@@ -1,6 +1,6 @@
 ---
 name: art-icon
-description: 【截图可见·必读】/pmem-icon 与 /art-icon 生成图标集时，关键单枚与不合格批次强制「最多8轮、合格线≥9.5」闭环自评收敛（生1张→打分挑刺→<9.5叠加修正→满8轮挑最高分→评分总表）。流水线对标 jezweb：先锁 style-spec → 约5个一批 SVG（统一 viewBox/currentColor/stroke）→ preview.html。触发例：「/pmem-icon 给青瓷RPG做一套24px导航图标」「/art-icon home settings inventory」。
+description: 【截图可见·必读】/pmem-icon 与 /art-icon 支持三大模式：(A) iOS/Android 1024×1024 App Icon 桌面启动图标母版（满幅直角出图+72%~80%圆角安全区+多尺寸导出矩阵+深浅色自适应）；(B) jezweb 式一致化 SVG 矢量图标集；(C) 游戏道具 64/128/256px 透明底栅格图标。全部支持单次原子调用 converge step 与动态阈值收敛闭环。
 ---
 
 # `/pmem-icon`（别名 `/art-icon`）— jezweb 式一致化图标集 / SVG 取向生成
@@ -81,6 +81,38 @@ python3 pmem_art.py converge start --goal "图标 <name> 对齐 style-spec" --mo
 ```bash
 python3 pmem_art.py feedback "图标集 style-spec：<preset+stroke+grid摘要>" --module ui.Icons --kind art_decision
 python3 pmem_art.py ingest icons/preview.html -p "icon set preview" --apply   # 若适用
+```
+
+## 二之二、App Icon 模式（iOS App Store / Android Adaptive 1024×1024 桌面应用图标专项）
+
+当用户要求制作 **App Icon / 手机桌面图标 / iOS 启动图标 / Android 自适应图标 / 产品 Logo 图标** 时，自动切换至 **App Icon 专项模式**：
+
+### 1. 1024×1024 满幅直角母版与系统圆角安全区铁律
+- **严禁预裁透明圆角**：母版必须输出 **`1024×1024` 满幅直角正方形（Full-bleed Square PNG，无 Alpha 透明缺角）**，防止系统套用 iOS 超椭圆（Superellipse Squircle）或 Android Adaptive 遮罩时露出黑边/白边裂隙。
+- **核心图形安全区（Center 72%–80% Safe Zone）**：核心主符号（Hero Glyph）必须收束在画布中心 **`72%–80%`（约 `740×740 px`）安全圆/超椭圆内**，四周留出充足呼吸负空间，绝不贴边。
+- **零细碎文字红线**：App Icon 严禁堆砌 Slogan、副标题或复杂多角色场景；只保留 **1 个高辨识度核心记忆符号**，确保缩放到 `29×29 px`（设置页）与 `60×60 px`（通知栏）时依然一眼认出。
+
+### 2. 光学微立体质感与光影层次（Tactile Material & Lighting）
+- **三层景深结构**：① 底板环境渐变层（70% 主色）→ ② 中心主符号微倾体块层（20% 辅色 + 柔和接触阴影 Contact Shadow）→ ③ 顶部 45° 高光切角边缘（Top-Edge Specular Rim，10% 点缀色）。
+- **支持 iOS 18+ 三态适配**：输出标准浅色版（Light）、深色模式版（Dark Mode 深邃底板+自发光边缘）与单色着色版（Tinted 单通道明度层次）。
+
+### 3. 多尺寸导出矩阵与 `app-icon-preview.html`
+通过 `converge step` 单次原子调用收敛出 `1024×1024` 母版后，自动导出标准尺寸包：
+- **iOS 矩阵**：`1024×1024` (App Store)、`180×180` (@3x Home)、`167×167` (iPad Pro)、`120×120` (@2x)、`60×60` (Notification)、`29×29` (Settings)
+- **Android / 桌面矩阵**：`512×512` (Play Store)、`192×192` (xxxhdpi Foreground/Background)
+
+### 4. App Icon 专属五维审图标准（满分 10.0 分，支持 `parse_5d_dims` 自动加权）
+1. **品牌符号与小尺寸识别度（25%）**：核心图形是否极致凝练？缩至 `29px / 60px` 轮廓是否依然清晰秒认？
+2. **1024母版与圆角遮罩安全区合规（25%）**：是否为满幅直角母版？主体是否严格落在中心 `72%–80%` 安全区内、无贴边裁切？
+3. **光影与微立体质感完成度（20%）**：顶部高光切角、材质折射/磨砂肌理与底部环境漫射阴影是否精致通透、无廉价塑料感？
+4. **多尺寸导出与深浅色自适应合规（15%）**：Light / Dark / Tinted 三态及多尺寸缩放是否无糊边、无伪影？
+5. **色板纯粹度与无细碎文字红线（15%）**：是否严格遵循 70-20-10 品牌色板？是否 100% 剔除了多余文字与杂乱背景？
+
+```bash
+# App Icon 模式单次原子调用示例：
+python3 pmem_art.py converge start --module icon.AppIcon --scale high --brief "iOS 1024x1024 App Icon: 青瓷质感记账应用，中心单枚立体青釉金币流光符号"
+python3 pmem_art.py converge step --session-id latest --image app_icon_r1.png \
+  --dims "识别度9.6/安全区9.7/光影质感9.5/多尺寸合规9.6/色板纯粹9.7"
 ```
 
 ## 三、交付检查清单
