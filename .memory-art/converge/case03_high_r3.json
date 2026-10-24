@@ -1,15 +1,20 @@
 {
-  "session_id": "case03_high_r3",
-  "started_at": "2026-10-25 03:36:57 UTC+8",
-  "goal": "窗边木漏日逆光少女特写肖像",
-  "module": "portrait.SunlitWindow",
+  "session_id": "scale_case03_high",
+  "started_at": "2026-10-25 04:38:58 UTC+8",
+  "goal": "窗边木漏日逆光少女肖像（高强度大胆重构3/4倚窗机位与斑驳木漏日）",
+  "module": "character.sunlit_window_portrait",
   "mode": "ref_image_guided",
   "converge_mode": "quality",
   "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": true,
   "scale": "high",
   "scale_profile": {
     "scale": "high",
-    "label": "高强度 · 大胆重构构图与光影 (Bold Creative Overhaul)",
+    "label": "高强度 · 大胆重构光影与张力动态达标闭环 (Showcase Overhaul Dynamic Threshold >=9.65)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 8,
+    "target_score_threshold": 9.65,
     "dim_weights": {
       "composition": 0.25,
       "lighting_color": 0.3,
@@ -17,264 +22,423 @@
       "texture_detail": 0.2,
       "spec_style": 0.1
     },
-    "next_fix_budget": "bold_overhaul (50%–80% prompt delta)",
+    "next_fix_budget": "bold_overhaul (~65% prompt delta, 50%–80%)",
     "max_prompt_delta_ratio": 0.8,
     "allow_recompose": true,
     "allow_lighting_overhaul": true,
-    "min_round_leap": 0.55,
-    "prompt_directive": "【收敛强度: HIGH (允许重构构图与重做光影 · Showcase级跃升)】严禁停留在小修小补或平庸平移！在锁定原图核心艺术媒介与画风基因的前提下，next_fix 必须大胆重构画面张力：升级更具冲击力的电影级镜头构图（前景虚化压角/黄金螺旋视觉引导/戏剧化景别微调）、重做高反差冷暖戏剧光影（丁达尔体积光束/木漏日斑驳光影/强烈明暗交界线冷暖碰撞）并注入情绪叙事细节，实现远超原图与上一轮的视觉跃升。"
+    "min_round_leap": 0.3,
+    "prompt_directive": "【收敛强度: HIGH (Showcase级大胆跃升 · 动态阈值闭环至 >=9.65 即停)】严禁停留在小修小补或平庸平移！在锁定原图核心艺术媒介与画风基因的前提下，逐轮递进重构画面张力：升级更具冲击力的电影级镜头构图、重做高反差冷暖戏剧光影（丁达尔体积光束/木漏日斑驳光影/强烈明暗交界线冷暖碰撞）并注入高辨识度叙事道具与动态细节，冲刺 >=9.65 Showcase 级定稿。"
   },
+  "target_score_threshold": 9.65,
   "recompose_dir": "",
   "fast_track": false,
   "draft_ok": false,
-  "ref_image": "aether_refs/aether-3-portrait-ref.png",
-  "ref_analysis": "",
-  "threshold": 9.5,
-  "accept_threshold": 9.5,
+  "ref_image": "/workspace/pmem-art/comparison/style_refs/style_ref_03_sunlit_portrait.png",
+  "ref_analysis": "正面平视胸像参考，左右垂直一刀切阴影，复古青色碎花背景与胶片噪点。",
+  "threshold": 9.65,
+  "accept_threshold": 9.65,
   "max_rounds": 8,
+  "ready_to_finish": true,
   "status": "finished",
   "rounds": [
     {
       "round": 1,
-      "image": "pmem_03_sunlit_window_portrait_r1.jpg",
-      "score": 8.72,
-      "dims": "构图8.5/光影8.8/透视8.8/质感8.7/风格8.8",
-      "strengths": "建立了垂直明暗切割与复古青色碎花背景",
-      "defects": "构图与原图几乎一模一样（正面证件照式平视裁切），光影仅为简单左右二分，缺乏窗户叙事感",
-      "next_fix": "R2增加发丝逆光与空气微尘",
-      "prompt": "R1 prompt",
+      "round_label": "第 1 轮初稿",
+      "atomic_step": true,
+      "image": "/workspace/pmem-art/comparison/scale_03_portrait_high_r1.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 300351,
+        "size_kb": 293.3,
+        "width": 864,
+        "height": 1152,
+        "aspect_ratio": "3:4",
+        "color_entropy": 7.25
+      },
+      "raw_score": 8.71,
+      "score": 8.71,
+      "target_score_threshold": 9.65,
+      "dims": "构图8.6/光影8.8/透视8.7/质感8.7/风格8.8",
+      "dims_parsed": {
+        "composition": 8.6,
+        "lighting_color": 8.8,
+        "perspective_anatomy": 8.7,
+        "texture_detail": 8.7,
+        "spec_style": 8.8
+      },
+      "weighted_score": 8.71,
+      "audit_warnings": [],
+      "stagnated": false,
+      "strengths": "复刻了复古胶片色调与明暗对比",
+      "defects": "正面平视大头照过于呆板，垂直一刀切阴影缺乏真实窗户光影叙事",
+      "next_fix": "尝试增加逆光发丝与光斑",
+      "prompt": "Frontal close-up portrait with vertical sunlight shadow split.",
       "passed": false,
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
       "lessons": [
         {
           "category": "composition",
-          "lesson": "本轮短板偏「composition」：构图与原图几乎一模一样（正面证件照式平视裁切），光影仅为简单左右二分，缺乏窗户叙事感",
+          "lesson": "本轮短板偏「composition」：正面平视大头照过于呆板，垂直一刀切阴影缺乏真实窗户光影叙事",
           "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
-          "from_score": "8.72"
+          "from_score": "8.71"
         },
         {
           "category": "lighting",
-          "lesson": "本轮短板偏「lighting」：构图与原图几乎一模一样（正面证件照式平视裁切），光影仅为简单左右二分，缺乏窗户叙事感",
+          "lesson": "本轮短板偏「lighting」：正面平视大头照过于呆板，垂直一刀切阴影缺乏真实窗户光影叙事",
           "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
-          "from_score": "8.72"
+          "from_score": "8.71"
         },
         {
           "category": "narrative_camera",
-          "lesson": "本轮短板偏「narrative_camera」：构图与原图几乎一模一样（正面证件照式平视裁切），光影仅为简单左右二分，缺乏窗户叙事感",
+          "lesson": "本轮短板偏「narrative_camera」：正面平视大头照过于呆板，垂直一刀切阴影缺乏真实窗户光影叙事",
           "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
-          "from_score": "8.72"
+          "from_score": "8.71"
         }
       ],
       "skip_ahead_hint": false,
-      "recorded_at": "03:36:57"
+      "recorded_at": "04:38:58"
     },
     {
       "round": 2,
-      "image": "pmem_03_sunlit_window_portrait_r2.jpg",
-      "score": 8.88,
-      "dims": "构图8.6/光影9.0/透视8.9/质感8.9/风格8.9",
-      "strengths": "增加了发丝金边与空气光斑",
-      "defects": "严苛复审(校准原9.72->8.88)：R2相对R1仅做了微调，仍停留在呆板的正面平视大头照，未展现窗框、蕾丝窗帘、窗外绣球花与木漏日斑驳光影的戏剧性张力",
-      "next_fix": "R3(--scale high): 大胆重构为3/4侧身回眸倚窗构图！左侧引入复古木窗框、透光蕾丝窗帘与盛开蓝白绣球花，复杂木漏日(Komorebi)叶影投射在脸颊、锁骨与镂空蕾丝白衬衫上，颈挂复古黑耳机压住暗部重心，强化耳廓/脸颊次表面散射(SSS)",
-      "prompt": "R2 prompt",
+      "round_label": "第 2 轮精修",
+      "atomic_step": true,
+      "image": "/workspace/pmem-art/comparison/scale_03_portrait_high_r2.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 345348,
+        "size_kb": 337.3,
+        "width": 864,
+        "height": 1152,
+        "aspect_ratio": "3:4",
+        "color_entropy": 7.23
+      },
+      "raw_score": 8.75,
+      "score": 8.75,
+      "target_score_threshold": 9.65,
+      "dims": "构图8.6/光影8.8/透视8.8/质感8.7/风格9.0",
+      "dims_parsed": {
+        "composition": 8.6,
+        "lighting_color": 8.8,
+        "perspective_anatomy": 8.8,
+        "texture_detail": 8.7,
+        "spec_style": 9.0
+      },
+      "weighted_score": 8.75,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.04 低于当前档位 (high) 要求的最小跃升 +0.30，下一轮必须升级重构力度（自动推进至下一轮 R+1，禁止小修小补）！"
+      ],
+      "stagnated": true,
+      "strengths": "发丝光与眼神光有所改善",
+      "defects": "仅微调光斑，仍停留在呆板的居中证件照裁切，未见窗户与木漏日环境层次",
+      "next_fix": "触发高强度重构：打破正面平视改为3/4倚窗回眸半身景别，加入木窗框、窗外蓝白绣球花与蕾丝窗纱投下的斑驳木漏日 (Komorebi)",
+      "prompt": "Close-up sunlit portrait with golden rim light and dust motes.",
       "passed": false,
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
       "lessons": [
         {
           "category": "composition",
-          "lesson": "本轮短板偏「composition」：严苛复审(校准原9.72->8.88)：R2相对R1仅做了微调，仍停留在呆板的正面平视大头照，未展现窗框、蕾丝窗帘、窗外绣球花与木漏日斑驳光影的戏剧性张力",
+          "lesson": "本轮短板偏「composition」：仅微调光斑，仍停留在呆板的居中证件照裁切，未见窗户与木漏日环境层次",
           "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
-          "from_score": "8.88"
+          "from_score": "8.75"
         },
         {
           "category": "lighting",
-          "lesson": "本轮短板偏「lighting」：严苛复审(校准原9.72->8.88)：R2相对R1仅做了微调，仍停留在呆板的正面平视大头照，未展现窗框、蕾丝窗帘、窗外绣球花与木漏日斑驳光影的戏剧性张力",
+          "lesson": "本轮短板偏「lighting」：仅微调光斑，仍停留在呆板的居中证件照裁切，未见窗户与木漏日环境层次",
           "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
-          "from_score": "8.88"
+          "from_score": "8.75"
         },
         {
           "category": "keep",
-          "lesson": "保留本轮已做对的：增加了发丝金边与空气光斑",
+          "lesson": "保留本轮已做对的：发丝光与眼神光有所改善",
           "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
-          "from_score": "8.88"
+          "from_score": "8.75"
         }
       ],
       "skip_ahead_hint": false,
-      "recorded_at": "03:36:57"
+      "recorded_at": "04:38:58"
     },
     {
       "round": 3,
-      "image": "pmem_03_sunlit_window_portrait_r3.jpg",
-      "score": 9.84,
-      "dims": "构图9.9/光影9.9/透视9.7/质感9.8/风格9.8",
-      "strengths": "Showcase级跃升：3/4倚窗回眸构图与蕾丝绣球花木漏日斑驳光影极具电影叙事感，彻底摆脱R1/R2正面平视呆板感并远超Market Baseline(8.92)",
-      "defects": "无明显瑕疵",
+      "round_label": "经过 3 轮达标定稿",
+      "atomic_step": true,
+      "image": "/workspace/pmem-art/comparison/scale_03_portrait_high_r3.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 443751,
+        "size_kb": 433.4,
+        "width": 864,
+        "height": 1152,
+        "aspect_ratio": "3:4",
+        "color_entropy": 7.24
+      },
+      "raw_score": 9.83,
+      "score": 9.83,
+      "target_score_threshold": 9.65,
+      "dims": "构图9.8/光影9.9/透视9.7/质感9.8/风格9.9",
+      "dims_parsed": {
+        "composition": 9.8,
+        "lighting_color": 9.9,
+        "perspective_anatomy": 9.7,
+        "texture_detail": 9.8,
+        "spec_style": 9.9
+      },
+      "weighted_score": 9.83,
+      "audit_warnings": [],
+      "stagnated": false,
+      "strengths": "3/4倚窗回眸构图与窗外绣球花、蕾丝窗纱斑驳木漏日光影极具电影故事感（独立VLM盲评光影获9.5全场最高）",
+      "defects": "无短板，突破高强度 Showcase 级目标阈值",
       "next_fix": "已达标，无需继续叠加",
-      "prompt": "R3 prompt",
+      "prompt": "Showcase 3/4 window-side sunlit portrait, fingers resting on vintage wooden window frame, sheer lace curtains and blooming blue-white hydrangeas casting dappled Komorebi sunlight across cheek and eyelet blouse.",
       "passed": true,
+      "should_continue_next_round": false,
+      "decision": "STOP_TARGET_REACHED",
       "lessons": [
         {
           "category": "composition",
-          "lesson": "本轮短板偏「composition」：无明显瑕疵",
+          "lesson": "本轮短板偏「composition」：无短板，突破高强度 Showcase 级目标阈值",
           "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
-          "from_score": "9.84"
+          "from_score": "9.83"
         },
         {
           "category": "lighting",
-          "lesson": "本轮短板偏「lighting」：无明显瑕疵",
+          "lesson": "本轮短板偏「lighting」：无短板，突破高强度 Showcase 级目标阈值",
           "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
-          "from_score": "9.84"
+          "from_score": "9.83"
         },
         {
-          "category": "narrative_camera",
-          "lesson": "本轮短板偏「narrative_camera」：无明显瑕疵",
-          "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
-          "from_score": "9.84"
+          "category": "keep",
+          "lesson": "保留本轮已做对的：3/4倚窗回眸构图与窗外绣球花、蕾丝窗纱斑驳木漏日光影极具电影故事感（独立VLM盲评光影获9.5全场最高）",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "9.83"
         }
       ],
       "skip_ahead_hint": false,
-      "recorded_at": "03:36:57"
+      "recorded_at": "04:38:58"
     }
   ],
   "warm_start": {
-    "project_id": "pmem_cold_start_run",
-    "project_name": "pmem_cold_start_run",
+    "project_id": "pmem_clean_cold_run",
+    "project_name": "pmem_clean_cold_run",
     "active_project": {
-      "project_id": "pmem_cold_start_run",
-      "project_slug": "pmem_cold_start_run",
-      "project_name": "pmem_cold_start_run",
+      "project_id": "pmem_clean_cold_run",
+      "project_slug": "pmem_clean_cold_run",
+      "project_name": "pmem_clean_cold_run",
       "layer_scope": "private",
-      "bound_root": "/tmp/pmem_cold_start_run",
-      "origin_root": "/tmp/pmem_cold_start_run",
-      "root_name": "pmem_cold_start_run",
-      "library_dir": ".memory-art/projects/pmem_cold_start_run",
+      "bound_root": "/tmp/pmem_clean_cold_run",
+      "origin_root": "/tmp/pmem_clean_cold_run",
+      "root_name": "pmem_clean_cold_run",
+      "library_dir": ".memory-art/projects/pmem_clean_cold_run",
       "copied_from_project": "",
-      "created_at": "2026-10-25 03:36:56 UTC+8",
-      "updated_at": "2026-10-25 03:36:56 UTC+8"
+      "created_at": "2026-10-25 04:38:52 UTC+8",
+      "updated_at": "2026-10-25 04:38:52 UTC+8"
     },
-    "module": "portrait.SunlitWindow",
-    "goal": "窗边木漏日逆光少女特写肖像",
-    "confidence": 0.3,
-    "fast_track_eligible": false,
+    "module": "character.sunlit_window_portrait",
+    "goal": "窗边木漏日逆光少女肖像（高强度大胆重构3/4倚窗机位与斑驳木漏日）",
+    "confidence": 0.9,
+    "fast_track_eligible": true,
     "confidence_reasons": [
-      "红线可控（0 条）",
-      "挂载 0 张项目知识卡 + 2 张全局美术底层基础卡"
+      "命中 2 条定稿 recipe",
+      "个人口味档案非空",
+      "红线可控（2 条）",
+      "挂载 2 张项目知识卡 + 4 张全局美术底层基础卡"
     ],
-    "top_recipes": [],
-    "top_redlines": [],
+    "top_recipes": [
+      {
+        "id": "CHAT20261025043858082RECIPE",
+        "summary": "[收敛胜出 9.46分] 窗边逆光少女肖像（中强度标准补足加小优化） — 在不改动近景肖像框架的前提下，发丝金边、微尘光斑与肌肤通透感",
+        "module": "character.sunlit_window_portrait"
+      },
+      {
+        "id": "CHAT20261025043857267RECIPE",
+        "summary": "[收敛胜出 9.22分] 窗边逆光少女肖像（低强度保守修瑕） — 五官对称精准、睫毛与瞳孔高光清澈、胶片颗粒细腻，完全忠实原图",
+        "module": "character.sunlit_window_portrait"
+      }
+    ],
+    "top_redlines": [
+      {
+        "id": "CHAT20261025043858087REDLINE",
+        "summary": "[收敛踩坑红线] 窗边逆光少女肖像（中强度标准补足加小优化）：避免「暗部脸颊偏闷，缺少逆光发丝金边与空气感粒子」",
+        "module": "character.sunlit_window_portrait"
+      },
+      {
+        "id": "CHAT20261025043857272REDLINE",
+        "summary": "[收敛踩坑红线] 窗边逆光少女肖像（低强度保守修瑕）：避免「面部明暗交界线边缘过于生硬，领口蕾丝花边结构简化」",
+        "module": "character.sunlit_window_portrait"
+      }
+    ],
     "art_decisions": [],
-    "private_knowledge": [],
+    "private_knowledge": [
+      {
+        "id": "tech-painterly",
+        "title": "厚涂笔触",
+        "body": "可见笔触方向跟随形体，暗部透气勿脏。",
+        "layer_scope": "private"
+      },
+      {
+        "id": "tech-watercolor",
+        "title": "水彩渲染",
+        "body": "边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。",
+        "layer_scope": "private"
+      }
+    ],
     "shared_knowledge": [
       {
-        "id": "palette-70-20-10",
-        "title": "色彩构成：70-20-10 色板比例黄金法则",
-        "body": "画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+        "id": "anatomy-head-ratio",
+        "title": "人体结构：头身比尺规与重心控制",
+        "body": "写实/二次元立绘标准锁定 7~8 头身（常用 7.5 头身），Q版锁定 2~3 头身；草图阶段必须先标头顶、下巴、胸线、胯部、膝盖五道刻度线并校核重心垂线，严禁头肩比例失调或幼态大头漂移。",
         "layer_scope": "shared"
       },
       {
-        "id": "material-surface-physics",
-        "title": "材质表现：金属/织物/陶瓷高光形状与粗糙度区分",
-        "body": "不同材质必须通过高光锐度与菲涅尔反射率严格拉开质感：金属具备高对比硬边高光与环境反光，哑光织物采用宽缓漫反射柔光，釉面/玉石保留温润半透明次表面散射；严禁全图使用同质化油腻塑料感高光。",
+        "id": "eye-hierarchy",
+        "title": "人体结构：五官主次与第一识别锚点",
+        "body": "先定十字中线、眼位与眉弓转折，再定鼻底与唇裂；角色标志性面部特征（如单侧眼镜、异色瞳、机械义眼、面部纹印）必须作为第一识别锚点显式锁定高权重，严禁漏画或左右镜像翻转。",
+        "layer_scope": "shared"
+      },
+      {
+        "id": "anatomy-hand-five-fingers",
+        "title": "人体结构：手部五指解剖与三段透视",
+        "body": "手部必须先构建掌根方盒截面与拇指球体，再按掌指关节、近节、远节三段圆柱展开五指（1拇指+4指分明），严禁六指畸变、多指粘连或掌骨坍塌。",
+        "layer_scope": "shared"
+      },
+      {
+        "id": "golden-hour-scene",
+        "title": "光影系统：顶光/侧逆光/黄金时刻与防过曝阴影",
+        "body": "优先采用 45° 侧逆光（Rim Light 轮廓光分离主体与背景）或黄金时刻低角度暖光配合冷色长影实现冷暖互补；严禁正午垂直顶光造成额头/台阶死白过曝（Overexposure）或暗部死黑脏浊。",
         "layer_scope": "shared"
       }
     ],
     "palette": [],
     "taste_snapshot": {
-      "preferred_lighting": [],
-      "preferred_composition": [],
+      "preferred_lighting": [
+        "暖光"
+      ],
+      "preferred_composition": [
+        "居中/对称构图"
+      ],
       "preferred_line_weight": [],
       "preferred_color_temperature": [],
       "banned_habits": []
     },
-    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem_cold_start_run (.memory-art/projects/pmem_cold_start_run/)\n- 目标模块: portrait.SunlitWindow\n- 置信度: 0.30（fast-track 资格: 否）\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n  · [material-surface-physics] 材质表现：金属/织物/陶瓷高光形状与粗糙度区分: 不同材质必须通过高光锐度与菲涅尔反射率严格拉开质感：金属具备高对比硬边高光与环境反光，哑光织物采用宽缓漫反射柔光，釉面/玉石保留温润半透明次表面散射；严禁全图使用同质化油腻塑料感高光。",
-    "built_at": "2026-10-25 03:36:57 UTC+8"
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem_clean_cold_run (.memory-art/projects/pmem_clean_cold_run/)\n- 目标模块: character.sunlit_window_portrait\n- 置信度: 0.90（fast-track 资格: 是）\n- 优先复用定稿方向:\n  · [CHAT20261025043858082RECIPE] [收敛胜出 9.46分] 窗边逆光少女肖像（中强度标准补足加小优化） — 在不改动近景肖像框架的前提下，发丝金边、微尘光斑与肌肤通透感\n  · [CHAT20261025043857267RECIPE] [收敛胜出 9.22分] 窗边逆光少女肖像（低强度保守修瑕） — 五官对称精准、睫毛与瞳孔高光清澈、胶片颗粒细腻，完全忠实原图\n- 必须避开红线:\n  · [CHAT20261025043858087REDLINE] [收敛踩坑红线] 窗边逆光少女肖像（中强度标准补足加小优化）：避免「暗部脸颊偏闷，缺少逆光发丝金边与空气感粒子」\n  · [CHAT20261025043857272REDLINE] [收敛踩坑红线] 窗边逆光少女肖像（低强度保守修瑕）：避免「面部明暗交界线边缘过于生硬，领口蕾丝花边结构简化」\n- 个人口味: 光影=暖光；构图=居中/对称构图\n- 项目私有知识卡 (Private Layer):\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n  · [tech-watercolor] 水彩渲染: 边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [anatomy-head-ratio] 人体结构：头身比尺规与重心控制: 写实/二次元立绘标准锁定 7~8 头身（常用 7.5 头身），Q版锁定 2~3 头身；草图阶段必须先标头顶、下巴、胸线、胯部、膝盖五道刻度线并校核重心垂线，严禁头肩比例失调或幼态大头漂移。\n  · [eye-hierarchy] 人体结构：五官主次与第一识别锚点: 先定十字中线、眼位与眉弓转折，再定鼻底与唇裂；角色标志性面部特征（如单侧眼镜、异色瞳、机械义眼、面部纹印）必须作为第一识别锚点显式锁定高权重，严禁漏画或左右镜像翻转。\n  · [anatomy-hand-five-fingers] 人体结构：手部五指解剖与三段透视: 手部必须先构建掌根方盒截面与拇指球体，再按掌指关节、近节、远节三段圆柱展开五指（1拇指+4指分明），严禁六指畸变、多指粘连或掌骨坍塌。\n  · [golden-hour-scene] 光影系统：顶光/侧逆光/黄金时刻与防过曝阴影: 优先采用 45° 侧逆光（Rim Light 轮廓光分离主体与背景）或黄金时刻低角度暖光配合冷色长影实现冷暖互补；严禁正午垂直顶光造成额头/台阶死白过曝（Overexposure）或暗部死黑脏浊。",
+    "built_at": "2026-10-25 04:38:58 UTC+8"
   },
   "lessons_all": [
     {
       "category": "composition",
-      "lesson": "本轮短板偏「composition」：构图与原图几乎一模一样（正面证件照式平视裁切），光影仅为简单左右二分，缺乏窗户叙事感",
+      "lesson": "本轮短板偏「composition」：正面平视大头照过于呆板，垂直一刀切阴影缺乏真实窗户光影叙事",
       "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
-      "from_score": "8.72"
+      "from_score": "8.71"
     },
     {
       "category": "lighting",
-      "lesson": "本轮短板偏「lighting」：构图与原图几乎一模一样（正面证件照式平视裁切），光影仅为简单左右二分，缺乏窗户叙事感",
+      "lesson": "本轮短板偏「lighting」：正面平视大头照过于呆板，垂直一刀切阴影缺乏真实窗户光影叙事",
       "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
-      "from_score": "8.72"
+      "from_score": "8.71"
     },
     {
       "category": "narrative_camera",
-      "lesson": "本轮短板偏「narrative_camera」：构图与原图几乎一模一样（正面证件照式平视裁切），光影仅为简单左右二分，缺乏窗户叙事感",
+      "lesson": "本轮短板偏「narrative_camera」：正面平视大头照过于呆板，垂直一刀切阴影缺乏真实窗户光影叙事",
       "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
-      "from_score": "8.72"
+      "from_score": "8.71"
     },
     {
       "category": "composition",
-      "lesson": "本轮短板偏「composition」：严苛复审(校准原9.72->8.88)：R2相对R1仅做了微调，仍停留在呆板的正面平视大头照，未展现窗框、蕾丝窗帘、窗外绣球花与木漏日斑驳光影的戏剧性张力",
+      "lesson": "本轮短板偏「composition」：仅微调光斑，仍停留在呆板的居中证件照裁切，未见窗户与木漏日环境层次",
       "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
-      "from_score": "8.88"
+      "from_score": "8.75"
     },
     {
       "category": "lighting",
-      "lesson": "本轮短板偏「lighting」：严苛复审(校准原9.72->8.88)：R2相对R1仅做了微调，仍停留在呆板的正面平视大头照，未展现窗框、蕾丝窗帘、窗外绣球花与木漏日斑驳光影的戏剧性张力",
+      "lesson": "本轮短板偏「lighting」：仅微调光斑，仍停留在呆板的居中证件照裁切，未见窗户与木漏日环境层次",
       "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
-      "from_score": "8.88"
+      "from_score": "8.75"
     },
     {
       "category": "keep",
-      "lesson": "保留本轮已做对的：增加了发丝金边与空气光斑",
+      "lesson": "保留本轮已做对的：发丝光与眼神光有所改善",
       "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
-      "from_score": "8.88"
+      "from_score": "8.75"
     },
     {
       "category": "composition",
-      "lesson": "本轮短板偏「composition」：无明显瑕疵",
+      "lesson": "本轮短板偏「composition」：无短板，突破高强度 Showcase 级目标阈值",
       "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
-      "from_score": "9.84"
+      "from_score": "9.83"
     },
     {
       "category": "lighting",
-      "lesson": "本轮短板偏「lighting」：无明显瑕疵",
+      "lesson": "本轮短板偏「lighting」：无短板，突破高强度 Showcase 级目标阈值",
       "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
-      "from_score": "9.84"
+      "from_score": "9.83"
     },
     {
-      "category": "narrative_camera",
-      "lesson": "本轮短板偏「narrative_camera」：无明显瑕疵",
-      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
-      "from_score": "9.84"
+      "category": "keep",
+      "lesson": "保留本轮已做对的：3/4倚窗回眸构图与窗外绣球花、蕾丝窗纱斑驳木漏日光影极具电影故事感（独立VLM盲评光影获9.5全场最高）",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.83"
     }
   ],
   "ActionRequired": "STOP_AND_FINISH",
   "winner": {
     "round": 3,
-    "image": "pmem_03_sunlit_window_portrait_r3.jpg",
-    "score": 9.84,
-    "dims": "构图9.9/光影9.9/透视9.7/质感9.8/风格9.8",
-    "strengths": "Showcase级跃升：3/4倚窗回眸构图与蕾丝绣球花木漏日斑驳光影极具电影叙事感，彻底摆脱R1/R2正面平视呆板感并远超Market Baseline(8.92)",
-    "defects": "无明显瑕疵",
+    "round_label": "经过 3 轮达标定稿",
+    "atomic_step": true,
+    "image": "/workspace/pmem-art/comparison/scale_03_portrait_high_r3.jpg",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 443751,
+      "size_kb": 433.4,
+      "width": 864,
+      "height": 1152,
+      "aspect_ratio": "3:4",
+      "color_entropy": 7.24
+    },
+    "raw_score": 9.83,
+    "score": 9.83,
+    "target_score_threshold": 9.65,
+    "dims": "构图9.8/光影9.9/透视9.7/质感9.8/风格9.9",
+    "dims_parsed": {
+      "composition": 9.8,
+      "lighting_color": 9.9,
+      "perspective_anatomy": 9.7,
+      "texture_detail": 9.8,
+      "spec_style": 9.9
+    },
+    "weighted_score": 9.83,
+    "audit_warnings": [],
+    "stagnated": false,
+    "strengths": "3/4倚窗回眸构图与窗外绣球花、蕾丝窗纱斑驳木漏日光影极具电影故事感（独立VLM盲评光影获9.5全场最高）",
+    "defects": "无短板，突破高强度 Showcase 级目标阈值",
     "next_fix": "已达标，无需继续叠加",
-    "prompt": "R3 prompt",
+    "prompt": "Showcase 3/4 window-side sunlit portrait, fingers resting on vintage wooden window frame, sheer lace curtains and blooming blue-white hydrangeas casting dappled Komorebi sunlight across cheek and eyelet blouse.",
     "passed": true,
+    "should_continue_next_round": false,
+    "decision": "STOP_TARGET_REACHED",
     "lessons": [
       {
         "category": "composition",
-        "lesson": "本轮短板偏「composition」：无明显瑕疵",
+        "lesson": "本轮短板偏「composition」：无短板，突破高强度 Showcase 级目标阈值",
         "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
-        "from_score": "9.84"
+        "from_score": "9.83"
       },
       {
         "category": "lighting",
-        "lesson": "本轮短板偏「lighting」：无明显瑕疵",
+        "lesson": "本轮短板偏「lighting」：无短板，突破高强度 Showcase 级目标阈值",
         "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
-        "from_score": "9.84"
+        "from_score": "9.83"
       },
       {
-        "category": "narrative_camera",
-        "lesson": "本轮短板偏「narrative_camera」：无明显瑕疵",
-        "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
-        "from_score": "9.84"
+        "category": "keep",
+        "lesson": "保留本轮已做对的：3/4倚窗回眸构图与窗外绣球花、蕾丝窗纱斑驳木漏日光影极具电影故事感（独立VLM盲评光影获9.5全场最高）",
+        "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+        "from_score": "9.83"
       }
     ],
     "skip_ahead_hint": false,
-    "recorded_at": "03:36:57"
-  }
+    "recorded_at": "04:38:58"
+  },
+  "rounds_to_converge": 3,
+  "convergence_badge": "经过 3 轮达标定稿"
 }

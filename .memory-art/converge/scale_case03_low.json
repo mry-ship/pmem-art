@@ -1,0 +1,417 @@
+{
+  "session_id": "scale_case03_low",
+  "started_at": "2026-10-25 04:38:56 UTC+8",
+  "goal": "窗边逆光少女肖像（低强度保守修瑕）",
+  "module": "character.sunlit_window_portrait",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": true,
+  "scale": "low",
+  "scale_profile": {
+    "scale": "low",
+    "label": "低强度 · 保守修瑕动态达标闭环 (Defect-Fix Dynamic Threshold >=9.15)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 8,
+    "target_score_threshold": 9.15,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.2,
+      "perspective_anatomy": 0.25,
+      "texture_detail": 0.25,
+      "spec_style": 0.15
+    },
+    "next_fix_budget": "conservative (~15% prompt delta, <=20%)",
+    "max_prompt_delta_ratio": 0.2,
+    "allow_recompose": false,
+    "allow_lighting_overhaul": false,
+    "min_round_leap": 0.18,
+    "prompt_directive": "【收敛强度: LOW (保守修瑕 · 动态阈值闭环至 >=9.15 即停)】严格锁死参考原图/上一轮的镜头机位、主体姿态、构图重心与主光源方向，严禁增删配饰或改变环境构图；通过单次原子生图+五维审图 (converge step)，逐轮针对解剖结构瑕疵（五指/关节/五官对称）、线条咬合、透视偏差或纸纹材质颗粒缺失做靶向修补，一旦真实加权分 >=9.15 立即达标停止。"
+  },
+  "target_score_threshold": 9.15,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "/workspace/pmem-art/comparison/style_refs/style_ref_03_sunlit_portrait.png",
+  "ref_analysis": "正面平视胸像参考，左右垂直一刀切阴影，复古青色碎花背景与胶片噪点。",
+  "threshold": 9.15,
+  "accept_threshold": 9.15,
+  "max_rounds": 8,
+  "ready_to_finish": true,
+  "status": "finished",
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "atomic_step": true,
+      "image": "/workspace/pmem-art/comparison/scale_03_portrait_low_r1.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 454149,
+        "size_kb": 443.5,
+        "width": 864,
+        "height": 1152,
+        "aspect_ratio": "3:4",
+        "color_entropy": 7.24
+      },
+      "raw_score": 8.55,
+      "score": 8.55,
+      "target_score_threshold": 9.15,
+      "dims": "构图8.6/光影8.5/透视8.6/质感8.5/风格8.6",
+      "dims_parsed": {
+        "composition": 8.6,
+        "lighting_color": 8.5,
+        "perspective_anatomy": 8.6,
+        "texture_detail": 8.5,
+        "spec_style": 8.6
+      },
+      "weighted_score": 8.55,
+      "audit_warnings": [],
+      "stagnated": false,
+      "strengths": "严格锁死正面平视胸像与左右明暗二分切割",
+      "defects": "面部明暗交界线边缘过于生硬，领口蕾丝花边结构简化",
+      "next_fix": "保持正面平视构图不变，柔化鼻梁明暗过渡并修清领口刺绣蕾丝细节",
+      "prompt": "Frontal close-up anime portrait of girl with dark bob hair, vertical sunlight shadow split, teal floral wallpaper.",
+      "passed": false,
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "lessons": [
+        {
+          "category": "composition",
+          "lesson": "本轮短板偏「composition」：面部明暗交界线边缘过于生硬，领口蕾丝花边结构简化",
+          "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+          "from_score": "8.55"
+        },
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：面部明暗交界线边缘过于生硬，领口蕾丝花边结构简化",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.55"
+        },
+        {
+          "category": "line_edge",
+          "lesson": "本轮短板偏「line_edge」：面部明暗交界线边缘过于生硬，领口蕾丝花边结构简化",
+          "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+          "from_score": "8.55"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "04:38:56"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "atomic_step": true,
+      "image": "/workspace/pmem-art/comparison/scale_03_portrait_low_r2.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 300351,
+        "size_kb": 293.3,
+        "width": 864,
+        "height": 1152,
+        "aspect_ratio": "3:4",
+        "color_entropy": 7.25
+      },
+      "raw_score": 8.88,
+      "score": 8.88,
+      "target_score_threshold": 9.15,
+      "dims": "构图8.8/光影8.9/透视8.9/质感8.8/风格9.0",
+      "dims_parsed": {
+        "composition": 8.8,
+        "lighting_color": 8.9,
+        "perspective_anatomy": 8.9,
+        "texture_detail": 8.8,
+        "spec_style": 9.0
+      },
+      "weighted_score": 8.88,
+      "audit_warnings": [],
+      "stagnated": false,
+      "strengths": "面部明暗交界线自然柔和，领口花边与复古青绿碎花背景干净",
+      "defects": "瞳孔高光反射与耳际碎发边缘还可更细腻",
+      "next_fix": "精修琥珀色瞳孔通透反光、睫毛投影与均匀35mm胶片颗粒",
+      "prompt": "Clean frontal chiaroscuro portrait, soft warm subsurface glow along shadow edge, crisp eyelet collar, vintage teal daisy wallpaper.",
+      "passed": false,
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "lessons": [
+        {
+          "category": "composition",
+          "lesson": "本轮短板偏「composition」：瞳孔高光反射与耳际碎发边缘还可更细腻",
+          "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+          "from_score": "8.88"
+        },
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：瞳孔高光反射与耳际碎发边缘还可更细腻",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.88"
+        },
+        {
+          "category": "line_edge",
+          "lesson": "本轮短板偏「line_edge」：瞳孔高光反射与耳际碎发边缘还可更细腻",
+          "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+          "from_score": "8.88"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "04:38:57"
+    },
+    {
+      "round": 3,
+      "round_label": "经过 3 轮达标定稿",
+      "atomic_step": true,
+      "image": "/workspace/pmem-art/comparison/scale_03_portrait_low_r3.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 463091,
+        "size_kb": 452.2,
+        "width": 864,
+        "height": 1152,
+        "aspect_ratio": "3:4",
+        "color_entropy": 7.25
+      },
+      "raw_score": 9.22,
+      "score": 9.22,
+      "target_score_threshold": 9.15,
+      "dims": "构图9.1/光影9.2/透视9.2/质感9.3/风格9.3",
+      "dims_parsed": {
+        "composition": 9.1,
+        "lighting_color": 9.2,
+        "perspective_anatomy": 9.2,
+        "texture_detail": 9.3,
+        "spec_style": 9.3
+      },
+      "weighted_score": 9.22,
+      "audit_warnings": [],
+      "stagnated": false,
+      "strengths": "五官对称精准、睫毛与瞳孔高光清澈、胶片颗粒细腻，完全忠实原图正面构图",
+      "defects": "无瑕疵，达到低强度修瑕目标阈值",
+      "next_fix": "已达标，无需继续叠加",
+      "prompt": "Masterpiece faithful frontal sunlit portrait, delicate eyelash catchlights, smooth chiaroscuro transition, authentic 35mm film grain.",
+      "passed": true,
+      "should_continue_next_round": false,
+      "decision": "STOP_TARGET_REACHED",
+      "lessons": [
+        {
+          "category": "composition",
+          "lesson": "本轮短板偏「composition」：无瑕疵，达到低强度修瑕目标阈值",
+          "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+          "from_score": "9.22"
+        },
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：无瑕疵，达到低强度修瑕目标阈值",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "9.22"
+        },
+        {
+          "category": "anatomy",
+          "lesson": "本轮短板偏「anatomy」：无瑕疵，达到低强度修瑕目标阈值",
+          "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+          "from_score": "9.22"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "04:38:57"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem_clean_cold_run",
+    "project_name": "pmem_clean_cold_run",
+    "active_project": {
+      "project_id": "pmem_clean_cold_run",
+      "project_slug": "pmem_clean_cold_run",
+      "project_name": "pmem_clean_cold_run",
+      "layer_scope": "private",
+      "bound_root": "/tmp/pmem_clean_cold_run",
+      "origin_root": "/tmp/pmem_clean_cold_run",
+      "root_name": "pmem_clean_cold_run",
+      "library_dir": ".memory-art/projects/pmem_clean_cold_run",
+      "copied_from_project": "",
+      "created_at": "2026-10-25 04:38:52 UTC+8",
+      "updated_at": "2026-10-25 04:38:52 UTC+8"
+    },
+    "module": "character.sunlit_window_portrait",
+    "goal": "窗边逆光少女肖像（低强度保守修瑕）",
+    "confidence": 0.45,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "个人口味档案非空",
+      "红线可控（0 条）",
+      "挂载 2 张项目知识卡 + 4 张全局美术底层基础卡"
+    ],
+    "top_recipes": [],
+    "top_redlines": [],
+    "art_decisions": [],
+    "private_knowledge": [
+      {
+        "id": "tech-painterly",
+        "title": "厚涂笔触",
+        "body": "可见笔触方向跟随形体，暗部透气勿脏。",
+        "layer_scope": "private"
+      },
+      {
+        "id": "tech-watercolor",
+        "title": "水彩渲染",
+        "body": "边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。",
+        "layer_scope": "private"
+      }
+    ],
+    "shared_knowledge": [
+      {
+        "id": "anatomy-head-ratio",
+        "title": "人体结构：头身比尺规与重心控制",
+        "body": "写实/二次元立绘标准锁定 7~8 头身（常用 7.5 头身），Q版锁定 2~3 头身；草图阶段必须先标头顶、下巴、胸线、胯部、膝盖五道刻度线并校核重心垂线，严禁头肩比例失调或幼态大头漂移。",
+        "layer_scope": "shared"
+      },
+      {
+        "id": "eye-hierarchy",
+        "title": "人体结构：五官主次与第一识别锚点",
+        "body": "先定十字中线、眼位与眉弓转折，再定鼻底与唇裂；角色标志性面部特征（如单侧眼镜、异色瞳、机械义眼、面部纹印）必须作为第一识别锚点显式锁定高权重，严禁漏画或左右镜像翻转。",
+        "layer_scope": "shared"
+      },
+      {
+        "id": "anatomy-hand-five-fingers",
+        "title": "人体结构：手部五指解剖与三段透视",
+        "body": "手部必须先构建掌根方盒截面与拇指球体，再按掌指关节、近节、远节三段圆柱展开五指（1拇指+4指分明），严禁六指畸变、多指粘连或掌骨坍塌。",
+        "layer_scope": "shared"
+      },
+      {
+        "id": "golden-hour-scene",
+        "title": "光影系统：顶光/侧逆光/黄金时刻与防过曝阴影",
+        "body": "优先采用 45° 侧逆光（Rim Light 轮廓光分离主体与背景）或黄金时刻低角度暖光配合冷色长影实现冷暖互补；严禁正午垂直顶光造成额头/台阶死白过曝（Overexposure）或暗部死黑脏浊。",
+        "layer_scope": "shared"
+      }
+    ],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [
+        "暖光"
+      ],
+      "preferred_composition": [],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [],
+      "banned_habits": []
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem_clean_cold_run (.memory-art/projects/pmem_clean_cold_run/)\n- 目标模块: character.sunlit_window_portrait\n- 置信度: 0.45（fast-track 资格: 否）\n- 个人口味: 光影=暖光\n- 项目私有知识卡 (Private Layer):\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n  · [tech-watercolor] 水彩渲染: 边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [anatomy-head-ratio] 人体结构：头身比尺规与重心控制: 写实/二次元立绘标准锁定 7~8 头身（常用 7.5 头身），Q版锁定 2~3 头身；草图阶段必须先标头顶、下巴、胸线、胯部、膝盖五道刻度线并校核重心垂线，严禁头肩比例失调或幼态大头漂移。\n  · [eye-hierarchy] 人体结构：五官主次与第一识别锚点: 先定十字中线、眼位与眉弓转折，再定鼻底与唇裂；角色标志性面部特征（如单侧眼镜、异色瞳、机械义眼、面部纹印）必须作为第一识别锚点显式锁定高权重，严禁漏画或左右镜像翻转。\n  · [anatomy-hand-five-fingers] 人体结构：手部五指解剖与三段透视: 手部必须先构建掌根方盒截面与拇指球体，再按掌指关节、近节、远节三段圆柱展开五指（1拇指+4指分明），严禁六指畸变、多指粘连或掌骨坍塌。\n  · [golden-hour-scene] 光影系统：顶光/侧逆光/黄金时刻与防过曝阴影: 优先采用 45° 侧逆光（Rim Light 轮廓光分离主体与背景）或黄金时刻低角度暖光配合冷色长影实现冷暖互补；严禁正午垂直顶光造成额头/台阶死白过曝（Overexposure）或暗部死黑脏浊。",
+    "built_at": "2026-10-25 04:38:56 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：面部明暗交界线边缘过于生硬，领口蕾丝花边结构简化",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "8.55"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：面部明暗交界线边缘过于生硬，领口蕾丝花边结构简化",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.55"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：面部明暗交界线边缘过于生硬，领口蕾丝花边结构简化",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "8.55"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：瞳孔高光反射与耳际碎发边缘还可更细腻",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "8.88"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：瞳孔高光反射与耳际碎发边缘还可更细腻",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.88"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：瞳孔高光反射与耳际碎发边缘还可更细腻",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "8.88"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：无瑕疵，达到低强度修瑕目标阈值",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "9.22"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：无瑕疵，达到低强度修瑕目标阈值",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.22"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：无瑕疵，达到低强度修瑕目标阈值",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "9.22"
+    }
+  ],
+  "ActionRequired": "STOP_AND_FINISH",
+  "winner": {
+    "round": 3,
+    "round_label": "经过 3 轮达标定稿",
+    "atomic_step": true,
+    "image": "/workspace/pmem-art/comparison/scale_03_portrait_low_r3.jpg",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 463091,
+      "size_kb": 452.2,
+      "width": 864,
+      "height": 1152,
+      "aspect_ratio": "3:4",
+      "color_entropy": 7.25
+    },
+    "raw_score": 9.22,
+    "score": 9.22,
+    "target_score_threshold": 9.15,
+    "dims": "构图9.1/光影9.2/透视9.2/质感9.3/风格9.3",
+    "dims_parsed": {
+      "composition": 9.1,
+      "lighting_color": 9.2,
+      "perspective_anatomy": 9.2,
+      "texture_detail": 9.3,
+      "spec_style": 9.3
+    },
+    "weighted_score": 9.22,
+    "audit_warnings": [],
+    "stagnated": false,
+    "strengths": "五官对称精准、睫毛与瞳孔高光清澈、胶片颗粒细腻，完全忠实原图正面构图",
+    "defects": "无瑕疵，达到低强度修瑕目标阈值",
+    "next_fix": "已达标，无需继续叠加",
+    "prompt": "Masterpiece faithful frontal sunlit portrait, delicate eyelash catchlights, smooth chiaroscuro transition, authentic 35mm film grain.",
+    "passed": true,
+    "should_continue_next_round": false,
+    "decision": "STOP_TARGET_REACHED",
+    "lessons": [
+      {
+        "category": "composition",
+        "lesson": "本轮短板偏「composition」：无瑕疵，达到低强度修瑕目标阈值",
+        "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+        "from_score": "9.22"
+      },
+      {
+        "category": "lighting",
+        "lesson": "本轮短板偏「lighting」：无瑕疵，达到低强度修瑕目标阈值",
+        "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+        "from_score": "9.22"
+      },
+      {
+        "category": "anatomy",
+        "lesson": "本轮短板偏「anatomy」：无瑕疵，达到低强度修瑕目标阈值",
+        "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+        "from_score": "9.22"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "04:38:57"
+  },
+  "rounds_to_converge": 3,
+  "convergence_badge": "经过 3 轮达标定稿"
+}

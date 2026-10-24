@@ -1031,10 +1031,11 @@ def main() -> int:
     p_skills.add_argument("--install", action="store_true", help="安装或刷新全部技能文件到 .cursor / .claude / .agents")
     p_skills.add_argument("--list", action="store_true", help="列出所有内置美术技能与触发方式")
 
-    p_conv = sub.add_parser("converge", help="闭环自评收敛（Warm-Start + quality/fast · 最多8轮 ≥9.5 · 反思）")
-    p_conv.add_argument("action", choices=("start", "round", "finish", "table", "status", "warm"), help="子操作")
-    p_conv.add_argument("--session", default="latest", help="会话 ID（默认 latest）")
-    p_conv.add_argument("--goal", "-g", default="", help="本次生图目标描述")
+    p_conv = sub.add_parser("converge", help="闭环自评收敛（Warm-Start + 单次原子生图&五维审图 converge step · 按档位目标阈值动态停机）")
+    p_conv.add_argument("action", choices=("start", "step", "round", "finish", "table", "status", "warm"), help="子操作（step=单次原子执行生图+五维VLM审图+动态阈值判定）")
+    p_conv.add_argument("--session", "--id", dest="session", default="latest", help="会话 ID（默认 latest，支持 --id 或 --session）")
+    p_conv.add_argument("--goal", "--brief", "-g", dest="goal", default="", help="本次生图目标描述（支持 --goal 或 --brief）")
+    p_conv.add_argument("--generate-cmd", dest="generate_cmd", default="", help="step 原子调用时可选的生图命令（生图后立即在同一调用内执行五维审图打分）")
     p_conv.add_argument("--module", "-m", default="", help="目标模块 ID")
     p_conv.add_argument("--ref-image", default="", help="垫图/参考图路径（若有）")
     p_conv.add_argument("--ref-analysis", default="", help="参考图视觉解构结论摘要")
@@ -1109,7 +1110,7 @@ def main() -> int:
 
     # Soft-load when memory missing (bootstrap/legacy on half-empty trees)
     mem = root / MEMORY_DIR
-    if not mem.exists() and args.command in ("bootstrap", "sync"):
+    if not mem.exists() and args.command in ("bootstrap", "sync", "converge"):
         from lifecycle import cmd_init
         print("ℹ️  未检测到 .memory-art，先执行隐式 init 脚手架…")
         cmd_init(root, project_name=root.name)
@@ -1200,6 +1201,7 @@ def main() -> int:
             max_rounds=args.max_rounds,
             round_num=args.round_num,
             image=args.image,
+            generate_cmd=getattr(args, "generate_cmd", "") or "",
             score=args.score,
             dims=args.dims,
             strengths=args.strengths,

@@ -379,6 +379,20 @@ def default_config(project_name: str = "Untitled Art Project", mode: str = "youn
             "image_trait_weight": 0.25,
             "module_match_weight": 0.15,
         },
+        "converge": {
+            "merged_generate_and_judge": True,
+            "stop_policy": "dynamic_threshold",
+            "default_scale": "medium",
+            "max_rounds": 8,
+            "target_thresholds": {
+                "low": 9.15,
+                "medium": 9.40,
+                "high": 9.65,
+                "recompose": 9.55,
+            },
+        },
+        "converge.merged_generate_and_judge": True,
+        "converge.stop_policy": "dynamic_threshold",
     }
 
 
