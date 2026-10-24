@@ -1068,7 +1068,54 @@ def cmd_converge(
             from improve import write_session_reflection
 
             mod = sess.get("module") or "brand.GlobalStyle"
+            def _ensure_conv_asset(img_str: str, m_id: str, prompt_str: str) -> str:
+                if not img_str:
+                    return ""
+                import shutil
+                cand = Path(img_str)
+                if not cand.is_absolute():
+                    cand = root / img_str
+                if not cand.is_file():
+                    return img_str
+                try:
+                    rel_c = cand.resolve().relative_to(root.resolve()).as_posix()
+                    if rel_c.startswith("assets/"):
+                        return rel_c
+                except Exception:
+                    pass
+                dom = m_id.split(".")[0] if "." in m_id else "misc"
+                ent = m_id.split(".")[1].lower() if "." in m_id else "general"
+                dest_rel = f"assets/{dom}/{ent}/{cand.name}"
+                dest_p = root / dest_rel
+                dest_p.parent.mkdir(parents=True, exist_ok=True)
+                if cand.resolve() != dest_p.resolve():
+                    shutil.copy2(str(cand), str(dest_p))
+                try:
+                    from classify import classify_asset, ensure_module_from_classification
+                    cl = classify_asset(root, data, path=dest_rel, prompt=prompt_str)
+                    cl["suggested_module"] = m_id
+                    cl["domain"] = dom
+                    cl["entity"] = m_id.split(".")[1] if "." in m_id else m_id
+                    cl["canonical_rel"] = dest_rel
+                    ensure_module_from_classification(root, data, cl, force_active=True)
+                except Exception:
+                    pass
+                return dest_rel
+
+            win_img = _ensure_conv_asset(
+                winner.get("image", ""),
+                mod,
+                str(winner.get("prompt") or sess.get("goal") or ""),
+            )
+            if win_img:
+                winner["image"] = win_img
+
             win_summary = f"[收敛胜出 {winner['score']:.1f}分] {sess.get('goal', '')[:50]} — {winner.get('strengths', '')[:30]}"
+            win_caption = (
+                f"🏆 收敛胜出定稿 ({winner['score']:.1f}/10分 · 第{winner['round']}轮)："
+                f"{sess.get('goal', '')}"
+                + (f" · 亮点：{winner.get('strengths')}" if winner.get("strengths") else "")
+            )
             win_body = (
                 f"**【闭环收敛胜出定稿（第 {winner['round']}/{len(rounds)} 轮 · {winner['score']:.1f} 分）】**\n"
                 f"- **生成目标**：{sess.get('goal')}\n"
@@ -1086,15 +1133,33 @@ def cmd_converge(
                 kind="recipe",
                 summary=win_summary,
                 body=win_body,
-                asset=winner.get("image", ""),
+                asset=win_img,
                 role="approved",
+                caption=win_caption,
+                extra_meta={
+                    "ai_params": {
+                        "prompt": str(winner.get("prompt") or sess.get("goal") or ""),
+                        "score": winner.get("score"),
+                        "round": winner.get("round"),
+                        "dims": winner.get("dims", ""),
+                    }
+                },
             )
             saved_paths.append(str(p_rec.relative_to(root)))
 
             failed = [r for r in rounds if not r.get("passed") and r.get("defects")]
             if failed:
                 worst = min(failed, key=lambda x: x["score"])
+                worst_img = _ensure_conv_asset(
+                    worst.get("image", ""),
+                    mod,
+                    str(worst.get("prompt") or sess.get("goal") or ""),
+                )
                 red_summary = f"[收敛踩坑红线] {sess.get('goal', '')[:30]}：避免「{worst.get('defects', '')[:45]}」"
+                red_caption = (
+                    f"❌ 第{worst['round']}轮收敛打回 ({worst['score']:.1f}分)："
+                    f"{worst.get('defects', '')} → 修正：{worst.get('next_fix', '')}"
+                )
                 defect_bullets = "\n".join(
                     f"- 第 {r['round']} 轮 ({r['score']:.1f}分) 不合理处：{r['defects']} → 修正：{r['next_fix']}"
                     for r in failed
@@ -1109,8 +1174,9 @@ def cmd_converge(
                     kind="style_redline",
                     summary=red_summary,
                     body=red_body,
-                    asset=worst.get("image", ""),
+                    asset=worst_img,
                     role="rejected",
+                    caption=red_caption,
                 )
                 saved_paths.append(str(p_red.relative_to(root)))
 
@@ -1155,6 +1221,12 @@ def cmd_converge(
                 if verbose:
                     print(f"⚠️ autopilot 跳过: {ex}")
 
+        if action == "finish" and apply_memory:
+            try:
+                from pmem_art import refresh_atlas_silent
+                refresh_atlas_silent(root)
+            except Exception:
+                pass
         report_text = "\n".join(md_lines)
         report_file = root / ".memory-art" / "converge" / f"{session_id}_report.md"
         report_file.parent.mkdir(parents=True, exist_ok=True)

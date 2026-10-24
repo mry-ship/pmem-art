@@ -24,7 +24,7 @@ import zlib
 from pathlib import Path
 from typing import Any
 
-VERSION = "0.12.0-art"
+VERSION = "0.13.0-art"
 MEMORY_DIR = ".memory-art"
 
 KIND_META = {
@@ -354,10 +354,168 @@ def load_project(root: Path) -> dict[str, Any]:
         if e["stale"]:
             stale_entries.append({"id": e["id"], "module": e["module"], "summary": e.get("summary"), "reasons": reasons})
 
+    # Enrich each asset with category, human description, prompt, role, and linked entries
+    from datetime import datetime, timezone, timedelta
+    cst = timezone(timedelta(hours=8))
+    default_cat_meta = {
+        "brand":     {"label": "全局风格圣经 (Brand & Style Bible)",   "short": "风格圣经",   "icon": "🎨"},
+        "character": {"label": "角色与立绘绑定 (Character & Rigging)", "short": "角色与立绘", "icon": "🧝‍♀️"},
+        "scene":     {"label": "场景与地块物件 (Scene & Environment)", "short": "场景与原画", "icon": "🏯"},
+        "ui":        {"label": "界面与九宫格图标 (UI & 9-Slice HUD)",  "short": "UI与九宫格", "icon": "💠"},
+        "vfx":       {"label": "特效与序列帧表现 (VFX & Shaders)",     "short": "特效与序列帧", "icon": "✨"},
+        "anim":      {"label": "骨骼与帧动画 (Animation & Spine)",     "short": "骨骼与动画", "icon": "🦴"},
+        "misc":      {"label": "未归类 / 待提升 (Misc)",               "short": "待归类资产", "icon": "📦"},
+    }
+    for ck, cv in default_cat_meta.items():
+        if ck not in categories:
+            categories[ck] = {"label": cv["label"], "icon": cv["icon"], "short": cv["short"]}
+        else:
+            categories[ck].setdefault("short", cv["short"])
+            categories[ck].setdefault("icon", cv["icon"])
+
+    for rel_path, info in assets_info.items():
+        mod_id = info.get("module") or "unassigned"
+        mod_cfg = modules.get(mod_id, {})
+        cat_key = mod_cfg.get("category") or (mod_id.split(".")[0] if "." in mod_id else "")
+        if not cat_key or cat_key == "unassigned":
+            parts = Path(rel_path).parts
+            cat_key = parts[1] if len(parts) > 2 and parts[0] == "assets" else "misc"
+        cat_m = categories.get(cat_key) or default_cat_meta.get(cat_key) or {"label": cat_key, "short": cat_key, "icon": "📦"}
+        info["category"] = cat_key
+        info["category_label"] = cat_m.get("label", cat_key)
+        info["category_short"] = cat_m.get("short") or str(cat_m.get("label", cat_key)).split(" (")[0]
+        info["category_icon"] = cat_m.get("icon", "📦")
+        info["module_title"] = mod_cfg.get("title") or mod_id
+
+        linked = [
+            e for e in entries
+            if any(isinstance(x, dict) and x.get("path") == rel_path for x in (e.get("assets") or []))
+            or any(rel_path in str(anc) for anc in (e.get("anchors") or []))
+        ]
+        info["linked_entry_ids"] = [e.get("id") for e in linked if e.get("id")]
+
+        # Determine effective role, description, and prompt
+        pmeta = info.get("png_meta") or {}
+        role = pmeta.get("pmem_role") or ""
+        best_desc = ""
+        best_prompt = pmeta.get("prompt") or ""
+        score_val = None
+
+        for e in linked:
+            ai_p = e.get("ai_params") if isinstance(e.get("ai_params"), dict) else {}
+            if not best_prompt and ai_p.get("prompt"):
+                best_prompt = str(ai_p.get("prompt"))
+            if score_val is None and ai_p.get("score") is not None:
+                score_val = ai_p.get("score")
+            # Check body for - prompt: ...
+            if not best_prompt and e.get("body"):
+                pm = re.search(r"^-\s*prompt:\s*(.+)$", str(e.get("body")), re.M)
+                if pm:
+                    best_prompt = pm.group(1).strip()
+            for a_item in (e.get("assets") or []):
+                if isinstance(a_item, dict) and a_item.get("path") == rel_path:
+                    if not role and a_item.get("role"):
+                        role = str(a_item.get("role"))
+                    cap = str(a_item.get("caption") or "").strip()
+                    # Replace generic stub captions with rich summary/prompt
+                    if cap.startswith("ingest conf=") or cap in ("✅ 正例（画师确认保留）", "❌ 反例（画师打回）", "参考图"):
+                        if best_prompt:
+                            cap = f"✅ {best_prompt} · 自动归类：{info[category_short]} ({mod_id})"
+                        elif e.get("summary") and not str(e.get("summary")).startswith("自动入库资产 "):
+                            prefix = "✅ 正例定稿：" if role == "approved" else ("❌ 反例警示：" if role == "rejected" else "📌 ")
+                            cap = prefix + str(e.get("summary"))
+                    if cap and not best_desc:
+                        best_desc = cap
+            if not best_desc and e.get("summary") and not str(e.get("summary")).startswith("自动入库资产 "):
+                best_desc = str(e.get("summary"))
+
+        if not best_desc:
+            best_desc = (
+                pmeta.get("reject_reason")
+                or pmeta.get("note")
+                or (f"🪄 {best_prompt[:80]}" if best_prompt else "")
+                or f"{info[category_icon]} {info[module_title]} · {Path(rel_path).name}"
+            )
+        if not role:
+            role = "approved"
+        info["role"] = role
+        info["description"] = best_desc
+        info["prompt"] = best_prompt
+        if score_val is not None:
+            info["score"] = score_val
+
+        abs_p = root / rel_path
+        if abs_p.is_file():
+            info["updated_at"] = datetime.fromtimestamp(abs_p.stat().st_mtime, tz=cst).strftime("%Y-%m-%d %H:%M")
+        else:
+            info["updated_at"] = ""
+
+    # Category summary for Gallery overview
+    category_summary: dict[str, dict[str, Any]] = {}
+    for ck in list(categories.keys()):
+        cm = categories[ck]
+        cat_assets = [a for a in assets_info.values() if a.get("category") == ck]
+        cat_mods = [m for m, mc in modules.items() if mc.get("category") == ck]
+        if not cat_assets and not cat_mods and ck in ("anim", "misc"):
+            continue
+        category_summary[ck] = {
+            "key": ck,
+            "label": cm.get("label", ck),
+            "short": cm.get("short") or str(cm.get("label", ck)).split(" (")[0],
+            "icon": cm.get("icon", "📦"),
+            "total_assets": len(cat_assets),
+            "approved_count": sum(1 for a in cat_assets if a.get("role") in ("anchor", "approved")),
+            "rejected_count": sum(1 for a in cat_assets if a.get("role") in ("rejected", "draft_violation")),
+            "module_count": len(cat_mods),
+        }
+
+    # Load Taste, Knowledge Cards & Reflections for Atlas display
+    profile_data: dict[str, Any] = {"taste": {}, "knowledge_cards": [], "reflections": [], "converge_latest": None}
+    taste_f = mem_dir / "_profile" / "taste.json"
+    if taste_f.is_file():
+        try:
+            profile_data["taste"] = json.loads(taste_f.read_text(encoding="utf-8"))
+        except Exception:
+            pass
+    know_f = mem_dir / "_knowledge" / "index.json"
+    if know_f.is_file():
+        try:
+            kd = json.loads(know_f.read_text(encoding="utf-8"))
+            profile_data["knowledge_cards"] = list((kd.get("cards") or {}).values())
+        except Exception:
+            pass
+    refl_d = mem_dir / "_reflections"
+    if refl_d.is_dir():
+        for rf in sorted(refl_d.glob("*.json"), key=lambda x: x.name, reverse=True)[:10]:
+            try:
+                profile_data["reflections"].append(json.loads(rf.read_text(encoding="utf-8")))
+            except Exception:
+                pass
+    conv_f = mem_dir / "converge" / "latest.json"
+    if conv_f.is_file():
+        try:
+            profile_data["converge_latest"] = json.loads(conv_f.read_text(encoding="utf-8"))
+        except Exception:
+            pass
+
+    built_at = datetime.now(cst).strftime("%Y-%m-%d %H:%M:%S UTC+8")
+    sig_src = json.dumps({
+        "a": [(k, v.get("sha256_16"), v.get("description"), v.get("role"), v.get("module")) for k, v in sorted(assets_info.items())],
+        "e": [(e.get("id"), e.get("summary"), e.get("status"), e.get("stale")) for e in entries],
+        "m": list(modules.keys()),
+        "t": profile_data["taste"].get("updated_at", ""),
+        "k": len(profile_data["knowledge_cards"]),
+        "r": len(profile_data["reflections"]),
+    }, ensure_ascii=False, sort_keys=True)
+    build_id = hashlib.sha256(sig_src.encode("utf-8")).hexdigest()[:16]
+
     return {
         "root": str(root),
+        "built_at": built_at,
+        "build_id": build_id,
         "config": config,
         "categories": categories,
+        "category_summary": category_summary,
         "modules": modules,
         "synonyms": synonyms,
         "entries": entries,
@@ -366,7 +524,20 @@ def load_project(root: Path) -> dict[str, Any]:
         "assets": assets_info,
         "qa_issues": qa_issues,
         "stale_entries": stale_entries,
+        "profile": profile_data,
     }
+
+
+def refresh_atlas_silent(root: Path, out_name: str = "art-atlas.html") -> Path | None:
+    """Automatically regenerate art-atlas.html and .memory-art/atlas_ping.js after any write op."""
+    try:
+        from build_atlas import generate_atlas_html
+        fresh_data = load_project(root)
+        out_file = root / out_name
+        generate_atlas_html(fresh_data, out_file)
+        return out_file
+    except Exception:
+        return None
 
 def cmd_list(data: dict[str, Any]) -> int:
     print(f"🎨 {data['config'].get('project', {}).get('name', 'pmem-art')} · 美术模块与资产总览\n")
@@ -825,5 +996,23 @@ def main() -> int:
     parser.print_help()
     return 0
 
+def _cli_entry() -> int:
+    rc = main()
+    try:
+        if len(sys.argv) > 1 and sys.argv[1] in (
+            "init", "bootstrap", "sync", "accept", "place",
+            "ingest", "classify-watch", "feedback", "note",
+            "converge", "improve", "taste", "learn", "hook",
+        ):
+            p = argparse.ArgumentParser(add_help=False)
+            p.add_argument("--root", default=".")
+            known, _ = p.parse_known_args()
+            root_p = Path(known.root).resolve()
+            if (root_p / MEMORY_DIR).is_dir():
+                refresh_atlas_silent(root_p)
+    except Exception:
+        pass
+    return rc
+
 if __name__ == "__main__":
-    raise SystemExit(main())
+    raise SystemExit(_cli_entry())

@@ -235,14 +235,15 @@ modules:
       max_size_kb: 1024
     status: active
   vfx.Nova:
-    title: Nova (vfx)
+    title: 战斗特效·新星刀光序列帧 (Nova)
     category: vfx
     status: active
-    description: 由 classify/ingest 自动扩展 · confidence=0.92 · reason=new_module_from_signals
+    description: 战斗刀光 序列帧 VFX · 自动归类特效模块 (1024x256 横排序列帧 · RGBA 透明通道)
     paths:
       - "assets/vfx/nova/**"
     aliases:
       - Nova
+      - 新星刀光
     entities: []
     palette: []
     specs:
@@ -250,18 +251,3 @@ modules:
       alpha_required: true
       safe_margin_px: 16
       max_size_kb: 1024
-  misc.Random:
-    title: Random (misc)
-    category: misc
-    status: candidate
-    description: 由 classify/ingest 自动扩展 · confidence=0.4 · reason=unknown_low_signal
-    paths:
-      - "assets/misc/random/**"
-    aliases:
-      - Random
-    entities: []
-    palette: []
-    specs:
-      resolution: 640x480
-      alpha_required: false
-      max_size_kb: 2048

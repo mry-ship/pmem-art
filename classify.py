@@ -509,14 +509,25 @@ def ensure_module_from_classification(
     can = classification.get("canonical_rel") or f"assets/{domain}/**"
     folder_glob = str(Path(can).parent).replace("\\", "/") + "/**"
 
+    dom_cn_map = {
+        "character": "角色与立绘",
+        "scene": "场景与原画",
+        "ui": "界面与九宫格",
+        "vfx": "特效与序列帧",
+        "anim": "骨骼与动画",
+        "brand": "风格圣经",
+        "misc": "待归类资产",
+    }
+    dom_cn = dom_cn_map.get(domain, domain)
+    prompt_hint = (classification.get("prompt") or "").strip()
     modules[mid] = {
-        "title": f"{classification.get('entity')} ({domain})"
-        + (f" · {classification['style_fork']}" if classification.get("style_fork") else ""),
+        "title": f"{dom_cn}·{classification.get('entity')}"
+        + (f" ({classification['style_fork']})" if classification.get("style_fork") else ""),
         "category": domain,
         "status": status,
         "description": (
-            f"由 classify/ingest 自动扩展 · confidence={classification['confidence']} · "
-            f"reason={classification.get('reason')}"
+            (f"{prompt_hint[:80]} · " if prompt_hint else "")
+            + f"自动归类至 {dom_cn} ({mid}) · 置信度 {classification['confidence']}"
         ),
         "paths": [folder_glob],
         "aliases": [classification.get("entity")],
@@ -597,7 +608,25 @@ def seed_asset_record_stub(root: Path, module_id: str, rel_path: str, classifica
     path = entries / f"{eid}.md"
     from pmem_art import inspect_png
     info = inspect_png(root / rel_path) if (root / rel_path).exists() else {}
-    fm = {
+    dom_cn_map = {
+        "character": "角色与立绘",
+        "scene": "场景与原画",
+        "ui": "UI与九宫格",
+        "vfx": "特效与序列帧",
+        "anim": "骨骼与动画",
+        "brand": "风格圣经",
+        "misc": "待归类资产",
+    }
+    dom = str(classification.get("domain") or (module_id.split(".")[0] if "." in module_id else "misc"))
+    dom_cn = dom_cn_map.get(dom, dom)
+    prompt_txt = (classification.get("prompt") or "").strip()
+    if prompt_txt:
+        summary_str = f"【{dom_cn}】{prompt_txt[:72]}（自动归档至 {module_id}）"
+        caption_str = f"✅ {prompt_txt} · 分类：{dom_cn} ({module_id}) · 置信度 {classification.get('confidence')}"
+    else:
+        summary_str = f"【{dom_cn}】入库资产 {Path(rel_path).name}（自动归档至 {module_id}）"
+        caption_str = f"✅ 自动识别为{dom_cn}资产 ({module_id}) · {info.get('resolution', '?')} · 置信度 {classification.get('confidence')}"
+    fm: dict[str, Any] = {
         "id": eid,
         "module": module_id,
         "kind": "asset_record",
@@ -606,16 +635,18 @@ def seed_asset_record_stub(root: Path, module_id: str, rel_path: str, classifica
         "status": "active",
         "author": "pmem-art-ingest",
         "note_date": datetime.now().strftime("%Y-%m-%d"),
-        "summary": f"自动入库资产 {rel_path}",
-        "assets": [
-            {
-                "path": rel_path,
-                "role": "approved",
-                "sha256_16": info.get("sha256_16"),
-                "caption": f"ingest conf={classification.get('confidence')} domain={classification.get('domain')}",
-            }
-        ],
+        "summary": summary_str,
     }
+    if prompt_txt:
+        fm["ai_params"] = {"prompt": prompt_txt}
+    fm["assets"] = [
+        {
+            "path": rel_path,
+            "role": "approved",
+            "sha256_16": info.get("sha256_16"),
+            "caption": caption_str,
+        }
+    ]
     # simple front matter
     lines = ["---"]
     for k, v in fm.items():
@@ -624,6 +655,8 @@ def seed_asset_record_stub(root: Path, module_id: str, rel_path: str, classifica
             for a in v:
                 parts = ", ".join(f"{ik}: {json.dumps(iv, ensure_ascii=False) if isinstance(iv, str) else iv}" for ik, iv in a.items() if iv is not None)
                 lines.append(f"  - {{ {parts} }}")
+        elif isinstance(v, (dict, list)):
+            lines.append(f"{k}: {json.dumps(v, ensure_ascii=False)}")
         else:
             lines.append(f"{k}: {json.dumps(v, ensure_ascii=False) if isinstance(v, str) else v}")
     lines.append("---")
@@ -735,7 +768,11 @@ def cmd_ingest(
         plan["asset_record"] = str(record_path.relative_to(root))
 
     plan["module_status"] = status
-    plan["message"] = f"已入库 → 模块 {mid} ({status}) · {dest_rel}"
+    from pmem_art import refresh_atlas_silent
+    atlas_out = refresh_atlas_silent(root)
+    if atlas_out:
+        plan["atlas_refreshed"] = str(atlas_out.relative_to(root))
+    plan["message"] = f"已入库 → 模块 {mid} ({status}) · {dest_rel}（已自动同步至 art-atlas.html）"
     print(json.dumps(plan, ensure_ascii=False, indent=2))
     return 0
 

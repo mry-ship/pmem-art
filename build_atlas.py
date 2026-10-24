@@ -364,7 +364,48 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     font-weight: 700; padding: 8px 16px; border-radius: 8px; z-index: 200;
     box-shadow: 0 6px 20px rgba(0,0,0,0.4); display: none;
   }
+
+  /* === v0.13 Auto-Refresh Bar, Category Filter Cards & Self-Improve Tab === */
+  .live-refresh-bar { display: flex; align-items: center; gap: 8px; background: rgba(15,23,42,0.92); border: 1px solid rgba(45,212,191,0.45); padding: 4px 10px; border-radius: 999px; }
+  .live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--success); box-shadow: 0 0 8px var(--success); animation: livePulse 1.8s infinite ease-in-out; }
+  .live-dot.paused { background: var(--gold); box-shadow: none; animation: none; }
+  @keyframes livePulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.35); opacity: 0.55; } }
+  .live-btn { background: rgba(16,185,129,0.16); border: 1px solid rgba(45,212,191,0.5); color: #6ee7b7; padding: 3px 10px; border-radius: 999px; font-size: 11.5px; font-weight: 700; cursor: pointer; transition: 0.15s; }
+  .live-btn.paused { background: rgba(245,158,11,0.16); border-color: rgba(245,158,11,0.5); color: #fcd34d; }
+  .live-btn:hover { filter: brightness(1.15); }
+  .live-sync-time { font-size: 11px; color: var(--text-muted); font-family: ui-monospace, monospace; }
+
+  .cat-filter-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-top: 8px; }
+  .cat-pill-card { background: rgba(9,13,22,0.82); border: 1px solid var(--border); border-radius: 10px; padding: 9px 12px; cursor: pointer; transition: all 0.15s; display: flex; flex-direction: column; gap: 4px; }
+  .cat-pill-card:hover { border-color: var(--gold); transform: translateY(-1px); }
+  .cat-pill-card.active { border-color: var(--teal); background: rgba(45,212,191,0.13); box-shadow: 0 0 0 1px rgba(45,212,191,0.35); }
+  .cat-pill-top { display: flex; align-items: center; justify-content: space-between; font-size: 12.5px; font-weight: 700; color: var(--text-main); }
+  .cat-pill-sub { font-size: 11px; color: var(--text-muted); display: flex; gap: 8px; align-items: center; }
+
+  .autopilot-strip { margin-top: 6px; background: linear-gradient(90deg, rgba(45,212,191,0.12), rgba(245,158,11,0.10), rgba(168,85,247,0.12)); border: 1px solid rgba(45,212,191,0.4); border-radius: 10px; padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .autopilot-tags { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; font-size: 12px; }
+  .autopilot-chip { background: rgba(9,13,22,0.85); border: 1px solid var(--border); padding: 3px 9px; border-radius: 999px; font-size: 11px; color: var(--text-main); }
+
+  .asset-desc-box { margin-top: 4px; padding: 7px 9px; background: rgba(9,13,22,0.75); border-left: 3px solid var(--teal); border-radius: 6px; font-size: 12px; color: var(--text-main); line-height: 1.5; }
+  .asset-desc-box.rejected { border-left-color: var(--danger); background: rgba(244,63,94,0.09); }
+  .asset-prompt-line { margin-top: 4px; font-size: 11px; color: var(--text-muted); font-family: ui-monospace, monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background: rgba(9,13,22,0.78); padding: 4px 8px; border-radius: 5px; border: 1px dashed var(--border); cursor: pointer; }
+  .asset-prompt-line:hover { border-color: var(--teal); color: var(--teal); }
+  .cat-top-badge { position: absolute; top: 8px; right: 8px; padding: 2px 8px; border-radius: 5px; font-size: 11px; font-weight: 700; background: rgba(9,13,22,0.86); color: var(--teal); border: 1px solid rgba(45,212,191,0.4); backdrop-filter: blur(6px); }
+
+  .improve-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 16px; margin-bottom: 18px; }
+  .improve-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+  .improve-card h3 { margin: 0 0 10px; font-size: 14.5px; font-weight: 700; display: flex; align-items: center; justify-content: space-between; color: var(--gold); }
+  .taste-pill-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 5px; }
+  .taste-pill { padding: 3px 9px; border-radius: 999px; font-size: 11.5px; background: var(--teal-bg); border: 1px solid var(--border-strong); color: var(--teal); }
+  .taste-pill.ban { background: var(--danger-bg); border-color: rgba(244,63,94,0.4); color: #fda4af; }
+  .score-step-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+  .score-step { padding: 4px 10px; border-radius: 7px; font-size: 11.5px; font-family: ui-monospace, monospace; background: #090d16; border: 1px solid var(--border); }
+  .score-step.pass { border-color: var(--success); background: var(--success-bg); color: #6ee7b7; font-weight: 700; }
+  .kcard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 12px; margin-top: 10px; }
+  .kcard { background: #090d16; border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
+  .kcard-title { font-size: 13px; font-weight: 700; color: var(--teal); margin-bottom: 4px; display: flex; justify-content: space-between; gap: 6px; }
 </style>
+<meta name="pmem-build-id" content="__BUILD_ID__">
 </head>
 <body>
 <div class="app-shell">
@@ -376,15 +417,24 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
         <p id="projStyle">面向人类美术师与 AI 美术 Agent 的模块视觉锚点、防翻车红线、九宫格/Alpha 质检与生图配方库</p>
       </div>
     </div>
-    <div class="kpi-strip" id="kpiStrip"></div>
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+      <div class="kpi-strip" id="kpiStrip"></div>
+      <div class="live-refresh-bar" id="liveRefreshBar">
+        <span class="live-dot" id="liveDot"></span>
+        <button class="live-btn" id="btnToggleAutoRefresh" onclick="toggleAutoRefresh()" title="开启后每 3 秒自动检测新入库/新生成的图片并无感刷新">🔄 自动刷新: 开启 (3s)</button>
+        <button class="btn-copy" style="padding:3px 9px;font-size:11px;" onclick="manualRefreshNow()" title="立即重新加载最新数据">⚡ 立即刷新</button>
+        <span class="live-sync-time" id="liveSyncTime"></span>
+      </div>
+    </div>
   </header>
 
   <div class="toolbar">
     <div class="nav-tabs" id="navTabs">
-      <button class="tab-btn active" data-tab="gallery">🖼️ 模块画廊总览 <span class="count-badge" id="cntGallery">0</span></button>
+      <button class="tab-btn active" data-tab="gallery">🖼️ 各类型资产画廊 <span class="count-badge" id="cntGallery">0</span></button>
+      <button class="tab-btn" data-tab="improve">🧠 自我迭代与知识图鉴 <span class="count-badge" id="cntImprove">0</span></button>
       <button class="tab-btn" data-tab="redlines">🚫 正反例红线对比 (Do vs Don't) <span class="count-badge" id="cntRedlines">0</span></button>
       <button class="tab-btn" data-tab="recipes">🧪 AI 生图配方工作台 <span class="count-badge" id="cntRecipes">0</span></button>
-      <button class="tab-btn" data-tab="memories">🧠 视觉记忆与演化图谱 <span class="count-badge" id="cntMemories">0</span></button>
+      <button class="tab-btn" data-tab="memories">🧭 视觉记忆与演化图谱 <span class="count-badge" id="cntMemories">0</span></button>
       <button class="tab-btn" data-tab="qa">🛡️ 管线规格与自动质检 <span class="count-badge" id="cntQa">0</span></button>
     </div>
 
@@ -448,11 +498,50 @@ const DATA = __ATLAS_JSON__;
 let state = {
   module: "ALL",
   tab: "gallery",
+  categoryFilter: "ALL",
   search: "",
   bgClass: "stage-checker",
   showGuides: false,
+  autoRefresh: true,
   lbScale: 1.0
 };
+
+function saveAtlasState() {
+  try {
+    const stage = document.getElementById("mainStage");
+    sessionStorage.setItem("pmem_atlas_state_v13", JSON.stringify({
+      module: state.module,
+      tab: state.tab,
+      categoryFilter: state.categoryFilter,
+      search: state.search,
+      bgClass: state.bgClass,
+      showGuides: state.showGuides,
+      autoRefresh: state.autoRefresh,
+      scrollTop: stage ? stage.scrollTop : 0
+    }));
+  } catch (e) {}
+}
+
+function restoreAtlasState() {
+  try {
+    const raw = sessionStorage.getItem("pmem_atlas_state_v13");
+    if (!raw) return;
+    const saved = JSON.parse(raw);
+    if (saved && typeof saved === "object") {
+      if (saved.module) state.module = saved.module;
+      if (saved.tab) state.tab = saved.tab;
+      if (saved.categoryFilter) state.categoryFilter = saved.categoryFilter;
+      if (typeof saved.search === "string") state.search = saved.search;
+      if (saved.bgClass) state.bgClass = saved.bgClass;
+      if (typeof saved.showGuides === "boolean") state.showGuides = saved.showGuides;
+      if (typeof saved.autoRefresh === "boolean") state.autoRefresh = saved.autoRefresh;
+      setTimeout(() => {
+        const stage = document.getElementById("mainStage");
+        if (stage && saved.scrollTop) stage.scrollTop = saved.scrollTop;
+      }, 30);
+    }
+  } catch (e) {}
+}
 
 function showToast(msg) {
   const t = document.getElementById("toast");
@@ -496,6 +585,9 @@ function getFilteredAssets() {
   return Object.values(DATA.assets).filter(a => {
     const modMatch = state.module === "ALL" || mods.has(a.module);
     if (!modMatch) return false;
+    if (state.module === "ALL" && state.categoryFilter && state.categoryFilter !== "ALL") {
+      if ((a.category || "other") !== state.categoryFilter) return false;
+    }
     if (!q) return true;
     return JSON.stringify(a).toLowerCase().includes(q);
   });
@@ -511,20 +603,33 @@ function renderHeaderAndSidebar() {
   const redlineCount = DATA.entries.filter(e => e.kind === "style_redline").length;
   const qaWarnCount = DATA.qa_issues.length + DATA.stale_entries.length;
 
+  const prof = DATA.profile || {};
+  const kCount = (prof.knowledge_cards || []).length;
+  const rCount = (prof.reflections || []).length;
   document.getElementById("kpiStrip").innerHTML = `
-    <div class="kpi-pill">📦 视觉模块 <b>${Object.keys(DATA.modules).length}</b></div>
-    <div class="kpi-pill">🖼️ 纳管图片资产 <b>${totalAssets}</b></div>
-    <div class="kpi-pill">🧠 美术记忆条目 <b>${totalMemories}</b></div>
-    <div class="kpi-pill">🚫 主美红线 <b>${redlineCount}</b></div>
+    <div class="kpi-pill" style="cursor:pointer;" onclick="state.module='ALL';state.categoryFilter='ALL';switchTab('gallery')">📦 视觉模块 <b>${Object.keys(DATA.modules).length}</b></div>
+    <div class="kpi-pill" style="cursor:pointer;" onclick="switchTab('gallery')">🖼️ 各类型图片资产 <b>${totalAssets}</b></div>
+    <div class="kpi-pill" style="cursor:pointer;" onclick="switchTab('memories')">🧭 美术记忆条目 <b>${totalMemories}</b></div>
+    <div class="kpi-pill" style="cursor:pointer;border-color:rgba(45,212,191,0.5);" onclick="switchTab('improve')" title="点击查看自我迭代口味档案、收敛记录与知识图鉴">🧠 自我迭代与知识卡 <b style="color:var(--teal)">${kCount}卡 / ${rCount}轮</b></div>
+    <div class="kpi-pill" style="cursor:pointer;" onclick="switchTab('redlines')">🚫 主美红线 <b>${redlineCount}</b></div>
     <div class="kpi-pill ${qaWarnCount ? 'warn' : ''}" style="cursor:pointer;" onclick="switchTab('qa')">
       🛡️ 管线质检/过期告警 <b>${qaWarnCount}</b>
     </div>
   `;
+  const syncEl = document.getElementById("liveSyncTime");
+  if (syncEl) {
+    const bt = (DATA.built_at || "").replace(" UTC+8", "");
+    syncEl.textContent = bt ? `同步: ${bt.slice(11)}` : "";
+    syncEl.title = `最后构建: ${DATA.built_at || ""} · Build ID: ${DATA.build_id || ""}`;
+  }
+  updateAutoRefreshUI();
 
   // Update tab counts
   const fAssets = getFilteredAssets();
   const fEntries = getFilteredEntries();
   document.getElementById("cntGallery").textContent = fAssets.length;
+  const cntImp = document.getElementById("cntImprove");
+  if (cntImp) cntImp.textContent = kCount + rCount;
   document.getElementById("cntRedlines").textContent = fEntries.filter(e => e.kind === "style_redline" || e.kind === "visual_correction").length;
   document.getElementById("cntRecipes").textContent = fEntries.filter(e => e.kind === "recipe" || e.ai_params).length;
   document.getElementById("cntMemories").textContent = fEntries.length;
@@ -570,17 +675,63 @@ function renderHeaderAndSidebar() {
   sb.innerHTML = htmlStr;
 }
 
+window.selectCategoryFilter = function(catKey) {
+  state.categoryFilter = catKey;
+  if (state.tab !== "gallery") {
+    state.tab = "gallery";
+    document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.tab === "gallery"));
+  }
+  saveAtlasState();
+  renderStage();
+};
+
 function renderModuleBanner() {
   if (state.module === "ALL") {
     const brandPalette = DATA.modules["brand.WorldStyle"]?.palette || [];
+    const catSum = DATA.category_summary || [];
+    const prof = DATA.profile || {};
+    const taste = prof.taste || {};
+    const kCards = prof.knowledge_cards || [];
+    const refls = prof.reflections || [];
+    const totalAssets = Object.keys(DATA.assets).length;
+    const catCardsHtml = [
+      `<div class="cat-pill-card ${state.categoryFilter === 'ALL' ? 'active' : ''}" onclick="selectCategoryFilter('ALL')">
+         <div class="cat-pill-top"><span>📂 全部图像类型</span><span style="color:var(--teal)">${totalAssets} 张</span></div>
+         <div class="cat-pill-sub"><span>5 大美术域自动归档带描述</span></div>
+       </div>`
+    ].concat(catSum.filter(c => c.total > 0 || ["brand","character","scene","ui","vfx"].includes(c.category)).map(c => `
+      <div class="cat-pill-card ${state.categoryFilter === c.category ? 'active' : ''}" onclick="selectCategoryFilter('${esc(c.category)}')">
+        <div class="cat-pill-top"><span>${c.icon} ${esc(c.short)}</span><span>${c.total} 张</span></div>
+        <div class="cat-pill-sub">
+          <span style="color:#6ee7b7">✅ 正例 ${c.approved}</span>
+          ${c.rejected > 0 ? `<span style="color:#fda4af">❌ 反例 ${c.rejected}</span>` : `<span>模块 ${(c.modules||[]).length}</span>`}
+        </div>
+      </div>
+    `)).join("");
+
     return `
       <div class="mod-banner">
         <div class="mod-banner-top">
           <div>
-            <h2>🎨 全项目视觉总览 · ${esc(DATA.config?.project?.name || '')}</h2>
-            <p>${esc(DATA.config?.project?.art_style || '')} —— 点击左侧模块树可下钻查看特定角色、场景、UI 九宫格或 VFX 序列帧的图片墙、正反例红线与生图配方。</p>
+            <h2>🎨 全项目各类型图片与自我进化总览 · ${esc(DATA.config?.project?.name || '')} <span class="badge teal" style="font-size:11px;">自动分类带描述 + 3s自动刷新</span></h2>
+            <p>${esc(DATA.config?.project?.art_style || '')} —— 任何通过 <code>ingest -p "描述" --apply</code>、<code>feedback</code> 或 <code>/pmem-draw · /pmem-ui · /pmem-concept · /pmem-icon</code> 产出的新图片，均自动按类型入库并附带描述与 Prompt 实时显示在下方。</p>
           </div>
-          <button class="btn-copy" onclick="copyAgentContext('brand.WorldStyle')">🤖 复制全局 AI 美术记忆 Prompt</button>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button class="btn-copy" onclick="switchTab('improve')">🧠 打开自我迭代与知识图鉴</button>
+            <button class="btn-copy" onclick="copyAgentContext('brand.WorldStyle')">🤖 复制全局 AI 美术记忆 Prompt</button>
+          </div>
+        </div>
+        <div class="cat-filter-strip">${catCardsHtml}</div>
+        <div class="autopilot-strip">
+          <div class="autopilot-tags">
+            <strong style="color:var(--gold)">🧠 Whisper Autopilot 静默自我迭代：</strong>
+            <span class="autopilot-chip">☀️ 光影偏好：${esc((taste.preferred_lighting||["侧逆光"])[0])}</span>
+            <span class="autopilot-chip">🎨 色温定律：${esc((taste.preferred_color_temperature||["青瓷+墨蓝+鎏金"])[0])}</span>
+            <span class="autopilot-chip">🚫 已免疫红线：${(taste.banned_habits||[]).length} 项</span>
+            <span class="autopilot-chip">📚 知识广度卡：${kCards.length} 张</span>
+            <span class="autopilot-chip">🏆 8轮≥9.5分收敛记录：${refls.length} 场</span>
+          </div>
+          <button class="btn-copy" onclick="switchTab('improve')">查看口味档案与收敛评分曲线 →</button>
         </div>
         <div class="palette-bar">
           <span style="font-size:11.5px;color:var(--text-muted);margin-right:4px;">全局基准色板 (点击复制 HEX):</span>
@@ -641,20 +792,20 @@ function renderGalleryTab() {
     return `<div class="entry-card">当前筛选条件下没有匹配的图片资产。</div>`;
   }
   const cards = assets.map(a => {
-    const role = a.png_meta?.pmem_role || (a.qa_passed ? "approved" : "draft_violation");
+    const role = a.role || a.png_meta?.pmem_role || (a.qa_passed ? "approved" : "draft_violation");
     const roleLabels = {
       anchor: "⚓ 视觉锚点基准",
       approved: "✅ 已验收定稿",
       rejected: "❌ 废案警示 (Don't)",
       draft_violation: "⚠️ 质检待修复草稿"
     };
-    // Find caption from entries referencing this asset
-    let caption = a.png_meta?.reject_reason || a.png_meta?.note || "";
     const linkedEntries = DATA.entries.filter(e => (e.assets || []).some(x => x.path === a.path));
-    if (!caption && linkedEntries.length) {
-      const found = (linkedEntries[0].assets || []).find(x => x.path === a.path);
-      caption = found?.caption || linkedEntries[0].summary || "";
-    }
+    const desc = a.description || a.png_meta?.reject_reason || a.png_meta?.note || "已自动归档纳管";
+    const catIcon = a.category_icon || "🖼️";
+    const catShort = a.category_short || a.module;
+    const promptLine = a.prompt
+      ? `<div class="asset-prompt-line" onclick="event.stopPropagation();copyText(${JSON.stringify(a.prompt)}, '图片 Prompt')" title="点击复制 Prompt: ${esc(a.prompt)}">🪄 Prompt: ${esc(a.prompt)}</div>`
+      : "";
     return `
       <div class="asset-card role-${esc(role)} ${a.qa_passed ? '' : 'qa-fail'}">
         <div class="thumb-wrap ${state.bgClass} ${state.showGuides ? 'show-guides' : ''}" onclick="openLightbox('${esc(a.path)}')">
@@ -664,14 +815,19 @@ function renderGalleryTab() {
             <div class="slice-line h1"></div><div class="slice-line h2"></div>
           </div>
           <span class="role-tag ${esc(role)}">${roleLabels[role] || esc(role)}</span>
+          <span class="cat-top-badge">${catIcon} ${esc(catShort)}</span>
           <span class="spec-tag">${esc(a.resolution)} · ${esc(a.mode)} · ${a.size_kb}KB</span>
         </div>
         <div class="asset-body">
-          <div class="asset-path">${esc(a.path)}</div>
-          <div class="asset-caption">${esc(caption || '点击查看原图、色板与绑定记忆')}</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;">
+            <div class="asset-path">${esc(a.path)}</div>
+            <span class="badge teal" style="font-size:10px;flex-shrink:0;">${esc(a.module_title || a.module)}</span>
+          </div>
+          <div class="asset-desc-box ${role === 'rejected' ? 'rejected' : ''}">${esc(desc)}</div>
+          ${promptLine}
           ${!a.qa_passed ? `<div style="color:#fcd34d;font-size:11.5px;background:var(--gold-bg);padding:4px 8px;border-radius:5px;">⚠️ ${esc(a.qa_issues.join('；'))}</div>` : ''}
           <div class="asset-meta-row">
-            <span>所属模块: <b>${esc(a.module)}</b></span>
+            <span>分类模块: <b>${esc(a.module)}</b></span>
             <span>关联记忆: <b>${linkedEntries.length} 条</b></span>
           </div>
         </div>
@@ -679,6 +835,105 @@ function renderGalleryTab() {
     `;
   }).join("");
   return `<div class="gallery-grid">${cards}</div>`;
+}
+
+function renderImproveTab() {
+  const prof = DATA.profile || {};
+  const taste = prof.taste || {};
+  const kCards = prof.knowledge_cards || [];
+  const refls = prof.reflections || [];
+  const sig = taste.signal_counts || {};
+
+  const lightingPills = (taste.preferred_lighting || []).map(x => `<span class="taste-pill">☀️ ${esc(x)}</span>`).join("") || `<span style="color:var(--text-muted)">暂未捕获</span>`;
+  const compPills = (taste.preferred_composition || []).map(x => `<span class="taste-pill">📐 ${esc(x)}</span>`).join("") || `<span style="color:var(--text-muted)">暂未捕获</span>`;
+  const tempPills = (taste.preferred_color_temperature || []).map(x => `<span class="taste-pill">🎨 ${esc(x)}</span>`).join("") || `<span style="color:var(--text-muted)">暂未捕获</span>`;
+  const linePills = (taste.preferred_line_weight || []).map(x => `<span class="taste-pill">✒️ ${esc(x)}</span>`).join("") || `<span style="color:var(--text-muted)">暂未捕获</span>`;
+  const banPills = (taste.banned_habits || []).map(x => `<span class="taste-pill ban">🚫 ${esc(x)}</span>`).join("") || `<span style="color:var(--text-muted)">暂无</span>`;
+
+  const reflHtml = refls.map(r => {
+    const scoresHtml = (r.scores || []).map(s => `
+      <span class="score-step ${s.passed ? 'pass' : ''}">第${s.round}轮: ${Number(s.score).toFixed(1)}分 ${s.passed ? '🏆 达标' : '→'}</span>
+    `).join("");
+    const fixesHtml = (r.what_fixed || []).map(f => `<li style="margin-left:16px;margin-top:3px;font-size:12px;color:var(--text-main);">${esc(f)}</li>`).join("");
+    return `
+      <div class="kcard" style="margin-bottom:10px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">
+          <strong style="color:var(--gold);font-size:13.5px;">🎯 ${esc(r.goal || r.session_id)}</strong>
+          <span class="badge success">${esc(r.outcome || "")}</span>
+        </div>
+        <div style="font-size:11.5px;color:var(--text-muted);margin-top:4px;font-family:ui-monospace,monospace;">
+          模块: ${esc(r.module)} · 模式: ${esc(r.converge_mode)} · 合格线: ≥${r.threshold}分 (最多${r.max_rounds}轮) · 胜出图: ${esc(r.winner_image || "")}
+        </div>
+        <div class="score-step-row">${scoresHtml}</div>
+        ${r.strengths ? `<div style="margin-top:8px;font-size:12px;color:#6ee7b7;">✨ <b>保留亮点：</b>${esc(r.strengths)}</div>` : ""}
+        ${fixesHtml ? `<div style="margin-top:6px;font-size:12px;color:#93c5fd;">🔧 <b>自动修正轨迹：</b><ul style="margin:4px 0 0;padding:0;">${fixesHtml}</ul></div>` : ""}
+      </div>
+    `;
+  }).join("") || `<div class="entry-card">暂无收敛复盘记录。</div>`;
+
+  const kCardsHtml = kCards.map(c => `
+    <div class="kcard">
+      <div class="kcard-title">
+        <span>📘 ${esc(c.title)}</span>
+        <span style="font-size:10.5px;color:var(--text-muted);font-family:ui-monospace,monospace;">${esc((c.tags || []).join(" · "))}</span>
+      </div>
+      <div style="font-size:12px;color:var(--text-main);line-height:1.55;margin-top:4px;">${esc(c.body)}</div>
+      <div style="font-size:10.5px;color:var(--text-dim);margin-top:6px;font-family:ui-monospace,monospace;">ID: ${esc(c.id)} · 来源: ${esc(c.source || "seed")}</div>
+    </div>
+  `).join("");
+
+  return `
+    <div class="improve-grid">
+      <div class="improve-card" style="margin-bottom:0;">
+        <h3><span>🎨 个人审美口味档案 (Personal Taste Profile)</span><span style="font-size:11px;color:var(--text-muted);font-family:ui-monospace,monospace;">.memory-art/_profile/taste.json</span></h3>
+        <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;">
+          系统在每次 <code>feedback</code>、<code>converge</code> 与自然语言对话中静默提取你的审美偏好，并在下次生图 Warm-Start 时自动注入：
+        </div>
+        <div style="margin-bottom:8px;"><strong style="font-size:12px;">☀️ 偏爱光影：</strong><div class="taste-pill-list">${lightingPills}</div></div>
+        <div style="margin-bottom:8px;"><strong style="font-size:12px;">📐 偏爱构图与规格：</strong><div class="taste-pill-list">${compPills}</div></div>
+        <div style="margin-bottom:8px;"><strong style="font-size:12px;">🎨 偏爱色温与色板：</strong><div class="taste-pill-list">${tempPills}</div></div>
+        <div style="margin-bottom:8px;"><strong style="font-size:12px;">✒️ 偏爱线稿与笔触：</strong><div class="taste-pill-list">${linePills}</div></div>
+        <div style="margin-bottom:10px;"><strong style="font-size:12px;color:#fda4af;">🚫 严禁踩坑习惯 (自动注入 Negative)：</strong><div class="taste-pill-list">${banPills}</div></div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;padding-top:8px;border-top:1px solid var(--border);font-size:11.5px;color:var(--text-muted);">
+          <span>累计保留正例: <b style="color:var(--teal)">${sig.keeps || 0}</b></span>
+          <span>累计打回红线: <b style="color:#fda4af">${sig.rejects || 0}</b></span>
+          <span>风格修正信号: <b style="color:var(--gold)">${sig.style_fixes || 0}</b></span>
+          <span>闭环收敛场次: <b>${sig.sessions || refls.length}</b></span>
+        </div>
+      </div>
+
+      <div class="improve-card" style="margin-bottom:0;">
+        <h3><span>⚡ 8轮 ≥9.5分 自评收敛与静默进化工作流</span><span style="font-size:11px;color:var(--teal);font-family:ui-monospace,monospace;">Whisper Autopilot</span></h3>
+        <div style="font-size:12px;color:var(--text-main);line-height:1.6;">
+          <div style="padding:8px 10px;background:#090d16;border-radius:8px;border:1px solid var(--border);margin-bottom:8px;">
+            <strong style="color:var(--gold);">1️⃣ 各类型图片自动入库带描述：</strong><br>
+            无论是 <code>python3 pmem_art.py ingest &lt;图片&gt; -p "中文描述/Prompt" --apply</code>，还是 <code>/pmem-draw</code>、<code>/pmem-ui</code>、<code>/pmem-concept</code>、<code>/pmem-icon</code> 收敛胜出，都会<b>自动识别分类（角色/场景/UI/特效/风格圣经）</b>、生成中文描述并立即重建本看板。
+          </div>
+          <div style="padding:8px 10px;background:#090d16;border-radius:8px;border:1px solid var(--border);margin-bottom:8px;">
+            <strong style="color:var(--teal);">2️⃣ 8轮 ≥9.5分 闭环自评收敛 (Converge Engine)：</strong><br>
+            每次生图最多迭代 <b>8 轮</b>，每轮按【项目红线与色板 35% + 构图解剖/透视 30% + 管线规格 20% + 质感细节 15%】打分，满 <b>9.5 / 10 分</b>且零硬伤才交付；胜出图与踩坑红线自动写回记忆。
+          </div>
+          <div style="padding:8px 10px;background:#090d16;border-radius:8px;border:1px solid var(--border);">
+            <strong style="color:#d8b4fe;">3️⃣ 浏览器 3 秒无感自动刷新：</strong><br>
+            右上角 <b>🔄 自动刷新: 开启 (3s)</b> 通过轻量级 <code>.memory-art/atlas_ping.js</code> 心跳检测变更，保持当前筛选、标签页与滚动位置无感同步最新资产。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="improve-card">
+      <h3><span>🏆 闭环自评收敛历史与评分曲线 (Converge Reflections)</span><span style="font-size:11px;color:var(--text-muted);font-family:ui-monospace,monospace;">.memory-art/_reflections/ (${refls.length} 场)</span></h3>
+      ${reflHtml}
+    </div>
+
+    <div class="improve-card">
+      <h3><span>🌍 美术知识广度图谱 (Visual Art Knowledge Cards)</span><span style="font-size:11px;color:var(--text-muted);font-family:ui-monospace,monospace;">.memory-art/_knowledge/ (${kCards.length} 张)</span></h3>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px;">
+        跨领域美术通识卡（光影、70/20/10色板、头身比尺规、五官主次、大气透视、九宫格规范、特效剪影），在生图冷启动时按模块自动挂载：
+      </div>
+      <div class="kcard-grid">${kCardsHtml}</div>
+    </div>
+  `;
 }
 
 function renderRedlinesTab() {
@@ -900,6 +1155,7 @@ function renderStage() {
   const stage = document.getElementById("mainStage");
   let content = renderModuleBanner();
   if (state.tab === "gallery") content += renderGalleryTab();
+  else if (state.tab === "improve") content += renderImproveTab();
   else if (state.tab === "redlines") content += renderRedlinesTab();
   else if (state.tab === "recipes") content += renderRecipesTab();
   else if (state.tab === "memories") content += renderMemoriesTab();
@@ -1035,7 +1291,68 @@ window.addEventListener("keydown", e => {
   if (e.key === "Escape") document.getElementById("lightbox").classList.remove("open");
 });
 
+let _autoRefreshTimer = null;
+
+window.updateAutoRefreshUI = function() {
+  const btn = document.getElementById("btnToggleAutoRefresh");
+  const dot = document.getElementById("liveDot");
+  if (!btn || !dot) return;
+  if (state.autoRefresh) {
+    btn.textContent = "🔄 自动刷新: 开启 (3s)";
+    btn.classList.remove("paused");
+    dot.classList.remove("paused");
+  } else {
+    btn.textContent = "⏸️ 自动刷新: 已暂停";
+    btn.classList.add("paused");
+    dot.classList.add("paused");
+  }
+};
+
+window.toggleAutoRefresh = function() {
+  state.autoRefresh = !state.autoRefresh;
+  saveAtlasState();
+  updateAutoRefreshUI();
+  showToast(state.autoRefresh ? "🔄 已开启每 3 秒自动检测新资产并无感刷新" : "⏸️ 已暂停自动刷新（可点击 ⚡ 立即刷新）");
+};
+
+window.manualRefreshNow = function() {
+  saveAtlasState();
+  sessionStorage.setItem("pmem_atlas_just_reloaded", "manual");
+  location.reload();
+};
+
+function checkAtlasUpdateOnce() {
+  if (!state.autoRefresh) return;
+  try {
+    const oldScript = document.getElementById("pmemPingScript");
+    if (oldScript) oldScript.remove();
+    const s = document.createElement("script");
+    s.id = "pmemPingScript";
+    s.src = ".memory-art/atlas_ping.js?_t=" + Date.now();
+    s.onload = function() {
+      const ping = window.__PMEM_ATLAS_PING__;
+      if (ping && ping.build_id && DATA.build_id && ping.build_id !== DATA.build_id) {
+        saveAtlasState();
+        sessionStorage.setItem("pmem_atlas_just_reloaded", ping.built_at || "auto");
+        location.reload();
+      }
+    };
+    document.head.appendChild(s);
+  } catch (e) {}
+}
+
+restoreAtlasState();
+document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.tab === state.tab));
+if (state.search) document.getElementById("searchInput").value = state.search;
 renderStage();
+_autoRefreshTimer = setInterval(checkAtlasUpdateOnce, 3000);
+try {
+  const rr = sessionStorage.getItem("pmem_atlas_just_reloaded");
+  if (rr) {
+    sessionStorage.removeItem("pmem_atlas_just_reloaded");
+    showToast(rr === "manual" ? "⚡ 已刷新至最新美术资产与记忆状态" : "✨ 检测到新入库/生成图片，已自动同步 (" + rr + ")");
+  }
+} catch (e) {}
 </script>
 </body>
 </html>
@@ -1043,9 +1360,29 @@ renderStage();
 
 def generate_atlas_html(data: dict[str, Any], out_path: Path) -> Path:
     proj_name = data.get("config", {}).get("project", {}).get("name", "pmem-art")
+    build_id = str(data.get("build_id") or "")
     json_str = json.dumps(data, ensure_ascii=False).replace("</", "<\\/")
-    html_out = HTML_TEMPLATE.replace("__PROJECT_NAME__", html.escape(proj_name)).replace("__ATLAS_JSON__", json_str)
+    html_out = (
+        HTML_TEMPLATE.replace("__PROJECT_NAME__", html.escape(proj_name))
+        .replace("__BUILD_ID__", html.escape(build_id))
+        .replace("__ATLAS_JSON__", json_str)
+    )
     out_path.write_text(html_out, encoding="utf-8", newline="\n")
+    try:
+        ping_dir = out_path.parent / ".memory-art"
+        if ping_dir.is_dir():
+            ping_payload = {
+                "build_id": build_id,
+                "built_at": data.get("built_at", ""),
+                "assets_count": len(data.get("assets", {})),
+                "entries_count": len(data.get("entries", [])),
+            }
+            (ping_dir / "atlas_ping.js").write_text(
+                "window.__PMEM_ATLAS_PING__ = " + json.dumps(ping_payload, ensure_ascii=False) + ";\n",
+                encoding="utf-8",
+            )
+    except Exception:
+        pass
     return out_path
 
 if __name__ == "__main__":

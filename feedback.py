@@ -176,6 +176,7 @@ def write_memory_entry(
     body: str,
     asset: str = "",
     role: str = "reference",
+    caption: str = "",
     aliases: list[str] | None = None,
     extra_meta: dict[str, Any] | None = None,
 ) -> Path:
@@ -195,12 +196,19 @@ def write_memory_entry(
             except Exception:
                 p = Path(asset)
         sha = _sha16(p) if p.is_file() else ""
-        cap = "✅ 正例（画师确认保留）" if role == "approved" else ("❌ 反例（画师打回）" if role == "rejected" else "参考图")
+        if caption:
+            cap = caption.strip()
+        elif role == "approved":
+            cap = f"✅ 正例定稿：{summary}"
+        elif role == "rejected":
+            cap = f"❌ 反例警示：{summary}"
+        else:
+            cap = f"📌 参考说明：{summary}"
         assets_block = (
             f"assets:\n"
             f"  - path: {rel}\n"
             f"    role: {role}\n"
-            f"    caption: \"{cap}\"\n"
+            f"    caption: {json.dumps(cap, ensure_ascii=False)}\n"
         )
         if sha:
             assets_block += f"    sha256_16: {sha}\n"
@@ -386,6 +394,11 @@ def cmd_feedback(
             print(f"⚠️ 口味/知识同步跳过: {ex}")
         else:
             print(f"「小提示」已记下")
+    try:
+        from pmem_art import refresh_atlas_silent
+        refresh_atlas_silent(root)
+    except Exception:
+        pass
     return 0
 
 
