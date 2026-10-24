@@ -871,16 +871,24 @@ function renderImproveTab() {
     `;
   }).join("") || `<div class="entry-card">暂无收敛复盘记录。</div>`;
 
-  const kCardsHtml = kCards.map(c => `
-    <div class="kcard">
+  const privCount = (prof.private_knowledge_cards || []).length;
+  const sharedCount = (prof.shared_knowledge_cards || []).length;
+  const kCardsHtml = kCards.map(c => {
+    const isShared = c.layer_scope === "shared";
+    const layerBadge = isShared
+      ? `<span class="badge info" style="font-size:10px;">🌐 跨项目共享层 (Shared)</span>`
+      : `<span class="badge teal" style="font-size:10px;">🔒 项目私有层 (Private)${c.promoted_to_shared ? ' · 已同步全局' : ''}</span>`;
+    return `
+    <div class="kcard" style="border-color:${isShared ? 'rgba(56,189,248,0.28)' : 'rgba(45,212,191,0.35)'};">
       <div class="kcard-title">
         <span>📘 ${esc(c.title)}</span>
-        <span style="font-size:10.5px;color:var(--text-muted);font-family:ui-monospace,monospace;">${esc((c.tags || []).join(" · "))}</span>
+        ${layerBadge}
       </div>
       <div style="font-size:12px;color:var(--text-main);line-height:1.55;margin-top:4px;">${esc(c.body)}</div>
-      <div style="font-size:10.5px;color:var(--text-dim);margin-top:6px;font-family:ui-monospace,monospace;">ID: ${esc(c.id)} · 来源: ${esc(c.source || "seed")}</div>
+      <div style="font-size:10.5px;color:var(--text-dim);margin-top:6px;font-family:ui-monospace,monospace;">ID: ${esc(c.id)} · 标签: ${esc((c.tags || []).join(" · "))} · 来源: ${esc(c.source || "seed")}</div>
     </div>
-  `).join("");
+    `;
+  }).join("");
 
   return `
     <div class="improve-grid">
@@ -927,9 +935,12 @@ function renderImproveTab() {
     </div>
 
     <div class="improve-card">
-      <h3><span>🌍 美术知识广度图谱 (Visual Art Knowledge Cards)</span><span style="font-size:11px;color:var(--text-muted);font-family:ui-monospace,monospace;">.memory-art/_knowledge/ (${kCards.length} 张)</span></h3>
+      <h3>
+        <span>🌍 双层美术知识广度图谱 (Two-Layer Knowledge Architecture)</span>
+        <span style="font-size:11px;color:var(--text-muted);font-family:ui-monospace,monospace;">🔒 项目私有: ${privCount} 张 · 🌐 跨项目共享: ${sharedCount} 张（合并去重 ${kCards.length} 张）</span>
+      </h3>
       <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px;">
-        跨领域美术通识卡（光影、70/20/10色板、头身比尺规、五官主次、大气透视、九宫格规范、特效剪影），在生图冷启动时按模块自动挂载：
+        <b>Layer 1 项目私有层 (<code>.memory-art/</code>)</b> 严格隔离本项目模块、红线、色板与画风卡，切换项目绝不串味；<b>Layer 2 跨项目全局共享层 (<code>~/.pmem-art/shared/</code>)</b> 仅存放无风格绑定的通用美术规律（头身比尺规、70/20/10配色比、大气透视、九宫格结构、可读剪影），新项目冷启动自动挂载，同模块匹配时私有层权重高于共享层：
       </div>
       <div class="kcard-grid">${kCardsHtml}</div>
     </div>

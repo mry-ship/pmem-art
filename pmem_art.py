@@ -266,6 +266,7 @@ def load_project(root: Path) -> dict[str, Any]:
             meta["layer"] = k_info["layer"]
             meta["badge"] = k_info["badge"]
             meta["kind_order"] = k_info["order"]
+            meta.setdefault("layer_scope", "private")
             entries.append(meta)
 
     # Load specs
@@ -469,21 +470,50 @@ def load_project(root: Path) -> dict[str, Any]:
             "module_count": len(cat_mods),
         }
 
-    # Load Taste, Knowledge Cards & Reflections for Atlas display
-    profile_data: dict[str, Any] = {"taste": {}, "knowledge_cards": [], "reflections": [], "converge_latest": None}
+    # Load Taste, Two-Layer Knowledge Cards (Private + Shared) & Reflections for Atlas display
+    profile_data: dict[str, Any] = {
+        "taste": {},
+        "knowledge_cards": [],
+        "private_knowledge_cards": [],
+        "shared_knowledge_cards": [],
+        "shared_dir": "",
+        "reflections": [],
+        "converge_latest": None,
+    }
     taste_f = mem_dir / "_profile" / "taste.json"
     if taste_f.is_file():
         try:
             profile_data["taste"] = json.loads(taste_f.read_text(encoding="utf-8"))
         except Exception:
             pass
+    priv_cards_list: list[dict[str, Any]] = []
     know_f = mem_dir / "_knowledge" / "index.json"
     if know_f.is_file():
         try:
             kd = json.loads(know_f.read_text(encoding="utf-8"))
-            profile_data["knowledge_cards"] = list((kd.get("cards") or {}).values())
+            for c in (kd.get("cards") or {}).values():
+                if isinstance(c, dict):
+                    cc = dict(c)
+                    cc["layer_scope"] = "private"
+                    priv_cards_list.append(cc)
         except Exception:
             pass
+    shared_cards_list: list[dict[str, Any]] = []
+    try:
+        from improve import load_shared_knowledge_index, shared_knowledge_dir
+        profile_data["shared_dir"] = str(shared_knowledge_dir(root))
+        sd = load_shared_knowledge_index(root, auto_seed=True)
+        for c in (sd.get("cards") or {}).values():
+            if isinstance(c, dict):
+                cc = dict(c)
+                cc["layer_scope"] = "shared"
+                shared_cards_list.append(cc)
+    except Exception:
+        pass
+    profile_data["private_knowledge_cards"] = priv_cards_list
+    profile_data["shared_knowledge_cards"] = shared_cards_list
+    priv_ids = {c.get("id") for c in priv_cards_list if c.get("id")}
+    profile_data["knowledge_cards"] = priv_cards_list + [c for c in shared_cards_list if c.get("id") not in priv_ids]
     refl_d = mem_dir / "_reflections"
     if refl_d.is_dir():
         for rf in sorted(refl_d.glob("*.json"), key=lambda x: x.name, reverse=True)[:10]:
@@ -619,6 +649,14 @@ def cmd_search(data: dict[str, Any], module: str, path: str, query: str) -> int:
             }
             for e in matched if e["layer"] == "record"
         ],
+        "layered_knowledge": (lambda: (
+            __import__("improve").recall_layered_knowledge_cards(
+                Path(data.get("root", ".")),
+                target_module=target_mod or "",
+                query=query or "",
+                limit=6,
+            )
+        ))(),
     }
     print(json.dumps(result, ensure_ascii=False, indent=2))
     return 0
@@ -684,12 +722,18 @@ def cmd_hook(root: Path, data: dict[str, Any], event: str) -> int:
                 ),
                 reverse=True,
             )[:6]
-        if matched:
-            advice.append(f"🎨 pmem-art 生图前记忆召回 · 模块 {module or '?'}（{len(matched)} 条）")
+        from improve import recall_layered_knowledge_cards
+        layered_k = recall_layered_knowledge_cards(root, target_module=module, query=q, limit=4)
+        if matched or layered_k:
+            advice.append(
+                f"🎨 pmem-art 双层记忆召回 · 模块 {module or '?'}（私有条目 {len(matched)} 条 + 知识卡 {len(layered_k)} 张）"
+            )
             for e in matched:
-                advice.append(f"  · [{e.get('kind')}] {e.get('summary', '')[:100]}")
+                advice.append(f"  · [private:{e.get('kind')}] {e.get('summary', '')[:100]}")
+            for kc in layered_k:
+                advice.append(f"  · [{kc.get('layer_scope', 'shared')}:knowledge] {kc.get('title')}: {kc.get('body', '')[:80]}")
         elif q:
-            advice.append(f"🎨 pmem-art：模块 {module or '未识别'} 暂无记忆，生图后请用自然语言反馈沉淀（如「太赛博」「这版留着」）。")
+            advice.append(f"🎨 pmem-art：模块 {module or '未识别'} 暂无私有记忆，生图后请用自然语言反馈沉淀（如「太赛博」「这版留着」）。")
 
     if event in ("post-tool", "post-asset"):
         advice.append("💬 若这张不对/要留着：直接说「太赛博 / 头太大 / 这版留着 / 换成水彩」，我会写入 pmem-art 记忆。")
@@ -841,8 +885,8 @@ def main() -> int:
     p_coach = sub.add_parser("coach", help="能力教练：短板→练习→下一张目标（/pmem-coach）")
     p_coach.add_argument("--last", type=int, default=20, help="扫描最近 N 份反思")
 
-    p_learn = sub.add_parser("learn", help="知识广度扩展 suggest|accept|list（/pmem-learn）")
-    p_learn.add_argument("action", nargs="?", default="suggest", choices=("suggest", "accept", "list", "propose"), help="子操作")
+    p_learn = sub.add_parser("learn", help="双层知识广度扩展 suggest|accept|list|promote（/pmem-learn）")
+    p_learn.add_argument("action", nargs="?", default="suggest", choices=("suggest", "accept", "list", "propose", "promote"), help="子操作")
     p_learn.add_argument("--limit", type=int, default=5, help="建议条数")
     p_learn.add_argument("--all", dest="accept_all", action="store_true", help="accept 全部建议")
     p_learn.add_argument("--ids", default="", help="accept 指定 id，逗号分隔")

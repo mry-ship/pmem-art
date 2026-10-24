@@ -10,6 +10,7 @@ pmem-art improve: 连续自我迭代 — warm-start + 会话反思 + 口味档�
 from __future__ import annotations
 
 import json
+import os
 import re
 from collections import Counter
 from datetime import datetime, timezone, timedelta
@@ -129,9 +130,11 @@ def rank_memory_entry(
     target_module: str = "",
     query: str = "",
     prioritize_kind: bool = False,
-) -> tuple[int, int, float, int, str]:
-    """Simplest unified weighting key across all pmem-art recall points:
-    (kind_priority, exact_module_match, round_score, query_token_overlap, date_str)
+) -> tuple[int, int, int, float, int, str]:
+    """Simplest unified weighting key across all pmem-art recall points (Two-Layer Aware):
+    (kind_priority, private_layer_priority, exact_module_match, round_score, query_token_overlap, date_str)
+    - private_layer_priority: 1 for project-private memories/cards (.memory-art/), 0 for cross-project shared (~/.pmem-art/shared/).
+      Ensures project-private layer always ranks above shared layer when both match!
     Higher tuple sorts first with reverse=True.
     """
     q_tokens = [
@@ -139,15 +142,23 @@ def rank_memory_entry(
         if len(tok) >= 2
     ]
     hay = " ".join([
-        str(e.get("summary") or ""),
+        str(e.get("summary") or e.get("title") or ""),
         str(e.get("body") or ""),
         " ".join(str(x) for x in (e.get("tags") or e.get("aliases") or [])),
     ]).lower()
     overlap = sum(1 for tok in q_tokens if tok in hay)
-    exact_mod = 1 if (target_module and e.get("module") == target_module) else 0
+    layer_scope = str(e.get("layer_scope") or e.get("layer_tier") or "private").lower()
+    private_prio = 0 if layer_scope == "shared" else 1
+    mod_val = str(e.get("module") or "")
+    target_dom = target_module.split(".")[0] if "." in (target_module or "") else (target_module or "")
+    tags_list = [str(x).lower() for x in (e.get("tags") or [])]
+    exact_mod = 1 if (
+        (target_module and mod_val == target_module)
+        or (target_dom and target_dom.lower() in tags_list)
+    ) else 0
     kind_prio = (10 - int(e.get("kind_order", 9))) if prioritize_kind else 0
-    date_str = str(e.get("verified") or e.get("note_date") or e.get("id") or "")
-    return (kind_prio, exact_mod, extract_entry_score(e), overlap, date_str)
+    date_str = str(e.get("verified") or e.get("note_date") or e.get("updated_at") or e.get("id") or "")
+    return (kind_prio, private_prio, exact_mod, extract_entry_score(e), overlap, date_str)
 
 
 def build_warm_start_pack(
@@ -269,6 +280,19 @@ def build_warm_start_pack(
     if banned:
         prompt_block_lines.append("- 个人禁用习惯: " + "；".join(banned[-8:]))
 
+    # Two-layer knowledge recall: Project-Private (_knowledge) > Cross-Project Shared (~/.pmem-art/shared)
+    recalled_cards = recall_layered_knowledge_cards(root, target_module=module, query=goal, limit=4)
+    private_kcards = [c for c in recalled_cards if c.get("layer_scope") == "private"]
+    shared_kcards = [c for c in recalled_cards if c.get("layer_scope") == "shared"]
+    if private_kcards:
+        prompt_block_lines.append("- 项目私有知识卡 (Private Layer):")
+        for c in private_kcards:
+            prompt_block_lines.append(f"  · [{c.get('id')}] {c.get('title')}: {c.get('body')}")
+    if shared_kcards:
+        prompt_block_lines.append("- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):")
+        for c in shared_kcards:
+            prompt_block_lines.append(f"  · [{c.get('id')}] {c.get('title')}: {c.get('body')}")
+
     prompt_block = "\n".join(prompt_block_lines)
 
     return {
@@ -279,7 +303,9 @@ def build_warm_start_pack(
         "confidence_reasons": reasons,
         "top_recipes": recipe_summaries,
         "top_redlines": redline_summaries,
-        "art_decisions": [{"id": e.get("id"), "summary": e.get("summary")} for e in decisions],
+        "art_decisions": [{"id": e.get("id"), "summary": e.get("summary"), "layer_scope": "private"} for e in decisions],
+        "private_knowledge": [{"id": c.get("id"), "title": c.get("title"), "body": c.get("body"), "layer_scope": "private"} for c in private_kcards],
+        "shared_knowledge": [{"id": c.get("id"), "title": c.get("title"), "body": c.get("body"), "layer_scope": "shared"} for c in shared_kcards],
         "palette": palette,
         "taste_snapshot": {
             "preferred_lighting": taste.get("preferred_lighting", [])[-5:],
@@ -1341,6 +1367,262 @@ ADJACENT_BREADTH: dict[str, list[str]] = {
 }
 
 
+# Style-specific or project-bound patterns that MUST NOT enter the cross-project shared layer
+STYLE_SPECIFIC_PATTERNS: list[str] = [
+    r"#[0-9a-fA-F]{3,8}\b",
+    r"青瓷|玄青|鎏金|赛博霓虹|霓虹紫|水彩|赛璐珞|厚涂|像素风|watercolor|cel[-\s]?shad|painterly|pixel[-\s]?art",
+    r"阿斯特拉|Astra|莱拉|Lyra|云海星穹",
+]
+
+
+def is_style_agnostic_universal_card(card: dict[str, Any]) -> tuple[bool, str]:
+    """Verify whether a knowledge card is universally useful and style-agnostic
+    (e.g., head-to-body ratio, 70-20-10 color proportion law, atmospheric perspective,
+    9-slice structure, silhouette readability) rather than bound to a specific project's
+    art style, palette HEX, or character setting.
+    """
+    cid = str(card.get("id") or "").lower()
+    kind = str(card.get("kind") or "").lower()
+    tags = [str(t).lower() for t in (card.get("tags") or [])]
+    blob = f"{card.get('title') or ''} {card.get('body') or ''}"
+
+    if kind == "style_fork" or cid.startswith("style-") or "style" in tags or "style_lock" in tags:
+        return False, "包含特定画风/风格锁定标签 (style / style_lock / style_fork)，仅限项目私有层"
+    if cid in ("tech-watercolor", "tech-celshade", "tech-painterly", "tech-pixel"):
+        return False, "属于特定渲染画风技法，仅保留在项目私有层以防跨项目串风"
+    for pat in STYLE_SPECIFIC_PATTERNS:
+        m = re.search(pat, blob, re.I)
+        if m:
+            return False, f"包含项目专属色值/画风/角色词 ({m.group(0)})，禁止上浮至跨项目共享层"
+    return True, "通用无风格绑定美术规律（可跨项目共享）"
+
+
+def shared_knowledge_dir(root: Path | None = None) -> Path:
+    """Global cross-project shared layer directory (~/.pmem-art/shared/ by default,
+    or overridden by PMEM_ART_SHARED_DIR environment variable).
+    """
+    env_dir = os.environ.get("PMEM_ART_SHARED_DIR", "").strip()
+    if env_dir:
+        d = Path(env_dir).expanduser().resolve()
+    else:
+        d = (Path.home() / ".pmem-art" / "shared").resolve()
+    d.mkdir(parents=True, exist_ok=True)
+    return d
+
+
+def _shared_knowledge_index_path(root: Path | None = None) -> Path:
+    return shared_knowledge_dir(root) / "index.json"
+
+
+def load_shared_knowledge_index(root: Path | None = None, *, auto_seed: bool = True) -> dict[str, Any]:
+    p = _shared_knowledge_index_path(root)
+    if not p.is_file():
+        if auto_seed:
+            return ensure_shared_knowledge_seeded(root)
+        return {"version": 1, "layer_scope": "shared", "cards": {}, "updated_at": ""}
+    try:
+        data = json.loads(p.read_text(encoding="utf-8"))
+        if auto_seed and not (data.get("cards") or {}):
+            return ensure_shared_knowledge_seeded(root)
+        return data
+    except Exception:
+        return {"version": 1, "layer_scope": "shared", "cards": {}, "updated_at": ""}
+
+
+def save_shared_knowledge_index(idx: dict[str, Any], root: Path | None = None) -> Path:
+    idx["layer_scope"] = "shared"
+    idx["updated_at"] = _now_cst().strftime("%Y-%m-%d %H:%M:%S UTC+8")
+    p = _shared_knowledge_index_path(root)
+    p.write_text(json.dumps(idx, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return p
+
+
+def upsert_shared_knowledge_card(
+    *,
+    card_id: str,
+    title: str,
+    body: str,
+    tags: list[str] | None = None,
+    source: str = "shared_seed",
+    promoted_from: str = "",
+    root: Path | None = None,
+    force: bool = False,
+) -> tuple[bool, str, Path | None]:
+    candidate = {
+        "id": card_id,
+        "title": title,
+        "body": body,
+        "tags": tags or [],
+    }
+    ok, reason = is_style_agnostic_universal_card(candidate)
+    if not ok and not force:
+        return False, reason, None
+
+    idx = load_shared_knowledge_index(root, auto_seed=False)
+    cards = idx.setdefault("cards", {})
+    card = {
+        "id": card_id,
+        "title": title,
+        "body": body,
+        "tags": tags or [],
+        "source": source,
+        "layer_scope": "shared",
+        "universal": True,
+        "promoted_from": promoted_from,
+        "updated_at": _now_cst().strftime("%Y-%m-%d %H:%M:%S UTC+8"),
+    }
+    cards[card_id] = card
+    safe = re.sub(r"[^\w\-.]+", "_", card_id)[:80]
+    md = shared_knowledge_dir(root) / f"{safe}.md"
+    md.write_text(
+        f"---\nid: {card_id}\ntitle: {json.dumps(title, ensure_ascii=False)}\n"
+        f"layer_scope: shared\nuniversal: true\n"
+        f"tags: {json.dumps(tags or [], ensure_ascii=False)}\nsource: {source}\n---\n\n"
+        f"# {title}\n\n{body.strip()}\n",
+        encoding="utf-8",
+    )
+    save_shared_knowledge_index(idx, root)
+    return True, reason, md
+
+
+def ensure_shared_knowledge_seeded(root: Path | None = None) -> dict[str, Any]:
+    """Ensure the global cross-project shared store (~/.pmem-art/shared/) has the
+    universal style-agnostic seed cards (head-to-body ratio, 70-20-10 law, perspective,
+    9-slice, silhouette readability, etc.).
+    """
+    idx = {"version": 1, "layer_scope": "shared", "cards": {}, "updated_at": ""}
+    p = _shared_knowledge_index_path(root)
+    if p.is_file():
+        try:
+            idx = json.loads(p.read_text(encoding="utf-8"))
+        except Exception:
+            pass
+    cards = idx.setdefault("cards", {})
+    changed = False
+    for dom, card_list in DOMAIN_SEED_CARDS.items():
+        for c in card_list:
+            cid = c["id"]
+            if cid not in cards:
+                ok, _ = is_style_agnostic_universal_card(c)
+                if ok:
+                    cards[cid] = {
+                        "id": cid,
+                        "title": c["title"],
+                        "body": c["body"],
+                        "tags": list(c.get("tags") or []),
+                        "source": "shared_seed",
+                        "layer_scope": "shared",
+                        "universal": True,
+                        "promoted_from": "builtin_universal_seed",
+                        "updated_at": _now_cst().strftime("%Y-%m-%d %H:%M:%S UTC+8"),
+                    }
+                    safe = re.sub(r"[^\w\-.]+", "_", cid)[:80]
+                    md = shared_knowledge_dir(root) / f"{safe}.md"
+                    if not md.exists():
+                        md.write_text(
+                            f"---\nid: {cid}\ntitle: {json.dumps(c['title'], ensure_ascii=False)}\n"
+                            f"layer_scope: shared\nuniversal: true\n"
+                            f"tags: {json.dumps(c.get('tags') or [], ensure_ascii=False)}\nsource: shared_seed\n---\n\n"
+                            f"# {c['title']}\n\n{c['body'].strip()}\n",
+                            encoding="utf-8",
+                        )
+                    changed = True
+    if changed or not p.is_file():
+        save_shared_knowledge_index(idx, root)
+    return idx
+
+
+def recall_layered_knowledge_cards(
+    root: Path,
+    target_module: str = "",
+    query: str = "",
+    limit: int = 5,
+) -> list[dict[str, Any]]:
+    """Recall knowledge cards across BOTH layers (Project-Private .memory-art/_knowledge/
+    and Cross-Project Shared ~/.pmem-art/shared/), ranked by `rank_memory_entry` so
+    project-private cards always rank above shared cards when both match.
+    """
+    priv_idx = load_knowledge_index(root)
+    priv_cards = list((priv_idx.get("cards") or {}).values())
+    shared_idx = load_shared_knowledge_index(root, auto_seed=True)
+    shared_cards = list((shared_idx.get("cards") or {}).values())
+
+    target_dom = target_module.split(".")[0].lower() if "." in (target_module or "") else (target_module or "").lower()
+    domain_adj = set(ADJACENT_BREADTH.get(target_dom, [])) | ({target_dom} if target_dom else set())
+
+    candidates: list[dict[str, Any]] = []
+    seen_ids: set[str] = set()
+
+    # 1. Project-private cards first (tagged layer_scope='private')
+    for c in priv_cards:
+        c_copy = dict(c)
+        c_copy["layer_scope"] = "private"
+        cid = str(c_copy.get("id") or "")
+        if cid:
+            seen_ids.add(cid)
+        candidates.append(c_copy)
+
+    # 2. Cross-project shared cards (tagged layer_scope='shared', skipped if overridden privately)
+    for c in shared_cards:
+        cid = str(c.get("id") or "")
+        if cid in seen_ids:
+            continue
+        c_copy = dict(c)
+        c_copy["layer_scope"] = "shared"
+        candidates.append(c_copy)
+
+    # Filter to cards relevant to target_module/domain or query when module is specified
+    filtered: list[dict[str, Any]] = []
+    for c in candidates:
+        tags = {str(t).lower() for t in (c.get("tags") or [])}
+        if not target_dom or (tags & domain_adj) or ("brand" in tags) or ("color_palette" in tags):
+            filtered.append(c)
+        elif query and rank_memory_entry(c, target_module=target_module, query=query)[4] > 0:
+            filtered.append(c)
+
+    filtered.sort(
+        key=lambda c: rank_memory_entry(c, target_module=target_module, query=query),
+        reverse=True,
+    )
+    return filtered[:limit]
+
+
+def promote_card_to_shared(
+    root: Path,
+    card_id: str,
+    *,
+    force: bool = False,
+) -> dict[str, Any]:
+    """Promote a project-private knowledge card to the cross-project shared layer
+    if it is style-agnostic and universally applicable.
+    """
+    priv_idx = load_knowledge_index(root)
+    priv_cards = priv_idx.get("cards") or {}
+    if card_id not in priv_cards:
+        return {"ok": False, "id": card_id, "reason": f"项目私有知识库中不存在卡片 {card_id}"}
+    card = priv_cards[card_id]
+    ok, reason, md_path = upsert_shared_knowledge_card(
+        card_id=card["id"],
+        title=card.get("title") or card["id"],
+        body=card.get("body") or "",
+        tags=list(card.get("tags") or []),
+        source="promoted_from_project",
+        promoted_from=root.name,
+        root=root,
+        force=force,
+    )
+    if ok:
+        card["promoted_to_shared"] = True
+        save_knowledge_index(root, priv_idx)
+    return {
+        "ok": ok,
+        "id": card_id,
+        "title": card.get("title"),
+        "reason": reason,
+        "shared_path": str(md_path) if md_path else "",
+    }
+
+
 def knowledge_dir(root: Path) -> Path:
     d = _mem_root(root) / KNOWLEDGE_DIR
     d.mkdir(parents=True, exist_ok=True)
@@ -1354,14 +1636,20 @@ def _knowledge_index_path(root: Path) -> Path:
 def load_knowledge_index(root: Path) -> dict[str, Any]:
     p = _knowledge_index_path(root)
     if not p.is_file():
-        return {"version": 1, "cards": {}, "updated_at": ""}
+        return {"version": 1, "layer_scope": "private", "cards": {}, "updated_at": ""}
     try:
-        return json.loads(p.read_text(encoding="utf-8"))
+        data = json.loads(p.read_text(encoding="utf-8"))
+        data.setdefault("layer_scope", "private")
+        for c in (data.get("cards") or {}).values():
+            if isinstance(c, dict):
+                c.setdefault("layer_scope", "private")
+        return data
     except Exception:
-        return {"version": 1, "cards": {}, "updated_at": ""}
+        return {"version": 1, "layer_scope": "private", "cards": {}, "updated_at": ""}
 
 
 def save_knowledge_index(root: Path, idx: dict[str, Any]) -> Path:
+    idx["layer_scope"] = "private"
     idx["updated_at"] = _now_cst().strftime("%Y-%m-%d %H:%M:%S UTC+8")
     p = _knowledge_index_path(root)
     p.write_text(json.dumps(idx, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -1376,23 +1664,42 @@ def upsert_knowledge_card(
     body: str,
     tags: list[str] | None = None,
     source: str = "auto",
+    promote_if_universal: bool = True,
 ) -> Path:
     idx = load_knowledge_index(root)
     cards = idx.setdefault("cards", {})
+    candidate = {"id": card_id, "title": title, "body": body, "tags": tags or []}
+    is_univ, _ = is_style_agnostic_universal_card(candidate)
     card = {
         "id": card_id,
         "title": title,
         "body": body,
         "tags": tags or [],
         "source": source,
+        "layer_scope": "private",
+        "universal": is_univ,
+        "promoted_to_shared": False,
         "updated_at": _now_cst().strftime("%Y-%m-%d %H:%M:%S UTC+8"),
     }
+    if promote_if_universal and is_univ:
+        ok, _, _ = upsert_shared_knowledge_card(
+            card_id=card_id,
+            title=title,
+            body=body,
+            tags=tags or [],
+            source=f"auto_promoted:{source}",
+            promoted_from=root.name,
+            root=root,
+        )
+        card["promoted_to_shared"] = ok
+
     cards[card_id] = card
     # also write individual markdown for human browsing
     safe = re.sub(r"[^\w\-.]+", "_", card_id)[:80]
     md = knowledge_dir(root) / f"{safe}.md"
     md.write_text(
         f"---\nid: {card_id}\ntitle: {json.dumps(title, ensure_ascii=False)}\n"
+        f"layer_scope: private\nuniversal: {str(is_univ).lower()}\n"
         f"tags: {json.dumps(tags or [], ensure_ascii=False)}\nsource: {source}\n---\n\n"
         f"# {title}\n\n{body.strip()}\n",
         encoding="utf-8",
@@ -1614,11 +1921,44 @@ def cmd_learn(
 
     if action == "list":
         idx = load_knowledge_index(root)
-        cards = idx.get("cards") or {}
-        print(f"📚 知识广度图谱（{len(cards)} 张） .memory-art/_knowledge/\n")
-        for cid, c in sorted(cards.items()):
-            print(f"   · {cid}: {c.get('title')}  tags={c.get('tags')}")
+        priv_cards = idx.get("cards") or {}
+        s_idx = load_shared_knowledge_index(root, auto_seed=True)
+        shared_cards = s_idx.get("cards") or {}
+        print(f"📚 双层知识广度图谱（项目私有 {len(priv_cards)} 张 + 跨项目全局共享 {len(shared_cards)} 张）\n")
+        print(f"🔒 [Layer 1 · 项目私有层] .memory-art/_knowledge/ ({len(priv_cards)} 张):")
+        if not priv_cards:
+            print("   （当前项目私有层为空）")
+        for cid, c in sorted(priv_cards.items()):
+            prom = " 🌐[已同步共享层]" if c.get("promoted_to_shared") else " 🔒[仅本项目]"
+            print(f"   · {cid}: {c.get('title')}  tags={c.get('tags')}{prom}")
+        print(f"\n🌐 [Layer 2 · 跨项目共享层] {shared_knowledge_dir(root)} ({len(shared_cards)} 张 · 纯通用无风格绑定):")
+        for cid, c in sorted(shared_cards.items()):
+            print(f"   · {cid}: {c.get('title')}  tags={c.get('tags')}  (from={c.get('promoted_from') or 'seed'})")
         return 0
 
-    print(f"未知 learn 子操作: {action}（suggest|accept|list）")
+    if action == "promote":
+        priv_idx = load_knowledge_index(root)
+        priv_cards = priv_idx.get("cards") or {}
+        target_ids = ids if ids else (list(priv_cards.keys()) if accept_all else [])
+        if not target_ids:
+            print("❌ 请指定 --ids card1,card2 或 --all 将项目私有通用知识卡上浮至跨项目共享层")
+            return 1
+        promoted, blocked = [], []
+        for cid in target_ids:
+            res = promote_card_to_shared(root, cid, force=False)
+            if res.get("ok"):
+                promoted.append(res)
+            else:
+                blocked.append(res)
+        if promoted:
+            print(f"🌐 已上浮至跨项目共享层 ({shared_knowledge_dir(root)}):")
+            for r in promoted:
+                print(f"   ✅ {r['id']} ({r.get('title')}) — {r.get('reason')}")
+        if blocked:
+            print("🔒 以下卡片因含项目特定画风/色板被拦截在项目私有层（防止跨项目污染）:")
+            for r in blocked:
+                print(f"   🛡️ {r['id']} ({r.get('title', '')}) — {r.get('reason')}")
+        return 0
+
+    print(f"未知 learn 子操作: {action}（suggest|accept|list|promote）")
     return 1

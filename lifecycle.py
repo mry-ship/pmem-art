@@ -500,7 +500,18 @@ def cmd_init(root: Path, project_name: str = "Untitled Art Project", force: bool
 
     (mem / "entries").mkdir(parents=True, exist_ok=True)
     (mem / "specs").mkdir(parents=True, exist_ok=True)
+    (mem / "_knowledge").mkdir(parents=True, exist_ok=True)
+    if not (mem / "_knowledge" / "index.json").exists():
+        (mem / "_knowledge" / "index.json").write_text(
+            json.dumps({"version": 1, "layer_scope": "private", "cards": {}, "updated_at": ""}, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
     (mem / "candidates.json").write_text("[]\n", encoding="utf-8")
+    try:
+        from improve import ensure_shared_knowledge_seeded
+        ensure_shared_knowledge_seeded(root)
+    except Exception:
+        pass
 
     # Scaffold empty asset dirs matching taxonomy
     for cat in STARTER_CATEGORIES:
