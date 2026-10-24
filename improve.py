@@ -620,6 +620,14 @@ def build_warm_start_pack(
             conf += 0.10
             reasons.append(f"目标与 recipe 关键词重叠 {hit}")
 
+    # Two-layer knowledge recall: Project-Private (_knowledge) > Cross-Project Shared (~/.pmem-art/shared)
+    recalled_cards = recall_layered_knowledge_cards(root, target_module=module, query=goal, limit=6)
+    private_kcards = [c for c in recalled_cards if c.get("layer_scope") == "private"]
+    shared_kcards = [c for c in recalled_cards if c.get("layer_scope") == "shared"]
+    if shared_kcards or private_kcards:
+        conf += 0.15
+        reasons.append(f"挂载 {len(private_kcards)} 张项目知识卡 + {len(shared_kcards)} 张全局美术底层基础卡")
+
     conf = round(min(conf, 1.0), 2)
     fast_track_eligible = conf >= 0.70 and len(redlines) <= 5
 
@@ -663,10 +671,7 @@ def build_warm_start_pack(
     if banned:
         prompt_block_lines.append("- 个人禁用习惯: " + "；".join(banned[-8:]))
 
-    # Two-layer knowledge recall: Project-Private (_knowledge) > Cross-Project Shared (~/.pmem-art/shared)
-    recalled_cards = recall_layered_knowledge_cards(root, target_module=module, query=goal, limit=4)
-    private_kcards = [c for c in recalled_cards if c.get("layer_scope") == "private"]
-    shared_kcards = [c for c in recalled_cards if c.get("layer_scope") == "shared"]
+    # Knowledge cards already recalled above
     if private_kcards:
         prompt_block_lines.append("- 项目私有知识卡 (Private Layer):")
         for c in private_kcards:
@@ -1723,38 +1728,114 @@ def cmd_coach(root: Path, data: dict[str, Any], *, last_n: int = 20) -> int:
 
 KNOWLEDGE_DIR = "_knowledge"
 
-DOMAIN_SEED_CARDS: dict[str, list[dict[str, str]]] = {
+DOMAIN_SEED_CARDS: dict[str, list[dict[str, Any]]] = {
     "character": [
-        {"id": "anatomy-head-ratio", "title": "头身比尺规", "tags": ["anatomy", "character"], "body": "立绘常用 7~8 头身；Q版 2~3 头身。草图阶段先标刻度。"},
-        {"id": "eye-hierarchy", "title": "五官主次", "tags": ["anatomy", "character"], "body": "先定眼位与眉弓，再嘴鼻；义眼/异色瞳要作为识别锚点锁定。"},
+        {
+            "id": "anatomy-head-ratio",
+            "title": "人体结构：头身比尺规与重心控制",
+            "tags": ["anatomy", "character", "composition"],
+            "body": "写实/二次元立绘标准锁定 7~8 头身（常用 7.5 头身），Q版锁定 2~3 头身；草图阶段必须先标头顶、下巴、胸线、胯部、膝盖五道刻度线并校核重心垂线，严禁头肩比例失调或幼态大头漂移。",
+        },
+        {
+            "id": "eye-hierarchy",
+            "title": "人体结构：五官主次与第一识别锚点",
+            "tags": ["anatomy", "character"],
+            "body": "先定十字中线、眼位与眉弓转折，再定鼻底与唇裂；角色标志性面部特征（如单侧眼镜、异色瞳、机械义眼、面部纹印）必须作为第一识别锚点显式锁定高权重，严禁漏画或左右镜像翻转。",
+        },
+        {
+            "id": "anatomy-hand-five-fingers",
+            "title": "人体结构：手部五指解剖与三段透视",
+            "tags": ["anatomy", "character"],
+            "body": "手部必须先构建掌根方盒截面与拇指球体，再按掌指关节、近节、远节三段圆柱展开五指（1拇指+4指分明），严禁六指畸变、多指粘连或掌骨坍塌。",
+        },
     ],
     "scene": [
-        {"id": "atmospheric-perspective", "title": "大气透视", "tags": ["scene", "lighting"], "body": "远景降对比降饱和，近景保持边缘清晰，增强纵深。"},
-        {"id": "golden-hour-scene", "title": "黄金时刻场景光", "tags": ["scene", "lighting"], "body": "低角度暖光 + 长影；避开正午顶光死白。"},
+        {
+            "id": "atmospheric-perspective",
+            "title": "空间景深：近中远三层大气透视法则",
+            "tags": ["scene", "lighting", "composition", "narrative_camera"],
+            "body": "场景必须划分近景（高对比暗部压角剪影）、中景（视觉主体与最高明暗对比度）、远景（随空气介质距离递减对比度与饱和度，融入天光雾气），严禁远中近三景饱和度相同导致画面扁平粘连。",
+        },
+        {
+            "id": "golden-hour-scene",
+            "title": "光影系统：顶光/侧逆光/黄金时刻与防过曝阴影",
+            "tags": ["scene", "lighting", "character"],
+            "body": "优先采用 45° 侧逆光（Rim Light 轮廓光分离主体与背景）或黄金时刻低角度暖光配合冷色长影实现冷暖互补；严禁正午垂直顶光造成额头/台阶死白过曝（Overexposure）或暗部死黑脏浊。",
+        },
+        {
+            "id": "composition-thirds-grid",
+            "title": "构图法则：九宫格三分法与呼吸留白安全区",
+            "tags": ["composition", "scene", "character", "narrative_camera"],
+            "body": "将核心视觉焦点布置在九宫格三分线交点（黄金分割点 0.618）上，利用引导线与前景暗角汇聚视线；独立资产四周必须预留 16px~24px 纯透明呼吸安全边距，严禁发冠、武器或特效贴死画布边缘被裁切。",
+        },
+        {
+            "id": "light-rim",
+            "title": "光影系统：侧逆光轮廓分离与明暗交界线",
+            "tags": ["lighting", "character", "scene"],
+            "body": "使用侧逆光（Rim Light）沿角色或主体边缘勾勒高光轮廓线，将主体从深色或复杂背景中干净剥离；明暗交界线保持柔中带刚的体块转折，避免平光导致体积感丧失。",
+        },
     ],
     "ui": [
-        {"id": "nine-slice-basics", "title": "九宫格基础", "tags": ["ui", "ui_9slice"], "body": "四角固定、四边单向、中心双向；中心区禁止复杂花纹。"},
-        {"id": "button-state-family", "title": "按钮状态族", "tags": ["ui"], "body": "normal/hover/pressed/disabled 同外形同色板，只改明度与内阴影。"},
+        {
+            "id": "nine-slice-basics",
+            "title": "UI切图规范：九宫格 48px 包角锁死与纯色拉伸中心",
+            "tags": ["ui", "ui_9slice", "composition"],
+            "body": "九宫格（9-Slice）组件四角 48x48px 为固定不拉伸包角区（一切雕花装饰必须严格收束在 48px 切线内），四边为单向拉伸区，中央区域必须保持均匀纯色或无方向性平铺底纹以支持 3 倍以上双向拉伸零畸变，严禁在中心拉伸区放置圆盘、斜线或大图案；外周强制保留 4px 纯透明安全边距防止图集溢色（Atlas Bleeding）。",
+        },
+        {
+            "id": "button-state-family",
+            "title": "UI交互规范：按钮四态同系家族规范",
+            "tags": ["ui", "ui_9slice"],
+            "body": "同一交互组件家族必须同步具备 Normal（默认）、Hover（悬停提亮+内发光）、Pressed（按下明度收暗+内凹位移）、Disabled（降饱和灰化降透明度）四态，保持外轮廓、圆角与切线 100% 对齐。",
+        },
+        {
+            "id": "icon-stroke-grid-spec",
+            "title": "图标工程规范：线宽统一、安全网格与剪影可读性",
+            "tags": ["ui", "icon_consistency", "line_edge"],
+            "body": "成套技能/功能图标必须锁定统一的描边线宽（如全局统一 2px 描边，严禁 1px 与 6px 混杂）、统一圆角半径与 16px~24px 安全内边距网格，确保在 64x64px 极小缩略尺寸下主体几何剪影依然一眼可辨、不与背景杂光粘连。",
+        },
     ],
     "vfx": [
-        {"id": "readability-silhouette", "title": "特效可读剪影", "tags": ["vfx"], "body": "序列帧每帧剪影可辨；主色不超过 2，高光一条即可。"},
+        {
+            "id": "readability-silhouette",
+            "title": "剪影可读性与特效预乘 Alpha 通道规范",
+            "tags": ["vfx", "line_edge", "icon_consistency"],
+            "body": "特效序列帧与图标必须满足黑白剪影第一眼可读性（外轮廓主次分明、具备清晰负空间，主色阶不超过三段：高光亮芯→主色中调→消散外沿）；透明资产必须使用预乘 Alpha（Premultiplied RGBA）彻底消除半透明边缘脏灰黑边，外周内缩 16px 防止序列帧裁切。",
+        },
     ],
     "anim": [
-        {"id": "key-extreme-breakdown", "title": "关键帧-极端帧-中分帧", "tags": ["anim"], "body": "先定 key 与 extreme，再补 breakdown；避免平均插值发僵。"},
+        {
+            "id": "key-extreme-breakdown",
+            "title": "动画运动规律：关键帧-极端帧-中分帧与预备缓冲",
+            "tags": ["anim", "character"],
+            "body": "动作设计先锁定叙事关键帧（Key）与张力极端帧（Extreme），再插入非对称中分帧（Breakdown）与挤压拉伸（Squash & Stretch），严禁机械平均线性插值导致动作发飘发僵。",
+        },
     ],
     "brand": [
-        {"id": "palette-70-20-10", "title": "色板 70/20/10", "tags": ["brand", "color_palette"], "body": "主色70%、辅色20%、点缀10%；点缀勿抢主体。"},
+        {
+            "id": "palette-70-20-10",
+            "title": "色彩构成：70-20-10 色板比例黄金法则",
+            "tags": ["brand", "color_palette", "character", "scene", "ui"],
+            "body": "画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+        },
+        {
+            "id": "material-surface-physics",
+            "title": "材质表现：金属/织物/陶瓷高光形状与粗糙度区分",
+            "tags": ["brand", "material", "character", "ui"],
+            "body": "不同材质必须通过高光锐度与菲涅尔反射率严格拉开质感：金属具备高对比硬边高光与环境反光，哑光织物采用宽缓漫反射柔光，釉面/玉石保留温润半透明次表面散射；严禁全图使用同质化油腻塑料感高光。",
+        },
     ],
 }
 
 ADJACENT_BREADTH: dict[str, list[str]] = {
-    "character": ["scene", "lighting", "narrative_camera"],
-    "scene": ["lighting", "narrative_camera", "brand"],
-    "ui": ["icon_consistency", "brand", "color_palette"],
-    "vfx": ["anim", "lighting"],
-    "anim": ["vfx", "anatomy"],
-    "brand": ["color_palette", "style_lock"],
-    "misc": ["brand", "lighting"],
+    "character": ["anatomy", "composition", "lighting", "material", "color_palette"],
+    "scene": ["lighting", "composition", "narrative_camera", "brand", "color_palette"],
+    "ui": ["ui_9slice", "icon_consistency", "line_edge", "brand", "color_palette", "material"],
+    "icon": ["icon_consistency", "ui", "line_edge", "vfx", "color_palette"],
+    "vfx": ["line_edge", "anim", "lighting", "color_palette"],
+    "anim": ["vfx", "anatomy", "composition"],
+    "brand": ["color_palette", "material", "composition"],
+    "misc": ["brand", "lighting", "composition"],
 }
 
 
@@ -1895,7 +1976,7 @@ def ensure_shared_knowledge_seeded(root: Path | None = None) -> dict[str, Any]:
     for dom, card_list in DOMAIN_SEED_CARDS.items():
         for c in card_list:
             cid = c["id"]
-            if cid not in cards:
+            if cid not in cards or cards[cid].get("source") in ("shared_seed", "builtin_universal_seed") or cards[cid].get("body") != c["body"]:
                 ok, _ = is_style_agnostic_universal_card(c)
                 if ok:
                     cards[cid] = {
@@ -2139,11 +2220,11 @@ def ingest_term_to_knowledge(root: Path, text: str, *, source: str = "feedback")
         if re.search(pat, text or "", re.I):
             idx = load_knowledge_index(root)
             if cid not in (idx.get("cards") or {}):
-                upsert_knowledge_card(root, card_id=cid, title=title, body=body, tags=tags, source=source)
+                upsert_knowledge_card(root, card_id=cid, title=title, body=body, tags=tags, source=source, promote_if_universal=False)
                 created.append(cid)
             else:
                 # refresh touch
-                upsert_knowledge_card(root, card_id=cid, title=title, body=body, tags=tags, source=source)
+                upsert_knowledge_card(root, card_id=cid, title=title, body=body, tags=tags, source=source, promote_if_universal=False)
                 created.append(cid)
     return list(dict.fromkeys(created))
 
