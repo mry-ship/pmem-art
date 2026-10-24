@@ -283,7 +283,11 @@ def cmd_feedback(
     asset: str = "",
     kind: str = "",
     apply: bool = True,
+    silent: bool = True,
+    verbose: bool = False,
 ) -> int:
+    if verbose:
+        silent = False
     text = (text or "").strip()
     if not text:
         print("❌ 请传入画师原话，例如：python3 pmem_art.py feedback \"太赛博了，别这样画\" --module character.Astra")
@@ -306,16 +310,18 @@ def cmd_feedback(
 
     body = build_body(detected, text, style_fork)
 
-    print(f"🗣️  画师原话: {text}")
-    print(f"📌 判定类型: {detected} ({KIND_META.get(detected, detected)})")
-    print(f"📦 目标模块: {mod}")
-    if style_fork:
-        print(f"🎨 风格分叉: .{style_fork}")
-    if asset:
-        print(f"🖼️  关联资产: {asset} ({role})")
+    if not silent:
+        print(f"🗣️  画师原话: {text}")
+        print(f"📌 判定类型: {detected} ({KIND_META.get(detected, detected)})")
+        print(f"📦 目标模块: {mod}")
+        if style_fork:
+            print(f"🎨 风格分叉: .{style_fork}")
+        if asset:
+            print(f"🖼️  关联资产: {asset} ({role})")
 
     if not apply:
-        print("（dry-run，未写入；加默认即写入，或显式 --apply）")
+        if not silent:
+            print("（dry-run，未写入；加默认即写入，或显式 --apply）")
         return 0
 
     # 确保模块目录存在
@@ -332,20 +338,54 @@ def cmd_feedback(
         aliases=[style_fork] if style_fork else None,
         extra_meta={"style_fork": style_fork} if style_fork else None,
     )
-    print(f"✅ 已写入记忆: {path.relative_to(root)}")
 
-    # High-signal: keep/reject/style → taste profile + knowledge atlas
+    tip = None
+    # High-signal: keep/reject/style → taste + knowledge + silent autopilot
+    high_signal = detected in ("recipe", "style_redline", "visual_correction", "art_decision")
     try:
-        from improve import apply_feedback_to_taste, ingest_term_to_knowledge
+        from improve import (
+            apply_feedback_to_taste,
+            ingest_term_to_knowledge,
+            run_silent_autopilot,
+            compose_whisper_tip,
+            try_consume_tip_budget,
+            print_whisper_tip,
+        )
         apply_feedback_to_taste(root, text, detected)
         cards = ingest_term_to_knowledge(root, text, source="feedback")
-        if cards:
-            print(f"🌍 知识广度扩展: {', '.join(cards)}")
-        print("🎨 已同步强化个人口味档案 (.memory-art/_profile/taste.json)")
+        if high_signal:
+            auto = run_silent_autopilot(
+                root,
+                data,
+                session_id=f"fb-{detected}",
+                defects=text if detected == "style_redline" else "",
+                strengths=text if detected == "recipe" else "",
+                source="feedback",
+                feedback_kind=detected,
+                feedback_text=text,
+                enqueue_learn=1,
+            )
+            tip = auto.get("tip")
+        else:
+            tip = compose_whisper_tip(feedback_kind=detected, feedback_text=text)
+            if tip and not try_consume_tip_budget(root, f"feedback:{detected}:{text[:24]}"):
+                tip = None
+        if not silent:
+            print(f"✅ 已写入记忆: {path.relative_to(root)}")
+            if cards:
+                print(f"🌍 知识广度扩展: {', '.join(cards)}")
+            print("🎨 已同步强化个人口味档案 (.memory-art/_profile/taste.json)")
+            print("💡 下次生同类图会自动召回，越画越准。")
+        else:
+            # Whisper only — tip budget exhausted ⇒ stay fully silent (no spam)
+            if tip:
+                print_whisper_tip(tip)
     except Exception as ex:
-        print(f"⚠️ 口味/知识同步跳过: {ex}")
-
-    print("💡 下次在 Cursor 里生同类图前，Agent 会自动 search 到这条，越画越准。")
+        if not silent:
+            print(f"✅ 已写入记忆: {path.relative_to(root)}")
+            print(f"⚠️ 口味/知识同步跳过: {ex}")
+        else:
+            print(f"「小提示」已记下")
     return 0
 
 

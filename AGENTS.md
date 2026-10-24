@@ -17,14 +17,18 @@
 | **`/pmem-critique`** | **`/art-check`** | **主美级五维审稿与红线入库**：对照项目记忆给图片打分挑刺，并将翻车点记入 `style_redline` |
 | **`/pmem-variant`** | **`/art-variant`** | **跨画风分叉与表情/动作差分**：继承角色核心锚点，派生水彩/Q版/像素子模块或序列帧差分 |
 | **`/pmem-atlas`** | **`/art-map`** | **一键整理散图并刷新 `art-atlas.html` 可视化图谱** |
-| **`/pmem-improve`** | **`/art-improve`** | **自我迭代**：反思→口味档案→进步曲线（越用越好） |
-| **`/pmem-coach`** | **`/art-coach`** | **能力教练**：短板分类→练习→下一张可画目标 + 每轮「本轮可学」 |
-| **`/pmem-learn`** | **`/art-learn`** | **知识广度**：技法/光影/镜头/UI 模式卡片自动扩展 |
+| **`/pmem-improve`** | **`/art-improve`** | **【进阶 peek】** 自我迭代报告（日常 finish 已静默跑） |
+| **`/pmem-coach`** | **`/art-coach`** | **【进阶 peek】** 能力教练练习计划 |
+| **`/pmem-learn`** | **`/art-learn`** | **【进阶 peek】** 知识广度建议（finish 已静默 enqueue） |
 
-### 2. 日常自然语言反馈沉淀（无需手写 YAML）
+### 2. 静默自动驾驶（默认）
+- `converge finish --apply` 与高信号 `feedback` 后：自动写反思、更新 taste、强化 recipe/红线、悄悄排队 learn——对用户最多一行「小提示」。
+- Agent **不要**旁白记忆写入；全量报告用 `--verbose` 或上述进阶技能。
+
+### 3. 日常自然语言反馈沉淀（无需手写 YAML）
 - 生图前先运行：`python3 pmem_art.py search --module <模块>` 或 `python3 pmem_art.py search "<关键词>"`
 - 当画师说「太赛博 / 头太大 / 别这样画 / 这版留着 / 换成水彩 / 以后都用…」时，立即运行：
   `python3 pmem_art.py feedback "<画师原话>" --module <模块> [--asset <图片路径>]`
-- 运行闭环收敛追踪器：`python3 pmem_art.py converge start|round|finish`
+- 运行闭环收敛追踪器：`python3 pmem_art.py converge start|round|finish`（finish 默认静默）
 <!-- pmem-art:skills:end -->
 

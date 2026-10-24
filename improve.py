@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """
-pmem-art improve: 连续自我迭代 — warm-start 首轮提速 + 会话反思 + 个人口味档案 + 进步曲线。
+pmem-art improve: 连续自我迭代 — warm-start + 会话反思 + 口味档案 + 进步曲线。
 
-心智模型：
-  converge finish → 写 session reflection → /pmem-improve 扫描反思+反馈+红线
-  → 更新 .memory-art/_profile/taste.json 与模块 recipe 强化建议 → 下次 warm-start 更准。
+默认心智（静默自动驾驶 / Whisper Autopilot）：
+  converge finish / 高信号 feedback → 后台自动写反思、更新 taste、强化 recipe/红线、
+  悄悄 enqueue 1–2 条 learn 建议 → 最多吐出一行「小提示」。
+  /pmem-improve · /pmem-coach · /pmem-learn · progress 为进阶 peek（--verbose 看全量）。
 """
 from __future__ import annotations
 
@@ -372,7 +373,8 @@ TEMP_HINTS = [
 ]
 BAN_HINTS = [
     (r"太赛博|赛博|霓虹紫|霓虹", "赛博霓虹/霓虹紫"),
-    (r"头太大|头身不对|幼态头身", "错误头身比/头过大"),
+    (r"头太大|头身不对|幼态头身|头身比", "错误头身比/头过大"),
+    (r"过曝|爆高光|高光过曝", "过曝高光"),
     (r"塑料感|油腻高光", "廉价塑料感/油腻高光"),
     (r"脏暗|脏色", "脏暗阴影/脏色"),
     (r"漏抠|黑底|毛边", "漏抠/黑底/毛边"),
@@ -567,10 +569,19 @@ def cmd_improve(
     *,
     last_n: int = 20,
     apply: bool = True,
+    silent: bool = False,
 ) -> int:
     if action in ("run", "reflect", ""):
         report = run_improve_pass(root, data, last_n=last_n, apply=apply)
-        print("🧠 `/pmem-improve` 自我迭代完成" + ("（dry-run）" if not apply else ""))
+        if silent:
+            tip = compose_whisper_tip(
+                taste_changes=list(report.get("taste_changes") or []),
+                defects=(report.get("top_recurring_defects") or [{}])[0].get("text", "") if report.get("top_recurring_defects") else "",
+            )
+            if tip and try_consume_tip_budget(root, f"improve:{_now_cst().strftime('%Y%m%d%H')}"):
+                print_whisper_tip(tip)
+            return 0
+        print("🧠 `/pmem-improve` 自我迭代完成" + ("（dry-run）" if not apply else "") + "（进阶 peek）")
         print(f"   · 扫描反思会话: {report.get('reflections_scanned')} 份（最近 {last_n}）")
         if report.get("avg_winner_score") is not None:
             print(f"   · 近期平均胜出分: {report['avg_winner_score']}")
@@ -591,6 +602,7 @@ def cmd_improve(
             for r in report["recipe_strengthen"][:5]:
                 print(f"      · [{r.get('module')}] {r.get('summary')}")
         print(f"   · 档案路径: .memory-art/_profile/taste.json")
+        print("   · 日常已静默自动驾驶；本命令为可选 peek。")
         return 0
 
     if action == "progress":
@@ -850,13 +862,294 @@ def craft_lessons_from_round(
     return lessons[:3]
 
 
-def print_round_lessons(lessons: list[dict[str, str]]) -> None:
+def print_round_lessons(lessons: list[dict[str, str]], *, silent: bool = False) -> None:
     if not lessons:
+        return
+    if silent:
         return
     print("📚 本轮可学（能力提升）:")
     for i, L in enumerate(lessons, 1):
         print(f"   {i}. [{L.get('category')}] {L.get('lesson')}")
         print(f"      → 练习: {L.get('drill')}")
+
+
+# ---------------------------------------------------------------------------
+# Whisper Autopilot — invisible self-improve by default（静默自动驾驶）
+# ---------------------------------------------------------------------------
+
+CATEGORY_TIP_ZH: dict[str, str] = {
+    "composition": "构图",
+    "lighting": "光影",
+    "anatomy": "结构/手部",
+    "color_palette": "色板",
+    "line_edge": "边缘/描边",
+    "ui_9slice": "九宫格",
+    "material": "材质高光",
+    "narrative_camera": "镜头叙事",
+    "icon_consistency": "图标一致性",
+    "style_lock": "画风锁定",
+    "keep": "保留亮点",
+}
+
+TIP_BUDGET_FILE = "tip_budget.json"
+
+
+def tip_budget_path(root: Path) -> Path:
+    return profile_dir(root) / TIP_BUDGET_FILE
+
+
+def _load_tip_budget(root: Path) -> dict[str, Any]:
+    p = tip_budget_path(root)
+    if not p.is_file():
+        return {"sessions_tipped": {}, "updated_at": ""}
+    try:
+        return json.loads(p.read_text(encoding="utf-8"))
+    except Exception:
+        return {"sessions_tipped": {}, "updated_at": ""}
+
+
+def try_consume_tip_budget(root: Path, session_key: str) -> bool:
+    """At most 1 tip per session finish (or feedback burst key). Returns True if tip allowed."""
+    key = (session_key or "latest").strip() or "latest"
+    bud = _load_tip_budget(root)
+    tipped = bud.setdefault("sessions_tipped", {})
+    if tipped.get(key):
+        return False
+    tipped[key] = _now_cst().strftime("%Y-%m-%d %H:%M:%S UTC+8")
+    # prune old keys (keep last 40)
+    if len(tipped) > 40:
+        for k in sorted(tipped.keys())[:-40]:
+            tipped.pop(k, None)
+    bud["updated_at"] = tipped[key]
+    tip_budget_path(root).write_text(json.dumps(bud, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return True
+
+
+def _short_phrase(text: str, n: int = 18) -> str:
+    """Trim to n chars; strip leading negations so '不要'+phrase won't double-negate."""
+    t = re.sub(r"\s+", "", (text or "").strip())
+    t = re.sub(r"^(别再|不要再|别|不要|别太|别这么|别这样|禁止|严禁)", "", t)
+    t = t.strip("，。,.！!：:；;、 ")
+    return t[:n] if t else ""
+
+
+
+
+def compose_whisper_tip(
+    *,
+    lessons: list[dict[str, str]] | None = None,
+    defects: str = "",
+    strengths: str = "",
+    taste_changes: list[str] | None = None,
+    banned_new: list[str] | None = None,
+    score_jump: float | None = None,
+    winner_passed: bool | None = None,
+    feedback_kind: str = "",
+    feedback_text: str = "",
+) -> str | None:
+    """One-line 「小提示」. Prefer remember/redline, else next-time focus. None if nothing useful."""
+    lessons = lessons or []
+    taste_changes = taste_changes or []
+    banned_new = banned_new or []
+
+    # 0) Explicit feedback wins (highest signal, shortest phrase)
+    if feedback_kind == "style_redline" and feedback_text:
+        hits = _extract_hints(feedback_text, BAN_HINTS)
+        phrase = _short_phrase(hits[0], 16) if hits else _short_phrase(feedback_text, 16)
+        phrase = phrase or "这条红线"
+        return f"「小提示」已记住：不要{phrase}"
+    if feedback_kind == "recipe" and feedback_text:
+        phrase = _short_phrase(feedback_text, 16) or "这版"
+        return f"「小提示」已记住：留着「{phrase}」"
+    if feedback_kind in ("visual_correction", "art_decision") and feedback_text:
+        hits = _extract_hints(feedback_text, BAN_HINTS)
+        if hits:
+            return f"「小提示」已记住：不要{_short_phrase(hits[0], 16)}"
+        phrase = _short_phrase(feedback_text, 16)
+        if phrase:
+            return f"「小提示」下次注意：{phrase}"
+
+    def _clean_ban(raw: str) -> str | None:
+        # Prefer BAN_HINTS extractions; skip long memory-summary junk
+        hits = _extract_hints(raw, BAN_HINTS)
+        if hits:
+            return _short_phrase(hits[0], 16)
+        short = _short_phrase(raw, 16)
+        if not short or len(raw) > 40 or "收敛" in raw or "避免「" in raw:
+            return None
+        return short
+
+    def _session_focus() -> str | None:
+        # Prefer concrete ban/defect phrase, then category label
+        blob = " ".join(
+            [defects or ""]
+            + [str(L.get("lesson") or "") for L in lessons if (L.get("category") or "") != "keep"]
+        )
+        hits = _extract_hints(blob, BAN_HINTS)
+        if hits:
+            return f"「小提示」下次注意：{_short_phrase(hits[0], 14)}"
+        for L in lessons:
+            cat = L.get("category") or ""
+            if cat and cat != "keep":
+                label = CATEGORY_TIP_ZH.get(cat, cat)
+                return f"「小提示」下次注意：{label}"
+        cats = classify_weakness(defects or "")
+        if cats:
+            label = CATEGORY_TIP_ZH.get(cats[0], cats[0])
+            return f"「小提示」下次注意：{label}"
+        if defects:
+            phrase = _short_phrase(defects, 14)
+            if phrase:
+                return f"「小提示」下次注意：{phrase}"
+        return None
+
+    # 1) This-session focus (converge finish) — beats global banned noise
+    if not feedback_kind:
+        focus = _session_focus()
+        if focus:
+            return focus
+
+    # 2) Newly remembered ban / redline (from taste delta / feedback)
+    for b in banned_new:
+        phrase = _clean_ban(b)
+        if phrase:
+            return f"「小提示」已记住：不要{phrase}"
+
+    # 3) Taste change remember
+    for ch in taste_changes:
+        if "banned_habits" in ch:
+            bit = ch.split(":", 1)[-1].strip().lstrip("+").strip()
+            phrase = _clean_ban(bit.split(",")[0])
+            if phrase:
+                return f"「小提示」已记住：不要{phrase}"
+        if "preferred_" in ch:
+            bit = ch.split(":", 1)[-1].strip().lstrip("+").strip()
+            phrase = _short_phrase(bit.split(",")[0], 14)
+            if phrase and len(bit.split(",")[0]) <= 40:
+                return f"「小提示」已记住：偏爱{phrase}"
+
+    # 4) Score jump celebration (quiet)
+    if score_jump is not None and score_jump >= 1.0 and winner_passed:
+        return f"「小提示」这轮跳了 +{score_jump:.1f}，口味已悄悄变强"
+
+    # 5) Fallback session focus (e.g. feedback path with defects)
+    focus = _session_focus()
+    if focus:
+        return focus
+    return None
+
+
+def run_silent_autopilot(
+    root: Path,
+    data: dict[str, Any],
+    *,
+    session_id: str = "latest",
+    lessons: list[dict[str, str]] | None = None,
+    defects: str = "",
+    strengths: str = "",
+    winner: dict[str, Any] | None = None,
+    rounds: list[dict[str, Any]] | None = None,
+    source: str = "converge_finish",
+    feedback_kind: str = "",
+    feedback_text: str = "",
+    force_tip: bool = False,
+    enqueue_learn: int = 2,
+) -> dict[str, Any]:
+    """
+    Invisible self-improve: update taste, strengthen from reflections, quietly stash
+    1–2 learn proposals. Returns tip (or None) under tip budget (≤1 per session).
+    """
+    lessons = lessons or []
+    winner = winner or {}
+    rounds = rounds or []
+
+    report = run_improve_pass(root, data, last_n=20, apply=True)
+    proposals: list[dict[str, Any]] = []
+    if enqueue_learn > 0:
+        try:
+            proposals = propose_breadth_expansions(root, data, limit=enqueue_learn)
+            if proposals:
+                stash = profile_dir(root) / "learn_proposals.json"
+                stash.write_text(
+                    json.dumps(
+                        {
+                            "proposals": proposals,
+                            "at": _now_cst().strftime("%Y-%m-%d %H:%M:%S UTC+8"),
+                            "source": source,
+                            "silent": True,
+                        },
+                        ensure_ascii=False,
+                        indent=2,
+                    )
+                    + "\n",
+                    encoding="utf-8",
+                )
+        except Exception:
+            proposals = []
+
+    # detect newly banned from taste_changes
+    banned_new: list[str] = []
+    for ch in report.get("taste_changes") or []:
+        if "banned_habits" in str(ch):
+            bit = str(ch).split(":", 1)[-1].strip().lstrip("+").strip()
+            for part in bit.split(","):
+                part = part.strip()
+                if part:
+                    banned_new.append(part)
+
+    score_jump = None
+    if rounds and winner.get("score") is not None:
+        try:
+            scores = [float(r.get("score", 0)) for r in rounds]
+            if len(scores) >= 2:
+                score_jump = float(winner["score"]) - min(scores)
+        except (TypeError, ValueError):
+            score_jump = None
+
+    tip = compose_whisper_tip(
+        lessons=lessons,
+        defects=defects or str(winner.get("defects") or ""),
+        strengths=strengths or str(winner.get("strengths") or ""),
+        taste_changes=list(report.get("taste_changes") or []),
+        banned_new=banned_new,
+        score_jump=score_jump,
+        winner_passed=bool(winner.get("passed")) if winner else None,
+        feedback_kind=feedback_kind,
+        feedback_text=feedback_text,
+    )
+
+    tip_emitted = None
+    budget_key = f"{source}:{session_id}"
+    if tip and (force_tip or try_consume_tip_budget(root, budget_key)):
+        tip_emitted = tip
+    elif tip and not force_tip:
+        tip_emitted = None  # budget exhausted — stay quiet
+
+    # sidecar for agents / peek
+    side = {
+        "ran_at": _now_cst().strftime("%Y-%m-%d %H:%M:%S UTC+8"),
+        "source": source,
+        "session_id": session_id,
+        "tip": tip_emitted,
+        "tip_candidate": tip,
+        "taste_changes": report.get("taste_changes") or [],
+        "learn_queued": [p.get("id") for p in proposals],
+        "avg_winner_score": report.get("avg_winner_score"),
+    }
+    (profile_dir(root) / "last_autopilot.json").write_text(
+        json.dumps(side, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
+    return {
+        "tip": tip_emitted,
+        "report": report,
+        "proposals": proposals,
+        "sidecar": side,
+    }
+
+
+def print_whisper_tip(tip: str | None) -> None:
+    if tip:
+        print(tip)
 
 
 def build_coach_plan(
@@ -1227,26 +1520,28 @@ def cmd_learn(
     accept_all: bool = False,
     seed_modules: bool = False,
     ids: list[str] | None = None,
+    silent: bool = False,
 ) -> int:
     if action in ("suggest", "propose", ""):
         props = propose_breadth_expansions(root, data, limit=limit)
-        print("🌍 `/pmem-learn` 知识广度扩展建议\n")
+        stash = profile_dir(root) / "learn_proposals.json"
+        stash.write_text(json.dumps({"proposals": props, "at": _now_cst().strftime("%Y-%m-%d %H:%M:%S UTC+8"), "silent": silent}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        if silent:
+            return 0
+        print("🌍 `/pmem-learn` 知识广度扩展建议（进阶 peek）\n")
         if not props:
-            print("   · 暂无新建议（知识库已较完整，或模块仍空）。可先多跑 converge / feedback。")
+            print("   · 暂无新建议（知识库已较完整，或模块仍空）。日常已在 finish 后静默 enqueue。")
             return 0
         for i, p in enumerate(props, 1):
             print(f"   {i}. [{p.get('kind')}] {p.get('title')}  ({p.get('id')})")
             print(f"      原因: {p.get('reason')}")
             if p.get("optional_module_stub"):
                 print(f"      可选模块种子: {p['optional_module_stub']}")
-        # stash proposals for accept
-        stash = profile_dir(root) / "learn_proposals.json"
-        stash.write_text(json.dumps({"proposals": props, "at": _now_cst().strftime("%Y-%m-%d %H:%M:%S UTC+8")}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         print(f"\n   · 建议已暂存: .memory-art/_profile/learn_proposals.json")
         print("   · 接受全部: python3 pmem_art.py learn accept --all")
         print("   · 接受指定: python3 pmem_art.py learn accept --ids id1,id2")
         if accept_all:
-            return cmd_learn(root, data, "accept", accept_all=True, seed_modules=seed_modules, limit=limit)
+            return cmd_learn(root, data, "accept", accept_all=True, seed_modules=seed_modules, limit=limit, silent=False)
         return 0
 
     if action == "accept":

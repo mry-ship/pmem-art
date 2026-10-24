@@ -14,7 +14,7 @@ pmem-art skills_kit:
 2. 提供 `pmem_art.py converge` 闭环收敛状态机与评分表生成器：
    - 记录第 1..8 轮生图的路径、五维评分、合理亮点、不合理缺陷与下一轮叠加修正指令
    - 判定 `>= 9.5` 立即达标收敛；若满 8 轮仍 `< 9.5`，自动挑选全阶段最高分轮次胜出
-   - 输出标准 Markdown 全轮次评分优劣对比表，并将胜出图配方与翻车红线自动写入 `.memory-art/`
+   - finish 默认静默自动驾驶（写反思/口味/learn 队列），只吐一行「小提示」；`--verbose` 才打全量 Markdown 总表
 """
 from __future__ import annotations
 
@@ -135,14 +135,21 @@ python3 pmem_art.py converge finish --apply
 2. 将最终胜出图通过 `ingest` / `feedback` 写入 `.memory-art` 的 `recipe`（正向定稿锚点），并把迭代过程中暴露的典型不合理点写入 `style_redline` / `visual_correction`。
 3. 生成标准 Markdown 汇总表。
 
-**你在最终回复中必须向用户完整展示：**
-1. 🏆 **最终胜出图片展示与结论**（说明是第几轮 `>= 9.5` 达标收敛，还是满 8 轮挑出第 X 轮最高分 `X.X / 10`）。
-2. 📊 **全阶段生图收敛评分总表**（包含每一轮的：轮次、图片路径、五维得分与总分、合理/亮点之处、**不合理/缺陷之处**、叠加修正方案、是否胜出）。
-3. ⚠️ **最终图的残余注意点与已沉淀的记忆条目**（让下次生同类图起点更高）。
-4. 📚 **本轮可学**（1~3 条手艺课，绑定本轮缺陷/修正）+ 提醒可跑 `/pmem-improve` / `/pmem-coach` / `/pmem-learn`。
+**对用户的默认展示（静默自动驾驶 · Whisper）：**
+1. 🏆 **最终胜出图** + 一句结论（第几轮达标 / 满8轮最高分）。
+2. 💡 若 CLI 打出一行 **「小提示」**（如「下次注意：头身比」/「已记住：不要过曝高光」），**原样转述给用户**——整次会话最多 1 条，不要扩写成教练长文。
+3. **禁止**向用户旁白「正在写反思 / 更新 taste / 入队 learn / 沉淀红线」；这些已在 `finish --apply` 后台静默完成。
+4. 用户没要详情时，**不要**倾倒全轮次评分总表、本轮可学清单、improve/coach/learn 推销。需要全量时让用户加 `--verbose` 或主动说「看报告 / 进步 / 教练」。
 
-### 闭环总览（生成 → 评分教学 → 记忆 → 变强 → 变广 → 下次更暖）
-`warm-start → (可选 best-of-N) → 8×≥9.5 / fast-track → finish 反思 → improve 口味+能力 → learn 广度 → 下次 warm-start 更准`
+### Agent 后台（对用户不可见）
+`finish --apply` 已自动：写 recipe/红线 + 会话反思 + `run_silent_autopilot`（更新 taste、强化配方、悄悄 enqueue 1–2 条 learn 建议）。
+
+### 闭环总览（用户几乎无感）
+`装上就用 → 画 → 偶尔一行小提示 → 系统自己变强；进阶 peek：improve/coach/learn/progress/--verbose`
+## 静默自动驾驶（Agent 必读 · 对用户几乎无感）
+- `converge finish --apply` 后系统**自动**写反思、更新 `taste.json`、强化 recipe/红线、悄悄排队 1–2 条知识建议——**无需**再跑 `/pmem-improve` / `/pmem-learn`。
+- 对用户只展示：**胜出图 + 结论**；若 stdout 有「小提示」则原样转述（每会话最多 1 条）。
+- **不要**叙述「已写入记忆 / 正在自我迭代 / 建议你跑 coach」。用户想看详情时用 `/pmem-progress`·`/pmem-coach`·`--verbose`（进阶/可选）。
 """,
     },
     {
@@ -188,7 +195,7 @@ python3 pmem_art.py converge finish --apply
    - 明确列出 **✅ 合理亮点** 与 **❌ 不合理/需返修点**，并给出可直接用于下一轮重绘的 **修正 Prompt 建议**。
 3. **自动沉淀红线**：
    - 若评分 `< 9.5` 或用户认可某条挑刺结论，调用 `python3 pmem_art.py feedback "<具体不合理点>" --module <模块> --asset <图片路径>` 自动写入记忆库。
-4. **本轮可学**：根据不合理点输出 1~3 条具体手艺课（构图/光影/解剖/九宫格…），并提示可跑 `/pmem-coach` 生成练习计划。
+4. **静默默认**：向用户最多一句「小提示」（如「下次注意：光影」）；完整教练报告仅当用户明确要 `/pmem-coach` 或 `--verbose`。
 """,
     },
     {
@@ -261,7 +268,7 @@ python3 pmem_art.py converge finish --apply
 ```
 
 ## 原理（截图摘要）
-1. `search` 召回 `ui.*` 红线与定稿 → 2. **概念先行**（整屏统一画风，禁止散生硬拼）→ 3. 透明组件表 → 4. 九宫格 + 状态族 + `manifest.json` → 5. **Warm-Start → 可选 fast/Best-of-N → 强制 8轮 ≥9.5** → 反思 → improve/coach/learn（能力+广度）
+1. `search` 召回 `ui.*` 红线与定稿 → 2. **概念先行** → 3. 透明组件表 → 4. 九宫格 + 状态族 → 5. **强制 8轮 ≥9.5** → `finish` **静默自动驾驶**（只转述一行小提示；勿旁白记忆写入）
 
 你现在运行在 **pmem-art UI Kit 模式**（对标 SpriteCook UI Kit Builder：概念先行 → 组件表 → 九宫格切线 → 状态族）。**禁止**把整屏各控件零散各生一张再硬拼；必须先锁一个统一视觉语言的概念稿，再从同一概念抽出可复用零件。
 
@@ -330,6 +337,12 @@ python3 pmem_art.py feedback "UI套件色板与九宫格规范：<摘要>" --mod
 1. 概念稿 + 组件表 + `elements/` + `manifest.json`（含九宫格）
 2. 若跑了收敛：全轮次评分优劣总表
 3. 已写入 `.memory-art` 的 recipe / redline 路径
+
+
+## 静默自动驾驶（Agent 必读）
+- `converge finish --apply` 后系统自动写反思/口味/learn 队列——**无需**再跑 `/pmem-improve`。
+- 对用户只展示胜出图 + 结论；若有「小提示」原样转述（每会话最多 1 条）。**禁止**旁白记忆写入。
+- 全量报告 / 教练 / 广度：用户明确要求或 `--verbose` / 进阶技能时再给。
 """,
     },
     {
@@ -357,7 +370,7 @@ python3 pmem_art.py feedback "UI套件色板与九宫格规范：<摘要>" --mod
 ```
 
 ## 原理（截图摘要）
-1. **Warm-Start + 与 draw 同等 8×≥9.5** → 2. `search`/口味召回 → 3. **FLUX 完整句** → 4. 垫图解构 → 5. `converge`（可 `--mode fast`）→ 6. 反思 + `/pmem-improve`/`/pmem-learn`
+1. **Warm-Start + 与 draw 同等 8×≥9.5** → 2. `search`/口味召回 → 3. **FLUX 完整句** → 4. 垫图解构 → 5. `converge` → 6. `finish` 静默自动驾驶（一行小提示；improve/learn 为进阶 peek）
 
 你现在运行在 **pmem-art 原画 / 概念图 / Key Art 模式**（对标 ZHO Comfy-FLUX 与 Yolain 等 FLUX 系提示法）：用 **完整自然语言句子** 描述成片，**主体与构图靠前**；FLUX 系几乎无有效负向 Prompt，排斥项用正向措辞写进正文。
 
@@ -407,6 +420,12 @@ python3 pmem_art.py converge finish --apply
 ## 四、与 `/pmem-draw` 的分工
 - **`/pmem-draw`**：通用单图收敛（角色立绘、道具、单件 UI 等）
 - **`/pmem-concept`**：专门服务 **概念图 / Key Art / 气氛图**，强制 FLUX 式完整句 Prompt 与叙事构图标准
+
+
+## 静默自动驾驶（Agent 必读）
+- `converge finish --apply` 后系统自动写反思/口味/learn 队列——**无需**再跑 `/pmem-improve`。
+- 对用户只展示胜出图 + 结论；若有「小提示」原样转述（每会话最多 1 条）。**禁止**旁白记忆写入。
+- 全量报告 / 教练 / 广度：用户明确要求或 `--verbose` / 进阶技能时再给。
 """,
     },
     {
@@ -503,100 +522,94 @@ python3 pmem_art.py ingest icons/preview.html -p "icon set preview" --apply   # 
 - [ ] 全部 `currentColor`
 - [ ] 视觉重量平衡、padding 一致、光学居中
 - [ ] 文件名 kebab-case；`preview.html` + `style-spec.json` 齐全
-- [ ] 若跑了收敛：附评分总表
+- [ ] 若跑了收敛：胜出图 + 一行小提示即可（全表仅 --verbose）
+
+## 静默自动驾驶（Agent 必读）
+- `converge finish --apply` 后系统自动写反思/口味/learn 队列——**无需**再跑 `/pmem-improve`。
+- 对用户只展示胜出图 + 结论；若有「小提示」原样转述（每会话最多 1 条）。**禁止**旁白记忆写入。
+- 全量报告 / 教练 / 广度：用户明确要求或 `--verbose` / 进阶技能时再给。
 """,
     },
     {
         "name": "pmem-improve",
         "alias": "art-improve",
-        "title": "自我迭代：反思→口味档案→进步曲线（越用越好）",
+        "title": "【进阶/可选】自我迭代 peek：反思→口味→进步（日常已静默自动驾驶）",
         "description": (
             "当用户说「提升/自我迭代/总结这次/越用越好」或输入 /pmem-improve /art-improve 时触发。"
             "扫描会话反思与反馈红线，更新个人口味档案 taste.json，并汇报进步曲线。"
         ),
-        "body": r"""# `/pmem-improve`（别名 `/art-improve`）— 连续自我迭代
+        "body": r"""# `/pmem-improve`（别名 `/art-improve`）— 【进阶/可选】自我迭代 peek
 
-## 怎么用（复制即用）
+> **日常不用喊这个。** `converge finish` / 高信号 `feedback` 后系统已**静默自动驾驶**：写反思、更新口味、强化配方、排队知识建议，最多一行「小提示」。
+
+## 什么时候用
+想**主动偷看**进步曲线、口味档案变了什么时：
 ```text
 /pmem-improve
 /art-improve 总结最近几次，看看我哪里变强了
-提升一下 / 自我迭代 / 越用越好
 ```
 
-## 原理（截图摘要）
-1. 每次 `converge finish --apply` 已自动写会话反思 → 2. 本技能扫描反思+反馈+红线 → 3. 更新 `.memory-art/_profile/taste.json` → 4. 打印进步曲线与「变聪明了什么」
+## 原理
+`finish --apply` → 反思 JSON + silent autopilot → taste.json；本技能只是把后台已经做过的事**大声读一遍**。
 
-## 个人进步
-系统会汇总近 7/30 次胜出分、收敛轮次、高频红线，并降低重复短板——**越用越好**。
-
-### 标准命令
 ```bash
-python3 pmem_art.py improve run          # 自我迭代（更新口味档案）
+python3 pmem_art.py improve run          # 完整报告（peek）
 python3 pmem_art.py progress             # 进步曲线
-python3 pmem_art.py taste show           # 查看口味档案
-python3 pmem_art.py coach                # 能力教练计划（弱项→练习→下一张目标）
+python3 pmem_art.py taste show
+python3 pmem_art.py coach                # 能力教练（进阶）
 ```
-
-向用户用中文汇报：扫描了多少反思、口味新增了什么、短板是否在下降。
 """,
     },
     {
         "name": "pmem-coach",
         "alias": "art-coach",
-        "title": "能力教练：短板分类→练习钻→下一张可画目标",
+        "title": "【进阶/可选】能力教练 peek：短板→练习→下一张目标",
         "description": (
             "当用户输入 /pmem-coach 或 /art-coach，或说「练什么/我的短板/能力提升计划」时触发。"
             "把红线与会话反思归类为构图/光影/解剖/九宫格等能力维，输出个人练习计划与下一张绘制目标。"
         ),
-        "body": r"""# `/pmem-coach`（别名 `/art-coach`）— 个人能力教练
+        "body": r"""# `/pmem-coach`（别名 `/art-coach`）— 【进阶/可选】能力教练 peek
+
+> 日常收敛只会给一行「小提示」。本技能用于你**主动要练习计划**时。
 
 ## 怎么用
 ```text
 /pmem-coach
 /art-coach 我最近老是翻车，给我练习计划
-练什么 / 我的短板 / 能力提升
 ```
 
 ## 原理
-红线 + `_reflections/` → 短板类别计数 → 配套 drills → `next_draw_goals`；进步看短板类别是否随时间下降（不只看分数）。
+红线 + `_reflections/` → 短板类别 → drills → `next_draw_goals`。
 
 ```bash
 python3 pmem_art.py coach
-python3 pmem_art.py progress   # 含能力短板趋势
+python3 pmem_art.py progress
 ```
-
-每轮 converge/critique 后 Agent 还应输出 **「本轮可学」** 1~3 条（与缺陷/修正绑定的具体手艺课）。
 """,
     },
     {
         "name": "pmem-learn",
         "alias": "art-learn",
-        "title": "知识广度：自动扩展技法/光影/镜头/UI 模式卡片",
+        "title": "【进阶/可选】知识广度 peek：技法/光影/镜头/UI 卡片（finish 已静默 enqueue）",
         "description": (
             "当用户输入 /pmem-learn 或 /art-learn，或说「扩展知识/学新技法/补广度」时触发。"
             "根据已有域与缺口提出 3~5 条广度扩展（技法卡/风格分叉/相邻模块种子），接受后写入 .memory-art/_knowledge/。"
         ),
-        "body": r"""# `/pmem-learn`（别名 `/art-learn`）— 知识广度自动扩展
+        "body": r"""# `/pmem-learn`（别名 `/art-learn`）— 【进阶/可选】知识广度 peek
+
+> `finish` 后已**静默 enqueue** 1–2 条建议到 `learn_proposals.json`。本技能用于查看/接受/补提更多。
 
 ## 怎么用
 ```text
 /pmem-learn
-/art-learn 我角色画得多，场景光影词汇不够
-扩展知识 / 补广度 / 学新技法
+/art-learn 看看排队的知识卡
 ```
-
-## 原理
-反馈新词 · 参考图解构 · improve 发现邻域缺口 → 提案 3~5 张知识卡 → 你说「接受」写入 `_knowledge/`（可选空模块种子）→ 下次 warm-start 更博。
 
 ```bash
-python3 pmem_art.py learn suggest
+python3 pmem_art.py learn suggest          # 大声列出建议（peek）
 python3 pmem_art.py learn accept --all
-python3 pmem_art.py learn accept --ids tech-watercolor,light-rim
 python3 pmem_art.py learn list
 ```
-
-## 个人进步
-广度与深度双轮：converge 加深手艺，learn 拓宽技法库，improve 固化口味。
 """,
     },
 ]
@@ -643,15 +656,19 @@ def _render_agent_doc_block() -> str:
 | **`/pmem-critique`** | **`/art-check`** | **主美级五维审稿与红线入库**：对照项目记忆给图片打分挑刺，并将翻车点记入 `style_redline` |
 | **`/pmem-variant`** | **`/art-variant`** | **跨画风分叉与表情/动作差分**：继承角色核心锚点，派生水彩/Q版/像素子模块或序列帧差分 |
 | **`/pmem-atlas`** | **`/art-map`** | **一键整理散图并刷新 `art-atlas.html` 可视化图谱** |
-| **`/pmem-improve`** | **`/art-improve`** | **自我迭代**：反思→口味档案→进步曲线（越用越好） |
-| **`/pmem-coach`** | **`/art-coach`** | **能力教练**：短板分类→练习→下一张可画目标 + 每轮「本轮可学」 |
-| **`/pmem-learn`** | **`/art-learn`** | **知识广度**：技法/光影/镜头/UI 模式卡片自动扩展 |
+| **`/pmem-improve`** | **`/art-improve`** | **【进阶 peek】** 自我迭代报告（日常 finish 已静默跑） |
+| **`/pmem-coach`** | **`/art-coach`** | **【进阶 peek】** 能力教练练习计划 |
+| **`/pmem-learn`** | **`/art-learn`** | **【进阶 peek】** 知识广度建议（finish 已静默 enqueue） |
 
-### 2. 日常自然语言反馈沉淀（无需手写 YAML）
+### 2. 静默自动驾驶（默认）
+- `converge finish --apply` 与高信号 `feedback` 后：自动写反思、更新 taste、强化 recipe/红线、悄悄排队 learn——对用户最多一行「小提示」。
+- Agent **不要**旁白记忆写入；全量报告用 `--verbose` 或上述进阶技能。
+
+### 3. 日常自然语言反馈沉淀（无需手写 YAML）
 - 生图前先运行：`python3 pmem_art.py search --module <模块>` 或 `python3 pmem_art.py search "<关键词>"`
 - 当画师说「太赛博 / 头太大 / 别这样画 / 这版留着 / 换成水彩 / 以后都用…」时，立即运行：
   `python3 pmem_art.py feedback "<画师原话>" --module <模块> [--asset <图片路径>]`
-- 运行闭环收敛追踪器：`python3 pmem_art.py converge start|round|finish`
+- 运行闭环收敛追踪器：`python3 pmem_art.py converge start|round|finish`（finish 默认静默）
 {AGENT_DOC_MARKER_END}
 """
 
@@ -772,11 +789,16 @@ def cmd_converge(
     apply_memory: bool = True,
     converge_mode: str = "quality",
     draft_ok: bool = False,
+    verbose: bool = False,
+    silent: bool = True,
 ) -> int:
     """
     converge_mode: quality (default, full 8×≥9.5) | fast (warm-start fast-track hints).
     draft_ok: if True (user said 草稿/fast), final accept may use soft threshold in fast mode.
+    silent: default True — finish/round 少说话，后台 autopilot；verbose=True 打全量报告。
     """
+    if verbose:
+        silent = False
     sf = _session_file(root, session_id)
     converge_mode = (converge_mode or "quality").lower()
     if converge_mode not in ("quality", "fast"):
@@ -954,13 +976,13 @@ def cmd_converge(
 
         sf.write_text(json.dumps(sess, ensure_ascii=False, indent=2), encoding="utf-8")
         print(msg)
-        print_round_lessons(lessons)
+        print_round_lessons(lessons, silent=silent)
         return 0
 
     if action in ("finish", "table", "status"):
         if not rounds:
-            print("❌ 当前收敛会话没有任何轮次记录。")
-            return 1
+            print("ℹ️ 当前收敛会话还没有轮次记录（先 round 再 status/finish）。")
+            return 0
 
         accept_th = float(sess.get("accept_threshold") or th)
         if sess.get("draft_ok") and (sess.get("fast_track") or sess.get("converge_mode") == "fast"):
@@ -1040,6 +1062,7 @@ def cmd_converge(
 
         saved_paths: list[str] = []
         reflection_path = None
+        tip = None
         if action == "finish" and apply_memory:
             from feedback import write_memory_entry
             from improve import write_session_reflection
@@ -1092,10 +1115,8 @@ def cmd_converge(
                 saved_paths.append(str(p_red.relative_to(root)))
 
             # Session reflection for continuous self-improve
-            # attach lessons onto sess for reflection
             sess["lessons_all"] = all_lessons
             reflection_path = write_session_reflection(root, sess, winner=winner, outcome=outcome_str)
-            # also stash lessons into reflection file
             try:
                 import json as _json
                 ref_data = _json.loads(reflection_path.read_text(encoding="utf-8"))
@@ -1111,14 +1132,53 @@ def cmd_converge(
                 md_lines.append(f"- `{sp}`")
             md_lines.append("")
             md_lines.append(
-                "> 🔁 下一步可变强：`python3 pmem_art.py improve run` · "
-                "`python3 pmem_art.py coach` · `python3 pmem_art.py learn suggest`"
+                "> 🔇 静默自动驾驶已跑完（反思 + taste + learn 队列）。"
+                "进阶 peek：`improve run` · `coach` · `learn suggest` · `progress`；全量本表加 `--verbose`。"
             )
+
+            try:
+                from improve import run_silent_autopilot
+                auto = run_silent_autopilot(
+                    root,
+                    data,
+                    session_id=session_id,
+                    lessons=all_lessons,
+                    defects=str(winner.get("defects") or ""),
+                    strengths=str(winner.get("strengths") or ""),
+                    winner=winner,
+                    rounds=rounds,
+                    source="converge_finish",
+                )
+                tip = auto.get("tip")
+            except Exception as ex:
+                tip = None
+                if verbose:
+                    print(f"⚠️ autopilot 跳过: {ex}")
 
         report_text = "\n".join(md_lines)
         report_file = root / ".memory-art" / "converge" / f"{session_id}_report.md"
+        report_file.parent.mkdir(parents=True, exist_ok=True)
         report_file.write_text(report_text + "\n", encoding="utf-8")
-        print(report_text)
+
+        # Default: whisper UX. table/status or --verbose: full Markdown.
+        want_full = (not silent) or action in ("table", "status") or verbose
+        if action == "finish" and silent and not verbose:
+            badge = "✅" if passing_rounds else "🏆"
+            print(
+                f"{badge} 收敛完成 · 第 {winner.get('round')} 轮 "
+                f"{float(winner.get('score', 0)):.1f}/10 · `{winner.get('image')}`"
+            )
+            if tip:
+                from improve import print_whisper_tip
+                print_whisper_tip(tip)
+            elif not apply_memory:
+                print("（未 --apply，跳过静默沉淀）")
+            print(f"📎 全量报告: {report_file.relative_to(root)} （加 --verbose 打印）")
+        else:
+            print(report_text)
+            if tip and action == "finish":
+                from improve import print_whisper_tip
+                print_whisper_tip(tip)
         return 0
 
     if action == "warm":

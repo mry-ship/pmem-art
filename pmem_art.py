@@ -6,7 +6,7 @@ pmem-art: 画师在 Cursor 里越画越准的个人美术积累记忆。
   生图 → 你用自然语言说「哪里不对 / 这版留着 / 换成水彩」→ 记忆长大 → 下次生图自动召回 → 更准。
 
 classify / ingest / domains 仍在后端默默工作；日常入口是 Cursor 对话 + Skills。
-v0.11：Warm-Start / fast-track · 会话反思 · 口味档案 · 能力教练 · 知识广度。
+v0.12：静默自动驾驶（Whisper Autopilot）· 一行小提示 · Warm-Start / coach/learn 进阶 peek。
 零第三方强依赖（Python 3.10+ 标准库）。
 """
 from __future__ import annotations
@@ -24,7 +24,7 @@ import zlib
 from pathlib import Path
 from typing import Any
 
-VERSION = "0.11.0-art"
+VERSION = "0.12.0-art"
 MEMORY_DIR = ".memory-art"
 
 KIND_META = {
@@ -601,6 +601,8 @@ def main() -> int:
     p_fb.add_argument("--asset", "-a", default="", help="关联图片路径（正例/反例）")
     p_fb.add_argument("--kind", default="", help="强制记忆类型；默认自动判定")
     p_fb.add_argument("--dry-run", action="store_true", help="只打印判定，不写文件")
+    p_fb.add_argument("--verbose", "-v", action="store_true", help="详细输出（默认一行小提示）")
+    p_fb.add_argument("--silent", action="store_true", default=True, help="静默（默认）")
 
     p_note = sub.add_parser("note", help="feedback 的别名（更短）")
     p_note.add_argument("text", nargs="?", default="")
@@ -609,6 +611,8 @@ def main() -> int:
     p_note.add_argument("--asset", "-a", default="")
     p_note.add_argument("--kind", default="")
     p_note.add_argument("--dry-run", action="store_true")
+    p_note.add_argument("--verbose", "-v", action="store_true")
+    p_note.add_argument("--silent", action="store_true", default=True)
 
     p_skills = sub.add_parser("skills", help="安装/刷新或列出内置的 Cursor / Claude Code / Codex 美术技能 (/pmem-draw 等)")
     p_skills.add_argument("--install", action="store_true", help="安装或刷新全部技能文件到 .cursor / .claude / .agents")
@@ -636,11 +640,16 @@ def main() -> int:
     p_conv.add_argument("--prompt", "-p", default="", help="本轮使用的 Prompt")
     p_conv.add_argument("--apply", action="store_true", help="finish 时自动将胜出图与踩坑红线写入 .memory-art")
     p_conv.add_argument("--no-apply", action="store_true", help="finish 时仅打印表格不写入记忆")
+    p_conv.add_argument("--verbose", "-v", action="store_true", help="打印全量 Markdown 报告（默认静默：一行结论+小提示）")
+    p_conv.add_argument("--silent", action="store_true", default=True, help="静默自动驾驶（默认开启）")
+    p_conv.add_argument("--no-silent", action="store_true", help="关闭静默，等同 --verbose 的报告倾倒")
 
     p_improve = sub.add_parser("improve", help="自我迭代：扫描反思+反馈 → 更新口味档案（/pmem-improve）")
     p_improve.add_argument("action", nargs="?", default="run", choices=("run", "progress", "reflect"), help="run|progress")
     p_improve.add_argument("--last", type=int, default=20, help="扫描最近 N 份反思")
     p_improve.add_argument("--dry-run", action="store_true", help="只报告不写档案")
+    p_improve.add_argument("--silent", action="store_true", help="静默模式（一行小提示）")
+    p_improve.add_argument("--verbose", "-v", action="store_true", help="完整报告（默认；显式 peek）")
 
     sub.add_parser("progress", help="进步曲线：近7/30胜出分、轮次、能力短板趋势、知识广度")
 
@@ -658,6 +667,7 @@ def main() -> int:
     p_learn.add_argument("--all", dest="accept_all", action="store_true", help="accept 全部建议")
     p_learn.add_argument("--ids", default="", help="accept 指定 id，逗号分隔")
     p_learn.add_argument("--seed-modules", action="store_true", help="接受时写入可选空模块种子")
+    p_learn.add_argument("--silent", action="store_true", help="只写提案不打印（后台用）")
 
     p_hook = sub.add_parser("hook", help="处理 Cursor / Claude Code / Codex 的 Hook 闸门事件")
     p_hook.add_argument("event", choices=("pre-tool", "post-tool", "stop", "pre-gen", "post-asset"))
@@ -755,6 +765,8 @@ def main() -> int:
         return cmd_feedback(
             root, data, text=raw, module=args.module, asset=args.asset,
             kind=args.kind, apply=not args.dry_run,
+            silent=not bool(getattr(args, "verbose", False)),
+            verbose=bool(getattr(args, "verbose", False)),
         )
     if args.command == "converge":
         from skills_kit import cmd_converge
@@ -780,12 +792,15 @@ def main() -> int:
             apply_memory=(not args.no_apply),
             converge_mode=getattr(args, "converge_mode", "quality") or "quality",
             draft_ok=bool(getattr(args, "draft", False)),
+            verbose=bool(getattr(args, "verbose", False) or getattr(args, "no_silent", False)),
+            silent=not bool(getattr(args, "verbose", False) or getattr(args, "no_silent", False)),
         )
     if args.command == "improve":
         from improve import cmd_improve
         return cmd_improve(
             root, data, action=args.action or "run",
             last_n=args.last, apply=not args.dry_run,
+            silent=bool(getattr(args, "silent", False)) and not bool(getattr(args, "verbose", False)),
         )
     if args.command == "progress":
         from improve import cmd_progress
@@ -803,6 +818,7 @@ def main() -> int:
             root, data, action=args.action or "suggest",
             limit=args.limit, accept_all=args.accept_all,
             seed_modules=args.seed_modules, ids=ids,
+            silent=bool(getattr(args, "silent", False)),
         )
     if args.command == "hook":
         return cmd_hook(root, data, args.event)

@@ -17,7 +17,7 @@ description: 【强制8轮≥9.5收敛】原画/概念图/Key Art（ZHO·FLUX式
 ```
 
 ## 原理（截图摘要）
-1. **Warm-Start + 与 draw 同等 8×≥9.5** → 2. `search`/口味召回 → 3. **FLUX 完整句** → 4. 垫图解构 → 5. `converge`（可 `--mode fast`）→ 6. 反思 + `/pmem-improve`/`/pmem-learn`
+1. **Warm-Start + 与 draw 同等 8×≥9.5** → 2. `search`/口味召回 → 3. **FLUX 完整句** → 4. 垫图解构 → 5. `converge` → 6. `finish` 静默自动驾驶（一行小提示；improve/learn 为进阶 peek）
 
 你现在运行在 **pmem-art 原画 / 概念图 / Key Art 模式**（对标 ZHO Comfy-FLUX 与 Yolain 等 FLUX 系提示法）：用 **完整自然语言句子** 描述成片，**主体与构图靠前**；FLUX 系几乎无有效负向 Prompt，排斥项用正向措辞写进正文。
 
@@ -67,3 +67,9 @@ python3 pmem_art.py converge finish --apply
 ## 四、与 `/pmem-draw` 的分工
 - **`/pmem-draw`**：通用单图收敛（角色立绘、道具、单件 UI 等）
 - **`/pmem-concept`**：专门服务 **概念图 / Key Art / 气氛图**，强制 FLUX 式完整句 Prompt 与叙事构图标准
+
+
+## 静默自动驾驶（Agent 必读）
+- `converge finish --apply` 后系统自动写反思/口味/learn 队列——**无需**再跑 `/pmem-improve`。
+- 对用户只展示胜出图 + 结论；若有「小提示」原样转述（每会话最多 1 条）。**禁止**旁白记忆写入。
+- 全量报告 / 教练 / 广度：用户明确要求或 `--verbose` / 进阶技能时再给。

@@ -99,11 +99,18 @@ python3 pmem_art.py converge finish --apply
 2. 将最终胜出图通过 `ingest` / `feedback` 写入 `.memory-art` 的 `recipe`（正向定稿锚点），并把迭代过程中暴露的典型不合理点写入 `style_redline` / `visual_correction`。
 3. 生成标准 Markdown 汇总表。
 
-**你在最终回复中必须向用户完整展示：**
-1. 🏆 **最终胜出图片展示与结论**（说明是第几轮 `>= 9.5` 达标收敛，还是满 8 轮挑出第 X 轮最高分 `X.X / 10`）。
-2. 📊 **全阶段生图收敛评分总表**（包含每一轮的：轮次、图片路径、五维得分与总分、合理/亮点之处、**不合理/缺陷之处**、叠加修正方案、是否胜出）。
-3. ⚠️ **最终图的残余注意点与已沉淀的记忆条目**（让下次生同类图起点更高）。
-4. 📚 **本轮可学**（1~3 条手艺课，绑定本轮缺陷/修正）+ 提醒可跑 `/pmem-improve` / `/pmem-coach` / `/pmem-learn`。
+**对用户的默认展示（静默自动驾驶 · Whisper）：**
+1. 🏆 **最终胜出图** + 一句结论（第几轮达标 / 满8轮最高分）。
+2. 💡 若 CLI 打出一行 **「小提示」**（如「下次注意：头身比」/「已记住：不要过曝高光」），**原样转述给用户**——整次会话最多 1 条，不要扩写成教练长文。
+3. **禁止**向用户旁白「正在写反思 / 更新 taste / 入队 learn / 沉淀红线」；这些已在 `finish --apply` 后台静默完成。
+4. 用户没要详情时，**不要**倾倒全轮次评分总表、本轮可学清单、improve/coach/learn 推销。需要全量时让用户加 `--verbose` 或主动说「看报告 / 进步 / 教练」。
 
-### 闭环总览（生成 → 评分教学 → 记忆 → 变强 → 变广 → 下次更暖）
-`warm-start → (可选 best-of-N) → 8×≥9.5 / fast-track → finish 反思 → improve 口味+能力 → learn 广度 → 下次 warm-start 更准`
+### Agent 后台（对用户不可见）
+`finish --apply` 已自动：写 recipe/红线 + 会话反思 + `run_silent_autopilot`（更新 taste、强化配方、悄悄 enqueue 1–2 条 learn 建议）。
+
+### 闭环总览（用户几乎无感）
+`装上就用 → 画 → 偶尔一行小提示 → 系统自己变强；进阶 peek：improve/coach/learn/progress/--verbose`
+## 静默自动驾驶（Agent 必读 · 对用户几乎无感）
+- `converge finish --apply` 后系统**自动**写反思、更新 `taste.json`、强化 recipe/红线、悄悄排队 1–2 条知识建议——**无需**再跑 `/pmem-improve` / `/pmem-learn`。
+- 对用户只展示：**胜出图 + 结论**；若 stdout 有「小提示」则原样转述（每会话最多 1 条）。
+- **不要**叙述「已写入记忆 / 正在自我迭代 / 建议你跑 coach」。用户想看详情时用 `/pmem-progress`·`/pmem-coach`·`--verbose`（进阶/可选）。

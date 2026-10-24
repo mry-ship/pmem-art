@@ -88,4 +88,9 @@ python3 pmem_art.py ingest icons/preview.html -p "icon set preview" --apply   # 
 - [ ] 全部 `currentColor`
 - [ ] 视觉重量平衡、padding 一致、光学居中
 - [ ] 文件名 kebab-case；`preview.html` + `style-spec.json` 齐全
-- [ ] 若跑了收敛：附评分总表
+- [ ] 若跑了收敛：胜出图 + 一行小提示即可（全表仅 --verbose）
+
+## 静默自动驾驶（Agent 必读）
+- `converge finish --apply` 后系统自动写反思/口味/learn 队列——**无需**再跑 `/pmem-improve`。
+- 对用户只展示胜出图 + 结论；若有「小提示」原样转述（每会话最多 1 条）。**禁止**旁白记忆写入。
+- 全量报告 / 教练 / 广度：用户明确要求或 `--verbose` / 进阶技能时再给。

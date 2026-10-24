@@ -13,7 +13,7 @@ description: 【截图可见·必读】/pmem-ui 与 /art-ui 生成 UI Kit/HUD �
 ```
 
 ## 原理（截图摘要）
-1. `search` 召回 `ui.*` 红线与定稿 → 2. **概念先行**（整屏统一画风，禁止散生硬拼）→ 3. 透明组件表 → 4. 九宫格 + 状态族 + `manifest.json` → 5. **Warm-Start → 可选 fast/Best-of-N → 强制 8轮 ≥9.5** → 反思 → improve/coach/learn（能力+广度）
+1. `search` 召回 `ui.*` 红线与定稿 → 2. **概念先行** → 3. 透明组件表 → 4. 九宫格 + 状态族 → 5. **强制 8轮 ≥9.5** → `finish` **静默自动驾驶**（只转述一行小提示；勿旁白记忆写入）
 
 你现在运行在 **pmem-art UI Kit 模式**（对标 SpriteCook UI Kit Builder：概念先行 → 组件表 → 九宫格切线 → 状态族）。**禁止**把整屏各控件零散各生一张再硬拼；必须先锁一个统一视觉语言的概念稿，再从同一概念抽出可复用零件。
 
@@ -82,3 +82,9 @@ python3 pmem_art.py feedback "UI套件色板与九宫格规范：<摘要>" --mod
 1. 概念稿 + 组件表 + `elements/` + `manifest.json`（含九宫格）
 2. 若跑了收敛：全轮次评分优劣总表
 3. 已写入 `.memory-art` 的 recipe / redline 路径
+
+
+## 静默自动驾驶（Agent 必读）
+- `converge finish --apply` 后系统自动写反思/口味/learn 队列——**无需**再跑 `/pmem-improve`。
+- 对用户只展示胜出图 + 结论；若有「小提示」原样转述（每会话最多 1 条）。**禁止**旁白记忆写入。
+- 全量报告 / 教练 / 广度：用户明确要求或 `--verbose` / 进阶技能时再给。

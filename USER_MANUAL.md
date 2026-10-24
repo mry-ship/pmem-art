@@ -189,4 +189,4 @@ python3 pmem_art.py coach
 python3 pmem_art.py learn suggest && python3 pmem_art.py learn accept --all
 ```
 
-闭环：`warm-start → 评分+本轮可学 → 记忆 → improve → learn → 下次更暖`。
+闭环（v0.12 静默）：`warm-start → 8×≥9.5 → finish 静默自动驾驶（反思/口味/learn 队列）→ 最多一行小提示 → 越用越好`；`improve/coach/learn/progress` 为进阶 peek。
