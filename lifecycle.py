@@ -15,6 +15,136 @@ from pathlib import Path
 from typing import Any
 
 MEMORY_DIR = ".memory-art"
+# Maximum module hierarchy / inherits chain depth (PMEM-aligned 4-layer hard cap)
+MAX_MODULE_DEPTH = 4
+MAX_INHERITS_DEPTH = 4
+MAX_SEGMENT_SUBDEPTH = MAX_MODULE_DEPTH - 1  # category (L1) + up to 3 sub-segments = 4 layers
+
+
+def _warn_depth_cap(msg: str) -> None:
+    import sys as _sys
+    print(f"⚠️ [pmem-art] {msg}", file=_sys.stderr)
+
+
+def get_module_parent(mod_cfg: dict[str, Any] | None) -> str | None:
+    """Return explicit parent/inherits target from module config (supports both `inherits` and `parent`)."""
+    if not isinstance(mod_cfg, dict):
+        return None
+    inh = mod_cfg.get("inherits")
+    if isinstance(inh, list) and inh:
+        inh = inh[0]
+    val = inh or mod_cfg.get("parent")
+    if isinstance(val, str) and val.strip():
+        return val.strip()
+    return None
+
+
+def clamp_module_id_depth(
+    module_id: str,
+    max_depth: int = MAX_MODULE_DEPTH,
+    *,
+    warn: bool = True,
+) -> tuple[str, bool]:
+    """Clamp dot-separated module ID to at most `max_depth` segments (e.g. L1.L2.L3.L4)."""
+    mid = (module_id or "").strip(".")
+    if not mid:
+        return "misc.Untitled", False
+    parts = [p for p in mid.split(".") if p]
+    if len(parts) <= max_depth:
+        return ".".join(parts), False
+    clamped = ".".join(parts[:max_depth])
+    if warn:
+        _warn_depth_cap(
+            f"模块层级深度超过 {max_depth} 层硬顶限制: '{module_id}' ({len(parts)} 层) → 已自动截断至 '{clamped}' ({max_depth} 层)"
+        )
+    return clamped, True
+
+
+def resolve_module_lineage(
+    module_id: str,
+    modules: dict[str, Any] | None,
+    max_depth: int = MAX_INHERITS_DEPTH,
+    *,
+    warn: bool = False,
+) -> list[str]:
+    """
+    Resolve module inheritance chain [self, parent1, parent2, ...] capped at `max_depth` (4 layers).
+    Supports both `inherits` and `parent` fields plus dot-prefix parent fallback, with cycle protection.
+    """
+    if not module_id:
+        return []
+    mods = modules or {}
+    chain: list[str] = []
+    seen: set[str] = set()
+    curr: str | None = module_id
+    while curr and curr not in seen:
+        if len(chain) >= max_depth:
+            if warn:
+                _warn_depth_cap(
+                    f"模块 '{module_id}' 的 inherits/parent 继承链超过 {max_depth} 层硬顶限制 → 已在 '{chain[-1]}' 处截断 ({' -> '.join(chain)})"
+                )
+            break
+        chain.append(curr)
+        seen.add(curr)
+        cfg = mods.get(curr) if isinstance(mods.get(curr), dict) else {}
+        nxt = get_module_parent(cfg)
+        if not nxt and "." in curr:
+            prefix = ".".join(curr.split(".")[:-1])
+            if prefix in mods:
+                nxt = prefix
+        if nxt and nxt in seen:
+            if warn:
+                _warn_depth_cap(f"检测到模块继承环路: {' -> '.join(chain)} -> {nxt}，已自动断开")
+            break
+        curr = nxt
+    return chain
+
+
+def clamp_inherits_parent(
+    module_id: str,
+    proposed_parent: str | None,
+    modules: dict[str, Any] | None,
+    max_depth: int = MAX_INHERITS_DEPTH,
+    *,
+    warn: bool = True,
+) -> tuple[str | None, bool]:
+    """
+    Ensure setting `module_id -> proposed_parent` does not create an inheritance chain > `max_depth` (4 layers).
+    If `proposed_parent` already has a chain of >= max_depth, shifts the parent pointer up so total depth <= 4.
+    """
+    if not proposed_parent:
+        return None, False
+    parent_clamped, _ = clamp_module_id_depth(proposed_parent, max_depth=max_depth, warn=warn)
+    if parent_clamped == module_id:
+        return None, True
+    mods = modules or {}
+    # Walk ancestors starting from parent_clamped
+    ancestors: list[str] = []
+    seen: set[str] = {module_id}
+    curr: str | None = parent_clamped
+    while curr and curr not in seen and len(ancestors) < max_depth + 4:
+        ancestors.append(curr)
+        seen.add(curr)
+        cfg = mods.get(curr) if isinstance(mods.get(curr), dict) else {}
+        nxt = get_module_parent(cfg)
+        if not nxt and "." in curr:
+            prefix = ".".join(curr.split(".")[:-1])
+            if prefix in mods and prefix != curr:
+                nxt = prefix
+        curr = nxt
+    # Total chain is [module_id] + ancestors. Max allowed ancestors is max_depth - 1 (3 ancestors + self = 4 layers).
+    max_ancestors = max(1, max_depth - 1)
+    if len(ancestors) <= max_ancestors:
+        return parent_clamped, (parent_clamped != proposed_parent)
+    # Shift parent to the highest ancestor suffixes so [module_id] + tail has length == max_depth
+    effective_parent = ancestors[-(max_ancestors)]
+    if warn:
+        full_chain = " -> ".join([module_id] + ancestors)
+        _warn_depth_cap(
+            f"模块 '{module_id}' 的 inherits 继承链 ({full_chain}) 超过 {max_depth} 层硬顶限制 → 已自动截断并绑定至第 {max_depth - 1} 层父模块 '{effective_parent}'"
+        )
+    return effective_parent, True
+
 IMAGE_EXTS = {".png", ".jpg", ".jpeg", ".webp", ".tga", ".psd", ".gif", ".exr", ".tif", ".tiff"}
 IGNORE_DIR_NAMES = {
     ".git", ".svn", ".perforce", ".memory-art", ".cursor", "__pycache__",
@@ -237,6 +367,8 @@ def default_config(project_name: str = "Untitled Art Project", mode: str = "youn
         },
         "classify": {
             "auto_add_modules": True,
+            "max_module_depth": MAX_MODULE_DEPTH,
+            "max_inherits_depth": MAX_INHERITS_DEPTH,
             "low_confidence_threshold": 0.55,
             "high_confidence_threshold": 0.78,
             "unknown_domain": "misc",
@@ -253,6 +385,23 @@ def default_config(project_name: str = "Untitled Art Project", mode: str = "youn
 def write_modules_yaml(root: Path, categories: dict, modules: dict, synonyms: list | None = None) -> Path:
     mem = root / MEMORY_DIR
     mem.mkdir(parents=True, exist_ok=True)
+    # Enforce 4-layer hard cap on module IDs and inherits/parent chains
+    clamped_modules: dict[str, Any] = {}
+    for raw_mid, mcfg in (modules or {}).items():
+        mid, _ = clamp_module_id_depth(str(raw_mid), max_depth=MAX_MODULE_DEPTH, warn=True)
+        cfg_copy = dict(mcfg) if isinstance(mcfg, dict) else {}
+        raw_parent = get_module_parent(cfg_copy)
+        if raw_parent:
+            safe_parent, _ = clamp_inherits_parent(mid, raw_parent, modules, max_depth=MAX_INHERITS_DEPTH, warn=True)
+            if safe_parent:
+                cfg_copy["parent"] = safe_parent
+                if "inherits" in cfg_copy:
+                    cfg_copy["inherits"] = safe_parent
+            else:
+                cfg_copy.pop("parent", None)
+                cfg_copy.pop("inherits", None)
+        clamped_modules[mid] = cfg_copy
+    modules = clamped_modules
     doc = {
         "schema_version": 1,
         "categories": categories,
@@ -387,16 +536,28 @@ def guess_category(path_parts: list[str]) -> str:
 
 
 def module_id_from_segments(category: str, segments: list[str], depth: int) -> str:
-    """Build module id like character.Astra or character.Astra.Expressions from path segments."""
-    raw = [s for s in segments[: max(1, depth)] if s]
+    """Build module id like character.Astra or character.Astra.Expressions from path segments (hard-capped at 4 layers)."""
+    capped_subdepth = min(max(1, depth), MAX_SEGMENT_SUBDEPTH)
+    if depth > MAX_SEGMENT_SUBDEPTH:
+        _warn_depth_cap(
+            f"目录扫描深度 depth={depth} 超过模块 4 层硬顶限制（category + 最多 {MAX_SEGMENT_SUBDEPTH} 层子路径）→ 已自动截断至 {MAX_MODULE_DEPTH} 层"
+        )
+    raw = [s for s in segments if s]
     aliases = CATEGORY_SEGMENT_ALIASES.get(category, set()) | {category}
     # Drop leading segments that are just the domain folder (Characters, UI, vfx…)
     while raw and raw[0].lower() in {a.lower() for a in aliases}:
         raw = raw[1:]
+    if len(raw) > capped_subdepth:
+        if len(raw) > MAX_SEGMENT_SUBDEPTH:
+            _warn_depth_cap(
+                f"路径分段 {category}.{'.'.join(sanitize_module_token(s) for s in raw)} 超过 {MAX_MODULE_DEPTH} 层硬顶限制 → 已截断至前 {MAX_MODULE_DEPTH} 层"
+            )
+        raw = raw[:capped_subdepth]
     segs = [sanitize_module_token(s) for s in raw if s]
     if not segs:
         segs = ["Main"]
-    return category + "." + ".".join(segs)
+    mid, _ = clamp_module_id_depth(category + "." + ".".join(segs), max_depth=MAX_MODULE_DEPTH, warn=True)
+    return mid
 
 
 def list_image_files(root: Path, asset_roots: list[str]) -> list[Path]:
@@ -609,7 +770,8 @@ def promote_module(
     proposal: dict[str, Any] | None = None,
     synonyms: list | None = None,
 ) -> dict[str, Any]:
-    """Promote scaffold/candidate → active; create if missing from proposal."""
+    """Promote scaffold/candidate → active; create if missing from proposal (enforces 4-layer hard cap)."""
+    module_id, _ = clamp_module_id_depth(module_id, max_depth=MAX_MODULE_DEPTH, warn=True)
     if module_id in modules:
         modules[module_id]["status"] = "active"
         if proposal:

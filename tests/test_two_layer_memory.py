@@ -205,6 +205,94 @@ def main() -> None:
     assert "专项记忆库项目切换器" in atlas_html
     assert "projecta_celadon" in atlas_html and "projectc_copiedmem" in atlas_html
 
+
+    # 8. Verify PMEM-aligned 4-Layer Hard Cap on module IDs and inherits/parent chains
+    from lifecycle import (
+        MAX_INHERITS_DEPTH,
+        MAX_MODULE_DEPTH,
+        clamp_inherits_parent,
+        clamp_module_id_depth,
+        module_id_from_segments,
+        resolve_module_lineage,
+    )
+    from classify import ensure_module_from_classification
+
+    assert MAX_MODULE_DEPTH == 4 and MAX_INHERITS_DEPTH == 4
+    # 8a. 5-layer module ID is automatically truncated to 4 layers
+    clamped_id, was_clamped = clamp_module_id_depth("character.Astra.SkinV2.Chibi.Winter", warn=True)
+    assert was_clamped is True
+    assert clamped_id == "character.Astra.SkinV2.Chibi", f"Expected 4-layer clamp, got {clamped_id}"
+
+    # 8b. module_id_from_segments caps deep folder paths at 4 layers (category + 3 subsegments)
+    seg_id = module_id_from_segments("character", ["Characters", "Astra", "Outfits", "Winter", "Chibi", "Expressions"], depth=6)
+    assert len(seg_id.split(".")) == 4, f"Expected 4 segments max, got {seg_id}"
+    assert seg_id == "character.Astra.Outfits.Winter"
+
+    # 8c. 5-layer inherits chain is automatically truncated to 4 layers and logs warning
+    mock_modules = {
+        "brand.WorldStyle": {"category": "brand", "status": "active"},
+        "character.Hero": {"category": "character", "status": "active", "inherits": "brand.WorldStyle", "parent": "brand.WorldStyle"},
+        "character.Hero.Astra": {"category": "character", "status": "active", "inherits": "character.Hero", "parent": "character.Hero"},
+        "character.Hero.Astra.Chibi": {"category": "character", "status": "active", "inherits": "character.Hero.Astra", "parent": "character.Hero.Astra"},
+    }
+    # Existing 4-layer chain resolves all 4 levels: L4 -> L3 -> L2 -> L1
+    chain_4 = resolve_module_lineage("character.Hero.Astra.Chibi", mock_modules)
+    assert chain_4 == [
+        "character.Hero.Astra.Chibi",
+        "character.Hero.Astra",
+        "character.Hero",
+        "brand.WorldStyle",
+    ], f"Unexpected 4-layer lineage: {chain_4}"
+
+    # Attempting to add a 5th layer inheriting from L4 (`character.Hero.Astra.Chibi`) is clamped so total chain <= 4
+    safe_parent, p_clamped = clamp_inherits_parent(
+        "character.Hero.Astra.Chibi",
+        "character.Hero.Astra.Chibi",
+        mock_modules,
+        warn=True,
+    )
+    assert p_clamped is True
+
+    # Test 5-level chain truncation via clamp_inherits_parent
+    safe_p5, p5_clamped = clamp_inherits_parent(
+        "character.Hero.Astra.Chibi",
+        "character.Hero.Astra.Chibi",
+        {
+            **mock_modules,
+            "character.Hero.Astra.Chibi.Extra": {"parent": "character.Hero.Astra.Chibi"},
+        },
+        warn=True,
+    )
+    safe_p_deep, deep_clamped = clamp_inherits_parent(
+        "character.LeafMod",
+        "character.Hero.Astra.Chibi",
+        mock_modules,
+        warn=True,
+    )
+    assert deep_clamped is True
+    assert safe_p_deep == "character.Hero.Astra", f"Expected parent shifted to L3 character.Hero.Astra, got {safe_p_deep}"
+
+    # Also test auto_add_modules via ensure_module_from_classification with a 5-segment suggested module
+    data_cap = load_project(proj_c)
+    mod_written, status_written = ensure_module_from_classification(
+        proj_c,
+        data_cap,
+        {
+            "suggested_module": "character.CyberSamurai.ArmorV2.NeonFork.ExtraDeepLayer",
+            "domain": "character",
+            "entity": "CyberSamurai",
+            "style_fork": "NeonFork",
+            "parent": "brand.WorldStyle",
+            "confidence": 0.91,
+            "decision": "auto_add_active",
+            "canonical_rel": "assets/character/cybersamurai/neonfork/test.png",
+            "prompt": "赛博义体武士立绘",
+        },
+        force_active=True,
+    )
+    assert mod_written == "character.CyberSamurai.ArmorV2.NeonFork", f"auto_add_modules must cap at 4 layers, got {mod_written}"
+    assert len(mod_written.split(".")) <= 4
+
     print("ALL TWO-LAYER & PROJECT-LABELED MEMORY TESTS PASSED!")
 
 

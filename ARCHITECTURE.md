@@ -161,3 +161,17 @@ python3 pmem_art.py atlas
 ```
 
 `classify.auto_add_modules: true` 时，**只追加**新模块键，绝不清空已有 `modules.yaml`。
+
+### 模块层级与 `inherits` 继承链最多四层硬顶限制（`MAX_MODULE_DEPTH = 4` · 与 PMEM 一致）
+
+为防止 `auto_add_modules`（或 `bootstrap --auto-accept-depth`）在多轮风格分叉与子目录扫描中把模块层级无限加深、导致记忆碎片化与召回分散，`pmem-art` 严格执行与 `mry-ship/pmem` 同款的 **最多四层硬顶（4-Layer Hard Cap）**：
+
+1. **模块点分 ID 最多 4 层（`MAX_MODULE_DEPTH = 4`）**：
+   - 标准四层结构：`L1(领域大类).L2(实体/主模块).L3(画风分叉/子部件).L4(状态/细分差分)`，例如 `character.Astra.Chibi.Expressions`。
+   - 当 `auto_add_modules`、`ensure_module_from_classification` 或 `module_id_from_segments` 遇到超过 4 层的模块名（如 `character.Astra.SkinV2.Chibi.Winter`）时，**绝不允许生成第 5 层**，系统会自动截断至前 4 层（`character.Astra.SkinV2.Chibi`）并向标准错误输出警告日志：
+     `⚠️ [pmem-art] 模块层级深度超过 4 层硬顶限制 ... → 已自动截断至 4 层`。
+2. **`inherits` / `parent` 继承链最多 4 层（`MAX_INHERITS_DEPTH = 4`）**：
+   - `modules.yaml` 同时支持 `inherits` 与 `parent` 字段声明父模块，继承链向上解析（`resolve_module_lineage`）最多遍历 **4 层**（例如 `L4 子模块 -> L3 画风分叉 -> L2 角色基座 -> L1 brand.WorldStyle`），并自带环路检测（Cycle Protection）。
+   - 自动扩展模块（`auto_add_modules`）或写入 `modules.yaml` 时，若新模块的 `inherits` / `parent` 链总深度会超过 4 层，`clamp_inherits_parent` 会自动将其父指针上移截断至第 3 层祖先（保证总链长 ≤ 4 层）并记录警告日志。
+   - `search` 与 `converge start`（Warm-Start）均通过 `resolve_module_lineage` 完整召回最多 4 层继承链上的全部 `recipe`、`style_redline` 与 `art_decision`，兼顾风格派生隔离与上游规范继承。
+

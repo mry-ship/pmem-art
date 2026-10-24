@@ -549,17 +549,14 @@ def build_warm_start_pack(
 ) -> dict[str, Any]:
     """Assemble top recipes + redlines + personal taste for first-prompt injection."""
     entries = data.get("entries") or []
-    parent = None
     modules = data.get("modules") or {}
-    if module in modules:
-        parent = modules[module].get("parent")
-    if not parent and "." in module:
-        cand = ".".join(module.split(".")[:-1])
-        if cand in modules:
-            parent = cand
+    from lifecycle import MAX_INHERITS_DEPTH, resolve_module_lineage
+    lineage = resolve_module_lineage(module, modules, max_depth=MAX_INHERITS_DEPTH, warn=False) if module else []
+    parent = lineage[1] if len(lineage) > 1 else None
+    lineage_set = set(lineage)
 
     def _mod_ok(em: str) -> bool:
-        return em in (module, parent) or (not module)
+        return (em in lineage_set) or (not module)
 
     recipes = [
         e for e in entries

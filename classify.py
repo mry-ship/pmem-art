@@ -21,7 +21,13 @@ from pathlib import Path
 from typing import Any
 
 from lifecycle import (
+    MAX_INHERITS_DEPTH,
+    MAX_MODULE_DEPTH,
     STARTER_CATEGORIES,
+    clamp_inherits_parent,
+    clamp_module_id_depth,
+    get_module_parent,
+    resolve_module_lineage,
     dump_yaml,
     load_candidates_file,
     merge_candidate,
@@ -390,6 +396,11 @@ def classify_asset(
                 reason = "new_module_from_signals"
             confidence = min(0.92, 0.45 + domain_strength)
 
+    # Enforce PMEM-aligned 4-layer hard cap on suggested module ID and inherits/parent chain
+    max_mod_depth = int(cfg.get("max_module_depth", MAX_MODULE_DEPTH))
+    max_inh_depth = int(cfg.get("max_inherits_depth", MAX_INHERITS_DEPTH))
+    suggested, was_id_clamped = clamp_module_id_depth(suggested, max_depth=max_mod_depth, warn=True)
+
     # Parent inheritance hint
     parent = None
     if style_fork and domain == "character":
@@ -402,6 +413,8 @@ def classify_asset(
         parent_guess = ".".join(suggested.split(".")[:-1])
         if parent_guess in modules:
             parent = parent_guess
+    if parent:
+        parent, _ = clamp_inherits_parent(suggested, parent, modules, max_depth=max_inh_depth, warn=True)
 
     decision = "use_existing"
     if suggested not in modules:
@@ -461,7 +474,14 @@ def ensure_module_from_classification(
     synonyms = data.get("synonyms")
     cfg = (data.get("config") or {}).get("classify") or {}
     auto_add = bool(cfg.get("auto_add_modules", True))
-    mid = classification["suggested_module"]
+    max_mod_depth = int(cfg.get("max_module_depth", MAX_MODULE_DEPTH))
+    max_inh_depth = int(cfg.get("max_inherits_depth", MAX_INHERITS_DEPTH))
+    mid, _ = clamp_module_id_depth(str(classification["suggested_module"]), max_depth=max_mod_depth, warn=True)
+    classification["suggested_module"] = mid
+    if classification.get("parent") or classification.get("inherits"):
+        raw_p = classification.get("inherits") or classification.get("parent")
+        clamped_p, _ = clamp_inherits_parent(mid, str(raw_p), modules, max_depth=max_inh_depth, warn=True)
+        classification["parent"] = clamped_p
     domain = classification["domain"]
     decision = classification["decision"]
 
@@ -537,6 +557,7 @@ def ensure_module_from_classification(
     }
     if classification.get("parent"):
         modules[mid]["parent"] = classification["parent"]
+        modules[mid]["inherits"] = classification["parent"]
 
     write_modules_yaml(root, categories, modules, synonyms)
     (root / ".memory-art" / "specs" / mid).mkdir(parents=True, exist_ok=True)

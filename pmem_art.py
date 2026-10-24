@@ -401,8 +401,20 @@ def load_project(root: Path) -> dict[str, Any]:
     config = load_yaml((mem_dir / "config.yaml").read_text(encoding="utf-8")) if (mem_dir / "config.yaml").exists() else {}
     modules_doc = load_yaml((mem_dir / "modules.yaml").read_text(encoding="utf-8")) if (mem_dir / "modules.yaml").exists() else {}
     categories = modules_doc.get("categories", {})
-    modules = modules_doc.get("modules", {})
+    raw_modules = modules_doc.get("modules", {}) or {}
     synonyms = modules_doc.get("synonyms", [])
+    from lifecycle import MAX_INHERITS_DEPTH, MAX_MODULE_DEPTH, clamp_inherits_parent, clamp_module_id_depth, get_module_parent
+    modules: dict[str, Any] = {}
+    for r_mid, r_cfg in raw_modules.items():
+        c_mid, _ = clamp_module_id_depth(str(r_mid), max_depth=MAX_MODULE_DEPTH, warn=False)
+        cfg_d = dict(r_cfg) if isinstance(r_cfg, dict) else {}
+        p_val = get_module_parent(cfg_d)
+        if p_val:
+            c_p, _ = clamp_inherits_parent(c_mid, p_val, raw_modules, max_depth=MAX_INHERITS_DEPTH, warn=False)
+            if c_p:
+                cfg_d["parent"] = c_p
+                cfg_d.setdefault("inherits", c_p)
+        modules[c_mid] = cfg_d
 
     active_pid = str(active_meta.get("project_id") or root.name.lower())
     active_pname = str(
@@ -764,14 +776,15 @@ def cmd_search(data: dict[str, Any], module: str, path: str, query: str) -> int:
                 if fnmatch.fnmatch(path, pat):
                     target_mod = mod_id
                     break
-    # Include parent module lessons & project-wide lessons (just like mry-ship/pmem!)
-    parent_mod = data["modules"].get(target_mod, {}).get("parent") or (
-        ".".join(target_mod.split(".")[:-1]) if "." in target_mod and ".".join(target_mod.split(".")[:-1]) in data["modules"] else None
-    )
+    # Resolve module inheritance chain up to MAX_INHERITS_DEPTH (4 layers, aligned with mry-ship/pmem!)
+    from lifecycle import MAX_INHERITS_DEPTH, resolve_module_lineage
+    lineage = resolve_module_lineage(target_mod, data["modules"], max_depth=MAX_INHERITS_DEPTH, warn=True) if target_mod else []
+    parent_mod = lineage[1] if len(lineage) > 1 else None
+    lineage_set = set(lineage)
     matched = []
     for e in data["entries"]:
         em = e.get("module", "")
-        if target_mod and em not in (target_mod, parent_mod) and e.get("scope") != "project":
+        if target_mod and em not in lineage_set and e.get("scope") != "project":
             continue
         if query:
             hay = json.dumps(e, ensure_ascii=False).lower()
@@ -790,6 +803,8 @@ def cmd_search(data: dict[str, Any], module: str, path: str, query: str) -> int:
         "server": "pmem-art",
         "queried_module": target_mod or "ALL",
         "parent_module_inherited": parent_mod,
+        "inherits_chain": lineage,
+        "max_inherits_depth": MAX_INHERITS_DEPTH,
         "module_specs": mod_cfg.get("specs", {}),
         "module_palette": mod_cfg.get("palette", []),
         "lessons": [
