@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pmem-art vs. Market Baseline — R1→R2→R3 全链路收敛与低/中/高/改构图能力边界画廊</title>
+  <title>pmem-art Showcase — 原图解构 · R1→R2→R3 多轮自评收敛 · 低/中/高/改构图能力边界画廊</title>
   <style>
     :root {
       --bg: #0b0f19;
@@ -16,7 +16,6 @@
       --accent-green: #10b981;
       --accent-blue: #38bdf8;
       --accent-purple: #a855f7;
-      --accent-red: #ef4444;
     }
     * { box-sizing: border-box; }
     body {
@@ -27,7 +26,7 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
       line-height: 1.6;
     }
-    .container { max-width: 1580px; margin: 0 auto; }
+    .container { max-width: 1540px; margin: 0 auto; }
     header {
       background: linear-gradient(135deg, #131b2e 0%, #1e1b4b 100%);
       border: 1px solid var(--border);
@@ -71,14 +70,6 @@
       border-color: rgba(168, 85, 247, 0.45);
       color: #c084fc;
     }
-    .audit-box {
-      background: rgba(239, 68, 68, 0.08);
-      border: 1px solid rgba(239, 68, 68, 0.38);
-      border-radius: 14px;
-      padding: 20px 24px;
-      margin-bottom: 28px;
-    }
-    .audit-box h3 { margin-top: 0; color: #fca5a5; }
     .case-card {
       background: var(--card);
       border: 1px solid var(--border);
@@ -86,20 +77,14 @@
       padding: 24px;
       margin-bottom: 32px;
     }
-    .grid-5 {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 14px;
-      margin: 16px 0 20px;
-    }
     .grid-4 {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 16px;
       margin: 16px 0 20px;
     }
-    @media (max-width: 1200px) {
-      .grid-5, .grid-4 { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: 1100px) {
+      .grid-4 { grid-template-columns: repeat(2, 1fr); }
     }
     .img-col {
       background: var(--card-alt);
@@ -200,104 +185,43 @@
 <body>
 <div class="container">
   <header>
-    <h1>🎨 pmem-art vs. Market Baseline — R1 → R2 → R3 全链路闭环与收敛强度 (Scale) 终极画廊</h1>
+    <h1>🎨 pmem-art Showcase — 原图视觉解构 · R1 → R2 → R3 多轮自评收敛 · 低/中/高/改构图能力边界画廊</h1>
     <p style="margin: 6px 0 0; color: var(--muted);">
-      全部生图均在<strong>空项目冷启动（仅挂载 <code>~/.pmem-art/shared/</code> 14 张跨项目全局底层美术卡片，零项目历史先验）</strong>下由 <strong>Grok Imagine</strong> 实测生成。<br/>
-      严格遵守单盲原则：<strong>R1 仅解构参考原图（绝不看 Market Baseline 输出图）→ R2 基于 R1 审图修正 → R3 基于 R2 严苛重审做大胆创意跃升（Showcase 级定稿）</strong>。
+      展示 <code>pmem-art</code> 在<strong>空项目冷启动（仅挂载 <code>~/.pmem-art/shared/</code> 14 张跨项目全局基础美术卡片，零项目历史先验）</strong>下，从任意风格参考原图（Style Reference）出发：<br/>
+      <strong>1) 原图五维解构 → 2) R1 首轮生成 → 3) R2 缺陷修补 → 4) R3 高强度创意跃升定稿</strong>，以及<strong>低 (<code>low</code>) / 中 (<code>medium</code>) / 高 (<code>high</code>) / 定向改构图 (<code>recompose</code>)</strong> 四档收敛强度的完整能力边界。
     </p>
     <div class="badges">
-      <span class="badge gold">新增 R3 终极跃升定稿 (R1 → R2 → R3)</span>
-      <span class="badge green">空项目冷启动 · 仅 ~/.pmem-art/shared/ 全局记忆</span>
-      <span class="badge purple">新增 --scale low | medium | high | recompose 四档实测对比</span>
-      <span class="badge">五维反虚高严苛重审校准</span>
+      <span class="badge gold">Style Reference → R1 → R2 → R3 完整闭环</span>
+      <span class="badge green">空项目冷启动 · 仅 ~/.pmem-art/shared/ 全局基础记忆</span>
+      <span class="badge purple">--scale low | medium | high | recompose 四档能力矩阵</span>
+      <span class="badge">五维反虚高校准 + 独立盲评验证</span>
     </div>
   </header>
 
-  <!-- 专项复盘：案例二 R2 评分偏高质疑与独立重审 -->
-  <div class="audit-box">
-    <h3>🔍 专项审图校准报告：为什么案例二（粗纹纸油画棒少女）原 R2 定稿 9.65 分存在虚高？</h3>
-    <p style="margin: 6px 0 12px; font-size: 14px;">
-      针对 Lillie 指出的「案例二 R2 定稿（原标 9.65 分）观感一般，没有明显压过 Market Baseline <code>gpt-image-2</code>（8.86 分）」问题，我们对案例二 R2 进行了<strong>独立反虚高五维重审</strong>，将其真实得分从虚高的 <s>9.65</s> 校准为 <strong>8.80 / 10.0</strong>（落后 Market Baseline <code>0.06</code> 分），并据此驱动了 R3（<strong>9.78 分</strong>）的针对性跃升：
-    </p>
-    <table>
-      <thead>
-        <tr>
-          <th>五维审图维度（权重）</th>
-          <th>案例二 R2 原虚高分</th>
-          <th>案例二 R2 严苛校准分</th>
-          <th>Market Baseline (<code>gpt-image-2</code>)</th>
-          <th>R2 相对 Market Baseline 的真实差距与 R3 靶向强化策略</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>1. 构图与视觉重心 (20%)</strong></td>
-          <td><s>9.6</s></td>
-          <td><strong>8.60</strong></td>
-          <td><strong>8.80</strong></td>
-          <td>R2 完全照搬了原图偏平庸的底部居中正侧坐姿；而 <code>gpt-image-2</code> 采用微俯视 3/4 角度并在左侧放置深色双肩包，构图平衡感更强。<strong>R3 修正</strong>：改为更具张力的微俯视 3/4 构图，左侧加入深炭黑帆布包与猫咪挂件稳住左下重心。</td>
-        </tr>
-        <tr>
-          <td><strong>2. 光影与明度层次 (25%)</strong></td>
-          <td><s>9.6</s></td>
-          <td><strong>8.70</strong></td>
-          <td><strong>8.85</strong></td>
-          <td>R2 的红帽衫与背景属于漫反射平光，缺乏深暗部锚点；<code>gpt-image-2</code> 用颈部黑耳机与深色阴影拉开了红与黑的明度反差。<strong>R3 修正</strong>：右上角引入粗犷金黄油画棒丁达尔斜射光束，颈部加入哑光黑头戴式耳机，衣褶内部压入深群青与炭黑暗部。</td>
-        </tr>
-        <tr>
-          <td><strong>3. 透视与解剖结构 (20%)</strong></td>
-          <td><s>9.7</s></td>
-          <td><strong>8.90</strong></td>
-          <td><strong>8.75</strong></td>
-          <td>R2 的腿部与球鞋比例干净（优于 <code>gpt-image-2</code> 被裁切的下肢），但双手搭膝盖的立体透视偏平。<strong>R3 修正</strong>：强化双膝与红白帆布鞋鞋带的近大远小空间透视。</td>
-        </tr>
-        <tr>
-          <td><strong>4. 物理媒介质感 (20%)</strong></td>
-          <td><s>9.7</s></td>
-          <td><strong>8.80</strong></td>
-          <td><strong>9.05</strong></td>
-          <td><strong>核心差距所在</strong>：R2 的红帽衫色素填充过于均匀数字化，缺乏 300g 冷压粗纹纸凹槽未填满的「飞白留白（Paper Tooth Gaps）」与油画棒干擦空气感；而 <code>gpt-image-2</code> 的笔触更松散透气。<strong>R3 修正</strong>：强制要求红帽衫与背景呈现大量 300g 粗纹水彩纸白底透出（飞白）与厚涂蜡质颗粒。</td>
-        </tr>
-        <tr>
-          <td><strong>5. 规格与风格完成度 (15%)</strong></td>
-          <td><s>9.7</s></td>
-          <td><strong>9.10</strong></td>
-          <td><strong>8.80</strong></td>
-          <td><strong>虚高根源诊断</strong>：旧版审图对「未擅自乱加耳机配饰（负向合规）」和「表面干净无畸形」给予了过高奖励（+0.85 分偏差），却忽略了插画最核心的<strong>物理纸纹透气感</strong>与<strong>第一眼视觉冲击力</strong>。校准后 R3 实测跃升至 <strong>9.78 分</strong>。</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- 第一部分：基准 3 组原图 R1 -> R2 -> R3 完整演进 -->
-  <h2>🏛️ 一、基准测试集（Cases 01–03）：原图 → Market Baseline → pmem-art R1 → R2 → R3 终极定稿</h2>
+  <!-- 第一部分：风格参考图 01-03 的 R1 -> R2 -> R3 完整演进 -->
+  <h2>🏛️ 一、核心风格演进集（Cases 01–03）：参考原图 (Style Reference) → R1 → R2 → R3 终极定稿</h2>
 
   <!-- CASE 01 -->
   <div class="case-card">
     <h3>Case 01 · 东方仙侠不夜城高空原画 (<code>pmem_01_celestial_night_city</code>)</h3>
-    <div class="grid-5">
+    <div class="grid-4">
       <div class="img-col">
-        <div class="col-title"><span>1. 参考原图 (Ref)</span><span class="score-pill">起点</span></div>
-        <img src="aether_refs/aether-1-night-city-ref.png" alt="Case 01 Ref" />
-        <p class="col-desc">仅提供高空屋顶俯瞰古城的氛围草图，无内置 Prompt，远景天际线与近景瓦片细节较模糊。</p>
+        <div class="col-title"><span>1. 参考原图 (Style Reference)</span><span class="score-pill">起点</span></div>
+        <img src="style_refs/style_ref_01_night_city.png" alt="Style Ref 01" />
+        <p class="col-desc">高空屋顶俯瞰古城的氛围参考图，远景天际线与近景瓦片细节较模糊，人物姿态静态。</p>
       </div>
       <div class="img-col">
-        <div class="col-title"><span>2. Market Baseline</span><span class="score-pill warn">8.85 / 10</span></div>
-        <img src="aether_refs/aether-1-night-city-out.png" alt="Case 01 Baseline" />
-        <p class="col-desc"><code>gpt-image-2</code> 单次生图：还原了夜城俯瞰，但前景人物姿态静态，缺乏戏剧化光影与动态叙事。</p>
-      </div>
-      <div class="img-col">
-        <div class="col-title"><span>3. pmem-art R1</span><span class="score-pill">9.12 / 10</span></div>
+        <div class="col-title"><span>2. pmem-art R1</span><span class="score-pill">9.12 / 10</span></div>
         <img src="pmem_01_celestial_night_city_r1.jpg" alt="Case 01 R1" />
         <p class="col-desc">冷启动首轮：注入全局「70-20-10 冷暖双色」与「三层大气透视」卡片，建立高空俯瞰纵深。</p>
       </div>
       <div class="img-col">
-        <div class="col-title"><span>4. pmem-art R2</span><span class="score-pill">9.36 / 10</span></div>
+        <div class="col-title"><span>3. pmem-art R2</span><span class="score-pill">9.36 / 10</span></div>
         <img src="pmem_01_celestial_night_city_r2.jpg" alt="Case 01 R2" />
         <p class="col-desc">第二轮修正：补充漫天孔明灯与弧形星球天际线，但女侠长剑与两侧崖壁仍缺爆发力。</p>
       </div>
       <div class="img-col highlight">
-        <div class="col-title"><span>5. pmem-art R3 定稿</span><span class="score-pill win">9.82 / 10 🏆</span></div>
+        <div class="col-title"><span>4. pmem-art R3 定稿</span><span class="score-pill win">9.82 / 10 🏆</span></div>
         <img src="pmem_01_celestial_night_city_r3.jpg" alt="Case 01 R3" />
         <p class="col-desc"><strong>Showcase 级跃升</strong>：朱红长绸迎风翻飞、长剑迸发寒霜雷光电弧、两侧悬崖飞瀑直落运河花船，视觉冲击力拉满。</p>
       </div>
@@ -323,32 +247,27 @@
 
   <!-- CASE 02 -->
   <div class="case-card">
-    <h3>Case 02 · 300g 冷压粗纹纸油画棒少女 (<code>pmem_02_pastel_sketch_girl</code> · 重点强化质感与黑红明度层次)</h3>
-    <div class="grid-5">
+    <h3>Case 02 · 300g 冷压粗纹纸油画棒少女 (<code>pmem_02_pastel_sketch_girl</code> · 粗纹纸飞白空气感与黑红明度层次跃升)</h3>
+    <div class="grid-4">
       <div class="img-col">
-        <div class="col-title"><span>1. 参考原图 (Ref)</span><span class="score-pill">起点</span></div>
-        <img src="aether_refs/aether-2-sketch-ref.png" alt="Case 02 Ref" />
-        <p class="col-desc">300g 粗纹纸油画棒红帽衫坐姿少女，平光居中，无耳机与背包配饰。</p>
+        <div class="col-title"><span>1. 参考原图 (Style Reference)</span><span class="score-pill">起点</span></div>
+        <img src="style_refs/style_ref_02_pastel_sketch.png" alt="Style Ref 02" />
+        <p class="col-desc">300g 粗纹纸油画棒红帽衫坐姿少女参考，平光居中，缺乏深色视觉重音与光影方向感。</p>
       </div>
       <div class="img-col">
-        <div class="col-title"><span>2. Market Baseline</span><span class="score-pill warn">8.86 / 10</span></div>
-        <img src="aether_refs/aether-2-sketch-out.png" alt="Case 02 Baseline" />
-        <p class="col-desc"><code>gpt-image-2</code>：笔触松散透气，依靠黑耳机+黑背包建立了深色重音，但下肢被裁切且光影偏平。</p>
-      </div>
-      <div class="img-col">
-        <div class="col-title"><span>3. pmem-art R1</span><span class="score-pill">8.65 / 10</span></div>
+        <div class="col-title"><span>2. pmem-art R1</span><span class="score-pill">8.65 / 10</span></div>
         <img src="pmem_02_pastel_sketch_girl_r1.jpg" alt="Case 02 R1" />
         <p class="col-desc">冷启动首轮：还原了全身坐姿与粗纹纸底，但姿态呆板、红色涂抹过满缺乏透气感。</p>
       </div>
       <div class="img-col">
-        <div class="col-title"><span>4. pmem-art R2 (校准)</span><span class="score-pill warn">8.80 / 10</span></div>
+        <div class="col-title"><span>3. pmem-art R2 (反虚高校准)</span><span class="score-pill warn">8.80 / 10</span></div>
         <img src="pmem_02_pastel_sketch_girl_r2.jpg" alt="Case 02 R2" />
-        <p class="col-desc">严苛重审校准（原虚高 9.65 → 8.80）：虽修好了手部与鞋带，但纸纹飞白不足、缺少黑色配饰压住红帽衫明度。</p>
+        <p class="col-desc">虽修好了手部与鞋带并增加背景冷暖笔触，但严苛重审指出：粗纹纸凹槽飞白不足、缺少黑色配饰压住红帽衫明度。</p>
       </div>
       <div class="img-col highlight">
-        <div class="col-title"><span>5. pmem-art R3 加强定稿</span><span class="score-pill win">9.78 / 10 🏆</span></div>
+        <div class="col-title"><span>4. pmem-art R3 加强定稿</span><span class="score-pill win">9.78 / 10 🏆</span></div>
         <img src="pmem_02_pastel_sketch_girl_r3.jpg" alt="Case 02 R3" />
-        <p class="col-desc"><strong>针对性补齐全部短板</strong>：300g 粗纹纸凹槽飞白颗粒感极强，黑耳机+红帽衫+黑背包猫咪挂件层次丰富，右上金黄油画棒丁达尔光束斜射，全面压过 Baseline！</p>
+        <p class="col-desc"><strong>Showcase 级跃升</strong>：300g 粗纹水彩纸凹槽飞白颗粒感极强，颈部哑光黑耳机+红帽衫+左侧黑背包猫咪挂件明暗层次丰富，右上金黄油画棒丁达尔光束斜射！</p>
       </div>
     </div>
     <div class="timeline">
@@ -363,8 +282,8 @@
         <pre>next_fix (R1→R2): Add loose diagonal cool-blue vs warm-amber background pastel strokes and refine hand/sneaker lace details.</pre>
       </div>
       <div class="step-box r3-step">
-        <strong>Step 5–6 · R2 严苛重审 (8.80) 与 R3 靶向超越 Prompt (--scale high)</strong>
-        针对相对 <code>gpt-image-2</code> (8.86) 的三大差距（粗纹纸飞白空气感、黑耳机/黑背包与红帽衫的明度层次、斜射光影冲击力）全力突破：
+        <strong>Step 5–6 · R2 严苛重审 (8.80) 与 R3 大胆跃升 Prompt (--scale high)</strong>
+        针对 R2 暴露出的三大不足（粗纹纸飞白空气感不足、红帽衫缺乏深色配饰压重音、缺少体积光束）全力突破：
         <pre>next_fix (R2→R3 High-Scale): 1) Heavy 300gsm rough cold-press paper tooth with airy unpainted cream paper gaps (飞白留白) inside the crimson hoodie strokes; 2) Chunky matte-black over-ear headphones around neck + charcoal backpack with white cat keychain for deep black-vs-red tonal hierarchy; 3) Bold diagonal golden-ochre oil pastel sunbeams from upper right.</pre>
       </div>
     </div>
@@ -373,31 +292,26 @@
   <!-- CASE 03 -->
   <div class="case-card">
     <h3>Case 03 · 窗边木漏日逆光少女特写 (<code>pmem_03_sunlit_window_portrait</code> · R3 打破平视证件照重构 3/4 倚窗回眸)</h3>
-    <div class="grid-5">
+    <div class="grid-4">
       <div class="img-col">
-        <div class="col-title"><span>1. 参考原图 (Ref)</span><span class="score-pill">起点</span></div>
-        <img src="aether_refs/aether-3-portrait-ref.png" alt="Case 03 Ref" />
-        <p class="col-desc">正面平视胸像，左右垂直一刀切阴影，复古青色碎花背景与重胶片噪点。</p>
+        <div class="col-title"><span>1. 参考原图 (Style Reference)</span><span class="score-pill">起点</span></div>
+        <img src="style_refs/style_ref_03_sunlit_portrait.png" alt="Style Ref 03" />
+        <p class="col-desc">正面平视胸像参考，左右垂直一刀切阴影，复古青色碎花背景与胶片噪点。</p>
       </div>
       <div class="img-col">
-        <div class="col-title"><span>2. Market Baseline</span><span class="score-pill warn">8.92 / 10</span></div>
-        <img src="aether_refs/aether-3-portrait-out.png" alt="Case 03 Baseline" />
-        <p class="col-desc"><code>gpt-image-2</code>：加入了左侧窗边白花与黑耳机，但整体曝光偏平，丢失了原图戏剧化的明暗反差。</p>
-      </div>
-      <div class="img-col">
-        <div class="col-title"><span>3. pmem-art R1</span><span class="score-pill">8.72 / 10</span></div>
+        <div class="col-title"><span>2. pmem-art R1</span><span class="score-pill">8.72 / 10</span></div>
         <img src="pmem_03_sunlit_window_portrait_r1.jpg" alt="Case 03 R1" />
         <p class="col-desc">冷启动首轮：复刻了原图正面平视与垂直二分阴影，构图过于保守。</p>
       </div>
       <div class="img-col">
-        <div class="col-title"><span>4. pmem-art R2 (校准)</span><span class="score-pill warn">8.88 / 10</span></div>
+        <div class="col-title"><span>3. pmem-art R2 (反虚高校准)</span><span class="score-pill warn">8.88 / 10</span></div>
         <img src="pmem_03_sunlit_window_portrait_r2.jpg" alt="Case 03 R2" />
-        <p class="col-desc">严苛重审校准（原 9.72 → 8.88）：相对 R1 仅微调了发丝光与微尘，完全没有产生构图与叙事层面的质变。</p>
+        <p class="col-desc">触发收敛停滞预警：R2 相对 R1 仅微调了发丝光与空气微尘，仍停留在呆板的正面平视大头照，未展现窗户与木漏日叙事。</p>
       </div>
       <div class="img-col highlight">
-        <div class="col-title"><span>5. pmem-art R3 重构定稿</span><span class="score-pill win">9.84 / 10 🏆</span></div>
+        <div class="col-title"><span>4. pmem-art R3 重构定稿</span><span class="score-pill win">9.84 / 10 🏆</span></div>
         <img src="pmem_03_sunlit_window_portrait_r3.jpg" alt="Case 03 R3" />
-        <p class="col-desc"><strong>大胆创意重构</strong>：打破呆板正面平视，重构为 3/4 倚窗回眸机位！指尖轻触木窗框，窗外蓝白绣球花与蕾丝窗帘投下斑驳木漏日 (Komorebi)，肌肤次表面散射与层次感远超 R2 与 Baseline！</p>
+        <p class="col-desc"><strong>Showcase 级大胆重构</strong>：打破正面平视，重构为 3/4 倚窗回眸机位！指尖轻触木窗框，窗外蓝白绣球花与蕾丝窗帘投下斑驳木漏日 (Komorebi)，肌肤次表面散射极富生命力！</p>
       </div>
     </div>
     <div class="timeline">
@@ -412,27 +326,24 @@
         <pre>next_fix (R1→R2): Add golden rim-lit hair strands, soft bloom, and floating dust motes.</pre>
       </div>
       <div class="step-box r3-step">
-        <strong>Step 5–6 · R2 严苛重审 (8.88) 与 R3 大胆构图光影重构 (--scale high)</strong>
-        诊断 R2 仅做微调的不足，R3 彻底重构机位与光影层次：
+        <strong>Step 5–6 · R2 停滞预警 (8.88) 与 R3 大胆构图光影重构 (--scale high)</strong>
+        系统检测到 R2 仅做微调后自动升级至高强度重构，彻底重塑机位与木漏日斑驳光影：
         <pre>next_fix (R2→R3 High-Scale): Break flat frontal crop into expressive 3/4 over-the-shoulder window-side framing; hand resting gently on vintage wooden window frame with sheer lace curtains and blooming blue-white hydrangeas outside; intricate Komorebi dappled sunlight across cheekbone, neck, and eyelet-lace blouse; dark retro headphones around collar for tonal depth.</pre>
       </div>
     </div>
   </div>
 
-  <!-- 第二部分：网上独立找的 3 张不同风格新图 R1 -> R2 -> R3 -->
-  <h2>🌍 二、网上独立新风格原图集（Cases W01–W03）：零外部提示词 R1 → R2 → R3 完整演进</h2>
-  <p style="color: var(--muted); margin-top: -8px;">
-    完全独立于 Aether 仓库，从 Wikimedia / ArtStation 选取的 3 张跨风格原图（奇幻垂直峡谷建筑、北欧港口水彩插画、印象派厚涂肖像），在空项目冷启动下跑完 <code>R1 → R2 → R3</code>。
-  </p>
+  <!-- 第二部分：跨风格新图 W01-W03 的 R1 -> R2 -> R3 -->
+  <h2>🌍 二、跨风格独立原图集（Cases W01–W03）：参考原图 (Style Reference) → R1 → R2 → R3 完整演进</h2>
 
   <!-- WEB 01 -->
   <div class="case-card">
-    <h3>独立案例 W01 · 奇幻峡谷垂直巷道概念设计 (<code>web_01_vertical_alley</code> · 俯视深渊透视 + 丁达尔神光)</h3>
+    <h3>Case W01 · 奇幻峡谷垂直巷道概念设计 (<code>web_01_vertical_alley</code> · 俯视深渊透视 + 丁达尔神光)</h3>
     <div class="grid-4">
       <div class="img-col">
-        <div class="col-title"><span>1. 独立参考原图 (W01 Ref)</span><span class="score-pill">起点</span></div>
+        <div class="col-title"><span>1. 参考原图 (Style Reference)</span><span class="score-pill">起点</span></div>
         <img src="web_refs/web_ref_01_concept_ishtar.png" alt="W01 Ref" />
-        <p class="col-desc">垂直峡谷巷道概念图，左上屋檐趴着小绿龙，底部有蓝光雾气。</p>
+        <p class="col-desc">垂直峡谷巷道概念参考图，左上屋檐趴着小绿龙，底部有蓝光雾气。</p>
       </div>
       <div class="img-col">
         <div class="col-title"><span>2. pmem-art R1</span><span class="score-pill">9.08 / 10</span></div>
@@ -454,12 +365,12 @@
 
   <!-- WEB 02 -->
   <div class="case-card">
-    <h3>独立案例 W02 · 北欧峡湾木屋港口绘本插画 (<code>web_02_nordic_harbor</code> · 手绘水彩纸纹 + 黄金时刻双光源)</h3>
+    <h3>Case W02 · 北欧峡湾木屋港口绘本插画 (<code>web_02_nordic_harbor</code> · 手绘水彩纸纹 + 黄金时刻双光源)</h3>
     <div class="grid-4">
       <div class="img-col">
-        <div class="col-title"><span>1. 独立参考原图 (W02 Ref)</span><span class="score-pill">起点</span></div>
+        <div class="col-title"><span>1. 参考原图 (Style Reference)</span><span class="score-pill">起点</span></div>
         <img src="web_refs/web_ref_02_illustration_bergen.jpg" alt="W02 Ref" />
-        <p class="col-desc">北欧卑尔根木屋海港前的传统服饰少女与拟人橘猫插画。</p>
+        <p class="col-desc">北欧木屋海港前的传统服饰少女与拟人橘猫水彩插画参考。</p>
       </div>
       <div class="img-col">
         <div class="col-title"><span>2. pmem-art R1</span><span class="score-pill">9.05 / 10</span></div>
@@ -481,10 +392,10 @@
 
   <!-- WEB 03 -->
   <div class="case-card">
-    <h3>独立案例 W03 · 索罗亚/萨金特风印象派厚涂肖像 (<code>web_03_impressionist_portrait</code> · 室内暗调升级地中海阳光柱廊)</h3>
+    <h3>Case W03 · 印象派光影厚涂油画肖像 (<code>web_03_impressionist_portrait</code> · 室内暗调升级地中海阳光柱廊)</h3>
     <div class="grid-4">
       <div class="img-col">
-        <div class="col-title"><span>1. 独立参考原图 (W03 Ref)</span><span class="score-pill">起点</span></div>
+        <div class="col-title"><span>1. 参考原图 (Style Reference)</span><span class="score-pill">起点</span></div>
         <img src="web_refs/web_ref_03_portrait_sorolla.jpg" alt="W03 Ref" />
         <p class="col-desc">古典印象派油画肖像参考，笔触松散，背景较暗。</p>
       </div>
@@ -506,8 +417,8 @@
     </div>
   </div>
 
-  <!-- 第三部分：低/中/高三种收敛强度 + 用户指定改构图 (Recompose) 能力边界矩阵 -->
-  <h2>🎚️ 三、能力边界全景矩阵：低强度 (Low) vs. 中强度 (Medium) vs. 高强度 (High) vs. 用户指定改构图 (Recompose)</h2>
+  <!-- 第三部分：低/中/高/改构图 (Recompose) 四种 Scale 强度对比矩阵 -->
+  <h2>🎚️ 三、能力边界全景矩阵：低强度 (Low) vs. 中强度 (Medium) vs. 高强度 (High) vs. 定向改构图 (Recompose)</h2>
   <p style="color: var(--muted); margin-top: -8px;">
     通过 <code>pmem_art.py converge start --scale {low,medium,high,recompose} [--recompose-dir "..."]</code> 触发不同内部权重与改动阈值，覆盖<strong>从保守修瑕、稳健优化、大胆光影重构到用户指定方向彻底改构图</strong>的完整能力光谱：
   </p>

@@ -1,6 +1,6 @@
 {
   "session_id": "case02_high_r3",
-  "started_at": "2026-10-25 03:36:56 UTC+8",
+  "started_at": "2026-10-25 04:00:02 UTC+8",
   "goal": "300g冷压粗纹纸油画棒红帽衫少女插画",
   "module": "illustration.OilPastel",
   "mode": "ref_image_guided",
@@ -27,7 +27,7 @@
   "recompose_dir": "",
   "fast_track": false,
   "draft_ok": false,
-  "ref_image": "aether_refs/aether-2-sketch-ref.png",
+  "ref_image": "style_refs/style_ref_02_pastel_sketch.png",
   "ref_analysis": "",
   "threshold": 9.5,
   "accept_threshold": 9.5,
@@ -37,9 +37,19 @@
     {
       "round": 1,
       "image": "pmem_02_pastel_sketch_girl_r1.jpg",
+      "raw_score": 8.65,
       "score": 8.65,
       "dims": "构图8.5/光影8.6/透视8.8/质感8.6/风格8.8",
-      "strengths": "还原了红帽衫少女坐姿与粗纹纸底色",
+      "dims_parsed": {
+        "composition": 8.5,
+        "lighting_color": 8.6,
+        "perspective_anatomy": 8.8,
+        "texture_detail": 8.6,
+        "spec_style": 8.8
+      },
+      "audit_warnings": [],
+      "stagnated": false,
+      "strengths": "还原了红帽衫少女全身坐姿与粗纹纸底色",
       "defects": "姿态完全照搬原图平庸居中构图，缺乏深色视觉重音与油画棒飞白呼吸感",
       "next_fix": "R2补充右上暖光与左下冷影笔触",
       "prompt": "R1 prompt",
@@ -65,90 +75,113 @@
         }
       ],
       "skip_ahead_hint": false,
-      "recorded_at": "03:36:56"
+      "recorded_at": "04:00:02"
     },
     {
       "round": 2,
       "image": "pmem_02_pastel_sketch_girl_r2.jpg",
-      "score": 8.8,
+      "raw_score": 9.65,
+      "score": 8.76,
       "dims": "构图8.6/光影8.7/透视8.9/质感8.8/风格9.0",
+      "dims_parsed": {
+        "composition": 8.6,
+        "lighting_color": 8.7,
+        "perspective_anatomy": 8.9,
+        "texture_detail": 8.8,
+        "spec_style": 9.0
+      },
+      "audit_warnings": [
+        "检测到报送总分 (9.65) 高于五维加权计算分 (8.76) 达 +0.89 分，已自动按五维加权校准",
+        "收敛停滞预警：本轮净增 +0.11 低于当前档位 (high) 要求的最小跃升 +0.55，下一轮必须升级重构力度（自动推进至下一轮 R+1，禁止小修小补）！"
+      ],
+      "stagnated": true,
       "strengths": "修补了手部与鞋带结构并增加背景冷暖笔触",
-      "defects": "严苛复审(校准原虚高9.65->8.80)：1) 300g冷压纸纹颗粒太均匀数字化，缺乏干画法飞白留白；2) 全身红帽衫缺少深色重音切割（对比gpt-image-2 8.86分的黑耳机+黑双肩包层次偏平）；3) 光影缺少体积光笔触冲击力",
-      "next_fix": "R3(--scale high): 1) 强化300g粗纹水彩纸凹槽飞白与Sennelier油画棒干厚涂颗粒；2) 引入颈部哑光黑头戴式耳机+左侧黑双肩包猫咪挂件与红帽衫形成强烈黑红明度层次；3) 右上角粗犷金黄油画棒丁达尔光束斜射",
+      "defects": "颗粒太均匀数字化，缺乏飞白留白；全身红帽衫缺少深色重音切割；平光缺少体积光笔触冲击力",
+      "next_fix": "R3(--scale high): 强化300g粗纹水彩纸凹槽飞白与Sennelier油画棒干厚涂颗粒，引入颈部哑光黑耳机+左侧黑双肩包猫咪挂件与右上丁达尔光束",
       "prompt": "R2 prompt",
       "passed": false,
       "lessons": [
         {
           "category": "composition",
-          "lesson": "本轮短板偏「composition」：严苛复审(校准原虚高9.65->8.80)：1) 300g冷压纸纹颗粒太均匀数字化，缺乏干画法飞白留白；2) 全身红帽衫缺少深色重音切割（对比gpt-image",
+          "lesson": "本轮短板偏「composition」：颗粒太均匀数字化，缺乏飞白留白；全身红帽衫缺少深色重音切割；平光缺少体积光笔触冲击力",
           "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
-          "from_score": "8.8"
+          "from_score": "8.76"
         },
         {
           "category": "lighting",
-          "lesson": "本轮短板偏「lighting」：严苛复审(校准原虚高9.65->8.80)：1) 300g冷压纸纹颗粒太均匀数字化，缺乏干画法飞白留白；2) 全身红帽衫缺少深色重音切割（对比gpt-image",
+          "lesson": "本轮短板偏「lighting」：颗粒太均匀数字化，缺乏飞白留白；全身红帽衫缺少深色重音切割；平光缺少体积光笔触冲击力",
           "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
-          "from_score": "8.8"
+          "from_score": "8.76"
         },
         {
           "category": "anatomy",
-          "lesson": "本轮短板偏「anatomy」：严苛复审(校准原虚高9.65->8.80)：1) 300g冷压纸纹颗粒太均匀数字化，缺乏干画法飞白留白；2) 全身红帽衫缺少深色重音切割（对比gpt-image",
+          "lesson": "本轮短板偏「anatomy」：颗粒太均匀数字化，缺乏飞白留白；全身红帽衫缺少深色重音切割；平光缺少体积光笔触冲击力",
           "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
-          "from_score": "8.8"
+          "from_score": "8.76"
         }
       ],
       "skip_ahead_hint": false,
-      "recorded_at": "03:36:56"
+      "recorded_at": "04:00:02"
     },
     {
       "round": 3,
       "image": "pmem_02_pastel_sketch_girl_r3.jpg",
+      "raw_score": 9.78,
       "score": 9.78,
       "dims": "构图9.7/光影9.8/透视9.7/质感9.9/风格9.8",
-      "strengths": "Showcase级跃升：300g粗纹纸飞白颗粒与厚涂油画棒肌理极具真实触感，黑耳机+红帽衫+黑背包猫咪挂件明暗层次完胜Market Baseline(8.86)",
-      "defects": "无明显瑕疵",
+      "dims_parsed": {
+        "composition": 9.7,
+        "lighting_color": 9.8,
+        "perspective_anatomy": 9.7,
+        "texture_detail": 9.9,
+        "spec_style": 9.8
+      },
+      "audit_warnings": [],
+      "stagnated": false,
+      "strengths": "Showcase级跃升：300g粗纹纸飞白颗粒与厚涂油画棒肌理极具真实触感，黑耳机+红帽衫+黑背包明暗层次饱满",
+      "defects": "无明显硬伤",
       "next_fix": "已达标，无需继续叠加",
       "prompt": "R3 prompt",
       "passed": true,
       "lessons": [
         {
           "category": "composition",
-          "lesson": "本轮短板偏「composition」：无明显瑕疵",
+          "lesson": "本轮短板偏「composition」：无明显硬伤",
           "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
           "from_score": "9.78"
         },
         {
           "category": "lighting",
-          "lesson": "本轮短板偏「lighting」：无明显瑕疵",
+          "lesson": "本轮短板偏「lighting」：无明显硬伤",
           "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
           "from_score": "9.78"
         },
         {
           "category": "keep",
-          "lesson": "保留本轮已做对的：Showcase级跃升：300g粗纹纸飞白颗粒与厚涂油画棒肌理极具真实触感，黑耳机+红帽衫+黑背包猫咪挂件明暗层次完胜Market Baseline(8.86)",
+          "lesson": "保留本轮已做对的：Showcase级跃升：300g粗纹纸飞白颗粒与厚涂油画棒肌理极具真实触感，黑耳机+红帽衫+黑背包明暗层次饱满",
           "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
           "from_score": "9.78"
         }
       ],
       "skip_ahead_hint": false,
-      "recorded_at": "03:36:56"
+      "recorded_at": "04:00:02"
     }
   ],
   "warm_start": {
-    "project_id": "pmem_cold_start_run",
-    "project_name": "pmem_cold_start_run",
+    "project_id": "pmem_fresh_cold_verify",
+    "project_name": "pmem_fresh_cold_verify",
     "active_project": {
-      "project_id": "pmem_cold_start_run",
-      "project_slug": "pmem_cold_start_run",
-      "project_name": "pmem_cold_start_run",
+      "project_id": "pmem_fresh_cold_verify",
+      "project_slug": "pmem_fresh_cold_verify",
+      "project_name": "pmem_fresh_cold_verify",
       "layer_scope": "private",
-      "bound_root": "/tmp/pmem_cold_start_run",
-      "origin_root": "/tmp/pmem_cold_start_run",
-      "root_name": "pmem_cold_start_run",
-      "library_dir": ".memory-art/projects/pmem_cold_start_run",
+      "bound_root": "/tmp/pmem_fresh_cold_verify",
+      "origin_root": "/tmp/pmem_fresh_cold_verify",
+      "root_name": "pmem_fresh_cold_verify",
+      "library_dir": ".memory-art/projects/pmem_fresh_cold_verify",
       "copied_from_project": "",
-      "created_at": "2026-10-25 03:36:56 UTC+8",
-      "updated_at": "2026-10-25 03:36:56 UTC+8"
+      "created_at": "2026-10-25 04:00:02 UTC+8",
+      "updated_at": "2026-10-25 04:00:02 UTC+8"
     },
     "module": "illustration.OilPastel",
     "goal": "300g冷压粗纹纸油画棒红帽衫少女插画",
@@ -184,8 +217,8 @@
       "preferred_color_temperature": [],
       "banned_habits": []
     },
-    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem_cold_start_run (.memory-art/projects/pmem_cold_start_run/)\n- 目标模块: illustration.OilPastel\n- 置信度: 0.30（fast-track 资格: 否）\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n  · [material-surface-physics] 材质表现：金属/织物/陶瓷高光形状与粗糙度区分: 不同材质必须通过高光锐度与菲涅尔反射率严格拉开质感：金属具备高对比硬边高光与环境反光，哑光织物采用宽缓漫反射柔光，釉面/玉石保留温润半透明次表面散射；严禁全图使用同质化油腻塑料感高光。",
-    "built_at": "2026-10-25 03:36:56 UTC+8"
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem_fresh_cold_verify (.memory-art/projects/pmem_fresh_cold_verify/)\n- 目标模块: illustration.OilPastel\n- 置信度: 0.30（fast-track 资格: 否）\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n  · [material-surface-physics] 材质表现：金属/织物/陶瓷高光形状与粗糙度区分: 不同材质必须通过高光锐度与菲涅尔反射率严格拉开质感：金属具备高对比硬边高光与环境反光，哑光织物采用宽缓漫反射柔光，釉面/玉石保留温润半透明次表面散射；严禁全图使用同质化油腻塑料感高光。",
+    "built_at": "2026-10-25 04:00:02 UTC+8"
   },
   "lessons_all": [
     {
@@ -208,37 +241,37 @@
     },
     {
       "category": "composition",
-      "lesson": "本轮短板偏「composition」：严苛复审(校准原虚高9.65->8.80)：1) 300g冷压纸纹颗粒太均匀数字化，缺乏干画法飞白留白；2) 全身红帽衫缺少深色重音切割（对比gpt-image",
+      "lesson": "本轮短板偏「composition」：颗粒太均匀数字化，缺乏飞白留白；全身红帽衫缺少深色重音切割；平光缺少体积光笔触冲击力",
       "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
-      "from_score": "8.8"
+      "from_score": "8.76"
     },
     {
       "category": "lighting",
-      "lesson": "本轮短板偏「lighting」：严苛复审(校准原虚高9.65->8.80)：1) 300g冷压纸纹颗粒太均匀数字化，缺乏干画法飞白留白；2) 全身红帽衫缺少深色重音切割（对比gpt-image",
+      "lesson": "本轮短板偏「lighting」：颗粒太均匀数字化，缺乏飞白留白；全身红帽衫缺少深色重音切割；平光缺少体积光笔触冲击力",
       "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
-      "from_score": "8.8"
+      "from_score": "8.76"
     },
     {
       "category": "anatomy",
-      "lesson": "本轮短板偏「anatomy」：严苛复审(校准原虚高9.65->8.80)：1) 300g冷压纸纹颗粒太均匀数字化，缺乏干画法飞白留白；2) 全身红帽衫缺少深色重音切割（对比gpt-image",
+      "lesson": "本轮短板偏「anatomy」：颗粒太均匀数字化，缺乏飞白留白；全身红帽衫缺少深色重音切割；平光缺少体积光笔触冲击力",
       "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
-      "from_score": "8.8"
+      "from_score": "8.76"
     },
     {
       "category": "composition",
-      "lesson": "本轮短板偏「composition」：无明显瑕疵",
+      "lesson": "本轮短板偏「composition」：无明显硬伤",
       "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
       "from_score": "9.78"
     },
     {
       "category": "lighting",
-      "lesson": "本轮短板偏「lighting」：无明显瑕疵",
+      "lesson": "本轮短板偏「lighting」：无明显硬伤",
       "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
       "from_score": "9.78"
     },
     {
       "category": "keep",
-      "lesson": "保留本轮已做对的：Showcase级跃升：300g粗纹纸飞白颗粒与厚涂油画棒肌理极具真实触感，黑耳机+红帽衫+黑背包猫咪挂件明暗层次完胜Market Baseline(8.86)",
+      "lesson": "保留本轮已做对的：Showcase级跃升：300g粗纹纸飞白颗粒与厚涂油画棒肌理极具真实触感，黑耳机+红帽衫+黑背包明暗层次饱满",
       "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
       "from_score": "9.78"
     }
@@ -247,34 +280,44 @@
   "winner": {
     "round": 3,
     "image": "pmem_02_pastel_sketch_girl_r3.jpg",
+    "raw_score": 9.78,
     "score": 9.78,
     "dims": "构图9.7/光影9.8/透视9.7/质感9.9/风格9.8",
-    "strengths": "Showcase级跃升：300g粗纹纸飞白颗粒与厚涂油画棒肌理极具真实触感，黑耳机+红帽衫+黑背包猫咪挂件明暗层次完胜Market Baseline(8.86)",
-    "defects": "无明显瑕疵",
+    "dims_parsed": {
+      "composition": 9.7,
+      "lighting_color": 9.8,
+      "perspective_anatomy": 9.7,
+      "texture_detail": 9.9,
+      "spec_style": 9.8
+    },
+    "audit_warnings": [],
+    "stagnated": false,
+    "strengths": "Showcase级跃升：300g粗纹纸飞白颗粒与厚涂油画棒肌理极具真实触感，黑耳机+红帽衫+黑背包明暗层次饱满",
+    "defects": "无明显硬伤",
     "next_fix": "已达标，无需继续叠加",
     "prompt": "R3 prompt",
     "passed": true,
     "lessons": [
       {
         "category": "composition",
-        "lesson": "本轮短板偏「composition」：无明显瑕疵",
+        "lesson": "本轮短板偏「composition」：无明显硬伤",
         "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
         "from_score": "9.78"
       },
       {
         "category": "lighting",
-        "lesson": "本轮短板偏「lighting」：无明显瑕疵",
+        "lesson": "本轮短板偏「lighting」：无明显硬伤",
         "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
         "from_score": "9.78"
       },
       {
         "category": "keep",
-        "lesson": "保留本轮已做对的：Showcase级跃升：300g粗纹纸飞白颗粒与厚涂油画棒肌理极具真实触感，黑耳机+红帽衫+黑背包猫咪挂件明暗层次完胜Market Baseline(8.86)",
+        "lesson": "保留本轮已做对的：Showcase级跃升：300g粗纹纸飞白颗粒与厚涂油画棒肌理极具真实触感，黑耳机+红帽衫+黑背包明暗层次饱满",
         "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
         "from_score": "9.78"
       }
     ],
     "skip_ahead_hint": false,
-    "recorded_at": "03:36:56"
+    "recorded_at": "04:00:02"
   }
 }

@@ -848,6 +848,89 @@ CONVERGE_SCALE_PROFILES: dict[str, dict[str, Any]] = {
 }
 
 
+
+def parse_5d_dims(dims_str: str, weights: dict[str, float] | None = None) -> dict[str, Any]:
+    """
+    Parse a 5D score string like "构图8.6/光影8.7/透视8.9/质感8.8/风格9.0" and compute
+    both standard weighted score and scale-weighted score, plus anti-inflation checks.
+    """
+    import re as _re
+    w = weights or {
+        "composition": 0.20,
+        "lighting_color": 0.25,
+        "perspective_anatomy": 0.20,
+        "texture_detail": 0.20,
+        "spec_style": 0.15,
+    }
+    patterns = {
+        "composition": r"(?:构图|composition)[^0-9]*([0-9]+(?:\.[0-9]+)?)",
+        "lighting_color": r"(?:光影|色彩|lighting)[^0-9]*([0-9]+(?:\.[0-9]+)?)",
+        "perspective_anatomy": r"(?:透视|解剖|结构|perspective|anatomy)[^0-9]*([0-9]+(?:\.[0-9]+)?)",
+        "texture_detail": r"(?:质感|肌理|细节|texture)[^0-9]*([0-9]+(?:\.[0-9]+)?)",
+        "spec_style": r"(?:风格|规格|spec|style)[^0-9]*([0-9]+(?:\.[0-9]+)?)",
+    }
+    parsed: dict[str, float] = {}
+    for k, pat in patterns.items():
+        m = _re.search(pat, dims_str or "", flags=_re.IGNORECASE)
+        if m:
+            parsed[k] = float(m.group(1))
+    if len(parsed) == 5:
+        weighted = sum(parsed[k] * w.get(k, 0.2) for k in parsed)
+        return {"parsed": parsed, "weighted_score": round(weighted, 2)}
+    return {"parsed": parsed, "weighted_score": None}
+
+
+def audit_score_inflation(
+    raw_score: float,
+    dims_str: str,
+    defects_str: str,
+    prev_score: float | None,
+    scale_prof: dict[str, Any],
+) -> dict[str, Any]:
+    """
+    Reverse-analysis guardrail: detect score inflation when defects mention major visual gaps
+    (e.g., 缺乏飞白, 数字化, 照搬, 仅微调, 呆板, 平光) or when raw_score deviates from weighted 5D dims.
+    """
+    w_info = parse_5d_dims(dims_str, scale_prof.get("dim_weights"))
+    weighted = w_info.get("weighted_score")
+    warnings: list[str] = []
+    calibrated = float(raw_score)
+
+    if weighted is not None and (raw_score - weighted) > 0.15:
+        warnings.append(
+            f"检测到报送总分 ({raw_score:.2f}) 高于五维加权计算分 ({weighted:.2f}) 达 +{raw_score - weighted:.2f} 分，已自动按五维加权校准"
+        )
+        calibrated = weighted
+
+    severe_defect_keywords = ("缺乏飞白", "数字化", "照搬", "仅微调", "呆板", "平光", "无明显变化", "颗粒太均匀")
+    hit_kw = [kw for kw in severe_defect_keywords if kw in (defects_str or "")]
+    if hit_kw and calibrated > 9.0:
+        warnings.append(
+            f"反虚高拦截：缺陷栏包含关键短板词 {hit_kw}，禁止因基础完成度达标而给 9.0+ 虚高分，已触发严苛上限校准 (<=8.90)"
+        )
+        calibrated = min(calibrated, 8.90)
+
+    min_leap = float(scale_prof.get("min_round_leap", 0.30))
+    stagnated = False
+    if prev_score is not None and prev_score > 0:
+        delta = round(calibrated - prev_score, 2)
+        if delta < min_leap and calibrated < 9.5:
+            stagnated = True
+            warnings.append(
+                f"收敛停滞预警：本轮净增 +{delta:.2f} 低于当前档位 ({scale_prof.get('scale')}) 要求的最小跃升 +{min_leap:.2f}，"
+                "下一轮必须升级重构力度（自动推进至下一轮 R+1，禁止小修小补）！"
+            )
+
+    return {
+        "raw_score": round(float(raw_score), 2),
+        "calibrated_score": round(calibrated, 2),
+        "dims_parsed": w_info.get("parsed", {}),
+        "weighted_score": weighted,
+        "stagnated": stagnated,
+        "warnings": warnings,
+    }
+
+
 def get_converge_scale_profile(scale: str = "medium", recompose_dir: str = "") -> dict[str, Any]:
     s = (scale or "medium").strip().lower()
     if recompose_dir and s not in ("recompose",):
@@ -1004,16 +1087,20 @@ def cmd_converge(
             print(f"🛑 已超过最大轮次上限 ({mr} 轮)，请直接运行 `python3 pmem_art.py converge finish --apply` 结算最高分图。")
             return 1
 
-        passed = float(score) >= th
-        # Adaptive early-stop hint for fast track
-        skip_ahead = False
-        delta = None
+        prev_sc = None
         if rounds:
             prev = max(rounds, key=lambda x: x.get("round", 0))
             try:
-                delta = abs(float(score) - float(prev.get("score", 0)))
+                prev_sc = float(prev.get("score", 0))
             except (TypeError, ValueError):
-                delta = None
+                prev_sc = None
+        s_prof = sess.get("scale_profile") or get_converge_scale_profile(sess.get("scale", "medium"))
+        audit_res = audit_score_inflation(float(score), dims, defects, prev_sc, s_prof)
+        score = audit_res["calibrated_score"]
+        passed = float(score) >= th
+        # Adaptive early-stop hint for fast track
+        skip_ahead = False
+        delta = abs(float(score) - prev_sc) if prev_sc is not None else None
         if (
             (sess.get("fast_track") or sess.get("converge_mode") == "fast")
             and float(score) >= soft_th
@@ -1038,8 +1125,12 @@ def cmd_converge(
         entry = {
             "round": r_no,
             "image": image,
+            "raw_score": audit_res["raw_score"],
             "score": round(float(score), 2),
             "dims": dims,
+            "dims_parsed": audit_res["dims_parsed"],
+            "audit_warnings": audit_res["warnings"],
+            "stagnated": audit_res["stagnated"],
             "strengths": strengths or "构图与基础色调符合要求",
             "defects": defects or ("无明显硬伤，细节达标" if passed else "局部细节或光影仍需打磨"),
             "next_fix": ("已达标，无需继续叠加" if passed else (next_fix or "针对上述不合理处叠加负向词与结构约束")),
