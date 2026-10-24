@@ -140,15 +140,42 @@ def build_warm_start_pack(
         if e.get("kind") == "art_decision" and _mod_ok(e.get("module", "")) and e.get("status", "active") != "archived"
     ]
 
-    # Prefer newer / verified-looking summaries; keep top_n
-    recipes = recipes[: max(top_n * 2, top_n)][-top_n:] if len(recipes) > top_n else recipes
-    # actually sort by note_date if present
-    def _date_key(e: dict) -> str:
-        return str(e.get("verified") or e.get("note_date") or e.get("id") or "")
+    goal_tokens = [
+        tok for tok in re.split(r"[\s,，。、·:：/|+()-]+", (goal or "").lower())
+        if len(tok) >= 2
+    ]
 
-    recipes = sorted(recipes, key=_date_key, reverse=True)[:top_n]
-    redlines = sorted(redlines, key=_date_key, reverse=True)[: max(top_n + 2, 5)]
-    decisions = sorted(decisions, key=_date_key, reverse=True)[:top_n]
+    def _entry_score(e: dict) -> float:
+        for k in ("score", "winner_score"):
+            if e.get(k) is not None:
+                try:
+                    return float(e[k])
+                except (TypeError, ValueError):
+                    pass
+        ai_p = e.get("ai_params") or {}
+        if isinstance(ai_p, dict) and ai_p.get("score") is not None:
+            try:
+                return float(ai_p["score"])
+            except (TypeError, ValueError):
+                pass
+        blob = f"{e.get('summary') or ''} {e.get('body') or ''}"
+        m = re.search(r"(\d+\.\d+)\s*(?:分|/\s*10)", blob)
+        return float(m.group(1)) if m else 0.0
+
+    def _rank_key(e: dict) -> tuple[int, float, int, str]:
+        hay = " ".join([
+            str(e.get("summary") or ""),
+            str(e.get("body") or ""),
+            " ".join(str(x) for x in (e.get("tags") or e.get("aliases") or [])),
+        ]).lower()
+        overlap = sum(1 for tok in goal_tokens if tok in hay)
+        exact_mod = 1 if e.get("module") == module else 0
+        date_str = str(e.get("verified") or e.get("note_date") or e.get("id") or "")
+        return (exact_mod, _entry_score(e), overlap, date_str)
+
+    recipes = sorted(recipes, key=_rank_key, reverse=True)[:top_n]
+    redlines = sorted(redlines, key=_rank_key, reverse=True)[: max(top_n + 2, 5)]
+    decisions = sorted(decisions, key=_rank_key, reverse=True)[:top_n]
 
     taste = load_taste(root)
     palette = (modules.get(module) or {}).get("palette") or []
