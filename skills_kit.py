@@ -859,12 +859,68 @@ CONVERGE_SCALE_PROFILES: dict[str, dict[str, Any]] = {
 }
 
 
-def parse_5d_dims(dims_str: str, weights: dict[str, float] | None = None) -> dict[str, Any]:
+UI_DEDICATED_DIM_WEIGHTS: dict[str, float] = {
+    "style_palette": 0.25,
+    "nine_slice_structure": 0.25,
+    "lighting_material": 0.20,
+    "rgba_pipeline_compliance": 0.15,
+    "state_suite_cohesion": 0.15,
+}
+
+
+def _is_ui_5d_context(dims_str: str = "", module: str = "") -> bool:
+    mod = (module or "").strip().lower()
+    if mod == "ui" or mod.startswith("ui."):
+        return True
+    s = (dims_str or "").lower()
+    ui_markers = ("九宫格", "9-slice", "状态族", "套件", "透明底", "rgba", "合规")
+    return sum(1 for kw in ui_markers if kw in s) >= 2
+
+
+def parse_5d_dims(
+    dims_str: str,
+    weights: dict[str, float] | None = None,
+    *,
+    module: str = "",
+) -> dict[str, Any]:
     """
-    Parse a 5D score string like "构图8.6/光影8.7/透视8.9/质感8.8/风格9.0" and compute
-    both standard weighted score and scale-weighted score, plus anti-inflation checks.
+    Parse a 5D score string and compute weighted score.
+    Supports:
+    1) General art / character / concept 5D: 构图 / 光影 / 透视 / 质感 / 风格 (leaves /pmem-draw untouched)
+    2) Dedicated /pmem-ui 5D rubric when module starts with 'ui' or UI keywords are present:
+       风格色板契合(25%) · 九宫格/结构(25%) · 光影材质(20%) · 透明底/RGBA管线合规(15%) · 套件状态族一致性(15%)
+       Automatically normalizes 2.5/2.5/2.0/1.5/1.5 point scales or 10-point scales to /10.0.
     """
     import re as _re
+
+    if _is_ui_5d_context(dims_str, module=module):
+        ui_patterns = {
+            "style_palette": (r"(?:风格色板|风格|色板|style_palette)[^0-9]*([0-9]+(?:\.[0-9]+)?)", 2.5),
+            "nine_slice_structure": (r"(?:九宫格|9-slice|结构|nine_slice)[^0-9]*([0-9]+(?:\.[0-9]+)?)", 2.5),
+            "lighting_material": (r"(?:光影材质|光影|材质|lighting_material)[^0-9]*([0-9]+(?:\.[0-9]+)?)", 2.0),
+            "rgba_pipeline_compliance": (r"(?:透明底|rgba|管线合规|合规|红线|pipeline)[^0-9]*([0-9]+(?:\.[0-9]+)?)", 1.5),
+            "state_suite_cohesion": (r"(?:状态族|套件一致性|套件|状态|一致性|还原|state_suite)[^0-9]*([0-9]+(?:\.[0-9]+)?)", 1.5),
+        }
+        ui_parsed: dict[str, float] = {}
+        raw_vals: dict[str, float] = {}
+        for k, (pat, max_pt) in ui_patterns.items():
+            m = _re.search(pat, dims_str or "", flags=_re.IGNORECASE)
+            if m:
+                raw_vals[k] = float(m.group(1))
+        if len(raw_vals) == 5:
+            # Check if scored on sub-weights (<=2.5) vs 10-point scale
+            is_subscale = all(raw_vals[k] <= ui_patterns[k][1] + 0.05 for k in raw_vals)
+            for k, val in raw_vals.items():
+                max_pt = ui_patterns[k][1]
+                ui_parsed[k] = round((val / max_pt) * 10.0, 2) if is_subscale else val
+            ui_w = UI_DEDICATED_DIM_WEIGHTS
+            weighted = sum(ui_parsed[k] * ui_w[k] for k in ui_parsed)
+            return {
+                "parsed": ui_parsed,
+                "weighted_score": round(weighted, 2),
+                "rubric_mode": "ui_5d",
+            }
+
     w = weights or {
         "composition": 0.20,
         "lighting_color": 0.25,
@@ -886,8 +942,8 @@ def parse_5d_dims(dims_str: str, weights: dict[str, float] | None = None) -> dic
             parsed[k] = float(m.group(1))
     if len(parsed) == 5:
         weighted = sum(parsed[k] * w.get(k, 0.2) for k in parsed)
-        return {"parsed": parsed, "weighted_score": round(weighted, 2)}
-    return {"parsed": parsed, "weighted_score": None}
+        return {"parsed": parsed, "weighted_score": round(weighted, 2), "rubric_mode": "general_5d"}
+    return {"parsed": parsed, "weighted_score": None, "rubric_mode": "general_5d"}
 
 
 def audit_score_inflation(
