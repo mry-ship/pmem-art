@@ -1,0 +1,42 @@
+{
+  "ran_at": "2026-10-25 02:58:02 UTC+8",
+  "reflections_scanned": 5,
+  "avg_winner_score": 9.71,
+  "avg_rounds": 2.2,
+  "top_recurring_defects": [
+    {
+      "text": "猫咪发夹别在了右侧发丝，与上一张左前额发夹位置不一致",
+      "count": 1
+    },
+    {
+      "text": "眼下阴影偏重略显疲惫，纸张粗颗粒留白透气感不够明显",
+      "count": 1
+    },
+    {
+      "text": "前景人物剪影与孔明灯层次感仍可进一步拉大动态范围",
+      "count": 1
+    }
+  ],
+  "recipe_strengthen": [
+    {
+      "module": "scene.CelestialCity",
+      "id": "CHAT20261025025801151RECIPE",
+      "summary": "[收敛胜出 9.8分] 俯瞰天穹仙侠万家灯火夜城与飞檐持剑女侠 — 飞檐琉璃瓦片、万家灯火鎏金中轴、云海丁达尔光与人物执剑姿态完",
+      "hint": "下次 warm-start 优先注入本条 recipe"
+    },
+    {
+      "module": "character.PastelGirl",
+      "id": "CHAT20261025025801796RECIPE",
+      "summary": "[收敛胜出 9.7分] 粗纹水彩纸油画棒肌理红帽衫黑耳机猫咪发夹少女 — 粗糙纸纹留白与申内利尔油画棒颗粒感极真，人物微仰神态、白猫发",
+      "hint": "下次 warm-start 优先注入本条 recipe"
+    },
+    {
+      "module": "character.Astra",
+      "id": "01ART005ASTRARECIPE",
+      "summary": "阿斯特拉标准生图配方 v3：Flux.1-dev + eastern_celadon_astra_v3(0.85) + Seed 42819204",
+      "hint": "下次 warm-start 优先注入本条 recipe"
+    }
+  ],
+  "taste_changes": [],
+  "taste_path": ".memory-art/_profile/taste.json"
+}

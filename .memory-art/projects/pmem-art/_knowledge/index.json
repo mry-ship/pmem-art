@@ -11,7 +11,9 @@
       "source": "converge_start",
       "updated_at": "2026-10-25 00:04:01 UTC+8",
       "layer_scope": "private",
-      "promoted_to_shared": true
+      "promoted_to_shared": true,
+      "project_id": "pmem-art",
+      "project_name": "Project-Celadon (东方青瓷星盘幻想)"
     },
     "palette-70-20-10": {
       "id": "palette-70-20-10",
@@ -24,7 +26,9 @@
       "source": "learn_accept",
       "updated_at": "2026-10-25 00:04:01 UTC+8",
       "layer_scope": "private",
-      "promoted_to_shared": true
+      "promoted_to_shared": true,
+      "project_id": "pmem-art",
+      "project_name": "Project-Celadon (东方青瓷星盘幻想)"
     },
     "anatomy-head-ratio": {
       "id": "anatomy-head-ratio",
@@ -37,7 +41,9 @@
       "source": "learn_accept",
       "updated_at": "2026-10-25 00:04:01 UTC+8",
       "layer_scope": "private",
-      "promoted_to_shared": true
+      "promoted_to_shared": true,
+      "project_id": "pmem-art",
+      "project_name": "Project-Celadon (东方青瓷星盘幻想)"
     },
     "eye-hierarchy": {
       "id": "eye-hierarchy",
@@ -50,7 +56,9 @@
       "source": "learn_accept",
       "updated_at": "2026-10-25 00:04:01 UTC+8",
       "layer_scope": "private",
-      "promoted_to_shared": true
+      "promoted_to_shared": true,
+      "project_id": "pmem-art",
+      "project_name": "Project-Celadon (东方青瓷星盘幻想)"
     },
     "atmospheric-perspective": {
       "id": "atmospheric-perspective",
@@ -63,7 +71,9 @@
       "source": "learn_accept",
       "updated_at": "2026-10-25 00:04:01 UTC+8",
       "layer_scope": "private",
-      "promoted_to_shared": true
+      "promoted_to_shared": true,
+      "project_id": "pmem-art",
+      "project_name": "Project-Celadon (东方青瓷星盘幻想)"
     },
     "golden-hour-scene": {
       "id": "golden-hour-scene",
@@ -76,7 +86,9 @@
       "source": "learn_accept",
       "updated_at": "2026-10-25 00:04:01 UTC+8",
       "layer_scope": "private",
-      "promoted_to_shared": true
+      "promoted_to_shared": true,
+      "project_id": "pmem-art",
+      "project_name": "Project-Celadon (东方青瓷星盘幻想)"
     },
     "nine-slice-basics": {
       "id": "nine-slice-basics",
@@ -89,7 +101,9 @@
       "source": "seed_atlas",
       "updated_at": "2026-10-25 00:32:15 UTC+8",
       "layer_scope": "private",
-      "promoted_to_shared": true
+      "promoted_to_shared": true,
+      "project_id": "pmem-art",
+      "project_name": "Project-Celadon (东方青瓷星盘幻想)"
     },
     "readability-silhouette": {
       "id": "readability-silhouette",
@@ -101,9 +115,45 @@
       ],
       "source": "seed_atlas",
       "updated_at": "2026-10-25 00:32:15 UTC+8",
-      "layer_scope": "private"
+      "layer_scope": "private",
+      "project_id": "pmem-art",
+      "project_name": "Project-Celadon (东方青瓷星盘幻想)"
+    },
+    "tech-watercolor": {
+      "id": "tech-watercolor",
+      "title": "水彩渲染",
+      "body": "边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。",
+      "tags": [
+        "style",
+        "material"
+      ],
+      "source": "converge_start",
+      "layer_scope": "private",
+      "project_id": "pmem-art",
+      "project_name": "Project-Celadon (东方青瓷星盘幻想)",
+      "universal": false,
+      "promoted_to_shared": false,
+      "updated_at": "2026-10-25 02:58:01 UTC+8"
+    },
+    "tech-painterly": {
+      "id": "tech-painterly",
+      "title": "厚涂笔触",
+      "body": "可见笔触方向跟随形体，暗部透气勿脏。",
+      "tags": [
+        "style",
+        "material"
+      ],
+      "source": "converge_round",
+      "layer_scope": "private",
+      "project_id": "pmem-art",
+      "project_name": "Project-Celadon (东方青瓷星盘幻想)",
+      "universal": false,
+      "promoted_to_shared": false,
+      "updated_at": "2026-10-25 02:58:01 UTC+8"
     }
   },
-  "updated_at": "2026-10-25 01:21:01 UTC+8",
-  "layer_scope": "private"
+  "updated_at": "2026-10-25 02:58:01 UTC+8",
+  "layer_scope": "private",
+  "project_id": "pmem-art",
+  "project_name": "Project-Celadon (东方青瓷星盘幻想)"
 }

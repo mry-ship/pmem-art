@@ -5,21 +5,31 @@ categories:
   brand:
     label: "全局风格圣经 (Brand & Style Bible)"
     icon: 🎨
+    short: 风格圣经
   character:
     label: "角色与立绘绑定 (Character & Rigging)"
     icon: 🧝‍♀️
+    short: 角色与立绘
   scene:
     label: "场景与地块物件 (Scene & Environment)"
     icon: 🏯
+    short: 场景与原画
   ui:
     label: "界面与九宫格图标 (UI & 9-Slice HUD)"
     icon: 💠
+    short: UI与九宫格
   vfx:
     label: "特效与序列帧表现 (VFX & Shaders)"
     icon: ✨
+    short: 特效与序列帧
   misc:
     label: 未归类 / 待提升 (Misc)
     icon: 📦
+    short: 待归类资产
+  anim:
+    label: "骨骼与帧动画 (Animation & Spine)"
+    icon: 🦴
+    short: 骨骼与动画
 synonyms:
   -
     - 立绘
@@ -146,6 +156,7 @@ modules:
       alpha_required: true
       max_size_kb: 1024
     status: active
+    inherits: character.Astra
   scene.FloatingRuins:
     title: 第一幕场景·浮空星盘遗迹
     category: scene
@@ -248,6 +259,62 @@ modules:
     palette: []
     specs:
       resolution: 1024x256
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  scene.CelestialCity:
+    title: 场景与原画·CelestialCity
+    category: scene
+    status: active
+    description: 俯瞰天穹仙侠万家灯火夜城与飞檐持剑女侠 · 自动归类至 场景与原画 (scene.CelestialCity) · 置信度 0.796
+    paths:
+      - "assets/scene/celestialcity/**"
+    aliases:
+      - CelestialCity
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x576
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  character.PastelGirl:
+    title: 角色与立绘·PastelGirl (Watercolor)
+    category: character
+    status: active
+    description: 粗纹水彩纸油画棒肌理红帽衫黑耳机猫咪发夹少女 · 自动归类至 角色与立绘 (character.PastelGirl) · 置信度 0.9
+    paths:
+      - "assets/character/pastelgirl/**"
+    aliases:
+      - PastelGirl
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      allowed_resolutions:
+        - 1024x1024
+        - 2048x1024
+      alpha_required: false
+      safe_margin_px: 16
+      max_size_kb: 1024
+    parent: brand.WorldStyle
+    inherits: brand.WorldStyle
+  character.SunlitGirl:
+    title: 角色与立绘·SunlitGirl
+    category: character
+    status: active
+    description: 窗边逆光斑驳树影黑耳机白猫发夹少女特写肖像 · 自动归类至 角色与立绘 (character.SunlitGirl) · 置信度 0.92
+    paths:
+      - "assets/character/sunlitgirl/**"
+    aliases:
+      - SunlitGirl
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      allowed_resolutions:
+        - 1024x1024
+        - 2048x1024
       alpha_required: true
       safe_margin_px: 16
       max_size_kb: 1024

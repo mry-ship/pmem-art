@@ -1,0 +1,280 @@
+{
+  "session_id": "case01_high_r3",
+  "started_at": "2026-10-25 03:36:56 UTC+8",
+  "goal": "东方仙侠万家灯火不夜城高空俯瞰原画",
+  "module": "concept.NightCity",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "scale": "high",
+  "scale_profile": {
+    "scale": "high",
+    "label": "高强度 · 大胆重构构图与光影 (Bold Creative Overhaul)",
+    "dim_weights": {
+      "composition": 0.25,
+      "lighting_color": 0.3,
+      "perspective_anatomy": 0.15,
+      "texture_detail": 0.2,
+      "spec_style": 0.1
+    },
+    "next_fix_budget": "bold_overhaul (50%–80% prompt delta)",
+    "max_prompt_delta_ratio": 0.8,
+    "allow_recompose": true,
+    "allow_lighting_overhaul": true,
+    "min_round_leap": 0.55,
+    "prompt_directive": "【收敛强度: HIGH (允许重构构图与重做光影 · Showcase级跃升)】严禁停留在小修小补或平庸平移！在锁定原图核心艺术媒介与画风基因的前提下，next_fix 必须大胆重构画面张力：升级更具冲击力的电影级镜头构图（前景虚化压角/黄金螺旋视觉引导/戏剧化景别微调）、重做高反差冷暖戏剧光影（丁达尔体积光束/木漏日斑驳光影/强烈明暗交界线冷暖碰撞）并注入情绪叙事细节，实现远超原图与上一轮的视觉跃升。"
+  },
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "aether_refs/aether-1-night-city-ref.png",
+  "ref_analysis": "",
+  "threshold": 9.5,
+  "accept_threshold": 9.5,
+  "max_rounds": 8,
+  "status": "finished",
+  "rounds": [
+    {
+      "round": 1,
+      "image": "pmem_01_celestial_night_city_r1.jpg",
+      "score": 9.12,
+      "dims": "构图9.1/光影9.2/透视9.1/质感9.0/风格9.2",
+      "strengths": "建立了冷暖70-20-10双色体系与俯瞰纵深",
+      "defects": "中景运河缺乏花船细节，女侠武器与披风动态张力不足",
+      "next_fix": "R2增加河道花船与远山天际线",
+      "prompt": "R1 prompt",
+      "passed": false,
+      "lessons": [
+        {
+          "category": "composition",
+          "lesson": "本轮短板偏「composition」：中景运河缺乏花船细节，女侠武器与披风动态张力不足",
+          "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+          "from_score": "9.12"
+        },
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：中景运河缺乏花船细节，女侠武器与披风动态张力不足",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "9.12"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：建立了冷暖70-20-10双色体系与俯瞰纵深",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "9.12"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "03:36:56"
+    },
+    {
+      "round": 2,
+      "image": "pmem_01_celestial_night_city_r2.jpg",
+      "score": 9.36,
+      "dims": "构图9.3/光影9.4/透视9.3/质感9.3/风格9.5",
+      "strengths": "补充了漫天孔明灯与弧形星球天际线",
+      "defects": "严苛复审：前景女侠长剑缺乏寒光视觉焦点，两侧崖壁缺少飞瀑水汽层次，画面冲击力仍可大幅跃升",
+      "next_fix": "R3(--scale high): 引入朱红长绸迎风翻飞、长剑寒霜雷光电弧、崖壁飞瀑入江与雕花龙首飞檐前景压角",
+      "prompt": "R2 prompt",
+      "passed": false,
+      "lessons": [
+        {
+          "category": "composition",
+          "lesson": "本轮短板偏「composition」：严苛复审：前景女侠长剑缺乏寒光视觉焦点，两侧崖壁缺少飞瀑水汽层次，画面冲击力仍可大幅跃升",
+          "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+          "from_score": "9.36"
+        },
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：严苛复审：前景女侠长剑缺乏寒光视觉焦点，两侧崖壁缺少飞瀑水汽层次，画面冲击力仍可大幅跃升",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "9.36"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：补充了漫天孔明灯与弧形星球天际线",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "9.36"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "03:36:56"
+    },
+    {
+      "round": 3,
+      "image": "pmem_01_celestial_night_city_r3.jpg",
+      "score": 9.82,
+      "dims": "构图9.9/光影9.8/透视9.8/质感9.8/风格9.8",
+      "strengths": "Showcase级跃升：朱红发带与寒霜剑气形成极强前景视觉锚点，崖壁飞瀑与千帆花船纵深震撼",
+      "defects": "无明显瑕疵",
+      "next_fix": "已达标，无需继续叠加",
+      "prompt": "R3 prompt",
+      "passed": true,
+      "lessons": [
+        {
+          "category": "composition",
+          "lesson": "本轮短板偏「composition」：无明显瑕疵",
+          "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+          "from_score": "9.82"
+        },
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：无明显瑕疵",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "9.82"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：Showcase级跃升：朱红发带与寒霜剑气形成极强前景视觉锚点，崖壁飞瀑与千帆花船纵深震撼",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "9.82"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "03:36:56"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem_cold_start_run",
+    "project_name": "pmem_cold_start_run",
+    "active_project": {
+      "project_id": "pmem_cold_start_run",
+      "project_slug": "pmem_cold_start_run",
+      "project_name": "pmem_cold_start_run",
+      "layer_scope": "private",
+      "bound_root": "/tmp/pmem_cold_start_run",
+      "origin_root": "/tmp/pmem_cold_start_run",
+      "root_name": "pmem_cold_start_run",
+      "library_dir": ".memory-art/projects/pmem_cold_start_run",
+      "copied_from_project": "",
+      "created_at": "2026-10-25 03:36:56 UTC+8",
+      "updated_at": "2026-10-25 03:36:56 UTC+8"
+    },
+    "module": "concept.NightCity",
+    "goal": "东方仙侠万家灯火不夜城高空俯瞰原画",
+    "confidence": 0.3,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "红线可控（0 条）",
+      "挂载 0 张项目知识卡 + 2 张全局美术底层基础卡"
+    ],
+    "top_recipes": [],
+    "top_redlines": [],
+    "art_decisions": [],
+    "private_knowledge": [],
+    "shared_knowledge": [
+      {
+        "id": "palette-70-20-10",
+        "title": "色彩构成：70-20-10 色板比例黄金法则",
+        "body": "画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+        "layer_scope": "shared"
+      },
+      {
+        "id": "material-surface-physics",
+        "title": "材质表现：金属/织物/陶瓷高光形状与粗糙度区分",
+        "body": "不同材质必须通过高光锐度与菲涅尔反射率严格拉开质感：金属具备高对比硬边高光与环境反光，哑光织物采用宽缓漫反射柔光，釉面/玉石保留温润半透明次表面散射；严禁全图使用同质化油腻塑料感高光。",
+        "layer_scope": "shared"
+      }
+    ],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [],
+      "preferred_composition": [],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [],
+      "banned_habits": []
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem_cold_start_run (.memory-art/projects/pmem_cold_start_run/)\n- 目标模块: concept.NightCity\n- 置信度: 0.30（fast-track 资格: 否）\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n  · [material-surface-physics] 材质表现：金属/织物/陶瓷高光形状与粗糙度区分: 不同材质必须通过高光锐度与菲涅尔反射率严格拉开质感：金属具备高对比硬边高光与环境反光，哑光织物采用宽缓漫反射柔光，釉面/玉石保留温润半透明次表面散射；严禁全图使用同质化油腻塑料感高光。",
+    "built_at": "2026-10-25 03:36:56 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：中景运河缺乏花船细节，女侠武器与披风动态张力不足",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "9.12"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：中景运河缺乏花船细节，女侠武器与披风动态张力不足",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.12"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：建立了冷暖70-20-10双色体系与俯瞰纵深",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.12"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：严苛复审：前景女侠长剑缺乏寒光视觉焦点，两侧崖壁缺少飞瀑水汽层次，画面冲击力仍可大幅跃升",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "9.36"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：严苛复审：前景女侠长剑缺乏寒光视觉焦点，两侧崖壁缺少飞瀑水汽层次，画面冲击力仍可大幅跃升",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.36"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：补充了漫天孔明灯与弧形星球天际线",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.36"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：无明显瑕疵",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "9.82"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：无明显瑕疵",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.82"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：Showcase级跃升：朱红发带与寒霜剑气形成极强前景视觉锚点，崖壁飞瀑与千帆花船纵深震撼",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.82"
+    }
+  ],
+  "ActionRequired": "STOP_AND_FINISH",
+  "winner": {
+    "round": 3,
+    "image": "pmem_01_celestial_night_city_r3.jpg",
+    "score": 9.82,
+    "dims": "构图9.9/光影9.8/透视9.8/质感9.8/风格9.8",
+    "strengths": "Showcase级跃升：朱红发带与寒霜剑气形成极强前景视觉锚点，崖壁飞瀑与千帆花船纵深震撼",
+    "defects": "无明显瑕疵",
+    "next_fix": "已达标，无需继续叠加",
+    "prompt": "R3 prompt",
+    "passed": true,
+    "lessons": [
+      {
+        "category": "composition",
+        "lesson": "本轮短板偏「composition」：无明显瑕疵",
+        "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+        "from_score": "9.82"
+      },
+      {
+        "category": "lighting",
+        "lesson": "本轮短板偏「lighting」：无明显瑕疵",
+        "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+        "from_score": "9.82"
+      },
+      {
+        "category": "keep",
+        "lesson": "保留本轮已做对的：Showcase级跃升：朱红发带与寒霜剑气形成极强前景视觉锚点，崖壁飞瀑与千帆花船纵深震撼",
+        "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+        "from_score": "9.82"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "03:36:56"
+  }
+}

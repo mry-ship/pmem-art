@@ -1042,6 +1042,10 @@ def main() -> int:
     p_conv.add_argument("--max-rounds", type=int, default=8, help="最大收敛轮次（默认 8）")
     p_conv.add_argument("--mode", dest="converge_mode", choices=("quality", "fast"), default="quality",
                         help="quality=完整8×9.5（默认）；fast=warm-start 置信高时可 fast-track")
+    p_conv.add_argument("--scale", dest="converge_scale", choices=("low", "medium", "high", "recompose"), default="",
+                        help="收敛强度：low=只修缺陷，medium=补足加小优化（默认），high=允许重构构图和重做光影，recompose=按用户指定方向改构图")
+    p_conv.add_argument("--recompose-dir", dest="recompose_dir", default="",
+                        help="当用户明确要求改变构图时指定新构图方向（如：从特写改为全景 / 把主体移到画面左侧三分点）")
     p_conv.add_argument("--draft", action="store_true", help="用户明确要草稿/fast 时允许软合格线（仅 fast 模式）")
     p_conv.add_argument("--round", dest="round_num", type=int, default=0, help="当前轮次序号 (1..8)")
     p_conv.add_argument("--image", "-i", default="", help="本轮生成图片路径")
@@ -1204,6 +1208,8 @@ def main() -> int:
             prompt=args.prompt,
             apply_memory=(not args.no_apply),
             converge_mode=getattr(args, "converge_mode", "quality") or "quality",
+            scale=getattr(args, "converge_scale", "") or "",
+            recompose_dir=getattr(args, "recompose_dir", "") or "",
             draft_ok=bool(getattr(args, "draft", False)),
             verbose=bool(getattr(args, "verbose", False) or getattr(args, "no_silent", False)),
             silent=not bool(getattr(args, "verbose", False) or getattr(args, "no_silent", False)),

@@ -759,6 +759,108 @@ DEFAULT_THRESHOLD = 9.5
 DEFAULT_MAX_ROUNDS = 8
 FAST_SOFT_THRESHOLD = 9.0  # fast-track: prefer fewer regens when score>=9.0 & delta small; final accept still >=9.5 unless draft
 
+CONVERGE_SCALE_PROFILES: dict[str, dict[str, Any]] = {
+    "low": {
+        "scale": "low",
+        "label": "低强度 · 保守修瑕 (Defect-Fix Only)",
+        "dim_weights": {
+            "composition": 0.15,
+            "lighting_color": 0.20,
+            "perspective_anatomy": 0.25,
+            "texture_detail": 0.25,
+            "spec_style": 0.15,
+        },
+        "next_fix_budget": "conservative (<=20% prompt delta)",
+        "max_prompt_delta_ratio": 0.20,
+        "allow_recompose": False,
+        "allow_lighting_overhaul": False,
+        "min_round_leap": 0.15,
+        "prompt_directive": (
+            "【收敛强度: LOW (只修缺陷)】严格锁死参考原图/上一轮的镜头机位、主体姿态、构图重心与主光源方向，"
+            "严禁增删配饰或改变环境构图；next_fix 仅针对五维审图发现的解剖结构瑕疵（五指/关节/五官对称）、"
+            "边缘杂色或局部纸纹材质颗粒缺失做最小幅度靶向修补。"
+        ),
+    },
+    "medium": {
+        "scale": "medium",
+        "label": "中强度 · 补足加小优化 (Balance & Polish)",
+        "dim_weights": {
+            "composition": 0.20,
+            "lighting_color": 0.25,
+            "perspective_anatomy": 0.20,
+            "texture_detail": 0.20,
+            "spec_style": 0.15,
+        },
+        "next_fix_budget": "moderate (25%–45% prompt delta)",
+        "max_prompt_delta_ratio": 0.45,
+        "allow_recompose": False,
+        "allow_lighting_overhaul": True,
+        "min_round_leap": 0.35,
+        "prompt_directive": (
+            "【收敛强度: MEDIUM (补足加小优化)】保持原图核心主体与构图框架不变，主动结合全局底层技法卡补足原图短板："
+            "强化 45° 侧逆光轮廓分离 (Rim Light)、补充皮肤次表面散射 (SSS) 与环境反射光 (Bounce Light)、"
+            "拉开近中远三层大气透视，并精细化 300g 冷压纸纹/厚涂油画刀触等物理媒介质感。"
+        ),
+    },
+    "high": {
+        "scale": "high",
+        "label": "高强度 · 大胆重构构图与光影 (Bold Creative Overhaul)",
+        "dim_weights": {
+            "composition": 0.25,
+            "lighting_color": 0.30,
+            "perspective_anatomy": 0.15,
+            "texture_detail": 0.20,
+            "spec_style": 0.10,
+        },
+        "next_fix_budget": "bold_overhaul (50%–80% prompt delta)",
+        "max_prompt_delta_ratio": 0.80,
+        "allow_recompose": True,
+        "allow_lighting_overhaul": True,
+        "min_round_leap": 0.55,
+        "prompt_directive": (
+            "【收敛强度: HIGH (允许重构构图与重做光影 · Showcase级跃升)】严禁停留在小修小补或平庸平移！"
+            "在锁定原图核心艺术媒介与画风基因的前提下，next_fix 必须大胆重构画面张力：升级更具冲击力的电影级镜头构图"
+            "（前景虚化压角/黄金螺旋视觉引导/戏剧化景别微调）、重做高反差冷暖戏剧光影（丁达尔体积光束/木漏日斑驳光影/"
+            "强烈明暗交界线冷暖碰撞）并注入情绪叙事细节，实现远超原图与上一轮的视觉跃升。"
+        ),
+    },
+    "recompose": {
+        "scale": "recompose",
+        "label": "定向改构图模式 · 用户指定新构图方向 (Directed Re-Composition)",
+        "dim_weights": {
+            "composition": 0.30,
+            "lighting_color": 0.25,
+            "perspective_anatomy": 0.20,
+            "texture_detail": 0.15,
+            "spec_style": 0.10,
+        },
+        "next_fix_budget": "directed_recompose (60%–85% prompt delta)",
+        "max_prompt_delta_ratio": 0.85,
+        "allow_recompose": True,
+        "allow_lighting_overhaul": True,
+        "min_round_leap": 0.50,
+        "prompt_directive": (
+            "【收敛强度: RECOMPOSE (用户指定改构图模式)】严格继承参考原图的画风笔触、媒介肌理、主辅色板与角色核心人设锚点，"
+            "同时必须 100% 按照用户指定的构图改造方向（recompose_dir，如特写改全景、主体移至画面左侧三分点、平视改高空俯瞰等）"
+            "彻底重排镜头机位、主体位置与空间景深层次。"
+        ),
+    },
+}
+
+
+def get_converge_scale_profile(scale: str = "medium", recompose_dir: str = "") -> dict[str, Any]:
+    s = (scale or "medium").strip().lower()
+    if recompose_dir and s not in ("recompose",):
+        s = "recompose"
+    if s not in CONVERGE_SCALE_PROFILES:
+        s = "medium"
+    prof = dict(CONVERGE_SCALE_PROFILES[s])
+    if recompose_dir:
+        prof["recompose_dir"] = recompose_dir
+        prof["prompt_directive"] = prof["prompt_directive"] + f" 当前强制构图改造指令：【{recompose_dir}】。"
+    return prof
+
+
 
 def _session_file(root: Path, session_id: str = "latest") -> Path:
     d = root / ".memory-art" / "converge"
@@ -788,6 +890,8 @@ def cmd_converge(
     prompt: str = "",
     apply_memory: bool = True,
     converge_mode: str = "quality",
+    scale: str = "",
+    recompose_dir: str = "",
     draft_ok: bool = False,
     verbose: bool = False,
     silent: bool = True,
@@ -803,6 +907,12 @@ def cmd_converge(
     converge_mode = (converge_mode or "quality").lower()
     if converge_mode not in ("quality", "fast"):
         converge_mode = "quality"
+    cfg_conv = (data.get("config") or {}).get("converge") if isinstance(data, dict) else {}
+    if not isinstance(cfg_conv, dict):
+        cfg_conv = {}
+    eff_scale = (scale or cfg_conv.get("default_scale") or "medium").strip().lower()
+    scale_prof = get_converge_scale_profile(eff_scale, recompose_dir=recompose_dir)
+    eff_scale = scale_prof["scale"]
 
     if action == "start":
         if not module and goal:
@@ -834,6 +944,9 @@ def cmd_converge(
             "mode": "ref_image_guided" if ref_image else "text_guided",
             "converge_mode": converge_mode,
             "quality_mode": converge_mode,
+            "scale": eff_scale,
+            "scale_profile": scale_prof,
+            "recompose_dir": recompose_dir,
             "fast_track": fast_track,
             "draft_ok": bool(draft_ok),
             "ref_image": ref_image,
@@ -848,10 +961,12 @@ def cmd_converge(
         }
         sf.write_text(json.dumps(sess, ensure_ascii=False, indent=2), encoding="utf-8")
         print(
-            f"🎯 [收敛会话已启动] 模块: {sess['module']} | 模式: {converge_mode}"
+            f"🎯 [收敛会话已启动] 模块: {sess['module']} | 模式: {converge_mode} | 强度(scale): {eff_scale} ({scale_prof['label']})"
             f"{' · FAST-TRACK' if fast_track else ''} | 合格线: >= {sess['accept_threshold']} 分"
             f"{'（草稿软线 ' + str(eff_threshold) + '）' if draft_ok else ''} | 最大轮次: {sess['max_rounds']}"
         )
+        print(f"🎚️  Scale 内部权重与约束: weights={scale_prof['dim_weights']} | budget={scale_prof['next_fix_budget']}")
+        print(f"🧭 Scale 指令: {scale_prof['prompt_directive']}")
         if fast_track:
             print(
                 f"⚡ Fast-track：warm-start 置信 {warm.get('confidence')} 高。"

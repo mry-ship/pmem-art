@@ -1,0 +1,33 @@
+{
+  "proposals": [
+    {
+      "kind": "knowledge_card",
+      "id": "material-surface-physics",
+      "title": "材质表现：金属/织物/陶瓷高光形状与粗糙度区分",
+      "tags": [
+        "brand",
+        "material",
+        "character",
+        "ui"
+      ],
+      "body": "不同材质必须通过高光锐度与菲涅尔反射率严格拉开质感：金属具备高对比硬边高光与环境反光，哑光织物采用宽缓漫反射柔光，釉面/玉石保留温润半透明次表面散射；严禁全图使用同质化油腻塑料感高光。",
+      "reason": "你已有 brand 域模块，但知识库缺少「材质表现：金属/织物/陶瓷高光形状与粗糙度区分」",
+      "optional_module_stub": ""
+    },
+    {
+      "kind": "knowledge_card",
+      "id": "anatomy-hand-five-fingers",
+      "title": "人体结构：手部五指解剖与三段透视",
+      "tags": [
+        "anatomy",
+        "character"
+      ],
+      "body": "手部必须先构建掌根方盒截面与拇指球体，再按掌指关节、近节、远节三段圆柱展开五指（1拇指+4指分明），严禁六指畸变、多指粘连或掌骨坍塌。",
+      "reason": "你已有 character 域模块，但知识库缺少「人体结构：手部五指解剖与三段透视」",
+      "optional_module_stub": ""
+    }
+  ],
+  "at": "2026-10-25 02:58:02 UTC+8",
+  "source": "converge_finish",
+  "silent": true
+}

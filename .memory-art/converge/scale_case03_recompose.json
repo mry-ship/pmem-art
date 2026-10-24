@@ -1,0 +1,195 @@
+{
+  "session_id": "scale_case03_recompose",
+  "started_at": "2026-10-25 03:36:57 UTC+8",
+  "goal": "窗边逆光少女改构图验证",
+  "module": "portrait.SunlitWindow",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "scale": "recompose",
+  "scale_profile": {
+    "scale": "recompose",
+    "label": "定向改构图模式 · 用户指定新构图方向 (Directed Re-Composition)",
+    "dim_weights": {
+      "composition": 0.3,
+      "lighting_color": 0.25,
+      "perspective_anatomy": 0.2,
+      "texture_detail": 0.15,
+      "spec_style": 0.1
+    },
+    "next_fix_budget": "directed_recompose (60%–85% prompt delta)",
+    "max_prompt_delta_ratio": 0.85,
+    "allow_recompose": true,
+    "allow_lighting_overhaul": true,
+    "min_round_leap": 0.5,
+    "prompt_directive": "【收敛强度: RECOMPOSE (用户指定改构图模式)】严格继承参考原图的画风笔触、媒介肌理、主辅色板与角色核心人设锚点，同时必须 100% 按照用户指定的构图改造方向（recompose_dir，如特写改全景、主体移至画面左侧三分点、平视改高空俯瞰等）彻底重排镜头机位、主体位置与空间景深层次。 当前强制构图改造指令：【从胸像正面特写改为复古阳光植物画室全景构图，少女位于右侧三分点藤椅看画册，左侧落地百叶窗丁达尔光束贯穿全屋】。",
+    "recompose_dir": "从胸像正面特写改为复古阳光植物画室全景构图，少女位于右侧三分点藤椅看画册，左侧落地百叶窗丁达尔光束贯穿全屋"
+  },
+  "recompose_dir": "从胸像正面特写改为复古阳光植物画室全景构图，少女位于右侧三分点藤椅看画册，左侧落地百叶窗丁达尔光束贯穿全屋",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "aether_refs/aether-3-portrait-ref.png",
+  "ref_analysis": "",
+  "threshold": 9.5,
+  "accept_threshold": 9.5,
+  "max_rounds": 8,
+  "status": "finished",
+  "rounds": [
+    {
+      "round": 1,
+      "image": "scale_03_portrait_recompose.jpg",
+      "score": 9.8,
+      "dims": "构图9.9/光影9.8/透视9.7/质感9.8/风格9.8",
+      "strengths": "完美执行用户改构图指令：从胸像特写扩展为阳光植物画室中全景，藤椅、画架、绣球花与丁达尔体积光束空间叙事极佳",
+      "defects": "无",
+      "next_fix": "已达标，无需继续叠加",
+      "prompt": "Recompose prompt",
+      "passed": true,
+      "lessons": [
+        {
+          "category": "composition",
+          "lesson": "本轮短板偏「composition」：无",
+          "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+          "from_score": "9.8"
+        },
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：无",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "9.8"
+        },
+        {
+          "category": "narrative_camera",
+          "lesson": "本轮短板偏「narrative_camera」：无",
+          "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+          "from_score": "9.8"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "03:36:57"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem_cold_start_run",
+    "project_name": "pmem_cold_start_run",
+    "active_project": {
+      "project_id": "pmem_cold_start_run",
+      "project_slug": "pmem_cold_start_run",
+      "project_name": "pmem_cold_start_run",
+      "layer_scope": "private",
+      "bound_root": "/tmp/pmem_cold_start_run",
+      "origin_root": "/tmp/pmem_cold_start_run",
+      "root_name": "pmem_cold_start_run",
+      "library_dir": ".memory-art/projects/pmem_cold_start_run",
+      "copied_from_project": "",
+      "created_at": "2026-10-25 03:36:56 UTC+8",
+      "updated_at": "2026-10-25 03:36:56 UTC+8"
+    },
+    "module": "portrait.SunlitWindow",
+    "goal": "窗边逆光少女改构图验证",
+    "confidence": 0.9,
+    "fast_track_eligible": true,
+    "confidence_reasons": [
+      "命中 1 条定稿 recipe",
+      "个人口味档案非空",
+      "红线可控（1 条）",
+      "挂载 0 张项目知识卡 + 2 张全局美术底层基础卡"
+    ],
+    "top_recipes": [
+      {
+        "id": "CHAT20261025033657349RECIPE",
+        "summary": "[收敛胜出 9.8分] 窗边木漏日逆光少女特写肖像 — Showcase级跃升：3/4倚窗回眸构图与蕾丝绣球花木漏日",
+        "module": "portrait.SunlitWindow"
+      }
+    ],
+    "top_redlines": [
+      {
+        "id": "CHAT20261025033657352REDLINE",
+        "summary": "[收敛踩坑红线] 窗边木漏日逆光少女特写肖像：避免「构图与原图几乎一模一样（正面证件照式平视裁切），光影仅为简单左右二分，缺乏窗户叙事感」",
+        "module": "portrait.SunlitWindow"
+      }
+    ],
+    "art_decisions": [],
+    "private_knowledge": [],
+    "shared_knowledge": [
+      {
+        "id": "palette-70-20-10",
+        "title": "色彩构成：70-20-10 色板比例黄金法则",
+        "body": "画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+        "layer_scope": "shared"
+      },
+      {
+        "id": "material-surface-physics",
+        "title": "材质表现：金属/织物/陶瓷高光形状与粗糙度区分",
+        "body": "不同材质必须通过高光锐度与菲涅尔反射率严格拉开质感：金属具备高对比硬边高光与环境反光，哑光织物采用宽缓漫反射柔光，釉面/玉石保留温润半透明次表面散射；严禁全图使用同质化油腻塑料感高光。",
+        "layer_scope": "shared"
+      }
+    ],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [],
+      "preferred_composition": [
+        "特写"
+      ],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [],
+      "banned_habits": []
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem_cold_start_run (.memory-art/projects/pmem_cold_start_run/)\n- 目标模块: portrait.SunlitWindow\n- 置信度: 0.90（fast-track 资格: 是）\n- 优先复用定稿方向:\n  · [CHAT20261025033657349RECIPE] [收敛胜出 9.8分] 窗边木漏日逆光少女特写肖像 — Showcase级跃升：3/4倚窗回眸构图与蕾丝绣球花木漏日\n- 必须避开红线:\n  · [CHAT20261025033657352REDLINE] [收敛踩坑红线] 窗边木漏日逆光少女特写肖像：避免「构图与原图几乎一模一样（正面证件照式平视裁切），光影仅为简单左右二分，缺乏窗户叙事感」\n- 个人口味: 构图=特写\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n  · [material-surface-physics] 材质表现：金属/织物/陶瓷高光形状与粗糙度区分: 不同材质必须通过高光锐度与菲涅尔反射率严格拉开质感：金属具备高对比硬边高光与环境反光，哑光织物采用宽缓漫反射柔光，釉面/玉石保留温润半透明次表面散射；严禁全图使用同质化油腻塑料感高光。",
+    "built_at": "2026-10-25 03:36:57 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：无",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "9.8"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：无",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.8"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：无",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "9.8"
+    }
+  ],
+  "ActionRequired": "STOP_AND_FINISH",
+  "winner": {
+    "round": 1,
+    "image": "scale_03_portrait_recompose.jpg",
+    "score": 9.8,
+    "dims": "构图9.9/光影9.8/透视9.7/质感9.8/风格9.8",
+    "strengths": "完美执行用户改构图指令：从胸像特写扩展为阳光植物画室中全景，藤椅、画架、绣球花与丁达尔体积光束空间叙事极佳",
+    "defects": "无",
+    "next_fix": "已达标，无需继续叠加",
+    "prompt": "Recompose prompt",
+    "passed": true,
+    "lessons": [
+      {
+        "category": "composition",
+        "lesson": "本轮短板偏「composition」：无",
+        "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+        "from_score": "9.8"
+      },
+      {
+        "category": "lighting",
+        "lesson": "本轮短板偏「lighting」：无",
+        "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+        "from_score": "9.8"
+      },
+      {
+        "category": "narrative_camera",
+        "lesson": "本轮短板偏「narrative_camera」：无",
+        "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+        "from_score": "9.8"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "03:36:57"
+  }
+}
