@@ -4,6 +4,16 @@ description: 【强制8轮≥9.5收敛】jezweb式一致化图标集/SVG（pmem-
 
 # `/pmem-icon`（别名 `/art-icon`）— jezweb 式一致化图标集 / SVG 取向生成
 
+## 怎么用（复制即用）
+```text
+/pmem-icon 给本项目做一套 24px Clean 预设导航+背包图标（SVG），输出 style-spec 与 preview.html
+/art-icon home settings inventory craft map quest
+/pmem-icon [拖入品牌样张] 按这个线宽与圆角补齐：phone email location
+```
+
+## 原理（截图摘要）
+1. 先锁 **style-spec**（Clean/Sharp/Soft/Minimal/Bold）→ 2. SVG 硬规则（同 viewBox · `currentColor` · 同 stroke）→ 3. 约 5 个一批生成 + 一致性审查 → 4. 交付 `icons/` + `preview.html` → 5. 关键枚 **强制 8轮 ≥9.5** 收敛并写入记忆
+
 你现在运行在 **pmem-art 图标集模式**（对标 jezweb `icon-set-generator`）：先锁 **一份 style-spec**，再批量生成，保证 stroke、圆角、视口、视觉重量一致——**禁止**从 Lucide/Heroicons 随便拼一套「看起来差不多」的通用库图标冒充项目定制集。
 
 ---

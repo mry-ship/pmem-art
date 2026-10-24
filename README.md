@@ -80,23 +80,85 @@ Step 3: 输出【全阶段评分与优劣分析总表】+ 自动把胜出配方�
 
 ---
 
-## 🕹️ 亮点二：三大垂直生成技能（UI / 概念图 / 图标集）
+## 🕹️ 亮点二：三大垂直生成技能（UI / 原画 / 图标）— 怎么用 & 原理
 
-均挂载同一套 **`converge` 8轮 `>=9.5` 自评收敛引擎**，只是流水线按业界最佳实践特化：
+三个技能都挂同一套 **`converge`：最多 8 轮 · 合格线 `≥ 9.5` · 未达标叠加修正 · 满 8 轮挑最高分 · 输出评分总表 · 写入 `.memory-art`**。  
+差别只在「领域流水线」：UI 走概念→组件→九宫格；原画走 FLUX 完整句；图标走 style-spec 批量一致化。
 
-| 指令 | 对标思路 | 一句话流程 |
-| :--- | :--- | :--- |
-| **`/pmem-ui`** `/art-ui` | [SpriteCook UI Kit](https://www.spritecook.ai/docs/ui-kit) | **强制 8轮 ≥9.5**：概念先行 → 组件表 → 九宫格/状态族 → 收敛 |
-| **`/pmem-concept`** `/art-concept` | ZHO Comfy-FLUX / Yolain | **强制 8轮 ≥9.5（原画同等闭环）**：完整句 Prompt → Key Art/概念图 → 评分总表 |
-| **`/pmem-icon`** `/art-icon` | [jezweb icon-set-generator](https://github.com/jezweb/claude-skills) | **强制 8轮 ≥9.5**：style-spec → 分批 SVG → preview；关键枚收敛 |
+| 指令 | 别名 | 对标 | 一句话 |
+| :--- | :--- | :--- | :--- |
+| **`/pmem-ui`** | `/art-ui` | SpriteCook | 概念先行 → 整套 HUD/组件表 → 九宫格+状态族 → **强制 8轮≥9.5** |
+| **`/pmem-concept`** | `/art-concept` | ZHO / Yolain / Comfy-FLUX | **原画 / Key Art** · 完整句 Prompt → **强制 8轮≥9.5**（禁止只生一张） |
+| **`/pmem-icon`** | `/art-icon` | jezweb | 统一 style-spec → 批量图标集（SVG/`preview.html`）→ 关键枚 **强制 8轮≥9.5** |
 
+---
+
+### 1️⃣ `/pmem-ui`（`/art-ui`）— UI Kit / HUD / 九宫格整套
+
+#### 怎么用
 ```text
-/pmem-ui 生成一套青瓷幻想风的主菜单：面板可九宫格拉伸，按钮含 normal/pressed
-/pmem-concept 画一张东方青瓷废土的主视觉 Key Art，宽幅海报   ← 原画也强制 8轮≥9.5 收敛！
-/pmem-icon 给本项目做一套 24px Clean 预设导航+背包图标（SVG）
+# 纯文字：从零做一整套主菜单
+/pmem-ui 生成一套青瓷幻想风主菜单：可九宫格拉伸的面板，按钮含 normal/pressed/disabled
+
+# 纯文字：HUD
+/art-ui 做一套蒸汽朋克战斗 HUD（血条空满态、技能槽、小地图框），透明底可切图
+
+# 垫图：已有概念稿，拆成可复用零件
+/pmem-ui [拖入概念图] 按这张概念拆出：主面板九宫格、主按钮四态、进度条空/满、Tab 选中/未选中
 ```
 
-> 📌 **截图要点**：`/pmem-concept`（`/art-concept`）= **原画/概念图**，与 `/pmem-draw` **同一套强制闭环**——最多 8 次生图、`< 9.5` 不算合格、满 8 轮挑最高分、最后列出评分优劣总表。
+#### 原理（为什么这样跑）
+1. **记忆先行**：`search --module ui.*` 召回该 UI 模块历史红线（脏边、中心拉伸区花纹、霓虹串色等）与定稿配方。  
+2. **概念先行（SpriteCook 核心）**：先收敛出 **1 张整屏概念稿**（统一材质/色板/光影），**禁止**各控件零散各生一张再硬拼。  
+3. **组件表**：以概念稿为垫图，在透明底上生成 1~3 张组件 sheet（面板、按钮族、进度条、Tab、角花…）。  
+4. **九宫格 + 状态族**：给可拉伸件标 `nine_slice {l,r,t,b}`；按钮至少 normal/pressed（最好含 hover/disabled）。输出 `elements/` + `manifest.json`。  
+5. **强制 8轮 ≥9.5**：概念稿与主面板/主按钮等关键件走 `converge`——生 1 张 → 五维打分+挑不合理处 → `<9.5` 叠加修正 → 最多 8 轮或挑最高分 → 评分总表写入记忆。
+
+---
+
+### 2️⃣ `/pmem-concept`（`/art-concept`）— 原画 / 概念图 / Key Art
+
+#### 怎么用
+```text
+# 纯文字：主视觉 / 原画
+/pmem-concept 画一张东方青瓷废土的主视觉 Key Art，宽幅海报，电影感侧逆光
+
+# 纯文字：场景气氛图
+/art-concept 生成一张浮空遗迹黄昏气氛概念图，青瓷白+墨蓝+鎏金，叙事构图
+
+# 垫图：先解构参考再收敛出同氛围原画
+/pmem-concept [拖入参考图] 保持这种构图与色板，画一张同世界观的角色登场 Key Art
+```
+
+#### 原理（为什么这样跑）
+1. **与 `/pmem-draw` 同等强制闭环**：原画也是 **最多 8 轮 · `≥9.5` 才合格 · 满 8 轮挑最高分 · 必须出评分优劣总表** —— **禁止只生一张就交差**。  
+2. **记忆先行**：`search` 召回 `scene.*` / `character.*` / `brand.*` 的红线、定稿与色板，避免重犯「太赛博 / 脏暗 / 比例崩」。  
+3. **FLUX 式完整句 Prompt（ZHO / Yolain）**：用自然语言完整句，**主体与动作靠前**；几乎无有效负向词，把「不要霓虹紫」写成「干净的青瓷白与墨蓝，无霓虹」。  
+4. **垫图模式**：若丢入参考图 → Step0 解构构图/HEX/光影/笔触 → 再进入 8 轮收敛。  
+5. **沉淀**：胜出图进 `recipe`，迭代中的硬伤进 `style_redline`，下次原画起点更高。
+
+---
+
+### 3️⃣ `/pmem-icon`（`/art-icon`）— 一致化图标集 / SVG
+
+#### 怎么用
+```text
+# 纯文字：整套导航 + 业务图标（SVG）
+/pmem-icon 给本项目做一套 24px Clean 预设导航+背包图标（SVG），输出 style-spec.json 与 preview.html
+
+# 纯文字：指定图标名
+/art-icon home settings inventory craft map quest
+
+# 垫图 / 品牌样张：锁风格后再批量
+/pmem-icon [拖入品牌样张或现有图标] 按这个线宽与圆角，补齐通信类图标：phone email location
+```
+
+#### 原理（为什么这样跑）
+1. **先锁 style-spec（jezweb 核心）**：选定 Clean/Sharp/Soft/Minimal/Bold，写死 grid、stroke、linecap、linejoin、padding —— **整套共用一份规格**，避免「每张各画各的」。  
+2. **SVG 硬规则**：统一 `viewBox`、只用 `currentColor`、根节点 stroke 属性一致、光学居中与视觉重量平衡。  
+3. **分批生成（约 5 个一批）**：每批做一致性审查（线宽漂移、圆角混用、偏轻偏重、贴边）。交付 `icons/*.svg` + `style-spec.json` + `preview.html`。  
+4. **强制 8轮 ≥9.5**：用户点名「这枚不对」或审查不通过的关键图标，走同一套 `converge` 闭环打磨。  
+5. **记忆**：把 style-spec 摘要写入 `art_decision`，翻车点写入 `style_redline`，下套图标不跑偏。
 
 ---
 

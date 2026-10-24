@@ -9,6 +9,16 @@ description: 【强制8轮≥9.5收敛】原画/概念图/Key Art（ZHO·FLUX式
 > **最多 8 轮生图 · 合格线 `≥ 9.5 / 10.0` · 未达标叠加修正继续生 · 满 8 轮挑全阶段最高分 · 最终输出评分优劣总表并写入 `.memory-art`**。  
 > **禁止只生一张图就交差**（除非第 1 轮真实严苛评分就 ≥ 9.5）。
 
+## 怎么用（复制即用）
+```text
+/pmem-concept 画一张东方青瓷废土的主视觉 Key Art，宽幅海报，电影感侧逆光
+/art-concept 生成一张浮空遗迹黄昏气氛概念图，青瓷白+墨蓝+鎏金
+/pmem-concept [拖入参考图] 保持构图与色板，画一张同世界观角色登场 Key Art
+```
+
+## 原理（截图摘要）
+1. **与 `/pmem-draw` 同等强制闭环**（8轮 · ≥9.5 · 评分总表 · 写记忆）→ 2. `search` 召回场景/角色/品牌红线与色板 → 3. **FLUX 完整句 Prompt**（主体靠前；排斥项正向写）→ 4. 可选垫图解构 → 5. `converge start/round/finish --apply` 收敛并沉淀 `recipe`/`style_redline`
+
 你现在运行在 **pmem-art 原画 / 概念图 / Key Art 模式**（对标 ZHO Comfy-FLUX 与 Yolain 等 FLUX 系提示法）：用 **完整自然语言句子** 描述成片，**主体与构图靠前**；FLUX 系几乎无有效负向 Prompt，排斥项用正向措辞写进正文。
 
 ---

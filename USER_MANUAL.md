@@ -80,17 +80,25 @@
 
 ---
 
-## 第二章附：三大垂直生成技能速查
+## 第二章附：三大垂直生成技能 — 怎么用 & 原理
 
-### `/pmem-ui`（`/art-ui`）— SpriteCook 式 UI Kit
-1. 概念先行（整屏统一画风，可先 8轮收敛）→ 2. 以概念为垫图抽透明组件表 → 3. 标九宫格 + normal/pressed 等状态 → 4. 输出 `manifest.json` + `elements/` → 5. 关键件不够 9.5 再局部 `converge`。
+### `/pmem-ui`（`/art-ui`）
+- **怎么用**
+  - `/pmem-ui 生成一套青瓷幻想风主菜单：九宫格面板 + 按钮 normal/pressed`
+  - `/pmem-ui [拖入概念图] 拆出主面板九宫格、按钮四态、进度条空/满`
+- **原理**：`search` 召回 UI 红线 → **概念先行**（禁止散生硬拼）→ 透明组件表 → 九宫格+状态族+`manifest.json` → **强制 8轮 ≥9.5** 收敛写记忆。
 
-### `/pmem-concept`（`/art-concept`）— 原画 / 概念图 / Key Art【强制 8轮 ≥9.5】
-与 `/pmem-draw` **同一套强制闭环**：最多 8 轮、合格线 `≥ 9.5`、未达标叠加修正、满 8 轮挑最高分、输出评分总表。  
-Prompt 用完整自然语言句（主体与动作靠前；排斥项写成正向描述）。CLI：`converge start → round × N → finish --apply`。
+### `/pmem-concept`（`/art-concept`）— 原画【强制 8轮 ≥9.5】
+- **怎么用**
+  - `/pmem-concept 画一张东方青瓷废土主视觉 Key Art，宽幅海报`
+  - `/pmem-concept [拖入参考图] 同氛围角色登场 Key Art`
+- **原理**：与 `/pmem-draw` **同等强制闭环**（禁止只生一张）→ 召回记忆 → FLUX 完整句 Prompt（主体靠前、排斥项正向写）→ 可选垫图解构 → `converge` → 评分总表 + `recipe`/`style_redline`。
 
-### `/pmem-icon`（`/art-icon`）— jezweb 式一致化图标集
-先确认预设（Clean/Sharp/Soft/Minimal/Bold）写入 `icons/style-spec.json`，再约 5 个一批生成 SVG（统一 viewBox/`currentColor`/stroke），交付 `preview.html`；单枚可收敛。
+### `/pmem-icon`（`/art-icon`）
+- **怎么用**
+  - `/pmem-icon 做一套 24px Clean 导航+背包 SVG，输出 style-spec 与 preview.html`
+  - `/art-icon home settings inventory` 或 `/pmem-icon [拖入样张] 按线宽补齐 phone email`
+- **原理**：先锁 style-spec → 统一 SVG 规则分批生成 → 一致性审查 → 关键枚 **强制 8轮 ≥9.5** → 写记忆。
 
 ---
 
