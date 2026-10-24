@@ -1,3 +1,5 @@
+> **产品定位（v0.8+）**：个人在 Cursor 中迭代生图的积累记忆；主 UX 是对话反馈（`feedback` / rules / hooks），classify 领域与 `art-atlas.html` 为后端与可选回看。
+
 # 🧠 `pmem-art` 深度架构设计文档：从代码记忆（`pmem`）到视觉与 AI 美术记忆
 
 ## 一、为什么要专门为美术与 AI 美术做 `pmem-art`？

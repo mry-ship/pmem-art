@@ -285,37 +285,53 @@ def write_config_yaml(root: Path, config: dict) -> Path:
 
 
 def ensure_cursor_stubs(root: Path) -> None:
+    """写入/刷新 Cursor 对话驱动的规则与 hooks（主入口是聊天，不是 CLI）。"""
     rules = root / ".cursor" / "rules"
     rules.mkdir(parents=True, exist_ok=True)
     mdc = rules / "pmem-art.mdc"
-    if not mdc.exists():
-        mdc.write_text(
-            "---\ndescription: pmem-art 美术记忆闸门\nglobs:\n  - assets/**\n  - Art/**\n  - .memory-art/**\nalwaysApply: true\n---\n"
-            "# pmem-art\n\n"
-            "在生成或覆盖美术资产前，先运行：\n"
-            "`python3 pmem_art.py search --path <目标路径>` 或 `search --module <模块>`。\n"
-            "若模块仍是 candidate/scaffold，先 `accept` 或写入第一条记忆以提升为 active。\n"
-            "落盘后运行 `python3 pmem_art.py validate`；新文件夹出现后运行 `sync`。\n",
-            encoding="utf-8",
-        )
+    mdc.write_text(
+        "---\n"
+        "description: pmem-art — Cursor 对话驱动的个人美术积累记忆\n"
+        "globs:\n  - assets/**\n  - Art/**\n  - .memory-art/**\n  - .cursor/generated/**\n"
+        "alwaysApply: true\n"
+        "---\n\n"
+        "# pmem-art\n\n"
+        "生图前：`python3 pmem_art.py search --module <模块>` 或 `search <关键词>`，把红线/定稿写进约束。\n\n"
+        "用户说「太赛博/头太大/别这样画/这版留着/换成水彩/以后都用…」时立刻：\n"
+        "`python3 pmem_art.py feedback \"<原话>\" --module <模块> [--asset <图>]`\n\n"
+        "新图可 `ingest <路径> -p \"...\" --apply`；atlas/doctor 是可选回看，不是日常主线。\n"
+        "用户说「跳过美术记忆」时可跳过。\n",
+        encoding="utf-8",
+    )
     hooks = root / ".cursor" / "hooks.json"
-    if not hooks.exists():
-        hooks.write_text(
-            json.dumps(
-                {
-                    "version": 1,
-                    "hooks": {
-                        "preToolUse": [{"command": "python3 pmem_art.py hook pre-tool"}],
-                        "postToolUse": [{"command": "python3 pmem_art.py hook post-tool"}],
-                        "stop": [{"command": "python3 pmem_art.py hook stop"}],
-                    },
+    hooks.write_text(
+        json.dumps(
+            {
+                "version": 1,
+                "hooks": {
+                    "preToolUse": [
+                        {
+                            "command": "python3 pmem_art.py hook pre-gen",
+                            "matcher": "GenerateImage|Write|Edit|StrReplace|MCP",
+                            "failClosed": False,
+                        }
+                    ],
+                    "postToolUse": [
+                        {
+                            "command": "python3 pmem_art.py hook post-asset",
+                            "matcher": "GenerateImage|Write|Edit",
+                        }
+                    ],
+                    "stop": [{"command": "python3 pmem_art.py hook stop", "loop_limit": 1}],
                 },
-                ensure_ascii=False,
-                indent=2,
-            )
-            + "\n",
-            encoding="utf-8",
+            },
+            ensure_ascii=False,
+            indent=2,
         )
+        + "\n",
+        encoding="utf-8",
+    )
+
 
 
 def sanitize_module_token(name: str) -> str:

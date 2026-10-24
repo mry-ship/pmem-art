@@ -670,8 +670,19 @@ def cmd_ingest(
         return 1
 
     classification = classify_asset(root, data, path=str(src), prompt=prompt)
+    cfg_c = config.get("classify") or {}
+    high_t = float(cfg_c.get("high_confidence_threshold", 0.78))
+    low_t = float(cfg_c.get("low_confidence_threshold", 0.55))
+    # Only high-confidence (or explicit auto_add_active) becomes active on apply.
+    # Mid confidence stays candidate; very low → misc candidate (classify already decides).
+    force_active = bool(
+        do_apply and (
+            classification.get("decision") == "auto_add_active"
+            or classification["confidence"] >= high_t
+        )
+    )
     mid, status = ensure_module_from_classification(
-        root, data, classification, force_active=(do_apply and classification["confidence"] >= float((config.get("classify") or {}).get("low_confidence_threshold", 0.55)))
+        root, data, classification, force_active=force_active
     )
     classification["module_status"] = status
     classification["module_id"] = mid
@@ -706,10 +717,8 @@ def cmd_ingest(
     else:
         plan["place"]["moved"] = False
 
-    # Promote to active only when confidence clears the low threshold.
-    # Low-signal misc stays candidate (file may still be placed under assets/misc/...).
-    low_t = float((config.get("classify") or {}).get("low_confidence_threshold", 0.55))
-    promote = classification["confidence"] >= low_t
+    # Promote to active only at high confidence; mid/low stay candidate (never silent wrong bucket).
+    promote = classification["confidence"] >= high_t or classification.get("decision") == "auto_add_active"
     if promote:
         mid, status = ensure_module_from_classification(
             root,
@@ -718,7 +727,6 @@ def cmd_ingest(
             force_active=True,
         )
     else:
-        # keep candidate; ensure misc category + module already written by first ensure call
         status = (data.get("modules") or {}).get(mid, {}).get("status", "candidate")
 
     record_path = None

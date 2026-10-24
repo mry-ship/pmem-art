@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 """
-pmem-art: 面向游戏/影视美术团队与 AI 美术 Agent 的插拔式视觉记忆、资产管线质检与可视化图谱系统
-基于 mry-ship/pmem 架构针对美术生产流（2D立绘/三视图/表情差分/场景光照/UI九宫格/VFX序列帧/ComfyUI配方）深度演化。
-零第三方强依赖（仅使用 Python 3.10+ 标准库；若安装 PyYAML 则优先使用，否则使用内置解析器）。
+pmem-art: 画师在 Cursor 里越画越准的个人美术积累记忆。
+
+心智模型（不是审稿台 / 不是 CLI 流水线）：
+  生图 → 你用自然语言说「哪里不对 / 这版留着 / 换成水彩」→ 记忆长大 → 下次生图自动召回 → 更准。
+
+classify / ingest / domains 仍在后端默默工作；日常入口是 Cursor 对话 + .cursor/rules。
+零第三方强依赖（Python 3.10+ 标准库）。
 """
 from __future__ import annotations
 
@@ -19,7 +23,7 @@ import zlib
 from pathlib import Path
 from typing import Any
 
-VERSION = "0.7.0-art"
+VERSION = "0.8.0-art"
 MEMORY_DIR = ".memory-art"
 
 KIND_META = {
@@ -460,10 +464,78 @@ def cmd_validate(data: dict[str, Any]) -> int:
                 print(f"         ↳ 原因: {r}")
     return 0 if not data["qa_issues"] else 1
 
+def cmd_hook(root: Path, data: dict[str, Any], event: str) -> int:
+    """Cursor / Claude Code hooks：生图前召回记忆；落盘后轻量提示；不阻断对话。"""
+    payload: dict[str, Any] = {}
+    try:
+        raw = sys.stdin.read()
+        if raw.strip():
+            payload = json.loads(raw)
+    except Exception:
+        payload = {}
+
+    tool = str(payload.get("toolName") or payload.get("tool") or "")
+    # 尝试从常见字段抠出路径 / prompt / 用户话
+    user_msg = str(payload.get("user_message") or payload.get("message") or "")
+    prompt = ""
+    path = ""
+    args_obj = payload.get("arguments") or payload.get("args") or {}
+    if isinstance(args_obj, dict):
+        prompt = str(args_obj.get("prompt") or args_obj.get("description") or "")
+        path = str(args_obj.get("path") or args_obj.get("file") or args_obj.get("outputPath") or "")
+    if not prompt and user_msg:
+        prompt = user_msg
+
+    advice: list[str] = []
+    # 生图前 / 写资产前：自动 search 相关记忆
+    if event in ("pre-tool", "pre-gen") or (event == "pre-tool" and re.search(r"GenerateImage|image|Write|Edit", tool, re.I)):
+        # 推断模块
+        module = ""
+        q = prompt or user_msg or path
+        if q:
+            from feedback import infer_module_from_text
+            module = infer_module_from_text(q, data)
+        matched = []
+        if module:
+            matched = [e for e in data.get("entries") or [] if e.get("module") == module or str(e.get("module", "")).startswith(module.split(".")[0])]
+            # 优先红线与定稿
+            matched = sorted(
+                matched,
+                key=lambda e: {"style_redline": 0, "recipe": 1, "art_decision": 2, "visual_correction": 3}.get(e.get("kind"), 9),
+            )[:6]
+        if matched:
+            advice.append(f"🎨 pmem-art 生图前记忆召回 · 模块 {module or '?'}（{len(matched)} 条）")
+            for e in matched:
+                advice.append(f"  · [{e.get('kind')}] {e.get('summary', '')[:100]}")
+        elif q:
+            advice.append(f"🎨 pmem-art：模块 {module or '未识别'} 暂无记忆，生图后请用自然语言反馈沉淀（如「太赛博」「这版留着」）。")
+
+    if event in ("post-tool", "post-asset"):
+        advice.append("💬 若这张不对/要留着：直接说「太赛博 / 头太大 / 这版留着 / 换成水彩」，我会写入 pmem-art 记忆。")
+        # 若落盘路径像图片，提示 ingest
+        if path and re.search(r"\.(png|jpe?g|webp)$", path, re.I):
+            advice.append(f'📥 可选归档：python3 pmem_art.py ingest {path} -p "{(prompt or "")[:80]}" --apply')
+
+    if event == "stop":
+        advice.append("🧠 pmem-art：本轮若有审美拍板，记得一句话留下（「以后都用这色板」「别再画霓虹」）。")
+
+    # Cursor hook 协议：输出 JSON，附加 agentMessage 提示（兼容 continue）
+    out = {
+        "continue": True,
+        "server": "pmem-art",
+        "version": VERSION,
+        "event": event,
+        "agentMessage": "\n".join(advice) if advice else "",
+    }
+    print(json.dumps(out, ensure_ascii=False))
+    return 0
+
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(
         prog="pmem-art",
-        description="挂载式美术记忆系统：冷启动脚手架 / 老项目扫描接入 / 持续 sync→accept→闸门循环",
+        description="Cursor 对话驱动的个人美术积累记忆：反馈沉淀 → 下次生图更准（classify/domains 在后端默默工作）",
     )
     parser.add_argument("--root", default=".", help="项目根目录")
     parser.add_argument("--version", action="version", version=f"pmem-art {VERSION}")
@@ -513,7 +585,7 @@ def main() -> int:
     sub.add_parser("list", help="列出所有美术模块、资产数与健康状态")
     p_search = sub.add_parser("search", help="按模块/路径/关键词检索美术记忆（含红线、色板、规格与 AI 配方）")
     p_search.add_argument("query", nargs="?", default="")
-    p_search.add_argument("--module", default="")
+    p_search.add_argument("--module", "-m", default="")
     p_search.add_argument("--path", default="")
 
     sub.add_parser("validate", help="校验所有图片资产的分辨率、RGBA 透明通道、安全边距与记忆 Stale 状态")
@@ -521,8 +593,24 @@ def main() -> int:
     p_atlas = sub.add_parser("atlas", help="生成/更新自包含可视化美术记忆图谱工作台 HTML (art-atlas.html)")
     p_atlas.add_argument("--out", default="art-atlas.html")
 
+    p_fb = sub.add_parser("feedback", help="把画师自然语言反馈沉淀为记忆（太赛博/头太大/这版留着/换成水彩…）")
+    p_fb.add_argument("text", nargs="?", default="", help="画师原话；也可 --text")
+    p_fb.add_argument("--text", dest="text_opt", default="", help="画师原话（与位置参数二选一）")
+    p_fb.add_argument("--module", "-m", default="", help="目标模块；省略则从原文推断")
+    p_fb.add_argument("--asset", "-a", default="", help="关联图片路径（正例/反例）")
+    p_fb.add_argument("--kind", default="", help="强制记忆类型；默认自动判定")
+    p_fb.add_argument("--dry-run", action="store_true", help="只打印判定，不写文件")
+
+    p_note = sub.add_parser("note", help="feedback 的别名（更短）")
+    p_note.add_argument("text", nargs="?", default="")
+    p_note.add_argument("--text", dest="text_opt", default="")
+    p_note.add_argument("--module", "-m", default="")
+    p_note.add_argument("--asset", "-a", default="")
+    p_note.add_argument("--kind", default="")
+    p_note.add_argument("--dry-run", action="store_true")
+
     p_hook = sub.add_parser("hook", help="处理 Cursor / Claude Code / Codex 的 Hook 闸门事件")
-    p_hook.add_argument("event", choices=("pre-tool", "post-tool", "stop"))
+    p_hook.add_argument("event", choices=("pre-tool", "post-tool", "stop", "pre-gen", "post-asset"))
 
     args = parser.parse_args()
     root = Path(args.root).resolve()
@@ -601,9 +689,15 @@ def main() -> int:
         generate_atlas_html(data, out_file)
         print(f"✨ 已生成可视化美术记忆图谱工作台: {out_file} ({round(out_file.stat().st_size / 1024, 1)} KB)")
         return 0
+    if args.command in ("feedback", "note"):
+        from feedback import cmd_feedback
+        raw = (getattr(args, "text_opt", "") or "") or (getattr(args, "text", "") or "")
+        return cmd_feedback(
+            root, data, text=raw, module=args.module, asset=args.asset,
+            kind=args.kind, apply=not args.dry_run,
+        )
     if args.command == "hook":
-        print(json.dumps({"continue": True, "server": "pmem-art", "version": VERSION}))
-        return 0
+        return cmd_hook(root, data, args.event)
     parser.print_help()
     return 0
 

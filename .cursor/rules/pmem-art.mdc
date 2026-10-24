@@ -1,25 +1,81 @@
 ---
-description: 美术研发与 AI 美术记忆系统（pmem-art）核心规范
+description: pmem-art — 画师在 Cursor 里越画越准的个人美术积累记忆（对话驱动，不是审稿台）
+globs:
+  - assets/**
+  - Art/**
+  - .memory-art/**
+  - .cursor/generated/**
 alwaysApply: true
 ---
-# 项目美术记忆系统（pmem-art）使用规范
 
-本项目使用 `pmem-art` 按视觉模块（`brand.*`、`character.*`、`scene.*`、`ui.*`、`vfx.*`）管理视觉锚点、风格红线、管线技术规范与 AI 生图配方。
+# pmem-art：你的个人美术积累记忆
 
-## 1. 生图与改图前必查（Pre-Generation Gate）
-- 在调用任何 AI 生图工具（ComfyUI / Stable Diffusion / Flux / Midjourney / 图像脚本）或修改 `assets/` 下任何图片前，**必须先按模块或路径检索美术记忆**：
-  - 终端：`python3 pmem_art.py search --module <模块名>` 或 `python3 pmem_art.py search --path <资产路径>`
-- 检索后必须严格核对四项硬指标：
-  1. **`style_redline`（风格红线与废案对比）**：看清主美打回过的错误方向（如禁用赛博洋红霓虹、禁止将 7.5 头身主角画成 Q 版、禁止在九宫格中央画暗纹）。
-  2. **`pipeline_constraint`（管线规范）**：严格遵守目标分辨率、宽高比、RGBA 透明通道、安全边距（Safe Margin）与九宫格切线（`nine_slice`）。
-  3. **`recipe`（已验证 AI 配方）**：优先复用该模块已验证的 Base Model、LoRA 权重、Seed、Positive/Negative Prompt 与 ComfyUI 工作流 JSON。
-  4. **`stale`（过期核实）**：若某条记忆带有 `stale: true`（说明关联图片已被重绘覆盖或尺寸/Alpha 被改动），必须先运行 `python3 pmem_art.py validate` 核实图片现状。
+本项目挂载了 **pmem-art**。它不是管线审稿台，也不是要你天天敲 CLI。
+**日常入口就是 Cursor 对话**：生图 → 你用中文说哪里不对 / 哪张留着 → 记忆自动变长 → 下次生图更准。
 
-## 2. 资产落盘后必过自动质检（Post-Asset QA）
-- 每次新增或修改图片后，立即运行：
-  - `python3 pmem_art.py validate`
-- 确保无分辨率违规、无 Alpha 透明通道缺失、无安全边距裁切风险。
+后端会悄悄用 `character / ui / vfx / scene / brand / anim` 和画风分叉（水彩 / Q版 / …）做分类；你平时不用管这些名字。
 
-## 3. 定稿后沉淀配方与更新图谱（Memory & Atlas Update）
-- 产出新定稿资产或验证出更优 Prompt/LoRA 参数后，调用 `python3 pmem_art.py record ...` 写入 `asset_record` 或 `recipe`。
-- 运行 `python3 pmem_art.py atlas` 重新编译可视化看图工作台 `art-atlas.html`。
+---
+
+## 1. 生图前（必须）
+
+在调用 **GenerateImage**、改图、或往 `assets/` / `.cursor/generated/` 写新图之前：
+
+1. 从用户这句话里认出**题材**（谁 / 什么 UI / 什么特效 / 什么画风）。
+2. 先跑一次记忆召回（二选一即可）：
+   ```bash
+   python3 pmem_art.py search --module <模块如 character.Astra>
+   # 或
+   python3 pmem_art.py search "<关键词：角色名/UI/画风>"
+   ```
+3. 把召回结果里的 **红线（style_redline）**、**定稿方向（recipe / art_decision）**、**上次修正（visual_correction）** 写进本次生图约束与 Negative；**禁止**重复用户已经打回过的方向。
+
+若 hook 已经在 `agentMessage` 里塞了召回摘要，直接遵守，不必重复跑，除非摘要为空。
+
+---
+
+## 2. 用户一说话，就沉淀记忆（核心！）
+
+用户**不需要写 YAML**。只要原话里出现下面这些意思，你必须立刻调用：
+
+```bash
+python3 pmem_art.py feedback "<用户原话>" --module <相关模块> [--asset <刚生成的图路径>]
+```
+
+### 中文触发词（优先认这些）
+
+| 用户大概会说 | 你应写入的记忆类型 | 例子 |
+| :--- | :--- | :--- |
+| **太赛博 / 太霓虹 / 别这样画 / 不要再 / 头太大 / 比例不对 / 发色不对 / 漏抠 / 黑底** | `style_redline`（红线，下次禁止） | `feedback "太赛博了，别这样画" -m character.Astra -a .cursor/generated/xxx.png` |
+| **这版留着 / 就这个 / 定稿 / 过了 / 可以用 / 保留** | `recipe`（正向定稿锚点） | `feedback "这版留着" -m character.Astra -a assets/character/...png` |
+| **换成水彩 / 改成Q版 / 换成像素 / 修一下头身** | `visual_correction`（修正方向；必要时画风分叉） | `feedback "换成水彩" -m character.Astra` |
+| **以后都用这色板 / 就定这个风格 / 统一用青瓷白** | `art_decision`（拍板） | `feedback "以后都用青瓷白+墨蓝，别霓虹" -m brand.WorldStyle` |
+
+判断不准时：**宁写一条 `visual_correction`，也不要让反馈蒸发。**
+
+写完后用一句话告诉用户：「已记入 pmem-art：…；下次生同类会自动避开/沿用。」
+
+---
+
+## 3. 新图落盘后（轻量）
+
+- 若图在 `.cursor/generated/` 且用户没有明确说「先别归类」，可：
+  ```bash
+  python3 pmem_art.py ingest <路径> -p "<生图用的那句提示/用户话>" --apply
+  ```
+  低置信度会进 `misc.*` 候选，**不会乱塞正式模块**。
+- 不要把 `art-atlas.html` / `doctor` / `validate` 当成日常主线；那是偶尔回头看的可选工具。
+
+---
+
+## 4. 对画师说话的方式
+
+- 用中文、短句、像搭档，不要甩 YAML 字段名吓唬人。
+- 可以说：「我记住了：Astra 别画赛博霓虹；这张水彩方向留着。」
+- 不要要求用户「请运行某某 CLI」——你自己跑；用户只管评图。
+
+---
+
+## 5. 跳过开关
+
+用户明确说「跳过美术记忆」或「skip-art-memory」时，本轮可不写 feedback / 不强制 search。
