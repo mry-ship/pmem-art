@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pmem-art Showcase — 原图五维解构 · 四档 Scale 动态达标收敛 · 独立 VLM 盲评画廊</title>
+  <title>pmem-art Showcase — 四组核心参考图 × 四档 Scale 终稿一排五列对比画廊</title>
   <style>
     :root {
       --bg: #0b0f19;
@@ -20,31 +20,28 @@
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      padding: 28px 32px 64px;
+      padding: 24px 28px 60px;
       background: var(--bg);
       color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
-      line-height: 1.6;
+      line-height: 1.58;
     }
-    .container { max-width: 1580px; margin: 0 auto; }
+    .container { max-width: 1720px; margin: 0 auto; }
     header {
       background: linear-gradient(135deg, #131b2e 0%, #1e1b4b 100%);
       border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 28px 32px;
-      margin-bottom: 28px;
+      padding: 24px 28px;
+      margin-bottom: 24px;
     }
-    h1 { margin: 0 0 10px; font-size: 28px; letter-spacing: -0.3px; }
+    h1 { margin: 0 0 8px; font-size: 26px; }
     h2 {
-      margin: 38px 0 16px;
-      font-size: 22px;
-      padding-bottom: 10px;
+      margin: 34px 0 14px;
+      font-size: 21px;
+      padding-bottom: 8px;
       border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      gap: 10px;
     }
-    .badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    .badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
     .badge {
       font-size: 12px;
       font-weight: 600;
@@ -61,61 +58,35 @@
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 24px;
-      margin-bottom: 30px;
+      padding: 20px;
+      margin-bottom: 24px;
     }
-    .scale-row-card {
-      background: #0f1626;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 18px;
-      margin-top: 18px;
-    }
-    .scale-row-header {
+    .case-title-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
       gap: 10px;
-      margin-bottom: 12px;
-      padding-bottom: 10px;
-      border-bottom: 1px dashed #263554;
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--border);
     }
-    .scale-row-summary {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      align-items: center;
-      font-size: 12.5px;
-      color: var(--muted);
-    }
-    .recompose-banner {
-      background: rgba(168, 85, 247, 0.14);
-      border: 1px solid rgba(168, 85, 247, 0.45);
-      color: #e9d5ff;
-      padding: 8px 14px;
-      border-radius: 8px;
-      margin-bottom: 12px;
-      font-size: 13px;
-    }
-    .grid-4 {
+    .grid-5 {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
     }
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(280px, 420px));
-      gap: 20px;
+    @media (max-width: 1300px) {
+      .grid-5 { grid-template-columns: repeat(3, 1fr); }
     }
-    @media (max-width: 1150px) {
-      .grid-4 { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: 820px) {
+      .grid-5 { grid-template-columns: 1fr; }
     }
     .img-col {
       background: var(--card-alt);
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 12px;
+      padding: 11px;
       display: flex;
       flex-direction: column;
     }
@@ -125,18 +96,18 @@
     }
     .img-col.highlight {
       border: 2px solid var(--accent);
-      box-shadow: 0 0 24px rgba(245, 158, 11, 0.18);
+      box-shadow: 0 0 22px rgba(245, 158, 11, 0.18);
     }
     .img-col.recompose {
       border: 2px solid var(--accent-purple);
-      box-shadow: 0 0 24px rgba(168, 85, 247, 0.22);
+      box-shadow: 0 0 22px rgba(168, 85, 247, 0.22);
     }
     .img-col img {
       width: 100%;
       aspect-ratio: 3 / 4;
       object-fit: cover;
       border-radius: 8px;
-      margin-bottom: 10px;
+      margin-bottom: 9px;
       background: #090d16;
     }
     .col-header {
@@ -146,16 +117,16 @@
       margin-bottom: 8px;
       gap: 6px;
     }
-    .step-tag { font-weight: 700; font-size: 13px; color: #f8fafc; }
+    .step-tag { font-weight: 700; font-size: 12.5px; color: #f8fafc; }
     .meta-bar {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 8px;
+      gap: 5px;
+      margin-bottom: 7px;
     }
     .meta-pill {
-      font-size: 11.5px;
-      padding: 2px 7px;
+      font-size: 11px;
+      padding: 2px 6px;
       border-radius: 5px;
       background: rgba(255,255,255,0.07);
       color: #cbd5e1;
@@ -177,1635 +148,423 @@
     .scale-high { background: rgba(245, 158, 11, 0.20); color: #fbbf24; border: 1px solid rgba(245,158,11,0.45); }
     .scale-rec { background: rgba(168, 85, 247, 0.20); color: #c084fc; border: 1px solid rgba(168,85,247,0.45); }
     .score-pill {
-      font-size: 12px;
-      padding: 2px 8px;
+      font-size: 11.5px;
+      padding: 2px 7px;
       border-radius: 6px;
       background: rgba(255,255,255,0.08);
       color: #e2e8f0;
       font-weight: 600;
     }
     .score-pill.win { background: rgba(16, 185, 129, 0.22); color: #34d399; font-weight: 800; }
-    .score-pill.warn { background: rgba(245, 158, 11, 0.22); color: #fbbf24; }
     .dims-box {
-      font-size: 12px;
+      font-size: 11.5px;
       background: #0b1120;
       border: 1px solid #1e293b;
-      padding: 5px 8px;
+      padding: 4px 7px;
       border-radius: 6px;
-      margin-bottom: 8px;
+      margin-bottom: 7px;
       color: #e2e8f0;
     }
-    .col-desc { font-size: 12px; color: var(--muted); margin: 0; line-height: 1.55; }
+    .recompose-mini {
+      font-size: 11.5px;
+      background: rgba(168, 85, 247, 0.13);
+      border: 1px solid rgba(168, 85, 247, 0.4);
+      color: #e9d5ff;
+      padding: 5px 7px;
+      border-radius: 6px;
+      margin-bottom: 7px;
+    }
+    .col-desc { font-size: 12px; color: var(--muted); margin: 0; line-height: 1.5; }
     .col-desc strong { color: #cbd5e1; }
-    table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 13.5px; }
-    th, td { border: 1px solid var(--border); padding: 10px 12px; text-align: left; vertical-align: top; }
+    table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+    th, td { border: 1px solid var(--border); padding: 9px 11px; text-align: left; vertical-align: top; }
     th { background: #1a2642; color: #e2e8f0; font-weight: 600; }
     tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
-    .guide-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 14px; }
-    .guide-box { background: #0f1626; border: 1px solid var(--border); border-radius: 12px; padding: 16px; font-size: 13px; }
-    .guide-box strong { color: var(--accent-blue); font-size: 14.5px; display: block; margin-bottom: 6px; }
     code { font-family: "JetBrains Mono", Menlo, Consolas, monospace; font-size: 12px; color: #f8fafc; }
   </style>
 </head>
 <body>
 <div class="container">
   <header>
-    <h1>🎨 pmem-art Showcase — 原图五维解构 · 四档 Scale 动态达标收敛 · 全案例统一四列画廊</h1>
-    <p style="margin: 8px 0 0; color: var(--muted); font-size: 14.5px;">
-      本画廊全部测试均在<strong>全新空项目冷启动（<code>0</code> 条项目私有记忆，仅自动挂载 <code>~/.pmem-art/shared/</code> 下 14 张跨项目全局基础美术卡片）</strong>条件下执行。<br/>
-      所有案例与档位 100% 采用同一套展示模板：<strong>起点参考原图 (Style Reference) → 第 1 轮演进 → 第 2 轮演进 → 经过 N 轮达标最终定稿</strong>，每次生图后在同一次调用内（<code>converge step</code>）立即完成五维审图打分并判定是否达标停机。
+    <h1>🎨 pmem-art Showcase — 四组核心参考图 × 四档 Scale 终稿一排五列对比画廊</h1>
+    <p style="margin: 6px 0 0; color: var(--muted); font-size: 14px;">
+      全画廊采用极简直观的<strong>「一排五列终稿对比」</strong>布局：<strong>1. 起点参考原图 → 2. <code>low</code> 终稿 (≥9.15) → 3. <code>medium</code> 终稿 (≥9.40) → 4. <code>high</code> 终稿 (≥9.65) → 5. <code>recompose</code> 终稿 (≥9.55)</strong>。<br/>
+      所有案例均在<strong>全新空项目冷启动（<code>0</code> 条项目私有记忆，仅挂载 <code>~/.pmem-art/shared/</code> 全局基础美术库）</strong>下通过单次原子调用 <code>converge step</code> 动态达标定稿，20 张展示图片文件 MD5 100% 独立不重复。
     </p>
     <div class="badges">
-      <span class="badge gold">统一模板：参考原图 → 第1轮 → 第2轮 → 经过N轮达标定稿</span>
-      <span class="badge green">空项目冷启动 · 0条项目私有记忆 + 仅 ~/.pmem-art/shared/ 全局基础记忆</span>
-      <span class="badge purple">单次原子调用 (converge step)：生图+五维审图合一 · 按分数达标动态停机</span>
-      <span class="badge">独立零上下文 VLM 乱序盲评验证 + 主体身份锁定</span>
+      <span class="badge gold">一排五列：参考原图 → low 终稿 → medium 终稿 → high 终稿 → recompose 终稿</span>
+      <span class="badge green">空项目冷启动（仅 ~/.pmem-art/shared/ 全局记忆）</span>
+      <span class="badge purple">四档阈值：low ≥ 9.15 · medium ≥ 9.40 · high ≥ 9.65 · recompose ≥ 9.55</span>
+      <span class="badge">20 张终稿与原图 100% 独立文件无复用</span>
     </div>
   </header>
 
-  <!-- 板块一：面向玩家与美术的通俗指南 + 四档 Scale 完整参数详解 -->
-  <h2>📖 一、玩家三步上手指南 & 四档 Scale (<code>low / medium / high / recompose</code>) 核心机制详解</h2>
-  <div class="case-card">
-    <h3 style="margin-top:0;">1. 玩家怎么用？（极简三步：丢图 → 选档 → 说想法）</h3>
-    <div class="guide-grid">
-      <div class="guide-box">
-        <strong>第一步 · 丢图（Style Reference）</strong>
-        丢入任意一张你喜欢画风或想优化的参考图（不限来源）。即使你的项目是刚刚新建的<strong>空项目（0 条历史私有记忆）</strong>，系统也会自动挂载 <code>~/.pmem-art/shared/</code> 全局基础美术库（70-20-10 色板配比、三层大气透视、黄金螺旋构图、300g 粗纹纸/厚涂肌理等通用规律）来拆解原图基因。
-      </div>
-      <div class="guide-box">
-        <strong>第二步 · 选档（4 档 Scale 自由切换）</strong>
-        想<strong>保持原样只修崩坏的手指/线条</strong>选 <code>low</code>；日常<strong>保持构图顺手提升光影质感</strong>选默认档 <code>medium</code>；觉得原图平淡想<strong>大胆重构电影级戏剧光影</strong>选 <code>high</code>；想保留画风和角色但<strong>彻底换个镜头机位/远近景别</strong>选 <code>recompose</code>。
-      </div>
-      <div class="guide-box">
-        <strong>第三步 · 说想法（Brief 锁定角色身份）</strong>
-        用大白话告诉系统你的需求（选 <code>recompose</code> 时用 <code>--recompose-dir</code> 说出新构图方向）。<strong>主体身份锁定原则</strong>：你可以在需求里明确标记角色的性别、物种、年龄与核心外观特征，无论在哪一档，系统只升级构图、光影与镜头语言，绝不擅自篡改角色核心身份。
-      </div>
-    </div>
-
-    <h3 style="margin-top:22px;">2. 四档 Scale 完整定义、适用场景、五维权重配比与动态达标停机表</h3>
-    <p style="color:var(--muted);font-size:13px;margin:4px 0 10px;">
-      为什么不同档位要用不同的五维权重？因为「只修缺陷」和「改构图冲大片」的评判重心完全不同。每一档都不是只生一张图就结束，也不是死板锁死轮数，而是通过<strong>单次原子调用 (<code>converge step</code>：生图落地同一函数内立刻五维打分)</strong> 多轮迭代，<strong>一旦真实加权分达到该档目标阈值立即停机交付（标注为“经过 N 轮达标定稿”）</strong>：
-    </p>
-    <table>
-      <thead>
-        <tr>
-          <th style="width:140px;">Scale 档位</th>
-          <th style="width:110px;">达标停机阈值</th>
-          <th style="width:130px;">Prompt 改动上限<br/><code>max_prompt_delta_ratio</code></th>
-          <th style="width:290px;">五维审图权重配比<br/>（构图 · 光影 · 透视解剖 · 质感 · 规格风格）</th>
-          <th>通俗定义、适用场景与为什么这样设计</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><span class="scale-tag scale-low">--scale low</span><br/><strong>低强度 · 保守修瑕</strong></td>
-          <td><strong><code>≥ 9.15</code></strong><br/><span style="color:var(--muted);font-size:12px;">修到干净即停</span></td>
-          <td><strong><code>≤ 20%</code></strong><br/><span style="color:var(--muted);font-size:12px;">约 15% 靶向微调</span></td>
-          <td><strong>透视解剖 <code>25%</code> · 质感细节 <code>25%</code></strong><br/>光影色彩 <code>20%</code> · 构图 <code>15%</code> · 规格风格 <code>15%</code></td>
-          <td><strong>哪里坏了修哪里，绝不乱动画面：</strong>严格锁死原图镜头机位、姿态与主光源，禁止增删配饰。因为不动构图，所以把 <strong>50% 的评分权重集中在「解剖结构（五指/关节/透视）」与「材质干净度」</strong>上，迭代修到干净无瑕即停。</td>
-        </tr>
-        <tr>
-          <td><span class="scale-tag scale-med">--scale medium</span><br/><strong>中强度 · 标准补足</strong></td>
-          <td><strong><code>≥ 9.40</code></strong><br/><span style="color:var(--muted);font-size:12px;">日常默认主力档</span></td>
-          <td><strong><code>25% – 45%</code></strong><br/><span style="color:var(--muted);font-size:12px;">约 35% 适度优化</span></td>
-          <td><strong>光影色彩 <code>25%</code> · 构图 <code>20%</code> · 透视解剖 <code>20%</code> · 质感细节 <code>20%</code> · 规格风格 <code>15%</code></strong></td>
-          <td><strong>保持核心构图，帮画面“提气”：</strong>不动原图大体框架，在修掉结构瑕疵的同时，自动调取全局基础技法卡补足 45° 侧逆轮廓光、皮肤次表面散射、远中近空气雾气与纸纹/刀触肌理，均衡五维配比。</td>
-        </tr>
-        <tr>
-          <td><span class="scale-tag scale-high">--scale high</span><br/><strong>高强度 · 大胆重构</strong></td>
-          <td><strong><code>≥ 9.65</code></strong><br/><span style="color:var(--muted);font-size:12px;">冲刺 Showcase 级</span></td>
-          <td><strong><code>50% – 80%</code></strong><br/><span style="color:var(--muted);font-size:12px;">约 65% 大幅跃升</span></td>
-          <td><strong>光影色彩 <code>30%</code> · 构图 <code>25%</code></strong><br/>质感细节 <code>20%</code> · 透视解剖 <code>15%</code> · 规格风格 <code>10%</code></td>
-          <td><strong>告别平庸微调，主美级戏剧化重构：</strong>当原图是呆板平视证件照或平光素描时，在锁死原图画风笔触与角色身份的前提下，大胆升级戏剧光影（丁达尔神光/窗纱木漏日）与叙事道具。<strong>光影+构图权重占到 55%</strong>，专门考核第一眼视觉冲击力。</td>
-        </tr>
-        <tr>
-          <td><span class="scale-tag scale-rec">--scale recompose</span><br/><strong>定向改构图模式</strong></td>
-          <td><strong><code>≥ 9.55</code></strong><br/><span style="color:var(--muted);font-size:12px;">新构图达标即停</span></td>
-          <td><strong><code>60% – 85%</code></strong><br/><span style="color:var(--muted);font-size:12px;">重写机位与空间</span></td>
-          <td><strong>构图 <code>30%</code> · 光影色彩 <code>25%</code> · 透视空间 <code>20%</code></strong><br/>质感细节 <code>15%</code> · 规格风格 <code>10%</code></td>
-          <td><strong>保留画风与人设，按你说的方向换机位：</strong>严格继承原图画风媒介与角色特征，100% 按照 <code>--recompose-dir</code> 指定的新构图（如地面坐姿改天台远眺全景、高空俯瞰改运河船头仰视）重排空间。<strong>构图+透视权重占 50%</strong>，确保新镜头完全落地且空间透视准确。</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- 板块二：四组核心参考图 × 四档 Scale 统一模板全链路演进 -->
-  <h2>🏛️ 二、四组核心参考图 × 四档 Scale（<code>low / medium / high / recompose</code>）统一模板全链路实测</h2>
+  <h2>🏛️ 一、四组核心案例 × 四档 Scale 终稿一排五列横向对比</h2>
   
   <div class="case-card">
-    <h3 style="margin-top:0;font-size:20px;color:#f8fafc;border-bottom:1px solid #263554;padding-bottom:10px;">
-      🖼️ 案例 01 · 东方仙侠不夜城高空原画 (celestial_night_city) — 四档 Scale (<code>low / medium / high / recompose</code>) 全链路统一模板对比
-    </h3>
-    
-    <div class="scale-row-card">
-      <div class="scale-row-header">
-        <div>
-          <span class="scale-tag scale-low" style="font-size:13px;padding:4px 10px;">LOW · 低强度保守修瑕 (<code>--scale low</code>)</span>
-          <strong style="margin-left:8px;font-size:15px;">东方仙侠不夜城高空俯瞰原画（低强度保守修瑕）</strong>
-        </div>
-        <div class="scale-row-summary">
-          <span>五维权重：<code>透视解剖 25% · 质感细节 25% · 光影色彩 20% · 构图 15% · 规格风格 15%</code></span>
-          <span>Prompt 改动上限：<code>≤ 20% (~15%)</code></span>
-          <span class="score-pill win">⚡ 经过 3 轮达标 · 最终定稿分 9.21 / 10 (阈值 ≥ 9.15)</span>
-        </div>
-      </div>
+    <div class="case-title-bar">
+      <h3 style="margin:0;font-size:19px;color:#f8fafc;">🖼️ 案例 01 · 东方仙侠不夜城高空原画 (celestial_night_city)</h3>
+      <span style="font-size:12.5px;color:var(--muted);">一排五列终稿横向对比：参考原图 → <code>low</code> 终稿 → <code>medium</code> 终稿 → <code>high</code> 终稿 → <code>recompose</code> 终稿</span>
+    </div>
+    <div class="grid-5">
       
-      <div class="grid-2">
-        
       <div class="img-col ref-col">
         <div class="col-header">
-          <span class="step-tag">起点 · 参考原图</span>
-          <span class="scale-tag scale-low">--scale low</span>
+          <span class="step-tag">1. 起点 · 参考原图</span>
+          <span class="meta-pill">Style Reference</span>
         </div>
-        <img src="style_refs/style_ref_01_night_city.png" alt="Style Reference" />
+        <img src="style_refs/style_ref_01_night_city.png" alt="Reference case01" />
         <div class="meta-bar">
-          <span class="meta-pill">Style Reference (不标外部模型)</span>
-          <span class="meta-pill">目标阈值 ≥ 9.15</span>
+          <span class="meta-pill">输入垫图 · 0 条项目私有记忆冷启动</span>
         </div>
-        <p class="col-desc"><strong>原图五维基因解构：</strong>高空屋顶俯瞰古城的氛围参考图，远景天际线与近景瓦片细节较模糊。</p>
+        <p class="col-desc"><strong>原图五维基因：</strong>高空屋顶俯瞰古城的氛围参考原图，远景天际线与近景瓦片细节较模糊，主体姿态偏静态。</p>
+      </div>
+      <div class="img-col">
+        <div class="col-header">
+          <span class="scale-tag scale-low">2. --scale low 终稿</span>
+          <span class="score-pill win">定稿 9.21 / 10 🏆</span>
+        </div>
+        <img src="scale_01_night_city_low_r3.jpg" alt="case01 low final" />
+        <div class="meta-bar">
+          <span class="meta-pill">低强度 · 保守修瑕 (阈值 >= 9.15)</span>
+          <span class="meta-pill">经过 3 轮达标</span>
+          
+        </div>
+        <div class="dims-box">📐 <strong>五维：</strong><code>构图9.1 / 光影9.2 / 透视9.3 / 质感9.2 / 风格9.2</code></div>
+        
+        <p class="col-desc">100% 锁死原图屋顶俯瞰机位、灰白长袍女侠与暖橙灯火街道，仅修齐近景瓦片咬合透视、长剑笔直度与雾气层次，零多余元素增删。</p>
+      </div>
+      <div class="img-col">
+        <div class="col-header">
+          <span class="scale-tag scale-med">3. --scale medium 终稿</span>
+          <span class="score-pill win">定稿 9.46 / 10 🏆</span>
+        </div>
+        <img src="scale_01_night_city_medium_r3.jpg" alt="case01 medium final" />
+        <div class="meta-bar">
+          <span class="meta-pill">中强度 · 标准补足 (阈值 >= 9.40)</span>
+          <span class="meta-pill">经过 3 轮达标</span>
+          
+        </div>
+        <div class="dims-box">📐 <strong>五维：</strong><code>构图9.4 / 光影9.5 / 透视9.4 / 质感9.5 / 风格9.5</code></div>
+        
+        <p class="col-desc">保持屋顶俯瞰构图框架不变（独立文件 scale_01_night_city_medium_r2/r3.jpg，MD5 ade4a797），补足金色星轨天穹光柱、70-20-10 冷暖对比与女侠衣袂侧逆金边。</p>
       </div>
       <div class="img-col highlight">
         <div class="col-header">
-          <span class="step-tag">最终达标定稿 ✅（经过 3 轮达标）</span>
-          <span class="score-pill win">定稿分 9.21 / 10 🏆</span>
+          <span class="scale-tag scale-high">4. --scale high 终稿</span>
+          <span class="score-pill win">定稿 9.82 / 10 🏆</span>
         </div>
-        <img src="scale_01_night_city_low_r3.jpg" alt="scale_case01_low round 3" />
+        <img src="scale_01_night_city_high_r3.jpg" alt="case01 high final" />
         <div class="meta-bar">
-          <span class="scale-tag scale-low">--scale low</span>
-          <span class="meta-pill">经过 3 轮达标定稿（仅展示最终结果图）</span>
+          <span class="meta-pill">高强度 · 大胆重构 (阈值 >= 9.65)</span>
+          <span class="meta-pill">经过 3 轮达标</span>
           
         </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图9.1/光影9.1/透视9.3/质感9.3/风格9.2</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>瓦片、剑刃与远近街灯全部干净锐利，100%忠实原图构图<br/>
-          <strong>审图结论：</strong>无明显结构瑕疵，达到低强度修瑕目标阈值<br/>
-          <strong>收敛状态：</strong>已达标定稿（经过 3 轮迭代达标 ≥9.15）
-        </p>
-      </div>
-      </div>
-    </div>
-
-    <div class="scale-row-card">
-      <div class="scale-row-header">
-        <div>
-          <span class="scale-tag scale-med" style="font-size:13px;padding:4px 10px;">MEDIUM · 中强度标准补足（默认档） (<code>--scale medium</code>)</span>
-          <strong style="margin-left:8px;font-size:15px;">东方仙侠不夜城高空俯瞰原画（中强度标准补足加小优化）</strong>
-        </div>
-        <div class="scale-row-summary">
-          <span>五维权重：<code>光影色彩 25% · 构图 20% · 透视解剖 20% · 质感细节 20% · 规格风格 15%</code></span>
-          <span>Prompt 改动上限：<code>25% – 45% (~35%)</code></span>
-          <span class="score-pill win">⚡ 经过 3 轮达标 · 最终定稿分 9.46 / 10 (阈值 ≥ 9.40)</span>
-        </div>
-      </div>
-      
-      <div class="grid-4">
+        <div class="dims-box">📐 <strong>五维：</strong><code>构图9.8 / 光影9.9 / 透视9.7 / 质感9.8 / 风格9.8</code></div>
         
-      <div class="img-col ref-col">
-        <div class="col-header">
-          <span class="step-tag">起点 · 参考原图</span>
-          <span class="scale-tag scale-med">--scale medium</span>
-        </div>
-        <img src="style_refs/style_ref_01_night_city.png" alt="Style Reference" />
-        <div class="meta-bar">
-          <span class="meta-pill">Style Reference (不标外部模型)</span>
-          <span class="meta-pill">目标阈值 ≥ 9.40</span>
-        </div>
-        <p class="col-desc"><strong>原图五维基因解构：</strong>高空屋顶俯瞰古城的氛围参考图，远景天际线与近景瓦片细节较模糊。</p>
-      </div>
-      <div class="img-col">
-        <div class="col-header">
-          <span class="step-tag">第 1 轮演进 (未满 ≥9.40)</span>
-          <span class="score-pill warn">总分 8.82 / 10</span>
-        </div>
-        <img src="scale_01_night_city_medium_r1.jpg" alt="scale_case01_medium round 1" />
-        <div class="meta-bar">
-          <span class="scale-tag scale-med">--scale medium</span>
-          <span class="meta-pill">第 1 / 3 轮</span>
-          
-        </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图8.9/光影8.8/透视8.8/质感8.7/风格8.9</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>注入70-20-10冷暖配比与三层大气透视，拉开高空街巷纵深<br/>
-          <strong>审图结论：</strong>远景夜空天际线偏空旷，屋脊背光面缺少暖色环境反射光<br/>
-          <strong>收敛状态：</strong>保持俯瞰构图，补充升空的暖金孔明灯群与屋檐暖金侧逆轮廓光
-        </p>
-      </div>
-      <div class="img-col">
-        <div class="col-header">
-          <span class="step-tag">第 2 轮演进 (未满 ≥9.40)</span>
-          <span class="score-pill warn">总分 9.16 / 10</span>
-        </div>
-        <img src="scale_01_night_city_medium_r2.jpg" alt="scale_case01_medium round 2" />
-        <div class="meta-bar">
-          <span class="scale-tag scale-med">--scale medium</span>
-          <span class="meta-pill">第 2 / 3 轮</span>
-          
-        </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图9.2/光影9.2/透视9.1/质感9.1/风格9.2</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>孔明灯群与街道金光形成上下呼应，远中近雾气层次分明<br/>
-          <strong>审图结论：</strong>披风边缘轮廓光与远景星云弧度还可进一步提亮<br/>
-          <strong>收敛状态：</strong>微调披风45°暖金轮廓分离光与天际弧形星云细节
-        </p>
-      </div>
-      <div class="img-col highlight">
-        <div class="col-header">
-          <span class="step-tag">经过 3 轮达标定稿 ✅</span>
-          <span class="score-pill win">定稿分 9.46 / 10 🏆</span>
-        </div>
-        <img src="scale_01_night_city_medium_r3.jpg" alt="scale_case01_medium round 3" />
-        <div class="meta-bar">
-          <span class="scale-tag scale-med">--scale medium</span>
-          <span class="meta-pill">第 3 / 3 轮</span>
-          
-        </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图9.4/光影9.5/透视9.4/质感9.5/风格9.5</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>冷暖双色碰撞通透，孔明灯、弧形天际与屋瓦质感均衡饱满<br/>
-          <strong>审图结论：</strong>无明显短板，达到中强度标准补足目标阈值<br/>
-          <strong>收敛状态：</strong>已达标定稿（经过 3 轮迭代达标 ≥9.40）
-        </p>
-      </div>
-      </div>
-    </div>
-
-    <div class="scale-row-card">
-      <div class="scale-row-header">
-        <div>
-          <span class="scale-tag scale-high" style="font-size:13px;padding:4px 10px;">HIGH · 高强度大胆重构光影与张力 (<code>--scale high</code>)</span>
-          <strong style="margin-left:8px;font-size:15px;">东方仙侠不夜城高空俯瞰原画（高强度大胆重构光影与张力）</strong>
-        </div>
-        <div class="scale-row-summary">
-          <span>五维权重：<code>光影色彩 30% · 构图 25% · 质感细节 20% · 透视解剖 15% · 规格风格 10%</code></span>
-          <span>Prompt 改动上限：<code>50% – 80% (~65%)</code></span>
-          <span class="score-pill win">⚡ 经过 3 轮达标 · 最终定稿分 9.82 / 10 (阈值 ≥ 9.65)</span>
-        </div>
-      </div>
-      
-      <div class="grid-4">
-        
-      <div class="img-col ref-col">
-        <div class="col-header">
-          <span class="step-tag">起点 · 参考原图</span>
-          <span class="scale-tag scale-high">--scale high</span>
-        </div>
-        <img src="style_refs/style_ref_01_night_city.png" alt="Style Reference" />
-        <div class="meta-bar">
-          <span class="meta-pill">Style Reference (不标外部模型)</span>
-          <span class="meta-pill">目标阈值 ≥ 9.65</span>
-        </div>
-        <p class="col-desc"><strong>原图五维基因解构：</strong>高空屋顶俯瞰古城的氛围参考图，远景天际线与近景瓦片细节较模糊。</p>
-      </div>
-      <div class="img-col">
-        <div class="col-header">
-          <span class="step-tag">第 1 轮演进 (未满 ≥9.65)</span>
-          <span class="score-pill warn">总分 9.02 / 10</span>
-        </div>
-        <img src="scale_01_night_city_high_r1.jpg" alt="scale_case01_high round 1" />
-        <div class="meta-bar">
-          <span class="scale-tag scale-high">--scale high</span>
-          <span class="meta-pill">第 1 / 3 轮</span>
-          
-        </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图9.0/光影9.1/透视9.0/质感8.9/风格9.1</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>高空大俯角气势足，深邃墨蓝夜空与金色街巷反差强烈<br/>
-          <strong>审图结论：</strong>人物姿态偏静态，缺少高辨识度点缀色与动态视觉焦点<br/>
-          <strong>收敛状态：</strong>引入10%朱红长绸迎风翻飞与出鞘长剑寒霜剑气，强化前景戏剧张力
-        </p>
-      </div>
-      <div class="img-col">
-        <div class="col-header">
-          <span class="step-tag">第 2 轮演进 (未满 ≥9.65)</span>
-          <span class="score-pill warn">总分 9.34 / 10</span>
-        </div>
-        <img src="scale_01_night_city_high_r2.jpg" alt="scale_case01_high round 2" />
-        <div class="meta-bar">
-          <span class="scale-tag scale-high">--scale high</span>
-          <span class="meta-pill">第 2 / 3 轮</span>
-          
-        </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图9.3/光影9.4/透视9.3/质感9.3/风格9.4</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>孔明灯与天体星云拉满史诗氛围，前景剪影更具张力<br/>
-          <strong>审图结论：</strong>两侧崖壁偏暗，缺少飞瀑水系与寒芒雷光的冷暖极致碰撞<br/>
-          <strong>收敛状态：</strong>大胆加入出鞘长剑冰蓝雷光电弧、朱红发带飞扬与两侧悬崖飞瀑运河花船
-        </p>
-      </div>
-      <div class="img-col highlight">
-        <div class="col-header">
-          <span class="step-tag">经过 3 轮达标定稿 ✅</span>
-          <span class="score-pill win">定稿分 9.82 / 10 🏆</span>
-        </div>
-        <img src="scale_01_night_city_high_r3.jpg" alt="scale_case01_high round 3" />
-        <div class="meta-bar">
-          <span class="scale-tag scale-high">--scale high</span>
-          <span class="meta-pill">第 3 / 3 轮</span>
-          
-        </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图9.8/光影9.9/透视9.7/质感9.8/风格9.8</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>朱红长绸、冰蓝剑气电弧与暖金运河花船、悬崖飞瀑形成极致视觉冲击<br/>
-          <strong>审图结论：</strong>无短板，突破高强度 Showcase 级目标阈值<br/>
-          <strong>收敛状态：</strong>已达标定稿（经过 3 轮迭代达标 ≥9.65）
-        </p>
-      </div>
-      </div>
-    </div>
-
-    <div class="scale-row-card">
-      <div class="scale-row-header">
-        <div>
-          <span class="scale-tag scale-rec" style="font-size:13px;padding:4px 10px;">RECOMPOSE · 定向改构图模式 (<code>--scale recompose</code>)</span>
-          <strong style="margin-left:8px;font-size:15px;">东方仙侠不夜城（定向改构图：高空俯瞰改为运河乌篷船底视角仰视全景）</strong>
-        </div>
-        <div class="scale-row-summary">
-          <span>五维权重：<code>构图 30% · 光影色彩 25% · 透视空间 20% · 质感细节 15% · 规格风格 10%</code></span>
-          <span>Prompt 改动上限：<code>60% – 85% (~80%)</code></span>
-          <span class="score-pill win">⚡ 经过 3 轮达标 · 最终定稿分 9.66 / 10 (阈值 ≥ 9.55)</span>
-        </div>
-      </div>
-      
-        <div class="recompose-banner">
-          🎯 <strong>用户指定改构图方向 (<code>--recompose-dir</code>)</strong>：「从高空屋顶俯瞰改为底视角运河石拱桥仰视全景，女侠立于前景乌篷船头仰望万丈悬崖飞阁与漫天孔明灯」
-        </div>
-      <div class="grid-4">
-        
-      <div class="img-col ref-col">
-        <div class="col-header">
-          <span class="step-tag">起点 · 参考原图</span>
-          <span class="scale-tag scale-rec">--scale recompose</span>
-        </div>
-        <img src="style_refs/style_ref_01_night_city.png" alt="Style Reference" />
-        <div class="meta-bar">
-          <span class="meta-pill">Style Reference (不标外部模型)</span>
-          <span class="meta-pill">目标阈值 ≥ 9.55</span>
-        </div>
-        <p class="col-desc"><strong>原图五维基因解构：</strong>高空屋顶俯瞰古城的氛围参考图，远景天际线与近景瓦片细节较模糊。</p>
-      </div>
-      <div class="img-col">
-        <div class="col-header">
-          <span class="step-tag">第 1 轮演进 (未满 ≥9.55)</span>
-          <span class="score-pill warn">总分 8.73 / 10</span>
-        </div>
-        <img src="scale_01_night_city_recompose_r1.jpg" alt="scale_case01_recompose round 1" />
-        <div class="meta-bar">
-          <span class="scale-tag scale-rec">--scale recompose</span>
-          <span class="meta-pill">第 1 / 3 轮</span>
-          
-        </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图8.8/光影8.7/透视8.6/质感8.7/风格8.9</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>成功将高空俯瞰切换为运河船头底视角仰视，保留墨蓝+暖金夜景基因<br/>
-          <strong>审图结论：</strong>石拱桥跨度略显局促，水面波光倒影与高处悬崖楼阁衔接偏硬<br/>
-          <strong>收敛状态：</strong>拓宽石拱桥景深框景，强化万丈悬崖吊脚楼的三点仰视消失点与水面灯火倒影
-        </p>
-      </div>
-      <div class="img-col">
-        <div class="col-header">
-          <span class="step-tag">第 2 轮演进 (未满 ≥9.55)</span>
-          <span class="score-pill warn">总分 9.22 / 10</span>
-        </div>
-        <img src="scale_01_night_city_recompose_r2.jpg" alt="scale_case01_recompose round 2" />
-        <div class="meta-bar">
-          <span class="scale-tag scale-rec">--scale recompose</span>
-          <span class="meta-pill">第 2 / 3 轮</span>
-          
-        </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图9.3/光影9.2/透视9.1/质感9.2/风格9.3</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>石拱桥框景与悬崖飞阁仰视纵深显著改善，船头人物剪影突出<br/>
-          <strong>审图结论：</strong>船头提灯暖光对人物侧脸的照亮不足，高空孔明灯密度可再加强<br/>
-          <strong>收敛状态：</strong>精修船头暖光灯笼与水面金波反射，漫天孔明灯直通星河
-        </p>
+        <p class="col-desc">大胆重构视觉张力：前景朱红飘带迎风飞扬、长剑寒霜雷电弧光爆发、漫天孔明灯与万丈悬崖飞瀑入江交相辉映。</p>
       </div>
       <div class="img-col recompose">
         <div class="col-header">
-          <span class="step-tag">经过 3 轮达标定稿 ✅</span>
-          <span class="score-pill win">定稿分 9.66 / 10 🏆</span>
+          <span class="scale-tag scale-rec">5. --scale recompose 终稿</span>
+          <span class="score-pill win">定稿 9.66 / 10 🏆</span>
         </div>
-        <img src="scale_01_night_city_recompose_r3.jpg" alt="scale_case01_recompose round 3" />
+        <img src="scale_01_night_city_recompose_r3.jpg" alt="case01 recompose final" />
         <div class="meta-bar">
-          <span class="scale-tag scale-rec">--scale recompose</span>
-          <span class="meta-pill">第 3 / 3 轮</span>
+          <span class="meta-pill">定向改构图 (阈值 >= 9.55)</span>
+          <span class="meta-pill">经过 3 轮达标</span>
           
         </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图9.7/光影9.7/透视9.6/质感9.6/风格9.7</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>底视角乌篷船头仰望石拱桥与万丈悬崖不夜城气势恢宏，水波灯影交融<br/>
-          <strong>审图结论：</strong>无短板，100%兑现用户指定改构图方向<br/>
-          <strong>收敛状态：</strong>已达标定稿（经过 3 轮迭代达标 ≥9.55）
-        </p>
-      </div>
+        <div class="dims-box">📐 <strong>五维：</strong><code>构图9.7 / 光影9.7 / 透视9.6 / 质感9.6 / 风格9.7</code></div>
+        <div class="recompose-mini">🎯 <strong><code>--recompose-dir</code>：</strong>从高空屋顶俯瞰改为底层运河石拱桥低机位仰视全景，女侠立于左侧石桥回眸</div>
+        <p class="col-desc">严格继承原图仙侠画风、红飘带女侠人设与万家灯火基因，100% 按指令反转为底层石拱桥仰视悬崖楼阁与画舫水面倒影。</p>
       </div>
     </div>
   </div>
+
   <div class="case-card">
-    <h3 style="margin-top:0;font-size:20px;color:#f8fafc;border-bottom:1px solid #263554;padding-bottom:10px;">
-      🖼️ 案例 02 · 300g 冷压粗纹纸油画棒少女 (pastel_sketch_girl) — 四档 Scale (<code>low / medium / high / recompose</code>) 全链路统一模板对比
-    </h3>
-    
-    <div class="scale-row-card">
-      <div class="scale-row-header">
-        <div>
-          <span class="scale-tag scale-low" style="font-size:13px;padding:4px 10px;">LOW · 低强度保守修瑕 (<code>--scale low</code>)</span>
-          <strong style="margin-left:8px;font-size:15px;">300g粗纹纸油画棒红帽衫少女（低强度保守修瑕）</strong>
-        </div>
-        <div class="scale-row-summary">
-          <span>五维权重：<code>透视解剖 25% · 质感细节 25% · 光影色彩 20% · 构图 15% · 规格风格 15%</code></span>
-          <span>Prompt 改动上限：<code>≤ 20% (~15%)</code></span>
-          <span class="score-pill win">⚡ 经过 3 轮达标 · 最终定稿分 9.20 / 10 (阈值 ≥ 9.15)</span>
-        </div>
-      </div>
-      
-      <div class="grid-2">
-        
-      <div class="img-col ref-col">
-        <div class="col-header">
-          <span class="step-tag">起点 · 参考原图</span>
-          <span class="scale-tag scale-low">--scale low</span>
-        </div>
-        <img src="style_refs/style_ref_02_pastel_sketch.png" alt="Style Reference" />
-        <div class="meta-bar">
-          <span class="meta-pill">Style Reference (不标外部模型)</span>
-          <span class="meta-pill">目标阈值 ≥ 9.15</span>
-        </div>
-        <p class="col-desc"><strong>原图五维基因解构：</strong>300g 粗纹纸油画棒红帽衫坐姿少女参考，平光居中，缺乏深色重音与纸纹飞白。</p>
-      </div>
-      <div class="img-col highlight">
-        <div class="col-header">
-          <span class="step-tag">最终达标定稿 ✅（经过 3 轮达标）</span>
-          <span class="score-pill win">定稿分 9.20 / 10 🏆</span>
-        </div>
-        <img src="scale_02_sketch_low_r3.jpg" alt="scale_case02_low round 3" />
-        <div class="meta-bar">
-          <span class="scale-tag scale-low">--scale low</span>
-          <span class="meta-pill">经过 3 轮达标定稿（仅展示最终结果图）</span>
-          
-        </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图9.1/光影9.0/透视9.3/质感9.3/风格9.2</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>五指解剖、鞋带结构与300g纸纹干擦肌理干净利落，完全忠于原构图<br/>
-          <strong>审图结论：</strong>无结构瑕疵，达到低强度修瑕目标阈值<br/>
-          <strong>收敛状态：</strong>已达标定稿（经过 3 轮迭代达标 ≥9.15）
-        </p>
-      </div>
-      </div>
+    <div class="case-title-bar">
+      <h3 style="margin:0;font-size:19px;color:#f8fafc;">🖼️ 案例 02 · 300g 粗纹纸油画棒红帽衫少女 (pastel_sketch_girl)</h3>
+      <span style="font-size:12.5px;color:var(--muted);">一排五列终稿横向对比：参考原图 → <code>low</code> 终稿 → <code>medium</code> 终稿 → <code>high</code> 终稿 → <code>recompose</code> 终稿</span>
     </div>
-
-    <div class="scale-row-card">
-      <div class="scale-row-header">
-        <div>
-          <span class="scale-tag scale-med" style="font-size:13px;padding:4px 10px;">MEDIUM · 中强度标准补足（默认档） (<code>--scale medium</code>)</span>
-          <strong style="margin-left:8px;font-size:15px;">300g粗纹纸油画棒红帽衫少女（中强度标准补足加小优化）</strong>
-        </div>
-        <div class="scale-row-summary">
-          <span>五维权重：<code>光影色彩 25% · 构图 20% · 透视解剖 20% · 质感细节 20% · 规格风格 15%</code></span>
-          <span>Prompt 改动上限：<code>25% – 45% (~35%)</code></span>
-          <span class="score-pill win">⚡ 经过 3 轮达标 · 最终定稿分 9.44 / 10 (阈值 ≥ 9.40)</span>
-        </div>
-      </div>
+    <div class="grid-5">
       
-      <div class="grid-4">
-        
       <div class="img-col ref-col">
         <div class="col-header">
-          <span class="step-tag">起点 · 参考原图</span>
-          <span class="scale-tag scale-med">--scale medium</span>
+          <span class="step-tag">1. 起点 · 参考原图</span>
+          <span class="meta-pill">Style Reference</span>
         </div>
-        <img src="style_refs/style_ref_02_pastel_sketch.png" alt="Style Reference" />
+        <img src="style_refs/style_ref_02_pastel_sketch.png" alt="Reference case02" />
         <div class="meta-bar">
-          <span class="meta-pill">Style Reference (不标外部模型)</span>
-          <span class="meta-pill">目标阈值 ≥ 9.40</span>
+          <span class="meta-pill">输入垫图 · 0 条项目私有记忆冷启动</span>
         </div>
-        <p class="col-desc"><strong>原图五维基因解构：</strong>300g 粗纹纸油画棒红帽衫坐姿少女参考，平光居中，缺乏深色重音与纸纹飞白。</p>
+        <p class="col-desc"><strong>原图五维基因：</strong>300g 粗纹水彩纸油画棒坐姿少女参考原图，红帽衫+牛仔短裤+黑长袜+白球鞋，平光居中，缺乏深色重音与光影方向感。</p>
       </div>
       <div class="img-col">
         <div class="col-header">
-          <span class="step-tag">第 1 轮演进 (未满 ≥9.40)</span>
-          <span class="score-pill warn">总分 8.71 / 10</span>
+          <span class="scale-tag scale-low">2. --scale low 终稿</span>
+          <span class="score-pill win">定稿 9.20 / 10 🏆</span>
         </div>
-        <img src="scale_02_sketch_medium_r1.jpg" alt="scale_case02_medium round 1" />
+        <img src="scale_02_sketch_low_r3.jpg" alt="case02 low final" />
         <div class="meta-bar">
-          <span class="scale-tag scale-med">--scale medium</span>
-          <span class="meta-pill">第 1 / 3 轮</span>
+          <span class="meta-pill">低强度 · 保守修瑕 (阈值 >= 9.15)</span>
+          <span class="meta-pill">经过 3 轮达标</span>
           
         </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图8.7/光影8.6/透视8.7/质感8.8/风格8.8</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>保持原坐姿框架，初步加入背景对角线笔触<br/>
-          <strong>审图结论：</strong>纯米白背景与人物分离度弱，发丝缺少暖色逆光提亮<br/>
-          <strong>收敛状态：</strong>补充左上冷灰蓝与右上暖杏黄油画棒排线对比，强化发梢金黄轮廓光
-        </p>
+        <div class="dims-box">📐 <strong>五维：</strong><code>构图9.1 / 光影9.1 / 透视9.3 / 质感9.3 / 风格9.2</code></div>
+        
+        <p class="col-desc">100% 锁死原图地面正侧坐姿、红帽衫黑长袜无配饰设定，仅修准双手搭膝五指关节、三条纹球鞋透视与 300g 粗纹纸留白颗粒。</p>
       </div>
       <div class="img-col">
         <div class="col-header">
-          <span class="step-tag">第 2 轮演进 (未满 ≥9.40)</span>
-          <span class="score-pill warn">总分 9.10 / 10</span>
+          <span class="scale-tag scale-med">3. --scale medium 终稿</span>
+          <span class="score-pill win">定稿 9.44 / 10 🏆</span>
         </div>
-        <img src="scale_02_sketch_medium_r2.jpg" alt="scale_case02_medium round 2" />
+        <img src="scale_02_sketch_medium_r3.jpg" alt="case02 medium final" />
         <div class="meta-bar">
-          <span class="scale-tag scale-med">--scale medium</span>
-          <span class="meta-pill">第 2 / 3 轮</span>
+          <span class="meta-pill">中强度 · 标准补足 (阈值 >= 9.40)</span>
+          <span class="meta-pill">经过 3 轮达标</span>
           
         </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图9.0/光影9.1/透视9.1/质感9.1/风格9.2</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>背景冷暖笔触衬托出红帽衫主体，手部与鞋面细节扎实<br/>
-          <strong>审图结论：</strong>红帽衫暗部缺少冷紫环境反射光，纸面留白呼吸感还可加强<br/>
-          <strong>收敛状态：</strong>在衣褶背光面补入冷紫灰环境反射色，强化粗纹纸凹凸纹理
-        </p>
+        <div class="dims-box">📐 <strong>五维：</strong><code>构图9.4 / 光影9.5 / 透视9.4 / 质感9.4 / 风格9.5</code></div>
+        
+        <p class="col-desc">保持原图地面抱膝坐姿框架不变（独立文件 scale_02_sketch_medium_r3.jpg，MD5 4a40ef37），补充右上暖金阳光散景光斑、发梢逆光金边与左冷蓝右暖金油画棒背景笔触。</p>
       </div>
       <div class="img-col highlight">
         <div class="col-header">
-          <span class="step-tag">经过 3 轮达标定稿 ✅</span>
-          <span class="score-pill win">定稿分 9.44 / 10 🏆</span>
+          <span class="scale-tag scale-high">4. --scale high 终稿</span>
+          <span class="score-pill win">定稿 9.78 / 10 🏆</span>
         </div>
-        <img src="scale_02_sketch_medium_r3.jpg" alt="scale_case02_medium round 3" />
+        <img src="scale_02_sketch_high_r3.jpg" alt="case02 high final" />
         <div class="meta-bar">
-          <span class="scale-tag scale-med">--scale medium</span>
-          <span class="meta-pill">第 3 / 3 轮</span>
-          
-        </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图9.4/光影9.5/透视9.4/质感9.4/风格9.5</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>保持原坐姿下实现了饱满的冷暖光影对话与真实油画棒厚涂肌理<br/>
-          <strong>审图结论：</strong>无明显短板，达到中强度标准补足目标阈值<br/>
-          <strong>收敛状态：</strong>已达标定稿（经过 3 轮迭代达标 ≥9.40）
-        </p>
-      </div>
-      </div>
-    </div>
-
-    <div class="scale-row-card">
-      <div class="scale-row-header">
-        <div>
-          <span class="scale-tag scale-high" style="font-size:13px;padding:4px 10px;">HIGH · 高强度大胆重构光影与张力 (<code>--scale high</code>)</span>
-          <strong style="margin-left:8px;font-size:15px;">300g粗纹纸油画棒红帽衫少女（高强度大胆重构光影与飞白质感）</strong>
-        </div>
-        <div class="scale-row-summary">
-          <span>五维权重：<code>光影色彩 30% · 构图 25% · 质感细节 20% · 透视解剖 15% · 规格风格 10%</code></span>
-          <span>Prompt 改动上限：<code>50% – 80% (~65%)</code></span>
-          <span class="score-pill win">⚡ 经过 3 轮达标 · 最终定稿分 9.78 / 10 (阈值 ≥ 9.65)</span>
-        </div>
-      </div>
-      
-      <div class="grid-4">
-        
-      <div class="img-col ref-col">
-        <div class="col-header">
-          <span class="step-tag">起点 · 参考原图</span>
-          <span class="scale-tag scale-high">--scale high</span>
-        </div>
-        <img src="style_refs/style_ref_02_pastel_sketch.png" alt="Style Reference" />
-        <div class="meta-bar">
-          <span class="meta-pill">Style Reference (不标外部模型)</span>
-          <span class="meta-pill">目标阈值 ≥ 9.65</span>
-        </div>
-        <p class="col-desc"><strong>原图五维基因解构：</strong>300g 粗纹纸油画棒红帽衫坐姿少女参考，平光居中，缺乏深色重音与纸纹飞白。</p>
-      </div>
-      <div class="img-col">
-        <div class="col-header">
-          <span class="step-tag">第 1 轮演进 (未满 ≥9.65)</span>
-          <span class="score-pill warn">总分 8.62 / 10</span>
-        </div>
-        <img src="scale_02_sketch_high_r1.jpg" alt="scale_case02_high round 1" />
-        <div class="meta-bar">
-          <span class="scale-tag scale-high">--scale high</span>
-          <span class="meta-pill">第 1 / 3 轮</span>
-          
-        </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图8.6/光影8.5/透视8.7/质感8.7/风格8.8</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>抓住了红帽衫、牛仔短裤与黑长袜的核心人设色板<br/>
-          <strong>审图结论：</strong>红帽衫涂抹过满缺乏飞白透气感，平光无戏剧性<br/>
-          <strong>收敛状态：</strong>引入右上斜射暖黄光束，拉开明暗反差
-        </p>
-      </div>
-      <div class="img-col">
-        <div class="col-header">
-          <span class="step-tag">第 2 轮演进 (未满 ≥9.65)</span>
-          <span class="score-pill warn">总分 8.65 / 10</span>
-        </div>
-        <img src="scale_02_sketch_high_r2.jpg" alt="scale_case02_high round 2" />
-        <div class="meta-bar">
-          <span class="scale-tag scale-high">--scale high</span>
-          <span class="meta-pill">第 2 / 3 轮</span>
-          <span class="meta-pill blind-pill">👁️ 独立盲评 8.66</span>
-        </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图8.6/光影8.5/透视8.6/质感8.9/风格8.8</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>修正了五指与运动鞋结构，加入了背景色块<br/>
-          <strong>审图结论：</strong>缺乏飞白留白空气感，颗粒太均匀偏数字化，且红帽衫缺少深色配饰压住明度对比<br/>
-          <strong>收敛状态：</strong>大胆注入300g粗纹纸凹槽飞白留白、颈部哑光黑耳机+左侧深灰双肩包白猫挂件压重音、右上金黄丁达尔油画棒光束
-        </p>
-      </div>
-      <div class="img-col highlight">
-        <div class="col-header">
-          <span class="step-tag">经过 3 轮达标定稿 ✅</span>
-          <span class="score-pill win">定稿分 9.78 / 10 🏆</span>
-        </div>
-        <img src="scale_02_sketch_high_r3.jpg" alt="scale_case02_high round 3" />
-        <div class="meta-bar">
-          <span class="scale-tag scale-high">--scale high</span>
-          <span class="meta-pill">第 3 / 3 轮</span>
+          <span class="meta-pill">高强度 · 大胆重构 (阈值 >= 9.65)</span>
+          <span class="meta-pill">经过 3 轮达标</span>
           <span class="meta-pill blind-pill">👁️ 独立盲评 8.88 🏆</span>
         </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图9.7/光影9.8/透视9.7/质感9.9/风格9.8</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>300g粗纹纸飞白空气感极强，黑耳机与黑背包猫咪挂件稳稳压住红帽衫明度，金黄光束充满松弛生命力<br/>
-          <strong>审图结论：</strong>无短板，突破高强度 Showcase 级目标阈值<br/>
-          <strong>收敛状态：</strong>已达标定稿（经过 3 轮迭代达标 ≥9.65）
-        </p>
-      </div>
-      </div>
-    </div>
-
-    <div class="scale-row-card">
-      <div class="scale-row-header">
-        <div>
-          <span class="scale-tag scale-rec" style="font-size:13px;padding:4px 10px;">RECOMPOSE · 定向改构图模式 (<code>--scale recompose</code>)</span>
-          <strong style="margin-left:8px;font-size:15px;">300g粗纹纸油画棒少女（定向改构图：地面侧坐改为高空天台凭栏远眺夕阳海港全景）</strong>
-        </div>
-        <div class="scale-row-summary">
-          <span>五维权重：<code>构图 30% · 光影色彩 25% · 透视空间 20% · 质感细节 15% · 规格风格 10%</code></span>
-          <span>Prompt 改动上限：<code>60% – 85% (~80%)</code></span>
-          <span class="score-pill win">⚡ 经过 3 轮达标 · 最终定稿分 9.64 / 10 (阈值 ≥ 9.55)</span>
-        </div>
-      </div>
-      
-        <div class="recompose-banner">
-          🎯 <strong>用户指定改构图方向 (<code>--recompose-dir</code>)</strong>：「从地面侧坐近景改为高空天台栏杆仰视三分法全身远景，少女手扶铁艺栏杆迎风远眺夕阳海港与飞鸟，保持300g粗纹纸油画棒质感」
-        </div>
-      <div class="grid-4">
+        <div class="dims-box">📐 <strong>五维：</strong><code>构图9.8 / 光影9.8 / 透视9.7 / 质感9.8 / 风格9.8</code></div>
         
-      <div class="img-col ref-col">
-        <div class="col-header">
-          <span class="step-tag">起点 · 参考原图</span>
-          <span class="scale-tag scale-rec">--scale recompose</span>
-        </div>
-        <img src="style_refs/style_ref_02_pastel_sketch.png" alt="Style Reference" />
-        <div class="meta-bar">
-          <span class="meta-pill">Style Reference (不标外部模型)</span>
-          <span class="meta-pill">目标阈值 ≥ 9.55</span>
-        </div>
-        <p class="col-desc"><strong>原图五维基因解构：</strong>300g 粗纹纸油画棒红帽衫坐姿少女参考，平光居中，缺乏深色重音与纸纹飞白。</p>
-      </div>
-      <div class="img-col">
-        <div class="col-header">
-          <span class="step-tag">第 1 轮演进 (未满 ≥9.55)</span>
-          <span class="score-pill warn">总分 8.68 / 10</span>
-        </div>
-        <img src="scale_02_sketch_recompose_r1.jpg" alt="scale_case02_recompose round 1" />
-        <div class="meta-bar">
-          <span class="scale-tag scale-rec">--scale recompose</span>
-          <span class="meta-pill">第 1 / 3 轮</span>
-          
-        </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图8.8/光影8.6/透视8.6/质感8.6/风格8.8</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>成功切换为天台栏杆站立远景，保留红帽衫+黑长袜人设与油画棒笔触<br/>
-          <strong>审图结论：</strong>远景海港地平线略斜，铁艺栏杆透视消失点不够汇聚<br/>
-          <strong>收敛状态：</strong>校准三分法天台栏杆仰视透视，拉开近景少女与远景夕阳海港帆船的空间纵深
-        </p>
-      </div>
-      <div class="img-col">
-        <div class="col-header">
-          <span class="step-tag">第 2 轮演进 (未满 ≥9.55)</span>
-          <span class="score-pill warn">总分 9.14 / 10</span>
-        </div>
-        <img src="scale_02_sketch_recompose_r2.jpg" alt="scale_case02_recompose round 2" />
-        <div class="meta-bar">
-          <span class="scale-tag scale-rec">--scale recompose</span>
-          <span class="meta-pill">第 2 / 3 轮</span>
-          
-        </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图9.2/光影9.1/透视9.1/质感9.1/风格9.2</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>天台栏杆三分法站姿稳健，夕阳海港与飞鸟远景层次清晰<br/>
-          <strong>审图结论：</strong>海风吹拂发丝的动感与300g粗纹纸干擦飞白还可再强化<br/>
-          <strong>收敛状态：</strong>强化夕阳逆光金黄油画棒厚涂高光、迎风飞扬发丝与粗纹水彩纸飞白留白
-        </p>
+        <p class="col-desc">主美级光影与质感重构：右上粗犷金黄油画棒丁达尔光束斜射，新增哑光黑耳机与黑背包猫咪挂件稳稳压住红帽衫高明度，300g 粗纹纸凹槽飞白极富呼吸感。</p>
       </div>
       <div class="img-col recompose">
         <div class="col-header">
-          <span class="step-tag">经过 3 轮达标定稿 ✅</span>
-          <span class="score-pill win">定稿分 9.64 / 10 🏆</span>
+          <span class="scale-tag scale-rec">5. --scale recompose 终稿</span>
+          <span class="score-pill win">定稿 9.64 / 10 🏆</span>
         </div>
-        <img src="scale_02_sketch_recompose_r3.jpg" alt="scale_case02_recompose round 3" />
+        <img src="scale_02_sketch_recompose_r3.jpg" alt="case02 recompose final" />
         <div class="meta-bar">
-          <span class="scale-tag scale-rec">--scale recompose</span>
-          <span class="meta-pill">第 3 / 3 轮</span>
+          <span class="meta-pill">定向改构图 (阈值 >= 9.55)</span>
+          <span class="meta-pill">经过 3 轮达标</span>
           
         </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图9.7/光影9.6/透视9.6/质感9.6/风格9.7</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>高空天台凭栏远眺夕阳海港视野开阔，300g粗纹纸油画棒肌理与原图一脉相承<br/>
-          <strong>审图结论：</strong>无短板，100%兑现用户指定改构图方向<br/>
-          <strong>收敛状态：</strong>已达标定稿（经过 3 轮迭代达标 ≥9.55）
-        </p>
-      </div>
+        <div class="dims-box">📐 <strong>五维：</strong><code>构图9.7 / 光影9.6 / 透视9.6 / 质感9.6 / 风格9.7</code></div>
+        <div class="recompose-mini">🎯 <strong><code>--recompose-dir</code>：</strong>从地面低头坐姿近景改为黄金时刻城市天台栏杆旁站立远眺夕阳海港全景</div>
+        <p class="col-desc">100% 延续原图 300g 粗纹纸油画棒排线笔触与红帽衫黑长袜少女设定，镜头彻底切换为天台铁艺栏杆三分法站立远眺夕阳海港与海鸥。</p>
       </div>
     </div>
   </div>
+
   <div class="case-card">
-    <h3 style="margin-top:0;font-size:20px;color:#f8fafc;border-bottom:1px solid #263554;padding-bottom:10px;">
-      🖼️ 案例 03 · 窗边木漏日逆光少女肖像 (sunlit_window_portrait) — 四档 Scale (<code>low / medium / high / recompose</code>) 全链路统一模板对比
-    </h3>
-    
-    <div class="scale-row-card">
-      <div class="scale-row-header">
-        <div>
-          <span class="scale-tag scale-low" style="font-size:13px;padding:4px 10px;">LOW · 低强度保守修瑕 (<code>--scale low</code>)</span>
-          <strong style="margin-left:8px;font-size:15px;">窗边逆光少女肖像（低强度保守修瑕）</strong>
-        </div>
-        <div class="scale-row-summary">
-          <span>五维权重：<code>透视解剖 25% · 质感细节 25% · 光影色彩 20% · 构图 15% · 规格风格 15%</code></span>
-          <span>Prompt 改动上限：<code>≤ 20% (~15%)</code></span>
-          <span class="score-pill win">⚡ 经过 3 轮达标 · 最终定稿分 9.22 / 10 (阈值 ≥ 9.15)</span>
-        </div>
-      </div>
-      
-      <div class="grid-2">
-        
-      <div class="img-col ref-col">
-        <div class="col-header">
-          <span class="step-tag">起点 · 参考原图</span>
-          <span class="scale-tag scale-low">--scale low</span>
-        </div>
-        <img src="style_refs/style_ref_03_sunlit_portrait.png" alt="Style Reference" />
-        <div class="meta-bar">
-          <span class="meta-pill">Style Reference (不标外部模型)</span>
-          <span class="meta-pill">目标阈值 ≥ 9.15</span>
-        </div>
-        <p class="col-desc"><strong>原图五维基因解构：</strong>正面平视胸像参考，左右垂直一刀切阴影，复古青色碎花背景与胶片噪点。</p>
-      </div>
-      <div class="img-col highlight">
-        <div class="col-header">
-          <span class="step-tag">最终达标定稿 ✅（经过 3 轮达标）</span>
-          <span class="score-pill win">定稿分 9.22 / 10 🏆</span>
-        </div>
-        <img src="scale_03_portrait_low_r3.jpg" alt="scale_case03_low round 3" />
-        <div class="meta-bar">
-          <span class="scale-tag scale-low">--scale low</span>
-          <span class="meta-pill">经过 3 轮达标定稿（仅展示最终结果图）</span>
-          
-        </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图9.1/光影9.2/透视9.2/质感9.3/风格9.3</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>100%忠实继承原图赛璐珞结合半厚涂动漫肖像画风、正面平视胸像裁切与左右垂直明暗交界线，五官对称度与胶片颗粒干净度显著提升<br/>
-          <strong>审图结论：</strong>无瑕疵，达到低强度修瑕目标阈值<br/>
-          <strong>收敛状态：</strong>已达标定稿（经过 3 轮迭代达标 ≥9.15）
-        </p>
-      </div>
-      </div>
+    <div class="case-title-bar">
+      <h3 style="margin:0;font-size:19px;color:#f8fafc;">🖼️ 案例 03 · 窗边木漏日逆光少女肖像 (sunlit_window_portrait)</h3>
+      <span style="font-size:12.5px;color:var(--muted);">一排五列终稿横向对比：参考原图 → <code>low</code> 终稿 → <code>medium</code> 终稿 → <code>high</code> 终稿 → <code>recompose</code> 终稿</span>
     </div>
-
-    <div class="scale-row-card">
-      <div class="scale-row-header">
-        <div>
-          <span class="scale-tag scale-med" style="font-size:13px;padding:4px 10px;">MEDIUM · 中强度标准补足（默认档） (<code>--scale medium</code>)</span>
-          <strong style="margin-left:8px;font-size:15px;">窗边逆光少女肖像（中强度标准补足加小优化）</strong>
-        </div>
-        <div class="scale-row-summary">
-          <span>五维权重：<code>光影色彩 25% · 构图 20% · 透视解剖 20% · 质感细节 20% · 规格风格 15%</code></span>
-          <span>Prompt 改动上限：<code>25% – 45% (~35%)</code></span>
-          <span class="score-pill win">⚡ 经过 3 轮达标 · 最终定稿分 9.46 / 10 (阈值 ≥ 9.40)</span>
-        </div>
-      </div>
+    <div class="grid-5">
       
-      <div class="grid-4">
-        
       <div class="img-col ref-col">
         <div class="col-header">
-          <span class="step-tag">起点 · 参考原图</span>
-          <span class="scale-tag scale-med">--scale medium</span>
+          <span class="step-tag">1. 起点 · 参考原图</span>
+          <span class="meta-pill">Style Reference</span>
         </div>
-        <img src="style_refs/style_ref_03_sunlit_portrait.png" alt="Style Reference" />
+        <img src="style_refs/style_ref_03_sunlit_portrait.png" alt="Reference case03" />
         <div class="meta-bar">
-          <span class="meta-pill">Style Reference (不标外部模型)</span>
-          <span class="meta-pill">目标阈值 ≥ 9.40</span>
+          <span class="meta-pill">输入垫图 · 0 条项目私有记忆冷启动</span>
         </div>
-        <p class="col-desc"><strong>原图五维基因解构：</strong>正面平视胸像参考，左右垂直一刀切阴影，复古青色碎花背景与胶片噪点。</p>
+        <p class="col-desc"><strong>原图五维基因：</strong>正面平视胸像参考原图，左右垂直一刀切明暗阴影，复古青绿小雏菊壁纸背景与 35mm 胶片噪点。</p>
       </div>
       <div class="img-col">
         <div class="col-header">
-          <span class="step-tag">第 1 轮演进 (未满 ≥9.40)</span>
-          <span class="score-pill warn">总分 8.74 / 10</span>
+          <span class="scale-tag scale-low">2. --scale low 终稿</span>
+          <span class="score-pill win">定稿 9.22 / 10 🏆</span>
         </div>
-        <img src="scale_03_portrait_medium_r1.jpg" alt="scale_case03_medium round 1" />
+        <img src="scale_03_portrait_low_r3.jpg" alt="case03 low final" />
         <div class="meta-bar">
-          <span class="scale-tag scale-med">--scale medium</span>
-          <span class="meta-pill">第 1 / 3 轮</span>
+          <span class="meta-pill">低强度 · 保守修瑕 (阈值 >= 9.15)</span>
+          <span class="meta-pill">经过 3 轮达标</span>
           
         </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图8.7/光影8.8/透视8.7/质感8.7/风格8.8</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>保持近景胸像框架，建立暖金阳光与青绿暗部的冷暖互补<br/>
-          <strong>审图结论：</strong>暗部脸颊偏闷，缺少逆光发丝金边与空气感粒子<br/>
-          <strong>收敛状态：</strong>补充45°逆光发丝金边、脸颊次表面散射红润感与空气悬浮微尘
-        </p>
+        <div class="dims-box">📐 <strong>五维：</strong><code>构图9.1 / 光影9.2 / 透视9.2 / 质感9.3 / 风格9.3</code></div>
+        
+        <p class="col-desc">100% 锁死原图日系半厚涂动漫肖像画风、正面平视胸像裁切与左右垂直二分明暗交界线，仅精修五官对称度、浅褐瞳孔高光与均匀复古胶片颗粒。</p>
       </div>
       <div class="img-col">
         <div class="col-header">
-          <span class="step-tag">第 2 轮演进 (未满 ≥9.40)</span>
-          <span class="score-pill warn">总分 9.10 / 10</span>
+          <span class="scale-tag scale-med">3. --scale medium 终稿</span>
+          <span class="score-pill win">定稿 9.46 / 10 🏆</span>
         </div>
-        <img src="scale_03_portrait_medium_r2.jpg" alt="scale_case03_medium round 2" />
+        <img src="scale_03_portrait_medium_r3.jpg" alt="case03 medium final" />
         <div class="meta-bar">
-          <span class="scale-tag scale-med">--scale medium</span>
-          <span class="meta-pill">第 2 / 3 轮</span>
+          <span class="meta-pill">中强度 · 标准补足 (阈值 >= 9.40)</span>
+          <span class="meta-pill">经过 3 轮达标</span>
           
         </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图9.0/光影9.2/透视9.1/质感9.0/风格9.2</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>发丝逆光金边与空气微尘让画面通透度显著提升<br/>
-          <strong>审图结论：</strong>肩部受光面缺少树叶投影的微妙层次过渡<br/>
-          <strong>收敛状态：</strong>在锁骨与肩头加入柔和的窗外枝叶光斑过渡，强化眼神光焦外光斑
-        </p>
+        <div class="dims-box">📐 <strong>五维：</strong><code>构图9.4 / 光影9.5 / 透视9.4 / 质感9.5 / 风格9.5</code></div>
+        
+        <p class="col-desc">保持原图正面胸像构图与青绿雏菊壁纸不变（独立文件 scale_03_portrait_medium_r3.jpg，MD5 831da21a），补足 45° 暖金发丝轮廓逆光、脸颊次表面散射、肩颈窗影与空气微尘光斑。</p>
       </div>
       <div class="img-col highlight">
         <div class="col-header">
-          <span class="step-tag">经过 3 轮达标定稿 ✅</span>
-          <span class="score-pill win">定稿分 9.46 / 10 🏆</span>
+          <span class="scale-tag scale-high">4. --scale high 终稿</span>
+          <span class="score-pill win">定稿 9.83 / 10 🏆</span>
         </div>
-        <img src="scale_03_portrait_medium_r3.jpg" alt="scale_case03_medium round 3" />
+        <img src="scale_03_portrait_high_r3.jpg" alt="case03 high final" />
         <div class="meta-bar">
-          <span class="scale-tag scale-med">--scale medium</span>
-          <span class="meta-pill">第 3 / 3 轮</span>
-          
-        </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图9.4/光影9.5/透视9.4/质感9.5/风格9.5</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>保持原图正面动漫肖像画风与青绿小雏菊背景，补足45°暖金发丝轮廓逆光、脸颊次表面散射与空气微尘光斑<br/>
-          <strong>审图结论：</strong>无明显短板，达到中强度标准补足目标阈值<br/>
-          <strong>收敛状态：</strong>已达标定稿（经过 3 轮迭代达标 ≥9.40）
-        </p>
-      </div>
-      </div>
-    </div>
-
-    <div class="scale-row-card">
-      <div class="scale-row-header">
-        <div>
-          <span class="scale-tag scale-high" style="font-size:13px;padding:4px 10px;">HIGH · 高强度大胆重构光影与张力 (<code>--scale high</code>)</span>
-          <strong style="margin-left:8px;font-size:15px;">窗边木漏日逆光少女肖像（高强度大胆重构3/4倚窗机位与斑驳木漏日）</strong>
-        </div>
-        <div class="scale-row-summary">
-          <span>五维权重：<code>光影色彩 30% · 构图 25% · 质感细节 20% · 透视解剖 15% · 规格风格 10%</code></span>
-          <span>Prompt 改动上限：<code>50% – 80% (~65%)</code></span>
-          <span class="score-pill win">⚡ 经过 3 轮达标 · 最终定稿分 9.83 / 10 (阈值 ≥ 9.65)</span>
-        </div>
-      </div>
-      
-      <div class="grid-4">
-        
-      <div class="img-col ref-col">
-        <div class="col-header">
-          <span class="step-tag">起点 · 参考原图</span>
-          <span class="scale-tag scale-high">--scale high</span>
-        </div>
-        <img src="style_refs/style_ref_03_sunlit_portrait.png" alt="Style Reference" />
-        <div class="meta-bar">
-          <span class="meta-pill">Style Reference (不标外部模型)</span>
-          <span class="meta-pill">目标阈值 ≥ 9.65</span>
-        </div>
-        <p class="col-desc"><strong>原图五维基因解构：</strong>正面平视胸像参考，左右垂直一刀切阴影，复古青色碎花背景与胶片噪点。</p>
-      </div>
-      <div class="img-col">
-        <div class="col-header">
-          <span class="step-tag">第 1 轮演进 (未满 ≥9.65)</span>
-          <span class="score-pill warn">总分 8.71 / 10</span>
-        </div>
-        <img src="scale_03_portrait_high_r1.jpg" alt="scale_case03_high round 1" />
-        <div class="meta-bar">
-          <span class="scale-tag scale-high">--scale high</span>
-          <span class="meta-pill">第 1 / 3 轮</span>
-          
-        </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图8.6/光影8.8/透视8.7/质感8.7/风格8.8</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>复刻了复古胶片色调与明暗对比<br/>
-          <strong>审图结论：</strong>正面平视大头照过于呆板，垂直一刀切阴影缺乏真实窗户光影叙事<br/>
-          <strong>收敛状态：</strong>尝试增加逆光发丝与光斑
-        </p>
-      </div>
-      <div class="img-col">
-        <div class="col-header">
-          <span class="step-tag">第 2 轮演进 (未满 ≥9.65)</span>
-          <span class="score-pill warn">总分 8.75 / 10</span>
-        </div>
-        <img src="scale_03_portrait_high_r2.jpg" alt="scale_case03_high round 2" />
-        <div class="meta-bar">
-          <span class="scale-tag scale-high">--scale high</span>
-          <span class="meta-pill">第 2 / 3 轮</span>
-          <span class="meta-pill blind-pill">👁️ 独立盲评 8.77</span>
-        </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图8.6/光影8.8/透视8.8/质感8.7/风格9.0</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>发丝光与眼神光有所改善<br/>
-          <strong>审图结论：</strong>仅微调光斑，仍停留在呆板的居中证件照裁切，未见窗户与木漏日环境层次<br/>
-          <strong>收敛状态：</strong>触发高强度重构：打破正面平视改为3/4倚窗回眸半身景别，加入木窗框、窗外蓝白绣球花与蕾丝窗纱投下的斑驳木漏日 (Komorebi)
-        </p>
-      </div>
-      <div class="img-col highlight">
-        <div class="col-header">
-          <span class="step-tag">经过 3 轮达标定稿 ✅</span>
-          <span class="score-pill win">定稿分 9.83 / 10 🏆</span>
-        </div>
-        <img src="scale_03_portrait_high_r3.jpg" alt="scale_case03_high round 3" />
-        <div class="meta-bar">
-          <span class="scale-tag scale-high">--scale high</span>
-          <span class="meta-pill">第 3 / 3 轮</span>
+          <span class="meta-pill">高强度 · 大胆重构 (阈值 >= 9.65)</span>
+          <span class="meta-pill">经过 3 轮达标</span>
           <span class="meta-pill blind-pill">👁️ 独立盲评 9.21 🏆</span>
         </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图9.8/光影9.9/透视9.7/质感9.8/风格9.9</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>3/4倚窗回眸构图与窗外绣球花、蕾丝窗纱斑驳木漏日光影极具电影故事感（独立VLM盲评光影获9.5全场最高）<br/>
-          <strong>审图结论：</strong>无短板，突破高强度 Showcase 级目标阈值<br/>
-          <strong>收敛状态：</strong>已达标定稿（经过 3 轮迭代达标 ≥9.65）
-        </p>
-      </div>
-      </div>
-    </div>
-
-    <div class="scale-row-card">
-      <div class="scale-row-header">
-        <div>
-          <span class="scale-tag scale-rec" style="font-size:13px;padding:4px 10px;">RECOMPOSE · 定向改构图模式 (<code>--scale recompose</code>)</span>
-          <strong style="margin-left:8px;font-size:15px;">窗边木漏日少女（定向改构图：正面大头特写改为阳光植物画室藤椅阅读中远景）</strong>
-        </div>
-        <div class="scale-row-summary">
-          <span>五维权重：<code>构图 30% · 光影色彩 25% · 透视空间 20% · 质感细节 15% · 规格风格 10%</code></span>
-          <span>Prompt 改动上限：<code>60% – 85% (~80%)</code></span>
-          <span class="score-pill win">⚡ 经过 3 轮达标 · 最终定稿分 9.66 / 10 (阈值 ≥ 9.55)</span>
-        </div>
-      </div>
-      
-        <div class="recompose-banner">
-          🎯 <strong>用户指定改构图方向 (<code>--recompose-dir</code>)</strong>：「从正面大头特写改为广角阳光植物画室中远景，少女斜靠复古藤椅捧书阅读，巨大落地窗外花园阳光穿过龟背竹投下满屋光斑」
-        </div>
-      <div class="grid-4">
+        <div class="dims-box">📐 <strong>五维：</strong><code>构图9.8 / 光影9.9 / 透视9.7 / 质感9.8 / 风格9.9</code></div>
         
-      <div class="img-col ref-col">
-        <div class="col-header">
-          <span class="step-tag">起点 · 参考原图</span>
-          <span class="scale-tag scale-rec">--scale recompose</span>
-        </div>
-        <img src="style_refs/style_ref_03_sunlit_portrait.png" alt="Style Reference" />
-        <div class="meta-bar">
-          <span class="meta-pill">Style Reference (不标外部模型)</span>
-          <span class="meta-pill">目标阈值 ≥ 9.55</span>
-        </div>
-        <p class="col-desc"><strong>原图五维基因解构：</strong>正面平视胸像参考，左右垂直一刀切阴影，复古青色碎花背景与胶片噪点。</p>
-      </div>
-      <div class="img-col">
-        <div class="col-header">
-          <span class="step-tag">第 1 轮演进 (未满 ≥9.55)</span>
-          <span class="score-pill warn">总分 8.72 / 10</span>
-        </div>
-        <img src="scale_03_portrait_recompose_r1.jpg" alt="scale_case03_recompose round 1" />
-        <div class="meta-bar">
-          <span class="scale-tag scale-rec">--scale recompose</span>
-          <span class="meta-pill">第 1 / 3 轮</span>
-          
-        </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图8.8/光影8.7/透视8.7/质感8.6/风格8.8</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>成功由大头特写拉远为阳光植物画室藤椅阅读中远景，保留复古暖金+青绿胶片色板<br/>
-          <strong>审图结论：</strong>画室背景绿植摆放略显杂乱，落地窗光束方向不够聚焦<br/>
-          <strong>收敛状态：</strong>梳理拱形落地窗与前景龟背竹虚化框景，让午后阳光光束精准打在少女与书页上
-        </p>
-      </div>
-      <div class="img-col">
-        <div class="col-header">
-          <span class="step-tag">第 2 轮演进 (未满 ≥9.55)</span>
-          <span class="score-pill warn">总分 9.18 / 10</span>
-        </div>
-        <img src="scale_03_portrait_recompose_r2.jpg" alt="scale_case03_recompose round 2" />
-        <div class="meta-bar">
-          <span class="scale-tag scale-rec">--scale recompose</span>
-          <span class="meta-pill">第 2 / 3 轮</span>
-          
-        </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图9.2/光影9.2/透视9.2/质感9.1/风格9.2</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>拱形落地窗景深与藤椅姿态自然舒展，龟背竹投影层次清晰<br/>
-          <strong>审图结论：</strong>木地板反光、画架细节与书页暖光漫反射还可进一步精修<br/>
-          <strong>收敛状态：</strong>强化书页暖金漫反射照亮下颌线、空气丁达尔微尘与复古胶片颗粒质感
-        </p>
+        <p class="col-desc">打破呆板正面平视证件照，大胆重构为 3/4 倚窗回眸故事感机位！左侧木格窗与蓝白绣球花蕾丝窗纱投下斑驳木漏日（Komorebi）光影，眼神光与发丝金边极富电影感。</p>
       </div>
       <div class="img-col recompose">
         <div class="col-header">
-          <span class="step-tag">经过 3 轮达标定稿 ✅</span>
-          <span class="score-pill win">定稿分 9.66 / 10 🏆</span>
+          <span class="scale-tag scale-rec">5. --scale recompose 终稿</span>
+          <span class="score-pill win">定稿 9.66 / 10 🏆</span>
         </div>
-        <img src="scale_03_portrait_recompose_r3.jpg" alt="scale_case03_recompose round 3" />
+        <img src="scale_03_portrait_recompose_r3.jpg" alt="case03 recompose final" />
         <div class="meta-bar">
-          <span class="scale-tag scale-rec">--scale recompose</span>
-          <span class="meta-pill">第 3 / 3 轮</span>
+          <span class="meta-pill">定向改构图 (阈值 >= 9.55)</span>
+          <span class="meta-pill">经过 3 轮达标</span>
           
         </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图9.7/光影9.7/透视9.6/质感9.6/风格9.7</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>广角植物画室藤椅阅读中远景静谧美好，满屋斑驳绿植光影与原图气质完美统一<br/>
-          <strong>审图结论：</strong>无短板，100%兑现用户指定改构图方向<br/>
-          <strong>收敛状态：</strong>已达标定稿（经过 3 轮迭代达标 ≥9.55）
-        </p>
-      </div>
+        <div class="dims-box">📐 <strong>五维：</strong><code>构图9.7 / 光影9.7 / 透视9.6 / 质感9.6 / 风格9.7</code></div>
+        <div class="recompose-mini">🎯 <strong><code>--recompose-dir</code>：</strong>从胸像正面特写拉远为古典阳光植物温室画室中全景，少女坐右侧藤椅翻阅画册</div>
+        <p class="col-desc">完美继承原图黑短发白衣少女、青绿碎花墙纸与暖金逆光基因，镜头拉远为阳光植物画室全景，左侧高大落地拱窗丁达尔光束贯穿画室。</p>
       </div>
     </div>
   </div>
+
   <div class="case-card">
-    <h3 style="margin-top:0;font-size:20px;color:#f8fafc;border-bottom:1px solid #263554;padding-bottom:10px;">
-      🖼️ 案例 04 (W01) · 奇幻峡谷垂直巷道概念设计 (web_01_vertical_alley) — 四档 Scale (<code>low / medium / high / recompose</code>) 全链路统一模板对比
-    </h3>
-    
-    <div class="scale-row-card">
-      <div class="scale-row-header">
-        <div>
-          <span class="scale-tag scale-low" style="font-size:13px;padding:4px 10px;">LOW · 低强度保守修瑕 (<code>--scale low</code>)</span>
-          <strong style="margin-left:8px;font-size:15px;">奇幻峡谷垂直巷道概念设计（低强度保守修瑕）</strong>
-        </div>
-        <div class="scale-row-summary">
-          <span>五维权重：<code>透视解剖 25% · 质感细节 25% · 光影色彩 20% · 构图 15% · 规格风格 15%</code></span>
-          <span>Prompt 改动上限：<code>≤ 20% (~15%)</code></span>
-          <span class="score-pill win">⚡ 经过 3 轮达标 · 最终定稿分 9.21 / 10 (阈值 ≥ 9.15)</span>
-        </div>
-      </div>
-      
-      <div class="grid-2">
-        
-      <div class="img-col ref-col">
-        <div class="col-header">
-          <span class="step-tag">起点 · 参考原图</span>
-          <span class="scale-tag scale-low">--scale low</span>
-        </div>
-        <img src="web_refs/web_ref_01_concept_ishtar.png" alt="Style Reference" />
-        <div class="meta-bar">
-          <span class="meta-pill">Style Reference (不标外部模型)</span>
-          <span class="meta-pill">目标阈值 ≥ 9.15</span>
-        </div>
-        <p class="col-desc"><strong>原图五维基因解构：</strong>垂直峡谷巷道概念参考图，左上屋檐趴着小绿龙，底部有蓝光雾气。</p>
-      </div>
-      <div class="img-col highlight">
-        <div class="col-header">
-          <span class="step-tag">最终达标定稿 ✅（经过 3 轮达标）</span>
-          <span class="score-pill win">定稿分 9.21 / 10 🏆</span>
-        </div>
-        <img src="scale_04_canyon_low_r3.jpg" alt="scale_case04_low round 3" />
-        <div class="meta-bar">
-          <span class="scale-tag scale-low">--scale low</span>
-          <span class="meta-pill">经过 3 轮达标定稿（仅展示最终结果图）</span>
-          
-        </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图9.1/光影9.1/透视9.3/质感9.3/风格9.2</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>100%忠实继承原图极限垂直俯视狭窄天井构图、左上绿龙、底部白石雕花拱门与红帽旅人，修齐石砖墙与木栈桥透视咬合<br/>
-          <strong>审图结论：</strong>无结构瑕疵，达到低强度修瑕目标阈值<br/>
-          <strong>收敛状态：</strong>已达标定稿（经过 3 轮迭代达标 ≥9.15）
-        </p>
-      </div>
-      </div>
+    <div class="case-title-bar">
+      <h3 style="margin:0;font-size:19px;color:#f8fafc;">🖼️ 案例 04 (W01) · 奇幻垂直峡谷天井城邦概念图 (web_01_vertical_alley)</h3>
+      <span style="font-size:12.5px;color:var(--muted);">一排五列终稿横向对比：参考原图 → <code>low</code> 终稿 → <code>medium</code> 终稿 → <code>high</code> 终稿 → <code>recompose</code> 终稿</span>
     </div>
-
-    <div class="scale-row-card">
-      <div class="scale-row-header">
-        <div>
-          <span class="scale-tag scale-med" style="font-size:13px;padding:4px 10px;">MEDIUM · 中强度标准补足（默认档） (<code>--scale medium</code>)</span>
-          <strong style="margin-left:8px;font-size:15px;">奇幻峡谷垂直巷道概念设计（中强度标准补足加小优化）</strong>
-        </div>
-        <div class="scale-row-summary">
-          <span>五维权重：<code>光影色彩 25% · 构图 20% · 透视解剖 20% · 质感细节 20% · 规格风格 15%</code></span>
-          <span>Prompt 改动上限：<code>25% – 45% (~35%)</code></span>
-          <span class="score-pill win">⚡ 经过 3 轮达标 · 最终定稿分 9.46 / 10 (阈值 ≥ 9.40)</span>
-        </div>
-      </div>
+    <div class="grid-5">
       
-      <div class="grid-4">
-        
       <div class="img-col ref-col">
         <div class="col-header">
-          <span class="step-tag">起点 · 参考原图</span>
-          <span class="scale-tag scale-med">--scale medium</span>
+          <span class="step-tag">1. 起点 · 参考原图</span>
+          <span class="meta-pill">Style Reference</span>
         </div>
-        <img src="web_refs/web_ref_01_concept_ishtar.png" alt="Style Reference" />
+        <img src="web_refs/web_ref_01_concept_ishtar.png" alt="Reference case04" />
         <div class="meta-bar">
-          <span class="meta-pill">Style Reference (不标外部模型)</span>
-          <span class="meta-pill">目标阈值 ≥ 9.40</span>
+          <span class="meta-pill">输入垫图 · 0 条项目私有记忆冷启动</span>
         </div>
-        <p class="col-desc"><strong>原图五维基因解构：</strong>垂直峡谷巷道概念参考图，左上屋檐趴着小绿龙，底部有蓝光雾气。</p>
+        <p class="col-desc"><strong>原图五维基因：</strong>极限垂直俯视狭窄天井概念参考原图，风化黄褐石砖与木百叶窗向谷底汇聚，右侧暖阳斜射，趴着小绿龙，谷底有雕花白石拱门与红帽小人。</p>
       </div>
       <div class="img-col">
         <div class="col-header">
-          <span class="step-tag">第 1 轮演进 (未满 ≥9.40)</span>
-          <span class="score-pill warn">总分 8.84 / 10</span>
+          <span class="scale-tag scale-low">2. --scale low 终稿</span>
+          <span class="score-pill win">定稿 9.21 / 10 🏆</span>
         </div>
-        <img src="scale_04_canyon_medium_r1.jpg" alt="scale_case04_medium round 1" />
+        <img src="scale_04_canyon_low_r3.jpg" alt="case04 low final" />
         <div class="meta-bar">
-          <span class="scale-tag scale-med">--scale medium</span>
-          <span class="meta-pill">第 1 / 3 轮</span>
+          <span class="meta-pill">低强度 · 保守修瑕 (阈值 >= 9.15)</span>
+          <span class="meta-pill">经过 3 轮达标</span>
           
         </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图8.8/光影8.8/透视8.9/质感8.8/风格8.9</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>保持垂直天井俯视构图，拉开近景屋檐、中景栈桥与谷底三层深度<br/>
-          <strong>审图结论：</strong>谷底青蓝雾气发光较弱，栈桥缺少暖色壁灯冷暖对比<br/>
-          <strong>收敛状态：</strong>强化谷底幽蓝魔法雾气与栈桥暖金风灯的冷暖交互光
-        </p>
+        <div class="dims-box">📐 <strong>五维：</strong><code>构图9.1 / 光影9.2 / 透视9.3 / 质感9.2 / 风格9.2</code></div>
+        
+        <p class="col-desc">100% 锁死原图极限垂直俯视狭窄天井构图、小绿龙、木跳板与谷底雕花拱门红帽旅人，仅修齐两侧石砖墙面三点俯视消失点与线条干净度。</p>
       </div>
       <div class="img-col">
         <div class="col-header">
-          <span class="step-tag">第 2 轮演进 (未满 ≥9.40)</span>
-          <span class="score-pill warn">总分 9.16 / 10</span>
+          <span class="scale-tag scale-med">3. --scale medium 终稿</span>
+          <span class="score-pill win">定稿 9.46 / 10 🏆</span>
         </div>
-        <img src="scale_04_canyon_medium_r2.jpg" alt="scale_case04_medium round 2" />
+        <img src="scale_04_canyon_medium_r3.jpg" alt="case04 medium final" />
         <div class="meta-bar">
-          <span class="scale-tag scale-med">--scale medium</span>
-          <span class="meta-pill">第 2 / 3 轮</span>
+          <span class="meta-pill">中强度 · 标准补足 (阈值 >= 9.40)</span>
+          <span class="meta-pill">经过 3 轮达标</span>
           
         </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图9.1/光影9.2/透视9.2/质感9.1/风格9.2</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>栈桥暖灯与谷底青蓝雾气形成鲜明冷暖层次<br/>
-          <strong>审图结论：</strong>石墙青苔肌理与绿龙背脊边缘光还可进一步提亮<br/>
-          <strong>收敛状态：</strong>补充绿龙鳞片侧逆高光与古老石壁青苔风化质感
-        </p>
+        <div class="dims-box">📐 <strong>五维：</strong><code>构图9.4 / 光影9.5 / 透视9.4 / 质感9.5 / 风格9.5</code></div>
+        
+        <p class="col-desc">保持垂直天井俯视构图不变（独立文件 scale_04_canyon_medium_r2/r3.jpg，MD5 bd5354bb），强化左上穿透薄雾的暖金体积光束、红帽旅人焦点照明与石砖木梁冷暖景深。</p>
       </div>
       <div class="img-col highlight">
         <div class="col-header">
-          <span class="step-tag">经过 3 轮达标定稿 ✅</span>
-          <span class="score-pill win">定稿分 9.46 / 10 🏆</span>
+          <span class="scale-tag scale-high">4. --scale high 终稿</span>
+          <span class="score-pill win">定稿 9.79 / 10 🏆</span>
         </div>
-        <img src="scale_04_canyon_medium_r3.jpg" alt="scale_case04_medium round 3" />
+        <img src="scale_04_canyon_high_r3.jpg" alt="case04 high final" />
         <div class="meta-bar">
-          <span class="scale-tag scale-med">--scale medium</span>
-          <span class="meta-pill">第 3 / 3 轮</span>
-          
-        </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图9.4/光影9.5/透视9.5/质感9.4/风格9.5</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>保持原俯视构图下实现了深邃冷暖空气透视与扎实概念材质<br/>
-          <strong>审图结论：</strong>无明显短板，达到中强度标准补足目标阈值<br/>
-          <strong>收敛状态：</strong>已达标定稿（经过 3 轮迭代达标 ≥9.40）
-        </p>
-      </div>
-      </div>
-    </div>
-
-    <div class="scale-row-card">
-      <div class="scale-row-header">
-        <div>
-          <span class="scale-tag scale-high" style="font-size:13px;padding:4px 10px;">HIGH · 高强度大胆重构光影与张力 (<code>--scale high</code>)</span>
-          <strong style="margin-left:8px;font-size:15px;">奇幻峡谷垂直巷道概念设计（高强度大胆重构丁达尔神光与史诗纵深）</strong>
-        </div>
-        <div class="scale-row-summary">
-          <span>五维权重：<code>光影色彩 30% · 构图 25% · 质感细节 20% · 透视解剖 15% · 规格风格 10%</code></span>
-          <span>Prompt 改动上限：<code>50% – 80% (~65%)</code></span>
-          <span class="score-pill win">⚡ 经过 3 轮达标 · 最终定稿分 9.79 / 10 (阈值 ≥ 9.65)</span>
-        </div>
-      </div>
-      
-      <div class="grid-4">
-        
-      <div class="img-col ref-col">
-        <div class="col-header">
-          <span class="step-tag">起点 · 参考原图</span>
-          <span class="scale-tag scale-high">--scale high</span>
-        </div>
-        <img src="web_refs/web_ref_01_concept_ishtar.png" alt="Style Reference" />
-        <div class="meta-bar">
-          <span class="meta-pill">Style Reference (不标外部模型)</span>
-          <span class="meta-pill">目标阈值 ≥ 9.65</span>
-        </div>
-        <p class="col-desc"><strong>原图五维基因解构：</strong>垂直峡谷巷道概念参考图，左上屋檐趴着小绿龙，底部有蓝光雾气。</p>
-      </div>
-      <div class="img-col">
-        <div class="col-header">
-          <span class="step-tag">第 1 轮演进 (未满 ≥9.65)</span>
-          <span class="score-pill warn">总分 8.73 / 10</span>
-        </div>
-        <img src="scale_04_canyon_high_r1.jpg" alt="scale_case04_high round 1" />
-        <div class="meta-bar">
-          <span class="scale-tag scale-high">--scale high</span>
-          <span class="meta-pill">第 1 / 3 轮</span>
-          
-        </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图8.7/光影8.7/透视8.7/质感8.8/风格8.8</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>陡峭三点俯视纵深强烈<br/>
-          <strong>审图结论：</strong>整体受光偏暗沉，缺少穿透峡谷的戏剧性主光<br/>
-          <strong>收敛状态：</strong>强化前景巨龙尺度与谷底蓝光反差
-        </p>
-      </div>
-      <div class="img-col">
-        <div class="col-header">
-          <span class="step-tag">第 2 轮演进 (未满 ≥9.65)</span>
-          <span class="score-pill warn">总分 8.99 / 10</span>
-        </div>
-        <img src="scale_04_canyon_high_r2.jpg" alt="scale_case04_high round 2" />
-        <div class="meta-bar">
-          <span class="scale-tag scale-high">--scale high</span>
-          <span class="meta-pill">第 2 / 3 轮</span>
-          <span class="meta-pill blind-pill">👁️ 独立盲评 8.84</span>
-        </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图9.1/光影8.9/透视8.9/质感9.0/风格9.1</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>俯视角度极具冲击力，绿龙鳞片细节提升<br/>
-          <strong>审图结论：</strong>独立盲评指出中层建筑几何交接略乱、光影偏泥泞缺乏主光束统领<br/>
-          <strong>收敛状态：</strong>大胆从右上裂谷引入金色丁达尔体积神光劈入深渊，绿龙半透明翼膜逆光透射，悬崖挂满绯红金纹战旗，谷底石桥点缀行人强化史诗尺度
-        </p>
-      </div>
-      <div class="img-col highlight">
-        <div class="col-header">
-          <span class="step-tag">经过 3 轮达标定稿 ✅</span>
-          <span class="score-pill win">定稿分 9.79 / 10 🏆</span>
-        </div>
-        <img src="scale_04_canyon_high_r3.jpg" alt="scale_case04_high round 3" />
-        <div class="meta-bar">
-          <span class="scale-tag scale-high">--scale high</span>
-          <span class="meta-pill">第 3 / 3 轮</span>
+          <span class="meta-pill">高强度 · 大胆重构 (阈值 >= 9.65)</span>
+          <span class="meta-pill">经过 3 轮达标</span>
           <span class="meta-pill blind-pill">👁️ 独立盲评 9.35 🏆</span>
         </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图9.8/光影9.9/透视9.7/质感9.7/风格9.8</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>金色丁达尔体积神光劈入幽蓝深渊，逆光龙翼与多层栈桥获独立VLM盲评全场最高分9.35<br/>
-          <strong>审图结论：</strong>无短板，突破高强度 Showcase 级目标阈值<br/>
-          <strong>收敛状态：</strong>已达标定稿（经过 3 轮迭代达标 ≥9.65）
-        </p>
-      </div>
-      </div>
-    </div>
-
-    <div class="scale-row-card">
-      <div class="scale-row-header">
-        <div>
-          <span class="scale-tag scale-rec" style="font-size:13px;padding:4px 10px;">RECOMPOSE · 定向改构图模式 (<code>--scale recompose</code>)</span>
-          <strong style="margin-left:8px;font-size:15px;">奇幻峡谷城邦（定向改构图：狭窄天井俯视改为高空悬崖露台远眺跨谷石拱大桥与千丈飞瀑全景）</strong>
-        </div>
-        <div class="scale-row-summary">
-          <span>五维权重：<code>构图 30% · 光影色彩 25% · 透视空间 20% · 质感细节 15% · 规格风格 10%</code></span>
-          <span>Prompt 改动上限：<code>60% – 85% (~80%)</code></span>
-          <span class="score-pill win">⚡ 经过 3 轮达标 · 最终定稿分 9.66 / 10 (阈值 ≥ 9.55)</span>
-        </div>
-      </div>
-      
-        <div class="recompose-banner">
-          🎯 <strong>用户指定改构图方向 (<code>--recompose-dir</code>)</strong>：「从狭窄天井俯视改为高空悬崖露台平视偏仰视史诗全景，左下露台红袍旅人与绿龙并肩远眺跨谷石拱大桥与千丈飞瀑」
-        </div>
-      <div class="grid-4">
+        <div class="dims-box">📐 <strong>五维：</strong><code>构图9.8 / 光影9.9 / 透视9.7 / 质感9.7 / 风格9.8</code></div>
         
-      <div class="img-col ref-col">
-        <div class="col-header">
-          <span class="step-tag">起点 · 参考原图</span>
-          <span class="scale-tag scale-rec">--scale recompose</span>
-        </div>
-        <img src="web_refs/web_ref_01_concept_ishtar.png" alt="Style Reference" />
-        <div class="meta-bar">
-          <span class="meta-pill">Style Reference (不标外部模型)</span>
-          <span class="meta-pill">目标阈值 ≥ 9.55</span>
-        </div>
-        <p class="col-desc"><strong>原图五维基因解构：</strong>垂直峡谷巷道概念参考图，左上屋檐趴着小绿龙，底部有蓝光雾气。</p>
-      </div>
-      <div class="img-col">
-        <div class="col-header">
-          <span class="step-tag">第 1 轮演进 (未满 ≥9.55)</span>
-          <span class="score-pill warn">总分 8.75 / 10</span>
-        </div>
-        <img src="scale_04_canyon_recompose_r1.jpg" alt="scale_case04_recompose round 1" />
-        <div class="meta-bar">
-          <span class="scale-tag scale-rec">--scale recompose</span>
-          <span class="meta-pill">第 1 / 3 轮</span>
-          
-        </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图8.9/光影8.7/透视8.7/质感8.6/风格8.8</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>成功将狭窄天井俯视重构为高空悬崖露台开阔横纵全景，红袍旅人与绿龙居左下前景锚点<br/>
-          <strong>审图结论：</strong>远景跨谷石拱大桥与悬崖飞瀑的空气透视层次不够分明<br/>
-          <strong>收敛状态：</strong>拉开前景露台、中景跨谷巨型石拱桥与远景雪山千丈飞瀑的三层景深
-        </p>
-      </div>
-      <div class="img-col">
-        <div class="col-header">
-          <span class="step-tag">第 2 轮演进 (未满 ≥9.55)</span>
-          <span class="score-pill warn">总分 9.21 / 10</span>
-        </div>
-        <img src="scale_04_canyon_recompose_r2.jpg" alt="scale_case04_recompose round 2" />
-        <div class="meta-bar">
-          <span class="scale-tag scale-rec">--scale recompose</span>
-          <span class="meta-pill">第 2 / 3 轮</span>
-          
-        </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图9.3/光影9.2/透视9.2/质感9.1/风格9.2</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>跨谷石拱大桥与两侧悬崖城邦气势宏伟，前景人龙互动自然<br/>
-          <strong>审图结论：</strong>飞瀑水雾折射的夕阳金光与谷底青蓝魔法光交汇还可更绚丽<br/>
-          <strong>收敛状态：</strong>精修千丈飞瀑彩虹水雾、夕阳金光穿透桥洞与绿龙鳞片高光质感
-        </p>
+        <p class="col-desc">史诗级概念设计重构：左上前景绿龙双翼逆光透射，右上裂谷金色丁达尔神光直劈谷底青蓝荧光河道，多层木索桥、绯红金纹战旗与石拱桥行人层次壮丽。</p>
       </div>
       <div class="img-col recompose">
         <div class="col-header">
-          <span class="step-tag">经过 3 轮达标定稿 ✅</span>
-          <span class="score-pill win">定稿分 9.66 / 10 🏆</span>
+          <span class="scale-tag scale-rec">5. --scale recompose 终稿</span>
+          <span class="score-pill win">定稿 9.66 / 10 🏆</span>
         </div>
-        <img src="scale_04_canyon_recompose_r3.jpg" alt="scale_case04_recompose round 3" />
+        <img src="scale_04_canyon_recompose_r3.jpg" alt="case04 recompose final" />
         <div class="meta-bar">
-          <span class="scale-tag scale-rec">--scale recompose</span>
-          <span class="meta-pill">第 3 / 3 轮</span>
+          <span class="meta-pill">定向改构图 (阈值 >= 9.55)</span>
+          <span class="meta-pill">经过 3 轮达标</span>
           
         </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图9.7/光影9.7/透视9.6/质感9.6/风格9.7</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>从幽闭天井豁然开朗为史诗级跨谷大桥飞瀑全景，构图与空间尺度极佳<br/>
-          <strong>审图结论：</strong>无短板，100%兑现用户指定改构图方向<br/>
-          <strong>收敛状态：</strong>已达标定稿（经过 3 轮迭代达标 ≥9.55）
-        </p>
-      </div>
+        <div class="dims-box">📐 <strong>五维：</strong><code>构图9.7 / 光影9.7 / 透视9.6 / 质感9.6 / 风格9.7</code></div>
+        <div class="recompose-mini">🎯 <strong><code>--recompose-dir</code>：</strong>从狭窄天井垂直俯视改为高空悬崖石砌露台平视偏仰视史诗全景，左下红袍旅人与绿龙并肩远眺跨谷石拱大桥与千丈飞瀑</div>
+        <p class="col-desc">完整保留绿龙、红袍旅人、绯红战旗与黄褐悬崖石城基因，彻底打开视野为高空露台平视跨谷石拱大桥、千丈飞瀑与远方山巅城堡全景。</p>
       </div>
     </div>
   </div>
 
-  <!-- 板块三：跨风格独立网图 W02 & W03 统一模板演进 -->
-  <h2>🌍 三、更多跨风格独立网图（W02 北欧海港水彩 & W03 索罗亚印象派厚涂）统一模板演进</h2>
-  
+  <h2>🎚️ 二、四档 Scale 参数阈值、五维权重与调用命令速查表</h2>
   <div class="case-card">
-    <h3 style="margin-top:0;font-size:20px;color:#f8fafc;border-bottom:1px solid #263554;padding-bottom:10px;">
-      🌍 独立网图 W02 · 北欧峡湾木屋港口绘本水彩插画 (web_02_nordic_harbor) — 统一四列模板演进
-    </h3>
-    
-    <div class="scale-row-card">
-      <div class="scale-row-header">
-        <div>
-          <span class="scale-tag scale-high" style="font-size:13px;padding:4px 10px;">HIGH · 高强度大胆重构光影与张力 (<code>--scale high</code>)</span>
-          <strong style="margin-left:8px;font-size:15px;">北欧峡湾木屋港口绘本水彩插画（高强度重构黄金时刻双光源与雨后石板倒影）</strong>
-        </div>
-        <div class="scale-row-summary">
-          <span>五维权重：<code>光影色彩 30% · 构图 25% · 质感细节 20% · 透视解剖 15% · 规格风格 10%</code></span>
-          <span>Prompt 改动上限：<code>50% – 80% (~65%)</code></span>
-          <span class="score-pill win">⚡ 经过 3 轮达标 · 最终定稿分 9.79 / 10 (阈值 ≥ 9.65)</span>
-        </div>
-      </div>
-      
-      <div class="grid-4">
-        
-      <div class="img-col ref-col">
-        <div class="col-header">
-          <span class="step-tag">起点 · 参考原图</span>
-          <span class="scale-tag scale-high">--scale high</span>
-        </div>
-        <img src="web_refs/web_ref_02_illustration_bergen.jpg" alt="Style Reference" />
-        <div class="meta-bar">
-          <span class="meta-pill">Style Reference (不标外部模型)</span>
-          <span class="meta-pill">目标阈值 ≥ 9.65</span>
-        </div>
-        <p class="col-desc"><strong>原图五维基因解构：</strong>北欧木屋海港前的传统服饰少女与拟人橘猫水彩插画参考。</p>
-      </div>
-      <div class="img-col">
-        <div class="col-header">
-          <span class="step-tag">第 1 轮演进 (未满 ≥9.65)</span>
-          <span class="score-pill warn">总分 8.73 / 10</span>
-        </div>
-        <img src="web_02_nordic_harbor_r1.jpg" alt="web_cmp_02 round 1" />
-        <div class="meta-bar">
-          <span class="scale-tag scale-high">--scale high</span>
-          <span class="meta-pill">第 1 / 3 轮</span>
-          
-        </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图8.7/光影8.7/透视8.7/质感8.8/风格8.8</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>建立北欧Bunad刺绣服饰少女、橘猫与彩色木屋海港近中远层次<br/>
-          <strong>审图结论：</strong>地面偏干平，人物与橘猫互动偏静态<br/>
-          <strong>收敛状态：</strong>细化水彩纸纹肌理、橘猫海军礼服与白桦树桩细节
-        </p>
-      </div>
-      <div class="img-col">
-        <div class="col-header">
-          <span class="step-tag">第 2 轮演进 (未满 ≥9.65)</span>
-          <span class="score-pill warn">总分 8.99 / 10</span>
-        </div>
-        <img src="web_02_nordic_harbor_r2.jpg" alt="web_cmp_02 round 2" />
-        <div class="meta-bar">
-          <span class="scale-tag scale-high">--scale high</span>
-          <span class="meta-pill">第 2 / 3 轮</span>
-          <span class="meta-pill blind-pill">👁️ 独立盲评 8.84</span>
-        </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图9.0/光影9.0/透视8.9/质感9.0/风格9.1</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>木屋色彩温暖，水彩颗粒自然<br/>
-          <strong>审图结论：</strong>独立盲评指出右下角人物与橘猫站姿偏拘谨，缺少戏剧性双光源与地面倒影<br/>
-          <strong>收敛状态：</strong>大胆引入雨后湿润鹅卵石码头镜面倒影、少女手提暖光黄铜灯笼与夕阳帆船双光源，橘猫船长挥爪指向雪山海鸥
-        </p>
-      </div>
-      <div class="img-col highlight">
-        <div class="col-header">
-          <span class="step-tag">经过 3 轮达标定稿 ✅</span>
-          <span class="score-pill win">定稿分 9.79 / 10 🏆</span>
-        </div>
-        <img src="web_02_nordic_harbor_r3.jpg" alt="web_cmp_02 round 3" />
-        <div class="meta-bar">
-          <span class="scale-tag scale-high">--scale high</span>
-          <span class="meta-pill">第 3 / 3 轮</span>
-          <span class="meta-pill blind-pill">👁️ 独立盲评 9.20 🏆</span>
-        </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图9.8/光影9.8/透视9.7/质感9.8/风格9.9</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>夕阳逆光+手提黄铜灯笼双光源与雨后鹅卵石倒影极具绘本叙事魅力（独立盲评9.20分）<br/>
-          <strong>审图结论：</strong>无短板，突破高强度 Showcase 级目标阈值<br/>
-          <strong>收敛状态：</strong>已达标定稿（经过 3 轮迭代达标 ≥9.65）
-        </p>
-      </div>
-      </div>
-    </div>
-  </div>
-  <div class="case-card">
-    <h3 style="margin-top:0;font-size:20px;color:#f8fafc;border-bottom:1px solid #263554;padding-bottom:10px;">
-      🌍 独立网图 W03 · 印象派光影厚涂油画肖像 (web_03_impressionist_portrait) — 统一四列模板演进
-    </h3>
-    
-    <div class="scale-row-card">
-      <div class="scale-row-header">
-        <div>
-          <span class="scale-tag scale-high" style="font-size:13px;padding:4px 10px;">HIGH · 高强度大胆重构光影与张力 (<code>--scale high</code>)</span>
-          <strong style="margin-left:8px;font-size:15px;">印象派厚涂油画肖像（高强度重构索罗亚式地中海阳光大理石柱廊与碧海）</strong>
-        </div>
-        <div class="scale-row-summary">
-          <span>五维权重：<code>光影色彩 30% · 构图 25% · 质感细节 20% · 透视解剖 15% · 规格风格 10%</code></span>
-          <span>Prompt 改动上限：<code>50% – 80% (~65%)</code></span>
-          <span class="score-pill win">⚡ 经过 3 轮达标 · 最终定稿分 9.81 / 10 (阈值 ≥ 9.65)</span>
-        </div>
-      </div>
-      
-      <div class="grid-4">
-        
-      <div class="img-col ref-col">
-        <div class="col-header">
-          <span class="step-tag">起点 · 参考原图</span>
-          <span class="scale-tag scale-high">--scale high</span>
-        </div>
-        <img src="web_refs/web_ref_03_portrait_sorolla.jpg" alt="Style Reference" />
-        <div class="meta-bar">
-          <span class="meta-pill">Style Reference (不标外部模型)</span>
-          <span class="meta-pill">目标阈值 ≥ 9.65</span>
-        </div>
-        <p class="col-desc"><strong>原图五维基因解构：</strong>古典印象派油画肖像参考，笔触松散，室内背景较暗沉。</p>
-      </div>
-      <div class="img-col">
-        <div class="col-header">
-          <span class="step-tag">第 1 轮演进 (未满 ≥9.65)</span>
-          <span class="score-pill warn">总分 8.79 / 10</span>
-        </div>
-        <img src="web_03_impressionist_portrait_r1.jpg" alt="web_cmp_03 round 1" />
-        <div class="meta-bar">
-          <span class="scale-tag scale-high">--scale high</span>
-          <span class="meta-pill">第 1 / 3 轮</span>
-          
-        </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图8.7/光影8.8/透视8.7/质感8.9/风格8.9</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>建立伦勃朗侧逆光、白绸缎礼服与红玫瑰胸花厚涂笔触<br/>
-          <strong>审图结论：</strong>背景沿用室内暗褐色调，色彩空间略显沉闷<br/>
-          <strong>收敛状态：</strong>强化珍珠项链高光、薄纱披肩透明感与油画刮刀笔触肌理
-        </p>
-      </div>
-      <div class="img-col">
-        <div class="col-header">
-          <span class="step-tag">第 2 轮演进 (未满 ≥9.65)</span>
-          <span class="score-pill warn">总分 9.04 / 10</span>
-        </div>
-        <img src="web_03_impressionist_portrait_r2.jpg" alt="web_cmp_03 round 2" />
-        <div class="meta-bar">
-          <span class="scale-tag scale-high">--scale high</span>
-          <span class="meta-pill">第 2 / 3 轮</span>
-          <span class="meta-pill blind-pill">👁️ 独立盲评 8.81</span>
-        </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图8.9/光影9.1/透视9.0/质感9.1/风格9.1</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>厚涂刮刀肌理扎实，面部冷暖笔触丰富<br/>
-          <strong>审图结论：</strong>独立盲评指出居中坐姿静态且室内暗背景扁平，缺乏印象派外光空气感<br/>
-          <strong>收敛状态：</strong>大胆打通索罗亚(Sorolla)式地中海阳光大理石柱廊与碧海远景，让炽烈阳光在白绸缎与粉色薄纱上激发厚涂高光与冷紫暗部反射
-        </p>
-      </div>
-      <div class="img-col highlight">
-        <div class="col-header">
-          <span class="step-tag">经过 3 轮达标定稿 ✅</span>
-          <span class="score-pill win">定稿分 9.81 / 10 🏆</span>
-        </div>
-        <img src="web_03_impressionist_portrait_r3.jpg" alt="web_cmp_03 round 3" />
-        <div class="meta-bar">
-          <span class="scale-tag scale-high">--scale high</span>
-          <span class="meta-pill">第 3 / 3 轮</span>
-          <span class="meta-pill blind-pill">👁️ 独立盲评 9.06 🏆</span>
-        </div>
-        <div class="dims-box">📐 <strong>五维分：</strong><code>构图9.7/光影9.9/透视9.7/质感9.9/风格9.8</code></div>
-        <p class="col-desc">
-          <strong>定稿亮点：</strong>地中海阳光柱廊与碧海背景让光影跃升至9.3（独立盲评总分9.06），刮刀厚涂高光熠熠生辉<br/>
-          <strong>审图结论：</strong>无短板，突破高强度 Showcase 级目标阈值<br/>
-          <strong>收敛状态：</strong>已达标定稿（经过 3 轮迭代达标 ≥9.65）
-        </p>
-      </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 板块四：独立 VLM 裁判乱序盲评验证 & Cursor 生图/审图解耦防虚高架构 -->
-  <h2>🔍 四、独立 VLM 裁判乱序盲评验证 & Cursor「生图端 / 审图端解耦」防虚高机制</h2>
-  <div class="case-card">
-    <h3 style="margin-top:0;">为什么不能让刚写完 Prompt 的模型自己给自己打分？（防止“自生自评自嗨”）</h3>
-    <p style="color: var(--muted); margin-top: 4px; font-size: 13.5px;">
-      在 Cursor 等环境里，如果让<strong>刚刚写完生图提示词的同一个对话直接给自己的图打分</strong>，模型会有强烈的<strong>「提示词确认偏误（Prompt Confirmation Bias）」</strong>——它看到自己写了“300g 粗纹纸飞白”或“斑驳木漏日”，就会脑补画面已经画出来了，在第 2 轮随手打出 <code>9.6+</code> 的虚高分提前收工。<br/>
-      为此，我们设计了<strong>三道防虚高机制</strong>，并将候选图全部打乱顺序、抹掉文件名与提示词（编号为 <code>BLIND_ART_01 .. 12</code>），交给<strong>完全不知道图片来历的独立 VLM 裁判模型</strong>只看画面盲评：
-    </p>
     <table>
       <thead>
         <tr>
-          <th style="width:110px;">匿名盲评编号</th>
-          <th style="width:230px;">解密后真实样本</th>
-          <th style="width:130px;">旧版同会话自评</th>
-          <th style="width:140px;">独立 VLM 盲评总分</th>
-          <th style="width:210px;">独立盲评五维明细<br/><code>构图 / 光影 / 透视 / 质感 / 风格</code></th>
-          <th>偏差分析與独立裁判纯视觉诊断评语</th>
+          <th style="width:150px;">Scale 档位</th>
+          <th style="width:110px;">达标停机阈值</th>
+          <th style="width:130px;">Prompt 改动幅度</th>
+          <th style="width:280px;">五维审图权重配比</th>
+          <th>Skill 斜杠调用写法 & CLI 命令写法</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td><code>BLIND_ART_07</code></td>
-          <td><strong>案例 02 · 第 2 轮演进</strong> (粗纹纸油画棒少女)</td>
-          <td><del style="color:#f87171;">9.65</del></td>
-          <td><span class="score-pill warn">8.66 / 10</span></td>
-          <td><code>8.6 / 8.5 / 8.6 / 8.9 / 8.8</code></td>
-          <td><strong>精准拦截 <code>+0.99</code> 分虚高</strong>：独立裁判一眼看出第 2 轮背景空旷、光线偏平 (<code>8.5</code>)、颗粒感过于规整，必须继续迭代第 3 轮。</td>
+          <td><span class="scale-tag scale-low">--scale low</span><br/>低强度保守修瑕</td>
+          <td><strong><code>≥ 9.15</code></strong></td>
+          <td><code>≤ 20%</code></td>
+          <td>透视解剖 25% · 质感 25% · 光影 20% · 构图 15% · 风格 15%</td>
+          <td><code>/pmem-draw --scale low [拖入参考图] 只修五指与透视瑕疵，保持原图构图不变</code><br/><code>python3 pmem_art.py converge start --scale low --ref-image ref.png --goal "..."</code></td>
         </tr>
         <tr>
-          <td><code>BLIND_ART_05</code></td>
-          <td><strong>案例 02 · 经过 3 轮达标定稿</strong></td>
-          <td><code>9.78</code></td>
-          <td><span class="score-pill win">8.88 / 10 (+0.22) 🏆</span></td>
-          <td><code>9.0 / 8.7 / 8.8 / 8.9 / 9.1</code></td>
-          <td><strong>盲评实测跃升 <code>+0.22</code> 分</strong>：对角线坐姿构图升至 <code>9.0</code>，哑光黑耳机与黑背包猫咪挂件稳稳压住红帽衫明度，风格升至 <code>9.1</code>。</td>
+          <td><span class="scale-tag scale-med">--scale medium</span><br/>中强度标准补足</td>
+          <td><strong><code>≥ 9.40</code></strong></td>
+          <td><code>25% – 45%</code></td>
+          <td>光影 25% · 构图 20% · 透视 20% · 质感 20% · 风格 15%</td>
+          <td><code>/pmem-draw --scale medium [拖入参考图] 保持构图，补足侧逆光与空气透视层次</code><br/><code>python3 pmem_art.py converge start --scale medium --ref-image ref.png --goal "..."</code></td>
         </tr>
         <tr>
-          <td><code>BLIND_ART_10</code></td>
-          <td><strong>案例 03 · 第 2 轮演进</strong> (窗边逆光少女平视特写)</td>
-          <td><del style="color:#f87171;">9.72</del></td>
-          <td><span class="score-pill warn">8.77 / 10</span></td>
-          <td><code>8.6 / 8.8 / 8.8 / 8.7 / 9.0</code></td>
-          <td><strong>精准拦截 <code>+0.95</code> 分虚高</strong>：独立裁判指出居中大头照裁切呆板 (<code>8.6</code>) 且表面偏光滑数字化 (<code>8.7</code>)。</td>
+          <td><span class="scale-tag scale-high">--scale high</span><br/>高强度大胆重构</td>
+          <td><strong><code>≥ 9.65</code></strong></td>
+          <td><code>50% – 80%</code></td>
+          <td>光影 30% · 构图 25% · 质感 20% · 透视 15% · 风格 10%</td>
+          <td><code>/pmem-concept --scale high [拖入参考图] 锁死画风与角色身份，大胆重构戏剧光影冲击力</code><br/><code>python3 pmem_art.py converge start --scale high --ref-image ref.png --goal "..."</code></td>
         </tr>
         <tr>
-          <td><code>BLIND_ART_01</code></td>
-          <td><strong>案例 03 · 经过 3 轮达标定稿</strong> (3/4 倚窗回眸)</td>
-          <td><code>9.84</code></td>
-          <td><span class="score-pill win">9.21 / 10 (+0.44) 🏆</span></td>
-          <td><code>9.2 / 9.5 / 9.0 / 9.0 / 9.3</code></td>
-          <td><strong>盲评大幅跃升 <code>+0.44</code> 分</strong>：打破平视大头照重构为 3/4 倚窗景深后，构图升至 <code>9.2</code>，绣球花蕾丝窗纱投下的斑驳木漏日获 <code>9.5</code> 高分！</td>
-        </tr>
-        <tr>
-          <td><code>BLIND_ART_12</code></td>
-          <td><strong>案例 04 (W01) · 第 2 轮演进</strong> (奇幻峡谷垂直巷道)</td>
-          <td><del style="color:#f87171;">9.38</del></td>
-          <td><span class="score-pill warn">8.84 / 10</span></td>
-          <td><code>9.1 / 8.8 / 8.6 / 8.8 / 8.9</code></td>
-          <td><strong>精准拦截 <code>+0.54</code> 分虚高</strong>：俯视角度大胆 (<code>9.1</code>)，但局部几何交接略乱 (<code>8.6</code>)、谷底光影偏暗沉。</td>
-        </tr>
-        <tr>
-          <td><code>BLIND_ART_08</code></td>
-          <td><strong>案例 04 (W01) · 经过 3 轮达标定稿</strong></td>
-          <td><code>9.81</code></td>
-          <td><span class="score-pill win">9.35 / 10 (+0.51) 🏆</span></td>
-          <td><code>9.4 / 9.5 / 9.3 / 9.2 / 9.3</code></td>
-          <td><strong>独立盲评全场最高分 (<code>9.35</code>，跃升 <code>+0.51</code> 分)</strong>：右上裂谷金色丁达尔体积神光 (<code>9.5</code>)、多层栈桥透视 (<code>9.3</code>) 与前景巨龙全面突破。</td>
-        </tr>
-        <tr>
-          <td><code>BLIND_ART_06</code></td>
-          <td><strong>独立网图 W02 · 第 2 轮演进</strong> (北欧峡湾港口)</td>
-          <td><del style="color:#f87171;">9.35</del></td>
-          <td><span class="score-pill warn">8.84 / 10</span></td>
-          <td><code>8.8 / 8.9 / 8.7 / 8.8 / 9.0</code></td>
-          <td><strong>精准拦截 <code>+0.51</code> 分虚高</strong>：海港色彩温暖，但右下角少女与橘猫站姿偏拘谨。</td>
-        </tr>
-        <tr>
-          <td><code>BLIND_ART_09</code></td>
-          <td><strong>独立网图 W02 · 经过 3 轮达标定稿</strong></td>
-          <td><code>9.80</code></td>
-          <td><span class="score-pill win">9.20 / 10 (+0.36) 🏆</span></td>
-          <td><code>9.3 / 9.3 / 9.1 / 9.0 / 9.3</code></td>
-          <td><strong>盲评跃升 <code>+0.36</code> 分</strong>：夕阳逆光 + 手提黄铜暖光灯笼双光源与雨后鹅卵石倒影让构图与光影双双升至 <code>9.3</code>。</td>
-        </tr>
-        <tr>
-          <td><code>BLIND_ART_02</code></td>
-          <td><strong>独立网图 W03 · 第 2 轮演进</strong> (印象派厚涂肖像)</td>
-          <td><del style="color:#f87171;">9.40</del></td>
-          <td><span class="score-pill warn">8.81 / 10</span></td>
-          <td><code>8.5 / 8.8 / 8.8 / 9.0 / 9.0</code></td>
-          <td><strong>精准拦截 <code>+0.59</code> 分虚高</strong>：厚涂笔触扎实 (<code>9.0</code>)，但居中坐姿偏静态 (<code>8.5</code>) 且室内暗背景扁平。</td>
-        </tr>
-        <tr>
-          <td><code>BLIND_ART_11</code></td>
-          <td><strong>独立网图 W03 · 经过 3 轮达标定稿</strong></td>
-          <td><code>9.83</code></td>
-          <td><span class="score-pill win">9.06 / 10 (+0.25) 🏆</span></td>
-          <td><code>8.6 / 9.3 / 9.0 / 9.2 / 9.2</code></td>
-          <td><strong>盲评跃升 <code>+0.25</code> 分</strong>：打通索罗亚式地中海阳光大理石柱廊与碧海远景后，光影跃升至 <code>9.3</code>、厚涂刮刀肌理升至 <code>9.2</code>。</td>
+          <td><span class="scale-tag scale-rec">--scale recompose</span><br/>定向改构图模式</td>
+          <td><strong><code>≥ 9.55</code></strong></td>
+          <td><code>60% – 85%</code></td>
+          <td>构图 30% · 光影 25% · 透视 20% · 质感 15% · 风格 10%</td>
+          <td><code>/pmem-draw --scale recompose --recompose-dir "改为天台栏杆远眺夕阳海港全景" [拖入参考图]</code><br/><code>python3 pmem_art.py converge start --scale recompose --recompose-dir "..." --ref-image ref.png</code></td>
         </tr>
       </tbody>
     </table>
