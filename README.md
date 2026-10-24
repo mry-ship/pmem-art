@@ -1,7 +1,7 @@
 # 🎨 pmem-art — 在 Cursor / Codex 里越画越准的个人美术积累记忆 & 闭环自评生图系统
 
 <p align="left">
-  <img src="https://img.shields.io/badge/version-v0.9.0-0ea5e9?style=for-the-badge" alt="v0.9.0"/>
+  <img src="https://img.shields.io/badge/version-v0.10.0-0ea5e9?style=for-the-badge" alt="v0.9.0"/>
   <img src="https://img.shields.io/badge/python-%3E%3D3.10-3776ab?style=for-the-badge&logo=python&logoColor=white" alt="Python"/>
   <img src="https://img.shields.io/badge/UX-Cursor%20对话%20%2B%20内置%20Skills-8b5cf6?style=for-the-badge" alt="Cursor-first + Skills"/>
   <img src="https://img.shields.io/badge/license-GPL--3.0-f59e0b?style=for-the-badge" alt="GPL-3.0"/>
@@ -15,18 +15,21 @@
 
 ---
 
-## 🌟 亮点一：初始化自动注入 5 大斜杠技能（Cursor / Claude Code / Codex 开箱即用）
+## 🌟 亮点一：初始化自动注入 8 大斜杠技能（Cursor / Claude Code / Codex 开箱即用）
 
-运行 `python3 pmem_art.py init`（或在已有项目运行 `python3 pmem_art.py skills --install`）时，系统会自动把 **5 大美术技能（含简短别名共 10 个 `/` 斜杠入口）** 安装到：
+运行 `python3 pmem_art.py init`（或在已有项目运行 `python3 pmem_art.py skills --install`）时，系统会自动把 **8 大美术技能（含简短别名共 16 个 `/` 斜杠入口）** 安装到：
 - **Cursor**：`.cursor/skills/<name>/SKILL.md` + `.cursor/commands/<name>.md` + `.cursor/rules/pmem-art.mdc`
 - **Claude Code**：`.claude/skills/<name>/SKILL.md` + `.claude/commands/<name>.md` + `CLAUDE.md`
 - **Codex**：`.agents/skills/<name>/SKILL.md` + `AGENTS.md`
 
-### 5 大内置美术技能一览
+### 8 大内置美术技能一览
 
 | 斜杠指令 | 简短别名 | 核心能力 |
 | :--- | :--- | :--- |
 | **`/pmem-draw`** | **`/art-draw`** | 🔥 **8轮 9.5分 闭环自评收敛生图**（支持①纯文本指令生图；②**丢入参考图先深度分析再生图**。每次生1张 → 五维严苛自评打分+说出不合理处 → `<9.5`分自动叠加修正继续生 → 最多8轮达标即停或挑全阶段最高分 → 输出全轮次评分优劣总表并自动沉淀记忆） |
+| **`/pmem-ui`** | **`/art-ui`** | 🕹️ **SpriteCook 式 UI Kit / HUD / 九宫格整套**：概念先行 → 透明组件表 → 九宫格切线与状态族（normal/pressed…）→ 关键件 8轮9.5收敛 |
+| **`/pmem-concept`** | **`/art-concept`** | 🎬 **ZHO / Yolain / Comfy-FLUX 式概念图 / Key Art**：完整自然语言句 Prompt（主体优先、正向写排斥项）+ 8轮9.5收敛 |
+| **`/pmem-icon`** | **`/art-icon`** | ✳️ **jezweb 式一致化图标集 / SVG**：先锁 style-spec（stroke/圆角/viewBox）→ 约5个一批生成 → 一致性审查 + `preview.html`；单枚可收敛 |
 | **`/pmem-style-lock`** | **`/art-style`** | 🎨 **样张一键提炼风格圣经与色板锁定**：丢入 1~3 张参考样张，自动提取主辅色 HEX、光影笔触与反例禁用词，写入项目记忆 |
 | **`/pmem-critique`** | **`/art-check`** | 🔍 **单图/批量图主美级五维审稿挑刺**：对照项目已有红线与规格打分，指出不合理处并一键记入 `style_redline` |
 | **`/pmem-variant`** | **`/art-variant`** | 🌿 **同角色跨画风分叉与表情/动作差分**：锁死角色核心人设锚点，派生水彩/Q版/像素子模块或序列帧差分 |
@@ -77,7 +80,25 @@ Step 3: 输出【全阶段评分与优劣分析总表】+ 自动把胜出配方�
 
 ---
 
-## 💬 亮点二：平时随口评一句，记忆自动长大（无需手写 YAML）
+## 🕹️ 亮点二：三大垂直生成技能（UI / 概念图 / 图标集）
+
+均挂载同一套 **`converge` 8轮 `>=9.5` 自评收敛引擎**，只是流水线按业界最佳实践特化：
+
+| 指令 | 对标思路 | 一句话流程 |
+| :--- | :--- | :--- |
+| **`/pmem-ui`** `/art-ui` | [SpriteCook UI Kit](https://www.spritecook.ai/docs/ui-kit) | 先锁整屏概念 → 从概念抽透明组件表 → 标九宫格与状态族 → 关键件收敛 |
+| **`/pmem-concept`** `/art-concept` | ZHO Comfy-FLUX / Yolain 提示法 | 完整句 Prompt（主体靠前、正向写「不要什么」）→ 概念图/Key Art 收敛 |
+| **`/pmem-icon`** `/art-icon` | [jezweb icon-set-generator](https://github.com/jezweb/claude-skills) | 定 style-spec → 分批 SVG（currentColor + 统一 viewBox/stroke）→ preview.html |
+
+```text
+/pmem-ui 生成一套青瓷幻想风的主菜单：面板可九宫格拉伸，按钮含 normal/pressed
+/pmem-concept 画一张东方青瓷废土的主视觉 Key Art，宽幅海报
+/pmem-icon 给本项目做一套 24px Clean 预设导航+背包图标（SVG）
+```
+
+---
+
+## 💬 亮点三：平时随口评一句，记忆自动长大（无需手写 YAML）
 
 除了用 `/pmem-draw` 自动收敛，你日常在 Cursor 对话里看图后随口说的每一句中文评价，都会自动沉淀进 `.memory-art/`：
 
@@ -97,7 +118,7 @@ Step 3: 输出【全阶段评分与优劣分析总表】+ 自动把胜出配方�
 python3 pmem_art.py init --name "我的项目"
 python3 pmem_art.py bootstrap --mode young --apply
 ```
-> 自动建好 `.memory-art/`、`assets/` 六大目录，并把 `/pmem-draw` 等 5 大技能装进 `.cursor/`、`.claude/`、`.agents/`。
+> 自动建好 `.memory-art/`、`assets/` 六大目录，并把 `/pmem-draw` / `/pmem-ui` / `/pmem-concept` / `/pmem-icon` 等 8 大技能装进 `.cursor/`、`.claude/`、`.agents/`。
 
 ### 2. 已有资产的老项目无损挂载
 ```bash

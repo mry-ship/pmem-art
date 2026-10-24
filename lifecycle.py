@@ -301,6 +301,9 @@ def ensure_cursor_stubs(root: Path) -> None:
         "  - 纯文本：`/pmem-draw 生成一张xxx风格的xxx图`\n"
         "  - 垫图模式：`/pmem-draw [丢入一张图] 生成一张xxx图`（先深度分析参考图构图/色板/光影/结构，再开始循环）\n"
         "  - 循环规则：每次生成1张图 → 严苛五维自评打分（满分10）+ 说出合理亮点与**不合理之处** → `< 9.5` 分不算合格，叠加修正策略继续生下一张（最多8轮）→ 达标立即停止，或满8轮挑全阶段最高分 → 运行 `python3 pmem_art.py converge finish --apply` 输出全轮次评分优劣对比总表并沉淀记忆。\n"
+        "- **`/pmem-ui`（`/art-ui`）**：SpriteCook 式 UI Kit/HUD/九宫格整套（概念先行→组件表→9-slice→状态族）+ 8轮9.5收敛。\n"
+        "- **`/pmem-concept`（`/art-concept`）**：ZHO/Yolain/Comfy-FLUX 式概念图/Key Art（完整句 Prompt）+ 8轮9.5收敛。\n"
+        "- **`/pmem-icon`（`/art-icon`）**：jezweb 式一致化图标集/SVG（style-spec→分批生成→一致性审查）+ 可选收敛。\n"
         "- **`/pmem-style-lock`（`/art-style`）**：从参考样张提炼风格圣经与色板锁定。\n"
         "- **`/pmem-critique`（`/art-check`）**：单图/批量图主美级五维审稿挑刺并写入红线。\n"
         "- **`/pmem-variant`（`/art-variant`）**：同角色跨画风分叉（Q版/水彩/像素）或表情动作差分。\n"
@@ -528,7 +531,7 @@ def cmd_init(root: Path, project_name: str = "Untitled Art Project", force: bool
     print(f"   · {MEMORY_DIR}/modules.yaml (6 个 scaffold 模块)")
     print("   · assets/{brand,character,scene,ui,vfx,anim}/ 空目录已创建")
     print("   · .cursor/rules/pmem-art.mdc + hooks.json")
-    print("   · 已自动注入 5 大技能 (/pmem-draw, /pmem-style-lock, /pmem-critique, /pmem-variant, /pmem-atlas) 到 .cursor / .claude / .agents")
+    print("   · 已自动注入 8 大技能 (/pmem-draw, /pmem-ui, /pmem-concept, /pmem-icon, /pmem-style-lock, /pmem-critique, /pmem-variant, /pmem-atlas) 到 .cursor / .claude / .agents")
     print(f"   · {MEMORY_DIR}/ONBOARDING.md")
     print("\n保证工作流（非盲目魔法）：")
     print("   落盘 → sync 提议 candidate → accept 一次确认 → search 闸门生效 → record/validate → atlas")

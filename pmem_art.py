@@ -23,7 +23,7 @@ import zlib
 from pathlib import Path
 from typing import Any
 
-VERSION = "0.9.0-art"
+VERSION = "0.10.0-art"
 MEMORY_DIR = ".memory-art"
 
 KIND_META = {

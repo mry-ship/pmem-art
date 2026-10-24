@@ -1,13 +1,13 @@
 # 📘 pmem-art 画师使用手册 — 怎么在 Cursor / Codex 里越画越准
 
-> **版本**：`v0.9.0`  
-> **核心理念**：日常入口就是 **Cursor / Claude Code / Codex 对话框**（外加开箱即用的 `/pmem-draw` 等 5 个斜杠技能）。不用背 CLI、不用手写 YAML、不用把时间花在填表上。
+> **版本**：`v0.10.0`  
+> **核心理念**：日常入口就是 **Cursor / Claude Code / Codex 对话框**（外加开箱即用的 `/pmem-draw` 等 8 个斜杠技能（含垂直生成））。不用背 CLI、不用手写 YAML、不用把时间花在填表上。
 
 ---
 
 ## 目录
 
-1. [第一章：初始化即自动安装的 5 大美术技能](#第一章初始化即自动安装的-5-大美术技能)
+1. [第一章：初始化即自动安装的 8 大美术技能](#第一章初始化即自动安装的-5-大美术技能)
 2. [第二章：王牌技能 `/pmem-draw`（8轮9.5分自评收敛生图 & 垫图生图）](#第二章王牌技能-pmem-draw8轮95分自评收敛生图--垫图生图)
 3. [第三章：日常对话反馈怎么变成长期记忆](#第三章日常对话反馈怎么变成长期记忆)
 4. [第四章：三种项目接入方式（空项目 / 老项目 / 持续生图）](#第四章三种项目接入方式空项目--老项目--持续生图)
@@ -17,7 +17,7 @@
 
 ---
 
-## 第一章：初始化即自动安装的 5 大美术技能
+## 第一章：初始化即自动安装的 8 大美术技能
 
 当你运行 `python3 pmem_art.py init`（或 `python3 pmem_art.py skills --install`）时，系统会自动在项目根目录生成：
 
@@ -30,6 +30,9 @@
 | 主技能指令 | 简短别名 | 什么时候用 |
 | :--- | :--- | :--- |
 | **`/pmem-draw`** | **`/art-draw`** | 想让 AI **自己反复打磨到 9.5 分以上**再交稿（支持纯文字或丢一张参考图） |
+| **`/pmem-ui`** | **`/art-ui`** | 要 **一整套 HUD/菜单 UI Kit**（概念→组件表→九宫格→按钮多状态），对标 SpriteCook |
+| **`/pmem-concept`** | **`/art-concept`** | 要 **主视觉 / Key Art / 气氛概念图**，用 FLUX 式完整句 Prompt + 8轮收敛 |
+| **`/pmem-icon`** | **`/art-icon`** | 要 **一整套风格统一的 SVG/图标**，先锁 style-spec 再分批生成（对标 jezweb） |
 | **`/pmem-style-lock`** | **`/art-style`** | 拿到一张特别对味的样张，想把它的色板、光影、笔触锁成长期标准 |
 | **`/pmem-critique`** | **`/art-check`** | 手头有一张图，想让 AI 对照历史红线严苛挑刺打分，并把毛病记入红线 |
 | **`/pmem-variant`** | **`/art-variant`** | 角色立绘定了，想衍生 **水彩概念图 / Q版贴纸 / 表情差分 / 序列帧** 且不崩人设 |
@@ -74,6 +77,19 @@
 无论第几轮结束，最终都会给你列出一张清晰的汇总表：
 - 每一轮的 **图片路径、综合评分（含五维明细）、亮眼合理处、不合理缺陷分析、叠加修正策略、是否胜出**；
 - 自动把胜出图的配方写入 `.memory-art` 的 `recipe`，把中途踩到的典型不合理项写入 `style_redline`，下次生同类图直接避坑！
+
+---
+
+## 第二章附：三大垂直生成技能速查
+
+### `/pmem-ui`（`/art-ui`）— SpriteCook 式 UI Kit
+1. 概念先行（整屏统一画风，可先 8轮收敛）→ 2. 以概念为垫图抽透明组件表 → 3. 标九宫格 + normal/pressed 等状态 → 4. 输出 `manifest.json` + `elements/` → 5. 关键件不够 9.5 再局部 `converge`。
+
+### `/pmem-concept`（`/art-concept`）— FLUX 式概念图 / Key Art
+用完整自然语言句写 Prompt（主体与动作靠前；排斥项写成正向描述）。走标准 `converge start → round × N → finish --apply`。
+
+### `/pmem-icon`（`/art-icon`）— jezweb 式一致化图标集
+先确认预设（Clean/Sharp/Soft/Minimal/Bold）写入 `icons/style-spec.json`，再约 5 个一批生成 SVG（统一 viewBox/`currentColor`/stroke），交付 `preview.html`；单枚可收敛。
 
 ---
 

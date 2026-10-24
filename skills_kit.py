@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 """
 pmem-art skills_kit:
-1. 定义并自动安装面向 Cursor / Claude Code / Codex 的 5 大美术技能（Skills & Slash Commands）：
+1. 定义并自动安装面向 Cursor / Claude Code / Codex 的 8 大美术技能（Skills & Slash Commands）：
    - /pmem-draw    (别名 /art-draw)    : 8轮 9.5分 闭环自评收敛生图（支持纯文本或【丢入参考图】先解构再生图 + 最终汇总评分表）
    - /pmem-style-lock (别名 /art-style): 样张/参考图一键提炼风格圣经与色板锁定
    - /pmem-critique (别名 /art-check)  : 单图/批量图主美级五维审稿与红线入库
    - /pmem-variant (别名 /art-variant) : 同角色/同资产跨画风分叉（Q版/水彩/像素）与表情动作差分
    - /pmem-atlas   (别名 /art-map)     : 一键归档散图、体检并刷新可视化图谱 art-atlas.html
+   - /pmem-ui      (别名 /art-ui)      : SpriteCook 式 UI Kit / HUD / 九宫格整套生成 + 8轮9.5收敛
+   - /pmem-concept (别名 /art-concept) : ZHO/Yolain/Comfy-FLUX 式概念图/Key Art 生成 + 8轮9.5收敛
+   - /pmem-icon    (别名 /art-icon)    : jezweb 式一致化图标集 / SVG 取向生成 + 8轮9.5收敛
 
 2. 提供 `pmem_art.py converge` 闭环收敛状态机与评分表生成器：
    - 记录第 1..8 轮生图的路径、五维评分、合理亮点、不合理缺陷与下一轮叠加修正指令
@@ -230,6 +233,232 @@ python3 pmem_art.py converge finish --apply
    告知用户可随时双击项目根目录的 `art-atlas.html` 检视正反例滑杆与配方卡。
 """,
     },
+
+    {
+        "name": "pmem-ui",
+        "alias": "art-ui",
+        "title": "SpriteCook式 UI Kit/HUD/九宫格整套生成 + 8轮9.5收敛",
+        "description": (
+            "当用户输入 /pmem-ui 或 /art-ui（如「/pmem-ui 生成一套蒸汽朋克主菜单 HUD」「/pmem-ui [附带概念图] 拆出九宫格弹窗与按钮态」）时触发。"
+            "按 SpriteCook 式「概念先行 → 组件表 → 九宫格切线 → 状态族」流程生成完整 UI 套件，并对关键面板/按钮用 8轮 >=9.5 自评收敛打磨。"
+        ),
+        "body": r"""# `/pmem-ui`（别名 `/art-ui`）— SpriteCook 式 UI Kit / HUD / 九宫格整套生成
+
+你现在运行在 **pmem-art UI Kit 模式**（对标 SpriteCook UI Kit Builder：概念先行 → 组件表 → 九宫格切线 → 状态族）。**禁止**把整屏各控件零散各生一张再硬拼；必须先锁一个统一视觉语言的概念稿，再从同一概念抽出可复用零件。
+
+---
+
+## 一、适用场景
+- 主菜单 / HUD / 暂停 / 设置 / 背包 / 对话框 / 商店 / 任务日志 / 角色面板 / 地图 / Game Over / Overlay
+- 需要 **九宫格可拉伸面板、按钮多状态（normal/hover/pressed/disabled）、进度条空满态、标签选中/未选中** 的成套 UI
+
+## 二、标准流水线（Concept → Sheets → 9-Slice → Converge）
+
+### Step 0：确定屏幕类型与规格
+确认：屏幕类型、平台（桌面/主机 vs 移动）、画幅（16:9 / 超宽 / 竖屏）、目标模块（如 `ui.MainMenu` / `ui.InventoryHUD`）。
+```bash
+python3 pmem_art.py search --module <ui.模块>
+```
+
+### Step 1：概念先行（Concept First）—— 不可跳过
+1. 若用户丢入概念图：先做参考图视觉解构（构图分区、主辅色 HEX、金属/木纹/霓虹材质、控件密度），再进入组件抽取。
+2. 若无概念图：先生成 **1 张完整屏幕概念稿**（整屏布局，统一材质与色板），用 `/pmem-draw` 同款 **8轮 >=9.5 收敛** 打磨概念稿：
+   ```bash
+   python3 pmem_art.py converge start --goal "UI概念稿：<屏幕类型+风格>" --module <ui.模块>
+   # … 每轮 converge round … 直到 >=9.5 或满8轮挑最高分
+   python3 pmem_art.py converge finish --apply
+   ```
+3. **概念稿通过后才进入组件表**——不要在概念未锁定时散生按钮。
+
+### Step 2：从概念抽取组件表（Component Sheets）
+以概念稿为垫图/参考，在 **透明底** 上生成组件表（1~3 张 sheet），覆盖：
+- **面板 / 边框 / 装饰条**（可九宫格拉伸）
+- **按钮族**：至少 normal + pressed（最好含 hover / disabled）
+- **进度条 / 血条**：空轨 + 满轨（或分段填充）
+- **标签 / Tab**：选中 + 未选中
+- **图标位 / 分隔线 / 角花** 等概念中出现或隐含的零件
+同一概念参考下批量生成，保证木纹/螺栓/色板/光影角度一致。缺件时只补缺件，不要整套重开。
+
+### Step 3：九宫格切线与清单（9-Slice + Manifest）
+对每个可缩放件标注九宫格：四角固定、四边单向拉伸、中心双向拉伸。输出清单建议：
+```
+ui_kit_<name>/
+├── concept.png
+├── sheets/
+├── elements/          # 透明 PNG 单件
+├── manifest.json      # name / group / state / rect / nine_slice {l,r,t,b}
+└── preview.html       # 可选：拼装预览
+```
+`manifest.json` 示例字段：`name`, `group`, `state`, `file`, `nine_slice: {left,right,top,bottom}`, `scalable: true|false`。
+
+### Step 4：关键件二次收敛（可选但推荐）
+对主面板、主按钮等核心件，若五维评分 `< 9.5`（重点查：中心拉伸区是否干净、转角是否形变、透明底毛边、状态族是否同系），再跑一轮 `converge` 局部重绘。
+
+### Step 5：沉淀记忆
+```bash
+python3 pmem_art.py ingest <concept或主面板路径> -p "UI kit <屏幕> 概念/主面板" --apply
+python3 pmem_art.py feedback "UI套件色板与九宫格规范：<摘要>" --module <ui.模块> --kind art_decision
+```
+
+## 三、UI 专用五维评分侧重（满分 10.0，`>= 9.5` 合格）
+1. 风格色板契合（2.5）— 与概念稿同材质同色板
+2. 结构/九宫格合理性（2.5）— 中心区干净、角不糊、可拉伸
+3. 光影材质完成度（2.0）
+4. 红线与管线合规（1.5）— RGBA 透明底、分辨率、无脏边
+5. 套件一致性 / 状态族完整（1.5）— normal/pressed 等同系，不「各画各的」
+
+## 四、最终交付必须包含
+1. 概念稿 + 组件表 + `elements/` + `manifest.json`（含九宫格）
+2. 若跑了收敛：全轮次评分优劣总表
+3. 已写入 `.memory-art` 的 recipe / redline 路径
+""",
+    },
+    {
+        "name": "pmem-concept",
+        "alias": "art-concept",
+        "title": "ZHO/Yolain/Comfy-FLUX式概念图/Key Art生成 + 8轮9.5收敛",
+        "description": (
+            "当用户输入 /pmem-concept 或 /art-concept（如「/pmem-concept 画一张青瓷废土的主视觉Key Art」「/pmem-concept [附参考] 同氛围的场景气氛图」）时触发。"
+            "采用 ZHO / Yolain / Comfy-FLUX 式自然语言完整句 Prompt（主体优先、正向描述排斥项），生成概念图/Key Art，并以 8轮 >=9.5 自评收敛打磨。"
+        ),
+        "body": r"""# `/pmem-concept`（别名 `/art-concept`）— ZHO / Yolain / Comfy-FLUX 式概念图 / Key Art
+
+你现在运行在 **pmem-art 概念图 / Key Art 模式**（对标 ZHO Comfy-FLUX 工作流与 Yolain 等 FLUX 系提示法）：用 **完整自然语言句子** 描述成片，**主体与构图靠前**；FLUX 系几乎无有效负向 Prompt，排斥项用正向措辞写进正文。
+
+---
+
+## 一、适用场景
+- 主视觉 Key Art / 宣传海报 / 场景气氛图 / 角色概念设定 / 封面插画
+- 需要电影感光影、叙事构图、高完成度单帧，而非 UI 切图或 SVG 图标
+
+## 二、FLUX 系 Prompt 写法（必须遵守）
+1. **完整句，不要纯 tag 堆砌**；T5/CLIP-L 对句子更友好。
+2. **权重靠前**：先写主体与动作，再场景，再风格/光影/色板，再画幅与成片要求。
+3. **无负向列表**：把「不要霓虹紫」写成「干净的青瓷白与墨蓝，无霓虹」。
+4. **可选结构模板**：
+   ```
+   [主体与动作]。[场景与空间关系]。[光影与时段]。[材质与画风]。
+   [色板：主色…辅色…点缀…]。[构图/景别/画幅]。[成片质量：边缘清晰、无水印无文字…]
+   ```
+
+## 三、标准流程（Memory → Prompt → Converge）
+
+### Step 0：垫图（可选）
+若用户丢入参考图：输出构图/色板 HEX/光影/笔触解构，写入 `converge start --ref-image … --ref-analysis …`。
+
+### Step 1：召回记忆并开收敛会话
+```bash
+python3 pmem_art.py search --module <scene.|character.|brand.模块>
+python3 pmem_art.py converge start --goal "<概念图目标>" --module <模块> [--ref-image …] [--ref-analysis …]
+```
+
+### Step 2：最多 8 轮自评收敛（合格线 `>= 9.5`）
+每轮：
+1. 用上一轮缺陷的 **正向叠加修正** 重写完整句 Prompt（仍禁止只堆 negative tags）。
+2. 生成 **1 张** 概念图 / Key Art。
+3. 五维严苛打分 + 说出合理处与不合理处 → `converge round`。
+4. `>= 9.5` 立即停；`< 9.5` 且未满 8 轮则继续；满 8 轮挑最高分。
+
+**概念图五维侧重**：
+1. 风格色板（2.5）2. 构图叙事与透视（2.5）3. 光影材质（2.0）4. 红线合规（1.5）5. 氛围/意图还原（1.5）
+
+### Step 3：结算与沉淀
+```bash
+python3 pmem_art.py converge finish --apply
+```
+向用户展示：胜出图、全轮次评分表、最终 Prompt 全文、已写入的 recipe/redline。
+
+## 四、与 `/pmem-draw` 的分工
+- **`/pmem-draw`**：通用单图收敛（角色立绘、道具、单件 UI 等）
+- **`/pmem-concept`**：专门服务 **概念图 / Key Art / 气氛图**，强制 FLUX 式完整句 Prompt 与叙事构图标准
+""",
+    },
+    {
+        "name": "pmem-icon",
+        "alias": "art-icon",
+        "title": "jezweb式一致化图标集/SVG取向生成 + 8轮9.5收敛",
+        "description": (
+            "当用户输入 /pmem-icon 或 /art-icon（如「/pmem-icon 给青瓷RPG做一套24px导航与道具图标」「/pmem-icon home settings inventory」）时触发。"
+            "按 jezweb icon-set-generator 式流程：定 style-spec → 批量一致化 SVG（或统一栅格图标）→ 一致性审查，关键单枚可用 8轮 >=9.5 收敛打磨。"
+        ),
+        "body": r"""# `/pmem-icon`（别名 `/art-icon`）— jezweb 式一致化图标集 / SVG 取向生成
+
+你现在运行在 **pmem-art 图标集模式**（对标 jezweb `icon-set-generator`）：先锁 **一份 style-spec**，再批量生成，保证 stroke、圆角、视口、视觉重量一致——**禁止**从 Lucide/Heroicons 随便拼一套「看起来差不多」的通用库图标冒充项目定制集。
+
+---
+
+## 一、适用场景
+- 网站 / App / 游戏 HUD 的 **成套自定义图标**
+- 需要 SVG（优先）或统一栅格（如 64×64 透明底道具图标）且 **整套同系**
+
+## 二、标准流程（Brief → Spec → Batch → Review → Converge）
+
+### Step 1：理解项目与图标清单
+收集：行业/项目气质、品牌色（即使 SVG 用 `currentColor` 也影响线型选择）、大约数量。
+按组建议清单（可让用户增删）：
+- Navigation / Communication / Trust / Actions / Industry-Specific（或游戏：Inventory / Combat / Status / Crafting）
+
+### Step 2：锁定 Style Spec（生成前必须确认）
+推荐预设起步：
+
+| Preset | 适用 | Stroke | Caps/Joins | Corners |
+|--------|------|--------|------------|---------|
+| Clean | 多数业务站 | 1.5px | round/round | 2px |
+| Sharp | 科技/硬核 | 1.5px | square/miter | 0px |
+| Soft | 亲和/休闲 | 2px | round/round | 4px |
+| Minimal | 编辑/优雅 | 1px | round/round | 0px |
+| Bold | 高识别/无障碍 | 2.5px | round/round | 2px |
+
+写入 `icons/style-spec.json`（含 grid/viewBox、strokeWidth、linecap、linejoin、padding、opticalBalance、icons[]）。
+
+### Step 3：SVG 硬规则（整套必须统一）
+```xml
+<svg xmlns="http://www.w3.org/2000/svg" width="{grid}" height="{grid}"
+  viewBox="0 0 {grid} {grid}" fill="none" stroke="currentColor"
+  stroke-width="{strokeWidth}" stroke-linecap="{…}" stroke-linejoin="{…}">
+  <!-- paths -->
+</svg>
+```
+1. **只用 `currentColor`**，禁止写死 `#000` / `blue`
+2. **同一 viewBox**、同一根节点 stroke 属性
+3. 无根节点 transform；无无用 id/class
+4. 坐标最多 2 位小数；保持 padding；视觉居中（光学校正）
+5. 路径尽量少；简单图标略加重以平衡视觉重量
+
+若用户要的是 **游戏道具栅格图标**（非 SVG）：仍先锁「线宽/圆角/色板/投影」style-spec，再批量生成透明底 PNG，规则改为「同色板同描边同投影」，并可用 `converge` 打磨单枚。
+
+### Step 4：分批生成（约每批 5 个）+ 一致性审查
+每批完成后检查：stroke 是否漂移、圆角是否混用、有无图标明显偏轻/偏重、是否贴边。
+全部完成后生成：
+```
+icons/
+├── style-spec.json
+├── preview.html      # 含 1x/2x 与深色底对比，内联 SVG
+├── home.svg
+└── …
+```
+
+### Step 5：关键图标 8轮9.5 收敛（可选）
+用户点名某枚「不对」或一致性审查不通过时：
+```bash
+python3 pmem_art.py converge start --goal "图标 <name> 对齐 style-spec" --module ui.Icons
+# 生成 → 自评（侧重：规格一致性 2.5 + 识别度 2.5 + …）→ round → finish --apply
+```
+
+### Step 6：沉淀
+```bash
+python3 pmem_art.py feedback "图标集 style-spec：<preset+stroke+grid摘要>" --module ui.Icons --kind art_decision
+python3 pmem_art.py ingest icons/preview.html -p "icon set preview" --apply   # 若适用
+```
+
+## 三、交付检查清单
+- [ ] 全部 SVG 同 viewBox / stroke-width / linecap / linejoin
+- [ ] 全部 `currentColor`
+- [ ] 视觉重量平衡、padding 一致、光学居中
+- [ ] 文件名 kebab-case；`preview.html` + `style-spec.json` 齐全
+- [ ] 若跑了收敛：附评分总表
+""",
+    },
 ]
 
 
@@ -267,6 +496,9 @@ def _render_agent_doc_block() -> str:
 | 技能指令 | 简短别名 | 用途说明 |
 | :--- | :--- | :--- |
 | **`/pmem-draw`** | **`/art-draw`** | **8轮 9.5分 闭环自评收敛生图**：支持① `/pmem-draw 生成一张xxx风格的xxx图` 或 ② `/pmem-draw [丢入一张图] 生成一张xxx图`（先深度分析参考图，再循环「生1张图 → 五维自评打分+指出不合理处 → `<9.5`分则叠加修正继续生 → 最多8轮挑最高分 → 输出全轮次评分优劣总表并自动沉淀记忆」） |
+| **`/pmem-ui`** | **`/art-ui`** | **SpriteCook 式 UI Kit / HUD / 九宫格整套**：概念先行 → 组件表 → 9-slice → 状态族，关键件 8轮9.5收敛 |
+| **`/pmem-concept`** | **`/art-concept`** | **ZHO/Yolain/Comfy-FLUX 式概念图 / Key Art**：完整句 Prompt + 8轮9.5收敛 |
+| **`/pmem-icon`** | **`/art-icon`** | **jezweb 式一致化图标集 / SVG**：style-spec 锁定 → 分批生成 → 一致性审查 + 可选收敛 |
 | **`/pmem-style-lock`** | **`/art-style`** | **样张一键提炼风格圣经与色板锁定**：丢入样张提取 HEX 色板、光影笔触与禁用词，锁定进项目记忆 |
 | **`/pmem-critique`** | **`/art-check`** | **主美级五维审稿与红线入库**：对照项目记忆给图片打分挑刺，并将翻车点记入 `style_redline` |
 | **`/pmem-variant`** | **`/art-variant`** | **跨画风分叉与表情/动作差分**：继承角色核心锚点，派生水彩/Q版/像素子模块或序列帧差分 |
@@ -352,7 +584,7 @@ def install_skills_and_agent_configs(root: Path, quiet: bool = False) -> dict[st
     installed["agent_docs"].append("AGENTS.md")
 
     if not quiet:
-        print("✨ 已自动安装 pmem-art 5 大美术技能（含别名共 10 个斜杠入口）到 Cursor / Claude Code / Codex：")
+        print(f"✨ 已自动安装 pmem-art {len(SKILL_SPECS)} 大美术技能（含别名共 {len(SKILL_SPECS)*2} 个斜杠入口）到 Cursor / Claude Code / Codex：")
         for spec in SKILL_SPECS:
             print(f"   · /{spec['name']:<16} (别名 /{spec['alias']:<11}) — {spec['title']}")
         print("   · 安装路径: .cursor/{skills,commands}/ · .claude/{skills,commands}/ · .agents/skills/ · CLAUDE.md · AGENTS.md")
