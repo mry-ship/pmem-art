@@ -1,189 +1,152 @@
-# 📘 pmem-art 画师手册 — 怎么在 Cursor 里越画越准
+# 📘 pmem-art 画师使用手册 — 怎么在 Cursor / Codex 里越画越准
 
-> **版本** v0.8.0 · **主入口**：Cursor 对话（不是 CLI 百科，不是 HTML 审稿台）  
-> **适合**：一个人或小团队，在 **同一个项目、画风基线相对稳定** 时，用 Cursor 反复生图/改图。
+> **版本**：`v0.9.0`  
+> **核心理念**：日常入口就是 **Cursor / Claude Code / Codex 对话框**（外加开箱即用的 `/pmem-draw` 等 5 个斜杠技能）。不用背 CLI、不用手写 YAML、不用把时间花在填表上。
 
 ---
 
 ## 目录
 
-1. [第一章：它到底帮你解决什么](#第一章它到底帮你解决什么)
-2. [第二章：第一次装进项目](#第二章第一次装进项目)
-3. [第三章：日常循环（生图 → 说话 → 更准）](#第三章日常循环生图--说话--更准)
-4. [第四章：你会说的话 → 系统怎么记](#第四章你会说的话--系统怎么记)
-5. [第五章：角色 / UI / 特效 / 多画风（后台分类）](#第五章角色--ui--特效--多画风后台分类)
-6. [第六章：可选工具（图谱、体检、命令）](#第六章可选工具图谱体检命令)
-7. [第七章：FAQ](#第七章faq)
+1. [第一章：初始化即自动安装的 5 大美术技能](#第一章初始化即自动安装的-5-大美术技能)
+2. [第二章：王牌技能 `/pmem-draw`（8轮9.5分自评收敛生图 & 垫图生图）](#第二章王牌技能-pmem-draw8轮95分自评收敛生图--垫图生图)
+3. [第三章：日常对话反馈怎么变成长期记忆](#第三章日常对话反馈怎么变成长期记忆)
+4. [第四章：三种项目接入方式（空项目 / 老项目 / 持续生图）](#第四章三种项目接入方式空项目--老项目--持续生图)
+5. [第五章：后台自动分类与多画风分叉（水彩 / Q版 / 像素）](#第五章后台自动分类与多画风分叉水彩--q版--像素)
+6. [第六章：命令与收敛追踪器参考](#第六章命令与收敛追踪器参考)
+7. [第七章：常见问题 FAQ](#第七章常见问题-faq)
 
 ---
 
-## 第一章：它到底帮你解决什么
+## 第一章：初始化即自动安装的 5 大美术技能
 
-在 Cursor 里画同一套项目视觉时，最烦的是：
+当你运行 `python3 pmem_art.py init`（或 `python3 pmem_art.py skills --install`）时，系统会自动在项目根目录生成：
 
-1. **上周刚骂过「别画赛博霓虹」**，这周 Agent 又画出来了。  
-2. **某张特别好**，过两天忘了当时方向，再也抽不回来。  
-3. **水彩概念图和正比立绘搅在一起**，越改越乱。  
-4. 不想学一套「美术资产管理」或天天填表。
+- **Cursor**：`.cursor/skills/<技能名>/SKILL.md` 与 `.cursor/commands/<技能名>.md`
+- **Claude Code**：`.claude/skills/<技能名>/SKILL.md`、`.claude/commands/<技能名>.md` 与 `CLAUDE.md`
+- **Codex**：`.agents/skills/<技能名>/SKILL.md` 与 `AGENTS.md`
 
-pmem-art 的答案很简单：
+你在对话框里敲 `/` 就能直接唤出：
 
-> **你只管评图；评过的话变成记忆；下次生图自动带上。**
-
-YAML、模块名、`classify` 分数——都是给 Agent / 脚本用的；你日常只说话。
+| 主技能指令 | 简短别名 | 什么时候用 |
+| :--- | :--- | :--- |
+| **`/pmem-draw`** | **`/art-draw`** | 想让 AI **自己反复打磨到 9.5 分以上**再交稿（支持纯文字或丢一张参考图） |
+| **`/pmem-style-lock`** | **`/art-style`** | 拿到一张特别对味的样张，想把它的色板、光影、笔触锁成长期标准 |
+| **`/pmem-critique`** | **`/art-check`** | 手头有一张图，想让 AI 对照历史红线严苛挑刺打分，并把毛病记入红线 |
+| **`/pmem-variant`** | **`/art-variant`** | 角色立绘定了，想衍生 **水彩概念图 / Q版贴纸 / 表情差分 / 序列帧** 且不崩人设 |
+| **`/pmem-atlas`** | **`/art-map`** | 阶段性整理散图，并刷新 `art-atlas.html` 画廊回看 |
 
 ---
 
-## 第二章：第一次装进项目
+## 第二章：王牌技能 `/pmem-draw`（8轮9.5分自评收敛生图 & 垫图生图）
 
-### 2.1 空项目
+平时让 AI 生图最大的痛点是：**生 1 张经常有硬伤（手崩、比例不对、混进赛博紫、漏画配饰），每次都要人工催它改。**  
+`/pmem-draw`（别名 `/art-draw`）把「生图 → 审图打分 → 挑出不合理处 → 叠加修正再生图」做成了 **全自动收敛循环**。
+
+### 2.1 两种输入姿势
+
+#### 姿势 A：直接文字描述
+> `/pmem-draw 生成一张青瓷幻想风格的阿斯特拉全身立绘，7.5头身，透明底`
+
+#### 姿势 B：丢入一张图 + 文字要求（垫图解构模式）
+> `/pmem-draw [拖入一张参考图] 生成一张这种构图和笔触的浮空遗迹场景气氛图`
+
+在**姿势 B** 下，Agent 在生第 1 张图之前，必须先输出 **【参考图视觉解构报告】**：
+1. 构图与透视重心
+2. 主辅色板 `#HEX` 配比与光影冷暖
+3. 笔触质感与边缘处理
+4. 需要保留的亮点 vs 需要规避的瑕疵
+
+### 2.2 五维严苛打分标准（满分 10.0 分，`>= 9.5` 才算合格）
+
+每生成 1 张图，Agent 都会按五维自评并说出具体不合理的地方：
+1. **风格与色板契合度（2.5 分）**
+2. **构图、透视与结构合理性（2.5 分）**
+3. **光影、材质与细节完成度（2.0 分）**
+4. **历史红线与管线规格合规度（1.5 分）**
+5. **提示词意图 / 参考图神韵还原度（1.5 分）**
+
+### 2.3 收敛规则（最多 8 次生图）
+- **达到 `>= 9.5` 分**：立即停止循环，当前图即为最终合格图。
+- **未达到 `9.5` 分（且轮次 `< 8`）**：不算合格！把本轮分析出的「不合理之处」叠加进下一轮修正指令，继续生图。
+- **满 8 次仍未达到 `9.5` 分**：停止循环，**从全部 8 轮中挑出分数最高的那一张**作为最终结果，并说明残余不足。
+
+### 2.4 最终必出的全轮次评分表与记忆沉淀
+无论第几轮结束，最终都会给你列出一张清晰的汇总表：
+- 每一轮的 **图片路径、综合评分（含五维明细）、亮眼合理处、不合理缺陷分析、叠加修正策略、是否胜出**；
+- 自动把胜出图的配方写入 `.memory-art` 的 `recipe`，把中途踩到的典型不合理项写入 `style_redline`，下次生同类图直接避坑！
+
+---
+
+## 第三章：日常对话反馈怎么变成长期记忆
+
+即使不用 `/pmem-draw`，你平时在 Cursor 里随口评一句，Agent 也会调用 `feedback` 记下来：
 
 ```bash
-python3 pmem_art.py init --name "我的游戏"
+python3 pmem_art.py feedback "太赛博了，别这样画" -m character.Astra -a .cursor/generated/try1.png
+python3 pmem_art.py feedback "这版留着" -m character.Astra -a .cursor/generated/try2.png
+python3 pmem_art.py feedback "换成水彩" -m character.Astra
+```
+
+- **否定词**（太赛博 / 头太大 / 别这样画 / 漏抠） → 自动记为 **`style_redline`（红线）**
+- **肯定词**（这版留着 / 就这个 / 定稿 / 过了） → 自动记为 **`recipe`（定稿配方）**
+- **调整词**（换成水彩 / 改成Q版 / 修一下） → 自动记为 **`visual_correction`（勘误 + 画风分叉）**
+- **定调词**（以后都用… / 统一用…） → 自动记为 **`art_decision`（审美拍板）**
+
+---
+
+## 第四章：三种项目接入方式（空项目 / 老项目 / 持续生图）
+
+### 4.1 空项目冷启动
+```bash
+python3 pmem_art.py init --name "Project-Celadon"
 python3 pmem_art.py bootstrap --mode young --apply
 ```
 
-会得到：
-
-- `.memory-art/`（记忆库，跟 Git 走）
-- `assets/{brand,character,scene,ui,vfx,anim}/`
-- `.cursor/rules/pmem-art.mdc`（**对话规则，alwaysApply**）
-- `.cursor/hooks.json`（生图前召回 / 落盘后提醒）
-
-然后用 Cursor 打开项目，直接开画。
-
-### 2.2 老项目（已有乱目录）
-
+### 4.2 老项目无损挂载（绝不乱移旧文件）
 ```bash
 python3 pmem_art.py bootstrap --mode legacy --roots Art Content assets
 python3 pmem_art.py accept --all
+python3 pmem_art.py skills --install
 ```
 
-**不会擅自移动你的旧文件。** 只建立模块候选与记忆架子；之后靠对话反馈慢慢变准。
-
-### 2.3 确认规则在
-
-打开 `.cursor/rules/pmem-art.mdc`，应看到：生图前 search、用户说「太赛博/这版留着…」时跑 `feedback`。  
-若没有，再跑一次 `init`（或从本仓库拷贝该文件）。
-
----
-
-## 第三章：日常循环（生图 → 说话 → 更准）
-
-```text
-你：给 Astra 画半身立绘，青瓷白袍
-    ↓
-Agent：search 记忆 → 带上旧红线/定稿 → GenerateImage
-    ↓
-你：太赛博了，别这样画
-    ↓
-Agent：pmem_art.py feedback "太赛博了，别这样画" -m character.Astra -a <这张图>
-    ↓
-你：再画一张
-    ↓
-Agent：search 时已经能读到「禁止赛博」→ 新图更贴青瓷方向
-```
-
-### 你需要做的
-
-- 正常下指令生图  
-- 看完用**短中文**评一句  
-- 偶尔说「这版留着」把好的钉住  
-
-### 你不需要做的
-
-- 手写 `.md` 记忆卡  
-- 先开 `art-atlas.html` 再干活  
-- 背模块 ID（说「Astra」「背包弹窗」即可，Agent 会对应）
-
----
-
-## 第四章：你会说的话 → 系统怎么记
-
-Agent（或你）统一用：
-
+### 4.3 持续生图自动分类入库
 ```bash
-python3 pmem_art.py feedback "<原话>" [--module 模块] [--asset 图片路径]
-# 别名
-python3 pmem_art.py note "<原话>" ...
-```
-
-| 原话类型 | 判定 | 写入 kind | 关联图角色 |
-| :--- | :--- | :--- | :--- |
-| 太赛博 / 别这样画 / 头太大 / 不要再… | 否定 | `style_redline` | rejected |
-| 这版留着 / 就这个 / 定稿 / 过了 | 肯定 | `recipe` | approved |
-| 换成水彩 / 改成Q版 / 修一下… | 修正 | `visual_correction` | reference |
-| 以后都用… / 就定… / 统一用… | 拍板 | `art_decision` | — |
-
-文件落在：`.memory-art/entries/<模块>/CHAT….md`  
-下次 `search` 会按模块（含父级）召回。
-
-**自己试一句：**
-
-```bash
-python3 pmem_art.py feedback "太赛博了，别这样画" -m character.Astra --dry-run
-python3 pmem_art.py feedback "这版留着" -m character.Astra -a assets/character/astra_standing_v3.png
-python3 pmem_art.py search -m character.Astra
+python3 pmem_art.py ingest .cursor/generated/new.png -p "角色Astra 水彩 概念图" --apply
 ```
 
 ---
 
-## 第五章：角色 / UI / 特效 / 多画风（后台分类）
+## 第五章：后台自动分类与多画风分叉（水彩 / Q版 / 像素）
 
-你说话时不必提这些；但心里有数会更顺：
-
-| 领域 | 典型内容 | 模块例子 |
-| :--- | :--- | :--- |
-| character | 立绘、表情、三视图 | `character.Astra` |
-| ui | 弹窗、图标、九宫格 | `ui.InventoryHUD` |
-| vfx | 刀光、序列帧 | `vfx.ArcaneSlash` |
-| scene | 气氛图、场景 | `scene.FloatingRuins` |
-| brand | 全局色板、风格圣经 | `brand.WorldStyle` |
-| anim | Spine / Live2D 等 | `anim.*` |
-| misc | 暂时看不准的 | `misc.*`（候选） |
-
-**同一角色多种画风**：说「换成水彩」后，ingest/分类会倾向 `character.Astra.Watercolor` 子模块，和正比立绘分开，避免管线规格打架。
-
-持续生图归档：
-
-```bash
-python3 pmem_art.py ingest .cursor/generated/foo.png -p "角色Astra 水彩 概念图" --apply
-python3 pmem_art.py classify-watch --apply
-```
+系统在后台维护 `brand` / `character` / `scene` / `ui` / `vfx` / `anim` 六大领域与 `misc` 候选池：
+- 同一个角色 `character.Astra`，当你说「换成水彩」或生成水彩概念图时，会自动归入子模块 **`character.Astra.Watercolor`**（继承 `character.Astra` 的人设锚点，但独立存放且不强制要求透明底）。
+- 置信度高（`>= 0.78`）自动激活模块；置信度中等或偏低则保持 **`candidate`（候选）**，绝不静默污染正式模块。
 
 ---
 
-## 第六章：可选工具（图谱、体检、命令）
+## 第六章：命令与收敛追踪器参考
 
-这些是**回看 / 排查**用，不是每天第一步。
-
-| 命令 | 何时用 |
+| 命令 | 说明 |
 | :--- | :--- |
-| `search` / `feedback` / `note` | **每天**（或交给 Agent） |
-| `ingest` / `classify` | 新图要归档时 |
-| `list` | 看看有哪些模块 |
-| `doctor` / `validate` | 觉得图规乱了、透明底丢了 |
-| `atlas` | 想打开 `art-atlas.html` 看正反例滑杆、色板 |
-| `bootstrap` / `accept` / `place` | 第一次接入 / 老项目 |
-| `hook pre-gen\|post-asset\|stop` | Cursor hooks 自动调用 |
-
-`art-atlas.html`：双击可看画廊、Do/Don't 滑杆、配方复制——**适合阶段回顾，不是对话替代品**。
+| `python3 pmem_art.py skills --install` | 安装/刷新 `.cursor`、`.claude`、`.agents` 下的 5 大技能与斜杠命令 |
+| `python3 pmem_art.py skills --list` | 查看所有内置技能列表 |
+| `python3 pmem_art.py converge start -g "<目标>" -m <模块> [--ref-image <图> --ref-analysis "<解构>"]` | 开启一轮最多 8 次、`>=9.5` 分的收敛生图会话 |
+| `python3 pmem_art.py converge round --round <i> -i <图> -s <分> --strengths "..." --defects "..." --next-fix "..."` | 记录第 $i$ 轮自评分数、亮点、不合理处与叠加修正策略 |
+| `python3 pmem_art.py converge finish --apply` | 结算达标图或 8 轮最高分图，输出 Markdown 评分总表并自动写记忆 |
+| `python3 pmem_art.py feedback "<原话>" -m <模块> [-a <图>]` | 把画师自然语言评价沉淀为记忆 |
+| `python3 pmem_art.py search -m <模块>` | 召回该模块（含父模块）的红线、定稿与色板 |
+| `python3 pmem_art.py ingest <图> -p "<说明>" --apply` | 四信号分类并归档图片 |
+| `python3 pmem_art.py atlas` | 可选：编译生成 `art-atlas.html` 可视化图谱 |
 
 ---
 
-## 第七章：FAQ
+## 第七章：常见问题 FAQ
 
-**Q：我不会 Python / 不想碰终端？**  
-A：在 Cursor 里正常说话即可；规则会要求 Agent 自己跑 `search` / `feedback`。
+**Q1：如果连生 8 张图都没有达到 9.5 分怎么办？**  
+A：到了第 8 轮仍未达 9.5 分时，`converge finish` 会自动停止循环，从 1~8 轮里挑出**综合评分最高**的那一张作为阶段最优交付图，并在最终汇总表里完整列出每一轮的分数、亮点与剩余不足。
 
-**Q：记忆会不会把项目写乱？**  
-A：反馈只追加 `.memory-art/entries/...`；老项目模式默认不移动你的现有资产。
+**Q2：丢入一张图让 `/pmem-draw` 生成时，它会怎么处理那张图？**  
+A：它会先做 **Step 0 参考图深度解构**（分析构图、提取主辅色 HEX、判断光影与笔触、识别头身结构），把解构结论记入收敛会话基准，然后带着这份基准进入 1~8 轮自评收敛循环。
 
-**Q：和 ComfyUI / 本地 SD 的关系？**  
-A：配方可以记在 `recipe` 里；日常仍建议在 Cursor 对话里用「这版留着 / 别这样」积累，不必先学工作流 JSON。
-
-**Q：想暂时关掉？**  
-A：说「跳过美术记忆」或「skip-art-memory」。
-
-**Q：GPL-3.0？**  
-A：是，与 mry-ship/pmem 一致，见 `LICENSE`。
+**Q3：以后升级了 `pmem-art`，怎么刷新已安装项目的技能文件？**  
+A：在项目根目录运行 `python3 pmem_art.py skills --install` 即可一键无损刷新 `.cursor`、`.claude`、`.agents` 下的全部技能定义。

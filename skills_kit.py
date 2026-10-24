@@ -1,0 +1,609 @@
+#!/usr/bin/env python3
+"""
+pmem-art skills_kit:
+1. 定义并自动安装面向 Cursor / Claude Code / Codex 的 5 大美术技能（Skills & Slash Commands）：
+   - /pmem-draw    (别名 /art-draw)    : 8轮 9.5分 闭环自评收敛生图（支持纯文本或【丢入参考图】先解构再生图 + 最终汇总评分表）
+   - /pmem-style-lock (别名 /art-style): 样张/参考图一键提炼风格圣经与色板锁定
+   - /pmem-critique (别名 /art-check)  : 单图/批量图主美级五维审稿与红线入库
+   - /pmem-variant (别名 /art-variant) : 同角色/同资产跨画风分叉（Q版/水彩/像素）与表情动作差分
+   - /pmem-atlas   (别名 /art-map)     : 一键归档散图、体检并刷新可视化图谱 art-atlas.html
+
+2. 提供 `pmem_art.py converge` 闭环收敛状态机与评分表生成器：
+   - 记录第 1..8 轮生图的路径、五维评分、合理亮点、不合理缺陷与下一轮叠加修正指令
+   - 判定 `>= 9.5` 立即达标收敛；若满 8 轮仍 `< 9.5`，自动挑选全阶段最高分轮次胜出
+   - 输出标准 Markdown 全轮次评分优劣对比表，并将胜出图配方与翻车红线自动写入 `.memory-art/`
+"""
+from __future__ import annotations
+
+import json
+import shutil
+from datetime import datetime, timezone, timedelta
+from pathlib import Path
+from typing import Any
+
+
+def _now_cst() -> datetime:
+    return datetime.now(timezone(timedelta(hours=8)))
+
+
+SKILL_SPECS: list[dict[str, Any]] = [
+    {
+        "name": "pmem-draw",
+        "alias": "art-draw",
+        "title": "8轮9.5分闭环自评收敛生图（支持垫图分析 + 自动挑最高分 + 汇总表）",
+        "description": (
+            "当用户输入 /pmem-draw 或 /art-draw（如「/pmem-draw 生成一张xxx风格的xxx图」或「/pmem-draw [附带一张图] 生成一张xxx图」）时触发。"
+            "执行「先查记忆/分析参考图 → 生成1张图 → 严苛五维自评打分+指出不合理处 → 未达9.5分则叠加修正继续生图（最多8轮）→ "
+            "达标或满8轮挑最高分 → 输出全轮次评分优劣汇总表并沉淀记忆」的完整闭环。"
+        ),
+        "body": r"""# `/pmem-draw`（别名 `/art-draw`）— 8轮 9.5分 闭环自评收敛生图技能
+
+你现在运行在 **pmem-art 闭环自评收敛生图模式**。无论是纯文字生图还是用户丢入了一张参考图，你都必须严格执行以下闭环流程，**绝不能只生一张图就草草交差**（除非第 1 轮真实严苛评分就达到 `>= 9.5`）。
+
+---
+
+## 一、支持两种触发方式
+
+### 方式 A：纯文本指令生图
+> 例：`/pmem-draw 生成一张东方青瓷水彩风格的阿斯特拉半身立绘`
+- 直接进入 **Step 1（召回记忆）→ Step 2（最多8轮自评收敛循环）→ Step 3（输出汇总表与沉淀记忆）**。
+
+### 方式 B：丢入一张参考图 / 垫图 + 生成指令
+> 例：`/pmem-draw [附带一张图] 生成一张同风格但换成冰霜刀光特效的武器图标`
+- **必须先执行 Step 0（参考图深度解构）**：
+  1. 仔细观察用户丢过来的图片（必要时用 Read 查看图像或运行 `python3 pmem_art.py classify <参考图路径>` 获取物理特征）。
+  2. 输出 **【参考图视觉解构报告】**：
+     - **构图与视角**：镜头景别、透视角度、主体占比、重心位置
+     - **色板与光影**：提取 3~5 个主辅色 HEX、主光源方向、明暗交界线冷暖关系
+     - **笔触与材质**：线条粗细/软硬、厚涂/赛璐珞/水彩颗粒感、边缘处理
+     - **比例与结构特征**：头身比、关键视觉锚点、哪些亮点必须继承、哪些瑕疵不要继承
+  3. 将上述解构结论写入收敛会话（`python3 pmem_art.py converge start --goal "..." --ref-image "<路径>" --ref-analysis "<解构摘要>"`），再进入 Step 1 & Step 2。
+
+---
+
+## 二、标准执行流程（Step 1 ~ Step 3）
+
+### Step 1：生图前召回历史记忆 & 初始化收敛会话
+1. 识别本次目标所属模块（如 `character.Astra`、`ui.InventoryHUD`、`vfx.FrostSlash` 等），运行：
+   ```bash
+   python3 pmem_art.py search --module <目标模块>
+   ```
+   读取该模块已有的 **`style_redline`（历史翻车红线）**、**`recipe`（已验证定稿方向）** 与 **`palette`（标准色板）**。
+2. 启动本轮收敛追踪器：
+   ```bash
+   python3 pmem_art.py converge start --goal "<用户目标描述>" --module <目标模块> [--ref-image <参考图>] [--ref-analysis "<参考图分析>"]
+   ```
+
+---
+
+### Step 2：闭环自评收敛循环（最多 8 轮，合格线 `>= 9.5 / 10.0`）
+
+令轮次 $i = 1, 2, \dots, 8$：
+
+#### 2.1 生成第 $i$ 轮单张候选图
+- 综合「用户原始需求 + 参考图解构特征（若有）+ `.memory-art` 历史红线 + **前 $i-1$ 轮累积的修正指令**」，构造第 $i$ 轮生图 Prompt。
+- 调用生图工具（如 `GenerateImage` 或项目配置的生图脚本）**生成 1 张图**。
+
+#### 2.2 严苛自我审图与五维打分（满分 `10.0` 分，精确到 `0.1`）
+生成后，你**必须亲自检视这张生成图**，按以下 5 个维度客观、严苛打分（严禁敷衍给高分，有任何明显结构/透视/风格瑕疵都必须扣分）：
+1. **风格与色板契合度（满分 2.5）**：是否符合目标画风与色板？有没有混入廉价塑料感、错误赛博霓虹或脏色？
+2. **构图、透视与结构合理性（满分 2.5）**：头身比是否准确？手部/手指/五官/关节/器械对称性是否合理？UI 九宫格中心区是否干净？
+3. **光影、材质与细节完成度（满分 2.0）**：光源方向是否统一？材质高光与暗部层次是否清晰？边缘有无杂边/毛刺？
+4. **历史红线与管线规格合规度（满分 1.5）**：是否避开了 `style_redline`？透明底/宽高比是否符合预期？
+5. **意图还原与参考图继承度（满分 1.5）**：是否精准表达了用户想要的动作/氛围/垫图神韵？
+
+计算总分：`score = d1 + d2 + d3 + d4 + d5`（满分 `10.0`）。
+
+#### 2.3 说出本张图的【合理亮点】与【不合理之处】，记录到收敛器
+每一轮生成后，向用户简明汇报本轮得分、哪里画得好、**哪里不合理需要改**，并运行：
+```bash
+python3 pmem_art.py converge round \
+  --round <i> \
+  --image "<第i轮图片路径>" \
+  --score <总分，如 8.6> \
+  --dims "<五维明细，如 风格2.2/结构2.0/光影1.7/合规1.4/还原1.3>" \
+  --strengths "<本轮合理与亮眼之处>" \
+  --defects "<本轮不合理与缺陷之处（具体到部位/色彩/构图）>" \
+  --next-fix "<下一轮叠加修正策略（具体要改什么提示词/加什么负向词/调什么结构）>" \
+  --prompt "<本轮实际使用的 Prompt>"
+```
+
+#### 2.4 收敛判定（核心规则！）
+- **情况 1：本轮评分 `>= 9.5`**
+  🎉 **合格达标！** 立即结束生图循环，以第 $i$ 轮图片作为最终胜出图，进入 Step 3。
+- **情况 2：本轮评分 `< 9.5` 且 $i < 8$**
+  🔄 **不合格！** 必须把本轮找出的「不合理之处」转化为具体的叠加修正指令（Overlay Fix），并入第 $i+1$ 轮 Prompt（保留已画对的优点，专门修补本轮缺陷），**立即继续生第 $i+1$ 张图**。
+- **情况 3：已满 8 轮（$i = 8$）且评分仍 `< 9.5`**
+  🏁 **达到 8 轮上限，停止循环！** 从第 1 ~ 8 轮中**挑选综合评分最高的那一轮图片**作为最终交付图，进入 Step 3。
+
+---
+
+### Step 3：结算最优图、输出全轮次评分对比表 & 自动沉淀记忆
+
+循环结束后，运行：
+```bash
+python3 pmem_art.py converge finish --apply
+```
+该命令会自动：
+1. 选出达标轮次（`>= 9.5`）或全阶段最高分轮次（`Best of 8`）。
+2. 将最终胜出图通过 `ingest` / `feedback` 写入 `.memory-art` 的 `recipe`（正向定稿锚点），并把迭代过程中暴露的典型不合理点写入 `style_redline` / `visual_correction`。
+3. 生成标准 Markdown 汇总表。
+
+**你在最终回复中必须向用户完整展示：**
+1. 🏆 **最终胜出图片展示与结论**（说明是第几轮 `>= 9.5` 达标收敛，还是满 8 轮挑出第 X 轮最高分 `X.X / 10`）。
+2. 📊 **全阶段生图收敛评分总表**（包含每一轮的：轮次、图片路径、五维得分与总分、合理/亮点之处、**不合理/缺陷之处**、叠加修正方案、是否胜出）。
+3. ⚠️ **最终图的残余注意点与已沉淀的记忆条目**（让下次生同类图起点更高）。
+""",
+    },
+    {
+        "name": "pmem-style-lock",
+        "alias": "art-style",
+        "title": "参考图/样张一键提炼风格圣经与色板锁定",
+        "description": (
+            "当用户输入 /pmem-style-lock 或 /art-style 并附带样张/参考图时触发。"
+            "自动解构样张的主辅色板 HEX、光影法则、笔触特征与禁用词，一键锁定为项目或模块的风格基准（art_decision + recipe）。"
+        ),
+        "body": r"""# `/pmem-style-lock`（别名 `/art-style`）— 样张提炼风格圣经与色板锁定
+
+当用户丢入 1~3 张满意的样张或概念图，希望「以后项目/这个角色就按这个画风来」时执行：
+
+1. **视觉基因深度提取**：
+   - **主辅色板（Palette）**：提取主色（70%）、辅色（20%）、点缀色（10%）的精确 `#HEX` 值与中文命名。
+   - **笔触与渲染（Rendering）**：线稿粗细与颜色、赛璐珞分层数 / 厚涂笔触感 / 水彩边缘扩散度。
+   - **光影与氛围（Lighting）**：主光源角度、环境光色温、高光材质表现（金属/丝绸/青瓷/发光体）。
+   - **严禁偏离项（Anti-Style Redlines）**：明确列出哪类常见 AI 坏习惯会破坏该画风（如过度霓虹、脏暗阴影、油腻高光、错误头身比）。
+2. **自动写入记忆库**：
+   - 调用 `python3 pmem_art.py feedback "以后统一按此样张画风：<核心色板+光影+笔触摘要>" --module <目标模块> --asset <样张路径> --kind art_decision`
+   - 调用 `python3 pmem_art.py feedback "禁止偏离样张画风：<反例禁用词汇总>" --module <目标模块> --kind style_redline`
+3. **输出《风格锁定卡片》**：用清晰的表格展示色板 HEX、正向风格词、负向禁用词与已写入的记忆路径。
+""",
+    },
+    {
+        "name": "pmem-critique",
+        "alias": "art-check",
+        "title": "单图/批量图主美级五维审稿与红线入库",
+        "description": (
+            "当用户输入 /pmem-critique 或 /art-check 对现有图片进行审稿挑刺时触发。"
+            "对照项目历史红线与模块规格进行五维打分，指出不合理之处，并可将问题一键记入 style_redline。"
+        ),
+        "body": r"""# `/pmem-critique`（别名 `/art-check`）— 主美级五维审稿与红线入库
+
+当用户丢入一张或多张图让 Agent「审一下 / 看看哪里不合理 / 打个分」时执行：
+
+1. **召回模块基准**：
+   - 运行 `python3 pmem_art.py search --module <模块>` 获取已有红线、色板与管线规格。
+   - 运行 `python3 pmem_art.py classify <图片路径>` 获取分辨率、宽高比、Alpha 透明通道等物理参数。
+2. **五维打分与挑刺（满分 10.0 分）**：
+   - 从「风格色板 (2.5) / 结构透视 (2.5) / 光影材质 (2.0) / 管线与红线合规 (1.5) / 设定还原 (1.5)」五个维度打分。
+   - 明确列出 **✅ 合理亮点** 与 **❌ 不合理/需返修点**，并给出可直接用于下一轮重绘的 **修正 Prompt 建议**。
+3. **自动沉淀红线**：
+   - 若评分 `< 9.5` 或用户认可某条挑刺结论，调用 `python3 pmem_art.py feedback "<具体不合理点>" --module <模块> --asset <图片路径>` 自动写入记忆库。
+""",
+    },
+    {
+        "name": "pmem-variant",
+        "alias": "art-variant",
+        "title": "同角色/同资产跨画风分叉（水彩/Q版/像素）与表情动作差分",
+        "description": (
+            "当用户输入 /pmem-variant 或 /art-variant 要求基于已有角色/资产生成其他画风（Q版/水彩/像素）或表情/动作差分时触发。"
+            "自动继承父模块核心视觉锚点并建立独立子模块，做到换画风不丢人设。"
+        ),
+        "body": r"""# `/pmem-variant`（别名 `/art-variant`）— 跨画风分叉与表情/动作差分生成
+
+当用户希望把已有角色/物件衍生出新画风（如「把 Astra 做成 Q 版贴纸 / 水彩概念图」）或做差分（如「生成愤怒/惊讶表情差分」「生成 4 帧挥刀序列帧」）时执行：
+
+1. **读取父模块核心锚点**：
+   - 运行 `python3 pmem_art.py search --module <父模块，如 character.Astra>`。
+   - 锁定不可改变的**人设核心识别特征**（发色、瞳色、标志性配饰如左眼黄铜星盘义眼、主色板）。
+2. **确定子模块与规格适配**：
+   - 画风分叉：如 `character.Astra.Chibi`（2~3头身、允许大头萌化）、`character.Astra.Watercolor`（允许非透明纸本纹理底 `alpha_required: false`）。
+   - 差分/动画：如 `character.Astra.Expressions`（严格锁死五官比例与底图机位）、`anim.Astra` 或 `vfx.*`（整除序列帧网格 + 透明底）。
+3. **调用自评收敛生图并独立归档**：
+   - 按 9.5 分标准生成与自评，完成后运行 `python3 pmem_art.py ingest <新图路径> -p "<含角色名+画风/差分词的Prompt>" --apply` 自动创建子模块并归位。
+""",
+    },
+    {
+        "name": "pmem-atlas",
+        "alias": "art-map",
+        "title": "一键归档散图、记忆体检并刷新可视化图谱工作台",
+        "description": (
+            "当用户输入 /pmem-atlas 或 /art-map 时触发。"
+            "自动扫描归位未分类散图、运行管线与记忆过期体检，并重新生成 art-atlas.html。"
+        ),
+        "body": r"""# `/pmem-atlas`（别名 `/art-map`）— 整理散图与刷新可视化图谱
+
+当用户想阶段性整理项目里的生成图、查看目前积累了多少条红线与定稿配方时执行：
+
+1. **扫描未归档新图**：
+   ```bash
+   python3 pmem_art.py classify-watch
+   ```
+   汇报有哪些散图待归档（若用户同意，加 `--apply` 自动归位）。
+2. **模块与记忆总览**：
+   ```bash
+   python3 pmem_art.py list
+   ```
+3. **重新编译单文件交互式图谱**：
+   ```bash
+   python3 pmem_art.py atlas
+   ```
+   告知用户可随时双击项目根目录的 `art-atlas.html` 检视正反例滑杆与配方卡。
+""",
+    },
+]
+
+
+def _render_skill_md(spec: dict[str, Any], command_name: str) -> str:
+    return (
+        f"---\n"
+        f"name: {command_name}\n"
+        f"description: {spec['description']}\n"
+        f"---\n\n"
+        f"{spec['body'].strip()}\n"
+    )
+
+
+def _render_command_md(spec: dict[str, Any], command_name: str) -> str:
+    return (
+        f"---\n"
+        f"description: {spec['title']}（pmem-art）\n"
+        f"---\n\n"
+        f"{spec['body'].strip()}\n"
+    )
+
+
+AGENT_DOC_MARKER_START = "<!-- pmem-art:skills:start -->"
+AGENT_DOC_MARKER_END = "<!-- pmem-art:skills:end -->"
+
+
+def _render_agent_doc_block() -> str:
+    return f"""{AGENT_DOC_MARKER_START}
+## 🎨 pmem-art 美术记忆系统与内置斜杠技能（Skills）
+
+本项目挂载了 **pmem-art**（面向 Cursor / Claude Code / Codex 的个人美术积累记忆与闭环自评生图系统）。
+
+### 1. 内置快捷技能（在对话框直接输入 `/技能名` 即可触发）
+
+| 技能指令 | 简短别名 | 用途说明 |
+| :--- | :--- | :--- |
+| **`/pmem-draw`** | **`/art-draw`** | **8轮 9.5分 闭环自评收敛生图**：支持① `/pmem-draw 生成一张xxx风格的xxx图` 或 ② `/pmem-draw [丢入一张图] 生成一张xxx图`（先深度分析参考图，再循环「生1张图 → 五维自评打分+指出不合理处 → `<9.5`分则叠加修正继续生 → 最多8轮挑最高分 → 输出全轮次评分优劣总表并自动沉淀记忆」） |
+| **`/pmem-style-lock`** | **`/art-style`** | **样张一键提炼风格圣经与色板锁定**：丢入样张提取 HEX 色板、光影笔触与禁用词，锁定进项目记忆 |
+| **`/pmem-critique`** | **`/art-check`** | **主美级五维审稿与红线入库**：对照项目记忆给图片打分挑刺，并将翻车点记入 `style_redline` |
+| **`/pmem-variant`** | **`/art-variant`** | **跨画风分叉与表情/动作差分**：继承角色核心锚点，派生水彩/Q版/像素子模块或序列帧差分 |
+| **`/pmem-atlas`** | **`/art-map`** | **一键整理散图并刷新 `art-atlas.html` 可视化图谱** |
+
+### 2. 日常自然语言反馈沉淀（无需手写 YAML）
+- 生图前先运行：`python3 pmem_art.py search --module <模块>` 或 `python3 pmem_art.py search "<关键词>"`
+- 当画师说「太赛博 / 头太大 / 别这样画 / 这版留着 / 换成水彩 / 以后都用…」时，立即运行：
+  `python3 pmem_art.py feedback "<画师原话>" --module <模块> [--asset <图片路径>]`
+- 运行闭环收敛追踪器：`python3 pmem_art.py converge start|round|finish`
+{AGENT_DOC_MARKER_END}
+"""
+
+
+def _upsert_markdown_block(file_path: Path, header_title: str) -> None:
+    block = _render_agent_doc_block()
+    if file_path.exists():
+        content = file_path.read_text(encoding="utf-8")
+        if AGENT_DOC_MARKER_START in content and AGENT_DOC_MARKER_END in content:
+            pre = content.split(AGENT_DOC_MARKER_START)[0]
+            post = content.split(AGENT_DOC_MARKER_END)[1]
+            file_path.write_text(pre.rstrip() + "\n\n" + block + "\n" + post.lstrip(), encoding="utf-8")
+        else:
+            file_path.write_text(content.rstrip() + "\n\n" + block + "\n", encoding="utf-8")
+    else:
+        file_path.write_text(f"# {header_title}\n\n{block}\n", encoding="utf-8")
+
+
+def install_skills_and_agent_configs(root: Path, quiet: bool = False) -> dict[str, list[str]]:
+    """
+    在目标项目根目录自动安装：
+    - Cursor Skills & Slash Commands: .cursor/skills/<name>/SKILL.md, .cursor/commands/<name>.md
+    - Claude Code Skills & Commands : .claude/skills/<name>/SKILL.md, .claude/commands/<name>.md, CLAUDE.md
+    - Codex / Agents Skills         : .agents/skills/<name>/SKILL.md, AGENTS.md
+    """
+    installed: dict[str, list[str]] = {
+        "cursor_skills": [],
+        "cursor_commands": [],
+        "claude_skills": [],
+        "claude_commands": [],
+        "codex_skills": [],
+        "agent_docs": [],
+    }
+
+    for spec in SKILL_SPECS:
+        names = [spec["name"], spec["alias"]]
+        for nm in names:
+            # 1. Cursor skill & slash command
+            c_skill = root / ".cursor" / "skills" / nm / "SKILL.md"
+            c_skill.parent.mkdir(parents=True, exist_ok=True)
+            c_skill.write_text(_render_skill_md(spec, nm), encoding="utf-8")
+            installed["cursor_skills"].append(str(c_skill.relative_to(root)))
+
+            c_cmd = root / ".cursor" / "commands" / f"{nm}.md"
+            c_cmd.parent.mkdir(parents=True, exist_ok=True)
+            c_cmd.write_text(_render_command_md(spec, nm), encoding="utf-8")
+            installed["cursor_commands"].append(str(c_cmd.relative_to(root)))
+
+            # 2. Claude Code skill & slash command
+            cl_skill = root / ".claude" / "skills" / nm / "SKILL.md"
+            cl_skill.parent.mkdir(parents=True, exist_ok=True)
+            cl_skill.write_text(_render_skill_md(spec, nm), encoding="utf-8")
+            installed["claude_skills"].append(str(cl_skill.relative_to(root)))
+
+            cl_cmd = root / ".claude" / "commands" / f"{nm}.md"
+            cl_cmd.parent.mkdir(parents=True, exist_ok=True)
+            cl_cmd.write_text(_render_command_md(spec, nm), encoding="utf-8")
+            installed["claude_commands"].append(str(cl_cmd.relative_to(root)))
+
+            # 3. Codex (.agents/skills/<nm>/SKILL.md)
+            cx_skill = root / ".agents" / "skills" / nm / "SKILL.md"
+            cx_skill.parent.mkdir(parents=True, exist_ok=True)
+            cx_skill.write_text(_render_skill_md(spec, nm), encoding="utf-8")
+            installed["codex_skills"].append(str(cx_skill.relative_to(root)))
+
+    # 4. Upsert CLAUDE.md and AGENTS.md
+    claude_md = root / "CLAUDE.md"
+    _upsert_markdown_block(claude_md, "CLAUDE.md — Project Instructions")
+    installed["agent_docs"].append("CLAUDE.md")
+
+    agents_md = root / "AGENTS.md"
+    _upsert_markdown_block(agents_md, "AGENTS.md — Codex & Coding Agent Instructions")
+    installed["agent_docs"].append("AGENTS.md")
+
+    if not quiet:
+        print("✨ 已自动安装 pmem-art 5 大美术技能（含别名共 10 个斜杠入口）到 Cursor / Claude Code / Codex：")
+        for spec in SKILL_SPECS:
+            print(f"   · /{spec['name']:<16} (别名 /{spec['alias']:<11}) — {spec['title']}")
+        print("   · 安装路径: .cursor/{skills,commands}/ · .claude/{skills,commands}/ · .agents/skills/ · CLAUDE.md · AGENTS.md")
+    return installed
+
+
+# ============================================================================
+# 闭环自评收敛状态机 (`pmem_art.py converge`)
+# ============================================================================
+
+DEFAULT_THRESHOLD = 9.5
+DEFAULT_MAX_ROUNDS = 8
+
+
+def _session_file(root: Path, session_id: str = "latest") -> Path:
+    d = root / ".memory-art" / "converge"
+    d.mkdir(parents=True, exist_ok=True)
+    return d / f"{session_id}.json"
+
+
+def cmd_converge(
+    root: Path,
+    data: dict[str, Any],
+    action: str,
+    *,
+    session_id: str = "latest",
+    goal: str = "",
+    module: str = "",
+    ref_image: str = "",
+    ref_analysis: str = "",
+    threshold: float = DEFAULT_THRESHOLD,
+    max_rounds: int = DEFAULT_MAX_ROUNDS,
+    round_num: int = 0,
+    image: str = "",
+    score: float = 0.0,
+    dims: str = "",
+    strengths: str = "",
+    defects: str = "",
+    next_fix: str = "",
+    prompt: str = "",
+    apply_memory: bool = True,
+) -> int:
+    sf = _session_file(root, session_id)
+
+    if action == "start":
+        if not module and goal:
+            from feedback import infer_module_from_text
+            module = infer_module_from_text(goal, data)
+        sess = {
+            "session_id": session_id,
+            "started_at": _now_cst().strftime("%Y-%m-%d %H:%M:%S UTC+8"),
+            "goal": goal or "未命名生图任务",
+            "module": module or "brand.GlobalStyle",
+            "mode": "ref_image_guided" if ref_image else "text_guided",
+            "ref_image": ref_image,
+            "ref_analysis": ref_analysis,
+            "threshold": float(threshold),
+            "max_rounds": int(max_rounds),
+            "status": "running",
+            "rounds": [],
+        }
+        sf.write_text(json.dumps(sess, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(f"🎯 [pmem-draw 收敛会话已启动] 模块: {sess['module']} | 合格线: >= {sess['threshold']} 分 | 最大轮次: {sess['max_rounds']} 轮")
+        if ref_image:
+            print(f"🖼️  垫图/参考图模式: {ref_image}")
+            if ref_analysis:
+                print(f"🔍 参考图解构基准: {ref_analysis}")
+        return 0
+
+    if not sf.exists():
+        print("⚠️ 未找到进行中的收敛会话，正在自动初始化默认会话…")
+        cmd_converge(
+            root, data, "start",
+            session_id=session_id, goal=goal or "自评收敛生图", module=module,
+            ref_image=ref_image, ref_analysis=ref_analysis,
+            threshold=threshold, max_rounds=max_rounds,
+        )
+
+    sess = json.loads(sf.read_text(encoding="utf-8"))
+    th = float(sess.get("threshold", DEFAULT_THRESHOLD))
+    mr = int(sess.get("max_rounds", DEFAULT_MAX_ROUNDS))
+    rounds: list[dict[str, Any]] = sess.get("rounds") or []
+
+    if action == "round":
+        r_no = round_num if round_num > 0 else (len(rounds) + 1)
+        if r_no > mr:
+            print(f"🛑 已超过最大轮次上限 ({mr} 轮)，请直接运行 `python3 pmem_art.py converge finish --apply` 结算最高分图。")
+            return 1
+
+        passed = float(score) >= th
+        entry = {
+            "round": r_no,
+            "image": image,
+            "score": round(float(score), 2),
+            "dims": dims,
+            "strengths": strengths or "构图与基础色调符合要求",
+            "defects": defects or ("无明显硬伤，细节达标" if passed else "局部细节或光影仍需打磨"),
+            "next_fix": ("已达标，无需继续叠加" if passed else (next_fix or "针对上述不合理处叠加负向词与结构约束")),
+            "prompt": prompt,
+            "passed": passed,
+            "recorded_at": _now_cst().strftime("%H:%M:%S"),
+        }
+        # Replace if same round number re-logged, else append
+        rounds = [r for r in rounds if r.get("round") != r_no]
+        rounds.append(entry)
+        rounds.sort(key=lambda x: x["round"])
+        sess["rounds"] = rounds
+
+        if passed:
+            sess["status"] = "converged"
+            sess["ActionRequired"] = "STOP_AND_FINISH"
+            msg = f"✅ 第 {r_no} 轮得分 {score:.1f} >= {th}（合格达标）！请立即停止生图，运行 `python3 pmem_art.py converge finish --apply` 输出总表。"
+        elif r_no >= mr:
+            best = max(rounds, key=lambda x: x["score"])
+            sess["status"] = "max_rounds_reached"
+            sess["ActionRequired"] = "STOP_PICK_BEST"
+            msg = (
+                f"🏁 第 {r_no}/{mr} 轮得分 {score:.1f} < {th}，已满 {mr} 轮上限！"
+                f"全阶段最高分为第 {best['round']} 轮 ({best['score']:.1f} 分: {best['image']})。"
+                f"请立即运行 `python3 pmem_art.py converge finish --apply` 输出汇总表。"
+            )
+        else:
+            sess["status"] = "continue"
+            sess["ActionRequired"] = f"GENERATE_ROUND_{r_no + 1}"
+            msg = (
+                f"🔄 第 {r_no}/{mr} 轮得分 {score:.1f} < {th}（不合格）。\n"
+                f"   · 不合理处: {entry['defects']}\n"
+                f"   · 下一轮叠加修正: {entry['next_fix']}\n"
+                f"   👉 请将修正策略叠加到 Prompt，继续生成第 {r_no + 1} 轮图片！"
+            )
+
+        sf.write_text(json.dumps(sess, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(msg)
+        return 0
+
+    if action in ("finish", "table", "status"):
+        if not rounds:
+            print("❌ 当前收敛会话没有任何轮次记录。")
+            return 1
+
+        # Pick winner: first round >= threshold, or highest score overall
+        passing_rounds = [r for r in rounds if float(r.get("score", 0)) >= th]
+        if passing_rounds:
+            winner = max(passing_rounds, key=lambda x: (x["score"], x["round"]))
+            outcome_str = f"✅ **达标收敛**（第 {winner['round']} 轮达到 `{winner['score']:.1f} / 10.0` 分 ≥ `{th}` 分合格线）"
+        else:
+            winner = max(rounds, key=lambda x: (x["score"], x["round"]))
+            outcome_str = (
+                f"⚠️ **满 {len(rounds)} 轮未达 `{th}` 分，已自动挑选全阶段最高分**"
+                f"（胜出：第 {winner['round']} 轮 `{winner['score']:.1f} / 10.0` 分）"
+            )
+
+        sess["winner"] = winner
+        sess["status"] = "finished"
+        sf.write_text(json.dumps(sess, ensure_ascii=False, indent=2), encoding="utf-8")
+
+        # Build Markdown summary table
+        md_lines = [
+            f"### 🎯 `/pmem-draw` 自评收敛生图报告 — {sess.get('goal', '')}",
+            "",
+            f"- **目标模块**：`{sess.get('module')}`",
+            f"- **生图模式**：{'🖼️ 垫图解构收敛模式 (`' + sess.get('ref_image', '') + '`)' if sess.get('ref_image') else '✍️ 纯文本指令收敛模式'}",
+        ]
+        if sess.get("ref_analysis"):
+            md_lines.append(f"- **参考图解构基准**：{sess.get('ref_analysis')}")
+        md_lines.extend([
+            f"- **收敛结论**：{outcome_str}",
+            f"- **最终采用图片**：`{winner.get('image')}`（综合评分 **`{winner.get('score'):.1f}`**）",
+            "",
+            "#### 📊 全阶段生图迭代评分与优劣分析总表",
+            "",
+            "| 轮次 | 生成图片 | 综合评分 (满分10) | 合理 / 亮点之处 | 不合理 / 缺陷之处 | 下一轮叠加修正策略 | 结果 |",
+            "| :---: | :--- | :---: | :--- | :--- | :--- | :---: |",
+        ])
+
+        for r in rounds:
+            is_win = (r["round"] == winner["round"])
+            badge = "🏆 **胜出采用**" if is_win else ("✅ 达标" if r.get("passed") else "❌ 未达标")
+            score_cell = f"**{r['score']:.1f}**" + (f"<br><small>{r['dims']}</small>" if r.get("dims") else "")
+            img_cell = f"`{r.get('image') or '-'}`"
+            md_lines.append(
+                f"| 第 {r['round']} 轮 | {img_cell} | {score_cell} | {r.get('strengths', '-')} | {r.get('defects', '-')} | {r.get('next_fix', '-')} | {badge} |"
+            )
+
+        md_lines.append("")
+        if not passing_rounds:
+            md_lines.append(
+                f"> 💡 **阶段总结**：本次共迭代 {len(rounds)} 轮，最高分为第 {winner['round']} 轮（`{winner['score']:.1f}` 分），"
+                f"仍留有轻微不足：「{winner.get('defects')}」，后续可针对该点微调或局部重绘。"
+            )
+
+        # Persist memories into .memory-art if action == "finish" and apply_memory
+        saved_paths: list[str] = []
+        if action == "finish" and apply_memory:
+            from feedback import write_memory_entry
+            mod = sess.get("module") or "brand.GlobalStyle"
+            # 1) Save winner as recipe
+            win_summary = f"[收敛胜出 {winner['score']:.1f}分] {sess.get('goal', '')[:50]} — {winner.get('strengths', '')[:30]}"
+            win_body = (
+                f"**【/pmem-draw 闭环收敛胜出定稿（第 {winner['round']}/{len(rounds)} 轮 · {winner['score']:.1f} 分）】**\n"
+                f"- **生成目标**：{sess.get('goal')}\n"
+                f"- **保留原因（亮点）**：{winner.get('strengths')}\n"
+                f"- **最终使用 Prompt**：`{winner.get('prompt') or sess.get('goal')}`\n"
+            )
+            if sess.get("ref_image"):
+                win_body += f"- **参考垫图**：`{sess.get('ref_image')}`（解构：{sess.get('ref_analysis')}）\n"
+            p_rec = write_memory_entry(
+                root,
+                module=mod,
+                kind="recipe",
+                summary=win_summary,
+                body=win_body,
+                asset=winner.get("image", ""),
+                role="approved",
+            )
+            saved_paths.append(str(p_rec.relative_to(root)))
+
+            # 2) Save worst / first failed defects as style_redline so next session avoids them immediately
+            failed = [r for r in rounds if not r.get("passed") and r.get("defects")]
+            if failed:
+                worst = min(failed, key=lambda x: x["score"])
+                red_summary = f"[收敛踩坑红线] {sess.get('goal', '')[:30]}：避免「{worst.get('defects', '')[:45]}」"
+                defect_bullets = "\n".join(
+                    f"- 第 {r['round']} 轮 ({r['score']:.1f}分) 不合理处：{r['defects']} → 修正：{r['next_fix']}"
+                    for r in failed
+                )
+                red_body = (
+                    f"**【/pmem-draw 迭代过程中暴露的不合理项（下次生图直接规避）】**\n\n"
+                    f"{defect_bullets}\n"
+                )
+                p_red = write_memory_entry(
+                    root,
+                    module=mod,
+                    kind="style_redline",
+                    summary=red_summary,
+                    body=red_body,
+                    asset=worst.get("image", ""),
+                    role="rejected",
+                )
+                saved_paths.append(str(p_red.relative_to(root)))
+
+            md_lines.append("")
+            md_lines.append("#### 🧠 已自动沉淀至 `.memory-art` 的记忆条目")
+            for sp in saved_paths:
+                md_lines.append(f"- `{sp}`")
+
+        report_text = "\n".join(md_lines)
+        report_file = root / ".memory-art" / "converge" / f"{session_id}_report.md"
+        report_file.write_text(report_text + "\n", encoding="utf-8")
+        print(report_text)
+        return 0
+
+    print(f"未知 converge 子操作: {action}")
+    return 1

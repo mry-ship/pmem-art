@@ -285,22 +285,31 @@ def write_config_yaml(root: Path, config: dict) -> Path:
 
 
 def ensure_cursor_stubs(root: Path) -> None:
-    """写入/刷新 Cursor 对话驱动的规则与 hooks（主入口是聊天，不是 CLI）。"""
+    """写入/刷新 Cursor 对话驱动的规则、hooks 以及自动安装 Cursor / Claude Code / Codex 技能（Skills & Commands）。"""
     rules = root / ".cursor" / "rules"
     rules.mkdir(parents=True, exist_ok=True)
     mdc = rules / "pmem-art.mdc"
     mdc.write_text(
         "---\n"
-        "description: pmem-art — Cursor 对话驱动的个人美术积累记忆\n"
+        "description: pmem-art — Cursor 对话驱动的个人美术积累记忆与 /pmem-draw 闭环收敛生图规则\n"
         "globs:\n  - assets/**\n  - Art/**\n  - .memory-art/**\n  - .cursor/generated/**\n"
         "alwaysApply: true\n"
         "---\n\n"
-        "# pmem-art\n\n"
-        "生图前：`python3 pmem_art.py search --module <模块>` 或 `search <关键词>`，把红线/定稿写进约束。\n\n"
-        "用户说「太赛博/头太大/别这样画/这版留着/换成水彩/以后都用…」时立刻：\n"
-        "`python3 pmem_art.py feedback \"<原话>\" --module <模块> [--asset <图>]`\n\n"
-        "新图可 `ingest <路径> -p \"...\" --apply`；atlas/doctor 是可选回看，不是日常主线。\n"
-        "用户说「跳过美术记忆」时可跳过。\n",
+        "# pmem-art：个人美术积累记忆 & 内置生图技能\n\n"
+        "## 1. 内置斜杠技能（用户输入即触发）\n"
+        "- **`/pmem-draw`（或 `/art-draw`）**：8轮 9.5分 闭环自评收敛生图！\n"
+        "  - 纯文本：`/pmem-draw 生成一张xxx风格的xxx图`\n"
+        "  - 垫图模式：`/pmem-draw [丢入一张图] 生成一张xxx图`（先深度分析参考图构图/色板/光影/结构，再开始循环）\n"
+        "  - 循环规则：每次生成1张图 → 严苛五维自评打分（满分10）+ 说出合理亮点与**不合理之处** → `< 9.5` 分不算合格，叠加修正策略继续生下一张（最多8轮）→ 达标立即停止，或满8轮挑全阶段最高分 → 运行 `python3 pmem_art.py converge finish --apply` 输出全轮次评分优劣对比总表并沉淀记忆。\n"
+        "- **`/pmem-style-lock`（`/art-style`）**：从参考样张提炼风格圣经与色板锁定。\n"
+        "- **`/pmem-critique`（`/art-check`）**：单图/批量图主美级五维审稿挑刺并写入红线。\n"
+        "- **`/pmem-variant`（`/art-variant`）**：同角色跨画风分叉（Q版/水彩/像素）或表情动作差分。\n"
+        "- **`/pmem-atlas`（`/art-map`）**：归档散图并刷新 `art-atlas.html`。\n\n"
+        "## 2. 日常生图前必查与对话反馈沉淀\n"
+        "- 生图前：`python3 pmem_art.py search --module <模块>` 或 `search <关键词>`，把历史红线/定稿写进约束。\n"
+        "- 用户说「太赛博/头太大/别这样画/这版留着/换成水彩/以后都用…」时立刻：\n"
+        "  `python3 pmem_art.py feedback \"<原话>\" --module <模块> [--asset <图>]`\n"
+        "- 新图可 `ingest <路径> -p \"...\" --apply`；用户说「跳过美术记忆」时可跳过。\n",
         encoding="utf-8",
     )
     hooks = root / ".cursor" / "hooks.json"
@@ -331,6 +340,11 @@ def ensure_cursor_stubs(root: Path) -> None:
         + "\n",
         encoding="utf-8",
     )
+    try:
+        from skills_kit import install_skills_and_agent_configs
+        install_skills_and_agent_configs(root, quiet=True)
+    except Exception as exc:
+        print(f"⚠️ 安装技能包时出现警告: {exc}")
 
 
 
@@ -514,6 +528,7 @@ def cmd_init(root: Path, project_name: str = "Untitled Art Project", force: bool
     print(f"   · {MEMORY_DIR}/modules.yaml (6 个 scaffold 模块)")
     print("   · assets/{brand,character,scene,ui,vfx,anim}/ 空目录已创建")
     print("   · .cursor/rules/pmem-art.mdc + hooks.json")
+    print("   · 已自动注入 5 大技能 (/pmem-draw, /pmem-style-lock, /pmem-critique, /pmem-variant, /pmem-atlas) 到 .cursor / .claude / .agents")
     print(f"   · {MEMORY_DIR}/ONBOARDING.md")
     print("\n保证工作流（非盲目魔法）：")
     print("   落盘 → sync 提议 candidate → accept 一次确认 → search 闸门生效 → record/validate → atlas")

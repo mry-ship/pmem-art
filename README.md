@@ -1,134 +1,139 @@
-# 🎨 pmem-art — 在 Cursor 里越画越准的个人美术积累记忆
+# 🎨 pmem-art — 在 Cursor / Codex 里越画越准的个人美术积累记忆 & 闭环自评生图系统
 
 <p align="left">
-  <img src="https://img.shields.io/badge/version-v0.8.0-0ea5e9?style=for-the-badge" alt="v0.8.0"/>
+  <img src="https://img.shields.io/badge/version-v0.9.0-0ea5e9?style=for-the-badge" alt="v0.9.0"/>
   <img src="https://img.shields.io/badge/python-%3E%3D3.10-3776ab?style=for-the-badge&logo=python&logoColor=white" alt="Python"/>
-  <img src="https://img.shields.io/badge/UX-Cursor%20对话优先-8b5cf6?style=for-the-badge" alt="Cursor-first"/>
+  <img src="https://img.shields.io/badge/UX-Cursor%20对话%20%2B%20内置%20Skills-8b5cf6?style=for-the-badge" alt="Cursor-first + Skills"/>
   <img src="https://img.shields.io/badge/license-GPL--3.0-f59e0b?style=for-the-badge" alt="GPL-3.0"/>
 </p>
 
-> **一句话**：你在 Cursor 里画一张 → 用中文说「哪里不对 / 这版留着」→ 记忆自动变长 → **下一张更准**。  
-> 姊妹项目：[mry-ship/pmem](https://github.com/mry-ship/pmem)（代码工程记忆）· 本仓库专做 **个人项目里稳定画风下的美术迭代记忆**。
+> **核心定位**：你在同一个项目（画风基线已定）里用 Cursor / Claude Code / Codex 反复生图、改图时的 **个人美术积累记忆 + 8轮 9.5分 闭环自评收敛生图技能**。  
+> **一句话心智模型**：`生图 → 自评挑刺或你说一句哪里不对/这版留着 → 记忆自动变长 → 下次生图更准`。  
+> 姊妹项目：[mry-ship/pmem](https://github.com/mry-ship/pmem)（代码工程研发记忆）。
 
 📘 [画师手册 USER_MANUAL.md](./USER_MANUAL.md) · 🧠 [架构 ARCHITECTURE.md](./ARCHITECTURE.md) · ⚖️ [LICENSE](./LICENSE) · 🖼️ [可选回看 art-atlas.html](./art-atlas.html)
 
 ---
 
-## 这是什么 / 不是什么
+## 🌟 亮点一：初始化自动注入 5 大斜杠技能（Cursor / Claude Code / Codex 开箱即用）
 
-| ✅ 是 | ❌ 不是 |
-| :--- | :--- |
-| 一个人（或小团队）在 **同一个项目、画风基线已定** 里，用 Cursor 反复生图、改图时的 **积累记忆** | 主美审稿台、管线质检台、资产管理系统 |
-| 对话里一句话就能留下红线与定稿（**不用手写 YAML**） | 要求你天天敲一长串 CLI 的工具 |
-| 后端悄悄按角色/UI/特效/场景/画风分叉归类 | 把分类域名甩到你脸上当主界面 |
-| 偶尔打开 `art-atlas.html` 回看正反例 | 以 HTML 图谱当每天第一入口 |
+运行 `python3 pmem_art.py init`（或在已有项目运行 `python3 pmem_art.py skills --install`）时，系统会自动把 **5 大美术技能（含简短别名共 10 个 `/` 斜杠入口）** 安装到：
+- **Cursor**：`.cursor/skills/<name>/SKILL.md` + `.cursor/commands/<name>.md` + `.cursor/rules/pmem-art.mdc`
+- **Claude Code**：`.claude/skills/<name>/SKILL.md` + `.claude/commands/<name>.md` + `CLAUDE.md`
+- **Codex**：`.agents/skills/<name>/SKILL.md` + `AGENTS.md`
 
-**心智模型**：`生图 → 反馈 → 记忆长大 → 下次更准`（styles / icons / UI / 概念图分叉都适用）。
+### 5 大内置美术技能一览
+
+| 斜杠指令 | 简短别名 | 核心能力 |
+| :--- | :--- | :--- |
+| **`/pmem-draw`** | **`/art-draw`** | 🔥 **8轮 9.5分 闭环自评收敛生图**（支持①纯文本指令生图；②**丢入参考图先深度分析再生图**。每次生1张 → 五维严苛自评打分+说出不合理处 → `<9.5`分自动叠加修正继续生 → 最多8轮达标即停或挑全阶段最高分 → 输出全轮次评分优劣总表并自动沉淀记忆） |
+| **`/pmem-style-lock`** | **`/art-style`** | 🎨 **样张一键提炼风格圣经与色板锁定**：丢入 1~3 张参考样张，自动提取主辅色 HEX、光影笔触与反例禁用词，写入项目记忆 |
+| **`/pmem-critique`** | **`/art-check`** | 🔍 **单图/批量图主美级五维审稿挑刺**：对照项目已有红线与规格打分，指出不合理处并一键记入 `style_redline` |
+| **`/pmem-variant`** | **`/art-variant`** | 🌿 **同角色跨画风分叉与表情/动作差分**：锁死角色核心人设锚点，派生水彩/Q版/像素子模块或序列帧差分 |
+| **`/pmem-atlas`** | **`/art-map`** | 🗺️ **一键归档散图并刷新 `art-atlas.html` 可视化图谱** |
 
 ---
 
-## 30 秒：你在 Cursor 里怎么用
+## 🔥 重点详解：`/pmem-draw`（或 `/art-draw`）8轮 9.5分 闭环自评收敛生图
 
-假设项目里已经放了本仓库（或 `init` 过），并且有 `.cursor/rules/pmem-art.mdc`（`alwaysApply`）。
+在 Cursor / Claude Code / Codex 对话框中直接输入，支持 **两种调用方式**：
 
-### ① 让 Agent 生一张
-
-> 「给 Astra 画一张半身立绘，青瓷白袍，透明底」
-
-Agent 会先 `search` 已有红线/定稿，再调用生图工具。
-
-### ② 你看图，用自然语言反馈（核心）
-
-直接说，例如：
-
-| 你说 | 系统会记住 |
-| :--- | :--- |
-| **「太赛博了，别这样画」** | 红线 `style_redline`：下次禁止霓虹/赛博方向 |
-| **「头太大」** / **「比例不对」** | 红线或勘误：头身约束 |
-| **「这版留着」** / **「就这个」** | 定稿 `recipe`：正向锚点，下次优先沿用 |
-| **「换成水彩」** / **「改成 Q 版」** | 勘误 + 画风分叉（与正比隔离） |
-| **「以后都用青瓷白+墨蓝，别霓虹」** | 拍板 `art_decision` |
-
-Agent 会执行类似：
-
-```bash
-python3 pmem_art.py feedback "太赛博了，别这样画" --module character.Astra --asset .cursor/generated/xxx.png
+### 用法 1：纯文字直接收敛生图
+```text
+/pmem-draw 生成一张东方青瓷水彩风格的阿斯特拉半身立绘，透明底
 ```
 
-你**不用**自己写 Markdown / YAML。
+### 用法 2：丢入一张参考图 + 先解构再收敛生图
+```text
+/pmem-draw [拖入/附上参考图] 生成一张同画风但换成冰霜刀光特效的武器图标
+```
 
-### ③ 下一张会自动更准
+### 它在后台自动跑的闭环流程（最多 8 轮，合格线 `>= 9.5 / 10.0`）
 
-再次生「Astra 立绘」时，Agent 会召回你刚留下的红线与定稿，把「别赛博」「留着的那版方向」写进约束。  
-**画得越多、评得越多，记忆越厚，越准。**
+```text
+[若有参考图] Step 0: 先深度解构丢进来的图（构图视角 / 主辅色HEX / 光影冷暖 / 笔触材质 / 头身结构）
+      ↓
+Step 1: 自动 search .memory-art 召回该模块历史红线 (style_redline) 与定稿配方 (recipe)
+      ↓
+Step 2: 进入自评收敛循环 (Round 1 .. 8)
+   ├─ 1) 调用生图工具生成 1 张图
+   ├─ 2) 亲自审图 + 五维严苛打分（风格色板2.5 / 结构透视2.5 / 光影材质2.0 / 红线合规1.5 / 意图还原1.5 = 10.0分）
+   ├─ 3) 明确说出这张图【哪里合理】+【哪里不合理需要改】
+   └─ 4) 判定：
+         · 评分 >= 9.5  ──► ✅ 合格达标！立即停止循环，采用本张图
+         · 评分 <  9.5 且未满 8 轮 ──► 🔄 不合格！把不合理处转成叠加修正指令并入下一轮 Prompt，继续生下一张
+         · 满 8 轮仍 < 9.5 ──► 🏆 停止循环，从 1~8 轮里挑出【得分最高】的那张图作为最终结果
+      ↓
+Step 3: 输出【全阶段评分与优劣分析总表】+ 自动把胜出配方与踩坑红线写入 .memory-art
+```
+
+#### 最终自动生成的汇总表示例（由 `pmem_art.py converge finish --apply` 产出）
+
+| 轮次 | 生成图片 | 综合评分 (满分10) | 合理 / 亮点之处 | 不合理 / 缺陷之处 | 下一轮叠加修正策略 | 结果 |
+| :---: | :--- | :---: | :--- | :--- | :--- | :---: |
+| 第 1 轮 | `.cursor/generated/r1.png` | **7.8**<br><small>风格1.9/结构1.8/光影1.6/合规1.3/还原1.2</small> | 青瓷白主色调准确 | 背景混入赛博紫光，头身比偏5.5头身幼态，左手手指粘连 | 叠加 `no neon purple, 7.5 heads tall, clear 5 fingers` | ❌ 未达标 |
+| 第 2 轮 | `.cursor/generated/r2.png` | **8.9**<br><small>风格2.3/结构2.2/光影1.7/合规1.4/还原1.3</small> | 7.5头身修长比例恢复，霓虹紫已消除 | 左眼（画面右侧）黄铜星盘义眼漏画十字星芒，披风边缘略糊 | 叠加 `brass astrolabe monocle on left eye with crisp 4-point star glint` | ❌ 未达标 |
+| 第 3 轮 | `.cursor/generated/r3.png` | **9.6**<br><small>风格2.5/结构2.4/光影1.9/合规1.4/还原1.4</small> | 青瓷白+墨蓝配比精准、7.5头身、左眼星盘义眼清晰、RGBA透明底干净 | 极细微衣摆暗部层次可接受 | 已达标，无需继续叠加 | 🏆 **胜出采用** |
 
 ---
 
-## 装进你的项目（三种情况）
+## 💬 亮点二：平时随口评一句，记忆自动长大（无需手写 YAML）
 
-### 空项目 / 刚立项
+除了用 `/pmem-draw` 自动收敛，你日常在 Cursor 对话里看图后随口说的每一句中文评价，都会自动沉淀进 `.memory-art/`：
 
+| 你在对话里说 | 系统自动记住的记忆类型 | 下次生图时的效果 |
+| :--- | :--- | :--- |
+| **「太赛博了，别这样画」** / **「头太大」** | `style_redline`（红线） | 下次自动塞进禁止项，绝不重犯 |
+| **「这版留着」** / **「就这个」** | `recipe`（定稿锚点） | 下次优先沿用这张的构图、色板与方向 |
+| **「换成水彩」** / **「改成 Q 版」** | `visual_correction`（修正 + 画风分叉） | 自动分叉到 `.Watercolor` / `.Chibi` 子模块，与正比立绘隔离 |
+| **「以后都用青瓷白+墨蓝，别霓虹」** | `art_decision`（审美拍板） | 升级为模块/全局长期定调 |
+
+---
+
+## ⚡ 30 秒安装接入
+
+### 1. 新项目 / 空项目冷启动
 ```bash
-# 把 pmem-art 的脚本放进项目根（或 git clone 后拷贝关键文件）
 python3 pmem_art.py init --name "我的项目"
 python3 pmem_art.py bootstrap --mode young --apply
 ```
+> 自动建好 `.memory-art/`、`assets/` 六大目录，并把 `/pmem-draw` 等 5 大技能装进 `.cursor/`、`.claude/`、`.agents/`。
 
-然后打开 Cursor，直接开始生图 + 用中文评图即可。
-
-### 已有一堆图的老项目
-
+### 2. 已有资产的老项目无损挂载
 ```bash
 python3 pmem_art.py bootstrap --mode legacy --roots Art assets
-python3 pmem_art.py candidates
-python3 pmem_art.py accept --all   # 只提升候选，不乱移文件
+python3 pmem_art.py accept --all
+python3 pmem_art.py skills --install
 ```
-
-之后同样：在对话里反馈 → 记忆增长。老文件默认 **不自动搬家**。
-
-### 已经在 Cursor 里狂生图
-
-把新图路径和那句 prompt 交给 Agent，或：
-
-```bash
-python3 pmem_art.py ingest .cursor/generated/xxx.png -p "角色Astra 水彩 概念图" --apply
-```
-
-分类（角色/UI/特效/画风分叉）在后台完成；低置信度进 `misc.*`，不污染正式模块。
+> 老项目文件**绝不自动搬家**；一键装好技能后即可在 Cursor 对话中越画越准。
 
 ---
 
-## 自然语言触发词速查（中文优先）
-
-```
-红线（别再这样）: 太赛博 / 太霓虹 / 别这样画 / 不要再 / 头太大 / 比例不对 / 发色不对 / 漏抠 / 黑底
-定稿（留着）    : 这版留着 / 就这个 / 定稿 / 过了 / 可以用 / 保留
-修正 / 换画风   : 换成水彩 / 改成Q版 / 换成像素 / 修一下 / 改成厚涂
-拍板            : 以后都用… / 就定… / 统一用… / 风格定了
-```
-
-对应命令（Agent 自动跑；你也可以自己跑）：
+## 🛠️ 核心命令速查（主要由 Agent 自动调用，你也可手动运行）
 
 ```bash
-python3 pmem_art.py feedback "<原话>" -m <模块> [-a <图片>]
-python3 pmem_art.py note "<原话>"        # 同上，更短别名
+# 列出或安装 Cursor / Claude Code / Codex 内置技能
+python3 pmem_art.py skills --list
+python3 pmem_art.py skills --install
+
+# /pmem-draw 闭环收敛追踪器（最多8轮，>=9.5达标或挑最高分，输出总表并写记忆）
+python3 pmem_art.py converge start --goal "青瓷风阿斯特拉立绘" --module character.Astra [--ref-image ref.png --ref-analysis "..."]
+python3 pmem_art.py converge round --round 1 --image r1.png --score 8.2 --strengths "..." --defects "..." --next-fix "..."
+python3 pmem_art.py converge finish --apply
+
+# 自然语言反馈一键写记忆（无需手写 YAML）
+python3 pmem_art.py feedback "太赛博了，别这样画" -m character.Astra -a r1.png
+python3 pmem_art.py note "这版留着" -m character.Astra -a r3.png
+
+# 生图前检索记忆 & 新图后台多信号分类归档
 python3 pmem_art.py search -m character.Astra
-python3 pmem_art.py search "赛博"
+python3 pmem_art.py ingest .cursor/generated/r3.png -p "角色Astra 立绘" --apply
 ```
 
----
-
-## 后端默默做的事（你通常不用管）
-
-- 领域：`brand` / `character` / `scene` / `ui` / `vfx` / `anim` / `misc`
-- 画风分叉：同一角色的水彩 / Q版 / 像素 → `character.Astra.Watercolor` 等子模块，父子继承
-- 四信号分类：Prompt + 路径 + 图像特征 + 已有模块
-- 可选：`art-atlas.html` 回看正反例与配方（`python3 pmem_art.py atlas`）——**偶尔用，不是主入口**
-
-完整命令与模块规范见 📘 [USER_MANUAL.md](./USER_MANUAL.md)。
+详细教程请查阅 📘 **[画师手册 USER_MANUAL.md](./USER_MANUAL.md)**。
 
 ---
 
-## License
+## ⚖️ License
 
 [GNU GPL v3.0](./LICENSE) · 与 [mry-ship/pmem](https://github.com/mry-ship/pmem) 一致。

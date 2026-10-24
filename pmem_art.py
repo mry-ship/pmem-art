@@ -23,7 +23,7 @@ import zlib
 from pathlib import Path
 from typing import Any
 
-VERSION = "0.8.0-art"
+VERSION = "0.9.0-art"
 MEMORY_DIR = ".memory-art"
 
 KIND_META = {
@@ -609,6 +609,30 @@ def main() -> int:
     p_note.add_argument("--kind", default="")
     p_note.add_argument("--dry-run", action="store_true")
 
+    p_skills = sub.add_parser("skills", help="安装/刷新或列出内置的 Cursor / Claude Code / Codex 美术技能 (/pmem-draw 等)")
+    p_skills.add_argument("--install", action="store_true", help="安装或刷新全部技能文件到 .cursor / .claude / .agents")
+    p_skills.add_argument("--list", action="store_true", help="列出所有内置美术技能与触发方式")
+
+    p_conv = sub.add_parser("converge", help="/pmem-draw 闭环自评收敛追踪器（最多8轮，>=9.5分达标或挑最高分，输出汇总表并写记忆）")
+    p_conv.add_argument("action", choices=("start", "round", "finish", "table", "status"), help="子操作")
+    p_conv.add_argument("--session", default="latest", help="会话 ID（默认 latest）")
+    p_conv.add_argument("--goal", "-g", default="", help="本次生图目标描述")
+    p_conv.add_argument("--module", "-m", default="", help="目标模块 ID")
+    p_conv.add_argument("--ref-image", default="", help="垫图/参考图路径（若有）")
+    p_conv.add_argument("--ref-analysis", default="", help="参考图视觉解构结论摘要")
+    p_conv.add_argument("--threshold", type=float, default=9.5, help="合格分数线（默认 9.5）")
+    p_conv.add_argument("--max-rounds", type=int, default=8, help="最大收敛轮次（默认 8）")
+    p_conv.add_argument("--round", dest="round_num", type=int, default=0, help="当前轮次序号 (1..8)")
+    p_conv.add_argument("--image", "-i", default="", help="本轮生成图片路径")
+    p_conv.add_argument("--score", "-s", type=float, default=0.0, help="本轮综合评分（满分 10.0）")
+    p_conv.add_argument("--dims", default="", help="五维细分得分说明")
+    p_conv.add_argument("--strengths", default="", help="本轮合理/亮点之处")
+    p_conv.add_argument("--defects", default="", help="本轮不合理/缺陷之处")
+    p_conv.add_argument("--next-fix", default="", help="下一轮叠加修正策略")
+    p_conv.add_argument("--prompt", "-p", default="", help="本轮使用的 Prompt")
+    p_conv.add_argument("--apply", action="store_true", help="finish 时自动将胜出图与踩坑红线写入 .memory-art")
+    p_conv.add_argument("--no-apply", action="store_true", help="finish 时仅打印表格不写入记忆")
+
     p_hook = sub.add_parser("hook", help="处理 Cursor / Claude Code / Codex 的 Hook 闸门事件")
     p_hook.add_argument("event", choices=("pre-tool", "post-tool", "stop", "pre-gen", "post-asset"))
 
@@ -619,6 +643,16 @@ def main() -> int:
     if args.command == "init":
         from lifecycle import cmd_init
         return cmd_init(root, project_name=args.name, force=args.force)
+    if args.command == "skills":
+        from skills_kit import install_skills_and_agent_configs, SKILL_SPECS
+        if args.list and not args.install:
+            print("🎨 pmem-art 内置美术技能列表（Cursor / Claude Code / Codex 通用）：\n")
+            for sp in SKILL_SPECS:
+                print(f"  /{sp['name']:<16} (别名 /{sp['alias']:<11}) — {sp['title']}")
+                print(f"     ↳ {sp['description']}\n")
+            return 0
+        install_skills_and_agent_configs(root, quiet=False)
+        return 0
 
     # Soft-load when memory missing (bootstrap/legacy on half-empty trees)
     mem = root / MEMORY_DIR
@@ -695,6 +729,29 @@ def main() -> int:
         return cmd_feedback(
             root, data, text=raw, module=args.module, asset=args.asset,
             kind=args.kind, apply=not args.dry_run,
+        )
+    if args.command == "converge":
+        from skills_kit import cmd_converge
+        return cmd_converge(
+            root,
+            data,
+            args.action,
+            session_id=args.session,
+            goal=args.goal,
+            module=args.module,
+            ref_image=args.ref_image,
+            ref_analysis=args.ref_analysis,
+            threshold=args.threshold,
+            max_rounds=args.max_rounds,
+            round_num=args.round_num,
+            image=args.image,
+            score=args.score,
+            dims=args.dims,
+            strengths=args.strengths,
+            defects=args.defects,
+            next_fix=args.next_fix,
+            prompt=args.prompt,
+            apply_memory=(not args.no_apply),
         )
     if args.command == "hook":
         return cmd_hook(root, data, args.event)
