@@ -240,34 +240,198 @@ def inspect_png(path: Path) -> dict[str, Any]:
         "data_uri": b64_uri,
     }
 
-def load_project(root: Path) -> dict[str, Any]:
+def _parse_entry_md_file(
+    md_file: Path,
+    rel_base: Path,
+    *,
+    project_id: str,
+    project_name: str,
+) -> dict[str, Any] | None:
+    try:
+        raw = md_file.read_text(encoding="utf-8")
+    except Exception:
+        return None
+    m = re.match(r"\A---\r?\n(.*?)\r?\n---\r?\n?(.*)\Z", raw, re.DOTALL)
+    if not m:
+        return None
+    meta = load_yaml(m.group(1))
+    body = m.group(2).strip()
+    meta["body"] = body
+    try:
+        meta["file_path"] = str(md_file.relative_to(rel_base))
+    except Exception:
+        meta["file_path"] = str(md_file)
+    k_info = KIND_META.get(meta.get("kind", ""), {"label": meta.get("kind", ""), "layer": "lesson", "badge": "info", "order": 9})
+    meta["kind_label"] = k_info["label"]
+    meta["layer"] = k_info["layer"]
+    meta["badge"] = k_info["badge"]
+    meta["kind_order"] = k_info["order"]
+    meta["layer_scope"] = "private"
+    meta["project_id"] = project_id
+    meta["project_name"] = project_name
+    return meta
+
+
+def _load_all_project_libraries(
+    root: Path,
+    active_meta: dict[str, Any],
+    assets_info: dict[str, dict[str, Any]],
+) -> list[dict[str, Any]]:
     mem_dir = root / MEMORY_DIR
+    projects_dir = mem_dir / "projects"
+    if not projects_dir.is_dir():
+        return []
+    active_pid = str(active_meta.get("project_id") or "")
+    libs: list[dict[str, Any]] = []
+    for lib_dir in sorted(projects_dir.iterdir()):
+        if not lib_dir.is_dir():
+            continue
+        lib_meta: dict[str, Any] = {}
+        for mf in ("library.json", "library_meta.json"):
+            mp = lib_dir / mf
+            if mp.is_file():
+                try:
+                    lib_meta = json.loads(mp.read_text(encoding="utf-8"))
+                    break
+                except Exception:
+                    pass
+        pid = str(lib_meta.get("project_id") or lib_dir.name)
+        pname = str(lib_meta.get("project_name") or pid)
+        if not lib_meta.get("project_name") and (lib_dir / "config.yaml").is_file():
+            try:
+                cfg_y = load_yaml((lib_dir / "config.yaml").read_text(encoding="utf-8"))
+                pname = str((cfg_y.get("project") or {}).get("name") or pname)
+            except Exception:
+                pass
+        is_current = (pid == active_pid)
+
+        lib_mods: dict[str, Any] = {}
+        if (lib_dir / "modules.yaml").is_file():
+            try:
+                lib_mods = (load_yaml((lib_dir / "modules.yaml").read_text(encoding="utf-8")) or {}).get("modules", {})
+            except Exception:
+                lib_mods = {}
+
+        lib_entries: list[dict[str, Any]] = []
+        lib_entries_dir = lib_dir / "entries"
+        if lib_entries_dir.is_dir():
+            for md_f in sorted(lib_entries_dir.rglob("*.md")):
+                em = _parse_entry_md_file(md_f, root, project_id=pid, project_name=pname)
+                if not em:
+                    continue
+                em["is_historical_project"] = not is_current
+                for a in em.get("assets") or []:
+                    if isinstance(a, dict) and a.get("path"):
+                        actual = assets_info.get(a["path"], {})
+                        if actual:
+                            a["actual"] = {k: v for k, v in actual.items() if k != "data_uri"}
+                lib_entries.append(em)
+
+        lib_kcards: list[dict[str, Any]] = []
+        kf = lib_dir / "_knowledge" / "index.json"
+        if kf.is_file():
+            try:
+                kd = json.loads(kf.read_text(encoding="utf-8"))
+                for c in (kd.get("cards") or {}).values():
+                    if isinstance(c, dict):
+                        cc = dict(c)
+                        cc["layer_scope"] = "private"
+                        cc["project_id"] = pid
+                        cc["project_name"] = pname
+                        lib_kcards.append(cc)
+            except Exception:
+                pass
+
+        lib_taste: dict[str, Any] = {}
+        tf = lib_dir / "_profile" / "taste.json"
+        if tf.is_file():
+            try:
+                lib_taste = json.loads(tf.read_text(encoding="utf-8"))
+                lib_taste["project_id"] = pid
+                lib_taste["project_name"] = pname
+            except Exception:
+                pass
+
+        lib_refls: list[dict[str, Any]] = []
+        rd = lib_dir / "_reflections"
+        if rd.is_dir():
+            for rf in sorted(rd.glob("*.json"), key=lambda x: x.name, reverse=True)[:15]:
+                try:
+                    ro = json.loads(rf.read_text(encoding="utf-8"))
+                    ro.setdefault("project_id", pid)
+                    ro.setdefault("project_name", pname)
+                    lib_refls.append(ro)
+                except Exception:
+                    pass
+
+        libs.append({
+            "project_id": pid,
+            "project_slug": pid,
+            "project_name": pname,
+            "is_current": is_current,
+            "layer_scope": "private",
+            "library_dir": f".memory-art/projects/{pid}",
+            "origin_root": str(lib_meta.get("origin_root") or lib_meta.get("bound_root") or ""),
+            "copied_from_project": str(lib_meta.get("copied_from_project") or ""),
+            "created_at": str(lib_meta.get("created_at") or ""),
+            "updated_at": str(lib_meta.get("updated_at") or ""),
+            "modules_count": len(lib_mods),
+            "entries_count": len(lib_entries),
+            "entries": lib_entries,
+            "knowledge_cards": lib_kcards,
+            "taste": lib_taste,
+            "reflections": lib_refls,
+        })
+
+    libs.sort(key=lambda x: (0 if x.get("is_current") else 1, x.get("project_id", "")))
+    return libs
+
+
+def load_project(root: Path) -> dict[str, Any]:
+    root = root.resolve()
+    mem_dir = root / MEMORY_DIR
+    active_meta: dict[str, Any] = {}
+    if mem_dir.is_dir():
+        try:
+            from improve import ensure_project_library_bound
+            active_meta = ensure_project_library_bound(root)
+        except Exception:
+            active_meta = {}
+
     config = load_yaml((mem_dir / "config.yaml").read_text(encoding="utf-8")) if (mem_dir / "config.yaml").exists() else {}
     modules_doc = load_yaml((mem_dir / "modules.yaml").read_text(encoding="utf-8")) if (mem_dir / "modules.yaml").exists() else {}
     categories = modules_doc.get("categories", {})
     modules = modules_doc.get("modules", {})
     synonyms = modules_doc.get("synonyms", [])
 
-    # Load entries
+    active_pid = str(active_meta.get("project_id") or root.name.lower())
+    active_pname = str(
+        active_meta.get("project_name")
+        or (config.get("project") or {}).get("name")
+        or root.name
+    )
+    active_meta["project_id"] = active_pid
+    active_meta["project_slug"] = active_pid
+    active_meta["project_name"] = active_pname
+    active_meta.setdefault("layer_scope", "private")
+    active_meta.setdefault("bound_root", str(root))
+    active_meta.setdefault("library_dir", f".memory-art/projects/{active_pid}")
+
+    # Load entries of the CURRENT active project only
     entries: list[dict[str, Any]] = []
     entries_dir = mem_dir / "entries"
     if entries_dir.is_dir():
         for md_file in sorted(entries_dir.rglob("*.md")):
-            raw = md_file.read_text(encoding="utf-8")
-            m = re.match(r"\A---\r?\n(.*?)\r?\n---\r?\n?(.*)\Z", raw, re.DOTALL)
-            if not m:
-                continue
-            meta = load_yaml(m.group(1))
-            body = m.group(2).strip()
-            meta["body"] = body
-            meta["file_path"] = str(md_file.relative_to(root))
-            k_info = KIND_META.get(meta.get("kind", ""), {"label": meta.get("kind", ""), "layer": "lesson", "badge": "info", "order": 9})
-            meta["kind_label"] = k_info["label"]
-            meta["layer"] = k_info["layer"]
-            meta["badge"] = k_info["badge"]
-            meta["kind_order"] = k_info["order"]
-            meta.setdefault("layer_scope", "private")
-            entries.append(meta)
+            em = _parse_entry_md_file(md_file, root, project_id=active_pid, project_name=active_pname)
+            if em:
+                entries.append(em)
+
+    if mem_dir.is_dir():
+        try:
+            from improve import sync_active_project_to_library
+            sync_active_project_to_library(root, project_name=active_pname)
+        except Exception:
+            pass
 
     # Load specs
     specs: dict[str, dict[str, str]] = {}
@@ -495,6 +659,8 @@ def load_project(root: Path) -> dict[str, Any]:
                 if isinstance(c, dict):
                     cc = dict(c)
                     cc["layer_scope"] = "private"
+                    cc["project_id"] = active_pid
+                    cc["project_name"] = active_pname
                     priv_cards_list.append(cc)
         except Exception:
             pass
@@ -507,6 +673,8 @@ def load_project(root: Path) -> dict[str, Any]:
             if isinstance(c, dict):
                 cc = dict(c)
                 cc["layer_scope"] = "shared"
+                cc.setdefault("project_id", "global_shared")
+                cc.setdefault("project_name", "全局共享通用库 (Global Shared)")
                 shared_cards_list.append(cc)
     except Exception:
         pass
@@ -528,8 +696,12 @@ def load_project(root: Path) -> dict[str, Any]:
         except Exception:
             pass
 
+    project_libraries = _load_all_project_libraries(root, active_meta, assets_info)
+
     built_at = datetime.now(cst).strftime("%Y-%m-%d %H:%M:%S UTC+8")
     sig_src = json.dumps({
+        "p": active_pid,
+        "pl": [(pl.get("project_id"), pl.get("entries_count"), len(pl.get("knowledge_cards") or [])) for pl in project_libraries],
         "a": [(k, v.get("sha256_16"), v.get("description"), v.get("role"), v.get("module")) for k, v in sorted(assets_info.items())],
         "e": [(e.get("id"), e.get("summary"), e.get("status"), e.get("stale")) for e in entries],
         "m": list(modules.keys()),
@@ -543,6 +715,8 @@ def load_project(root: Path) -> dict[str, Any]:
         "root": str(root),
         "built_at": built_at,
         "build_id": build_id,
+        "active_project": active_meta,
+        "project_libraries": project_libraries,
         "config": config,
         "categories": categories,
         "category_summary": category_summary,

@@ -486,13 +486,27 @@ def discover_folder_clusters(root: Path, asset_roots: list[str], depth: int = 2)
 
 def cmd_init(root: Path, project_name: str = "Untitled Art Project", force: bool = False) -> int:
     mem = root / MEMORY_DIR
-    if mem.exists() and not force:
+    explicit_name = project_name if (project_name and project_name != "Untitled Art Project") else ""
+    eff_name = explicit_name or root.name
+    was_copied = False
+    if mem.exists():
+        try:
+            from improve import ensure_project_library_bound, sync_active_project_to_library
+            meta = ensure_project_library_bound(root, explicit_project_name=explicit_name)
+            was_copied = bool(meta.get("auto_isolated_on_copy"))
+            if explicit_name:
+                cfg_now = default_config(explicit_name, mode="young")
+                write_config_yaml(root, cfg_now)
+                sync_active_project_to_library(root, project_name=explicit_name)
+        except Exception:
+            pass
+    if mem.exists() and not force and not was_copied:
         print(f"⚠️  已存在 {mem}。若要重建脚手架请加 --force（不会删除已有 entries）。")
         print("   年轻项目下一步: python3 pmem_art.py bootstrap --mode young")
         print("   老项目下一步:   python3 pmem_art.py bootstrap --mode legacy")
         return 0
 
-    config = default_config(project_name, mode="young")
+    config = default_config(eff_name, mode="young")
     write_config_yaml(root, config)
 
     modules = {k: dict(v) for k, v in STARTER_MODULES.items()}
@@ -508,8 +522,10 @@ def cmd_init(root: Path, project_name: str = "Untitled Art Project", force: bool
         )
     (mem / "candidates.json").write_text("[]\n", encoding="utf-8")
     try:
-        from improve import ensure_shared_knowledge_seeded
+        from improve import ensure_shared_knowledge_seeded, ensure_project_library_bound, sync_active_project_to_library
         ensure_shared_knowledge_seeded(root)
+        ensure_project_library_bound(root, explicit_project_name=eff_name)
+        sync_active_project_to_library(root, project_name=eff_name)
     except Exception:
         pass
 

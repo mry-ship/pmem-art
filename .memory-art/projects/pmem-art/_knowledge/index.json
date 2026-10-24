@@ -1,0 +1,109 @@
+{
+  "version": 1,
+  "cards": {
+    "light-rim": {
+      "id": "light-rim",
+      "title": "侧逆光",
+      "body": "轮廓分离主体与背景，高光条沿边缘走。",
+      "tags": [
+        "lighting"
+      ],
+      "source": "converge_start",
+      "updated_at": "2026-10-25 00:04:01 UTC+8",
+      "layer_scope": "private",
+      "promoted_to_shared": true
+    },
+    "palette-70-20-10": {
+      "id": "palette-70-20-10",
+      "title": "色板 70/20/10",
+      "body": "主色70%、辅色20%、点缀10%；点缀勿抢主体。",
+      "tags": [
+        "brand",
+        "color_palette"
+      ],
+      "source": "learn_accept",
+      "updated_at": "2026-10-25 00:04:01 UTC+8",
+      "layer_scope": "private",
+      "promoted_to_shared": true
+    },
+    "anatomy-head-ratio": {
+      "id": "anatomy-head-ratio",
+      "title": "头身比尺规",
+      "body": "立绘常用 7~8 头身；Q版 2~3 头身。草图阶段先标刻度。",
+      "tags": [
+        "anatomy",
+        "character"
+      ],
+      "source": "learn_accept",
+      "updated_at": "2026-10-25 00:04:01 UTC+8",
+      "layer_scope": "private",
+      "promoted_to_shared": true
+    },
+    "eye-hierarchy": {
+      "id": "eye-hierarchy",
+      "title": "五官主次",
+      "body": "先定眼位与眉弓，再嘴鼻；义眼/异色瞳要作为识别锚点锁定。",
+      "tags": [
+        "anatomy",
+        "character"
+      ],
+      "source": "learn_accept",
+      "updated_at": "2026-10-25 00:04:01 UTC+8",
+      "layer_scope": "private",
+      "promoted_to_shared": true
+    },
+    "atmospheric-perspective": {
+      "id": "atmospheric-perspective",
+      "title": "大气透视",
+      "body": "远景降对比降饱和，近景保持边缘清晰，增强纵深。",
+      "tags": [
+        "scene",
+        "lighting"
+      ],
+      "source": "learn_accept",
+      "updated_at": "2026-10-25 00:04:01 UTC+8",
+      "layer_scope": "private",
+      "promoted_to_shared": true
+    },
+    "golden-hour-scene": {
+      "id": "golden-hour-scene",
+      "title": "黄金时刻场景光",
+      "body": "低角度暖光 + 长影；避开正午顶光死白。",
+      "tags": [
+        "scene",
+        "lighting"
+      ],
+      "source": "learn_accept",
+      "updated_at": "2026-10-25 00:04:01 UTC+8",
+      "layer_scope": "private",
+      "promoted_to_shared": true
+    },
+    "nine-slice-basics": {
+      "id": "nine-slice-basics",
+      "title": "九宫格基础 (9-Slice)",
+      "body": "四角 48px 固定、四边单向拉伸、中心双向纯色拉伸；中心区禁止复杂圆盘花纹，外留 4px 透明安全边。",
+      "tags": [
+        "ui",
+        "ui_9slice"
+      ],
+      "source": "seed_atlas",
+      "updated_at": "2026-10-25 00:32:15 UTC+8",
+      "layer_scope": "private",
+      "promoted_to_shared": true
+    },
+    "readability-silhouette": {
+      "id": "readability-silhouette",
+      "title": "特效可读剪影与预乘Alpha",
+      "body": "序列帧每帧剪影可辨；白芯→鎏金→青瓷残影三段色阶，Premultiplied Alpha 严禁黑边。",
+      "tags": [
+        "vfx",
+        "alpha"
+      ],
+      "source": "seed_atlas",
+      "updated_at": "2026-10-25 00:32:15 UTC+8",
+      "layer_scope": "private"
+    }
+  },
+  "updated_at": "2026-10-25 01:21:01 UTC+8",
+  "layer_scope": "private"
+}

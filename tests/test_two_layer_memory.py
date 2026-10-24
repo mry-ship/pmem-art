@@ -147,12 +147,65 @@ def main() -> None:
     recalled_a = recall_layered_knowledge_cards(proj_a, target_module="character.Hero", query="手部透视 头身比", limit=6)
     assert recalled_a[0]["layer_scope"] == "private", "Private layer cards must sort before shared layer cards"
 
-    # 5. Verify Atlas generation includes both layers cleanly
-    atlas_out = generate_atlas_html(load_project(proj_a), proj_a / "art-atlas.html")
-    atlas_html = atlas_out.read_text(encoding="utf-8")
-    assert "跨项目共享层 (Shared)" in atlas_html and "项目私有层 (Private)" in atlas_html
+    # 5. Verify explicit project labeling in Project A's specialized library (.memory-art/projects/projecta_celadon/)
+    data_a = load_project(proj_a)
+    assert data_a["active_project"]["project_id"] == "projecta_celadon"
+    lib_a_dir = proj_a / ".memory-art" / "projects" / "projecta_celadon"
+    assert (lib_a_dir / "library.json").exists() and (lib_a_dir / "library_meta.json").exists()
+    assert all(e.get("project_id") == "projecta_celadon" for e in data_a["entries"])
 
-    print("ALL TWO-LAYER MEMORY TESTS PASSED!")
+    # 6. Verify Copy-Memory-Folder Workflow:
+    # Copy the ENTIRE .memory-art/ folder from ProjectA_Celadon into a brand-new project directory ProjectC_CopiedMem
+    proj_c = tmp_base / "ProjectC_CopiedMem"
+    proj_c.mkdir(parents=True)
+    shutil.copytree(proj_a / ".memory-art", proj_c / ".memory-art")
+
+    # Immediately inspect / warm-start Project C after copying .memory-art/
+    data_c = load_project(proj_c)
+    assert data_c["active_project"]["project_id"] == "projectc_copiedmem", "Project C must get its own project_id"
+    assert data_c["active_project"].get("copied_from_project") == "projecta_celadon"
+    assert len(data_c["entries"]) == 0, "Project C active entries must start 100% clean after copying .memory-art/"
+    assert len(data_c["profile"]["private_knowledge_cards"]) == 0, "Project C active private knowledge cards must start empty"
+    assert not data_c["profile"]["taste"].get("banned_habits"), "Project C active taste must start clean"
+
+    # Verify Project A's specialized library was preserved intact under .memory-art/projects/projecta_celadon/
+    libs_c = {lib["project_id"]: lib for lib in data_c["project_libraries"]}
+    assert "projectc_copiedmem" in libs_c and libs_c["projectc_copiedmem"]["is_current"] is True
+    assert "projecta_celadon" in libs_c and libs_c["projecta_celadon"]["is_current"] is False
+    assert libs_c["projecta_celadon"]["entries_count"] >= 1, "Archived Project A specialized library must preserve all entries"
+    assert any(c["id"] == "style-celadon-lock" for c in libs_c["projecta_celadon"]["knowledge_cards"]), (
+        "Archived Project A specialized library must preserve its private style knowledge cards"
+    )
+
+    # Verify Project A's private memories NEVER leak into Project C's active Warm-Start recall, while Shared Layer still works
+    warm_c = build_warm_start_pack(proj_c, data_c, module="character.Hero", goal="赛博义体武士立绘 手部透视")
+    assert "青瓷" not in warm_c["prompt_block"], "Copied Project A's private memories must NEVER leak into Project C recall"
+    assert len(warm_c.get("shared_knowledge") or []) >= 1, "Global shared universal craft cards must still warm-start Project C"
+
+    # Write a new memory in Project C and verify it tags with projectc_copiedmem without mutating archived projecta_celadon
+    run_cli(
+        proj_c,
+        "feedback",
+        "赛博义体武士锁定钛黑#0B0F19与霓虹青#00F5D4留着当正例；严禁蒸汽波粉紫",
+        "-m",
+        "character.Hero",
+        env=env,
+    )
+    data_c_after = load_project(proj_c)
+    assert len(data_c_after["entries"]) >= 1
+    assert all(e["project_id"] == "projectc_copiedmem" for e in data_c_after["entries"])
+    libs_c_after = {lib["project_id"]: lib for lib in data_c_after["project_libraries"]}
+    assert libs_c_after["projectc_copiedmem"]["entries_count"] >= 1
+    assert libs_c_after["projecta_celadon"]["entries_count"] == libs_c["projecta_celadon"]["entries_count"]
+
+    # 7. Verify Atlas generation includes both layers AND the Multi-Project Specialized Library Switcher
+    atlas_out = generate_atlas_html(data_c_after, proj_c / "art-atlas.html")
+    atlas_html = atlas_out.read_text(encoding="utf-8")
+    assert "跨项目共享层 (Shared)" in atlas_html and "项目私有层" in atlas_html
+    assert "专项记忆库项目切换器" in atlas_html
+    assert "projecta_celadon" in atlas_html and "projectc_copiedmem" in atlas_html
+
+    print("ALL TWO-LAYER & PROJECT-LABELED MEMORY TESTS PASSED!")
 
 
 if __name__ == "__main__":

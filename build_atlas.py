@@ -499,11 +499,58 @@ let state = {
   module: "ALL",
   tab: "gallery",
   categoryFilter: "ALL",
+  selectedLibrary: "CURRENT",
   search: "",
   bgClass: "stage-checker",
   showGuides: false,
   autoRefresh: true,
   lbScale: 1.0
+};
+
+function getActiveProjectMeta() {
+  const ap = DATA.active_project || {};
+  const fallbackName = DATA.config?.project?.name || "pmem-art";
+  const pid = ap.project_id || "pmem-art";
+  return {
+    project_id: pid,
+    project_name: ap.project_name || fallbackName,
+    library_dir: ap.library_dir || (".memory-art/projects/" + pid),
+    copied_from_project: ap.copied_from_project || ""
+  };
+}
+
+function getProjectLibraries() {
+  const ap = getActiveProjectMeta();
+  if (Array.isArray(DATA.project_libraries) && DATA.project_libraries.length > 0) {
+    return DATA.project_libraries;
+  }
+  return [{
+    project_id: ap.project_id,
+    project_name: ap.project_name,
+    is_current: true,
+    library_dir: ap.library_dir,
+    entries_count: (DATA.entries || []).length,
+    modules_count: Object.keys(DATA.modules || {}).length,
+    entries: DATA.entries || [],
+    knowledge_cards: DATA.profile?.private_knowledge_cards || [],
+    taste: DATA.profile?.taste || {},
+    reflections: DATA.profile?.reflections || []
+  }];
+}
+
+function getSelectedLibraryObj() {
+  const libs = getProjectLibraries();
+  const cur = libs.find(l => l.is_current) || libs[0];
+  if (!state.selectedLibrary || state.selectedLibrary === "CURRENT") return cur;
+  return libs.find(l => l.project_id === state.selectedLibrary) || cur;
+}
+
+window.selectProjectLibrary = function(projectId) {
+  const libs = getProjectLibraries();
+  const target = libs.find(l => l.project_id === projectId);
+  state.selectedLibrary = (target && !target.is_current) ? target.project_id : "CURRENT";
+  saveAtlasState();
+  renderStage();
 };
 
 function saveAtlasState() {
@@ -571,8 +618,10 @@ function getFilteredModules() {
 function getFilteredEntries() {
   const mods = new Set(getFilteredModules());
   const q = state.search.trim().toLowerCase();
-  return DATA.entries.filter(e => {
-    const modMatch = state.module === "ALL" || mods.has(e.module) || (e.scope === "project" && state.tab === "memories");
+  const selLib = getSelectedLibraryObj();
+  const sourceEntries = (selLib && !selLib.is_current) ? (selLib.entries || []) : (DATA.entries || []);
+  return sourceEntries.filter(e => {
+    const modMatch = state.module === "ALL" || mods.has(e.module) || (e.scope === "project" && state.tab === "memories") || (selLib && !selLib.is_current);
     if (!modMatch) return false;
     if (!q) return true;
     return JSON.stringify(e).toLowerCase().includes(q);
@@ -606,7 +655,10 @@ function renderHeaderAndSidebar() {
   const prof = DATA.profile || {};
   const kCount = (prof.knowledge_cards || []).length;
   const rCount = (prof.reflections || []).length;
+  const activeProj = getActiveProjectMeta();
+  const projLibs = getProjectLibraries();
   document.getElementById("kpiStrip").innerHTML = `
+    <div class="kpi-pill" style="cursor:pointer;border-color:rgba(168,85,247,0.5);" onclick="switchTab('improve')" title="当前项目专项记忆库: ${esc(activeProj.project_name)} (${esc(activeProj.library_dir)}/) · 共 ${projLibs.length} 个项目专项库">🏷️ 当前专项记忆库: <b style="color:#d8b4fe">${esc(activeProj.project_id)}</b> <span style="opacity:0.75">(${projLibs.length}库)</span></div>
     <div class="kpi-pill" style="cursor:pointer;" onclick="state.module='ALL';state.categoryFilter='ALL';switchTab('gallery')">📦 视觉模块 <b>${Object.keys(DATA.modules).length}</b></div>
     <div class="kpi-pill" style="cursor:pointer;" onclick="switchTab('gallery')">🖼️ 各类型图片资产 <b>${totalAssets}</b></div>
     <div class="kpi-pill" style="cursor:pointer;" onclick="switchTab('memories')">🧭 美术记忆条目 <b>${totalMemories}</b></div>
@@ -722,6 +774,23 @@ function renderModuleBanner() {
           </div>
         </div>
         <div class="cat-filter-strip">${catCardsHtml}</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.32);border-radius:9px;padding:9px 12px;margin-bottom:8px;">
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:12px;">
+            <span class="badge purple">🏷️ 当前专项记忆库: ${esc(getActiveProjectMeta().project_name)} (${esc(getActiveProjectMeta().library_dir)}/)</span>
+            <span class="badge info">🌐 全局共享通用库 (~/.pmem-art/shared/)</span>
+            ${getProjectLibraries().map(lib => {
+              const isSelected = (state.selectedLibrary === "CURRENT" && lib.is_current) || (state.selectedLibrary === lib.project_id);
+              const statusTag = lib.is_current ? "🟢 当前项目专项库" : "🕓 历史项目专项库（拷贝保留·严禁串味）";
+              return `<button class="btn-copy" style="border-color:${isSelected ? 'var(--teal)' : 'var(--border)'};background:${isSelected ? 'rgba(45,212,191,0.16)' : '#0b101d'};" onclick="selectProjectLibrary('${esc(lib.project_id)}')">${statusTag}: ${esc(lib.project_name)} [${esc(lib.project_id)}] (${lib.entries_count || 0}记/${(lib.knowledge_cards||[]).length}卡)</button>`;
+            }).join("")}
+          </div>
+          ${(!getSelectedLibraryObj().is_current) ? `<button class="btn-copy" style="border-color:var(--gold);color:var(--gold);" onclick="selectProjectLibrary('CURRENT')">↩ 切回当前项目专项库</button>` : ''}
+        </div>
+        ${(!getSelectedLibraryObj().is_current) ? `
+          <div style="background:rgba(245,158,11,0.14);border:1px solid rgba(245,158,11,0.45);color:#fcd34d;padding:8px 12px;border-radius:8px;font-size:12px;margin-bottom:8px;">
+            🕓 <b>正在回看历史项目专项库：${esc(getSelectedLibraryObj().project_name)} (<code>.memory-art/projects/${esc(getSelectedLibraryObj().project_id)}/</code>)</b> —— 该专项库由拷贝 <code>.memory-art</code> 文件夹自动封存保留，已与当前激活项目 <b>${esc(getActiveProjectMeta().project_name)}</b> 严格物理隔离，绝不参与当前项目生图召回！
+          </div>
+        ` : ''}
         <div class="autopilot-strip">
           <div class="autopilot-tags">
             <strong style="color:var(--gold)">🧠 Whisper Autopilot 静默自我迭代：</strong>
@@ -839,10 +908,17 @@ function renderGalleryTab() {
 
 function renderImproveTab() {
   const prof = DATA.profile || {};
-  const taste = prof.taste || {};
-  const kCards = prof.knowledge_cards || [];
-  const refls = prof.reflections || [];
+  const selLib = getSelectedLibraryObj();
+  const isHist = selLib && !selLib.is_current;
+  const taste = isHist ? (selLib.taste || {}) : (prof.taste || {});
+  const privCardsForView = isHist ? (selLib.knowledge_cards || []) : (prof.private_knowledge_cards || []);
+  const sharedCardsForView = prof.shared_knowledge_cards || [];
+  const privIdsForView = new Set(privCardsForView.map(c => c.id));
+  const kCards = privCardsForView.concat(sharedCardsForView.filter(c => !privIdsForView.has(c.id)));
+  const refls = isHist ? (selLib.reflections || []) : (prof.reflections || []);
   const sig = taste.signal_counts || {};
+  const projLibs = getProjectLibraries();
+  const activeProj = getActiveProjectMeta();
 
   const lightingPills = (taste.preferred_lighting || []).map(x => `<span class="taste-pill">☀️ ${esc(x)}</span>`).join("") || `<span style="color:var(--text-muted)">暂未捕获</span>`;
   const compPills = (taste.preferred_composition || []).map(x => `<span class="taste-pill">📐 ${esc(x)}</span>`).join("") || `<span style="color:var(--text-muted)">暂未捕获</span>`;
@@ -871,13 +947,16 @@ function renderImproveTab() {
     `;
   }).join("") || `<div class="entry-card">暂无收敛复盘记录。</div>`;
 
-  const privCount = (prof.private_knowledge_cards || []).length;
-  const sharedCount = (prof.shared_knowledge_cards || []).length;
+  const privCount = privCardsForView.length;
+  const sharedCount = sharedCardsForView.length;
   const kCardsHtml = kCards.map(c => {
     const isShared = c.layer_scope === "shared";
+    const ownerLabel = isShared
+      ? "🌐 全局共享通用库 (~/.pmem-art/shared/)"
+      : `🏷️ 所属专项库: ${c.project_name || selLib.project_name} (${c.project_id || selLib.project_id})`;
     const layerBadge = isShared
       ? `<span class="badge info" style="font-size:10px;">🌐 跨项目共享层 (Shared)</span>`
-      : `<span class="badge teal" style="font-size:10px;">🔒 项目私有层 (Private)${c.promoted_to_shared ? ' · 已同步全局' : ''}</span>`;
+      : `<span class="badge teal" style="font-size:10px;">🔒 项目私有层 (${esc(c.project_id || selLib.project_id)})${c.promoted_to_shared ? ' · 已同步全局' : ''}</span>`;
     return `
     <div class="kcard" style="border-color:${isShared ? 'rgba(56,189,248,0.28)' : 'rgba(45,212,191,0.35)'};">
       <div class="kcard-title">
@@ -885,12 +964,46 @@ function renderImproveTab() {
         ${layerBadge}
       </div>
       <div style="font-size:12px;color:var(--text-main);line-height:1.55;margin-top:4px;">${esc(c.body)}</div>
-      <div style="font-size:10.5px;color:var(--text-dim);margin-top:6px;font-family:ui-monospace,monospace;">ID: ${esc(c.id)} · 标签: ${esc((c.tags || []).join(" · "))} · 来源: ${esc(c.source || "seed")}</div>
+      <div style="font-size:10.5px;color:var(--text-dim);margin-top:6px;font-family:ui-monospace,monospace;">${esc(ownerLabel)} · ID: ${esc(c.id)} · 标签: ${esc((c.tags || []).join(" · "))}</div>
     </div>
     `;
   }).join("");
 
+  const switcherHtml = `
+    <div class="improve-card" style="border-color:rgba(168,85,247,0.4);">
+      <h3>
+        <span>🗂️ 专项记忆库项目切换器 & 历史项目演进看板 (Specialized Project Library Switcher)</span>
+        <span style="font-size:11px;color:#d8b4fe;font-family:ui-monospace,monospace;">.memory-art/projects/ (${projLibs.length} 个项目专项库) + ~/.pmem-art/shared/</span>
+      </h3>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;">
+        每个项目拥有明确项目名标识的专属记忆库 <code>.memory-art/projects/&lt;project-id&gt;/</code>。当你把旧项目的 <code>.memory-art</code> 文件夹直接拷贝到新项目时，系统会自动把旧项目封存为<b>历史项目专项库（只读溯源、严禁串味）</b>，并为新项目自动创建干净的专属记忆库，同时挂载全局共享通用库 <code>~/.pmem-art/shared/</code>：
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px;">
+        ${projLibs.map(lib => {
+          const isSel = (state.selectedLibrary === "CURRENT" && lib.is_current) || (state.selectedLibrary === lib.project_id);
+          return `
+            <div class="kcard" style="cursor:pointer;border-color:${isSel ? 'var(--teal)' : (lib.is_current ? 'rgba(16,185,129,0.4)' : 'rgba(245,158,11,0.35)')};background:${isSel ? 'rgba(45,212,191,0.08)' : '#090d16'};" onclick="selectProjectLibrary('${esc(lib.project_id)}')">
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;">
+                <strong style="color:${lib.is_current ? '#6ee7b7' : '#fcd34d'};font-size:13px;">🏷️ ${esc(lib.project_name)}</strong>
+                <span class="badge ${lib.is_current ? 'success' : 'warning'}" style="font-size:10px;">${lib.is_current ? '🟢 当前项目专项库' : '🕓 历史项目专项库（拷贝保留·严禁串味）'}</span>
+              </div>
+              <div style="font-size:11px;color:var(--text-muted);font-family:ui-monospace,monospace;margin-top:4px;">
+                项目ID: <b>${esc(lib.project_id)}</b> · 路径: <code>${esc(lib.library_dir)}/</code>
+              </div>
+              <div style="display:flex;gap:10px;flex-wrap:wrap;font-size:11.5px;color:var(--text-main);margin-top:6px;">
+                <span>🧭 专项记忆: <b>${lib.entries_count || 0} 条</b></span>
+                <span>📘 私有知识卡: <b>${(lib.knowledge_cards || []).length} 张</b></span>
+                <span>🏆 收敛复盘: <b>${(lib.reflections || []).length} 场</b></span>
+              </div>
+            </div>
+          `;
+        }).join("")}
+      </div>
+    </div>
+  `;
+
   return `
+    ${switcherHtml}
     <div class="improve-grid">
       <div class="improve-card" style="margin-bottom:0;">
         <h3><span>🎨 个人审美口味档案 (Personal Taste Profile)</span><span style="font-size:11px;color:var(--text-muted);font-family:ui-monospace,monospace;">.memory-art/_profile/taste.json</span></h3>
@@ -1090,7 +1203,8 @@ function renderMemoriesTab() {
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
         <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
           <span class="badge ${esc(e.badge)}">${esc(e.kind_label)}</span>
-          <span style="font-family:monospace;font-weight:700;color:var(--teal);">${esc(e.module)} · ${esc(e.entity)}</span>
+          <span style="font-family:monospace;font-weight:700;color:var(--teal);">${esc(e.module)} · ${esc(e.entity || '')}</span>
+          <span class="badge purple" style="font-size:10.5px;">🏷️ 所属专项库: ${esc(e.project_name || getActiveProjectMeta().project_name)} (${esc(e.project_id || getActiveProjectMeta().project_id)})</span>
           ${e.scope === 'project' ? `<span class="badge info">🌐 全项目通用</span>` : ''}
           ${e.stale ? `<span class="badge warning">⚠️ STALE 需复核</span>` : ''}
           ${(e.supersedes && e.supersedes.length) ? `<span class="badge purple">🔄 替代旧记忆: ${esc(e.supersedes.join(', '))}</span>` : ''}

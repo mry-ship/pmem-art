@@ -180,6 +180,16 @@ def write_memory_entry(
     aliases: list[str] | None = None,
     extra_meta: dict[str, Any] | None = None,
 ) -> Path:
+    proj_id = ""
+    proj_name = ""
+    try:
+        from improve import ensure_project_library_bound, slugify_project_id
+        meta = ensure_project_library_bound(root)
+        proj_id = meta.get("project_id") or slugify_project_id(root.name)
+        proj_name = meta.get("project_name") or root.name
+    except Exception:
+        proj_id = root.name.lower()
+        proj_name = root.name
     entries_root = root / ".memory-art" / "entries" / module
     entries_root.mkdir(parents=True, exist_ok=True)
     eid = _next_id(entries_root, kind)
@@ -228,6 +238,9 @@ def write_memory_entry(
     content = (
         f"---\n"
         f"id: {eid}\n"
+        f"project_id: {json.dumps(proj_id, ensure_ascii=False)}\n"
+        f"project_name: {json.dumps(proj_name, ensure_ascii=False)}\n"
+        f"layer_scope: private\n"
         f"module: {module}\n"
         f"kind: {kind}\n"
         f"status: active\n"
@@ -244,6 +257,11 @@ def write_memory_entry(
     )
     out = entries_root / f"{eid}.md"
     out.write_text(content, encoding="utf-8")
+    try:
+        from improve import sync_active_project_to_library
+        sync_active_project_to_library(root)
+    except Exception:
+        pass
     return out
 
 

@@ -1,0 +1,54 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "written_at": "2026-10-24 22:15:00 UTC+8",
+  "session_id": "astra_standing_v3",
+  "goal": "阿斯特拉 7.5头身东方星盘术士立绘（青瓷鎏金配色 + 左眼星盘义眼 + 透明通道）",
+  "module": "character.Astra",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image",
+  "threshold": 9.5,
+  "max_rounds": 8,
+  "rounds_used": 3,
+  "winner_round": 3,
+  "winner_score": 9.6,
+  "winner_image": "assets/character/astra_standing_v3.png",
+  "winner_passed": true,
+  "outcome": "✅ 达标收敛（第 3 轮达到 9.6 / 10.0 分 ≥ 9.5 分合格线）",
+  "what_fixed": [
+    "挂载 openpose_full (0.72) 锁定 7.5 头身骨骼，消除 Q 版大头倾向",
+    "固定 LoRA 权重 0.85 并强化 golden brass astrolabe monocle on left eye 提示词"
+  ],
+  "what_still_weak": "无明显硬伤（已达标并经 RMBG-2.0 去背）",
+  "strengths": "7.5头身修长比例、玄青外袍配鎏金滾边、左眼星盘义眼十字星芒清晰、四周 >16px 透明留白",
+  "warm_start_confidence": 0.9,
+  "fast_track": true,
+  "scores": [
+    {
+      "round": 1,
+      "score": 6.8,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 8.9,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 9.6,
+      "passed": true
+    }
+  ],
+  "lessons": [
+    {
+      "category": "anatomy",
+      "lesson": "立绘必须先锁 7.5 头身骨骼控制网",
+      "drill": "首轮开启 openpose_full 0.72"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "禁用赛博洋红，锁定玄青+青瓷+鎏金 70/20/10",
+      "drill": "注入全局色板 HEX 与 Negative"
+    }
+  ]
+}

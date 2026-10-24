@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "updated_at": "2026-10-25 00:28:00 UTC+8",
+  "preferred_lighting": [
+    "侧逆光 / rim light",
+    "左上45°暖金主光 + 冷黛环境阴影",
+    "黄金时刻光"
+  ],
+  "preferred_composition": [
+    "7.5头身标准立绘留白 (>16px)",
+    "30°等轴测游戏镜头 (Isometric)",
+    "九宫格四角48px固定 + 中央纯色拉伸"
+  ],
+  "preferred_line_weight": [
+    "干净金墨细描边 (Cel-shaded clean ink line)"
+  ],
+  "preferred_color_temperature": [
+    "青瓷白+墨蓝+鎏金倾向 (70/20/10 色板定律)",
+    "外青瓷内鎏金双层色阶"
+  ],
+  "banned_habits": [
+    "赛博霓虹/霓虹紫 (#FF00FF / #00FFFF)",
+    "错误头身比/5头身幼态大头",
+    "九宫格中央拉伸区画圆盘暗纹或斜线",
+    "漏画左眼黄铜星盘义眼",
+    "RGB白底/黑底未去背伪透明网格"
+  ],
+  "keep_phrases": [
+    "这版7.5头身和左眼星盘义眼很准，留着当立绘锚点",
+    "四角黄铜雕花收在48px内，中间纯色可拉伸，定稿"
+  ],
+  "reject_phrases": [
+    "太赛博了，禁止洋红和电光青霓虹",
+    "九宫格中间不能有圆盘花纹，拉宽会变形"
+  ],
+  "style_notes": [
+    "70%玄青墨蓝主调 + 20%秘色青瓷与宣纸白 + 10%鎏金点睛",
+    "每次生图或入库自动归档至对应分类并刷新 art-atlas.html"
+  ],
+  "signal_counts": {
+    "keeps": 6,
+    "rejects": 4,
+    "style_fixes": 3,
+    "sessions": 2
+  }
+}

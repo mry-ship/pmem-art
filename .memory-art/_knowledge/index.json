@@ -9,7 +9,9 @@
         "lighting"
       ],
       "source": "converge_start",
-      "updated_at": "2026-10-25 00:04:01 UTC+8"
+      "updated_at": "2026-10-25 00:04:01 UTC+8",
+      "layer_scope": "private",
+      "promoted_to_shared": true
     },
     "palette-70-20-10": {
       "id": "palette-70-20-10",
@@ -20,7 +22,9 @@
         "color_palette"
       ],
       "source": "learn_accept",
-      "updated_at": "2026-10-25 00:04:01 UTC+8"
+      "updated_at": "2026-10-25 00:04:01 UTC+8",
+      "layer_scope": "private",
+      "promoted_to_shared": true
     },
     "anatomy-head-ratio": {
       "id": "anatomy-head-ratio",
@@ -31,7 +35,9 @@
         "character"
       ],
       "source": "learn_accept",
-      "updated_at": "2026-10-25 00:04:01 UTC+8"
+      "updated_at": "2026-10-25 00:04:01 UTC+8",
+      "layer_scope": "private",
+      "promoted_to_shared": true
     },
     "eye-hierarchy": {
       "id": "eye-hierarchy",
@@ -42,7 +48,9 @@
         "character"
       ],
       "source": "learn_accept",
-      "updated_at": "2026-10-25 00:04:01 UTC+8"
+      "updated_at": "2026-10-25 00:04:01 UTC+8",
+      "layer_scope": "private",
+      "promoted_to_shared": true
     },
     "atmospheric-perspective": {
       "id": "atmospheric-perspective",
@@ -53,7 +61,9 @@
         "lighting"
       ],
       "source": "learn_accept",
-      "updated_at": "2026-10-25 00:04:01 UTC+8"
+      "updated_at": "2026-10-25 00:04:01 UTC+8",
+      "layer_scope": "private",
+      "promoted_to_shared": true
     },
     "golden-hour-scene": {
       "id": "golden-hour-scene",
@@ -64,7 +74,9 @@
         "lighting"
       ],
       "source": "learn_accept",
-      "updated_at": "2026-10-25 00:04:01 UTC+8"
+      "updated_at": "2026-10-25 00:04:01 UTC+8",
+      "layer_scope": "private",
+      "promoted_to_shared": true
     },
     "nine-slice-basics": {
       "id": "nine-slice-basics",
@@ -75,7 +87,9 @@
         "ui_9slice"
       ],
       "source": "seed_atlas",
-      "updated_at": "2026-10-25 00:32:15 UTC+8"
+      "updated_at": "2026-10-25 00:32:15 UTC+8",
+      "layer_scope": "private",
+      "promoted_to_shared": true
     },
     "readability-silhouette": {
       "id": "readability-silhouette",
@@ -86,8 +100,10 @@
         "alpha"
       ],
       "source": "seed_atlas",
-      "updated_at": "2026-10-25 00:32:15 UTC+8"
+      "updated_at": "2026-10-25 00:32:15 UTC+8",
+      "layer_scope": "private"
     }
   },
-  "updated_at": "2026-10-25 00:32:15 UTC+8"
+  "updated_at": "2026-10-25 01:21:01 UTC+8",
+  "layer_scope": "private"
 }
