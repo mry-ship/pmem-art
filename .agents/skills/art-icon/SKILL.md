@@ -1,6 +1,6 @@
 ---
 name: art-icon
-description: 当用户输入 /pmem-icon 或 /art-icon（如「/pmem-icon 给青瓷RPG做一套24px导航与道具图标」「/pmem-icon home settings inventory」）时触发。按 jezweb icon-set-generator 式流程：定 style-spec → 批量一致化 SVG（或统一栅格图标）→ 一致性审查，关键单枚可用 8轮 >=9.5 收敛打磨。
+description: 【截图可见·必读】/pmem-icon 与 /art-icon 生成图标集时，关键单枚与不合格批次强制「最多8轮、合格线≥9.5」闭环自评收敛（生1张→打分挑刺→<9.5叠加修正→满8轮挑最高分→评分总表）。流水线对标 jezweb：先锁 style-spec → 约5个一批 SVG（统一 viewBox/currentColor/stroke）→ preview.html。触发例：「/pmem-icon 给青瓷RPG做一套24px导航图标」「/art-icon home settings inventory」。
 ---
 
 # `/pmem-icon`（别名 `/art-icon`）— jezweb 式一致化图标集 / SVG 取向生成

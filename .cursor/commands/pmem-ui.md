@@ -1,5 +1,5 @@
 ---
-description: SpriteCook式 UI Kit/HUD/九宫格整套生成 + 8轮9.5收敛（pmem-art）
+description: 【强制8轮≥9.5收敛】SpriteCook式 UI Kit/HUD/九宫格整套（pmem-art）
 ---
 
 # `/pmem-ui`（别名 `/art-ui`）— SpriteCook 式 UI Kit / HUD / 九宫格整套生成

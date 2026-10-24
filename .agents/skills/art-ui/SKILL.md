@@ -1,6 +1,6 @@
 ---
 name: art-ui
-description: 当用户输入 /pmem-ui 或 /art-ui（如「/pmem-ui 生成一套蒸汽朋克主菜单 HUD」「/pmem-ui [附带概念图] 拆出九宫格弹窗与按钮态」）时触发。按 SpriteCook 式「概念先行 → 组件表 → 九宫格切线 → 状态族」流程生成完整 UI 套件，并对关键面板/按钮用 8轮 >=9.5 自评收敛打磨。
+description: 【截图可见·必读】/pmem-ui 与 /art-ui 生成 UI Kit/HUD 时，概念稿与关键组件均强制「最多8轮、合格线≥9.5」闭环自评收敛（生1张→打分挑刺→<9.5叠加修正→满8轮挑最高分→评分总表）。流水线对标 SpriteCook：概念先行 → 透明组件表 → 九宫格切线 → 状态族。触发例：「/pmem-ui 生成一套蒸汽朋克主菜单 HUD」「/art-ui [附概念图] 拆出九宫格弹窗与按钮态」。
 ---
 
 # `/pmem-ui`（别名 `/art-ui`）— SpriteCook 式 UI Kit / HUD / 九宫格整套生成

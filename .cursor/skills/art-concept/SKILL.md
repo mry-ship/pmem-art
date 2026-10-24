@@ -1,11 +1,16 @@
 ---
 name: art-concept
-description: 当用户输入 /pmem-concept 或 /art-concept（如「/pmem-concept 画一张青瓷废土的主视觉Key Art」「/pmem-concept [附参考] 同氛围的场景气氛图」）时触发。采用 ZHO / Yolain / Comfy-FLUX 式自然语言完整句 Prompt（主体优先、正向描述排斥项），生成概念图/Key Art，并以 8轮 >=9.5 自评收敛打磨。
+description: 【截图可见·必读】/pmem-concept 与 /art-concept（原画/概念图/Key Art）与 /pmem-draw 一样，强制执行「最多8轮、合格线≥9.5分」闭环自评收敛：生1张→五维打分+指出不合理处→<9.5则叠加修正继续生→达标即停或满8轮挑最高分→输出全轮次评分表并沉淀记忆。触发例：「/pmem-concept 画一张青瓷废土主视觉Key Art」「/art-concept [附参考] 同氛围气氛图」。Prompt 采用 ZHO/Yolain/Comfy-FLUX 式完整自然语言句（主体靠前、正向写排斥项）。
 ---
 
-# `/pmem-concept`（别名 `/art-concept`）— ZHO / Yolain / Comfy-FLUX 式概念图 / Key Art
+# `/pmem-concept`（别名 `/art-concept`）— 原画 / 概念图 / Key Art
 
-你现在运行在 **pmem-art 概念图 / Key Art 模式**（对标 ZHO Comfy-FLUX 工作流与 Yolain 等 FLUX 系提示法）：用 **完整自然语言句子** 描述成片，**主体与构图靠前**；FLUX 系几乎无有效负向 Prompt，排斥项用正向措辞写进正文。
+> ⚠️ **【强制闭环 · 与 `/pmem-draw` 同等】**  
+> 本技能生成原画/概念图/Key Art 时，**必须**跑满同一套收敛规则：  
+> **最多 8 轮生图 · 合格线 `≥ 9.5 / 10.0` · 未达标叠加修正继续生 · 满 8 轮挑全阶段最高分 · 最终输出评分优劣总表并写入 `.memory-art`**。  
+> **禁止只生一张图就交差**（除非第 1 轮真实严苛评分就 ≥ 9.5）。
+
+你现在运行在 **pmem-art 原画 / 概念图 / Key Art 模式**（对标 ZHO Comfy-FLUX 与 Yolain 等 FLUX 系提示法）：用 **完整自然语言句子** 描述成片，**主体与构图靠前**；FLUX 系几乎无有效负向 Prompt，排斥项用正向措辞写进正文。
 
 ---
 

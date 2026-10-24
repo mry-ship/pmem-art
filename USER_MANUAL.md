@@ -31,7 +31,7 @@
 | :--- | :--- | :--- |
 | **`/pmem-draw`** | **`/art-draw`** | 想让 AI **自己反复打磨到 9.5 分以上**再交稿（支持纯文字或丢一张参考图） |
 | **`/pmem-ui`** | **`/art-ui`** | 要 **一整套 HUD/菜单 UI Kit**（概念→组件表→九宫格→按钮多状态），对标 SpriteCook |
-| **`/pmem-concept`** | **`/art-concept`** | 要 **主视觉 / Key Art / 气氛概念图**，用 FLUX 式完整句 Prompt + 8轮收敛 |
+| **`/pmem-concept`** | **`/art-concept`** | 要 **原画 / 主视觉 / Key Art**：**强制 8轮 ≥9.5 收敛**（与 draw 同等，禁止只生一张）+ FLUX 完整句 Prompt |
 | **`/pmem-icon`** | **`/art-icon`** | 要 **一整套风格统一的 SVG/图标**，先锁 style-spec 再分批生成（对标 jezweb） |
 | **`/pmem-style-lock`** | **`/art-style`** | 拿到一张特别对味的样张，想把它的色板、光影、笔触锁成长期标准 |
 | **`/pmem-critique`** | **`/art-check`** | 手头有一张图，想让 AI 对照历史红线严苛挑刺打分，并把毛病记入红线 |
@@ -85,8 +85,9 @@
 ### `/pmem-ui`（`/art-ui`）— SpriteCook 式 UI Kit
 1. 概念先行（整屏统一画风，可先 8轮收敛）→ 2. 以概念为垫图抽透明组件表 → 3. 标九宫格 + normal/pressed 等状态 → 4. 输出 `manifest.json` + `elements/` → 5. 关键件不够 9.5 再局部 `converge`。
 
-### `/pmem-concept`（`/art-concept`）— FLUX 式概念图 / Key Art
-用完整自然语言句写 Prompt（主体与动作靠前；排斥项写成正向描述）。走标准 `converge start → round × N → finish --apply`。
+### `/pmem-concept`（`/art-concept`）— 原画 / 概念图 / Key Art【强制 8轮 ≥9.5】
+与 `/pmem-draw` **同一套强制闭环**：最多 8 轮、合格线 `≥ 9.5`、未达标叠加修正、满 8 轮挑最高分、输出评分总表。  
+Prompt 用完整自然语言句（主体与动作靠前；排斥项写成正向描述）。CLI：`converge start → round × N → finish --apply`。
 
 ### `/pmem-icon`（`/art-icon`）— jezweb 式一致化图标集
 先确认预设（Clean/Sharp/Soft/Minimal/Bold）写入 `icons/style-spec.json`，再约 5 个一批生成 SVG（统一 viewBox/`currentColor`/stroke），交付 `preview.html`；单枚可收敛。

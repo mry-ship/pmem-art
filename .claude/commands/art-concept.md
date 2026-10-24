@@ -1,10 +1,15 @@
 ---
-description: ZHO/Yolain/Comfy-FLUX式概念图/Key Art生成 + 8轮9.5收敛（pmem-art）
+description: 【强制8轮≥9.5收敛】原画/概念图/Key Art（ZHO·FLUX式完整句Prompt）（pmem-art）
 ---
 
-# `/pmem-concept`（别名 `/art-concept`）— ZHO / Yolain / Comfy-FLUX 式概念图 / Key Art
+# `/pmem-concept`（别名 `/art-concept`）— 原画 / 概念图 / Key Art
 
-你现在运行在 **pmem-art 概念图 / Key Art 模式**（对标 ZHO Comfy-FLUX 工作流与 Yolain 等 FLUX 系提示法）：用 **完整自然语言句子** 描述成片，**主体与构图靠前**；FLUX 系几乎无有效负向 Prompt，排斥项用正向措辞写进正文。
+> ⚠️ **【强制闭环 · 与 `/pmem-draw` 同等】**  
+> 本技能生成原画/概念图/Key Art 时，**必须**跑满同一套收敛规则：  
+> **最多 8 轮生图 · 合格线 `≥ 9.5 / 10.0` · 未达标叠加修正继续生 · 满 8 轮挑全阶段最高分 · 最终输出评分优劣总表并写入 `.memory-art`**。  
+> **禁止只生一张图就交差**（除非第 1 轮真实严苛评分就 ≥ 9.5）。
+
+你现在运行在 **pmem-art 原画 / 概念图 / Key Art 模式**（对标 ZHO Comfy-FLUX 与 Yolain 等 FLUX 系提示法）：用 **完整自然语言句子** 描述成片，**主体与构图靠前**；FLUX 系几乎无有效负向 Prompt，排斥项用正向措辞写进正文。
 
 ---
 

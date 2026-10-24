@@ -1,5 +1,5 @@
 ---
-description: jezweb式一致化图标集/SVG取向生成 + 8轮9.5收敛（pmem-art）
+description: 【强制8轮≥9.5收敛】jezweb式一致化图标集/SVG（pmem-art）
 ---
 
 # `/pmem-icon`（别名 `/art-icon`）— jezweb 式一致化图标集 / SVG 取向生成

@@ -9,10 +9,10 @@
 
 | 技能指令 | 简短别名 | 用途说明 |
 | :--- | :--- | :--- |
-| **`/pmem-draw`** | **`/art-draw`** | **8轮 9.5分 闭环自评收敛生图**：支持① `/pmem-draw 生成一张xxx风格的xxx图` 或 ② `/pmem-draw [丢入一张图] 生成一张xxx图`（先深度分析参考图，再循环「生1张图 → 五维自评打分+指出不合理处 → `<9.5`分则叠加修正继续生 → 最多8轮挑最高分 → 输出全轮次评分优劣总表并自动沉淀记忆」） |
-| **`/pmem-ui`** | **`/art-ui`** | **SpriteCook 式 UI Kit / HUD / 九宫格整套**：概念先行 → 组件表 → 9-slice → 状态族，关键件 8轮9.5收敛 |
-| **`/pmem-concept`** | **`/art-concept`** | **ZHO/Yolain/Comfy-FLUX 式概念图 / Key Art**：完整句 Prompt + 8轮9.5收敛 |
-| **`/pmem-icon`** | **`/art-icon`** | **jezweb 式一致化图标集 / SVG**：style-spec 锁定 → 分批生成 → 一致性审查 + 可选收敛 |
+| **`/pmem-draw`** | **`/art-draw`** | **【强制 8轮 ≥9.5 收敛】** 通用生图：纯文本或垫图 → 生1张→打分挑刺→`<9.5`叠加修正→满8轮挑最高分→评分总表 |
+| **`/pmem-ui`** | **`/art-ui`** | **【强制 8轮 ≥9.5 收敛】** SpriteCook 式 UI Kit/HUD/九宫格：概念先行→组件表→9-slice→状态族 |
+| **`/pmem-concept`** | **`/art-concept`** | **【强制 8轮 ≥9.5 收敛】** 原画/概念图/Key Art（ZHO·FLUX 完整句 Prompt）— **与 draw 同等强制闭环，禁止只生一张** |
+| **`/pmem-icon`** | **`/art-icon`** | **【强制 8轮 ≥9.5 收敛】** jezweb 式一致化 SVG 图标集：style-spec→分批→preview；关键枚强制收敛 |
 | **`/pmem-style-lock`** | **`/art-style`** | **样张一键提炼风格圣经与色板锁定**：丢入样张提取 HEX 色板、光影笔触与禁用词，锁定进项目记忆 |
 | **`/pmem-critique`** | **`/art-check`** | **主美级五维审稿与红线入库**：对照项目记忆给图片打分挑刺，并将翻车点记入 `style_redline` |
 | **`/pmem-variant`** | **`/art-variant`** | **跨画风分叉与表情/动作差分**：继承角色核心锚点，派生水彩/Q版/像素子模块或序列帧差分 |
