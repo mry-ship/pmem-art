@@ -1,6 +1,6 @@
 {
   "session_id": "scale_case03_recompose",
-  "started_at": "2026-10-25 04:38:59 UTC+8",
+  "started_at": "2026-10-25 04:50:43 UTC+8",
   "goal": "窗边木漏日少女（定向改构图：正面大头特写改为阳光植物画室藤椅阅读中远景）",
   "module": "character.sunlit_window_portrait",
   "mode": "ref_image_guided",
@@ -98,7 +98,7 @@
         }
       ],
       "skip_ahead_hint": false,
-      "recorded_at": "04:38:59"
+      "recorded_at": "04:50:43"
     },
     {
       "round": 2,
@@ -156,7 +156,7 @@
         }
       ],
       "skip_ahead_hint": false,
-      "recorded_at": "04:38:59"
+      "recorded_at": "04:50:43"
     },
     {
       "round": 3,
@@ -214,84 +214,37 @@
         }
       ],
       "skip_ahead_hint": false,
-      "recorded_at": "04:38:59"
+      "recorded_at": "04:50:43"
     }
   ],
   "warm_start": {
-    "project_id": "pmem_clean_cold_run",
-    "project_name": "pmem_clean_cold_run",
+    "project_id": "scale_case03_recompose",
+    "project_name": "scale_case03_recompose",
     "active_project": {
-      "project_id": "pmem_clean_cold_run",
-      "project_slug": "pmem_clean_cold_run",
-      "project_name": "pmem_clean_cold_run",
+      "project_id": "scale_case03_recompose",
+      "project_slug": "scale_case03_recompose",
+      "project_name": "scale_case03_recompose",
       "layer_scope": "private",
-      "bound_root": "/tmp/pmem_clean_cold_run",
-      "origin_root": "/tmp/pmem_clean_cold_run",
-      "root_name": "pmem_clean_cold_run",
-      "library_dir": ".memory-art/projects/pmem_clean_cold_run",
+      "bound_root": "/tmp/pmem_clean_cold_isolated/scale_case03_recompose",
+      "origin_root": "/tmp/pmem_clean_cold_isolated/scale_case03_recompose",
+      "root_name": "scale_case03_recompose",
+      "library_dir": ".memory-art/projects/scale_case03_recompose",
       "copied_from_project": "",
-      "created_at": "2026-10-25 04:38:52 UTC+8",
-      "updated_at": "2026-10-25 04:38:52 UTC+8"
+      "created_at": "2026-10-25 04:50:43 UTC+8",
+      "updated_at": "2026-10-25 04:50:43 UTC+8"
     },
     "module": "character.sunlit_window_portrait",
     "goal": "窗边木漏日少女（定向改构图：正面大头特写改为阳光植物画室藤椅阅读中远景）",
-    "confidence": 0.9,
-    "fast_track_eligible": true,
+    "confidence": 0.3,
+    "fast_track_eligible": false,
     "confidence_reasons": [
-      "命中 3 条定稿 recipe",
-      "个人口味档案非空",
-      "红线可控（3 条）",
-      "挂载 2 张项目知识卡 + 4 张全局美术底层基础卡"
+      "红线可控（0 条）",
+      "挂载 0 张项目知识卡 + 6 张全局美术底层基础卡"
     ],
-    "top_recipes": [
-      {
-        "id": "CHAT20261025043858932RECIPE",
-        "summary": "[收敛胜出 9.83分] 窗边木漏日逆光少女肖像（高强度大胆重构3/4倚窗机位与斑驳木漏日） — 3/4倚窗回眸构图与窗外绣球花、蕾丝窗纱斑驳木漏日光影极具电",
-        "module": "character.sunlit_window_portrait"
-      },
-      {
-        "id": "CHAT20261025043858082RECIPE",
-        "summary": "[收敛胜出 9.46分] 窗边逆光少女肖像（中强度标准补足加小优化） — 在不改动近景肖像框架的前提下，发丝金边、微尘光斑与肌肤通透感",
-        "module": "character.sunlit_window_portrait"
-      },
-      {
-        "id": "CHAT20261025043857267RECIPE",
-        "summary": "[收敛胜出 9.22分] 窗边逆光少女肖像（低强度保守修瑕） — 五官对称精准、睫毛与瞳孔高光清澈、胶片颗粒细腻，完全忠实原图",
-        "module": "character.sunlit_window_portrait"
-      }
-    ],
-    "top_redlines": [
-      {
-        "id": "CHAT20261025043858087REDLINE",
-        "summary": "[收敛踩坑红线] 窗边逆光少女肖像（中强度标准补足加小优化）：避免「暗部脸颊偏闷，缺少逆光发丝金边与空气感粒子」",
-        "module": "character.sunlit_window_portrait"
-      },
-      {
-        "id": "CHAT20261025043858937REDLINE",
-        "summary": "[收敛踩坑红线] 窗边木漏日逆光少女肖像（高强度大胆重构3/4倚窗机位与斑驳木：避免「正面平视大头照过于呆板，垂直一刀切阴影缺乏真实窗户光影叙事」",
-        "module": "character.sunlit_window_portrait"
-      },
-      {
-        "id": "CHAT20261025043857272REDLINE",
-        "summary": "[收敛踩坑红线] 窗边逆光少女肖像（低强度保守修瑕）：避免「面部明暗交界线边缘过于生硬，领口蕾丝花边结构简化」",
-        "module": "character.sunlit_window_portrait"
-      }
-    ],
+    "top_recipes": [],
+    "top_redlines": [],
     "art_decisions": [],
-    "private_knowledge": [
-      {
-        "id": "tech-painterly",
-        "title": "厚涂笔触",
-        "body": "可见笔触方向跟随形体，暗部透气勿脏。",
-        "layer_scope": "private"
-      },
-      {
-        "id": "tech-watercolor",
-        "title": "水彩渲染",
-        "body": "边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。",
-        "layer_scope": "private"
-      }
-    ],
+    "private_knowledge": [],
     "shared_knowledge": [
       {
         "id": "anatomy-head-ratio",
@@ -316,22 +269,30 @@
         "title": "光影系统：顶光/侧逆光/黄金时刻与防过曝阴影",
         "body": "优先采用 45° 侧逆光（Rim Light 轮廓光分离主体与背景）或黄金时刻低角度暖光配合冷色长影实现冷暖互补；严禁正午垂直顶光造成额头/台阶死白过曝（Overexposure）或暗部死黑脏浊。",
         "layer_scope": "shared"
+      },
+      {
+        "id": "composition-thirds-grid",
+        "title": "构图法则：九宫格三分法与呼吸留白安全区",
+        "body": "将核心视觉焦点布置在九宫格三分线交点（黄金分割点 0.618）上，利用引导线与前景暗角汇聚视线；独立资产四周必须预留 16px~24px 纯透明呼吸安全边距，严禁发冠、武器或特效贴死画布边缘被裁切。",
+        "layer_scope": "shared"
+      },
+      {
+        "id": "key-extreme-breakdown",
+        "title": "动画运动规律：关键帧-极端帧-中分帧与预备缓冲",
+        "body": "动作设计先锁定叙事关键帧（Key）与张力极端帧（Extreme），再插入非对称中分帧（Breakdown）与挤压拉伸（Squash & Stretch），严禁机械平均线性插值导致动作发飘发僵。",
+        "layer_scope": "shared"
       }
     ],
     "palette": [],
     "taste_snapshot": {
-      "preferred_lighting": [
-        "暖光"
-      ],
-      "preferred_composition": [
-        "居中/对称构图"
-      ],
+      "preferred_lighting": [],
+      "preferred_composition": [],
       "preferred_line_weight": [],
       "preferred_color_temperature": [],
       "banned_habits": []
     },
-    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem_clean_cold_run (.memory-art/projects/pmem_clean_cold_run/)\n- 目标模块: character.sunlit_window_portrait\n- 置信度: 0.90（fast-track 资格: 是）\n- 优先复用定稿方向:\n  · [CHAT20261025043858932RECIPE] [收敛胜出 9.83分] 窗边木漏日逆光少女肖像（高强度大胆重构3/4倚窗机位与斑驳木漏日） — 3/4倚窗回眸构图与窗外绣球花、蕾丝窗纱斑驳木漏日光影极具电\n  · [CHAT20261025043858082RECIPE] [收敛胜出 9.46分] 窗边逆光少女肖像（中强度标准补足加小优化） — 在不改动近景肖像框架的前提下，发丝金边、微尘光斑与肌肤通透感\n  · [CHAT20261025043857267RECIPE] [收敛胜出 9.22分] 窗边逆光少女肖像（低强度保守修瑕） — 五官对称精准、睫毛与瞳孔高光清澈、胶片颗粒细腻，完全忠实原图\n- 必须避开红线:\n  · [CHAT20261025043858087REDLINE] [收敛踩坑红线] 窗边逆光少女肖像（中强度标准补足加小优化）：避免「暗部脸颊偏闷，缺少逆光发丝金边与空气感粒子」\n  · [CHAT20261025043858937REDLINE] [收敛踩坑红线] 窗边木漏日逆光少女肖像（高强度大胆重构3/4倚窗机位与斑驳木：避免「正面平视大头照过于呆板，垂直一刀切阴影缺乏真实窗户光影叙事」\n  · [CHAT20261025043857272REDLINE] [收敛踩坑红线] 窗边逆光少女肖像（低强度保守修瑕）：避免「面部明暗交界线边缘过于生硬，领口蕾丝花边结构简化」\n- 个人口味: 光影=暖光；构图=居中/对称构图\n- 项目私有知识卡 (Private Layer):\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n  · [tech-watercolor] 水彩渲染: 边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [anatomy-head-ratio] 人体结构：头身比尺规与重心控制: 写实/二次元立绘标准锁定 7~8 头身（常用 7.5 头身），Q版锁定 2~3 头身；草图阶段必须先标头顶、下巴、胸线、胯部、膝盖五道刻度线并校核重心垂线，严禁头肩比例失调或幼态大头漂移。\n  · [eye-hierarchy] 人体结构：五官主次与第一识别锚点: 先定十字中线、眼位与眉弓转折，再定鼻底与唇裂；角色标志性面部特征（如单侧眼镜、异色瞳、机械义眼、面部纹印）必须作为第一识别锚点显式锁定高权重，严禁漏画或左右镜像翻转。\n  · [anatomy-hand-five-fingers] 人体结构：手部五指解剖与三段透视: 手部必须先构建掌根方盒截面与拇指球体，再按掌指关节、近节、远节三段圆柱展开五指（1拇指+4指分明），严禁六指畸变、多指粘连或掌骨坍塌。\n  · [golden-hour-scene] 光影系统：顶光/侧逆光/黄金时刻与防过曝阴影: 优先采用 45° 侧逆光（Rim Light 轮廓光分离主体与背景）或黄金时刻低角度暖光配合冷色长影实现冷暖互补；严禁正午垂直顶光造成额头/台阶死白过曝（Overexposure）或暗部死黑脏浊。",
-    "built_at": "2026-10-25 04:38:59 UTC+8"
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: scale_case03_recompose (.memory-art/projects/scale_case03_recompose/)\n- 目标模块: character.sunlit_window_portrait\n- 置信度: 0.30（fast-track 资格: 否）\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [anatomy-head-ratio] 人体结构：头身比尺规与重心控制: 写实/二次元立绘标准锁定 7~8 头身（常用 7.5 头身），Q版锁定 2~3 头身；草图阶段必须先标头顶、下巴、胸线、胯部、膝盖五道刻度线并校核重心垂线，严禁头肩比例失调或幼态大头漂移。\n  · [eye-hierarchy] 人体结构：五官主次与第一识别锚点: 先定十字中线、眼位与眉弓转折，再定鼻底与唇裂；角色标志性面部特征（如单侧眼镜、异色瞳、机械义眼、面部纹印）必须作为第一识别锚点显式锁定高权重，严禁漏画或左右镜像翻转。\n  · [anatomy-hand-five-fingers] 人体结构：手部五指解剖与三段透视: 手部必须先构建掌根方盒截面与拇指球体，再按掌指关节、近节、远节三段圆柱展开五指（1拇指+4指分明），严禁六指畸变、多指粘连或掌骨坍塌。\n  · [golden-hour-scene] 光影系统：顶光/侧逆光/黄金时刻与防过曝阴影: 优先采用 45° 侧逆光（Rim Light 轮廓光分离主体与背景）或黄金时刻低角度暖光配合冷色长影实现冷暖互补；严禁正午垂直顶光造成额头/台阶死白过曝（Overexposure）或暗部死黑脏浊。\n  · [composition-thirds-grid] 构图法则：九宫格三分法与呼吸留白安全区: 将核心视觉焦点布置在九宫格三分线交点（黄金分割点 0.618）上，利用引导线与前景暗角汇聚视线；独立资产四周必须预留 16px~24px 纯透明呼吸安全边距，严禁发冠、武器或特效贴死画布边缘被裁切。\n  · [key-extreme-breakdown] 动画运动规律：关键帧-极端帧-中分帧与预备缓冲: 动作设计先锁定叙事关键帧（Key）与张力极端帧（Extreme），再插入非对称中分帧（Breakdown）与挤压拉伸（Squash & Stretch），严禁机械平均线性插值导致动作发飘发僵。",
+    "built_at": "2026-10-25 04:50:43 UTC+8"
   },
   "lessons_all": [
     {
@@ -446,7 +407,7 @@
       }
     ],
     "skip_ahead_hint": false,
-    "recorded_at": "04:38:59"
+    "recorded_at": "04:50:43"
   },
   "rounds_to_converge": 3,
   "convergence_badge": "经过 3 轮达标定稿"

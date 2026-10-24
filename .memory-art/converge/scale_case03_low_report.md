@@ -4,7 +4,7 @@
 - **收敛档位 (`--scale`)**：`low`（目标阈值 `>= 9.15` · 动态达标停机）
 - **收敛模式**：`quality`
 - **生图模式**：🖼️ 垫图解构收敛模式 (`/workspace/pmem-art/comparison/style_refs/style_ref_03_sunlit_portrait.png`)
-- **Warm-Start 置信度**：`0.45`（私有记忆 `0` 条 · 跨项目共享卡 `4` 张）
+- **Warm-Start 置信度**：`0.3`（私有记忆 `0` 条 · 跨项目共享卡 `6` 张）
 - **参考图解构基准**：正面平视胸像参考，左右垂直一刀切阴影，复古青色碎花背景与胶片噪点。
 - **收敛结论**：✅ **经过 3 轮迭代达标定稿**（单次原子生图+五维审图动态收敛，第 3 轮达到 `9.22 / 10.0` 分 ≥ `9.15` 分档位目标线）
 - **最终采用图片**：`/workspace/pmem-art/comparison/scale_03_portrait_low_r3.jpg`（综合评分 **`9.22`** · 经过 3 轮达标定稿）
@@ -15,7 +15,7 @@
 | :---: | :--- | :---: | :--- | :--- | :--- | :---: |
 | 第 1 轮初稿 | `/workspace/pmem-art/comparison/scale_03_portrait_low_r1.jpg` | **8.55**<br><small>构图8.6/光影8.5/透视8.6/质感8.5/风格8.6</small> | 严格锁死正面平视胸像与左右明暗二分切割 | 面部明暗交界线边缘过于生硬，领口蕾丝花边结构简化 | 保持正面平视构图不变，柔化鼻梁明暗过渡并修清领口刺绣蕾丝细节 | 🔄 继续迭代 |
 | 第 2 轮精修 | `/workspace/pmem-art/comparison/scale_03_portrait_low_r2.jpg` | **8.88**<br><small>构图8.8/光影8.9/透视8.9/质感8.8/风格9.0</small> | 面部明暗交界线自然柔和，领口花边与复古青绿碎花背景干净 | 瞳孔高光反射与耳际碎发边缘还可更细腻 | 精修琥珀色瞳孔通透反光、睫毛投影与均匀35mm胶片颗粒 | 🔄 继续迭代 |
-| 经过 3 轮达标定稿 | `/workspace/pmem-art/comparison/scale_03_portrait_low_r3.jpg` | **9.22**<br><small>构图9.1/光影9.2/透视9.2/质感9.3/风格9.3</small> | 五官对称精准、睫毛与瞳孔高光清澈、胶片颗粒细腻，完全忠实原图正面构图 | 无瑕疵，达到低强度修瑕目标阈值 | 已达标，无需继续叠加 | 🏆 **经过 3 轮达标定稿** |
+| 经过 3 轮达标定稿 | `/workspace/pmem-art/comparison/scale_03_portrait_low_r3.jpg` | **9.22**<br><small>构图9.1/光影9.2/透视9.2/质感9.3/风格9.3</small> | 100%忠实继承原图赛璐珞结合半厚涂动漫肖像画风、正面平视胸像裁切与左右垂直明暗交界线，五官对称度与胶片颗粒干净度显著提升 | 无瑕疵，达到低强度修瑕目标阈值 | 已达标，无需继续叠加 | 🏆 **经过 3 轮达标定稿** |
 
 #### 📚 本轮可学（能力提升）
 
@@ -31,8 +31,8 @@
 
 
 #### 🧠 已自动沉淀至 `.memory-art` 的记忆条目
-- `.memory-art/entries/character.sunlit_window_portrait/CHAT20261025043857267RECIPE.md`
-- `.memory-art/entries/character.sunlit_window_portrait/CHAT20261025043857272REDLINE.md`
-- `.memory-art/_reflections/20261025_043857_scale_case03_low.json`
+- `.memory-art/entries/character.sunlit_window_portrait/CHAT20261025045042246RECIPE.md`
+- `.memory-art/entries/character.sunlit_window_portrait/CHAT20261025045042250REDLINE.md`
+- `.memory-art/_reflections/20261025_045042_scale_case03_low.json`
 
 > 🔇 静默自动驾驶已跑完（反思 + taste + learn 队列）。进阶 peek：`improve run` · `coach` · `learn suggest` · `progress`；全量本表加 `--verbose`。

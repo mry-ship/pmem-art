@@ -4,7 +4,7 @@
 - **收敛档位 (`--scale`)**：`high`（目标阈值 `>= 9.65` · 动态达标停机）
 - **收敛模式**：`quality`
 - **生图模式**：🖼️ 垫图解构收敛模式 (`/workspace/pmem-art/comparison/web_refs/web_ref_01_concept_ishtar.png`)
-- **Warm-Start 置信度**：`0.9`（私有记忆 `4` 条 · 跨项目共享卡 `5` 张）
+- **Warm-Start 置信度**：`0.3`（私有记忆 `0` 条 · 跨项目共享卡 `6` 张）
 - **参考图解构基准**：垂直峡谷巷道概念参考图，左上屋檐趴着小绿龙，底部有蓝光雾气。
 - **收敛结论**：✅ **经过 3 轮迭代达标定稿**（单次原子生图+五维审图动态收敛，第 3 轮达到 `9.79 / 10.0` 分 ≥ `9.65` 分档位目标线）
 - **最终采用图片**：`/workspace/pmem-art/comparison/scale_04_canyon_high_r3.jpg`（综合评分 **`9.79`** · 经过 3 轮达标定稿）
@@ -13,8 +13,8 @@
 
 | 迭代阶段 | 生成图片 | 综合评分 (满分10) | 合理 / 亮点之处 | 不合理 / 缺陷之处 | 下一轮叠加修正策略 | 结果 |
 | :---: | :--- | :---: | :--- | :--- | :--- | :---: |
-| 第 1 轮初稿 | `/workspace/pmem-art/comparison/scale_04_canyon_high_r1.jpg` | **8.95**<br><small>构图9.0/光影8.9/透视9.0/质感8.9/风格9.0</small> | 陡峭三点俯视纵深强烈 | 整体受光偏暗沉，缺少穿透峡谷的戏剧性主光 | 强化前景巨龙尺度与谷底蓝光反差 | 🔄 继续迭代 |
-| 第 2 轮精修 | `/workspace/pmem-art/comparison/scale_04_canyon_high_r2.jpg` | **8.86**<br><small>构图9.1/光影8.8/透视8.6/质感8.8/风格8.9</small> | 俯视角度极具冲击力，绿龙鳞片细节提升 | 独立盲评指出中层建筑几何交接略乱、光影偏泥泞缺乏主光束统领 | 大胆从右上裂谷引入金色丁达尔体积神光劈入深渊，绿龙半透明翼膜逆光透射，悬崖挂满绯红金纹战旗，谷底石桥点缀行人强化史诗尺度 | 🔄 继续迭代 |
+| 第 1 轮初稿 | `/workspace/pmem-art/comparison/scale_04_canyon_high_r1.jpg` | **8.73**<br><small>构图8.7/光影8.7/透视8.7/质感8.8/风格8.8</small> | 陡峭三点俯视纵深强烈 | 整体受光偏暗沉，缺少穿透峡谷的戏剧性主光 | 强化前景巨龙尺度与谷底蓝光反差 | 🔄 继续迭代 |
+| 第 2 轮精修 | `/workspace/pmem-art/comparison/scale_04_canyon_high_r2.jpg` | **8.99**<br><small>构图9.1/光影8.9/透视8.9/质感9.0/风格9.1</small> | 俯视角度极具冲击力，绿龙鳞片细节提升 | 独立盲评指出中层建筑几何交接略乱、光影偏泥泞缺乏主光束统领 | 大胆从右上裂谷引入金色丁达尔体积神光劈入深渊，绿龙半透明翼膜逆光透射，悬崖挂满绯红金纹战旗，谷底石桥点缀行人强化史诗尺度 | 🔄 继续迭代 |
 | 经过 3 轮达标定稿 | `/workspace/pmem-art/comparison/scale_04_canyon_high_r3.jpg` | **9.79**<br><small>构图9.8/光影9.9/透视9.7/质感9.7/风格9.8</small> | 金色丁达尔体积神光劈入幽蓝深渊，逆光龙翼与多层栈桥获独立VLM盲评全场最高分9.35 | 无短板，突破高强度 Showcase 级目标阈值 | 已达标，无需继续叠加 | 🏆 **经过 3 轮达标定稿** |
 
 #### 📚 本轮可学（能力提升）
@@ -31,8 +31,8 @@
 
 
 #### 🧠 已自动沉淀至 `.memory-art` 的记忆条目
-- `.memory-art/entries/scene.vertical_alley/CHAT20261025043902895RECIPE.md`
-- `.memory-art/entries/scene.vertical_alley/CHAT20261025043902902REDLINE.md`
-- `.memory-art/_reflections/20261025_043902_scale_case04_high.json`
+- `.memory-art/entries/scene.vertical_alley/CHAT20261025045044612RECIPE.md`
+- `.memory-art/entries/scene.vertical_alley/CHAT20261025045044616REDLINE.md`
+- `.memory-art/_reflections/20261025_045044_scale_case04_high.json`
 
 > 🔇 静默自动驾驶已跑完（反思 + taste + learn 队列）。进阶 peek：`improve run` · `coach` · `learn suggest` · `progress`；全量本表加 `--verbose`。

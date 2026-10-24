@@ -5,7 +5,7 @@
 - **收敛模式**：`quality`
 - **生图模式**：🖼️ 垫图解构收敛模式 (`/workspace/pmem-art/comparison/web_refs/web_ref_01_concept_ishtar.png`)
 - **定向改构图指令 (`--recompose-dir`)**：`从狭窄天井俯视改为高空悬崖露台平视偏仰视史诗全景，左下露台红袍旅人与绿龙并肩远眺跨谷石拱大桥与千丈飞瀑`
-- **Warm-Start 置信度**：`0.9`（私有记忆 `6` 条 · 跨项目共享卡 `5` 张）
+- **Warm-Start 置信度**：`0.3`（私有记忆 `0` 条 · 跨项目共享卡 `6` 张）
 - **参考图解构基准**：垂直峡谷巷道概念参考图，左上屋檐趴着小绿龙，底部有蓝光雾气。
 - **收敛结论**：✅ **经过 3 轮迭代达标定稿**（单次原子生图+五维审图动态收敛，第 3 轮达到 `9.66 / 10.0` 分 ≥ `9.55` 分档位目标线）
 - **最终采用图片**：`/workspace/pmem-art/comparison/scale_04_canyon_recompose_r3.jpg`（综合评分 **`9.66`** · 经过 3 轮达标定稿）
@@ -32,8 +32,8 @@
 
 
 #### 🧠 已自动沉淀至 `.memory-art` 的记忆条目
-- `.memory-art/entries/scene.vertical_alley/CHAT20261025043903963RECIPE.md`
-- `.memory-art/entries/scene.vertical_alley/CHAT20261025043903970REDLINE.md`
-- `.memory-art/_reflections/20261025_043903_scale_case04_recompose.json`
+- `.memory-art/entries/scene.vertical_alley/CHAT20261025045044970RECIPE.md`
+- `.memory-art/entries/scene.vertical_alley/CHAT20261025045044975REDLINE.md`
+- `.memory-art/_reflections/20261025_045044_scale_case04_recompose.json`
 
 > 🔇 静默自动驾驶已跑完（反思 + taste + learn 队列）。进阶 peek：`improve run` · `coach` · `learn suggest` · `progress`；全量本表加 `--verbose`。

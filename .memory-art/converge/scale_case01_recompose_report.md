@@ -5,7 +5,7 @@
 - **收敛模式**：`quality`
 - **生图模式**：🖼️ 垫图解构收敛模式 (`/workspace/pmem-art/comparison/style_refs/style_ref_01_night_city.png`)
 - **定向改构图指令 (`--recompose-dir`)**：`从高空屋顶俯瞰改为底视角运河石拱桥仰视全景，女侠立于前景乌篷船头仰望万丈悬崖飞阁与漫天孔明灯`
-- **Warm-Start 置信度**：`0.75`（私有记忆 `6` 条 · 跨项目共享卡 `5` 张）
+- **Warm-Start 置信度**：`0.3`（私有记忆 `0` 条 · 跨项目共享卡 `6` 张）
 - **参考图解构基准**：高空屋顶俯瞰古城的氛围参考图，远景天际线与近景瓦片细节较模糊。
 - **收敛结论**：✅ **经过 3 轮迭代达标定稿**（单次原子生图+五维审图动态收敛，第 3 轮达到 `9.66 / 10.0` 分 ≥ `9.55` 分档位目标线）
 - **最终采用图片**：`/workspace/pmem-art/comparison/scale_01_night_city_recompose_r3.jpg`（综合评分 **`9.66`** · 经过 3 轮达标定稿）
@@ -32,8 +32,8 @@
 
 
 #### 🧠 已自动沉淀至 `.memory-art` 的记忆条目
-- `.memory-art/entries/scene.celestial_night_city/CHAT20261025043854058RECIPE.md`
-- `.memory-art/entries/scene.celestial_night_city/CHAT20261025043854064REDLINE.md`
-- `.memory-art/_reflections/20261025_043854_scale_case01_recompose.json`
+- `.memory-art/entries/scene.celestial_night_city/CHAT20261025045040383RECIPE.md`
+- `.memory-art/entries/scene.celestial_night_city/CHAT20261025045040387REDLINE.md`
+- `.memory-art/_reflections/20261025_045040_scale_case01_recompose.json`
 
 > 🔇 静默自动驾驶已跑完（反思 + taste + learn 队列）。进阶 peek：`improve run` · `coach` · `learn suggest` · `progress`；全量本表加 `--verbose`。

@@ -1,6 +1,6 @@
 {
   "session_id": "scale_case02_recompose",
-  "started_at": "2026-10-25 04:38:56 UTC+8",
+  "started_at": "2026-10-25 04:50:41 UTC+8",
   "goal": "300g粗纹纸油画棒少女（定向改构图：地面侧坐改为高空天台凭栏远眺夕阳海港全景）",
   "module": "character.pastel_sketch_girl",
   "mode": "ref_image_guided",
@@ -98,7 +98,7 @@
         }
       ],
       "skip_ahead_hint": false,
-      "recorded_at": "04:38:56"
+      "recorded_at": "04:50:41"
     },
     {
       "round": 2,
@@ -156,7 +156,7 @@
         }
       ],
       "skip_ahead_hint": false,
-      "recorded_at": "04:38:56"
+      "recorded_at": "04:50:41"
     },
     {
       "round": 3,
@@ -214,78 +214,37 @@
         }
       ],
       "skip_ahead_hint": false,
-      "recorded_at": "04:38:56"
+      "recorded_at": "04:50:41"
     }
   ],
   "warm_start": {
-    "project_id": "pmem_clean_cold_run",
-    "project_name": "pmem_clean_cold_run",
+    "project_id": "scale_case02_recompose",
+    "project_name": "scale_case02_recompose",
     "active_project": {
-      "project_id": "pmem_clean_cold_run",
-      "project_slug": "pmem_clean_cold_run",
-      "project_name": "pmem_clean_cold_run",
+      "project_id": "scale_case02_recompose",
+      "project_slug": "scale_case02_recompose",
+      "project_name": "scale_case02_recompose",
       "layer_scope": "private",
-      "bound_root": "/tmp/pmem_clean_cold_run",
-      "origin_root": "/tmp/pmem_clean_cold_run",
-      "root_name": "pmem_clean_cold_run",
-      "library_dir": ".memory-art/projects/pmem_clean_cold_run",
+      "bound_root": "/tmp/pmem_clean_cold_isolated/scale_case02_recompose",
+      "origin_root": "/tmp/pmem_clean_cold_isolated/scale_case02_recompose",
+      "root_name": "scale_case02_recompose",
+      "library_dir": ".memory-art/projects/scale_case02_recompose",
       "copied_from_project": "",
-      "created_at": "2026-10-25 04:38:52 UTC+8",
-      "updated_at": "2026-10-25 04:38:52 UTC+8"
+      "created_at": "2026-10-25 04:50:41 UTC+8",
+      "updated_at": "2026-10-25 04:50:41 UTC+8"
     },
     "module": "character.pastel_sketch_girl",
     "goal": "300g粗纹纸油画棒少女（定向改构图：地面侧坐改为高空天台凭栏远眺夕阳海港全景）",
-    "confidence": 0.9,
-    "fast_track_eligible": true,
+    "confidence": 0.3,
+    "fast_track_eligible": false,
     "confidence_reasons": [
-      "命中 3 条定稿 recipe",
-      "个人口味档案非空",
-      "红线可控（3 条）",
-      "挂载 1 张项目知识卡 + 5 张全局美术底层基础卡"
+      "红线可控（0 条）",
+      "挂载 0 张项目知识卡 + 6 张全局美术底层基础卡"
     ],
-    "top_recipes": [
-      {
-        "id": "CHAT20261025043855794RECIPE",
-        "summary": "[收敛胜出 9.78分] 300g粗纹纸油画棒红帽衫少女（高强度大胆重构光影与飞白质感） — 300g粗纹纸飞白空气感极强，黑耳机与黑背包猫咪挂件稳稳压住",
-        "module": "character.pastel_sketch_girl"
-      },
-      {
-        "id": "CHAT20261025043855171RECIPE",
-        "summary": "[收敛胜出 9.44分] 300g粗纹纸油画棒红帽衫少女（中强度标准补足加小优化） — 保持原坐姿下实现了饱满的冷暖光影对话与真实油画棒厚涂肌理",
-        "module": "character.pastel_sketch_girl"
-      },
-      {
-        "id": "CHAT20261025043854624RECIPE",
-        "summary": "[收敛胜出 9.20分] 300g粗纹纸油画棒红帽衫少女（低强度保守修瑕） — 五指解剖、鞋带结构与300g纸纹干擦肌理干净利落，完全忠于原",
-        "module": "character.pastel_sketch_girl"
-      }
-    ],
-    "top_redlines": [
-      {
-        "id": "CHAT20261025043855176REDLINE",
-        "summary": "[收敛踩坑红线] 300g粗纹纸油画棒红帽衫少女（中强度标准补足加小优化）：避免「纯米白背景与人物分离度弱，发丝缺少暖色逆光提亮」",
-        "module": "character.pastel_sketch_girl"
-      },
-      {
-        "id": "CHAT20261025043855800REDLINE",
-        "summary": "[收敛踩坑红线] 300g粗纹纸油画棒红帽衫少女（高强度大胆重构光影与飞白质感：避免「红帽衫涂抹过满缺乏飞白透气感，平光无戏剧性」",
-        "module": "character.pastel_sketch_girl"
-      },
-      {
-        "id": "CHAT20261025043854630REDLINE",
-        "summary": "[收敛踩坑红线] 300g粗纹纸油画棒红帽衫少女（低强度保守修瑕）：避免「搭在膝头的手指关节粘连，白色运动鞋鞋带线条凌乱」",
-        "module": "character.pastel_sketch_girl"
-      }
-    ],
+    "top_recipes": [],
+    "top_redlines": [],
     "art_decisions": [],
-    "private_knowledge": [
-      {
-        "id": "tech-painterly",
-        "title": "厚涂笔触",
-        "body": "可见笔触方向跟随形体，暗部透气勿脏。",
-        "layer_scope": "private"
-      }
-    ],
+    "private_knowledge": [],
     "shared_knowledge": [
       {
         "id": "anatomy-head-ratio",
@@ -316,20 +275,24 @@
         "title": "构图法则：九宫格三分法与呼吸留白安全区",
         "body": "将核心视觉焦点布置在九宫格三分线交点（黄金分割点 0.618）上，利用引导线与前景暗角汇聚视线；独立资产四周必须预留 16px~24px 纯透明呼吸安全边距，严禁发冠、武器或特效贴死画布边缘被裁切。",
         "layer_scope": "shared"
+      },
+      {
+        "id": "key-extreme-breakdown",
+        "title": "动画运动规律：关键帧-极端帧-中分帧与预备缓冲",
+        "body": "动作设计先锁定叙事关键帧（Key）与张力极端帧（Extreme），再插入非对称中分帧（Breakdown）与挤压拉伸（Squash & Stretch），严禁机械平均线性插值导致动作发飘发僵。",
+        "layer_scope": "shared"
       }
     ],
     "palette": [],
     "taste_snapshot": {
-      "preferred_lighting": [
-        "暖光"
-      ],
+      "preferred_lighting": [],
       "preferred_composition": [],
       "preferred_line_weight": [],
       "preferred_color_temperature": [],
       "banned_habits": []
     },
-    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem_clean_cold_run (.memory-art/projects/pmem_clean_cold_run/)\n- 目标模块: character.pastel_sketch_girl\n- 置信度: 0.90（fast-track 资格: 是）\n- 优先复用定稿方向:\n  · [CHAT20261025043855794RECIPE] [收敛胜出 9.78分] 300g粗纹纸油画棒红帽衫少女（高强度大胆重构光影与飞白质感） — 300g粗纹纸飞白空气感极强，黑耳机与黑背包猫咪挂件稳稳压住\n  · [CHAT20261025043855171RECIPE] [收敛胜出 9.44分] 300g粗纹纸油画棒红帽衫少女（中强度标准补足加小优化） — 保持原坐姿下实现了饱满的冷暖光影对话与真实油画棒厚涂肌理\n  · [CHAT20261025043854624RECIPE] [收敛胜出 9.20分] 300g粗纹纸油画棒红帽衫少女（低强度保守修瑕） — 五指解剖、鞋带结构与300g纸纹干擦肌理干净利落，完全忠于原\n- 必须避开红线:\n  · [CHAT20261025043855176REDLINE] [收敛踩坑红线] 300g粗纹纸油画棒红帽衫少女（中强度标准补足加小优化）：避免「纯米白背景与人物分离度弱，发丝缺少暖色逆光提亮」\n  · [CHAT20261025043855800REDLINE] [收敛踩坑红线] 300g粗纹纸油画棒红帽衫少女（高强度大胆重构光影与飞白质感：避免「红帽衫涂抹过满缺乏飞白透气感，平光无戏剧性」\n  · [CHAT20261025043854630REDLINE] [收敛踩坑红线] 300g粗纹纸油画棒红帽衫少女（低强度保守修瑕）：避免「搭在膝头的手指关节粘连，白色运动鞋鞋带线条凌乱」\n- 个人口味: 光影=暖光\n- 项目私有知识卡 (Private Layer):\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [anatomy-head-ratio] 人体结构：头身比尺规与重心控制: 写实/二次元立绘标准锁定 7~8 头身（常用 7.5 头身），Q版锁定 2~3 头身；草图阶段必须先标头顶、下巴、胸线、胯部、膝盖五道刻度线并校核重心垂线，严禁头肩比例失调或幼态大头漂移。\n  · [eye-hierarchy] 人体结构：五官主次与第一识别锚点: 先定十字中线、眼位与眉弓转折，再定鼻底与唇裂；角色标志性面部特征（如单侧眼镜、异色瞳、机械义眼、面部纹印）必须作为第一识别锚点显式锁定高权重，严禁漏画或左右镜像翻转。\n  · [anatomy-hand-five-fingers] 人体结构：手部五指解剖与三段透视: 手部必须先构建掌根方盒截面与拇指球体，再按掌指关节、近节、远节三段圆柱展开五指（1拇指+4指分明），严禁六指畸变、多指粘连或掌骨坍塌。\n  · [golden-hour-scene] 光影系统：顶光/侧逆光/黄金时刻与防过曝阴影: 优先采用 45° 侧逆光（Rim Light 轮廓光分离主体与背景）或黄金时刻低角度暖光配合冷色长影实现冷暖互补；严禁正午垂直顶光造成额头/台阶死白过曝（Overexposure）或暗部死黑脏浊。\n  · [composition-thirds-grid] 构图法则：九宫格三分法与呼吸留白安全区: 将核心视觉焦点布置在九宫格三分线交点（黄金分割点 0.618）上，利用引导线与前景暗角汇聚视线；独立资产四周必须预留 16px~24px 纯透明呼吸安全边距，严禁发冠、武器或特效贴死画布边缘被裁切。",
-    "built_at": "2026-10-25 04:38:56 UTC+8"
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: scale_case02_recompose (.memory-art/projects/scale_case02_recompose/)\n- 目标模块: character.pastel_sketch_girl\n- 置信度: 0.30（fast-track 资格: 否）\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [anatomy-head-ratio] 人体结构：头身比尺规与重心控制: 写实/二次元立绘标准锁定 7~8 头身（常用 7.5 头身），Q版锁定 2~3 头身；草图阶段必须先标头顶、下巴、胸线、胯部、膝盖五道刻度线并校核重心垂线，严禁头肩比例失调或幼态大头漂移。\n  · [eye-hierarchy] 人体结构：五官主次与第一识别锚点: 先定十字中线、眼位与眉弓转折，再定鼻底与唇裂；角色标志性面部特征（如单侧眼镜、异色瞳、机械义眼、面部纹印）必须作为第一识别锚点显式锁定高权重，严禁漏画或左右镜像翻转。\n  · [anatomy-hand-five-fingers] 人体结构：手部五指解剖与三段透视: 手部必须先构建掌根方盒截面与拇指球体，再按掌指关节、近节、远节三段圆柱展开五指（1拇指+4指分明），严禁六指畸变、多指粘连或掌骨坍塌。\n  · [golden-hour-scene] 光影系统：顶光/侧逆光/黄金时刻与防过曝阴影: 优先采用 45° 侧逆光（Rim Light 轮廓光分离主体与背景）或黄金时刻低角度暖光配合冷色长影实现冷暖互补；严禁正午垂直顶光造成额头/台阶死白过曝（Overexposure）或暗部死黑脏浊。\n  · [composition-thirds-grid] 构图法则：九宫格三分法与呼吸留白安全区: 将核心视觉焦点布置在九宫格三分线交点（黄金分割点 0.618）上，利用引导线与前景暗角汇聚视线；独立资产四周必须预留 16px~24px 纯透明呼吸安全边距，严禁发冠、武器或特效贴死画布边缘被裁切。\n  · [key-extreme-breakdown] 动画运动规律：关键帧-极端帧-中分帧与预备缓冲: 动作设计先锁定叙事关键帧（Key）与张力极端帧（Extreme），再插入非对称中分帧（Breakdown）与挤压拉伸（Squash & Stretch），严禁机械平均线性插值导致动作发飘发僵。",
+    "built_at": "2026-10-25 04:50:41 UTC+8"
   },
   "lessons_all": [
     {
@@ -444,7 +407,7 @@
       }
     ],
     "skip_ahead_hint": false,
-    "recorded_at": "04:38:56"
+    "recorded_at": "04:50:41"
   },
   "rounds_to_converge": 3,
   "convergence_badge": "经过 3 轮达标定稿"

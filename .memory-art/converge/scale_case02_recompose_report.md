@@ -5,7 +5,7 @@
 - **收敛模式**：`quality`
 - **生图模式**：🖼️ 垫图解构收敛模式 (`/workspace/pmem-art/comparison/style_refs/style_ref_02_pastel_sketch.png`)
 - **定向改构图指令 (`--recompose-dir`)**：`从地面侧坐近景改为高空天台栏杆仰视三分法全身远景，少女手扶铁艺栏杆迎风远眺夕阳海港与飞鸟，保持300g粗纹纸油画棒质感`
-- **Warm-Start 置信度**：`0.9`（私有记忆 `6` 条 · 跨项目共享卡 `5` 张）
+- **Warm-Start 置信度**：`0.3`（私有记忆 `0` 条 · 跨项目共享卡 `6` 张）
 - **参考图解构基准**：300g 粗纹纸油画棒红帽衫坐姿少女参考，平光居中，缺乏深色重音与纸纹飞白。
 - **收敛结论**：✅ **经过 3 轮迭代达标定稿**（单次原子生图+五维审图动态收敛，第 3 轮达到 `9.64 / 10.0` 分 ≥ `9.55` 分档位目标线）
 - **最终采用图片**：`/workspace/pmem-art/comparison/scale_02_sketch_recompose_r3.jpg`（综合评分 **`9.64`** · 经过 3 轮达标定稿）
@@ -32,8 +32,8 @@
 
 
 #### 🧠 已自动沉淀至 `.memory-art` 的记忆条目
-- `.memory-art/entries/character.pastel_sketch_girl/CHAT20261025043856517RECIPE.md`
-- `.memory-art/entries/character.pastel_sketch_girl/CHAT20261025043856523REDLINE.md`
-- `.memory-art/_reflections/20261025_043856_scale_case02_recompose.json`
+- `.memory-art/entries/character.pastel_sketch_girl/CHAT20261025045041867RECIPE.md`
+- `.memory-art/entries/character.pastel_sketch_girl/CHAT20261025045041871REDLINE.md`
+- `.memory-art/_reflections/20261025_045041_scale_case02_recompose.json`
 
 > 🔇 静默自动驾驶已跑完（反思 + taste + learn 队列）。进阶 peek：`improve run` · `coach` · `learn suggest` · `progress`；全量本表加 `--verbose`。

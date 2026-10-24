@@ -31,8 +31,8 @@
 
 
 #### 🧠 已自动沉淀至 `.memory-art` 的记忆条目
-- `.memory-art/entries/scene.celestial_night_city/CHAT20261025043852749RECIPE.md`
-- `.memory-art/entries/scene.celestial_night_city/CHAT20261025043852753REDLINE.md`
-- `.memory-art/_reflections/20261025_043852_scale_case01_low.json`
+- `.memory-art/entries/scene.celestial_night_city/CHAT20261025045039247RECIPE.md`
+- `.memory-art/entries/scene.celestial_night_city/CHAT20261025045039251REDLINE.md`
+- `.memory-art/_reflections/20261025_045039_scale_case01_low.json`
 
 > 🔇 静默自动驾驶已跑完（反思 + taste + learn 队列）。进阶 peek：`improve run` · `coach` · `learn suggest` · `progress`；全量本表加 `--verbose`。

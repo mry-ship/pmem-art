@@ -4,7 +4,7 @@
 - **收敛档位 (`--scale`)**：`medium`（目标阈值 `>= 9.40` · 动态达标停机）
 - **收敛模式**：`quality`
 - **生图模式**：🖼️ 垫图解构收敛模式 (`/workspace/pmem-art/comparison/style_refs/style_ref_02_pastel_sketch.png`)
-- **Warm-Start 置信度**：`0.75`（私有记忆 `2` 条 · 跨项目共享卡 `6` 张）
+- **Warm-Start 置信度**：`0.3`（私有记忆 `0` 条 · 跨项目共享卡 `6` 张）
 - **参考图解构基准**：300g 粗纹纸油画棒红帽衫坐姿少女参考，平光居中，缺乏深色重音与纸纹飞白。
 - **收敛结论**：✅ **经过 3 轮迭代达标定稿**（单次原子生图+五维审图动态收敛，第 3 轮达到 `9.44 / 10.0` 分 ≥ `9.40` 分档位目标线）
 - **最终采用图片**：`/workspace/pmem-art/comparison/scale_02_sketch_medium_r3.jpg`（综合评分 **`9.44`** · 经过 3 轮达标定稿）
@@ -31,8 +31,8 @@
 
 
 #### 🧠 已自动沉淀至 `.memory-art` 的记忆条目
-- `.memory-art/entries/character.pastel_sketch_girl/CHAT20261025043855171RECIPE.md`
-- `.memory-art/entries/character.pastel_sketch_girl/CHAT20261025043855176REDLINE.md`
-- `.memory-art/_reflections/20261025_043855_scale_case02_medium.json`
+- `.memory-art/entries/character.pastel_sketch_girl/CHAT20261025045041134RECIPE.md`
+- `.memory-art/entries/character.pastel_sketch_girl/CHAT20261025045041138REDLINE.md`
+- `.memory-art/_reflections/20261025_045041_scale_case02_medium.json`
 
 > 🔇 静默自动驾驶已跑完（反思 + taste + learn 队列）。进阶 peek：`improve run` · `coach` · `learn suggest` · `progress`；全量本表加 `--verbose`。

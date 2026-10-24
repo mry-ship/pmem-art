@@ -4,7 +4,7 @@
 - **收敛档位 (`--scale`)**：`medium`（目标阈值 `>= 9.40` · 动态达标停机）
 - **收敛模式**：`quality`
 - **生图模式**：🖼️ 垫图解构收敛模式 (`/workspace/pmem-art/comparison/web_refs/web_ref_01_concept_ishtar.png`)
-- **Warm-Start 置信度**：`0.9`（私有记忆 `2` 条 · 跨项目共享卡 `5` 张）
+- **Warm-Start 置信度**：`0.3`（私有记忆 `0` 条 · 跨项目共享卡 `6` 张）
 - **参考图解构基准**：垂直峡谷巷道概念参考图，左上屋檐趴着小绿龙，底部有蓝光雾气。
 - **收敛结论**：✅ **经过 3 轮迭代达标定稿**（单次原子生图+五维审图动态收敛，第 3 轮达到 `9.46 / 10.0` 分 ≥ `9.40` 分档位目标线）
 - **最终采用图片**：`/workspace/pmem-art/comparison/scale_04_canyon_medium_r3.jpg`（综合评分 **`9.46`** · 经过 3 轮达标定稿）
@@ -31,8 +31,8 @@
 
 
 #### 🧠 已自动沉淀至 `.memory-art` 的记忆条目
-- `.memory-art/entries/scene.vertical_alley/CHAT20261025043901777RECIPE.md`
-- `.memory-art/entries/scene.vertical_alley/CHAT20261025043901784REDLINE.md`
-- `.memory-art/_reflections/20261025_043901_scale_case04_medium.json`
+- `.memory-art/entries/scene.vertical_alley/CHAT20261025045044242RECIPE.md`
+- `.memory-art/entries/scene.vertical_alley/CHAT20261025045044246REDLINE.md`
+- `.memory-art/_reflections/20261025_045044_scale_case04_medium.json`
 
 > 🔇 静默自动驾驶已跑完（反思 + taste + learn 队列）。进阶 peek：`improve run` · `coach` · `learn suggest` · `progress`；全量本表加 `--verbose`。

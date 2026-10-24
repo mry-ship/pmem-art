@@ -31,8 +31,8 @@
 
 
 #### 🧠 已自动沉淀至 `.memory-art` 的记忆条目
-- `.memory-art/entries/character.pastel_sketch_girl/CHAT20261025043854624RECIPE.md`
-- `.memory-art/entries/character.pastel_sketch_girl/CHAT20261025043854630REDLINE.md`
-- `.memory-art/_reflections/20261025_043854_scale_case02_low.json`
+- `.memory-art/entries/character.pastel_sketch_girl/CHAT20261025045040753RECIPE.md`
+- `.memory-art/entries/character.pastel_sketch_girl/CHAT20261025045040757REDLINE.md`
+- `.memory-art/_reflections/20261025_045040_scale_case02_low.json`
 
 > 🔇 静默自动驾驶已跑完（反思 + taste + learn 队列）。进阶 peek：`improve run` · `coach` · `learn suggest` · `progress`；全量本表加 `--verbose`。
