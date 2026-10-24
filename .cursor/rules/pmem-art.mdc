@@ -1,0 +1,25 @@
+---
+description: 美术研发与 AI 美术记忆系统（pmem-art）核心规范
+alwaysApply: true
+---
+# 项目美术记忆系统（pmem-art）使用规范
+
+本项目使用 `pmem-art` 按视觉模块（`brand.*`、`character.*`、`scene.*`、`ui.*`、`vfx.*`）管理视觉锚点、风格红线、管线技术规范与 AI 生图配方。
+
+## 1. 生图与改图前必查（Pre-Generation Gate）
+- 在调用任何 AI 生图工具（ComfyUI / Stable Diffusion / Flux / Midjourney / 图像脚本）或修改 `assets/` 下任何图片前，**必须先按模块或路径检索美术记忆**：
+  - 终端：`python3 pmem_art.py search --module <模块名>` 或 `python3 pmem_art.py search --path <资产路径>`
+- 检索后必须严格核对四项硬指标：
+  1. **`style_redline`（风格红线与废案对比）**：看清主美打回过的错误方向（如禁用赛博洋红霓虹、禁止将 7.5 头身主角画成 Q 版、禁止在九宫格中央画暗纹）。
+  2. **`pipeline_constraint`（管线规范）**：严格遵守目标分辨率、宽高比、RGBA 透明通道、安全边距（Safe Margin）与九宫格切线（`nine_slice`）。
+  3. **`recipe`（已验证 AI 配方）**：优先复用该模块已验证的 Base Model、LoRA 权重、Seed、Positive/Negative Prompt 与 ComfyUI 工作流 JSON。
+  4. **`stale`（过期核实）**：若某条记忆带有 `stale: true`（说明关联图片已被重绘覆盖或尺寸/Alpha 被改动），必须先运行 `python3 pmem_art.py validate` 核实图片现状。
+
+## 2. 资产落盘后必过自动质检（Post-Asset QA）
+- 每次新增或修改图片后，立即运行：
+  - `python3 pmem_art.py validate`
+- 确保无分辨率违规、无 Alpha 透明通道缺失、无安全边距裁切风险。
+
+## 3. 定稿后沉淀配方与更新图谱（Memory & Atlas Update）
+- 产出新定稿资产或验证出更优 Prompt/LoRA 参数后，调用 `python3 pmem_art.py record ...` 写入 `asset_record` 或 `recipe`。
+- 运行 `python3 pmem_art.py atlas` 重新编译可视化看图工作台 `art-atlas.html`。

@@ -1,0 +1,49 @@
+# pmem-art 项目级美术记忆与管线配置（随版本库提交）
+schema_version: 1
+project:
+  name: "Project-Celadon (东方青瓷星盘幻想)"
+  art_style: "东方秘色青瓷 × 黄铜星盘幻想（厚涂半赛璐珞 Cel-Shaded Painting）"
+  color_space: "sRGB"
+  engine: "Unity 2022 LTS (URP 2D/3D Hybrid)"
+  lifecycle_mode: "mature"
+vcs: auto
+gate:
+  mode: block
+  auto_validate_on_save: true
+  stale_check:
+    hash: true
+    dimensions: true
+    alpha: true
+    png_metadata: true
+  skip_markers:
+    - "跳过美术记忆"
+    - "skip-art-memory"
+write:
+  default_status: active
+  require_visual_anchor: true
+  max_per_day_per_entity: 10
+  auto_promote_candidate_on_record: true
+bootstrap:
+  asset_roots:
+    - assets
+  auto_accept_depth: 2
+  candidate_min_files: 1
+  never_auto_move: true
+  scaffold_dirs: true
+  confirmed: true
+  last_sync_at: null
+  auto_place: false
+classify:
+  auto_add_modules: true
+  low_confidence_threshold: 0.55
+  high_confidence_threshold: 0.78
+  unknown_domain: misc
+  style_fork_parent: brand.WorldStyle
+  watch_dirs:
+    - assets
+    - .cursor/generated
+    - generated
+  prompt_weight: 0.35
+  path_weight: 0.25
+  image_trait_weight: 0.25
+  module_match_weight: 0.15

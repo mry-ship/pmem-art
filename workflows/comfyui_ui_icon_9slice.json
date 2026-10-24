@@ -1,0 +1,17 @@
+{
+  "workflow_name": "Project-Celadon_UI_9Slice_Frame_v2",
+  "pmem_module": "ui.InventoryHUD",
+  "base_model": "sdxl_celadon_ui_v4.safetensors",
+  "sampler": {
+    "name": "dpmpp_2m_sde",
+    "scheduler": "karras",
+    "steps": 24,
+    "cfg": 6.5,
+    "seed": 9018231
+  },
+  "inpaint_mask": "keep_48px_corners_lock_flat_center.png",
+  "post_process": [
+    "4px_Transparent_Border_Crop",
+    "Center_Uniformity_Check"
+  ]
+}

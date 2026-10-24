@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "hooks": {
+    "preToolUse": [
+      {
+        "command": "python3 pmem_art.py hook pre-tool",
+        "matcher": "Write|StrReplace|Edit|Delete|Shell|MCP",
+        "failClosed": false
+      }
+    ],
+    "postToolUse": [
+      {
+        "command": "python3 pmem_art.py hook post-tool",
+        "matcher": "Read|Shell|Write"
+      }
+    ],
+    "stop": [
+      {
+        "command": "python3 pmem_art.py hook stop",
+        "loop_limit": 1
+      }
+    ]
+  }
+}
