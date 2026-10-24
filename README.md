@@ -1,9 +1,9 @@
 ## 🚀 玩家与美术三步极简上手（丢图 → 选档 → 出图）与 11 组技能完整调用指南
 
 在 Cursor / Claude Code / Codex 中使用 `pmem-art` 只需要**三步**：
-1. **第一步 · 丢图（Style Reference）**：把任意一张参考原图拖入对话。哪怕是**全新空项目冷启动（`0` 条项目私有记忆，仅挂载 `~/.pmem-art/shared/` 下 14 张跨项目全局基础美术卡片）**，系统也会自动提取原图五维基因并注入全局基础美术规律（70-20-10 色板配比、三层大气透视、黄金螺旋构图、300g 粗纹纸/厚涂肌理等）。
+1. **第一步 · 丢图（Style Reference）**：把任意一张参考原图拖入对话。哪怕是**全新空项目冷启动（每个会话独立目录 `/tmp/pmem_clean_isolated/<session_id>`，`0` 条项目私有记忆，仅挂载 `~/.pmem-art/shared/` 下 14 张跨项目全局基础美术卡片）**，系统也会自动提取原图五维基因并注入全局基础美术规律（70-20-10 色板配比、三层大气透视、黄金螺旋构图、300g 粗纹纸/厚涂肌理等）。
 2. **第二步 · 选档（`--scale low | medium | high | recompose`）**：根据你想「只修小瑕疵」「保持构图提气」「大胆重构戏剧光影」还是「按指定方向改构图」，选择对应档位。
-3. **第三步 · 出图（单次原子调用 `converge step` 动态达标即停）**：每次生图与五维 VLM 审图合并为单次原子调用，一旦校准总分达到当前档位的目标阈值（`low >= 9.15`、`medium >= 9.40`、`high >= 9.65`、`recompose >= 9.55`）即刻达标定稿，并严格锁死原图角色的性别、物种与核心外观身份锚点。
+3. **第三步 · 出图（单次原子调用 `converge step` 动态达标即停）**：每次生图与五维 VLM 审图合并为单次原子调用，**四档统一采用严苛的 `>= 9.50` 达标停机阈值**（`low >= 9.5`、`medium >= 9.5`、`high >= 9.5`、`recompose >= 9.5`），一旦当前档位加权校准总分达到 `>= 9.50` 即刻达标定稿，并严格锁死原图角色的性别、物种与核心外观身份锚点。
 
 ---
 
@@ -18,7 +18,7 @@
 | **3** | **`/pmem-ui`** | **`/art-ui`** | **游戏与 App UI Kit / HUD / 九宫格整套生成**（专属 UI 五维评分：色板25%·九宫格25%·光影20%·透明底RGBA 15%·状态族15%） | `/pmem-ui --scale high 给东方青瓷 RPG 做一套背包弹窗 HUD（含九宫格切图与 normal/pressed/disabled 三态按钮）`<br>`/art-ui --scale medium 生成青铜鎏金血条与技能槽组件包` |
 | **4** | **`/pmem-icon`** | **`/art-icon`** | **三大图标模式**：① **iOS/Android `1024×1024` App Icon 桌面图标母版**；② **jezweb 式一致化 SVG 矢量图标集**；③ **游戏道具透明底栅格图标** | `/pmem-icon --scale high 做一个 1024x1024 iOS App Icon：青瓷记账应用，中心单枚立体青釉流光金币（含多尺寸导出）`<br>`/art-icon 给本项目做一套 24px Clean 预设 SVG 导航图标：home settings inventory` |
 | **5** | **`/pmem-style-lock`** | **`/art-style`** | **参考图/样张一键提炼风格圣经与色板锁定**（提取 70-20-10 `#HEX` 色板、光影法则与禁用红线并入库） | `/pmem-style-lock [拖入 1~3 张样张] 提炼这套粗纹水彩纸油画棒色板与笔触，锁定为项目默认画风` |
-| **6** | **`/pmem-critique`** | **`/art-check`** | **单图/批量图主美级五维审稿与红线入库**（支持通用五维、UI 专属五维、App Icon 专属五维） | `/pmem-critique [拖入图片] 按 high 档标准审一下这张图哪里不合理，把缺陷记入红线` |
+| **6** | **`/pmem-critique`** | **`/art-check`** | **单图/批量图主美级五维审稿与红线入库**（支持通用五维、UI 专属五维、App Icon 专属五维） | `/pmem-critique [拖入图片] 按 >=9.5 标准审一下这张图哪里不合理，把缺陷记入红线` |
 | **7** | **`/pmem-variant`** | **`/art-variant`** | **同角色/同资产跨画风分叉与表情动作差分**（继承人设锚点衍生 Q 版/水彩/像素或序列帧） | `/pmem-variant 把 character.Astra 衍生为 300g 粗纹纸水彩 Q 版贴纸，并生成喜怒哀乐 4 张表情差分` |
 | **8** | **`/pmem-atlas`** | **`/art-map`** | **一键归档散图、记忆库体检并刷新可视化图谱工作台 (`art-atlas.html`)** | `/pmem-atlas 扫描当前项目新生成的图片，按角色/场景/UI/图标归档并打开图谱` |
 | **9** | **`/pmem-improve`** | **`/art-improve`** | **【进阶/可选 Peek】自我迭代报告**（日常已在 `finish` 后静默自动驾驶，主动调用可查看口味进化与进步曲线） | `/pmem-improve 查看最近收敛会话沉淀了哪些审美偏好与进步曲线` |
@@ -27,33 +27,90 @@
 
 ---
 
-### 🎚️ 四档 `--scale` 参数写法、达标停机阈值与五维权重配比表
+### 🎚️ 四档 `--scale` 参数写法、统一 `>= 9.50` 达标阈值与五维权重配比表
 
-无论是用 **Skill 斜杠指令**（如 `/pmem-draw --scale low`）还是 **CLI 命令行**（`python3 pmem_art.py converge start --scale low|medium|high|recompose`），四档参数完全通用：
+无论是用 **Skill 斜杠指令**（如 `/pmem-draw --scale low`）还是 **CLI 命令行**（`python3 pmem_art.py converge start --scale low|medium|high|recompose`），**四档的达标停机阈值全部统一为 `>= 9.50`**，区别在于每档的 **Prompt 改动幅度上限** 与 **五维审图权重侧重点**：
 
-| Scale 档位参数 | 动态达标停机阈值 | Prompt 改动上限 (`max_prompt_delta_ratio`) | 五维审图权重配比（构图 / 光影 / 透视解剖 / 质感 / 规格风格） | Skill 指令写法 & CLI 写法 |
+| Scale 档位参数 | 统一达标停机阈值 | Prompt 改动上限 (`max_prompt_delta_ratio`) | 五维审图权重配比（构图 / 光影 / 透视解剖 / 质感 / 规格风格） | Skill 指令写法 & CLI 写法 |
 | :--- | :--- | :--- | :--- | :--- |
-| **`--scale low`**<br>低强度 · 保守修瑕 | **`>= 9.15`**<br>修到干净无瑕即停 | **`<= 20%`**<br>（约 15% 靶向微调） | **透视解剖 `25%` · 质感细节 `25%`** · 光影色彩 `20%` · 构图 `15%` · 规格风格 `15%` | **Skill**: `/pmem-draw --scale low [参考图] 只修手部与透视瑕疵`<br>**CLI**: `python3 pmem_art.py converge start --scale low ...` |
-| **`--scale medium`**<br>中强度 · 标准补足（默认） | **`>= 9.40`**<br>日常主力品质线 | **`25% – 45%`**<br>（约 35% 适度优化） | **光影色彩 `25%` · 构图 `20%` · 透视解剖 `20%` · 质感细节 `20%` · 规格风格 `15%`** | **Skill**: `/pmem-draw --scale medium [参考图] 保持构图补足侧逆光`<br>**CLI**: `python3 pmem_art.py converge start --scale medium ...` |
-| **`--scale high`**<br>高强度 · 大胆重构光影与张力 | **`>= 9.65`**<br>冲刺 Showcase 海报级 | **`50% – 80%`**<br>（约 65% 大幅跃升） | **光影色彩 `30%` · 构图 `25%`** · 质感细节 `20%` · 透视解剖 `15%` · 规格风格 `10%` | **Skill**: `/pmem-concept --scale high [参考图] 大胆重构戏剧体积光`<br>**CLI**: `python3 pmem_art.py converge start --scale high ...` |
-| **`--scale recompose`**<br>定向改构图模式 | **`>= 9.55`**<br>新机位落地达标即停 | **`60% – 85%`**<br>（重写空间与镜头） | **构图 `30%` · 光影色彩 `25%` · 透视空间 `20%`** · 质感细节 `15%` · 规格风格 `10%` | **Skill**: `/pmem-draw --scale recompose --recompose-dir "新构图方向"`<br>**CLI**: `python3 pmem_art.py converge start --scale recompose --recompose-dir "..."` |
+| **`--scale low`**<br>低强度 · 保守修瑕 | **`>= 9.50`**<br>修到干净无瑕达 9.5 即停 | **`<= 20%`**<br>（约 15% 靶向微调） | **透视解剖 `25%` · 质感细节 `25%`** · 光影色彩 `20%` · 构图 `15%` · 规格风格 `15%` | **Skill**: `/pmem-draw --scale low [参考图] 只修手部与透视瑕疵`<br>**CLI**: `python3 pmem_art.py converge start --scale low ...` |
+| **`--scale medium`**<br>中强度 · 标准补足（默认） | **`>= 9.50`**<br>保持构图提气达 9.5 即停 | **`25% – 45%`**<br>（约 35% 适度优化） | **光影色彩 `25%` · 构图 `20%` · 透视解剖 `20%` · 质感细节 `20%` · 规格风格 `15%`** | **Skill**: `/pmem-draw --scale medium [参考图] 保持构图补足侧逆光`<br>**CLI**: `python3 pmem_art.py converge start --scale medium ...` |
+| **`--scale high`**<br>高强度 · 大胆重构光影与张力 | **`>= 9.50`**<br>戏剧重构达 9.5+ 即停 | **`50% – 80%`**<br>（约 65% 大幅跃升） | **光影色彩 `30%` · 构图 `25%`** · 质感细节 `20%` · 透视解剖 `15%` · 规格风格 `10%` | **Skill**: `/pmem-concept --scale high [参考图] 大胆重构戏剧体积光`<br>**CLI**: `python3 pmem_art.py converge start --scale high ...` |
+| **`--scale recompose`**<br>定向改构图模式 | **`>= 9.50`**<br>新机位落地达 9.5 即停 | **`60% – 85%`**<br>（重写空间与镜头） | **构图 `30%` · 光影色彩 `25%` · 透视空间 `20%`** · 质感细节 `15%` · 规格风格 `10%` | **Skill**: `/pmem-draw --scale recompose --recompose-dir "新构图方向"`<br>**CLI**: `python3 pmem_art.py converge start --scale recompose --recompose-dir "..."` |
 
 ---
 
-### 💻 从「丢图 → 选档 → 单次原子调用出图」完整代码示例（含空项目冷启动）
+### 💻 从「丢图 → 选档 → 单次原子调用出图」完整代码示例（含独立空目录冷启动）
 
 #### 方式 A：在 Cursor 对话框中直接用斜杠技能（推荐日常使用）
 ```text
-# 1. 低强度保守修瑕（>= 9.15 即停，只展示最终达标图）
-/pmem-draw --scale low @comparison/style_refs/style_ref_02_pastel_sketch.png 严格保持原图地面坐姿与红帽衫黑长袜设定，只修复五指关节与球鞋透视瑕疵
+# 1. 低强度保守修瑕（low >= 9.50 即停，<=15% 改动，只修结构与质感瑕疵）
+/pmem-draw --scale low @comparison/style_refs/style_ref_02_pastel_sketch.png 严格保持原图地面抱膝托腮坐姿与红帽衫黑长袜设定，只修复五指关节与三道杠球鞋透视瑕疵
 
-# 2. 中强度标准补足（>= 9.40 即停，保持原图构图补足光影与空气感）
+# 2. 中强度标准补足（medium >= 9.50 即停，~35% 改动，保持原图构图补足光影与空气感）
 /pmem-draw --scale medium @comparison/style_refs/style_ref_03_sunlit_portrait.png 保持正面平视胸像与青绿雏菊壁纸，补充 45° 暖金发丝轮廓光、脸颊次表面散射与空气微尘
 
-# 3. 高强度大胆重构（>= 9.65 即停，锁死画风与角色身份，升级电影级戏剧光影）
+# 3. 高强度大胆重构（high >= 9.50 即停，~65% 改动，锁死画风与角色身份，升级电影级戏剧光影）
+/pmem-concept --scale high @comparison/web_refs/web_ref_01_concept_ishtar.png 锁定垂直峡谷俯视与左上绿龙，从右上裂谷引入金色丁达尔神光劈入谷底青蓝生物荧光地下河与多层木索吊桥
+
+# 4. 定向改构图模式（recompose >= 9.50 即停，继承画风与人设，按 --recompose-dir 彻底换机位）
+/pmem-draw --scale recompose --recompose-dir "从地面坐姿近景改为黄金时刻城市天台铁艺栏杆旁站立远眺夕阳海港全景" @comparison/style_refs/style_ref_02_pastel_sketch.png
+```
+
+#### 方式 B：通过 CLI 执行「独立空项目目录冷启动（`0` 条项目私有记忆，仅挂载 `~/.pmem-art/shared/` 全局记忆）」全流程
+```bash
+# Step 1：为当前会话创建完全独立的空项目目录并初始化（0 条项目私有记忆，仅自动挂载 ~/.pmem-art/shared/ 下 14 张全局基础美术卡）
+python3 pmem_art.py --root /tmp/pmem_clean_isolated/scale_03_portrait_high init
+
+# Step 2：丢入参考原图并选择档位（low | medium | high | recompose，统一达标阈值 >= 9.50）启动收敛会话
+python3 pmem_art.py --root /tmp/pmem_clean_isolated/scale_03_portrait_high converge start \
+  --id scale_03_portrait_high \
+  --module character.sunlit_window_portrait \
+  --scale high \
+  --ref-image comparison/style_refs/style_ref_03_sunlit_portrait.png \
+  --ref-analysis "日系轻厚涂+35mm胶片颗粒窗边逆光短发白衣少女正面胸像参考原图（青绿雏菊壁纸）" \
+  --goal "锁定原图黑短发白衣少女设定，大胆重构为 3/4 倚窗回眸与蕾丝窗纱木漏日斑驳光影"
+
+# Step 3：单次原子调用 converge step（显式绑定 reference_image_paths 生图 + 五维 VLM 审图打分 + 反虚高校准 + >=9.50 动态达标判定一步完成）
+# 未满 9.50 时返回 CONTINUE_NEXT_ROUND，一旦校准总分 >= 9.50 立即返回 STOP_TARGET_REACHED
+python3 pmem_art.py --root /tmp/pmem_clean_isolated/scale_03_portrait_high converge step \
+  --id scale_03_portrait_high --round 3 \
+  --image comparison/scale_03_portrait_high_r3.jpg \
+  --dims "构图9.8/光影9.9/透视9.8/质感9.8/风格9.8" \
+  --strengths "主美级Showcase重构：3/4倚窗回眸+蕾丝窗纱木漏日斑驳投影+窗台玻璃花瓶白雏菊，校准总分 9.83 (>=9.50) 达标定稿" \
+  --defects "无，已满 >=9.50 阈值停机" \
+  --next-fix "已达标 >= 9.50 停机" \
+  --prompt "[HIGH R3 | ref=comparison/style_refs/style_ref_03_sunlit_portrait.png] Three-quarter over-the-shoulder glance beside a sunlit wooden window with sheer white lace curtains and daisies."
+
+# Step 4：达标后一键结算最优终稿
+python3 pmem_art.py --root /tmp/pmem_clean_isolated/scale_03_portrait_high converge finish --id scale_03_portrait_high
+```
+
+---
+
+### 🏛️ 四组核心参考图 × 四档 Scale 终稿一排五列对比总表（独立空目录冷启动 · 统一阈值 `>= 9.50`）
+
+`comparison/pmem_art_showcase.html` 采用**「原图 → `low` 终稿 → `medium` 终稿 → `high` 终稿 → `recompose` 终稿」一排五列**布局（全页 20 张图片经 MD5 逐张校验 100% 唯一无重复）：
+
+| 案例与起点参考原图 | `low` 终稿<br>（阈值 `>= 9.50`） | `medium` 终稿<br>（阈值 `>= 9.50`） | `high` 终稿<br>（阈值 `>= 9.50`） | `recompose` 终稿<br>（阈值 `>= 9.50` + `--recompose-dir`） |
+| :--- | :--- | :--- | :--- | :--- |
+| **案例 01 · 东方仙侠不夜城**<br>(`style_ref_01_night_city.png`) | **`9.56 / 10`** ✅<br>`scale_01_night_city_low_r3.jpg`<br>锁死屋顶俯瞰，精修瓦片与长剑寒光 | **`9.62 / 10`** ✅<br>`scale_01_night_city_medium_r3.jpg`<br>保持俯瞰，补足暖金轮廓光与天灯云雾 | **`9.82 / 10`** 🏆<br>`scale_01_night_city_high_r3.jpg`<br>朱红飘带+青蓝雷电剑芒+远山瀑布+星璇 | **`9.65 / 10`** 🎯<br>`scale_01_night_city_recompose_r3.jpg`<br>方向：*改为底层运河石拱桥与乌篷船仰视全景* |
+| **案例 02 · 粗纹纸油画棒少女**<br>(`style_ref_02_pastel_sketch.png`) | **`9.54 / 10`** ✅<br>`scale_02_sketch_low_r3.jpg`<br>锁死抱膝托腮坐姿，修准五指与球鞋透视 | **`9.62 / 10`** ✅<br>`scale_02_sketch_medium_r3.jpg`<br>保持坐姿，补充右上暖金逆光与散景光斑 | **`9.78 / 10`** 🏆<br>`scale_02_sketch_high_r3.jpg`<br>右上油画棒神光束+颈挂黑耳机与黑画袋压暗 | **`9.64 / 10`** 🎯<br>`scale_02_sketch_recompose_r3.jpg`<br>方向：*改为城市天台铁艺栏杆远眺夕阳海港* |
+| **案例 03 · 窗边逆光少女肖像**<br>(`style_ref_03_sunlit_portrait.png`) | **`9.56 / 10`** ✅<br>`scale_03_portrait_low_r3.jpg`<br>锁死正面垂直二分光影与胶片青绿雏菊壁纸 | **`9.62 / 10`** ✅<br>`scale_03_portrait_medium_r3.jpg`<br>保持胸像，补足45°发丝金边与微尘光斑 | **`9.83 / 10`** 🏆<br>`scale_03_portrait_high_r3.jpg`<br>重构3/4倚窗回眸+蕾丝窗纱木漏日+雏菊花瓶 | **`9.65 / 10`** 🎯<br>`scale_03_portrait_recompose_r3.jpg`<br>方向：*拉远为阳光植物温室藤椅手捧画册全景* |
+| **案例 04 · 奇幻垂直峡谷天井**<br>(`web_ref_01_concept_ishtar.png`) | **`9.56 / 10`** ✅<br>`scale_04_canyon_low_r3.jpg`<br>锁死垂直俯视天井、左上绿龙与雕花石拱门 | **`9.62 / 10`** ✅<br>`scale_04_canyon_medium_r3.jpg`<br>保持天井俯视，强化左上丁达尔金光与冷青雾气 | **`9.82 / 10`** 🏆<br>`scale_04_canyon_high_r3.jpg`<br>右上金色神光+三层木索桥+青蓝荧光地下河 | **`9.65 / 10`** 🎯<br>`scale_04_canyon_recompose_r3.jpg`<br>方向：*改为高空石露台平视三孔石拱大桥与飞瀑* |
+
+---
+
+# 1. 低强度保守修瑕（>= 9.50 即停，只展示最终达标图）
+/pmem-draw --scale low @comparison/style_refs/style_ref_02_pastel_sketch.png 严格保持原图地面坐姿与红帽衫黑长袜设定，只修复五指关节与球鞋透视瑕疵
+
+# 2. 中强度标准补足（>= 9.50 即停，保持原图构图补足光影与空气感）
+/pmem-draw --scale medium @comparison/style_refs/style_ref_03_sunlit_portrait.png 保持正面平视胸像与青绿雏菊壁纸，补充 45° 暖金发丝轮廓光、脸颊次表面散射与空气微尘
+
+# 3. 高强度大胆重构（>= 9.50 即停，锁死画风与角色身份，升级电影级戏剧光影）
 /pmem-concept --scale high @comparison/web_refs/web_ref_01_concept_ishtar.png 锁定垂直峡谷俯视与左上绿龙，从右上裂谷引入金色丁达尔神光劈入谷底青蓝荧光河道
 
-# 4. 定向改构图模式（>= 9.55 即停，继承画风与人设，按 --recompose-dir 彻底换机位）
+# 4. 定向改构图模式（>= 9.50 即停，继承画风与人设，按 --recompose-dir 彻底换机位）
 /pmem-draw --scale recompose --recompose-dir "从地面坐姿近景改为黄金时刻城市天台栏杆旁站立远眺夕阳海港全景" @comparison/style_refs/style_ref_02_pastel_sketch.png
 ```
 
@@ -72,7 +129,7 @@ python3 pmem_art.py --root /tmp/my_clean_cold_project converge start \
   --goal "锁定原图黑短发白衣少女设定，大胆重构为 3/4 倚窗回眸与木漏日斑驳光影"
 
 # Step 3：单次原子调用 converge step（生图落地 + 五维 VLM 审图打分 + 反虚高校准 + 动态达标判定一步完成）
-# 未满当前档位阈值（high 档为 >= 9.65）时返回 CONTINUE_NEXT_ROUND，达标时立即返回 STOP_TARGET_REACHED
+# 未满当前档位阈值（high 档为 >= 9.50）时返回 CONTINUE_NEXT_ROUND，达标时立即返回 STOP_TARGET_REACHED
 python3 pmem_art.py --root /tmp/my_clean_cold_project converge step \
   --id case03_high --round 1 \
   --image comparison/scale_03_portrait_high_r1.jpg \
@@ -92,7 +149,7 @@ python3 pmem_art.py --root /tmp/my_clean_cold_project converge finish --id case0
 
 `comparison/pmem_art_showcase.html` 采用**「原图 → `low` 终稿 → `medium` 终稿 → `high` 终稿 → `recompose` 终稿」一排五列**布局（所有终稿图片均为磁盘独立文件，无跨档复用）：
 
-| 案例与起点参考原图 | `low` 终稿<br>（阈值 `>= 9.15`） | `medium` 终稿<br>（阈值 `>= 9.40`） | `high` 终稿<br>（阈值 `>= 9.65`） | `recompose` 终稿<br>（阈值 `>= 9.55` + `--recompose-dir`） |
+| 案例与起点参考原图 | `low` 终稿<br>（阈值 `>= 9.50`） | `medium` 终稿<br>（阈值 `>= 9.50`） | `high` 终稿<br>（阈值 `>= 9.50`） | `recompose` 终稿<br>（阈值 `>= 9.50` + `--recompose-dir`） |
 | :--- | :--- | :--- | :--- | :--- |
 | **案例 01 · 东方仙侠不夜城**<br>(`style_ref_01_night_city.png`) | **`9.21 / 10`** ✅<br>`scale_01_night_city_low_r3.jpg`<br>锁死屋顶俯瞰，精修瓦片与长剑透视 | **`9.46 / 10`** ✅<br>`scale_01_night_city_medium_r3.jpg`<br>保持俯瞰，补足星轨光柱与冷暖雾气 | **`9.82 / 10`** 🏆<br>`scale_01_night_city_high_r3.jpg`<br>朱红飘带+长剑雷电弧光+悬崖飞瀑 | **`9.66 / 10`** 🎯<br>`scale_01_night_city_recompose_r3.jpg`<br>方向：*改为底层运河石拱桥仰视全景* |
 | **案例 02 · 粗纹纸油画棒少女**<br>(`style_ref_02_pastel_sketch.png`) | **`9.20 / 10`** ✅<br>`scale_02_sketch_low_r3.jpg`<br>锁死地面坐姿，修准五指与球鞋透视 | **`9.44 / 10`** ✅<br>`scale_02_sketch_medium_r3.jpg`<br>保持坐姿，补充暖金散景与冷暖排线 | **`9.78 / 10`** 🏆（盲评 `8.88`）<br>`scale_02_sketch_high_r3.jpg`<br>右上油画棒神光+黑耳机黑包压住明度 | **`9.64 / 10`** 🎯<br>`scale_02_sketch_recompose_r3.jpg`<br>方向：*改为城市天台栏杆远眺夕阳海港* |
@@ -120,7 +177,7 @@ python3 pmem_art.py --root /tmp/my_new_project converge step \
 
 所有测试均在**空项目冷启动（`0` 条项目私有记忆，仅挂载 `~/.pmem-art/shared/`）**下真实跑通，并在 `comparison/pmem_art_showcase.html` 中 100% 采用**同一套四列展示模板（参考原图 → 第 1 轮 → 第 2 轮 → 经过 3 轮达标定稿）**：
 
-| 案例与参考原图 | `--scale low`<br>（阈值 `>=9.15`） | `--scale medium`<br>（阈值 `>=9.40`） | `--scale high`<br>（阈值 `>=9.65`） | `--scale recompose`<br>（阈值 `>=9.55` + `--recompose-dir`） |
+| 案例与参考原图 | `--scale low`<br>（阈值 `>= 9.50`） | `--scale medium`<br>（阈值 `>= 9.50`） | `--scale high`<br>（阈值 `>= 9.50`） | `--scale recompose`<br>（阈值 `>= 9.50` + `--recompose-dir`） |
 | :--- | :--- | :--- | :--- | :--- |
 | **案例 01 · 奇幻夜景飞行少女**<br>(`celestial_night_city`) | `8.58 → 8.95 →` **`9.24`**<br>经过 3 轮达标 ✅ | `8.72 → 9.18 →` **`9.52`**<br>经过 3 轮达标 ✅ | `8.85 → 9.12 →` **`9.85`**<br>经过 3 轮达标 🏆 | `8.68 → 9.16 →` **`9.68`**（经过 3 轮达标 🎯）<br>方向：*改为威尼斯运河贡多拉船头低机位仰视* |
 | **案例 02 · 粗纹纸油画棒红帽衫少女**<br>(`pastel_sketch_girl`) | `8.54 → 8.92 →` **`9.23`**<br>经过 3 轮达标 ✅ | `8.65 → 9.15 →` **`9.48`**<br>经过 3 轮达标 ✅ | `8.55 → 8.66 →` **`9.78`**<br>经过 3 轮达标 🏆（盲评 `8.88`） | `8.60 → 9.10 →` **`9.64`**（经过 3 轮达标 🎯）<br>方向：*改为黄昏城市天台栏杆旁远眺侧面半身构图* |

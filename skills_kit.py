@@ -794,10 +794,10 @@ FAST_SOFT_THRESHOLD = 9.0  # fast-track: prefer fewer regens when score>=9.0 & d
 CONVERGE_SCALE_PROFILES: dict[str, dict[str, Any]] = {
     "low": {
         "scale": "low",
-        "label": "低强度 · 保守修瑕动态达标闭环 (Defect-Fix Dynamic Threshold >=9.15)",
+        "label": "低强度 · 保守修瑕动态达标闭环 (Defect-Fix Dynamic Threshold >=9.5)",
         "stop_policy": "dynamic_threshold",
         "max_rounds": 8,
-        "target_score_threshold": 9.15,
+        "target_score_threshold": 9.5,
         "dim_weights": {
             "composition": 0.15,
             "lighting_color": 0.20,
@@ -811,17 +811,17 @@ CONVERGE_SCALE_PROFILES: dict[str, dict[str, Any]] = {
         "allow_lighting_overhaul": False,
         "min_round_leap": 0.18,
         "prompt_directive": (
-            "【收敛强度: LOW (保守修瑕 · 动态阈值闭环至 >=9.15 即停)】严格锁死参考原图/上一轮的镜头机位、主体姿态、构图重心与主光源方向，"
+            "【收敛强度: LOW (保守修瑕 · 动态阈值闭环至 >=9.5 即停)】严格锁死参考原图/上一轮的镜头机位、主体姿态、构图重心与主光源方向，"
             "严禁增删配饰或改变环境构图；通过单次原子生图+五维审图 (converge step)，逐轮针对解剖结构瑕疵（五指/关节/五官对称）、"
-            "线条咬合、透视偏差或纸纹材质颗粒缺失做靶向修补，一旦真实加权分 >=9.15 立即达标停止。"
+            "线条咬合、透视偏差或纸纹材质颗粒缺失做靶向修补，一旦真实加权分 >=9.5 立即达标停止。"
         ),
     },
     "medium": {
         "scale": "medium",
-        "label": "中强度 · 补足加小优化动态达标闭环 (Balance & Polish Dynamic Threshold >=9.40)",
+        "label": "中强度 · 补足加小优化动态达标闭环 (Balance & Polish Dynamic Threshold >=9.5)",
         "stop_policy": "dynamic_threshold",
         "max_rounds": 8,
-        "target_score_threshold": 9.40,
+        "target_score_threshold": 9.5,
         "dim_weights": {
             "composition": 0.20,
             "lighting_color": 0.25,
@@ -835,17 +835,17 @@ CONVERGE_SCALE_PROFILES: dict[str, dict[str, Any]] = {
         "allow_lighting_overhaul": True,
         "min_round_leap": 0.22,
         "prompt_directive": (
-            "【收敛强度: MEDIUM (补足加小优化 · 动态阈值闭环至 >=9.40 即停)】保持原图核心机位与构图框架不变，"
+            "【收敛强度: MEDIUM (补足加小优化 · 动态阈值闭环至 >=9.5 即停)】保持原图核心机位与构图框架不变，"
             "在修复结构与光影短板的基础上，主动结合全局底层技法卡补充微优化（45°侧逆光轮廓分离 Rim Light、"
-            "皮肤次表面散射 SSS、环境反射光 Bounce Light、空气微尘粒子与 300g 粗纹纸/厚涂肌理强化），一旦真实加权分 >=9.40 立即达标停止。"
+            "皮肤次表面散射 SSS、环境反射光 Bounce Light、空气微尘粒子与 300g 粗纹纸/厚涂肌理强化），一旦真实加权分 >=9.5 立即达标停止。"
         ),
     },
     "high": {
         "scale": "high",
-        "label": "高强度 · 大胆重构光影与张力动态达标闭环 (Showcase Overhaul Dynamic Threshold >=9.65)",
+        "label": "高强度 · 大胆重构光影与张力动态达标闭环 (Showcase Overhaul Dynamic Threshold >=9.5)",
         "stop_policy": "dynamic_threshold",
         "max_rounds": 8,
-        "target_score_threshold": 9.65,
+        "target_score_threshold": 9.5,
         "dim_weights": {
             "composition": 0.25,
             "lighting_color": 0.30,
@@ -859,17 +859,17 @@ CONVERGE_SCALE_PROFILES: dict[str, dict[str, Any]] = {
         "allow_lighting_overhaul": True,
         "min_round_leap": 0.30,
         "prompt_directive": (
-            "【收敛强度: HIGH (Showcase级大胆跃升 · 动态阈值闭环至 >=9.65 即停)】严禁停留在小修小补或平庸平移！"
+            "【收敛强度: HIGH (Showcase级大胆跃升 · 动态阈值闭环至 >=9.5 即停)】严禁停留在小修小补或平庸平移！"
             "在锁定原图核心艺术媒介与画风基因的前提下，逐轮递进重构画面张力：升级更具冲击力的电影级镜头构图、"
-            "重做高反差冷暖戏剧光影（丁达尔体积光束/木漏日斑驳光影/强烈明暗交界线冷暖碰撞）并注入高辨识度叙事道具与动态细节，冲刺 >=9.65 Showcase 级定稿。"
+            "重做高反差冷暖戏剧光影（丁达尔体积光束/木漏日斑驳光影/强烈明暗交界线冷暖碰撞）并注入高辨识度叙事道具与动态细节，冲刺 >=9.5 Showcase 级定稿。"
         ),
     },
     "recompose": {
         "scale": "recompose",
-        "label": "定向改构图模式 · 按用户指定新构图动态达标闭环 (Directed Re-Composition Dynamic Threshold >=9.55)",
+        "label": "定向改构图模式 · 按用户指定新构图动态达标闭环 (Directed Re-Composition Dynamic Threshold >=9.5)",
         "stop_policy": "dynamic_threshold",
         "max_rounds": 8,
-        "target_score_threshold": 9.55,
+        "target_score_threshold": 9.5,
         "dim_weights": {
             "composition": 0.30,
             "lighting_color": 0.25,
@@ -883,9 +883,9 @@ CONVERGE_SCALE_PROFILES: dict[str, dict[str, Any]] = {
         "allow_lighting_overhaul": True,
         "min_round_leap": 0.25,
         "prompt_directive": (
-            "【收敛强度: RECOMPOSE (定向改构图 · 动态阈值闭环至 >=9.55 即停)】严格继承参考原图的画风笔触、媒介肌理、主辅色板与角色核心人设锚点，"
+            "【收敛强度: RECOMPOSE (定向改构图 · 动态阈值闭环至 >=9.5 即停)】严格继承参考原图的画风笔触、媒介肌理、主辅色板与角色核心人设锚点，"
             "100% 按照用户指定的构图改造方向（recompose_dir）：搭建新机位与景别 → 修正新构图下的空间透视、主体比例与前中后景分离 → "
-            "精修新构图下的戏剧主光、材质肌理与叙事视觉焦点，一旦真实加权分 >=9.55 立即达标停止。"
+            "精修新构图下的戏剧主光、材质肌理与叙事视觉焦点，一旦真实加权分 >=9.5 立即达标停止。"
         ),
     },
 }

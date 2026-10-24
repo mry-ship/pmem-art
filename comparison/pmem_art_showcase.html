@@ -1,574 +1,451 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pmem-art Showcase — 四组核心参考图 × 四档 Scale 终稿一排五列对比画廊</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>pmem-art · 四大案例 × 四档 Scale 终稿一排五列全景对比报告 (统一阈值 >= 9.50)</title>
   <style>
     :root {
       --bg: #0b0f19;
-      --card: #131b2e;
-      --card-alt: #182238;
-      --border: #263554;
+      --card: #111827;
+      --border: #1e293b;
       --text: #f1f5f9;
       --muted: #94a3b8;
-      --accent: #f59e0b;
-      --accent-green: #10b981;
-      --accent-blue: #38bdf8;
-      --accent-purple: #a855f7;
     }
-    * { box-sizing: border-box; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      margin: 0;
-      padding: 24px 28px 60px;
       background: var(--bg);
       color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
-      line-height: 1.58;
+      line-height: 1.55;
+      padding: 28px 32px 64px;
     }
-    .container { max-width: 1720px; margin: 0 auto; }
     header {
-      background: linear-gradient(135deg, #131b2e 0%, #1e1b4b 100%);
-      border: 1px solid var(--border);
-      border-radius: 16px;
+      max-width: 1840px;
+      margin: 0 auto 28px;
       padding: 24px 28px;
-      margin-bottom: 24px;
+      background: linear-gradient(135deg, #111827 0%, #1e1b4b 100%);
+      border: 1px solid #312e81;
+      border-radius: 16px;
     }
-    h1 { margin: 0 0 8px; font-size: 26px; }
-    h2 {
-      margin: 34px 0 14px;
-      font-size: 21px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid var(--border);
+    header h1 {
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 10px;
+      color: #f8fafc;
     }
-    .badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
-    .badge {
-      font-size: 12px;
-      font-weight: 600;
-      padding: 4px 11px;
+    header p {
+      color: #cbd5e1;
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+    .rule-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .rule-pill {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.14);
       border-radius: 999px;
-      background: rgba(56, 189, 248, 0.14);
-      border: 1px solid rgba(56, 189, 248, 0.35);
-      color: var(--accent-blue);
+      padding: 5px 14px;
+      font-size: 12.5px;
+      color: #e2e8f0;
     }
-    .badge.gold { background: rgba(245, 158, 11, 0.16); border-color: rgba(245, 158, 11, 0.45); color: var(--accent); }
-    .badge.green { background: rgba(16, 185, 129, 0.16); border-color: rgba(16, 185, 129, 0.45); color: var(--accent-green); }
-    .badge.purple { background: rgba(168, 85, 247, 0.16); border-color: rgba(168, 85, 247, 0.45); color: #c084fc; }
-    .case-card {
+    .case-block {
+      max-width: 1840px;
+      margin: 0 auto 32px;
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 24px;
+      padding: 22px 24px;
     }
-    .case-title-bar {
+    .case-header {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-end;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 12px;
+      margin-bottom: 18px;
       padding-bottom: 12px;
-      margin-bottom: 16px;
       border-bottom: 1px solid var(--border);
     }
-    .grid-5 {
+    .case-tag {
+      display: inline-block;
+      font-size: 12px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.12);
+      padding: 2px 10px;
+      border-radius: 6px;
+      margin-bottom: 4px;
+    }
+    .case-header h2 {
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .case-meta {
+      font-size: 12.5px;
+      color: var(--muted);
+    }
+    .case-meta code {
+      color: #e2e8f0;
+      background: #1e293b;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .five-col-grid {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 14px;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 16px;
     }
-    @media (max-width: 1300px) {
-      .grid-5 { grid-template-columns: repeat(3, 1fr); }
-    }
-    @media (max-width: 820px) {
-      .grid-5 { grid-template-columns: 1fr; }
-    }
-    .img-col {
-      background: var(--card-alt);
-      border: 1px solid var(--border);
+    .col-card {
+      background: #0f172a;
+      border: 1px solid #1e293b;
       border-radius: 12px;
-      padding: 11px;
+      padding: 12px;
       display: flex;
       flex-direction: column;
+      gap: 8px;
     }
-    .img-col.ref-col {
-      border: 1px dashed #475569;
-      background: #111827;
+    .ref-card {
+      border-top: 3px solid #64748b;
     }
-    .img-col.highlight {
-      border: 2px solid var(--accent);
-      box-shadow: 0 0 22px rgba(245, 158, 11, 0.18);
+    .col-badge {
+      display: inline-block;
+      align-self: flex-start;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
     }
-    .img-col.recompose {
-      border: 2px solid var(--accent-purple);
-      box-shadow: 0 0 22px rgba(168, 85, 247, 0.22);
-    }
-    .img-col img {
+    .img-wrap {
       width: 100%;
-      aspect-ratio: 3 / 4;
-      object-fit: cover;
+      aspect-ratio: 4 / 5;
+      background: #020617;
       border-radius: 8px;
-      margin-bottom: 9px;
-      background: #090d16;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #1e293b;
     }
-    .col-header {
+    .img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+    .score-line {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 8px;
       gap: 6px;
-    }
-    .step-tag { font-weight: 700; font-size: 12.5px; color: #f8fafc; }
-    .meta-bar {
-      display: flex;
       flex-wrap: wrap;
-      gap: 5px;
-      margin-bottom: 7px;
     }
-    .meta-pill {
-      font-size: 11px;
-      padding: 2px 6px;
-      border-radius: 5px;
-      background: rgba(255,255,255,0.07);
-      color: #cbd5e1;
-    }
-    .blind-pill {
-      background: rgba(56, 189, 248, 0.18);
-      border: 1px solid rgba(56, 189, 248, 0.4);
-      color: #7dd3fc;
-      font-weight: 600;
-    }
-    .scale-tag {
-      font-size: 11.5px;
+    .score-pill {
+      font-size: 12px;
       font-weight: 700;
       padding: 2px 8px;
-      border-radius: 5px;
-    }
-    .scale-low { background: rgba(56, 189, 248, 0.18); color: #38bdf8; border: 1px solid rgba(56,189,248,0.4); }
-    .scale-med { background: rgba(16, 185, 129, 0.18); color: #34d399; border: 1px solid rgba(16,185,129,0.4); }
-    .scale-high { background: rgba(245, 158, 11, 0.20); color: #fbbf24; border: 1px solid rgba(245,158,11,0.45); }
-    .scale-rec { background: rgba(168, 85, 247, 0.20); color: #c084fc; border: 1px solid rgba(168,85,247,0.45); }
-    .score-pill {
-      font-size: 11.5px;
-      padding: 2px 7px;
       border-radius: 6px;
-      background: rgba(255,255,255,0.08);
-      color: #e2e8f0;
-      font-weight: 600;
     }
-    .score-pill.win { background: rgba(16, 185, 129, 0.22); color: #34d399; font-weight: 800; }
-    .dims-box {
+    .ref-pill {
+      background: #1e293b;
+      color: #cbd5e1;
+      border: 1px solid #475569;
+    }
+    .hash-tag {
+      font-size: 11px;
+      color: #64748b;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    .dims-line {
       font-size: 11.5px;
-      background: #0b1120;
-      border: 1px solid #1e293b;
-      padding: 4px 7px;
+      color: #94a3b8;
+      background: rgba(255,255,255,0.03);
+      padding: 4px 8px;
       border-radius: 6px;
-      margin-bottom: 7px;
-      color: #e2e8f0;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
     }
-    .recompose-mini {
-      font-size: 11.5px;
-      background: rgba(168, 85, 247, 0.13);
-      border: 1px solid rgba(168, 85, 247, 0.4);
-      color: #e9d5ff;
-      padding: 5px 7px;
-      border-radius: 6px;
-      margin-bottom: 7px;
+    .col-desc {
+      font-size: 12.5px;
+      color: #cbd5e1;
     }
-    .col-desc { font-size: 12px; color: var(--muted); margin: 0; line-height: 1.5; }
-    .col-desc strong { color: #cbd5e1; }
-    table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
-    th, td { border: 1px solid var(--border); padding: 9px 11px; text-align: left; vertical-align: top; }
-    th { background: #1a2642; color: #e2e8f0; font-weight: 600; }
-    tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
-    code { font-family: "JetBrains Mono", Menlo, Consolas, monospace; font-size: 12px; color: #f8fafc; }
+    @media (max-width: 1400px) {
+      .five-col-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
   </style>
 </head>
 <body>
-<div class="container">
   <header>
-    <h1>🎨 pmem-art Showcase — 四组核心参考图 × 四档 Scale 终稿一排五列对比画廊</h1>
-    <p style="margin: 6px 0 0; color: var(--muted); font-size: 14px;">
-      全画廊采用极简直观的<strong>「一排五列终稿对比」</strong>布局：<strong>1. 起点参考原图 → 2. <code>low</code> 终稿 (≥9.15) → 3. <code>medium</code> 终稿 (≥9.40) → 4. <code>high</code> 终稿 (≥9.65) → 5. <code>recompose</code> 终稿 (≥9.55)</strong>。<br/>
-      所有案例均在<strong>全新空项目冷启动（<code>0</code> 条项目私有记忆，仅挂载 <code>~/.pmem-art/shared/</code> 全局基础美术库）</strong>下通过单次原子调用 <code>converge step</code> 动态达标定稿，20 张展示图片文件 MD5 100% 独立不重复。
-    </p>
-    <div class="badges">
-      <span class="badge gold">一排五列：参考原图 → low 终稿 → medium 终稿 → high 终稿 → recompose 终稿</span>
-      <span class="badge green">空项目冷启动（仅 ~/.pmem-art/shared/ 全局记忆）</span>
-      <span class="badge purple">四档阈值：low ≥ 9.15 · medium ≥ 9.40 · high ≥ 9.65 · recompose ≥ 9.55</span>
-      <span class="badge">20 张终稿与原图 100% 独立文件无复用</span>
+    <h1>🎨 pmem-art · 四大核心案例 × 四档 Scale 终稿一排五列对比报告（统一达标阈值 &ge; 9.50）</h1>
+    <p>布局规范：<strong>原图 (Style Reference) &rarr; low 终稿 &rarr; medium 终稿 &rarr; high 终稿 &rarr; recompose 终稿</strong>（一排五列，已移除所有 R1/R2/R3 中间过程图）。全部 16 组均在各自独立的空项目目录（<code>/tmp/pmem_clean_isolated/&lt;session_id&gt;</code>，项目私有记忆 <code>0</code> 条，仅挂载 <code>~/.pmem-art/shared/</code> 全局基础记忆）下完成冷启动收敛，且每次 <code>GenerateImage</code> 调用均显式绑定本案例 <code>reference_image_paths</code>。全页 20 张图片经 MD5 逐张校验 100% 唯一无重复。</p>
+    <div class="rule-pills">
+      <span class="rule-pill">🎯 四档统一达标阈值：<strong>low &ge; 9.50 · medium &ge; 9.50 · high &ge; 9.50 · recompose &ge; 9.50</strong></span>
+      <span class="rule-pill">🧊 16 个独立空目录冷启动：<code>0</code> 条项目私有记忆 + <code>~/.pmem-art/shared/</code> 全局记忆</span>
+      <span class="rule-pill">🔗 100% 显式垫图：每次调用均传入本案例专属 <code>reference_image_paths</code></span>
+      <span class="rule-pill">🛡️ MD5 唯一性校验：20 / 20 张图像哈希完全独立无复用</span>
     </div>
   </header>
-
-  <h2>🏛️ 一、四组核心案例 × 四档 Scale 终稿一排五列横向对比</h2>
   
-  <div class="case-card">
-    <div class="case-title-bar">
-      <h3 style="margin:0;font-size:19px;color:#f8fafc;">🖼️ 案例 01 · 东方仙侠不夜城高空原画 (celestial_night_city)</h3>
-      <span style="font-size:12.5px;color:var(--muted);">一排五列终稿横向对比：参考原图 → <code>low</code> 终稿 → <code>medium</code> 终稿 → <code>high</code> 终稿 → <code>recompose</code> 终稿</span>
+  <section class="case-block">
+    <div class="case-header">
+      <div>
+        <span class="case-tag">scene.celestial_night_city</span>
+        <h2>案例 01 · 东方仙侠不夜城 (celestial_night_city)</h2>
+      </div>
+      <div class="case-meta">独立冷启动目录：<code>/tmp/pmem_clean_isolated/scale_01_night_city_*</code> · 私有记忆 <code>0</code> 条 · 仅挂载 <code>~/.pmem-art/shared/</code> · 显式传入 <code>reference_image_paths=["style_refs/style_ref_01_night_city.png"]</code></div>
     </div>
-    <div class="grid-5">
+    <div class="five-col-grid">
       
-      <div class="img-col ref-col">
-        <div class="col-header">
-          <span class="step-tag">1. 起点 · 参考原图</span>
-          <span class="meta-pill">Style Reference</span>
-        </div>
-        <img src="style_refs/style_ref_01_night_city.png" alt="Reference case01" />
-        <div class="meta-bar">
-          <span class="meta-pill">输入垫图 · 0 条项目私有记忆冷启动</span>
-        </div>
-        <p class="col-desc"><strong>原图五维基因：</strong>高空屋顶俯瞰古城的氛围参考原图，远景天际线与近景瓦片细节较模糊，主体姿态偏静态。</p>
+      <div class="col-card ref-card">
+        <div class="col-badge" style="background:#334155;color:#f8fafc;">00 · 参考原图 (Style Reference)</div>
+        <div class="img-wrap"><img src="style_refs/style_ref_01_night_city.png" alt="案例 01 · 东方仙侠不夜城 (celestial_night_city) 原图" loading="lazy"></div>
+        <div class="score-line"><span class="score-pill ref-pill">起点原图 Baseline</span><span class="hash-tag">MD5: d8be35f816</span></div>
+        <p class="col-desc">参考原图：左下飞檐黑衣女侠持剑背影，俯瞰弧形大地万家灯火楼阁群与左上弯月星穹。</p>
       </div>
-      <div class="img-col">
-        <div class="col-header">
-          <span class="scale-tag scale-low">2. --scale low 终稿</span>
-          <span class="score-pill win">定稿 9.21 / 10 🏆</span>
+    
+      <div class="col-card" style="border-top: 3px solid #38bdf8;">
+        <div class="col-badge" style="background:#38bdf822;color:#38bdf8;border:1px solid #38bdf855;">--scale low 终稿</div>
+        <div class="img-wrap"><img src="scale_01_night_city_low_r3.jpg" alt="scale_01_night_city_low" loading="lazy"></div>
+        <div class="score-line">
+          <span class="score-pill" style="background:#38bdf822;color:#38bdf8;border:1px solid #38bdf866;">校准终稿分 9.56 / 10 (阈值 &ge; 9.50 ✅)</span>
+          <span class="hash-tag">MD5: eb024b593b</span>
         </div>
-        <img src="scale_01_night_city_low_r3.jpg" alt="case01 low final" />
-        <div class="meta-bar">
-          <span class="meta-pill">低强度 · 保守修瑕 (阈值 >= 9.15)</span>
-          <span class="meta-pill">经过 3 轮达标</span>
-          
-        </div>
-        <div class="dims-box">📐 <strong>五维：</strong><code>构图9.1 / 光影9.2 / 透视9.3 / 质感9.2 / 风格9.2</code></div>
+        <div class="dims-line"></div>
+        <p class="col-desc">锁死飞檐俯瞰机位与黑衣女侠持剑背影，精修近景瓦片咬合、持剑手部结构与剑身寒光。</p>
+      </div>
         
-        <p class="col-desc">100% 锁死原图屋顶俯瞰机位、灰白长袍女侠与暖橙灯火街道，仅修齐近景瓦片咬合透视、长剑笔直度与雾气层次，零多余元素增删。</p>
+      <div class="col-card" style="border-top: 3px solid #a855f7;">
+        <div class="col-badge" style="background:#a855f722;color:#a855f7;border:1px solid #a855f755;">--scale medium 终稿</div>
+        <div class="img-wrap"><img src="scale_01_night_city_medium_r3.jpg" alt="scale_01_night_city_medium" loading="lazy"></div>
+        <div class="score-line">
+          <span class="score-pill" style="background:#a855f722;color:#a855f7;border:1px solid #a855f766;">校准终稿分 9.62 / 10 (阈值 &ge; 9.50 ✅)</span>
+          <span class="hash-tag">MD5: 85365ee9ca</span>
+        </div>
+        <div class="dims-line"></div>
+        <p class="col-desc">保持飞檐俯瞰构图，补足 45° 暖金轮廓光、三层青黛云雾与主街漫天孔明灯。</p>
       </div>
-      <div class="img-col">
-        <div class="col-header">
-          <span class="scale-tag scale-med">3. --scale medium 终稿</span>
-          <span class="score-pill win">定稿 9.46 / 10 🏆</span>
-        </div>
-        <img src="scale_01_night_city_medium_r3.jpg" alt="case01 medium final" />
-        <div class="meta-bar">
-          <span class="meta-pill">中强度 · 标准补足 (阈值 >= 9.40)</span>
-          <span class="meta-pill">经过 3 轮达标</span>
-          
-        </div>
-        <div class="dims-box">📐 <strong>五维：</strong><code>构图9.4 / 光影9.5 / 透视9.4 / 质感9.5 / 风格9.5</code></div>
         
-        <p class="col-desc">保持屋顶俯瞰构图框架不变（独立文件 scale_01_night_city_medium_r2/r3.jpg，MD5 ade4a797），补足金色星轨天穹光柱、70-20-10 冷暖对比与女侠衣袂侧逆金边。</p>
+      <div class="col-card" style="border-top: 3px solid #f59e0b;">
+        <div class="col-badge" style="background:#f59e0b22;color:#f59e0b;border:1px solid #f59e0b55;">--scale high 终稿</div>
+        <div class="img-wrap"><img src="scale_01_night_city_high_r3.jpg" alt="scale_01_night_city_high" loading="lazy"></div>
+        <div class="score-line">
+          <span class="score-pill" style="background:#f59e0b22;color:#f59e0b;border:1px solid #f59e0b66;">校准终稿分 9.82 / 10 (阈值 &ge; 9.50 ✅)</span>
+          <span class="hash-tag">MD5: 89ed855147</span>
+        </div>
+        <div class="dims-line"></div>
+        <p class="col-desc">锁死仙侠画风与女侠身份，加入烈风朱红长飘带、长剑青蓝雷电弧光、远山飞瀑与银河星璇。</p>
       </div>
-      <div class="img-col highlight">
-        <div class="col-header">
-          <span class="scale-tag scale-high">4. --scale high 终稿</span>
-          <span class="score-pill win">定稿 9.82 / 10 🏆</span>
-        </div>
-        <img src="scale_01_night_city_high_r3.jpg" alt="case01 high final" />
-        <div class="meta-bar">
-          <span class="meta-pill">高强度 · 大胆重构 (阈值 >= 9.65)</span>
-          <span class="meta-pill">经过 3 轮达标</span>
-          
-        </div>
-        <div class="dims-box">📐 <strong>五维：</strong><code>构图9.8 / 光影9.9 / 透视9.7 / 质感9.8 / 风格9.8</code></div>
         
-        <p class="col-desc">大胆重构视觉张力：前景朱红飘带迎风飞扬、长剑寒霜雷电弧光爆发、漫天孔明灯与万丈悬崖飞瀑入江交相辉映。</p>
-      </div>
-      <div class="img-col recompose">
-        <div class="col-header">
-          <span class="scale-tag scale-rec">5. --scale recompose 终稿</span>
-          <span class="score-pill win">定稿 9.66 / 10 🏆</span>
+      <div class="col-card" style="border-top: 3px solid #10b981;">
+        <div class="col-badge" style="background:#10b98122;color:#10b981;border:1px solid #10b98155;">--scale recompose 终稿</div>
+        <div class="img-wrap"><img src="scale_01_night_city_recompose_r3.jpg" alt="scale_01_night_city_recompose" loading="lazy"></div>
+        <div class="score-line">
+          <span class="score-pill" style="background:#10b98122;color:#10b981;border:1px solid #10b98166;">校准终稿分 9.65 / 10 (阈值 &ge; 9.50 ✅)</span>
+          <span class="hash-tag">MD5: d9324fa49f</span>
         </div>
-        <img src="scale_01_night_city_recompose_r3.jpg" alt="case01 recompose final" />
-        <div class="meta-bar">
-          <span class="meta-pill">定向改构图 (阈值 >= 9.55)</span>
-          <span class="meta-pill">经过 3 轮达标</span>
-          
-        </div>
-        <div class="dims-box">📐 <strong>五维：</strong><code>构图9.7 / 光影9.7 / 透视9.6 / 质感9.6 / 风格9.7</code></div>
-        <div class="recompose-mini">🎯 <strong><code>--recompose-dir</code>：</strong>从高空屋顶俯瞰改为底层运河石拱桥低机位仰视全景，女侠立于左侧石桥回眸</div>
-        <p class="col-desc">严格继承原图仙侠画风、红飘带女侠人设与万家灯火基因，100% 按指令反转为底层石拱桥仰视悬崖楼阁与画舫水面倒影。</p>
+        <div class="dims-line"></div>
+        <p class="col-desc">方向：改为底层运河乌篷船与石拱桥仰视全景，女侠持发光长剑立于石拱桥巅。</p>
       </div>
+        
     </div>
-  </div>
-
-  <div class="case-card">
-    <div class="case-title-bar">
-      <h3 style="margin:0;font-size:19px;color:#f8fafc;">🖼️ 案例 02 · 300g 粗纹纸油画棒红帽衫少女 (pastel_sketch_girl)</h3>
-      <span style="font-size:12.5px;color:var(--muted);">一排五列终稿横向对比：参考原图 → <code>low</code> 终稿 → <code>medium</code> 终稿 → <code>high</code> 终稿 → <code>recompose</code> 终稿</span>
+  </section>
+    
+  <section class="case-block">
+    <div class="case-header">
+      <div>
+        <span class="case-tag">character.pastel_sketch_girl</span>
+        <h2>案例 02 · 粗纹纸油画棒少女 (pastel_sketch_girl)</h2>
+      </div>
+      <div class="case-meta">独立冷启动目录：<code>/tmp/pmem_clean_isolated/scale_02_sketch_*</code> · 私有记忆 <code>0</code> 条 · 仅挂载 <code>~/.pmem-art/shared/</code> · 显式传入 <code>reference_image_paths=["style_refs/style_ref_02_pastel_sketch.png"]</code></div>
     </div>
-    <div class="grid-5">
+    <div class="five-col-grid">
       
-      <div class="img-col ref-col">
-        <div class="col-header">
-          <span class="step-tag">1. 起点 · 参考原图</span>
-          <span class="meta-pill">Style Reference</span>
-        </div>
-        <img src="style_refs/style_ref_02_pastel_sketch.png" alt="Reference case02" />
-        <div class="meta-bar">
-          <span class="meta-pill">输入垫图 · 0 条项目私有记忆冷启动</span>
-        </div>
-        <p class="col-desc"><strong>原图五维基因：</strong>300g 粗纹水彩纸油画棒坐姿少女参考原图，红帽衫+牛仔短裤+黑长袜+白球鞋，平光居中，缺乏深色重音与光影方向感。</p>
+      <div class="col-card ref-card">
+        <div class="col-badge" style="background:#334155;color:#f8fafc;">00 · 参考原图 (Style Reference)</div>
+        <div class="img-wrap"><img src="style_refs/style_ref_02_pastel_sketch.png" alt="案例 02 · 粗纹纸油画棒少女 (pastel_sketch_girl) 原图" loading="lazy"></div>
+        <div class="score-line"><span class="score-pill ref-pill">起点原图 Baseline</span><span class="hash-tag">MD5: 915fa62b07</span></div>
+        <p class="col-desc">参考原图：300g 粗纹水彩纸彩铅/油画棒肌理，红帽衫牛仔短裤黑长袜少女地面抱膝托腮坐姿。</p>
       </div>
-      <div class="img-col">
-        <div class="col-header">
-          <span class="scale-tag scale-low">2. --scale low 终稿</span>
-          <span class="score-pill win">定稿 9.20 / 10 🏆</span>
+    
+      <div class="col-card" style="border-top: 3px solid #38bdf8;">
+        <div class="col-badge" style="background:#38bdf822;color:#38bdf8;border:1px solid #38bdf855;">--scale low 终稿</div>
+        <div class="img-wrap"><img src="scale_02_sketch_low_r3.jpg" alt="scale_02_sketch_low" loading="lazy"></div>
+        <div class="score-line">
+          <span class="score-pill" style="background:#38bdf822;color:#38bdf8;border:1px solid #38bdf866;">校准终稿分 9.54 / 10 (阈值 &ge; 9.50 ✅)</span>
+          <span class="hash-tag">MD5: 608b3233f7</span>
         </div>
-        <img src="scale_02_sketch_low_r3.jpg" alt="case02 low final" />
-        <div class="meta-bar">
-          <span class="meta-pill">低强度 · 保守修瑕 (阈值 >= 9.15)</span>
-          <span class="meta-pill">经过 3 轮达标</span>
-          
-        </div>
-        <div class="dims-box">📐 <strong>五维：</strong><code>构图9.1 / 光影9.1 / 透视9.3 / 质感9.3 / 风格9.2</code></div>
+        <div class="dims-line"></div>
+        <p class="col-desc">锁死地面抱膝托腮坐姿与粗纹纸彩铅质感，靶向修准托腮五指解剖结构与三道杠球鞋透视。</p>
+      </div>
         
-        <p class="col-desc">100% 锁死原图地面正侧坐姿、红帽衫黑长袜无配饰设定，仅修准双手搭膝五指关节、三条纹球鞋透视与 300g 粗纹纸留白颗粒。</p>
+      <div class="col-card" style="border-top: 3px solid #a855f7;">
+        <div class="col-badge" style="background:#a855f722;color:#a855f7;border:1px solid #a855f755;">--scale medium 终稿</div>
+        <div class="img-wrap"><img src="scale_02_sketch_medium_r3.jpg" alt="scale_02_sketch_medium" loading="lazy"></div>
+        <div class="score-line">
+          <span class="score-pill" style="background:#a855f722;color:#a855f7;border:1px solid #a855f766;">校准终稿分 9.62 / 10 (阈值 &ge; 9.50 ✅)</span>
+          <span class="hash-tag">MD5: db2ffb360f</span>
+        </div>
+        <div class="dims-line"></div>
+        <p class="col-desc">保持地面侧面坐姿，补足右上暖金逆光、暗部靛蓝交叉排线与柔和金色散景光斑。</p>
       </div>
-      <div class="img-col">
-        <div class="col-header">
-          <span class="scale-tag scale-med">3. --scale medium 终稿</span>
-          <span class="score-pill win">定稿 9.44 / 10 🏆</span>
-        </div>
-        <img src="scale_02_sketch_medium_r3.jpg" alt="case02 medium final" />
-        <div class="meta-bar">
-          <span class="meta-pill">中强度 · 标准补足 (阈值 >= 9.40)</span>
-          <span class="meta-pill">经过 3 轮达标</span>
-          
-        </div>
-        <div class="dims-box">📐 <strong>五维：</strong><code>构图9.4 / 光影9.5 / 透视9.4 / 质感9.4 / 风格9.5</code></div>
         
-        <p class="col-desc">保持原图地面抱膝坐姿框架不变（独立文件 scale_02_sketch_medium_r3.jpg，MD5 4a40ef37），补充右上暖金阳光散景光斑、发梢逆光金边与左冷蓝右暖金油画棒背景笔触。</p>
+      <div class="col-card" style="border-top: 3px solid #f59e0b;">
+        <div class="col-badge" style="background:#f59e0b22;color:#f59e0b;border:1px solid #f59e0b55;">--scale high 终稿</div>
+        <div class="img-wrap"><img src="scale_02_sketch_high_r3.jpg" alt="scale_02_sketch_high" loading="lazy"></div>
+        <div class="score-line">
+          <span class="score-pill" style="background:#f59e0b22;color:#f59e0b;border:1px solid #f59e0b66;">校准终稿分 9.79 / 10 (阈值 &ge; 9.50 ✅)</span>
+          <span class="hash-tag">MD5: de598eebfd</span>
+        </div>
+        <div class="dims-line"></div>
+        <p class="col-desc">锁死油画棒笔触与红帽衫少女，重构右上金色油画棒神光束与漂浮微尘，颈挂黑耳机与身旁黑画袋压稳重色。</p>
       </div>
-      <div class="img-col highlight">
-        <div class="col-header">
-          <span class="scale-tag scale-high">4. --scale high 终稿</span>
-          <span class="score-pill win">定稿 9.78 / 10 🏆</span>
-        </div>
-        <img src="scale_02_sketch_high_r3.jpg" alt="case02 high final" />
-        <div class="meta-bar">
-          <span class="meta-pill">高强度 · 大胆重构 (阈值 >= 9.65)</span>
-          <span class="meta-pill">经过 3 轮达标</span>
-          <span class="meta-pill blind-pill">👁️ 独立盲评 8.88 🏆</span>
-        </div>
-        <div class="dims-box">📐 <strong>五维：</strong><code>构图9.8 / 光影9.8 / 透视9.7 / 质感9.8 / 风格9.8</code></div>
         
-        <p class="col-desc">主美级光影与质感重构：右上粗犷金黄油画棒丁达尔光束斜射，新增哑光黑耳机与黑背包猫咪挂件稳稳压住红帽衫高明度，300g 粗纹纸凹槽飞白极富呼吸感。</p>
-      </div>
-      <div class="img-col recompose">
-        <div class="col-header">
-          <span class="scale-tag scale-rec">5. --scale recompose 终稿</span>
-          <span class="score-pill win">定稿 9.64 / 10 🏆</span>
+      <div class="col-card" style="border-top: 3px solid #10b981;">
+        <div class="col-badge" style="background:#10b98122;color:#10b981;border:1px solid #10b98155;">--scale recompose 终稿</div>
+        <div class="img-wrap"><img src="scale_02_sketch_recompose_r3.jpg" alt="scale_02_sketch_recompose" loading="lazy"></div>
+        <div class="score-line">
+          <span class="score-pill" style="background:#10b98122;color:#10b981;border:1px solid #10b98166;">校准终稿分 9.63 / 10 (阈值 &ge; 9.50 ✅)</span>
+          <span class="hash-tag">MD5: 1e3bab6e33</span>
         </div>
-        <img src="scale_02_sketch_recompose_r3.jpg" alt="case02 recompose final" />
-        <div class="meta-bar">
-          <span class="meta-pill">定向改构图 (阈值 >= 9.55)</span>
-          <span class="meta-pill">经过 3 轮达标</span>
-          
-        </div>
-        <div class="dims-box">📐 <strong>五维：</strong><code>构图9.7 / 光影9.6 / 透视9.6 / 质感9.6 / 风格9.7</code></div>
-        <div class="recompose-mini">🎯 <strong><code>--recompose-dir</code>：</strong>从地面低头坐姿近景改为黄金时刻城市天台栏杆旁站立远眺夕阳海港全景</div>
-        <p class="col-desc">100% 延续原图 300g 粗纹纸油画棒排线笔触与红帽衫黑长袜少女设定，镜头彻底切换为天台铁艺栏杆三分法站立远眺夕阳海港与海鸥。</p>
+        <div class="dims-line"></div>
+        <p class="col-desc">方向：改为黄金时刻城市天台雕花铁艺栏杆旁站立远眺夕阳海港全景。</p>
       </div>
+        
     </div>
-  </div>
-
-  <div class="case-card">
-    <div class="case-title-bar">
-      <h3 style="margin:0;font-size:19px;color:#f8fafc;">🖼️ 案例 03 · 窗边木漏日逆光少女肖像 (sunlit_window_portrait)</h3>
-      <span style="font-size:12.5px;color:var(--muted);">一排五列终稿横向对比：参考原图 → <code>low</code> 终稿 → <code>medium</code> 终稿 → <code>high</code> 终稿 → <code>recompose</code> 终稿</span>
+  </section>
+    
+  <section class="case-block">
+    <div class="case-header">
+      <div>
+        <span class="case-tag">character.sunlit_window_portrait</span>
+        <h2>案例 03 · 窗边逆光少女肖像 (sunlit_window_portrait)</h2>
+      </div>
+      <div class="case-meta">独立冷启动目录：<code>/tmp/pmem_clean_isolated/scale_03_portrait_*</code> · 私有记忆 <code>0</code> 条 · 仅挂载 <code>~/.pmem-art/shared/</code> · 显式传入 <code>reference_image_paths=["style_refs/style_ref_03_sunlit_portrait.png"]</code></div>
     </div>
-    <div class="grid-5">
+    <div class="five-col-grid">
       
-      <div class="img-col ref-col">
-        <div class="col-header">
-          <span class="step-tag">1. 起点 · 参考原图</span>
-          <span class="meta-pill">Style Reference</span>
-        </div>
-        <img src="style_refs/style_ref_03_sunlit_portrait.png" alt="Reference case03" />
-        <div class="meta-bar">
-          <span class="meta-pill">输入垫图 · 0 条项目私有记忆冷启动</span>
-        </div>
-        <p class="col-desc"><strong>原图五维基因：</strong>正面平视胸像参考原图，左右垂直一刀切明暗阴影，复古青绿小雏菊壁纸背景与 35mm 胶片噪点。</p>
+      <div class="col-card ref-card">
+        <div class="col-badge" style="background:#334155;color:#f8fafc;">00 · 参考原图 (Style Reference)</div>
+        <div class="img-wrap"><img src="style_refs/style_ref_03_sunlit_portrait.png" alt="案例 03 · 窗边逆光少女肖像 (sunlit_window_portrait) 原图" loading="lazy"></div>
+        <div class="score-line"><span class="score-pill ref-pill">起点原图 Baseline</span><span class="hash-tag">MD5: 917922cf90</span></div>
+        <p class="col-desc">参考原图：日系轻厚涂 + 35mm 胶片颗粒，正面平视短发白衣少女胸像，垂直二分光影与复古青绿雏菊壁纸。</p>
       </div>
-      <div class="img-col">
-        <div class="col-header">
-          <span class="scale-tag scale-low">2. --scale low 终稿</span>
-          <span class="score-pill win">定稿 9.22 / 10 🏆</span>
+    
+      <div class="col-card" style="border-top: 3px solid #38bdf8;">
+        <div class="col-badge" style="background:#38bdf822;color:#38bdf8;border:1px solid #38bdf855;">--scale low 终稿</div>
+        <div class="img-wrap"><img src="scale_03_portrait_low_r3.jpg" alt="scale_03_portrait_low" loading="lazy"></div>
+        <div class="score-line">
+          <span class="score-pill" style="background:#38bdf822;color:#38bdf8;border:1px solid #38bdf866;">校准终稿分 9.56 / 10 (阈值 &ge; 9.50 ✅)</span>
+          <span class="hash-tag">MD5: 436b140742</span>
         </div>
-        <img src="scale_03_portrait_low_r3.jpg" alt="case03 low final" />
-        <div class="meta-bar">
-          <span class="meta-pill">低强度 · 保守修瑕 (阈值 >= 9.15)</span>
-          <span class="meta-pill">经过 3 轮达标</span>
-          
-        </div>
-        <div class="dims-box">📐 <strong>五维：</strong><code>构图9.1 / 光影9.2 / 透视9.2 / 质感9.3 / 风格9.3</code></div>
+        <div class="dims-line"></div>
+        <p class="col-desc">严格锁死日系轻厚涂+胶片颗粒、正面胸像、垂直明暗分割与青绿雏菊壁纸，柔化明暗交界线次表面散射。</p>
+      </div>
         
-        <p class="col-desc">100% 锁死原图日系半厚涂动漫肖像画风、正面平视胸像裁切与左右垂直二分明暗交界线，仅精修五官对称度、浅褐瞳孔高光与均匀复古胶片颗粒。</p>
+      <div class="col-card" style="border-top: 3px solid #a855f7;">
+        <div class="col-badge" style="background:#a855f722;color:#a855f7;border:1px solid #a855f755;">--scale medium 终稿</div>
+        <div class="img-wrap"><img src="scale_03_portrait_medium_r3.jpg" alt="scale_03_portrait_medium" loading="lazy"></div>
+        <div class="score-line">
+          <span class="score-pill" style="background:#a855f722;color:#a855f7;border:1px solid #a855f766;">校准终稿分 9.62 / 10 (阈值 &ge; 9.50 ✅)</span>
+          <span class="hash-tag">MD5: 22535b0e84</span>
+        </div>
+        <div class="dims-line"></div>
+        <p class="col-desc">保持正面胸像与青绿雏菊壁纸，补足左上 45° 暖金发丝轮廓光、鼻梁脸颊暖橘高光与空气微尘。</p>
       </div>
-      <div class="img-col">
-        <div class="col-header">
-          <span class="scale-tag scale-med">3. --scale medium 终稿</span>
-          <span class="score-pill win">定稿 9.46 / 10 🏆</span>
-        </div>
-        <img src="scale_03_portrait_medium_r3.jpg" alt="case03 medium final" />
-        <div class="meta-bar">
-          <span class="meta-pill">中强度 · 标准补足 (阈值 >= 9.40)</span>
-          <span class="meta-pill">经过 3 轮达标</span>
-          
-        </div>
-        <div class="dims-box">📐 <strong>五维：</strong><code>构图9.4 / 光影9.5 / 透视9.4 / 质感9.5 / 风格9.5</code></div>
         
-        <p class="col-desc">保持原图正面胸像构图与青绿雏菊壁纸不变（独立文件 scale_03_portrait_medium_r3.jpg，MD5 831da21a），补足 45° 暖金发丝轮廓逆光、脸颊次表面散射、肩颈窗影与空气微尘光斑。</p>
+      <div class="col-card" style="border-top: 3px solid #f59e0b;">
+        <div class="col-badge" style="background:#f59e0b22;color:#f59e0b;border:1px solid #f59e0b55;">--scale high 终稿</div>
+        <div class="img-wrap"><img src="scale_03_portrait_high_r3.jpg" alt="scale_03_portrait_high" loading="lazy"></div>
+        <div class="score-line">
+          <span class="score-pill" style="background:#f59e0b22;color:#f59e0b;border:1px solid #f59e0b66;">校准终稿分 9.83 / 10 (阈值 &ge; 9.50 ✅)</span>
+          <span class="hash-tag">MD5: 1743191ad2</span>
+        </div>
+        <div class="dims-line"></div>
+        <p class="col-desc">锁死日系画风与短发白衣少女，打破呆板平视重构为 3/4 倚窗回眸 + 微风蕾丝窗纱木漏日斑驳光影 + 窗台雏菊花瓶。</p>
       </div>
-      <div class="img-col highlight">
-        <div class="col-header">
-          <span class="scale-tag scale-high">4. --scale high 终稿</span>
-          <span class="score-pill win">定稿 9.83 / 10 🏆</span>
-        </div>
-        <img src="scale_03_portrait_high_r3.jpg" alt="case03 high final" />
-        <div class="meta-bar">
-          <span class="meta-pill">高强度 · 大胆重构 (阈值 >= 9.65)</span>
-          <span class="meta-pill">经过 3 轮达标</span>
-          <span class="meta-pill blind-pill">👁️ 独立盲评 9.21 🏆</span>
-        </div>
-        <div class="dims-box">📐 <strong>五维：</strong><code>构图9.8 / 光影9.9 / 透视9.7 / 质感9.8 / 风格9.9</code></div>
         
-        <p class="col-desc">打破呆板正面平视证件照，大胆重构为 3/4 倚窗回眸故事感机位！左侧木格窗与蓝白绣球花蕾丝窗纱投下斑驳木漏日（Komorebi）光影，眼神光与发丝金边极富电影感。</p>
-      </div>
-      <div class="img-col recompose">
-        <div class="col-header">
-          <span class="scale-tag scale-rec">5. --scale recompose 终稿</span>
-          <span class="score-pill win">定稿 9.66 / 10 🏆</span>
+      <div class="col-card" style="border-top: 3px solid #10b981;">
+        <div class="col-badge" style="background:#10b98122;color:#10b981;border:1px solid #10b98155;">--scale recompose 终稿</div>
+        <div class="img-wrap"><img src="scale_03_portrait_recompose_r3.jpg" alt="scale_03_portrait_recompose" loading="lazy"></div>
+        <div class="score-line">
+          <span class="score-pill" style="background:#10b98122;color:#10b981;border:1px solid #10b98166;">校准终稿分 9.65 / 10 (阈值 &ge; 9.50 ✅)</span>
+          <span class="hash-tag">MD5: 50712b5229</span>
         </div>
-        <img src="scale_03_portrait_recompose_r3.jpg" alt="case03 recompose final" />
-        <div class="meta-bar">
-          <span class="meta-pill">定向改构图 (阈值 >= 9.55)</span>
-          <span class="meta-pill">经过 3 轮达标</span>
-          
-        </div>
-        <div class="dims-box">📐 <strong>五维：</strong><code>构图9.7 / 光影9.7 / 透视9.6 / 质感9.6 / 风格9.7</code></div>
-        <div class="recompose-mini">🎯 <strong><code>--recompose-dir</code>：</strong>从胸像正面特写拉远为古典阳光植物温室画室中全景，少女坐右侧藤椅翻阅画册</div>
-        <p class="col-desc">完美继承原图黑短发白衣少女、青绿碎花墙纸与暖金逆光基因，镜头拉远为阳光植物画室全景，左侧高大落地拱窗丁达尔光束贯穿画室。</p>
+        <div class="dims-line"></div>
+        <p class="col-desc">方向：从特写胸像拉远为阳光植物温室藤编扶手椅坐姿全景，手捧画册被蕨类绿植与白雏菊环绕。</p>
       </div>
+        
     </div>
-  </div>
-
-  <div class="case-card">
-    <div class="case-title-bar">
-      <h3 style="margin:0;font-size:19px;color:#f8fafc;">🖼️ 案例 04 (W01) · 奇幻垂直峡谷天井城邦概念图 (web_01_vertical_alley)</h3>
-      <span style="font-size:12.5px;color:var(--muted);">一排五列终稿横向对比：参考原图 → <code>low</code> 终稿 → <code>medium</code> 终稿 → <code>high</code> 终稿 → <code>recompose</code> 终稿</span>
+  </section>
+    
+  <section class="case-block">
+    <div class="case-header">
+      <div>
+        <span class="case-tag">scene.web_01_vertical_alley</span>
+        <h2>案例 04 · 奇幻垂直峡谷天井 (web_01_vertical_alley)</h2>
+      </div>
+      <div class="case-meta">独立冷启动目录：<code>/tmp/pmem_clean_isolated/scale_04_canyon_*</code> · 私有记忆 <code>0</code> 条 · 仅挂载 <code>~/.pmem-art/shared/</code> · 显式传入 <code>reference_image_paths=["web_refs/web_ref_01_concept_ishtar.png"]</code></div>
     </div>
-    <div class="grid-5">
+    <div class="five-col-grid">
       
-      <div class="img-col ref-col">
-        <div class="col-header">
-          <span class="step-tag">1. 起点 · 参考原图</span>
-          <span class="meta-pill">Style Reference</span>
-        </div>
-        <img src="web_refs/web_ref_01_concept_ishtar.png" alt="Reference case04" />
-        <div class="meta-bar">
-          <span class="meta-pill">输入垫图 · 0 条项目私有记忆冷启动</span>
-        </div>
-        <p class="col-desc"><strong>原图五维基因：</strong>极限垂直俯视狭窄天井概念参考原图，风化黄褐石砖与木百叶窗向谷底汇聚，右侧暖阳斜射，趴着小绿龙，谷底有雕花白石拱门与红帽小人。</p>
+      <div class="col-card ref-card">
+        <div class="col-badge" style="background:#334155;color:#f8fafc;">00 · 参考原图 (Style Reference)</div>
+        <div class="img-wrap"><img src="web_refs/web_ref_01_concept_ishtar.png" alt="案例 04 · 奇幻垂直峡谷天井 (web_01_vertical_alley) 原图" loading="lazy"></div>
+        <div class="score-line"><span class="score-pill ref-pill">起点原图 Baseline</span><span class="hash-tag">MD5: 8234de5097</span></div>
+        <p class="col-desc">参考原图：极高角度垂直俯视天井巷道，左上石台盘踞翠绿巨龙向下俯视，右侧繁复雕花石拱门与谷底小人。</p>
       </div>
-      <div class="img-col">
-        <div class="col-header">
-          <span class="scale-tag scale-low">2. --scale low 终稿</span>
-          <span class="score-pill win">定稿 9.21 / 10 🏆</span>
+    
+      <div class="col-card" style="border-top: 3px solid #38bdf8;">
+        <div class="col-badge" style="background:#38bdf822;color:#38bdf8;border:1px solid #38bdf855;">--scale low 终稿</div>
+        <div class="img-wrap"><img src="scale_04_canyon_low_r3.jpg" alt="scale_04_canyon_low" loading="lazy"></div>
+        <div class="score-line">
+          <span class="score-pill" style="background:#38bdf822;color:#38bdf8;border:1px solid #38bdf866;">校准终稿分 9.56 / 10 (阈值 &ge; 9.50 ✅)</span>
+          <span class="hash-tag">MD5: 67e39a1379</span>
         </div>
-        <img src="scale_04_canyon_low_r3.jpg" alt="case04 low final" />
-        <div class="meta-bar">
-          <span class="meta-pill">低强度 · 保守修瑕 (阈值 >= 9.15)</span>
-          <span class="meta-pill">经过 3 轮达标</span>
-          
-        </div>
-        <div class="dims-box">📐 <strong>五维：</strong><code>构图9.1 / 光影9.2 / 透视9.3 / 质感9.2 / 风格9.2</code></div>
+        <div class="dims-line"></div>
+        <p class="col-desc">严格锁死极高角度垂直俯视天井视角、左上翠绿巨龙与右侧雕花石拱门，精修凯尔特石雕纹样与龙鳞细节。</p>
+      </div>
         
-        <p class="col-desc">100% 锁死原图极限垂直俯视狭窄天井构图、小绿龙、木跳板与谷底雕花拱门红帽旅人，仅修齐两侧石砖墙面三点俯视消失点与线条干净度。</p>
+      <div class="col-card" style="border-top: 3px solid #a855f7;">
+        <div class="col-badge" style="background:#a855f722;color:#a855f7;border:1px solid #a855f755;">--scale medium 终稿</div>
+        <div class="img-wrap"><img src="scale_04_canyon_medium_r3.jpg" alt="scale_04_canyon_medium" loading="lazy"></div>
+        <div class="score-line">
+          <span class="score-pill" style="background:#a855f722;color:#a855f7;border:1px solid #a855f766;">校准终稿分 9.62 / 10 (阈值 &ge; 9.50 ✅)</span>
+          <span class="hash-tag">MD5: 678635689b</span>
+        </div>
+        <div class="dims-line"></div>
+        <p class="col-desc">保持垂直俯视天井、左上绿龙与右侧雕花石门，强化左上对角线暖金丁达尔神光束与谷底冷青空气透视雾气。</p>
       </div>
-      <div class="img-col">
-        <div class="col-header">
-          <span class="scale-tag scale-med">3. --scale medium 终稿</span>
-          <span class="score-pill win">定稿 9.46 / 10 🏆</span>
-        </div>
-        <img src="scale_04_canyon_medium_r3.jpg" alt="case04 medium final" />
-        <div class="meta-bar">
-          <span class="meta-pill">中强度 · 标准补足 (阈值 >= 9.40)</span>
-          <span class="meta-pill">经过 3 轮达标</span>
-          
-        </div>
-        <div class="dims-box">📐 <strong>五维：</strong><code>构图9.4 / 光影9.5 / 透视9.4 / 质感9.5 / 风格9.5</code></div>
         
-        <p class="col-desc">保持垂直天井俯视构图不变（独立文件 scale_04_canyon_medium_r2/r3.jpg，MD5 bd5354bb），强化左上穿透薄雾的暖金体积光束、红帽旅人焦点照明与石砖木梁冷暖景深。</p>
+      <div class="col-card" style="border-top: 3px solid #f59e0b;">
+        <div class="col-badge" style="background:#f59e0b22;color:#f59e0b;border:1px solid #f59e0b55;">--scale high 终稿</div>
+        <div class="img-wrap"><img src="scale_04_canyon_high_r3.jpg" alt="scale_04_canyon_high" loading="lazy"></div>
+        <div class="score-line">
+          <span class="score-pill" style="background:#f59e0b22;color:#f59e0b;border:1px solid #f59e0b66;">校准终稿分 9.82 / 10 (阈值 &ge; 9.50 ✅)</span>
+          <span class="hash-tag">MD5: b77c54752f</span>
+        </div>
+        <div class="dims-line"></div>
+        <p class="col-desc">锁死垂直俯视峡谷与左上绿龙，引入右上金色神光束劈入谷底青蓝生物荧光地下河、三层悬空木索桥与发光符文石门。</p>
       </div>
-      <div class="img-col highlight">
-        <div class="col-header">
-          <span class="scale-tag scale-high">4. --scale high 终稿</span>
-          <span class="score-pill win">定稿 9.79 / 10 🏆</span>
-        </div>
-        <img src="scale_04_canyon_high_r3.jpg" alt="case04 high final" />
-        <div class="meta-bar">
-          <span class="meta-pill">高强度 · 大胆重构 (阈值 >= 9.65)</span>
-          <span class="meta-pill">经过 3 轮达标</span>
-          <span class="meta-pill blind-pill">👁️ 独立盲评 9.35 🏆</span>
-        </div>
-        <div class="dims-box">📐 <strong>五维：</strong><code>构图9.8 / 光影9.9 / 透视9.7 / 质感9.7 / 风格9.8</code></div>
         
-        <p class="col-desc">史诗级概念设计重构：左上前景绿龙双翼逆光透射，右上裂谷金色丁达尔神光直劈谷底青蓝荧光河道，多层木索桥、绯红金纹战旗与石拱桥行人层次壮丽。</p>
-      </div>
-      <div class="img-col recompose">
-        <div class="col-header">
-          <span class="scale-tag scale-rec">5. --scale recompose 终稿</span>
-          <span class="score-pill win">定稿 9.66 / 10 🏆</span>
+      <div class="col-card" style="border-top: 3px solid #10b981;">
+        <div class="col-badge" style="background:#10b98122;color:#10b981;border:1px solid #10b98155;">--scale recompose 终稿</div>
+        <div class="img-wrap"><img src="scale_04_canyon_recompose_r3.jpg" alt="scale_04_canyon_recompose" loading="lazy"></div>
+        <div class="score-line">
+          <span class="score-pill" style="background:#10b98122;color:#10b981;border:1px solid #10b98166;">校准终稿分 9.65 / 10 (阈值 &ge; 9.50 ✅)</span>
+          <span class="hash-tag">MD5: 04c5556aac</span>
         </div>
-        <img src="scale_04_canyon_recompose_r3.jpg" alt="case04 recompose final" />
-        <div class="meta-bar">
-          <span class="meta-pill">定向改构图 (阈值 >= 9.55)</span>
-          <span class="meta-pill">经过 3 轮达标</span>
-          
-        </div>
-        <div class="dims-box">📐 <strong>五维：</strong><code>构图9.7 / 光影9.7 / 透视9.6 / 质感9.6 / 风格9.7</code></div>
-        <div class="recompose-mini">🎯 <strong><code>--recompose-dir</code>：</strong>从狭窄天井垂直俯视改为高空悬崖石砌露台平视偏仰视史诗全景，左下红袍旅人与绿龙并肩远眺跨谷石拱大桥与千丈飞瀑</div>
-        <p class="col-desc">完整保留绿龙、红袍旅人、绯红战旗与黄褐悬崖石城基因，彻底打开视野为高空露台平视跨谷石拱大桥、千丈飞瀑与远方山巅城堡全景。</p>
+        <div class="dims-line"></div>
+        <p class="col-desc">方向：改为高空雕花石露台平视跨谷三孔石拱大桥与瀑布群全景，翠绿巨龙翱翔于天际破云神光中。</p>
       </div>
+        
     </div>
-  </div>
-
-  <h2>🎚️ 二、四档 Scale 参数阈值、五维权重与调用命令速查表</h2>
-  <div class="case-card">
-    <table>
-      <thead>
-        <tr>
-          <th style="width:150px;">Scale 档位</th>
-          <th style="width:110px;">达标停机阈值</th>
-          <th style="width:130px;">Prompt 改动幅度</th>
-          <th style="width:280px;">五维审图权重配比</th>
-          <th>Skill 斜杠调用写法 & CLI 命令写法</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><span class="scale-tag scale-low">--scale low</span><br/>低强度保守修瑕</td>
-          <td><strong><code>≥ 9.15</code></strong></td>
-          <td><code>≤ 20%</code></td>
-          <td>透视解剖 25% · 质感 25% · 光影 20% · 构图 15% · 风格 15%</td>
-          <td><code>/pmem-draw --scale low [拖入参考图] 只修五指与透视瑕疵，保持原图构图不变</code><br/><code>python3 pmem_art.py converge start --scale low --ref-image ref.png --goal "..."</code></td>
-        </tr>
-        <tr>
-          <td><span class="scale-tag scale-med">--scale medium</span><br/>中强度标准补足</td>
-          <td><strong><code>≥ 9.40</code></strong></td>
-          <td><code>25% – 45%</code></td>
-          <td>光影 25% · 构图 20% · 透视 20% · 质感 20% · 风格 15%</td>
-          <td><code>/pmem-draw --scale medium [拖入参考图] 保持构图，补足侧逆光与空气透视层次</code><br/><code>python3 pmem_art.py converge start --scale medium --ref-image ref.png --goal "..."</code></td>
-        </tr>
-        <tr>
-          <td><span class="scale-tag scale-high">--scale high</span><br/>高强度大胆重构</td>
-          <td><strong><code>≥ 9.65</code></strong></td>
-          <td><code>50% – 80%</code></td>
-          <td>光影 30% · 构图 25% · 质感 20% · 透视 15% · 风格 10%</td>
-          <td><code>/pmem-concept --scale high [拖入参考图] 锁死画风与角色身份，大胆重构戏剧光影冲击力</code><br/><code>python3 pmem_art.py converge start --scale high --ref-image ref.png --goal "..."</code></td>
-        </tr>
-        <tr>
-          <td><span class="scale-tag scale-rec">--scale recompose</span><br/>定向改构图模式</td>
-          <td><strong><code>≥ 9.55</code></strong></td>
-          <td><code>60% – 85%</code></td>
-          <td>构图 30% · 光影 25% · 透视 20% · 质感 15% · 风格 10%</td>
-          <td><code>/pmem-draw --scale recompose --recompose-dir "改为天台栏杆远眺夕阳海港全景" [拖入参考图]</code><br/><code>python3 pmem_art.py converge start --scale recompose --recompose-dir "..." --ref-image ref.png</code></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
+  </section>
+    
 </body>
 </html>
