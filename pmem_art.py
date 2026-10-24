@@ -574,7 +574,11 @@ def cmd_search(data: dict[str, Any], module: str, path: str, query: str) -> int:
             if query.lower() not in hay:
                 continue
         matched.append(e)
-    matched.sort(key=lambda x: x.get("kind_order", 9))
+    from improve import rank_memory_entry
+    matched.sort(
+        key=lambda x: rank_memory_entry(x, target_module=target_mod or "", query=query or "", prioritize_kind=True),
+        reverse=True,
+    )
 
     mod_cfg = data["modules"].get(target_mod, {})
     result = {
@@ -670,10 +674,15 @@ def cmd_hook(root: Path, data: dict[str, Any], event: str) -> int:
         matched = []
         if module:
             matched = [e for e in data.get("entries") or [] if e.get("module") == module or str(e.get("module", "")).startswith(module.split(".")[0])]
-            # 优先红线与定稿
+            # 优先红线与定稿 + 最简加权（精确模块 > 胜出评分 > 关键词重叠 > 日期）
+            from improve import rank_memory_entry
             matched = sorted(
                 matched,
-                key=lambda e: {"style_redline": 0, "recipe": 1, "art_decision": 2, "visual_correction": 3}.get(e.get("kind"), 9),
+                key=lambda e: (
+                    -{"style_redline": 0, "recipe": 1, "art_decision": 2, "visual_correction": 3}.get(e.get("kind"), 9),
+                    *rank_memory_entry(e, target_module=module, query=q),
+                ),
+                reverse=True,
             )[:6]
         if matched:
             advice.append(f"🎨 pmem-art 生图前记忆召回 · 模块 {module or '?'}（{len(matched)} 条）")

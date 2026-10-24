@@ -106,6 +106,50 @@ def _uniq_append(lst: list[Any], item: str, limit: int = 40) -> list[Any]:
 # Warm-start pack (inject into round-1 prompt before first generation)
 # ---------------------------------------------------------------------------
 
+def extract_entry_score(e: dict[str, Any]) -> float:
+    for k in ("score", "winner_score"):
+        if e.get(k) is not None:
+            try:
+                return float(e[k])
+            except (TypeError, ValueError):
+                pass
+    ai_p = e.get("ai_params") or {}
+    if isinstance(ai_p, dict) and ai_p.get("score") is not None:
+        try:
+            return float(ai_p["score"])
+        except (TypeError, ValueError):
+            pass
+    blob = f"{e.get('summary') or ''} {e.get('body') or ''}"
+    m = re.search(r"(\d+\.\d+)\s*(?:分|/\s*10)", blob)
+    return float(m.group(1)) if m else 0.0
+
+
+def rank_memory_entry(
+    e: dict[str, Any],
+    target_module: str = "",
+    query: str = "",
+    prioritize_kind: bool = False,
+) -> tuple[int, int, float, int, str]:
+    """Simplest unified weighting key across all pmem-art recall points:
+    (kind_priority, exact_module_match, round_score, query_token_overlap, date_str)
+    Higher tuple sorts first with reverse=True.
+    """
+    q_tokens = [
+        tok for tok in re.split(r"[\s,，。、·:：/|+()-]+", (query or "").lower())
+        if len(tok) >= 2
+    ]
+    hay = " ".join([
+        str(e.get("summary") or ""),
+        str(e.get("body") or ""),
+        " ".join(str(x) for x in (e.get("tags") or e.get("aliases") or [])),
+    ]).lower()
+    overlap = sum(1 for tok in q_tokens if tok in hay)
+    exact_mod = 1 if (target_module and e.get("module") == target_module) else 0
+    kind_prio = (10 - int(e.get("kind_order", 9))) if prioritize_kind else 0
+    date_str = str(e.get("verified") or e.get("note_date") or e.get("id") or "")
+    return (kind_prio, exact_mod, extract_entry_score(e), overlap, date_str)
+
+
 def build_warm_start_pack(
     root: Path,
     data: dict[str, Any],
@@ -140,42 +184,9 @@ def build_warm_start_pack(
         if e.get("kind") == "art_decision" and _mod_ok(e.get("module", "")) and e.get("status", "active") != "archived"
     ]
 
-    goal_tokens = [
-        tok for tok in re.split(r"[\s,，。、·:：/|+()-]+", (goal or "").lower())
-        if len(tok) >= 2
-    ]
-
-    def _entry_score(e: dict) -> float:
-        for k in ("score", "winner_score"):
-            if e.get(k) is not None:
-                try:
-                    return float(e[k])
-                except (TypeError, ValueError):
-                    pass
-        ai_p = e.get("ai_params") or {}
-        if isinstance(ai_p, dict) and ai_p.get("score") is not None:
-            try:
-                return float(ai_p["score"])
-            except (TypeError, ValueError):
-                pass
-        blob = f"{e.get('summary') or ''} {e.get('body') or ''}"
-        m = re.search(r"(\d+\.\d+)\s*(?:分|/\s*10)", blob)
-        return float(m.group(1)) if m else 0.0
-
-    def _rank_key(e: dict) -> tuple[int, float, int, str]:
-        hay = " ".join([
-            str(e.get("summary") or ""),
-            str(e.get("body") or ""),
-            " ".join(str(x) for x in (e.get("tags") or e.get("aliases") or [])),
-        ]).lower()
-        overlap = sum(1 for tok in goal_tokens if tok in hay)
-        exact_mod = 1 if e.get("module") == module else 0
-        date_str = str(e.get("verified") or e.get("note_date") or e.get("id") or "")
-        return (exact_mod, _entry_score(e), overlap, date_str)
-
-    recipes = sorted(recipes, key=_rank_key, reverse=True)[:top_n]
-    redlines = sorted(redlines, key=_rank_key, reverse=True)[: max(top_n + 2, 5)]
-    decisions = sorted(decisions, key=_rank_key, reverse=True)[:top_n]
+    recipes = sorted(recipes, key=lambda e: rank_memory_entry(e, target_module=module, query=goal), reverse=True)[:top_n]
+    redlines = sorted(redlines, key=lambda e: rank_memory_entry(e, target_module=module, query=goal), reverse=True)[: max(top_n + 2, 5)]
+    decisions = sorted(decisions, key=lambda e: rank_memory_entry(e, target_module=module, query=goal), reverse=True)[:top_n]
 
     taste = load_taste(root)
     palette = (modules.get(module) or {}).get("palette") or []
@@ -522,7 +533,11 @@ def run_improve_pass(
         if summary and len(summary) <= 50:
             taste["banned_habits"] = _uniq_append(taste.get("banned_habits") or [], summary)
 
-    recent_rec = [e for e in entries if e.get("kind") == "recipe"][-10:]
+    recent_rec = sorted(
+        [e for e in entries if e.get("kind") == "recipe"],
+        key=lambda e: rank_memory_entry(e),
+        reverse=True,
+    )[:10]
     recipe_strengthen: list[dict[str, str]] = []
     for e in recent_rec:
         summary = str(e.get("summary") or "")
