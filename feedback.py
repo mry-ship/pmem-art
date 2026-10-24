@@ -333,6 +333,18 @@ def cmd_feedback(
         extra_meta={"style_fork": style_fork} if style_fork else None,
     )
     print(f"✅ 已写入记忆: {path.relative_to(root)}")
+
+    # High-signal: keep/reject/style → taste profile + knowledge atlas
+    try:
+        from improve import apply_feedback_to_taste, ingest_term_to_knowledge
+        apply_feedback_to_taste(root, text, detected)
+        cards = ingest_term_to_knowledge(root, text, source="feedback")
+        if cards:
+            print(f"🌍 知识广度扩展: {', '.join(cards)}")
+        print("🎨 已同步强化个人口味档案 (.memory-art/_profile/taste.json)")
+    except Exception as ex:
+        print(f"⚠️ 口味/知识同步跳过: {ex}")
+
     print("💡 下次在 Cursor 里生同类图前，Agent 会自动 search 到这条，越画越准。")
     return 0
 

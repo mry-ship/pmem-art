@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "updated_at": "2026-10-25 00:04:17 UTC+8",
+  "preferred_lighting": [
+    "侧逆光 / rim light"
+  ],
+  "preferred_composition": [
+    "半身"
+  ],
+  "preferred_line_weight": [],
+  "preferred_color_temperature": [
+    "青瓷白+墨蓝+鎏金倾向"
+  ],
+  "banned_habits": [
+    "赛博霓虹/霓虹紫",
+    "错误头身比/头过大"
+  ],
+  "keep_phrases": [],
+  "reject_phrases": [],
+  "style_notes": [
+    "示例种子：可由 /pmem-improve 与 feedback 持续强化"
+  ],
+  "signal_counts": {
+    "keeps": 0,
+    "rejects": 0,
+    "style_fixes": 0,
+    "sessions": 0
+  }
+}

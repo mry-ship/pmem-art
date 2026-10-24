@@ -17,6 +17,9 @@
 | **`/pmem-critique`** | **`/art-check`** | **主美级五维审稿与红线入库**：对照项目记忆给图片打分挑刺，并将翻车点记入 `style_redline` |
 | **`/pmem-variant`** | **`/art-variant`** | **跨画风分叉与表情/动作差分**：继承角色核心锚点，派生水彩/Q版/像素子模块或序列帧差分 |
 | **`/pmem-atlas`** | **`/art-map`** | **一键整理散图并刷新 `art-atlas.html` 可视化图谱** |
+| **`/pmem-improve`** | **`/art-improve`** | **自我迭代**：反思→口味档案→进步曲线（越用越好） |
+| **`/pmem-coach`** | **`/art-coach`** | **能力教练**：短板分类→练习→下一张可画目标 + 每轮「本轮可学」 |
+| **`/pmem-learn`** | **`/art-learn`** | **知识广度**：技法/光影/镜头/UI 模式卡片自动扩展 |
 
 ### 2. 日常自然语言反馈沉淀（无需手写 YAML）
 - 生图前先运行：`python3 pmem_art.py search --module <模块>` 或 `python3 pmem_art.py search "<关键词>"`

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 pmem-art skills_kit:
-1. 定义并自动安装面向 Cursor / Claude Code / Codex 的 8 大美术技能（Skills & Slash Commands）：
+1. 定义并自动安装面向 Cursor / Claude Code / Codex 的美术技能（含 improve/coach/learn）（Skills & Slash Commands）：
    - /pmem-draw    (别名 /art-draw)    : 8轮 9.5分 闭环自评收敛生图（支持纯文本或【丢入参考图】先解构再生图 + 最终汇总评分表）
    - /pmem-style-lock (别名 /art-style): 样张/参考图一键提炼风格圣经与色板锁定
    - /pmem-critique (别名 /art-check)  : 单图/批量图主美级五维审稿与红线入库
@@ -66,16 +66,19 @@ SKILL_SPECS: list[dict[str, Any]] = [
 
 ## 二、标准执行流程（Step 1 ~ Step 3）
 
-### Step 1：生图前召回历史记忆 & 初始化收敛会话
-1. 识别本次目标所属模块（如 `character.Astra`、`ui.InventoryHUD`、`vfx.FrostSlash` 等），运行：
+### Step 1：Warm-Start 召回 & 初始化收敛会话（首轮就要接近 9 分）
+1. 识别目标模块，运行 search（仍可用）：
    ```bash
    python3 pmem_art.py search --module <目标模块>
    ```
-   读取该模块已有的 **`style_redline`（历史翻车红线）**、**`recipe`（已验证定稿方向）** 与 **`palette`（标准色板）**。
-2. 启动本轮收敛追踪器：
+2. **启动收敛（自动注入 Warm-Start 包：Top recipes + 红线 + 个人口味）**：
    ```bash
-   python3 pmem_art.py converge start --goal "<用户目标描述>" --module <目标模块> [--ref-image <参考图>] [--ref-analysis "<参考图分析>"]
+   python3 pmem_art.py converge start --goal "<用户目标描述>" --module <目标模块> [--mode quality|fast] [--ref-image <参考图>] [--ref-analysis "<参考图分析>"]
    ```
+   - 默认 `--mode quality` = 完整 8×≥9.5。
+   - `--mode fast`：warm-start 置信度高时可走 **fast track**（仍须每张打分；最终采纳默认仍要 ≥9.5，除非用户明确说「草稿/fast/先看看」）。
+   - 把打印出的 **Warm-Start `prompt_block` 完整并入第 1 轮 Prompt**。
+3. **可选 Best-of-N 首帧**：第 1 轮先构思 2~3 个方向（或并行想法），挑最佳进入后续 converge（在回复里写明选了哪条）。
 
 ---
 
@@ -136,6 +139,10 @@ python3 pmem_art.py converge finish --apply
 1. 🏆 **最终胜出图片展示与结论**（说明是第几轮 `>= 9.5` 达标收敛，还是满 8 轮挑出第 X 轮最高分 `X.X / 10`）。
 2. 📊 **全阶段生图收敛评分总表**（包含每一轮的：轮次、图片路径、五维得分与总分、合理/亮点之处、**不合理/缺陷之处**、叠加修正方案、是否胜出）。
 3. ⚠️ **最终图的残余注意点与已沉淀的记忆条目**（让下次生同类图起点更高）。
+4. 📚 **本轮可学**（1~3 条手艺课，绑定本轮缺陷/修正）+ 提醒可跑 `/pmem-improve` / `/pmem-coach` / `/pmem-learn`。
+
+### 闭环总览（生成 → 评分教学 → 记忆 → 变强 → 变广 → 下次更暖）
+`warm-start → (可选 best-of-N) → 8×≥9.5 / fast-track → finish 反思 → improve 口味+能力 → learn 广度 → 下次 warm-start 更准`
 """,
     },
     {
@@ -181,6 +188,7 @@ python3 pmem_art.py converge finish --apply
    - 明确列出 **✅ 合理亮点** 与 **❌ 不合理/需返修点**，并给出可直接用于下一轮重绘的 **修正 Prompt 建议**。
 3. **自动沉淀红线**：
    - 若评分 `< 9.5` 或用户认可某条挑刺结论，调用 `python3 pmem_art.py feedback "<具体不合理点>" --module <模块> --asset <图片路径>` 自动写入记忆库。
+4. **本轮可学**：根据不合理点输出 1~3 条具体手艺课（构图/光影/解剖/九宫格…），并提示可跑 `/pmem-coach` 生成练习计划。
 """,
     },
     {
@@ -253,7 +261,7 @@ python3 pmem_art.py converge finish --apply
 ```
 
 ## 原理（截图摘要）
-1. `search` 召回 `ui.*` 红线与定稿 → 2. **概念先行**（整屏统一画风，禁止散生硬拼）→ 3. 透明组件表 → 4. 九宫格 + 状态族 + `manifest.json` → 5. **强制 8轮 ≥9.5**（概念稿与关键件：生1张→打分挑刺→`<9.5`叠加修正→满8轮挑最高分→评分总表→写记忆）
+1. `search` 召回 `ui.*` 红线与定稿 → 2. **概念先行**（整屏统一画风，禁止散生硬拼）→ 3. 透明组件表 → 4. 九宫格 + 状态族 + `manifest.json` → 5. **Warm-Start → 可选 fast/Best-of-N → 强制 8轮 ≥9.5** → 反思 → improve/coach/learn（能力+广度）
 
 你现在运行在 **pmem-art UI Kit 模式**（对标 SpriteCook UI Kit Builder：概念先行 → 组件表 → 九宫格切线 → 状态族）。**禁止**把整屏各控件零散各生一张再硬拼；必须先锁一个统一视觉语言的概念稿，再从同一概念抽出可复用零件。
 
@@ -349,7 +357,7 @@ python3 pmem_art.py feedback "UI套件色板与九宫格规范：<摘要>" --mod
 ```
 
 ## 原理（截图摘要）
-1. **与 `/pmem-draw` 同等强制闭环**（8轮 · ≥9.5 · 评分总表 · 写记忆）→ 2. `search` 召回场景/角色/品牌红线与色板 → 3. **FLUX 完整句 Prompt**（主体靠前；排斥项正向写）→ 4. 可选垫图解构 → 5. `converge start/round/finish --apply` 收敛并沉淀 `recipe`/`style_redline`
+1. **Warm-Start + 与 draw 同等 8×≥9.5** → 2. `search`/口味召回 → 3. **FLUX 完整句** → 4. 垫图解构 → 5. `converge`（可 `--mode fast`）→ 6. 反思 + `/pmem-improve`/`/pmem-learn`
 
 你现在运行在 **pmem-art 原画 / 概念图 / Key Art 模式**（对标 ZHO Comfy-FLUX 与 Yolain 等 FLUX 系提示法）：用 **完整自然语言句子** 描述成片，**主体与构图靠前**；FLUX 系几乎无有效负向 Prompt，排斥项用正向措辞写进正文。
 
@@ -420,7 +428,7 @@ python3 pmem_art.py converge finish --apply
 ```
 
 ## 原理（截图摘要）
-1. 先锁 **style-spec**（Clean/Sharp/Soft/Minimal/Bold）→ 2. SVG 硬规则（同 viewBox · `currentColor` · 同 stroke）→ 3. 约 5 个一批生成 + 一致性审查 → 4. 交付 `icons/` + `preview.html` → 5. 关键枚 **强制 8轮 ≥9.5** 收敛并写入记忆
+1. 先锁 **style-spec** → 2. SVG 硬规则 → 3. 分批生成 → 4. 交付 preview → 5. 关键枚 **Warm-Start + 8×≥9.5** → 6. 反思 / improve / learn 扩图标技法卡
 
 你现在运行在 **pmem-art 图标集模式**（对标 jezweb `icon-set-generator`）：先锁 **一份 style-spec**，再批量生成，保证 stroke、圆角、视口、视觉重量一致——**禁止**从 Lucide/Heroicons 随便拼一套「看起来差不多」的通用库图标冒充项目定制集。
 
@@ -498,6 +506,99 @@ python3 pmem_art.py ingest icons/preview.html -p "icon set preview" --apply   # 
 - [ ] 若跑了收敛：附评分总表
 """,
     },
+    {
+        "name": "pmem-improve",
+        "alias": "art-improve",
+        "title": "自我迭代：反思→口味档案→进步曲线（越用越好）",
+        "description": (
+            "当用户说「提升/自我迭代/总结这次/越用越好」或输入 /pmem-improve /art-improve 时触发。"
+            "扫描会话反思与反馈红线，更新个人口味档案 taste.json，并汇报进步曲线。"
+        ),
+        "body": r"""# `/pmem-improve`（别名 `/art-improve`）— 连续自我迭代
+
+## 怎么用（复制即用）
+```text
+/pmem-improve
+/art-improve 总结最近几次，看看我哪里变强了
+提升一下 / 自我迭代 / 越用越好
+```
+
+## 原理（截图摘要）
+1. 每次 `converge finish --apply` 已自动写会话反思 → 2. 本技能扫描反思+反馈+红线 → 3. 更新 `.memory-art/_profile/taste.json` → 4. 打印进步曲线与「变聪明了什么」
+
+## 个人进步
+系统会汇总近 7/30 次胜出分、收敛轮次、高频红线，并降低重复短板——**越用越好**。
+
+### 标准命令
+```bash
+python3 pmem_art.py improve run          # 自我迭代（更新口味档案）
+python3 pmem_art.py progress             # 进步曲线
+python3 pmem_art.py taste show           # 查看口味档案
+python3 pmem_art.py coach                # 能力教练计划（弱项→练习→下一张目标）
+```
+
+向用户用中文汇报：扫描了多少反思、口味新增了什么、短板是否在下降。
+""",
+    },
+    {
+        "name": "pmem-coach",
+        "alias": "art-coach",
+        "title": "能力教练：短板分类→练习钻→下一张可画目标",
+        "description": (
+            "当用户输入 /pmem-coach 或 /art-coach，或说「练什么/我的短板/能力提升计划」时触发。"
+            "把红线与会话反思归类为构图/光影/解剖/九宫格等能力维，输出个人练习计划与下一张绘制目标。"
+        ),
+        "body": r"""# `/pmem-coach`（别名 `/art-coach`）— 个人能力教练
+
+## 怎么用
+```text
+/pmem-coach
+/art-coach 我最近老是翻车，给我练习计划
+练什么 / 我的短板 / 能力提升
+```
+
+## 原理
+红线 + `_reflections/` → 短板类别计数 → 配套 drills → `next_draw_goals`；进步看短板类别是否随时间下降（不只看分数）。
+
+```bash
+python3 pmem_art.py coach
+python3 pmem_art.py progress   # 含能力短板趋势
+```
+
+每轮 converge/critique 后 Agent 还应输出 **「本轮可学」** 1~3 条（与缺陷/修正绑定的具体手艺课）。
+""",
+    },
+    {
+        "name": "pmem-learn",
+        "alias": "art-learn",
+        "title": "知识广度：自动扩展技法/光影/镜头/UI 模式卡片",
+        "description": (
+            "当用户输入 /pmem-learn 或 /art-learn，或说「扩展知识/学新技法/补广度」时触发。"
+            "根据已有域与缺口提出 3~5 条广度扩展（技法卡/风格分叉/相邻模块种子），接受后写入 .memory-art/_knowledge/。"
+        ),
+        "body": r"""# `/pmem-learn`（别名 `/art-learn`）— 知识广度自动扩展
+
+## 怎么用
+```text
+/pmem-learn
+/art-learn 我角色画得多，场景光影词汇不够
+扩展知识 / 补广度 / 学新技法
+```
+
+## 原理
+反馈新词 · 参考图解构 · improve 发现邻域缺口 → 提案 3~5 张知识卡 → 你说「接受」写入 `_knowledge/`（可选空模块种子）→ 下次 warm-start 更博。
+
+```bash
+python3 pmem_art.py learn suggest
+python3 pmem_art.py learn accept --all
+python3 pmem_art.py learn accept --ids tech-watercolor,light-rim
+python3 pmem_art.py learn list
+```
+
+## 个人进步
+广度与深度双轮：converge 加深手艺，learn 拓宽技法库，improve 固化口味。
+""",
+    },
 ]
 
 
@@ -542,6 +643,9 @@ def _render_agent_doc_block() -> str:
 | **`/pmem-critique`** | **`/art-check`** | **主美级五维审稿与红线入库**：对照项目记忆给图片打分挑刺，并将翻车点记入 `style_redline` |
 | **`/pmem-variant`** | **`/art-variant`** | **跨画风分叉与表情/动作差分**：继承角色核心锚点，派生水彩/Q版/像素子模块或序列帧差分 |
 | **`/pmem-atlas`** | **`/art-map`** | **一键整理散图并刷新 `art-atlas.html` 可视化图谱** |
+| **`/pmem-improve`** | **`/art-improve`** | **自我迭代**：反思→口味档案→进步曲线（越用越好） |
+| **`/pmem-coach`** | **`/art-coach`** | **能力教练**：短板分类→练习→下一张可画目标 + 每轮「本轮可学」 |
+| **`/pmem-learn`** | **`/art-learn`** | **知识广度**：技法/光影/镜头/UI 模式卡片自动扩展 |
 
 ### 2. 日常自然语言反馈沉淀（无需手写 YAML）
 - 生图前先运行：`python3 pmem_art.py search --module <模块>` 或 `python3 pmem_art.py search "<关键词>"`
@@ -623,7 +727,7 @@ def install_skills_and_agent_configs(root: Path, quiet: bool = False) -> dict[st
     installed["agent_docs"].append("AGENTS.md")
 
     if not quiet:
-        print(f"✨ 已自动安装 pmem-art {len(SKILL_SPECS)} 大美术技能（含别名共 {len(SKILL_SPECS)*2} 个斜杠入口）到 Cursor / Claude Code / Codex：")
+        print(f"✨ 已自动安装 pmem-art {len(SKILL_SPECS)} 项美术技能（含别名共 {len(SKILL_SPECS)*2} 个斜杠入口）到 Cursor / Claude Code / Codex：")
         for spec in SKILL_SPECS:
             print(f"   · /{spec['name']:<16} (别名 /{spec['alias']:<11}) — {spec['title']}")
         print("   · 安装路径: .cursor/{skills,commands}/ · .claude/{skills,commands}/ · .agents/skills/ · CLAUDE.md · AGENTS.md")
@@ -636,6 +740,7 @@ def install_skills_and_agent_configs(root: Path, quiet: bool = False) -> dict[st
 
 DEFAULT_THRESHOLD = 9.5
 DEFAULT_MAX_ROUNDS = 8
+FAST_SOFT_THRESHOLD = 9.0  # fast-track: prefer fewer regens when score>=9.0 & delta small; final accept still >=9.5 unless draft
 
 
 def _session_file(root: Path, session_id: str = "latest") -> Path:
@@ -665,32 +770,77 @@ def cmd_converge(
     next_fix: str = "",
     prompt: str = "",
     apply_memory: bool = True,
+    converge_mode: str = "quality",
+    draft_ok: bool = False,
 ) -> int:
+    """
+    converge_mode: quality (default, full 8×≥9.5) | fast (warm-start fast-track hints).
+    draft_ok: if True (user said 草稿/fast), final accept may use soft threshold in fast mode.
+    """
     sf = _session_file(root, session_id)
+    converge_mode = (converge_mode or "quality").lower()
+    if converge_mode not in ("quality", "fast"):
+        converge_mode = "quality"
 
     if action == "start":
         if not module and goal:
             from feedback import infer_module_from_text
             module = infer_module_from_text(goal, data)
+
+        from improve import build_warm_start_pack, print_warm_start, ingest_term_to_knowledge
+        warm = build_warm_start_pack(root, data, module=module or "brand.GlobalStyle", goal=goal or "")
+        print_warm_start(warm)
+
+        # Grow knowledge from ref-analysis / goal terms
+        for blob in (goal, ref_analysis):
+            if blob:
+                created = ingest_term_to_knowledge(root, blob, source="converge_start")
+                if created:
+                    print(f"🌍 知识广度：已触及/写入卡片 {', '.join(created)}")
+
+        fast_track = bool(converge_mode == "fast" and warm.get("fast_track_eligible"))
+        # In fast mode with high confidence, keep threshold 9.5 for final unless draft_ok
+        eff_threshold = float(threshold)
+        if draft_ok and converge_mode == "fast":
+            eff_threshold = min(eff_threshold, FAST_SOFT_THRESHOLD)
+
         sess = {
             "session_id": session_id,
             "started_at": _now_cst().strftime("%Y-%m-%d %H:%M:%S UTC+8"),
             "goal": goal or "未命名生图任务",
             "module": module or "brand.GlobalStyle",
             "mode": "ref_image_guided" if ref_image else "text_guided",
+            "converge_mode": converge_mode,
+            "quality_mode": converge_mode,
+            "fast_track": fast_track,
+            "draft_ok": bool(draft_ok),
             "ref_image": ref_image,
             "ref_analysis": ref_analysis,
-            "threshold": float(threshold),
+            "threshold": eff_threshold,
+            "accept_threshold": float(threshold),  # hard rule for final unless draft
             "max_rounds": int(max_rounds),
             "status": "running",
             "rounds": [],
+            "warm_start": warm,
+            "lessons_all": [],
         }
         sf.write_text(json.dumps(sess, ensure_ascii=False, indent=2), encoding="utf-8")
-        print(f"🎯 [pmem-draw 收敛会话已启动] 模块: {sess['module']} | 合格线: >= {sess['threshold']} 分 | 最大轮次: {sess['max_rounds']} 轮")
+        print(
+            f"🎯 [收敛会话已启动] 模块: {sess['module']} | 模式: {converge_mode}"
+            f"{' · FAST-TRACK' if fast_track else ''} | 合格线: >= {sess['accept_threshold']} 分"
+            f"{'（草稿软线 ' + str(eff_threshold) + '）' if draft_ok else ''} | 最大轮次: {sess['max_rounds']}"
+        )
+        if fast_track:
+            print(
+                f"⚡ Fast-track：warm-start 置信 {warm.get('confidence')} 高。"
+                f"仍须每张打分；若 score≥{FAST_SOFT_THRESHOLD} 且与上轮 Δ 很小可少重生，"
+                f"但最终采纳默认仍要 ≥{threshold}（除非用户明确草稿/fast）。"
+            )
         if ref_image:
             print(f"🖼️  垫图/参考图模式: {ref_image}")
             if ref_analysis:
                 print(f"🔍 参考图解构基准: {ref_analysis}")
+        print("\n👉 Agent：请将上方 Warm-Start prompt_block 完整并入第 1 轮 Prompt。可选 Best-of-N 首帧后进入 round。")
         return 0
 
     if not sf.exists():
@@ -700,20 +850,54 @@ def cmd_converge(
             session_id=session_id, goal=goal or "自评收敛生图", module=module,
             ref_image=ref_image, ref_analysis=ref_analysis,
             threshold=threshold, max_rounds=max_rounds,
+            converge_mode=converge_mode, draft_ok=draft_ok,
         )
 
     sess = json.loads(sf.read_text(encoding="utf-8"))
-    th = float(sess.get("threshold", DEFAULT_THRESHOLD))
+    th = float(sess.get("accept_threshold") or sess.get("threshold", DEFAULT_THRESHOLD))
+    soft_th = FAST_SOFT_THRESHOLD if sess.get("fast_track") or sess.get("converge_mode") == "fast" else th
     mr = int(sess.get("max_rounds", DEFAULT_MAX_ROUNDS))
     rounds: list[dict[str, Any]] = sess.get("rounds") or []
 
     if action == "round":
+        from improve import craft_lessons_from_round, print_round_lessons, ingest_term_to_knowledge
+
         r_no = round_num if round_num > 0 else (len(rounds) + 1)
         if r_no > mr:
             print(f"🛑 已超过最大轮次上限 ({mr} 轮)，请直接运行 `python3 pmem_art.py converge finish --apply` 结算最高分图。")
             return 1
 
         passed = float(score) >= th
+        # Adaptive early-stop hint for fast track
+        skip_ahead = False
+        delta = None
+        if rounds:
+            prev = max(rounds, key=lambda x: x.get("round", 0))
+            try:
+                delta = abs(float(score) - float(prev.get("score", 0)))
+            except (TypeError, ValueError):
+                delta = None
+        if (
+            (sess.get("fast_track") or sess.get("converge_mode") == "fast")
+            and float(score) >= soft_th
+            and not passed
+            and delta is not None
+            and delta < 0.25
+            and r_no >= 2
+        ):
+            skip_ahead = True
+
+        lessons = craft_lessons_from_round(
+            defects=defects, strengths=strengths, next_fix=next_fix,
+            score=float(score), dims=dims,
+        )
+        sess.setdefault("lessons_all", []).extend(lessons)
+
+        # knowledge from defects/fixes
+        for blob in (defects, next_fix, strengths):
+            if blob:
+                ingest_term_to_knowledge(root, blob, source="converge_round")
+
         entry = {
             "round": r_no,
             "image": image,
@@ -724,9 +908,10 @@ def cmd_converge(
             "next_fix": ("已达标，无需继续叠加" if passed else (next_fix or "针对上述不合理处叠加负向词与结构约束")),
             "prompt": prompt,
             "passed": passed,
+            "lessons": lessons,
+            "skip_ahead_hint": skip_ahead,
             "recorded_at": _now_cst().strftime("%H:%M:%S"),
         }
-        # Replace if same round number re-logged, else append
         rounds = [r for r in rounds if r.get("round") != r_no]
         rounds.append(entry)
         rounds.sort(key=lambda x: x["round"])
@@ -736,6 +921,13 @@ def cmd_converge(
             sess["status"] = "converged"
             sess["ActionRequired"] = "STOP_AND_FINISH"
             msg = f"✅ 第 {r_no} 轮得分 {score:.1f} >= {th}（合格达标）！请立即停止生图，运行 `python3 pmem_art.py converge finish --apply` 输出总表。"
+        elif skip_ahead and sess.get("draft_ok"):
+            sess["status"] = "fast_soft_accept"
+            sess["ActionRequired"] = "STOP_AND_FINISH"
+            msg = (
+                f"⚡ Fast-track 草稿软达标：第 {r_no} 轮 {score:.1f} ≥ {soft_th} 且 Δ 很小。"
+                f"用户已允许草稿 — 可 `converge finish --apply`；正式交付仍建议冲到 ≥{th}。"
+            )
         elif r_no >= mr:
             best = max(rounds, key=lambda x: x["score"])
             sess["status"] = "max_rounds_reached"
@@ -752,11 +944,17 @@ def cmd_converge(
                 f"🔄 第 {r_no}/{mr} 轮得分 {score:.1f} < {th}（不合格）。\n"
                 f"   · 不合理处: {entry['defects']}\n"
                 f"   · 下一轮叠加修正: {entry['next_fix']}\n"
-                f"   👉 请将修正策略叠加到 Prompt，继续生成第 {r_no + 1} 轮图片！"
             )
+            if skip_ahead:
+                msg += (
+                    f"   · ⚡ Fast-track 提示：已 ≥{soft_th} 且与上轮变化很小 — "
+                    f"可少做大重生、做局部修正；最终采纳仍要 ≥{th}（非草稿）。\n"
+                )
+            msg += f"   👉 请将修正策略叠加到 Prompt，继续生成第 {r_no + 1} 轮图片！"
 
         sf.write_text(json.dumps(sess, ensure_ascii=False, indent=2), encoding="utf-8")
         print(msg)
+        print_round_lessons(lessons)
         return 0
 
     if action in ("finish", "table", "status"):
@@ -764,15 +962,18 @@ def cmd_converge(
             print("❌ 当前收敛会话没有任何轮次记录。")
             return 1
 
-        # Pick winner: first round >= threshold, or highest score overall
-        passing_rounds = [r for r in rounds if float(r.get("score", 0)) >= th]
+        accept_th = float(sess.get("accept_threshold") or th)
+        if sess.get("draft_ok") and (sess.get("fast_track") or sess.get("converge_mode") == "fast"):
+            accept_th = min(accept_th, FAST_SOFT_THRESHOLD)
+
+        passing_rounds = [r for r in rounds if float(r.get("score", 0)) >= accept_th]
         if passing_rounds:
             winner = max(passing_rounds, key=lambda x: (x["score"], x["round"]))
-            outcome_str = f"✅ **达标收敛**（第 {winner['round']} 轮达到 `{winner['score']:.1f} / 10.0` 分 ≥ `{th}` 分合格线）"
+            outcome_str = f"✅ **达标收敛**（第 {winner['round']} 轮达到 `{winner['score']:.1f} / 10.0` 分 ≥ `{accept_th}` 分合格线）"
         else:
             winner = max(rounds, key=lambda x: (x["score"], x["round"]))
             outcome_str = (
-                f"⚠️ **满 {len(rounds)} 轮未达 `{th}` 分，已自动挑选全阶段最高分**"
+                f"⚠️ **满 {len(rounds)} 轮未达 `{accept_th}` 分，已自动挑选全阶段最高分**"
                 f"（胜出：第 {winner['round']} 轮 `{winner['score']:.1f} / 10.0` 分）"
             )
 
@@ -780,13 +981,17 @@ def cmd_converge(
         sess["status"] = "finished"
         sf.write_text(json.dumps(sess, ensure_ascii=False, indent=2), encoding="utf-8")
 
-        # Build Markdown summary table
+        warm = sess.get("warm_start") or {}
         md_lines = [
-            f"### 🎯 `/pmem-draw` 自评收敛生图报告 — {sess.get('goal', '')}",
+            f"### 🎯 自评收敛生图报告 — {sess.get('goal', '')}",
             "",
             f"- **目标模块**：`{sess.get('module')}`",
+            f"- **收敛模式**：`{sess.get('converge_mode', 'quality')}`"
+            + (" · ⚡ FAST-TRACK" if sess.get("fast_track") else ""),
             f"- **生图模式**：{'🖼️ 垫图解构收敛模式 (`' + sess.get('ref_image', '') + '`)' if sess.get('ref_image') else '✍️ 纯文本指令收敛模式'}",
         ]
+        if warm.get("confidence") is not None:
+            md_lines.append(f"- **Warm-Start 置信度**：`{warm.get('confidence')}`")
         if sess.get("ref_analysis"):
             md_lines.append(f"- **参考图解构基准**：{sess.get('ref_analysis')}")
         md_lines.extend([
@@ -809,27 +1014,49 @@ def cmd_converge(
             )
 
         md_lines.append("")
+        # 本轮可学 aggregate
+        all_lessons = []
+        for r in rounds:
+            all_lessons.extend(r.get("lessons") or [])
+        if not all_lessons:
+            all_lessons = sess.get("lessons_all") or []
+        if all_lessons:
+            md_lines.append("#### 📚 本轮可学（能力提升）")
+            md_lines.append("")
+            seen = set()
+            for L in all_lessons:
+                key = (L.get("category"), L.get("lesson"))
+                if key in seen:
+                    continue
+                seen.add(key)
+                md_lines.append(f"- **[{L.get('category')}]** {L.get('lesson')} → _{L.get('drill')}_")
+            md_lines.append("")
+
         if not passing_rounds:
             md_lines.append(
                 f"> 💡 **阶段总结**：本次共迭代 {len(rounds)} 轮，最高分为第 {winner['round']} 轮（`{winner['score']:.1f}` 分），"
                 f"仍留有轻微不足：「{winner.get('defects')}」，后续可针对该点微调或局部重绘。"
             )
 
-        # Persist memories into .memory-art if action == "finish" and apply_memory
         saved_paths: list[str] = []
+        reflection_path = None
         if action == "finish" and apply_memory:
             from feedback import write_memory_entry
+            from improve import write_session_reflection
+
             mod = sess.get("module") or "brand.GlobalStyle"
-            # 1) Save winner as recipe
             win_summary = f"[收敛胜出 {winner['score']:.1f}分] {sess.get('goal', '')[:50]} — {winner.get('strengths', '')[:30]}"
             win_body = (
-                f"**【/pmem-draw 闭环收敛胜出定稿（第 {winner['round']}/{len(rounds)} 轮 · {winner['score']:.1f} 分）】**\n"
+                f"**【闭环收敛胜出定稿（第 {winner['round']}/{len(rounds)} 轮 · {winner['score']:.1f} 分）】**\n"
                 f"- **生成目标**：{sess.get('goal')}\n"
+                f"- **收敛模式**：{sess.get('converge_mode')}{' · fast-track' if sess.get('fast_track') else ''}\n"
                 f"- **保留原因（亮点）**：{winner.get('strengths')}\n"
                 f"- **最终使用 Prompt**：`{winner.get('prompt') or sess.get('goal')}`\n"
             )
             if sess.get("ref_image"):
                 win_body += f"- **参考垫图**：`{sess.get('ref_image')}`（解构：{sess.get('ref_analysis')}）\n"
+            if warm.get("prompt_block"):
+                win_body += f"\n<details><summary>Warm-Start 包</summary>\n\n```\n{warm.get('prompt_block')}\n```\n</details>\n"
             p_rec = write_memory_entry(
                 root,
                 module=mod,
@@ -841,7 +1068,6 @@ def cmd_converge(
             )
             saved_paths.append(str(p_rec.relative_to(root)))
 
-            # 2) Save worst / first failed defects as style_redline so next session avoids them immediately
             failed = [r for r in rounds if not r.get("passed") and r.get("defects")]
             if failed:
                 worst = min(failed, key=lambda x: x["score"])
@@ -851,7 +1077,7 @@ def cmd_converge(
                     for r in failed
                 )
                 red_body = (
-                    f"**【/pmem-draw 迭代过程中暴露的不合理项（下次生图直接规避）】**\n\n"
+                    f"**【迭代过程中暴露的不合理项（下次生图直接规避）】**\n\n"
                     f"{defect_bullets}\n"
                 )
                 p_red = write_memory_entry(
@@ -865,15 +1091,45 @@ def cmd_converge(
                 )
                 saved_paths.append(str(p_red.relative_to(root)))
 
+            # Session reflection for continuous self-improve
+            # attach lessons onto sess for reflection
+            sess["lessons_all"] = all_lessons
+            reflection_path = write_session_reflection(root, sess, winner=winner, outcome=outcome_str)
+            # also stash lessons into reflection file
+            try:
+                import json as _json
+                ref_data = _json.loads(reflection_path.read_text(encoding="utf-8"))
+                ref_data["lessons"] = all_lessons[:12]
+                reflection_path.write_text(_json.dumps(ref_data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+            except Exception:
+                pass
+            saved_paths.append(str(reflection_path.relative_to(root)))
+
             md_lines.append("")
             md_lines.append("#### 🧠 已自动沉淀至 `.memory-art` 的记忆条目")
             for sp in saved_paths:
                 md_lines.append(f"- `{sp}`")
+            md_lines.append("")
+            md_lines.append(
+                "> 🔁 下一步可变强：`python3 pmem_art.py improve run` · "
+                "`python3 pmem_art.py coach` · `python3 pmem_art.py learn suggest`"
+            )
 
         report_text = "\n".join(md_lines)
         report_file = root / ".memory-art" / "converge" / f"{session_id}_report.md"
         report_file.write_text(report_text + "\n", encoding="utf-8")
         print(report_text)
+        return 0
+
+    if action == "warm":
+        # standalone warm-start preview without starting session
+        from improve import build_warm_start_pack, print_warm_start
+        mod = module
+        if not mod and goal:
+            from feedback import infer_module_from_text
+            mod = infer_module_from_text(goal, data)
+        pack = build_warm_start_pack(root, data, module=mod or "brand.GlobalStyle", goal=goal or "")
+        print_warm_start(pack)
         return 0
 
     print(f"未知 converge 子操作: {action}")

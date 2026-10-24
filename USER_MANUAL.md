@@ -175,3 +175,18 @@ A：它会先做 **Step 0 参考图深度解构**（分析构图、提取主辅�
 
 **Q3：以后升级了 `pmem-art`，怎么刷新已安装项目的技能文件？**  
 A：在项目根目录运行 `python3 pmem_art.py skills --install` 即可一键无损刷新 `.cursor`、`.claude`、`.agents` 下的全部技能定义。
+
+
+---
+
+## v0.11 连续自我迭代（能力 + 广度）
+
+```bash
+python3 pmem_art.py converge start -g "…" -m <模块>          # Warm-Start
+python3 pmem_art.py converge start -g "…" -m <模块> --mode fast
+python3 pmem_art.py improve run && python3 pmem_art.py progress
+python3 pmem_art.py coach
+python3 pmem_art.py learn suggest && python3 pmem_art.py learn accept --all
+```
+
+闭环：`warm-start → 评分+本轮可学 → 记忆 → improve → learn → 下次更暖`。

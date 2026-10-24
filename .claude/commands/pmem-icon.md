@@ -12,7 +12,7 @@ description: 【强制8轮≥9.5收敛】jezweb式一致化图标集/SVG（pmem-
 ```
 
 ## 原理（截图摘要）
-1. 先锁 **style-spec**（Clean/Sharp/Soft/Minimal/Bold）→ 2. SVG 硬规则（同 viewBox · `currentColor` · 同 stroke）→ 3. 约 5 个一批生成 + 一致性审查 → 4. 交付 `icons/` + `preview.html` → 5. 关键枚 **强制 8轮 ≥9.5** 收敛并写入记忆
+1. 先锁 **style-spec** → 2. SVG 硬规则 → 3. 分批生成 → 4. 交付 preview → 5. 关键枚 **Warm-Start + 8×≥9.5** → 6. 反思 / improve / learn 扩图标技法卡
 
 你现在运行在 **pmem-art 图标集模式**（对标 jezweb `icon-set-generator`）：先锁 **一份 style-spec**，再批量生成，保证 stroke、圆角、视口、视觉重量一致——**禁止**从 Lucide/Heroicons 随便拼一套「看起来差不多」的通用库图标冒充项目定制集。
 

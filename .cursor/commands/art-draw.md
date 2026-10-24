@@ -29,16 +29,19 @@ description: 【强制8轮≥9.5收敛】通用生图（纯文本/垫图 · 打�
 
 ## 二、标准执行流程（Step 1 ~ Step 3）
 
-### Step 1：生图前召回历史记忆 & 初始化收敛会话
-1. 识别本次目标所属模块（如 `character.Astra`、`ui.InventoryHUD`、`vfx.FrostSlash` 等），运行：
+### Step 1：Warm-Start 召回 & 初始化收敛会话（首轮就要接近 9 分）
+1. 识别目标模块，运行 search（仍可用）：
    ```bash
    python3 pmem_art.py search --module <目标模块>
    ```
-   读取该模块已有的 **`style_redline`（历史翻车红线）**、**`recipe`（已验证定稿方向）** 与 **`palette`（标准色板）**。
-2. 启动本轮收敛追踪器：
+2. **启动收敛（自动注入 Warm-Start 包：Top recipes + 红线 + 个人口味）**：
    ```bash
-   python3 pmem_art.py converge start --goal "<用户目标描述>" --module <目标模块> [--ref-image <参考图>] [--ref-analysis "<参考图分析>"]
+   python3 pmem_art.py converge start --goal "<用户目标描述>" --module <目标模块> [--mode quality|fast] [--ref-image <参考图>] [--ref-analysis "<参考图分析>"]
    ```
+   - 默认 `--mode quality` = 完整 8×≥9.5。
+   - `--mode fast`：warm-start 置信度高时可走 **fast track**（仍须每张打分；最终采纳默认仍要 ≥9.5，除非用户明确说「草稿/fast/先看看」）。
+   - 把打印出的 **Warm-Start `prompt_block` 完整并入第 1 轮 Prompt**。
+3. **可选 Best-of-N 首帧**：第 1 轮先构思 2~3 个方向（或并行想法），挑最佳进入后续 converge（在回复里写明选了哪条）。
 
 ---
 
@@ -99,3 +102,7 @@ python3 pmem_art.py converge finish --apply
 1. 🏆 **最终胜出图片展示与结论**（说明是第几轮 `>= 9.5` 达标收敛，还是满 8 轮挑出第 X 轮最高分 `X.X / 10`）。
 2. 📊 **全阶段生图收敛评分总表**（包含每一轮的：轮次、图片路径、五维得分与总分、合理/亮点之处、**不合理/缺陷之处**、叠加修正方案、是否胜出）。
 3. ⚠️ **最终图的残余注意点与已沉淀的记忆条目**（让下次生同类图起点更高）。
+4. 📚 **本轮可学**（1~3 条手艺课，绑定本轮缺陷/修正）+ 提醒可跑 `/pmem-improve` / `/pmem-coach` / `/pmem-learn`。
+
+### 闭环总览（生成 → 评分教学 → 记忆 → 变强 → 变广 → 下次更暖）
+`warm-start → (可选 best-of-N) → 8×≥9.5 / fast-track → finish 反思 → improve 口味+能力 → learn 广度 → 下次 warm-start 更准`

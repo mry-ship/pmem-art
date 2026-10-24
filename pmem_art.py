@@ -5,7 +5,8 @@ pmem-art: 画师在 Cursor 里越画越准的个人美术积累记忆。
 心智模型（不是审稿台 / 不是 CLI 流水线）：
   生图 → 你用自然语言说「哪里不对 / 这版留着 / 换成水彩」→ 记忆长大 → 下次生图自动召回 → 更准。
 
-classify / ingest / domains 仍在后端默默工作；日常入口是 Cursor 对话 + .cursor/rules。
+classify / ingest / domains 仍在后端默默工作；日常入口是 Cursor 对话 + Skills。
+v0.11：Warm-Start / fast-track · 会话反思 · 口味档案 · 能力教练 · 知识广度。
 零第三方强依赖（Python 3.10+ 标准库）。
 """
 from __future__ import annotations
@@ -23,7 +24,7 @@ import zlib
 from pathlib import Path
 from typing import Any
 
-VERSION = "0.10.0-art"
+VERSION = "0.11.0-art"
 MEMORY_DIR = ".memory-art"
 
 KIND_META = {
@@ -613,8 +614,8 @@ def main() -> int:
     p_skills.add_argument("--install", action="store_true", help="安装或刷新全部技能文件到 .cursor / .claude / .agents")
     p_skills.add_argument("--list", action="store_true", help="列出所有内置美术技能与触发方式")
 
-    p_conv = sub.add_parser("converge", help="/pmem-draw 闭环自评收敛追踪器（最多8轮，>=9.5分达标或挑最高分，输出汇总表并写记忆）")
-    p_conv.add_argument("action", choices=("start", "round", "finish", "table", "status"), help="子操作")
+    p_conv = sub.add_parser("converge", help="闭环自评收敛（Warm-Start + quality/fast · 最多8轮 ≥9.5 · 反思）")
+    p_conv.add_argument("action", choices=("start", "round", "finish", "table", "status", "warm"), help="子操作")
     p_conv.add_argument("--session", default="latest", help="会话 ID（默认 latest）")
     p_conv.add_argument("--goal", "-g", default="", help="本次生图目标描述")
     p_conv.add_argument("--module", "-m", default="", help="目标模块 ID")
@@ -622,6 +623,9 @@ def main() -> int:
     p_conv.add_argument("--ref-analysis", default="", help="参考图视觉解构结论摘要")
     p_conv.add_argument("--threshold", type=float, default=9.5, help="合格分数线（默认 9.5）")
     p_conv.add_argument("--max-rounds", type=int, default=8, help="最大收敛轮次（默认 8）")
+    p_conv.add_argument("--mode", dest="converge_mode", choices=("quality", "fast"), default="quality",
+                        help="quality=完整8×9.5（默认）；fast=warm-start 置信高时可 fast-track")
+    p_conv.add_argument("--draft", action="store_true", help="用户明确要草稿/fast 时允许软合格线（仅 fast 模式）")
     p_conv.add_argument("--round", dest="round_num", type=int, default=0, help="当前轮次序号 (1..8)")
     p_conv.add_argument("--image", "-i", default="", help="本轮生成图片路径")
     p_conv.add_argument("--score", "-s", type=float, default=0.0, help="本轮综合评分（满分 10.0）")
@@ -632,6 +636,28 @@ def main() -> int:
     p_conv.add_argument("--prompt", "-p", default="", help="本轮使用的 Prompt")
     p_conv.add_argument("--apply", action="store_true", help="finish 时自动将胜出图与踩坑红线写入 .memory-art")
     p_conv.add_argument("--no-apply", action="store_true", help="finish 时仅打印表格不写入记忆")
+
+    p_improve = sub.add_parser("improve", help="自我迭代：扫描反思+反馈 → 更新口味档案（/pmem-improve）")
+    p_improve.add_argument("action", nargs="?", default="run", choices=("run", "progress", "reflect"), help="run|progress")
+    p_improve.add_argument("--last", type=int, default=20, help="扫描最近 N 份反思")
+    p_improve.add_argument("--dry-run", action="store_true", help="只报告不写档案")
+
+    sub.add_parser("progress", help="进步曲线：近7/30胜出分、轮次、能力短板趋势、知识广度")
+
+    p_taste = sub.add_parser("taste", help="个人口味档案 show|update")
+    p_taste.add_argument("action", choices=("show", "update"), help="show|update")
+    p_taste.add_argument("--key", default="", help="update 时的字段名")
+    p_taste.add_argument("--value", default="", help="update 时追加的值")
+
+    p_coach = sub.add_parser("coach", help="能力教练：短板→练习→下一张目标（/pmem-coach）")
+    p_coach.add_argument("--last", type=int, default=20, help="扫描最近 N 份反思")
+
+    p_learn = sub.add_parser("learn", help="知识广度扩展 suggest|accept|list（/pmem-learn）")
+    p_learn.add_argument("action", nargs="?", default="suggest", choices=("suggest", "accept", "list", "propose"), help="子操作")
+    p_learn.add_argument("--limit", type=int, default=5, help="建议条数")
+    p_learn.add_argument("--all", dest="accept_all", action="store_true", help="accept 全部建议")
+    p_learn.add_argument("--ids", default="", help="accept 指定 id，逗号分隔")
+    p_learn.add_argument("--seed-modules", action="store_true", help="接受时写入可选空模块种子")
 
     p_hook = sub.add_parser("hook", help="处理 Cursor / Claude Code / Codex 的 Hook 闸门事件")
     p_hook.add_argument("event", choices=("pre-tool", "post-tool", "stop", "pre-gen", "post-asset"))
@@ -752,6 +778,31 @@ def main() -> int:
             next_fix=args.next_fix,
             prompt=args.prompt,
             apply_memory=(not args.no_apply),
+            converge_mode=getattr(args, "converge_mode", "quality") or "quality",
+            draft_ok=bool(getattr(args, "draft", False)),
+        )
+    if args.command == "improve":
+        from improve import cmd_improve
+        return cmd_improve(
+            root, data, action=args.action or "run",
+            last_n=args.last, apply=not args.dry_run,
+        )
+    if args.command == "progress":
+        from improve import cmd_progress
+        return cmd_progress(root, data)
+    if args.command == "taste":
+        from improve import cmd_taste
+        return cmd_taste(root, data, action=args.action, key=args.key, value=args.value)
+    if args.command == "coach":
+        from improve import cmd_coach
+        return cmd_coach(root, data, last_n=args.last)
+    if args.command == "learn":
+        from improve import cmd_learn
+        ids = [x.strip() for x in (args.ids or "").split(",") if x.strip()] or None
+        return cmd_learn(
+            root, data, action=args.action or "suggest",
+            limit=args.limit, accept_all=args.accept_all,
+            seed_modules=args.seed_modules, ids=ids,
         )
     if args.command == "hook":
         return cmd_hook(root, data, args.event)

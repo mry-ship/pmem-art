@@ -1,28 +1,28 @@
 # 🎨 pmem-art — 在 Cursor / Codex 里越画越准的个人美术积累记忆 & 闭环自评生图系统
 
 <p align="left">
-  <img src="https://img.shields.io/badge/version-v0.10.0-0ea5e9?style=for-the-badge" alt="v0.9.0"/>
+  <img src="https://img.shields.io/badge/version-v0.11.0-0ea5e9?style=for-the-badge" alt="v0.9.0"/>
   <img src="https://img.shields.io/badge/python-%3E%3D3.10-3776ab?style=for-the-badge&logo=python&logoColor=white" alt="Python"/>
   <img src="https://img.shields.io/badge/UX-Cursor%20对话%20%2B%20内置%20Skills-8b5cf6?style=for-the-badge" alt="Cursor-first + Skills"/>
   <img src="https://img.shields.io/badge/license-GPL--3.0-f59e0b?style=for-the-badge" alt="GPL-3.0"/>
 </p>
 
-> **核心定位**：你在同一个项目（画风基线已定）里用 Cursor / Claude Code / Codex 反复生图、改图时的 **个人美术积累记忆 + 8轮 9.5分 闭环自评收敛生图技能**。  
-> **一句话心智模型**：`生图 → 自评挑刺或你说一句哪里不对/这版留着 → 记忆自动变长 → 下次生图更准`。  
+> **核心定位**：个人美术 **自动迭代记忆系统** — Cursor 对话里生图、打分、教学、变强、变广。  
+> **一句话心智模型**：`Warm-Start 生图 → 评分+本轮可学 → 记忆/口味 → improve 能力 → learn 广度 → 下次更准更快`。  
 > 姊妹项目：[mry-ship/pmem](https://github.com/mry-ship/pmem)（代码工程研发记忆）。
 
 📘 [画师手册 USER_MANUAL.md](./USER_MANUAL.md) · 🧠 [架构 ARCHITECTURE.md](./ARCHITECTURE.md) · ⚖️ [LICENSE](./LICENSE) · 🖼️ [可选回看 art-atlas.html](./art-atlas.html)
 
 ---
 
-## 🌟 亮点一：初始化自动注入 8 大斜杠技能（Cursor / Claude Code / Codex 开箱即用）
+## 🌟 亮点一：初始化自动注入 斜杠技能（Cursor / Claude Code / Codex 开箱即用）
 
-运行 `python3 pmem_art.py init`（或在已有项目运行 `python3 pmem_art.py skills --install`）时，系统会自动把 **8 大美术技能（含简短别名共 16 个 `/` 斜杠入口）** 安装到：
+运行 `python3 pmem_art.py init`（或在已有项目运行 `python3 pmem_art.py skills --install`）时，系统会自动把 **美术技能（含 improve/coach/learn；每项含简短别名）** 安装到：
 - **Cursor**：`.cursor/skills/<name>/SKILL.md` + `.cursor/commands/<name>.md` + `.cursor/rules/pmem-art.mdc`
 - **Claude Code**：`.claude/skills/<name>/SKILL.md` + `.claude/commands/<name>.md` + `CLAUDE.md`
 - **Codex**：`.agents/skills/<name>/SKILL.md` + `AGENTS.md`
 
-### 8 大内置美术技能一览
+### 内置美术技能一览
 
 | 斜杠指令 | 简短别名 | 核心能力 |
 | :--- | :--- | :--- |
@@ -34,6 +34,9 @@
 | **`/pmem-critique`** | **`/art-check`** | 🔍 **单图/批量图主美级五维审稿挑刺**：对照项目已有红线与规格打分，指出不合理处并一键记入 `style_redline` |
 | **`/pmem-variant`** | **`/art-variant`** | 🌿 **同角色跨画风分叉与表情/动作差分**：锁死角色核心人设锚点，派生水彩/Q版/像素子模块或序列帧差分 |
 | **`/pmem-atlas`** | **`/art-map`** | 🗺️ **一键归档散图并刷新 `art-atlas.html` 可视化图谱** |
+| **`/pmem-improve`** | **`/art-improve`** | 🧠 **自我迭代**：会话反思 → 口味档案 → 进步曲线（越用越好） |
+| **`/pmem-coach`** | **`/art-coach`** | 🎓 **能力教练**：短板分类 → 练习钻 → 下一张可画目标；每轮「本轮可学」 |
+| **`/pmem-learn`** | **`/art-learn`** | 🌍 **知识广度**：技法/光影/镜头/UI 模式卡片自动扩展（`_knowledge/`） |
 
 ---
 
@@ -162,7 +165,26 @@ Step 3: 输出【全阶段评分与优劣分析总表】+ 自动把胜出配方�
 
 ---
 
-## 💬 亮点三：平时随口评一句，记忆自动长大（无需手写 YAML）
+## 🚀 亮点三：Warm-Start 快质路径 + 能力教练 + 知识广度（v0.11）
+
+**闭环**：`生成 → 评分/教学 → 记忆 → improve（口味+能力）→ learn（广度）→ 下次 Warm-Start 更暖`
+
+| 能力 | 怎么用 | 原理 |
+| :--- | :--- | :--- |
+| **Warm-Start** | `converge start` 自动注入 Top recipes + 红线 + `taste.json` | 第 1 轮 Prompt 就接近 9 分 |
+| **Fast-track** | `converge start --mode fast`（默认 `quality`=完整 8×≥9.5） | 置信高时可少重生；**最终采纳默认仍 ≥9.5**（除非你说草稿） |
+| **本轮可学** | 每轮 `converge round` / `/pmem-critique` 后自动给 1~3 条手艺课 | 分数之外真正提升你的能力 |
+| **自我迭代** | `/pmem-improve` · `improve run` · `progress` | 反思 JSON → 口味档案 → 进步曲线 |
+| **能力教练** | `/pmem-coach` · `coach` | 短板类别 → drills → 下一张绘制目标；短板下降=变强 |
+| **知识广度** | `/pmem-learn` · `learn suggest/accept` | 反馈新词/邻域缺口 → `_knowledge/` 技法卡 |
+
+### 个人进步
+`progress` 不只看胜出分，还看 **能力短板类别是否随时间下降**，以及知识卡片是否在变多。
+
+---
+
+## 💬 亮点四：平时随口评一句，记忆自动长大（无需手写 YAML）
+
 
 除了用 `/pmem-draw` 自动收敛，你日常在 Cursor 对话里看图后随口说的每一句中文评价，都会自动沉淀进 `.memory-art/`：
 
@@ -182,7 +204,7 @@ Step 3: 输出【全阶段评分与优劣分析总表】+ 自动把胜出配方�
 python3 pmem_art.py init --name "我的项目"
 python3 pmem_art.py bootstrap --mode young --apply
 ```
-> 自动建好 `.memory-art/`、`assets/` 六大目录，并把 `/pmem-draw` / `/pmem-ui` / `/pmem-concept` / `/pmem-icon` 等 8 大技能装进 `.cursor/`、`.claude/`、`.agents/`。
+> 自动建好 `.memory-art/`、`assets/` 六大目录，并把 `/pmem-draw` / `/pmem-improve` / `/pmem-coach` / `/pmem-learn` 等技能装进 `.cursor/`、`.claude/`、`.agents/`。
 
 ### 2. 已有资产的老项目无损挂载
 ```bash
@@ -201,12 +223,21 @@ python3 pmem_art.py skills --install
 python3 pmem_art.py skills --list
 python3 pmem_art.py skills --install
 
-# /pmem-draw 闭环收敛追踪器（最多8轮，>=9.5达标或挑最高分，输出总表并写记忆）
-python3 pmem_art.py converge start --goal "青瓷风阿斯特拉立绘" --module character.Astra [--ref-image ref.png --ref-analysis "..."]
-python3 pmem_art.py converge round --round 1 --image r1.png --score 8.2 --strengths "..." --defects "..." --next-fix "..."
-python3 pmem_art.py converge finish --apply
+# 闭环收敛（Warm-Start；默认 quality=完整8×≥9.5；--mode fast 可 fast-track）
+python3 pmem_art.py converge start --goal "青瓷风阿斯特拉立绘" --module character.Astra
+python3 pmem_art.py converge start --goal "草稿预览" -m character.Astra --mode fast --draft
+python3 pmem_art.py converge round --round 1 --image r1.png --score 8.2 --strengths "..." --defects "头身偏大" --next-fix "..."
+python3 pmem_art.py converge finish --apply   # 写 recipe/红线 + 会话反思
 
-# 自然语言反馈一键写记忆（无需手写 YAML）
+# 自我迭代 / 进步 / 口味 / 能力教练 / 知识广度
+python3 pmem_art.py improve run
+python3 pmem_art.py progress
+python3 pmem_art.py taste show
+python3 pmem_art.py coach
+python3 pmem_art.py learn suggest
+python3 pmem_art.py learn accept --all
+
+# 自然语言反馈一键写记忆（同时强化口味+知识卡）
 python3 pmem_art.py feedback "太赛博了，别这样画" -m character.Astra -a r1.png
 python3 pmem_art.py note "这版留着" -m character.Astra -a r3.png
 
