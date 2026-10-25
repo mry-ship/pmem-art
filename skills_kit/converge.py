@@ -25,6 +25,7 @@ from .prompt_scale import (
     FAST_SOFT_THRESHOLD,
     _constraint_tail,
     _prompt_change_ratio,
+    _recompose_change_evidence,
     compose_style_first_prompt,
     get_converge_scale_profile,
     strip_redline_tags_from_generation_text,
@@ -408,9 +409,14 @@ def cmd_converge(
             f"🎯 [收敛会话已启动] 模块: {sess['module']} | 模式: {converge_mode} | 强度(scale): {eff_scale} ({scale_prof['label']})"
             f"{' · FAST-TRACK' if fast_track else ''} | 动态达标线: >= {sess['accept_threshold']} 分即停"
             f"{'（草稿软线 ' + str(eff_threshold) + '）' if draft_ok else ''} | 最大兜底轮次: {sess['max_rounds']}"
+            f" | 最早停机轮次: {int(scale_prof.get('min_rounds_before_stop') or 1)}"
         )
         print(f"🎚️  Scale 内部权重与约束: weights={scale_prof['dim_weights']} | budget={scale_prof['next_fix_budget']}")
         print(f"🧭 Scale 指令: {scale_prof['prompt_directive']}")
+        hint = str(scale_prof.get("best_direction_hint") or "").strip()
+        if hint:
+            print(f"✨ 最优方向（按档加法，勿当第二份DNA锁）: {hint}")
+        print(f"🧷 本档保留集: {scale_prof.get('retention_set')}")
         tail = _constraint_tail(scale_prof)
         if tail:
             print(f"📌 约束写在生成词末尾: {tail}")
@@ -717,6 +723,19 @@ def cmd_converge(
             direction = str(sess.get("recompose_dir") or "").strip()
             if not direction or direction not in (recorded_gen_prompt or ""):
                 gate_notes.append("生成 prompt 未包含指定构图方向")
+            # Refuse stop when text still only validates the original camera DNA.
+            evidence_blob = " ".join(
+                [
+                    str(recorded_gen_prompt or ""),
+                    str(judge_res.get("strengths") or strengths or ""),
+                    str(judge_res.get("defects") or defects or ""),
+                    str(judge_res.get("next_fix") or next_fix or ""),
+                ]
+            )
+            if not _recompose_change_evidence(evidence_blob, direction):
+                gate_notes.append(
+                    "recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机"
+                )
         prior_prompts = [
             r for r in rounds
             if r.get("round") != r_no and str(r.get("prompt") or "").strip()

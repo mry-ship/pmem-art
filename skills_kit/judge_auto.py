@@ -190,6 +190,22 @@ def auto_vlm_judge_image(
             audit_res["warnings"].append(warn)
 
     passed = bool(calibrated >= target_th) and not image_gate_blocked and not soft_defects_blocked
+    min_rounds = int(scale_prof.get("min_rounds_before_stop") or 1)
+    early_stop_blocked = False
+    if passed and int(round_num) < min_rounds and int(round_num) < max_rounds:
+        # high / recompose: refuse 1-round photocopy stops; keep iterating.
+        early_stop_blocked = True
+        passed = False
+        calibrated = min(float(calibrated), round(target_th - 0.05, 2))
+        warn = (
+            f"未满最小轮次 ({round_num}/{min_rounds})，拒绝达标停机；"
+            f"本档要求至少 {min_rounds} 轮递进后再判定"
+        )
+        if warn not in audit_res["warnings"]:
+            audit_res["warnings"].append(warn)
+        if not next_fix:
+            next_fix = str(scale_prof.get("best_direction_hint") or "按本档最优方向继续叠加光影或构图跃升")
+
     should_continue_next_round = bool((not passed) and (round_num < max_rounds))
     if passed:
         decision = "STOP_TARGET_REACHED"
@@ -206,6 +222,7 @@ def auto_vlm_judge_image(
         "target_score_threshold": target_th,
         "round_num": int(round_num),
         "max_rounds": max_rounds,
+        "min_rounds_before_stop": min_rounds,
         "dims": eff_dims,
         "dims_parsed": audit_res["dims_parsed"],
         "weighted_score": audit_res["weighted_score"],
@@ -217,6 +234,7 @@ def auto_vlm_judge_image(
         "audit_warnings": audit_res["warnings"],
         "stagnated": audit_res["stagnated"],
         "image_gate_blocked": image_gate_blocked,
+        "early_stop_blocked": early_stop_blocked,
         "judge_source": judge_source,
         "remote_vlm": remote_meta,
         "passed": passed,

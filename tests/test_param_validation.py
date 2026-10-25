@@ -15,8 +15,11 @@ from skills_kit import (
     CASE_CONFIG_MAP,
     audit_score_inflation,
     auto_vlm_judge_image,
+    check_scale_task_text,
     cmd_converge,
+    find_affirmative_lock_hits,
     get_converge_scale_profile,
+    parse_5d_dims,
     validate_case_generation_params,
 )
 
@@ -239,9 +242,10 @@ class TestGateFixes(unittest.TestCase):
         prof = get_converge_scale_profile("high", goal="峡谷天井绿龙", ref_image="canyon")
         self.assertNotIn("耳机", prof["prompt_directive"])
         self.assertNotIn("孔明灯", prof["prompt_directive"])
-        # Showcase clauses must survive dynamic rebuild (not a stub that drops them).
-        self.assertIn("小修小补", prof["prompt_directive"])
-        self.assertIn("叙事道具", prof["prompt_directive"])
+        # V4-short skeleton: no prop laundry list, no affirmative DNA locks.
+        self.assertIn("光影张力", prof["prompt_directive"])
+        self.assertNotIn("严格锁死", prof["prompt_directive"])
+        self.assertEqual(find_affirmative_lock_hits(prof["prompt_directive"]), [])
 
     def test_scale_leap_and_cumulative_delta_ladder(self) -> None:
         low = get_converge_scale_profile("low")
@@ -256,6 +260,133 @@ class TestGateFixes(unittest.TestCase):
         self.assertEqual(high["max_prompt_delta_vs_first"], 0.85)
         self.assertEqual(rec["max_prompt_delta_vs_first"], 0.95)
         self.assertIsNone(low.get("max_prompt_delta_vs_first"))
+        # high / recompose must not 1-round stop (anti photocopy).
+        self.assertEqual(int(low["min_rounds_before_stop"]), 1)
+        self.assertEqual(int(med["min_rounds_before_stop"]), 1)
+        self.assertGreaterEqual(int(high["min_rounds_before_stop"]), 2)
+        self.assertGreaterEqual(int(rec["min_rounds_before_stop"]), 2)
+
+    def test_high_and_recompose_refuse_round1_stop(self) -> None:
+        dims = "构图9.8/光影9.9/透视9.7/质感9.8/风格9.8"
+        defects = "远景灯火略糊，冷暖交界可更锐"
+        for scale, dir_kw in (("high", ""), ("recompose", "改为运河石拱桥仰视")):
+            prof = get_converge_scale_profile(scale, recompose_dir=dir_kw)
+            r1 = auto_vlm_judge_image(
+                "",
+                prof,
+                round_num=1,
+                dims=dims,
+                defects=defects,
+                next_fix="继续加强体积光",
+                require_image=False,
+            )
+            self.assertFalse(r1["passed"], scale)
+            self.assertTrue(r1.get("early_stop_blocked"), scale)
+            self.assertEqual(r1["decision"], "CONTINUE_NEXT_ROUND")
+            r2 = auto_vlm_judge_image(
+                "",
+                prof,
+                round_num=2,
+                dims=dims,
+                defects=defects,
+                next_fix="继续加强体积光",
+                require_image=False,
+            )
+            self.assertTrue(r2["passed"], scale)
+            self.assertEqual(r2["decision"], "STOP_TARGET_REACHED")
+
+    def test_best_direction_hint_is_additive_not_dna_lock(self) -> None:
+        from skills_kit import build_best_direction_hint, SCALE_BEST_DIRECTION_HINTS
+
+        high = get_converge_scale_profile("high")
+        self.assertTrue(high["best_direction_hint"].startswith("最优方向："))
+        self.assertIn("体积光", high["best_direction_hint"])
+        self.assertEqual(find_affirmative_lock_hits(high["best_direction_hint"]), [])
+        self.assertEqual(find_affirmative_lock_hits(high["prompt_directive"]), [])
+        self.assertIn("光影张力", high["prompt_directive"])
+        med = get_converge_scale_profile("medium")
+        self.assertIn("光影", med["best_direction_hint"])
+        self.assertIn("柔化光影", med["prompt_directive"])
+        rec = get_converge_scale_profile("recompose", recompose_dir="改为阳台侧机位")
+        self.assertIn("改为阳台侧机位", rec["prompt_directive"])
+        self.assertIn("重构机位", rec["prompt_directive"])
+        self.assertIn("目标机位", build_best_direction_hint("recompose"))
+        self.assertEqual(find_affirmative_lock_hits(rec["prompt_directive"]), [])
+        bold = build_best_direction_hint("recompose", recompose_bold=True)
+        self.assertEqual(bold, SCALE_BEST_DIRECTION_HINTS["recompose_bold"])
+        self.assertIn("剪影", bold)
+        self.assertEqual(find_affirmative_lock_hits(bold), [])
+
+    def test_recompose_change_evidence_helper(self) -> None:
+        from skills_kit import _recompose_change_evidence
+
+        self.assertFalse(_recompose_change_evidence("核验DNA：高空俯瞰飞檐", "改为运河仰视"))
+        self.assertTrue(
+            _recompose_change_evidence("已改为运河石拱桥仰视全景机位", "改为运河石拱桥仰视全景")
+        )
+        self.assertTrue(_recompose_change_evidence("low angle riverside bridge", "运河仰视"))
+
+    def test_high_dull_photocopy_scores_below_drama(self) -> None:
+        """Same case: dull flat lighting + locked composition must score below cold/warm drama."""
+        high = get_converge_scale_profile("high")
+        dull_dims = "构图9.9/光影8.2/透视9.5/质感9.0/风格9.5"
+        drama_dims = "构图9.2/光影9.9/透视9.3/质感9.5/风格9.6"
+        dull_w = parse_5d_dims(dull_dims, high["dim_weights"])["weighted_score"]
+        drama_w = parse_5d_dims(drama_dims, high["dim_weights"])["weighted_score"]
+        self.assertLess(dull_w, drama_w)
+        dull_audit = audit_score_inflation(
+            dull_w, dull_dims, "冷暖分离不足，闷贴原图", None, high, round_num=2
+        )
+        drama_audit = audit_score_inflation(
+            drama_w, drama_dims, "体积光可再锐一点", None, high, round_num=2
+        )
+        self.assertLess(dull_audit["calibrated_score"], drama_audit["calibrated_score"])
+        self.assertLessEqual(dull_audit["calibrated_score"], 8.95)
+
+    def test_compose_strips_affirmative_locks(self) -> None:
+        from skills_kit import compose_style_first_prompt, strip_affirmative_locks_from_prompt
+
+        dirty = (
+            "严格保留DNA：高空俯瞰 | 参考垫图一致性高 | 构图：锁死9:16飞檐 | "
+            "升级体积光与冷暖碰撞"
+        )
+        cleaned = strip_affirmative_locks_from_prompt(dirty, scale="high")
+        self.assertNotIn("严格保留DNA", cleaned)
+        self.assertNotIn("垫图一致性高", cleaned)
+        self.assertNotIn("构图：锁死", cleaned)
+        self.assertIn("体积光", cleaned)
+        high = get_converge_scale_profile("high")
+        composed = compose_style_first_prompt(dirty, high)
+        self.assertEqual(find_affirmative_lock_hits(composed), [])
+        self.assertIn("光影张力", composed)
+
+    def test_preflight_affirmative_lock_and_min_rounds(self) -> None:
+        bad = check_scale_task_text(
+            scale="high",
+            goal="严格锁死高空俯瞰，垫图一致性高",
+        )
+        self.assertFalse(bad["ok"])
+        self.assertTrue(any("肯定锁" in x for x in bad["issues"]))
+        good = check_scale_task_text(
+            scale="high",
+            goal="升级体积光与冷暖碰撞，保媒介身份",
+        )
+        self.assertTrue(good["ok"])
+        self.assertGreaterEqual(good["min_rounds_before_stop"], 2)
+        # Negation must not count as affirmative lock.
+        self.assertEqual(find_affirmative_lock_hits("勿写锁死构图，禁止垫图一致性高"), [])
+        rec_bad = check_scale_task_text(
+            scale="recompose",
+            goal="高空俯瞰左下飞檐微调",
+            recompose_dir="高空俯瞰左下飞檐",
+        )
+        self.assertFalse(rec_bad["ok"])
+        rec_ok = check_scale_task_text(
+            scale="recompose",
+            goal="改为阳台花格过肩仰视",
+            recompose_dir="改为阳台花格过肩仰视",
+        )
+        self.assertTrue(rec_ok["ok"], rec_ok["issues"])
 
     def test_low_case_redlines_replace_generic_not_stack(self) -> None:
         prof = get_converge_scale_profile(

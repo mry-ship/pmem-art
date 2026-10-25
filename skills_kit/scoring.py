@@ -404,6 +404,33 @@ def audit_score_inflation(
         )
         calibrated = min(calibrated, 8.90)
 
+    # high / recompose / bold: do not reward dull photocopies of the ref.
+    scale_name = str(scale_prof.get("scale") or "").strip().lower()
+    photocopy_keywords = (
+        "贴原", "闷贴", "复印", "过度还原", "机位未变", "几乎没换机位",
+        "冷暖分离不足", "对比度不足", "戏剧光不足", "平光证件照",
+        "photocopy", "too close to reference", "near-duplicate",
+    )
+    if scale_name in ("high", "recompose") and calibrated > 9.0:
+        hit_photo = _keyword_hits(defects_str or "", photocopy_keywords)
+        if hit_photo:
+            warnings.append(
+                f"反贴原拦截（{scale_name}）：检测到 {hit_photo}，禁止因「长得像原图」虚高，压分 (<=8.85)"
+            )
+            calibrated = min(calibrated, 8.85)
+        # Dims-only cue: high composition + weak lighting = photocopy-shaped score.
+        parsed = w_info.get("parsed") or {}
+        try:
+            comp = float(parsed.get("composition") or 0)
+            light = float(parsed.get("lighting_color") or 0)
+        except (TypeError, ValueError):
+            comp, light = 0.0, 0.0
+        if scale_name == "high" and comp >= 9.5 and 0 < light <= 8.6 and calibrated > 9.0:
+            warnings.append(
+                "反贴原拦截（high）：构图≥9.5 且光影≤8.6，疑闷贴原图，压分 (<=8.95)"
+            )
+            calibrated = min(calibrated, 8.95)
+
     if scale_prof.get("allow_action_pose_change") is False:
         pose_drift_keywords = (
             "动作改变", "姿态改变", "动作不符", "姿态不符", "姿态偏移", "动作偏移",

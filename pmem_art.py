@@ -697,8 +697,13 @@ def load_project(root: Path) -> dict[str, Any]:
                 # pipeline violations are the point of the sample — never mark entry STALE for them.
                 a["actual"] = {k: v for k, v in actual.items() if k != "data_uri"}
                 continue
-            if expected_sha and actual.get("sha256_16") and expected_sha != actual.get("sha256_16"):
-                reasons.append(f"关联图片 {ap} 哈希已变更（记录 {expected_sha[:8]}… → 当前 {actual['sha256_16'][:8]}…）")
+            # YAML may parse pure-hex sha as int; coerce before compare/slice.
+            exp_s = str(expected_sha) if expected_sha is not None else ""
+            act_s = str(actual.get("sha256_16") or "")
+            if exp_s and act_s and exp_s != act_s:
+                reasons.append(
+                    f"关联图片 {ap} 哈希已变更（记录 {exp_s[:8]}… → 当前 {act_s[:8]}…）"
+                )
             if actual.get("qa_issues") and not actual.get("qa_intentional_reject"):
                 reasons.append(f"关联图片 {ap} 存在管线违规：{'；'.join(actual['qa_issues'])}")
             a["actual"] = {k: v for k, v in actual.items() if k != "data_uri"}
@@ -1213,6 +1218,18 @@ def main() -> int:
     p_skills.add_argument("--install", action="store_true", help="安装或刷新全部技能文件到 .cursor / .claude / .agents")
     p_skills.add_argument("--list", action="store_true", help="列出所有内置美术技能与触发方式")
 
+    p_gate = sub.add_parser(
+        "check-scale-gates",
+        help="出图前验收：肯定锁 grep、recompose 新机位词、high/recompose min_rounds≥2（不调生图）",
+    )
+    p_gate.add_argument("--scale", default="high", choices=("low", "medium", "high", "recompose"))
+    p_gate.add_argument("--goal", default="", help="任务 goal / brief")
+    p_gate.add_argument("--prompt", default="", help="拟用生成 prompt（可选）")
+    p_gate.add_argument("--best-direction", default="", help="最优方向叠加句（可选）")
+    p_gate.add_argument("--recompose-dir", default="", help="recompose 目标机位")
+    p_gate.add_argument("--bold", action="store_true", help="按 recompose_bold 大改列检查")
+    p_gate.add_argument("--self-check", action="store_true", help="只检查内置四档 directive/hint/min_rounds")
+
     p_vlm = sub.add_parser(
         "vlm-judge",
         help="独立视觉裁判配置/探测（有 API key 则 converge judge 调真视觉模型；无 key 回退 Agent 自评）",
@@ -1384,6 +1401,51 @@ def main() -> int:
             silent=not bool(getattr(args, "verbose", False)),
             verbose=bool(getattr(args, "verbose", False)),
         )
+    if args.command == "check-scale-gates":
+        from skills_kit import check_scale_task_text, get_converge_scale_profile, find_affirmative_lock_hits
+        if getattr(args, "self_check", False):
+            failed = 0
+            for scale in ("low", "medium", "high", "recompose"):
+                dir_kw = "改为阳台花格过肩仰视" if scale == "recompose" else ""
+                res = check_scale_task_text(
+                    scale=scale,
+                    goal=("改为阳台花格过肩仰视" if scale == "recompose" else "保媒介提升光影"),
+                    recompose_dir=dir_kw,
+                )
+                prof = get_converge_scale_profile(scale, recompose_dir=dir_kw)
+                hits = find_affirmative_lock_hits(
+                    f"{prof.get('prompt_directive')}\n{prof.get('best_direction_hint')}"
+                )
+                ok = res["ok"] and not hits
+                if scale in ("high", "recompose") and int(prof.get("min_rounds_before_stop") or 1) < 2:
+                    ok = False
+                status = "OK" if ok else "FAIL"
+                if not ok:
+                    failed += 1
+                print(
+                    f"[{status}] {scale}: min_rounds={prof.get('min_rounds_before_stop')} "
+                    f"locks={hits or '∅'} issues={res.get('issues') or '∅'}"
+                )
+                print(f"         directive={prof.get('prompt_directive')}")
+                print(f"         hint={prof.get('best_direction_hint')}")
+            return 1 if failed else 0
+        res = check_scale_task_text(
+            scale=getattr(args, "scale", "high") or "high",
+            goal=getattr(args, "goal", "") or "",
+            prompt=getattr(args, "prompt", "") or "",
+            best_direction=getattr(args, "best_direction", "") or "",
+            recompose_dir=getattr(args, "recompose_dir", "") or "",
+            recompose_bold=bool(getattr(args, "bold", False)),
+        )
+        print(
+            f"{'OK' if res['ok'] else 'FAIL'} scale={res['scale']} "
+            f"min_rounds={res['min_rounds_before_stop']} lock_hits={res['lock_hits'] or '∅'}"
+        )
+        for issue in res.get("issues") or []:
+            print(f"  · {issue}")
+        print(f"  directive: {res.get('prompt_directive')}")
+        print(f"  hint: {res.get('best_direction_hint')}")
+        return 0 if res["ok"] else 1
     if args.command == "vlm-judge":
         from vlm_judge import cmd_vlm_judge
         return cmd_vlm_judge(
