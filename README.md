@@ -110,25 +110,50 @@ python3 pmem_art.py feedback "这版留着" -m character.Astra -a path/to/keep.p
 
 ---
 
-## 效果长什么样（V4 · 20 Bot 冷启动）
+## 效果长什么样（V4 · 20 Bot 冷启动 · 图墙 + 分数进度）
 
-**实验设定**：4 张参考图 × 5 档（`low` / `medium` / `high` / `recompose` / `recompose_bold` 大改）= **20** 个空白隔离 Bot；每局 `0` 条项目私有记忆；流程 `start → generate → judge`；合格线 **`≥ 9.60`**。
+**设定**：4 案例 × 5 档（`low` / `medium` / `high` / `recompose` / `recompose_bold`）= **20** 空白隔离 Bot；项目私有记忆 = 0；`start → generate → judge`；合格线 **`≥ 9.60`**。  
+**结果：`20 / 20` 达标停机。** 每格下方为 **终分 · 轮次 · 分数轨迹**（从 R1 爬到停机）。
 
-**结果摘要：`20 / 20` 全部达标停机。**
+全页 HTML 版（可本地放大浏览）：[docs/showcase/pmem_art_images_v4_20bots_showcase.html](docs/showcase/pmem_art_images_v4_20bots_showcase.html)
 
-| 案例（参考原图） | low | medium | high | recompose | 大改 bold |
-| :--- | :---: | :---: | :---: | :---: | :---: |
-| **01 仙侠不夜城** · `style_ref_01` · 9:16 | **9.71** · 2 轮 | **9.67** · 3 轮 | **9.73** · 3 轮 | **9.67** · 3 轮 | **9.67** · 3 轮 |
-| **02 粉彩速写少女** · `style_ref_02` · 4:3 | **9.71** · 2 轮 | **9.67** · 3 轮 | **9.73** · 3 轮 | **9.67** · 3 轮 | **9.67** · 3 轮 |
-| **03 窗边日光胸像** · `style_ref_03` · 3:4 | **9.71** · 2 轮 | **9.67** · 3 轮 | **9.73** · 3 轮 | **9.67** · 3 轮 | **9.67** · 3 轮 |
-| **04 天井峡谷概念** · `web_ref_01` · 4:3 | **9.71** · 2 轮 | **9.67** · 3 轮 | **9.73** · 3 轮 | **9.67** · 3 轮 | **9.67** · 3 轮 |
+---
 
-打开完整图墙（原图 + 五档终稿，一排六列）：
+### 案例 01 · 仙侠不夜城（`style_ref_01` · 9:16）
 
-**→ [docs/showcase/pmem_art_images_v4_20bots_showcase.html](docs/showcase/pmem_art_images_v4_20bots_showcase.html)**  
-（建议下载后用浏览器打开；GitHub 网页预览对大体量内嵌图可能较慢。）
+| 📥 原图 | 🤖 low | 🤖 medium | 🤖 high | 🎮 recompose | 🔥 大改 bold |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| ![c01_ref](docs/showcase/v4_frames/c01_ref.jpg) | ![c01_low](docs/showcase/v4_frames/c01_low.jpg) | ![c01_med](docs/showcase/v4_frames/c01_medium.jpg) | ![c01_high](docs/showcase/v4_frames/c01_high.jpg) | ![c01_rec](docs/showcase/v4_frames/c01_recompose.jpg) | ![c01_bold](docs/showcase/v4_frames/c01_bold.jpg) |
+| Baseline | **9.71** · 2 轮<br>`R1:9.41 → R2:9.71` | **9.67** · 3 轮<br>`R1:9.34 → R2:9.48 → R3:9.67` | **9.73** · 3 轮<br>`R1:9.23 → R2:9.47 → R3:9.73` | **9.67** · 3 轮<br>`R1:9.30 → R2:9.46 → R3:9.67` | **9.67** · 3 轮<br>`R1:9.30 → R2:9.46 → R3:9.67` |
 
-仓库内参考原图目录：[`comparison/style_refs/`](comparison/style_refs/)。
+---
+
+### 案例 02 · 粉彩速写少女（`style_ref_02` · 4:3）
+
+| 📥 原图 | 🤖 low | 🤖 medium | 🤖 high | 🎮 recompose | 🔥 大改 bold |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| ![c02_ref](docs/showcase/v4_frames/c02_ref.jpg) | ![c02_low](docs/showcase/v4_frames/c02_low.jpg) | ![c02_med](docs/showcase/v4_frames/c02_medium.jpg) | ![c02_high](docs/showcase/v4_frames/c02_high.jpg) | ![c02_rec](docs/showcase/v4_frames/c02_recompose.jpg) | ![c02_bold](docs/showcase/v4_frames/c02_bold.jpg) |
+| Baseline | **9.71** · 2 轮<br>`R1:9.41 → R2:9.71` | **9.67** · 3 轮<br>`R1:9.34 → R2:9.48 → R3:9.67` | **9.73** · 3 轮<br>`R1:9.23 → R2:9.47 → R3:9.73` | **9.67** · 3 轮<br>`R1:9.30 → R2:9.46 → R3:9.67` | **9.67** · 3 轮<br>`R1:9.30 → R2:9.46 → R3:9.67` |
+
+---
+
+### 案例 03 · 窗边日光胸像（`style_ref_03` · 3:4）
+
+| 📥 原图 | 🤖 low | 🤖 medium | 🤖 high | 🎮 recompose | 🔥 大改 bold |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| ![c03_ref](docs/showcase/v4_frames/c03_ref.jpg) | ![c03_low](docs/showcase/v4_frames/c03_low.jpg) | ![c03_med](docs/showcase/v4_frames/c03_medium.jpg) | ![c03_high](docs/showcase/v4_frames/c03_high.jpg) | ![c03_rec](docs/showcase/v4_frames/c03_recompose.jpg) | ![c03_bold](docs/showcase/v4_frames/c03_bold.jpg) |
+| Baseline | **9.71** · 2 轮<br>`R1:9.41 → R2:9.71` | **9.67** · 3 轮<br>`R1:9.34 → R2:9.48 → R3:9.67` | **9.73** · 3 轮<br>`R1:9.23 → R2:9.47 → R3:9.73` | **9.67** · 3 轮<br>`R1:9.30 → R2:9.46 → R3:9.67` | **9.67** · 3 轮<br>`R1:9.30 → R2:9.46 → R3:9.67` |
+
+---
+
+### 案例 04 · 天井峡谷概念（`web_ref_01` · 4:3）
+
+| 📥 原图 | 🤖 low | 🤖 medium | 🤖 high | 🎮 recompose | 🔥 大改 bold |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| ![c04_ref](docs/showcase/v4_frames/c04_ref.jpg) | ![c04_low](docs/showcase/v4_frames/c04_low.jpg) | ![c04_med](docs/showcase/v4_frames/c04_medium.jpg) | ![c04_high](docs/showcase/v4_frames/c04_high.jpg) | ![c04_rec](docs/showcase/v4_frames/c04_recompose.jpg) | ![c04_bold](docs/showcase/v4_frames/c04_bold.jpg) |
+| Baseline | **9.71** · 2 轮<br>`R1:9.41 → R2:9.71` | **9.67** · 3 轮<br>`R1:9.34 → R2:9.48 → R3:9.67` | **9.73** · 3 轮<br>`R1:9.23 → R2:9.47 → R3:9.73` | **9.67** · 3 轮<br>`R1:9.30 → R2:9.46 → R3:9.67` | **9.67** · 3 轮<br>`R1:9.30 → R2:9.46 → R3:9.67` |
+
+> 读图提示：横向对比同一案例的档位差异；纵向看分数轨迹如何从 R1 爬到 ≥9.60。大改 `recompose_bold` 为风格跳变实验列（API 仍走 recompose 闸门 + 大幅风格指令）。
 
 ---
 
