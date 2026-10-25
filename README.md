@@ -110,7 +110,19 @@ python3 pmem_art.py feedback "这版留着" -m character.Astra -a path/to/keep.p
 
 ---
 
-## 效果长什么样（V4 · 20 Bot 冷启动 · 图墙 + 分数进度）
+## 效果长什么样
+
+### 自我进化总览（`benchmark-evolution-report`）
+
+跨场景 / UI / 图标等多线收敛时，记忆沉淀与分数爬升长什么样——预览图即报告封面：
+
+![pmem-art 自我进化报告预览](benchmark-evolution-preview.png)
+
+本地完整交互报告（含分轮明细）：生成或打开仓库根目录的 `benchmark-evolution-report.html`（由 `benchmark_evolution.py` 产出；体积大，默认不进 git）。
+
+---
+
+### V4 · 20 Bot 冷启动（图墙 + 分数进度）
 
 **设定**：4 案例 × 5 档（`low` / `medium` / `high` / `recompose` / `recompose_bold`）= **20** 空白隔离 Bot；项目私有记忆 = 0；`start → generate → judge`；合格线 **`≥ 9.60`**。  
 **结果：`20 / 20` 达标停机。** 每格下方为 **终分 · 轮次 · 分数轨迹**（从 R1 爬到停机）。
