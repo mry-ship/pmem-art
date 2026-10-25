@@ -203,22 +203,42 @@ python3 pmem_art.py learn suggest && python3 pmem_art.py learn accept --all
 
 ## 附录 A：四档 `--scale` 细则与示例
 
+> **首页已有闸门总表**：[README · 四档闸门](README.md#四档闸门每档允许变什么--禁止变什么)。本附录补「怎么自己调」与 CLI。
+
 两大驱动：
 
 1. **模型自动分析收敛**：`low` / `medium` / `high` — 自主诊断缺陷、生成 `next_fix`，加权分 **`>= 9.60` 即停**。  
 2. **玩家定向改构图**：`recompose` + `--recompose-dir` — 按你指定的新机位/布局改，仍锁画风与身份。
 
-| 档位 | 达标线 | Prompt 改动上限 | 构图约束（摘要） | 五维权重（摘要） |
-| :--- | :--- | :--- | :--- | :--- |
-| `low` | ≥ 9.60 | ≤ 20% vs 首轮 | **不改**机位/姿态/元素数/布局 | 透视 25% · 质感 25% · 光影 20% · 构图 15% · 风格 15% |
-| `medium`（默认） | ≥ 9.60 | ≤ 45% 上轮 · 累计 ≤ 60% | **不改**机位、姿态、主体数、布局 | 光影 25% · 构图 20% · 透视 20% · 质感 20% · 风格 15% |
-| `high` | ≥ 9.60 | ≤ 70% 上轮 · 累计 ≤ 85% | **可改**机位与戏剧光影；**不改**身份/画风/主体数 | 光影 25% · 构图 20% · 质感 20% · 风格 20% · 透视 15% |
-| `recompose` | ≥ 9.60 | ≤ 85% · 累计 ≤ 95% | **按 `--recompose-dir` 换机位** | 构图 30% · 透视 20% · 光影 20% · 质感 15% · 风格 15% |
+### A.1 闸门字段（与源码一致）
+
+源文件：`skills_kit/prompt_scale.py` → `CONVERGE_SCALE_PROFILES`。
+
+| 档位 | `max_prompt_delta` | 允许机位 | 允许姿态 | 允许改布局 | 允许大改光影 | 允许增删主体 | 硬锁 |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :--- |
+| `low` | 20% vs 首轮 | ❌ | ❌ | ❌ | ❌ | ❌ | 画风 + 身份 |
+| `medium` | 45% / 累计 60% | ❌ | ❌ | ❌ | ✅ | ❌ | 画风 + 身份 |
+| `high` | 70% / 累计 85% | ✅ | ✅ | ✅ | ✅ | ❌ | 画风 + 身份 + 不引外来主体 |
+| `recompose` | 85% / 累计 95% | ✅（按方向） | ✅ | ✅ | ✅ | ❌ | 画风 + 身份 + **必须跟 `--recompose-dir`** |
+
+### A.2 某一档不符合预期时：用提示词覆盖闸门（推荐）
+
+不必先改源码。在斜杠命令后追加约束，Agent 会写进本轮 Prompt / `next_fix`：
+
+| 场景 | 示例提示词 |
+| :--- | :--- |
+| low 修不够 | 「low 闸门内允许修衣褶高光与金属反光，仍禁止改机位姿态」 |
+| medium 光影弱 | 「medium：允许更强体积光与雾层，仍禁止换镜头」 |
+| high 构图乱动 | 「high：禁止改机位与布局，只升级光影材质」 |
+| recompose 跑偏 | 「必须保留原图 X；禁止出现 Y；严格执行 recompose-dir」 |
+| 想长期生效 | `python3 pmem_art.py feedback "以后 medium 禁止改发色" -m <模块>` |
+
+全局改默认闸门（权重 / 改动上限 / forbidden 列表）：改 `prompt_scale.py` 后 `python3 pmem_art.py skills --install`。
 
 ```text
 /pmem-draw --scale low @comparison/style_refs/style_ref_02_pastel_sketch.png 只修五指与球鞋透视
-/pmem-draw --scale medium @comparison/style_refs/style_ref_03_sunlit_portrait.png 补轮廓光与空气微尘
-/pmem-concept --scale high @comparison/web_refs/web_ref_01_concept_ishtar.png 升级丁达尔神光
+/pmem-draw --scale medium @comparison/style_refs/style_ref_03_sunlit_portrait.png 补轮廓光与空气微尘；禁止改机位
+/pmem-concept --scale high @comparison/web_refs/web_ref_01_concept_ishtar.png 升级丁达尔神光；锁身份与画风
 /pmem-draw --scale recompose --recompose-dir "改为天台远眺海港全景" @comparison/style_refs/style_ref_02_pastel_sketch.png
 ```
 
