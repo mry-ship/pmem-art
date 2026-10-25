@@ -3,11 +3,11 @@
   "project_slug": "pmem-art",
   "project_name": "Project-Celadon (东方青瓷星盘幻想)",
   "layer_scope": "private",
-  "bound_root": "/workspace/pmem-art",
-  "origin_root": "/workspace/pmem-art",
+  "bound_root": "/Users/yanghu/Desktop/pmem-art",
+  "origin_root": "/Users/yanghu/Desktop/pmem-art",
   "root_name": "pmem-art",
   "library_dir": ".memory-art/projects/pmem-art",
   "copied_from_project": "",
   "created_at": "2026-10-25 01:33:57 UTC+8",
-  "updated_at": "2026-10-25 01:33:57 UTC+8"
+  "updated_at": "2026-10-25 17:30:00 UTC+8"
 }

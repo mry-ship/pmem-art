@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-25 02:58:02 UTC+8",
+  "updated_at": "2026-10-25 18:00:33 UTC+8",
   "preferred_lighting": [
     "侧逆光 / rim light",
     "左上45°暖金主光 + 冷黛环境阴影",
@@ -9,7 +9,8 @@
   "preferred_composition": [
     "7.5头身标准立绘留白 (>16px)",
     "30°等轴测游戏镜头 (Isometric)",
-    "九宫格四角48px固定 + 中央纯色拉伸"
+    "九宫格四角48px固定 + 中央纯色拉伸",
+    "特写"
   ],
   "preferred_line_weight": [
     "干净金墨细描边 (Cel-shaded clean ink line)"
@@ -25,8 +26,8 @@
     "九宫格中央拉伸区画圆盘暗纹或斜线",
     "漏画左眼黄铜星盘义眼",
     "RGB白底/黑底未去背伪透明网格",
-    "赛博霓虹/霓虹紫",
-    "严禁使用高饱和赛博洋红("
+    "严禁使用高饱和赛博洋红",
+    "赛博霓虹/霓虹紫"
   ],
   "keep_phrases": [
     "这版7.5头身和左眼星盘义眼很准，留着当立绘锚点",
@@ -44,7 +45,7 @@
     "keeps": 6,
     "rejects": 4,
     "style_fixes": 3,
-    "sessions": 5
+    "sessions": 6
   },
   "project_id": "pmem-art",
   "project_name": "Project-Celadon (东方青瓷星盘幻想)",

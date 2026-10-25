@@ -1,23 +1,27 @@
 # 📘 pmem-art 画师使用手册 — 怎么在 Cursor / Codex 里越画越准
 
-> **版本**：`v0.10.0`  
-> **核心理念**：日常入口就是 **Cursor / Claude Code / Codex 对话框**（外加开箱即用的 `/pmem-draw` 等 8 个斜杠技能（含垂直生成））。不用背 CLI、不用手写 YAML、不用把时间花在填表上。
+> **版本**：`v0.12+`  
+> **核心理念**：日常入口就是 **Cursor / Claude Code / Codex 对话框**（外加开箱即用的 `/pmem-draw` 等 11 个斜杠技能）。不用背 CLI、不用手写 YAML。  
+> **先看总览？** → 仓库首页 [README.md](README.md)（作用 · 接入 · 使用 · V4 效果摘要）  
+> **看图墙？** → [docs/showcase/pmem_art_images_v4_20bots_showcase.html](docs/showcase/pmem_art_images_v4_20bots_showcase.html)（20 Bot 冷启动 · 一排六列）
 
 ---
 
 ## 目录
 
-1. [第一章：初始化即自动安装的 8 大美术技能](#第一章初始化即自动安装的-5-大美术技能)
-2. [第二章：王牌技能 `/pmem-draw`（8轮9.5分自评收敛生图 & 垫图生图）](#第二章王牌技能-pmem-draw8轮95分自评收敛生图--垫图生图)
+1. [第一章：初始化即自动安装的 11 大美术技能](#第一章初始化即自动安装的-11-大美术技能)
+2. [第二章：王牌技能 `/pmem-draw`（8轮9.6分自评收敛生图 & 垫图生图）](#第二章王牌技能-pmem-draw8轮96分自评收敛生图--垫图生图)
 3. [第三章：日常对话反馈怎么变成长期记忆](#第三章日常对话反馈怎么变成长期记忆)
 4. [第四章：三种项目接入方式（空项目 / 老项目 / 持续生图）](#第四章三种项目接入方式空项目--老项目--持续生图)
 5. [第五章：后台自动分类与多画风分叉（水彩 / Q版 / 像素）](#第五章后台自动分类与多画风分叉水彩--q版--像素)
 6. [第六章：命令与收敛追踪器参考](#第六章命令与收敛追踪器参考)
 7. [第七章：常见问题 FAQ](#第七章常见问题-faq)
+8. [附录 A：四档 `--scale` 细则与示例](#附录-a四档---scale-细则与示例)
+9. [附录 B：V4 冷启动验收摘要](#附录-bv4-冷启动验收摘要)
 
 ---
 
-## 第一章：初始化即自动安装的 8 大美术技能
+## 第一章：初始化即自动安装的 11 大美术技能
 
 当你运行 `python3 pmem_art.py init`（或 `python3 pmem_art.py skills --install`）时，系统会自动在项目根目录生成：
 
@@ -29,18 +33,23 @@
 
 | 主技能指令 | 简短别名 | 什么时候用 |
 | :--- | :--- | :--- |
-| **`/pmem-draw`** | **`/art-draw`** | 想让 AI **自己反复打磨到 9.5 分以上**再交稿（支持纯文字或丢一张参考图） |
+| **`/pmem-draw`** | **`/art-draw`** | 想让 AI **自己反复打磨到 9.6 分以上**再交稿（支持纯文字或丢一张参考图） |
 | **`/pmem-ui`** | **`/art-ui`** | 要 **一整套 HUD/菜单 UI Kit**（概念→组件表→九宫格→按钮多状态），对标 SpriteCook |
-| **`/pmem-concept`** | **`/art-concept`** | 要 **原画 / 主视觉 / Key Art**：**强制 8轮 ≥9.5 收敛**（与 draw 同等，禁止只生一张）+ FLUX 完整句 Prompt |
+| **`/pmem-concept`** | **`/art-concept`** | 要 **原画 / 主视觉 / Key Art**：**强制 8轮 ≥9.6 收敛**（与 draw 同等，禁止只生一张）+ FLUX 完整句 Prompt |
 | **`/pmem-icon`** | **`/art-icon`** | 要 **一整套风格统一的 SVG/图标**，先锁 style-spec 再分批生成（对标 jezweb） |
 | **`/pmem-style-lock`** | **`/art-style`** | 拿到一张特别对味的样张，想把它的色板、光影、笔触锁成长期标准 |
 | **`/pmem-critique`** | **`/art-check`** | 手头有一张图，想让 AI 对照历史红线严苛挑刺打分，并把毛病记入红线 |
 | **`/pmem-variant`** | **`/art-variant`** | 角色立绘定了，想衍生 **水彩概念图 / Q版贴纸 / 表情差分 / 序列帧** 且不崩人设 |
 | **`/pmem-atlas`** | **`/art-map`** | 阶段性整理散图，并刷新 `art-atlas.html` 画廊回看 |
+| **`/pmem-improve`** | **`/art-improve`** | **进阶 peek**：大声读出 finish 已静默做过的自我迭代 |
+| **`/pmem-coach`** | **`/art-coach`** | **进阶 peek**：短板练习计划 |
+| **`/pmem-learn`** | **`/art-learn`** | **进阶 peek**：知识广度建议（finish 已静默 enqueue） |
+
+进步曲线 CLI：`python3 pmem_art.py progress`（无独立斜杠技能，也可用 `/pmem-improve`）。
 
 ---
 
-## 第二章：王牌技能 `/pmem-draw`（8轮9.5分自评收敛生图 & 垫图生图）
+## 第二章：王牌技能 `/pmem-draw`（8轮9.6分自评收敛生图 & 垫图生图）
 
 平时让 AI 生图最大的痛点是：**生 1 张经常有硬伤（手崩、比例不对、混进赛博紫、漏画配饰），每次都要人工催它改。**  
 `/pmem-draw`（别名 `/art-draw`）把「生图 → 审图打分 → 挑出不合理处 → 叠加修正再生图」做成了 **全自动收敛循环**。
@@ -59,24 +68,22 @@
 3. 笔触质感与边缘处理
 4. 需要保留的亮点 vs 需要规避的瑕疵
 
-### 2.2 五维严苛打分标准（满分 10.0 分，`>= 9.5` 才算合格）
+### 2.2 五维严苛打分标准（满分 10.0 分，`>= 9.6` 才算合格）
 
-每生成 1 张图，Agent 都会按五维自评并说出具体不合理的地方：
-1. **风格与色板契合度（2.5 分）**
-2. **构图、透视与结构合理性（2.5 分）**
-3. **光影、材质与细节完成度（2.0 分）**
-4. **历史红线与管线规格合规度（1.5 分）**
-5. **提示词意图 / 参考图神韵还原度（1.5 分）**
+现行默认按 **每维 /10** 再按档位权重合成（示例写法）：  
+`构图8.6/光影8.2/透视7.8/质感8.0/风格8.4`  
+五维名：**构图 · 光影色彩 · 透视与解剖 · 质感 · 规格与风格**。  
+（旧写法 `风格2.2/结构2.0/光影1.7/合规1.4/还原1.3` 仍可解析为相加总分，但不作为新会话主写法。）
 
 ### 2.3 收敛规则（最多 8 次生图）
-- **达到 `>= 9.5` 分**：立即停止循环，当前图即为最终合格图。
-- **未达到 `9.5` 分（且轮次 `< 8`）**：不算合格！把本轮分析出的「不合理之处」叠加进下一轮修正指令，继续生图。
-- **满 8 次仍未达到 `9.5` 分**：停止循环，**从全部 8 轮中挑出分数最高的那一张**作为最终结果，并说明残余不足。
+- **达到 `>= 9.6` 分**：立即停止循环，当前图即为最终合格图。
+- **未达到 `9.6` 分（且轮次 `< 8`）**：不算合格！把本轮分析出的「不合理之处」叠加进下一轮修正指令，继续生图。
+- **满 8 次仍未达到 `9.6` 分**：停止循环，**从全部 8 轮中挑出分数最高的那一张**作为最终结果，并说明残余不足。
 
-### 2.4 最终必出的全轮次评分表与记忆沉淀
-无论第几轮结束，最终都会给你列出一张清晰的汇总表：
-- 每一轮的 **图片路径、综合评分（含五维明细）、亮眼合理处、不合理缺陷分析、叠加修正策略、是否胜出**；
-- 自动把胜出图的配方写入 `.memory-art` 的 `recipe`，把中途踩到的典型不合理项写入 `style_redline`，下次生同类图直接避坑！
+### 2.4 结算、静默沉淀与全量表（按需）
+默认对你只展示：**胜出图 + 一句结论**（第几轮达标 / 满 8 轮最高分）；系统在后台把配方写入 `recipe`、踩坑写入 `style_redline`。
+- 需要全轮次明细时：给 CLI 加 `--verbose`，或主动说「看报告」。
+- 不想写记忆：`converge finish --no-apply`。
 
 ---
 
@@ -86,19 +93,19 @@
 - **怎么用**
   - `/pmem-ui 生成一套青瓷幻想风主菜单：九宫格面板 + 按钮 normal/pressed`
   - `/pmem-ui [拖入概念图] 拆出主面板九宫格、按钮四态、进度条空/满`
-- **原理**：`search` 召回 UI 红线 → **概念先行**（禁止散生硬拼）→ 透明组件表 → 九宫格+状态族+`manifest.json` → **强制 8轮 ≥9.5** 收敛写记忆。
+- **原理**：`search` 召回 UI 红线 → **概念先行**（禁止散生硬拼）→ 透明组件表 → 九宫格+状态族+`manifest.json` → **强制 8轮 ≥9.6** 收敛写记忆。
 
-### `/pmem-concept`（`/art-concept`）— 原画【强制 8轮 ≥9.5】
+### `/pmem-concept`（`/art-concept`）— 原画【强制 8轮 ≥9.6】
 - **怎么用**
   - `/pmem-concept 画一张东方青瓷废土主视觉 Key Art，宽幅海报`
   - `/pmem-concept [拖入参考图] 同氛围角色登场 Key Art`
-- **原理**：与 `/pmem-draw` **同等强制闭环**（禁止只生一张）→ 召回记忆 → FLUX 完整句 Prompt（主体靠前、排斥项正向写）→ 可选垫图解构 → `converge` → 评分总表 + `recipe`/`style_redline`。
+- **原理**：与 `/pmem-draw` **同等强制闭环**（禁止只生一张）→ 召回记忆 → FLUX 完整句 Prompt（主体靠前、排斥项正向写）→ 可选垫图解构 → `converge` → 静默写 `recipe`/`style_redline`（全量表需 `--verbose`）。
 
 ### `/pmem-icon`（`/art-icon`）
 - **怎么用**
   - `/pmem-icon 做一套 24px Clean 导航+背包 SVG，输出 style-spec 与 preview.html`
   - `/art-icon home settings inventory` 或 `/pmem-icon [拖入样张] 按线宽补齐 phone email`
-- **原理**：先锁 style-spec → 统一 SVG 规则分批生成 → 一致性审查 → 关键枚 **强制 8轮 ≥9.5** → 写记忆。
+- **原理**：先锁 style-spec → 统一 SVG 规则分批生成 → 一致性审查 → 关键枚 **强制 8轮 ≥9.6** → 写记忆。
 
 ---
 
@@ -153,11 +160,12 @@ python3 pmem_art.py ingest .cursor/generated/new.png -p "角色Astra 水彩 概�
 
 | 命令 | 说明 |
 | :--- | :--- |
-| `python3 pmem_art.py skills --install` | 安装/刷新 `.cursor`、`.claude`、`.agents` 下的 5 大技能与斜杠命令 |
+| `python3 pmem_art.py skills --install` | 安装/刷新 `.cursor`、`.claude`、`.agents` 下的 11 大技能与斜杠命令 |
 | `python3 pmem_art.py skills --list` | 查看所有内置技能列表 |
-| `python3 pmem_art.py converge start -g "<目标>" -m <模块> [--ref-image <图> --ref-analysis "<解构>"]` | 开启一轮最多 8 次、`>=9.5` 分的收敛生图会话 |
-| `python3 pmem_art.py converge round --round <i> -i <图> -s <分> --strengths "..." --defects "..." --next-fix "..."` | 记录第 $i$ 轮自评分数、亮点、不合理处与叠加修正策略 |
-| `python3 pmem_art.py converge finish --apply` | 结算达标图或 8 轮最高分图，输出 Markdown 评分总表并自动写记忆 |
+| `python3 pmem_art.py converge start -g "<目标>" -m <模块> [--scale medium] [--ref-image <图> --ref-analysis "<解构>"]` | 开启一轮最多 8 次、`>=9.6` 分的收敛生图会话 |
+| `python3 pmem_art.py converge generate --round <i> -i <图> -p "<Prompt>"` | **仅生图登记**（禁止带 score/dims；与 judge 必须分两步） |
+| `python3 pmem_art.py converge judge --round <i> -i <图> --dims "..." --strengths "..." --defects "..." --next-fix "..."` | **独立审图**：五维打分、亮点、不合理处与下一轮修正（须先有 generate） |
+| `python3 pmem_art.py converge finish` | 结算达标图或 8 轮最高分图；**默认写入记忆**（`--no-apply` 可跳过；`--verbose` 打印全量表） |
 | `python3 pmem_art.py feedback "<原话>" -m <模块> [-a <图>]` | 把画师自然语言评价沉淀为记忆 |
 | `python3 pmem_art.py search -m <模块>` | 召回该模块（含父模块）的红线、定稿与色板 |
 | `python3 pmem_art.py ingest <图> -p "<说明>" --apply` | 四信号分类并归档图片 |
@@ -167,8 +175,8 @@ python3 pmem_art.py ingest .cursor/generated/new.png -p "角色Astra 水彩 概�
 
 ## 第七章：常见问题 FAQ
 
-**Q1：如果连生 8 张图都没有达到 9.5 分怎么办？**  
-A：到了第 8 轮仍未达 9.5 分时，`converge finish` 会自动停止循环，从 1~8 轮里挑出**综合评分最高**的那一张作为阶段最优交付图，并在最终汇总表里完整列出每一轮的分数、亮点与剩余不足。
+**Q1：如果连生 8 张图都没有达到 9.6 分怎么办？**  
+A：到了第 8 轮仍未达 9.6 分时，`converge finish` 会自动停止循环，从 1~8 轮里挑出**综合评分最高**的那一张作为阶段最优交付图；默认只给你胜出图+一句结论，全轮明细加 `--verbose` 或说「看报告」。
 
 **Q2：丢入一张图让 `/pmem-draw` 生成时，它会怎么处理那张图？**  
 A：它会先做 **Step 0 参考图深度解构**（分析构图、提取主辅色 HEX、判断光影与笔触、识别头身结构），把解构结论记入收敛会话基准，然后带着这份基准进入 1~8 轮自评收敛循环。
@@ -189,4 +197,48 @@ python3 pmem_art.py coach
 python3 pmem_art.py learn suggest && python3 pmem_art.py learn accept --all
 ```
 
-闭环（v0.12 静默）：`warm-start → 8×≥9.5 → finish 静默自动驾驶（反思/口味/learn 队列）→ 最多一行小提示 → 越用越好`；`improve/coach/learn/progress` 为进阶 peek。
+闭环（v0.12 静默）：`warm-start → 8×≥9.6 → finish 静默自动驾驶（反思/口味/learn 队列）→ 最多一行小提示 → 越用越好`；`improve/coach/learn/progress` 为进阶 peek。
+
+---
+
+## 附录 A：四档 `--scale` 细则与示例
+
+两大驱动：
+
+1. **模型自动分析收敛**：`low` / `medium` / `high` — 自主诊断缺陷、生成 `next_fix`，加权分 **`>= 9.60` 即停**。  
+2. **玩家定向改构图**：`recompose` + `--recompose-dir` — 按你指定的新机位/布局改，仍锁画风与身份。
+
+| 档位 | 达标线 | Prompt 改动上限 | 构图约束（摘要） | 五维权重（摘要） |
+| :--- | :--- | :--- | :--- | :--- |
+| `low` | ≥ 9.60 | ≤ 20% vs 首轮 | **不改**机位/姿态/元素数/布局 | 透视 25% · 质感 25% · 光影 20% · 构图 15% · 风格 15% |
+| `medium`（默认） | ≥ 9.60 | ≤ 45% 上轮 · 累计 ≤ 60% | **不改**机位、姿态、主体数、布局 | 光影 25% · 构图 20% · 透视 20% · 质感 20% · 风格 15% |
+| `high` | ≥ 9.60 | ≤ 70% 上轮 · 累计 ≤ 85% | **可改**机位与戏剧光影；**不改**身份/画风/主体数 | 光影 25% · 构图 20% · 质感 20% · 风格 20% · 透视 15% |
+| `recompose` | ≥ 9.60 | ≤ 85% · 累计 ≤ 95% | **按 `--recompose-dir` 换机位** | 构图 30% · 透视 20% · 光影 20% · 质感 15% · 风格 15% |
+
+```text
+/pmem-draw --scale low @comparison/style_refs/style_ref_02_pastel_sketch.png 只修五指与球鞋透视
+/pmem-draw --scale medium @comparison/style_refs/style_ref_03_sunlit_portrait.png 补轮廓光与空气微尘
+/pmem-concept --scale high @comparison/web_refs/web_ref_01_concept_ishtar.png 升级丁达尔神光
+/pmem-draw --scale recompose --recompose-dir "改为天台远眺海港全景" @comparison/style_refs/style_ref_02_pastel_sketch.png
+```
+
+生图与审图必须分两步（Skill 会自动跑）：
+
+```bash
+python3 pmem_art.py converge generate --id <sid> --round 1 -i out.jpg -p "<prompt>"
+python3 pmem_art.py converge judge    --id <sid> --round 1 -i out.jpg --dims "构图9.2/光影9.1/透视9.0/质感9.0/风格9.2" --defects "..." --next-fix "..."
+python3 pmem_art.py converge finish   --id <sid>   # 默认写记忆；全量表加 --verbose
+```
+
+---
+
+## 附录 B：V4 冷启动验收摘要
+
+来源：[docs/showcase/pmem_art_images_v4_20bots_showcase.html](docs/showcase/pmem_art_images_v4_20bots_showcase.html)
+
+- **规模**：4 案例 × 5 档（含 `recompose_bold` 大改）= **20** Bot  
+- **条件**：每 Bot 独立空目录、项目私有记忆 = 0、三步分离、画幅/垫图继承校验  
+- **结果**：**20 / 20** 达到 `≥ 9.60` 停机  
+- **首页摘要表**：见 [README.md §效果长什么样](README.md)
+
+首页只保留摘要；逐张 MD5 / 轨迹 / 视觉核验以该 HTML 为准。

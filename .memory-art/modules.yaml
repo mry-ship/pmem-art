@@ -162,7 +162,8 @@ modules:
     category: scene
     description: 30°等轴测浮空遗迹概念图、左上45°暖金主光与冷黛环境阴影规范、白玉断柱与青瓷法阵地表
     paths:
-      - "assets/scene/**"
+      - "assets/scene/floating_ruins*"
+      - "assets/scene/floating_*"
     aliases:
       - FloatingRuins
       - 浮空遗迹
@@ -223,7 +224,8 @@ modules:
     category: vfx
     description: 1024x512 四帧横排刀光序列帧（单帧 256x512）、外青瓷内鎏金双层色阶、预乘透明通道（Premultiplied Alpha）禁黑边规范
     paths:
-      - "assets/vfx/**"
+      - "assets/vfx/arcane_*"
+      - "assets/vfx/astrolabe_*"
     aliases:
       - ArcaneSlash
       - 星轨刀光
@@ -259,14 +261,18 @@ modules:
     palette: []
     specs:
       resolution: 1024x256
+      allowed_resolutions:
+        - 1024x256
+      aspect_ratio: "4:1"
       alpha_required: true
       safe_margin_px: 16
       max_size_kb: 1024
+  # Case01 硬合同 9:16 竖版 — 禁止 864x1152(3:4) 白名单绕过
   scene.CelestialCity:
     title: 场景与原画·CelestialCity
     category: scene
     status: active
-    description: 俯瞰天穹仙侠万家灯火夜城与飞檐持剑女侠 · 自动归类至 场景与原画 (scene.CelestialCity) · 置信度 0.796
+    description: 俯瞰天穹仙侠万家灯火夜城与飞檐持剑男侠 · 自动归类至 场景与原画 (scene.CelestialCity) · 置信度 0.796
     paths:
       - "assets/scene/celestialcity/**"
     aliases:
@@ -274,10 +280,14 @@ modules:
     entities: []
     palette: []
     specs:
-      resolution: 1024x576
-      aspect_ratio: "16:9"
+      resolution: 720x1280
+      allowed_resolutions:
+        - 720x1280
+        - 405x720
+      aspect_ratio: "9:16"
       alpha_required: false
       max_size_kb: 2048
+  # Case02 硬合同 4:3 横版 — 旧冷启动 864x1152(3:4) 不再过检；720x580 为风格参考可过检
   character.PastelGirl:
     title: 角色与立绘·PastelGirl (Watercolor)
     category: character
@@ -290,15 +300,17 @@ modules:
     entities: []
     palette: []
     specs:
-      resolution: 1024x1024
+      resolution: 1152x864
       allowed_resolutions:
-        - 1024x1024
-        - 2048x1024
+        - 1152x864
+        - 720x580
+      aspect_ratio: "4:3"
       alpha_required: false
       safe_margin_px: 16
       max_size_kb: 1024
     parent: brand.WorldStyle
     inherits: brand.WorldStyle
+  # Case03 硬合同 3:4 竖版肖像
   character.SunlitGirl:
     title: 角色与立绘·SunlitGirl
     category: character
@@ -311,10 +323,34 @@ modules:
     entities: []
     palette: []
     specs:
-      resolution: 1024x1024
+      resolution: 864x1152
       allowed_resolutions:
+        - 864x1152
+        - 547x720
         - 1024x1024
-        - 2048x1024
-      alpha_required: true
+      aspect_ratio: "3:4"
+      alpha_required: false
       safe_margin_px: 16
       max_size_kb: 1024
+  # 与 CelestialCity 同画幅 9:16；继承夜城父模块而非 FloatingRuins(16:9)
+  scene.celestial_night_city:
+    title: 场景与原画·celestial_night_city (Watercolor)
+    category: scene
+    status: active
+    description: "仙侠水墨夜色风：锁视角与姿态，仅微调局部笔触 | Pad-locked near duplicate of reference night city key a · 自动归类至 场景与原画 (scene.celestial_night_city) · 置信度 0.808"
+    paths:
+      - "assets/scene/celestial_night_city/**"
+    aliases:
+      - celestial_night_city
+    entities: []
+    palette: []
+    specs:
+      resolution: 720x1280
+      allowed_resolutions:
+        - 720x1280
+        - 405x720
+      aspect_ratio: "9:16"
+      alpha_required: false
+      max_size_kb: 2048
+    parent: scene.CelestialCity
+    inherits: scene.CelestialCity

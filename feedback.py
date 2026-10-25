@@ -31,15 +31,17 @@ KIND_META = {
 # 自然语言触发词 → 记忆类型（中文优先，面向画师）
 # 顺序重要：先匹配「留着/定稿」再匹配「别/不要」
 KEEP_PATTERNS = [
-    r"这版留着", r"留着这版", r"就这个", r"就用这张", r"定稿", r"过了", r"通过",
-    r"可以用", r"保留", r"keep\s*(this|it)", r"ship\s*it", r"lgtm", r"approved",
+    r"这版留着", r"留着这版", r"就这个", r"就用这张", r"定稿", r"(?<!不)可以用",
+    r"keep\s*(this|it)", r"ship\s*it", r"lgtm",
 ]
 REJECT_PATTERNS = [
     r"别这样画", r"不要这样", r"别再", r"不要再", r"禁止", r"严禁",
     r"太赛博", r"太霓虹", r"太Q版", r"头太大", r"头身不对", r"比例不对",
     r"发色不对", r"颜色不对", r"太粉", r"太紫", r"漏抠", r"黑底",
+    r"打回", r"重画", r"过曝", r"太过",
     r"don't", r"do not", r"never\s+draw", r"reject", r"wrong",
 ]
+_COMPLAINT_RE = re.compile(r"打回|重画|过曝|太过|不通过|无法通过|未通过")
 FIX_PATTERNS = [
     r"改成", r"换成", r"调整", r"修一下", r"改一下", r"改成水彩", r"换成水彩",
     r"换成Q版", r"改成Q版", r"换成像素", r"改成像素", r"换成厚涂",
@@ -65,12 +67,58 @@ def _sha16(path: Path) -> str:
     return h.hexdigest()[:16]
 
 
+def _has_strong_keep(text: str) -> bool:
+    low = text.lower()
+    return any(re.search(pat, text, re.I) or re.search(pat, low, re.I) for pat in KEEP_PATTERNS)
+
+
+def _negated_keep_prefix(text: str, index: int) -> bool:
+    window = text[max(0, index - 4):index]
+    if any(window.endswith(w) for w in (
+        "不要再", "别再", "不可以", "无法", "不能", "不可", "未能", "并未", "没有", "不要",
+    )):
+        return True
+    for w in ("未", "不", "别"):
+        if not window.endswith(w):
+            continue
+        prev_at = index - len(w) - 1
+        prev = text[prev_at] if prev_at >= 0 else ""
+        if not prev or prev in "，。；、 \n\t":
+            return True
+    return False
+
+
+def _has_unnegated_weak_keep(text: str) -> bool:
+    """过了 / 通过 / 保留 / approved count only outside a negation."""
+    low = text.lower()
+    for m in re.finditer(r"过了", text):
+        prev = text[m.start() - 1:m.start()] if m.start() else ""
+        if prev != "太":
+            return True
+    for m in re.finditer(r"通过", text):
+        if _negated_keep_prefix(text, m.start()):
+            continue
+        return True
+    for m in re.finditer(r"保留", text):
+        if _negated_keep_prefix(text, m.start()):
+            continue
+        return True
+    for m in re.finditer(r"approved", low):
+        if low[max(0, m.start() - 2):m.start()] == "un":
+            continue
+        return True
+    return False
+
+
 def detect_kind(text: str) -> str:
     t = text.strip()
     low = t.lower()
-    for pat in KEEP_PATTERNS:
-        if re.search(pat, t, re.I) or re.search(pat, low, re.I):
-            return "recipe"  # keep → 定稿配方 / 正向锚点；同时可挂 asset_record
+    if _COMPLAINT_RE.search(t):
+        return "style_redline"
+    if _has_strong_keep(t):
+        return "recipe"
+    if _has_unnegated_weak_keep(t):
+        return "recipe"
     for pat in REJECT_PATTERNS:
         if re.search(pat, t, re.I) or re.search(pat, low, re.I):
             return "style_redline"
@@ -179,6 +227,7 @@ def write_memory_entry(
     caption: str = "",
     aliases: list[str] | None = None,
     extra_meta: dict[str, Any] | None = None,
+    replace_same_asset: bool = False,
 ) -> Path:
     proj_id = ""
     proj_name = ""
@@ -192,7 +241,22 @@ def write_memory_entry(
         proj_name = root.name
     entries_root = root / ".memory-art" / "entries" / module
     entries_root.mkdir(parents=True, exist_ok=True)
-    eid = _next_id(entries_root, kind)
+    existing_same: Path | None = None
+    if replace_same_asset and asset:
+        rel_probe = asset.replace("\\", "/")
+        from lifecycle import iter_md_files
+        for prior in iter_md_files(entries_root, recursive=False):
+            try:
+                prior_text = prior.read_text(encoding="utf-8")
+            except (UnicodeDecodeError, OSError):
+                continue
+            if f"kind: {kind}" in prior_text and f"path: {rel_probe}" in prior_text:
+                existing_same = prior
+                break
+    if existing_same is not None:
+        eid = existing_same.stem
+    else:
+        eid = _next_id(entries_root, kind)
     now = _now_cst().strftime("%Y-%m-%d")
     assets_block = ""
     if asset:
@@ -255,7 +319,7 @@ def write_memory_entry(
         f"---\n"
         f"{body.strip()}\n"
     )
-    out = entries_root / f"{eid}.md"
+    out = existing_same or (entries_root / f"{eid}.md")
     out.write_text(content, encoding="utf-8")
     try:
         from improve import sync_active_project_to_library

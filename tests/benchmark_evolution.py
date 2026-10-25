@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# DEPRECATED_FOR_CI — historical showcase harness (pre generate/judge · thr 9.5).
+# Current contract: converge generate → judge; DEFAULT_THRESHOLD=9.6. Not a CI gate.
 """
 pmem-art Quantitative & Visual Evolution Benchmark
 ==================================================
@@ -355,7 +357,7 @@ def execute_converge_task(bench_root: Path, staging: Path, batch_num: int, task_
         "--goal", task_spec["goal"],
         "--module", task_spec["module"],
         "--mode", "quality",
-        "--threshold", "9.5",
+        "--threshold", "9.6",
         "--max-rounds", "8",
     )
     sess_file = bench_root / ".memory-art" / "converge" / f"{sess_id}.json"
@@ -364,7 +366,7 @@ def execute_converge_task(bench_root: Path, staging: Path, batch_num: int, task_
 
     round_records = []
     for idx, r in enumerate(task_spec["rounds"], start=1):
-        passed = r["score"] >= 9.5
+        passed = r["score"] >= 9.6
         img_p = render_round_artwork(
             task_spec["domain"],
             batch_num,

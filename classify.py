@@ -802,20 +802,15 @@ def cmd_watch_sync_classify(root: Path, data: dict[str, Any], apply: bool = Fals
     """Scan watch_dirs for images not mapped → classify each → queue candidates / optional ingest."""
     cfg = (data.get("config") or {}).get("classify") or {}
     watch = cfg.get("watch_dirs") or ["assets", ".cursor/generated", "generated"]
-    from lifecycle import list_image_files, IMAGE_EXTS
+    from lifecycle import list_image_files
 
     modules = data.get("modules") or {}
     queued = []
-    for w in watch:
-        base = root / w
-        if not base.exists():
+    for p in list_image_files(root, list(watch)):
+        rel = p.relative_to(root).as_posix()
+        if path_mapped_to_module(rel, {k: v for k, v in modules.items() if v.get("status") == "active"}):
             continue
-        for p in base.rglob("*"):
-            if p.is_file() and p.suffix.lower() in IMAGE_EXTS:
-                rel = p.relative_to(root).as_posix()
-                if path_mapped_to_module(rel, {k: v for k, v in modules.items() if v.get("status") == "active"}):
-                    continue
-                queued.append(rel)
+        queued.append(rel)
 
     print(f"👀 classify-watch: {len(queued)} unmapped images under {watch}")
     for rel in queued:

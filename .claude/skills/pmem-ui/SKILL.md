@@ -1,6 +1,6 @@
 ---
 name: pmem-ui
-description: 【截图可见·必读】/pmem-ui 与 /art-ui 生成 UI Kit/HUD 时，概念稿与关键组件均强制「最多8轮、合格线≥9.5」闭环自评收敛（生1张→打分挑刺→<9.5叠加修正→满8轮挑最高分→评分总表）。流水线对标 SpriteCook：概念先行 → 透明组件表 → 九宫格切线 → 状态族。触发例：「/pmem-ui 生成一套蒸汽朋克主菜单 HUD」「/art-ui [附概念图] 拆出九宫格弹窗与按钮态」。
+description: 【截图可见·必读】/pmem-ui 与 /art-ui 生成 UI Kit/HUD 时，概念稿与关键组件均强制「最多8轮、合格线≥9.6」闭环自评收敛（生1张→打分挑刺→<9.6叠加修正→满8轮挑最高分→静默结算）。流水线对标 SpriteCook：概念先行 → 透明组件表 → 九宫格切线 → 状态族。触发例：「/pmem-ui 生成一套蒸汽朋克主菜单 HUD」「/art-ui [附概念图] 拆出九宫格弹窗与按钮态」。
 ---
 
 # `/pmem-ui`（别名 `/art-ui`）— SpriteCook 式 UI Kit / HUD / 九宫格整套生成
@@ -13,7 +13,7 @@ description: 【截图可见·必读】/pmem-ui 与 /art-ui 生成 UI Kit/HUD �
 ```
 
 ## 原理（截图摘要）
-1. `search` 召回 `ui.*` 红线与定稿 → 2. **概念先行** → 3. 透明组件表 → 4. 九宫格 + 状态族 → 5. **强制 8轮 ≥9.5** → `finish` **静默自动驾驶**（只转述一行小提示；勿旁白记忆写入）
+1. `search` 召回 `ui.*` 红线与定稿 → 2. **概念先行** → 3. 透明组件表 → 4. 九宫格 + 状态族 → 5. **强制 8轮 ≥9.6** → `finish` **静默自动驾驶**（只转述一行小提示；勿旁白记忆写入）
 
 你现在运行在 **pmem-art UI Kit 模式**（对标 SpriteCook UI Kit Builder：概念先行 → 组件表 → 九宫格切线 → 状态族）。**禁止**把整屏各控件零散各生一张再硬拼；必须先锁一个统一视觉语言的概念稿，再从同一概念抽出可复用零件。
 
@@ -33,11 +33,11 @@ python3 pmem_art.py search --module <ui.模块>
 
 ### Step 1：概念先行（Concept First）—— 不可跳过
 1. 若用户丢入概念图：先做参考图视觉解构（构图分区、主辅色 HEX、金属/木纹/霓虹材质、控件密度），再进入组件抽取。
-2. 若无概念图：先生成 **1 张完整屏幕概念稿**（整屏布局，统一材质与色板），用 `/pmem-draw` 同款 **8轮 >=9.5 收敛** 打磨概念稿：
+2. 若无概念图：先生成 **1 张完整屏幕概念稿**（整屏布局，统一材质与色板），用 `/pmem-draw` 同款 **8轮 >=9.6 收敛** 打磨概念稿：
    ```bash
-   python3 pmem_art.py converge start --goal "UI概念稿：<屏幕类型+风格>" --module <ui.模块>
-   # … 每轮 converge round … 直到 >=9.5 或满8轮挑最高分
-   python3 pmem_art.py converge finish --apply
+   python3 pmem_art.py converge start --goal "UI概念稿：<屏幕类型+风格>" --module <ui.模块> [--scale medium|high]
+   # 每轮：converge generate 生图，再 converge judge 审图，直到 >=9.6 或满 8 轮
+   python3 pmem_art.py converge finish
    ```
 3. **概念稿通过后才进入组件表**——不要在概念未锁定时散生按钮。
 
@@ -63,7 +63,7 @@ ui_kit_<name>/
 `manifest.json` 示例字段：`name`, `group`, `state`, `file`, `nine_slice: {left,right,top,bottom}`, `scalable: true|false`。
 
 ### Step 4：关键件二次收敛（可选但推荐）
-对主面板、主按钮等核心件，若五维评分 `< 9.5`（重点查：中心拉伸区是否干净、转角是否形变、透明底毛边、状态族是否同系），再跑一轮 `converge` 局部重绘。
+对主面板、主按钮等核心件，若五维评分 `< 9.6`（重点查：中心拉伸区是否干净、转角是否形变、透明底毛边、状态族是否同系），再跑一轮 `converge generate` 局部重绘，然后 `converge judge` 审图。
 
 ### Step 5：沉淀记忆
 ```bash
@@ -71,7 +71,7 @@ python3 pmem_art.py ingest <concept或主面板路径> -p "UI kit <屏幕> 概�
 python3 pmem_art.py feedback "UI套件色板与九宫格规范：<摘要>" --module <ui.模块> --kind art_decision
 ```
 
-## 三、UI 专用五维评分侧重（满分 10.0，`>= 9.5` 合格）
+## 三、UI 专用五维评分侧重（满分 10.0，`>= 9.6` 合格）
 1. 风格色板契合（2.5）— 与概念稿同材质同色板
 2. 结构/九宫格合理性（2.5）— 中心区干净、角不糊、可拉伸
 3. 光影材质完成度（2.0）
@@ -80,11 +80,11 @@ python3 pmem_art.py feedback "UI套件色板与九宫格规范：<摘要>" --mod
 
 ## 四、最终交付必须包含
 1. 概念稿 + 组件表 + `elements/` + `manifest.json`（含九宫格）
-2. 若跑了收敛：全轮次评分优劣总表
+2. 若跑了收敛且用户要详情/`--verbose`：全轮次评分优劣总表
 3. 已写入 `.memory-art` 的 recipe / redline 路径
 
 
 ## 静默自动驾驶（Agent 必读）
-- `converge finish --apply` 后系统自动写反思/口味/learn 队列——**无需**再跑 `/pmem-improve`。
+- `converge finish` 后系统自动写反思/口味/learn 队列——**无需**再跑 `/pmem-improve`。
 - 对用户只展示胜出图 + 结论；若有「小提示」原样转述（每会话最多 1 条）。**禁止**旁白记忆写入。
 - 全量报告 / 教练 / 广度：用户明确要求或 `--verbose` / 进阶技能时再给。

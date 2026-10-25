@@ -9,6 +9,9 @@ __pycache__/
 # OS & editor junk
 .DS_Store
 Thumbs.db
+._*
+**/.DS_Store
+**/._*
 *.swp
 *.swo
 *~
@@ -19,3 +22,22 @@ Thumbs.db
 .cache/
 *.tmp
 *.bak
+
+# Local secrets (VLM judge API keys — never commit)
+.memory-art/vlm_judge.local.yaml
+.env
+.env.*
+
+# Generated / bulky HTML (rebuild via atlas / benchmark scripts)
+art-atlas.html
+benchmark-*.html
+*_showcase.html
+**/pmem_*_showcase.html
+reference_fresh/
+comparison/pmem_vs_*.html
+comparison/pmem_vs_market_showcase.html
+
+# Allow curated showcase pages under docs/
+!docs/showcase/
+!docs/showcase/**
+

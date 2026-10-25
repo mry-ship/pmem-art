@@ -44,7 +44,7 @@ def run_cli(proj_dir: Path, *args: str, env: dict[str, str] | None = None) -> su
     )
 
 
-def main() -> None:
+def test_two_layer_memory_architecture() -> None:
     tmp_base = Path("/tmp/pmem_two_layer_test")
     if tmp_base.exists():
         shutil.rmtree(tmp_base)
@@ -297,4 +297,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    test_two_layer_memory_architecture()

@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# DEPRECATED_FOR_CI — historical showcase harness (pre generate/judge · thr 9.5).
+# Current contract: converge generate → judge; DEFAULT_THRESHOLD=9.6. Not a CI gate.
 """
 pmem-art Quantitative Multi-Batch Evolution Benchmark
 =====================================================
@@ -278,7 +280,7 @@ def run_benchmark(bench_root: Path) -> dict[str, Any]:
             "--goal", t["goal"],
             "--module", t["module"],
             "--mode", "quality",
-            "--threshold", "9.5",
+            "--threshold", "9.6",
             "--max-rounds", "8",
         )
         warm_info = start_res.get("warm_start", {})
@@ -427,7 +429,7 @@ def run_benchmark(bench_root: Path) -> dict[str, Any]:
             "--goal", t["goal"],
             "--module", t["module"],
             "--mode", "quality",
-            "--threshold", "9.5",
+            "--threshold", "9.6",
             "--max-rounds", "8",
         )
         warm_info = start_res.get("warm_start", {})

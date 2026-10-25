@@ -1,6 +1,6 @@
 ---
 name: pmem-icon
-description: 【截图可见·必读】/pmem-icon 与 /art-icon 支持三大模式：(A) iOS/Android 1024×1024 App Icon 桌面启动图标母版（满幅直角出图+72%~80%圆角安全区+多尺寸导出矩阵+深浅色自适应）；(B) jezweb 式一致化 SVG 矢量图标集；(C) 游戏道具 64/128/256px 透明底栅格图标。全部支持单次原子调用 converge step 与动态阈值收敛闭环。
+description: 【截图可见·必读】/pmem-icon 与 /art-icon 支持三大模式：(A) iOS/Android 1024×1024 App Icon 桌面启动图标母版（满幅直角出图+72%~80%圆角安全区+多尺寸导出矩阵+深浅色自适应）；(B) jezweb 式一致化 SVG 矢量图标集；(C) 游戏道具 64/128/256px 透明底栅格图标。全部支持 converge generate 与 converge judge 两步分离，以及动态阈值收敛闭环。
 ---
 
 # `/pmem-icon`（别名 `/art-icon`）— jezweb 式一致化图标集 / SVG 取向生成
@@ -13,7 +13,7 @@ description: 【截图可见·必读】/pmem-icon 与 /art-icon 支持三大模�
 ```
 
 ## 原理（截图摘要）
-1. 先锁 **style-spec** → 2. SVG 硬规则 → 3. 分批生成 → 4. 交付 preview → 5. 关键枚 **Warm-Start + 8×≥9.5** → 6. 反思 / improve / learn 扩图标技法卡
+1. 先锁 **style-spec** → 2. SVG 硬规则 → 3. 分批生成 → 4. 交付 preview → 5. 关键枚 **Warm-Start + 8×≥9.6** → 6. 反思 / improve / learn 扩图标技法卡
 
 你现在运行在 **pmem-art 图标集模式**（对标 jezweb `icon-set-generator`）：先锁 **一份 style-spec**，再批量生成，保证 stroke、圆角、视口、视觉重量一致——**禁止**从 Lucide/Heroicons 随便拼一套「看起来差不多」的通用库图标冒充项目定制集。
 
@@ -70,16 +70,16 @@ icons/
 └── …
 ```
 
-### Step 5：关键图标 8轮9.5 收敛（可选）
+### Step 5：关键图标 8轮9.6 收敛（可选）
 用户点名某枚「不对」或一致性审查不通过时：
 ```bash
-python3 pmem_art.py converge start --goal "图标 <name> 对齐 style-spec" --module ui.Icons
-# 生成 → 自评（侧重：规格一致性 2.5 + 识别度 2.5 + …）→ round → finish --apply
+python3 pmem_art.py converge start --goal "图标 <name> 对齐 style-spec" --module brand.WorldStyle
+# 生成 → 自评 → converge generate / converge judge → finish
 ```
 
 ### Step 6：沉淀
 ```bash
-python3 pmem_art.py feedback "图标集 style-spec：<preset+stroke+grid摘要>" --module ui.Icons --kind art_decision
+python3 pmem_art.py feedback "图标集 style-spec：<preset+stroke+grid摘要>" --module brand.WorldStyle --kind art_decision
 python3 pmem_art.py ingest icons/preview.html -p "icon set preview" --apply   # 若适用
 ```
 
@@ -97,7 +97,7 @@ python3 pmem_art.py ingest icons/preview.html -p "icon set preview" --apply   # 
 - **支持 iOS 18+ 三态适配**：输出标准浅色版（Light）、深色模式版（Dark Mode 深邃底板+自发光边缘）与单色着色版（Tinted 单通道明度层次）。
 
 ### 3. 多尺寸导出矩阵与 `app-icon-preview.html`
-通过 `converge step` 单次原子调用收敛出 `1024×1024` 母版后，自动导出标准尺寸包：
+通过 `converge generate` 与 `converge judge` 分两步收敛出 `1024×1024` 母版后，自动导出标准尺寸包：
 - **iOS 矩阵**：`1024×1024` (App Store)、`180×180` (@3x Home)、`167×167` (iPad Pro)、`120×120` (@2x)、`60×60` (Notification)、`29×29` (Settings)
 - **Android / 桌面矩阵**：`512×512` (Play Store)、`192×192` (xxxhdpi Foreground/Background)
 
@@ -109,9 +109,9 @@ python3 pmem_art.py ingest icons/preview.html -p "icon set preview" --apply   # 
 5. **色板纯粹度与无细碎文字红线（15%）**：是否严格遵循 70-20-10 品牌色板？是否 100% 剔除了多余文字与杂乱背景？
 
 ```bash
-# App Icon 模式单次原子调用示例：
-python3 pmem_art.py converge start --module icon.AppIcon --scale high --brief "iOS 1024x1024 App Icon: 青瓷质感记账应用，中心单枚立体青釉金币流光符号"
-python3 pmem_art.py converge step --session-id latest --image app_icon_r1.png \
+python3 pmem_art.py converge start --session appicon --module brand.WorldStyle --scale high --goal "iOS 1024x1024 App Icon: 青瓷质感记账应用，中心单枚立体青釉金币流光符号"
+python3 pmem_art.py converge generate --session appicon --round 1 --image app_icon_r1.png --prompt "..."
+python3 pmem_art.py converge judge --session appicon --round 1 --image app_icon_r1.png \
   --dims "识别度9.6/安全区9.7/光影质感9.5/多尺寸合规9.6/色板纯粹9.7"
 ```
 
@@ -123,6 +123,6 @@ python3 pmem_art.py converge step --session-id latest --image app_icon_r1.png \
 - [ ] 若跑了收敛：胜出图 + 一行小提示即可（全表仅 --verbose）
 
 ## 静默自动驾驶（Agent 必读）
-- `converge finish --apply` 后系统自动写反思/口味/learn 队列——**无需**再跑 `/pmem-improve`。
+- `converge finish` 后系统自动写反思/口味/learn 队列——**无需**再跑 `/pmem-improve`。
 - 对用户只展示胜出图 + 结论；若有「小提示」原样转述（每会话最多 1 条）。**禁止**旁白记忆写入。
 - 全量报告 / 教练 / 广度：用户明确要求或 `--verbose` / 进阶技能时再给。

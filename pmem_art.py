@@ -75,19 +75,48 @@ def parse_scalar(val: str) -> Any:
         return float(val)
     return val
 
+_HEX_COLOR_RE = re.compile(r"#([0-9A-Fa-f]{8}|[0-9A-Fa-f]{6})\b")
+
+
+def _shield_hex_colors(text: str) -> tuple[str, list[str]]:
+    """Keep #RRGGBB / #RRGGBBAA out of YAML comment stripping."""
+    found: list[str] = []
+
+    def repl(m: re.Match[str]) -> str:
+        found.append(m.group(0))
+        return f"__HEX{len(found) - 1}__"
+
+    return _HEX_COLOR_RE.sub(repl, text), found
+
+
+def _restore_hex(obj: Any, found: list[str]) -> Any:
+    if isinstance(obj, str):
+        for i, h in enumerate(found):
+            obj = obj.replace(f"__HEX{i}__", h)
+        return obj
+    if isinstance(obj, list):
+        return [_restore_hex(x, found) for x in obj]
+    if isinstance(obj, dict):
+        return {k: _restore_hex(v, found) for k, v in obj.items()}
+    return obj
+
+
 def load_yaml(text: str) -> dict:
+    shielded, hexes = _shield_hex_colors(text)
     try:
         import yaml
-        data = yaml.safe_load(text)
-        return data if isinstance(data, dict) else {}
+        data = yaml.safe_load(shielded)
+        if isinstance(data, dict):
+            return _restore_hex(data, hexes)
     except Exception:
         pass
     lines: list[tuple[int, str]] = []
-    for raw_line in text.splitlines():
+    for raw_line in shielded.splitlines():
         s = raw_line.rstrip()
         if not s.strip() or s.strip().startswith("#"):
             continue
-        # Strip inline comments outside quotes (prevents "true # comment" pollution)
+        # Strip inline comments outside quotes. A '#' is a comment only at
+        # line start or after whitespace, and never when it begins a hex color.
         in_q = None
         out_chars: list[str] = []
         i = 0
@@ -102,7 +131,12 @@ def load_yaml(text: str) -> dict:
                     in_q = ch
                     out_chars.append(ch)
                 elif ch == "#":
-                    break
+                    prev = s[i - 1] if i else " "
+                    rest = s[i:]
+                    is_hex = bool(_HEX_COLOR_RE.match(rest))
+                    if (i == 0 or prev.isspace()) and not is_hex:
+                        break
+                    out_chars.append(ch)
                 else:
                     out_chars.append(ch)
             i += 1
@@ -188,17 +222,114 @@ def load_yaml(text: str) -> dict:
             return obj, idx
 
     res, _ = parse_block(0, 0)
-    return res if isinstance(res, dict) else {}
+    restored = _restore_hex(res, hexes)
+    return restored if isinstance(restored, dict) else {}
+
+def _image_mime(path: Path) -> str:
+    return {
+        ".png": "image/png",
+        ".jpg": "image/jpeg",
+        ".jpeg": "image/jpeg",
+        ".webp": "image/webp",
+    }.get(path.suffix.lower(), "application/octet-stream")
+
+
+def _jpeg_size(raw: bytes) -> tuple[int, int] | None:
+    if len(raw) < 4 or raw[:2] != b"\xff\xd8":
+        return None
+    idx = 2
+    n = len(raw)
+    while idx + 9 < n:
+        if raw[idx] != 0xFF:
+            idx += 1
+            continue
+        marker = raw[idx + 1]
+        if marker == 0xFF:
+            idx += 1
+            continue
+        if marker in (0xC0, 0xC1, 0xC2, 0xC3):
+            height, width = struct.unpack(">HH", raw[idx + 5:idx + 9])
+            if width > 0 and height > 0:
+                return width, height
+            return None
+        if marker in (0xD8, 0xD9) or (0xD0 <= marker <= 0xD7):
+            idx += 2
+            continue
+        if idx + 4 > n:
+            break
+        seg_len = struct.unpack(">H", raw[idx + 2:idx + 4])[0]
+        if seg_len < 2:
+            break
+        idx += 2 + seg_len
+    return None
+
+
+def _webp_size(raw: bytes) -> tuple[int, int, bool] | None:
+    if len(raw) < 16 or raw[:4] != b"RIFF" or raw[8:12] != b"WEBP":
+        return None
+    chunk = raw[12:16]
+    if chunk == b"VP8X" and len(raw) >= 30:
+        flags = raw[20]
+        width = 1 + int.from_bytes(raw[24:27], "little")
+        height = 1 + int.from_bytes(raw[27:30], "little")
+        return width, height, bool(flags & 0x10)
+    if chunk == b"VP8 " and len(raw) >= 30:
+        # Lossy bitstream starts after the chunk header; frame tag is 3 bytes then start code.
+        start = raw.find(b"\x9d\x01\x2a", 20, 40)
+        if start >= 0 and start + 7 <= len(raw):
+            width, height = struct.unpack("<HH", raw[start + 3:start + 7])
+            return width & 0x3FFF, height & 0x3FFF, False
+    if chunk == b"VP8L" and len(raw) >= 25 and raw[20] == 0x2F:
+        bits = int.from_bytes(raw[21:25], "little")
+        width = (bits & 0x3FFF) + 1
+        height = ((bits >> 14) & 0x3FFF) + 1
+        alpha = bool((bits >> 28) & 1)
+        return width, height, alpha
+    return None
+
 
 def inspect_png(path: Path) -> dict[str, Any]:
-    """Pure-Python PNG header & tEXt chunk inspector + outer border alpha checker."""
+    """Read PNG / JPEG / WebP headers for size, mode, and alpha. PNG also keeps tEXt."""
     if not path.is_file():
         return {"exists": False, "path": str(path)}
     raw = path.read_bytes()
     sha16 = hashlib.sha256(raw).hexdigest()[:16]
     size_kb = round(len(raw) / 1024, 1)
-    b64_uri = "data:image/png;base64," + base64.b64encode(raw).decode("ascii")
+    mime = _image_mime(path)
+    b64_uri = f"data:{mime};base64," + base64.b64encode(raw).decode("ascii")
     if raw[:8] != b"\x89PNG\r\n\x1a\n":
+        jpeg = _jpeg_size(raw)
+        webp = None if jpeg else _webp_size(raw)
+        if jpeg:
+            width, height = jpeg
+            return {
+                "exists": True,
+                "width": width,
+                "height": height,
+                "resolution": f"{width}x{height}",
+                "bit_depth": 8,
+                "mode": "RGB",
+                "has_alpha": False,
+                "size_kb": size_kb,
+                "sha256_16": sha16,
+                "png_meta": {},
+                "data_uri": b64_uri,
+            }
+        if webp:
+            width, height, has_alpha = webp
+            return {
+                "exists": True,
+                "width": width,
+                "height": height,
+                "resolution": f"{width}x{height}",
+                "bit_depth": 8,
+                "mode": "RGBA" if has_alpha else "RGB",
+                "has_alpha": has_alpha,
+                "size_kb": size_kb,
+                "sha256_16": sha16,
+                "png_meta": {},
+                "data_uri": b64_uri,
+            }
         return {"exists": True, "size_kb": size_kb, "sha256_16": sha16, "data_uri": b64_uri}
 
     pos = 8
@@ -315,7 +446,8 @@ def _load_all_project_libraries(
         lib_entries: list[dict[str, Any]] = []
         lib_entries_dir = lib_dir / "entries"
         if lib_entries_dir.is_dir():
-            for md_f in sorted(lib_entries_dir.rglob("*.md")):
+            from lifecycle import iter_md_files
+            for md_f in iter_md_files(lib_entries_dir, recursive=True):
                 em = _parse_entry_md_file(md_f, root, project_id=pid, project_name=pname)
                 if not em:
                     continue
@@ -433,7 +565,8 @@ def load_project(root: Path) -> dict[str, Any]:
     entries: list[dict[str, Any]] = []
     entries_dir = mem_dir / "entries"
     if entries_dir.is_dir():
-        for md_file in sorted(entries_dir.rglob("*.md")):
+        from lifecycle import iter_md_files
+        for md_file in iter_md_files(entries_dir, recursive=True):
             em = _parse_entry_md_file(md_file, root, project_id=active_pid, project_name=active_pname)
             if em:
                 entries.append(em)
@@ -449,11 +582,16 @@ def load_project(root: Path) -> dict[str, Any]:
     specs: dict[str, dict[str, str]] = {}
     specs_dir = mem_dir / "specs"
     if specs_dir.is_dir():
+        from lifecycle import is_junk_sidecar_name, iter_md_files
         for mod_dir in sorted(specs_dir.iterdir()):
-            if mod_dir.is_dir():
-                specs[mod_dir.name] = {}
-                for sf in sorted(mod_dir.glob("*.md")):
+            if not mod_dir.is_dir() or is_junk_sidecar_name(mod_dir.name):
+                continue
+            specs[mod_dir.name] = {}
+            for sf in iter_md_files(mod_dir, recursive=False):
+                try:
                     specs[mod_dir.name][sf.stem] = sf.read_text(encoding="utf-8").strip()
+                except (UnicodeDecodeError, OSError):
+                    continue
 
     # Load workflows
     workflows: dict[str, Any] = {}
@@ -467,8 +605,15 @@ def load_project(root: Path) -> dict[str, Any]:
 
     # Inspect all assets & check staleness / QA rules
     asset_Set: set[str] = set()
-    for p in sorted((root / "assets").rglob("*.png")) if (root / "assets").is_dir() else []:
-        asset_Set.add(str(p.relative_to(root)).replace("\\", "/"))
+    asset_exts = {".png", ".jpg", ".jpeg", ".webp"}
+    if (root / "assets").is_dir():
+        from lifecycle import is_junk_sidecar_name
+        for p in sorted((root / "assets").rglob("*")):
+            if not p.is_file() or p.suffix.lower() not in asset_exts:
+                continue
+            if is_junk_sidecar_name(p.name) or any(is_junk_sidecar_name(part) for part in p.parts):
+                continue
+            asset_Set.add(str(p.relative_to(root)).replace("\\", "/"))
     for e in entries:
         for a in e.get("assets") or []:
             if isinstance(a, dict) and a.get("path"):
@@ -489,6 +634,14 @@ def load_project(root: Path) -> dict[str, Any]:
         info["module"] = matched_mod or "unassigned"
         assets_info[rel_path] = info
 
+    # Paths explicitly marked rejected/draft_violation in entries are intentional
+    # counter-examples — still inspect, but do not fail gate / stale on their QA diffs.
+    intentional_reject_paths: set[str] = set()
+    for e in entries:
+        for a in e.get("assets") or []:
+            if isinstance(a, dict) and a.get("role") in ("rejected", "draft_violation") and a.get("path"):
+                intentional_reject_paths.add(str(a["path"]))
+
     # Run QA validation per asset against its module's specs
     qa_issues: list[dict[str, Any]] = []
     for rel_path, info in assets_info.items():
@@ -500,15 +653,32 @@ def load_project(root: Path) -> dict[str, Any]:
             issues.append("文件缺失 (File Missing)")
         else:
             allowed_res = mspecs.get("allowed_resolutions") or ([mspecs["resolution"]] if mspecs.get("resolution") else [])
-            if allowed_res and info.get("resolution") not in allowed_res:
+            res_ok = (not allowed_res) or (info.get("resolution") in allowed_res)
+            if allowed_res and not res_ok:
                 issues.append(f"分辨率不符：当前 {info.get('resolution')}，模块要求 {' / '.join(allowed_res)}")
+            # Aspect contract only for sizes NOT already on the whitelist
+            # (modules like character.Astra allow both 1:1立绘 and 2:1三视图).
+            expected_ar = str(mspecs.get("aspect_ratio") or "").strip()
+            if expected_ar and (not res_ok) and info.get("width") and info.get("height"):
+                try:
+                    from skills_kit.image_gates import _aspect_relation
+                    ar_rel = _aspect_relation(int(info["width"]), int(info["height"]), expected_ar)
+                    if ar_rel.get("hard_fail"):
+                        issues.append(
+                            f"画幅比例不符：模块要求 aspect_ratio={expected_ar}，"
+                            f"实测为 {ar_rel.get('simplified')} ({info.get('resolution')})"
+                        )
+                except Exception:
+                    pass
             if mspecs.get("alpha_required") and not info.get("has_alpha"):
                 issues.append(f"缺失透明通道：当前色彩模式为 {info.get('mode')}，模块要求 RGBA 透明通道")
             if mspecs.get("max_size_kb") and info.get("size_kb", 0) > mspecs["max_size_kb"]:
                 issues.append(f"文件体积超标：当前 {info.get('size_kb')} KB > 上限 {mspecs['max_size_kb']} KB")
         info["qa_issues"] = issues
-        info["qa_passed"] = len(issues) == 0
-        if issues:
+        info["qa_intentional_reject"] = rel_path in intentional_reject_paths
+        # Intentional rejected samples keep issue text for atlas, but do not fail the gate.
+        info["qa_passed"] = (len(issues) == 0) or info["qa_intentional_reject"]
+        if issues and not info["qa_intentional_reject"]:
             qa_issues.append({"path": rel_path, "module": mod_id, "issues": issues})
 
     # Check staleness on entries (compare recorded sha256_16 & QA status of anchored assets)
@@ -519,11 +689,17 @@ def load_project(root: Path) -> dict[str, Any]:
             if not isinstance(a, dict):
                 continue
             ap = a.get("path", "")
+            role = str(a.get("role") or "")
             expected_sha = a.get("sha256_16")
             actual = assets_info.get(ap, {})
+            if role in ("rejected", "draft_violation"):
+                # Counter-example drafts: hash drift is expected when regenerating bad samples;
+                # pipeline violations are the point of the sample — never mark entry STALE for them.
+                a["actual"] = {k: v for k, v in actual.items() if k != "data_uri"}
+                continue
             if expected_sha and actual.get("sha256_16") and expected_sha != actual.get("sha256_16"):
                 reasons.append(f"关联图片 {ap} 哈希已变更（记录 {expected_sha[:8]}… → 当前 {actual['sha256_16'][:8]}…）")
-            if actual.get("qa_issues"):
+            if actual.get("qa_issues") and not actual.get("qa_intentional_reject"):
                 reasons.append(f"关联图片 {ap} 存在管线违规：{'；'.join(actual['qa_issues'])}")
             a["actual"] = {k: v for k, v in actual.items() if k != "data_uri"}
         e["stale"] = len(reasons) > 0
@@ -597,7 +773,7 @@ def load_project(root: Path) -> dict[str, Any]:
                     # Replace generic stub captions with rich summary/prompt
                     if cap.startswith("ingest conf=") or cap in ("✅ 正例（画师确认保留）", "❌ 反例（画师打回）", "参考图"):
                         if best_prompt:
-                            cap = f"✅ {best_prompt} · 自动归类：{info[category_short]} ({mod_id})"
+                            cap = f"✅ {best_prompt} · 自动归类：{info['category_short']} ({mod_id})"
                         elif e.get("summary") and not str(e.get("summary")).startswith("自动入库资产 "):
                             prefix = "✅ 正例定稿：" if role == "approved" else ("❌ 反例警示：" if role == "rejected" else "📌 ")
                             cap = prefix + str(e.get("summary"))
@@ -611,7 +787,7 @@ def load_project(root: Path) -> dict[str, Any]:
                 pmeta.get("reject_reason")
                 or pmeta.get("note")
                 or (f"🪄 {best_prompt[:80]}" if best_prompt else "")
-                or f"{info[category_icon]} {info[module_title]} · {Path(rel_path).name}"
+                or f"{info['category_icon']} {info['module_title']} · {Path(rel_path).name}"
             )
         if not role:
             role = "approved"
@@ -853,10 +1029,16 @@ def cmd_search(data: dict[str, Any], module: str, path: str, query: str) -> int:
 def cmd_validate(data: dict[str, Any]) -> int:
     print("🔍 pmem-art 资产管线规范与视觉锚点过期（Stale）自动质检报告\n")
     for path, info in data["assets"].items():
-        badge = "✅ PASS" if info["qa_passed"] else "❌ FAIL"
+        if info.get("qa_intentional_reject") and info.get("qa_issues"):
+            badge = "⚠️ REJECT"
+        elif info["qa_passed"]:
+            badge = "✅ PASS"
+        else:
+            badge = "❌ FAIL"
         print(f"  {badge}  {path:<52} [{info.get('resolution', '?'):<9} | {info.get('mode', '?'):<4} | {info.get('size_kb', 0):>5} KB | {info['module']}]")
         for iss in info["qa_issues"]:
-            print(f"         ↳ ⚠️ 违规项: {iss}")
+            prefix = "反例样张（不计入门禁）" if info.get("qa_intentional_reject") else "违规项"
+            print(f"         ↳ ⚠️ {prefix}: {iss}")
     print("\n📌 记忆条目过期核对（Stale Check）：")
     if not data["stale_entries"]:
         print("  ✅ 所有美术记忆条目的关联图片哈希与规格均匹配，无过期条目。")
@@ -1031,18 +1213,30 @@ def main() -> int:
     p_skills.add_argument("--install", action="store_true", help="安装或刷新全部技能文件到 .cursor / .claude / .agents")
     p_skills.add_argument("--list", action="store_true", help="列出所有内置美术技能与触发方式")
 
-    p_conv = sub.add_parser("converge", help="闭环自评收敛（Warm-Start + 单次原子生图&五维审图 converge step · 按档位目标阈值动态停机）")
-    p_conv.add_argument("action", choices=("start", "step", "round", "finish", "table", "status", "warm"), help="子操作（step=单次原子执行生图+五维VLM审图+动态阈值判定）")
+    p_vlm = sub.add_parser(
+        "vlm-judge",
+        help="独立视觉裁判配置/探测（有 API key 则 converge judge 调真视觉模型；无 key 回退 Agent 自评）",
+    )
+    p_vlm.add_argument("action", nargs="?", default="status", choices=("status", "probe", "config", "show", "test", "run"))
+    p_vlm.add_argument("--image", "-i", default="", help="probe 时要审的图片路径")
+    p_vlm.add_argument("--scale", default="medium", choices=("low", "medium", "high", "recompose"))
+    p_vlm.add_argument("--goal", default="", help="任务简述（仅作裁判上下文）")
+    p_vlm.add_argument("--module", "-m", default="", help="模块 ID")
+
+    p_conv = sub.add_parser("converge", help="闭环收敛（Warm-Start + 严格两步分离：converge generate 仅生图 -> converge judge 独立VLM审图 · 按档位目标阈值动态停机）")
+    p_conv.add_argument("action", choices=("start", "generate", "judge", "step", "round", "finish", "table", "status", "warm"), help="子操作（generate=仅生图无打分；judge=对已完成图片独立VLM五维审图）")
     p_conv.add_argument("--session", "--id", dest="session", default="latest", help="会话 ID（默认 latest，支持 --id 或 --session）")
     p_conv.add_argument("--goal", "--brief", "-g", dest="goal", default="", help="本次生图目标描述（支持 --goal 或 --brief）")
-    p_conv.add_argument("--generate-cmd", dest="generate_cmd", default="", help="step 原子调用时可选的生图命令（生图后立即在同一调用内执行五维审图打分）")
+    p_conv.add_argument("--generate-cmd", dest="generate_cmd", default="", help="仅 converge generate 可带的生图命令；judge 阶段传入会被拒绝")
     p_conv.add_argument("--module", "-m", default="", help="目标模块 ID")
     p_conv.add_argument("--ref-image", default="", help="垫图/参考图路径（若有）")
+    p_conv.add_argument("--aspect-ratio", dest="aspect_ratio", default="", help="目标画幅比例（如 9:16, 4:3, 3:4；默认跟随参考图比例）")
+    p_conv.add_argument("--reference-image-paths", dest="reference_image_paths", default="", help="垫图路径列表（逗号分隔；默认跟随 --ref-image）")
     p_conv.add_argument("--ref-analysis", default="", help="参考图视觉解构结论摘要")
-    p_conv.add_argument("--threshold", type=float, default=9.5, help="合格分数线（默认 9.5）")
+    p_conv.add_argument("--threshold", type=float, default=9.6, help="合格分数线（默认 9.6）")
     p_conv.add_argument("--max-rounds", type=int, default=8, help="最大收敛轮次（默认 8）")
     p_conv.add_argument("--mode", dest="converge_mode", choices=("quality", "fast"), default="quality",
-                        help="quality=完整8×9.5（默认）；fast=warm-start 置信高时可 fast-track")
+                        help="quality=完整8×9.6（默认）；fast=warm-start 置信高时可 fast-track")
     p_conv.add_argument("--scale", dest="converge_scale", choices=("low", "medium", "high", "recompose"), default="",
                         help="收敛强度：low=只修缺陷，medium=补足加小优化（默认），high=允许重构构图和重做光影，recompose=按用户指定方向改构图")
     p_conv.add_argument("--recompose-dir", dest="recompose_dir", default="",
@@ -1056,14 +1250,18 @@ def main() -> int:
     p_conv.add_argument("--defects", default="", help="本轮不合理/缺陷之处")
     p_conv.add_argument("--next-fix", default="", help="下一轮叠加修正策略")
     p_conv.add_argument("--prompt", "-p", default="", help="本轮使用的 Prompt")
-    p_conv.add_argument("--apply", action="store_true", help="finish 时自动将胜出图与踩坑红线写入 .memory-art")
-    p_conv.add_argument("--no-apply", action="store_true", help="finish 时仅打印表格不写入记忆")
+    p_conv.add_argument(
+        "--apply",
+        action="store_true",
+        help="兼容旧用法：finish 默认已写入记忆，可省略；与 --no-apply 同时出现时以 --no-apply 为准",
+    )
+    p_conv.add_argument("--no-apply", action="store_true", help="finish 时仅结算/出报告，不写入记忆（默认会写）")
     p_conv.add_argument("--verbose", "-v", action="store_true", help="打印全量 Markdown 报告（默认静默：一行结论+小提示）")
     p_conv.add_argument("--silent", action="store_true", default=True, help="静默自动驾驶（默认开启）")
     p_conv.add_argument("--no-silent", action="store_true", help="关闭静默，等同 --verbose 的报告倾倒")
 
     p_improve = sub.add_parser("improve", help="自我迭代：扫描反思+反馈 → 更新口味档案（/pmem-improve）")
-    p_improve.add_argument("action", nargs="?", default="run", choices=("run", "progress", "reflect"), help="run|progress")
+    p_improve.add_argument("action", nargs="?", default="run", choices=("run", "progress", "reflect"), help="run|progress|reflect")
     p_improve.add_argument("--last", type=int, default=20, help="扫描最近 N 份反思")
     p_improve.add_argument("--dry-run", action="store_true", help="只报告不写档案")
     p_improve.add_argument("--silent", action="store_true", help="静默模式（一行小提示）")
@@ -1186,6 +1384,17 @@ def main() -> int:
             silent=not bool(getattr(args, "verbose", False)),
             verbose=bool(getattr(args, "verbose", False)),
         )
+    if args.command == "vlm-judge":
+        from vlm_judge import cmd_vlm_judge
+        return cmd_vlm_judge(
+            root,
+            data,
+            action=getattr(args, "action", "status") or "status",
+            image=getattr(args, "image", "") or "",
+            scale=getattr(args, "scale", "medium") or "medium",
+            goal=getattr(args, "goal", "") or "",
+            module=getattr(args, "module", "") or "",
+        )
     if args.command == "converge":
         from skills_kit import cmd_converge
         return cmd_converge(
@@ -1212,6 +1421,8 @@ def main() -> int:
             converge_mode=getattr(args, "converge_mode", "quality") or "quality",
             scale=getattr(args, "converge_scale", "") or "",
             recompose_dir=getattr(args, "recompose_dir", "") or "",
+            aspect_ratio=getattr(args, "aspect_ratio", "") or "",
+            reference_image_paths=getattr(args, "reference_image_paths", "") or None,
             draft_ok=bool(getattr(args, "draft", False)),
             verbose=bool(getattr(args, "verbose", False) or getattr(args, "no_silent", False)),
             silent=not bool(getattr(args, "verbose", False) or getattr(args, "no_silent", False)),
@@ -1249,11 +1460,12 @@ def main() -> int:
 def _cli_entry() -> int:
     rc = main()
     try:
-        if len(sys.argv) > 1 and sys.argv[1] in (
+        atlas_commands = {
             "init", "bootstrap", "sync", "accept", "place",
             "ingest", "classify-watch", "feedback", "note",
             "converge", "improve", "taste", "learn", "hook",
-        ):
+        }
+        if any(a in atlas_commands for a in sys.argv[1:]):
             p = argparse.ArgumentParser(add_help=False)
             p.add_argument("--root", default=".")
             known, _ = p.parse_known_args()

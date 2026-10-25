@@ -1,14 +1,14 @@
 ---
 name: pmem-concept
-description: 【截图可见·必读】/pmem-concept 与 /art-concept（原画/概念图/Key Art）与 /pmem-draw 一样，强制执行「最多8轮、合格线≥9.5分」闭环自评收敛：生1张→五维打分+指出不合理处→<9.5则叠加修正继续生→达标即停或满8轮挑最高分→输出全轮次评分表并沉淀记忆。触发例：「/pmem-concept 画一张青瓷废土主视觉Key Art」「/art-concept [附参考] 同氛围气氛图」。Prompt 采用 ZHO/Yolain/Comfy-FLUX 式完整自然语言句（主体靠前、正向写排斥项）。
+description: 【截图可见·必读】/pmem-concept 与 /art-concept（原画/概念图/Key Art）与 /pmem-draw 一样，强制执行「最多8轮、合格线≥9.6分」闭环自评收敛：生1张→五维打分+指出不合理处→<9.6则叠加修正继续生→达标即停或满8轮挑最高分→默认静默结算并沉淀记忆。触发例：「/pmem-concept 画一张青瓷废土主视觉Key Art」「/art-concept [附参考] 同氛围气氛图」。Prompt 采用 ZHO/Yolain/Comfy-FLUX 式完整自然语言句（主体靠前、正向写排斥项）。
 ---
 
 # `/pmem-concept`（别名 `/art-concept`）— 原画 / 概念图 / Key Art
 
 > ⚠️ **【强制闭环 · 与 `/pmem-draw` 同等】**  
 > 本技能生成原画/概念图/Key Art 时，**必须**跑满同一套收敛规则：  
-> **最多 8 轮生图 · 合格线 `≥ 9.5 / 10.0` · 未达标叠加修正继续生 · 满 8 轮挑全阶段最高分 · 最终输出评分优劣总表并写入 `.memory-art`**。  
-> **禁止只生一张图就交差**（除非第 1 轮真实严苛评分就 ≥ 9.5）。
+> **最多 8 轮生图 · 合格线 `≥ 9.6 / 10.0` · 未达标叠加修正继续生 · 满 8 轮挑全阶段最高分 · `finish` 默认静默写记忆（全量表仅 `--verbose`）**。  
+> **禁止只生一张图就交差**（除非第 1 轮真实严苛评分就 ≥ 9.6）。
 
 ## 怎么用（复制即用）
 ```text
@@ -18,7 +18,7 @@ description: 【截图可见·必读】/pmem-concept 与 /art-concept（原画/�
 ```
 
 ## 原理（截图摘要）
-1. **Warm-Start + 与 draw 同等 8×≥9.5** → 2. `search`/口味召回 → 3. **FLUX 完整句** → 4. 垫图解构 → 5. `converge` → 6. `finish` 静默自动驾驶（一行小提示；improve/learn 为进阶 peek）
+1. **Warm-Start + 与 draw 同等 8×≥9.6** → 2. `search`/口味召回 → 3. **FLUX 完整句** → 4. 垫图解构 → 5. `converge` → 6. `finish` 静默自动驾驶（一行小提示；improve/learn 为进阶 peek）
 
 你现在运行在 **pmem-art 原画 / 概念图 / Key Art 模式**（对标 ZHO Comfy-FLUX 与 Yolain 等 FLUX 系提示法）：用 **完整自然语言句子** 描述成片，**主体与构图靠前**；FLUX 系几乎无有效负向 Prompt，排斥项用正向措辞写进正文。
 
@@ -46,24 +46,24 @@ description: 【截图可见·必读】/pmem-concept 与 /art-concept（原画/�
 ### Step 1：召回记忆并开收敛会话
 ```bash
 python3 pmem_art.py search --module <scene.|character.|brand.模块>
-python3 pmem_art.py converge start --goal "<概念图目标>" --module <模块> [--ref-image …] [--ref-analysis …]
+python3 pmem_art.py converge start --goal "<概念图目标>" --module <模块> [--scale low|medium|high|recompose] [--recompose-dir "…"] [--ref-image …] [--ref-analysis …]
 ```
 
-### Step 2：最多 8 轮自评收敛（合格线 `>= 9.5`）
+### Step 2：最多 8 轮自评收敛（合格线 `>= 9.6`）
 每轮：
 1. 用上一轮缺陷的 **正向叠加修正** 重写完整句 Prompt（仍禁止只堆 negative tags）。
 2. 生成 **1 张** 概念图 / Key Art。
-3. 五维严苛打分 + 说出合理处与不合理处 → `converge round`。
-4. `>= 9.5` 立即停；`< 9.5` 且未满 8 轮则继续；满 8 轮挑最高分。
+3. 五维严苛打分 + 说出合理处与不合理处 → `converge generate` 然后 `converge judge`。
+4. `>= 9.6` 立即停；`< 9.6` 且未满 8 轮则继续；满 8 轮挑最高分。
 
 **概念图五维侧重**：
 1. 风格色板（2.5）2. 构图叙事与透视（2.5）3. 光影材质（2.0）4. 红线合规（1.5）5. 氛围/意图还原（1.5）
 
 ### Step 3：结算与沉淀
 ```bash
-python3 pmem_art.py converge finish --apply
+python3 pmem_art.py converge finish
 ```
-向用户展示：胜出图、全轮次评分表、最终 Prompt 全文、已写入的 recipe/redline。
+向用户默认展示：胜出图 + 一句结论（全轮次评分表 / Prompt 全文仅在 `--verbose` 或用户要报告时）。
 
 ## 四、与 `/pmem-draw` 的分工
 - **`/pmem-draw`**：通用单图收敛（角色立绘、道具、单件 UI 等）
@@ -71,6 +71,6 @@ python3 pmem_art.py converge finish --apply
 
 
 ## 静默自动驾驶（Agent 必读）
-- `converge finish --apply` 后系统自动写反思/口味/learn 队列——**无需**再跑 `/pmem-improve`。
+- `converge finish` 后系统自动写反思/口味/learn 队列——**无需**再跑 `/pmem-improve`。
 - 对用户只展示胜出图 + 结论；若有「小提示」原样转述（每会话最多 1 条）。**禁止**旁白记忆写入。
 - 全量报告 / 教练 / 广度：用户明确要求或 `--verbose` / 进阶技能时再给。

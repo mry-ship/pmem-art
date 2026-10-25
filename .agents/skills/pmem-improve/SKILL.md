@@ -15,7 +15,7 @@ description: 当用户说「提升/自我迭代/总结这次/越用越好」或�
 ```
 
 ## 原理
-`finish --apply` → 反思 JSON + silent autopilot → taste.json；本技能只是把后台已经做过的事**大声读一遍**。
+`finish`（默认写记忆；`--no-apply` 可跳过） → 反思 JSON + silent autopilot → taste.json；本技能只是把后台已经做过的事**大声读一遍**。
 
 ```bash
 python3 pmem_art.py improve run          # 完整报告（peek）

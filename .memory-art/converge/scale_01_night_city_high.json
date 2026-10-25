@@ -1,7 +1,7 @@
 {
   "session_id": "scale_01_night_city_high",
   "started_at": "2026-10-25 05:02:49 UTC+8",
-  "goal": "高强度Showcase重构（~65%改动，达标阈值 >=9.50）：锁死画风与女侠身份，加入烈风朱红飘带、长剑雷电弧光、远山瀑布与银河星璇",
+  "goal": "高强度Showcase重构（~65%改动，达标阈值 >=9.50）：锁死画风与男侠身份，加入烈风朱红飘带、长剑雷电弧光、远山瀑布与银河星璇",
   "module": "scene.celestial_night_city",
   "mode": "ref_image_guided",
   "converge_mode": "quality",
@@ -34,7 +34,7 @@
   "fast_track": false,
   "draft_ok": false,
   "ref_image": "comparison/style_refs/style_ref_01_night_city.png",
-  "ref_analysis": "东方仙侠不夜城参考原图：左下飞檐女侠持剑俯瞰万家灯火楼阁群与弯月星穹",
+  "ref_analysis": "东方仙侠不夜城参考原图：左下飞檐男侠持剑俯瞰万家灯火楼阁群与弯月星穹",
   "threshold": 9.5,
   "accept_threshold": 9.5,
   "max_rounds": 8,
@@ -69,10 +69,10 @@
       "weighted_score": 8.79,
       "audit_warnings": [],
       "stagnated": false,
-      "strengths": "保留仙侠画风与飞檐女侠主角",
+      "strengths": "保留仙侠画风与飞檐男侠主角",
       "defects": "缺乏史诗级动态张力与视觉奇观焦点",
       "next_fix": "继续收敛至 >= 9.50",
-      "prompt": "[HIGH R1 | ref=comparison/style_refs/style_ref_01_night_city.png] 高强度Showcase重构（~65%改动，达标阈值 >=9.50）：锁死画风与女侠身份，加入烈风朱红飘带、长剑雷电弧光、远山瀑布与银河星璇",
+      "prompt": "[HIGH R1 | ref=comparison/style_refs/style_ref_01_night_city.png] 高强度Showcase重构（~65%改动，达标阈值 >=9.50）：锁死画风与男侠身份，加入烈风朱红飘带、长剑雷电弧光、远山瀑布与银河星璇",
       "passed": false,
       "should_continue_next_round": true,
       "decision": "CONTINUE_NEXT_ROUND",
@@ -91,7 +91,7 @@
         },
         {
           "category": "keep",
-          "lesson": "保留本轮已做对的：保留仙侠画风与飞檐女侠主角",
+          "lesson": "保留本轮已做对的：保留仙侠画风与飞檐男侠主角",
           "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
           "from_score": "8.79"
         }
@@ -130,7 +130,7 @@
       "strengths": "引入朱红飘带与星穹光柱",
       "defects": "长剑雷电冷光与暖金灯海碰撞未满 9.50",
       "next_fix": "继续收敛至 >= 9.50",
-      "prompt": "[HIGH R2 | ref=comparison/style_refs/style_ref_01_night_city.png] 高强度Showcase重构（~65%改动，达标阈值 >=9.50）：锁死画风与女侠身份，加入烈风朱红飘带、长剑雷电弧光、远山瀑布与银河星璇",
+      "prompt": "[HIGH R2 | ref=comparison/style_refs/style_ref_01_night_city.png] 高强度Showcase重构（~65%改动，达标阈值 >=9.50）：锁死画风与男侠身份，加入烈风朱红飘带、长剑雷电弧光、远山瀑布与银河星璇",
       "passed": false,
       "should_continue_next_round": true,
       "decision": "CONTINUE_NEXT_ROUND",
@@ -188,7 +188,7 @@
       "strengths": "主美级Showcase重构：朱红飘带+青蓝雷电剑芒+悬崖飞瀑+金色星璇，校准总分 9.82 (>=9.50) 达标定稿",
       "defects": "无，已满 >=9.50 阈值停机",
       "next_fix": "已达标，无需继续叠加",
-      "prompt": "[HIGH R3 | ref=comparison/style_refs/style_ref_01_night_city.png] 高强度Showcase重构（~65%改动，达标阈值 >=9.50）：锁死画风与女侠身份，加入烈风朱红飘带、长剑雷电弧光、远山瀑布与银河星璇",
+      "prompt": "[HIGH R3 | ref=comparison/style_refs/style_ref_01_night_city.png] 高强度Showcase重构（~65%改动，达标阈值 >=9.50）：锁死画风与男侠身份，加入烈风朱红飘带、长剑雷电弧光、远山瀑布与银河星璇",
       "passed": true,
       "should_continue_next_round": false,
       "decision": "STOP_TARGET_REACHED",
@@ -233,7 +233,7 @@
       "updated_at": "2026-10-25 05:02:49 UTC+8"
     },
     "module": "scene.celestial_night_city",
-    "goal": "高强度Showcase重构（~65%改动，达标阈值 >=9.50）：锁死画风与女侠身份，加入烈风朱红飘带、长剑雷电弧光、远山瀑布与银河星璇",
+    "goal": "高强度Showcase重构（~65%改动，达标阈值 >=9.50）：锁死画风与男侠身份，加入烈风朱红飘带、长剑雷电弧光、远山瀑布与银河星璇",
     "confidence": 0.3,
     "fast_track_eligible": false,
     "confidence_reasons": [
@@ -308,7 +308,7 @@
     },
     {
       "category": "keep",
-      "lesson": "保留本轮已做对的：保留仙侠画风与飞檐女侠主角",
+      "lesson": "保留本轮已做对的：保留仙侠画风与飞檐男侠主角",
       "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
       "from_score": "8.79"
     },
@@ -381,7 +381,7 @@
     "strengths": "主美级Showcase重构：朱红飘带+青蓝雷电剑芒+悬崖飞瀑+金色星璇，校准总分 9.82 (>=9.50) 达标定稿",
     "defects": "无，已满 >=9.50 阈值停机",
     "next_fix": "已达标，无需继续叠加",
-    "prompt": "[HIGH R3 | ref=comparison/style_refs/style_ref_01_night_city.png] 高强度Showcase重构（~65%改动，达标阈值 >=9.50）：锁死画风与女侠身份，加入烈风朱红飘带、长剑雷电弧光、远山瀑布与银河星璇",
+    "prompt": "[HIGH R3 | ref=comparison/style_refs/style_ref_01_night_city.png] 高强度Showcase重构（~65%改动，达标阈值 >=9.50）：锁死画风与男侠身份，加入烈风朱红飘带、长剑雷电弧光、远山瀑布与银河星璇",
     "passed": true,
     "should_continue_next_round": false,
     "decision": "STOP_TARGET_REACHED",

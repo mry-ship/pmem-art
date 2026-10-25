@@ -47,3 +47,24 @@ classify:
   path_weight: 0.25
   image_trait_weight: 0.25
   module_match_weight: 0.15
+converge:
+  merged_generate_and_judge: false
+  stop_policy: dynamic_threshold
+  default_scale: medium
+  max_rounds: 8
+  target_thresholds:
+    low: 9.6
+    medium: 9.6
+    high: 9.6
+    recompose: 9.6
+# 独立视觉裁判：填了 key（或环境变量）则 converge judge 调真视觉模型；留空则 Agent 自评
+vlm_judge:
+  enabled: auto          # auto=有 key 就用；always=同 auto（无 key 仍回退自评）；never=强制自评
+  provider: openai       # openai | openai_compatible | anthropic
+  api_key: ""            # 不建议写进仓库；优先用环境变量或 .memory-art/vlm_judge.local.yaml
+  api_key_env: PMEM_VLM_API_KEY
+  base_url: ""           # 兼容中转时填写，如 https://api.openai.com/v1
+  model: ""              # 默认 openai→gpt-4o，anthropic→claude-sonnet-4-20250514
+  timeout_sec: 90
+  on_error: fallback     # fallback=失败回退 Agent 自评；fail=审图失败不给分
+  write_sidecar: true

@@ -1,0 +1,309 @@
+{
+  "session_id": "rerun_01_medium",
+  "started_at": "2026-10-25 17:47:23 UTC+8",
+  "goal": "【强垫图medium】锁机位姿态浅灰白袍男侠，只补轮廓光与雾层材质",
+  "module": "scene.celestial_night_city",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "medium",
+  "scale_profile": {
+    "scale": "medium",
+    "label": "中强度 · 补足加小优化动态达标闭环 (Balance & Polish Dynamic Threshold >=9.6)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 8,
+    "target_score_threshold": 9.6,
+    "dim_weights": {
+      "composition": 0.2,
+      "lighting_color": 0.25,
+      "perspective_anatomy": 0.2,
+      "texture_detail": 0.2,
+      "spec_style": 0.15
+    },
+    "next_fix_budget": "moderate (~35% prompt delta, <=45%; cumulative <=60% vs first)",
+    "max_prompt_delta_ratio": 0.45,
+    "max_prompt_delta_vs_first": 0.6,
+    "allow_recompose": false,
+    "allow_viewpoint_change": false,
+    "allow_action_pose_change": false,
+    "allow_element_count_change": false,
+    "allow_layout_change": false,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "viewpoint_angle (不改机位与镜头视角)",
+      "character_action_and_pose (不改动作与姿态)",
+      "element_count (不增删主体元素)",
+      "scene_layout (不重排画面布局)",
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)"
+    ],
+    "min_round_leap": 0.22,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "仙侠水墨夜色风：【收敛强度: MEDIUM (补足加小优化)】保持原图核心画风、机位、姿态与主体，加强侧逆光、留白层次与媒介笔触"
+  },
+  "target_score_threshold": 9.6,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "comparison/style_refs/style_ref_01_night_city.png",
+  "ref_analysis": "原图像素锚点：①左下飞檐背影男性持剑侠客 ②浅灰/灰白袍非青绿绣金 ③人物占比小 ④中轴暖橙灯海大道 ⑤冷灰蓝雾夜+暗天空 ⑥密檐屋顶纹理 ⑦行星弧地平。禁止改性别、禁止封面化放大主角。",
+  "default_aspect_ratio": "9:16",
+  "default_reference_image_paths": [
+    "/Users/yanghu/Desktop/pmem-art/comparison/style_refs/style_ref_01_night_city.png"
+  ],
+  "aspect_ratio": "9:16",
+  "reference_image_paths": [
+    "/Users/yanghu/Desktop/pmem-art/comparison/style_refs/style_ref_01_night_city.png"
+  ],
+  "ref_physical_traits": {
+    "exists": true,
+    "size_bytes": 492662,
+    "size_kb": 481.1,
+    "width": 405,
+    "height": 720,
+    "aspect_ratio": "9:16",
+    "canonical_aspect_ratio": "9:16",
+    "color_entropy": 7.96
+  },
+  "param_validation": {
+    "valid": true,
+    "validation_passed": true,
+    "case_id": "rerun_01_medium",
+    "scale": "medium",
+    "aspect_ratio": "9:16",
+    "ref_aspect_ratio": "9:16",
+    "ref_dimensions": "405x720",
+    "output_aspect_ratio": "",
+    "output_dimensions": "",
+    "reference_image": "/Users/yanghu/Desktop/pmem-art/comparison/style_refs/style_ref_01_night_city.png",
+    "reference_image_paths": [
+      "/Users/yanghu/Desktop/pmem-art/comparison/style_refs/style_ref_01_night_city.png"
+    ],
+    "inherited_default_aspect_ratio": false,
+    "inherited_default_pad_image": true,
+    "matched_ref_aspect_ratio": true,
+    "matched_ref_pad_image": true,
+    "matched_output_aspect_ratio": true,
+    "three_step_stage": "step1_start",
+    "three_step_verified": false,
+    "warnings": []
+  },
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.6,
+  "accept_threshold": 9.6,
+  "max_rounds": 8,
+  "ready_to_finish": false,
+  "status": "abandoned",
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/comparison/style_refs/style_ref_01_night_city.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "rerun_01_medium",
+        "scale": "medium",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "405x720",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/comparison/style_refs/style_ref_01_night_city.png",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/comparison/style_refs/style_ref_01_night_city.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": []
+      },
+      "generated_at": "17:49:55",
+      "image": "comparison/retest/rerun/rerun_01_medium_r1.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 373664,
+        "size_kb": 364.9,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.24
+      },
+      "raw_score": 8.76,
+      "score": 8.76,
+      "target_score_threshold": 9.6,
+      "dims": "构图9.0/光影8.8/透视8.6/质感8.6/风格8.8",
+      "dims_parsed": {
+        "composition": 9.0,
+        "lighting_color": 8.8,
+        "perspective_anatomy": 8.6,
+        "texture_detail": 8.6,
+        "spec_style": 8.8
+      },
+      "weighted_score": 8.76,
+      "audit_warnings": [],
+      "stagnated": false,
+      "strengths": "贴原图俯瞰与浅袍男侠；雾层与轮廓相对原图略提",
+      "defects": "轮廓光仍偏弱；瓦片湿润高光不足；剑身材质分层弱",
+      "next_fix": "加强发丝袍缘轮廓光与瓦/剑材质；不改机位浅灰袍",
+      "prompt": "仙侠水墨夜色风：【收敛强度: MEDIUM (补足加小优化)】保持原图核心画风、机位、姿态与主体，加强侧逆光、留白层次与媒介笔触 | 仙侠水墨夜色风： 保持原图核心画风机位姿态主体，加强侧逆光与媒介质感 | 【强垫图】comparison/style_refs/style_ref_01_night_city.png 浅灰白袍男侠俯瞰；补轮廓光与雾层；画幅9:16 | 约束：不改机位与镜头视角；不改动作与姿态；不增删主体元素；不重排画面布局；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观",
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "judge_source": "agent_self_judge",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：轮廓光仍偏弱；瓦片湿润高光不足；剑身材质分层弱",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.76"
+        },
+        {
+          "category": "material",
+          "lesson": "本轮短板偏「material」：轮廓光仍偏弱；瓦片湿润高光不足；剑身材质分层弱",
+          "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+          "from_score": "8.76"
+        },
+        {
+          "category": "narrative_camera",
+          "lesson": "本轮短板偏「narrative_camera」：轮廓光仍偏弱；瓦片湿润高光不足；剑身材质分层弱",
+          "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+          "from_score": "8.76"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "17:49:55"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "Project-Celadon (东方青瓷星盘幻想)",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "Project-Celadon (东方青瓷星盘幻想)",
+      "layer_scope": "private",
+      "bound_root": "/Users/yanghu/Desktop/pmem-art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "",
+      "created_at": "2026-10-25 01:33:57 UTC+8",
+      "updated_at": "2026-10-25 17:30:00 UTC+8"
+    },
+    "module": "scene.celestial_night_city",
+    "goal": "【强垫图medium】锁机位姿态浅灰白袍男侠，只补轮廓光与雾层材质",
+    "confidence": 0.45,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "个人口味档案非空",
+      "红线可控（0 条）",
+      "挂载 2 张项目知识卡 + 0 张全局美术底层基础卡"
+    ],
+    "top_recipes": [],
+    "top_redlines": [],
+    "art_decisions": [],
+    "private_knowledge": [
+      {
+        "id": "atmospheric-perspective",
+        "title": "大气透视",
+        "body": "远景降对比降饱和，近景保持边缘清晰，增强纵深。",
+        "layer_scope": "private"
+      },
+      {
+        "id": "golden-hour-scene",
+        "title": "黄金时刻场景光",
+        "body": "低角度暖光 + 长影；避开正午顶光死白。",
+        "layer_scope": "private"
+      }
+    ],
+    "shared_knowledge": [],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [
+        "侧逆光 / rim light",
+        "左上45°暖金主光 + 冷黛环境阴影",
+        "黄金时刻光"
+      ],
+      "preferred_composition": [
+        "7.5头身标准立绘留白 (>16px)",
+        "30°等轴测游戏镜头 (Isometric)",
+        "九宫格四角48px固定 + 中央纯色拉伸"
+      ],
+      "preferred_line_weight": [
+        "干净金墨细描边 (Cel-shaded clean ink line)"
+      ],
+      "preferred_color_temperature": [
+        "青瓷白+墨蓝+鎏金倾向 (70/20/10 色板定律)",
+        "外青瓷内鎏金双层色阶",
+        "青瓷白+墨蓝+鎏金倾向"
+      ],
+      "banned_habits": [
+        "赛博霓虹/霓虹紫 (#FF00FF / #00FFFF)",
+        "错误头身比/5头身幼态大头",
+        "九宫格中央拉伸区画圆盘暗纹或斜线",
+        "漏画左眼黄铜星盘义眼",
+        "RGB白底/黑底未去背伪透明网格",
+        "赛博霓虹/霓虹紫",
+        "严禁使用高饱和赛博洋红("
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: Project-Celadon (东方青瓷星盘幻想) (.memory-art/projects/pmem-art/)\n- 目标模块: scene.celestial_night_city\n- 置信度: 0.45（fast-track 资格: 否）\n- 个人口味: 光影=侧逆光 / rim light / 左上45°暖金主光 + 冷黛环境阴影 / 黄金时刻光；构图=7.5头身标准立绘留白 (>16px) / 30°等轴测游戏镜头 (Isometric) / 九宫格四角48px固定 + 中央纯色拉伸；线宽=干净金墨细描边 (Cel-shaded clean ink line)；色温=青瓷白+墨蓝+鎏金倾向 (70/20/10 色板定律) / 外青瓷内鎏金双层色阶 / 青瓷白+墨蓝+鎏金倾向\n- 个人禁用习惯: 赛博霓虹/霓虹紫 (#FF00FF / #00FFFF)；错误头身比/5头身幼态大头；九宫格中央拉伸区画圆盘暗纹或斜线；漏画左眼黄铜星盘义眼；RGB白底/黑底未去背伪透明网格；赛博霓虹/霓虹紫；严禁使用高饱和赛博洋红(\n- 项目私有知识卡 (Private Layer):\n  · [atmospheric-perspective] 大气透视: 远景降对比降饱和，近景保持边缘清晰，增强纵深。\n  · [golden-hour-scene] 黄金时刻场景光: 低角度暖光 + 长影；避开正午顶光死白。",
+    "built_at": "2026-10-25 17:47:23 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：轮廓光仍偏弱；瓦片湿润高光不足；剑身材质分层弱",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.76"
+    },
+    {
+      "category": "material",
+      "lesson": "本轮短板偏「material」：轮廓光仍偏弱；瓦片湿润高光不足；剑身材质分层弱",
+      "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+      "from_score": "8.76"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：轮廓光仍偏弱；瓦片湿润高光不足；剑身材质分层弱",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "8.76"
+    }
+  ],
+  "ActionRequired": "GENERATE_ROUND_2",
+  "abandoned_at": "2026-10-25 19:06:19 UTC+8",
+  "abandon_reason": "hygiene: incomplete session closed during audit fix (2026-10-25)"
+}

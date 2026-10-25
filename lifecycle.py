@@ -26,6 +26,31 @@ def _warn_depth_cap(msg: str) -> None:
     print(f"⚠️ [pmem-art] {msg}", file=_sys.stderr)
 
 
+def is_junk_sidecar_name(name: str) -> bool:
+    """True for macOS AppleDouble (`._*`), Finder junk, and Office lock files."""
+    n = (name or "").strip()
+    if not n:
+        return True
+    if n.startswith("._"):
+        return True
+    if n in (".DS_Store", "Thumbs.db", "desktop.ini"):
+        return True
+    if n.startswith("~$"):
+        return True
+    return False
+
+
+def iter_md_files(directory: Path, *, recursive: bool = True):
+    """Yield ``*.md`` under directory, skipping AppleDouble / junk sidecars."""
+    if not directory.is_dir():
+        return
+    it = directory.rglob("*.md") if recursive else directory.glob("*.md")
+    for p in sorted(it):
+        if is_junk_sidecar_name(p.name):
+            continue
+        yield p
+
+
 def get_module_parent(mod_cfg: dict[str, Any] | None) -> str | None:
     """Return explicit parent/inherits target from module config (supports both `inherits` and `parent`)."""
     if not isinstance(mod_cfg, dict):
@@ -380,19 +405,28 @@ def default_config(project_name: str = "Untitled Art Project", mode: str = "youn
             "module_match_weight": 0.15,
         },
         "converge": {
-            "merged_generate_and_judge": True,
+            "merged_generate_and_judge": False,
             "stop_policy": "dynamic_threshold",
             "default_scale": "medium",
             "max_rounds": 8,
             "target_thresholds": {
-                "low": 9.5,
-                "medium": 9.5,
-                "high": 9.5,
-                "recompose": 9.5,
+                "low": 9.6,
+                "medium": 9.6,
+                "high": 9.6,
+                "recompose": 9.6,
             },
         },
-        "converge.merged_generate_and_judge": True,
-        "converge.stop_policy": "dynamic_threshold",
+        "vlm_judge": {
+            "enabled": "auto",
+            "provider": "openai",
+            "api_key": "",
+            "api_key_env": "PMEM_VLM_API_KEY",
+            "base_url": "",
+            "model": "",
+            "timeout_sec": 90,
+            "on_error": "fallback",
+            "write_sidecar": True,
+        },
     }
 
 
@@ -460,13 +494,13 @@ def ensure_cursor_stubs(root: Path) -> None:
         "---\n\n"
         "# pmem-art：个人美术积累记忆 & 内置生图技能\n\n"
         "## 1. 内置斜杠技能（用户输入即触发）\n"
-        "- **`/pmem-draw`（或 `/art-draw`）**：8轮 9.5分 闭环自评收敛生图！\n"
+        "- **`/pmem-draw`（或 `/art-draw`）**：8轮 9.6分 闭环自评收敛生图！\n"
         "  - 纯文本：`/pmem-draw 生成一张xxx风格的xxx图`\n"
         "  - 垫图模式：`/pmem-draw [丢入一张图] 生成一张xxx图`（先深度分析参考图构图/色板/光影/结构，再开始循环）\n"
-        "  - 循环规则：每次生成1张图 → 严苛五维自评打分（满分10）+ 说出合理亮点与**不合理之处** → `< 9.5` 分不算合格，叠加修正策略继续生下一张（最多8轮）→ 达标立即停止，或满8轮挑全阶段最高分 → 运行 `python3 pmem_art.py converge finish --apply` 输出全轮次评分优劣对比总表并沉淀记忆。\n"
-        "- **`/pmem-ui`（`/art-ui`）**：**【强制8轮≥9.5】** SpriteCook 式 UI Kit/HUD/九宫格整套（概念先行→组件表→9-slice→状态族）。\n"
-        "- **`/pmem-concept`（`/art-concept`）**：**【强制8轮≥9.5】** 原画/概念图/Key Art（ZHO·FLUX 完整句）— 与 draw 同等闭环，禁止只生一张。\n"
-        "- **`/pmem-icon`（`/art-icon`）**：**【强制8轮≥9.5】** jezweb 式一致化图标集/SVG（style-spec→分批→preview；关键枚闭环）。\n"
+        "  - 循环规则：每轮先 `converge generate` 生 1 张，再 `converge judge` 做严苛五维审图（满分10）+ 说出合理亮点与**不合理之处** → `< 9.6` 分不算合格，叠加修正策略继续下一轮（最多8轮）→ 达标立即停止，或满8轮挑全阶段最高分 → 运行 `python3 pmem_art.py converge finish`（默认写记忆；`--verbose` 才倾倒全轮次评分表）。\n"
+        "- **`/pmem-ui`（`/art-ui`）**：**【强制8轮≥9.6】** SpriteCook 式 UI Kit/HUD/九宫格整套（概念先行→组件表→9-slice→状态族）。\n"
+        "- **`/pmem-concept`（`/art-concept`）**：**【强制8轮≥9.6】** 原画/概念图/Key Art（ZHO·FLUX 完整句）— 与 draw 同等闭环，禁止只生一张。\n"
+        "- **`/pmem-icon`（`/art-icon`）**：**【强制8轮≥9.6】** jezweb 式一致化图标集/SVG（style-spec→分批→preview；关键枚闭环）。\n"
         "- **`/pmem-style-lock`（`/art-style`）**：从参考样张提炼风格圣经与色板锁定。\n"
         "- **`/pmem-critique`（`/art-check`）**：单图/批量图主美级五维审稿挑刺并写入红线。\n"
         "- **`/pmem-variant`（`/art-variant`）**：同角色跨画风分叉（Q版/水彩/像素）或表情动作差分。\n"
@@ -582,6 +616,8 @@ def list_image_files(root: Path, asset_roots: list[str]) -> list[Path]:
             continue
         for p in base.rglob("*"):
             if not p.is_file():
+                continue
+            if is_junk_sidecar_name(p.name) or any(is_junk_sidecar_name(part) for part in p.parts):
                 continue
             if any(part in IGNORE_DIR_NAMES for part in p.parts):
                 continue
@@ -1245,6 +1281,22 @@ def cmd_doctor_lifecycle(root: Path, data: dict[str, Any]) -> int:
         if ("promo" in paths or "marketing" in paths) and ("ui" in (cfg.get("category") or "") or "hud" in paths):
             conflicts.append(f"{mid}: 宣传向路径与 UI 生产模块可能冲突，建议拆分 parent")
 
+    specs_dir = root / MEMORY_DIR / "specs"
+    specs_mods = {
+        p.name
+        for p in specs_dir.iterdir()
+        if p.is_dir() and not is_junk_sidecar_name(p.name)
+    } if specs_dir.is_dir() else set()
+    entry_mods = {
+        str(e.get("module") or "")
+        for e in (data.get("entries") or [])
+        if isinstance(e, dict) and e.get("module")
+    }
+    missing_specs = sorted(
+        m for m in entry_mods
+        if m and m not in specs_mods and not str(m).startswith("vlm.")
+    )
+
     print("🩺 pmem-art doctor（覆盖率 · 孤儿 · 生命周期）\n")
     print(f"   lifecycle_mode : {config.get('project', {}).get('lifecycle_mode', '?')}")
     print(f"   gate.mode      : {config.get('gate', {}).get('mode', '?')}")
@@ -1252,10 +1304,15 @@ def cmd_doctor_lifecycle(root: Path, data: dict[str, Any]) -> int:
     print(f"   asset_roots    : {roots}")
     print(f"   modules        : active={len(actives)}  scaffold={len(scaffolds)}  candidates_pending={len(candidates)}")
     print(f"   assets         : total={total}  mapped={len(mapped)}  orphans={len(orphans)}  coverage={cov:.1f}%")
+    print(f"   specs          : dirs={len(specs_mods)}  entries_missing_specs={len(missing_specs)}")
     if orphans[:8]:
         print("\n   孤儿文件样本:")
         for o in orphans[:8]:
             print(f"      - {o}")
+    if missing_specs:
+        print("\n   有 entries 但缺 specs/ 目录:")
+        for m in missing_specs[:12]:
+            print(f"      ⚠️ {m}  → 建议补 `.memory-art/specs/{m}/`（管线规格 / 视觉设定 / 资产台账）")
     if conflicts:
         print("\n   多风格冲突提示:")
         for c in conflicts:

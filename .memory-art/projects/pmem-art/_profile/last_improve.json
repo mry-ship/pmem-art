@@ -1,9 +1,21 @@
 {
-  "ran_at": "2026-10-25 02:58:02 UTC+8",
-  "reflections_scanned": 5,
-  "avg_winner_score": 9.71,
-  "avg_rounds": 2.2,
+  "ran_at": "2026-10-25 18:00:33 UTC+8",
+  "reflections_scanned": 6,
+  "avg_winner_score": 9.62,
+  "avg_rounds": 3.17,
   "top_recurring_defects": [
+    {
+      "text": "剑刃冷钢高光仍不够锋利连续；近中景灯点锐度仍略逊原图；远楼密纹增益有限；局部雾仍盖脊",
+      "count": 1
+    },
+    {
+      "text": "剑刃冷钢高光仍略弱于原图；近中景灯点锐度仍差一点；远楼密纹增益有限；局部瓦脊高光略散",
+      "count": 1
+    },
+    {
+      "text": "近中景灯点锐度与原图仍有微差；远楼密纹仍略软；剑刃高光仍未完全贴原图；雾层局部仍盖脊",
+      "count": 1
+    },
     {
       "text": "猫咪发夹别在了右侧发丝，与上一张左前额发夹位置不一致",
       "count": 1
@@ -19,9 +31,15 @@
   ],
   "recipe_strengthen": [
     {
+      "module": "character.SunlitGirl",
+      "id": "CHAT20261025025802847RECIPE",
+      "summary": "[收敛胜出 9.8分] 窗边逆光斑驳树影黑耳机白猫发夹少女特写肖像 — 木漏日丁达尔光斑、皮肤次表面散射、发丝逆光金边与左侧白猫发夹",
+      "hint": "下次 warm-start 优先注入本条 recipe"
+    },
+    {
       "module": "scene.CelestialCity",
       "id": "CHAT20261025025801151RECIPE",
-      "summary": "[收敛胜出 9.8分] 俯瞰天穹仙侠万家灯火夜城与飞檐持剑女侠 — 飞檐琉璃瓦片、万家灯火鎏金中轴、云海丁达尔光与人物执剑姿态完",
+      "summary": "[收敛胜出 9.8分] 俯瞰天穹仙侠万家灯火夜城与飞檐持剑男侠 — 飞檐琉璃瓦片、万家灯火鎏金中轴、云海丁达尔光与人物执剑姿态完",
       "hint": "下次 warm-start 优先注入本条 recipe"
     },
     {
@@ -37,6 +55,8 @@
       "hint": "下次 warm-start 优先注入本条 recipe"
     }
   ],
-  "taste_changes": [],
+  "taste_changes": [
+    "preferred_composition: +特写"
+  ],
   "taste_path": ".memory-art/_profile/taste.json"
 }
