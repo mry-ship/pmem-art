@@ -9,8 +9,11 @@ import fnmatch
 import json
 import re
 import shutil
+import os
+import subprocess
+import sys
 from collections import defaultdict
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
@@ -1250,14 +1253,149 @@ def cmd_bootstrap(root: Path, data: dict[str, Any], mode: str, auto_accept_depth
     return 1
 
 
-def cmd_doctor_lifecycle(root: Path, data: dict[str, Any]) -> int:
+# ---------------------------------------------------------------------------
+# Doctor state · lazy hook 巡检（≥48h 才后台跑；默认用户无感）
+# ---------------------------------------------------------------------------
+
+DOCTOR_STATE_FILE = "last_doctor.json"
+DOCTOR_CLAIM_LOCK = "last_doctor.claim"
+DOCTOR_INTERVAL_HOURS = 48.0
+DOCTOR_CLAIM_TTL_MINUTES = 30.0
+DOCTOR_HOOK_EVENTS = frozenset({"pre-tool", "pre-gen", "stop"})
+
+
+def _doctor_now() -> datetime:
+    return datetime.now(timezone(timedelta(hours=8)))
+
+
+def _doctor_now_str() -> str:
+    return _doctor_now().strftime("%Y-%m-%d %H:%M:%S UTC+8")
+
+
+def doctor_state_path(root: Path) -> Path:
+    d = root / MEMORY_DIR / "_profile"
+    d.mkdir(parents=True, exist_ok=True)
+    return d / DOCTOR_STATE_FILE
+
+
+def doctor_claim_lock_path(root: Path) -> Path:
+    d = root / MEMORY_DIR / "_profile"
+    d.mkdir(parents=True, exist_ok=True)
+    return d / DOCTOR_CLAIM_LOCK
+
+
+def load_doctor_state(root: Path) -> dict[str, Any]:
+    p = doctor_state_path(root)
+    if not p.is_file():
+        return {}
+    try:
+        raw = json.loads(p.read_text(encoding="utf-8"))
+        return raw if isinstance(raw, dict) else {}
+    except Exception:
+        # Keep corrupt payload as .bak — never silently discard then overwrite memory of last run
+        try:
+            bak = p.with_suffix(".json.bak")
+            if not bak.exists():
+                p.replace(bak)
+        except Exception:
+            pass
+        return {}
+
+
+def save_doctor_state(root: Path, state: dict[str, Any]) -> Path:
+    """Atomic write of doctor profile only (never touches entries/modules/assets)."""
+    if not isinstance(state, dict):
+        raise TypeError("doctor state must be a dict")
+    p = doctor_state_path(root)
+    tmp = p.with_suffix(".tmp")
+    tmp.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    tmp.replace(p)
+    return p
+
+
+def _clear_doctor_claim_lock(root: Path) -> None:
+    try:
+        doctor_claim_lock_path(root).unlink(missing_ok=True)
+    except Exception:
+        pass
+
+
+def parse_doctor_timestamp(text: str) -> datetime | None:
+    s = (text or "").strip().replace(" UTC+8", "").strip()
+    if not s:
+        return None
+    slices = (s, s[:19], s[:10])
+    for cand in slices:
+        for fmt in ("%Y-%m-%d %H:%M:%S", "%Y-%m-%dT%H:%M:%S", "%Y-%m-%d"):
+            try:
+                dt = datetime.strptime(cand, fmt)
+                return dt.replace(tzinfo=timezone(timedelta(hours=8)))
+            except ValueError:
+                continue
+    return None
+
+
+def is_doctor_due(root: Path, *, interval_hours: float = DOCTOR_INTERVAL_HOURS) -> bool:
+    state = load_doctor_state(root)
+    last = parse_doctor_timestamp(str(state.get("last_run_at") or ""))
+    if last is None:
+        return True
+    return (_doctor_now() - last) >= timedelta(hours=interval_hours)
+
+
+def try_claim_lazy_doctor(
+    root: Path,
+    *,
+    interval_hours: float = DOCTOR_INTERVAL_HOURS,
+    claim_ttl_minutes: float = DOCTOR_CLAIM_TTL_MINUTES,
+) -> bool:
+    """
+    Claim a background doctor slot via O_EXCL lock.
+
+    ``last_run_at`` is only written by a successful ``run_doctor_quiet`` — so a
+    crashed child does not burn the full 48h window. In-flight is gated by the
+    claim lock TTL (default 30m) instead.
+    """
+    state = load_doctor_state(root)
+    now = _doctor_now()
+    last = parse_doctor_timestamp(str(state.get("last_run_at") or ""))
+    if last is not None and (now - last) < timedelta(hours=interval_hours):
+        return False
+
+    lock = doctor_claim_lock_path(root)
+    if lock.is_file():
+        age_sec = max(0.0, now.timestamp() - lock.stat().st_mtime)
+        if age_sec < claim_ttl_minutes * 60.0:
+            return False
+        _clear_doctor_claim_lock(root)
+
+    try:
+        fd = os.open(str(lock), os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+        try:
+            os.write(fd, _doctor_now_str().encode("utf-8"))
+        finally:
+            os.close(fd)
+    except FileExistsError:
+        return False
+    except Exception:
+        return False
+
+    now_s = _doctor_now_str()
+    state["claimed_at"] = now_s
+    state["status"] = "running"
+    save_doctor_state(root, state)
+    return True
+
+
+def collect_doctor_summary(root: Path, data: dict[str, Any]) -> dict[str, Any]:
+    """Structured doctor metrics (no printing). Includes validate signals from ``data``."""
     config = data.get("config") or {}
     boot = config.get("bootstrap") or {}
     roots = boot.get("asset_roots") or ["assets"]
     modules = data.get("modules") or {}
     images = list_image_files(root, roots)
-    mapped = []
-    orphans = []
+    mapped: list[str] = []
+    orphans: list[str] = []
     by_mod: dict[str, int] = defaultdict(int)
     for img in images:
         rel = img.relative_to(root).as_posix()
@@ -1269,16 +1407,17 @@ def cmd_doctor_lifecycle(root: Path, data: dict[str, Any]) -> int:
             orphans.append(rel)
 
     total = len(images)
-    cov = (len(mapped) / total * 100) if total else 100.0
+    cov = (len(mapped) / total * 100.0) if total else 100.0
     scaffolds = [m for m, c in modules.items() if c.get("status") == "scaffold"]
     candidates = [c for c in load_candidates_file(root) if c.get("status", "candidate") == "candidate"]
     actives = [m for m, c in modules.items() if c.get("status", "active") == "active"]
 
-    # multi-style conflict heuristic: same category leaf with promo+prod markers
-    conflicts = []
+    conflicts: list[str] = []
     for mid, cfg in modules.items():
         paths = " ".join(cfg.get("paths") or []).lower()
-        if ("promo" in paths or "marketing" in paths) and ("ui" in (cfg.get("category") or "") or "hud" in paths):
+        if ("promo" in paths or "marketing" in paths) and (
+            "ui" in (cfg.get("category") or "") or "hud" in paths
+        ):
             conflicts.append(f"{mid}: 宣传向路径与 UI 生产模块可能冲突，建议拆分 parent")
 
     specs_dir = root / MEMORY_DIR / "specs"
@@ -1297,25 +1436,228 @@ def cmd_doctor_lifecycle(root: Path, data: dict[str, Any]) -> int:
         if m and m not in specs_mods and not str(m).startswith("vlm.")
     )
 
-    print("🩺 pmem-art doctor（覆盖率 · 孤儿 · 生命周期）\n")
-    print(f"   lifecycle_mode : {config.get('project', {}).get('lifecycle_mode', '?')}")
-    print(f"   gate.mode      : {config.get('gate', {}).get('mode', '?')}")
-    print(f"   bootstrap.ok   : {boot.get('confirmed', False)}  last_sync={boot.get('last_sync_at')}")
-    print(f"   asset_roots    : {roots}")
-    print(f"   modules        : active={len(actives)}  scaffold={len(scaffolds)}  candidates_pending={len(candidates)}")
-    print(f"   assets         : total={total}  mapped={len(mapped)}  orphans={len(orphans)}  coverage={cov:.1f}%")
-    print(f"   specs          : dirs={len(specs_mods)}  entries_missing_specs={len(missing_specs)}")
-    if orphans[:8]:
-        print("\n   孤儿文件样本:")
-        for o in orphans[:8]:
-            print(f"      - {o}")
+    stale_entries = list(data.get("stale_entries") or [])
+    qa_issues = list(data.get("qa_issues") or [])
+
+    # 巡检信号：发现问题即记（严格）；是否打扰用户另由 tip_budget 节流
+    signals: list[str] = []
+    if conflicts:
+        signals.append(f"多风格冲突 {len(conflicts)}")
+    if orphans:
+        signals.append(f"孤儿 {len(orphans)}")
+    if cov < 80.0 and total > 0:
+        signals.append(f"覆盖率 {cov:.0f}%")
+    if stale_entries:
+        signals.append(f"STALE {len(stale_entries)}")
+    if qa_issues:
+        signals.append(f"QA {len(qa_issues)}")
     if missing_specs:
+        signals.append(f"缺specs {len(missing_specs)}")
+
+    needs_attention = bool(signals)
+    tip_line = None
+    if needs_attention:
+        tip_line = "🩺 记忆医生：" + " · ".join(signals[:4]) + "（可 `python3 pmem_art.py doctor`）"
+
+    return {
+        "lifecycle_mode": (config.get("project") or {}).get("lifecycle_mode", "?"),
+        "gate_mode": (config.get("gate") or {}).get("mode", "?"),
+        "bootstrap_ok": bool(boot.get("confirmed", False)),
+        "last_sync_at": boot.get("last_sync_at"),
+        "asset_roots": list(roots),
+        "active_modules": len(actives),
+        "scaffold_modules": len(scaffolds),
+        "candidates_pending": len(candidates),
+        "assets_total": total,
+        "assets_mapped": len(mapped),
+        "orphans": len(orphans),
+        "orphan_samples": orphans[:8],
+        "coverage_pct": round(cov, 1),
+        "specs_dirs": len(specs_mods),
+        "missing_specs": missing_specs,
+        "conflicts": conflicts,
+        "stale_count": len(stale_entries),
+        "qa_issue_count": len(qa_issues),
+        "signals": signals,
+        "needs_attention": needs_attention,
+        "tip_line": tip_line,
+    }
+
+
+def print_doctor_summary(summary: dict[str, Any]) -> None:
+    print("🩺 pmem-art doctor（覆盖率 · 孤儿 · 生命周期）\n")
+    print(f"   lifecycle_mode : {summary.get('lifecycle_mode', '?')}")
+    print(f"   gate.mode      : {summary.get('gate_mode', '?')}")
+    print(
+        f"   bootstrap.ok   : {summary.get('bootstrap_ok', False)}  "
+        f"last_sync={summary.get('last_sync_at')}"
+    )
+    print(f"   asset_roots    : {summary.get('asset_roots') or ['assets']}")
+    print(
+        f"   modules        : active={summary.get('active_modules', 0)}  "
+        f"scaffold={summary.get('scaffold_modules', 0)}  "
+        f"candidates_pending={summary.get('candidates_pending', 0)}"
+    )
+    print(
+        f"   assets         : total={summary.get('assets_total', 0)}  "
+        f"mapped={summary.get('assets_mapped', 0)}  "
+        f"orphans={summary.get('orphans', 0)}  "
+        f"coverage={summary.get('coverage_pct', 100.0):.1f}%"
+    )
+    missing = list(summary.get("missing_specs") or [])
+    print(
+        f"   specs          : dirs={summary.get('specs_dirs', 0)}  "
+        f"entries_missing_specs={len(missing)}"
+    )
+    samples = list(summary.get("orphan_samples") or [])
+    if samples:
+        print("\n   孤儿文件样本:")
+        for o in samples:
+            print(f"      - {o}")
+    if missing:
         print("\n   有 entries 但缺 specs/ 目录:")
-        for m in missing_specs[:12]:
+        for m in missing[:12]:
             print(f"      ⚠️ {m}  → 建议补 `.memory-art/specs/{m}/`（管线规格 / 视觉设定 / 资产台账）")
+    conflicts = list(summary.get("conflicts") or [])
     if conflicts:
         print("\n   多风格冲突提示:")
         for c in conflicts:
             print(f"      ⚠️ {c}")
     print("\n   Mode C 持续循环: sync → candidates/accept → search/validate → record → atlas")
+
+
+def cmd_doctor_lifecycle(root: Path, data: dict[str, Any]) -> int:
+    summary = collect_doctor_summary(root, data)
+    print_doctor_summary(summary)
+    cov = float(summary.get("coverage_pct") or 100.0)
+    total = int(summary.get("assets_total") or 0)
     return 0 if cov >= 50 or total == 0 else 0
+
+
+def run_doctor_quiet(
+    root: Path,
+    data: dict[str, Any],
+    *,
+    source: str = "cli",
+    offer_tip: bool = True,
+) -> dict[str, Any]:
+    """
+    Inspect-only silent doctor.
+
+    Writes solely ``.memory-art/_profile/last_doctor.json`` (+ clears claim lock).
+    Never creates/updates/deletes entries、modules.yaml、assets、specs、library.
+    """
+    try:
+        summary = collect_doctor_summary(root, data)
+        needs = bool(summary.get("needs_attention"))
+        state = load_doctor_state(root)
+        state.update(
+            {
+                "last_run_at": _doctor_now_str(),
+                "claimed_at": "",
+                "status": "ok",
+                "source": source,
+                "needs_attention": needs,
+                "tip_pending": bool(needs and offer_tip),
+                "tip_line": summary.get("tip_line") or "",
+                "signals": list(summary.get("signals") or []),
+                "coverage_pct": summary.get("coverage_pct"),
+                "orphans": summary.get("orphans"),
+                "orphan_samples": list(summary.get("orphan_samples") or [])[:8],
+                "stale_count": summary.get("stale_count"),
+                "qa_issue_count": summary.get("qa_issue_count"),
+                "conflicts": list(summary.get("conflicts") or []),
+                "missing_specs": list(summary.get("missing_specs") or [])[:20],
+                "missing_specs_count": len(summary.get("missing_specs") or []),
+                "inspect_only": True,
+            }
+        )
+        save_doctor_state(root, state)
+        return summary
+    except Exception:
+        state = load_doctor_state(root)
+        state["claimed_at"] = ""
+        state["status"] = "quiet_failed"
+        # Do not stamp last_run_at — allow hook retry after claim lock TTL
+        save_doctor_state(root, state)
+        raise
+    finally:
+        _clear_doctor_claim_lock(root)
+
+
+def spawn_lazy_doctor(root: Path, *, source: str = "hook") -> bool:
+    """Fire-and-forget ``doctor --quiet``. Caller must ``try_claim_lazy_doctor`` first."""
+    script = Path(__file__).resolve().parent / "pmem_art.py"
+    if not script.is_file():
+        script = root / "pmem_art.py"
+    cmd = [
+        sys.executable,
+        str(script),
+        "--root",
+        str(root),
+        "doctor",
+        "--quiet",
+        "--source",
+        source,
+    ]
+    try:
+        kwargs: dict[str, Any] = {
+            "stdout": subprocess.DEVNULL,
+            "stderr": subprocess.DEVNULL,
+            "stdin": subprocess.DEVNULL,
+        }
+        if os.name == "nt":
+            kwargs["creationflags"] = getattr(subprocess, "CREATE_NO_WINDOW", 0) | getattr(
+                subprocess, "DETACHED_PROCESS", 0
+            )
+        else:
+            kwargs["start_new_session"] = True
+        subprocess.Popen(cmd, **kwargs)
+        return True
+    except Exception:
+        # Release in-flight claim only — do not invent a successful last_run_at
+        state = load_doctor_state(root)
+        state["claimed_at"] = ""
+        state["status"] = "spawn_failed"
+        save_doctor_state(root, state)
+        _clear_doctor_claim_lock(root)
+        return False
+
+
+def consume_doctor_tip(root: Path) -> str | None:
+    """If a quiet doctor left a high-signal tip pending, spend tip_budget once per day."""
+    state = load_doctor_state(root)
+    if not state.get("tip_pending") or not state.get("needs_attention"):
+        return None
+    tip = str(state.get("tip_line") or "").strip()
+    if not tip:
+        state["tip_pending"] = False
+        save_doctor_state(root, state)
+        return None
+    try:
+        from improve import try_consume_tip_budget
+    except Exception:
+        state["tip_pending"] = False
+        state["tip_error"] = "improve.try_consume_tip_budget unavailable"
+        save_doctor_state(root, state)
+        return None
+    day_key = f"doctor:{_doctor_now().strftime('%Y%m%d')}"
+    if not try_consume_tip_budget(root, day_key):
+        return None
+    state["tip_pending"] = False
+    state["tip_consumed_at"] = _doctor_now_str()
+    save_doctor_state(root, state)
+    return tip
+
+
+def maybe_lazy_doctor_on_hook(root: Path, event: str) -> str | None:
+    """
+    On use-hooks: if doctor due (>48h), claim + background spawn.
+    Always try to surface at most one high-signal whisper tip (from a finished quiet run).
+    Never dumps the full doctor report into the hook message.
+    """
+    if event not in DOCTOR_HOOK_EVENTS:
+        return consume_doctor_tip(root)
+    if try_claim_lazy_doctor(root):
+        spawn_lazy_doctor(root, source=f"hook:{event}")
+    return consume_doctor_tip(root)

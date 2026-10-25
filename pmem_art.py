@@ -1134,6 +1134,16 @@ def cmd_hook(root: Path, data: dict[str, Any], event: str) -> int:
     if event == "stop":
         advice.append("🧠 pmem-art：本轮若有审美拍板，记得一句话留下（「以后都用这色板」「别再画霓虹」）。")
 
+    # 懒巡检：距上次 doctor ≥48h 则后台静默跑；高信号才可能多一行小提示
+    try:
+        from lifecycle import maybe_lazy_doctor_on_hook
+        doctor_tip = maybe_lazy_doctor_on_hook(root, event)
+        if doctor_tip:
+            advice.append(doctor_tip)
+    except Exception as exc:
+        # 不阻断 hook；写一行 stderr 便于排障（不进 agentMessage）
+        print(f"⚠️ [pmem-art] lazy doctor skipped: {exc}", file=sys.stderr)
+
     # Cursor hook 协议：输出 JSON，附加 agentMessage 提示（兼容 continue）
     out = {
         "continue": True,
@@ -1204,7 +1214,15 @@ def main() -> int:
     p_search.add_argument("--path", default="")
 
     sub.add_parser("validate", help="校验所有图片资产的分辨率、RGBA 透明通道、安全边距与记忆 Stale 状态")
-    sub.add_parser("doctor", help="覆盖率%% / 孤儿 / 多风格冲突 / 生命周期体检 + 资产质检")
+    p_doctor = sub.add_parser("doctor", help="覆盖率%% / 孤儿 / 多风格冲突 / 生命周期体检 + 资产质检")
+    p_doctor.add_argument(
+        "--quiet", action="store_true",
+        help="静默体检：只写 .memory-art/_profile/last_doctor.json（供 hook 懒巡检）",
+    )
+    p_doctor.add_argument(
+        "--source", default="cli",
+        help="写入 last_doctor.source（cli / hook:pre-gen …）",
+    )
     p_atlas = sub.add_parser("atlas", help="生成/更新自包含可视化美术记忆图谱工作台 HTML (art-atlas.html)")
     p_atlas.add_argument("--out", default="art-atlas.html")
 
@@ -1411,10 +1429,19 @@ def main() -> int:
     if args.command == "validate":
         return cmd_validate(data)
     if args.command == "doctor":
-        from lifecycle import cmd_doctor_lifecycle
+        from lifecycle import cmd_doctor_lifecycle, run_doctor_quiet
+        src = str(getattr(args, "source", None) or "cli")
+        if getattr(args, "quiet", False):
+            run_doctor_quiet(root, data, source=src, offer_tip=True)
+            return 0
         rc1 = cmd_doctor_lifecycle(root, data)
         print()
         rc2 = cmd_validate(data)
+        # 手动跑也刷新节流戳；用户已看全文，不再挂 tip_pending
+        try:
+            run_doctor_quiet(root, data, source=src, offer_tip=False)
+        except Exception as exc:
+            print(f"⚠️ [pmem-art] doctor state stamp failed: {exc}", file=sys.stderr)
         return rc1 or rc2
     if args.command == "atlas":
         from build_atlas import generate_atlas_html
