@@ -11,7 +11,7 @@ alwaysApply: true
 
 | 技能指令 | 简短别名 | 用途说明 |
 | :--- | :--- | :--- |
-| **`/pmem-draw`** | **`/art-draw`** | **【强制 8轮 ≥9.6 收敛】** 通用生图：纯文本或垫图 → 生1张→打分挑刺→`<9.6`叠加修正→满8轮挑最高分→静默结算 |
+| **`/pmem-draw`** | **`/art-draw`** | **【强制 8轮 ≥9.6 收敛】** 通用生图：纯文本或垫图 → 生1张→打分挑刺→展示不足/改点→`<9.6`叠加修正→满8轮挑最高分→评分履历可见 |
 | **`/pmem-ui`** | **`/art-ui`** | **【强制 8轮 ≥9.6 收敛】** SpriteCook 式 UI Kit/HUD/九宫格：概念先行→组件表→9-slice→状态族 |
 | **`/pmem-concept`** | **`/art-concept`** | **【强制 8轮 ≥9.6 收敛】** 原画/概念图/Key Art（ZHO·FLUX 完整句 Prompt）— **与 draw 同等强制闭环，禁止只生一张** |
 | **`/pmem-icon`** | **`/art-icon`** | **【强制 8轮 ≥9.6 收敛】** jezweb 式一致化 SVG 图标集：style-spec→分批→preview；关键枚强制收敛 |
@@ -23,13 +23,14 @@ alwaysApply: true
 | **`/pmem-coach`** | **`/art-coach`** | **【进阶 peek】** 能力教练练习计划 |
 | **`/pmem-learn`** | **`/art-learn`** | **【进阶 peek】** 知识广度建议（finish 已静默 enqueue） |
 
-### 2. 静默自动驾驶（默认）
-- `converge finish`（默认写记忆；`--no-apply` 可跳过）与高信号 `feedback` 后：自动写反思、更新 taste、强化 recipe/红线、悄悄排队 learn——对用户最多一行「小提示」。
-- Agent **不要**旁白记忆写入；全量报告用 `--verbose` 或上述进阶技能。
+### 2. 评分履历可见 · 记忆静默写入（默认）
+- 闭环每轮须向用户展示：五维分、不足、下一轮改点；`converge finish` 默认打印全轮评分履历并写记忆（`--no-apply` 可跳过；只要终稿加 `--quiet`）。
+- `finish` / 高信号 `feedback` 后仍自动写反思、更新 taste、强化 recipe/红线、悄悄排队 learn——**不要**旁白记忆写入；最多转述一行「小提示」。
+- 教练 / 广度报告用进阶技能 `/pmem-improve` · `/pmem-coach` · `/pmem-learn`。
 
 ### 3. 日常自然语言反馈沉淀（无需手写 YAML）
 - 生图前先运行：`python3 pmem_art.py search --module <模块>` 或 `python3 pmem_art.py search "<关键词>"`
 - 当画师说「太赛博 / 头太大 / 别这样画 / 这版留着 / 换成水彩 / 以后都用…」时，立即运行：
   `python3 pmem_art.py feedback "<画师原话>" --module <模块> [--asset <图片路径>]`
-- 运行闭环收敛追踪器：`python3 pmem_art.py converge start`，然后每轮 `converge generate` 与 `converge judge`，最后 `converge finish`（finish 默认静默）
+- 运行闭环收敛追踪器：`python3 pmem_art.py converge start`，然后每轮 `converge generate` 与 `converge judge`，最后 `converge finish`（默认打印评分履历）
 

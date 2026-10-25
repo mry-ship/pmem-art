@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-25 18:00:33 UTC+8",
+  "updated_at": "2026-10-26 03:26:15 UTC+8",
   "preferred_lighting": [
     "侧逆光 / rim light",
     "左上45°暖金主光 + 冷黛环境阴影",
@@ -10,6 +10,7 @@
     "7.5头身标准立绘留白 (>16px)",
     "30°等轴测游戏镜头 (Isometric)",
     "九宫格四角48px固定 + 中央纯色拉伸",
+    "居中/对称构图",
     "特写"
   ],
   "preferred_line_weight": [
@@ -27,6 +28,7 @@
     "漏画左眼黄铜星盘义眼",
     "RGB白底/黑底未去背伪透明网格",
     "严禁使用高饱和赛博洋红",
+    "过曝高光",
     "赛博霓虹/霓虹紫"
   ],
   "keep_phrases": [
@@ -39,13 +41,17 @@
   ],
   "style_notes": [
     "70%玄青墨蓝主调 + 20%秘色青瓷与宣纸白 + 10%鎏金点睛",
-    "每次生图或入库自动归档至对应分类并刷新 art-atlas.html"
+    "每次生图或入库自动归档至对应分类并刷新 art-atlas.html",
+    "无 VLM Key 时主分改走 gpt-6-sol 检查项离线尺 absolute_5d_scorer v9.0（0/1/2→/10、硬封顶、N/A 重归一）；",
+    "离线 Absolute-5D 暂定 v9.1_audit_patch：弱语义代理 N/A、撤销 short_side/P5/假融化封顶、缺项向先验7.0轻收缩；有 Key 仍优先 VLM；",
+    "赛博夜景小巷左侧竖条霓虹偏电光青(#00FFFF倾向)，触碰品牌禁用赛博霓虹；构图中轴对称呆板；工业防火梯/管线堆纹过密削弱简洁 key art；",
+    "无 Key 时主分是 Agent Absolute-5D（门槛仍>=9.6，满轮 best-of-N）；"
   ],
   "signal_counts": {
     "keeps": 6,
     "rejects": 4,
-    "style_fixes": 3,
-    "sessions": 6
+    "style_fixes": 7,
+    "sessions": 8
   },
   "project_id": "pmem-art",
   "project_name": "Project-Celadon (东方青瓷星盘幻想)",

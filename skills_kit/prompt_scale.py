@@ -57,34 +57,34 @@ CONVERGE_SCALE_PROFILES: dict[str, dict[str, Any]] = {
     },
     "medium": {
         "scale": "medium",
-        "label": "中强度 · 补足加小优化动态达标闭环 (Balance & Polish Dynamic Threshold >=9.6)",
+        "label": "中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.6)",
         "stop_policy": "dynamic_threshold",
         "max_rounds": 8,
         "min_rounds_before_stop": 1,
         "target_score_threshold": 9.6,
         "dim_weights": {
-            "composition": 0.15,
-            "lighting_color": 0.30,
+            # Align v2 mid feel: lighting ≈25%; still camera-locked polish.
+            "composition": 0.20,
+            "lighting_color": 0.25,
             "perspective_anatomy": 0.20,
             "texture_detail": 0.20,
             "spec_style": 0.15,
         },
-        # Keep medium + identity + camera frame; polish light/air/material. No coordinate DNA dump.
+        # Keep viewpoint + medium + identity; allow small pose / local layout / lighting polish.
         "retention_set": ("viewpoint_frame", "style_medium", "identity"),
-        "next_fix_budget": "moderate (~35% prompt delta, 25%–45%; cumulative <=60% vs first)",
-        "max_prompt_delta_ratio": 0.45,
+        "next_fix_budget": "moderate (~40% prompt delta, 35%–45%; cumulative <=60% vs first)",
+        "max_prompt_delta_ratio": 0.40,
         "max_prompt_delta_vs_first": 0.60,
         "allow_recompose": False,
         "allow_viewpoint_change": False,
-        "allow_action_pose_change": False,
+        "allow_action_pose_change": True,
         "allow_element_count_change": False,
-        "allow_layout_change": False,
+        "allow_layout_change": True,
         "allow_lighting_overhaul": True,
         "forbidden_changes": [
             "viewpoint_angle (不改机位与镜头视角)",
-            "character_action_and_pose (不改动作与姿态)",
-            "element_count (不增删主体元素)",
-            "scene_layout (不重排画面布局)",
+            "element_count (不增删主体元素清单)",
+            "no_full_recompose (不做整体 recompose / 换景别故事)",
             "style_medium (保持原图画风笔触与色板)",
             "identity_lock (保持原图性别、物种、年龄段与核心外观)",
         ],
@@ -92,11 +92,11 @@ CONVERGE_SCALE_PROFILES: dict[str, dict[str, Any]] = {
         "prompt_delta_baseline": "previous",
         # Stub only — NOT the live contract. get_converge_scale_profile always overwrites
         # via build_dynamic_prompt_directive (painterly may inject SSS; UI/pixel/flat skip it).
-        "prompt_directive": "保画风与主体，柔化光影层次",
+        "prompt_directive": "保画风与机位，小幅姿态/局部布局与光影优化",
     },
     "high": {
         "scale": "high",
-        "label": "高强度 · 大胆重构光影与张力动态达标闭环 (Showcase Overhaul Dynamic Threshold >=9.6)",
+        "label": "高强度 · 大胆跃升+可叙事动态达标闭环 (Showcase Overhaul Dynamic Threshold >=9.6)",
         "stop_policy": "dynamic_threshold",
         "max_rounds": 8,
         # Prevent 1-round "locked DNA photocopy" stop — drama needs at least one refine pass.
@@ -112,24 +112,25 @@ CONVERGE_SCALE_PROFILES: dict[str, dict[str, Any]] = {
         },
         # Only medium gene + identity — NOT original camera coordinates / 垫图一致性.
         "retention_set": ("style_medium", "identity"),
-        "next_fix_budget": "bold_overhaul (~65% prompt delta, 50%–80% / <=70% vs previous; cumulative <=85% vs first)",
-        "max_prompt_delta_ratio": 0.70,
-        "max_prompt_delta_vs_first": 0.85,
-        "allow_recompose": False,
+        "next_fix_budget": "bold_overhaul (~75% prompt delta, 60%–80% / <=80% vs previous; cumulative <=90% vs first)",
+        "max_prompt_delta_ratio": 0.80,
+        "max_prompt_delta_vs_first": 0.90,
+        "allow_recompose": True,
         "allow_viewpoint_change": True,
         "allow_action_pose_change": True,
-        "allow_element_count_change": False,
+        "allow_element_count_change": True,
         "allow_layout_change": True,
         "allow_lighting_overhaul": True,
         "forbidden_changes": [
             "style_medium (保持原图核心艺术媒介与画风基因)",
             "identity_lock (保持原图性别、物种、年龄段与核心外观)",
-            "no_foreign_props (叙事道具只保留原图已有主体)",
+            # Allow in-style narrative accents; do not swap subject identity.
+            "no_identity_swap (可加风格内叙事点缀，不换主体身份)",
         ],
         "min_round_leap": 0.20,
         "prompt_delta_baseline": "previous",
         # Fallback only — runtime rebuilds to V4-short skeleton (no 锁死/DNA/垫图一致性 tokens).
-        "prompt_directive": "保媒介与身份，提升光影张力",
+        "prompt_directive": "保媒介与身份，提升光影张力；可加风格内叙事点缀",
     },
     "recompose": {
         "scale": "recompose",
@@ -173,8 +174,8 @@ CONVERGE_SCALE_PROFILES: dict[str, dict[str, Any]] = {
 # Keep free of affirmative lock tokens so preflight grep stays clean.
 SCALE_BEST_DIRECTION_HINTS: dict[str, str] = {
     "low": "最优方向：微质感（瓦当/纸齿/发丝），≤40字",
-    "medium": "最优方向：光影·空气透视·介质三条",
-    "high": "最优方向：体积光/冷暖碰撞/轮廓光",
+    "medium": "最优方向：光影·空气·介质；可小幅姿态/局部布局",
+    "high": "最优方向：体积光/冷暖碰撞/轮廓光/叙事点缀",
     "recompose": "最优方向：只写目标机位与布局",
     "recompose_bold": "最优方向：画幅比+剪影一句，风格叙事大跳",
 }
@@ -357,15 +358,16 @@ def build_dynamic_prompt_directive(
             or "pixel" in mod_l
             or any(k in blob.lower() for k in ("像素", "pixel", "ui kit", "九宫格", "hud"))
         )
+        # v2 mid feel: lock camera; allow small pose / local layout + lighting polish.
         if no_sss:
-            return f"{style_head}：保画风与主体，加强色块边界与材质可读性"
+            return f"{style_head}：保画风与机位，小幅姿态/局部布局；加强色块边界与材质可读性"
         if any(k in blob for k in ("速写", "粉彩", "水彩", "浮世绘", "水墨", "线稿", "pastel", "sketch", "ukiyoe")):
-            return f"{style_head}：保画风与主体，柔化光影与留白层次"
+            return f"{style_head}：保画风与机位，小幅姿态/局部布局；柔化光影与留白层次"
         # Painterly / film (incl. canyon thick-paint): short SSS cue; UI/pixel skipped above.
-        return f"{style_head}：保画风与主体，柔化光影与次表面散射"
+        return f"{style_head}：保画风与机位，小幅姿态/局部布局；柔化光影与次表面散射"
     if s == "high":
         # Short V4 skeleton — ban-lists live in skill docs / preflight, not in the gen string.
-        return f"{style_head}：保媒介与身份，提升光影张力"
+        return f"{style_head}：保媒介与身份，提升光影张力；可加风格内叙事点缀"
     target = (recompose_dir or "").strip() or "指定新机位与景别"
     return f"{style_head}：保画风色板，按「{target}」重构机位"
 
@@ -431,18 +433,27 @@ def check_scale_task_text(
     if s in ("high", "recompose") or recompose_bold:
         if lock_hits:
             issues.append(f"肯定锁命中: {sorted(set(lock_hits))}")
-    if s == "recompose":
+    if s == "recompose" and not recompose_bold:
         g = str(goal or "") + " " + str(recompose_dir or "")
         # Scene + portrait camera lexicon (not night-city only).
         new_cam = (
             "阳台", "花格", "过肩", "仰视", "侧机位", "低机位", "平视", "运河", "天台",
             "肩线", "回眸", "半身", "特写", "俯视", "仰拍", "露台", "回廊",
+            "乌篷", "拱桥", "石桥", "温室", "藤椅",
         )
         old_cam = ("高空俯瞰", "左下飞檐")
         if not any(t in g for t in new_cam):
             issues.append("recompose 未含新机位词（阳台/花格/过肩/仰视/肩线/…）")
         if any(t in g for t in old_cam):
             issues.append("recompose 仍含原俯瞰句（高空俯瞰/左下飞檐）")
+    if recompose_bold:
+        # Bold = style bible + silhouette only; must NOT require/reuse recompose camera dir.
+        g = str(goal or "") + " " + str(prompt or "")
+        style_cues = ("风格", "style", "剪影", "赛博", "波普", "浮世绘", "动漫", "跳变", "圣经")
+        if not any(t.lower() in g.lower() for t in style_cues):
+            issues.append("recompose_bold 未含风格/剪影跳变词")
+        if str(recompose_dir or "").strip():
+            issues.append("recompose_bold 不应携带 recompose_dir 机位（与 recompose 拆开）")
     min_r = int(prof.get("min_rounds_before_stop") or 1)
     if s in ("high", "recompose") and min_r < 2:
         issues.append(f"{s} min_rounds_before_stop={min_r} < 2")
@@ -634,6 +645,385 @@ def compose_style_first_prompt(prompt: str, scale_prof: dict[str, Any]) -> str:
         if part not in ordered:
             ordered.append(part)
     return " | ".join(ordered)
+
+
+_DIM_WEIGHT_ZH: dict[str, str] = {
+    "composition": "构图",
+    "lighting_color": "光影色彩",
+    "perspective_anatomy": "透视与解剖",
+    "texture_detail": "质感",
+    "spec_style": "规格与风格",
+}
+
+_SCALE_LABEL_ZH: dict[str, str] = {
+    "low": "低强度 · 贴原修瑕",
+    "medium": "中强度 · 小优化（锁机位）",
+    "high": "高强度 · 大胆跃升+可叙事",
+    "recompose": "定向改构图",
+}
+
+_RETENTION_ZH: dict[str, str] = {
+    "viewpoint_or_pose": "视角/姿态",
+    "viewpoint_frame": "机位画幅",
+    "style_medium": "画风媒介与色板",
+    "identity": "身份外观",
+    "recompose_dir_target": "用户指定的新机位目标",
+}
+
+# Artist-facing lock intensity % per 5D axis (NOT judge score weights).
+# 100% = 完全锁死不可动；0% = 本档可大胆改。画家可说「光影锁定降到 40%」。
+SCALE_DIM_LOCK_LEVELS: dict[str, dict[str, tuple[int, str]]] = {
+    "low": {
+        "composition": (95, "几乎不改机位、景别与布局"),
+        "lighting_color": (75, "不大翻主光；局部明暗可微修"),
+        "perspective_anatomy": (80, "可修硬伤，不改姿态动作"),
+        "texture_detail": (25, "本档主战场：边缘、材质、小瑕疵"),
+        "spec_style": (95, "画风笔触、色板与身份几乎不动"),
+    },
+    "medium": {
+        "composition": (85, "锁机位；允许局部布局微调，禁止整体 recompose"),
+        "lighting_color": (30, "本档主战场：光影层次、空气感、介质"),
+        "perspective_anatomy": (55, "允许小幅姿态；可修局部结构"),
+        "texture_detail": (35, "材质与边缘可抛光"),
+        "spec_style": (90, "画风与身份几乎不动"),
+    },
+    "high": {
+        "composition": (30, "允许机位/布局/元素数为张力与叙事服务"),
+        "lighting_color": (20, "本档主战场：体积光、冷暖、轮廓光"),
+        "perspective_anatomy": (40, "姿态可动，仍保身份可读"),
+        "texture_detail": (35, "材质可跟光影一起升级"),
+        "spec_style": (70, "锁媒介基因；no_identity_swap 可加风格内点缀"),
+    },
+    "recompose": {
+        "composition": (15, "按 --recompose-dir 重构机位/布局（主战场）"),
+        "lighting_color": (40, "可随新机位重铺光影"),
+        "perspective_anatomy": (35, "透视随新机位重建"),
+        "texture_detail": (40, "材质跟新构图走"),
+        "spec_style": (75, "画风色板与身份仍偏锁"),
+    },
+}
+
+
+def format_dim_weights_zh(weights: dict[str, Any] | None) -> str:
+    """Judge score weights, e.g. 构图15% · 光影色彩20% · … (internal; not artist lock levels)."""
+    if not isinstance(weights, dict) or not weights:
+        return "（无权重）"
+    parts: list[str] = []
+    for key, label in _DIM_WEIGHT_ZH.items():
+        if key not in weights:
+            continue
+        try:
+            pct = int(round(float(weights[key]) * 100))
+        except (TypeError, ValueError):
+            continue
+        parts.append(f"{label}{pct}%")
+    if not parts:
+        for k, v in weights.items():
+            try:
+                pct = int(round(float(v) * 100))
+            except (TypeError, ValueError):
+                continue
+            parts.append(f"{_DIM_WEIGHT_ZH.get(str(k), str(k))}{pct}%")
+    return " · ".join(parts) if parts else "（无权重）"
+
+
+_DIM_ALIAS_TO_KEY: dict[str, str] = {
+    "构图": "composition",
+    "composition": "composition",
+    "光影": "lighting_color",
+    "光影色彩": "lighting_color",
+    "色彩": "lighting_color",
+    "lighting": "lighting_color",
+    "lighting_color": "lighting_color",
+    "透视": "perspective_anatomy",
+    "解剖": "perspective_anatomy",
+    "透视与解剖": "perspective_anatomy",
+    "透视解剖": "perspective_anatomy",
+    "perspective": "perspective_anatomy",
+    "perspective_anatomy": "perspective_anatomy",
+    "质感": "texture_detail",
+    "材质": "texture_detail",
+    "细节": "texture_detail",
+    "texture": "texture_detail",
+    "texture_detail": "texture_detail",
+    "规格": "spec_style",
+    "风格": "spec_style",
+    "规格与风格": "spec_style",
+    "规格风格": "spec_style",
+    "style": "spec_style",
+    "spec_style": "spec_style",
+}
+
+LOCK_RELAX_STEP = 20  # 「松一点」默认下调锁定%
+LOCK_TIGHTEN_STEP = 15  # 「紧一点」默认上调
+
+
+def get_base_dim_lock_pct(scale: str, dim_key: str) -> int:
+    s = (scale or "medium").strip().lower()
+    if s not in SCALE_DIM_LOCK_LEVELS:
+        s = "medium"
+    pct, _ = SCALE_DIM_LOCK_LEVELS[s].get(dim_key, (50, ""))
+    return int(pct)
+
+
+def resolve_dim_lock_levels(
+    scale: str = "medium",
+    overrides: dict[str, Any] | None = None,
+) -> list[dict[str, Any]]:
+    """
+    Per-dim rows with base vs effective lock %.
+    overrides: {composition: 70, ...} absolute targets after artist fine-tune.
+    """
+    s = (scale or "medium").strip().lower()
+    if s not in SCALE_DIM_LOCK_LEVELS:
+        s = "medium"
+    ov: dict[str, int] = {}
+    if isinstance(overrides, dict):
+        for k, v in overrides.items():
+            key = _DIM_ALIAS_TO_KEY.get(str(k).strip().lower()) or _DIM_ALIAS_TO_KEY.get(str(k).strip())
+            if not key:
+                key = str(k).strip()
+            if key not in _DIM_WEIGHT_ZH:
+                continue
+            try:
+                ov[key] = max(0, min(100, int(round(float(v)))))
+            except (TypeError, ValueError):
+                continue
+    rows_out: list[dict[str, Any]] = []
+    for key, label in _DIM_WEIGHT_ZH.items():
+        base, note = SCALE_DIM_LOCK_LEVELS[s].get(key, (50, ""))
+        base_i = int(base)
+        eff = int(ov[key]) if key in ov else base_i
+        changed = eff != base_i
+        delta = eff - base_i
+        if changed and delta < 0:
+            note = f"{note}（画师放宽 {delta}%：{base_i}% → {eff}%）"
+        elif changed and delta > 0:
+            note = f"{note}（画师收紧 +{delta}%：{base_i}% → {eff}%）"
+        rows_out.append(
+            {
+                "key": key,
+                "label": label,
+                "base": base_i,
+                "effective": eff,
+                "delta": delta,
+                "changed": changed,
+                "note": note,
+            }
+        )
+    return rows_out
+
+
+def parse_dim_lock_overrides(
+    text: str,
+    *,
+    scale: str = "medium",
+    current: dict[str, Any] | None = None,
+) -> dict[str, int]:
+    """
+    Parse artist one-liners into absolute lock-% overrides.
+    Examples: 「构图松一点」「光影锁定降到 40%」「构图=60」「透视再紧一点」
+    """
+    raw = str(text or "").strip()
+    if not raw:
+        return {}
+    s = (scale or "medium").strip().lower()
+    cur: dict[str, int] = {}
+    if isinstance(current, dict):
+        for k, v in current.items():
+            key = _DIM_ALIAS_TO_KEY.get(str(k).strip()) or _DIM_ALIAS_TO_KEY.get(str(k).strip().lower()) or str(k)
+            if key in _DIM_WEIGHT_ZH:
+                try:
+                    cur[key] = int(round(float(v)))
+                except (TypeError, ValueError):
+                    pass
+
+    def _eff(key: str) -> int:
+        if key in cur:
+            return cur[key]
+        return get_base_dim_lock_pct(s, key)
+
+    found: dict[str, int] = {}
+    # Explicit kv: 构图=60 / composition:70 / 光影锁定 40%
+    for m in re.finditer(
+        r"(构图|光影色彩|光影|透视与解剖|透视解剖|透视|解剖|质感|材质|规格与风格|规格风格|风格|规格|"
+        r"composition|lighting_color|perspective_anatomy|texture_detail|spec_style)"
+        r"\s*(?:的?\s*锁定(?:程度)?\s*)?(?:[=:：]|降到|调到|改为|改到|到)\s*(\d{1,3})\s*%?",
+        raw,
+        flags=re.I,
+    ):
+        key = _DIM_ALIAS_TO_KEY.get(m.group(1)) or _DIM_ALIAS_TO_KEY.get(m.group(1).lower())
+        if key:
+            found[key] = max(0, min(100, int(m.group(2))))
+
+    # Relative relax / tighten
+    for m in re.finditer(
+        r"(构图|光影色彩|光影|透视与解剖|透视解剖|透视|解剖|质感|材质|规格与风格|规格风格|风格|规格)"
+        r".{0,10}(再?松一点|松一些|放宽|松点儿|放松|再松)",
+        raw,
+    ):
+        key = _DIM_ALIAS_TO_KEY.get(m.group(1))
+        if key and key not in found:
+            found[key] = max(0, _eff(key) - LOCK_RELAX_STEP)
+    for m in re.finditer(
+        r"(构图|光影色彩|光影|透视与解剖|透视解剖|透视|解剖|质感|材质|规格与风格|规格风格|风格|规格)"
+        r".{0,10}(再?紧一点|紧一些|收紧|再紧)",
+        raw,
+    ):
+        key = _DIM_ALIAS_TO_KEY.get(m.group(1))
+        if key and key not in found:
+            found[key] = min(100, _eff(key) + LOCK_TIGHTEN_STEP)
+
+    return found
+
+
+def merge_dim_lock_overrides(
+    scale: str,
+    existing: dict[str, Any] | None,
+    *texts: str,
+) -> dict[str, int]:
+    """Fold artist texts into absolute overrides (later text wins per dim)."""
+    merged: dict[str, int] = {}
+    if isinstance(existing, dict):
+        for k, v in existing.items():
+            key = _DIM_ALIAS_TO_KEY.get(str(k).strip()) or _DIM_ALIAS_TO_KEY.get(str(k).strip().lower()) or str(k)
+            if key in _DIM_WEIGHT_ZH:
+                try:
+                    merged[key] = max(0, min(100, int(round(float(v)))))
+                except (TypeError, ValueError):
+                    pass
+    for text in texts:
+        parsed = parse_dim_lock_overrides(text, scale=scale, current=merged)
+        merged.update(parsed)
+    return merged
+
+
+def _format_lock_delta_s(delta: int) -> str:
+    return f"{delta}%" if delta < 0 else f"+{delta}%"
+
+
+def _format_lock_pct_cell(row: dict[str, Any]) -> str:
+    """Always show 有效%（默认X%，±Y%） so artists see every dial."""
+    delta = int(row.get("delta") or 0)
+    return (
+        f"**{row['effective']}%**（默认{row['base']}%，**{_format_lock_delta_s(delta)}**）"
+    )
+
+
+def format_dim_lock_levels_zh(
+    scale: str = "medium",
+    overrides: dict[str, Any] | None = None,
+) -> list[str]:
+    """Markdown table: every dim shows effective%（默认base%，±delta%）."""
+    lines = [
+        "| 维度 | 锁定%（有效 · 默认 · 相对增减） | 含义 |",
+        "| :--- | :---: | :--- |",
+    ]
+    for row in resolve_dim_lock_levels(scale, overrides):
+        lines.append(f"| {row['label']} | {_format_lock_pct_cell(row)} | {row['note']} |")
+    return lines
+
+
+def format_dim_lock_summary_zh(
+    scale: str = "medium",
+    overrides: dict[str, Any] | None = None,
+) -> str:
+    """One-liner: every dim 构图75%(-20) / 光影75%(+0)."""
+    parts: list[str] = []
+    for row in resolve_dim_lock_levels(scale, overrides):
+        d = int(row.get("delta") or 0)
+        d_s = f"{d}" if d < 0 else f"+{d}"
+        parts.append(f"{row['label']}{row['effective']}%({d_s})")
+    return " · ".join(parts)
+
+
+def format_lock_override_prompt_hint(
+    scale: str = "medium",
+    overrides: dict[str, Any] | None = None,
+) -> str:
+    """Short generation hint when artist loosened/tightened locks mid-session."""
+    bits: list[str] = []
+    for row in resolve_dim_lock_levels(scale, overrides):
+        if not row["changed"]:
+            continue
+        direction = "放宽" if row["effective"] < row["base"] else "收紧"
+        bits.append(
+            f"{row['label']}锁定{direction}为{row['effective']}%（档位默认{row['base']}%）"
+        )
+    if not bits:
+        return ""
+    return "画师锁定微调：" + "；".join(bits)
+
+
+def format_scale_artist_footer(
+    scale: str = "medium",
+    *,
+    recompose_dir: str = "",
+    scale_prof: dict[str, Any] | None = None,
+    goal: str = "",
+    ref_analysis: str = "",
+    ref_image: str = "",
+    module: str = "",
+    dim_lock_overrides: dict[str, Any] | None = None,
+) -> str:
+    """
+    Artist-facing footer: per-dimension lock % (+ base→effective when artist fine-tuned).
+    Judge dim_weights % are demoted to a small internal note (not the main message).
+    """
+    s = (scale or "medium").strip().lower()
+    if s not in CONVERGE_SCALE_PROFILES:
+        s = "medium"
+    # Also scrape goal for one-shot overrides if not already in dim_lock_overrides
+    ov = merge_dim_lock_overrides(s, dim_lock_overrides, goal or "")
+    prof = scale_prof or get_converge_scale_profile(
+        s,
+        recompose_dir=recompose_dir,
+        goal=goal,
+        ref_analysis=ref_analysis,
+        ref_image=ref_image,
+        module=module,
+    )
+    label = _SCALE_LABEL_ZH.get(s, str(prof.get("label") or s))
+    scale_title = s.upper() if s != "recompose" else "Recompose"
+    budget = str(prof.get("next_fix_budget") or "").strip() or "（见档位合同）"
+    directive = str(prof.get("prompt_directive") or "").strip()
+    hint = str(prof.get("best_direction_hint") or SCALE_BEST_DIRECTION_HINTS.get(s) or "").strip()
+    thr = float(prof.get("target_score_threshold") or DEFAULT_THRESHOLD)
+    weights_line = format_dim_weights_zh(prof.get("dim_weights") or {})
+    summary = format_dim_lock_summary_zh(s, ov)
+    changed = [r for r in resolve_dim_lock_levels(s, ov) if r["changed"]]
+    lines = [
+        "#### 🎚️ 本局档位合同（五维锁定%表 · 画师据此判断大改空间）",
+        "",
+        f"**目前是 {scale_title} 档**：{label}。"
+        + ("（已含画师口头微调）" if changed else ""),
+        f"一览：`{summary}`",
+        "",
+        "下表 **五维全部列出**（有效% · 本档默认% · 相对增减 ±%），方便对照往哪调；未改的维显示 **+0%**：",
+        "",
+    ]
+    lines.extend(format_dim_lock_levels_zh(s, ov))
+    lines.append("")
+    lines.append(f"- **改动预算**：{budget} · 停机线 `>= {thr:.2f}`")
+    if directive:
+        lines.append(f"- **本档指令骨架**：{directive}")
+    lock_hint = format_lock_override_prompt_hint(s, ov)
+    if lock_hint:
+        lines.append(f"- **本局锁定微调**：{lock_hint}")
+    if s == "recompose" and (recompose_dir or prof.get("recompose_dir")):
+        lines.append(f"- **改构图方向**：`{recompose_dir or prof.get('recompose_dir')}`")
+    if hint:
+        lines.append(f"- **本档优选微调**：{hint}")
+    lines.extend(
+        [
+            "",
+            "> 💬 **画师可写一句**（对照上表点名维度）：",
+            "> `构图松一点` → **75%（默认95%，-20%）**；`光影锁定降到 40%` → **40%（默认75%，-35%）**；或 `升到 medium`",
+            "",
+            f"<small>裁判内部加权（合成总分用，不是上表锁定%）：{weights_line}</small>",
+        ]
+    )
+    return "\n".join(lines)
 
 
 def get_converge_scale_profile(

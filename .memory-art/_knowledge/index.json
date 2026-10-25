@@ -150,9 +150,24 @@
       "universal": false,
       "promoted_to_shared": false,
       "updated_at": "2026-10-25 02:58:01 UTC+8"
+    },
+    "tech-pixel": {
+      "id": "tech-pixel",
+      "title": "像素艺术",
+      "body": "锁调色板与像素网格，禁止糊边抗锯齿乱入。",
+      "tags": [
+        "style"
+      ],
+      "source": "feedback",
+      "layer_scope": "private",
+      "project_id": "pmem-art",
+      "project_name": "Project-Celadon (东方青瓷星盘幻想)",
+      "universal": false,
+      "promoted_to_shared": false,
+      "updated_at": "2026-10-26 03:26:15 UTC+8"
     }
   },
-  "updated_at": "2026-10-25 02:58:01 UTC+8",
+  "updated_at": "2026-10-26 03:26:15 UTC+8",
   "layer_scope": "private",
   "project_id": "pmem-art",
   "project_name": "Project-Celadon (东方青瓷星盘幻想)"

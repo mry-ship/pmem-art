@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""V7 image scorer — do NOT reward photocopy similarity on high/recompose/bold.
+"""V7 image scorer — DIAGNOSTIC ONLY as of V8.
 
-Diagnostic MSE/struct may still be logged in meta, but they must not dominate
-composition/style or lift scores to ≥9.60 on high tiers.
+V8 main score / STOP / HTML baseline → scripts/absolute_5d_scorer.py
+(Absolute-5D single-image). Do NOT use score_image_v7(ref, ref, low) as Baseline
+(struct=1 inflation). MSE/struct here remain meta-only for Intent diagnostics.
 
-struct weight by api_scale:
-  low: keep (still a defect-fix tier)
-  medium: half
-  high / recompose / bold: 0  (optionally reward contrast / edge energy instead)
+Legacy notes (kept for dry regressions):
+  high / recompose / bold: struct weight = 0
+  NO struct-floor lift to ≥9.60 (legacy V6 pattern forbidden)
 """
 from __future__ import annotations
 
@@ -47,7 +47,7 @@ def score_v7(
     """
     Combine optional 5D dims with diagnostic metrics.
 
-    Important: there is NO `if struct > 0.35: score = max(score, 9.60)` path.
+    Important: there is NO legacy struct-similarity floor that lifts score to ≥9.60.
     """
     dims = dict(dims or {})
     metrics = dict(metrics or {})
@@ -192,8 +192,10 @@ def assert_no_struct_floor_in_source(source: str) -> None:
     """CI helper: fail if old V6 floor pattern reappears."""
     import re
 
-    if re.search(r"struct\s*>\s*0\.35", source):
-        raise AssertionError("forbidden struct>0.35 floor found in scorer source")
+    # Pattern assembled so acceptance `rg` does not false-positive on this helper itself.
+    pat = "struct" + r"\s*>\s*" + r"0\.35"
+    if re.search(pat, source):
+        raise AssertionError("forbidden V6 struct-similarity floor found in scorer source")
 
 
 if __name__ == "__main__":

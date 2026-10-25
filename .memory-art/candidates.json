@@ -84,5 +84,21 @@
     "created_at": "2026-10-24T21:16:43+0800",
     "status": "dismissed",
     "dismiss_reason": "broad folder shell already covered by specific active modules"
+  },
+  {
+    "module_id": "ui.Audit",
+    "category": "ui",
+    "folder": "assets/ui/audit",
+    "file_count": 1,
+    "confidence": 0.643,
+    "sample_files": [
+      "_audit_tmp.html"
+    ],
+    "paths_glob": [
+      "assets/ui/audit/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-10-26T03:47:14+0800",
+    "status": "candidate"
   }
 ]

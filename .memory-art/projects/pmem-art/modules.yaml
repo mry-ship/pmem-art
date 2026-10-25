@@ -267,7 +267,6 @@ modules:
       alpha_required: true
       safe_margin_px: 16
       max_size_kb: 1024
-  # Case01 硬合同 9:16 竖版 — 禁止 864x1152(3:4) 白名单绕过
   scene.CelestialCity:
     title: 场景与原画·CelestialCity
     category: scene
@@ -287,7 +286,6 @@ modules:
       aspect_ratio: "9:16"
       alpha_required: false
       max_size_kb: 2048
-  # Case02 硬合同 4:3 横版 — 旧冷启动 864x1152(3:4) 不再过检；720x580 为风格参考可过检
   character.PastelGirl:
     title: 角色与立绘·PastelGirl (Watercolor)
     category: character
@@ -310,7 +308,6 @@ modules:
       max_size_kb: 1024
     parent: brand.WorldStyle
     inherits: brand.WorldStyle
-  # Case03 硬合同 3:4 竖版肖像
   character.SunlitGirl:
     title: 角色与立绘·SunlitGirl
     category: character
@@ -332,7 +329,6 @@ modules:
       alpha_required: false
       safe_margin_px: 16
       max_size_kb: 1024
-  # 与 CelestialCity 同画幅 9:16；继承夜城父模块而非 FloatingRuins(16:9)
   scene.celestial_night_city:
     title: 场景与原画·celestial_night_city (Watercolor)
     category: scene
@@ -354,3 +350,28 @@ modules:
       max_size_kb: 2048
     parent: scene.CelestialCity
     inherits: scene.CelestialCity
+  ui.Audit:
+    title: 界面与九宫格·Audit
+    category: ui
+    status: candidate
+    description: icon preview · 自动归类至 界面与九宫格 (ui.Audit) · 置信度 0.643
+    paths:
+      - "assets/ui/audit/**"
+    aliases:
+      - Audit
+    entities: []
+    palette: []
+    specs:
+      resolution: 512x512
+      allowed_resolutions:
+        - 512x512
+        - 256x256
+        - 128x128
+      alpha_required: true
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512

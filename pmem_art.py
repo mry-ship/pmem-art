@@ -6,7 +6,7 @@ pmem-art: 画师在 Cursor 里越画越准的个人美术积累记忆。
   生图 → 你用自然语言说「哪里不对 / 这版留着 / 换成水彩」→ 记忆长大 → 下次生图自动召回 → 更准。
 
 classify / ingest / domains 仍在后端默默工作；日常入口是 Cursor 对话 + Skills。
-v0.12：静默自动驾驶（Whisper Autopilot）· 一行小提示 · Warm-Start / coach/learn 进阶 peek。
+v0.12：评分履历默认可见（`--quiet` 只要终稿）· 记忆写入仍静默 · Warm-Start / coach/learn 进阶 peek。
 零第三方强依赖（Python 3.10+ 标准库）。
 """
 from __future__ import annotations
@@ -964,6 +964,9 @@ def cmd_search(data: dict[str, Any], module: str, path: str, query: str) -> int:
     lineage_set = set(lineage)
     matched = []
     for e in data["entries"]:
+        # Hide retired lessons so superseded STOP=8.50-style advice cannot resurface.
+        if str(e.get("status") or "active").lower() in ("superseded", "archived", "inactive"):
+            continue
         em = e.get("module", "")
         if target_mod and em not in lineage_set and e.get("scope") != "project":
             continue
@@ -1087,7 +1090,18 @@ def cmd_hook(root: Path, data: dict[str, Any], event: str) -> int:
             module = infer_module_from_text(q, data)
         matched = []
         if module:
-            matched = [e for e in data.get("entries") or [] if e.get("module") == module or str(e.get("module", "")).startswith(module.split(".")[0])]
+            def _live(e: dict[str, Any]) -> bool:
+                return str(e.get("status") or "active").lower() not in ("superseded", "archived", "inactive")
+
+            matched = [
+                e
+                for e in data.get("entries") or []
+                if _live(e)
+                and (
+                    e.get("module") == module
+                    or str(e.get("module", "")).startswith(module.split(".")[0])
+                )
+            ]
             # 优先红线与定稿 + 最简加权（精确模块 > 胜出评分 > 关键词重叠 > 日期）
             from improve import rank_memory_entry
             matched = sorted(
@@ -1241,7 +1255,11 @@ def main() -> int:
     p_vlm.add_argument("--module", "-m", default="", help="模块 ID")
 
     p_conv = sub.add_parser("converge", help="闭环收敛（Warm-Start + 严格两步分离：converge generate 仅生图 -> converge judge 独立VLM审图 · 按档位目标阈值动态停机）")
-    p_conv.add_argument("action", choices=("start", "generate", "judge", "step", "round", "finish", "table", "status", "warm"), help="子操作（generate=仅生图无打分；judge=对已完成图片独立VLM五维审图）")
+    p_conv.add_argument(
+        "action",
+        choices=("start", "generate", "judge", "step", "round", "finish", "table", "status", "warm", "lock"),
+        help="子操作（generate=仅生图；judge=独立审图；lock=画师口头放宽/收紧某维锁定%%）",
+    )
     p_conv.add_argument("--session", "--id", dest="session", default="latest", help="会话 ID（默认 latest，支持 --id 或 --session）")
     p_conv.add_argument("--goal", "--brief", "-g", dest="goal", default="", help="本次生图目标描述（支持 --goal 或 --brief）")
     p_conv.add_argument("--generate-cmd", dest="generate_cmd", default="", help="仅 converge generate 可带的生图命令；judge 阶段传入会被拒绝")
@@ -1266,6 +1284,11 @@ def main() -> int:
     p_conv.add_argument("--strengths", default="", help="本轮合理/亮点之处")
     p_conv.add_argument("--defects", default="", help="本轮不合理/缺陷之处")
     p_conv.add_argument("--next-fix", default="", help="下一轮叠加修正策略")
+    p_conv.add_argument(
+        "--lock-text",
+        default="",
+        help="画师锁定微调原话，如「构图松一点」「光影锁定降到 40%%」（档位仍是 low，表上显示 95%%→75%%）",
+    )
     p_conv.add_argument("--prompt", "-p", default="", help="本轮使用的 Prompt")
     p_conv.add_argument(
         "--apply",
@@ -1273,9 +1296,16 @@ def main() -> int:
         help="兼容旧用法：finish 默认已写入记忆，可省略；与 --no-apply 同时出现时以 --no-apply 为准",
     )
     p_conv.add_argument("--no-apply", action="store_true", help="finish 时仅结算/出报告，不写入记忆（默认会写）")
-    p_conv.add_argument("--verbose", "-v", action="store_true", help="打印全量 Markdown 报告（默认静默：一行结论+小提示）")
-    p_conv.add_argument("--silent", action="store_true", default=True, help="静默自动驾驶（默认开启）")
-    p_conv.add_argument("--no-silent", action="store_true", help="关闭静默，等同 --verbose 的报告倾倒")
+    p_conv.add_argument(
+        "--verbose", "-v", action="store_true",
+        help="打印完整 Markdown 报告（默认已打印评分履历表；记忆写入仍后台静默）",
+    )
+    p_conv.add_argument(
+        "--quiet", "-q", action="store_true",
+        help="仅一行结论+小提示，不打印每轮评分履历（旧静默展示）",
+    )
+    p_conv.add_argument("--silent", action="store_true", help="同 --quiet（兼容旧参数）")
+    p_conv.add_argument("--no-silent", action="store_true", help="兼容旧参数：强制打印评分履历（现为默认）")
 
     p_improve = sub.add_parser("improve", help="自我迭代：扫描反思+反馈 → 更新口味档案（/pmem-improve）")
     p_improve.add_argument("action", nargs="?", default="run", choices=("run", "progress", "reflect"), help="run|progress|reflect")
@@ -1487,7 +1517,11 @@ def main() -> int:
             reference_image_paths=getattr(args, "reference_image_paths", "") or None,
             draft_ok=bool(getattr(args, "draft", False)),
             verbose=bool(getattr(args, "verbose", False) or getattr(args, "no_silent", False)),
-            silent=not bool(getattr(args, "verbose", False) or getattr(args, "no_silent", False)),
+            silent=(
+                bool(getattr(args, "quiet", False) or getattr(args, "silent", False))
+                and not bool(getattr(args, "verbose", False) or getattr(args, "no_silent", False))
+            ),
+            lock_text=getattr(args, "lock_text", "") or "",
         )
     if args.command == "improve":
         from improve import cmd_improve
@@ -1525,7 +1559,7 @@ def _cli_entry() -> int:
         atlas_commands = {
             "init", "bootstrap", "sync", "accept", "place",
             "ingest", "classify-watch", "feedback", "note",
-            "converge", "improve", "taste", "learn", "hook",
+            "converge", "improve", "taste", "learn", "coach", "hook",
         }
         if any(a in atlas_commands for a in sys.argv[1:]):
             p = argparse.ArgumentParser(add_help=False)

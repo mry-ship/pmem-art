@@ -91,17 +91,20 @@ def build_warm_start_pack(
     def _mod_ok(em: str) -> bool:
         return (em in lineage_set) or (not module)
 
+    def _entry_live(e: dict) -> bool:
+        return str(e.get("status") or "active").lower() not in ("archived", "superseded", "inactive")
+
     recipes = [
         e for e in entries
-        if e.get("kind") == "recipe" and _mod_ok(e.get("module", "")) and e.get("status", "active") != "archived"
+        if e.get("kind") == "recipe" and _mod_ok(e.get("module", "")) and _entry_live(e)
     ]
     redlines = [
         e for e in entries
-        if e.get("kind") == "style_redline" and _mod_ok(e.get("module", "")) and e.get("status", "active") != "archived"
+        if e.get("kind") == "style_redline" and _mod_ok(e.get("module", "")) and _entry_live(e)
     ]
     decisions = [
         e for e in entries
-        if e.get("kind") == "art_decision" and _mod_ok(e.get("module", "")) and e.get("status", "active") != "archived"
+        if e.get("kind") == "art_decision" and _mod_ok(e.get("module", "")) and _entry_live(e)
     ]
 
     recipes = sorted(recipes, key=lambda e: rank_memory_entry(e, target_module=module, query=goal), reverse=True)[:top_n]

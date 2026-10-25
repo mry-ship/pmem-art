@@ -80,9 +80,10 @@
 - **未达到 `9.6` 分（且轮次 `< 8`）**：不算合格！把本轮分析出的「不合理之处」叠加进下一轮修正指令，继续生图。
 - **满 8 次仍未达到 `9.6` 分**：停止循环，**从全部 8 轮中挑出分数最高的那一张**作为最终结果，并说明残余不足。
 
-### 2.4 结算、静默沉淀与全量表（按需）
-默认对你只展示：**胜出图 + 一句结论**（第几轮达标 / 满 8 轮最高分）；系统在后台把配方写入 `recipe`、踩坑写入 `style_redline`。
-- 需要全轮次明细时：给 CLI 加 `--verbose`，或主动说「看报告」。
+### 2.4 结算、评分履历与记忆沉淀
+默认对你展示：**每轮五维分 + 不足 + 改点**，以及结算时的**全轮评分履历** + 胜出图；系统在后台把配方写入 `recipe`、踩坑写入 `style_redline`（不旁白记忆写入）。
+报告最底部会附 **本局档位合同**：五维锁定%**不是写死的**——你一句话可微调，表上显示有效%相对本档默认的 **-xx% / +yy%**（例：low 下「构图松一点」→ **75%（默认95%，-20%）**）。也可写「光影锁定降到 40%」。裁判打分加权%只作小字备注。
+- 只要终稿、不要履历：`converge finish --quiet`，或说「只要终稿」。
 - 不想写记忆：`converge finish --no-apply`。
 
 ---
@@ -99,7 +100,7 @@
 - **怎么用**
   - `/pmem-concept 画一张东方青瓷废土主视觉 Key Art，宽幅海报`
   - `/pmem-concept [拖入参考图] 同氛围角色登场 Key Art`
-- **原理**：与 `/pmem-draw` **同等强制闭环**（禁止只生一张）→ 召回记忆 → FLUX 完整句 Prompt（主体靠前、排斥项正向写）→ 可选垫图解构 → `converge` → 静默写 `recipe`/`style_redline`（全量表需 `--verbose`）。
+- **原理**：与 `/pmem-draw` **同等强制闭环**（禁止只生一张）→ 召回记忆 → FLUX 完整句 Prompt（主体靠前、排斥项正向写）→ 可选垫图解构 → `converge`（每轮展示评分履历）→ 写 `recipe`/`style_redline`（只要终稿加 `--quiet`）。
 
 ### `/pmem-icon`（`/art-icon`）
 - **怎么用**
@@ -165,7 +166,7 @@ python3 pmem_art.py ingest .cursor/generated/new.png -p "角色Astra 水彩 概�
 | `python3 pmem_art.py converge start -g "<目标>" -m <模块> [--scale medium] [--ref-image <图> --ref-analysis "<解构>"]` | 开启一轮最多 8 次、`>=9.6` 分的收敛生图会话 |
 | `python3 pmem_art.py converge generate --round <i> -i <图> -p "<Prompt>"` | **仅生图登记**（禁止带 score/dims；与 judge 必须分两步） |
 | `python3 pmem_art.py converge judge --round <i> -i <图> --dims "..." --strengths "..." --defects "..." --next-fix "..."` | **独立审图**：五维打分、亮点、不合理处与下一轮修正（须先有 generate） |
-| `python3 pmem_art.py converge finish` | 结算达标图或 8 轮最高分图；**默认写入记忆**（`--no-apply` 可跳过；`--verbose` 打印全量表） |
+| `python3 pmem_art.py converge finish` | 结算达标图或 8 轮最高分图；**默认写入记忆并打印评分履历**（`--no-apply` 可跳过；`--quiet` 只要一行结论） |
 | `python3 pmem_art.py feedback "<原话>" -m <模块> [-a <图>]` | 把画师自然语言评价沉淀为记忆 |
 | `python3 pmem_art.py search -m <模块>` | 召回该模块（含父模块）的红线、定稿与色板 |
 | `python3 pmem_art.py ingest <图> -p "<说明>" --apply` | 四信号分类并归档图片 |
@@ -176,7 +177,7 @@ python3 pmem_art.py ingest .cursor/generated/new.png -p "角色Astra 水彩 概�
 ## 第七章：常见问题 FAQ
 
 **Q1：如果连生 8 张图都没有达到 9.6 分怎么办？**  
-A：到了第 8 轮仍未达 9.6 分时，`converge finish` 会自动停止循环，从 1~8 轮里挑出**综合评分最高**的那一张作为阶段最优交付图；默认只给你胜出图+一句结论，全轮明细加 `--verbose` 或说「看报告」。
+A：到了第 8 轮仍未达 9.6 分时，`converge finish` 会自动停止循环，从 1~8 轮里挑出**综合评分最高**的那一张作为阶段最优交付图；默认给你全轮评分履历（不足/改点）+ 胜出图。只要终稿时加 `--quiet`。
 
 **Q2：丢入一张图让 `/pmem-draw` 生成时，它会怎么处理那张图？**  
 A：它会先做 **Step 0 参考图深度解构**（分析构图、提取主辅色 HEX、判断光影与笔触、识别头身结构），把解构结论记入收敛会话基准，然后带着这份基准进入 1~8 轮自评收敛循环。
@@ -197,7 +198,7 @@ python3 pmem_art.py coach
 python3 pmem_art.py learn suggest && python3 pmem_art.py learn accept --all
 ```
 
-闭环（v0.12 静默）：`warm-start → 8×≥9.6 → finish 静默自动驾驶（反思/口味/learn 队列）→ 最多一行小提示 → 越用越好`；`improve/coach/learn/progress` 为进阶 peek。
+闭环（v0.13 履历可见）：`warm-start → 8×≥9.6（每轮展示评分/不足/改点）→ finish 打印履历 + 记忆静默自动驾驶 → 最多一行小提示 → 越用越好`；只要终稿用 `--quiet`；`improve/coach/learn/progress` 为进阶 peek。
 
 ---
 
@@ -216,10 +217,10 @@ python3 pmem_art.py learn suggest && python3 pmem_art.py learn accept --all
 
 | 档位 | `max_prompt_delta` | 最早停机 | 允许机位 | 允许姿态 | 允许改布局 | 允许大改光影 | 硬锁 / 保留集 |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :--- |
-| `low` | 20% vs 首轮 | 1 | ❌ | ❌ | ❌ | ❌ | 姿态/机位一条 + 画风 + 身份 |
-| `medium` | 25%–45% / 累计 60% | 1 | ❌ | ❌ | ❌ | ✅ | 机位框 + 画风 + 身份（勿坐标 DNA） |
-| `high` | 50%–80% / ≤70% / 累计 85% | **2** | ✅ | ✅ | ✅ | ✅ | 媒介基因 + 身份（勿锁死构图/垫图一致性） |
-| `recompose` | 85% / 累计 95% | **2** | ✅（按方向） | ✅ | ✅ | ✅ | 画风 + 身份 + **目标机位=`--recompose-dir`** |
+| `low` | ≤20% vs 首轮 | 1 | ❌ | ❌ | ❌ | ❌ | 姿态/机位一条 + 画风 + 身份 |
+| `medium` | ~40% / 累计 60% | 1 | ❌ | ✅（小幅） | ✅（局部） | ✅ | 锁机位；禁整体 recompose / 大改元素清单 |
+| `high` | ≤80% / 累计 90% | **2** | ✅ | ✅ | ✅ | ✅ | 媒介基因 + `no_identity_swap`（可叙事，不换主体） |
+| `recompose` | ≤85% / 累计 95% | **2** | ✅（按方向） | ✅ | ✅ | ✅ | 画风 + 身份 + **目标机位=`--recompose-dir`**（与 bold 拆开） |
 
 ### A.2 某一档不符合预期时：用提示词覆盖闸门（推荐）
 
@@ -247,7 +248,7 @@ python3 pmem_art.py learn suggest && python3 pmem_art.py learn accept --all
 ```bash
 python3 pmem_art.py converge generate --id <sid> --round 1 -i out.jpg -p "<prompt>"
 python3 pmem_art.py converge judge    --id <sid> --round 1 -i out.jpg --dims "构图9.2/光影9.1/透视9.0/质感9.0/风格9.2" --defects "..." --next-fix "..."
-python3 pmem_art.py converge finish   --id <sid>   # 默认写记忆；全量表加 --verbose
+python3 pmem_art.py converge finish   --id <sid>   # 默认写记忆并打印评分履历；只要终稿加 --quiet
 ```
 
 ---

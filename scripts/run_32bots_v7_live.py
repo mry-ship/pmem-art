@@ -94,13 +94,20 @@ def run_bot(bot_task: dict, best_doc: dict, job: dict) -> dict:
     shared_root.mkdir(parents=True, exist_ok=True)
 
     # Install Desktop modular package pieces (not box monolithic skills_kit.py)
-    for name in ("pmem_art.py",):
-        shutil.copy2(REPO_ROOT / name, bot_root / name)
-    # copy skills_kit package
+    for name in ("pmem_art.py", "lifecycle.py", "classify.py", "feedback.py", "vlm_judge.py"):
+        src = REPO_ROOT / name
+        if src.is_file():
+            shutil.copy2(src, bot_root / name)
+    # copy skills_kit + improve packages
     sk_dst = bot_root / "skills_kit"
     if sk_dst.exists():
         shutil.rmtree(sk_dst)
     shutil.copytree(REPO_ROOT / "skills_kit", sk_dst, ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
+    imp_dst = bot_root / "improve"
+    if imp_dst.exists():
+        shutil.rmtree(imp_dst)
+    if (REPO_ROOT / "improve").is_dir():
+        shutil.copytree(REPO_ROOT / "improve", imp_dst, ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
 
     refs_dir = bot_root / "references"
     refs_dir.mkdir(parents=True, exist_ok=True)
@@ -122,7 +129,10 @@ def run_bot(bot_task: dict, best_doc: dict, job: dict) -> dict:
     (mem_dir / "entries").mkdir(parents=True, exist_ok=True)
     (mem_dir / "converge").mkdir(parents=True, exist_ok=True)
     (mem_dir / "config.yaml").write_text(
-        f"project: {bot_id}_{bot_task['slug']}_{display}\nstyle: v7\nversion: 1.0\n",
+        "project:\n"
+        f"  name: {bot_id}_{bot_task['slug']}_{display}\n"
+        "style: v7\n"
+        "version: 1.0\n",
         encoding="utf-8",
     )
 

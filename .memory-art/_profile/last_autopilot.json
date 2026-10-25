@@ -1,12 +1,10 @@
 {
-  "ran_at": "2026-10-25 18:00:33 UTC+8",
-  "source": "converge_finish",
-  "session_id": "skill_run_01_low",
-  "tip": "「小提示」下次注意：光影",
-  "tip_candidate": "「小提示」下次注意：光影",
-  "taste_changes": [
-    "preferred_composition: +特写"
-  ],
+  "ran_at": "2026-10-26 03:26:15 UTC+8",
+  "source": "feedback",
+  "session_id": "fb-visual_correction",
+  "tip": null,
+  "tip_candidate": "「小提示」下次注意：无Key时主分是AgentAbs",
+  "taste_changes": [],
   "learn_queued": [],
-  "avg_winner_score": 9.62
+  "avg_winner_score": 9.38
 }

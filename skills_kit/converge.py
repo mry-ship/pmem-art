@@ -53,7 +53,7 @@ def converge_start(
     recompose_dir: str = "",
     draft_ok: bool = False,
     verbose: bool = False,
-    silent: bool = True,
+    silent: bool = False,
 ) -> dict[str, Any]:
     """
     Step 1 (Start & Reference Inheritance Step):
@@ -117,7 +117,7 @@ def converge_generate(
     converge_mode: str = "quality",
     draft_ok: bool = False,
     verbose: bool = False,
-    silent: bool = True,
+    silent: bool = False,
 ) -> dict[str, Any]:
     """
     Step 2 (Generate-Only Step):
@@ -172,12 +172,13 @@ def converge_finish(
     session_id: str = "latest",
     apply_memory: bool = True,
     verbose: bool = False,
-    silent: bool = True,
+    silent: bool = False,
 ) -> dict[str, Any]:
     """
     Finish & Settle Step:
     Settles the winning round after `STOP_TARGET_REACHED` (`score >= 9.60`), writes recipe/redline/reflection
     into `.memory-art`, and runs silent autopilot maintenance.
+    By default prints the per-round score trail; pass silent=True (CLI --quiet) for one-line whisper.
     """
     rc = cmd_converge(
         root,
@@ -218,7 +219,7 @@ def converge_judge(
     converge_mode: str = "quality",
     draft_ok: bool = False,
     verbose: bool = False,
-    silent: bool = True,
+    silent: bool = False,
 ) -> dict[str, Any]:
     """
     Step 2B (Independent VLM Scoring Step):
@@ -304,12 +305,14 @@ def cmd_converge(
     reference_image_paths: list[str] | tuple[str, ...] | str | None = None,
     draft_ok: bool = False,
     verbose: bool = False,
-    silent: bool = True,
+    silent: bool = False,
+    lock_text: str = "",
 ) -> int:
     """
     converge_mode: quality (default, dynamic threshold per scale up to 8 rounds) | fast (warm-start fast-track hints).
     draft_ok: if True (user said 草稿/fast), final accept may use soft threshold in fast mode.
-    silent: default True — finish/round 少说话，后台 autopilot；verbose=True 打全量报告。
+    silent: default False — 默认打印评分履历；True/--quiet 仅一行结论；记忆写入始终后台静默。verbose=True 等同强制打印全量报告。
+    lock_text: artist one-liner to loosen/tighten per-dim locks (e.g. 「构图松一点」→ show 95%→75%).
     """
     if verbose:
         silent = False
@@ -403,7 +406,18 @@ def cmd_converge(
             "rounds": [],
             "warm_start": warm,
             "lessons_all": [],
+            "dim_lock_overrides": {},
+            "dim_lock_history": [],
         }
+        if lock_text or goal:
+            from skills_kit.prompt_scale import merge_dim_lock_overrides, format_dim_lock_summary_zh
+            ov = merge_dim_lock_overrides(eff_scale, {}, goal or "", lock_text or "")
+            if ov:
+                sess["dim_lock_overrides"] = ov
+                sess["dim_lock_history"].append(
+                    {"at": "start", "text": lock_text or goal, "overrides": dict(ov)}
+                )
+                print(f"🔓 画师锁定微调已生效：{format_dim_lock_summary_zh(eff_scale, ov)}")
         _write_session_json(sf, sess)
         print(
             f"🎯 [收敛会话已启动] 模块: {sess['module']} | 模式: {converge_mode} | 强度(scale): {eff_scale} ({scale_prof['label']})"
@@ -446,6 +460,36 @@ def cmd_converge(
     soft_th = FAST_SOFT_THRESHOLD if sess.get("fast_track") or sess.get("converge_mode") == "fast" else th
     mr = int(sess.get("max_rounds", DEFAULT_MAX_ROUNDS))
     rounds: list[dict[str, Any]] = sess.get("rounds") or []
+
+    def _apply_lock_texts(*texts: str, source: str = "") -> dict[str, int]:
+        from skills_kit.prompt_scale import merge_dim_lock_overrides, format_dim_lock_summary_zh
+        scale_now = str(sess.get("scale") or "medium")
+        before = dict(sess.get("dim_lock_overrides") or {})
+        merged = merge_dim_lock_overrides(scale_now, before, *[t for t in texts if t])
+        if merged != before:
+            sess["dim_lock_overrides"] = merged
+            hist = list(sess.get("dim_lock_history") or [])
+            hist.append(
+                {
+                    "at": source or action,
+                    "text": " | ".join(t for t in texts if t)[:240],
+                    "overrides": dict(merged),
+                }
+            )
+            sess["dim_lock_history"] = hist[-12:]
+            _write_session_json(sf, sess)
+            print(f"🔓 画师锁定微调：{format_dim_lock_summary_zh(scale_now, merged)}")
+        return dict(sess.get("dim_lock_overrides") or {})
+
+    if action == "lock":
+        blob = (lock_text or goal or next_fix or prompt or "").strip()
+        if not blob:
+            print("❌ 请提供画师原话，例如：`converge lock --lock-text \"构图松一点\"`")
+            return 1
+        ov = _apply_lock_texts(blob, source="lock")
+        from skills_kit.prompt_scale import format_dim_lock_levels_zh
+        print("\n".join(format_dim_lock_levels_zh(str(sess.get("scale") or "medium"), ov)))
+        return 0
 
     if action == "step":
         print(
@@ -520,7 +564,13 @@ def cmd_converge(
             ref_image=sess.get("ref_image", ""),
             module=sess.get("module", ""),
         )
+        # Artist may loosen a dim mid-loop (still same --scale); fold into session + prompt.
+        ov_now = _apply_lock_texts(lock_text or "", next_fix or "", prompt or "", source=f"generate_r{r_no}")
+        from skills_kit.prompt_scale import format_lock_override_prompt_hint
+        lock_hint = format_lock_override_prompt_hint(str(sess.get("scale") or "medium"), ov_now)
         composed_prompt = compose_style_first_prompt(prompt, s_prof)
+        if lock_hint:
+            composed_prompt = f"{composed_prompt} | {lock_hint}".strip(" |")
 
         if generate_cmd:
             proc = subprocess.run(
@@ -680,8 +730,8 @@ def cmd_converge(
         s_prof["max_rounds"] = mr
 
         cli_score = float(score or 0)
-        # Independent VLM judge: receives finished image; remote vision API used when key configured,
-        # otherwise Agent CLI --dims/--defects (self-judge fallback).
+        # Independent VLM if keyed; else Agent Absolute-5D (threshold stays session 9.6).
+        # Pixel offline scorer is advisory only — never lower accept_threshold.
         judge_res = auto_vlm_judge_image(
             image_path=eff_image,
             scale_prof=s_prof,
@@ -898,7 +948,7 @@ def cmd_converge(
             msg = (
                 f"🏁 第 {r_no}/{mr} 轮得分 {score:.2f} < {th:.2f}，已满 {mr} 轮上限！\n"
                 f"   · 全阶段最高分为第 {best['round']} 轮 ({best['score']:.2f} 分: {best['image']})。\n"
-                f"   · 请立即运行 `python3 pmem_art.py converge finish --id {session_id}` 结算（默认静默写记忆；全量表加 `--verbose`）。"
+                f"   · 请立即运行 `python3 pmem_art.py converge finish --id {session_id}` 结算（默认写记忆并打印评分履历；只要一行结论加 `--quiet`）。"
             )
         else:
             sess["status"] = "continue"
@@ -1032,6 +1082,35 @@ def cmd_converge(
                 f"> 💡 **阶段总结**：本次共迭代 {len(rounds)} 轮，最高分为第 {winner['round']} 轮（`{winner['score']:.2f}` 分），"
                 f"仍留有轻微不足：「{winner.get('defects')}」，后续可针对该点微调或局部重绘。"
             )
+
+        # Artist-facing scale contract footer — show base% → effective% when artist loosened a dim.
+        try:
+            from skills_kit.prompt_scale import format_scale_artist_footer, merge_dim_lock_overrides
+            scale_now = str(sess.get("scale") or "medium")
+            scrape_bits = [str(sess.get("goal") or ""), str(lock_text or "")]
+            for r in rounds:
+                scrape_bits.append(str(r.get("next_fix") or ""))
+                scrape_bits.append(str(r.get("defects") or ""))
+            ov_finish = merge_dim_lock_overrides(
+                scale_now, sess.get("dim_lock_overrides") or {}, *scrape_bits
+            )
+            if ov_finish:
+                sess["dim_lock_overrides"] = ov_finish
+                _write_session_json(sf, sess)
+            scale_footer = format_scale_artist_footer(
+                scale_now,
+                recompose_dir=str(sess.get("recompose_dir") or ""),
+                goal=str(sess.get("goal") or ""),
+                ref_analysis=str(sess.get("ref_analysis") or ""),
+                ref_image=str(sess.get("ref_image") or ""),
+                module=str(sess.get("module") or ""),
+                dim_lock_overrides=ov_finish,
+            )
+            md_lines.append("")
+            md_lines.append(scale_footer)
+            md_lines.append("")
+        except Exception:
+            pass
 
         saved_paths: list[str] = []
         reflection_path = None
@@ -1181,8 +1260,8 @@ def cmd_converge(
                 md_lines.append(f"- `{sp}`")
             md_lines.append("")
             md_lines.append(
-                "> 🔇 静默自动驾驶已跑完（反思 + taste + learn 队列）。"
-                "进阶 peek：`improve run` · `coach` · `learn suggest` · `progress`；全量本表加 `--verbose`。"
+                "> 🔇 记忆沉淀已在后台完成（反思 + taste + learn 队列；不对用户旁白）。"
+                "进阶 peek：`improve run` · `coach` · `learn suggest` · `progress`；只要一行结论用 `--quiet`。"
             )
 
             try:
@@ -1227,7 +1306,7 @@ def cmd_converge(
                 print_whisper_tip(tip)
             elif not apply_memory:
                 print("（未写入记忆：已指定 --no-apply）")
-            print(f"📎 全量报告: {report_file.relative_to(root)} （加 --verbose 打印）")
+            print(f"📎 评分履历已写盘: {report_file.relative_to(root)} （去掉 --quiet 可在终端打印）")
         else:
             print(report_text)
             if tip and action == "finish":

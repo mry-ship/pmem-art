@@ -14,6 +14,7 @@ from .prompt_scale import DEFAULT_MAX_ROUNDS, DEFAULT_THRESHOLD, get_converge_sc
 from .scoring import audit_score_inflation, defects_are_substantive, parse_5d_dims
 from .image_gates import _aspect_relation, _inspect_image_physical_traits, resolve_case_config
 from .validate_params import _physical_image_gate
+from .absolute_5d_agent_rubric import AGENT_JUDGE_SOURCE, annotate_advisory_offline
 
 def auto_vlm_judge_image(
     image_path: str,
@@ -41,7 +42,10 @@ def auto_vlm_judge_image(
     - Has NO access to the generation prompt or any generator self-assessment (`raw_score` is never trusted over 5D weighted calculation).
     - Enforces `scale_prof["dim_weights"]`, `audit_score_inflation()`, and the low-scale pose redline (`allow_action_pose_change=False`).
     - By default (`require_image=True`) a missing / blank / tiny file cannot reach STOP_TARGET_REACHED.
-    - If `vlm_judge` API key is configured, calls the remote vision model first; otherwise keeps Agent CLI dims.
+    - If `vlm_judge` API key is configured, calls the remote vision model first.
+    - If no key: current multimodal Agent scores Absolute-5D via CLI `dims`/`defects`
+      (`agent_absolute_5d`); pixel offline scorer is **advisory only**. Threshold stays
+      scale profile (default 9.6) — no no-key hard STOP / 8.50 early exit.
     - Case aspect checks use `session_id` + `ref_image` only — never the output filename.
     """
     p = Path(image_path) if image_path else Path()
@@ -69,6 +73,7 @@ def auto_vlm_judge_image(
 
     judge_source = "agent_self_judge"
     remote_meta: dict[str, Any] = {}
+    offline_meta: dict[str, Any] = {}
     eff_strengths = strengths or ""
     if use_remote_vlm:
         try:
@@ -104,6 +109,54 @@ def auto_vlm_judge_image(
         except Exception as exc:  # noqa: BLE001 — never break local judge path
             remote_meta = {"source": "vlm_import_error", "error": str(exc), "active": False}
             judge_source = "agent_self_judge"
+
+    # No independent VLM → Agent Absolute-5D (same 9.6 gate). Pixel offline = advisory only.
+    if judge_source != "independent_vlm":
+        if dims.strip():
+            judge_source = AGENT_JUDGE_SOURCE
+        else:
+            judge_source = "agent_self_judge"
+        if p.is_file():
+            try:
+                import sys as _sys
+
+                _scripts = Path(__file__).resolve().parent.parent / "scripts"
+                if str(_scripts) not in _sys.path:
+                    _sys.path.insert(0, str(_scripts))
+                from absolute_5d_scorer import absolute_5d as _offline_a5d  # noqa: WPS433
+
+                offline = _offline_a5d(
+                    str(p),
+                    api_scale=str(scale_prof.get("scale") or "medium"),
+                    prompt_mode=str(scale_prof.get("prompt_mode") or ""),
+                    ref_path=str(ref_image or scale_prof.get("ref_image") or "") or None,
+                )
+                offline_meta = {
+                    "version": (offline.get("meta") or {}).get("version"),
+                    "score": offline.get("score"),
+                    "coverage": offline.get("coverage"),
+                    "rankable": (offline.get("meta") or {}).get("rankable"),
+                    "contract": (offline.get("meta") or {}).get("contract"),
+                    "role": "advisory_only",
+                }
+                note = annotate_advisory_offline(
+                    offline.get("score"), offline.get("coverage")
+                )
+                remote_meta = {
+                    **remote_meta,
+                    "offline_advisory": offline_meta,
+                    "source": judge_source,
+                    "offline_advisory_note": note,
+                }
+                # Hint only — never splice into defects (would defeat soft-defect STOP gate).
+                # Warning path below already surfaces annotate_advisory_offline(...).
+            except Exception as exc:  # noqa: BLE001
+                offline_meta = {"error": str(exc), "role": "advisory_only"}
+                remote_meta = {
+                    **remote_meta,
+                    "offline_advisory": offline_meta,
+                    "source": judge_source,
+                }
 
     w_info = parse_5d_dims(dims, scale_prof.get("dim_weights"), module=module)
     weighted = w_info.get("weighted_score")
@@ -173,19 +226,45 @@ def auto_vlm_judge_image(
                 audit_res["warnings"].append(warn)
         if phys["score_cap"] is not None:
             calibrated = min(float(calibrated), float(phys["score_cap"]))
-    if remote_meta.get("error") and judge_source in ("vlm_error_fallback", "vlm_import_error"):
-        audit_res["warnings"].append(f"独立视觉裁判不可用，已回退 Agent 自评：{remote_meta.get('error')}")
+    if remote_meta.get("error") and judge_source in (
+        "vlm_error_fallback",
+        "vlm_import_error",
+        "agent_absolute_5d",
+        "agent_self_judge",
+    ):
+        audit_res["warnings"].append(
+            f"独立视觉 API 不可用，改由本模型按 Absolute-5D 检查表评分（门槛仍 {target_th}）："
+            f"{remote_meta.get('error') or 'no key'}"
+        )
     if judge_source == "independent_vlm":
         audit_res["warnings"].append(
             f"独立视觉裁判已采纳：{remote_meta.get('provider')}/{remote_meta.get('model')}"
         )
+    if judge_source == "agent_absolute_5d":
+        audit_res["warnings"].append(
+            f"Agent Absolute-5D 已采纳（门槛 {target_th}；像素离线仅为旁证）"
+        )
+    if offline_meta.get("score") is not None and judge_source != "independent_vlm":
+        audit_res["warnings"].append(
+            annotate_advisory_offline(offline_meta.get("score"), offline_meta.get("coverage"))
+        )
 
-    # Rubber-stamp defects cannot justify STOP_TARGET_REACHED (Agent or VLM).
+    # Rubber-stamp defects cannot justify STOP (Agent / independent VLM alike).
     soft_defects_blocked = False
-    if calibrated >= target_th and not image_gate_blocked and not defects_are_substantive(defects):
+    if (
+        calibrated >= target_th
+        and not image_gate_blocked
+        and not defects_are_substantive(defects)
+    ):
         soft_defects_blocked = True
         calibrated = min(float(calibrated), round(target_th - 0.05, 2))
         warn = "缺陷栏为空或仅套话，拒绝达标停机；请写出可核验的画面问题或继续迭代"
+        if warn not in audit_res["warnings"]:
+            audit_res["warnings"].append(warn)
+    if judge_source == "agent_self_judge" and not str(dims or "").strip():
+        soft_defects_blocked = True
+        calibrated = min(float(calibrated), round(target_th - 0.05, 2))
+        warn = "无独立 VLM 时须由本模型按 Absolute-5D 给出 dims；缺五维分拒绝达标"
         if warn not in audit_res["warnings"]:
             audit_res["warnings"].append(warn)
 

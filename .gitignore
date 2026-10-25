@@ -25,8 +25,18 @@ Thumbs.db
 
 # Local secrets (VLM judge API keys — never commit)
 .memory-art/vlm_judge.local.yaml
+**/.memory-art/**/vlm_judge.local.yaml
+**/vlm_judge.local.yaml
 .env
 .env.*
+!.env.example
+
+# Local VLM / batch run artifacts (do not publish)
+generated_v8_20/
+generated_v8_20_v2/
+_box_sync/
+.memory-art/_e2e_test_pmemart2/
+.pmem-art-commit
 
 # Generated / bulky HTML (rebuild via atlas / benchmark scripts)
 art-atlas.html

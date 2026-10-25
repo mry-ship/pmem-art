@@ -20,7 +20,7 @@ from .taste_profile import (
     save_taste,
 )
 from .reflection import list_reflections, write_session_reflection
-from .lessons import WEAKNESS_CATEGORIES, classify_weakness, craft_lessons_from_round
+from .lessons import DRILLS, WEAKNESS_CATEGORIES, classify_weakness, craft_lessons_from_round
 
 # ---------------------------------------------------------------------------
 # Whisper Autopilot — invisible self-improve by default（静默自动驾驶）

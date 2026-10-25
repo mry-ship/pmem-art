@@ -45,7 +45,7 @@ def _render_agent_doc_block() -> str:
 
 | 技能指令 | 简短别名 | 用途说明 |
 | :--- | :--- | :--- |
-| **`/pmem-draw`** | **`/art-draw`** | **【强制 8轮 ≥9.6 收敛】** 通用生图：纯文本或垫图 → 生1张→打分挑刺→`<9.6`叠加修正→满8轮挑最高分→静默结算 |
+| **`/pmem-draw`** | **`/art-draw`** | **【强制 8轮 ≥9.6 收敛】** 通用生图：纯文本或垫图 → 生1张→打分挑刺→展示不足/改点→`<9.6`叠加修正→满8轮挑最高分→评分履历可见 |
 | **`/pmem-ui`** | **`/art-ui`** | **【强制 8轮 ≥9.6 收敛】** SpriteCook 式 UI Kit/HUD/九宫格：概念先行→组件表→9-slice→状态族 |
 | **`/pmem-concept`** | **`/art-concept`** | **【强制 8轮 ≥9.6 收敛】** 原画/概念图/Key Art（ZHO·FLUX 完整句 Prompt）— **与 draw 同等强制闭环，禁止只生一张** |
 | **`/pmem-icon`** | **`/art-icon`** | **【强制 8轮 ≥9.6 收敛】** jezweb 式一致化 SVG 图标集：style-spec→分批→preview；关键枚强制收敛 |
@@ -57,15 +57,16 @@ def _render_agent_doc_block() -> str:
 | **`/pmem-coach`** | **`/art-coach`** | **【进阶 peek】** 能力教练练习计划 |
 | **`/pmem-learn`** | **`/art-learn`** | **【进阶 peek】** 知识广度建议（finish 已静默 enqueue） |
 
-### 2. 静默自动驾驶（默认）
-- `converge finish`（默认写记忆；`--no-apply` 可跳过）与高信号 `feedback` 后：自动写反思、更新 taste、强化 recipe/红线、悄悄排队 learn——对用户最多一行「小提示」。
-- Agent **不要**旁白记忆写入；全量报告用 `--verbose` 或上述进阶技能。
+### 2. 评分履历可见 · 记忆静默写入（默认）
+- 闭环每轮须向用户展示：五维分、不足、下一轮改点；`converge finish` 默认打印全轮评分履历并写记忆（`--no-apply` 可跳过；只要终稿加 `--quiet`）。
+- `finish` / 高信号 `feedback` 后仍自动写反思、更新 taste、强化 recipe/红线、悄悄排队 learn——**不要**旁白记忆写入；最多转述一行「小提示」。
+- 教练 / 广度报告用进阶技能 `/pmem-improve` · `/pmem-coach` · `/pmem-learn`。
 
 ### 3. 日常自然语言反馈沉淀（无需手写 YAML）
 - 生图前先运行：`python3 pmem_art.py search --module <模块>` 或 `python3 pmem_art.py search "<关键词>"`
 - 当画师说「太赛博 / 头太大 / 别这样画 / 这版留着 / 换成水彩 / 以后都用…」时，立即运行：
   `python3 pmem_art.py feedback "<画师原话>" --module <模块> [--asset <图片路径>]`
-- 运行闭环收敛追踪器：`python3 pmem_art.py converge start`，然后每轮 `converge generate` 与 `converge judge`，最后 `converge finish`（finish 默认静默）
+- 运行闭环收敛追踪器：`python3 pmem_art.py converge start`，然后每轮 `converge generate` 与 `converge judge`，最后 `converge finish`（默认打印评分履历）
 {AGENT_DOC_MARKER_END}
 """
 
@@ -89,7 +90,7 @@ def install_skills_and_agent_configs(root: Path, quiet: bool = False) -> dict[st
     在目标项目根目录自动安装：
     - Cursor Skills & Slash Commands: .cursor/skills/<name>/SKILL.md, .cursor/commands/<name>.md
     - Claude Code Skills & Commands : .claude/skills/<name>/SKILL.md, .claude/commands/<name>.md, CLAUDE.md
-    - Codex / Agents Skills         : .agents/skills/<name>/SKILL.md, AGENTS.md
+    - Codex / Agents Skills+Commands: .agents/skills/<name>/SKILL.md, .agents/commands/<name>.md, AGENTS.md
     """
     installed: dict[str, list[str]] = {
         "cursor_skills": [],
@@ -97,6 +98,7 @@ def install_skills_and_agent_configs(root: Path, quiet: bool = False) -> dict[st
         "claude_skills": [],
         "claude_commands": [],
         "codex_skills": [],
+        "codex_commands": [],
         "agent_docs": [],
     }
 
@@ -125,11 +127,16 @@ def install_skills_and_agent_configs(root: Path, quiet: bool = False) -> dict[st
             cl_cmd.write_text(_render_command_md(spec, nm), encoding="utf-8")
             installed["claude_commands"].append(str(cl_cmd.relative_to(root)))
 
-            # 3. Codex (.agents/skills/<nm>/SKILL.md)
+            # 3. Codex (.agents/skills/<nm>/SKILL.md + commands mirror for parity)
             cx_skill = root / ".agents" / "skills" / nm / "SKILL.md"
             cx_skill.parent.mkdir(parents=True, exist_ok=True)
             cx_skill.write_text(_render_skill_md(spec, nm), encoding="utf-8")
             installed["codex_skills"].append(str(cx_skill.relative_to(root)))
+
+            cx_cmd = root / ".agents" / "commands" / f"{nm}.md"
+            cx_cmd.parent.mkdir(parents=True, exist_ok=True)
+            cx_cmd.write_text(_render_command_md(spec, nm), encoding="utf-8")
+            installed.setdefault("codex_commands", []).append(str(cx_cmd.relative_to(root)))
 
     # 4. Upsert CLAUDE.md and AGENTS.md
     claude_md = root / "CLAUDE.md"
@@ -161,7 +168,7 @@ def install_skills_and_agent_configs(root: Path, quiet: bool = False) -> dict[st
         print(f"✨ 已自动安装 pmem-art {len(SKILL_SPECS)} 项美术技能（含别名共 {len(SKILL_SPECS)*2} 个斜杠入口）到 Cursor / Claude Code / Codex：")
         for spec in SKILL_SPECS:
             print(f"   · /{spec['name']:<16} (别名 /{spec['alias']:<11}) — {spec['title']}")
-        print("   · 安装路径: .cursor/{skills,commands}/ · .claude/{skills,commands}/ · .agents/skills/ · CLAUDE.md · AGENTS.md · .cursor/rules/pmem-art.mdc")
+        print("   · 安装路径: .cursor/{skills,commands}/ · .claude/{skills,commands}/ · .agents/{skills,commands}/ · CLAUDE.md · AGENTS.md · .cursor/rules/pmem-art.mdc")
     return installed
 
 

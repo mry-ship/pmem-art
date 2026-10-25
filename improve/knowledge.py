@@ -18,6 +18,7 @@ from .project_library import (
     sync_active_project_to_library,
 )
 from .taste_profile import _mem_root, _uniq_append, load_taste, profile_dir
+from .lessons import DRILLS
 
 # ---------------------------------------------------------------------------
 # Knowledge atlas — auto-expand breadth

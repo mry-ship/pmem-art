@@ -497,7 +497,7 @@ def ensure_cursor_stubs(root: Path) -> None:
         "- **`/pmem-draw`（或 `/art-draw`）**：8轮 9.6分 闭环自评收敛生图！\n"
         "  - 纯文本：`/pmem-draw 生成一张xxx风格的xxx图`\n"
         "  - 垫图模式：`/pmem-draw [丢入一张图] 生成一张xxx图`（先深度分析参考图构图/色板/光影/结构，再开始循环）\n"
-        "  - 循环规则：每轮先 `converge generate` 生 1 张，再 `converge judge` 做严苛五维审图（满分10）+ 说出合理亮点与**不合理之处** → `< 9.6` 分不算合格，叠加修正策略继续下一轮（最多8轮）→ 达标立即停止，或满8轮挑全阶段最高分 → 运行 `python3 pmem_art.py converge finish`（默认写记忆；`--verbose` 才倾倒全轮次评分表）。\n"
+        "  - 循环规则：每轮先 `converge generate` 生 1 张，再 `converge judge` 做严苛五维审图（满分10）+ 说出合理亮点与**不合理之处**，并在对话展示评分/不足/改点 → `< 9.6` 分不算合格，叠加修正策略继续下一轮（最多8轮）→ 达标立即停止，或满8轮挑全阶段最高分 → 运行 `python3 pmem_art.py converge finish`（默认写记忆并打印评分履历；只要终稿加 `--quiet`）。\n"
         "- **`/pmem-ui`（`/art-ui`）**：**【强制8轮≥9.6】** SpriteCook 式 UI Kit/HUD/九宫格整套（概念先行→组件表→9-slice→状态族）。\n"
         "- **`/pmem-concept`（`/art-concept`）**：**【强制8轮≥9.6】** 原画/概念图/Key Art（ZHO·FLUX 完整句）— 与 draw 同等闭环，禁止只生一张。\n"
         "- **`/pmem-icon`（`/art-icon`）**：**【强制8轮≥9.6】** jezweb 式一致化图标集/SVG（style-spec→分批→preview；关键枚闭环）。\n"

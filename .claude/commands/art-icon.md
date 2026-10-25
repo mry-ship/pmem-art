@@ -69,11 +69,11 @@ icons/
 └── …
 ```
 
-### Step 5：关键图标 8轮9.6 收敛（可选）
-用户点名某枚「不对」或一致性审查不通过时：
+### Step 5：关键图标 8轮≥9.6 收敛（App Icon 母版强制；SVG/道具集：点名或一致性失败时强制）
+整集批量生成不必对每枚跑满 8 轮；**App Icon 1024 母版**、用户点名「不对」、或一致性审查不通过的关键枚必须跑满 Absolute-5D 闭环（有 Key→API；无 Key→本模型；禁止像素 8.50 早停）：
 ```bash
 python3 pmem_art.py converge start --goal "图标 <name> 对齐 style-spec" --module brand.WorldStyle
-# 生成 → 自评 → converge generate / converge judge → finish
+# 生成 → Absolute-5D 自评 → converge generate / converge judge → finish
 ```
 
 ### Step 6：沉淀
@@ -119,9 +119,9 @@ python3 pmem_art.py converge judge --session appicon --round 1 --image app_icon_
 - [ ] 全部 `currentColor`
 - [ ] 视觉重量平衡、padding 一致、光学居中
 - [ ] 文件名 kebab-case；`preview.html` + `style-spec.json` 齐全
-- [ ] 若跑了收敛：胜出图 + 一行小提示即可（全表仅 --verbose）
+- [ ] 若跑了收敛：默认展示每轮评分/不足/改点 + 胜出图（只要终稿用 --quiet）
 
-## 静默自动驾驶（Agent 必读）
+## 记忆静默 / 履历可见（Agent 必读）
 - `converge finish` 后系统自动写反思/口味/learn 队列——**无需**再跑 `/pmem-improve`。
-- 对用户只展示胜出图 + 结论；若有「小提示」原样转述（每会话最多 1 条）。**禁止**旁白记忆写入。
-- 全量报告 / 教练 / 广度：用户明确要求或 `--verbose` / 进阶技能时再给。
+- 对用户默认展示：**每轮五维分 + 不足 + 改点 + 胜出图 + 全轮履历**；若有「小提示」原样转述（每会话最多 1 条）。**禁止**旁白记忆写入。
+- 只要终稿：`--quiet`。教练 / 广度：用户明确要求或进阶技能时再给。

@@ -1,6 +1,6 @@
 ---
 name: art-draw
-description: 当用户输入 /pmem-draw 或 /art-draw（如「/pmem-draw 生成一张xxx风格的xxx图」或「/pmem-draw [附带一张图] 生成一张xxx图」）时触发。执行「先查记忆/分析参考图 → 生成1张图 → 严苛五维自评打分+指出不合理处 → 未达9.6分则叠加修正继续生图（最多8轮）→ 达标或满8轮挑最高分 → 默认静默结算并沉淀记忆（`--verbose` 才倾倒全轮次评分表）」的完整闭环。
+description: 当用户输入 /pmem-draw 或 /art-draw（如「/pmem-draw 生成一张xxx风格的xxx图」或「/pmem-draw [附带一张图] 生成一张xxx图」）时触发。执行「先查记忆/分析参考图 → 生成1张图 → 严苛五维自评打分+指出不合理处 → 未达9.6分则叠加修正继续生图（最多8轮）→ 达标或满8轮挑最高分 → 默认展示每轮评分/不足/改点并沉淀记忆（只要终稿加 `--quiet`）」的完整闭环。
 ---
 
 # `/pmem-draw`（别名 `/art-draw`）— 8轮 9.6分 闭环自评收敛生图技能
@@ -13,7 +13,7 @@ description: 当用户输入 /pmem-draw 或 /art-draw（如「/pmem-draw 生成�
 
 ### 方式 A：纯文本指令生图
 > 例：`/pmem-draw 生成一张东方青瓷水彩风格的阿斯特拉半身立绘`
-- 直接进入 **Step 1（召回记忆）→ Step 2（最多8轮自评收敛循环）→ Step 3（静默结算与沉淀记忆）**。
+- 直接进入 **Step 1（召回记忆）→ Step 2（最多8轮自评收敛循环）→ Step 3（展示评分履历 + 静默沉淀记忆）**。
 
 ### 方式 B：丢入一张参考图 / 垫图 + 生成指令
 > 例：`/pmem-draw [附带一张图] 生成一张同风格但换成冰霜刀光特效的武器图标`
@@ -40,14 +40,14 @@ description: 当用户输入 /pmem-draw 或 /art-draw（如「/pmem-draw 生成�
    python3 pmem_art.py converge start --goal "<用户目标描述>" --module <目标模块> [--mode quality|fast] [--scale low|medium|high|recompose] [--recompose-dir "<新构图方向>"] [--ref-image <参考图>] [--ref-analysis "<参考图分析>"]
    ```
    - 默认 `--mode quality` = 完整 8×≥9.6。
-   - `--scale`：`low` 贴原修瑕 · `medium` 补足（默认）· `high` 允许戏剧光影升级 · `recompose` 须配 `--recompose-dir`。
+   - `--scale`：`low` 贴原修瑕 · `medium` 小优化锁机位（默认）· `high` 大胆跃升+可叙事 · `recompose` 须配 `--recompose-dir`。
    - `--mode fast`：warm-start 置信度高时可走 **fast track**（仍须每张打分；最终采纳默认仍要 ≥9.6，除非用户明确说「草稿/fast/先看看」）。
    - 把打印出的 **Warm-Start `prompt_block` 完整并入第 1 轮 Prompt**。
    - **档位保留集（V4 短骨架；禁止全档复读肯定锁）**：
      - `low`：姿态/机位锁 **一条即可**；goal ≤20% 修瑕。
-     - `medium`：goal **25%–45%**；指令骨架「保画风与主体，柔化光影…」。
-     - `high`：goal **50%–80%**；骨架「保媒介与身份，提升光影张力」；**≥2 轮才停**。
-     - `recompose`：目标机位 = `--recompose-dir`；骨架「保画风色板，按「方向」重构机位」；**≥2 轮**；未换机位勿停。
+     - `medium`：goal **~40%**；锁机位；可小幅姿态/局部布局；骨架「保画风与机位，小幅姿态/局部布局；柔化光影…」。
+     - `high`：goal **≤80%**；`allow_recompose` + 可改元素数；forbid=`no_identity_swap`；骨架「保媒介与身份，提升光影张力；可加风格内叙事点缀」；**≥2 轮才停**。
+     - `recompose`：目标机位 = `--recompose-dir`；骨架「保画风色板，按「方向」重构机位」；**≥2 轮**；未换机位勿停；与 bold 拆开。
    - **最优方向按档分流**（加法，不是第二份锁）。出图前可跑：`python3 pmem_art.py check-scale-gates --self-check`。
 3. **可选 Best-of-N 首帧**：第 1 轮先构思 2~3 个方向（或并行想法），挑最佳进入后续 converge（在回复里写明选了哪条）。
 
@@ -62,7 +62,7 @@ description: 当用户输入 /pmem-draw 或 /art-draw（如「/pmem-draw 生成�
 - 调用生图工具（如 `GenerateImage` 或项目配置的生图脚本）**生成 1 张图**。
 
 #### 2.2 严苛审图与五维打分（每维满分 10，再按档位权重合成）
-生成后亲自看图，按这五项打分（有结构、透视、质感硬伤就必须压到 9 以下）：
+生成后**亲自看图**按 Absolute-5D 打分（有结构、透视、质感硬伤就必须压到 9 以下）。有独立 VLM Key 时 API 主分；**无 Key 时仍由你（本模型）按检查表看图评分**，门槛照旧 `>=9.6`，未达标继续，满 8 轮取最高分——**禁止**用像素离线尺另设 8.50 早停。可参考 `skills_kit/absolute_5d_agent_rubric.py` 的 `agent_absolute_5d_judge_prompt()`。
 1. **构图** 2. **光影色彩** 3. **透视与解剖** 4. **质感** 5. **规格与风格**
 
 示例：`构图8.6/光影8.2/透视7.8/质感8.0/风格8.4`。旧的加和尺 `风格2.2/结构2.0/光影1.7/合规1.4/还原1.3` 仍可解析为相加总分。
@@ -80,7 +80,11 @@ python3 pmem_art.py converge judge \
 ```
 不要把 `--score` 当成最终分。五维解析成功后，停机分以加权结果为准。
 
-#### 2.4 收敛判定（核心规则！）
+#### 2.4 向用户展示本轮审图卡（默认必做）
+在继续下一轮或进入结算前，把本轮结果写进对话（除非用户 `--quiet`）：
+`第 i 轮 · 总分 X.XX · 五维… · 不足：… · 本轮/下轮改点：…`，并附上本轮图。
+
+#### 2.5 收敛判定（核心规则！）
 - **情况 1：本轮评分 `>= 9.6` 且已满本档 `min_rounds_before_stop`（`high`/`recompose` 默认 ≥2 轮）**
   🎉 **合格达标！** 结束生图循环，以第 $i$ 轮为胜出图，进入 Step 3。
 - **情况 1b：分数够但未满最小轮次** → 视为未停机，按 `best_direction_hint` 继续叠加（防 1 轮贴原虚高）。
@@ -91,7 +95,7 @@ python3 pmem_art.py converge judge \
 
 ---
 
-### Step 3：结算最优图 & 自动沉淀记忆（默认静默；全量表需 `--verbose`）
+### Step 3：结算最优图 & 自动沉淀记忆（默认展示评分履历；记忆写入仍静默）
 
 循环结束后，运行：
 ```bash
@@ -100,20 +104,28 @@ python3 pmem_art.py converge finish
 该命令会自动：
 1. 选出达标轮次（`>= 9.6`）或全阶段最高分轮次（`Best of 8`）。
 2. 将最终胜出图通过 `ingest` / `feedback` 写入 `.memory-art` 的 `recipe`（正向定稿锚点），并把迭代过程中暴露的典型不合理点写入 `style_redline` / `visual_correction`。
-3. 生成标准 Markdown 汇总表。
+3. 生成并**默认打印**标准 Markdown 评分履历表（只要一行结论时加 `--quiet`）。
 
-**对用户的默认展示（静默自动驾驶 · Whisper）：**
-1. 🏆 **最终胜出图** + 一句结论（第几轮达标 / 满8轮最高分）。
-2. 💡 若 CLI 打出一行 **「小提示」**（如「下次注意：头身比」/「已记住：不要过曝高光」），**原样转述给用户**——整次会话最多 1 条，不要扩写成教练长文。
-3. **禁止**向用户旁白「正在写反思 / 更新 taste / 入队 learn / 沉淀红线」；这些已在 `finish`（默认写记忆；`--no-apply` 可跳过） 后台静默完成。
-4. 用户没要详情时，**不要**倾倒全轮次评分总表、本轮可学清单、improve/coach/learn 推销。需要全量时让用户加 `--verbose` 或主动说「看报告 / 进步 / 教练」。
+**对用户的默认展示（评分履历可见 · 记忆写入静默）：**
+每轮 `converge judge` 之后，**必须**在对话里展示本轮审图卡（用户明确说「安静/quiet」或 CLI `--quiet` 才可省略）：
+1. 本轮图（或路径）
+2. **五维分 + 综合分**（例：`构图8.6/光影8.2/透视7.8/质感8.0/风格8.4 · 总分 8.40`）
+3. **不合理 / 不足**（`defects`，具体到部位）
+4. **下一轮主要改哪里**（`next_fix`）；若已达标则写「定稿」
+循环结束后再展示：🏆 **最终胜出图** + 全轮次评分总表（分数 / 不足 / 改点 / 结果）。
+报告**最底部**必须带档位合同脚注（`converge finish` 已打印），原样转述，例如：
+> **目前是 LOW 档**… 若画师说「构图松一点」，表上该维显示 **`75%（默认95%，-20%）`**（档位仍是 low，只微调这一维）。
+画师可写：`构图松一点` / `光影锁定降到 40%` / `升到 medium`；Agent 应跑 `converge lock --lock-text "…"` 再继续生图。
+💡 若 CLI 打出一行「小提示」，原样转述（每会话最多 1 条）。
+**禁止**旁白「正在写反思 / 更新 taste / 入队 learn / 沉淀红线」——记忆仍在 `finish` 后台静默完成。
+improve/coach/learn 推销仅在用户主动要时再给。
 
 ### Agent 后台（对用户不可见）
 `finish`（默认写记忆；`--no-apply` 可跳过） 已自动：写 recipe/红线 + 会话反思 + `run_silent_autopilot`（更新 taste、强化配方、悄悄 enqueue 1–2 条 learn 建议）。
 
-### 闭环总览（用户几乎无感）
-`装上就用 → 画 → 偶尔一行小提示 → 系统自己变强；进阶 peek：improve/coach/learn/progress/--verbose`
-## 静默自动驾驶（Agent 必读 · 对用户几乎无感）
+### 闭环总览
+`装上就用 → 画 → 每轮摊开评分与改点 → 偶发一行小提示 → 记忆后台变强；只要终稿用 --quiet；进阶 peek：improve/coach/learn/progress`
+## 记忆静默 / 履历可见（Agent 必读）
 - `converge finish` 后系统**自动**写反思、更新 `taste.json`、强化 recipe/红线、悄悄排队 1–2 条知识建议——**无需**再跑 `/pmem-improve` / `/pmem-learn`。
-- 对用户只展示：**胜出图 + 结论**；若 stdout 有「小提示」则原样转述（每会话最多 1 条）。
-- **不要**叙述「已写入记忆 / 正在自我迭代 / 建议你跑 coach」。用户想看详情时用 `/pmem-improve`·`/pmem-coach`·`python3 pmem_art.py progress`·`--verbose`（进阶/可选）。
+- 对用户默认展示：**每轮审图卡 + 胜出图 + 全轮评分履历**；记忆写入不要旁白。
+- 用户要安静出图时用 `--quiet` 或说「只要终稿」。想看教练/广度再用 `/pmem-improve`·`/pmem-coach`·`progress`。

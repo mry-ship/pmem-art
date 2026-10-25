@@ -133,14 +133,15 @@ def detect_kind(text: str) -> str:
 
 
 def detect_style_fork(text: str) -> str | None:
+    # Prefer explicit style-change phrasing; bare「像素」in「像素旁证/像素尺」must not fork.
     mapping = [
         (r"水彩|watercolor", "Watercolor"),
         (r"Q版|q版|chibi|二头身|三头身", "Chibi"),
-        (r"像素|pixel", "Pixel"),
-        (r"赛博|cyber|霓虹|neon", "Cyber"),
+        (r"像素风|像素画|改成像素|换成像素|pixel\s*art", "Pixel"),
+        (r"赛博风|改成赛博|换成赛博|cyberpunk|霓虹风", "Cyber"),
         (r"厚涂|oil\s*paint", "Painterly"),
         (r"线稿|lineart|线稿图", "Lineart"),
-        (r"扁平|flat", "Flat"),
+        (r"扁平风|flat\s*design|改成扁平", "Flat"),
     ]
     for pat, name in mapping:
         if re.search(pat, text, re.I):

@@ -95,12 +95,16 @@ class TestVlmJudgeParse(unittest.TestCase):
         self.assertEqual(obs["defects"], "平光")
 
     def test_maybe_run_falls_back_without_key(self) -> None:
+        # Use an empty temp project root so repo .memory-art/vlm_judge.local.yaml
+        # cannot leak a real key into this unit test.
+        td = Path(tempfile.mkdtemp())
+        (td / ".memory-art").mkdir()
         with mock.patch.dict(os.environ, {}, clear=False):
             for k in ("PMEM_VLM_API_KEY", "OPENAI_API_KEY", "ANTHROPIC_API_KEY"):
                 os.environ.pop(k, None)
             res = maybe_run_independent_vlm_judge(
                 "",
-                root=ROOT,
+                root=td,
                 data={"config": {"vlm_judge": {"enabled": "auto", "api_key": ""}}},
                 cli_dims="构图9.0/光影9.0/透视9.0/质感9.0/风格9.0",
                 cli_defects="干净",

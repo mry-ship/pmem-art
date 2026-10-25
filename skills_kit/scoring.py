@@ -148,17 +148,23 @@ def _parse_skill_additive(dims_str: str) -> dict[str, Any] | None:
     additive caps instead of failing open with a silent 0.
     """
     spec = (
-        ("style_palette", r"(?:风格|色板)[^0-9]*([0-9]+(?:\.[0-9]+)?)", 2.5),
-        ("structure", r"(?:结构)[^0-9]*([0-9]+(?:\.[0-9]+)?)", 2.5),
-        ("lighting_material", r"(?:光影)[^0-9]*([0-9]+(?:\.[0-9]+)?)", 2.0),
-        ("compliance", r"(?:合规|红线)[^0-9]*([0-9]+(?:\.[0-9]+)?)", 1.5),
-        ("intent", r"(?:还原|意图)[^0-9]*([0-9]+(?:\.[0-9]+)?)", 1.5),
+        ("style_palette", r"(?:风格色板|风格|色板)[^0-9]*([0-9]+(?:\.[0-9]+)?)", 2.5),
+        # 「构图叙事」等旧 concept 侧重标签：无「结构」时也可落入加和尺，避免 judge 记 0 分
+        ("structure", r"(?:结构透视|构图叙事(?:与透视)?|结构|构图)[^0-9]*([0-9]+(?:\.[0-9]+)?)", 2.5),
+        ("lighting_material", r"(?:光影材质|光影)[^0-9]*([0-9]+(?:\.[0-9]+)?)", 2.0),
+        ("compliance", r"(?:管线与红线合规|红线合规|合规|红线)[^0-9]*([0-9]+(?:\.[0-9]+)?)", 1.5),
+        ("intent", r"(?:氛围[/／]?意图还原|氛围意图还原|设定还原|氛围|还原|意图)[^0-9]*([0-9]+(?:\.[0-9]+)?)", 1.5),
     )
     # Require skill-only markers so general 「构图/透视/质感」 strings stay on general_5d.
     probe = dims_str or ""
-    if not re.search(r"(?:合规|红线|还原|意图)", probe):
+    if not re.search(r"(?:合规|红线|还原|意图|氛围)", probe):
         return None
-    if not re.search(r"(?:风格|色板)", probe) or not re.search(r"结构", probe):
+    if not re.search(r"(?:风格|色板)", probe) or not re.search(r"(?:结构|构图)", probe):
+        return None
+    # Absolute-5D 主串（含质感且无合规/红线类）留给 general_5d
+    if re.search(r"(?:质感|肌理|细节|texture)", probe, flags=re.IGNORECASE) and not re.search(
+        r"(?:合规|红线)", probe
+    ):
         return None
     raw: dict[str, float] = {}
     for key, pat, _cap in spec:

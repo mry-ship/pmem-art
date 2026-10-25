@@ -131,6 +131,7 @@ class TestCaseParameterValidation(unittest.TestCase):
                 root=ROOT,
                 session_id="custom_session",
                 ref_image="",
+                use_remote_vlm=False,  # assert sidecar merge, not live API rewrite
             )
             self.assertIn("three hands", hijack["defects"])
             self.assertNotIn("画幅比例错误", hijack["defects"])
@@ -145,6 +146,7 @@ class TestCaseParameterValidation(unittest.TestCase):
                 root=ROOT,
                 session_id="case02",
                 ref_image="comparison/style_refs/style_ref_02_pastel_sketch.png",
+                use_remote_vlm=False,
             )
             self.assertLessEqual(judge_res["calibrated_score"], 7.90)
             self.assertFalse(judge_res["passed"])
@@ -256,10 +258,23 @@ class TestGateFixes(unittest.TestCase):
         self.assertLess(med["min_round_leap"], high["min_round_leap"])
         # recompose is orthogonal to intensity but must not undercut high leap.
         self.assertGreaterEqual(rec["min_round_leap"], high["min_round_leap"])
+        self.assertEqual(med["max_prompt_delta_ratio"], 0.40)
         self.assertEqual(med["max_prompt_delta_vs_first"], 0.60)
-        self.assertEqual(high["max_prompt_delta_vs_first"], 0.85)
+        self.assertEqual(high["max_prompt_delta_ratio"], 0.80)
+        self.assertEqual(high["max_prompt_delta_vs_first"], 0.90)
+        self.assertEqual(rec["max_prompt_delta_ratio"], 0.85)
         self.assertEqual(rec["max_prompt_delta_vs_first"], 0.95)
         self.assertIsNone(low.get("max_prompt_delta_vs_first"))
+        # medium: small pose/layout OK; still lock viewpoint + no full recompose
+        self.assertTrue(med["allow_action_pose_change"])
+        self.assertTrue(med["allow_layout_change"])
+        self.assertFalse(med["allow_viewpoint_change"])
+        self.assertFalse(med["allow_recompose"])
+        self.assertFalse(med["allow_element_count_change"])
+        # high: bold leap + narrative; recompose orthogonal axis stays separate
+        self.assertTrue(high["allow_recompose"])
+        self.assertTrue(high["allow_element_count_change"])
+        self.assertTrue(any("no_identity_swap" in str(x) for x in high["forbidden_changes"]))
         # high / recompose must not 1-round stop (anti photocopy).
         self.assertEqual(int(low["min_rounds_before_stop"]), 1)
         self.assertEqual(int(med["min_rounds_before_stop"]), 1)
@@ -685,6 +700,22 @@ class TestGateFixes(unittest.TestCase):
         self.assertIsNotNone(info["weighted_score"])
         self.assertGreater(info["weighted_score"], 8.5)
 
+    def test_concept_legacy_emphasis_dims_do_not_zero(self) -> None:
+        """旧 concept 侧重标签不得再把 converge judge 打成 0 分。"""
+        from skills_kit import parse_5d_dims, audit_score_inflation, get_converge_scale_profile
+
+        legacy = "风格色板9.5/构图叙事与透视9.2/光影材质9.0/红线合规8.8/氛围意图还原9.1"
+        info = parse_5d_dims(legacy)
+        self.assertIsNotNone(info["weighted_score"], info)
+        self.assertGreater(info["weighted_score"], 8.5)
+        abs5 = parse_5d_dims("构图9.2/光影9.0/透视8.8/质感8.9/风格9.1")
+        self.assertEqual(abs5["rubric_mode"], "general_5d")
+        self.assertIsNotNone(abs5["weighted_score"])
+        prof = get_converge_scale_profile("medium")
+        audited = audit_score_inflation(9.5, legacy, "远景层次偏弱，需加强空气透视", None, prof, round_num=1)
+        self.assertGreater(audited["calibrated_score"], 0.0)
+        self.assertNotIn("五维字符串无法解析", " ".join(audited.get("warnings") or []))
+
     def test_loose_case_aliases_no_longer_hijack_sessions(self) -> None:
         from skills_kit import resolve_case_config
         self.assertIsNone(resolve_case_config("my_sketch_art"))
@@ -850,12 +881,19 @@ class TestGateFixes(unittest.TestCase):
         self.assertIn("未达阈值", recipe_text)
         self.assertNotIn("达标定稿", recipe_text)
 
-    def test_medium_constraint_locks_pose(self) -> None:
+    def test_medium_constraint_locks_viewpoint_not_pose(self) -> None:
         from skills_kit import _constraint_tail
         med = get_converge_scale_profile("medium")
-        self.assertFalse(med["allow_action_pose_change"])
-        self.assertTrue(any("姿态" in x or "pose" in x.lower() for x in med["forbidden_changes"]))
-        self.assertIn("姿态", _constraint_tail(med))
+        self.assertTrue(med["allow_action_pose_change"])
+        self.assertTrue(med["allow_layout_change"])
+        self.assertFalse(med["allow_viewpoint_change"])
+        self.assertFalse(med["allow_recompose"])
+        keys = [str(x).split("(", 1)[0].strip() for x in med["forbidden_changes"]]
+        self.assertIn("viewpoint_angle", keys)
+        self.assertNotIn("character_action_and_pose", keys)
+        self.assertNotIn("scene_layout", keys)
+        self.assertIn("机位", _constraint_tail(med))
+        self.assertNotIn("不改动作与姿态", _constraint_tail(med))
 
     def test_style_infer_prefers_ref_over_weak_goal_sketch(self) -> None:
         from skills_kit import _infer_case_style_and_subject

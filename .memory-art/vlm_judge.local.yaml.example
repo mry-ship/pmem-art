@@ -1,18 +1,20 @@
-# 复制为 vlm_judge.local.yaml 后填写（该文件已被 .gitignore，勿提交）
+# 复制为 vlm_judge.local.yaml 后填写（该文件已被 .gitignore，勿提交真实密钥）
 #   cp .memory-art/vlm_judge.local.yaml.example .memory-art/vlm_judge.local.yaml
 #
 # 也可用环境变量（任选其一）：
-#   export PMEM_VLM_API_KEY=sk-...
-#   export OPENAI_API_KEY=sk-...
-#   export ANTHROPIC_API_KEY=sk-ant-...
+#   export PMEM_VLM_API_KEY=YOUR_KEY_HERE
+#   export OPENAI_API_KEY=YOUR_KEY_HERE
+#   export ANTHROPIC_API_KEY=YOUR_KEY_HERE
+#
+# 说明：仓库里只保留本 example；每人自己的 api_key / base_url 只放本地 yaml 或环境变量。
 
 vlm_judge:
-  enabled: auto
-  provider: openai          # openai | openai_compatible | anthropic
-  api_key: ""               # 填这里或只靠环境变量
+  enabled: auto             # auto | always | never
+  provider: openai_compatible  # openai | openai_compatible | anthropic
+  api_key: ""               # 填 YOUR_KEY_HERE，或留空只靠环境变量
   api_key_env: PMEM_VLM_API_KEY
-  base_url: ""              # OpenAI 兼容中转：https://your-gateway/v1
-  model: gpt-4o
+  base_url: ""              # OpenAI 兼容中转，例如 https://YOUR_VLM_GATEWAY/v1
+  model: gpt-4o             # 改成你网关上的视觉模型 id
   timeout_sec: 90
-  on_error: fallback
+  on_error: fallback        # fallback | fail
   write_sidecar: true
