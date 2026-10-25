@@ -1,24 +1,25 @@
 <div align="center">
 
-# 参考图 → 记忆 → 可复现资产
+# 项目 → 记忆 → 可复现资产
 
-**pmem-art** · 面向 Cursor / Claude Code / Codex 的个人美术记忆与闭环生图系统
+**pmem-art** · 插拔式、托管式的 **AI 美术记忆系统**  
+（其次才是自带的斜杠 Skill 闭环）
 
-把主美红线、色板锚点、AI 配方和管线硬指标留在项目里。<br>
-下次生图自动召回；不够分就继续修，达标才停。
+把主美红线、色板锚点、管线硬指标和过稿配方留在项目里。<br>
+Agent 生图前自动查、对话里随口一句话就记下来；记忆随仓库走，换机器还能用。
 
-让 AI 美术 Agent **少跑风格、少翻管线、少丢配方**，并在对话里越用越准。
+**主线是记忆；Skill 是把记忆用起来的加速器。**
 
 ![License](https://img.shields.io/badge/license-see%20LICENSE-green)
 ![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
 ![Cursor](https://img.shields.io/badge/Cursor-支持-000000)
 ![Claude Code](https://img.shields.io/badge/Claude%20Code-支持-D97757)
 ![Codex](https://img.shields.io/badge/Codex-支持-10A37F)
-![Threshold](https://img.shields.io/badge/合格线-≥9.60-blue)
-![Scale](https://img.shields.io/badge/scale-low%20%7C%20medium%20%7C%20high%20%7C%20recompose-8B5CF6)
-![V4](https://img.shields.io/badge/V4%20冷启动-20%2F20%20达标-success)
+![Core](https://img.shields.io/badge/核心-美术记忆-0EA5E9)
+![Skills](https://img.shields.io/badge/内置-11%20Skills-8B5CF6)
+![Threshold](https://img.shields.io/badge/Skill合格线-≥9.60-blue)
 
-[📖 使用手册](USER_MANUAL.md) · [快速接入](#如何接入约-1-分钟) · [优势](#为什么是-pmem-art) · [四档闸门](#四档闸门每档允许变什么--禁止变什么) · [效果](#效果长什么样) · [架构](ARCHITECTURE.md)
+[📖 使用手册](USER_MANUAL.md) · [快速接入](#如何接入约-1-分钟) · [优势](#为什么是-pmem-art) · [记忆怎么用](#如何使用记忆为主--skill-为辅) · [四档闸门](#四档闸门每档允许变什么--禁止变什么) · [效果](#效果长什么样) · [架构](ARCHITECTURE.md)
 
 </div>
 
@@ -26,34 +27,39 @@
 
 ## 解决什么问题
 
-AI 生图每个对话几乎从零开始：上周主美打回的霓虹色、九宫格中心不能画花纹、某张过稿图的 Prompt / 色板 / 头身比，下一次它全不知道。结果是同样风格跑偏反复发生，管线硬指标（RGBA、切图、安全边）一改就炸，好配方散落在聊天记录里无法复现。
+AI 美术每个对话几乎从零开始：上周主美打回的霓虹色、九宫格中心不能画花纹、某张过稿图的 Prompt / 色板 / 头身比，下一次它全不知道。结果是同样风格跑偏反复发生，管线硬指标（RGBA、切图、安全边）一改就炸，好配方散落在聊天记录里无法复现。
 
-**pmem-art** 把这些结论按 **美术模块**（`brand.*` / `character.*` / `scene.*` / `ui.*` / `vfx.*`）沉淀进 `.memory-art/`。Agent 生图前 `search` 召回红线与配方；对话里一句「太赛博 / 这版留着」即可入库；斜杠技能强制 **生图 → 独立审图 → `< 9.60` 继续修**，最多 8 轮。
+**pmem-art 先解决「记不住」**：把结论按美术模块（`brand.*` / `character.*` / `scene.*` / `ui.*` / `vfx.*`）沉淀进 `.memory-art/`。生图前 `search` 召回；一句「太赛博 / 这版留着」即入库。  
+**再提供「用得顺」的内置 Skills**（可选）：`/pmem-draw` 等在召回记忆之上做 **生图 → 独立审图 → `< 9.60` 继续修** 的闭环。不用 Skill、只用 `search` / `feedback` / `ingest`，记忆系统照样工作。
+
+| 层级 | 你得到什么 |
+| :--- | :--- |
+| **① 核心 · 美术记忆** | 红线 / 定稿 / 色板 / 管线 specs / recipe；模块继承；本地可提交；`doctor` / `validate` / `art-atlas` |
+| **② 加速 · 内置 Skills** | 11 组斜杠技能（draw / concept / ui / icon…）+ 四档 `scale` 闸门 + ≥9.60 收敛；安装后对话框 `/` 即用 |
 
 | 特性 | 说明 |
 | :--- | :--- |
-| 🎨 **视觉记忆，不是日志** | 红线绑定正反例图、色板 HEX、分辨率 / RGBA / 九宫格等 **可校验契约**；不是只能搜的纯文本笔记 |
-| 🔁 **闭环收敛，不是单次抽卡** | `/pmem-draw` 等技能强制 generate 与 judge 分步；加权分 **≥ 9.60** 才停，否则叠加修正再生 |
-| 🎚️ **四档闸门可预期** | `low` / `medium` / `high` / `recompose` 写清「能改什么 / 不能改什么」；不合口味可用提示词单次覆盖，或 `feedback` 长期沉淀 |
-| 🔌 **插拔式 Agent 技能** | `skills --install` 一键写入 Cursor / Claude Code / Codex；不改你的引擎工程，卸掉只删技能与配置即可 |
-| 🤫 **静默进化** | `finish` 默认写 recipe / 红线 / 反思 / 口味；对用户最多一行小提示，不刷屏（`--verbose` 才倾倒全表） |
-| 🧊 **冷启动也可跑** | 项目私有记忆为空时仍可挂载跨项目共享知识卡；V4 实测 **20/20** 空白 Bot 达标停机 |
-| 🗂️ **本地资产，可提交** | 记忆与规格落在仓库 `.memory-art/`；可选 `art-atlas.html` 看图墙；不上传服务器 |
+| 🎨 **视觉记忆，不是聊天日志** | 正反例图、HEX 色板、分辨率 / RGBA / 九宫格等 **可校验契约**；按模块继承，不是只能全文搜的笔记 |
+| 🗣️ **自然语言即可沉淀** | 「太赛博 / 头太大 / 这版留着 / 换成水彩」→ `feedback` 自动归类红线 / recipe / 勘误 / 拍板 |
+| 🔎 **生图前强制可召回** | `search --module` / Warm-Start：把历史红线与定稿配方注进下一轮 Prompt |
+| 📉 **越用越收敛** | 静默写反思与口味档案；同一错少犯第二次；跨项目可挂共享知识卡 |
+| 🗂️ **本地资产，可进版本库** | 记忆在 `.memory-art/`；可选图谱 `art-atlas.html`；不上传服务器 |
+| ⚡ **（其次）内置 Skill 闭环** | `skills --install` 后可用 `/pmem-draw` 等；generate / judge 分步，≥9.60 停机；闸门不合可用提示词覆盖 |
 
-相对代码版 [**pmem**](https://github.com/mry-ship/pmem)（记根因 / 排除项 / 模块契约）：**pmem-art** 专攻 **风格漂移、管线硬指标、可复现配方、垫图档位闸门**——同一套「查 → 干 → 记」习惯，换成美术生产语义。详见 [ARCHITECTURE.md](ARCHITECTURE.md)。
+相对代码版 [**pmem**](https://github.com/mry-ship/pmem)（记根因 / 排除项 / 模块契约）：同一套「查 → 干 → 记」习惯；**pmem-art** 换成美术语义（风格漂移、管线硬指标、可复现配方）。详见 [ARCHITECTURE.md](ARCHITECTURE.md)。
 
 ---
 
 ## 为什么是 pmem-art
 
-| 维度 | 常见做法 | pmem-art |
+| 维度 | 常见做法 | pmem-art（记忆优先） |
 | :--- | :--- | :--- |
 | 风格一致性 | 每次手写 Negative / 口头叮嘱 | 模块级 `style_redline` + 色板 + 父模块继承，生图前自动召回 |
-| 质量门槛 | 主观「看起来还行」就交 | 五维加权 + 物理图闸门；**≥ 9.60** 动态停机 |
-| 改动幅度 | Prompt 越写越飘 | 四档 `scale` 锁定机位 / 姿态 / 布局权限；`recompose` 必须跟 `--recompose-dir` |
-| 过稿复现 | 聊天记录里翻旧图 | `recipe` 沉淀定稿锚点；`feedback "这版留着"` 一句话入库 |
-| 管线返工 | 进引擎才发现漏透明 / 切图炸 | `validate` / `doctor` 对照模块 `specs`（分辨率、RGBA、九宫格…） |
-| Agent 协作 | 每人规则文件各写一套 | 统一斜杠技能 + Warm-Start；换机器 `skills --install` 对齐 |
+| 过稿复现 | 聊天记录里翻旧图 | `recipe` / `art_decision` 定稿锚点；`feedback "这版留着"` 一句话入库 |
+| 管线返工 | 进引擎才发现漏透明 / 切图炸 | 模块 `specs` + `validate` / `doctor`（分辨率、RGBA、九宫格…） |
+| 知识归属 | 散落在个人笔记 / Discord | `.memory-art/` 按 `character.*` / `ui.*` 等模块落盘，可随 git 共享 |
+| Agent 对齐 | 每人一份提示词 | 记忆是单一事实源；Skill 只是消费记忆的官方工作流 |
+| （可选）出图质量 | 单次抽卡、主观「还行」 | 内置 Skill：五维加权 + 物理闸门，**≥ 9.60** 动态停机；四档 `scale` 锁改动幅度 |
 
 ---
 
@@ -62,31 +68,47 @@ AI 生图每个对话几乎从零开始：上周主美打回的霓虹色、九�
 ```bash
 git clone https://github.com/mry-ship/pmem-art.git
 cd pmem-art
-python3 pmem_art.py init --name "MyArtProject"
-python3 pmem_art.py skills --install
+python3 pmem_art.py init --name "MyArtProject"   # 核心：初始化美术记忆库
+python3 pmem_art.py skills --install             # 可选：安装内置斜杠 Skills
 ```
 
-然后在 **Cursor / Claude Code / Codex** 对话框里输入 `/`，即可看到 `/pmem-draw`、`/pmem-concept` 等技能。
+只做记忆、暂不装 Skill 也可以：日常用 `search` / `feedback` / `ingest` 即可。装上 Skill 后，在 Cursor / Claude Code / Codex 对话框输入 `/` 可唤出 `/pmem-draw` 等。
 
 | 场景 | 命令 |
 | :--- | :--- |
-| 空项目 | `python3 pmem_art.py init` → `skills --install` |
-| 已有美术目录（不乱移文件） | `python3 pmem_art.py bootstrap --mode legacy --roots Art assets` → `accept --all` → `skills --install` |
-| 刷新技能定义 | `python3 pmem_art.py skills --install` |
+| 空项目 | `init` →（可选）`skills --install` |
+| 已有美术目录（不乱移文件） | `bootstrap --mode legacy --roots Art assets` → `accept --all` →（可选）`skills --install` |
+| 只刷新 Skills | `python3 pmem_art.py skills --install` |
 
 更细的三种接入方式见手册 [第四章](USER_MANUAL.md#第四章三种项目接入方式空项目--老项目--持续生图)。
 
 ---
 
-## 如何使用（日常三步）
+## 如何使用（记忆为主 · Skill 为辅）
+
+### A. 记忆主路径（随时可用，不必开 Skill）
+
+```bash
+# 生图前：召回该模块红线 / 定稿 / 色板
+python3 pmem_art.py search --module character.Astra
+
+# 画师随口评价 → 自动沉淀
+python3 pmem_art.py feedback "太赛博了，别这样画" -m character.Astra
+python3 pmem_art.py feedback "这版留着" -m character.Astra -a path/to/keep.png
+
+# 新图入库（分类 + 归位，默认 dry-run）
+python3 pmem_art.py ingest path/to.png -p "Astra 立绘 青瓷" --apply
+```
+
+### B. 内置 Skill 加速路径（可选）
+
+在已安装 Skills 的对话框里：
 
 ```text
 1. 丢图（可选）  把参考图拖进对话
 2. 选档          --scale low | medium | high | recompose
-3. 出图          Agent 自动：converge start → generate → judge → finish（≥9.60 停）
+3. 出图          Agent：converge start → generate → judge → finish（写回记忆）
 ```
-
-### 最常用几条（复制即用）
 
 ```text
 /pmem-draw --scale low [拖入参考图] 只修五指与透视，不改构图
