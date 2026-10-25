@@ -1,23 +1,59 @@
-# pmem-art
+<div align="center">
 
-**给 Cursor / Claude Code / Codex 用的个人美术记忆 + 闭环生图系统。**  
-对话里丢图、选档、出图；红线与定稿自动沉淀，下次更准。合格线统一 **`≥ 9.60`**（最多 8 轮，达标即停）。
+# 参考图 → 记忆 → 可复现资产
 
-| 文档 | 适合谁 |
-| :--- | :--- |
-| **本页（README）** | 作用 · 接入 · 使用 · **四档闸门（能改/不能改）** · 用提示词自调 · 效果摘要 |
-| **[使用手册 USER_MANUAL.md](USER_MANUAL.md)** | 技能全表、闸门字段表、CLI、FAQ、自调示例 |
-| **[V4 效果页（20 Bot 冷启动）](docs/showcase/pmem_art_images_v4_20bots_showcase.html)** | 原图 → low → medium → high → recompose → 大改 一排六列 |
+**pmem-art** · 面向 Cursor / Claude Code / Codex 的个人美术记忆与闭环生图系统
+
+把主美红线、色板锚点、AI 配方和管线硬指标留在项目里。<br>
+下次生图自动召回；不够分就继续修，达标才停。
+
+让 AI 美术 Agent **少跑风格、少翻管线、少丢配方**，并在对话里越用越准。
+
+![License](https://img.shields.io/badge/license-see%20LICENSE-green)
+![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
+![Cursor](https://img.shields.io/badge/Cursor-支持-000000)
+![Claude Code](https://img.shields.io/badge/Claude%20Code-支持-D97757)
+![Codex](https://img.shields.io/badge/Codex-支持-10A37F)
+![Threshold](https://img.shields.io/badge/合格线-≥9.60-blue)
+![Scale](https://img.shields.io/badge/scale-low%20%7C%20medium%20%7C%20high%20%7C%20recompose-8B5CF6)
+![V4](https://img.shields.io/badge/V4%20冷启动-20%2F20%20达标-success)
+
+[📖 使用手册](USER_MANUAL.md) · [快速接入](#如何接入约-1-分钟) · [优势](#为什么是-pmem-art) · [四档闸门](#四档闸门每档允许变什么--禁止变什么) · [效果](#效果长什么样) · [架构](ARCHITECTURE.md)
+
+</div>
 
 ---
 
-## 它解决什么问题
+## 解决什么问题
 
-| 痛点 | pmem-art 怎么做 |
+AI 生图每个对话几乎从零开始：上周主美打回的霓虹色、九宫格中心不能画花纹、某张过稿图的 Prompt / 色板 / 头身比，下一次它全不知道。结果是同样风格跑偏反复发生，管线硬指标（RGBA、切图、安全边）一改就炸，好配方散落在聊天记录里无法复现。
+
+**pmem-art** 把这些结论按 **美术模块**（`brand.*` / `character.*` / `scene.*` / `ui.*` / `vfx.*`）沉淀进 `.memory-art/`。Agent 生图前 `search` 召回红线与配方；对话里一句「太赛博 / 这版留着」即可入库；斜杠技能强制 **生图 → 独立审图 → `< 9.60` 继续修**，最多 8 轮。
+
+| 特性 | 说明 |
 | :--- | :--- |
-| 生一张就交差，手崩/色偏/跑风格 | `/pmem-draw` 等技能强制 **生图 → 审图 → 不够 9.6 就修**，最多 8 轮 |
-| 上次踩过的坑下次又犯 | 自然语言反馈写入红线 / 定稿；下次 `search` 自动召回 |
-| 换电脑、换 Agent 规则对不上 | 一键 `skills --install` 装到 Cursor / Claude / Codex |
+| 🎨 **视觉记忆，不是日志** | 红线绑定正反例图、色板 HEX、分辨率 / RGBA / 九宫格等 **可校验契约**；不是只能搜的纯文本笔记 |
+| 🔁 **闭环收敛，不是单次抽卡** | `/pmem-draw` 等技能强制 generate 与 judge 分步；加权分 **≥ 9.60** 才停，否则叠加修正再生 |
+| 🎚️ **四档闸门可预期** | `low` / `medium` / `high` / `recompose` 写清「能改什么 / 不能改什么」；不合口味可用提示词单次覆盖，或 `feedback` 长期沉淀 |
+| 🔌 **插拔式 Agent 技能** | `skills --install` 一键写入 Cursor / Claude Code / Codex；不改你的引擎工程，卸掉只删技能与配置即可 |
+| 🤫 **静默进化** | `finish` 默认写 recipe / 红线 / 反思 / 口味；对用户最多一行小提示，不刷屏（`--verbose` 才倾倒全表） |
+| 🧊 **冷启动也可跑** | 项目私有记忆为空时仍可挂载跨项目共享知识卡；V4 实测 **20/20** 空白 Bot 达标停机 |
+| 🗂️ **本地资产，可提交** | 记忆与规格落在仓库 `.memory-art/`；可选 `art-atlas.html` 看图墙；不上传服务器 |
+
+相对代码版 [**pmem**](https://github.com/mry-ship/pmem)（记根因 / 排除项 / 模块契约）：**pmem-art** 专攻 **风格漂移、管线硬指标、可复现配方、垫图档位闸门**——同一套「查 → 干 → 记」习惯，换成美术生产语义。详见 [ARCHITECTURE.md](ARCHITECTURE.md)。
+
+---
+
+## 为什么是 pmem-art
+
+| 维度 | 常见做法 | pmem-art |
+| :--- | :--- | :--- |
+| 风格一致性 | 每次手写 Negative / 口头叮嘱 | 模块级 `style_redline` + 色板 + 父模块继承，生图前自动召回 |
+| 质量门槛 | 主观「看起来还行」就交 | 五维加权 + 物理图闸门；**≥ 9.60** 动态停机 |
+| 改动幅度 | Prompt 越写越飘 | 四档 `scale` 锁定机位 / 姿态 / 布局权限；`recompose` 必须跟 `--recompose-dir` |
+| 过稿复现 | 聊天记录里翻旧图 | `recipe` 沉淀定稿锚点；`feedback "这版留着"` 一句话入库 |
+| 管线返工 | 进引擎才发现漏透明 / 切图炸 | `validate` / `doctor` 对照模块 `specs`（分辨率、RGBA、九宫格…） |
+| Agent 协作 | 每人规则文件各写一套 | 统一斜杠技能 + Warm-Start；换机器 `skills --install` 对齐 |
 
 ---
 
