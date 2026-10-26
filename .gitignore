@@ -34,7 +34,14 @@ Thumbs.db
 # Local VLM / batch run artifacts (do not publish)
 generated_v8_20/
 generated_v8_20_v2/
+generated_v8_20_skill/
 _box_sync/
+_sync_parts/
+.memory-art/_profile/last_doctor.json
+.memory-art/_profile/last_doctor.claim
+.memory-art/_profile/last_doctor.json.bak
+.memory-art/projects/**/_profile/last_doctor.json
+.memory-art/projects/**/_profile/last_doctor.claim
 .memory-art/_e2e_test_pmemart2/
 .pmem-art-commit
 
