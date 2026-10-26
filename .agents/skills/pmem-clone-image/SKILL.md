@@ -17,11 +17,14 @@ Default lock **~95%**。可选四档 polish 仅在达标后。
 ## 合同（~95%）
 **LOCK**：medium；色板角色；光感；材质语法；红线；按类：
 - Scene/原画：medium+光感；构图自由
-- UI：chrome 分层（外框+内描边若参考有则**两层都锁**）；文案=brief；奖励物无脸除非 brief 要求
-- Icon：构图框+材质+BG 习惯；主体新；motif≤1；缩略轮廓清晰
-- Character：脸部+体型语法（大虹膜+巩膜月牙+高光；**禁黑点眼**；**必须双眼分穴，禁独眼/融合眼**；软颊；短粗肢；大头桶身）；换装/身份自由；禁 turnaround
+- UI：chrome 分层（外框+内描边若参考有则**两层都锁**）；文案=brief；奖励物无脸除非 brief 要求。**GenerateImage 织入（散文，禁清单子弹）**：dual-rim chrome with a thick gold outer rim plus a distinct orange/amber inner bevel, edge-readable laminate at mid-edges, reward prop with NO face, and NO gold-only single rim.
+- Icon：构图框+材质+BG 习惯；主体新；motif≤1；缩略轮廓清晰。**GenerateImage 织入（散文，禁清单子弹）**：chunky vinyl-toy plastic volumes under soft studio key from upper-left; NO jewelry product render; NO micro metal scratches.
+- Character：脸部+体型语法。**GenerateImage 织入（散文，禁清单子弹）**：TWO separate eye sockets, large iris fills most of oval with white sclera crescent and specular highlight, soft cheeks short limbs barrel torso, empty-hand T-pose with clothing badge preferred; NOT cyclops NOT black-dot pupils. 换装/身份自由；禁 turnaround。
 **FREE**：构图/题材/身份（除非要求保留）
 **Hard**：Mode B 必须垫参考；motif≤1；尺寸硬锁；禁无 brief 造 UI 字；角色 DNA≠名人脸/著名服装
+
+## Stub 织入规则（A/B 试词 KEEP）
+从失败模式抽出的可验证 stub：写入 Mode B icon/UI/char LOCK 与 GenerateImage overlay 时，**必须织成散文句**，**禁止**裸 bullet checklist（清单会印进画面）。不要堆空「masterpiece」形容词。Chinese OK for section headers；stub 短语可保留英文试词原文。
 
 ## Size
 用户 W×H → 每轮一致；否则跟参考；AR 不符则 Pillow 锁后再评。
@@ -31,7 +34,7 @@ bible（角色写清眼/颊/肢）+ 新题材 brief（UI 精确文案）。Mode 
 
 ## Step 2：闭环 i=1…8
 ### 2.1 生成
-Prompt = bible + brief + 缺陷叠加 + negatives；Mode B 每轮带风格参考。
+Prompt = bible + brief + 缺陷叠加 + negatives + **按类 KEEP stub 散文**；Mode B 每轮带风格参考。
 **Refine pad**：比例/尺度是主缺陷时**不要**再垫上一张结果（会锁死 bug），只垫风格参考并写绝对相对尺度；chrome/文案缺陷可垫上轮胜出+风格参考。
 角色职业信号优先：空手数 T-pose + 胸章/腰带/脚边道具；手持物易缩水，若必须手持则每轮重申绝对尺度。
 
@@ -40,7 +43,7 @@ Prompt = bible + brief + 缺陷叠加 + negatives；Mode B 每轮带风格参考
 1. **构图**（结构与题材/新颖度反回声）
 2. **光影**（光感与明暗冷暖）
 3. **透视**（主体比例/解剖/角色双眼分穴/道具尺度）
-4. **质感**（材质语法与边缘，UI 边角 crop 确认双层描边）
+4. **质感**（材质语法与边缘，UI 边角 crop 确认双层描边 / dual-rim gold+amber）
 5. **风格**（~95% 色板角色与媒介锁定）
 
 ### 2.3 判定
@@ -56,4 +59,4 @@ Prompt = bible + brief + 缺陷叠加 + negatives；Mode B 每轮带风格参考
 连续 **3 组**（icon+char+UI 等）全部 ≥9.6 才算稳；失败→通用规则写回（禁写死本次专名）。
 
 ## Anti
-首发免评 · 假对照 · 100% 死锁布局 · 造 UI 字 · 黑点眼/独眼躲串味 · 个例写死
+首发免评 · 假对照 · 100% 死锁布局 · 造 UI 字 · 黑点眼/独眼躲串味 · 个例写死 · **裸 stub 清单印进画面**

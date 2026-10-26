@@ -30,7 +30,12 @@ Banned：跨域杂物串；同瓶叠光；纯 FX；茶杯修复分镜。
 1. **有参考（B/C）** — 整梯 medium **锁参考**（材质/光影/边缘/色温/BG）。抄纪律不抄 motif。参考写实就跟写实；参考卡通就跟卡通。
 2. **零参考（A）默认** — **卡通可爱**（cute cartoon / casual chibi-toy merge 图标：圆润块面、软阴影、饱和友好色、微笑感造型但**道具本身仍无脸**除非 brief 要求）。brief 另写 medium 则以 brief 为准。
 3. **Mode A 生成必写 stub（防「口头可爱、画面半写实」）** — 每次 GenerateImage description **必须**包含（可英可中，语义等价即可）：`vinyl toy merge icon` · `chibi proportions` · `soft rounded bevels` · `soft painted shadows` · `NO metal specular` · `NO photoreal` · `NO product photography`。缺任一项视为未按 Mode A 执行。
-4. **实拍漂移** — 在默认卡通可爱或 stylized 参考下，重扣产品实拍/油光不锈钢 HDR/真实木纹微细节；仅当参考/brief 明确写实才允许写实。Mode A 若 dim1 偏产品目录感 → 整梯重生并加码 stub，不得硬过。
+4. **Mode A EXTRA KEEP（A/B 试词，写在 mandatory stubs 旁）** — 额外织入散文：`squishy chibi mass` · `pastel candy brand glue` · `NO catalog product lighting`。与上条一起织成散文，**禁止**裸 bullet 清单（会印进格子）。
+5. **Mode B/C 脸红线（真·B/C 修复）** — 硬锁：`props NO faces` / `NO black-dot eyes on props`（道具无脸、无黑点眼）。可选 polish（非单独修复）：`pastel candy brand glue` · `NO catalog product lighting`。若写 `squishy chibi mass`，**必须**同句配对脸禁；**禁止**声称 EXTRA alone 能修 B/C 脸。
+6. **实拍漂移** — 在默认卡通可爱或 stylized 参考下，重扣产品实拍/油光不锈钢 HDR/真实木纹微细节；仅当参考/brief 明确写实才允许写实。Mode A 若 dim1 偏产品目录感 → 整梯重生并加码 stub，不得硬过。
+
+## Stub 织入规则（A/B 试词 KEEP）
+可验证 stub 来自失败模式，不是空 masterpiece 形容词。写入 GenerateImage 时**织成散文**，**永不**裸 checklist bullets（会印进 sheet）。Chinese OK for section headers；stub 短语可保留英文试词原文。Mode A：mandatory vinyl/chibi + EXTRA KEEP 三件套。Mode B/C：脸禁是硬修复；candy glue + NO catalog lighting 仅为可选 polish。
 
 ## Step 0：Ladder bible
 域 · 类 · 品牌胶 · medium 来源（参考锁 / 默认卡通可爱 / brief 覆盖）· **L1…LN 逐级物品名词** + 升级理由 · negatives · 易混档。  
@@ -38,7 +43,7 @@ Mode C：写出参考「升级课程」，映射到**新域**物品表。
 **L8 = 最大体量或最多零件**；晚档禁「同一超类微差」。
 
 ## Step 1：整梯一次生成
-1. Prompt 必须：**exactly N**、**编号列出每个名词**、一句品牌胶、一句 medium（A 默认写清 cute cartoon **+ Mode A stub 全套**）、网格锁（等大格、统一 BG、无字无脸）。
+1. Prompt 必须：**exactly N**、**编号列出每个名词**、一句品牌胶、一句 medium（A 默认写清 cute cartoon **+ Mode A stub 全套 + EXTRA KEEP 散文**；B/C 写清 face ban + 可选 candy/NO-catalog polish）、网格锁（等大格、统一 BG、无字无脸）。
 2. 多色域用共用点缀品牌胶，勿强行同体色。
 3. Mode C 垫参考整梯只锁 medium+网格；NEW family、勿抄参考 motif。
 4. 切格；均分出血则连通域重切。
@@ -49,7 +54,7 @@ Mode C：写出参考「升级课程」，映射到**新域**物品表。
 1. 风格与品牌胶（2.5）— 默认卡通可爱时偏写实/产品目录感重扣
 2. 升级路径（2.5）— 剪影名词测试
 3. 图标完成度（2.0）
-4. 红线（1.5）
+4. 红线（1.5）— 含 props NO faces / NO black-dot eyes on props
 5. 连续与爬升（1.5）
 
 整梯 OK：**所有格 ≥9.6** 且域/相邻/同族/N-count 通过。
