@@ -18,11 +18,12 @@ description: 【强制8轮≥9.6收敛】iOS/Android App Icon 应用图标母版
 
 ---
 
-## 一、适用场景
-- 网站 / App / 游戏 HUD 的 **成套自定义图标**
-- 需要 SVG（优先）或统一栅格（如 64×64 透明底道具图标）且 **整套同系**
+## 一、三大模式分流（入口 `/pmem-icon` · `/art-icon` 保持不变，按需求进对应分节，严禁串味）
+- **【Mode A · App Icon 1024 母版】**（手机桌面启动图标 / iOS App Store / Android Adaptive / 产品 Logo）→ 直接跳至下方 **「## 二之二、Mode A：App Icon 1024×1024 母版专项」**（满幅直角 + 72%–80% 安全区 + 微立体光影，不用 SVG 规则）。
+- **【Mode B · 24px 线性 SVG 图标集】**（网页 / App 导航栏 / HUD 矢量图标）→ 执行下方 **「## 二、Mode B：一致化 SVG 矢量图标集流程」**（只用 `currentColor` + 统一 stroke/viewBox）。
+- **【Mode C · 游戏道具栅格图标】**（背包 64/128/256px 透明底 PNG 道具）→ 执行下方 **「## 二之三、Mode C：游戏道具透明底栅格图标」**（锁描边/色板/投影，不用 SVG 代码）。
 
-## 二、标准流程（Brief → Spec → Batch → Review → Converge）
+## 二、Mode B：一致化 SVG 矢量图标集流程（Brief → Spec → Batch → Review → Converge）
 
 ### Step 1：理解项目与图标清单
 收集：行业/项目气质、品牌色（即使 SVG 用 `currentColor` 也影响线型选择）、大约数量。
@@ -56,7 +57,8 @@ description: 【强制8轮≥9.6收敛】iOS/Android App Icon 应用图标母版
 4. 坐标最多 2 位小数；保持 padding；视觉居中（光学校正）
 5. 路径尽量少；简单图标略加重以平衡视觉重量
 
-若用户要的是 **游戏道具栅格图标**（非 SVG）：仍先锁「线宽/圆角/色板/投影」style-spec，再批量生成透明底 PNG，规则改为「同色板同描边同投影」，并可用 `converge` 打磨单枚。
+### 二之三、Mode C：游戏道具透明底栅格图标（64/128/256px PNG，非 SVG）
+若用户要的是 **游戏道具栅格图标**：先锁「线宽/圆角/色板/投影」style-spec，再批量生成透明底 PNG（同色板、同描边、同光源投影、中心缩略轮廓清晰、无文字），关键单枚可用 `converge` 跑 8 轮 ≥9.6 打磨。
 
 ### Step 4：分批生成（约每批 5 个）+ 一致性审查
 每批完成后检查：stroke 是否漂移、圆角是否混用、有无图标明显偏轻/偏重、是否贴边。
@@ -69,11 +71,11 @@ icons/
 └── …
 ```
 
-### Step 5：关键图标 8轮≥9.6 收敛（App Icon 母版强制；SVG/道具集：点名或一致性失败时强制）
-整集批量生成不必对每枚跑满 8 轮；**App Icon 1024 母版**、用户点名「不对」、或一致性审查不通过的关键枚必须跑满 Absolute-5D 闭环（有 Key→API；无 Key→本模型；禁止像素 8.50 早停）：
+### Step 5：关键图标 8轮9.6 收敛（可选）
+用户点名某枚「不对」或一致性审查不通过时：
 ```bash
 python3 pmem_art.py converge start --goal "图标 <name> 对齐 style-spec" --module brand.WorldStyle
-# 生成 → Absolute-5D 自评 → converge generate / converge judge → finish
+# 生成 → 自评 → converge generate / converge judge → finish
 ```
 
 ### Step 6：沉淀
@@ -82,7 +84,7 @@ python3 pmem_art.py feedback "图标集 style-spec：<preset+stroke+grid摘要>"
 python3 pmem_art.py ingest icons/preview.html -p "icon set preview" --apply   # 若适用
 ```
 
-## 二之二、App Icon 模式（iOS App Store / Android Adaptive 1024×1024 桌面应用图标专项）
+## 二之二、Mode A：App Icon 1024×1024 母版专项（iOS App Store / Android Adaptive 桌面启动图标）
 
 当用户要求制作 **App Icon / 手机桌面图标 / iOS 启动图标 / Android 自适应图标 / 产品 Logo 图标** 时，自动切换至 **App Icon 专项模式**：
 
@@ -125,16 +127,3 @@ python3 pmem_art.py converge judge --session appicon --round 1 --image app_icon_
 - `converge finish` 后系统自动写反思/口味/learn 队列——**无需**再跑 `/pmem-improve`。
 - 对用户默认展示：**每轮五维分 + 不足 + 改点 + 胜出图 + 全轮履历**；若有「小提示」原样转述（每会话最多 1 条）。**禁止**旁白记忆写入。
 - 只要终稿：`--quiet`。教练 / 广度：用户明确要求或进阶技能时再给。
-
-## 合理性（硬门槛）
-
-合理性单独过关。风格分高，也不能把这格补过 9.6。
-
-出图前按本技能要交付的对象关系自己组提示词。看这一张的像素再打分。没过就留下已经对的地方，下一轮点名没过的部位，只补那一句。第 2 轮起垫目前分数最高的那张，比它差的一轮不接着垫，也不把前几轮的修正叠进同一段。
-
-有参考图时，先跑 `python3 pmem_art.py ref-read <参考图路径>`，再写提示词。它说底是透明的，提示词里就不要出现黑底、深底、底板。用一块浅的空底放下物件，这块浅底不是风格。表面只写眼睛在参考图上看见的那一句，同一组每一张、后面每一轮都用这同一句，不换成另一种媒介。小高光不要写成油亮、光面、发亮。表面光洁，也不要改成毛毡、纸纹或粗颗粒。同一张图继续修时，垫目前分数最高的那张成图，只改点名的那一处。第一张对一下底和表面。更油、更黑或更毛，就改提示词里这几个词，再出这一张。表面那一句已经对了，就留着。
-
-对象关系：
-- 人物、场景、图标：身体、透视、光和物件之间说得通。
-- UI：标题、说明、按钮指向同一件事。
-- 合成梯：每一件单独落在一个同样大的正方形里，不把八件画进同一张。两件相同的这一档合成下一档，画面里仍然只有这一件。低档只比高档小一圈，最低档也要占到正方形的大半，最高档留一圈边，不顶出格子，也不能变成一组场景。沿档位零件变多或剪影更复杂。末档在格子里最大、零件最多。相邻两档不能是同一类。第一段先用文字定稿这八行，六条都过了再逐张出图核对，不看美术品质。第二段在过关的正方形上抬风格和质感；关系散了，美术分也不能过。

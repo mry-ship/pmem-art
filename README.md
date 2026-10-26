@@ -11,7 +11,7 @@
 ![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
 ![Cursor](https://img.shields.io/badge/Cursor-支持-000000)
 ![Claude Code](https://img.shields.io/badge/Claude%20Code-支持-D97757)
-![Skills](https://img.shields.io/badge/斜杠技能-12-8B5CF6)
+![Skills](https://img.shields.io/badge/斜杠技能-14-8B5CF6)
 ![Threshold](https://img.shields.io/badge/合格线-≥9.60-blue)
 
 [📖 使用手册](USER_MANUAL.md) · [效果图墙](#效果长什么样) · [Merge / Clone 实测](#merge-ladder--clone-mode-b另外两技能实测) · [架构](ARCHITECTURE.md)
@@ -56,22 +56,22 @@ python3 pmem_art.py skills --install
 /pmem-draw --scale recompose --recompose-dir "改为运河石拱桥仰视" [拖入参考图]
 ```
 
-### 12 个斜杠技能
+### 14 个斜杠技能（含简短别名共 28 个入口）
 
 | 想做什么 | 输入 | 说明 |
 | :--- | :--- | :--- |
-| 通用生图 / 垫图修图 | `/pmem-draw`（`/art-draw`） | 最常用；强制 8 轮 ≥9.6 闭环 |
-| 原画 / Key Art | `/pmem-concept`（`/art-concept`） | 气氛图、主视觉；同样强制闭环 |
+| 通用生图 / 垫图修图 | `/pmem-draw`（`/art-draw`） | 最常用；强制 8 轮 ≥9.6 闭环（含 `pad=auto` 智能垫图与解剖 `<7.5` 熔断） |
+| 原画 / Key Art | `/pmem-concept`（`/art-concept`） | 气氛图、主视觉；同样强制闭环（FLUX 自然语言 + 按题材 R1 结构底线） |
 | UI Kit / HUD / 九宫格 | `/pmem-ui`（`/art-ui`） | 概念 → 组件表 → 9-slice → 状态族 |
-| App / SVG / 道具图标 | `/pmem-icon`（`/art-icon`） | 桌面图标母版、矢量集、透明底道具 |
+| App / SVG / 道具图标 | `/pmem-icon`（`/art-icon`） | 内部三模式隔离：**Mode A**（1024 App Icon 母版）· **Mode B**（24px SVG 矢量集）· **Mode C**（游戏透明底道具图标） |
 | 从样张锁风格 | `/pmem-style-lock`（`/art-style`） | 抽色板 HEX、光影、禁用词 |
-| 审图挑刺 | `/pmem-critique`（`/art-check`） | 五维打分，翻车点可记红线 |
+| 审图挑刺 | `/pmem-critique`（`/art-check`） | 五维 0–10 打分，翻车点可记红线 |
 | 换画风 / 表情差分 | `/pmem-variant`（`/art-variant`） | 继承角色锚点，派生水彩/Q版等 |
 | 散图归位 + 图谱 | `/pmem-atlas`（`/art-map`） | 整理资产，刷新 `art-atlas.html` |
-| 同域合并进阶梯 | `/pmem-merge-ladder`（`/art-merge`） | 八件各一张正方形，两两相合；先定关系再抬美术；实测见下方图墙 |
-| 风格克隆新主体 | 无斜杠技能 | 下方图墙是早前实验记录，仓库里没有 `/pmem-clone-image` |
-| 镜头包提案（先选再生成） | `/pmem-lens-propose` | 参考图 → 多套 camera/light/props 包，选完再 converge；见 `docs/skills/pmem-lens-propose.md` |
-| 进阶 | `/pmem-improve` · `/pmem-coach` · `/pmem-learn` | 口味迭代 / 练习计划 / 补知识 |
+| 镜头包提案（独立可选） | `/pmem-lens-propose`（`/art-lens`） | 参考图 → 4 套具象机位/光影/道具方案，先选再进收敛（不阻塞批量直跑） |
+| 风格克隆新主体 | `/pmem-clone-image`（`/art-clone`） | Mode B ~95% 锁参考画风 + 新主体（角色双眼/UI双层描边门禁）；实测见下方图墙 |
+| 同域合并进阶梯 | `/pmem-merge-ladder`（`/art-ladder`） | Merge-2 棋盘 L1–L8 整梯同框生成与切格审计；实测见下方图墙 |
+| 进阶 | `/pmem-improve`（`/art-improve`） · `/pmem-coach`（`/art-coach`） · `/pmem-learn`（`/art-learn`） | 口味迭代 / 练习计划 / 补知识 |
 
 ### 四档改动幅度（选错了用嘴改就行）
 
@@ -82,7 +82,13 @@ python3 pmem_art.py skills --install
 | **`high`** | 可以换机位、姿态、戏剧光影 | 画风基因、身份；别塞原图没有的道具 |
 | **`recompose`** | 按你写的方向改构图 | 色板笔触、身份；方向写进 `--recompose-dir` |
 
-停机线统一：**≥ 9.60**（`high` / `recompose` 至少跑 2 轮）。  
+停机线统一：**≥ 9.60**（`high` / `recompose` 至少跑 2 轮），并内置 **5 项安全收敛护栏**：
+1. **`pad=auto` 智能垫图**：涨分且解剖 `≥ 7.5` 时链式垫上一轮最佳图微修；一旦掉分或 `透视与解剖 < 7.5` 立即退回 `style_ref` 原图重画。
+2. **解剖 `< 7.5` 一票否决（熔断）**：全局停机仍以加权总分 `≥ 9.60` 为准，仅当 `透视与解剖 < 7.5`（严重肢体/结构崩坏）时强制禁停重修；看板同时展示 `总分≥9.6` 与 `总分≥9.6 且 解剖≥8.5` 双指标。
+3. **R4 起连续 2 轮掉分 `> 0.5` 安全早停**：仅在 `round ≥ 4` 且连续 2 轮低于历史最高分超过 `0.5` 分时触发早停，并保底取历史最高分轮次。
+4. **按题材触发 R1 结构底线**：仅人物/生物自动注入关节/握持/双瞳高光底线；纯空镜仅注入透视灭点与接触阴影；UI/图标跳过人体解剖词。
+5. **精简回流与评分容错**：单轮 `【回流修正】` 硬限 `≤ 2` 条；评分 API 偶发失败自动重试，绝不灌入泛化套话污染下一轮 Prompt。
+
 嫌某档太死或太放：同档直接加一句话，例如「medium：允许更大冷暖对比，仍禁止换机位」。细则 → [手册附录 A](USER_MANUAL.md#附录-a四档---scale-细则与示例)。
 
 ---

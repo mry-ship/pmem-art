@@ -14,7 +14,7 @@ alwaysApply: true
 | **`/pmem-draw`** | **`/art-draw`** | **【强制 8轮 ≥9.6 收敛】** 通用生图：纯文本或垫图 → 生1张→打分挑刺→展示不足/改点→`<9.6`叠加修正→满8轮挑最高分→评分履历可见 |
 | **`/pmem-ui`** | **`/art-ui`** | **【强制 8轮 ≥9.6 收敛】** SpriteCook 式 UI Kit/HUD/九宫格：概念先行→组件表→9-slice→状态族 |
 | **`/pmem-concept`** | **`/art-concept`** | **【强制 8轮 ≥9.6 收敛】** 原画/概念图/Key Art（ZHO·FLUX 完整句 Prompt）— **与 draw 同等强制闭环，禁止只生一张** |
-| **`/pmem-icon`** | **`/art-icon`** | **【强制 8轮 ≥9.6 收敛】** jezweb 式一致化 SVG 图标集：style-spec→分批→preview；关键枚强制收敛 |
+| **`/pmem-icon`** | **`/art-icon`** | **【强制 8轮 ≥9.6 收敛】** 三模式隔离：Mode A（1024 App Icon 母版）· Mode B（24px SVG 矢量集）· Mode C（游戏透明底道具栅格图标） |
 | **`/pmem-style-lock`** | **`/art-style`** | **样张一键提炼风格圣经与色板锁定**：丢入样张提取 HEX 色板、光影笔触与禁用词，锁定进项目记忆 |
 | **`/pmem-critique`** | **`/art-check`** | **主美级五维审稿与红线入库**：对照项目记忆给图片打分挑刺，并将翻车点记入 `style_redline` |
 | **`/pmem-variant`** | **`/art-variant`** | **跨画风分叉与表情/动作差分**：继承角色核心锚点，派生水彩/Q版/像素子模块或序列帧差分 |
