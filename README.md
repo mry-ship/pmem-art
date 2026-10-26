@@ -145,19 +145,11 @@ python3 pmem_art.py skills --install
 
 #### Merge ladder · 合并进阶梯
 
-Market 风格参考（只锁 medium + 网格，不抄 motif）：
-
-![market style ref](docs/showcase/skills-homepage/assets/merge/market/market_ref_sheet.jpg)
-
 | G1 · 烘焙厨具 | G2 · 清洁工具 | G3 · 运动装备 |
 | :---: | :---: | :---: |
 | ![G1 sheet](docs/showcase/skills-homepage/assets/merge/G1/sheet.jpg) | ![G2 sheet](docs/showcase/skills-homepage/assets/merge/G2/sheet.jpg) | ![G3 sheet](docs/showcase/skills-homepage/assets/merge/G3/sheet.jpg) |
 | **8/8 ≥9.6** · min cell **9.6** · r02 | **8/8 ≥9.6** · min cell **9.8** · r02 | **8/8 ≥9.6** · min cell **9.7** · r01 |
 | ![G1 vs market](docs/showcase/skills-homepage/assets/merge/G1/compare_to_market.jpg) | ![G2 vs market](docs/showcase/skills-homepage/assets/merge/G2/compare_to_market.jpg) | ![G3 vs market](docs/showcase/skills-homepage/assets/merge/G3/compare_to_market.jpg) |
-
-额外整梯（清洁八档 · verify2 · 全 PASS）：
-
-![cleaning pack](docs/showcase/skills-homepage/assets/merge/cleaning-pack/result-sheet.jpg)
 
 #### Clone Mode B · 风格克隆新主体
 
@@ -173,6 +165,13 @@ G3 连胜终局（icon / char / UI 均 Absolute-5D ≥9.6）：
 | ICON · Potion 9.6（G2） | UI · Bonus 9.6（G1） |
 | :---: | :---: |
 | ![potion](docs/showcase/skills-homepage/assets/clone/G2-icon-potion/compare_r01.jpg) | ![bonus](docs/showcase/skills-homepage/assets/clone/G1-ui-bonus/compare_r02.jpg) |
+
+清晰重出 · same subject（Mode B 垫糊图清出，Absolute-5D ≥9.6）：
+
+| ICON · 球械 9.64 | ICON · 玩具炮 9.62 |
+| :---: | :---: |
+| ![sphere clear](docs/showcase/skills-homepage/assets/clone/clear-icon-sphere-cannon/sidebyside-sphere.jpg) | ![cannon clear](docs/showcase/skills-homepage/assets/clone/clear-icon-sphere-cannon/sidebyside-cannon.jpg) |
+| 糊图垫 → 清晰球械 | 糊图垫 → 清晰玩具炮 |
 
 > 分数均来自真实 `SCORES.md` / `REPORT.md` 跑分，不是展示用编造分。
 
