@@ -11,10 +11,10 @@
 ![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
 ![Cursor](https://img.shields.io/badge/Cursor-支持-000000)
 ![Claude Code](https://img.shields.io/badge/Claude%20Code-支持-D97757)
-![Skills](https://img.shields.io/badge/斜杠技能-11-8B5CF6)
+![Skills](https://img.shields.io/badge/斜杠技能-13-8B5CF6)
 ![Threshold](https://img.shields.io/badge/合格线-≥9.60-blue)
 
-[📖 使用手册](USER_MANUAL.md) · [效果图墙](#效果长什么样) · [架构](ARCHITECTURE.md)
+[📖 使用手册](USER_MANUAL.md) · [效果图墙](#效果长什么样) · [Merge / Clone 实测](#merge-ladder--clone-mode-b另外两技能实测) · [架构](ARCHITECTURE.md)
 
 </div>
 
@@ -68,6 +68,8 @@ python3 pmem_art.py skills --install
 | 审图挑刺 | `/pmem-critique`（`/art-check`） | 五维打分，翻车点可记红线 |
 | 换画风 / 表情差分 | `/pmem-variant`（`/art-variant`） | 继承角色锚点，派生水彩/Q版等 |
 | 散图归位 + 图谱 | `/pmem-atlas`（`/art-map`） | 整理资产，刷新 `art-atlas.html` |
+| 同域合并进阶梯 | `/pmem-merge-ladder` | L1→L8 整梯棋盘；实测见下方图墙 |
+| 风格克隆新主体 | `/pmem-clone-image` | Mode B 锁画风换主体；实测见下方图墙 |
 | 进阶 | `/pmem-improve` · `/pmem-coach` · `/pmem-learn` | 口味迭代 / 练习计划 / 补知识 |
 
 ### 四档改动幅度（选错了用嘴改就行）
@@ -124,6 +126,48 @@ python3 pmem_art.py skills --install
 | Baseline · **7.06** | **7.97** · 8 轮<br>`7.40 → 7.97` | **8.45** · 8 轮<br>`7.27 → 8.45` | **9.55** · 8 轮<br>`7.96 → 9.55` | **9.70** · 5 轮<br>`→ 9.70` | **9.40** · 8 轮<br>`→ 9.40` |
 
 > 横看：同一原图在 low → medium → high → recompose → 大改 的差异。竖看：R1 到终稿怎么抬分（Absolute-5D Quant）。
+
+### Merge ladder · Clone Mode B（另外两技能实测）
+
+全页展陈（含分数出处）：[docs/showcase/skills-homepage/index.html](docs/showcase/skills-homepage/index.html)
+
+| 技能 | 在测什么 | 稳定性门槛 | 本批结果 |
+| :--- | :--- | :--- | :--- |
+| **`pmem-merge-ladder`** | 同域 L1→L8 整梯棋盘 · whole-sheet · Absolute-5D ≥9.6 | 连续 3 个**新域** OK | **MET** · G1/G2/G3 均 8/8 |
+| **`pmem-clone-image`** | Mode B：锁风格 ~95% + **新主体** · REF\|RESULT | 连续 3 组 OK（每组 icon+char+UI） | **MET** · G1→G2→G3 |
+
+#### Merge ladder · 合并进阶梯
+
+Market 风格参考（只锁 medium + 网格，不抄 motif）：
+
+![market style ref](docs/showcase/skills-homepage/assets/merge/market/market_ref_sheet.jpg)
+
+| G1 · 烘焙厨具 | G2 · 清洁工具 | G3 · 运动装备 |
+| :---: | :---: | :---: |
+| ![G1 sheet](docs/showcase/skills-homepage/assets/merge/G1/sheet.jpg) | ![G2 sheet](docs/showcase/skills-homepage/assets/merge/G2/sheet.jpg) | ![G3 sheet](docs/showcase/skills-homepage/assets/merge/G3/sheet.jpg) |
+| **8/8 ≥9.6** · min cell **9.7** · r01 | **8/8 ≥9.6** · min cell **9.7** · r03 | **8/8 ≥9.6** · min cell **9.7** · r01 |
+| ![G1 vs market](docs/showcase/skills-homepage/assets/merge/G1/compare_to_market.jpg) | ![G2 vs market](docs/showcase/skills-homepage/assets/merge/G2/compare_to_market.jpg) | ![G3 vs market](docs/showcase/skills-homepage/assets/merge/G3/compare_to_market.jpg) |
+
+额外整梯（清洁八档 · verify2 · 全 PASS）：
+
+![cleaning pack](docs/showcase/skills-homepage/assets/merge/cleaning-pack/result-sheet.jpg)
+
+#### Clone Mode B · 风格克隆新主体
+
+G3 连胜终局（icon / char / UI 均 Absolute-5D ≥9.6）：
+
+| ICON · Scroll 9.7 | CHAR · Blacksmith 9.6 | UI · Jackpot 9.6 |
+| :---: | :---: | :---: |
+| ![scroll](docs/showcase/skills-homepage/assets/clone/G3-icon-scroll/compare_r01.jpg) | ![blacksmith](docs/showcase/skills-homepage/assets/clone/G3-char-blacksmith/compare_r02.jpg) | ![jackpot](docs/showcase/skills-homepage/assets/clone/G3-ui-jackpot/compare_r02.jpg) |
+| cannon booster → 卷轴+蜡封 | king T-pose → 铁匠（空手） | unlock chrome → Jackpot 弹窗 |
+
+同批更早过关（仍计入稳定性循环）：
+
+| ICON · Potion 9.7（G2） | UI · Bonus 9.7（G1） |
+| :---: | :---: |
+| ![potion](docs/showcase/skills-homepage/assets/clone/G2-icon-potion/compare_r01.jpg) | ![bonus](docs/showcase/skills-homepage/assets/clone/G1-ui-bonus/compare_r02.jpg) |
+
+> 分数均来自真实 `SCORES.md` / `REPORT.md` 跑分，不是展示用编造分。
 
 ---
 
