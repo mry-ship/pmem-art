@@ -170,7 +170,7 @@ G3 连胜终局（icon / char / UI 均 Absolute-5D ≥9.6）：
 
 同批更早过关（仍计入稳定性循环）：
 
-| ICON · Potion 9.7（G2） | UI · Bonus 9.7（G1） |
+| ICON · Potion 9.6（G2） | UI · Bonus 9.6（G1） |
 | :---: | :---: |
 | ![potion](docs/showcase/skills-homepage/assets/clone/G2-icon-potion/compare_r01.jpg) | ![bonus](docs/showcase/skills-homepage/assets/clone/G1-ui-bonus/compare_r02.jpg) |
 

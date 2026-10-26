@@ -1,18 +1,20 @@
-# G1 UI — Absolute-5D
+# UI — Bonus! (Mode B re-run) Absolute-5D
 
-Brief: Bonus! / Extra moves +3 / Grab; scroll reward; dual chrome; 1070×1916.
-Mode B pads: every round `ref_ui.png` (+ r02 also prior)
+Ref pad every round: `ref_ui.png` (r02 also prior r01 for chrome refine)
 
-| Round | d1/2.5 | d2/2.5 | d3/2.0 | d4/1.5 | d5/1.5 | **Total** | Gate |
-|---|---|---|---|---|---|---|---|
-| r01 | 2.3 | 2.4 | 1.9 | 1.4 | 1.4 | **9.4** | FAIL |
-| r02 | 2.4 | 2.5 | 1.9 | 1.5 | 1.4 | **9.7** | **PASS** |
+| Round | 构图 | 光影 | 透视 | 质感 | 风格 | **Total** | Gate |
+|-------|------|------|------|------|------|-----------|------|
+| r01   | 9.7 | 9.5 | 9.5 | 9.3 | 9.6 | **9.5** | FAIL (orange/amber inner too thin on edge crop) |
+| r02   | 9.7 | 9.5 | 9.5 | 9.7 | 9.7 | **9.6** | **PASS ≥9.6** |
+
+dims r02: `构图9.7/光影9.5/透视9.5/质感9.7/风格9.7` (mean)
 
 ## r01
-- 亮点: copy exact; scroll no face; gold rim present; orange middle layer weakly readable on corner crop.
-- 不合理: orange/amber inner stroke not obvious enough; title letter color slightly yellow-lean.
-- Overlay→r02: force obvious orange inner stroke; white title letters.
+- **strengths:** Exact copy Bonus! / Extra moves +3 / Grab; scroll+gem no face; layout grammar; size locked 1070×1916.
+- **defects:** dual chrome orange/amber inner only a thin sliver on left mid crop → 质感 fail.
+- Overlay→r02: force thick separable gold outer + orange/amber inner; pad style ref + r01.
 
 ## r02
-- 亮点: chrome crop shows gold outer + orange inner bevel; white Bonus!; exact body+CTA copy; scroll+seal no face; size locked.
-- **Winner:** r02 → `result.png`
+- **strengths:** Edge crop + pixel scan show thick ORANGE band then GOLD laminate (dual chrome hard lock); exact copy; scroll no face; green Grab CTA; soft UL light.
+- **defects:** title fill slightly cream-lean vs pure white (minor).
+- **Winner:** r02 → `winner.png`
