@@ -24,6 +24,25 @@ MAX_INHERITS_DEPTH = 4
 MAX_SEGMENT_SUBDEPTH = MAX_MODULE_DEPTH - 1  # category (L1) + up to 3 sub-segments = 4 layers
 
 
+def ensure_stdio_survives_locale() -> None:
+    """GBK 控制台写不了 ❌ / 🏆 时用替换字符，避免整条命令崩溃。
+
+    不把管道改成 UTF-8：父进程仍按系统编码读 stdout，改编码会把输出读空。
+    """
+    for name in ("stdout", "stderr"):
+        stream = getattr(sys, name, None)
+        reconf = getattr(stream, "reconfigure", None)
+        if reconf is None:
+            continue
+        try:
+            reconf(errors="replace")
+        except Exception:
+            pass
+
+
+ensure_stdio_survives_locale()
+
+
 def _warn_depth_cap(msg: str) -> None:
     import sys as _sys
     print(f"⚠️ [pmem-art] {msg}", file=_sys.stderr)
@@ -523,18 +542,18 @@ def ensure_cursor_stubs(root: Path) -> None:
                 "hooks": {
                     "preToolUse": [
                         {
-                            "command": "python3 pmem_art.py hook pre-gen",
+                            "command": "python3 pmem_art.py hook pre-gen || py -3 pmem_art.py hook pre-gen",
                             "matcher": "GenerateImage|Write|Edit|StrReplace|MCP",
                             "failClosed": False,
                         }
                     ],
                     "postToolUse": [
                         {
-                            "command": "python3 pmem_art.py hook post-asset",
+                            "command": "python3 pmem_art.py hook post-asset || py -3 pmem_art.py hook post-asset",
                             "matcher": "GenerateImage|Write|Edit",
                         }
                     ],
-                    "stop": [{"command": "python3 pmem_art.py hook stop", "loop_limit": 1}],
+                    "stop": [{"command": "python3 pmem_art.py hook stop || py -3 pmem_art.py hook stop", "loop_limit": 1}],
                 },
             },
             ensure_ascii=False,
@@ -620,9 +639,10 @@ def list_image_files(root: Path, asset_roots: list[str]) -> list[Path]:
         for p in base.rglob("*"):
             if not p.is_file():
                 continue
-            if is_junk_sidecar_name(p.name) or any(is_junk_sidecar_name(part) for part in p.parts):
+            rel_parts = p.relative_to(base).parts
+            if is_junk_sidecar_name(p.name) or any(is_junk_sidecar_name(part) for part in rel_parts):
                 continue
-            if any(part in IGNORE_DIR_NAMES for part in p.parts):
+            if any(part in IGNORE_DIR_NAMES for part in rel_parts):
                 continue
             if p.suffix.lower() in IMAGE_EXTS:
                 files.append(p)
@@ -772,7 +792,7 @@ def cmd_init(root: Path, project_name: str = "Untitled Art Project", force: bool
     print(f"   · {MEMORY_DIR}/modules.yaml (6 个 scaffold 模块)")
     print("   · assets/{brand,character,scene,ui,vfx,anim}/ 空目录已创建")
     print("   · .cursor/rules/pmem-art.mdc + hooks.json")
-    print("   · 已自动注入 8 大技能 (/pmem-draw, /pmem-ui, /pmem-concept, /pmem-icon, /pmem-style-lock, /pmem-critique, /pmem-variant, /pmem-atlas) 到 .cursor / .claude / .agents")
+    print("   · 已安装全部斜杠技能到 .cursor / .claude / .agents")
     print(f"   · {MEMORY_DIR}/ONBOARDING.md")
     print("\n保证工作流（非盲目魔法）：")
     print("   落盘 → sync 提议 candidate → accept 一次确认 → search 闸门生效 → record/validate → atlas")

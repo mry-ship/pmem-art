@@ -1,7 +1,7 @@
 # 📘 pmem-art 画师使用手册 — 怎么在 Cursor / Codex 里越画越准
 
 > **版本**：`v0.12+`  
-> **核心理念**：日常入口就是 **Cursor / Claude Code / Codex 对话框**（外加开箱即用的 `/pmem-draw` 等 11 个斜杠技能）。不用背 CLI、不用手写 YAML。  
+> **核心理念**：日常入口就是 **Cursor / Claude Code / Codex 对话框**（外加开箱即用的 `/pmem-draw` 等 12 个斜杠技能）。不用背 CLI、不用手写 YAML。  
 > **先看总览？** → 仓库首页 [README.md](README.md)（作用 · 接入 · 使用 · V4 效果摘要）  
 > **看图墙？** → [docs/showcase/pmem_art_images_v4_20bots_showcase.html](docs/showcase/pmem_art_images_v4_20bots_showcase.html)（20 Bot 冷启动 · 一排六列）
 
@@ -9,7 +9,7 @@
 
 ## 目录
 
-1. [第一章：初始化即自动安装的 11 大美术技能](#第一章初始化即自动安装的-11-大美术技能)
+1. [第一章：初始化即自动安装的 12 大美术技能](#第一章初始化即自动安装的-12-大美术技能)
 2. [第二章：王牌技能 `/pmem-draw`（8轮9.6分自评收敛生图 & 垫图生图）](#第二章王牌技能-pmem-draw8轮96分自评收敛生图--垫图生图)
 3. [第三章：日常对话反馈怎么变成长期记忆](#第三章日常对话反馈怎么变成长期记忆)
 4. [第四章：三种项目接入方式（空项目 / 老项目 / 持续生图）](#第四章三种项目接入方式空项目--老项目--持续生图)
@@ -21,7 +21,7 @@
 
 ---
 
-## 第一章：初始化即自动安装的 11 大美术技能
+## 第一章：初始化即自动安装的 12 大美术技能
 
 当你运行 `python3 pmem_art.py init`（或 `python3 pmem_art.py skills --install`）时，系统会自动在项目根目录生成：
 
@@ -44,6 +44,7 @@
 | **`/pmem-improve`** | **`/art-improve`** | **进阶 peek**：大声读出 finish 已静默做过的自我迭代 |
 | **`/pmem-coach`** | **`/art-coach`** | **进阶 peek**：短板练习计划 |
 | **`/pmem-learn`** | **`/art-learn`** | **进阶 peek**：知识广度建议（finish 已静默 enqueue） |
+| **`/pmem-merge-ladder`** | **`/art-merge`** | 同域合成梯：八件各一张正方形，先用文字定稿关系，再抬美术 |
 
 进步曲线 CLI：`python3 pmem_art.py progress`（无独立斜杠技能，也可用 `/pmem-improve`）。
 
@@ -161,7 +162,7 @@ python3 pmem_art.py ingest .cursor/generated/new.png -p "角色Astra 水彩 概�
 
 | 命令 | 说明 |
 | :--- | :--- |
-| `python3 pmem_art.py skills --install` | 安装/刷新 `.cursor`、`.claude`、`.agents` 下的 11 大技能与斜杠命令 |
+| `python3 pmem_art.py skills --install` | 安装/刷新 `.cursor`、`.claude`、`.agents` 下的 12 项技能与斜杠命令 |
 | `python3 pmem_art.py skills --list` | 查看所有内置技能列表 |
 | `python3 pmem_art.py converge start -g "<目标>" -m <模块> [--scale medium] [--ref-image <图> --ref-analysis "<解构>"]` | 开启一轮最多 8 次、`>=9.6` 分的收敛生图会话 |
 | `python3 pmem_art.py converge generate --round <i> -i <图> -p "<Prompt>"` | **仅生图登记**（禁止带 score/dims；与 judge 必须分两步） |

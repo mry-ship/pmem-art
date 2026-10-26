@@ -652,7 +652,7 @@ python3 pmem_art.py learn list
     {
         "name": "pmem-merge-ladder",
         "alias": "art-merge",
-        "title": "同域 L1→L8 整梯（先过合成关系，再在过关稿上抬美术）",
+        "title": "同域合成梯（先过关系，再逐张抬美术）",
         "description": (
             "当用户输入 /pmem-merge-ladder 或 /art-merge，或要一条同域合成升级梯时触发。"
             "分两段，各最多 8 轮。第一段先在文字上定稿八件的合成关系，不看美术品质，过了再每一档单独出一张正方形核对。"
@@ -663,7 +663,7 @@ python3 pmem_art.py learn list
         ),
         "body": r"""# `/pmem-merge-ladder`（别名 `/art-merge`）— 同域合成梯
 
-分两段。第一段只把八件的合成关系排对。第二段在这张过关稿上把画面画好。两段都过，才交付。
+分两段。第一段只把八件的合成关系排对。第二段在这些过关的正方形上把画面画好。两段都过，才交付。
 
 ## 风格
 

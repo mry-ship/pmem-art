@@ -4,6 +4,10 @@ Re-exports public API so `from skills_kit import X` keeps working.
 """
 from __future__ import annotations
 
+from lifecycle import ensure_stdio_survives_locale
+
+ensure_stdio_survives_locale()
+
 from ._time import _now_cst
 
 from .skill_specs import SKILL_SPECS

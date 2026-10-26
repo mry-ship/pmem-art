@@ -24,6 +24,10 @@ import zlib
 from pathlib import Path
 from typing import Any
 
+from lifecycle import ensure_stdio_survives_locale
+
+ensure_stdio_survives_locale()
+
 VERSION = "0.13.0-art"
 MEMORY_DIR = ".memory-art"
 
@@ -726,7 +730,8 @@ def load_project(root: Path) -> dict[str, Any]:
         for p in sorted((root / "assets").rglob("*")):
             if not p.is_file() or p.suffix.lower() not in asset_exts:
                 continue
-            if is_junk_sidecar_name(p.name) or any(is_junk_sidecar_name(part) for part in p.parts):
+            rel_parts = p.relative_to(root).parts
+            if is_junk_sidecar_name(p.name) or any(is_junk_sidecar_name(part) for part in rel_parts):
                 continue
             asset_Set.add(str(p.relative_to(root)).replace("\\", "/"))
     for e in entries:

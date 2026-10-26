@@ -11,7 +11,7 @@
 ![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
 ![Cursor](https://img.shields.io/badge/Cursor-支持-000000)
 ![Claude Code](https://img.shields.io/badge/Claude%20Code-支持-D97757)
-![Skills](https://img.shields.io/badge/斜杠技能-13-8B5CF6)
+![Skills](https://img.shields.io/badge/斜杠技能-12-8B5CF6)
 ![Threshold](https://img.shields.io/badge/合格线-≥9.60-blue)
 
 [📖 使用手册](USER_MANUAL.md) · [效果图墙](#效果长什么样) · [Merge / Clone 实测](#merge-ladder--clone-mode-b另外两技能实测) · [架构](ARCHITECTURE.md)
@@ -56,7 +56,7 @@ python3 pmem_art.py skills --install
 /pmem-draw --scale recompose --recompose-dir "改为运河石拱桥仰视" [拖入参考图]
 ```
 
-### 11 个斜杠技能
+### 12 个斜杠技能
 
 | 想做什么 | 输入 | 说明 |
 | :--- | :--- | :--- |
@@ -68,8 +68,8 @@ python3 pmem_art.py skills --install
 | 审图挑刺 | `/pmem-critique`（`/art-check`） | 五维打分，翻车点可记红线 |
 | 换画风 / 表情差分 | `/pmem-variant`（`/art-variant`） | 继承角色锚点，派生水彩/Q版等 |
 | 散图归位 + 图谱 | `/pmem-atlas`（`/art-map`） | 整理资产，刷新 `art-atlas.html` |
-| 同域合并进阶梯 | `/pmem-merge-ladder` | L1→L8 整梯棋盘；实测见下方图墙 |
-| 风格克隆新主体 | `/pmem-clone-image` | Mode B 锁画风换主体；实测见下方图墙 |
+| 同域合并进阶梯 | `/pmem-merge-ladder`（`/art-merge`） | 八件各一张正方形，两两相合；先定关系再抬美术 |
+| 风格克隆新主体 | 无斜杠技能 | 下方图墙是早前实验记录，仓库里没有 `/pmem-clone-image` |
 | 进阶 | `/pmem-improve` · `/pmem-coach` · `/pmem-learn` | 口味迭代 / 练习计划 / 补知识 |
 
 ### 四档改动幅度（选错了用嘴改就行）
@@ -133,8 +133,8 @@ python3 pmem_art.py skills --install
 
 | 技能 | 在测什么 | 稳定性门槛 | 本批结果 |
 | :--- | :--- | :--- | :--- |
-| **`pmem-merge-ladder`** | 同域 L1→L8 整梯棋盘 · whole-sheet · Absolute-5D ≥9.6 | 连续 3 个**新域** OK | **MET** · G1/G2/G3 均 8/8 |
-| **`pmem-clone-image`** | Mode B：锁风格 ~95% + **新主体** · REF\|RESULT | 连续 3 组 OK（每组 icon+char+UI） | **MET** · G1→G2→G3 |
+| **`pmem-merge-ladder`** | 当时按整梯棋盘测过；现行技能是八张正方形、先定关系再抬美术 | 连续 3 个**新域** OK | **MET** · G1/G2/G3 均 8/8（整梯那一轮） |
+| 风格克隆（未做成斜杠技能） | Mode B：锁风格 ~95% + **新主体** · REF\|RESULT | 连续 3 组 OK（每组 icon+char+UI） | **MET** · G1→G2→G3 |
 
 #### Merge ladder · 合并进阶梯
 

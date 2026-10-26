@@ -3,20 +3,20 @@
   "hooks": {
     "preToolUse": [
       {
-        "command": "python3 pmem_art.py hook pre-gen",
+        "command": "python3 pmem_art.py hook pre-gen || py -3 pmem_art.py hook pre-gen",
         "matcher": "GenerateImage|Write|Edit|StrReplace|MCP",
         "failClosed": false
       }
     ],
     "postToolUse": [
       {
-        "command": "python3 pmem_art.py hook post-asset",
+        "command": "python3 pmem_art.py hook post-asset || py -3 pmem_art.py hook post-asset",
         "matcher": "GenerateImage|Write|Edit"
       }
     ],
     "stop": [
       {
-        "command": "python3 pmem_art.py hook stop",
+        "command": "python3 pmem_art.py hook stop || py -3 pmem_art.py hook stop",
         "loop_limit": 1
       }
     ]

@@ -12,6 +12,7 @@ from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+DEMO_MODULES = ROOT / ".memory-art" / "projects" / "pmem-art" / "modules.yaml"
 sys.path.insert(0, str(ROOT))
 
 from skills_kit.converge import _session_file, cmd_converge
@@ -46,9 +47,7 @@ class TestModuleAspectContracts(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         import pmem_art as pa
-        cls.mods = (pa.load_yaml((ROOT / ".memory-art" / "modules.yaml").read_text(encoding="utf-8")) or {}).get(
-            "modules", {}
-        )
+        cls.mods = (pa.load_yaml(DEMO_MODULES.read_text(encoding="utf-8")) or {}).get("modules", {})
 
     def test_pastel_is_4x3_1152x864(self) -> None:
         specs = (self.mods.get("character.PastelGirl") or {}).get("specs") or {}
@@ -77,7 +76,26 @@ class TestRejectedDraftNotStale(unittest.TestCase):
     def test_astra_expr_correction_not_stale(self) -> None:
         import pmem_art as pa
 
-        data = pa.load_project(ROOT)
+        demo = ROOT / ".memory-art" / "projects" / "pmem-art"
+        td = Path(tempfile.mkdtemp(prefix="pmem_astra_"))
+        try:
+            mem = td / ".memory-art"
+            mem.mkdir()
+            shutil.copy2(demo / "modules.yaml", mem / "modules.yaml")
+            src_entry = demo / "entries" / "character.Astra.Expressions" / "01ART006EXPRCORRECTION.md"
+            dst_entry = mem / "entries" / "character.Astra.Expressions" / src_entry.name
+            dst_entry.parent.mkdir(parents=True)
+            shutil.copy2(src_entry, dst_entry)
+            for rel in (
+                "assets/character/astra_expressions_2x2.png",
+                "assets/character/astra_expr_shock_draft.png",
+            ):
+                dst = td / rel
+                dst.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(ROOT / rel, dst)
+            data = pa.load_project(td)
+        finally:
+            shutil.rmtree(td, ignore_errors=True)
         entry = next((e for e in data["entries"] if e.get("id") == "01ART006EXPRCORRECTION"), None)
         self.assertIsNotNone(entry)
         self.assertFalse(entry.get("stale"), entry.get("stale_reasons"))
@@ -176,9 +194,7 @@ class TestPathGlobNoOverlap(unittest.TestCase):
     def test_floating_ruins_and_arcane_globs_do_not_cover_siblings(self) -> None:
         import pmem_art as pa
 
-        mods = (pa.load_yaml((ROOT / ".memory-art" / "modules.yaml").read_text(encoding="utf-8")) or {}).get(
-            "modules", {}
-        )
+        mods = (pa.load_yaml(DEMO_MODULES.read_text(encoding="utf-8")) or {}).get("modules", {})
         fr = (mods.get("scene.FloatingRuins") or {}).get("paths") or []
         slash = (mods.get("vfx.ArcaneSlash") or {}).get("paths") or []
         self.assertTrue(fr)
