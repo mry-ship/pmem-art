@@ -36,6 +36,7 @@ from .prompt_scale import (
     _recompose_change_evidence,
     build_best_direction_hint,
     build_dynamic_prompt_directive,
+    build_r1_structure_floor,
     check_scale_task_text,
     compose_style_first_prompt,
     find_affirmative_lock_hits,

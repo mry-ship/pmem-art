@@ -66,6 +66,7 @@ SKILL_SPECS: list[dict[str, Any]] = [
      - `high`：goal **≤80%**；`allow_recompose` + 可改元素数；forbid=`no_identity_swap`；骨架「保媒介与身份，提升光影张力；可加风格内叙事点缀」；**≥2 轮才停**。
      - `recompose`：目标机位 = `--recompose-dir`；骨架「保画风色板，按「方向」重构机位」；**≥2 轮**；未换机位勿停；与 bold 拆开。
    - **最优方向按档分流**（加法，不是第二份锁）。出图前可跑：`python3 pmem_art.py check-scale-gates --self-check`。
+   - **可选镜头包前置（`/art-lens` / `pmem-lens-propose`，不打断批量流水线）**：仅当**交互式对话**且用户选 `high`/`recompose` 但**未给具体机位/镜头方向**时，可主动提议跑 `/art-lens` 给出 4 套镜头包供点选；若在跑批量脚本或用户已写明构图方向，直接进入收敛，严禁弹窗打断。
 3. **可选 Best-of-N 首帧**：第 1 轮先构思 2~3 个方向（或并行想法），挑最佳进入后续 converge（在回复里写明选了哪条）。
 
 ---
@@ -75,12 +76,18 @@ SKILL_SPECS: list[dict[str, Any]] = [
 令轮次 $i = 1, 2, \dots, 8$：
 
 #### 2.1 生成第 $i$ 轮单张候选图
-- **第 1 轮**：用用户目标、参考图（若有）和红线写完整提示词，垫图用最初那张参考图。
-- **第 2 轮起**：出图前先跑 `python3 pmem_art.py converge next --id <id>`，或直接用上一轮审图印出的「下一轮先垫这张」。生图参考图只用这张最高分成图，比它差的一轮不垫。提示词用它印出的那一句，只改没过的那一处。不要再把最初的原图垫进去，也不要把前几轮的修正叠进同一段。
-- 调用生图工具（如 `GenerateImage`）**生成 1 张图**。参考图路径用 `converge next` 给出的那张。提示词写明：只改点名的那一处，没点名的地方保持垫图。画完再 `converge generate` 登记。
+- 综合「用户原始需求 + 参考图解构特征（若有）+ `.memory-art` 历史红线 + **针对上一轮最低分维度的具体修正指令（≤2 条）**」，构造第 $i$ 轮生图 Prompt。
+- **首轮（R1）按主体/模块分类注入结构底线（防纯景物误生人影）**：
+  - 检测到**人物/动物主体**（或 `character.*` 模块）：R1 注入「主体关节/双眼/持物连接清楚，接触阴影与承托可读，禁止肢体融化」；
+  - **纯场景/建筑**（`scene.*` 且无人物）：R1 仅注入「空间透视收束与体块接触阴影清楚，禁止结构融化」；
+  - **UI / 图标**（`ui.*` / `icon.*`）：不注入人物解剖词。
+- **垫图自适应策略（`pad=auto`，防链式糊化）**：
+  - 首轮（$i=1$）垫原始参考图 `style_ref`；
+  - 后续轮次：仅当上一轮评分成功且总分较前轮提升时，才垫上一轮胜出图继续精修；若上一轮掉分、比例/结构锁死或评分异常，**必须退回垫原始参考图（或历史最高分图）**，严禁拿劣化图或未评分图继续链式垫图。
+- 调用生图工具（如 `GenerateImage` 或项目配置的生图脚本）**生成 1 张图**。
 
 #### 2.2 严苛审图与五维打分（每维满分 10，再按档位权重合成）
-生成后**亲自看图**按 Absolute-5D 打分（有结构、透视、质感硬伤就必须压到 9 以下）。有独立 VLM Key 时 API 主分；**无 Key 时仍由你（本模型）按检查表看图评分**，门槛照旧 `>=9.6`，未达标继续，满 8 轮取最高分——**禁止**用像素离线尺另设 8.50 早停。可参考 `skills_kit/absolute_5d_agent_rubric.py` 的 `agent_absolute_5d_judge_prompt()`。
+生成后亲自看图，按这五项打分（有结构、透视、质感硬伤就必须压到 9 以下）：
 1. **构图** 2. **光影色彩** 3. **透视与解剖** 4. **质感** 5. **规格与风格**
 
 示例：`构图8.6/光影8.2/透视7.8/质感8.0/风格8.4`。旧的加和尺 `风格2.2/结构2.0/光影1.7/合规1.4/还原1.3` 仍可解析为相加总分。
@@ -103,11 +110,14 @@ python3 pmem_art.py converge judge \
 `第 i 轮 · 总分 X.XX · 五维… · 不足：… · 本轮/下轮改点：…`，并附上本轮图。
 
 #### 2.5 收敛判定（核心规则！）
-- **情况 1：本轮评分 `>= 9.6` 且已满本档 `min_rounds_before_stop`（`high`/`recompose` 默认 ≥2 轮）**
+- **情况 1：本轮评分 `>= 9.6`、已满本档 `min_rounds_before_stop`（`high`/`recompose` 默认 ≥2 轮），且未触发解剖硬伤一票否决（`perspective_anatomy >= 7.5`）**
   🎉 **合格达标！** 结束生图循环，以第 $i$ 轮为胜出图，进入 Step 3。
-- **情况 1b：分数够但未满最小轮次** → 视为未停机。下一轮垫目前最高分的那张，只补还没到位的那一处，不按优选方向重画整张。
+  - **解剖硬伤一票否决（`< 7.5` 禁停，不硬卡 `8.5`）**：若总分 `>= 9.6` 但 `透视与解剖 < 7.5`（存在明显肢体融化/结构崩坏），禁止停机，下一轮针对该结构硬伤回流修正；若 `7.5 <= 透视与解剖 < 8.5`（如无人物风景或轻微透视偏差），正常准予 `>= 9.6` 停机，并在批量看板中分列「总分≥9.6」与「总分≥9.6 且解剖≥8.5」双指标。
+- **情况 1b：分数够但未满最小轮次** → 视为未停机，按 `best_direction_hint` 继续叠加（防 1 轮贴原虚高）。
 - **情况 2：本轮评分 `< 9.6` 且 $i < 8$**
-  🔄 **不合格！** 下一轮垫目前分数最高的那张，只把那张没过的地方写成一句。本轮更低分，就不拿本轮接着垫。**立即继续生第 $i+1$ 张图**。
+  🔄 **不合格！** 必须把本轮最低分维度的具体硬伤转化为 **≤2 条部位级修正指令**（如具体关节/持物连接、接触阴影、边缘描边），并入第 $i+1$ 轮 Prompt，**严禁**堆砌「加强氛围、提升体积光」等空泛套话；若本轮评分解析失败，先重试 1 次，仍失败则保持上一轮有效缺陷与底图，绝不用套话污染 Prompt。
+- **情况 2b：第 4 轮及之后的过峰安全早停（`i >= 4`）**
+  🛑 前 3 轮允许 `high`/`recompose` 大改构图时先跌后升（不触发早停）；从 **第 4 轮（`i >= 4`）** 起，若**连续 2 轮有效评分均低于历史最高分超过 `0.5` 分**，立即停止循环并直接晋升历史最高分轮次（防止后半程把好图越改越糊，同时避开 `±0.2~0.3` 的 VLM 单次打分抖动）。
 - **情况 3：已满 8 轮（$i = 8$）且评分仍 `< 9.6`**
   🏁 **达到 8 轮上限，停止循环！** 从第 1 ~ 8 轮中**挑选综合评分最高的那一轮图片**作为最终交付图，进入 Step 3。
 
@@ -187,13 +197,12 @@ improve/coach/learn 推销仅在用户主动要时再给。
 1. **召回模块基准**：
    - 运行 `python3 pmem_art.py search --module <模块>` 获取已有红线、色板与管线规格。
    - 运行 `python3 pmem_art.py classify <图片路径>` 获取分辨率、宽高比、Alpha 透明通道等物理参数。
-2. **五维打分与挑刺（Absolute-5D，与 `converge judge` 同一套标签）**：
-   - 每维满分 10，写入格式：`构图x/光影x/透视x/质感x/风格x`（例：`构图8.6/光影8.2/透视7.8/质感8.0/风格8.4`）。
-   - UI/App Icon 专用标签仅在对应资产上使用；**禁止**再手填旧加和尺「风格2.5/结构2.5/…」当主报告（旧串仍可被解析，但新审稿一律 Absolute-5D）。
+2. **五维打分与挑刺（每维 0–10 分，按档位权重合成 10.0 分）**：
+   - 统一按 **`构图 / 光影 / 透视 / 质感 / 风格`** 五个维度各打 0–10 分（例：`构图8.8/光影8.5/透视7.9/质感8.4/风格8.8`），保证档位权重与 `perspective_anatomy`（透视与解剖）维度检测正常生效。
    - 明确列出 **✅ 合理亮点** 与 **❌ 不合理/需返修点**，并给出可直接用于下一轮重绘的 **修正 Prompt 建议**。
 3. **自动沉淀红线**：
    - 若评分 `< 9.6` 或用户认可某条挑刺结论，调用 `python3 pmem_art.py feedback "<具体不合理点>" --module <模块> --asset <图片路径>` 自动写入记忆库。
-4. **展示与静默边界**：默认必须向用户展示 Absolute-5D 分数卡 + ✅/❌ 要点 + 修正 Prompt；记忆写入仍勿旁白。完整 `/pmem-coach` 练习计划仅当用户明确要教练或 `--verbose` 时再展开；CLI 若打出一行「小提示」可原样转述（每会话最多 1 条）。
+4. **静默默认**：向用户最多一句「小提示」（如「下次注意：光影」）；完整教练报告仅当用户明确要 `/pmem-coach` 或 `--verbose`。
 """,
     },
     {
@@ -289,7 +298,7 @@ python3 pmem_art.py search --module <ui.模块>
 2. 若无概念图：先生成 **1 张完整屏幕概念稿**（整屏布局，统一材质与色板），用 `/pmem-draw` 同款 **8轮 >=9.6 收敛** 打磨概念稿：
    ```bash
    python3 pmem_art.py converge start --goal "UI概念稿：<屏幕类型+风格>" --module <ui.模块> [--scale medium|high]
-   # 每轮：converge generate 生图，再 Absolute-5D converge judge（有 Key→API；无 Key→本模型检查表；禁止像素尺 8.50 早停）
+   # 每轮：converge generate 生图，再 converge judge 审图，直到 >=9.6 或满 8 轮
    python3 pmem_art.py converge finish
    ```
 3. **概念稿通过后才进入组件表**——不要在概念未锁定时散生按钮。
@@ -315,8 +324,8 @@ ui_kit_<name>/
 ```
 `manifest.json` 示例字段：`name`, `group`, `state`, `file`, `nine_slice: {left,right,top,bottom}`, `scalable: true|false`。
 
-### Step 4：关键件二次收敛（概念稿已强制；核心件不达标则继续）
-对主面板、主按钮等核心件，若 Absolute-5D 评分 `< 9.6`（重点查：中心拉伸区是否干净、转角是否形变、透明底毛边、状态族是否同系），继续 `converge generate` / `converge judge` 直到达标或满 8 轮（门槛仍 9.6，禁止像素 8.50 早停）。
+### Step 4：关键件二次收敛（可选但推荐）
+对主面板、主按钮等核心件，若五维评分 `< 9.6`（重点查：中心拉伸区是否干净、转角是否形变、透明底毛边、状态族是否同系），再跑一轮 `converge generate` 局部重绘，然后 `converge judge` 审图。
 
 ### Step 5：沉淀记忆
 ```bash
@@ -325,15 +334,11 @@ python3 pmem_art.py feedback "UI套件色板与九宫格规范：<摘要>" --mod
 ```
 
 ## 三、UI 专用五维评分侧重（满分 10.0，`>= 9.6` 合格）
-`--dims` 优先写 **UI 专用 Absolute 标签**（每维 0–10，由 `parse_5d_dims` 按 UI 权重合成），示例：
-`风格色板契合9.5/九宫格合理性9.2/光影材质9.0/红线合规8.8/套件一致性9.1`
-侧重含义：
-1. 风格色板契合 — 与概念稿同材质同色板
-2. 九宫格合理性 — 中心区干净、角不糊、可拉伸
-3. 光影材质 — 完成度
-4. 红线合规 — RGBA 透明底、分辨率、无脏边
-5. 套件一致性 — normal/pressed 等同系，不「各画各的」
-（旧加和小数写法如 `风格2.5/九宫格2.4/…` 仍兼容；无 UI 关键词时也可用通用 `构图/光影/透视/质感/风格`。）
+1. 风格色板契合（2.5）— 与概念稿同材质同色板
+2. 结构/九宫格合理性（2.5）— 中心区干净、角不糊、可拉伸
+3. 光影材质完成度（2.0）
+4. 红线与管线合规（1.5）— RGBA 透明底、分辨率、无脏边
+5. 套件一致性 / 状态族完整（1.5）— normal/pressed 等同系，不「各画各的」
 
 ## 四、最终交付必须包含
 1. 概念稿 + 组件表 + `elements/` + `manifest.json`（含九宫格）
@@ -405,16 +410,13 @@ python3 pmem_art.py converge start --goal "<概念图目标>" --module <模块> 
 
 ### Step 2：最多 8 轮自评收敛（合格线 `>= 9.6`）
 每轮：
-1. 垫目前分数最高的那张成图。只把那张没过的那一处写成一句，不重写整段，也不把前几轮的修正叠在一起。比它差的一轮不接着垫。
+1. 用上一轮缺陷的 **正向叠加修正** 重写完整句 Prompt（仍禁止只堆 negative tags）。
 2. 生成 **1 张** 概念图 / Key Art。
-3. **Absolute-5D** 严苛打分（有 Key→API；无 Key→本模型检查表；**禁止**像素尺 8.50 早停）+ 说出合理处与不合理处 → `converge generate` 然后 `converge judge`。
+3. 五维严苛打分 + 说出合理处与不合理处 → `converge generate` 然后 `converge judge`。
 4. `>= 9.6` 立即停；`< 9.6` 且未满 8 轮则继续；满 8 轮挑最高分。
 
-**概念图五维侧重（`--dims` 必须可被 `parse_5d_dims` 解析，否则本轮记 0 分）**：
-主用 Absolute-5D：`构图x/光影x/透视x/质感x/风格x`（每维 0–10）。
-评判侧重：构图→叙事机位与层次；光影→电影感侧逆/体积光；透视→空间纵深；质感→空气介质与材质可读；风格→色板与 Key Art 完成度。
-示例：`--dims "构图9.2/光影9.0/透视8.8/质感8.9/风格9.1"`。
-旧侧重串（`风格色板/构图叙事与透视/光影材质/红线合规/氛围意图还原`）现仍可解析为兼容加和尺，但**新会话请统一写 Absolute-5D**，以便与 `/pmem-draw` 履历直接对比。
+**概念图五维侧重（每维 0–10 分，传入 `--dims "构图X/光影X/透视X/质感X/风格X"`）**：
+1. **构图**（叙事重心与景别） 2. **光影**（色温碰撞与体积光） 3. **透视**（空间收束与主体解剖/承托） 4. **质感**（材质笔触与边缘） 5. **风格**（色板与媒介一致性）
 
 ### Step 3：结算与沉淀
 ```bash
@@ -458,11 +460,12 @@ python3 pmem_art.py converge finish
 
 ---
 
-## 一、适用场景
-- 网站 / App / 游戏 HUD 的 **成套自定义图标**
-- 需要 SVG（优先）或统一栅格（如 64×64 透明底道具图标）且 **整套同系**
+## 一、三大模式分流（入口 `/pmem-icon` · `/art-icon` 保持不变，按需求进对应分节，严禁串味）
+- **【Mode A · App Icon 1024 母版】**（手机桌面启动图标 / iOS App Store / Android Adaptive / 产品 Logo）→ 直接跳至下方 **「## 二之二、Mode A：App Icon 1024×1024 母版专项」**（满幅直角 + 72%–80% 安全区 + 微立体光影，不用 SVG 规则）。
+- **【Mode B · 24px 线性 SVG 图标集】**（网页 / App 导航栏 / HUD 矢量图标）→ 执行下方 **「## 二、Mode B：一致化 SVG 矢量图标集流程」**（只用 `currentColor` + 统一 stroke/viewBox）。
+- **【Mode C · 游戏道具栅格图标】**（背包 64/128/256px 透明底 PNG 道具）→ 执行下方 **「## 二之三、Mode C：游戏道具透明底栅格图标」**（锁描边/色板/投影，不用 SVG 代码）。
 
-## 二、标准流程（Brief → Spec → Batch → Review → Converge）
+## 二、Mode B：一致化 SVG 矢量图标集流程（Brief → Spec → Batch → Review → Converge）
 
 ### Step 1：理解项目与图标清单
 收集：行业/项目气质、品牌色（即使 SVG 用 `currentColor` 也影响线型选择）、大约数量。
@@ -496,7 +499,8 @@ python3 pmem_art.py converge finish
 4. 坐标最多 2 位小数；保持 padding；视觉居中（光学校正）
 5. 路径尽量少；简单图标略加重以平衡视觉重量
 
-若用户要的是 **游戏道具栅格图标**（非 SVG）：仍先锁「线宽/圆角/色板/投影」style-spec，再批量生成透明底 PNG，规则改为「同色板同描边同投影」，并可用 `converge` 打磨单枚。
+### 二之三、Mode C：游戏道具透明底栅格图标（64/128/256px PNG，非 SVG）
+若用户要的是 **游戏道具栅格图标**：先锁「线宽/圆角/色板/投影」style-spec，再批量生成透明底 PNG（同色板、同描边、同光源投影、中心缩略轮廓清晰、无文字），关键单枚可用 `converge` 跑 8 轮 ≥9.6 打磨。
 
 ### Step 4：分批生成（约每批 5 个）+ 一致性审查
 每批完成后检查：stroke 是否漂移、圆角是否混用、有无图标明显偏轻/偏重、是否贴边。
@@ -509,11 +513,11 @@ icons/
 └── …
 ```
 
-### Step 5：关键图标 8轮≥9.6 收敛（App Icon 母版强制；SVG/道具集：点名或一致性失败时强制）
-整集批量生成不必对每枚跑满 8 轮；**App Icon 1024 母版**、用户点名「不对」、或一致性审查不通过的关键枚必须跑满 Absolute-5D 闭环（有 Key→API；无 Key→本模型；禁止像素 8.50 早停）：
+### Step 5：关键图标 8轮9.6 收敛（可选）
+用户点名某枚「不对」或一致性审查不通过时：
 ```bash
 python3 pmem_art.py converge start --goal "图标 <name> 对齐 style-spec" --module brand.WorldStyle
-# 生成 → Absolute-5D 自评 → converge generate / converge judge → finish
+# 生成 → 自评 → converge generate / converge judge → finish
 ```
 
 ### Step 6：沉淀
@@ -522,7 +526,7 @@ python3 pmem_art.py feedback "图标集 style-spec：<preset+stroke+grid摘要>"
 python3 pmem_art.py ingest icons/preview.html -p "icon set preview" --apply   # 若适用
 ```
 
-## 二之二、App Icon 模式（iOS App Store / Android Adaptive 1024×1024 桌面应用图标专项）
+## 二之二、Mode A：App Icon 1024×1024 母版专项（iOS App Store / Android Adaptive 桌面启动图标）
 
 当用户要求制作 **App Icon / 手机桌面图标 / iOS 启动图标 / Android 自适应图标 / 产品 Logo 图标** 时，自动切换至 **App Icon 专项模式**：
 
@@ -650,48 +654,24 @@ python3 pmem_art.py learn list
 """,
     },
     {
+        "name": "pmem-lens-propose",
+        "alias": "art-lens",
+        "title": "参考图具象镜头包提案（机位/光影/道具四选一后再收敛）",
+        "description": "Use when the user drops a reference image (or names a style_ref) and wants several concrete lens / lighting / prop packages to pick from before generating—V2-style showcase language, choose then generate.",
+        "body": '# pmem-lens-propose\n\nOff-line **lens pack** step before converge / edits. Look at a reference image, propose several concrete cinematic packages (camera, light, props, forbids), let the user pick, then hand the chosen pack into goal / recompose_dir / best_direction—do **not** invent Absolute-5D scores.\n\n## When\n\n- User wants V2-like strong lens language but from **this** image, not a canned script.\n- Before a batch or a single high / recompose / bold run.\n- Not for style-clone locks only → use pmem-clone-image.\n- Not for scoring-only reviews.\n\n## Inputs\n\n- Required: one reference image path (box or user machine) **or** a known slug (`night_city` / `pastel_sketch` / `sunlit_portrait` / `ishtar_canyon`).\n- Optional: target scales (`low` `medium` `high` `recompose` `recompose_bold`), count of packs (default **4**), language (default zh + short en keywords), identity lock notes from the user.\n\n## Steps\n\n1. **Resolve image**  \n   Open/read the reference. Note aspect, subject identity (gender/species/age anchors), medium/palette, current camera. Do not invent props already absent as if they were in the ref.\n\n2. **Debrief (short)**  \n   One short paragraph: what must stay (identity + medium) vs what may leap (camera / light / narrative ornaments by scale).\n\n3. **Propose N packs** (default 4)  \n   Each pack is a pickable card with fixed fields:\n   - `id`: A/B/C/…\n   - `scale_fit`: which scales it suits (e.g. high, or recompose-only)\n   - `title`: 6–12字\n   - `camera`: concrete shot (height, angle, framing)—no vague「更好构图」\n   - `light`: concrete light (direction, color clash, volume)\n   - `props`: 1–3 style-in ornaments (may add for high+; must not swap identity)\n   - `forbid`: hard no (old camera DNA, identity swap, empty boilerplate)\n   - `goal_zh`: one goal line ready for `bot_tasks` / converge `--goal`\n   - `recompose_dir`: only if scale_fit includes recompose; else empty\n   - `best_direction`: one overlay line like `最优方向：…`\n\n   Rules for pack quality:\n   - Specific nouns (孔明灯级), not「加强氛围」「提升质感」.\n   - At least **one** pack keeps near-ref camera (high polish); at least **one** is a true recompose camera change.\n   - Bold/style_jump packs must say silhouette-only + new style bible.\n   - Never attach fake scores or STOP claims.\n\n4. **User picks**  \n   Send a widget (multiSelect if they may merge). Values must read like natural replies (e.g. `选 A 孔明灯体积光`). Do not generate images in this step.\n\n5. **Materialize**  \n   After pick:\n   - Write/update the chosen fields into the task source they are using (`goal`, `gen_description`, `recompose_dir`, `best_prompts` overlay)—or print a ready `converge start …` command block.\n   - Confirm identity locks still present.\n   - Ask once whether to start generate/converge now; only then run edits.\n\n6. **Optional contrast**  \n   If they ask「和 V2 比」, map which pack is closest to known V2 showcase lenses for that ref—still no scripted scores.\n\n## Output shape (chat)\n\nLead with the debrief (2–3 sentences). Then one short block per pack (title + camera/light/props/forbid + goal). End with the pick widget—not a long essay.\n\n## Anti-patterns\n\n- Dumping generic `best_direction_hint` scale boilerplate as a pack.\n- Proposing packs then auto-generating without a pick.\n- Treating this skill as a scorer or as pmem-clone-image.\n- Chaining edit-from-previous-round here; pad policy belongs to the converge runner.',
+    },
+    {
+        "name": "pmem-clone-image",
+        "alias": "art-clone",
+        "title": "【截图可见·必读】~95%锁参考画风克隆到新题材（强制8轮≥9.6）",
+        "description": "【截图可见·必读】克隆参考画风到新 scene/UI/icon/character。默认~95%锁。最多8轮≥9.6。Mode B 必须垫参考。角色双眼/虹膜、UI 双层 chrome、道具尺度。稳测连续3组过线。",
+        "body": '# `/pmem-clone-image` — 画风克隆 → 新图（强制 8 轮 · ≥9.6）\n\n> **最多 8 轮 · 合格线 `≥ 9.6 / 10.0` · 未达标叠加修正 · 满 8 轮挑最高分 · 评分总表**。  \n> **禁止只生一张就交差**（除非第 1 轮真实严苛 ≥9.6）。**禁止无五维数字宣称 PASS**。\n\nDefault lock **~95%**。可选四档 polish 仅在达标后。\n\n## Modes\n- **Mode A（零参考）**：仅 brief + 自写 bible；medium 必须 brief 写明。\n- **Mode B（有参考）**：**必须** `reference_image_paths=[风格参考]` 每轮都垫；锁 medium/chrome/眼部语法，**换新题材**；禁止事后拿无关图冒充「原图对照」。\n\n## 合同（~95%）\n**LOCK**：medium；色板角色；光感；材质语法；红线；按类：\n- Scene/原画：medium+光感；构图自由\n- UI：chrome 分层（外框+内描边若参考有则**两层都锁**）；文案=brief；奖励物无脸除非 brief 要求\n- Icon：构图框+材质+BG 习惯；主体新；motif≤1；缩略轮廓清晰\n- Character：脸部+体型语法（大虹膜+巩膜月牙+高光；**禁黑点眼**；**必须双眼分穴，禁独眼/融合眼**；软颊；短粗肢；大头桶身）；换装/身份自由；禁 turnaround\n**FREE**：构图/题材/身份（除非要求保留）\n**Hard**：Mode B 必须垫参考；motif≤1；尺寸硬锁；禁无 brief 造 UI 字；角色 DNA≠名人脸/著名服装\n\n## Size\n用户 W×H → 每轮一致；否则跟参考；AR 不符则 Pillow 锁后再评。\n\n## Step 1：圣经 + Brief\nbible（角色写清眼/颊/肢）+ 新题材 brief（UI 精确文案）。Mode B bible 必须从参考像素归纳。\n\n## Step 2：闭环 i=1…8\n### 2.1 生成\nPrompt = bible + brief + 缺陷叠加 + negatives；Mode B 每轮带风格参考。\n**Refine pad**：比例/尺度是主缺陷时**不要**再垫上一张结果（会锁死 bug），只垫风格参考并写绝对相对尺度；chrome/文案缺陷可垫上轮胜出+风格参考。\n角色职业信号优先：空手数 T-pose + 胸章/腰带/脚边道具；手持物易缩水，若必须手持则每轮重申绝对尺度。\n\n### 2.2 五维（五个数字，每维 0–10 分加权合成 10.0）\n统一传入 `--dims "构图X/光影X/透视X/质感X/风格X"`（兼容旧 2.5/2.5/2.0/1.5/1.5 加和制）：\n1. **构图**（结构与题材/新颖度反回声）\n2. **光影**（光感与明暗冷暖）\n3. **透视**（主体比例/解剖/角色双眼分穴/道具尺度）\n4. **质感**（材质语法与边缘，UI 边角 crop 确认双层描边）\n5. **风格**（~95% 色板角色与媒介锁定）\n\n### 2.3 判定\n≥9.6 停；否则 Overlay 至满 8；满轮 Best-of 标明未达线。\n\n### 参考眼语法冲突\n若主参考是黑点瞳，但合同要求虹膜：可辅垫同族虹膜样张，并每轮写死虹膜配方；**禁止**为贴参考把 LOCK 降成黑点眼。\n\n## Step 3：交付\n胜出图 + 评分表 + bible 摘要。对照=**本趟真正垫过的参考** | 结果。\n\n## 稳定性门\n连续 **3 组**（icon+char+UI 等）全部 ≥9.6 才算稳；失败→通用规则写回（禁写死本次专名）。\n\n## Anti\n首发免评 · 假对照 · 100% 死锁布局 · 造 UI 字 · 黑点眼/独眼躲串味 · 个例写死',
+    },
+    {
         "name": "pmem-merge-ladder",
-        "alias": "art-merge",
-        "title": "同域合成梯（先过关系，再逐张抬美术）",
-        "description": (
-            "当用户输入 /pmem-merge-ladder 或 /art-merge，或要一条同域合成升级梯时触发。"
-            "分两段，各最多 8 轮。第一段先在文字上定稿八件的合成关系，不看美术品质，过了再每一档单独出一张正方形核对。"
-            "关系过关后，第二段在这些正方形上抬光影和质感，合格线 ≥ 9.6。"
-            "风格优先用用户写下的；没写就用放进来的参考图；都没有再用默认「质感好的卡通可爱」。"
-            "每一件单独放在一个同样大的正方形里，不把八件画进同一张。两件相同的这一档合成下一档。相邻档只大一点，低档也要占满格子大半。"
-            "件数、顺序和档位锁着。关系散了，美术分再高也不算过。"
-        ),
-        "body": r"""# `/pmem-merge-ladder`（别名 `/art-merge`）— 同域合成梯
-
-分两段。第一段只把八件的合成关系排对。第二段在这些过关的正方形上把画面画好。两段都过，才交付。
-
-## 风格
-
-第二段的风格按这个顺序取，只取一条：
-1. 用户写下了风格，就用写下的风格。
-2. 没写风格，但放了参考图，就用这张参考图的风格。不抄参考图里的物件。先跑 `python3 pmem_art.py ref-read <参考图路径>`。底是透明的，不要写成黑底。表面用看见图上的那一句，整组每一张、后面每一轮都用这同一句，不换成另一种媒介。小高光不要写成油亮。表面光洁，也不要改成毛毡或纸纹。不要把参考图文件垫进生图。第一张比参考图更油、更黑或更毛，就改这几个词再出。表面那一句已经对了，就留着。
-3. 风格和参考图都没有，用默认的质感好的卡通可爱。
-
-## 第一段 · 合成关系
-
-先不出图。只在文字上定八件的顺序，不看质感、光影和风格，不用美术 9.6 决定停不停。最多改 8 稿。
-
-过关要同时满足：正好八件。每一件单独占一个正方形，八个格子一样大，不把八件画进同一张。画面里只有这一件，居中。两件相同的这一档合成下一档，所以每一档仍然是一件，不是一对，也不是一组场景。低档只比高档小一圈，相邻档的大小差要小：最低档也要占到正方形的大半，最高档留一圈边，不顶出格子，也不能缩成格子中间的一个小点。沿档位零件变多或剪影更复杂。末档最大、零件最多，仍然是一件。相邻两档的剪影家族不能相同。
-
-每一稿写成八行。每行写：第几档、物件、剪影家族、比上一档大多少、比上一档多了什么零件。这一稿先交给独立文本模型，只谈这八行的关系，不谈美术。请它按上面六条判断过没过，并指出没过的是哪一行。指定的模型连不上，就改用当前默认模型，按同样六条判断，可以定稿。有模型回了「定稿」才出图。没过只改它指出的那几行，已经过的行留下。不写「不要画某件」。最多改 8 稿。
-
-它判六条都过了，才算定稿，然后每一档单独出一张正方形。对不上，就改那一档的这一张，不重新选八件。像素也对上，才进入第二段。8 稿文字仍过不了，就停在这一段，不进入第二段。
-
-## 第二段 · 美术品质
-
-只从第一段过关的那些正方形接着画，不重选八件。每一档仍是单独一张正方形。最多再 8 轮，合格线 ≥ 9.6。这一段用 medium 档。表面那一句每轮原样保留，改动只写在没过的那一格上。生图那一句不写光影张力、体积光、次表面散射。正方形、一件一格、件数、顺序、档位大小继续锁着：不把八件拼进同一张，不把低档缩得很小，不增删件数，不重排。
-
-每轮先出图，再看像素。向用户写出五维分、不足、下一轮改点，并再查一遍第一段的合成关系。关系还在、美术分 ≥ 9.6，才停。关系散了，这一轮美术分再高也不算过，下一轮回到过关稿的件数、顺序和档位上改质感。满 8 轮还没有两段都过的，留下美术最高且关系仍在的那些正方形；关系都不在了，就交付第一段那些过关的正方形。
-
-用 `converge generate` 记生图，`converge judge` 记审图，结束时 `converge finish`。第二段的 `converge start` 用 `--scale medium`。
-""",
+        "alias": "art-ladder",
+        "title": "【截图可见·必读】Merge-2 棋盘进阶梯 L1–L8 整梯生成（≥9.6）",
+        "description": "【截图可见·必读】merge-2 棋盘进阶梯（默认L1–L8）。同任务域。优先整梯一次出 sheet；≥9.6。无参考默认卡通可爱（Mode A 必写 vinyl/chibi stub）；有参考跟参考 medium。稳测连续3组过线。",
+        "body": '# `/pmem-merge-ladder` — Merge-2 棋盘进阶梯（整梯优先 · ≥9.6）\n\n> **合格线 `≥ 9.6 / 10.0` · 最多 8 轮 · 禁止无五维数字宣称 PASS**。  \n> **优先：一次生成整梯 contact sheet（L1…LN 同框），再切格评分**。某格反复塌身份才可单格补生（同品牌胶/光照）。\n\nDefault N=**8**。Modes：A 零参考 · B 单参考风格 · C 参考整梯（抄域纪律+medium，不抄 motif）。\n\n## 硬：升级路径\n1. 同一任务域（禁同色杂物串）\n2. 订单价值递增\n3. 棋盘完整图标：居中、缩略可读；无脸；无等级字\n4. 相邻档缩略差：体量/零件/身份可辨；同模只加特效=失败\n5. 同族放大必须可读（缩略 ≥~1.6× 体量或明显更多零件）\n\n### 类\n| 类 | 规则 |\n|---|---|\n| category-swap | 域内换完整道具 + 品牌胶 + 体量升 |\n| family-morph | 同物长大/零件↑ |\n| theme-morph | 主题内身份跳但用途一致且规格升 |\n\nBanned：跨域杂物串；同瓶叠光；纯 FX；茶杯修复分镜。\n\n## 硬：Medium\n1. **有参考（B/C）** — 整梯 medium **锁参考**（材质/光影/边缘/色温/BG）。抄纪律不抄 motif。参考写实就跟写实；参考卡通就跟卡通。\n2. **零参考（A）默认** — **卡通可爱**（cute cartoon / casual chibi-toy merge 图标：圆润块面、软阴影、饱和友好色、微笑感造型但**道具本身仍无脸**除非 brief 要求）。brief 另写 medium 则以 brief 为准。\n3. **Mode A 生成必写 stub（防「口头可爱、画面半写实」）** — 每次 GenerateImage description **必须**包含（可英可中，语义等价即可）：`vinyl toy merge icon` · `chibi proportions` · `soft rounded bevels` · `soft painted shadows` · `NO metal specular` · `NO photoreal` · `NO product photography`。缺任一项视为未按 Mode A 执行。\n4. **实拍漂移** — 在默认卡通可爱或 stylized 参考下，重扣产品实拍/油光不锈钢 HDR/真实木纹微细节；仅当参考/brief 明确写实才允许写实。Mode A 若 dim1 偏产品目录感 → 整梯重生并加码 stub，不得硬过。\n\n## Step 0：Ladder bible\n域 · 类 · 品牌胶 · medium 来源（参考锁 / 默认卡通可爱 / brief 覆盖）· **L1…LN 逐级物品名词** + 升级理由 · negatives · 易混档。  \nMode C：写出参考「升级课程」，映射到**新域**物品表。  \n**L8 = 最大体量或最多零件**；晚档禁「同一超类微差」。\n\n## Step 1：整梯一次生成\n1. Prompt 必须：**exactly N**、**编号列出每个名词**、一句品牌胶、一句 medium（A 默认写清 cute cartoon **+ Mode A stub 全套**）、网格锁（等大格、统一 BG、无字无脸）。\n2. 多色域用共用点缀品牌胶，勿强行同体色。\n3. Mode C 垫参考整梯只锁 medium+网格；NEW family、勿抄参考 motif。\n4. 切格；均分出血则连通域重切。\n5. **N-count gate**：组件数 ≠ N → 失败重来。\n6. 任一格 <9.6 → 优先整梯重生；最多 8 轮。\n\n## Step 2：五维 + 整梯审计\n1. 风格与品牌胶（2.5）— 默认卡通可爱时偏写实/产品目录感重扣\n2. 升级路径（2.5）— 剪影名词测试\n3. 图标完成度（2.0）\n4. 红线（1.5）\n5. 连续与爬升（1.5）\n\n整梯 OK：**所有格 ≥9.6** 且域/相邻/同族/N-count 通过。\n\n## Step 3：交付\nsheet + L01…LN + 每格评分 + 整梯审计 + curriculum。\n\n## 稳定性门\n连续 **3 组**不同新域过线才算稳；失败→通用规则写回（禁写死本次道具名）。',
     },
 ]
-
-
-
