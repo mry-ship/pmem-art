@@ -1,0 +1,219 @@
+# pmem-art modules.yaml — status: scaffold | candidate | active
+# scaffold = 冷启动空壳（引导落盘路径）; candidate = sync 自动提议（待 accept）; active = 已确认生效
+schema_version: 1
+categories:
+  brand:
+    label: "全局风格圣经 (Brand & Style Bible)"
+    icon: 🎨
+    short: 风格圣经
+  character:
+    label: "角色与立绘绑定 (Character & Rigging)"
+    icon: 🧝‍♀️
+    short: 角色与立绘
+  scene:
+    label: "场景与地块物件 (Scene & Environment)"
+    icon: 🏯
+    short: 场景与原画
+  ui:
+    label: "界面与九宫格图标 (UI & 9-Slice HUD)"
+    icon: 💠
+    short: UI与九宫格
+  vfx:
+    label: "特效与序列帧表现 (VFX & Shaders)"
+    icon: ✨
+    short: 特效与序列帧
+  anim:
+    label: 骨骼动画与 Live2D/Spine (Animation)
+    icon: 🦴
+    short: 骨骼与动画
+  misc:
+    label: 未归类 / 待提升 (Misc)
+    icon: 📦
+    short: 待归类资产
+  prop:
+    label: prop
+    icon: 📦
+synonyms:
+  -
+    - 立绘
+    - 半身像
+    - 全身像
+    - portrait
+    - sprite
+  -
+    - 九宫格
+    - 9-slice
+    - 拉伸框
+    - 弹窗底板
+  -
+    - 去背
+    - 透明通道
+    - alpha
+    - 抠图
+    - 白边
+  -
+    - 废案
+    - 红线
+    - 打回
+    - redline
+    - "don't"
+  -
+    - 配方
+    - 工作流
+    - lora
+    - prompt
+    - comfyui
+    - seed
+modules:
+  brand.WorldStyle:
+    title: 全局世界观色彩圣经（脚手架）
+    category: brand
+    status: scaffold
+    description: 冷启动脚手架：放入色板、色彩脚本、Negative Prompt 总表后，用 accept 或写入第一条 art_decision 自动提升为 active。
+    paths:
+      - "assets/brand/**"
+    aliases:
+      - StyleGuide
+      - ColorBible
+      - 色彩圣经
+    entities:
+      - ColorRatio
+      - GlobalNegative
+    palette: []
+    specs:
+      resolution: 1024x576
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  character.Hero:
+    title: 主角立绘（脚手架 · 请改名为实际角色）
+    category: character
+    status: scaffold
+    description: "冷启动脚手架：将主角立绘/三视图放入 assets/character/<Name>/ 后，sync 会提出 character.<Name> 候选。"
+    paths:
+      - "assets/character/**"
+    aliases:
+      - Hero
+      - 主角
+    entities:
+      - Proportions
+      - Turnaround
+    palette: []
+    specs:
+      resolution: 1024x1024
+      aspect_ratio: "1:1"
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  scene.MainArea:
+    title: 主场景（脚手架）
+    category: scene
+    status: scaffold
+    description: 冷启动脚手架：放入概念图 / Tilemap / Props 后提升为 active。
+    paths:
+      - "assets/scene/**"
+    aliases:
+      - MainArea
+      - 主场景
+    entities:
+      - KeyArt
+      - Lighting
+    palette: []
+    specs:
+      resolution: 1024x576
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  ui.HUD:
+    title: 主界面 HUD / 弹窗（脚手架）
+    category: ui
+    status: scaffold
+    description: 冷启动脚手架：九宫格底板、图标、字体规范放入 assets/ui/。
+    paths:
+      - "assets/ui/**"
+    aliases:
+      - HUD
+      - UI
+      - 九宫格
+    entities:
+      - NineSlice
+      - Icon
+    palette: []
+    specs:
+      resolution: 512x512
+      aspect_ratio: "1:1"
+      alpha_required: true
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512
+  vfx.Combat:
+    title: 战斗特效（脚手架）
+    category: vfx
+    status: scaffold
+    description: 冷启动脚手架：序列帧 / Shader 参数约束放入 assets/vfx/。
+    paths:
+      - "assets/vfx/**"
+    aliases:
+      - CombatVFX
+      - 特效
+    entities:
+      - SpriteSheet
+      - PremultipliedAlpha
+    palette: []
+    specs:
+      resolution: 1024x512
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  anim.Spine:
+    title: Spine / Live2D 绑定（脚手架）
+    category: anim
+    status: scaffold
+    description: 冷启动脚手架：骨骼图层命名规范、导出目录放入 assets/anim/。
+    paths:
+      - "assets/anim/**"
+    aliases:
+      - Spine
+      - Live2D
+      - 骨骼
+    entities:
+      - LayerNaming
+      - Export
+    palette: []
+    specs:
+      alpha_required: true
+      max_size_kb: 2048
+  prop.KitchenMerge:
+    title: prop·KitchenMerge (Watercolor)
+    category: prop
+    status: active
+    description: "原图画风优先：保画风与机位，小幅姿态/局部布局；柔化光影与留白层次 | A watercolor storybook mobile-game merge lad · 自动归类至 prop (prop.KitchenMerge) · 置信度 0.893"
+    paths:
+      - "assets/prop/kitchenmerge/**"
+    aliases:
+      - KitchenMerge
+    entities: []
+    palette: []
+    specs:
+      resolution: 1280x720
+      alpha_required: false
+      max_size_kb: 2048
+  prop.ValentineMerge:
+    title: prop·ValentineMerge
+    category: prop
+    status: active
+    description: "原图画风优先：保媒介与身份，提升光影张力；可加风格内叙事点缀 | 提示词改动区间 30% 到 80%：必须拉开，媒介与身份留下 | 糖的两端是光洁桃扭，箭只朝一 · 自动归类至 prop (prop.ValentineMerge) · 置信度 0.893"
+    paths:
+      - "assets/prop/valentinemerge/**"
+    aliases:
+      - ValentineMerge
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      alpha_required: false
+      max_size_kb: 2048

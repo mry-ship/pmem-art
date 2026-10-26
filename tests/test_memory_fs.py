@@ -75,6 +75,19 @@ class TestMediumNoSssForUiPixel(unittest.TestCase):
             ref_image="style_ref_03_sunlit_portrait.png",
         )
         self.assertIn("次表面散射", portrait["prompt_directive"])
+        prop = get_converge_scale_profile(
+            "medium",
+            module="prop.ValentineMerge",
+            goal="心形糖、玫瑰、情书。表面光洁。",
+        )
+        self.assertNotIn("次表面散射", prop["prompt_directive"])
+        self.assertNotIn("提升光影张力", prop["prompt_directive"])
+        self.assertNotIn("古典水彩", prop["prompt_directive"])
+        self.assertIn("表面那一句不动", prop["prompt_directive"])
+        rose = get_converge_scale_profile("medium", goal="一朵玫瑰")
+        self.assertNotIn("古典水彩", rose["prompt_directive"])
+        plate = get_converge_scale_profile("medium", goal="古典水彩植物志")
+        self.assertIn("古典水彩植物志", plate["prompt_directive"])
 
     def test_static_medium_table_does_not_claim_sss(self) -> None:
         """Reading CONVERGE_SCALE_PROFILES directly must not imply every medium run gets SSS."""

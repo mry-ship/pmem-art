@@ -22,14 +22,17 @@ categories:
     label: "特效与序列帧表现 (VFX & Shaders)"
     icon: ✨
     short: 特效与序列帧
+  anim:
+    label: 骨骼动画与 Live2D/Spine (Animation)
+    icon: 🦴
+    short: 骨骼与动画
   misc:
     label: 未归类 / 待提升 (Misc)
     icon: 📦
     short: 待归类资产
-  anim:
-    label: "骨骼与帧动画 (Animation & Spine)"
-    icon: 🦴
-    short: 骨骼与动画
+  prop:
+    label: prop
+    icon: 📦
 synonyms:
   -
     - 立绘
@@ -63,152 +66,81 @@ synonyms:
     - seed
 modules:
   brand.WorldStyle:
-    title: 全局世界观色彩圣经与光影红线
+    title: 全局世界观色彩圣经（脚手架）
     category: brand
-    description: 定义全项目 70/20/10 东方青瓷鎏金色彩比例、统一笔触质感、全局禁用赛博霓虹色系及通用 Negative Prompts
+    status: scaffold
+    description: 冷启动脚手架：放入色板、色彩脚本、Negative Prompt 总表后，用 accept 或写入第一条 art_decision 自动提升为 active。
     paths:
       - "assets/brand/**"
     aliases:
       - StyleGuide
       - ColorBible
       - 色彩圣经
-      - 全局风格
     entities:
       - ColorRatio
-      - BrushStroke
-      - LightingRule
       - GlobalNegative
-    palette:
-      - { hex: "#0F172A", name: "玄青夜色 (70% 暗部主基调)", role: primary_dark }
-      - { hex: "#1E3A4B", name: "远山黛蓝 (70% 辅助环境面)", role: secondary_dark }
-      - { hex: "#2DD4BF", name: "秘色青瓷 (20% 灵脉/高光漫射)", role: secondary_accent }
-      - { hex: "#F4F1EA", name: "宣纸暖白 (20% 服饰/云石亮面)", role: neutral_light }
-      - { hex: "#F59E0B", name: "鎏金符文 (10% 视觉焦点点睛)", role: accent_gold }
-      - { hex: "#E11D48", name: 朱砂绛红 (受击/警示专用), role: danger }
+    palette: []
     specs:
       resolution: 1024x576
       aspect_ratio: "16:9"
       alpha_required: false
-      color_space: sRGB
       max_size_kb: 2048
-    status: active
-  character.Astra:
-    title: 核心主角·阿斯特拉 (星盘司辰)
+  character.Hero:
+    title: 主角立绘（脚手架 · 请改名为实际角色）
     category: character
-    description: 7.5头身东方星盘术士立绘、正侧背三视图、左眼黄铜星盘义眼特征与 Spine 8层拆分规范
+    status: scaffold
+    description: "冷启动脚手架：将主角立绘/三视图放入 assets/character/<Name>/ 后，sync 会提出 character.<Name> 候选。"
     paths:
-      - "assets/character/astra_standing*.png"
-      - "assets/character/astra_rejected*.png"
-      - "assets/character/astra_turnaround*.png"
-      - "workflows/comfyui_astra*.json"
+      - "assets/character/**"
     aliases:
-      - Astra
-      - 阿斯特拉
-      - 主角立绘
-      - 司辰
+      - Hero
+      - 主角
     entities:
       - Proportions
-      - CostumeDesign
-      - AstrolabeMonocle
-      - SpineLayering
       - Turnaround
-    palette:
-      - { hex: "#0F172A", name: 外袍玄青, role: cloak }
-      - { hex: "#F4F1EA", name: 内衬宣纸白, role: tunic }
-      - { hex: "#2DD4BF", name: 青瓷灵玉佩, role: jade }
-      - { hex: "#F59E0B", name: 左眼星盘义眼/金边, role: gold_trim }
-      - { hex: "#E2E8F0", name: 月白银发, role: hair }
+    palette: []
     specs:
       resolution: 1024x1024
-      allowed_resolutions:
-        - 1024x1024
-        - 2048x1024
       aspect_ratio: "1:1"
       alpha_required: true
-      premultiplied_alpha: true
       safe_margin_px: 16
       max_size_kb: 1024
-    status: active
-  character.Astra.Expressions:
-    title: 阿斯特拉·剧情表情差分组
-    category: character
-    parent: character.Astra
-    description: 继承 character.Astra 头身与五官规范，专管 AVG 对话框表情差分（平静/战斗/微哂/受击/惊愕）及眼部发光层拆分
-    paths:
-      - "assets/character/astra_expr*.png"
-    aliases:
-      - AstraExpressions
-      - 阿斯特拉表情
-      - 表情差分
-    entities:
-      - ExpressionSheet
-      - EyeGlowLayer
-      - MouthSync
-    palette:
-      - { hex: "#2DD4BF", name: 常态青瓷瞳光, role: calm_glow }
-      - { hex: "#F59E0B", name: 觉醒鎏金瞳光, role: battle_glow }
-      - { hex: "#E11D48", name: 受击朱砂瞳光, role: damaged_glow }
-    specs:
-      resolution: 1024x1024
-      allowed_resolutions:
-        - 1024x1024
-      aspect_ratio: "1:1"
-      alpha_required: true
-      max_size_kb: 1024
-    status: active
-    inherits: character.Astra
-  scene.FloatingRuins:
-    title: 第一幕场景·浮空星盘遗迹
+  scene.MainArea:
+    title: 主场景（脚手架）
     category: scene
-    description: 30°等轴测浮空遗迹概念图、左上45°暖金主光与冷黛环境阴影规范、白玉断柱与青瓷法阵地表
+    status: scaffold
+    description: 冷启动脚手架：放入概念图 / Tilemap / Props 后提升为 active。
     paths:
-      - "assets/scene/floating_ruins*"
-      - "assets/scene/floating_*"
+      - "assets/scene/**"
     aliases:
-      - FloatingRuins
-      - 浮空遗迹
-      - 星盘遗迹
+      - MainArea
+      - 主场景
     entities:
-      - LightingDirection
-      - IsometricCamera
-      - ArchitectureProp
-    palette:
-      - { hex: "#1E3A4B", name: 浮岛背光岩层, role: rock_shadow }
-      - { hex: "#F4F1EA", name: 汉白玉台面, role: marble_lit }
-      - { hex: "#F59E0B", name: 左上45°斜射天光, role: sun_keylight }
-      - { hex: "#2DD4BF", name: 地表星轨法阵, role: rune_glow }
+      - KeyArt
+      - Lighting
+    palette: []
     specs:
       resolution: 1024x576
-      allowed_resolutions:
-        - 1024x576
-        - 1920x1080
       aspect_ratio: "16:9"
       alpha_required: false
       max_size_kb: 2048
-    status: active
-  ui.InventoryHUD:
-    title: 背包与通用弹窗九宫格组件
+  ui.HUD:
+    title: 主界面 HUD / 弹窗（脚手架）
     category: ui
-    description: 512x512 九宫格（9-Slice）弹窗底板、48px 四角黄铜包角固定区、中央纯色拉伸区禁画暗纹红线与 4px 透明安全边距
+    status: scaffold
+    description: 冷启动脚手架：九宫格底板、图标、字体规范放入 assets/ui/。
     paths:
       - "assets/ui/**"
-      - "workflows/comfyui_ui*.json"
     aliases:
-      - InventoryHUD
-      - UI弹窗
-      - 九宫格底板
+      - HUD
+      - UI
+      - 九宫格
     entities:
-      - NineSliceRule
-      - OuterMargin
-      - CornerOrnament
-    palette:
-      - { hex: "#0F172A", name: "面板底色 (95% 不透明度)", role: panel_bg }
-      - { hex: "#F59E0B", name: 四角黄铜镶边, role: corner_frame }
-      - { hex: "#2DD4BF", name: 内层1px青瓷辉光边, role: inner_stroke }
+      - NineSlice
+      - Icon
+    palette: []
     specs:
       resolution: 512x512
-      allowed_resolutions:
-        - 512x512
       aspect_ratio: "1:1"
       alpha_required: true
       nine_slice:
@@ -218,160 +150,70 @@ modules:
         - 48
       safe_margin_px: 4
       max_size_kb: 512
-    status: active
-  vfx.ArcaneSlash:
-    title: 战斗特效·星轨秘色刀光序列帧
+  vfx.Combat:
+    title: 战斗特效（脚手架）
     category: vfx
-    description: 1024x512 四帧横排刀光序列帧（单帧 256x512）、外青瓷内鎏金双层色阶、预乘透明通道（Premultiplied Alpha）禁黑边规范
+    status: scaffold
+    description: 冷启动脚手架：序列帧 / Shader 参数约束放入 assets/vfx/。
     paths:
-      - "assets/vfx/arcane_*"
-      - "assets/vfx/astrolabe_*"
+      - "assets/vfx/**"
     aliases:
-      - ArcaneSlash
-      - 星轨刀光
-      - 技能序列帧
+      - CombatVFX
+      - 特效
     entities:
-      - SpriteSheetGrid
-      - AlphaBlend
-      - ColorRamp
-    palette:
-      - { hex: "#F4F1EA", name: 刀刃核心极亮白, role: core_hot }
-      - { hex: "#F59E0B", name: 中层鎏金剑气, role: mid_gold }
-      - { hex: "#2DD4BF", name: 外层青瓷残影消散, role: outer_fade }
+      - SpriteSheet
+      - PremultipliedAlpha
+    palette: []
     specs:
       resolution: 1024x512
-      allowed_resolutions:
-        - 1024x512
-      aspect_ratio: "2:1"
-      alpha_required: true
-      premultiplied_alpha: true
-      max_size_kb: 1024
-    status: active
-  vfx.Nova:
-    title: 战斗特效·新星刀光序列帧 (Nova)
-    category: vfx
-    status: active
-    description: 战斗刀光 序列帧 VFX · 自动归类特效模块 (1024x256 横排序列帧 · RGBA 透明通道)
-    paths:
-      - "assets/vfx/nova/**"
-    aliases:
-      - Nova
-      - 新星刀光
-    entities: []
-    palette: []
-    specs:
-      resolution: 1024x256
-      allowed_resolutions:
-        - 1024x256
-      aspect_ratio: "4:1"
       alpha_required: true
       safe_margin_px: 16
       max_size_kb: 1024
-  scene.CelestialCity:
-    title: 场景与原画·CelestialCity
-    category: scene
-    status: active
-    description: 俯瞰天穹仙侠万家灯火夜城与飞檐持剑男侠 · 自动归类至 场景与原画 (scene.CelestialCity) · 置信度 0.796
+  anim.Spine:
+    title: Spine / Live2D 绑定（脚手架）
+    category: anim
+    status: scaffold
+    description: 冷启动脚手架：骨骼图层命名规范、导出目录放入 assets/anim/。
     paths:
-      - "assets/scene/celestialcity/**"
+      - "assets/anim/**"
     aliases:
-      - CelestialCity
+      - Spine
+      - Live2D
+      - 骨骼
+    entities:
+      - LayerNaming
+      - Export
+    palette: []
+    specs:
+      alpha_required: true
+      max_size_kb: 2048
+  prop.KitchenMerge:
+    title: prop·KitchenMerge (Watercolor)
+    category: prop
+    status: active
+    description: "原图画风优先：保画风与机位，小幅姿态/局部布局；柔化光影与留白层次 | A watercolor storybook mobile-game merge lad · 自动归类至 prop (prop.KitchenMerge) · 置信度 0.893"
+    paths:
+      - "assets/prop/kitchenmerge/**"
+    aliases:
+      - KitchenMerge
     entities: []
     palette: []
     specs:
-      resolution: 720x1280
-      allowed_resolutions:
-        - 720x1280
-        - 405x720
-      aspect_ratio: "9:16"
+      resolution: 1280x720
       alpha_required: false
       max_size_kb: 2048
-  character.PastelGirl:
-    title: 角色与立绘·PastelGirl (Watercolor)
-    category: character
+  prop.ValentineMerge:
+    title: prop·ValentineMerge
+    category: prop
     status: active
-    description: 粗纹水彩纸油画棒肌理红帽衫黑耳机猫咪发夹少女 · 自动归类至 角色与立绘 (character.PastelGirl) · 置信度 0.9
+    description: "原图画风优先：保媒介与身份，提升光影张力；可加风格内叙事点缀 | 提示词改动区间 30% 到 80%：必须拉开，媒介与身份留下 | 糖的两端是光洁桃扭，箭只朝一 · 自动归类至 prop (prop.ValentineMerge) · 置信度 0.893"
     paths:
-      - "assets/character/pastelgirl/**"
+      - "assets/prop/valentinemerge/**"
     aliases:
-      - PastelGirl
+      - ValentineMerge
     entities: []
     palette: []
     specs:
-      resolution: 1152x864
-      allowed_resolutions:
-        - 1152x864
-        - 720x580
-      aspect_ratio: "4:3"
-      alpha_required: false
-      safe_margin_px: 16
-      max_size_kb: 1024
-    parent: brand.WorldStyle
-    inherits: brand.WorldStyle
-  character.SunlitGirl:
-    title: 角色与立绘·SunlitGirl
-    category: character
-    status: active
-    description: 窗边逆光斑驳树影黑耳机白猫发夹少女特写肖像 · 自动归类至 角色与立绘 (character.SunlitGirl) · 置信度 0.92
-    paths:
-      - "assets/character/sunlitgirl/**"
-    aliases:
-      - SunlitGirl
-    entities: []
-    palette: []
-    specs:
-      resolution: 864x1152
-      allowed_resolutions:
-        - 864x1152
-        - 547x720
-        - 1024x1024
-      aspect_ratio: "3:4"
-      alpha_required: false
-      safe_margin_px: 16
-      max_size_kb: 1024
-  scene.celestial_night_city:
-    title: 场景与原画·celestial_night_city (Watercolor)
-    category: scene
-    status: active
-    description: "仙侠水墨夜色风：锁视角与姿态，仅微调局部笔触 | Pad-locked near duplicate of reference night city key a · 自动归类至 场景与原画 (scene.celestial_night_city) · 置信度 0.808"
-    paths:
-      - "assets/scene/celestial_night_city/**"
-    aliases:
-      - celestial_night_city
-    entities: []
-    palette: []
-    specs:
-      resolution: 720x1280
-      allowed_resolutions:
-        - 720x1280
-        - 405x720
-      aspect_ratio: "9:16"
+      resolution: 1024x1024
       alpha_required: false
       max_size_kb: 2048
-    parent: scene.CelestialCity
-    inherits: scene.CelestialCity
-  ui.Audit:
-    title: 界面与九宫格·Audit
-    category: ui
-    status: candidate
-    description: icon preview · 自动归类至 界面与九宫格 (ui.Audit) · 置信度 0.643
-    paths:
-      - "assets/ui/audit/**"
-    aliases:
-      - Audit
-    entities: []
-    palette: []
-    specs:
-      resolution: 512x512
-      allowed_resolutions:
-        - 512x512
-        - 256x256
-        - 128x128
-      alpha_required: true
-      nine_slice:
-        - 48
-        - 48
-        - 48
-        - 48
-      safe_margin_px: 4
-      max_size_kb: 512

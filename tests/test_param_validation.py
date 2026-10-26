@@ -265,6 +265,12 @@ class TestGateFixes(unittest.TestCase):
         self.assertEqual(rec["max_prompt_delta_ratio"], 0.85)
         self.assertEqual(rec["max_prompt_delta_vs_first"], 0.95)
         self.assertIsNone(low.get("max_prompt_delta_vs_first"))
+        self.assertIsNone(low.get("min_prompt_delta_ratio"))
+        self.assertEqual(low["max_prompt_delta_ratio"], 0.20)
+        self.assertIsNone(med.get("min_prompt_delta_ratio"))
+        self.assertIsNone(high.get("min_prompt_delta_ratio"))
+        self.assertIsNone(rec.get("min_prompt_delta_ratio"))
+        self.assertEqual(rec["max_prompt_delta_ratio"], 0.85)
         # medium: small pose/layout OK; still lock viewpoint + no full recompose
         self.assertTrue(med["allow_action_pose_change"])
         self.assertTrue(med["allow_layout_change"])
@@ -280,6 +286,110 @@ class TestGateFixes(unittest.TestCase):
         self.assertEqual(int(med["min_rounds_before_stop"]), 1)
         self.assertGreaterEqual(int(high["min_rounds_before_stop"]), 2)
         self.assertGreaterEqual(int(rec["min_rounds_before_stop"]), 2)
+
+    def test_continuation_pad_keeps_one_fix_and_accepts_previous_plate(self) -> None:
+        from skills_kit.prompt_scale import compose_continuation_prompt
+        import shutil
+
+        text = compose_continuation_prompt("把右手五指画清楚", get_converge_scale_profile("high"))
+        self.assertIn("目前分数最高", text)
+        self.assertIn("只改这一处：把右手五指画清楚", text)
+        self.assertIn("没点名的地方保持垫图", text)
+        self.assertNotIn("体积光", text)
+        rec = compose_continuation_prompt(
+            "把梁画清楚",
+            get_converge_scale_profile("recompose", recompose_dir="改为街巷仰视"),
+        )
+        self.assertIn("改为街巷仰视", rec)
+        self.assertIn("机位保持指定方向", rec)
+
+        src = ROOT / "docs" / "showcase" / "default_round" / "images" / "night_city_ref.png"
+        if not src.is_file():
+            self.skipTest("night city plate missing")
+        with tempfile.TemporaryDirectory() as tmp:
+            plate = Path(tmp) / "round1_plate.png"
+            shutil.copyfile(src, plate)
+            with self.assertRaises(ValueError):
+                validate_case_generation_params(
+                    "Case 01",
+                    aspect_ratio="9:16",
+                    reference_image_paths=[str(plate)],
+                    root=ROOT,
+                )
+            ok = validate_case_generation_params(
+                "Case 01",
+                aspect_ratio="9:16",
+                reference_image_paths=[str(plate)],
+                root=ROOT,
+                continuation_pad=True,
+            )
+            self.assertTrue(ok["validation_passed"])
+            self.assertTrue(any("目前最高分的成图" in w for w in ok["warnings"]))
+
+    def test_best_plate_skips_a_later_worse_round(self) -> None:
+        from skills_kit.converge import _best_plate
+
+        src = ROOT / "docs" / "showcase" / "default_round" / "images" / "night_city_ref.png"
+        if not src.is_file():
+            self.skipTest("night city plate missing")
+        image, fix, number = _best_plate(
+            [
+                {"round": 1, "image": str(src), "score": 8.4, "next_fix": "修手指"},
+                {"round": 2, "image": str(src), "score": 7.1, "next_fix": "重画全身"},
+            ],
+            3,
+            ROOT,
+        )
+        self.assertEqual(number, 1)
+        self.assertEqual(fix, "修手指")
+        self.assertTrue(image.endswith("night_city_ref.png"))
+
+    def test_next_waits_until_the_open_round_is_judged(self) -> None:
+        import contextlib
+        import io
+        from skills_kit.converge import cmd_converge
+
+        src = ROOT / "docs" / "showcase" / "default_round" / "images" / "night_city_ref.png"
+        if not src.is_file():
+            self.skipTest("night city plate missing")
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            sess_dir = root / ".memory-art" / "converge"
+            sess_dir.mkdir(parents=True)
+            (sess_dir / "latest.json").write_text(
+                json.dumps({
+                    "scale": "low",
+                    "rounds": [
+                        {"round": 1, "image": str(src), "score": 8.4, "judged": True, "next_fix": "修瓦当"},
+                        {"round": 2, "image": str(src), "score": None, "judged": False},
+                    ],
+                }),
+                encoding="utf-8",
+            )
+            buf = io.StringIO()
+            with contextlib.redirect_stdout(buf):
+                rc = cmd_converge(root, {}, "next", session_id="latest")
+            self.assertEqual(rc, 0)
+            self.assertIn("第 2 轮还没审图", buf.getvalue())
+            (sess_dir / "latest.json").write_text(
+                json.dumps({
+                    "scale": "low",
+                    "rounds": [
+                        {"round": 1, "image": str(src), "score": 8.4, "judged": True, "next_fix": "修瓦当"},
+                        {"round": 2, "image": str(src), "score": 7.2, "judged": True, "next_fix": "重画屋顶"},
+                    ],
+                }),
+                encoding="utf-8",
+            )
+            buf = io.StringIO()
+            with contextlib.redirect_stdout(buf):
+                rc = cmd_converge(root, {}, "next", session_id="latest")
+            text = buf.getvalue()
+            self.assertEqual(rc, 0)
+            self.assertIn("下一轮第 3 轮", text)
+            self.assertIn("第 1 轮", text)
+            self.assertIn("修瓦当", text)
+            self.assertNotIn("重画屋顶", text)
 
     def test_high_and_recompose_refuse_round1_stop(self) -> None:
         dims = "构图9.8/光影9.9/透视9.7/质感9.8/风格9.8"

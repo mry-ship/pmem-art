@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "updated_at": "2026-10-26 23:11:48 UTC+8",
+  "preferred_lighting": [],
+  "preferred_composition": [],
+  "preferred_line_weight": [],
+  "preferred_color_temperature": [],
+  "banned_habits": [],
+  "keep_phrases": [],
+  "reject_phrases": [],
+  "style_notes": [],
+  "signal_counts": {
+    "keeps": 0,
+    "rejects": 0,
+    "style_fixes": 0,
+    "sessions": 2
+  },
+  "project_id": "cursor-pmem-art",
+  "project_name": "Cursor-Pmem-Art",
+  "layer_scope": "private"
+}

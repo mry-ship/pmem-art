@@ -1,0 +1,42 @@
+{
+  "ran_at": "2026-10-26 23:11:48 UTC+8",
+  "reflections_scanned": 2,
+  "avg_winner_score": 8.28,
+  "avg_rounds": 8.0,
+  "top_recurring_defects": [
+    {
+      "text": "箭变成两边羽毛，糖纸起皱",
+      "count": 1
+    },
+    {
+      "text": "箭又变瘦，四周空",
+      "count": 1
+    },
+    {
+      "text": "箭改成横条，上下仍空，不如斜向那张",
+      "count": 1
+    },
+    {
+      "text": "中间有一档比左边更小，末档变成叠在一起的一组，且和左边同类挨着；prompt 相对第一轮改动 62% 超过累计上限 60",
+      "count": 1
+    },
+    {
+      "text": "有两对同类挨在一起，有两档没有比左边更大",
+      "count": 1
+    },
+    {
+      "text": "末尾两件同类挨着，前段有一档没有比左边更大，中间两件也是同类挨着；prompt 相对第一轮改动 61% 超过累计上限 6",
+      "count": 1
+    }
+  ],
+  "recipe_strengthen": [
+    {
+      "module": "prop.KitchenMerge",
+      "id": "CHAT20261026180738276RECIPE",
+      "summary": "[收敛胜出 7.70分] 水彩绘本厨房炊具八级合成梯。一格一件，低档略小高档略大，同类不挨着，末档不撑成场景。 — 水彩还在，末档是一件，整体从左到右变大",
+      "hint": "下次 warm-start 优先注入本条 recipe"
+    }
+  ],
+  "taste_changes": [],
+  "taste_path": ".memory-art\\_profile\\taste.json"
+}

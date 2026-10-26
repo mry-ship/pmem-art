@@ -1,0 +1,146 @@
+{
+  "pastel_sketch_ref.png": {
+    "score": 8.5,
+    "reason": "蜡笔般的笔触和鲜亮的红衣让画面温暖又有活力，人物神态也很讨喜，但手指与鞋子的形态稍显含混，离我愿意直接收下的成品还差一点。",
+    "ok": true,
+    "model": "gpt-6-astra"
+  },
+  "ishtar_canyon_low.png": {
+    "score": 8.7,
+    "reason": "倾斜俯视的空间和温暖斑驳的光线让这座旧城角落很有故事感，建筑细节也耐看，只是中央暗部略显拥挤，视线落点不够鲜明。",
+    "ok": true,
+    "model": "gpt-6-astra"
+  },
+  "ishtar_canyon_ref.png": {
+    "score": 8.3,
+    "reason": "倾斜俯视的空间和暖黄灰绿的光色营造出很迷人的古旧奇幻感，但中央暗部的结构与装饰略显纠缠，离让我毫不犹豫收下的成品还差一点清晰与凝练。",
+    "ok": true,
+    "model": "gpt-6-astra"
+  },
+  "sunlit_portrait_ref.png": {
+    "score": 8.7,
+    "reason": "暖色光影、细碎发丝和安静的神情让画面很有感染力，但贯穿脸部与衣服的明暗分界略显生硬，离我愿意直接收下的成品还差一点自然感。",
+    "ok": true,
+    "model": "gpt-6-astra"
+  },
+  "ishtar_canyon_high.png": {
+    "score": 8.7,
+    "reason": "巨龙与红披风人物的对峙在冷暖光影和宏大废墟中很有震撼力，但画面倾斜较猛、龙身与建筑局部混在一起，让我觉得离愿意直接收下的成品还差一点清晰与从容。",
+    "ok": true,
+    "model": "gpt-6-astra"
+  },
+  "night_city_ref.png": {
+    "score": 8.6,
+    "reason": "屋脊上的孤影与延伸至天际的灯火营造出极有吸引力的宏大幽暗意境，但远处城池的纹理略显重复、暗部有些糊成一片，离我愿意直接收下的成品还差一点清晰而独特的刻画。",
+    "ok": true,
+    "model": "gpt-6-astra"
+  },
+  "night_city_low.png": {
+    "score": 8.7,
+    "reason": "孤身立于屋脊俯瞰万家灯火的画面很有震撼力，冷雾与暖光也营造出迷人的武侠气息，但远处建筑的重复堆叠和略显突兀的弧形天际让它离完全可信的成品还差一点。",
+    "ok": true,
+    "model": "gpt-6-astra"
+  },
+  "ishtar_canyon_recompose.png": {
+    "score": 9.1,
+    "reason": "暖金色古城、深谷石桥与红披风旅人共同营造出令人愿意驻足的冒险世界，整体已很像成品，只是远方城堡和飞龙略显套路，少了一点独属于这张图的惊喜。",
+    "ok": true,
+    "model": "gpt-6-astra"
+  },
+  "ishtar_canyon_medium.png": {
+    "score": 8.6,
+    "reason": "暖金色光线与层叠旧建筑营造出很有吸引力的奇幻街巷，手绘质感也很完整，但大幅倾斜的视角和中央拥挤的细节让视线略难落定。",
+    "ok": true,
+    "model": "gpt-6-astra"
+  },
+  "ishtar_canyon_bold.png": {
+    "score": 8.8,
+    "reason": "红蓝撞色与倾斜楼阁把孤身迎龙的气势推得很足，版画质感也很完整，只是密集的斜线和刮痕稍微淹没了人物与龙的对峙焦点。",
+    "ok": true,
+    "model": "gpt-6-astra"
+  },
+  "night_city_high.png": {
+    "score": 8.7,
+    "reason": "灯火铺展的古城与屋脊上的孤身人物营造出很强的仙侠史诗感，但建筑和光点过于密集重复，蓝色光带也略显刻意，离我愿意直接收下的成品还差一点克制。",
+    "ok": true,
+    "model": "gpt-6-astra"
+  },
+  "night_city_recompose.png": {
+    "score": 9.1,
+    "reason": "桥洞框住层层灯火与水上远城，人物背影让夜游的故事感自然成立，整体已很有成品气质，只是前景暗部略显拥塞、远处建筑纹理稍碎。",
+    "ok": true,
+    "model": "gpt-6-astra"
+  },
+  "night_city_bold.png": {
+    "score": 8.7,
+    "reason": "霓虹古城的纵深与屋顶人物剪影营造出很强的电影感，但满幅高亮细节略显拥挤，让本该最抓人的瞬间少了一点余韵。",
+    "ok": true,
+    "model": "gpt-6-astra"
+  },
+  "pastel_sketch_medium.png": {
+    "score": 8.6,
+    "reason": "蜡笔般的笔触和暖光把女孩的神情衬得鲜活温柔，整体很有感染力，但双手略显生硬、右侧鞋子被裁得仓促，让我还不愿直接当作成品收下。",
+    "ok": true,
+    "model": "gpt-6-astra"
+  },
+  "pastel_sketch_low.png": {
+    "score": 8.3,
+    "reason": "蜡笔笔触和鲜亮红衣让人物显得温暖生动，整体很有感染力，但双手与鞋子的形体略显含混、右侧裁切偏局促，离我愿意直接收下的成品还差一点。",
+    "ok": true,
+    "model": "gpt-6-astra"
+  },
+  "night_city_medium.png": {
+    "score": 8.8,
+    "reason": "灯火长街贯穿雾中巨城，屋脊上的孤身人物让画面有了鲜明的故事感，但远处建筑与光点过于重复密集，略削弱了成品应有的自然与精致。",
+    "ok": true,
+    "model": "gpt-6-astra"
+  },
+  "pastel_sketch_bold.png": {
+    "score": 8.3,
+    "reason": "荧光粉蓝与粗黑线条形成鲜明又完整的波普气质，人物神态讨喜，但双手和鞋子的形体略显生硬，右上角的杂色也让成品感打了折扣。",
+    "ok": true,
+    "model": "gpt-6-astra"
+  },
+  "pastel_sketch_high.png": {
+    "score": 8.8,
+    "reason": "夕阳般的暖光、鲜明的红衣与蜡笔笔触让画面温柔又有生命力，已经很接近我愿意收下的成品，只是双手和鞋子的形体略显含混。",
+    "ok": true,
+    "model": "gpt-6-astra"
+  },
+  "sunlit_portrait_low.png": {
+    "score": 9.1,
+    "reason": "夕阳切过脸庞的光影与细密发丝营造出很动人的静谧感，整体已很接近愿意收下的成品，只是面部略显柔滑、表情稍欠独特性。",
+    "ok": true,
+    "model": "gpt-6-astra"
+  },
+  "sunlit_portrait_high.png": {
+    "score": 8.8,
+    "reason": "夕阳穿过发丝的光感与安静的神情很动人，整体已接近我愿意收下的成品，但满幅金光、浮尘和做旧边框稍显用力，削弱了人物本身的余韵。",
+    "ok": true,
+    "model": "gpt-6-astra"
+  },
+  "sunlit_portrait_bold.png": {
+    "score": 8.8,
+    "reason": "青绿与暖黄的光影把人物的清冷神情衬得很动人，整体已很像成品，只是脸部正中的明暗切分略显生硬，少了一点自然的余韵。",
+    "ok": true,
+    "model": "gpt-6-astra"
+  },
+  "sunlit_portrait_medium.png": {
+    "score": 8.8,
+    "reason": "夕阳穿过发丝的光感和安静的眼神很动人，整体已接近成品，但贯穿脸部到衣服的笔直明暗分界略显刻意，柔雾也稍微掩盖了细节。",
+    "ok": true,
+    "model": "gpt-6-astra"
+  },
+  "pastel_sketch_recompose.png": {
+    "score": 8.7,
+    "reason": "红衣少女与港湾落日相映得温暖动人，蜡笔般的笔触也很有感染力，但遍布全画的碎白纹理略显抢眼，手部与栏杆交接处还不够自然。",
+    "ok": true,
+    "model": "gpt-6-astra"
+  },
+  "sunlit_portrait_recompose.png": {
+    "score": 9.1,
+    "reason": "暖金色阳光、蓬松发丝和花草环绕的绘画场景营造出很完整的静谧感，已经接近可直接收下的成品，只是面部略显蜡质、整体金黄稍满，让人物少了一点鲜活的呼吸感。",
+    "ok": true,
+    "model": "gpt-6-astra"
+  }
+}

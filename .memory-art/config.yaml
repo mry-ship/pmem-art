@@ -1,14 +1,14 @@
-# pmem-art 项目级美术记忆与管线配置（随版本库提交）
+# pmem-art config.yaml — 挂载式美术记忆生命周期配置
 schema_version: 1
 project:
-  name: "Project-Celadon (东方青瓷星盘幻想)"
-  art_style: "东方秘色青瓷 × 黄铜星盘幻想（厚涂半赛璐珞 Cel-Shaded Painting）"
-  color_space: "sRGB"
-  engine: "Unity 2022 LTS (URP 2D/3D Hybrid)"
-  lifecycle_mode: "mature"
+  name: Cursor-Pmem-Art
+  art_style: ""
+  color_space: sRGB
+  engine: ""
+  lifecycle_mode: young
 vcs: auto
 gate:
-  mode: block
+  mode: warn
   auto_validate_on_save: true
   stale_check:
     hash: true
@@ -16,8 +16,8 @@ gate:
     alpha: true
     png_metadata: true
   skip_markers:
-    - "跳过美术记忆"
-    - "skip-art-memory"
+    - 跳过美术记忆
+    - skip-art-memory
 write:
   default_status: active
   require_visual_anchor: true
@@ -30,11 +30,13 @@ bootstrap:
   candidate_min_files: 1
   never_auto_move: true
   scaffold_dirs: true
-  confirmed: true
+  confirmed: false
   last_sync_at: null
-  auto_place: false
+  auto_place: true
 classify:
   auto_add_modules: true
+  max_module_depth: 4
+  max_inherits_depth: 4
   low_confidence_threshold: 0.55
   high_confidence_threshold: 0.78
   unknown_domain: misc
@@ -57,14 +59,13 @@ converge:
     medium: 9.6
     high: 9.6
     recompose: 9.6
-# 独立视觉裁判：填了 key（或环境变量）则 converge judge 调真视觉模型；留空则 Agent 自评
 vlm_judge:
-  enabled: auto          # auto=有 key 就用；always=同 auto（无 key 仍回退自评）；never=强制自评
-  provider: openai       # openai | openai_compatible | anthropic
-  api_key: ""            # 不建议写进仓库；优先用环境变量或 .memory-art/vlm_judge.local.yaml
+  enabled: auto
+  provider: openai
+  api_key: ""
   api_key_env: PMEM_VLM_API_KEY
-  base_url: ""           # 兼容中转时填写，如 https://api.openai.com/v1
-  model: ""              # 默认 openai→gpt-4o，anthropic→claude-sonnet-4-20250514
+  base_url: ""
+  model: ""
   timeout_sec: 90
-  on_error: fallback     # fallback=失败回退 Agent 自评；fail=审图失败不给分
+  on_error: fallback
   write_sidecar: true

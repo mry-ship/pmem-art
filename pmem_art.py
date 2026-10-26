@@ -371,6 +371,121 @@ def inspect_png(path: Path) -> dict[str, Any]:
         "data_uri": b64_uri,
     }
 
+
+def _paeth(a: int, b: int, c: int) -> int:
+    p = a + b - c
+    pa, pb, pc = abs(p - a), abs(p - b), abs(p - c)
+    if pa <= pb and pa <= pc:
+        return a
+    if pb <= pc:
+        return b
+    return c
+
+
+def _png_corner_samples(raw: bytes) -> dict[str, Any] | None:
+    """Sample the four corners of an 8-bit RGB or RGBA PNG. None if this is not a PNG."""
+    if raw[:8] != b"\x89PNG\r\n\x1a\n":
+        return None
+    pos = 8
+    width = height = bit_depth = color_type = 0
+    idat = b""
+    while pos + 8 <= len(raw):
+        length = struct.unpack(">I", raw[pos:pos + 4])[0]
+        chunk_type = raw[pos + 4:pos + 8]
+        chunk_data = raw[pos + 8:pos + 8 + length]
+        pos += 12 + length
+        if chunk_type == b"IHDR" and len(chunk_data) >= 10:
+            width, height, bit_depth, color_type = struct.unpack(">IIBB", chunk_data[:10])
+        elif chunk_type == b"IDAT":
+            idat += chunk_data
+        elif chunk_type == b"IEND":
+            break
+    if bit_depth != 8 or color_type not in (2, 6) or not idat or width < 1 or height < 1:
+        return {"width": width, "height": height, "sampled": False, "corners": []}
+    channels = 4 if color_type == 6 else 3
+    stride = width * channels
+    try:
+        inflated = zlib.decompress(idat)
+    except zlib.error:
+        return {"width": width, "height": height, "sampled": False, "corners": []}
+    if len(inflated) < height * (stride + 1):
+        return {"width": width, "height": height, "sampled": False, "corners": []}
+    rows: list[bytearray] = []
+    i = 0
+    prev = bytearray(stride)
+    for _y in range(height):
+        filt = inflated[i]
+        i += 1
+        row = bytearray(inflated[i:i + stride])
+        i += stride
+        if filt == 1:
+            for x in range(stride):
+                left = row[x - channels] if x >= channels else 0
+                row[x] = (row[x] + left) & 255
+        elif filt == 2:
+            for x in range(stride):
+                row[x] = (row[x] + prev[x]) & 255
+        elif filt == 3:
+            for x in range(stride):
+                left = row[x - channels] if x >= channels else 0
+                row[x] = (row[x] + ((left + prev[x]) // 2)) & 255
+        elif filt == 4:
+            for x in range(stride):
+                a = row[x - channels] if x >= channels else 0
+                b = prev[x]
+                c = prev[x - channels] if x >= channels else 0
+                row[x] = (row[x] + _paeth(a, b, c)) & 255
+        elif filt != 0:
+            return {"width": width, "height": height, "sampled": False, "corners": []}
+        prev = row
+        rows.append(row)
+
+    def pix(x: int, y: int) -> tuple[int, int, int, int]:
+        o = x * channels
+        row = rows[y]
+        alpha = row[o + 3] if channels == 4 else 255
+        return (row[o], row[o + 1], row[o + 2], alpha)
+
+    corners = [pix(0, 0), pix(width - 1, 0), pix(0, height - 1), pix(width - 1, height - 1)]
+    return {"width": width, "height": height, "sampled": True, "corners": corners}
+
+
+def cmd_ref_read(path: str) -> int:
+    """Tell the prompt writer what the reference file actually contains, before any style words are invented."""
+    file_path = Path(path)
+    if not file_path.is_file():
+        print(f"找不到参考图：{path}")
+        return 1
+    raw = file_path.read_bytes()
+    info = inspect_png(file_path)
+    print(f"参考图：{file_path.name}")
+    if info.get("resolution"):
+        print(f"尺寸：{info['resolution']}  模式：{info.get('mode', '未知')}")
+    samples = _png_corner_samples(raw) if raw[:8] == b"\x89PNG\r\n\x1a\n" else None
+    if samples and samples.get("sampled"):
+        corners = samples["corners"]
+        clear = sum(1 for _r, _g, _b, a in corners if a < 16)
+        if clear >= 3:
+            print("底：透明。四角没有颜色。")
+            print("提示词里不要写黑底、深底、底板。用一块浅的空底放下物件，这块浅底不是风格。")
+        else:
+            opaque = [(r, g, b) for r, g, b, a in corners if a >= 200]
+            if opaque:
+                r = sum(c[0] for c in opaque) // len(opaque)
+                g = sum(c[1] for c in opaque) // len(opaque)
+                b = sum(c[2] for c in opaque) // len(opaque)
+                print(f"底：不透明。四角大约 #{r:02X}{g:02X}{b:02X}。出图用这个底，不要换成别的。")
+            else:
+                print("底：四角读到了，但不是一整块实底。先看图再写底，不要猜成黑色。")
+    elif info.get("mode") == "RGB" and not info.get("has_alpha"):
+        print("底：这个文件没有透明通道。先看四角的真实颜色再写底，不要把预览里的黑当成底。")
+    else:
+        print("底：四角没有读出来。先看图再写底，不要猜成黑色。")
+    print("表面：只写眼睛在这张图上看见的那一句。小高光不要写成油亮、光面、发亮。表面光洁，也不要改成毛毡、纸纹或粗颗粒。")
+    print("要画别的物件时，不要把这张参考图垫进生图，免得参考图里的物件被画上去。")
+    return 0
+
+
 def _parse_entry_md_file(
     md_file: Path,
     rel_base: Path,
@@ -1246,6 +1361,9 @@ def main() -> int:
     p_note.add_argument("--verbose", "-v", action="store_true")
     p_note.add_argument("--silent", action="store_true", default=True)
 
+    p_ref = sub.add_parser("ref-read", help="读参考图的底：透明就不要写成黑底；表面词跟看见的走")
+    p_ref.add_argument("path", help="参考图路径")
+
     p_skills = sub.add_parser("skills", help="安装/刷新或列出内置的 Cursor / Claude Code / Codex 美术技能 (/pmem-draw 等)")
     p_skills.add_argument("--install", action="store_true", help="安装或刷新全部技能文件到 .cursor / .claude / .agents")
     p_skills.add_argument("--list", action="store_true", help="列出所有内置美术技能与触发方式")
@@ -1275,8 +1393,8 @@ def main() -> int:
     p_conv = sub.add_parser("converge", help="闭环收敛（Warm-Start + 严格两步分离：converge generate 仅生图 -> converge judge 独立VLM审图 · 按档位目标阈值动态停机）")
     p_conv.add_argument(
         "action",
-        choices=("start", "generate", "judge", "step", "round", "finish", "table", "status", "warm", "lock"),
-        help="子操作（generate=仅生图；judge=独立审图；lock=画师口头放宽/收紧某维锁定%%）",
+        choices=("start", "generate", "judge", "next", "step", "round", "finish", "table", "status", "warm", "lock"),
+        help="子操作（next=出图前打印最高分垫图；generate=仅登记生图；judge=独立审图）",
     )
     p_conv.add_argument("--session", "--id", dest="session", default="latest", help="会话 ID（默认 latest，支持 --id 或 --session）")
     p_conv.add_argument("--goal", "--brief", "-g", dest="goal", default="", help="本次生图目标描述（支持 --goal 或 --brief）")
@@ -1406,6 +1524,8 @@ def main() -> int:
             root, data, src=args.src, module=args.module, role=args.role,
             apply=args.apply, plan_all_orphans=args.plan_orphans,
         )
+    if args.command == "ref-read":
+        return cmd_ref_read(args.path)
     if args.command == "classify":
         from classify import cmd_classify
         prompt = args.prompt

@@ -1,124 +1,9 @@
 {
   "version": 1,
+  "layer_scope": "private",
+  "project_id": "cursor-pmem-art",
+  "project_name": "Cursor-Pmem-Art",
   "cards": {
-    "light-rim": {
-      "id": "light-rim",
-      "title": "侧逆光",
-      "body": "轮廓分离主体与背景，高光条沿边缘走。",
-      "tags": [
-        "lighting"
-      ],
-      "source": "converge_start",
-      "updated_at": "2026-10-25 00:04:01 UTC+8",
-      "layer_scope": "private",
-      "promoted_to_shared": true,
-      "project_id": "pmem-art",
-      "project_name": "Project-Celadon (东方青瓷星盘幻想)"
-    },
-    "palette-70-20-10": {
-      "id": "palette-70-20-10",
-      "title": "色板 70/20/10",
-      "body": "主色70%、辅色20%、点缀10%；点缀勿抢主体。",
-      "tags": [
-        "brand",
-        "color_palette"
-      ],
-      "source": "learn_accept",
-      "updated_at": "2026-10-25 00:04:01 UTC+8",
-      "layer_scope": "private",
-      "promoted_to_shared": true,
-      "project_id": "pmem-art",
-      "project_name": "Project-Celadon (东方青瓷星盘幻想)"
-    },
-    "anatomy-head-ratio": {
-      "id": "anatomy-head-ratio",
-      "title": "头身比尺规",
-      "body": "立绘常用 7~8 头身；Q版 2~3 头身。草图阶段先标刻度。",
-      "tags": [
-        "anatomy",
-        "character"
-      ],
-      "source": "learn_accept",
-      "updated_at": "2026-10-25 00:04:01 UTC+8",
-      "layer_scope": "private",
-      "promoted_to_shared": true,
-      "project_id": "pmem-art",
-      "project_name": "Project-Celadon (东方青瓷星盘幻想)"
-    },
-    "eye-hierarchy": {
-      "id": "eye-hierarchy",
-      "title": "五官主次",
-      "body": "先定眼位与眉弓，再嘴鼻；义眼/异色瞳要作为识别锚点锁定。",
-      "tags": [
-        "anatomy",
-        "character"
-      ],
-      "source": "learn_accept",
-      "updated_at": "2026-10-25 00:04:01 UTC+8",
-      "layer_scope": "private",
-      "promoted_to_shared": true,
-      "project_id": "pmem-art",
-      "project_name": "Project-Celadon (东方青瓷星盘幻想)"
-    },
-    "atmospheric-perspective": {
-      "id": "atmospheric-perspective",
-      "title": "大气透视",
-      "body": "远景降对比降饱和，近景保持边缘清晰，增强纵深。",
-      "tags": [
-        "scene",
-        "lighting"
-      ],
-      "source": "learn_accept",
-      "updated_at": "2026-10-25 00:04:01 UTC+8",
-      "layer_scope": "private",
-      "promoted_to_shared": true,
-      "project_id": "pmem-art",
-      "project_name": "Project-Celadon (东方青瓷星盘幻想)"
-    },
-    "golden-hour-scene": {
-      "id": "golden-hour-scene",
-      "title": "黄金时刻场景光",
-      "body": "低角度暖光 + 长影；避开正午顶光死白。",
-      "tags": [
-        "scene",
-        "lighting"
-      ],
-      "source": "learn_accept",
-      "updated_at": "2026-10-25 00:04:01 UTC+8",
-      "layer_scope": "private",
-      "promoted_to_shared": true,
-      "project_id": "pmem-art",
-      "project_name": "Project-Celadon (东方青瓷星盘幻想)"
-    },
-    "nine-slice-basics": {
-      "id": "nine-slice-basics",
-      "title": "九宫格基础 (9-Slice)",
-      "body": "四角 48px 固定、四边单向拉伸、中心双向纯色拉伸；中心区禁止复杂圆盘花纹，外留 4px 透明安全边。",
-      "tags": [
-        "ui",
-        "ui_9slice"
-      ],
-      "source": "seed_atlas",
-      "updated_at": "2026-10-25 00:32:15 UTC+8",
-      "layer_scope": "private",
-      "promoted_to_shared": true,
-      "project_id": "pmem-art",
-      "project_name": "Project-Celadon (东方青瓷星盘幻想)"
-    },
-    "readability-silhouette": {
-      "id": "readability-silhouette",
-      "title": "特效可读剪影与预乘Alpha",
-      "body": "序列帧每帧剪影可辨；白芯→鎏金→青瓷残影三段色阶，Premultiplied Alpha 严禁黑边。",
-      "tags": [
-        "vfx",
-        "alpha"
-      ],
-      "source": "seed_atlas",
-      "updated_at": "2026-10-25 00:32:15 UTC+8",
-      "layer_scope": "private",
-      "project_id": "pmem-art",
-      "project_name": "Project-Celadon (东方青瓷星盘幻想)"
-    },
     "tech-watercolor": {
       "id": "tech-watercolor",
       "title": "水彩渲染",
@@ -127,48 +12,14 @@
         "style",
         "material"
       ],
-      "source": "converge_start",
+      "source": "converge_finish",
       "layer_scope": "private",
-      "project_id": "pmem-art",
-      "project_name": "Project-Celadon (东方青瓷星盘幻想)",
+      "project_id": "cursor-pmem-art",
+      "project_name": "Cursor-Pmem-Art",
       "universal": false,
       "promoted_to_shared": false,
-      "updated_at": "2026-10-25 02:58:01 UTC+8"
-    },
-    "tech-painterly": {
-      "id": "tech-painterly",
-      "title": "厚涂笔触",
-      "body": "可见笔触方向跟随形体，暗部透气勿脏。",
-      "tags": [
-        "style",
-        "material"
-      ],
-      "source": "converge_round",
-      "layer_scope": "private",
-      "project_id": "pmem-art",
-      "project_name": "Project-Celadon (东方青瓷星盘幻想)",
-      "universal": false,
-      "promoted_to_shared": false,
-      "updated_at": "2026-10-25 02:58:01 UTC+8"
-    },
-    "tech-pixel": {
-      "id": "tech-pixel",
-      "title": "像素艺术",
-      "body": "锁调色板与像素网格，禁止糊边抗锯齿乱入。",
-      "tags": [
-        "style"
-      ],
-      "source": "feedback",
-      "layer_scope": "private",
-      "project_id": "pmem-art",
-      "project_name": "Project-Celadon (东方青瓷星盘幻想)",
-      "universal": false,
-      "promoted_to_shared": false,
-      "updated_at": "2026-10-26 03:26:15 UTC+8"
+      "updated_at": "2026-10-26 18:07:37 UTC+8"
     }
   },
-  "updated_at": "2026-10-26 03:26:15 UTC+8",
-  "layer_scope": "private",
-  "project_id": "pmem-art",
-  "project_name": "Project-Celadon (东方青瓷星盘幻想)"
+  "updated_at": "2026-10-26 18:07:37 UTC+8"
 }

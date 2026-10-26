@@ -1,12 +1,7 @@
 {
   "sessions_tipped": {
-    "converge_finish:aether_cmp_01": "2026-10-25 02:58:01 UTC+8",
-    "converge_finish:aether_cmp_02": "2026-10-25 02:58:01 UTC+8",
-    "converge_finish:aether_cmp_03": "2026-10-25 02:58:02 UTC+8",
-    "converge_finish:skill_run_01_low": "2026-10-25 18:00:33 UTC+8",
-    "feedback:fb-visual_correction": "2026-10-25 23:36:24 UTC+8",
-    "converge_finish:latest": "2026-10-26 01:15:43 UTC+8",
-    "converge_finish:e2e_cyber_cont": "2026-10-26 01:43:29 UTC+8"
+    "converge_finish:kitchen-wc": "2026-10-26 18:07:38 UTC+8",
+    "converge_finish:merge-val-heart": "2026-10-26 23:11:48 UTC+8"
   },
-  "updated_at": "2026-10-26 01:43:29 UTC+8"
+  "updated_at": "2026-10-26 23:11:48 UTC+8"
 }

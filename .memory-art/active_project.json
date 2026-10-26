@@ -1,13 +1,15 @@
 {
-  "project_id": "pmem-art",
-  "project_slug": "pmem-art",
-  "project_name": "Project-Celadon (东方青瓷星盘幻想)",
+  "project_id": "cursor-pmem-art",
+  "project_slug": "cursor-pmem-art",
+  "project_name": "Cursor-Pmem-Art",
   "layer_scope": "private",
-  "bound_root": "/Users/yanghu/Desktop/pmem-art",
-  "origin_root": "/Users/yanghu/Desktop/pmem-art",
-  "root_name": "pmem-art",
-  "library_dir": ".memory-art/projects/pmem-art",
-  "copied_from_project": "",
-  "created_at": "2026-10-25 01:33:57 UTC+8",
-  "updated_at": "2026-10-25 17:30:00 UTC+8"
+  "bound_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+  "origin_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+  "root_name": "Cursor-Pmem-Art",
+  "library_dir": ".memory-art/projects/cursor-pmem-art",
+  "copied_from_project": "pmem-art",
+  "copied_from_root": "/Users/yanghu/Desktop/pmem-art",
+  "auto_isolated_on_copy": true,
+  "created_at": "2026-10-26 18:01:04 UTC+8",
+  "updated_at": "2026-10-26 18:01:04 UTC+8"
 }

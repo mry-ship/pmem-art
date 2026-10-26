@@ -1,10 +1,10 @@
 {
-  "ran_at": "2026-10-26 03:26:15 UTC+8",
-  "source": "feedback",
-  "session_id": "fb-visual_correction",
-  "tip": null,
-  "tip_candidate": "「小提示」下次注意：无Key时主分是AgentAbs",
+  "ran_at": "2026-10-26 23:11:48 UTC+8",
+  "source": "converge_finish",
+  "session_id": "merge-val-heart",
+  "tip": "「小提示」下次注意：画风锁定",
+  "tip_candidate": "「小提示」下次注意：画风锁定",
   "taste_changes": [],
   "learn_queued": [],
-  "avg_winner_score": 9.38
+  "avg_winner_score": 8.28
 }

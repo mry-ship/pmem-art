@@ -34,7 +34,7 @@ CONVERGE_SCALE_PROFILES: dict[str, dict[str, Any]] = {
         },
         # Retention: one pose/viewpoint lock + medium/identity. Do NOT stack "垫图一致性高" or coordinate DNA.
         "retention_set": ("viewpoint_or_pose", "style_medium", "identity"),
-        "next_fix_budget": "conservative (~15% prompt delta, <=20% vs first)",
+        "next_fix_budget": "第 2 轮起垫目前最高分的那张，只补它没过的那一处（提示词改动仍 ≤20%）",
         "max_prompt_delta_ratio": 0.20,
         "allow_recompose": False,
         "allow_viewpoint_change": False,
@@ -72,7 +72,7 @@ CONVERGE_SCALE_PROFILES: dict[str, dict[str, Any]] = {
         },
         # Keep viewpoint + medium + identity; allow small pose / local layout / lighting polish.
         "retention_set": ("viewpoint_frame", "style_medium", "identity"),
-        "next_fix_budget": "moderate (~40% prompt delta, 35%–45%; cumulative <=60% vs first)",
+        "next_fix_budget": "第 2 轮起垫目前最高分的那张，只补它没过的那一处（提示词改动仍 ≤40%）",
         "max_prompt_delta_ratio": 0.40,
         "max_prompt_delta_vs_first": 0.60,
         "allow_recompose": False,
@@ -112,7 +112,7 @@ CONVERGE_SCALE_PROFILES: dict[str, dict[str, Any]] = {
         },
         # Only medium gene + identity — NOT original camera coordinates / 垫图一致性.
         "retention_set": ("style_medium", "identity"),
-        "next_fix_budget": "bold_overhaul (~75% prompt delta, 60%–80% / <=80% vs previous; cumulative <=90% vs first)",
+        "next_fix_budget": "第 1 轮可以拉开光影；之后垫目前最高分的那张，只补它没过的那一处（提示词改动仍 ≤80%）",
         "max_prompt_delta_ratio": 0.80,
         "max_prompt_delta_vs_first": 0.90,
         "allow_recompose": True,
@@ -148,7 +148,7 @@ CONVERGE_SCALE_PROFILES: dict[str, dict[str, Any]] = {
         },
         # Inherit brush/palette/identity; camera target = --recompose-dir, NOT the ref overhead/pose.
         "retention_set": ("style_medium", "identity", "recompose_dir_target"),
-        "next_fix_budget": "directed_recompose (~80% prompt delta, <=85%; cumulative <=95% vs first)",
+        "next_fix_budget": "第 1 轮落到指定机位；之后垫目前最高分的那张，只补它没过的那一处（提示词改动仍 ≤85%）",
         "max_prompt_delta_ratio": 0.85,
         "max_prompt_delta_vs_first": 0.95,
         "allow_recompose": True,
@@ -273,7 +273,7 @@ def _match_style_keywords(blob: str, *, allow_weak_sketch: bool) -> tuple[str, b
             True,
             ["ukiyoe_woodblock_line_and_layout (严禁改变木版画平涂墨线与构图布局)"],
         )
-    if any(k in b for k in ("植物", "玫瑰", "botanical", "rose")):
+    if any(k in b for k in ("植物志", "水彩植物", "botanical")):
         return (
             "古典水彩植物志",
             False,
@@ -361,6 +361,8 @@ def build_dynamic_prompt_directive(
         # v2 mid feel: lock camera; allow small pose / local layout + lighting polish.
         if no_sss:
             return f"{style_head}：保画风与机位，小幅姿态/局部布局；加强色块边界与材质可读性"
+        if mod_l.startswith("prop."):
+            return f"{style_head}：保画风与机位，表面那一句不动，只修没过的那一格"
         if any(k in blob for k in ("速写", "粉彩", "水彩", "浮世绘", "水墨", "线稿", "pastel", "sketch", "ukiyoe")):
             return f"{style_head}：保画风与机位，小幅姿态/局部布局；柔化光影与留白层次"
         # Painterly / film (incl. canyon thick-paint): short SSS cue; UI/pixel skipped above.
@@ -626,6 +628,31 @@ def _prompt_change_ratio(prev: str, curr: str, directive: str = "") -> float:
     if a == b:
         return 0.0
     return 1.0 - difflib.SequenceMatcher(None, a, b).ratio()
+
+
+def compose_continuation_prompt(fix: str, scale_prof: dict[str, Any]) -> str:
+    """Round 2+: the pad is the previous plate. Name one repair; do not restate the scene."""
+    scale = str(scale_prof.get("scale") or "")
+    directive = strip_affirmative_locks_from_prompt(
+        str(scale_prof.get("prompt_directive") or "").strip(),
+        scale=scale,
+    )
+    one = strip_affirmative_locks_from_prompt(
+        strip_redline_tags_from_generation_text(fix or "").strip(),
+        scale=scale,
+    )
+    if not one:
+        one = "只补这一张里还没到位的那一处"
+    direction = str(scale_prof.get("recompose_dir") or "").strip()
+    keep_camera = ""
+    if scale == "recompose" and direction:
+        keep_camera = f"机位保持指定方向：{direction}。"
+    edit = f"{keep_camera}垫图是目前分数最高的那张成图。只改这一处：{one}。没点名的地方保持垫图。"
+    ordered: list[str] = []
+    for part in (directive, edit):
+        if part and part not in ordered:
+            ordered.append(part)
+    return " | ".join(ordered)
 
 
 def compose_style_first_prompt(prompt: str, scale_prof: dict[str, Any]) -> str:

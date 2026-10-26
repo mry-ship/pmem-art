@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "layer_scope": "private",
+  "project_id": "cursor-pmem-art",
+  "project_name": "Cursor-Pmem-Art",
+  "cards": {
+    "tech-watercolor": {
+      "id": "tech-watercolor",
+      "title": "水彩渲染",
+      "body": "边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。",
+      "tags": [
+        "style",
+        "material"
+      ],
+      "source": "converge_finish",
+      "layer_scope": "private",
+      "project_id": "cursor-pmem-art",
+      "project_name": "Cursor-Pmem-Art",
+      "universal": false,
+      "promoted_to_shared": false,
+      "updated_at": "2026-10-26 18:07:37 UTC+8"
+    }
+  },
+  "updated_at": "2026-10-26 18:07:37 UTC+8"
+}

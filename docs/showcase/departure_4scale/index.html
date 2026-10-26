@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>四档偏离下限</title>
+<style>
+body { margin:0; background:#141414; color:#eee; font-family:"Segoe UI",sans-serif; }
+header { padding:24px 28px 8px; } h1 { font-size:22px; margin:0 0 8px; }
+p.note { color:#aaa; max-width:980px; line-height:1.5; }
+section { padding:8px 20px 28px; } h2 { font-size:16px; margin:12px 8px; }
+.row { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:10px; }
+.card { margin:0; background:#1e1e1e; border:1px solid #333; padding:8px; }
+.card.ref { border-color:#6a5a3a; } .card.go { border-color:#3d7a4a; }
+figcaption { display:flex; justify-content:space-between; font-size:12px; margin-bottom:6px; }
+figcaption b { font-size:18px; }
+img { width:100%; height:auto; display:block; background:#0e0e0e; }
+.line { font-size:12px; line-height:1.4; color:#ccc; }
+.err { color:#f0a0a0; font-size:12px; }
+</style></head><body>
+<header><h1>案例 01–04 · 四档可见偏离</h1>
+<p class="note">low 0.5–2.0，medium 2.0–4.5，high 4.5–7.5，区间首尾相接。recompose 看指定机位有没有落到画面上。每格最多 3 轮，偏离进了本档区间就停。右上角是相对原图的偏离分。落在区间 13/16。</p>
+</header>
+<section><h2>案例 01 · 仙侠不夜城</h2><div class="row"><figure class="card ref"><figcaption>原图</figcaption><img src="images/night_city_ref.png" alt="原图"></figure><figure class="card ">
+  <figcaption><span>low · 0.5–2.0</span><b>2.1</b></figcaption>
+  <img src="images/night_city_low_r2.png" alt="low · 0.5–2.0">
+  <p class="line">未进区间 · 第 2 轮。第2轮偏离 2.1，仍高出 2.0；第3轮出图时网络中断</p>
+</figure><figure class="card go">
+  <figcaption><span>medium · 2.0–4.5</span><b>3.1</b></figcaption>
+  <img src="images/night_city_medium_r2.png" alt="medium · 2.0–4.5">
+  <p class="line">落在区间 · 第 2 轮。机位、人物姿态和纵向城市布局基本一致，但第二张显著更明亮、细节与建筑密度更高，雾气和光点分布也有明显变化。</p>
+</figure><figure class="card go">
+  <figcaption><span>high · 4.5–7.5</span><b>5.5</b></figcaption>
+  <img src="images/night_city_high_r1.png" alt="high · 4.5–7.5">
+  <p class="line">落在区间 · 第 1 轮。机位和人物主体布局基本一致，但城市与天空明显更亮，新增大量灯笼和月亮，人物衣发及光效也有变化。</p>
+</figure><figure class="card go">
+  <figcaption><span>recompose · 指定机位</span><b>9.2</b></figcaption>
+  <img src="images/night_city_recompose_r1.png" alt="recompose · 指定机位">
+  <p class="line">落在区间 · 第 1 轮。画面由高空屋檐俯瞰转为运河水面低机位，乌篷船与高拱石桥成为主体，构图和光影均有明显变化。</p>
+</figure></div></section><section><h2>案例 02 · 粉彩速写少女</h2><div class="row"><figure class="card ref"><figcaption>原图</figcaption><img src="images/pastel_sketch_ref.png" alt="原图"></figure><figure class="card go">
+  <figcaption><span>low · 0.5–2.0</span><b>1.4</b></figcaption>
+  <img src="images/pastel_sketch_low_r1.png" alt="low · 0.5–2.0">
+  <p class="line">落在区间 · 第 1 轮。人物机位、坐姿和构图基本一致，仅有轻微的比例、线条和背景纹理差异。</p>
+</figure><figure class="card go">
+  <figcaption><span>medium · 2.0–4.5</span><b>2.0</b></figcaption>
+  <img src="images/pastel_sketch_medium_r3.png" alt="medium · 2.0–4.5">
+  <p class="line">落在区间 · 第 3 轮。机位、坐姿和构图基本一致，人物轮廓略有变化，光线明显变暖并增加了右上方的阳光和光斑。</p>
+</figure><figure class="card go">
+  <figcaption><span>high · 4.5–7.5</span><b>5.8</b></figcaption>
+  <img src="images/pastel_sketch_high_r3.png" alt="high · 4.5–7.5">
+  <p class="line">落在区间 · 第 3 轮。人物姿态和构图大体保留，但画面改为更低仰视角并新增楼梯、栏杆、耳机及强烈夕阳光影。</p>
+</figure><figure class="card go">
+  <figcaption><span>recompose · 指定机位</span><b>8.7</b></figcaption>
+  <img src="images/pastel_sketch_recompose_r1.png" alt="recompose · 指定机位">
+  <p class="line">落在区间 · 第 1 轮。第二张改为人物站在天台铁艺栏杆旁、从过肩侧后方远眺夕阳海港，姿态、构图、场景和光影均显著变化。</p>
+</figure></div></section><section><h2>案例 03 · 窗边日光胸像</h2><div class="row"><figure class="card ref"><figcaption>原图</figcaption><img src="images/sunlit_portrait_ref.png" alt="原图"></figure><figure class="card go">
+  <figcaption><span>low · 0.5–2.0</span><b>1.4</b></figcaption>
+  <img src="images/sunlit_portrait_low_r1.png" alt="low · 0.5–2.0">
+  <p class="line">落在区间 · 第 1 轮。机位、姿态和整体布局基本一致，人物面部及头发细节略变，光影对比稍有增强。</p>
+</figure><figure class="card go">
+  <figcaption><span>medium · 2.0–4.5</span><b>3.1</b></figcaption>
+  <img src="images/sunlit_portrait_medium_r1.png" alt="medium · 2.0–4.5">
+  <p class="line">落在区间 · 第 1 轮。机位、正面姿态和构图基本一致，主要是光照增强及头发、五官和衣领细节有轻微变化。</p>
+</figure><figure class="card go">
+  <figcaption><span>high · 4.5–7.5</span><b>6.4</b></figcaption>
+  <img src="images/sunlit_portrait_high_r3.png" alt="high · 4.5–7.5">
+  <p class="line">落在区间 · 第 3 轮。人物从正面近景改为侧身回望，构图、背景和逆光方向均明显变化。</p>
+</figure><figure class="card go">
+  <figcaption><span>recompose · 指定机位</span><b>8.7</b></figcaption>
+  <img src="images/sunlit_portrait_recompose_r1.png" alt="recompose · 指定机位">
+  <p class="line">落在区间 · 第 1 轮。第二张改为阳光温室画室中景，人物坐藤椅手捧速写本，周围有绿植和雏菊，呈3/4侧机位。</p>
+</figure></div></section><section><h2>案例 04 · 天井峡谷概念</h2><div class="row"><figure class="card ref"><figcaption>原图</figcaption><img src="images/ishtar_canyon_ref.png" alt="原图"></figure><figure class="card go">
+  <figcaption><span>low · 0.5–2.0</span><b>1.2</b></figcaption>
+  <img src="images/ishtar_canyon_low_r2.png" alt="low · 0.5–2.0">
+  <p class="line">落在区间 · 第 2 轮。机位、俯视角度、建筑布局和光影基本一致，仅有局部线条与细节纹理的轻微变化。</p>
+</figure><figure class="card ">
+  <figcaption><span>medium · 2.0–4.5</span><b>1.1</b></figcaption>
+  <img src="images/ishtar_canyon_medium_r3.png" alt="medium · 2.0–4.5">
+  <p class="line">未进区间 · 第 3 轮。机位、俯视构图和建筑布局基本一致，主要可见变化是整体光照增强并增加了雾气与植被细节。</p>
+</figure><figure class="card ">
+  <figcaption><span>high · 4.5–7.5</span><b>7.8</b></figcaption>
+  <img src="images/ishtar_canyon_high_r3.png" alt="high · 4.5–7.5">
+  <p class="line">未进区间 · 第 3 轮。两图同为仰视石砌建筑与飞龙题材，但第二张构图、建筑结构、光照和主体位置均明显变化。</p>
+</figure><figure class="card go">
+  <figcaption><span>recompose · 指定机位</span><b>9.6</b></figcaption>
+  <img src="images/ishtar_canyon_recompose_r1.png" alt="recompose · 指定机位">
+  <p class="line">落在区间 · 第 1 轮。机位已改为石露台平视跨谷三孔石拱桥，远景天际有飞龙，构图与原图差异极大。</p>
+</figure></div></section>
+</body></html>

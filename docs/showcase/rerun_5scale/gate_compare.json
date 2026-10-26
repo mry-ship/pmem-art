@@ -1,0 +1,182 @@
+{
+  "ishtar_canyon_low.png": {
+    "ok": true,
+    "task_score": 4.5,
+    "pair_score": 3.5,
+    "task_met": false,
+    "prefer": "ref",
+    "why": "虽然整体机位和布局大致保留，但全图的纹理、色调和明暗均明显重绘，超出了仅修局部瑕疵的范围。",
+    "model": "gpt-5.6-terra"
+  },
+  "ishtar_canyon_medium.png": {
+    "ok": true,
+    "task_score": 9.6,
+    "pair_score": 6.8,
+    "task_met": true,
+    "prefer": "result",
+    "why": "机位和主要构图保持一致，修改集中在更强的日照、阴影与局部细节明暗，且提升了空间聚焦感。",
+    "model": "gpt-5.6-terra"
+  },
+  "ishtar_canyon_high.png": {
+    "ok": true,
+    "task_score": 8.4,
+    "pair_score": 7.3,
+    "task_met": true,
+    "prefer": "result",
+    "why": "改图保留了奇幻石砌纵深空间的核心媒介与场景身份，并以更强的戏剧光影和机位强化了叙事主体。",
+    "model": "gpt-5.6-terra"
+  },
+  "ishtar_canyon_recompose.png": {
+    "ok": true,
+    "task_score": 8.5,
+    "pair_score": 8.5,
+    "task_met": true,
+    "prefer": "result",
+    "why": "改图清楚呈现石露台平视跨谷三孔石拱桥与远景飞龙，也保留了中古奇幻建筑和暖色手绘质感，但人物及场景的具体身份与原图衔接较弱。",
+    "model": "gpt-5.6-terra"
+  },
+  "ishtar_canyon_bold.png": {
+    "ok": true,
+    "task_score": 9.2,
+    "pair_score": 8.8,
+    "task_met": true,
+    "prefer": "result",
+    "why": "修改图以红蓝木刻海报风彻底跳开原图色板与写实线稿结构，同时保留了人物与巨兽对峙的主体剪影关系。",
+    "model": "gpt-5.6-terra"
+  },
+  "night_city_low.png": {
+    "ok": true,
+    "task_score": 1.5,
+    "pair_score": 3.0,
+    "task_met": false,
+    "prefer": "ref",
+    "why": "修改图大幅重绘并改变了城市密度、光照、主体姿态和画面构图，不是局部瑕疵修复。",
+    "model": "gpt-5.6-terra"
+  },
+  "night_city_medium.png": {
+    "ok": true,
+    "task_score": 8.8,
+    "pair_score": 5.8,
+    "task_met": true,
+    "prefer": "result",
+    "why": "改图保持了屋顶人物俯瞰中轴城市的高位机位和主要构图，局部景物与光影变化较明显。",
+    "model": "gpt-5.6-terra"
+  },
+  "night_city_high.png": {
+    "ok": true,
+    "task_score": 9.2,
+    "pair_score": 7.8,
+    "task_met": true,
+    "prefer": "result",
+    "why": "修改图保留了屋脊上的披风人物与俯瞰巨城的奇幻媒介，同时通过机位微调和强烈灯火夜景扩展了戏剧光影。",
+    "model": "gpt-5.6-terra"
+  },
+  "night_city_recompose.png": {
+    "ok": true,
+    "task_score": 9.4,
+    "pair_score": 9.2,
+    "task_met": true,
+    "prefer": "result",
+    "why": "修改图明确切换为运河乌篷船的低机位视角仰望高拱石桥，同时保留了原图的暗夜武侠人物身份与冷峻写实氛围。",
+    "model": "gpt-5.6-terra"
+  },
+  "night_city_bold.png": {
+    "ok": true,
+    "task_score": 9.5,
+    "pair_score": 9.2,
+    "task_met": true,
+    "prefer": "result",
+    "why": "修改图以霓虹赛博城市彻底跳开原图冷暗史诗色板，同时保留了屋脊人物俯瞰城市的主体剪影关系。",
+    "model": "gpt-5.6-terra"
+  },
+  "pastel_sketch_low.png": {
+    "ok": true,
+    "task_score": 2.0,
+    "pair_score": 2.8,
+    "task_met": false,
+    "prefer": "ref",
+    "why": "修改图明显改变了构图裁切、人物比例和姿态细节，超出了仅修局部瑕疵的范围。",
+    "model": "gpt-5.6-terra"
+  },
+  "pastel_sketch_medium.png": {
+    "ok": true,
+    "task_score": 9.2,
+    "pair_score": 7.8,
+    "task_met": true,
+    "prefer": "result",
+    "why": "机位与主体构图保持一致，主要仅增强了局部比例、细节布局及暖色光影氛围。",
+    "model": "gpt-5.6-terra"
+  },
+  "pastel_sketch_high.png": {
+    "ok": true,
+    "task_score": 9.5,
+    "pair_score": 8.7,
+    "task_met": true,
+    "prefer": "result",
+    "why": "修改图保留了蜡笔手绘媒介和女孩主体身份，并通过环境、构图细节与强烈暖光有效提升了戏剧性。",
+    "model": "gpt-5.6-terra"
+  },
+  "pastel_sketch_recompose.png": {
+    "ok": true,
+    "task_score": 9.2,
+    "pair_score": 9.3,
+    "task_met": true,
+    "prefer": "result",
+    "why": "改图呈现了人物站在天台铁栏旁、从侧后方眺望夕阳海港的机位，并保留了原人物特征和蜡笔画风。",
+    "model": "gpt-5.6-terra"
+  },
+  "pastel_sketch_bold.png": {
+    "ok": true,
+    "task_score": 8.8,
+    "pair_score": 8.1,
+    "task_met": true,
+    "prefer": "result",
+    "why": "修改图以高饱和霓虹波普与网点质感明显跳出原图蜡笔色板，同时完整保留了人物坐姿主体剪影。",
+    "model": "gpt-5.6-terra"
+  },
+  "sunlit_portrait_low.png": {
+    "ok": true,
+    "task_score": 3.5,
+    "pair_score": 3.8,
+    "task_met": false,
+    "prefer": "ref",
+    "why": "修改版明显重绘了头发、五官、光影和衣物细节，虽保留构图但远超局部瑕疵修复范围。",
+    "model": "gpt-5.6-terra"
+  },
+  "sunlit_portrait_medium.png": {
+    "ok": true,
+    "task_score": 9.0,
+    "pair_score": 5.0,
+    "task_met": true,
+    "prefer": "tie",
+    "why": "改图保持了正面平视的机位和近景构图，变化主要集中在光影与局部细节，符合该档要求。",
+    "model": "gpt-5.6-terra"
+  },
+  "sunlit_portrait_high.png": {
+    "ok": true,
+    "task_score": 9.0,
+    "pair_score": 7.5,
+    "task_met": true,
+    "prefer": "result",
+    "why": "改图保留了动漫插画媒介及短发少女的主体身份，同时强化了逆光和明暗对比，符合这一档的要求。",
+    "model": "gpt-5.6-terra"
+  },
+  "sunlit_portrait_recompose.png": {
+    "ok": true,
+    "task_score": 9.2,
+    "pair_score": 9.3,
+    "task_met": true,
+    "prefer": "result",
+    "why": "修改图准确呈现阳光温室画室、藤椅中景、手捧速写本与绿植雏菊环绕，保留了原图人物身份和暖调细腻画风，侧机位仅略偏正面。",
+    "model": "gpt-5.6-terra"
+  },
+  "sunlit_portrait_bold.png": {
+    "ok": true,
+    "task_score": 5.5,
+    "pair_score": 6.5,
+    "task_met": false,
+    "prefer": "result",
+    "why": "改图明显换成冷绿色和硬边几何风格，但仍高度保留原图的五官、光影分割和花朵背景，并非只保留主体剪影。",
+    "model": "gpt-5.6-terra"
+  }
+}

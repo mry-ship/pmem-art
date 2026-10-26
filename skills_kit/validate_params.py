@@ -27,6 +27,7 @@ def validate_case_generation_params(
     *,
     root: Path | None = None,
     output_image_path: str = "",
+    continuation_pad: bool = False,
 ) -> dict[str, Any]:
     """
     Hard pre-GenerateImage parameter validator:
@@ -80,10 +81,14 @@ def validate_case_generation_params(
 
         expected_ref_name = Path(expected_ref).name
         actual_ref_names = [p.name for p in resolved_refs]
-        if expected_ref_name not in actual_ref_names:
+        if expected_ref_name not in actual_ref_names and not continuation_pad:
             raise ValueError(
                 f"[{case_label}] Parameter 'reference_image_paths' mismatch: expected '{expected_ref}', "
                 f"got '{ref_list[0]}'. Aborting generation round before calling GenerateImage."
+            )
+        if continuation_pad and expected_ref_name not in actual_ref_names:
+            warnings.append(
+                f"[{case_label}] 本轮垫图改为目前最高分的成图 '{resolved_refs[0].name}'，不再要求文件名等于 '{expected_ref_name}'。"
             )
 
         exp_ratio_num = _parse_ratio_float(expected_ar)
@@ -189,6 +194,7 @@ def validate_converge_params(
     output_image_path: str = "",
     root: Path | None = None,
     three_step_stage: str = "step2_generate",
+    continuation_pad: bool = False,
 ) -> dict[str, Any]:
     """
     Validate converge generation/session parameters with default inheritance from `ref_image`:
@@ -231,6 +237,7 @@ def validate_converge_params(
         reference_image_paths=raw_refs,
         root=base_root,
         output_image_path=output_image_path,
+        continuation_pad=continuation_pad,
     )
     out_traits: dict[str, Any] = {}
     if output_image_path:

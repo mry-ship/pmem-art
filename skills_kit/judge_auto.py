@@ -283,7 +283,7 @@ def auto_vlm_judge_image(
         if warn not in audit_res["warnings"]:
             audit_res["warnings"].append(warn)
         if not next_fix:
-            next_fix = str(scale_prof.get("best_direction_hint") or "按本档最优方向继续叠加光影或构图跃升")
+            next_fix = "在目前最高分的那张上只补还没到位的那一处，其余保持那张"
 
     should_continue_next_round = bool((not passed) and (round_num < max_rounds))
     if passed:

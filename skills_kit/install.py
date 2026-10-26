@@ -12,6 +12,22 @@ from ._time import _now_cst
 
 from .skill_specs import SKILL_SPECS
 
+RATIONALITY_GATE = """
+## 合理性（硬门槛）
+
+合理性单独过关。风格分高，也不能把这格补过 9.6。
+
+出图前按本技能要交付的对象关系自己组提示词。看这一张的像素再打分。没过就留下已经对的地方，下一轮点名没过的部位，只补那一句。第 2 轮起垫目前分数最高的那张，比它差的一轮不接着垫，也不把前几轮的修正叠进同一段。
+
+有参考图时，先跑 `python3 pmem_art.py ref-read <参考图路径>`，再写提示词。它说底是透明的，提示词里就不要出现黑底、深底、底板。用一块浅的空底放下物件，这块浅底不是风格。表面只写眼睛在参考图上看见的那一句，同一组每一张、后面每一轮都用这同一句，不换成另一种媒介。小高光不要写成油亮、光面、发亮。表面光洁，也不要改成毛毡、纸纹或粗颗粒。同一张图继续修时，垫目前分数最高的那张成图，只改点名的那一处。第一张对一下底和表面。更油、更黑或更毛，就改提示词里这几个词，再出这一张。表面那一句已经对了，就留着。
+
+对象关系：
+- 人物、场景、图标：身体、透视、光和物件之间说得通。
+- UI：标题、说明、按钮指向同一件事。
+- 合成梯：每一件单独落在一个同样大的正方形里，不把八件画进同一张。两件相同的这一档合成下一档，画面里仍然只有这一件。低档只比高档小一圈，最低档也要占到正方形的大半，最高档留一圈边，不顶出格子，也不能变成一组场景。沿档位零件变多或剪影更复杂。末档在格子里最大、零件最多。相邻两档不能是同一类。第一段先用文字定稿这八行，六条都过了再逐张出图核对，不看美术品质。第二段在过关的正方形上抬风格和质感；关系散了，美术分也不能过。
+"""
+
+
 def _render_skill_md(spec: dict[str, Any], command_name: str) -> str:
     return (
         f"---\n"
@@ -19,6 +35,7 @@ def _render_skill_md(spec: dict[str, Any], command_name: str) -> str:
         f"description: {spec['description']}\n"
         f"---\n\n"
         f"{spec['body'].strip()}\n"
+        f"{RATIONALITY_GATE}"
     )
 
 
@@ -28,6 +45,7 @@ def _render_command_md(spec: dict[str, Any], command_name: str) -> str:
         f"description: {spec['title']}（pmem-art）\n"
         f"---\n\n"
         f"{spec['body'].strip()}\n"
+        f"{RATIONALITY_GATE}"
     )
 
 
@@ -56,6 +74,7 @@ def _render_agent_doc_block() -> str:
 | **`/pmem-improve`** | **`/art-improve`** | **【进阶 peek】** 自我迭代报告（日常 finish 已静默跑） |
 | **`/pmem-coach`** | **`/art-coach`** | **【进阶 peek】** 能力教练练习计划 |
 | **`/pmem-learn`** | **`/art-learn`** | **【进阶 peek】** 知识广度建议（finish 已静默 enqueue） |
+| **`/pmem-merge-ladder`** | **`/art-merge`** | **【两段各最多 8 轮】** 先用文字定稿合成关系，过了再逐张出图核对；然后在这些正方形上抬美术。每一件单独一个正方形，两两相合。相邻档只大一点。风格：写下的优先，否则跟参考图，都没有用默认质感好的卡通可爱。关系散了不能过 |
 
 ### 2. 评分履历可见 · 记忆静默写入（默认）
 - 闭环每轮须向用户展示：五维分、不足、下一轮改点；`converge finish` 默认打印全轮评分履历并写记忆（`--no-apply` 可跳过；只要终稿加 `--quiet`）。

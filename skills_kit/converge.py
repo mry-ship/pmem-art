@@ -26,6 +26,7 @@ from .prompt_scale import (
     _constraint_tail,
     _prompt_change_ratio,
     _recompose_change_evidence,
+    compose_continuation_prompt,
     compose_style_first_prompt,
     get_converge_scale_profile,
     strip_redline_tags_from_generation_text,
@@ -276,6 +277,44 @@ def _session_file(root: Path, session_id: str = "latest") -> Path:
     return d / f"{session_id}.json"
 
 
+def _plate_file(raw: str, root: Path) -> str:
+    path = Path(raw)
+    if not path.is_file():
+        path = root / raw
+    return str(path.resolve()) if path.is_file() else ""
+
+
+def _best_plate(rounds: list, round_num: int, root: Path) -> tuple[str, str, int]:
+    """Pad the highest-scoring earlier plate. A later worse plate does not replace it."""
+    prior = [
+        r for r in rounds
+        if int(r.get("round") or 0) < int(round_num) and str(r.get("image") or "").strip()
+    ]
+    scored: list[tuple[float, int, str, str]] = []
+    unscored: list[tuple[int, str, str]] = []
+    for row in prior:
+        image = _plate_file(str(row.get("image") or "").strip(), root)
+        if not image:
+            continue
+        fix = str(row.get("next_fix") or "").strip()
+        if fix.startswith("已达标"):
+            fix = ""
+        number = int(row.get("round") or 0)
+        try:
+            score = float(row.get("score"))
+        except (TypeError, ValueError):
+            unscored.append((number, image, fix))
+            continue
+        scored.append((score, number, image, fix))
+    if scored:
+        _score, number, image, fix = max(scored, key=lambda item: (item[0], item[1]))
+        return image, fix, number
+    if unscored:
+        number, image, fix = max(unscored, key=lambda item: item[0])
+        return image, fix, number
+    return "", "", 0
+
+
 def cmd_converge(
     root: Path,
     data: dict[str, Any],
@@ -500,6 +539,39 @@ def cmd_converge(
         )
         return 1
 
+    if action == "next":
+        pending = [
+            r for r in rounds
+            if not r.get("judged") and str(r.get("image") or "").strip()
+        ]
+        if pending:
+            pending_no = int(pending[-1].get("round") or 0)
+            print(f"第 {pending_no} 轮还没审图。先 `converge judge --id {session_id} --round {pending_no}`，再 `converge next`。")
+            return 0
+        judged_nums = [int(r.get("round") or 0) for r in rounds if r.get("judged")]
+        nxt = (max(judged_nums) if judged_nums else 0) + 1
+        image, fix, number = _best_plate(rounds, nxt, root)
+        prof = get_converge_scale_profile(
+            sess.get("scale", "medium"),
+            recompose_dir=sess.get("recompose_dir", ""),
+            goal=sess.get("goal", ""),
+            ref_analysis=sess.get("ref_analysis", ""),
+            ref_image=sess.get("ref_image", ""),
+            module=sess.get("module", ""),
+        )
+        if not image:
+            ref = str(sess.get("ref_image") or "").strip()
+            print("还没有可垫的成图。第 1 轮垫最初的参考图。" + (f"\n垫图：{ref}" if ref else ""))
+            return 0
+        scored = next((r.get("score") for r in rounds if int(r.get("round") or 0) == number), None)
+        score_bit = f"{float(scored):.2f} 分" if scored is not None else "尚未打分"
+        print(
+            f"下一轮第 {nxt} 轮，先垫第 {number} 轮（{score_bit}）：{image}\n"
+            f"生图参考图只用这一张。\n"
+            f"提示词：{compose_continuation_prompt(fix, prof)}"
+        )
+        return 0
+
     if action == "generate":
         import subprocess
 
@@ -526,6 +598,10 @@ def cmd_converge(
 
         eff_ref_img = (ref_image or sess.get("ref_image") or "").strip()
         eff_ar = (aspect_ratio or sess.get("default_aspect_ratio") or sess.get("aspect_ratio") or "").strip()
+        carry_image, carry_fix, carry_round = _best_plate(rounds, r_no, root)
+        continuation = bool(carry_image)
+        if continuation:
+            reference_image_paths = [carry_image]
         eff_ref_paths = (
             reference_image_paths
             if reference_image_paths is not None
@@ -545,9 +621,11 @@ def cmd_converge(
                     output_image_path=image if (image and not generate_cmd) else "",
                     root=root,
                     three_step_stage="step2_generate",
+                    continuation_pad=continuation,
                 )
                 val_res["inherited_default_aspect_ratio"] = not bool((aspect_ratio or "").strip())
                 val_res["inherited_default_pad_image"] = (reference_image_paths is None or not bool(reference_image_paths))
+                val_res["continuation_pad"] = continuation
                 eff_ar = val_res["aspect_ratio"]
                 eff_ref_paths = val_res["reference_image_paths"]
                 for w_msg in val_res.get("warnings", []):
@@ -568,7 +646,10 @@ def cmd_converge(
         ov_now = _apply_lock_texts(lock_text or "", next_fix or "", prompt or "", source=f"generate_r{r_no}")
         from skills_kit.prompt_scale import format_lock_override_prompt_hint
         lock_hint = format_lock_override_prompt_hint(str(sess.get("scale") or "medium"), ov_now)
-        composed_prompt = compose_style_first_prompt(prompt, s_prof)
+        if continuation:
+            composed_prompt = compose_continuation_prompt(carry_fix or prompt, s_prof)
+        else:
+            composed_prompt = compose_style_first_prompt(prompt, s_prof)
         if lock_hint:
             composed_prompt = f"{composed_prompt} | {lock_hint}".strip(" |")
 
@@ -594,6 +675,7 @@ def cmd_converge(
                         output_image_path=image,
                         root=root,
                         three_step_stage="step2_generate",
+                        continuation_pad=continuation,
                     )
                 except (FileNotFoundError, ValueError) as exc:
                     print(f"❌ [生成后输出图比例校验拦截] {exc}")
@@ -631,6 +713,7 @@ def cmd_converge(
             "param_validation": val_res,
             "step_trace": ["step1_start", "step2_generate"],
             "prompt": composed_prompt,
+            "continuation": continuation,
             "score": None,
             "dims": "",
             "passed": False,
@@ -650,8 +733,10 @@ def cmd_converge(
             if img_v.get("exists")
             else "待检出文件"
         )
+        pad_line = f"   · 垫目前最高分的第 {carry_round} 轮: {carry_image}\n" if continuation else ""
         print(
             f"🎨 [Step 2A · 仅生图阶段完成] 第 {r_no}/{mr} 轮图像已生成: `{image}` ({v_badge})\n"
+            f"{pad_line}"
             f"   · 置顶风格指令 Prompt: {composed_prompt}\n"
             f"   · 当前未执行任何自评或 VLM 裁判；请下一步独立调用 `python3 pmem_art.py converge judge --id {session_id} --round {r_no} --image {image} --dims ...`"
         )
@@ -790,7 +875,7 @@ def cmd_converge(
             r for r in rounds
             if r.get("round") != r_no and str(r.get("prompt") or "").strip()
         ]
-        if prior_prompts and recorded_gen_prompt:
+        if prior_prompts and recorded_gen_prompt and not bool((existing_r or {}).get("continuation")):
             first_prompt = str(min(prior_prompts, key=lambda x: x.get("round") or 0).get("prompt") or "")
             prev_prompt = str(max(prior_prompts, key=lambda x: x.get("round") or 0).get("prompt") or "")
             baseline = str(s_prof.get("prompt_delta_baseline") or "previous")
@@ -889,6 +974,7 @@ def cmd_converge(
                 )
             ),
             "prompt": recorded_gen_prompt or (compose_style_first_prompt(prompt, s_prof) if prompt else ""),
+            "continuation": bool((existing_r or {}).get("continuation")),
             "passed": passed,
             "gate_blocked": bool(gate_notes),
             "image_gate_blocked": bool(judge_res.get("image_gate_blocked")),
@@ -953,18 +1039,27 @@ def cmd_converge(
         else:
             sess["status"] = "continue"
             sess["ActionRequired"] = f"GENERATE_ROUND_{r_no + 1}"
+            nxt_image, nxt_fix, nxt_round = _best_plate(rounds, r_no + 1, root)
+            fix_line = nxt_fix or entry["next_fix"]
             msg = (
                 f"🔄 [Step 2B · 五维审图 · {src_badge}] 第 {r_no}/{mr} 轮得分 {score:.2f} < 目标阈值 {th:.2f}（未达标继续下一轮第 {r_no + 1} 轮）。\n"
                 f"   · 图像校验: {v_badge} | 五维: {judge_res['dims']}\n"
                 f"   · 不合理处: {entry['defects']}\n"
-                f"   · 下一轮叠加修正: {entry['next_fix']}\n"
             )
+            if nxt_image:
+                msg += (
+                    f"   · 下一轮先垫这张再出图：第 {nxt_round} 轮 `{nxt_image}`\n"
+                    f"   · 只改这一处：{fix_line}\n"
+                    f"   · 生图参考图只用这一张。可先 `converge next --id {session_id}` 核对路径，画完再 generate。\n"
+                )
+            else:
+                msg += f"   · 下一轮只改：{entry['next_fix']}\n"
             if skip_ahead:
                 msg += (
                     f"   · ⚡ Fast-track 提示：已 ≥{soft_th} 且与上轮变化很小 — "
                     f"可少做大重生、做局部修正；最终采纳仍要 ≥{th:.2f}（非草稿）。\n"
                 )
-            msg += f"   👉 请将修正策略叠加到 Prompt，先执行第 {r_no + 1} 轮 `converge generate`（仅生图），再执行 `converge judge`（独立审图）！"
+            msg += f"   👉 先用上面这张垫图出第 {r_no + 1} 轮，再 `converge generate`，然后 `converge judge`。"
 
         _write_session_json(sf, sess)
         print(msg)
