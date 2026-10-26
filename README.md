@@ -68,8 +68,9 @@ python3 pmem_art.py skills --install
 | 审图挑刺 | `/pmem-critique`（`/art-check`） | 五维打分，翻车点可记红线 |
 | 换画风 / 表情差分 | `/pmem-variant`（`/art-variant`） | 继承角色锚点，派生水彩/Q版等 |
 | 散图归位 + 图谱 | `/pmem-atlas`（`/art-map`） | 整理资产，刷新 `art-atlas.html` |
-| 同域合并进阶梯 | `/pmem-merge-ladder`（`/art-merge`） | 八件各一张正方形，两两相合；先定关系再抬美术 |
+| 同域合并进阶梯 | `/pmem-merge-ladder`（`/art-merge`） | 八件各一张正方形，两两相合；先定关系再抬美术；实测见下方图墙 |
 | 风格克隆新主体 | 无斜杠技能 | 下方图墙是早前实验记录，仓库里没有 `/pmem-clone-image` |
+| 镜头包提案（先选再生成） | `/pmem-lens-propose` | 参考图 → 多套 camera/light/props 包，选完再 converge；见 `docs/skills/pmem-lens-propose.md` |
 | 进阶 | `/pmem-improve` · `/pmem-coach` · `/pmem-learn` | 口味迭代 / 练习计划 / 补知识 |
 
 ### 四档改动幅度（选错了用嘴改就行）
@@ -129,7 +130,7 @@ python3 pmem_art.py skills --install
 
 ### Merge ladder · Clone Mode B（另外两技能实测）
 
-全页展陈（含分数出处）：[docs/showcase/skills-homepage/index.html](docs/showcase/skills-homepage/index.html)
+全页展陈（V8×20 + Merge/Clone，含分数出处）：[docs/showcase/skills-homepage/index.html](docs/showcase/skills-homepage/index.html)
 
 | 技能 | 在测什么 | 稳定性门槛 | 本批结果 |
 | :--- | :--- | :--- | :--- |

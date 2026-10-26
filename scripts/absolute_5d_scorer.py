@@ -952,16 +952,42 @@ def rewrite_prompt_from_defects(
     intent: dict[str, Any] | None = None,
     api_scale: str = "medium",
     recompose_dir: str = "",
+    strategy: str = "tail",
+    dims: dict[str, Any] | None = None,
 ) -> str:
+    """
+    strategy:
+      - ``tail`` (default): legacy append; high still gets volume-light hint (old 32bot scripts).
+      - ``by_dim``: no universal volume-light; keep short defect list (skill runner has fuller logic).
+    """
     bits = [base_prompt.strip()]
     fix = [d.strip() for d in defects if (d or "").strip()]
     if intent and not intent.get("pass"):
         fix.append(str(intent.get("reason") or "档位意图未完成"))
     s = (api_scale or "").lower()
+    strat = (strategy or "tail").lower()
     if s == "recompose" and recompose_dir:
         fix.append(f"强化新机位：{recompose_dir}")
-    elif s == "high":
+    elif s == "high" and strat == "tail":
         fix.append("加强体积光/冷暖分离，并提高结构化清晰度（勿用噪点冒充细节）")
+    if strat == "by_dim":
+        by_dim_defects = list(defects or [])
+        if intent and not intent.get("pass"):
+            by_dim_defects.append(str(intent.get("reason") or "档位意图未完成"))
+        try:
+            from v8_skill_converge_policy import rewrite_reflow_by_dims
+            return rewrite_reflow_by_dims(
+                base_prompt,
+                defects=by_dim_defects,
+                dims=dims,
+                api_scale=api_scale,
+                recompose_dir=recompose_dir,
+                max_fixes=2,
+            )
+        except Exception:
+            fix = [d for d in fix if "体积光" not in d][:2] or ["优先修复结构与边缘完整"]
+            bits.append("【回流修正】" + "；".join(fix[:2]))
+            return " | ".join(bits)
     if fix:
         bits.append("【回流修正】" + "；".join(fix[:4]))
     return " | ".join(bits)

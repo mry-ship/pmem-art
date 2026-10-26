@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>pmem-art skills · Merge ladder &amp; Clone Mode B showcase</title>
+  <title>pmem-art skills · V8×20 · Merge ladder · Clone Mode B</title>
   <style>
     :root {
       --bg: #0b0f19;
@@ -334,6 +334,86 @@
       border-top: 1px solid var(--border);
     }
     footer.foot strong { color: #cbd5e1; }
+
+    /* V8 scale row */
+    .v8-stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+    @media (max-width: 700px) {
+      .v8-stats { grid-template-columns: 1fr 1fr; }
+    }
+    .v8-stat {
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+    }
+    .v8-stat .k { font-size: 12px; color: var(--muted); }
+    .v8-stat .v { font-size: 22px; font-weight: 800; margin-top: 4px; color: #e2e8f0; }
+    .v8-stat .v.pass { color: var(--pass); }
+    .v8-case {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+    .v8-case .case-title {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: baseline;
+      margin-bottom: 12px;
+    }
+    .v8-case .case-title h3 { font-size: 16px; font-weight: 700; }
+    .v8-case .case-title .meta { font-size: 12.5px; color: var(--muted); }
+    .v8-row {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 8px;
+    }
+    @media (max-width: 900px) {
+      .v8-row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+    .v8-cell {
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .v8-cell .lbl {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .v8-cell .lbl.hit { color: var(--pass); }
+    .v8-cell .sc {
+      font-size: 13px;
+      font-weight: 800;
+      color: #e2e8f0;
+    }
+    .v8-cell .sc.hit { color: var(--pass); }
+    .v8-cell .rounds {
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .v8-cell img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      border-radius: 8px;
+      background: #020617;
+    }
+    .v8-cell.landscape img { aspect-ratio: 4/3; }
   </style>
 </head>
 <body>
@@ -342,6 +422,7 @@
       <div class="brand">pmem-art skills</div>
       <nav>
         <a href="#hero">Hero</a>
+        <a href="#v8">V8 × 20</a>
         <a href="#merge">Merge ladder</a>
         <a href="#clone">Clone Mode B</a>
         <a href="#also">Also PASS</a>
@@ -355,6 +436,10 @@
       <h1>pmem-art skills</h1>
       <div class="skill-lines">
         <div class="skill-line">
+          <code>pmem-draw / concept</code>
+          <span>V8 × 20 Bot · 原画/low/medium/high/recompose/大改 · STOP≥9.60 · ≤8 轮</span>
+        </div>
+        <div class="skill-line">
           <code>pmem-merge-ladder</code>
           <span>同域 L1→L8 棋盘进阶梯 · whole-sheet · Absolute-5D ≥9.6</span>
         </div>
@@ -364,12 +449,201 @@
         </div>
       </div>
       <div class="pills">
-        <span class="pill pass">stability: 3 consecutive OK groups</span>
+        <span class="pill pass">V8 mean 9.14 · ≥9.60 = 4/20</span>
+        <span class="pill pass">merge/clone stability MET</span>
         <span class="pill pass">Absolute-5D ≥9.6</span>
         <span class="pill">scores from real runs · not invented</span>
-        <span class="pill">published under docs/showcase/skills-homepage</span>
       </div>
     </header>
+
+
+    <!-- V8 -->
+    <section class="block" id="v8">
+      <div class="sec-head">
+        <div>
+          <div class="tag">skills_kit · Absolute-5D Quant</div>
+          <h2>V8 × 20 Bot · 原画档位墙</h2>
+        </div>
+        <div class="sub">4 案例 × 5 档终图 + 原图 · STOP≥9.60 · 最多 8 轮</div>
+      </div>
+
+      <div class="v8-stats">
+        <div class="v8-stat"><div class="k">终图数</div><div class="v">20</div></div>
+        <div class="v8-stat"><div class="k">均值</div><div class="v">9.14</div></div>
+        <div class="v8-stat"><div class="k">≥9.60 达标</div><div class="v pass">4/20</div></div>
+        <div class="v8-stat"><div class="k">合同</div><div class="v" style="font-size:15px;padding-top:6px;">≤8 轮 · pad=ref</div></div>
+      </div>
+
+      <article class="v8-case">
+        <div class="case-title"><h3>案例 01 · 仙侠不夜城</h3><div class="meta">night_city · 9:16</div></div>
+        <div class="v8-row">
+          <div class="v8-cell">
+            <div class="lbl">原图</div>
+            <img src="assets/v8/c01_ref.jpg" alt="c01 原图" loading="lazy" />
+            <div class="sc">—</div>
+            <div class="rounds"></div>
+          </div>
+          <div class="v8-cell">
+            <div class="lbl">low</div>
+            <img src="assets/v8/c01_low.jpg" alt="c01 low" loading="lazy" />
+            <div class="sc">8.96</div>
+            <div class="rounds">8 轮 · 7.96→8.96</div>
+          </div>
+          <div class="v8-cell">
+            <div class="lbl">medium</div>
+            <img src="assets/v8/c01_medium.jpg" alt="c01 medium" loading="lazy" />
+            <div class="sc">9.38</div>
+            <div class="rounds">8 轮 · 8.15→9.38</div>
+          </div>
+          <div class="v8-cell">
+            <div class="lbl">high</div>
+            <img src="assets/v8/c01_high.jpg" alt="c01 high" loading="lazy" />
+            <div class="sc">8.97</div>
+            <div class="rounds">8 轮 · 8.38→8.97</div>
+          </div>
+          <div class="v8-cell">
+            <div class="lbl hit">recompose</div>
+            <img src="assets/v8/c01_recompose.jpg" alt="c01 recompose" loading="lazy" />
+            <div class="sc hit">9.60</div>
+            <div class="rounds">3 轮 · →9.60</div>
+          </div>
+          <div class="v8-cell">
+            <div class="lbl">大改</div>
+            <img src="assets/v8/c01_bold.jpg" alt="c01 大改" loading="lazy" />
+            <div class="sc">9.18</div>
+            <div class="rounds">8 轮 · 6.90→9.18</div>
+          </div>
+        </div>
+      </article>
+      <article class="v8-case">
+        <div class="case-title"><h3>案例 02 · 粉彩速写少女</h3><div class="meta">pastel_sketch · 4:3</div></div>
+        <div class="v8-row">
+          <div class="v8-cell landscape">
+            <div class="lbl">原图</div>
+            <img src="assets/v8/c02_ref.jpg" alt="c02 原图" loading="lazy" />
+            <div class="sc">—</div>
+            <div class="rounds"></div>
+          </div>
+          <div class="v8-cell landscape">
+            <div class="lbl">low</div>
+            <img src="assets/v8/c02_low.jpg" alt="c02 low" loading="lazy" />
+            <div class="sc">8.72</div>
+            <div class="rounds">8 轮 · 7.88→8.72</div>
+          </div>
+          <div class="v8-cell landscape">
+            <div class="lbl">medium</div>
+            <img src="assets/v8/c02_medium.jpg" alt="c02 medium" loading="lazy" />
+            <div class="sc">8.86</div>
+            <div class="rounds">8 轮 · 7.99→8.86</div>
+          </div>
+          <div class="v8-cell landscape">
+            <div class="lbl">high</div>
+            <img src="assets/v8/c02_high.jpg" alt="c02 high" loading="lazy" />
+            <div class="sc">9.35</div>
+            <div class="rounds">8 轮 · 9.22→9.35</div>
+          </div>
+          <div class="v8-cell landscape">
+            <div class="lbl hit">recompose</div>
+            <img src="assets/v8/c02_recompose.jpg" alt="c02 recompose" loading="lazy" />
+            <div class="sc hit">9.68</div>
+            <div class="rounds">6 轮 · →9.68</div>
+          </div>
+          <div class="v8-cell landscape">
+            <div class="lbl">大改</div>
+            <img src="assets/v8/c02_bold.jpg" alt="c02 大改" loading="lazy" />
+            <div class="sc">9.09</div>
+            <div class="rounds">8 轮 · 8.10→9.09</div>
+          </div>
+        </div>
+      </article>
+      <article class="v8-case">
+        <div class="case-title"><h3>案例 03 · 窗边日光胸像</h3><div class="meta">sunlit_portrait · 3:4</div></div>
+        <div class="v8-row">
+          <div class="v8-cell">
+            <div class="lbl">原图</div>
+            <img src="assets/v8/c03_ref.jpg" alt="c03 原图" loading="lazy" />
+            <div class="sc">8.30</div>
+            <div class="rounds">baseline</div>
+          </div>
+          <div class="v8-cell">
+            <div class="lbl">low</div>
+            <img src="assets/v8/c03_low.jpg" alt="c03 low" loading="lazy" />
+            <div class="sc">8.91</div>
+            <div class="rounds">8 轮</div>
+          </div>
+          <div class="v8-cell">
+            <div class="lbl">medium</div>
+            <img src="assets/v8/c03_medium.jpg" alt="c03 medium" loading="lazy" />
+            <div class="sc">8.81</div>
+            <div class="rounds">8 轮</div>
+          </div>
+          <div class="v8-cell">
+            <div class="lbl">high</div>
+            <img src="assets/v8/c03_high.jpg" alt="c03 high" loading="lazy" />
+            <div class="sc">9.35</div>
+            <div class="rounds">8 轮</div>
+          </div>
+          <div class="v8-cell">
+            <div class="lbl">recompose</div>
+            <img src="assets/v8/c03_recompose.jpg" alt="c03 recompose" loading="lazy" />
+            <div class="sc">9.18</div>
+            <div class="rounds">8 轮</div>
+          </div>
+          <div class="v8-cell">
+            <div class="lbl hit">大改</div>
+            <img src="assets/v8/c03_bold.jpg" alt="c03 大改" loading="lazy" />
+            <div class="sc hit">9.66</div>
+            <div class="rounds">2 轮 · →9.66</div>
+          </div>
+        </div>
+      </article>
+      <article class="v8-case">
+        <div class="case-title"><h3>案例 04 · 天井峡谷概念</h3><div class="meta">ishtar_canyon · 4:3</div></div>
+        <div class="v8-row">
+          <div class="v8-cell landscape">
+            <div class="lbl">原图</div>
+            <img src="assets/v8/c04_ref.jpg" alt="c04 原图" loading="lazy" />
+            <div class="sc">7.06</div>
+            <div class="rounds">baseline</div>
+          </div>
+          <div class="v8-cell landscape">
+            <div class="lbl">low</div>
+            <img src="assets/v8/c04_low.jpg" alt="c04 low" loading="lazy" />
+            <div class="sc">7.97</div>
+            <div class="rounds">8 轮</div>
+          </div>
+          <div class="v8-cell landscape">
+            <div class="lbl">medium</div>
+            <img src="assets/v8/c04_medium.jpg" alt="c04 medium" loading="lazy" />
+            <div class="sc">8.45</div>
+            <div class="rounds">8 轮</div>
+          </div>
+          <div class="v8-cell landscape">
+            <div class="lbl">high</div>
+            <img src="assets/v8/c04_high.jpg" alt="c04 high" loading="lazy" />
+            <div class="sc">9.55</div>
+            <div class="rounds">8 轮</div>
+          </div>
+          <div class="v8-cell landscape">
+            <div class="lbl hit">recompose</div>
+            <img src="assets/v8/c04_recompose.jpg" alt="c04 recompose" loading="lazy" />
+            <div class="sc hit">9.70</div>
+            <div class="rounds">5 轮 · →9.70</div>
+          </div>
+          <div class="v8-cell landscape">
+            <div class="lbl">大改</div>
+            <img src="assets/v8/c04_bold.jpg" alt="c04 大改" loading="lazy" />
+            <div class="sc">9.40</div>
+            <div class="rounds">8 轮</div>
+          </div>
+        </div>
+      </article>
+      <div class="note">
+        横看：同一原图在 low → medium → high → recompose → 大改 的差异。
+        竖看：R1 到终稿怎么抬分（Absolute-5D Quant）。
+        全页细档：仓库 <code style="color:#7dd3fc;">docs/showcase/pmem_art_images_v8_20bots_showcase.html</code>
+      </div>
+    </section>
 
     <!-- MERGE -->
     <section class="block" id="merge">
@@ -558,8 +832,8 @@
   </div>
 
   <footer class="foot">
-    <strong>GitHub docs/showcase</strong> · scores from real runs<br />
-    Sources: <code style="color:#94a3b8;">pmem-stability-triple/merge</code> · <code style="color:#94a3b8;">pmem-stability-triple/clone</code> · cleaning pack verify2
+    <strong>Homepage showcase</strong> · scores from real runs<br />
+    Sources: <code style="color:#94a3b8;">V8×20 skill converge</code> · <code style="color:#94a3b8;">pmem-stability-triple/merge</code> · <code style="color:#94a3b8;">pmem-stability-triple/clone</code> · cleaning pack verify2
   </footer>
 </body>
 </html>

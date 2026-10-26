@@ -48,6 +48,8 @@
 
 进步曲线 CLI：`python3 pmem_art.py progress`（无独立斜杠技能，也可用 `/pmem-improve`）。
 
+额外进阶技能（与 clone / merge 同级，不占用「11 大」计数；安装后在 `.agents/skills/` 等目录）： `/pmem-lens-propose`（参考图镜头包提案，先选再生成；详见 `docs/skills/pmem-lens-propose.md`）、`/pmem-clone-image`、`/pmem-merge-ladder`。
+
 ---
 
 ## 第二章：王牌技能 `/pmem-draw`（8轮9.6分自评收敛生图 & 垫图生图）
