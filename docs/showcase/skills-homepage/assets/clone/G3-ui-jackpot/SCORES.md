@@ -1,9 +1,14 @@
-# G3 UI — Jackpot! / Win a rare gem / Open
-Ref: `/workspace/pmem-stability-market/refs/ref_ui.png` (Mode B, real pad every round)
+# UI — Jackpot! (Mode B re-run) Absolute-5D
 
-| Round | Style 2.5 | Struct 2.5 | Light-mat 2.0 | Redlines 1.5 | Novelty 1.5 | Total | Notes |
-|-------|-----------|------------|---------------|--------------|-------------|-------|-------|
-| r01   | 2.2 | 2.5 | 1.9 | 1.2 | 1.4 | **9.2** | FAIL chrome — gold-only outer; orange/amber inner stroke not clearly separable in edge crop. Layout/copy OK. |
-| r02   | 2.4 | 2.5 | 1.9 | 1.4 | 1.4 | **9.6** | Winner. Dual chrome verified in crop_chrome_r02: yellow-gold outer + amber-orange bevel laminate. Jackpot! / Win a rare gem / Open. Blue gem + gold stand + sparkles. Green CTA. |
+Ref pad every round: `ref_ui.png`
 
-**Winner: r02 (9.6)** — PASS
+| Round | 构图 | 光影 | 透视 | 质感 | 风格 | **Total** | Gate |
+|-------|------|------|------|------|------|-----------|------|
+| r01   | 9.7 | 9.5 | 9.5 | 9.6 | 9.7 | **9.6** | **PASS ≥9.6** |
+
+dims: `构图9.7/光影9.5/透视9.5/质感9.6/风格9.7` (mean)
+
+## r01
+- **strengths:** Exact copy Jackpot! / Win a rare gem / Open; dual chrome verified in edge crops (gold outer + orange/amber inner); blue faceted gem on gold stand, no face; green CTA; layout grammar locked.
+- **defects:** title fill slightly cream vs pure white (minor).
+- **Winner:** r01 → `winner.png`

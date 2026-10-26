@@ -152,7 +152,7 @@ Market 风格参考（只锁 medium + 网格，不抄 motif）：
 | G1 · 烘焙厨具 | G2 · 清洁工具 | G3 · 运动装备 |
 | :---: | :---: | :---: |
 | ![G1 sheet](docs/showcase/skills-homepage/assets/merge/G1/sheet.jpg) | ![G2 sheet](docs/showcase/skills-homepage/assets/merge/G2/sheet.jpg) | ![G3 sheet](docs/showcase/skills-homepage/assets/merge/G3/sheet.jpg) |
-| **8/8 ≥9.6** · min cell **9.7** · r01 | **8/8 ≥9.6** · min cell **9.7** · r03 | **8/8 ≥9.6** · min cell **9.7** · r01 |
+| **8/8 ≥9.6** · min cell **9.6** · r02 | **8/8 ≥9.6** · min cell **9.8** · r02 | **8/8 ≥9.6** · min cell **9.7** · r01 |
 | ![G1 vs market](docs/showcase/skills-homepage/assets/merge/G1/compare_to_market.jpg) | ![G2 vs market](docs/showcase/skills-homepage/assets/merge/G2/compare_to_market.jpg) | ![G3 vs market](docs/showcase/skills-homepage/assets/merge/G3/compare_to_market.jpg) |
 
 额外整梯（清洁八档 · verify2 · 全 PASS）：
@@ -163,7 +163,7 @@ Market 风格参考（只锁 medium + 网格，不抄 motif）：
 
 G3 连胜终局（icon / char / UI 均 Absolute-5D ≥9.6）：
 
-| ICON · Scroll 9.7 | CHAR · Blacksmith 9.6 | UI · Jackpot 9.6 |
+| ICON · Scroll 9.6 | CHAR · Blacksmith 9.6 | UI · Jackpot 9.6 |
 | :---: | :---: | :---: |
 | ![scroll](docs/showcase/skills-homepage/assets/clone/G3-icon-scroll/compare_r01.jpg) | ![blacksmith](docs/showcase/skills-homepage/assets/clone/G3-char-blacksmith/compare_r02.jpg) | ![jackpot](docs/showcase/skills-homepage/assets/clone/G3-ui-jackpot/compare_r02.jpg) |
 | cannon booster → 卷轴+蜡封 | king T-pose → 铁匠（空手） | unlock chrome → Jackpot 弹窗 |
