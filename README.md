@@ -140,10 +140,22 @@ python3 pmem_art.py skills --install
 
 | 技能 | 在测什么 | 稳定性门槛 | 本批结果 |
 | :--- | :--- | :--- | :--- |
-| **`pmem-merge-ladder`** | 当时按整梯棋盘测过；现行技能是八张正方形、先定关系再抬美术 | 连续 3 个**新域** OK | **MET** · G1/G2/G3 均 8/8（整梯那一轮） |
+| **`pmem-merge-ladder`** | Mode A/B/C 同域 beach-candy 整梯；另有早期 Mode C 三新域连胜 | 每格 Absolute-5D ≥9.6 · N=8 | **A PASS** min 9.8 · **B/C FAIL**（L6 脸红线）· 早期 G1–G3 MET |
 | 风格克隆（未做成斜杠技能） | Mode B：锁风格 ~95% + **新主体** · REF\|RESULT | 连续 3 组 OK（每组 icon+char+UI） | **MET** · G1→G2→G3 |
 
-#### Merge ladder · 合并进阶梯
+#### Merge ladder · Mode A / B / C（beach-candy）
+
+同源 beach-candy 八格梯 · EXTRA 片（相对 CONTROL 更优或同级）。分数见 [`modes-abc/SCORES.md`](docs/showcase/skills-homepage/assets/merge/modes-abc/SCORES.md)。
+
+| Mode A · 零参考 | Mode B · 单参考垫 | Mode C · 参考整梯+新域 |
+| :---: | :---: | :---: |
+| ![Mode A sheet](docs/showcase/skills-homepage/assets/merge/modes-abc/modeA-sheet.jpg) | ![Mode B sheet](docs/showcase/skills-homepage/assets/merge/modes-abc/modeB-sheet.jpg) | ![Mode C sheet](docs/showcase/skills-homepage/assets/merge/modes-abc/modeC-sheet.jpg) |
+| **min 9.8 PASS** · beach-candy · 零参考 | **min 8.8 FAIL** · beach-candy · 单参考垫<br>（L6 鸭子黑点脸） | **min 8.5 FAIL** · beach-candy · 参考整梯+新域<br>（同 L6 脸红线） |
+| ![Mode A compare](docs/showcase/skills-homepage/assets/merge/modes-abc/modeA-compare.jpg) | ![Mode B compare](docs/showcase/skills-homepage/assets/merge/modes-abc/modeB-compare.jpg) | ![Mode C compare](docs/showcase/skills-homepage/assets/merge/modes-abc/modeC-compare.jpg) |
+
+#### Merge ladder · 早期 Mode C 稳定性连胜（G1 / G2 / G3）
+
+较早一轮：连续 3 个**新域** category-swap 均 8/8 ≥9.6（整梯棋盘）。
 
 | G1 · 烘焙厨具 | G2 · 清洁工具 | G3 · 运动装备 |
 | :---: | :---: | :---: |

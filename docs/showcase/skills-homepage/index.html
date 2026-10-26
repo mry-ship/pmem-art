@@ -16,6 +16,9 @@
       --pass: #34d399;
       --pass-bg: rgba(52, 211, 153, 0.14);
       --pass-border: rgba(52, 211, 153, 0.45);
+      --fail: #f87171;
+      --fail-bg: rgba(248, 113, 113, 0.14);
+      --fail-border: rgba(248, 113, 113, 0.45);
       --violet: #a78bfa;
       --amber: #fbbf24;
     }
@@ -196,10 +199,19 @@
       border: 1px solid var(--pass-border);
       color: var(--pass);
     }
+    .badge.fail {
+      background: var(--fail-bg);
+      border: 1px solid var(--fail-border);
+      color: var(--fail);
+    }
     .badge .dot {
       width: 7px; height: 7px; border-radius: 50%;
       background: var(--pass);
       box-shadow: 0 0 8px var(--pass);
+    }
+    .badge.fail .dot {
+      background: var(--fail);
+      box-shadow: 0 0 8px var(--fail);
     }
     .note {
       font-size: 12.5px;
@@ -661,7 +673,68 @@
           <div class="tag">pmem-merge-ladder</div>
           <h2>Merge ladder · 合并进阶梯</h2>
         </div>
-        <div class="sub">Mode C · market medium+grid · 3 consecutive NEW-domain OK</div>
+        <div class="sub">Mode A/B/C · beach-candy · Absolute-5D ≥9.6 · N=8</div>
+      </div>
+
+      <div class="grid-3">
+        <!-- Mode A -->
+        <article class="mini-card">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+            <div>
+              <h4>Mode A · 零参考</h4>
+              <div class="meta">beach-candy · stubs only · EXTRA</div>
+            </div>
+            <span class="badge pass"><span class="dot"></span>min 9.8 PASS</span>
+          </div>
+          <img src="assets/merge/modes-abc/modeA-sheet.jpg" alt="Mode A beach-candy ladder sheet" loading="lazy" />
+          <div class="thumb-compare">
+            CONTROL vs EXTRA
+            <img src="assets/merge/modes-abc/modeA-compare.jpg" alt="Mode A CONTROL vs EXTRA" loading="lazy" />
+          </div>
+          <div class="note">Min cell <strong>9.8</strong> · L6 duck NO face ✓ · <a href="assets/merge/modes-abc/SCORES.md">SCORES.md</a></div>
+        </article>
+
+        <!-- Mode B -->
+        <article class="mini-card">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+            <div>
+              <h4>Mode B · 单参考垫</h4>
+              <div class="meta">beach-candy · toy3d bakery pad · EXTRA</div>
+            </div>
+            <span class="badge fail"><span class="dot"></span>min 8.8 FAIL</span>
+          </div>
+          <img src="assets/merge/modes-abc/modeB-sheet.jpg" alt="Mode B beach-candy ladder sheet FAIL" loading="lazy" />
+          <div class="thumb-compare">
+            CONTROL vs EXTRA
+            <img src="assets/merge/modes-abc/modeB-compare.jpg" alt="Mode B CONTROL vs EXTRA" loading="lazy" />
+          </div>
+          <div class="note">Min cell <strong>8.8</strong> · L6 鸭子黑点脸 · <a href="assets/merge/modes-abc/SCORES.md">SCORES.md</a></div>
+        </article>
+
+        <!-- Mode C -->
+        <article class="mini-card">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+            <div>
+              <h4>Mode C · 参考整梯+新域</h4>
+              <div class="meta">beach-candy · market ladder pad · EXTRA</div>
+            </div>
+            <span class="badge fail"><span class="dot"></span>min 8.5 FAIL</span>
+          </div>
+          <img src="assets/merge/modes-abc/modeC-sheet.jpg" alt="Mode C beach-candy ladder sheet FAIL" loading="lazy" />
+          <div class="thumb-compare">
+            CONTROL vs EXTRA
+            <img src="assets/merge/modes-abc/modeC-compare.jpg" alt="Mode C CONTROL vs EXTRA" loading="lazy" />
+          </div>
+          <div class="note">Min cell <strong>8.5</strong> · 同 L6 脸红线 · <a href="assets/merge/modes-abc/SCORES.md">SCORES.md</a></div>
+        </article>
+      </div>
+
+      <div class="sec-head" style="margin-top:28px;">
+        <div>
+          <div class="tag">earlier Mode C streak</div>
+          <h2 style="font-size:18px;">早期 Mode C 稳定性连胜 · G1 / G2 / G3</h2>
+        </div>
+        <div class="sub">3 consecutive NEW-domain OK · category-swap</div>
       </div>
 
       <div class="grid-3">
