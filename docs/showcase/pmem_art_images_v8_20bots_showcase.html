@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>pmem-art · V8×20 Bot Showcase (skills_kit · ≥9.60 / 8 rounds)</title>
+<style>
+
+:root{--bg:#0b0f19;--card:#111827;--border:#1e293b;--text:#f1f5f9;--muted:#94a3b8}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;padding:24px 18px 60px;line-height:1.45}
+header{max-width:2200px;margin:0 auto 28px;padding:24px 28px;background:linear-gradient(135deg,#111827,#1e1b4b);border:1px solid #312e81;border-radius:16px}
+header h1{font-size:22px;font-weight:800;margin-bottom:10px}
+header p{color:#cbd5e1;font-size:14px;margin-bottom:14px}
+.category-legend{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px}
+.legend-box{padding:12px 16px;border-radius:12px;font-size:13px}
+.legend-auto{background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.35);color:#e0f2fe}
+.legend-boost{background:rgba(234,179,8,.12);border:1px solid rgba(234,179,8,.45);color:#fef08a}
+.legend-bold{background:rgba(244,63,94,.12);border:1px solid rgba(244,63,94,.45);color:#fecdd3}
+.rule-pills{display:flex;flex-wrap:wrap;gap:10px}
+.rule-pill{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:5px 14px;font-size:12px}
+.case-block{max-width:2200px;margin:0 auto 36px;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px}
+.case-header{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px;margin-bottom:12px}
+.case-tag{display:inline-block;font-size:12px;font-family:ui-monospace,Menlo,monospace;color:#38bdf8;background:rgba(56,189,248,.12);padding:3px 10px;border-radius:6px;margin-bottom:6px}
+.case-header h2{font-size:17px;font-weight:700}
+.case-meta{font-size:12.5px;color:var(--muted)}
+.case-meta code,td code{color:#7dd3fc;background:#1e293b;padding:2px 6px;border-radius:4px;font-size:11.5px}
+.row-label{margin:14px 0 8px;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:700}
+.row-a-label{background:rgba(100,116,139,.18);border:1px solid rgba(148,163,184,.4);color:#e2e8f0}
+.row-b-label{background:linear-gradient(90deg,rgba(234,179,8,.16),rgba(244,63,94,.14));border:1px solid rgba(234,179,8,.45);color:#fef9c3}
+.five-col-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-bottom:8px}
+.col-card{background:#0f172a;border:1px solid #1e293b;border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px}
+.ref-card{border-top:3px solid #64748b}
+.source-tag{font-size:11px;font-weight:700;padding:3px 8px;border-radius:5px;text-align:center}
+.ref-source{background:rgba(100,116,139,.2);color:#cbd5e1;border:1px solid rgba(100,116,139,.4)}
+.auto-source{background:rgba(56,189,248,.14);color:#7dd3fc;border:1px solid rgba(56,189,248,.35)}
+.col-badge{display:inline-block;align-self:flex-start;font-size:10.5px;font-weight:700;padding:3px 8px;border-radius:6px}
+.img-wrap{width:100%;aspect-ratio:3/4;background:#020617;border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.img-wrap.landscape{aspect-ratio:4/3}
+.img-wrap img{width:100%;height:100%;object-fit:contain;display:block}
+.score-line{display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap}
+.score-pill{font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px}
+.ref-pill{background:#1e293b;color:#e2e8f0;border:1px solid #475569}
+.hash-tag{font-size:10.5px;color:#64748b;font-family:ui-monospace,Menlo,monospace}
+.dims-line{font-size:11px;color:#94a3b8;background:rgba(255,255,255,.03);padding:5px 8px;border-radius:6px}
+.audit-badges{display:flex;flex-direction:column;gap:4px}
+.mini-badge{font-size:10.5px;padding:2px 7px;border-radius:5px;background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.35);color:#6ee7b7}
+.col-desc{font-size:11.5px;color:#cbd5e1}
+.pmode-tag{display:inline-block;font-size:10.5px;font-weight:800;padding:3px 8px;border-radius:6px;align-self:flex-start}
+.pmode-none{background:rgba(148,163,184,.15);color:#cbd5e1;border:1px solid rgba(148,163,184,.4)}
+.pmode-boost{background:rgba(234,179,8,.18);color:#fde047;border:1px solid rgba(234,179,8,.55)}
+.pmode-bold{background:rgba(244,63,94,.18);color:#fda4af;border:1px solid rgba(244,63,94,.55)}
+.pmode-baseline{background:rgba(100,116,139,.25);color:#e2e8f0;border:1px solid rgba(148,163,184,.5)}
+.pmode-bar{display:block;height:4px;border-radius:2px;margin-top:2px}
+.pmode-none-bar{background:linear-gradient(90deg,#64748b,#94a3b8)}
+.pmode-boost-bar{background:linear-gradient(90deg,#eab308,#f59e0b)}
+.pmode-bold-bar{background:linear-gradient(90deg,#f43f5e,#fb7185)}
+.prompt-footnote{font-size:10.5px;padding:6px 8px;border-radius:6px;line-height:1.4}
+.boost-fn{background:rgba(234,179,8,.1);border:1px dashed rgba(234,179,8,.45);color:#fef08a}
+.bold-fn{background:rgba(244,63,94,.1);border:1px dashed rgba(244,63,94,.45);color:#fecdd3}
+.none-fn{background:rgba(100,116,139,.1);border:1px dashed rgba(148,163,184,.35);color:#94a3b8}
+.summary-block{max-width:2200px;margin:0 auto 40px;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px}
+.summary-block h2{font-size:18px;margin-bottom:12px}
+table.accept-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:10px}
+table.accept-table th,table.accept-table td{border:1px solid #1e293b;padding:8px 10px;text-align:left;vertical-align:top}
+table.accept-table th{background:#0f172a;color:#38bdf8;font-weight:700}
+table.accept-table tr:nth-child(even){background:rgba(255,255,255,.02)}
+tr.baseline-row{background:rgba(100,116,139,.12)!important}
+.qp-box{margin-top:14px;padding:12px 16px;background:#0f172a;border-radius:10px;border:1px solid #334155;font-size:12.5px;color:#e2e8f0}
+.qp-box ul{margin:8px 0 0 18px}
+@media(max-width:1400px){.five-col-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.category-legend{grid-template-columns:1fr}}
+
+.score-big{font-size:22px;font-weight:800}
+.stats-row{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:14px}
+.stat{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:12px}
+.stat .k{font-size:12px;color:var(--muted)}
+.stat .v{font-size:22px;font-weight:800;margin-top:4px}
+.up{color:#4ade80}.down{color:#fb7185}.flat{color:#94a3b8}
+@media(max-width:1100px){.stats-row{grid-template-columns:1fr 1fr}}
+.five-col-grid.base-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+</style></head><body>
+<header>
+<h1>🎨 pmem-art · V8 × 20 Bot 展陈（skills_kit 合同 · STOP≥9.60 · 最多8轮）</h1>
+<p>选型：4 风格 ×（low_best / medium_best / high_best / recompose / recompose_bold）= 20（与前次相同）。生图：gpt-image-2 edits（自 style ref）；按 skills_kit：停分 ≥9.60、上限 8 轮、缺陷回流再生成。评分：gpt-6-sol Absolute-5D Quant。布局对齐 <code>pmem_art_images_v6_32bots_showcase.html</code>（category legend · case-block · five-col-grid · baseline）。旧 V2 showcase 剧本分不可横比。</p>
+<div class="category-legend">
+  <div class="legend-box legend-auto"><b>改构图 recompose</b><br>跟 --recompose-dir 换机位；保画风色板与身份；≥2 轮</div>
+  <div class="legend-box legend-boost"><b>最优方向 best</b><br>low/med/high + cinematic V8 加法清单（孔明灯/耳机/雏菊/体积光）</div>
+  <div class="legend-box legend-bold"><b>大改 recompose_bold</b><br>仅剪影+画幅+风格圣经大跳；禁止混装保色板/旧机位</div>
+</div>
+<div class="rule-pills">
+  <span class="rule-pill">评分 gpt-6-sol Quant</span>
+  <span class="rule-pill">生图 gpt-image-2</span>
+  <span class="rule-pill">STOP ≥9.60 · max 8</span>
+  <span class="rule-pill">前次 V8-20 均值 8.43</span>
+  <span class="rule-pill">轮次 2轮×1 · 3轮×1 · 5轮×1 · 6轮×1 · 8轮×16</span>
+  <span class="rule-pill">更新 2026-10-26 05:19 Asia/Shanghai (UTC+8)</span>
+</div>
+<div class="stats-row">
+  <div class="stat"><div class="k">V8-v2 均值 (n=20)</div><div class="v">9.14</div></div>
+  <div class="stat"><div class="k">vs 前次 V8-20 8.43</div><div class="v up">+0.71</div></div>
+  <div class="stat"><div class="k">原图基线均值</div><div class="v">7.68</div></div>
+  <div class="stat"><div class="k">区间</div><div class="v">7.97–9.70</div></div>
+  <div class="stat"><div class="k">≥9.60 达标</div><div class="v">4/20</div></div>
+</div>
+<p style="margin-top:10px;font-size:13px;color:#cbd5e1">停因 {'max_rounds_reached': 16, 'STOP_TARGET_REACHED': 4} · 轮次分布 {8: 16, 3: 1, 6: 1, 2: 1, 5: 1} · 合同停分 9.6</p>
+<p style="margin-top:12px;font-size:13px;color:#cbd5e1">维度均值：构图 9.78 · 光影 9.12 · 透视 8.45 · 质感 8.71 · 风格 9.7</p>
+</header>
+<section class="case-block"><div class="case-header"><div><span class="case-tag">baselines</span><h2>原图 / 风格参考（Absolute-5D 同尺）</h2></div><div class="case-meta">4 refs · 与 bot 同一 gpt-6-sol Quant 量表</div></div><div class="five-col-grid base-grid">
+<div class="col-card ref-card">
+  <span class="pmode-tag pmode-baseline">原图 Baseline · night_city</span>
+  <span class="pmode-bar pmode-none-bar"></span>
+  <div class="source-tag ref-source">原图 Baseline</div>
+  <div class="img-wrap"><img src="v8_frames/c01_ref.jpg" alt="style_ref_01_night_city.png" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">—</span><span class="hash-tag"></span></div>
+  <div class="mini-badge">原图·0轮</div>
+  <div class="dims-line">—</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px"></div>
+  <div class="hash-tag">style_ref_01_night_city.png</div>
+</div>
+<div class="col-card ref-card">
+  <span class="pmode-tag pmode-baseline">原图 Baseline · pastel_sketch</span>
+  <span class="pmode-bar pmode-none-bar"></span>
+  <div class="source-tag ref-source">原图 Baseline</div>
+  <div class="img-wrap landscape"><img src="v8_frames/c02_ref.jpg" alt="style_ref_02_pastel_sketch.png" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">—</span><span class="hash-tag"></span></div>
+  <div class="mini-badge">原图·0轮</div>
+  <div class="dims-line">—</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px"></div>
+  <div class="hash-tag">style_ref_02_pastel_sketch.png</div>
+</div>
+<div class="col-card ref-card">
+  <span class="pmode-tag pmode-baseline">原图 Baseline · sunlit_portrait</span>
+  <span class="pmode-bar pmode-none-bar"></span>
+  <div class="source-tag ref-source">原图 Baseline</div>
+  <div class="img-wrap"><img src="v8_frames/c03_ref.jpg" alt="style_ref_03_sunlit_portrait.png" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">8.30</span><span class="hash-tag">良好</span></div>
+  <div class="mini-badge">原图·0轮</div>
+  <div class="dims-line">构图 9.25 · 光影 8.25 · 透视 7.75 · 质感 5.75 · 风格 10.0</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px">整体细节偏软，头发和衣物纹理不足；暗部面部与衣领区域层次较弱；肩颈和衣领结构略显模糊</div>
+  <div class="hash-tag">style_ref_03_sunlit_portrait.png</div>
+</div>
+<div class="col-card ref-card">
+  <span class="pmode-tag pmode-baseline">原图 Baseline · ishtar_canyon</span>
+  <span class="pmode-bar pmode-none-bar"></span>
+  <div class="source-tag ref-source">原图 Baseline</div>
+  <div class="img-wrap landscape"><img src="v8_frames/c04_ref.jpg" alt="web_ref_01_concept_ishtar.png" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">7.06</span><span class="hash-tag">良好</span></div>
+  <div class="mini-badge">原图·0轮</div>
+  <div class="dims-line">构图 6.75 · 光影 8.25 · 透视 5.75 · 质感 7.5 · 风格 7.5</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px">C1/C6：缩小后墙面、阶梯与中央装饰挤成密集线块，主焦点不够突出。；C3/C5：强烈倾斜与多向斜线争夺注意，空间层次和视线路径不够清晰。；L1/L6：局部亮面与整体入光方向对应不足，阶梯及构件接缝的接触阴影偏弱。</div>
+  <div class="hash-tag">web_ref_01_concept_ishtar.png</div>
+</div></div></section><section class="case-block">
+<div class="case-header"><div><span class="case-tag">night_city</span>
+<h2>案例 · 东方仙侠不夜城 · 飞檐孤侠俯瞰万家灯火 (style_ref_01_night_city.png)</h2></div>
+<div class="case-meta">画幅 <code>9:16</code> · 5 档 cinematic 子集</div></div>
+<div class="row-label row-b-label">最优方向 / 改构图 / 大改 · 含实际轮次与 Absolute-5D</div>
+<div class="five-col-grid">
+<div class="col-card">
+  <span class="pmode-tag pmode-boost">v8_bot_02 · 低·最优方向</span>
+  <span class="pmode-bar pmode-boost-bar"></span>
+  <div class="source-tag auto-source">gpt-image-2 · V8→V2 · 终图</div>
+  <div class="img-wrap"><img src="v8_frames/c01_low.jpg" alt="v8_bot_02_night_city_low_best.jpg" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">8.96</span><span class="hash-tag">优秀</span></div>
+  <div class="mini-badge">R1→R8·8轮 · max_rounds_reached · 8.96</div>
+  <div class="dims-line">构图 10.0 · 光影 9.25 · 透视 8.25 · 质感 8.0 · 风格 9.25</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px">远景屋顶与灯点略显重复、局部细节偏软。；人物手部与剑柄结构不够清晰，屋脊接触阴影略弱。</div>
+  <div class="hash-tag">v8_bot_02_night_city_low_best.jpg</div>
+</div>
+<div class="col-card">
+  <span class="pmode-tag pmode-boost">v8_bot_04 · 中·最优方向</span>
+  <span class="pmode-bar pmode-boost-bar"></span>
+  <div class="source-tag auto-source">gpt-image-2 · V8→V2 · 终图</div>
+  <div class="img-wrap"><img src="v8_frames/c01_medium.jpg" alt="v8_bot_04_night_city_medium_best.jpg" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">9.38</span><span class="hash-tag">优秀</span></div>
+  <div class="mini-badge">R1→R8·8轮 · max_rounds_reached · 9.38</div>
+  <div class="dims-line">构图 10.0 · 光影 9.25 · 透视 9.0 · 质感 8.5 · 风格 10.0</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px">人物手臂与剑柄区域略显僵硬，关节结构不够明确；部分屋檐、树冠与雾气交界偏软，材质边缘有轻微糊化；人物脚部与屋脊的接触阴影略弱，站立关系不够扎实</div>
+  <div class="hash-tag">v8_bot_04_night_city_medium_best.jpg</div>
+</div>
+<div class="col-card">
+  <span class="pmode-tag pmode-boost">v8_bot_06 · 高·最优方向</span>
+  <span class="pmode-bar pmode-boost-bar"></span>
+  <div class="source-tag auto-source">gpt-image-2 · V8→V2 · 终图</div>
+  <div class="img-wrap"><img src="v8_frames/c01_high.jpg" alt="v8_bot_06_night_city_high_best.jpg" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">8.97</span><span class="hash-tag">优秀</span></div>
+  <div class="mini-badge">R1→R8·8轮 · max_rounds_reached · 8.97</div>
+  <div class="dims-line">构图 10.0 · 光影 9.25 · 透视 7.25 · 质感 8.75 · 风格 10.0</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px">人物手臂与持剑连接处略显模糊；屋顶与远景城市局部结构过密并有软化；部分云雾、剑气边缘出现轻微融边</div>
+  <div class="hash-tag">v8_bot_06_night_city_high_best.jpg</div>
+</div>
+<div class="col-card">
+  <span class="pmode-tag pmode-none">v8_bot_07 · 改构图</span>
+  <span class="pmode-bar pmode-none-bar"></span>
+  <div class="source-tag auto-source">gpt-image-2 · V8→V2 · 终图</div>
+  <div class="img-wrap"><img src="v8_frames/c01_recompose.jpg" alt="v8_bot_07_night_city_recompose.jpg" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">9.60</span><span class="hash-tag">近乎无瑕</span></div>
+  <div class="mini-badge">R1→R3·3轮 · STOP_TARGET_REACHED · 9.60</div>
+  <div class="dims-line">构图 10.0 · 光影 10.0 · 透视 9.0 · 质感 9.0 · 风格 10.0</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px">远景建筑与树叶局部细节偏软偏糊；人物手臂与剑柄区域结构略显生硬；船体和人物暗部存在少量细节损失</div>
+  <div class="hash-tag">v8_bot_07_night_city_recompose.jpg</div>
+</div>
+<div class="col-card">
+  <span class="pmode-tag pmode-bold">v8_bot_08 · 大改 bold</span>
+  <span class="pmode-bar pmode-bold-bar"></span>
+  <div class="source-tag auto-source">gpt-image-2 · V8→V2 · 终图</div>
+  <div class="img-wrap"><img src="v8_frames/c01_bold.jpg" alt="v8_bot_08_night_city_recompose_bold.jpg" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">9.18</span><span class="hash-tag">优秀</span></div>
+  <div class="mini-badge">R1→R8·8轮 · max_rounds_reached · 9.18</div>
+  <div class="dims-line">构图 9.25 · 光影 9.25 · 透视 8.5 · 质感 9.0 · 风格 10.0</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px">人物手臂与持剑处略显僵硬，局部解剖不够清晰；积水高光偏密，人物脚底接触阴影略弱</div>
+  <div class="hash-tag">v8_bot_08_night_city_recompose_bold.jpg</div>
+</div></div></section><section class="case-block">
+<div class="case-header"><div><span class="case-tag">pastel_sketch</span>
+<h2>案例 · 油画棒粉彩速写 · 红卫衣屈膝少女 (style_ref_02_pastel_sketch.png)</h2></div>
+<div class="case-meta">画幅 <code>4:3</code> · 5 档 cinematic 子集</div></div>
+<div class="row-label row-b-label">最优方向 / 改构图 / 大改 · 含实际轮次与 Absolute-5D</div>
+<div class="five-col-grid">
+<div class="col-card">
+  <span class="pmode-tag pmode-boost">v8_bot_10 · 低·最优方向</span>
+  <span class="pmode-bar pmode-boost-bar"></span>
+  <div class="source-tag auto-source">gpt-image-2 · V8→V2 · 终图</div>
+  <div class="img-wrap landscape"><img src="v8_frames/c02_low.jpg" alt="v8_bot_10_pastel_sketch_low_best.jpg" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">8.72</span><span class="hash-tag">优秀</span></div>
+  <div class="mini-badge">R1→R8·8轮 · max_rounds_reached · 8.72</div>
+  <div class="dims-line">构图 10.0 · 光影 9.25 · 透视 7.0 · 质感 8.5 · 风格 9.25</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px">手指局部略有粘连和线条含混；膝盖、踝部结构转折偏软；鞋面和袜口细节略显糊化</div>
+  <div class="hash-tag">v8_bot_10_pastel_sketch_low_best.jpg</div>
+</div>
+<div class="col-card">
+  <span class="pmode-tag pmode-boost">v8_bot_12 · 中·最优方向</span>
+  <span class="pmode-bar pmode-boost-bar"></span>
+  <div class="source-tag auto-source">gpt-image-2 · V8→V2 · 终图</div>
+  <div class="img-wrap landscape"><img src="v8_frames/c02_medium.jpg" alt="v8_bot_12_pastel_sketch_medium_best.jpg" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">8.86</span><span class="hash-tag">优秀</span></div>
+  <div class="mini-badge">R1→R8·8轮 · max_rounds_reached · 8.86</div>
+  <div class="dims-line">构图 10.0 · 光影 8.5 · 透视 7.25 · 质感 9.0 · 风格 10.0</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px">高光区域略有泛白和细节丢失；手指与鞋部结构略显含混；部分衣物和背景边缘偏软</div>
+  <div class="hash-tag">v8_bot_12_pastel_sketch_medium_best.jpg</div>
+</div>
+<div class="col-card">
+  <span class="pmode-tag pmode-boost">v8_bot_14 · 高·最优方向</span>
+  <span class="pmode-bar pmode-boost-bar"></span>
+  <div class="source-tag auto-source">gpt-image-2 · V8→V2 · 终图</div>
+  <div class="img-wrap landscape"><img src="v8_frames/c02_high.jpg" alt="v8_bot_14_pastel_sketch_high_best.jpg" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">9.35</span><span class="hash-tag">优秀</span></div>
+  <div class="mini-badge">R1→R8·8轮 · max_rounds_reached · 9.35</div>
+  <div class="dims-line">构图 10.0 · 光影 10.0 · 透视 8.0 · 质感 9.0 · 风格 10.0</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px">交叠腿部的膝、胫部关系略显含混；鞋与脚踝结构细节有轻微变形；全画面颗粒排线偏密，局部材质分界受影响</div>
+  <div class="hash-tag">v8_bot_14_pastel_sketch_high_best.jpg</div>
+</div>
+<div class="col-card">
+  <span class="pmode-tag pmode-none">v8_bot_15 · 改构图</span>
+  <span class="pmode-bar pmode-none-bar"></span>
+  <div class="source-tag auto-source">gpt-image-2 · V8→V2 · 终图</div>
+  <div class="img-wrap landscape"><img src="v8_frames/c02_recompose.jpg" alt="v8_bot_15_pastel_sketch_recompose.jpg" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">9.68</span><span class="hash-tag">近乎无瑕</span></div>
+  <div class="mini-badge">R1→R6·6轮 · STOP_TARGET_REACHED · 9.68</div>
+  <div class="dims-line">构图 10.0 · 光影 10.0 · 透视 9.0 · 质感 9.5 · 风格 10.0</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px">人物面部与肢体结构有轻微简化和软化；栏杆与远景局部笔触偏软，细节锐度略不足</div>
+  <div class="hash-tag">v8_bot_15_pastel_sketch_recompose.jpg</div>
+</div>
+<div class="col-card">
+  <span class="pmode-tag pmode-bold">v8_bot_16 · 大改 bold</span>
+  <span class="pmode-bar pmode-bold-bar"></span>
+  <div class="source-tag auto-source">gpt-image-2 · V8→V2 · 终图</div>
+  <div class="img-wrap landscape"><img src="v8_frames/c02_bold.jpg" alt="v8_bot_16_pastel_sketch_recompose_bold.jpg" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">9.09</span><span class="hash-tag">优秀</span></div>
+  <div class="mini-badge">R1→R8·8轮 · max_rounds_reached · 9.09</div>
+  <div class="dims-line">构图 10.0 · 光影 8.25 · 透视 7.75 · 质感 10.0 · 风格 10.0</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px">光照方向不明确，接触阴影表现较弱；手部与膝腿连接略显僵硬，局部解剖简化；主体更接近彩色网点插画而非完全单色剪影</div>
+  <div class="hash-tag">v8_bot_16_pastel_sketch_recompose_bold.jpg</div>
+</div></div></section><section class="case-block">
+<div class="case-header"><div><span class="case-tag">sunlit_portrait</span>
+<h2>案例 · 胶片轻厚涂肖像 · 二分光雏菊壁纸 (style_ref_03_sunlit_portrait.png)</h2></div>
+<div class="case-meta">画幅 <code>3:4</code> · 5 档 cinematic 子集</div></div>
+<div class="row-label row-b-label">最优方向 / 改构图 / 大改 · 含实际轮次与 Absolute-5D</div>
+<div class="five-col-grid">
+<div class="col-card">
+  <span class="pmode-tag pmode-boost">v8_bot_18 · 低·最优方向</span>
+  <span class="pmode-bar pmode-boost-bar"></span>
+  <div class="source-tag auto-source">gpt-image-2 · V8→V2 · 终图</div>
+  <div class="img-wrap"><img src="v8_frames/c03_low.jpg" alt="v8_bot_18_sunlit_portrait_low_best.jpg" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">8.91</span><span class="hash-tag">优秀</span></div>
+  <div class="mini-badge">R1→R8·8轮 · max_rounds_reached · 8.91</div>
+  <div class="dims-line">构图 10.0 · 光影 8.25 · 透视 10.0 · 质感 6.75 · 风格 8.75</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px">面部与衣物局部质感偏软，细节解析不足；头发边缘与背景在逆光区域有轻微融化；明暗分界过于生硬，暗部面部和衣物层次略弱</div>
+  <div class="hash-tag">v8_bot_18_sunlit_portrait_low_best.jpg</div>
+</div>
+<div class="col-card">
+  <span class="pmode-tag pmode-boost">v8_bot_20 · 中·最优方向</span>
+  <span class="pmode-bar pmode-boost-bar"></span>
+  <div class="source-tag auto-source">gpt-image-2 · V8→V2 · 终图</div>
+  <div class="img-wrap"><img src="v8_frames/c03_medium.jpg" alt="v8_bot_20_sunlit_portrait_medium_best.jpg" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">8.81</span><span class="hash-tag">优秀</span></div>
+  <div class="mini-badge">R1→R8·8轮 · max_rounds_reached · 8.81</div>
+  <div class="dims-line">构图 9.25 · 光影 8.25 · 透视 9.25 · 质感 8.25 · 风格 8.82</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px">高光区域局部过曝，面部明暗分割略显生硬；头发与背景交界部分偏软，边缘融化感明显；整体微观纹理和厚涂笔触不足，质感略偏柔化</div>
+  <div class="hash-tag">v8_bot_20_sunlit_portrait_medium_best.jpg</div>
+</div>
+<div class="col-card">
+  <span class="pmode-tag pmode-boost">v8_bot_22 · 高·最优方向</span>
+  <span class="pmode-bar pmode-boost-bar"></span>
+  <div class="source-tag auto-source">gpt-image-2 · V8→V2 · 终图</div>
+  <div class="img-wrap"><img src="v8_frames/c03_high.jpg" alt="v8_bot_22_sunlit_portrait_high_best.jpg" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">9.35</span><span class="hash-tag">优秀</span></div>
+  <div class="mini-badge">R1→R8·8轮 · max_rounds_reached · 9.35</div>
+  <div class="dims-line">构图 9.25 · 光影 9.25 · 透视 9.5 · 质感 8.5 · 风格 10.0</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px">构图裁切偏紧，顶部与两侧空间不足；白衣高光局部偏亮，纹理细节有所丢失；发丝与衣料局部偏软，材质区分度略弱</div>
+  <div class="hash-tag">v8_bot_22_sunlit_portrait_high_best.jpg</div>
+</div>
+<div class="col-card">
+  <span class="pmode-tag pmode-none">v8_bot_23 · 改构图</span>
+  <span class="pmode-bar pmode-none-bar"></span>
+  <div class="source-tag auto-source">gpt-image-2 · V8→V2 · 终图</div>
+  <div class="img-wrap"><img src="v8_frames/c03_recompose.jpg" alt="v8_bot_23_sunlit_portrait_recompose.jpg" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">9.18</span><span class="hash-tag">优秀</span></div>
+  <div class="mini-badge">R1→R8·8轮 · max_rounds_reached · 9.18</div>
+  <div class="dims-line">构图 10.0 · 光影 9.25 · 透视 8.5 · 质感 8.0 · 风格 10.0</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px">手指与速写本边缘略显含混；整体柔焦和颗粒感削弱局部细节；高光略强，衣料纹理部分被压淡</div>
+  <div class="hash-tag">v8_bot_23_sunlit_portrait_recompose.jpg</div>
+</div>
+<div class="col-card">
+  <span class="pmode-tag pmode-bold">v8_bot_24 · 大改 bold</span>
+  <span class="pmode-bar pmode-bold-bar"></span>
+  <div class="source-tag auto-source">gpt-image-2 · V8→V2 · 终图</div>
+  <div class="img-wrap"><img src="v8_frames/c03_bold.jpg" alt="v8_bot_24_sunlit_portrait_recompose_bold.jpg" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">9.66</span><span class="hash-tag">近乎无瑕</span></div>
+  <div class="mini-badge">R1→R2·2轮 · STOP_TARGET_REACHED · 9.66</div>
+  <div class="dims-line">构图 10.0 · 光影 9.25 · 透视 9.25 · 质感 10.0 · 风格 10.0</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px">肩颈与衣领交界略显生硬，接触关系稍弱；人物为背面剪影，面部不可见但符合目标设定</div>
+  <div class="hash-tag">v8_bot_24_sunlit_portrait_recompose_bold.jpg</div>
+</div></div></section><section class="case-block">
+<div class="case-header"><div><span class="case-tag">ishtar_canyon</span>
+<h2>案例 · 概念厚涂峡谷 · Ishtar 天井飞龙 (web_ref_01_concept_ishtar.png)</h2></div>
+<div class="case-meta">画幅 <code>4:3</code> · 5 档 cinematic 子集</div></div>
+<div class="row-label row-b-label">最优方向 / 改构图 / 大改 · 含实际轮次与 Absolute-5D</div>
+<div class="five-col-grid">
+<div class="col-card">
+  <span class="pmode-tag pmode-boost">v8_bot_26 · 低·最优方向</span>
+  <span class="pmode-bar pmode-boost-bar"></span>
+  <div class="source-tag auto-source">gpt-image-2 · V8→V2 · 终图</div>
+  <div class="img-wrap landscape"><img src="v8_frames/c04_low.jpg" alt="v8_bot_26_ishtar_canyon_low_best.jpg" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">7.97</span><span class="hash-tag">良好</span></div>
+  <div class="mini-badge">R1→R8·8轮 · max_rounds_reached · 7.97</div>
+  <div class="dims-line">构图 8.5 · 光影 8.5 · 透视 6.25 · 质感 7.75 · 风格 9.25</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px">局部屋顶和梁架透视变形，结构线不够稳定；阴影区域偏糊，接触阴影与遮挡关系不够明确；部分瓦片和木材边缘出现软化融化</div>
+  <div class="hash-tag">v8_bot_26_ishtar_canyon_low_best.jpg</div>
+</div>
+<div class="col-card">
+  <span class="pmode-tag pmode-boost">v8_bot_28 · 中·最优方向</span>
+  <span class="pmode-bar pmode-boost-bar"></span>
+  <div class="source-tag auto-source">gpt-image-2 · V8→V2 · 终图</div>
+  <div class="img-wrap landscape"><img src="v8_frames/c04_medium.jpg" alt="v8_bot_28_ishtar_canyon_medium_best.jpg" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">8.45</span><span class="hash-tag">良好</span></div>
+  <div class="mini-badge">R1→R8·8轮 · max_rounds_reached · 8.45</div>
+  <div class="dims-line">构图 9.25 · 光影 9.25 · 透视 7.65 · 质感 7.25 · 风格 8.75</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px">局部建筑结构和木梁连接关系略显松散；雾化较重，部分远景与边缘细节发软；接触阴影偏弱，构件贴合感不足</div>
+  <div class="hash-tag">v8_bot_28_ishtar_canyon_medium_best.jpg</div>
+</div>
+<div class="col-card">
+  <span class="pmode-tag pmode-boost">v8_bot_30 · 高·最优方向</span>
+  <span class="pmode-bar pmode-boost-bar"></span>
+  <div class="source-tag auto-source">gpt-image-2 · V8→V2 · 终图</div>
+  <div class="img-wrap landscape"><img src="v8_frames/c04_high.jpg" alt="v8_bot_30_ishtar_canyon_high_best.jpg" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">9.55</span><span class="hash-tag">近乎无瑕</span></div>
+  <div class="mini-badge">R1→R8·8轮 · max_rounds_reached · 9.55</div>
+  <div class="dims-line">构图 10.0 · 光影 9.25 · 透视 9.25 · 质感 9.25 · 风格 10.0</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px">人物比例偏小，红斗篷旅人的动作与身份细节较弱；部分龙翼和前景结构被裁切或遮挡；局部火光与桥面接触阴影略显混杂</div>
+  <div class="hash-tag">v8_bot_30_ishtar_canyon_high_best.jpg</div>
+</div>
+<div class="col-card">
+  <span class="pmode-tag pmode-none">v8_bot_31 · 改构图</span>
+  <span class="pmode-bar pmode-none-bar"></span>
+  <div class="source-tag auto-source">gpt-image-2 · V8→V2 · 终图</div>
+  <div class="img-wrap landscape"><img src="v8_frames/c04_recompose.jpg" alt="v8_bot_31_ishtar_canyon_recompose.jpg" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">9.70</span><span class="hash-tag">近乎无瑕</span></div>
+  <div class="mini-badge">R1→R5·5轮 · STOP_TARGET_REACHED · 9.70</div>
+  <div class="dims-line">构图 10.0 · 光影 10.0 · 透视 9.25 · 质感 9.25 · 风格 10.0</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px">旅人下肢与手部局部细节略软，解剖结构不够明确；远景树木、桥体与植被交界处有少量笔触融合</div>
+  <div class="hash-tag">v8_bot_31_ishtar_canyon_recompose.jpg</div>
+</div>
+<div class="col-card">
+  <span class="pmode-tag pmode-bold">v8_bot_32 · 大改 bold</span>
+  <span class="pmode-bar pmode-bold-bar"></span>
+  <div class="source-tag auto-source">gpt-image-2 · V8→V2 · 终图</div>
+  <div class="img-wrap landscape"><img src="v8_frames/c04_bold.jpg" alt="v8_bot_32_ishtar_canyon_recompose_bold.jpg" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">9.40</span><span class="hash-tag">优秀</span></div>
+  <div class="mini-badge">R1→R8·8轮 · max_rounds_reached · 9.40</div>
+  <div class="dims-line">构图 10.0 · 光影 8.25 · 透视 9.0 · 质感 10.0 · 风格 10.0</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px">光照方向较弱，整体以平面版画处理为主；桥体下部被裁切，结构纵深略显简化；旅人接触桥面的阴影不明显</div>
+  <div class="hash-tag">v8_bot_32_ishtar_canyon_recompose_bold.jpg</div>
+</div></div></section><section class="summary-block"><h2>分数汇总</h2><table class="accept-table"><tr><th>Bot</th><th>档</th><th>总分</th><th>等级</th><th>轮次</th><th>五维</th></tr><tr><td><code>v8_bot_02</code></td><td>low_best</td><td><b>8.96</b></td><td>优秀</td><td>R1→R8·8轮 · max_rounds_reached · 8.96</td><td>10.0/9.25/8.25/8.0/9.25</td></tr><tr><td><code>v8_bot_04</code></td><td>medium_best</td><td><b>9.38</b></td><td>优秀</td><td>R1→R8·8轮 · max_rounds_reached · 9.38</td><td>10.0/9.25/9.0/8.5/10.0</td></tr><tr><td><code>v8_bot_06</code></td><td>high_best</td><td><b>8.97</b></td><td>优秀</td><td>R1→R8·8轮 · max_rounds_reached · 8.97</td><td>10.0/9.25/7.25/8.75/10.0</td></tr><tr><td><code>v8_bot_07</code></td><td>recompose</td><td><b>9.6</b></td><td>近乎无瑕</td><td>R1→R3·3轮 · STOP_TARGET_REACHED · 9.60</td><td>10.0/10.0/9.0/9.0/10.0</td></tr><tr><td><code>v8_bot_08</code></td><td>recompose_bold</td><td><b>9.18</b></td><td>优秀</td><td>R1→R8·8轮 · max_rounds_reached · 9.18</td><td>9.25/9.25/8.5/9.0/10.0</td></tr><tr><td><code>v8_bot_10</code></td><td>low_best</td><td><b>8.72</b></td><td>优秀</td><td>R1→R8·8轮 · max_rounds_reached · 8.72</td><td>10.0/9.25/7.0/8.5/9.25</td></tr><tr><td><code>v8_bot_12</code></td><td>medium_best</td><td><b>8.86</b></td><td>优秀</td><td>R1→R8·8轮 · max_rounds_reached · 8.86</td><td>10.0/8.5/7.25/9.0/10.0</td></tr><tr><td><code>v8_bot_14</code></td><td>high_best</td><td><b>9.35</b></td><td>优秀</td><td>R1→R8·8轮 · max_rounds_reached · 9.35</td><td>10.0/10.0/8.0/9.0/10.0</td></tr><tr><td><code>v8_bot_15</code></td><td>recompose</td><td><b>9.68</b></td><td>近乎无瑕</td><td>R1→R6·6轮 · STOP_TARGET_REACHED · 9.68</td><td>10.0/10.0/9.0/9.5/10.0</td></tr><tr><td><code>v8_bot_16</code></td><td>recompose_bold</td><td><b>9.09</b></td><td>优秀</td><td>R1→R8·8轮 · max_rounds_reached · 9.09</td><td>10.0/8.25/7.75/10.0/10.0</td></tr><tr><td><code>v8_bot_18</code></td><td>low_best</td><td><b>8.91</b></td><td>优秀</td><td>R1→R8·8轮 · max_rounds_reached · 8.91</td><td>10.0/8.25/10.0/6.75/8.75</td></tr><tr><td><code>v8_bot_20</code></td><td>medium_best</td><td><b>8.81</b></td><td>优秀</td><td>R1→R8·8轮 · max_rounds_reached · 8.81</td><td>9.25/8.25/9.25/8.25/8.82</td></tr><tr><td><code>v8_bot_22</code></td><td>high_best</td><td><b>9.35</b></td><td>优秀</td><td>R1→R8·8轮 · max_rounds_reached · 9.35</td><td>9.25/9.25/9.5/8.5/10.0</td></tr><tr><td><code>v8_bot_23</code></td><td>recompose</td><td><b>9.18</b></td><td>优秀</td><td>R1→R8·8轮 · max_rounds_reached · 9.18</td><td>10.0/9.25/8.5/8.0/10.0</td></tr><tr><td><code>v8_bot_24</code></td><td>recompose_bold</td><td><b>9.66</b></td><td>近乎无瑕</td><td>R1→R2·2轮 · STOP_TARGET_REACHED · 9.66</td><td>10.0/9.25/9.25/10.0/10.0</td></tr><tr><td><code>v8_bot_26</code></td><td>low_best</td><td><b>7.97</b></td><td>良好</td><td>R1→R8·8轮 · max_rounds_reached · 7.97</td><td>8.5/8.5/6.25/7.75/9.25</td></tr><tr><td><code>v8_bot_28</code></td><td>medium_best</td><td><b>8.45</b></td><td>良好</td><td>R1→R8·8轮 · max_rounds_reached · 8.45</td><td>9.25/9.25/7.65/7.25/8.75</td></tr><tr><td><code>v8_bot_30</code></td><td>high_best</td><td><b>9.55</b></td><td>近乎无瑕</td><td>R1→R8·8轮 · max_rounds_reached · 9.55</td><td>10.0/9.25/9.25/9.25/10.0</td></tr><tr><td><code>v8_bot_31</code></td><td>recompose</td><td><b>9.7</b></td><td>近乎无瑕</td><td>R1→R5·5轮 · STOP_TARGET_REACHED · 9.70</td><td>10.0/10.0/9.25/9.25/10.0</td></tr><tr><td><code>v8_bot_32</code></td><td>recompose_bold</td><td><b>9.4</b></td><td>优秀</td><td>R1→R8·8轮 · max_rounds_reached · 9.40</td><td>10.0/8.25/9.0/10.0/10.0</td></tr></table><div class="qp-box"><b>对照说明</b><ul><li>前次 V8-20 均值 <b>8.43</b>（do_r2=false，单轮）；本批 V8→V2 调整 + 真 R2。</li><li>本批均值 <b>9.14</b>，Δ = <b>0.71</b>。</li><li>原图基线均值 <b>7.68</b>（同尺）。</li><li>旧 V2 showcase 分为 scripted，不可与本批 Absolute-5D 横比。</li></ul></div></section></body></html>

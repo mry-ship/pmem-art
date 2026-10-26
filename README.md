@@ -90,40 +90,40 @@ python3 pmem_art.py skills --install
 
 ![pmem-art 自我进化报告预览](benchmark-evolution-preview.png)
 
-### V4 · 20 Bot 冷启动（图墙）
+### V8 · 20 Bot（skills_kit · Absolute-5D）
 
-4 案例 × 5 档，空白项目从零跑，**20 / 20 达标停机**（≥9.60）。  
-全页放大版：[docs/showcase/pmem_art_images_v4_20bots_showcase.html](docs/showcase/pmem_art_images_v4_20bots_showcase.html)
+4 案例 ×（原画 / low / medium / high / recompose / 大改）= **20 终图**；停分 ≥9.60、最多 8 轮。  
+本批均值 **9.14**（≥9.60 达标 **4/20**）。全页：[docs/showcase/pmem_art_images_v8_20bots_showcase.html](docs/showcase/pmem_art_images_v8_20bots_showcase.html)
 
 #### 案例 01 · 仙侠不夜城
 
 | 📥 原图 | 🤖 low | 🤖 medium | 🤖 high | 🎮 recompose | 🔥 大改 |
 | :---: | :---: | :---: | :---: | :---: | :---: |
-| ![c01_ref](docs/showcase/v4_frames/c01_ref.jpg) | ![c01_low](docs/showcase/v4_frames/c01_low.jpg) | ![c01_med](docs/showcase/v4_frames/c01_medium.jpg) | ![c01_high](docs/showcase/v4_frames/c01_high.jpg) | ![c01_rec](docs/showcase/v4_frames/c01_recompose.jpg) | ![c01_bold](docs/showcase/v4_frames/c01_bold.jpg) |
-| Baseline | **9.71** · 2 轮<br>`9.41 → 9.71` | **9.67** · 3 轮<br>`9.34 → 9.48 → 9.67` | **9.73** · 3 轮<br>`9.23 → 9.47 → 9.73` | **9.67** · 3 轮<br>`9.30 → 9.46 → 9.67` | **9.67** · 3 轮<br>`9.30 → 9.46 → 9.67` |
+| ![c01_ref](docs/showcase/v8_frames/c01_ref.jpg) | ![c01_low](docs/showcase/v8_frames/c01_low.jpg) | ![c01_med](docs/showcase/v8_frames/c01_medium.jpg) | ![c01_high](docs/showcase/v8_frames/c01_high.jpg) | ![c01_rec](docs/showcase/v8_frames/c01_recompose.jpg) | ![c01_bold](docs/showcase/v8_frames/c01_bold.jpg) |
+| Baseline | **8.96** · 8 轮<br>`7.96 → 8.96` | **9.38** · 8 轮<br>`8.15 → 9.38` | **8.97** · 8 轮<br>`8.38 → 8.97` | **9.60** · 3 轮<br>`9.06 → 9.60` | **9.18** · 8 轮<br>`6.90 → 9.18` |
 
 #### 案例 02 · 粉彩速写少女
 
 | 📥 原图 | 🤖 low | 🤖 medium | 🤖 high | 🎮 recompose | 🔥 大改 |
 | :---: | :---: | :---: | :---: | :---: | :---: |
-| ![c02_ref](docs/showcase/v4_frames/c02_ref.jpg) | ![c02_low](docs/showcase/v4_frames/c02_low.jpg) | ![c02_med](docs/showcase/v4_frames/c02_medium.jpg) | ![c02_high](docs/showcase/v4_frames/c02_high.jpg) | ![c02_rec](docs/showcase/v4_frames/c02_recompose.jpg) | ![c02_bold](docs/showcase/v4_frames/c02_bold.jpg) |
-| Baseline | **9.71** · 2 轮<br>`9.41 → 9.71` | **9.67** · 3 轮<br>`9.34 → 9.48 → 9.67` | **9.73** · 3 轮<br>`9.23 → 9.47 → 9.73` | **9.67** · 3 轮<br>`9.30 → 9.46 → 9.67` | **9.67** · 3 轮<br>`9.30 → 9.46 → 9.67` |
+| ![c02_ref](docs/showcase/v8_frames/c02_ref.jpg) | ![c02_low](docs/showcase/v8_frames/c02_low.jpg) | ![c02_med](docs/showcase/v8_frames/c02_medium.jpg) | ![c02_high](docs/showcase/v8_frames/c02_high.jpg) | ![c02_rec](docs/showcase/v8_frames/c02_recompose.jpg) | ![c02_bold](docs/showcase/v8_frames/c02_bold.jpg) |
+| Baseline | **8.72** · 8 轮<br>`7.88 → 8.72` | **8.86** · 8 轮<br>`7.99 → 8.86` | **9.35** · 8 轮<br>`9.22 → 9.35` | **9.68** · 6 轮<br>`8.60 → 9.68` | **9.09** · 8 轮<br>`8.10 → 9.09` |
 
 #### 案例 03 · 窗边日光胸像
 
 | 📥 原图 | 🤖 low | 🤖 medium | 🤖 high | 🎮 recompose | 🔥 大改 |
 | :---: | :---: | :---: | :---: | :---: | :---: |
-| ![c03_ref](docs/showcase/v4_frames/c03_ref.jpg) | ![c03_low](docs/showcase/v4_frames/c03_low.jpg) | ![c03_med](docs/showcase/v4_frames/c03_medium.jpg) | ![c03_high](docs/showcase/v4_frames/c03_high.jpg) | ![c03_rec](docs/showcase/v4_frames/c03_recompose.jpg) | ![c03_bold](docs/showcase/v4_frames/c03_bold.jpg) |
-| Baseline | **9.71** · 2 轮<br>`9.41 → 9.71` | **9.67** · 3 轮<br>`9.34 → 9.48 → 9.67` | **9.73** · 3 轮<br>`9.23 → 9.47 → 9.73` | **9.67** · 3 轮<br>`9.30 → 9.46 → 9.67` | **9.67** · 3 轮<br>`9.30 → 9.46 → 9.67` |
+| ![c03_ref](docs/showcase/v8_frames/c03_ref.jpg) | ![c03_low](docs/showcase/v8_frames/c03_low.jpg) | ![c03_med](docs/showcase/v8_frames/c03_medium.jpg) | ![c03_high](docs/showcase/v8_frames/c03_high.jpg) | ![c03_rec](docs/showcase/v8_frames/c03_recompose.jpg) | ![c03_bold](docs/showcase/v8_frames/c03_bold.jpg) |
+| Baseline · **8.30** | **8.91** · 8 轮<br>`8.91 → 8.91` | **8.81** · 8 轮<br>`8.61 → 8.81` | **9.35** · 8 轮<br>`8.79 → 9.35` | **9.18** · 8 轮<br>`8.21 → 9.18` | **9.66** · 2 轮<br>`8.88 → 9.66` |
 
 #### 案例 04 · 天井峡谷概念
 
 | 📥 原图 | 🤖 low | 🤖 medium | 🤖 high | 🎮 recompose | 🔥 大改 |
 | :---: | :---: | :---: | :---: | :---: | :---: |
-| ![c04_ref](docs/showcase/v4_frames/c04_ref.jpg) | ![c04_low](docs/showcase/v4_frames/c04_low.jpg) | ![c04_med](docs/showcase/v4_frames/c04_medium.jpg) | ![c04_high](docs/showcase/v4_frames/c04_high.jpg) | ![c04_rec](docs/showcase/v4_frames/c04_recompose.jpg) | ![c04_bold](docs/showcase/v4_frames/c04_bold.jpg) |
-| Baseline | **9.71** · 2 轮<br>`9.41 → 9.71` | **9.67** · 3 轮<br>`9.34 → 9.48 → 9.67` | **9.73** · 3 轮<br>`9.23 → 9.47 → 9.73` | **9.67** · 3 轮<br>`9.30 → 9.46 → 9.67` | **9.67** · 3 轮<br>`9.30 → 9.46 → 9.67` |
+| ![c04_ref](docs/showcase/v8_frames/c04_ref.jpg) | ![c04_low](docs/showcase/v8_frames/c04_low.jpg) | ![c04_med](docs/showcase/v8_frames/c04_medium.jpg) | ![c04_high](docs/showcase/v8_frames/c04_high.jpg) | ![c04_rec](docs/showcase/v8_frames/c04_recompose.jpg) | ![c04_bold](docs/showcase/v8_frames/c04_bold.jpg) |
+| Baseline · **7.06** | **7.97** · 8 轮<br>`7.40 → 7.97` | **8.45** · 8 轮<br>`7.27 → 8.45` | **9.55** · 8 轮<br>`7.96 → 9.55` | **9.70** · 5 轮<br>`→ 9.70` | **9.40** · 8 轮<br>`→ 9.40` |
 
-> 横看：同一张图不同档位差多少。竖看：分数怎么从 R1 爬到 ≥9.60。
+> 横看：同一原图在 low → medium → high → recompose → 大改 的差异。竖看：R1 到终稿怎么抬分（Absolute-5D Quant）。
 
 ---
 
