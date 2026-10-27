@@ -75,7 +75,7 @@ flowchart LR
   B --> C[生 1 张]
   C --> D[五维 judge]
   D -->|≥9.6 且护栏过| E[停 · 胜出]
-  D -->|<9.6 且未满 8| F[≤2 条部位修正]
+  D -->|<9.6 且未满 4| F[≤2 条部位修正]
   F --> C
   D -->|满 4 轮| G[Best-of-4]
   E --> H[finish 履历可见]
@@ -99,7 +99,7 @@ flowchart TD
   J -->|≥9.6| OK[定稿]
   J -->|解剖熔断 / 未达标| FIX[部位级修正]
   FIX --> G
-  J -->|满 8 或早停| BEST[取历史最高]
+  J -->|满 4 轮| BEST[取历史最高]
   OK --> F[finish]
   BEST --> F
 ```
@@ -112,7 +112,7 @@ flowchart TD
 flowchart LR
   A[可选垫图解构] --> B[Warm-Start]
   B --> C[FLUX 完整句 Prompt]
-  C --> D[同 draw 的 8×≥9.6]
+  C --> D[同 draw 的 4×≥9.6]
   D --> E[finish]
 ```
 
@@ -124,7 +124,7 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-  A[定屏幕规格 + search] --> B[概念先行 8×≥9.6]
+  A[定屏幕规格 + search] --> B[概念先行 4×≥9.6]
   B --> C[透明组件表]
   C --> D[九宫格 + manifest]
   D --> E[关键件可再 converge]
@@ -143,7 +143,7 @@ flowchart TD
   M --> A[A · 1024 App Icon 母版]
   M --> B[B · SVG 集：spec→分批→preview]
   M --> C[C · 道具栅格 64/128/256]
-  A --> K[关键枚可选 8×≥9.6]
+  A --> K[关键枚可选 4×≥9.6]
   B --> K
   C --> K
   K --> OUT[沉淀 style-spec]
@@ -182,7 +182,7 @@ flowchart TD
   F -->|关系散了| H[不算过，回到过关稿改质感]
 ```
 
-同框 16:9 只作体量预览，切坏了就作废，不能当成品。
+同框 16:9 只作体量预览，切坏了就作废，不能当成品。机读数字过了、八件合成说不通，仍然不算定稿，也不能出图。这一段固定 8 稿，不跟着生图的 4 轮缩短。
 
 ---
 
@@ -313,9 +313,9 @@ flowchart TD
 - **达到 `>= 9.6` 分（且未触发解剖 `< 7.5` 熔断）**：立即停止循环，当前图即为最终合格图（`high` / `recompose` 至少跑满 2 轮）。
 - **每轮垫最初参考图**：`low` / `medium` / `high` / `recompose` 每一轮都垫最初的 `style_ref`，把上一轮具体改点追加进提示词，不改垫成图。风格跳跃不垫旧风格图，也不垫上一轮成图。`pad=previous` 仍是显式链式覆盖。
 - **解剖 `< 7.5` 一票否决（熔断）**：全局停机仍以加权总分 `>= 9.6` 为准，仅当 `透视与解剖 < 7.5`（严重肢体/结构崩坏）时一票否决禁止停机；批量看板同时展示 `总分≥9.6` 与 `总分≥9.6 且 解剖≥8.5` 双指标。
-- **R4 起连续 2 轮掉分 `> 0.5` 安全早停**：仅在 `round >= 4` 且连续 2 轮低于历史最高分超过 `0.5` 分时触发早停，并保底取历史最高分轮次。
+- **前 3 轮不因掉分停**：生图上限就是第 4 轮。到第 4 轮时，若连续 2 轮比历史最高分低超过 `0.5`，交历史最高分那张。
 - **按题材触发 R1 结构底线 + 精简回流**：仅人物/生物自动注入关节/握持/双瞳高光底线，纯空镜仅注入透视灭点与接触阴影，UI/图标跳过人体解剖词；单轮 `【回流修正】` 最多 `<= 2` 条；评分偶发失败自动重试，绝不写入泛化套话污染下一轮 Prompt。
-- **满 8 次仍未达到 `9.6` 分**：停止循环，**从全部轮次中挑出综合评分最高且结构未熔断的那一张**作为最终结果，并说明残余不足。
+- **满 4 次仍未达到 `9.6` 分**：停止循环，**从 1～4 轮里挑出综合评分最高且结构未熔断的那一张**作为最终结果，并说明残余不足。
 
 ### 2.4 结算、评分履历与记忆沉淀
 默认对你展示：**每轮五维分 + 不足 + 改点**，以及结算时的**全轮评分履历** + 胜出图；系统在后台把配方写入 `recipe`、踩坑写入 `style_redline`（不旁白记忆写入）。
@@ -325,7 +325,9 @@ flowchart TD
 
 ---
 
-## 第二章附：三大垂直生成技能 — 怎么用 & 原理
+## 第二章附：界面、原画锁定、图标
+
+原画用 `/pmem-concept` 只是锁定 draw 里的原画合同。界面和图标仍各读自己的技能文件，不在 draw 里生。
 
 ### `/pmem-ui`（`/art-ui`）
 - **怎么用**
@@ -399,7 +401,7 @@ python3 pmem_art.py ingest .cursor/generated/new.png -p "角色Astra 水彩 概�
 
 | 命令 | 说明 |
 | :--- | :--- |
-| `python3 pmem_art.py skills --install` | 安装/刷新 `.cursor`、`.claude`、`.agents` 下的 14 项技能与 28 个斜杠命令入口 |
+| `python3 pmem_art.py skills --install` | 安装/刷新 `.cursor`、`.claude`、`.agents` 下的 8 个技能目录。旧斜杠名仍在，一共 29 个命令入口，点了就锁定对应那一支 |
 | `python3 pmem_art.py skills --list` | 查看所有内置技能列表 |
 | `python3 pmem_art.py converge start -g "<目标>" -m <模块> [--scale medium] [--ref-image <图> --ref-analysis "<解构>"]` | 开启一轮最多 4 次、`>=9.6` 分的收敛生图会话 |
 | `python3 pmem_art.py converge generate --round <i> -i <图> -p "<Prompt>"` | **仅生图登记**（禁止带 score/dims；与 judge 必须分两步） |
@@ -414,7 +416,7 @@ python3 pmem_art.py ingest .cursor/generated/new.png -p "角色Astra 水彩 概�
 
 ## 第七章：常见问题 FAQ
 
-**Q1：如果连生 8 张图都没有达到 9.6 分怎么办？**  
+**Q1：如果 4 轮都没有达到 9.6 分怎么办？**  
 A：到了第 4 轮仍未达 9.6 分时，`converge finish` 会自动停止循环，从 1~4 轮里挑出**综合评分最高**的那一张作为阶段最优交付图；默认给你全轮评分履历（不足/改点）+ 胜出图。只要终稿时加 `--quiet`。
 
 **Q2：丢入一张图让 `/pmem-draw` 生成时，它会怎么处理那张图？**  
@@ -436,7 +438,7 @@ python3 pmem_art.py coach
 python3 pmem_art.py learn suggest && python3 pmem_art.py learn accept --all
 ```
 
-闭环（v0.13 履历可见）：`warm-start → 8×≥9.6（每轮展示评分/不足/改点）→ finish 打印履历 + 记忆静默自动驾驶 → 最多一行小提示 → 越用越好`；只要终稿用 `--quiet`；`improve/coach/learn/progress` 为进阶 peek。
+闭环（v0.13 履历可见）：`warm-start → 生图最多 4 轮、≥9.6（每轮展示评分/不足/改点）→ finish 打印履历 + 记忆静默自动驾驶 → 最多一行小提示 → 越用越好`。合成梯的关系讨论仍是 8 稿，不跟这 4 轮缩短。只要终稿用 `--quiet`；`improve/coach/learn/progress` 为进阶 peek。
 
 ---
 

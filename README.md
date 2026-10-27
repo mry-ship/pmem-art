@@ -4,17 +4,17 @@
 
 **给画师用的 AI 生图助手**（Cursor / Claude Code / Codex）
 
-对话框输入 `/` 就能画：丢参考图 → 选改动幅度 → 自动生图审图，不够分就继续修，直到 **≥ 9.60**。  
+对话框输入 `/` 就能画。没点名类型时自己认成哪一支，回显一句就做。生图最多 **4 轮**，不够分就继续修，直到 **≥ 9.60**。  
 顺带把你随口说的「别赛博 / 这版留着」记进项目，下次少犯同样的错。
 
 ![License](https://img.shields.io/badge/license-see%20LICENSE-green)
 ![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
 ![Cursor](https://img.shields.io/badge/Cursor-支持-000000)
 ![Claude Code](https://img.shields.io/badge/Claude%20Code-支持-D97757)
-![Skills](https://img.shields.io/badge/斜杠技能-14-8B5CF6)
+![Skills](https://img.shields.io/badge/美术技能-8-8B5CF6)
 ![Threshold](https://img.shields.io/badge/合格线-≥9.60-blue)
 
-[📖 使用手册](USER_MANUAL.md) · [技能流程图](docs/skills/flows.html) · [效果图墙](#效果长什么样) · [Merge / Clone 实测](#merge-ladder--clone-mode-b另外两技能实测) · [架构](ARCHITECTURE.md)
+[📖 使用手册](USER_MANUAL.md) · [技能流程图](docs/skills/flows.html) · [效果图墙](#效果长什么样) · [合成梯 / 克隆实测](#合成梯与风格克隆旧跑分) · [架构](ARCHITECTURE.md)
 
 </div>
 
@@ -87,7 +87,7 @@ python3 pmem_art.py skills --install
 停机线统一：**≥ 9.60**（`high` / `recompose` 至少跑 2 轮），并内置 **5 项安全收敛护栏**：
 1. **每轮垫最初参考图**：`low` / `medium` / `high` / `recompose` 每一轮都垫最初的 `style_ref`，修正只追加进提示词。风格跳跃不垫旧风格图，也不垫上一轮成图。`pad=previous` 仍是显式链式覆盖。
 2. **解剖 `< 7.5` 一票否决（熔断）**：全局停机仍以加权总分 `≥ 9.60` 为准，仅当 `透视与解剖 < 7.5`（严重肢体/结构崩坏）时强制禁停重修；看板同时展示 `总分≥9.6` 与 `总分≥9.6 且 解剖≥8.5` 双指标。
-3. **R4 起连续 2 轮掉分 `> 0.5` 安全早停**：仅在 `round ≥ 4` 且连续 2 轮低于历史最高分超过 `0.5` 分时触发早停，并保底取历史最高分轮次。
+3. **前 3 轮不因掉分停**：生图上限就是第 4 轮。到第 4 轮时，若连续 2 轮比历史最高分低超过 `0.5`，交历史最高分那张。
 4. **按题材触发 R1 结构底线**：仅人物/生物自动注入关节/握持/双瞳高光底线；纯空镜仅注入透视灭点与接触阴影；UI/图标跳过人体解剖词。
 5. **精简回流与评分容错**：单轮 `【回流修正】` 硬限 `≤ 2` 条；评分 API 偶发失败自动重试，绝不灌入泛化套话污染下一轮 Prompt。
 
@@ -103,7 +103,7 @@ python3 pmem_art.py skills --install
 
 ### V8 · 20 Bot（skills_kit · Absolute-5D）
 
-4 案例 ×（原画 / low / medium / high / recompose / 大改）= **20 终图**；停分 ≥9.60、最多 8 轮。  
+4 案例 ×（原画 / low / medium / high / recompose / 大改）= **20 终图**。这批是旧上限跑的（当时最多 8 轮、停分 ≥9.60）。现在生图上限是 **最多 4 轮**；表里的「8 轮」只说明那一格实际跑了几轮。  
 本批均值 **9.14**（≥9.60 达标 **4/20**）。全页：[docs/showcase/pmem_art_images_v8_20bots_showcase.html](docs/showcase/pmem_art_images_v8_20bots_showcase.html)
 
 Grok 三轮优化 best-of（离线 Absolute-5D 均值 **8.504**）：[docs/showcase/grok_best/pmem_art_images_v8_20bots_grok_best_showcase.html](docs/showcase/grok_best/pmem_art_images_v8_20bots_grok_best_showcase.html) · 永久策略与三轮结论：[docs/grok_v8_3round/FINAL_3ROUND_SYNTHESIS_AND_POLICY.md](docs/grok_v8_3round/FINAL_3ROUND_SYNTHESIS_AND_POLICY.md)
@@ -138,14 +138,14 @@ Grok 三轮优化 best-of（离线 Absolute-5D 均值 **8.504**）：[docs/showc
 
 > 横看：同一原图在 low → medium → high → recompose → 大改 的差异。竖看：R1 到终稿怎么抬分（Absolute-5D Quant）。
 
-### Merge ladder · Clone Mode B（另外两技能实测）
+### 合成梯与风格克隆（旧跑分）
 
 全页展陈（V8×20 + Merge/Clone，含分数出处）：[docs/showcase/skills-homepage/index.html](docs/showcase/skills-homepage/index.html)
 
 | 技能 | 在测什么 | 稳定性门槛 | 本批结果 |
 | :--- | :--- | :--- | :--- |
 | **`pmem-merge-ladder`** | Mode A/B/C 同域 beach-candy 整梯；另有早期 Mode C 三新域连胜 | 每格 Absolute-5D ≥9.6 · N=8 | **A PASS** min 9.8 · **B/C FAIL**（L6 脸红线）· 早期 G1–G3 MET |
-| 风格克隆（未做成斜杠技能） | Mode B：锁风格 ~95% + **新主体** · REF\|RESULT | 连续 3 组 OK（每组 icon+char+UI） | **MET** · G1→G2→G3 |
+| 风格克隆 | Mode B：锁风格 ~95% + **新主体** · REF\|RESULT。现在用 `/pmem-clone-image` 锁进 draw 的克隆合同 | 连续 3 组 OK（每组 icon+char+UI） | **MET** · G1→G2→G3 |
 
 #### Merge ladder · Mode A / B / C（beach-candy）
 
