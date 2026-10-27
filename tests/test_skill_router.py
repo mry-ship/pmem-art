@@ -68,6 +68,8 @@ class SkillRouterTests(unittest.TestCase):
         self.assertEqual(DEFAULT_MAX_ROUNDS, 4)
         self.assertIn("最多 4 轮", draw)
         self.assertNotIn("最多 8 轮", draw)
+        self.assertIn("过程板", draw)
+        self.assertIn("converge discuss", _spec("pmem-merge-ladder")["body"])
         merge_body = _spec("pmem-merge-ladder")["body"]
         self.assertIn("最多改 **8 稿**", merge_body)
         self.assertIn("合成说不通，仍然不算定稿", merge_body)

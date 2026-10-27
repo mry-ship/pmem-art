@@ -1412,7 +1412,7 @@ def main() -> int:
     p_conv = sub.add_parser("converge", help="闭环收敛（Warm-Start + 严格两步分离：converge generate 仅生图 -> converge judge 独立VLM审图 · 按档位目标阈值动态停机）")
     p_conv.add_argument(
         "action",
-        choices=("start", "generate", "judge", "next", "step", "round", "finish", "table", "status", "warm", "lock"),
+        choices=("start", "generate", "judge", "next", "step", "round", "finish", "table", "status", "warm", "lock", "discuss"),
         help="子操作（next=出图前打印最高分垫图；generate=仅登记生图；judge=独立审图）",
     )
     p_conv.add_argument("--session", "--id", dest="session", default="latest", help="会话 ID（默认 latest，支持 --id 或 --session）")

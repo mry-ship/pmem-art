@@ -83,7 +83,7 @@ flowchart LR
   H --> I[记忆静默写入]
 ```
 
-要点：评分履历对你可见；`recipe` / 红线 / taste 在后台静默写，不旁白。
+要点：评分履历对你可见，结算另给一张可点开的过程板；`recipe` / 红线 / taste 在后台静默写，不旁白。
 
 ---
 
@@ -318,9 +318,9 @@ flowchart TD
 - **满 4 次仍未达到 `9.6` 分**：停止循环，**从 1～4 轮里挑出综合评分最高且结构未熔断的那一张**作为最终结果，并说明残余不足。
 
 ### 2.4 结算、评分履历与记忆沉淀
-默认对你展示：**每轮五维分 + 不足 + 改点**，以及结算时的**全轮评分履历** + 胜出图；系统在后台把配方写入 `recipe`、踩坑写入 `style_redline`（不旁白记忆写入）。
+默认对你展示：**每轮五维分 + 不足 + 改点**，以及结算时的**全轮评分履历** + 胜出图。`converge finish` 同时写出过程板 `.memory-art/converge/boards/<会话>/index.html`：参考图分析、每一轮的图和五维总分、这一轮改了什么、还差什么。点图片看大图，红框是胜出轮，页尾是总结。合成梯的关系论述用 `converge discuss` 记下后，也出现在这张板上。系统在后台把配方写入 `recipe`、踩坑写入 `style_redline`（不旁白记忆写入）。
 报告最底部会附 **本局档位合同**：五维锁定%**不是写死的**——你一句话可微调，表上显示有效%相对本档默认的 **-xx% / +yy%**（例：low 下「构图松一点」→ **75%（默认95%，-20%）**）。也可写「光影锁定降到 40%」。裁判打分加权%只作小字备注。
-- 只要终稿、不要履历：`converge finish --quiet`，或说「只要终稿」。
+- 只要终稿、不要履历：`converge finish --quiet`，或说「只要终稿」。过程板路径仍会给出。
 - 不想写记忆：`converge finish --no-apply`。
 
 ---
@@ -406,7 +406,8 @@ python3 pmem_art.py ingest .cursor/generated/new.png -p "角色Astra 水彩 概�
 | `python3 pmem_art.py converge start -g "<目标>" -m <模块> [--scale medium] [--ref-image <图> --ref-analysis "<解构>"]` | 开启一轮最多 4 次、`>=9.6` 分的收敛生图会话 |
 | `python3 pmem_art.py converge generate --round <i> -i <图> -p "<Prompt>"` | **仅生图登记**（禁止带 score/dims；与 judge 必须分两步） |
 | `python3 pmem_art.py converge judge --round <i> -i <图> --dims "..." --strengths "..." --defects "..." --next-fix "..."` | **独立审图**：五维打分、亮点、不合理处与下一轮修正（须先有 generate） |
-| `python3 pmem_art.py converge finish` | 结算达标图或 4 轮最高分图；**默认写入记忆并打印评分履历**（`--no-apply` 可跳过；`--quiet` 只要一行结论） |
+| `python3 pmem_art.py converge discuss --round <稿次> -p "<正文>" --defects "<没过的行>" --next-fix "<下一稿只改哪里>"` | 记下还没出图的论述稿（合成梯关系讨论）。结算时列进过程板 |
+| `python3 pmem_art.py converge finish` | 结算达标图或 4 轮最高分图；**默认写入记忆、打印评分履历，并写出可点开的过程板**（`--no-apply` 可跳过写记忆；`--quiet` 只要一行结论，过程板路径仍给出） |
 | `python3 pmem_art.py feedback "<原话>" -m <模块> [-a <图>]` | 把画师自然语言评价沉淀为记忆 |
 | `python3 pmem_art.py search -m <模块>` | 召回该模块（含父模块）的红线、定稿与色板 |
 | `python3 pmem_art.py ingest <图> -p "<说明>" --apply` | 四信号分类并归档图片 |
@@ -417,7 +418,7 @@ python3 pmem_art.py ingest .cursor/generated/new.png -p "角色Astra 水彩 概�
 ## 第七章：常见问题 FAQ
 
 **Q1：如果 4 轮都没有达到 9.6 分怎么办？**  
-A：到了第 4 轮仍未达 9.6 分时，`converge finish` 会自动停止循环，从 1~4 轮里挑出**综合评分最高**的那一张作为阶段最优交付图；默认给你全轮评分履历（不足/改点）+ 胜出图。只要终稿时加 `--quiet`。
+A：到了第 4 轮仍未达 9.6 分时，`converge finish` 会自动停止循环，从 1~4 轮里挑出**综合评分最高**的那一张作为阶段最优交付图；默认给你全轮评分履历（不足/改点）+ 胜出图，并写出过程板，红框标在胜出轮上，总结里写明未到 9.60。只要终稿时加 `--quiet`，过程板路径仍会给出。
 
 **Q2：丢入一张图让 `/pmem-draw` 生成时，它会怎么处理那张图？**  
 A：它会先做 **Step 0 参考图深度解构**（分析构图、提取主辅色 HEX、判断光影与笔触、识别头身结构），把解构结论记入收敛会话基准，然后带着这份基准进入 1~4 轮自评收敛循环。
@@ -490,7 +491,7 @@ python3 pmem_art.py learn suggest && python3 pmem_art.py learn accept --all
 ```bash
 python3 pmem_art.py converge generate --id <sid> --round 1 -i out.jpg -p "<prompt>"
 python3 pmem_art.py converge judge    --id <sid> --round 1 -i out.jpg --dims "构图9.2/光影9.1/透视9.0/质感9.0/风格9.2" --defects "..." --next-fix "..."
-python3 pmem_art.py converge finish   --id <sid>   # 默认写记忆并打印评分履历；只要终稿加 --quiet
+python3 pmem_art.py converge finish   --id <sid>   # 默认写记忆、打印评分履历，并写出过程板；只要终稿加 --quiet
 ```
 
 ---

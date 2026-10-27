@@ -58,7 +58,10 @@ python3 pmem_art.py skills --install
 1. 丢图（可选）   把参考图拖进对话
 2. 选档           --scale low | medium | high | recompose
 3. 出图           生 1 张 → 打分挑刺 → 不到 9.60 就改（最多 4 轮）
+4. 看过程         结算打开过程板：参考分析、每轮图、五维和总分，点图片看大图
 ```
+
+过程板在 `.memory-art/converge/boards/<会话>/index.html`。红框是胜出轮。合成梯的关系论述也会留在同一张板上。
 
 合成梯多一步：先用文字把八件关系谈到说通（最多 8 稿，这一段不出图），通过后再按上面的 4 轮出图。同框大图只是体量预览。
 
@@ -82,10 +85,10 @@ python3 pmem_art.py skills --install
 <tr><th></th><th>技能</th><th>输入</th><th>做什么</th></tr>
 </thead>
 <tbody>
-<tr><td>1</td><td>生图</td><td><code>/pmem-draw</code></td><td>总入口。自己认成普通图、原画、克隆、变体或镜头包。生图最多 4 轮，合格线 ≥9.6。有参考但没说新题材时，不进克隆。</td></tr>
+<tr><td>1</td><td>生图</td><td><code>/pmem-draw</code></td><td>总入口。自己认成普通图、原画、克隆、变体或镜头包。生图最多 4 轮，合格线 ≥9.6。结算给一张可点开的过程板。有参考但没说新题材时，不进克隆。</td></tr>
 <tr><td>2</td><td>界面</td><td><code>/pmem-ui</code></td><td>一整套 HUD / 菜单 / 九宫格。不用单张插画代替。</td></tr>
 <tr><td>3</td><td>图标</td><td><code>/pmem-icon</code></td><td>三档不混：A 桌面母版、B 线性 SVG、C 道具格。</td></tr>
-<tr><td>4</td><td>合成梯</td><td><code>/pmem-merge-ladder</code></td><td>先用文字过八件关系（最多 8 稿，说不通就不出图），再一档一张正方形。同框只是体量预览。出图最多 4 轮。</td></tr>
+<tr><td>4</td><td>合成梯</td><td><code>/pmem-merge-ladder</code></td><td>先用文字过八件关系（最多 8 稿，说不通就不出图），再一档一张正方形。同框只是体量预览。出图最多 4 轮。八稿论述和出图轮都留在过程板上。</td></tr>
 <tr><td>5</td><td>锁风格</td><td><code>/pmem-style-lock</code></td><td>从样张抽色板、光影、禁用词。不进自动生图。</td></tr>
 <tr><td>6</td><td>审图</td><td><code>/pmem-critique</code></td><td>只打分挑刺，不生图。</td></tr>
 <tr><td>7</td><td>归档</td><td><code>/pmem-atlas</code></td><td>散图归位，刷新 <code>art-atlas.html</code>。</td></tr>
