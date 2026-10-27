@@ -94,9 +94,25 @@ def build_warm_start_pack(
     def _entry_live(e: dict) -> bool:
         return str(e.get("status") or "active").lower() not in ("archived", "superseded", "inactive")
 
+    from skills_kit.subject_lexicon import ui_shell_clone_task
+
+    def _recipe_ok_for_shell_goal(e: dict) -> bool:
+        if not ui_shell_clone_task(module=module, goal=goal):
+            return True
+        blob = f"{e.get('summary') or ''} {e.get('body') or ''}"
+        if any(k in blob for k in ("奖励弹窗", "reward popup", "奖励面板")) and not any(
+            k in blob
+            for k in ("空内容", "空中心", "母版", "留白", "九宫格母版", "stretchable", "empty content")
+        ):
+            return False
+        return True
+
     recipes = [
         e for e in entries
-        if e.get("kind") == "recipe" and _mod_ok(e.get("module", "")) and _entry_live(e)
+        if e.get("kind") == "recipe"
+        and _mod_ok(e.get("module", ""))
+        and _entry_live(e)
+        and _recipe_ok_for_shell_goal(e)
     ]
     redlines = [
         e for e in entries

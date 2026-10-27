@@ -1,0 +1,75 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "cursor-pmem-art",
+  "project_name": "Cursor-Pmem-Art",
+  "layer_scope": "private",
+  "written_at": "2026-10-27 18:01:46 UTC+8",
+  "session_id": "merge-stationery-p2",
+  "goal": "Merge C 第二段美术 medium",
+  "module": "prop.StationeryMerge",
+  "converge_mode": "quality",
+  "guided_mode": "text_guided",
+  "threshold": 9.6,
+  "max_rounds": 8,
+  "rounds_used": 2,
+  "winner_round": 2,
+  "winner_score": 9.15,
+  "winner_image": "assets/prop/stationerymerge/sheet.jpg",
+  "winner_passed": false,
+  "outcome": "⚠️ **共执行 2 轮审图（目标阈值 `9.60` 分），未达标，已挑选全阶段最高分**（胜出：第 2 轮 `9.15 / 10.0` 分）",
+  "what_fixed": [
+    "L07 篮筐结构加一条横箍；L04 握把棱纹加重",
+    "L07 敞口篮+外沿"
+  ],
+  "what_still_weak": "L07 篮与笔仍略像笔筒；距 9.6 差局部；prompt 改动 72% 超过档位上限 40%；prompt 相对第一轮改动 72% 超过累计上限 60%",
+  "strengths": "整梯抛光、打印机 L8 体量稳、audit 过",
+  "taste_deltas": {
+    "from_strengths": [
+      "整梯抛光、打印机 L8 体量稳、audit 过"
+    ],
+    "from_defects": [
+      "L07 收纳篮与笔筒边界略糊；L04 棱纹握把不够明显；prompt 改动 78% 超过档位上限 40%；prompt 相对第一轮改动 78% 超过累计上限 60%",
+      "L07 篮与笔仍略像笔筒；距 9.6 差局部；prompt 改动 72% 超过档位上限 40%；prompt 相对第一轮改动 72% 超过累计上限 60%"
+    ]
+  },
+  "warm_start_confidence": 0.85,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 9.03,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 9.15,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：L07 收纳篮与笔筒边界略糊；L04 棱纹握把不够明显；prompt 改动 78% 超过档位上限 40%；prompt 相对第一轮改动 78% 超过累计上限 6",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.03"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：市场棱纹+灰绿 satin 一致、八件清晰、L8 打印机整件",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.03"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：L07 篮与笔仍略像笔筒；距 9.6 差局部；prompt 改动 72% 超过档位上限 40%；prompt 相对第一轮改动 72% 超过累计上限 60%",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.15"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：整梯抛光、打印机 L8 体量稳、audit 过",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.15"
+    }
+  ]
+}

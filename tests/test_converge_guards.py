@@ -15,9 +15,13 @@ from skills_kit.converge_policy import (  # noqa: E402
     DEFAULT_EARLY_STOP_MIN_ROUND,
     DEFAULT_REGRESSION_DROP,
     anatomy_ok_for_stop,
+    clone_subject_structure_ok_for_stop,
     decide_round_stop,
     plate_safe_to_pad,
+    scale_lock_marked,
+    ui_shell_structure_ok_for_stop,
 )
+from skills_kit.scoring import audit_score_inflation  # noqa: E402
 from skills_kit.judge_auto import auto_vlm_judge_image  # noqa: E402
 from skills_kit.prompt_scale import (  # noqa: E402
     build_r1_structure_floor,
@@ -78,6 +82,37 @@ class TestPolicyDefaults(unittest.TestCase):
 class TestR1Floor(unittest.TestCase):
     def test_ui_empty(self) -> None:
         self.assertEqual(build_r1_structure_floor(goal="主菜单 HUD 九宫格", module="ui.hud"), "")
+
+    def test_ui_shell_clone_injects_floor(self) -> None:
+        goal = "空内容弹框母版，中心留白可拉伸，禁止礼盒"
+        s = build_r1_structure_floor(goal=goal, module="ui.PopupClone")
+        self.assertIn("stretchable", s.lower())
+        self.assertIn("gift box", s.lower())
+        zh = build_r1_structure_floor(goal=goal, module="ui.PopupClone", lang="zh")
+        self.assertIn("留白", zh)
+
+    def test_popupclone_default_shell_floor(self) -> None:
+        s = build_r1_structure_floor(goal="Clone UI 弹窗", module="ui.PopupClone")
+        self.assertIn("9-slice", s.lower())
+
+    def test_popupclone_negated_reward_illustration_injects_shell_floor(self) -> None:
+        goal = (
+            "Clone Mode B UI。新题材：空内容弹框九宫格母版（非奖励插画）。"
+            "中心大面积留白，禁止礼盒画进内容区。"
+        )
+        ra = "参考是道具icon不是弹窗布局，弹窗只借材质与描边语法。"
+        s = build_r1_structure_floor(goal=goal, ref_analysis=ra, module="ui.PopupClone")
+        self.assertIn("9-slice", s.lower())
+        self.assertIn("gift box", s.lower())
+
+    def test_clone_mode_b_icon_injects_subject_floor(self) -> None:
+        s = build_r1_structure_floor(
+            goal="Clone Mode B icon 新题材钥匙",
+            module="icon.KeyClone",
+            ref_image="docs/ref.png",
+        )
+        self.assertIn("photocopy", s.lower())
+        self.assertIn("gift box", s.lower())
 
     def test_character_joints_english_in_prompt_chinese_for_display(self) -> None:
         s = build_r1_structure_floor(goal="少女全身立绘", module="character.Hero")
@@ -190,7 +225,7 @@ class TestPadAuto(unittest.TestCase):
             self.assertEqual(Path(pad).resolve(), ref.resolve())
             self.assertIn("style_ref", reason)
 
-    def test_safe_plate_chains(self) -> None:
+    def test_safe_plate_stays_on_style_ref(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
             img = root / "r1.png"
@@ -209,17 +244,89 @@ class TestPadAuto(unittest.TestCase):
             pad, fix, num, cont, reason = _resolve_pad_auto(
                 rounds, 2, root, style_ref=str(ref), pad_mode="auto", anatomy_floor=7.5
             )
-            self.assertTrue(cont)
-            self.assertEqual(Path(pad).resolve(), img.resolve())
-            self.assertEqual(num, 1)
-            self.assertTrue(plate_safe_to_pad(pad_mode="auto", dims={"perspective_anatomy": 8.8}))
+            self.assertFalse(cont)
+            self.assertEqual(Path(pad).resolve(), ref.resolve())
+            self.assertEqual(num, 0)
+            self.assertEqual(fix, "修光影")
+            self.assertIn("style_ref", reason)
+            self.assertFalse(plate_safe_to_pad(pad_mode="auto", dims={"perspective_anatomy": 8.8}))
+
+    def test_style_jump_pads_nothing(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            img = root / "r1.png"
+            img.write_bytes(b"\x89PNG\r\n\x1a\n" + b"\x00" * 64)
+            ref = root / "ref.png"
+            ref.write_bytes(b"\x89PNG\r\n\x1a\n" + b"\x00" * 64)
+            rounds = [
+                {
+                    "round": 1,
+                    "image": str(img),
+                    "score": 8.8,
+                    "next_fix": "换剪影",
+                    "dims_parsed": {"perspective_anatomy": 8.8},
+                }
+            ]
+            pad, fix, _num, cont, reason = _resolve_pad_auto(
+                rounds,
+                2,
+                root,
+                style_ref=str(ref),
+                pad_mode="auto",
+                scale="recompose_bold",
+            )
+            self.assertEqual(pad, "")
+            self.assertFalse(cont)
+            self.assertEqual(fix, "换剪影")
+            self.assertIn("style_jump", reason)
+
+    def test_scale_or_eye_defect_does_not_chain(self) -> None:
+        dims = {"perspective_anatomy": 9.6, "composition": 9.6}
+        self.assertTrue(scale_lock_marked("巩膜月牙偏窄，道具仍偏小"))
+        self.assertFalse(scale_lock_marked("巩膜月牙合格，禁黑点瞳"))
+        self.assertFalse(scale_lock_marked("金齿偏珠宝光洁"))
+        self.assertFalse(
+            plate_safe_to_pad(pad_mode="auto", dims=dims, defects="巩膜月牙偏窄，蛋糕仍偏小")
+        )
+        self.assertFalse(
+            plate_safe_to_pad(pad_mode="auto", dims=dims, defects="金齿偏珠宝光洁")
+        )
+        self.assertTrue(
+            plate_safe_to_pad(pad_mode="previous", dims=dims, defects="巩膜月牙偏窄")
+        )
+
+    def test_scale_defect_resolve_falls_back_to_style_ref(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            img = root / "r1.png"
+            img.write_bytes(b"\x89PNG\r\n\x1a\n" + b"\x00" * 64)
+            ref = root / "ref.png"
+            ref.write_bytes(b"\x89PNG\r\n\x1a\n" + b"\x00" * 64)
+            rounds = [
+                {
+                    "round": 1,
+                    "image": str(img),
+                    "score": 9.58,
+                    "next_fix": "放大巩膜月牙",
+                    "defects": "巩膜月牙偏窄，主体偏小",
+                    "dims_parsed": {"perspective_anatomy": 9.6, "composition": 9.6},
+                }
+            ]
+            pad, fix, num, cont, reason = _resolve_pad_auto(
+                rounds, 2, root, style_ref=str(ref), pad_mode="auto", anatomy_floor=7.5
+            )
+            self.assertFalse(cont)
+            self.assertEqual(Path(pad).resolve(), ref.resolve())
+            self.assertIn("style_ref", reason)
+            self.assertEqual(fix, "放大巩膜月牙")
+            self.assertEqual(num, 0)
 
     def test_scene_low_perspective_does_not_chain(self) -> None:
         dims = {"perspective_anatomy": 4.2}
         self.assertFalse(
             plate_safe_to_pad(pad_mode="auto", dims=dims, subject_kind="scene", defects="灭点略偏")
         )
-        self.assertTrue(
+        self.assertFalse(
             plate_safe_to_pad(
                 pad_mode="auto",
                 dims={"perspective_anatomy": 5.9},
@@ -318,6 +425,108 @@ class TestJudgeAnatomyVeto(unittest.TestCase):
                             module="character.Hero",
                         )
         self.assertTrue(res.get("anatomy_veto_blocked"))
+        self.assertFalse(res.get("passed"))
+
+    def test_clone_subject_echo_blocks_stop(self) -> None:
+        self.assertFalse(
+            clone_subject_structure_ok_for_stop(
+                goal="Clone Mode B icon 新题材钥匙",
+                module="icon.KeyClone",
+                ref_image="ref.png",
+                defects="完全抄参考心形礼盒",
+                dims={"composition": 4.0},
+            )
+        )
+        self.assertFalse(
+            plate_safe_to_pad(
+                pad_mode="auto",
+                dims={"composition": 4.0, "perspective_anatomy": 9.0},
+                defects="完全抄参考",
+                goal="Clone Mode B icon 垫 ref 新题材钥匙",
+                module="icon.KeyClone",
+                ref_image="ref.png",
+            )
+        )
+
+    def test_clone_subject_audit_caps_score(self) -> None:
+        prof = {
+            "goal": "Clone Mode B icon 新题材钥匙",
+            "ref_image": "ref.png",
+            "ref_analysis": "",
+            "dim_weights": {
+                "composition": 0.2,
+                "lighting_color": 0.25,
+                "perspective_anatomy": 0.2,
+                "texture_detail": 0.2,
+                "spec_style": 0.15,
+            },
+        }
+        res = audit_score_inflation(
+            9.7,
+            "构图4.0/光影9.5/透视9.0/质感9.5/风格9.6",
+            "完全抄参考礼盒主体",
+            None,
+            prof,
+            module="icon.KeyClone",
+        )
+        self.assertLessEqual(float(res["calibrated_score"]), 8.85)
+
+    def test_ui_shell_echo_blocks_stop(self) -> None:
+        self.assertFalse(
+            ui_shell_structure_ok_for_stop(
+                goal="空内容弹框母版",
+                module="ui.PopupClone",
+                defects="中心有礼盒，抄参考主体",
+            )
+        )
+        with tempfile.TemporaryDirectory() as td:
+            img = Path(td) / "ui.png"
+            img.write_bytes(b"\x89PNG\r\n\x1a\n" + b"\x00" * 200)
+            dims = "风格色板9.7/九宫格9.6/光影材质9.5/透明底合规9.5/状态族9.6"
+            prof = get_converge_scale_profile("medium", goal="空内容弹框", module="ui.PopupClone")
+            with mock.patch("skills_kit.judge_auto._physical_image_gate", return_value={"blocked": False, "reasons": [], "score_cap": None}):
+                with mock.patch(
+                    "skills_kit.judge_auto._inspect_image_physical_traits",
+                    return_value={
+                        "exists": True,
+                        "size_bytes": 5000,
+                        "size_kb": 5.0,
+                        "width": 1024,
+                        "height": 1024,
+                        "aspect_ratio": "1:1",
+                        "color_entropy": 4.0,
+                    },
+                ):
+                    with mock.patch(
+                        "skills_kit.judge_auto.audit_score_inflation",
+                        return_value={
+                            "calibrated_score": 9.68,
+                            "dims_parsed": {
+                                "style_palette": 9.7,
+                                "nine_slice_structure": 9.6,
+                                "lighting_material": 9.5,
+                                "rgba_pipeline_compliance": 9.5,
+                                "state_suite_cohesion": 9.6,
+                            },
+                            "weighted_score": 9.68,
+                            "raw_score": 9.68,
+                            "warnings": [],
+                            "stagnated": False,
+                            "rubric_mode": "ui_5d",
+                        },
+                    ):
+                        res = auto_vlm_judge_image(
+                            str(img),
+                            prof,
+                            round_num=2,
+                            dims=dims,
+                            defects="中心有礼盒，内容区非空中心",
+                            next_fix="已达标",
+                            use_remote_vlm=False,
+                            module="ui.PopupClone",
+                            goal="空内容弹框母版，禁止礼盒",
+                        )
+        self.assertTrue(res.get("ui_shell_veto_blocked"))
         self.assertFalse(res.get("passed"))
 
     def test_ui_module_skips_anat_veto(self) -> None:

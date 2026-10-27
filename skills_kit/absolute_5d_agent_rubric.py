@@ -19,7 +19,7 @@ def agent_absolute_5d_judge_prompt(
     goal: str = "",
     target_threshold: float = DEFAULT_THRESHOLD,
     round_num: int = 1,
-    max_rounds: int = 8,
+    max_rounds: int = 4,
 ) -> str:
     """Prompt the current vision-capable model to score one plate Absolute-5D."""
     goal_line = f"目标：{goal.strip()}\n" if goal and goal.strip() else ""

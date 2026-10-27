@@ -42,11 +42,27 @@ from .converge_policy import (
     DEFAULT_PAD_MODE,
     DEFAULT_PLATEAU_ROUNDS,
     DEFAULT_REGRESSION_DROP,
-    anatomy_score,
     coerce_dims_dict,
     decide_round_stop,
-    plate_safe_to_pad,
+    round_passes_structure_gates,
 )
+
+
+def _norm_ref_paths(paths: Any) -> list[str]:
+    """Stable lowercase resolved paths for comparing suggested vs actual pads."""
+    if paths is None:
+        return []
+    if isinstance(paths, str):
+        raw = [p.strip() for p in paths.split(",") if p.strip()]
+    else:
+        raw = [str(p).strip() for p in paths if str(p).strip()]
+    out: list[str] = []
+    for item in raw:
+        try:
+            out.append(str(Path(item).resolve()).lower())
+        except OSError:
+            out.append(item.replace("\\", "/").lower())
+    return out
 
 
 def converge_start(
@@ -337,6 +353,16 @@ def _round_dims_dict(row: dict[str, Any] | None) -> dict[str, Any] | None:
     return coerce_dims_dict(row.get("dims"))
 
 
+def _style_jump_requested(scale: str = "", goal: str = "", flagged: bool = False) -> bool:
+    if flagged:
+        return True
+    s = (scale or "").strip().lower()
+    if s in {"recompose_bold", "bold", "style_jump"}:
+        return True
+    blob = goal or ""
+    return any(tok in blob for tok in ("style_jump", "recompose_bold", "风格跳跃"))
+
+
 def _resolve_pad_auto(
     rounds: list,
     round_num: int,
@@ -346,45 +372,29 @@ def _resolve_pad_auto(
     pad_mode: str = DEFAULT_PAD_MODE,
     anatomy_floor: float = DEFAULT_ANATOMY_FLOOR,
     subject_kind: str = "",
+    goal: str = "",
+    module: str = "",
+    ref_analysis: str = "",
+    scale: str = "",
+    style_jump: bool = False,
 ) -> tuple[str, str, int, bool, str]:
-    """Pick pad under pad=auto: chain best plate only when structure-safe; else style_ref.
+    """Pad policy: auto/ref always use the original style_ref. Fixes stay in the prompt.
 
+    pad=previous is an explicit chain of the best plate. Style jump pads nothing.
     Returns (pad_image, fix, pad_round, continuation, reason).
     """
+    del anatomy_floor, subject_kind, module, ref_analysis
     mode = (pad_mode or DEFAULT_PAD_MODE).lower().strip()
     carry_image, carry_fix, carry_round = _best_plate(rounds, round_num, root)
     style = (style_ref or "").strip()
-    if mode == "ref" or not carry_image:
-        return style, "", 0, False, "pad=ref" if mode == "ref" else "no_prior_plate"
-    best_row = next((r for r in rounds if int(r.get("round") or 0) == int(carry_round)), None)
-    dims = _round_dims_dict(best_row)
-    defects = str((best_row or {}).get("defects") or "")
-    if mode == "previous":
+    if _style_jump_requested(scale, goal, style_jump):
+        return "", carry_fix, 0, False, "style_jump：不垫风格参考，也不链成图"
+    if mode == "previous" and carry_image:
         return carry_image, carry_fix, carry_round, True, "pad=previous"
-    # auto: refuse to chain plates with missing/low anatomy (fail-closed).
-    # Scenes chain unless the plate is missing, under 4.0, or marked collapsed.
-    if not plate_safe_to_pad(
-        pad_mode=mode,
-        dims=dims,
-        anatomy_floor=anatomy_floor,
-        subject_kind=subject_kind,
-        defects=defects,
-    ):
-        anat = anatomy_score(dims)
-        if (subject_kind or "") == "scene":
-            why = (
-                "pad=auto→style_ref（场景结构缺失、低于 4.0，或缺陷写了塌缩"
-                + (f"，当前 {anat:.1f}" if anat is not None else "")
-                + "）"
-            )
-        else:
-            why = (
-                f"pad=auto→style_ref（最佳板解剖缺失或 <{anatomy_floor}"
-                + (f"，当前 {anat:.1f}" if anat is not None else "，缺维")
-                + "）"
-            )
-        return style, carry_fix, 0, False, why
-    return carry_image, carry_fix, carry_round, True, f"pad=auto→R{carry_round}"
+    why = "pad=ref" if mode == "ref" else "pad=auto→style_ref（每轮垫最初参考，修正只写进提示词）"
+    if not style and not carry_image:
+        why = "no_prior_plate"
+    return style, carry_fix, 0, False, why
 
 
 def cmd_converge(
@@ -434,8 +444,10 @@ def cmd_converge(
     cfg_conv = (data.get("config") or {}).get("converge") if isinstance(data, dict) else {}
     if not isinstance(cfg_conv, dict):
         cfg_conv = {}
-    eff_scale = (scale or cfg_conv.get("default_scale") or "medium").strip().lower()
+    requested_scale = (scale or cfg_conv.get("default_scale") or "medium").strip().lower()
+    eff_scale = requested_scale
     scale_prof = get_converge_scale_profile(eff_scale, recompose_dir=recompose_dir, goal=goal, ref_analysis=ref_analysis, ref_image=ref_image, module=module)
+    style_jump_requested = _style_jump_requested(requested_scale, goal or "")
     eff_scale = scale_prof["scale"]
 
     if action == "start":
@@ -495,6 +507,7 @@ def cmd_converge(
             "three_step_separation": True,
             "pipeline_mode": "strict_three_step_start_generate_judge",
             "scale": eff_scale,
+            "style_jump": bool(style_jump_requested),
             "scale_profile": scale_prof,
             "target_score_threshold": base_th,
             "recompose_dir": recompose_dir,
@@ -641,15 +654,55 @@ def cmd_converge(
         )
         if not image:
             ref = str(sess.get("ref_image") or "").strip()
-            print("还没有可垫的成图。第 1 轮垫最初的参考图。" + (f"\n垫图：{ref}" if ref else ""))
+            if _style_jump_requested(str(sess.get("scale") or ""), str(sess.get("goal") or ""), bool(sess.get("style_jump"))):
+                print("第 1 轮是风格跳跃，不垫旧风格参考。")
+            else:
+                print("还没有可垫的成图。第 1 轮垫最初的参考图。" + (f"\n垫图：{ref}" if ref else ""))
             return 0
         scored = next((r.get("score") for r in rounds if int(r.get("round") or 0) == number), None)
         score_bit = f"{float(scored):.2f} 分" if scored is not None else "尚未打分"
-        print(
-            f"下一轮第 {nxt} 轮，先垫第 {number} 轮（{score_bit}）：{image}\n"
-            f"生图参考图只用这一张。\n"
-            f"提示词：{compose_continuation_prompt(fix, prof)}"
+        style_ref = str(sess.get("ref_image") or "").strip()
+        pad_image, pad_fix, pad_round, continuation, pad_reason = _resolve_pad_auto(
+            rounds,
+            nxt,
+            root,
+            style_ref=style_ref,
+            pad_mode=str(sess.get("pad_mode") or DEFAULT_PAD_MODE),
+            anatomy_floor=float(sess.get("anatomy_floor") or DEFAULT_ANATOMY_FLOOR),
+            subject_kind=classify_subject(
+                goal=str(sess.get("goal") or ""),
+                ref_analysis=sess.get("ref_analysis") or "",
+                ref_image=style_ref,
+                module=str(sess.get("module") or ""),
+            ),
+            goal=str(sess.get("goal") or ""),
+            module=str(sess.get("module") or ""),
+            ref_analysis=str(sess.get("ref_analysis") or ""),
+            scale=str(sess.get("scale") or ""),
+            style_jump=bool(sess.get("style_jump")),
         )
+        if continuation and pad_image:
+            print(
+                f"下一轮第 {nxt} 轮，策略建议垫第 {pad_round} 轮（{score_bit}）：{pad_image}\n"
+                f"策略：{pad_reason}\n"
+                f"生图参考图只用这一张。\n"
+                f"提示词：{compose_continuation_prompt(pad_fix or fix, prof)}"
+            )
+        elif not (pad_image or "").strip():
+            print(
+                f"下一轮第 {nxt} 轮不垫图。\n"
+                f"策略：{pad_reason}\n"
+                f"上轮成图不链（{score_bit}）：{image}\n"
+                f"提示词仍带改点：{pad_fix or fix}"
+            )
+        else:
+            shown = pad_image or style_ref or "（无风格参考）"
+            print(
+                f"下一轮第 {nxt} 轮，垫最初的参考图：{shown}\n"
+                f"策略：{pad_reason}\n"
+                f"上轮成图不链（{score_bit}）：{image}\n"
+                f"提示词仍带改点：{pad_fix or fix}"
+            )
         return 0
 
     if action == "generate":
@@ -686,7 +739,7 @@ def cmd_converge(
             module=str(sess.get("module") or module or ""),
         )
         anatomy_floor = float(sess.get("anatomy_floor") or DEFAULT_ANATOMY_FLOOR)
-        carry_image, carry_fix, carry_round, continuation, pad_reason = _resolve_pad_auto(
+        carry_image, carry_fix, carry_round, policy_continuation, pad_reason = _resolve_pad_auto(
             rounds,
             r_no,
             root,
@@ -694,16 +747,39 @@ def cmd_converge(
             pad_mode=pad_mode,
             anatomy_floor=anatomy_floor,
             subject_kind=subject_kind,
+            goal=str(sess.get("goal") or goal or ""),
+            module=str(sess.get("module") or module or ""),
+            ref_analysis=str(sess.get("ref_analysis") or ref_analysis or ""),
+            scale=str(sess.get("scale") or scale or ""),
+            style_jump=bool(sess.get("style_jump")),
         )
-        if continuation and carry_image:
-            reference_image_paths = [carry_image]
-        elif not continuation and eff_ref_img and reference_image_paths is None:
-            reference_image_paths = [eff_ref_img]
-        eff_ref_paths = (
-            reference_image_paths
-            if reference_image_paths is not None
-            else (sess.get("default_reference_image_paths") or sess.get("reference_image_paths") or ([eff_ref_img] if eff_ref_img else []))
+        style_jump = str(pad_reason).startswith("style_jump")
+        if policy_continuation and carry_image:
+            suggested_paths: list[str] = [carry_image]
+        elif eff_ref_img and not style_jump:
+            suggested_paths = [eff_ref_img]
+        else:
+            suggested_paths = []
+        caller_supplied = reference_image_paths is not None and bool(_norm_ref_paths(reference_image_paths))
+        if not caller_supplied:
+            reference_image_paths = list(suggested_paths)
+        pad_diverged = caller_supplied and _norm_ref_paths(reference_image_paths) != _norm_ref_paths(suggested_paths)
+        # Prompt follows the policy. Only pad=previous is a generated-plate continuation.
+        continuation = policy_continuation
+        actual_is_plate = bool(policy_continuation and carry_image) and (
+            _norm_ref_paths([carry_image])[0] in _norm_ref_paths(reference_image_paths)
         )
+        empty_pad = style_jump and not caller_supplied
+        if empty_pad:
+            eff_ref_paths = []
+        elif reference_image_paths is not None:
+            eff_ref_paths = list(reference_image_paths) if not isinstance(reference_image_paths, str) else [reference_image_paths]
+        else:
+            eff_ref_paths = list(
+                sess.get("default_reference_image_paths")
+                or sess.get("reference_image_paths")
+                or ([eff_ref_img] if eff_ref_img else [])
+            )
         matched_case_cfg = resolve_case_config(session_id, eff_ref_img)
         val_res: dict[str, Any] = {}
         if matched_case_cfg is not None or eff_ref_img or eff_ref_paths:
@@ -712,19 +788,22 @@ def cmd_converge(
                 val_res = validate_converge_params(
                     session_id=session_id or (matched_case_cfg["case_id"] if matched_case_cfg else ""),
                     scale=sess.get("scale", eff_scale),
-                    ref_image=eff_ref_for_val,
+                    ref_image="" if empty_pad else eff_ref_for_val,
                     aspect_ratio=eff_ar,
-                    reference_image_paths=eff_ref_paths if eff_ref_paths else ([eff_ref_for_val] if eff_ref_for_val else []),
+                    reference_image_paths=eff_ref_paths,
                     output_image_path=image if (image and not generate_cmd) else "",
                     root=root,
                     three_step_stage="step2_generate",
-                    continuation_pad=continuation,
+                    continuation_pad=actual_is_plate,
+                    allow_empty_pad=empty_pad,
                 )
                 val_res["inherited_default_aspect_ratio"] = not bool((aspect_ratio or "").strip())
-                val_res["inherited_default_pad_image"] = (reference_image_paths is None or not bool(reference_image_paths))
-                val_res["continuation_pad"] = continuation
+                val_res["inherited_default_pad_image"] = (not caller_supplied) and not empty_pad
+                val_res["continuation_pad"] = actual_is_plate
+                val_res["pad_diverged"] = pad_diverged
                 eff_ar = val_res["aspect_ratio"]
-                eff_ref_paths = val_res["reference_image_paths"]
+                if not empty_pad:
+                    eff_ref_paths = val_res["reference_image_paths"]
                 for w_msg in val_res.get("warnings", []):
                     print(f"⚠️ [参数校验提示] {w_msg}")
             except (FileNotFoundError, ValueError) as exc:
@@ -763,6 +842,8 @@ def cmd_converge(
                 composed_prompt = f"{composed_prompt} | {floor}".strip(" |")
         if lock_hint:
             composed_prompt = f"{composed_prompt} | {lock_hint}".strip(" |")
+        if not continuation and carry_fix and carry_fix not in composed_prompt:
+            composed_prompt = f"{composed_prompt} | {carry_fix}".strip(" |")
 
         if generate_cmd:
             proc = subprocess.run(
@@ -780,13 +861,14 @@ def cmd_converge(
                     val_res = validate_converge_params(
                         session_id=session_id or (matched_case_cfg["case_id"] if matched_case_cfg else ""),
                         scale=sess.get("scale", eff_scale),
-                        ref_image=eff_ref_img or (matched_case_cfg["ref_image"] if matched_case_cfg else ""),
+                        ref_image="" if empty_pad else (eff_ref_img or (matched_case_cfg["ref_image"] if matched_case_cfg else "")),
                         aspect_ratio=eff_ar,
                         reference_image_paths=eff_ref_paths,
                         output_image_path=image,
                         root=root,
                         three_step_stage="step2_generate",
-                        continuation_pad=continuation,
+                        continuation_pad=actual_is_plate,
+                        allow_empty_pad=empty_pad,
                     )
                 except (FileNotFoundError, ValueError) as exc:
                     print(f"❌ [生成后输出图比例校验拦截] {exc}")
@@ -825,6 +907,9 @@ def cmd_converge(
             "step_trace": ["step1_start", "step2_generate"],
             "prompt": composed_prompt,
             "continuation": continuation,
+            "policy_continuation": policy_continuation,
+            "suggested_pad_paths": suggested_paths,
+            "pad_diverged": pad_diverged,
             "pad_mode": pad_mode,
             "pad_reason": pad_reason,
             "score": None,
@@ -846,12 +931,13 @@ def cmd_converge(
             if img_v.get("exists")
             else "待检出文件"
         )
-        if continuation:
-            pad_line = f"   · 垫目前最高分的第 {carry_round} 轮: {carry_image}（{pad_reason}）\n"
-        elif eff_ref_img:
-            pad_line = f"   · 垫 style_ref: {eff_ref_img}（{pad_reason}）\n"
-        else:
-            pad_line = f"   · 垫图策略: {pad_reason}\n"
+        suggest_target = suggested_paths[0] if suggested_paths else "（无）"
+        actual_shown = eff_ref_paths if eff_ref_paths else "（无）"
+        diverge_bit = "（与策略建议不一致）" if pad_diverged else ""
+        pad_line = (
+            f"   · 策略建议垫图: {suggest_target}（{pad_reason}）\n"
+            f"   · 本轮实际垫图: {actual_shown}{diverge_bit}\n"
+        )
         floor_line = f"   · 结构底线: {floor_zh}\n" if floor_zh else ""
         stub_line = ""
         if stub_notes:
@@ -1289,8 +1375,24 @@ def cmd_converge(
         if not judged_for_finish:
             print("ℹ️ 当前会话还没有完成审图的轮次（先 converge judge 再 finish）。")
             return 0
+
+        def _structure_ok(row: dict[str, Any]) -> bool:
+            return round_passes_structure_gates(
+                goal=str(sess.get("goal") or ""),
+                ref_analysis=str(sess.get("ref_analysis") or ""),
+                module=str(sess.get("module") or ""),
+                ref_image=str(sess.get("ref_image") or ""),
+                defects=str(row.get("defects") or ""),
+                dims=_round_dims_dict(row),
+            )
+
+        struct_ok = [r for r in judged_for_finish if _structure_ok(r)]
+        pool = struct_ok if struct_ok else judged_for_finish
+        if struct_ok and len(struct_ok) < len(judged_for_finish):
+            sess["structure_gate_fallback"] = True
+
         passing_rounds = [
-            r for r in judged_for_finish
+            r for r in pool
             if _round_counts_as_passed(r, accept_th, root=root)
         ]
         if passing_rounds:
@@ -1305,7 +1407,7 @@ def cmd_converge(
             )
             badge_text = f"经过 {len([r for r in rounds if _score_of(r) >= 0])} 轮达标定稿"
         else:
-            winner = max(judged_for_finish, key=lambda x: (_score_of(x), x.get("round") or 0))
+            winner = max(pool, key=lambda x: (_score_of(x), x.get("round") or 0))
             outcome_str = (
                 f"⚠️ **共执行 {len(judged_for_finish)} 轮审图（目标阈值 `{accept_th:.2f}` 分），未达标，已挑选全阶段最高分**"
                 f"（胜出：第 {winner['round']} 轮 `{_score_of(winner):.2f} / 10.0` 分）"

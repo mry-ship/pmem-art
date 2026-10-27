@@ -1,0 +1,129 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "cursor-pmem-art",
+  "project_name": "Cursor-Pmem-Art",
+  "layer_scope": "private",
+  "written_at": "2026-10-27 16:19:56 UTC+8",
+  "session_id": "skill-clone-b-key",
+  "goal": "Clone Mode B icon。垫心形礼盒。新题材钥匙。亮粉桃黄光洁圆润。chunky vinyl-toy plastic volumes soft studio key from upper-left NO jewelry product render NO micro metal scratches。",
+  "module": "icon.KeyClone",
+  "converge_mode": "quality",
+  "guided_mode": "text_guided",
+  "threshold": 9.6,
+  "max_rounds": 8,
+  "rounds_used": 6,
+  "winner_round": 6,
+  "winner_score": 9.65,
+  "winner_image": "assets/icon/keyclone/skill_clone_b_key_r6.jpg",
+  "winner_passed": true,
+  "outcome": "✅ **经过 6 轮迭代达标定稿**（generate 与 judge 分步收敛，第 6 轮达到 `9.65 / 10.0` 分 ≥ `9.60` 分档位目标线即刻停机）",
+  "what_fixed": [
+    "只把钥匙齿廓收清楚。",
+    "只把齿与杆做成一体模具，阴影贴杆。",
+    "只把三阶齿内角收方一点仍保持圆角玩具感。",
+    "只加强心形内嵌与外圈的边缘对比。",
+    "解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁止糊边融边；无硬伤"
+  ],
+  "what_still_weak": "残余可接受点：无明显缺陷",
+  "strengths": "齿清；内嵌对比；阴影贴",
+  "taste_deltas": {
+    "from_strengths": [
+      "齿清；内嵌对比；阴影贴"
+    ],
+    "from_defects": [
+      "齿台阶内角略软。",
+      "心形内嵌边缘对比还可再硬一点。",
+      "无硬伤"
+    ]
+  },
+  "warm_start_confidence": 0.3,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 9.04,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 9.15,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 9.36,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 9.5,
+      "passed": false
+    },
+    {
+      "round": 5,
+      "score": 9.55,
+      "passed": false
+    },
+    {
+      "round": 6,
+      "score": 9.65,
+      "passed": true
+    }
+  ],
+  "lessons": [
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：齿距略糊缩略。",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.04"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：齿块与杆交接略像粘贴；阴影与杆尖略脱。",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.15"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：三阶齿可读",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.15"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：齿台阶内角略软。",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.36"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：齿杆一体；色板锁住",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.36"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：心形内嵌边缘对比还可再硬一点。",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "9.5"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：齿阶更清；色板锁",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.5"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：齿清；内嵌对比够；色板锁",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.55"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：齿清；内嵌对比；阴影贴",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.65"
+    }
+  ]
+}

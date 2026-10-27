@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="128" viewBox="0 0 512 128" role="img" aria-label="Mode B SVG icon set">
+  <title>pmem-icon Mode B · 24px linear set preview</title>
+  <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" color="#334155">
+    <!-- home -->
+    <g transform="translate(24 40) scale(2)">
+      <path d="M3 10.5 12 3l9 7.5"/>
+      <path d="M5 9.5V21h14V9.5"/>
+      <path d="M10 21v-7h4v7"/>
+    </g>
+    <!-- search -->
+    <g transform="translate(152 40) scale(2)">
+      <circle cx="11" cy="11" r="6.5"/>
+      <path d="m16.5 16.5 4 4"/>
+    </g>
+    <!-- bag -->
+    <g transform="translate(280 40) scale(2)">
+      <path d="M5 8h14l-1.2 12.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8L5 8z"/>
+      <path d="M9 8V6.5a3 3 0 0 1 6 0V8"/>
+    </g>
+    <!-- settings -->
+    <g transform="translate(408 40) scale(2)">
+      <circle cx="12" cy="12" r="3"/>
+      <path d="M12 3.5v2.2M12 18.3v2.2M4.8 6.5l1.6 1.6M17.6 15.9l1.6 1.6M3.5 12h2.2M18.3 12h2.2M4.8 17.5l1.6-1.6M17.6 8.1l1.6-1.6"/>
+    </g>
+  </g>
+  <text x="48" y="118" fill="#94a3b8" font-size="10" font-family="Segoe UI,sans-serif">home</text>
+  <text x="176" y="118" fill="#94a3b8" font-size="10" font-family="Segoe UI,sans-serif">search</text>
+  <text x="304" y="118" fill="#94a3b8" font-size="10" font-family="Segoe UI,sans-serif">bag</text>
+  <text x="424" y="118" fill="#94a3b8" font-size="10" font-family="Segoe UI,sans-serif">settings</text>
+</svg>

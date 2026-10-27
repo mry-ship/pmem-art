@@ -1,0 +1,21 @@
+{
+  "skill": "pmem-style-lock",
+  "source": "val_heart_ref.png",
+  "palette": [
+    "#E02060",
+    "#F08090",
+    "#F0B080",
+    "#F0D0C0",
+    "#F7F4F1"
+  ],
+  "surface": "光洁圆润一整块，左上小块暖桃浅色",
+  "light": "软的左上浅色块，不是油亮窗格高光",
+  "forbid": [
+    "黑底",
+    "油亮",
+    "毛毡",
+    "纸纹",
+    "粗颗粒"
+  ],
+  "recipe_one_liner": "亮粉主体 + 桃黄配色 + 光洁圆润 + 浅空底"
+}

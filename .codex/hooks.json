@@ -1,0 +1,26 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "GenerateImage|Write|Edit|StrReplace|MCP",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 pmem_art.py hook pre-gen || py -3 pmem_art.py hook pre-gen"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "GenerateImage|Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 pmem_art.py hook post-asset || py -3 pmem_art.py hook post-asset"
+          }
+        ]
+      }
+    ]
+  }
+}

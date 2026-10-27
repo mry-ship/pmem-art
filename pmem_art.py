@@ -1369,6 +1369,20 @@ def main() -> int:
     p_ref = sub.add_parser("ref-read", help="读参考图的底：透明就不要写成黑底；表面词跟看见的走")
     p_ref.add_argument("path", help="参考图路径")
 
+    p_merge = sub.add_parser("merge", help="art-merge 第一段关系机读审 + 阶梯体量审计 + 整梯等分切格")
+    p_merge.add_argument(
+        "action",
+        choices=("relation-judge", "audit", "split-sheet", "normalize", "publish"),
+        help="publish=split→audit→(必要时)normalize；其余见 MERGE_PIPELINE.md",
+    )
+    p_merge.add_argument("--file", "-f", default="", help="merge_phase1_canonical.yaml 路径")
+    p_merge.add_argument("--track", "-t", default="", help="tracks 下 id：kitchen | valentine | stationery")
+    p_merge.add_argument("--all", action="store_true", help="relation-judge 审全部 track")
+    p_merge.add_argument("--dir", "-d", default="", help="audit：方图目录；split-sheet：输出目录")
+    p_merge.add_argument("--sheet", default="", help="split-sheet：整梯 16:9 图路径")
+    p_merge.add_argument("--phase1", default="", help="audit 时对照 scale_pct")
+    p_merge.add_argument("--columns", type=int, default=8, help="split-sheet 列数，默认 8")
+
     p_skills = sub.add_parser("skills", help="安装/刷新或列出内置的 Cursor / Claude Code / Codex 美术技能 (/pmem-draw 等)")
     p_skills.add_argument("--install", action="store_true", help="安装或刷新全部技能文件到 .cursor / .claude / .agents")
     p_skills.add_argument("--list", action="store_true", help="列出所有内置美术技能与触发方式")
@@ -1487,8 +1501,11 @@ def main() -> int:
         from skills_kit import install_skills_and_agent_configs, SKILL_SPECS
         if args.list and not args.install:
             print("🎨 pmem-art 内置美术技能列表（Cursor / Claude Code / Codex 通用）：\n")
+            from skills_kit.install import command_names
             for sp in SKILL_SPECS:
-                print(f"  /{sp['name']:<16} (别名 /{sp['alias']:<11}) — {sp['title']}")
+                extras = " ".join(f"/{n}" for n in command_names(sp) if n != sp["name"])
+                print(f"  /{sp['name']:<18} {extras}")
+                print(f"     {sp['title']}")
                 print(f"     ↳ {sp['description']}\n")
             return 0
         install_skills_and_agent_configs(root, quiet=False)
@@ -1531,6 +1548,46 @@ def main() -> int:
         )
     if args.command == "ref-read":
         return cmd_ref_read(args.path)
+    if args.command == "merge":
+        from skills_kit.merge_relation import cmd_audit, cmd_normalize, cmd_relation_judge, cmd_split
+
+        if args.action == "relation-judge":
+            if not args.file:
+                print("需要 --file merge_phase1_canonical.yaml")
+                return 1
+            return cmd_relation_judge(Path(args.file), args.track or None, args.all)
+        if args.action == "audit":
+            if not args.dir:
+                print("需要 --dir 方图目录")
+                return 1
+            ph = Path(args.phase1) if args.phase1 else None
+            return cmd_audit(Path(args.dir), ph, args.track or None)
+        if args.action == "split-sheet":
+            if not args.sheet or not args.dir:
+                print("需要 --sheet 与 --dir")
+                return 1
+            return cmd_split(Path(args.sheet), Path(args.dir), args.columns)
+        if args.action == "normalize":
+            if not args.dir or not args.phase1 or not args.track:
+                print("需要 --dir --phase1 --track")
+                return 1
+            return cmd_normalize(Path(args.dir), Path(args.phase1), args.track)
+        if args.action == "publish":
+            if not args.sheet or not args.dir or not args.phase1 or not args.track:
+                print("需要 --sheet --dir --phase1 --track")
+                return 1
+            from skills_kit.merge_relation import audit_ladder_dir, load_phase1, parse_rows
+
+            rc = cmd_split(Path(args.sheet), Path(args.dir), args.columns)
+            if rc:
+                return rc
+            rows = parse_rows(load_phase1(Path(args.phase1))["tracks"][args.track])
+            ok, _ = audit_ladder_dir(Path(args.dir), expected_pcts=[r.scale_pct for r in rows])
+            if ok:
+                print("✅ publish：audit 已通过，跳过 normalize")
+                return 0
+            return cmd_normalize(Path(args.dir), Path(args.phase1), args.track)
+        return 1
     if args.command == "classify":
         from classify import cmd_classify
         prompt = args.prompt

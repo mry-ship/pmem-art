@@ -33,6 +33,8 @@ from .converge_policy import (
     reflow_fix_text,
     scene_perspective_credit,
     scene_structure_ok_for_stop,
+    clone_subject_structure_ok_for_stop,
+    ui_shell_structure_ok_for_stop,
 )
 
 def auto_vlm_judge_image(
@@ -227,12 +229,20 @@ def auto_vlm_judge_image(
     defects = merged_defects
 
     eff_dims = dims
+    audit_prof = dict(scale_prof)
+    if goal and not str(audit_prof.get("goal") or "").strip():
+        audit_prof["goal"] = goal
+    if ref_image and not str(audit_prof.get("ref_image") or "").strip():
+        audit_prof["ref_image"] = ref_image
+    ra_merge = scale_prof.get("ref_analysis") or ""
+    if ra_merge and not str(audit_prof.get("ref_analysis") or "").strip():
+        audit_prof["ref_analysis"] = ra_merge
     audit_res = audit_score_inflation(
         float(raw_score) if (raw_score is not None and float(raw_score) > 0) else 0.0,
         eff_dims,
         defects,
         prev_score,
-        scale_prof,
+        audit_prof,
         round_num=round_num,
         module=module,
     )
@@ -331,7 +341,7 @@ def auto_vlm_judge_image(
         if warn not in audit_res["warnings"]:
             audit_res["warnings"].append(warn)
         if not next_fix:
-            next_fix = "在目前最高分的那张上只补还没到位的那一处，其余保持那张"
+            next_fix = "下一轮仍垫最初的参考图，只在提示词上补还没到位的那一处"
 
     # Anatomy hard veto on general_5d. UI / icon / skill-additive rubrics have no
     # perspective_anatomy key — skip so they are not fail-closed forever.
@@ -407,6 +417,56 @@ def auto_vlm_judge_image(
         if not next_fix or "已达标" in str(next_fix):
             next_fix = anat_fix
 
+    ui_shell_veto_blocked = False
+    clone_subject_veto_blocked = False
+    ref_analysis_blob = scale_prof.get("ref_analysis") or ""
+    eff_goal = goal or str(scale_prof.get("goal") or "")
+    eff_ref_img = ref_image or str(scale_prof.get("ref_image") or "")
+    if passed and not ui_shell_structure_ok_for_stop(
+        goal=eff_goal,
+        ref_analysis=str(ref_analysis_blob),
+        module=module,
+        defects=defects or "",
+        dims=dims_for_anat,
+    ):
+        ui_shell_veto_blocked = True
+        passed = False
+        calibrated = min(float(calibrated), round(target_th - 0.05, 2))
+        warn = (
+            "UI弹框母版结构一票否决：内容区不得回声参考主体/礼盒，"
+            "或九宫格/构图结构分不足；总分达线仍禁止停机"
+        )
+        if warn not in audit_res["warnings"]:
+            audit_res["warnings"].append(warn)
+        shell_fix = "只清空内容区：大块留白可拉伸，删礼盒/道具插画，保留 chrome 与符号钮"
+        if shell_fix not in str(defects or ""):
+            defects = f"{defects}；{shell_fix}".strip("； ") if defects else shell_fix
+        if not next_fix or "已达标" in str(next_fix):
+            next_fix = shell_fix
+
+    if passed and not clone_subject_structure_ok_for_stop(
+        goal=eff_goal,
+        ref_analysis=str(ref_analysis_blob),
+        module=module,
+        ref_image=eff_ref_img,
+        defects=defects or "",
+        dims=dims_for_anat,
+    ):
+        clone_subject_veto_blocked = True
+        passed = False
+        calibrated = min(float(calibrated), round(target_th - 0.05, 2))
+        warn = (
+            "Clone 题材结构一票否决：不得复制参考 prop 主体，或构图<6；"
+            "总分达线仍禁止停机"
+        )
+        if warn not in audit_res["warnings"]:
+            audit_res["warnings"].append(warn)
+        subj_fix = "只垫参考锁材质：新主体必须独占画面，删礼盒/参考 prop 外形"
+        if subj_fix not in str(defects or ""):
+            defects = f"{defects}；{subj_fix}".strip("； ") if defects else subj_fix
+        if not next_fix or "已达标" in str(next_fix):
+            next_fix = subj_fix
+
     if not passed and next_fix_is_weak(next_fix):
         hint = reflow_fix_text(
             defects=[str(defects or "")],
@@ -443,6 +503,8 @@ def auto_vlm_judge_image(
         "anatomy_score": anat_val,
         "anatomy_floor": anatomy_floor,
         "anatomy_veto_blocked": anatomy_veto_blocked,
+        "ui_shell_veto_blocked": ui_shell_veto_blocked,
+        "clone_subject_veto_blocked": clone_subject_veto_blocked,
         "subject_kind": subject_kind,
         "rubric_mode": rubric_mode,
         "weighted_score": audit_res["weighted_score"],

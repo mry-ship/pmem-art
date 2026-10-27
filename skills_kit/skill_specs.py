@@ -14,26 +14,77 @@ SKILL_SPECS: list[dict[str, Any]] = [
     {
         "name": "pmem-draw",
         "alias": "art-draw",
-        "title": "【强制8轮≥9.6收敛】通用生图（纯文本/垫图 · 打分挑刺 · 评分履历可见）",
+        "aliases": [
+            "art-draw",
+            "pmem-concept",
+            "art-concept",
+            "pmem-clone-image",
+            "art-clone",
+            "pmem-variant",
+            "art-variant",
+            "pmem-lens-propose",
+            "art-lens",
+        ],
+        "alias_routes": {
+            "pmem-concept": "原画",
+            "art-concept": "原画",
+            "pmem-clone-image": "克隆",
+            "art-clone": "克隆",
+            "pmem-variant": "变体",
+            "art-variant": "变体",
+            "pmem-lens-propose": "镜头包",
+            "art-lens": "镜头包",
+        },
+        "title": "【强制4轮≥9.6收敛】生图总入口：先认类型再进对应合同",
         "description": (
-            "当用户输入 /pmem-draw 或 /art-draw（如「/pmem-draw 生成一张xxx风格的xxx图」或「/pmem-draw [附带一张图] 生成一张xxx图」）时触发。"
-            "执行「先查记忆/分析参考图 → 生成1张图 → 严苛五维自评打分+指出不合理处 → 未达9.6分则叠加修正继续生图（最多8轮）→ "
-            "达标或满8轮挑最高分 → 默认展示每轮评分/不足/改点并沉淀记忆（只要终稿加 `--quiet`）」的完整闭环。"
+            "玩家要生图时使用。玩家点名了原画、克隆、变体、镜头包、界面、图标或合成梯就听玩家的；"
+            "没点名则看这句话和附图自己认，认完直接做，不问选哪条技能。"
+            "普通图、原画、克隆、变体、镜头包在本技能里做。整套 UI、图标集、合成梯读对应技能再做，禁止用单张插画合同代替。"
+            "旧入口 /pmem-concept、/pmem-clone-image、/pmem-variant、/pmem-lens-propose 及其 art 别名仍可用，点名即锁定该支。"
         ),
-        "body": r"""# `/pmem-draw`（别名 `/art-draw`）— 8轮 9.6分 闭环自评收敛生图技能
+        "body": r"""# `/pmem-draw`（别名 `/art-draw`）— 生图总入口
 
-你现在运行在 **pmem-art 闭环自评收敛生图模式**。无论是纯文字生图还是用户丢入了一张参考图，你都必须严格执行以下闭环流程，**绝不能只生一张图就草草交差**（除非第 1 轮真实严苛评分就达到 `>= 9.6`）。
+玩家点名了类型就听玩家的。没点名就看这句话和附图自己认，认完直接往下做，中间不再让人选技能。先回显一句，例如「按原画走了」。这句只供改口，不等确认。
+
+## 零、先认类型（一次只走一支）
+
+点名锁定优先于模型判断。文件开头若写着「点名锁定」，就用那一支。
+
+| 认成 | 什么时候 | 接着做什么 |
+| :--- | :--- | :--- |
+| **界面** | 玩家要整屏、HUD、弹窗套件、九宫格、按钮状态 | **不要在本文件生图**。先读 `.cursor/skills/pmem-ui/SKILL.md`，只执行那一份 |
+| **图标** | 桌面图标、一套线性 SVG、背包道具格 | **不要在本文件生图**。先读 `.cursor/skills/pmem-icon/SKILL.md`。A/B/C 不混用 |
+| **合成梯** | 同一套东西一档比一档更大，L1–L8 | **不要在本文件生图**。先读 `.cursor/skills/pmem-merge-ladder/SKILL.md` |
+| **镜头包** | 玩家明确要几套机位 / 镜头 / 光给自己挑 | 只做文末「合同 · 镜头包」，然后停。点选前禁止生图 |
+| **克隆** | 有参考，并且要换一个新题材，锁的是画风 | 只做文末「合同 · 克隆」 |
+| **变体** | 已有角色要换画风，或做表情 / 动作差分 | 只做文末「合同 · 变体」 |
+| **原画** | 主视觉、Key Art、气氛图、概念海报 | 用下面的 4 轮闭环，提示词再守文末「合同 · 原画」 |
+| **普通图** | 以上都不是 | 用下面的 4 轮闭环 |
+
+认不准时按这个顺序收紧，不要猜成更重的合同：
+
+1. 没人要「几套镜头」→ 不进镜头包。有参考图本身不是镜头包。
+2. 有参考，但没说新题材、新物件、新角色 → **普通图**，不进克隆。
+3. 单张弹框、只要一张图标 → 不升成整套界面或图标集。整套才去界面 / 图标。有参考又要换题材的这一张，走克隆。
+4. 只说「画这个角色」→ 普通图或原画，不进变体。变体要出现换画风、表情或动作。
+5. 回显的类型必须和实际执行的合同是同一个。玩家下一句改口，丢掉这一支重来；已经画完的图不能拿去冒充新合同的结果。
+
+普通图和原画走第一节到第三节。克隆和变体仍用第二节的打分轮次和 `converge` 命令，但不要按第一节继承构图。镜头包、界面、图标、合成梯不要从第一节往下生。
+
+你现在运行在 **pmem-art 闭环自评收敛生图模式**。进入普通图或原画后，**绝不能只生一张图就草草交差**（除非第 1 轮真实严苛评分就达到 `>= 9.6`）。
 
 ---
 
 ## 一、支持两种触发方式
 
+只服务**普通图**和**原画**。类型已经是克隆、变体、镜头包、界面、图标或合成梯时，跳过这一节。
+
 ### 方式 A：纯文本指令生图
 > 例：`/pmem-draw 生成一张东方青瓷水彩风格的阿斯特拉半身立绘`
-- 直接进入 **Step 1（召回记忆）→ Step 2（最多8轮自评收敛循环）→ Step 3（展示评分履历 + 静默沉淀记忆）**。
+- 直接进入 **Step 1（召回记忆）→ Step 2（最多4轮自评收敛循环）→ Step 3（展示评分履历 + 静默沉淀记忆）**。
 
 ### 方式 B：丢入一张参考图 / 垫图 + 生成指令
-> 例：`/pmem-draw [附带一张图] 生成一张同风格但换成冰霜刀光特效的武器图标`
+> 例：`/pmem-draw [附带一张图] 只修手指和接触阴影，机位和人物不要动`
 - **必须先执行 Step 0（参考图深度解构）**：
   1. 仔细观察用户丢过来的图片（必要时用 Read 查看图像或运行 `python3 pmem_art.py classify <参考图路径>` 获取物理特征）。
   2. 输出 **【参考图视觉解构报告】**：
@@ -66,14 +117,14 @@ SKILL_SPECS: list[dict[str, Any]] = [
      - `high`：goal **≤80%**；`allow_recompose` + 可改元素数；forbid=`no_identity_swap`；骨架「保媒介与身份，提升光影张力；可加风格内叙事点缀」；**≥2 轮才停**。
      - `recompose`：目标机位 = `--recompose-dir`；骨架「保画风色板，按「方向」重构机位」；**≥2 轮**；未换机位勿停；与 bold 拆开。
    - **最优方向按档分流**（加法，不是第二份锁）。出图前可跑：`python3 pmem_art.py check-scale-gates --self-check`。
-   - **可选镜头包前置（`/art-lens` / `pmem-lens-propose`，不打断批量流水线）**：仅当**交互式对话**且用户选 `high`/`recompose` 但**未给具体机位/镜头方向**时，可主动提议跑 `/art-lens` 给出 4 套镜头包供点选；若在跑批量脚本或用户已写明构图方向，直接进入收敛，严禁弹窗打断。
+   - **不要中途改去镜头包**。玩家没要几套机位，就按当前这一支继续。`high` / `recompose` 缺一句机位时，用玩家已经写的目标或档位骨架，不要停下来提议 4 套镜头。
 3. **可选 Best-of-N 首帧**：第 1 轮先构思 2~3 个方向（或并行想法），挑最佳进入后续 converge（在回复里写明选了哪条）。
 
 ---
 
-### Step 2：闭环自评收敛循环（最多 8 轮，合格线 `>= 9.6 / 10.0`）
+### Step 2：闭环自评收敛循环（最多 4 轮，合格线 `>= 9.6 / 10.0`）
 
-令轮次 $i = 1, 2, \dots, 8$：
+令轮次 $i = 1, 2, \dots, 4$：
 
 #### 2.1 生成第 $i$ 轮单张候选图
 - 综合「用户原始需求 + 参考图解构特征（若有）+ `.memory-art` 历史红线 + **针对上一轮最低分维度的具体修正指令（≤2 条）**」，构造第 $i$ 轮生图 Prompt。
@@ -85,9 +136,10 @@ SKILL_SPECS: list[dict[str, Any]] = [
   - **纯场景**：只写灭点与接触阴影；
   - **任务型 UI**（模块 `ui.` / `icon.`、HUD、UI kit、九宫格、图标集）不注入。button / menu / icon / 界面 / 按钮 / 菜单单独出现才算 UI；和人物、动物或场景写在一句里时跟主体走。
   - 「画一张漂亮的图」这类认不出的 brief：**不注入**。
-- **垫图自适应策略（`pad=auto`，防链式糊化）**：
-  - 首轮（$i=1$）垫原始参考图 `style_ref`；
-  - 后续轮次：仅当上一轮评分成功且总分较前轮提升时，才垫上一轮胜出图继续精修；若上一轮掉分、比例/结构锁死或评分异常，**必须退回垫原始参考图（或历史最高分图）**，严禁拿劣化图或未评分图继续链式垫图。
+- **垫图（每轮原图，修正只进提示词）**：
+  - `low` / `medium` / `high` / `recompose`：每一轮都垫最初的参考图 `style_ref`。上一轮的具体改点追加进提示词，**不要**改垫上一轮成图或历史最高分图。
+  - 没有参考图的纯文本任务：不垫成图，只在提示词上追加改点。
+  - **风格跳跃（`recompose_bold` / `style_jump`）**：不垫旧风格参考，也不垫上一轮成图。剪影和画幅留在提示词里。
 - 调用生图工具（如 `GenerateImage` 或项目配置的生图脚本）**生成 1 张图**。
 
 #### 2.2 严苛审图与五维打分（每维满分 10，再按档位权重合成）
@@ -118,12 +170,12 @@ python3 pmem_art.py converge judge \
   🎉 **合格达标！** 结束生图循环，以第 $i$ 轮为胜出图，进入 Step 3。
   - **解剖硬伤一票否决（人物/动物 `< 7.5` 禁停；纯场景只在 `< 6.0` 禁停）**：人物或动物总分 `>= 9.6` 但 `透视与解剖 < 7.5`（肢体融化）禁止停机。纯场景这一维主要是透视，`7.5` 以下的轻微偏差允许停，只有 `< 6.0` 的结构崩坏才禁停。缺这一维仍然 fail-closed。看板另列「总分≥9.6 且解剖≥8.5」。下一轮改点若是「加强氛围 / 提升体积光」这类空话，由回流策略改成 ≤2 条部位级修正。
 - **情况 1b：分数够但未满最小轮次** → 视为未停机，按 `best_direction_hint` 继续叠加（防 1 轮贴原虚高）。
-- **情况 2：本轮评分 `< 9.6` 且 $i < 8$**
+- **情况 2：本轮评分 `< 9.6` 且 $i < 4$**
   🔄 **不合格！** 必须把本轮最低分维度的具体硬伤转化为 **≤2 条部位级修正指令**（如具体关节/持物连接、接触阴影、边缘描边），并入第 $i+1$ 轮 Prompt，**严禁**堆砌「加强氛围、提升体积光」等空泛套话；若本轮评分解析失败，先重试 1 次，仍失败则保持上一轮有效缺陷与底图，绝不用套话污染 Prompt。
-- **情况 2b：第 4 轮及之后的过峰安全早停（`i >= 4`）**
-  🛑 前 3 轮允许 `high`/`recompose` 大改构图时先跌后升（不触发早停）；从 **第 4 轮（`i >= 4`）** 起，若**连续 2 轮有效评分均低于历史最高分超过 `0.5` 分**，立即停止循环并直接晋升历史最高分轮次（防止后半程把好图越改越糊，同时避开 `±0.2~0.3` 的 VLM 单次打分抖动）。
-- **情况 3：已满 8 轮（$i = 8$）且评分仍 `< 9.6`**
-  🏁 **达到 8 轮上限，停止循环！** 从第 1 ~ 8 轮中**挑选综合评分最高的那一轮图片**作为最终交付图，进入 Step 3。
+- **情况 2b：第 4 轮过峰（第 4 轮已是上限）**
+  🛑 前 3 轮允许 `high`/`recompose` 先跌后升，不因掉分停。到第 4 轮，若连续 2 轮都比历史最高分低超过 `0.5`，交付历史最高分那张。
+- **情况 3：已满 4 轮（$i = 4$）且评分仍 `< 9.6`**
+  🏁 **达到 4 轮上限，停止循环！** 从第 1 ~ 4 轮中**挑选综合评分最高的那一轮图片**作为最终交付图，进入 Step 3。
 
 ---
 
@@ -156,11 +208,54 @@ improve/coach/learn 推销仅在用户主动要时再给。
 `finish`（默认写记忆；`--no-apply` 可跳过） 已自动：写 recipe/红线 + 会话反思 + `run_silent_autopilot`（更新 taste、强化配方、悄悄 enqueue 1–2 条 learn 建议）。
 
 ### 闭环总览
-`装上就用 → 画 → 每轮摊开评分与改点 → 偶发一行小提示 → 记忆后台变强；只要终稿用 --quiet；进阶 peek：improve/coach/learn/progress`
+`装上就用 → 先认类型 → 画 → 每轮摊开评分与改点 → 偶发一行小提示 → 记忆后台变强；只要终稿用 --quiet；进阶偷看用 /pmem-coach`
 ## 记忆静默 / 履历可见（Agent 必读）
-- `converge finish` 后系统**自动**写反思、更新 `taste.json`、强化 recipe/红线、悄悄排队 1–2 条知识建议——**无需**再跑 `/pmem-improve` / `/pmem-learn`。
+- `converge finish` 后系统**自动**写反思、更新 `taste.json`、强化 recipe/红线、悄悄排队 1–2 条知识建议——**无需**再跑 `/pmem-coach`。
 - 对用户默认展示：**每轮审图卡 + 胜出图 + 全轮评分履历**；记忆写入不要旁白。
-- 用户要安静出图时用 `--quiet` 或说「只要终稿」。想看教练/广度再用 `/pmem-improve`·`/pmem-coach`·`progress`。
+- 用户要安静出图时用 `--quiet` 或说「只要终稿」。想看进步、短板或知识卡时再用 `/pmem-coach`。
+
+## 合同 · 原画
+
+只在类型是原画时加在闭环上。闭环轮次、9.6、评分履历与上面相同。
+
+提示词用完整句子，不要纯 tag。顺序：主体与动作，场景，光影与时段，材质与画风，色板，景别画幅。排斥项写成正向句（「干净的青瓷白与墨蓝，无霓虹」）。每轮用上一轮的具体缺陷重写整句，仍禁止只堆负向 tag。
+
+## 合同 · 克隆
+
+只在类型是克隆时执行。轮次用第二节的 `converge generate` / `judge` / `finish`，最多 4 轮，合格线 ≥ 9.6。不要按第一节继承参考构图。禁止无五维数字宣称通过。默认锁大约 95% 的画风，换的是题材。
+
+- **没有参考**：只靠 brief 和自写风格圣经。媒介必须在 brief 里写明。
+- **有参考**：每一轮都垫最初那张风格参考。比例、眼型、描边、文案的修正写进提示词，不要垫上一轮成图。禁止事后拿无关图当原图对照。
+
+**锁**：媒介、色板角色、光感、材质语法、红线。按类再加：
+
+- 场景 / 原画：锁媒介和光感，构图可以换。
+- **界面弹框母版**：锁媒介和双层描边（参考有两层就把两层都锁住）。新题材是空内容的九宫格面板：中心大块留白，角区不放复杂纹样。禁止把参考里的道具（如礼盒）放进内容区。顶栏纹样最多 1 个。底栏只用符号钮。没有 brief 就不造可读界面文字。参考若是道具图标，分析里写明「只借材质描边，不借布局和主体」。整套组件仍走 `/pmem-ui`，克隆只交一张母版。内容区回声了参考主体 → 压分并且不可停。
+- 图标：锁外框、材质、背景习惯。主体是新的。纹样最多 1 个。缩略轮廓要清楚。搪胶、软塑胶体积只在参考本身是玩具或 Q 版时才写。
+- 角色：脸的画法跟参考媒介。通用只锁双眼分穴、虹膜、巩膜月牙、高光，禁止独眼和黑点瞳。软颊、短粗肢、大头桶身只在卡通或 Q 版参考里才写。换装可以，禁止三视图。角色身份不是名人脸或著名服装。
+
+**不锁**：构图、题材、身份，除非玩家要求保留。尺寸按玩家说的来，否则跟参考。
+
+风格圣经从参考像素归纳媒介、色板、描边。参考是道具图标时，禁止把道具外形写进界面 brief。界面 brief 写清空内容弹框、禁止中心纹样、符号钮。
+
+五维仍是 `构图/光影/透视/质感/风格`。构图分同时看有没有把参考题材抄回来。构图低于 6.0，或缺陷写了抄回参考主体、礼盒进了内容区，压到 8.85 以下并且不能停。≥9.6 且结构门过了才停。主参考是黑点瞳而合同要虹膜时，写死虹膜，禁止为了贴参考改回黑点眼。
+
+交付时对照的是这趟真正垫过的参考。
+
+## 合同 · 变体
+
+只在类型是变体时执行。轮次用第二节的 `converge generate` / `judge` / `finish`。先 `python3 pmem_art.py search --module <父模块>`，锁住不能改的人设：发色、瞳色、标志配饰、主色板。
+
+- 换画风：另建子模块（如 `character.Astra.Chibi`）。不垫旧画风原图，人设只写进提示词。
+- 表情或动作差分：每一轮垫最初的角色原图，修正只写进提示词。锁五官比例和机位。
+
+然后按上面的 4 轮、≥9.6 闭环生图。完成后 `python3 pmem_art.py ingest <新图路径> -p "<含角色名和画风或差分的提示词>" --apply`。
+
+## 合同 · 镜头包
+
+只在类型是镜头包时执行。看参考图，给 4 套可点的机位方案，然后停。禁止在这一步生图，禁止编分数。
+
+每套写清：机位（高度、角度、景别）、光（方向和色）、1–3 个具体道具、明确禁止项、一句可直接拿去生图的目标。至少一套接近原图机位，至少一套真的换机位。用具体名词，不要写「加强氛围」。身份和媒介留在参考上。玩家点了一套之后，再按点名进入原画、普通图或其它合同。没点选就停。
 """,
     },
     {
@@ -210,28 +305,6 @@ improve/coach/learn 推销仅在用户主动要时再给。
 """,
     },
     {
-        "name": "pmem-variant",
-        "alias": "art-variant",
-        "title": "同角色/同资产跨画风分叉（水彩/Q版/像素）与表情动作差分",
-        "description": (
-            "当用户输入 /pmem-variant 或 /art-variant 要求基于已有角色/资产生成其他画风（Q版/水彩/像素）或表情/动作差分时触发。"
-            "自动继承父模块核心视觉锚点并建立独立子模块，做到换画风不丢人设。"
-        ),
-        "body": r"""# `/pmem-variant`（别名 `/art-variant`）— 跨画风分叉与表情/动作差分生成
-
-当用户希望把已有角色/物件衍生出新画风（如「把 Astra 做成 Q 版贴纸 / 水彩概念图」）或做差分（如「生成愤怒/惊讶表情差分」「生成 4 帧挥刀序列帧」）时执行：
-
-1. **读取父模块核心锚点**：
-   - 运行 `python3 pmem_art.py search --module <父模块，如 character.Astra>`。
-   - 锁定不可改变的**人设核心识别特征**（发色、瞳色、标志性配饰如左眼黄铜星盘义眼、主色板）。
-2. **确定子模块与规格适配**：
-   - 画风分叉：如 `character.Astra.Chibi`（2~3头身、允许大头萌化）、`character.Astra.Watercolor`（允许非透明纸本纹理底 `alpha_required: false`）。
-   - 差分/动画：如 `character.Astra.Expressions`（严格锁死五官比例与底图机位）、`anim.Astra` 或 `vfx.*`（整除序列帧网格 + 透明底）。
-3. **调用自评收敛生图并独立归档**：
-   - 按 9.6 分标准生成与自评，完成后运行 `python3 pmem_art.py ingest <新图路径> -p "<含角色名+画风/差分词的Prompt>" --apply` 自动创建子模块并归位。
-""",
-    },
-    {
         "name": "pmem-atlas",
         "alias": "art-map",
         "title": "一键归档散图、记忆体检并刷新可视化图谱工作台",
@@ -263,13 +336,16 @@ improve/coach/learn 推销仅在用户主动要时再给。
     {
         "name": "pmem-ui",
         "alias": "art-ui",
-        "title": "【强制8轮≥9.6收敛】SpriteCook式 UI Kit/HUD/九宫格整套",
+        "title": "【强制4轮≥9.6收敛】SpriteCook式 UI Kit/HUD/九宫格整套",
         "description": (
-            "【截图可见·必读】/pmem-ui 与 /art-ui 生成 UI Kit/HUD 时，概念稿与关键组件均强制「最多8轮、合格线≥9.6」闭环自评收敛（生1张→打分挑刺→展示不足与改点→<9.6叠加修正→满8轮挑最高分→评分履历可见）。"
+            "仅当玩家点名 UI/HUD/九宫格，或生图分流判成整套界面时使用。不要用来画普通插画、单张克隆或合成梯。"
+            "概念稿与关键组件均强制「最多4轮、合格线≥9.6」闭环自评收敛（生1张→打分挑刺→展示不足与改点→<9.6叠加修正→满4轮挑最高分→评分履历可见）。"
             "流水线对标 SpriteCook：概念先行 → 透明组件表 → 九宫格切线 → 状态族。"
             "触发例：「/pmem-ui 生成一套蒸汽朋克主菜单 HUD」「/art-ui [附概念图] 拆出九宫格弹窗与按钮态」。"
         ),
         "body": r"""# `/pmem-ui`（别名 `/art-ui`）— SpriteCook 式 UI Kit / HUD / 九宫格整套生成
+
+只在玩家点名界面，或 `/pmem-draw` 判成「界面」之后执行。不要用单张插画合同代替这套管线。
 
 ## 怎么用（复制即用）
 ```text
@@ -279,7 +355,7 @@ improve/coach/learn 推销仅在用户主动要时再给。
 ```
 
 ## 原理（截图摘要）
-1. `search` 召回 `ui.*` 红线与定稿 → 2. **概念先行** → 3. 透明组件表 → 4. 九宫格 + 状态族 → 5. **强制 8轮 ≥9.6**（每轮展示评分履历） → `finish` 打印履历 + **记忆静默写入**（勿旁白记忆）
+1. `search` 召回 `ui.*` 红线与定稿 → 2. **概念先行** → 3. 透明组件表 → 4. 九宫格 + 状态族 → 5. **强制 4轮 ≥9.6**（每轮展示评分履历） → `finish` 打印履历 + **记忆静默写入**（勿旁白记忆）
 
 你现在运行在 **pmem-art UI Kit 模式**（对标 SpriteCook UI Kit Builder：概念先行 → 组件表 → 九宫格切线 → 状态族）。**禁止**把整屏各控件零散各生一张再硬拼；必须先锁一个统一视觉语言的概念稿，再从同一概念抽出可复用零件。
 
@@ -299,10 +375,10 @@ python3 pmem_art.py search --module <ui.模块>
 
 ### Step 1：概念先行（Concept First）—— 不可跳过
 1. 若用户丢入概念图：先做参考图视觉解构（构图分区、主辅色 HEX、金属/木纹/霓虹材质、控件密度），再进入组件抽取。
-2. 若无概念图：先生成 **1 张完整屏幕概念稿**（整屏布局，统一材质与色板），用 `/pmem-draw` 同款 **8轮 >=9.6 收敛** 打磨概念稿：
+2. 若无概念图：先生成 **1 张完整屏幕概念稿**（整屏布局，统一材质与色板），用 `/pmem-draw` 同款 **4轮 >=9.6 收敛** 打磨概念稿：
    ```bash
    python3 pmem_art.py converge start --goal "UI概念稿：<屏幕类型+风格>" --module <ui.模块> [--scale medium|high]
-   # 每轮：converge generate 生图，再 converge judge 审图，直到 >=9.6 或满 8 轮
+   # 每轮：converge generate 生图，再 converge judge 审图，直到 >=9.6 或满 4 轮
    python3 pmem_art.py converge finish
    ```
 3. **概念稿通过后才进入组件表**——不要在概念未锁定时散生按钮。
@@ -314,7 +390,7 @@ python3 pmem_art.py search --module <ui.模块>
 - **进度条 / 血条**：空轨 + 满轨（或分段填充）
 - **标签 / Tab**：选中 + 未选中
 - **图标位 / 分隔线 / 角花** 等概念中出现或隐含的零件
-同一概念参考下批量生成，保证木纹/螺栓/色板/光影角度一致。缺件时只补缺件，不要整套重开。
+同一概念参考下批量生成，保证木纹/螺栓/色板/光影角度一致。概念稿和组件表的每一轮都垫最初那张参考（用户概念图，或已定稿的概念稿），不改垫上一轮生成结果，修正只追加进提示词。缺件时只补缺件，不要整套重开。
 
 ### Step 3：九宫格切线与清单（9-Slice + Manifest）
 对每个可缩放件标注九宫格：四角固定、四边单向拉伸、中心双向拉伸。输出清单建议：
@@ -357,98 +433,18 @@ python3 pmem_art.py feedback "UI套件色板与九宫格规范：<摘要>" --mod
 """,
     },
     {
-        "name": "pmem-concept",
-        "alias": "art-concept",
-        "title": "【强制8轮≥9.6收敛】原画/概念图/Key Art（ZHO·FLUX式完整句Prompt）",
-        "description": (
-            "【截图可见·必读】/pmem-concept 与 /art-concept（原画/概念图/Key Art）与 /pmem-draw 一样，强制执行「最多8轮、合格线≥9.6分」闭环自评收敛："
-            "生1张→五维打分+指出不合理处→展示不足与改点→<9.6则叠加修正继续生→达标即停或满8轮挑最高分→默认展示评分履历并沉淀记忆。"
-            "触发例：「/pmem-concept 画一张青瓷废土主视觉Key Art」「/art-concept [附参考] 同氛围气氛图」。"
-            "Prompt 采用 ZHO/Yolain/Comfy-FLUX 式完整自然语言句（主体靠前、正向写排斥项）。"
-        ),
-        "body": r"""# `/pmem-concept`（别名 `/art-concept`）— 原画 / 概念图 / Key Art
-
-> ⚠️ **【强制闭环 · 与 `/pmem-draw` 同等】**  
-> 本技能生成原画/概念图/Key Art 时，**必须**跑满同一套收敛规则：  
-> **最多 8 轮生图 · 合格线 `≥ 9.6 / 10.0` · 未达标叠加修正继续生 · 满 8 轮挑全阶段最高分 · 每轮展示评分/不足/改点 · `finish` 默认打印履历并写记忆（`--quiet` 只要终稿）**。  
-> **禁止只生一张图就交差**（除非第 1 轮真实严苛评分就 ≥ 9.6）。
-
-## 怎么用（复制即用）
-```text
-/pmem-concept 画一张东方青瓷废土的主视觉 Key Art，宽幅海报，电影感侧逆光
-/art-concept 生成一张浮空遗迹黄昏气氛概念图，青瓷白+墨蓝+鎏金
-/pmem-concept [拖入参考图] 保持构图与色板，画一张同世界观角色登场 Key Art
-```
-
-## 原理（截图摘要）
-1. **Warm-Start + 与 draw 同等 8×≥9.6** → 2. `search`/口味召回 → 3. **FLUX 完整句** → 4. 垫图解构 → 5. `converge`（每轮摊开评分履历） → 6. `finish` 打印履历 + 记忆静默写入
-
-你现在运行在 **pmem-art 原画 / 概念图 / Key Art 模式**（对标 ZHO Comfy-FLUX 与 Yolain 等 FLUX 系提示法）：用 **完整自然语言句子** 描述成片，**主体与构图靠前**；FLUX 系几乎无有效负向 Prompt，排斥项用正向措辞写进正文。
-
----
-
-## 一、适用场景
-- 主视觉 Key Art / 宣传海报 / 场景气氛图 / 角色概念设定 / 封面插画
-- 需要电影感光影、叙事构图、高完成度单帧，而非 UI 切图或 SVG 图标
-
-## 二、FLUX 系 Prompt 写法（必须遵守）
-1. **完整句，不要纯 tag 堆砌**；T5/CLIP-L 对句子更友好。
-2. **权重靠前**：先写主体与动作，再场景，再风格/光影/色板，再画幅与成片要求。
-3. **无负向列表**：把「不要霓虹紫」写成「干净的青瓷白与墨蓝，无霓虹」。
-4. **可选结构模板**：
-   ```
-   [主体与动作]。[场景与空间关系]。[光影与时段]。[材质与画风]。
-   [色板：主色…辅色…点缀…]。[构图/景别/画幅]。[成片质量：边缘清晰、无水印无文字…]
-   ```
-
-## 三、标准流程（Memory → Prompt → Converge）
-
-### Step 0：垫图（可选）
-若用户丢入参考图：输出构图/色板 HEX/光影/笔触解构，写入 `converge start --ref-image … --ref-analysis …`。
-
-### Step 1：召回记忆并开收敛会话
-```bash
-python3 pmem_art.py search --module <scene.|character.|brand.模块>
-python3 pmem_art.py converge start --goal "<概念图目标>" --module <模块> [--scale low|medium|high|recompose] [--recompose-dir "…"] [--ref-image …] [--ref-analysis …]
-```
-
-### Step 2：最多 8 轮自评收敛（合格线 `>= 9.6`）
-每轮：
-1. 用上一轮缺陷的 **正向叠加修正** 重写完整句 Prompt（仍禁止只堆 negative tags）。
-2. 生成 **1 张** 概念图 / Key Art。
-3. 五维严苛打分 + 说出合理处与不合理处 → `converge generate` 然后 `converge judge`。
-4. `>= 9.6` 立即停；`< 9.6` 且未满 8 轮则继续；满 8 轮挑最高分。
-
-**概念图五维侧重（每维 0–10 分，传入 `--dims "构图X/光影X/透视X/质感X/风格X"`）**：
-1. **构图**（叙事重心与景别） 2. **光影**（色温碰撞与体积光） 3. **透视**（空间收束与主体解剖/承托） 4. **质感**（材质笔触与边缘） 5. **风格**（色板与媒介一致性）
-
-### Step 3：结算与沉淀
-```bash
-python3 pmem_art.py converge finish
-```
-向用户默认展示：每轮审图卡（五维分/不足/改点）+ 胜出图 + 全轮评分履历；只要终稿时用 `--quiet`。
-
-## 四、与 `/pmem-draw` 的分工
-- **`/pmem-draw`**：通用单图收敛（角色立绘、道具、单件 UI 等）
-- **`/pmem-concept`**：专门服务 **概念图 / Key Art / 气氛图**，强制 FLUX 式完整句 Prompt 与叙事构图标准
-
-
-## 记忆静默 / 履历可见（Agent 必读）
-- `converge finish` 后系统自动写反思/口味/learn 队列——**无需**再跑 `/pmem-improve`。
-- 对用户默认展示：**每轮五维分 + 不足 + 改点 + 胜出图 + 全轮履历**；若有「小提示」原样转述（每会话最多 1 条）。**禁止**旁白记忆写入。
-- 只要终稿：`--quiet`。教练 / 广度：用户明确要求或进阶技能时再给。
-""",
-    },
-    {
         "name": "pmem-icon",
         "alias": "art-icon",
-        "title": "【强制8轮≥9.6收敛】iOS/Android App Icon 应用图标母版 + jezweb式一致化 SVG 图标集 + 游戏道具栅格图标",
+        "title": "【强制4轮≥9.6收敛】iOS/Android App Icon 应用图标母版 + jezweb式一致化 SVG 图标集 + 游戏道具栅格图标",
         "description": (
-            "【截图可见·必读】/pmem-icon 与 /art-icon 支持三大模式：(A) iOS/Android 1024×1024 App Icon 桌面启动图标母版（满幅直角出图+72%~80%圆角安全区+多尺寸导出矩阵+深浅色自适应）；"
+            "仅当玩家点名图标，或生图分流判成桌面图标、SVG 图标集、游戏道具格时使用。A/B/C 不混用。不要用来画普通插画或合成梯。"
+            "(A) iOS/Android 1024×1024 App Icon 桌面启动图标母版（满幅直角出图+72%~80%圆角安全区+多尺寸导出矩阵+深浅色自适应）；"
             "(B) jezweb 式一致化 SVG 矢量图标集；(C) 游戏道具 64/128/256px 透明底栅格图标。"
             "全部支持 converge generate 与 converge judge 两步分离，以及动态阈值收敛闭环。"
         ),
         "body": r"""# `/pmem-icon`（别名 `/art-icon`）— jezweb 式一致化图标集 / SVG 取向生成
+
+只在玩家点名图标，或 `/pmem-draw` 判成「图标」之后执行。先分 A/B/C，三条不混用。单张「按这张画风换一个新道具」走 `/pmem-draw` 的克隆合同，不在这里做成一整套。
 
 ## 怎么用（复制即用）
 ```text
@@ -504,7 +500,7 @@ python3 pmem_art.py converge finish
 5. 路径尽量少；简单图标略加重以平衡视觉重量
 
 ### 二之三、Mode C：游戏道具透明底栅格图标（64/128/256px PNG，非 SVG）
-若用户要的是 **游戏道具栅格图标**：先锁「线宽/圆角/色板/投影」style-spec，再批量生成透明底 PNG（同色板、同描边、同光源投影、中心缩略轮廓清晰、无文字），关键单枚可用 `converge` 跑 8 轮 ≥9.6 打磨。
+若用户要的是 **游戏道具栅格图标**：先锁「线宽/圆角/色板/投影」style-spec，再批量生成透明底 PNG（同色板、同描边、同光源投影、中心缩略轮廓清晰、无文字），关键单枚可用 `converge` 跑 4 轮 ≥9.6 打磨。
 
 ### Step 4：分批生成（约每批 5 个）+ 一致性审查
 每批完成后检查：stroke 是否漂移、圆角是否混用、有无图标明显偏轻/偏重、是否贴边。
@@ -517,8 +513,8 @@ icons/
 └── …
 ```
 
-### Step 5：关键图标 8轮9.6 收敛（可选）
-用户点名某枚「不对」或一致性审查不通过时：
+### Step 5：关键图标 4轮9.6 收敛（可选）
+用户点名某枚「不对」或一致性审查不通过时，每一轮垫最初的风格参考或 style-spec 样张，不垫上一轮成图：
 ```bash
 python3 pmem_art.py converge start --goal "图标 <name> 对齐 style-spec" --module brand.WorldStyle
 # 生成 → 自评 → converge generate / converge judge → finish
@@ -576,106 +572,129 @@ python3 pmem_art.py converge judge --session appicon --round 1 --image app_icon_
 """,
     },
     {
-        "name": "pmem-improve",
-        "alias": "art-improve",
-        "title": "【进阶/可选】自我迭代 peek：反思→口味→进步（日常已静默自动驾驶）",
-        "description": (
-            "当用户说「提升/自我迭代/总结这次/越用越好」或输入 /pmem-improve /art-improve 时触发。"
-            "扫描会话反思与反馈红线，更新个人口味档案 taste.json，并汇报进步曲线。"
-        ),
-        "body": r"""# `/pmem-improve`（别名 `/art-improve`）— 【进阶/可选】自我迭代 peek
-
-> **日常不用喊这个。** `converge finish` / 高信号 `feedback` 后系统已**静默自动驾驶**：写反思、更新口味、强化配方、排队知识建议，最多一行「小提示」。
-
-## 什么时候用
-想**主动偷看**进步曲线、口味档案变了什么时：
-```text
-/pmem-improve
-/art-improve 总结最近几次，看看我哪里变强了
-```
-
-## 原理
-`finish`（默认写记忆；`--no-apply` 可跳过） → 反思 JSON + silent autopilot → taste.json；本技能只是把后台已经做过的事**大声读一遍**。
-
-```bash
-python3 pmem_art.py improve run          # 完整报告（peek）
-python3 pmem_art.py progress             # 进步曲线
-python3 pmem_art.py taste show
-python3 pmem_art.py coach                # 能力教练（进阶）
-```
-""",
-    },
-    {
         "name": "pmem-coach",
         "alias": "art-coach",
-        "title": "【进阶/可选】能力教练 peek：短板→练习→下一张目标",
+        "aliases": ["art-coach", "pmem-improve", "art-improve", "pmem-learn", "art-learn"],
+        "alias_routes": {
+            "pmem-improve": "进步",
+            "art-improve": "进步",
+            "pmem-learn": "知识",
+            "art-learn": "知识",
+        },
+        "title": "【进阶/可选】进步、短板与知识卡（日常已静默写过）",
         "description": (
-            "当用户输入 /pmem-coach 或 /art-coach，或说「练什么/我的短板/能力提升计划」时触发。"
-            "把红线与会话反思归类为构图/光影/解剖/九宫格等能力维，输出个人练习计划与下一张绘制目标。"
+            "玩家要看进步、口味、短板练习或知识卡时使用。/pmem-improve、/pmem-learn 及其 art 别名并进这一条。"
+            "日常 converge finish 已经在后台写过，不要主动推销。知识卡没有玩家明确说收下，就不要写入。"
         ),
-        "body": r"""# `/pmem-coach`（别名 `/art-coach`）— 【进阶/可选】能力教练 peek
+        "body": r"""# `/pmem-coach` — 进步 / 短板 / 知识（三条偷看合成一条）
 
-> 日常收敛只会给一行「小提示」。本技能用于你**主动要练习计划**时。
+日常 `converge finish` 已经在后台写过反思、口味和知识队列。只有玩家来要报告时才跑。一次只出一份，不要把三份一起倒出来。
 
-## 怎么用
-```text
-/pmem-coach
-/art-coach 我最近老是翻车，给我练习计划
+文件开头若写着「点名锁定」，就按锁定的那一支。否则看用词：
+
+| 玩家在说 | 跑 |
+| :--- | :--- |
+| `/pmem-improve`、`/art-improve`、总结、进步、口味 | 进步 |
+| `/pmem-learn`、`/art-learn`、知识、技法、广度 | 知识 |
+| `/pmem-coach`、`/art-coach`、短板、练习、练什么，或没点明 | 短板 |
+
+## 进步
+```bash
+python3 pmem_art.py improve run
+python3 pmem_art.py progress
+python3 pmem_art.py taste show
 ```
 
-## 原理
-红线 + `_reflections/` → 短板类别 → drills → `next_draw_goals`。
-
+## 短板
 ```bash
 python3 pmem_art.py coach
 python3 pmem_art.py progress
 ```
-""",
-    },
-    {
-        "name": "pmem-learn",
-        "alias": "art-learn",
-        "title": "【进阶/可选】知识广度 peek：技法/光影/镜头/UI 卡片（finish 已静默 enqueue）",
-        "description": (
-            "当用户输入 /pmem-learn 或 /art-learn，或说「扩展知识/学新技法/补广度」时触发。"
-            "根据已有域与缺口提出 3~5 条广度扩展（技法卡/风格分叉/相邻模块种子），接受后写入 .memory-art/_knowledge/。"
-        ),
-        "body": r"""# `/pmem-learn`（别名 `/art-learn`）— 【进阶/可选】知识广度 peek
+红线加会话反思，收成构图、光影、解剖、九宫格等短板，给下一张该练什么。
 
-> `finish` 后已**静默 enqueue** 1–2 条建议到 `learn_proposals.json`。本技能用于查看/接受/补提更多。
-
-## 怎么用
-```text
-/pmem-learn
-/art-learn 看看排队的知识卡
-```
-
+## 知识
 ```bash
-python3 pmem_art.py learn suggest          # 大声列出建议（peek）
-python3 pmem_art.py learn accept --all
+python3 pmem_art.py learn suggest
 python3 pmem_art.py learn list
 ```
+只列出建议。玩家明确说「收下」或「写入」之后，才运行 `python3 pmem_art.py learn accept`。禁止自动 `accept --all`。
 """,
-    },
-    {
-        "name": "pmem-lens-propose",
-        "alias": "art-lens",
-        "title": "参考图具象镜头包提案（机位/光影/道具四选一后再收敛）",
-        "description": "Use when the user drops a reference image (or names a style_ref) and wants several concrete lens / lighting / prop packages to pick from before generating—V2-style showcase language, choose then generate.",
-        "body": '# pmem-lens-propose\n\nOff-line **lens pack** step before converge / edits. Look at a reference image, propose several concrete cinematic packages (camera, light, props, forbids), let the user pick, then hand the chosen pack into goal / recompose_dir / best_direction—do **not** invent Absolute-5D scores.\n\n## When\n\n- User wants V2-like strong lens language but from **this** image, not a canned script.\n- Before a batch or a single high / recompose / bold run.\n- Not for style-clone locks only → use pmem-clone-image.\n- Not for scoring-only reviews.\n\n## Inputs\n\n- Required: one reference image (any subject). Known slugs (`night_city` / `pastel_sketch` / `sunlit_portrait` / `ishtar_canyon`) are optional shortcuts only — do not refuse other images.\n- Optional: target scales (`low` `medium` `high` `recompose` `recompose_bold`), count of packs (default **4**), language (default zh + short en keywords), identity lock notes from the user.\n\n## Steps\n\n1. **Resolve image**  \n   Open/read the reference. Note aspect, subject identity (gender/species/age anchors), medium/palette, current camera. Do not invent props already absent as if they were in the ref.\n\n2. **Debrief (short)**  \n   One short paragraph: what must stay (identity + medium) vs what may leap (camera / light / narrative ornaments by scale).\n\n3. **Propose N packs** (default 4)  \n   Each pack is a pickable card with fixed fields:\n   - `id`: A/B/C/…\n   - `scale_fit`: which scales it suits (e.g. high, or recompose-only)\n   - `title`: 6–12字\n   - `camera`: concrete shot (height, angle, framing)—no vague「更好构图」\n   - `light`: concrete light (direction, color clash, volume)\n   - `props`: 1–3 style-in ornaments (may add for high+; must not swap identity)\n   - `forbid`: hard no (old camera DNA, identity swap, empty boilerplate)\n   - `goal_zh`: one goal line ready for `bot_tasks` / converge `--goal`\n   - `recompose_dir`: only if scale_fit includes recompose; else empty\n   - `best_direction`: one overlay line like `最优方向：…`\n\n   Rules for pack quality:\n   - Specific nouns (孔明灯级), not「加强氛围」「提升质感」.\n   - At least **one** pack keeps near-ref camera (high polish); at least **one** is a true recompose camera change.\n   - Bold/style_jump packs must say silhouette-only + new style bible.\n   - Never attach fake scores or STOP claims.\n\n4. **User picks**  \n   Send a widget (multiSelect if they may merge). Values must read like natural replies (e.g. `选 A 孔明灯体积光`). Do not generate images in this step.\n\n5. **Materialize**  \n   After pick:\n   - Write/update the chosen fields into the task source they are using (`goal`, `gen_description`, `recompose_dir`, `best_prompts` overlay)—or print a ready `converge start …` command block.\n   - Confirm identity locks still present.\n   - Ask once whether to start generate/converge now; only then run edits.\n\n6. **Optional contrast**  \n   If they ask「和 V2 比」, map which pack is closest to known V2 showcase lenses for that ref—still no scripted scores.\n\n## Output shape (chat)\n\nLead with the debrief (2–3 sentences). Then one short block per pack (title + camera/light/props/forbid + goal). End with the pick widget—not a long essay.\n\n## Anti-patterns\n\n- Dumping generic `best_direction_hint` scale boilerplate as a pack.\n- Proposing packs then auto-generating without a pick.\n- Treating this skill as a scorer or as pmem-clone-image.\n- Chaining edit-from-previous-round here; pad policy belongs to the converge runner.',
-    },
-    {
-        "name": "pmem-clone-image",
-        "alias": "art-clone",
-        "title": "【截图可见·必读】~95%锁参考画风克隆到新题材（强制8轮≥9.6）",
-        "description": "【截图可见·必读】克隆参考画风到新 scene/UI/icon/character。默认~95%锁。最多8轮≥9.6。Mode B 必须垫参考。角色双眼/虹膜、UI 双层 chrome、道具尺度。稳测连续3组过线。",
-        "body": '# `/pmem-clone-image` — 画风克隆 → 新图（强制 8 轮 · ≥9.6）\n\n> **最多 8 轮 · 合格线 `≥ 9.6 / 10.0` · 未达标叠加修正 · 满 8 轮挑最高分 · 评分总表**。  \n> **禁止只生一张就交差**（除非第 1 轮真实严苛 ≥9.6）。**禁止无五维数字宣称 PASS**。\n\nDefault lock **~95%**。可选四档 polish 仅在达标后。\n\n## Modes\n- **Mode A（零参考）**：仅 brief + 自写 bible；medium 必须 brief 写明。\n- **Mode B（有参考）**：**必须** `reference_image_paths=[风格参考]` 每轮都垫；锁 medium/chrome/眼部语法，**换新题材**；禁止事后拿无关图冒充「原图对照」。\n\n## 合同（~95%）\n**LOCK**：medium；色板角色；光感；材质语法；红线；按类：\n- Scene/原画：medium+光感；构图自由\n- UI：chrome 分层（外框+内描边若参考有则**两层都锁**）；文案=brief；奖励物无脸除非 brief 要求\n- Icon：构图框+材质+BG 习惯；主体新；motif≤1；缩略轮廓清晰。vinyl/软塑胶体积**仅玩具或 Q 版参考**；写实、像素、金属、赛博禁止套 vinyl\n- Character：脸部语法跟参考媒介。通用只锁：双眼分穴、虹膜+巩膜月牙+高光、禁独眼/黑点瞳。软颊、短粗肢、大头桶身**仅卡通/Q版参考或 brief**；写实/像素参考写该参考的头身，禁止改成玩具比例。换装/身份自由；禁 turnaround\n**FREE**：构图/题材/身份（除非要求保留）\n**Hard**：Mode B 必须垫参考；motif≤1；尺寸硬锁；禁无 brief 造 UI 字；角色 DNA≠名人脸/著名服装\n\n## Size\n用户 W×H → 每轮一致；否则跟参考；AR 不符则 Pillow 锁后再评。\n\n## Step 1：圣经 + Brief\nbible（角色写清眼/颊/肢）+ 新题材 brief（UI 精确文案）。Mode B bible 必须从参考像素归纳。\n\n## Step 2：闭环 i=1…8\n### 2.1 生成\nPrompt = bible + brief + 缺陷叠加 + negatives；Mode B 每轮带风格参考。\n**Refine pad**：比例/尺度是主缺陷时**不要**再垫上一张结果（会锁死 bug），只垫风格参考并写绝对相对尺度；chrome/文案缺陷可垫上轮胜出+风格参考。\n角色职业信号优先：空手数 T-pose + 胸章/腰带/脚边道具；手持物易缩水，若必须手持则每轮重申绝对尺度。\n\n### 2.2 五维（五个数字，每维 0–10 分加权合成 10.0）\n统一传入 `--dims "构图X/光影X/透视X/质感X/风格X"`（兼容旧 2.5/2.5/2.0/1.5/1.5 加和制）：\n1. **构图**（结构与题材/新颖度反回声）\n2. **光影**（光感与明暗冷暖）\n3. **透视**（主体比例/解剖/角色双眼分穴/道具尺度）\n4. **质感**（材质语法与边缘，UI 边角 crop 确认双层描边）\n5. **风格**（~95% 色板角色与媒介锁定）\n\n### 2.3 判定\n≥9.6 停；否则 Overlay 至满 8；满轮 Best-of 标明未达线。\n\n### 参考眼语法冲突\n若主参考是黑点瞳，但合同要求虹膜：可辅垫同族虹膜样张，并每轮写死虹膜配方；**禁止**为贴参考把 LOCK 降成黑点眼。\n\n## Step 3：交付\n胜出图 + 评分表 + bible 摘要。对照=**本趟真正垫过的参考** | 结果。\n\n## 稳定性门\n连续 **3 组**（icon+char+UI 等）全部 ≥9.6 才算稳；失败→通用规则写回（禁写死本次专名）。\n\n## Anti\n首发免评 · 假对照 · 100% 死锁布局 · 造 UI 字 · 黑点眼/独眼躲串味 · 个例写死',
     },
     {
         "name": "pmem-merge-ladder",
         "alias": "art-ladder",
-        "title": "【截图可见·必读】Merge-2 棋盘进阶梯 L1–L8 整梯生成（≥9.6）",
-        "description": "【截图可见·必读】merge-2 棋盘进阶梯（默认L1–L8）。同任务域。优先整梯一次出 sheet；≥9.6。无参考默认卡通可爱（Mode A 须在 brief 写明卡通/玩具才保留 vinyl/chibi，否则生成前剥掉）；有参考跟参考 medium。稳测连续3组过线。",
-        "body": '# `/pmem-merge-ladder` — Merge-2 棋盘进阶梯（整梯优先 · ≥9.6）\n\n> **合格线 `≥ 9.6 / 10.0` · 最多 8 轮 · 禁止无五维数字宣称 PASS**。  \n> **优先：一次生成整梯 contact sheet（L1…LN 同框），再切格评分**。某格反复塌身份才可单格补生（同品牌胶/光照）。\n\nDefault N=**8**。Modes：A 零参考 · B 单参考风格 · C 参考整梯（抄域纪律+medium，不抄 motif）。\n\n## 硬：升级路径\n1. 同一任务域（禁同色杂物串）\n2. 订单价值递增\n3. 棋盘完整图标：居中、缩略可读；无脸；无等级字\n4. 相邻档缩略差：体量/零件/身份可辨；同模只加特效=失败\n5. 同族放大必须可读（缩略 ≥~1.6× 体量或明显更多零件）\n\n### 类\n| 类 | 规则 |\n|---|---|\n| category-swap | 域内换完整道具 + 品牌胶 + 体量升 |\n| family-morph | 同物长大/零件↑ |\n| theme-morph | 主题内身份跳但用途一致且规格升 |\n\nBanned：跨域杂物串；同瓶叠光；纯 FX；茶杯修复分镜。\n\n## 硬：Medium\n1. **有参考（B/C）** — 整梯 medium **锁参考**（材质/光影/边缘/色温/BG）。抄纪律不抄 motif。参考写实就跟写实；参考卡通就跟卡通。\n2. **零参考（A）默认** — **卡通可爱**（cute cartoon / casual chibi-toy merge 图标：圆润块面、软阴影、饱和友好色、微笑感造型但**道具本身仍无脸**除非 brief 要求）。brief 另写 medium 则以 brief 为准。\n3. **Mode A 媒介** — 零参考默认卡通可爱。goal、模块或参考分析里写明「卡通可爱」「玩具」「Q版」或 vinyl/chibi 时，生图词才可以保留 vinyl、chibi、搪胶、桶身。没声明时，生成前会剥掉 vinyl、chibi、搪胶、桶身、金琥珀双描边、barrel torso、dual-rim，避免抄进写实、像素、赛博或 `/pmem-draw`。Mode B/C 只有参考本身是该媒介才写这些词。圆润倒角、软阴影、禁止金属高光和产品摄影，仍然是卡通可爱的画面要求，不必靠 vinyl 这个词。\n4. **实拍漂移** — 在默认卡通可爱或 stylized 参考下，重扣产品实拍/油光不锈钢 HDR/真实木纹微细节；仅当参考/brief 明确写实才允许写实。Mode A 若 dim1 偏产品目录感 → 整梯重生并加码 stub，不得硬过。\n\n## Step 0：Ladder bible\n域 · 类 · 品牌胶 · medium 来源（参考锁 / 默认卡通可爱 / brief 覆盖）· **L1…LN 逐级物品名词** + 升级理由 · negatives · 易混档。  \nMode C：写出参考「升级课程」，映射到**新域**物品表。  \n**L8 = 最大体量或最多零件**；晚档禁「同一超类微差」。\n\n## Step 1：整梯一次生成\n1. Prompt 必须：**exactly N**、**编号列出每个名词**、一句品牌胶、一句 medium（A 默认写清 cute cartoon **+ Mode A stub 全套**）、网格锁（等大格、统一 BG、无字无脸）。\n2. 多色域用共用点缀品牌胶，勿强行同体色。\n3. Mode C 垫参考整梯只锁 medium+网格；NEW family、勿抄参考 motif。\n4. 切格；均分出血则连通域重切。\n5. **N-count gate**：组件数 ≠ N → 失败重来。\n6. 任一格 <9.6 → 优先整梯重生；最多 8 轮。\n\n## Step 2：五维 + 整梯审计\n1. 风格与品牌胶（2.5）— 默认卡通可爱时偏写实/产品目录感重扣\n2. 升级路径（2.5）— 剪影名词测试\n3. 图标完成度（2.0）\n4. 红线（1.5）\n5. 连续与爬升（1.5）\n\n整梯 OK：**所有格 ≥9.6** 且域/相邻/同族/N-count 通过。\n\n## Step 3：交付\nsheet + L01…LN + 每格评分 + 整梯审计 + curriculum。\n\n## 稳定性门\n连续 **3 组**不同新域过线才算稳；失败→通用规则写回（禁写死本次道具名）。',
+        "aliases": ["art-ladder", "art-merge"],
+        "alias_routes": {
+            "art-ladder": "合成梯",
+            "art-merge": "合成梯",
+        },
+        "title": "同域合成梯：先过八件关系，再逐张抬到 ≥9.6",
+        "description": (
+            "玩家要一条同域合成升级梯，或生图分流判成合成梯时使用。"
+            "/art-ladder、/art-merge、/pmem-merge-ladder 都走这一条：先文字定稿八件关系，再每一档单独一张正方形。"
+            "同框整梯只作体量预览，不是交付物。关系讨论固定 8 稿，合成说不通就不能出图；第二段跑图最多 4 轮。"
+        ),
+        "body": r"""# `/pmem-merge-ladder`（别名 `/art-ladder`、`/art-merge`）— 同域合成梯
+
+一条合同。玩家用哪个旧名字进来都一样，不要再分成「整梯同框交货」和「一档一张」两套。
+
+交付物是八张同样大的正方形，每张只有一件、居中。16:9 八格同框只允许当体量预览；预览切格切进了邻件，整张预览作废，不能拿去当成品。
+
+## 风格（第二段才用，只取一条）
+
+1. 玩家写下了风格，就用写下的。
+2. 没写风格但有参考图：先跑 `python3 pmem_art.py ref-read <参考图路径>`，把看见的表面写成一句。底是透明的，不要写成黑底。小高光不要写成油亮。表面光洁，不要改成毛毡或纸纹。不要把参考图文件垫进生图。不抄参考里的物件。
+3. 风格和参考都没有：质感好的卡通可爱。圆润倒角、软阴影、饱和友好色，道具本身无脸，除非玩家要求有脸。没写明玩具、Q版或卡通时，生成前剥掉 vinyl、chibi、搪胶、桶身、金琥珀双描边。圆润和软阴影可以留着，不必靠这些词。
+
+默认卡通或风格化参考下，产品实拍、油光不锈钢、真实木纹微细节要重扣。只有参考或 brief 明确写实才允许写实。
+
+## 第一段 · 关系讨论（8 稿，先不出图）
+
+这一段不是跑图。跑图上限是 4 轮，不能拿来缩短这里。关系要谈到严谨，最多改 **8 稿**。8 稿里没有一稿把下面六条都说通，就停在这一段，一张图都不出。
+
+每一稿写成八行，交给独立文本判断。只谈关系，不谈画风、光影、质感。判断要指出没过的是哪一行、哪一条。没过只改那几行，已经说通的行锁住。不写「不要画某件」。
+
+六条都要过，而且要说得通：
+
+1. 正好八件，`level` 为 1 到 8。同一任务域，不许串成同色杂物。
+2. 每一档画面里将只有一件、居中。不是一对，也不是一组场景。无脸，无等级字。
+3. 两件相同的这一档合成下一档。下一档仍是一件，而且说得出：这两件合成之后多了哪一块、为什么是这个物件。换成一个同色但无关的物件，没过。
+4. 体量只大一圈。最低档占格子大半，最高档留边，不顶出格子，也不缩成中间一个小点。末档最大、零件最多。
+5. 沿档位零件变多或剪影更复杂。`parts_add` 必须是具体零件。只写「更华丽 / 加光 / 特效」没过。同模只加特效没过。
+6. 相邻两档的剪影家族不能相同，也不能只改一两个字冒充不同。
+
+机读数字过了、合成说不通，仍然不算定稿。讨论定稿之后，才把这八行写成机读文件。文件要有 `tracks:`，每一行用这些英文键：`level`、`name`、`silhouette`、`scale_delta`、`scale_pct`、`parts_add`。`scale_pct` 单调递增（L1 ≥ 0.58，L8 ≤ 0.80，后一档必须大于前一档）。L1 的 `parts_add` 写 `—`，L2–L8 必须是具体零件。键名写错或少了 `scale_pct`，`relation-judge` 审不了。
+
+新任务另写一份副本，照 `docs/showcase/skill_full_modes_1027/merge_phase1_canonical.yaml` 的结构。不要改掉这份 canonical 里已有的 track。然后必须跑：
+
+```bash
+python pmem_art.py merge relation-judge --file <yaml> --all
+```
+
+**exit 0 才能出图。** 8 稿仍不过，停在这一段，不进入第二段。
+
+关系过了，每一档单独出一张正方形核对。对不上就只改那一档，不重选八件。然后跑 `merge audit`。没过可以 `merge normalize` 一次再 audit。仍不过就逐格重出，不要靠归一化交差。audit 没过，不能进第二段。
+
+## 第二段 · 美术
+
+只从第一段过关的正方形接着画，不重选八件。每一档仍是单独一张正方形。最多再 4 轮，合格线 ≥ 9.6，`converge start --scale medium`。表面那一句每轮原样保留。生图句不写光影张力、体积光、次表面散射。件数、顺序、档位大小继续锁着。
+
+同一档继续修时，每一轮垫的是这一档第一张关系过关的正方形，只在提示词里改点名的那一处。不垫风格参考文件，不垫上一轮更高分的成图，也不把前几轮修正叠进同一段。
+
+每轮先出图再看像素。向玩家写出五维分、不足、下一轮改点，并再查第一段的关系。第二段每一轮 judge 之后再跑一次 audit。关系还在、audit 过了、美术分 ≥ 9.6，才停。关系散了或 audit 没过，这一轮美术分再高也不算过。满 4 轮还没有两段都过的，留下美术最高且关系仍在、audit 也过的那些正方形；关系都不在了，就交付第一段那些过关的正方形。
+
+```bash
+python pmem_art.py merge audit --dir <目录> --phase1 <yaml> --track <域名>
+```
+
+用 `converge generate` 记生图，`converge judge` 记审图，结束时 `converge finish`。
+
+## 禁止
+
+- 没过 `relation-judge` 就出图或上展示。
+- 把八件画进同一张当成品。
+- 从同框预览里抠图代替逐格重出。
+- 垫风格参考文件，或让 L2–L8 全部垫 L1 来锁占格。
+""",
     },
 ]

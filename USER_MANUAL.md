@@ -1,18 +1,18 @@
 # 📘 pmem-art 画师使用手册 — 怎么在 Cursor / Codex 里越画越准
 
 > **版本**：`v0.12+`  
-> **核心理念**：日常入口就是 **Cursor / Claude Code / Codex 对话框**（外加开箱即用的 `/pmem-draw` 等 14 个斜杠技能，含简短别名共 28 个入口）。不用背 CLI、不用手写 YAML。  
+> **核心理念**：日常入口就是 **Cursor / Claude Code / Codex 对话框**（8 个技能。没点名类型就由模型自己认；旧斜杠名仍能锁定那一支）。不用背 CLI、不用手写 YAML。  
 > **先看总览？** → 仓库首页 [README.md](README.md)（作用 · 接入 · 使用 · V4 效果摘要）  
-> **技能流程图（一眼看懂）？** → [第一章附](#第一章附14-技能工作流程图一眼看懂) · 网页点选版 [docs/skills/flows.html](docs/skills/flows.html)  
+> **技能流程图（一眼看懂）？** → [第一章附](#第一章附工作流程图一眼看懂) · 网页点选版 [docs/skills/flows.html](docs/skills/flows.html)  
 > **看图墙？** → [docs/showcase/pmem_art_images_v4_20bots_showcase.html](docs/showcase/pmem_art_images_v4_20bots_showcase.html)（20 Bot 冷启动 · 一排六列）
 
 ---
 
 ## 目录
 
-1. [第一章：初始化即自动安装的 14 大美术技能](#第一章初始化即自动安装的-14-大美术技能)
-2. [第一章附：14 技能工作流程图（一眼看懂）](#第一章附14-技能工作流程图一眼看懂)
-3. [第二章：王牌技能 `/pmem-draw`（8轮9.6分自评收敛生图 & 垫图生图）](#第二章王牌技能-pmem-draw8轮96分自评收敛生图--垫图生图)
+1. [第一章：初始化即自动安装的 8 个美术技能](#第一章初始化即自动安装的-8-个美术技能)
+2. [第一章附：工作流程图（一眼看懂）](#第一章附工作流程图一眼看懂)
+3. [第二章：王牌技能 `/pmem-draw`（4轮9.6分自评收敛生图 & 垫图生图）](#第二章王牌技能-pmem-draw4轮96分自评收敛生图--垫图生图)
 4. [第三章：日常对话反馈怎么变成长期记忆](#第三章日常对话反馈怎么变成长期记忆)
 5. [第四章：三种项目接入方式（空项目 / 老项目 / 持续生图）](#第四章三种项目接入方式空项目--老项目--持续生图)
 6. [第五章：后台自动分类与多画风分叉（水彩 / Q版 / 像素）](#第五章后台自动分类与多画风分叉水彩--q版--像素)
@@ -25,7 +25,9 @@
 
 ---
 
-## 第一章：初始化即自动安装的 14 大美术技能
+## 第一章：初始化即自动安装的 8 个美术技能
+
+玩家没点名类型时，模型看这句话和附图自己认，回显一句后直接做。下面旧斜杠名还能用，点了就锁定那一支，不再单独占一个技能。
 
 当你运行 `python3 pmem_art.py init`（或 `python3 pmem_art.py skills --install`）时，系统会自动在项目根目录生成：
 
@@ -37,39 +39,35 @@
 
 | 主技能指令 | 简短别名 | 什么时候用 |
 | :--- | :--- | :--- |
-| **`/pmem-draw`** | **`/art-draw`** | 想让 AI **自己反复打磨到 9.6 分以上**再交稿（支持纯文字或丢一张参考图） |
-| **`/pmem-ui`** | **`/art-ui`** | 要 **一整套 HUD/菜单 UI Kit**（概念→组件表→九宫格→按钮多状态），对标 SpriteCook |
-| **`/pmem-concept`** | **`/art-concept`** | 要 **原画 / 主视觉 / Key Art**：**强制 8轮 ≥9.6 收敛**（与 draw 同等，禁止只生一张）+ FLUX 完整句 Prompt |
-| **`/pmem-icon`** | **`/art-icon`** | **内部三模式隔离**：Mode A（1024 App Icon 母版）· Mode B（24px SVG 矢量集）· Mode C（游戏透明底道具图标），关键枚强制 8 轮 ≥9.6 |
-| **`/pmem-style-lock`** | **`/art-style`** | 拿到一张特别对味的样张，想把它的色板、光影、笔触锁成长期标准 |
-| **`/pmem-critique`** | **`/art-check`** | 手头有一张图，想让 AI 对照历史红线按 `0–10` 五维严苛挑刺打分，并把毛病记入红线 |
-| **`/pmem-variant`** | **`/art-variant`** | 角色立绘定了，想衍生 **水彩概念图 / Q版贴纸 / 表情差分 / 序列帧** 且不崩人设 |
-| **`/pmem-atlas`** | **`/art-map`** | 阶段性整理散图，并刷新 `art-atlas.html` 画廊回看 |
-| **`/pmem-improve`** | **`/art-improve`** | **进阶 peek**：大声读出 finish 已静默做过的自我迭代 |
-| **`/pmem-coach`** | **`/art-coach`** | **进阶 peek**：短板练习计划 |
-| **`/pmem-learn`** | **`/art-learn`** | **进阶 peek**：知识广度建议（finish 已静默 enqueue） |
-| **`/pmem-lens-propose`** | **`/art-lens`** | **独立可选镜头包提案**：参考图 → 4 套具象机位/光影/道具方案，先选再进收敛（详见 `docs/skills/pmem-lens-propose.md`） |
-| **`/pmem-clone-image`** | **`/art-clone`** | **风格克隆新主体**：Mode B ~95% 锁参考画风克隆到新题材（含角色双眼/UI双层描边门禁，强制 8 轮 ≥9.6） |
-| **`/pmem-merge-ladder`** | **`/art-ladder`** | **同域合成进阶梯**：Merge-2 棋盘 L1–L8 整梯同框生成与切格审计（≥9.6） |
+| **`/pmem-draw`** | **`/art-draw`** | 生图总入口。没点名就自己认成普通图、原画、克隆、变体或镜头包，然后打磨到 9.6 |
+| **`/pmem-ui`** | **`/art-ui`** | 一整套 HUD/菜单。判成界面才走 |
+| **`/pmem-icon`** | **`/art-icon`** | 图标三档不混：桌面母版、线性 SVG、道具格 |
+| **`/pmem-merge-ladder`** | **`/art-ladder`、`/art-merge`** | 合成梯。先过八件关系，再一档一张正方形。同框只是预览 |
+| **`/pmem-style-lock`** | **`/art-style`** | 从样张锁色板、光影、禁用词。不进自动生图 |
+| **`/pmem-critique`** | **`/art-check`** | 只审图，并可以把毛病记入红线 |
+| **`/pmem-atlas`** | **`/art-map`** | 整理散图，刷新 `art-atlas.html` |
+| **`/pmem-coach`** | **`/art-coach`、`/pmem-improve`、`/pmem-learn`** | 进步、短板、知识合成一条。知识卡要你说收下才写入 |
+
+旧名 `/pmem-concept`、`/pmem-clone-image`、`/pmem-variant`、`/pmem-lens-propose` 仍然可用，点了就锁定 draw 里的那一支。镜头包点选前不生图。有参考但没说新题材时，不会走进克隆。
 
 进步曲线 CLI：`python3 pmem_art.py progress`（无独立斜杠技能，也可用 `/pmem-improve`）。
 
 ---
 
-## 第一章附：14 技能工作流程图（一眼看懂）
+## 第一章附：工作流程图（一眼看懂）
 
-> 新人只看本章也能分清「该用哪个、跑完会怎样」。细则仍以各 `SKILL.md` 为准。  
+> 原画、克隆、变体、镜头包已经收进 `/pmem-draw`。下面仍按那一支合同画流程，不再是互相竞争的入口。合成梯以「先过关系、再一档一张」为准，同框不是成品。细则以各 `SKILL.md` 为准。  
 > 可交互点选版：[docs/skills/flows.html](docs/skills/flows.html)
 
 ### 先分三类
 
 | 类型 | 技能 | 一句话 |
 | :--- | :--- | :--- |
-| **强制 8 轮 ≥9.6** | draw · concept · ui · icon · clone · merge-ladder | 生图→打分→不够就改，最多 8 轮；达标或挑最高分 |
-| **前置 / 审稿 / 整理** | lens · style-lock · critique · variant · atlas | 先提案/锁风/只审/分叉/归档，不一定立刻开满收敛 |
-| **进阶 peek** | improve · coach · learn | 日常 `finish` 已静默跑过；主动喊才大声读报告 |
+| **生图** | draw（含原画、克隆、变体、镜头包）· ui · icon · 合成梯 | 认成一支再做。生图→打分→不够就改，最多 4 轮 |
+| **不生图** | style-lock · critique · atlas | 锁风格、只审、归档 |
+| **进阶偷看** | coach（含进步、知识） | 日常 `finish` 已静默跑过；知识卡要说收下才写入 |
 
-### 共享收敛环（六大生图技能都套这层）
+### 共享收敛环（普通图、原画、克隆、变体、界面、图标都套这层）
 
 ```mermaid
 flowchart LR
@@ -79,7 +77,7 @@ flowchart LR
   D -->|≥9.6 且护栏过| E[停 · 胜出]
   D -->|<9.6 且未满 8| F[≤2 条部位修正]
   F --> C
-  D -->|满 8 轮| G[Best-of-8]
+  D -->|满 4 轮| G[Best-of-4]
   E --> H[finish 履历可见]
   G --> H
   H --> I[记忆静默写入]
@@ -165,23 +163,26 @@ flowchart TD
   P --> G[生图]
   G --> J[五维 · 眼/chrome/尺度硬门]
   J -->|≥9.6| D[交付 + 稳测连续 3 组]
-  J -->|未过| F[叠加修正 · 尺度缺陷勿链式垫结果]
+  J -->|未过| F[叠加修正写进提示词 · 每轮仍垫最初风格参考]
   F --> G
 ```
 
 ---
 
-### `/pmem-merge-ladder`（`/art-ladder`）— 整梯棋盘
+### `/pmem-merge-ladder`（`/art-ladder`、`/art-merge`）— 合成梯
 
 ```mermaid
 flowchart TD
-  A[Ladder bible：域·类·L1…L8] --> B[一次出整梯 contact sheet]
-  B --> C[切格 + N-count gate]
-  C --> J[每格五维 + 升级路径审计]
-  J -->|全格≥9.6| D[交付 sheet + 各格分]
-  J -->|任一格不过| R[优先整梯重生 · ≤8 轮]
-  R --> B
+  A[关系讨论最多 8 稿] --> B[六条说通且 relation-judge exit 0]
+  B --> C[每一档单独一张正方形]
+  C --> D[像素对上才进第二段]
+  D --> E[medium 抬质感 · 最多 4 轮]
+  E --> F{关系还在且 ≥9.6}
+  F -->|是| G[交付八张正方形]
+  F -->|关系散了| H[不算过，回到过关稿改质感]
 ```
+
+同框 16:9 只作体量预览，切坏了就作废，不能当成品。
 
 ---
 
@@ -266,22 +267,23 @@ flowchart TD
 
 | 你想… | 用 |
 | :--- | :--- |
+| 没想好类型，直接说 | 不用选。模型认完就做 |
 | 随便画一张并打磨到过线 | `/pmem-draw` |
-| 主视觉 / 气氛图 | `/pmem-concept` |
+| 主视觉 / 气氛图 | 说「原画」，或 `/pmem-concept` |
 | 一整套菜单 / HUD | `/pmem-ui` |
 | App 图标 / SVG / 道具图标 | `/pmem-icon` |
-| 照着某张图的风画新题材 | `/pmem-clone-image` |
-| 同域 L1–L8 升级棋盘 | `/pmem-merge-ladder` |
-| 先挑镜头再画 | `/pmem-lens-propose` → 再 draw/concept |
+| 照着某张图的风画新题材 | 说「按这个风格画别的」，或 `/pmem-clone-image` |
+| 同域升级八件 | `/pmem-merge-ladder` |
+| 先挑镜头再画 | `/pmem-lens-propose`，点选前不生图 |
 | 把样张锁成项目标准 | `/pmem-style-lock` |
 | 只打分挑刺 | `/pmem-critique` |
 | Q 版 / 水彩 / 表情差分 | `/pmem-variant` |
 | 整理散图看图谱 | `/pmem-atlas` |
-| 看进步 / 练什么 / 学什么 | improve / coach / learn |
+| 看进步 / 练什么 / 学什么 | `/pmem-coach` |
 
 ---
 
-## 第二章：王牌技能 `/pmem-draw`（8轮9.6分自评收敛生图 & 垫图生图）
+## 第二章：王牌技能 `/pmem-draw`（4轮9.6分自评收敛生图 & 垫图生图）
 
 平时让 AI 生图最大的痛点是：**生 1 张经常有硬伤（手崩、比例不对、混进赛博紫、漏画配饰），每次都要人工催它改。**  
 `/pmem-draw`（别名 `/art-draw`）把「生图 → 审图打分 → 挑出不合理处 → 叠加修正再生图」做成了 **全自动收敛循环**。
@@ -307,9 +309,9 @@ flowchart TD
 五维名：**构图 · 光影色彩 · 透视与解剖 · 质感 · 规格与风格**。  
 （旧写法 `风格2.2/结构2.0/光影1.7/合规1.4/还原1.3` 仍可解析为相加总分，但不作为新会话主写法。）
 
-### 2.3 收敛规则与 5 项安全护栏（最多 8 次生图）
+### 2.3 收敛规则与 5 项安全护栏（最多 4 次生图）
 - **达到 `>= 9.6` 分（且未触发解剖 `< 7.5` 熔断）**：立即停止循环，当前图即为最终合格图（`high` / `recompose` 至少跑满 2 轮）。
-- **`pad=auto` 智能垫图策略**：R2+ 默认开启 `pad=auto`——当上一轮涨分且 `透视与解剖 >= 7.5` 时链式垫上一轮最佳图微修；一旦掉分或 `透视与解剖 < 7.5` 立即退回 `style_ref` 原图重画，切断坏骨架遗传。
+- **每轮垫最初参考图**：`low` / `medium` / `high` / `recompose` 每一轮都垫最初的 `style_ref`，把上一轮具体改点追加进提示词，不改垫成图。风格跳跃不垫旧风格图，也不垫上一轮成图。`pad=previous` 仍是显式链式覆盖。
 - **解剖 `< 7.5` 一票否决（熔断）**：全局停机仍以加权总分 `>= 9.6` 为准，仅当 `透视与解剖 < 7.5`（严重肢体/结构崩坏）时一票否决禁止停机；批量看板同时展示 `总分≥9.6` 与 `总分≥9.6 且 解剖≥8.5` 双指标。
 - **R4 起连续 2 轮掉分 `> 0.5` 安全早停**：仅在 `round >= 4` 且连续 2 轮低于历史最高分超过 `0.5` 分时触发早停，并保底取历史最高分轮次。
 - **按题材触发 R1 结构底线 + 精简回流**：仅人物/生物自动注入关节/握持/双瞳高光底线，纯空镜仅注入透视灭点与接触阴影，UI/图标跳过人体解剖词；单轮 `【回流修正】` 最多 `<= 2` 条；评分偶发失败自动重试，绝不写入泛化套话污染下一轮 Prompt。
@@ -329,9 +331,9 @@ flowchart TD
 - **怎么用**
   - `/pmem-ui 生成一套青瓷幻想风主菜单：九宫格面板 + 按钮 normal/pressed`
   - `/pmem-ui [拖入概念图] 拆出主面板九宫格、按钮四态、进度条空/满`
-- **原理**：`search` 召回 UI 红线 → **概念先行**（禁止散生硬拼）→ 透明组件表 → 九宫格+状态族+`manifest.json` → **强制 8轮 ≥9.6** 收敛写记忆。
+- **原理**：`search` 召回 UI 红线 → **概念先行**（禁止散生硬拼）→ 透明组件表 → 九宫格+状态族+`manifest.json` → **强制 4轮 ≥9.6** 收敛写记忆。
 
-### `/pmem-concept`（`/art-concept`）— 原画【强制 8轮 ≥9.6】
+### `/pmem-concept`（`/art-concept`）— 原画【强制 4轮 ≥9.6】
 - **怎么用**
   - `/pmem-concept 画一张东方青瓷废土主视觉 Key Art，宽幅海报`
   - `/pmem-concept [拖入参考图] 同氛围角色登场 Key Art`
@@ -342,7 +344,7 @@ flowchart TD
   - **Mode A（1024×1024 App Icon 母版）**：`/pmem-icon 生成 1024×1024 iOS/Android 应用图标母版，中心符号占 62%–72%，带小字号缩略可读性检查`
   - **Mode B（24px `currentColor` 一致化 SVG 矢量图标集）**：`/pmem-icon 做一套 24px Clean 导航+背包 SVG，输出 style-spec 与 preview.html`
   - **Mode C（64/128/256px 游戏透明底道具栅格图标）**：`/pmem-icon 生成一套 RPG 药水与宝箱透明底道具图标，双层外描边 + 剪影秒认`
-- **原理**：在 Step 0 先判定 Mode A / Mode B / Mode C 三选一（严禁把 SVG 网格规则套在栅格图标上，也严禁把 iOS 圆角遮罩套在透明底道具上）→ 关键枚 **强制 8轮 ≥9.6** → 写记忆。
+- **原理**：在 Step 0 先判定 Mode A / Mode B / Mode C 三选一（严禁把 SVG 网格规则套在栅格图标上，也严禁把 iOS 圆角遮罩套在透明底道具上）→ 关键枚 **强制 4轮 ≥9.6** → 写记忆。
 
 ---
 
@@ -399,10 +401,10 @@ python3 pmem_art.py ingest .cursor/generated/new.png -p "角色Astra 水彩 概�
 | :--- | :--- |
 | `python3 pmem_art.py skills --install` | 安装/刷新 `.cursor`、`.claude`、`.agents` 下的 14 项技能与 28 个斜杠命令入口 |
 | `python3 pmem_art.py skills --list` | 查看所有内置技能列表 |
-| `python3 pmem_art.py converge start -g "<目标>" -m <模块> [--scale medium] [--ref-image <图> --ref-analysis "<解构>"]` | 开启一轮最多 8 次、`>=9.6` 分的收敛生图会话 |
+| `python3 pmem_art.py converge start -g "<目标>" -m <模块> [--scale medium] [--ref-image <图> --ref-analysis "<解构>"]` | 开启一轮最多 4 次、`>=9.6` 分的收敛生图会话 |
 | `python3 pmem_art.py converge generate --round <i> -i <图> -p "<Prompt>"` | **仅生图登记**（禁止带 score/dims；与 judge 必须分两步） |
 | `python3 pmem_art.py converge judge --round <i> -i <图> --dims "..." --strengths "..." --defects "..." --next-fix "..."` | **独立审图**：五维打分、亮点、不合理处与下一轮修正（须先有 generate） |
-| `python3 pmem_art.py converge finish` | 结算达标图或 8 轮最高分图；**默认写入记忆并打印评分履历**（`--no-apply` 可跳过；`--quiet` 只要一行结论） |
+| `python3 pmem_art.py converge finish` | 结算达标图或 4 轮最高分图；**默认写入记忆并打印评分履历**（`--no-apply` 可跳过；`--quiet` 只要一行结论） |
 | `python3 pmem_art.py feedback "<原话>" -m <模块> [-a <图>]` | 把画师自然语言评价沉淀为记忆 |
 | `python3 pmem_art.py search -m <模块>` | 召回该模块（含父模块）的红线、定稿与色板 |
 | `python3 pmem_art.py ingest <图> -p "<说明>" --apply` | 四信号分类并归档图片 |
@@ -413,10 +415,10 @@ python3 pmem_art.py ingest .cursor/generated/new.png -p "角色Astra 水彩 概�
 ## 第七章：常见问题 FAQ
 
 **Q1：如果连生 8 张图都没有达到 9.6 分怎么办？**  
-A：到了第 8 轮仍未达 9.6 分时，`converge finish` 会自动停止循环，从 1~8 轮里挑出**综合评分最高**的那一张作为阶段最优交付图；默认给你全轮评分履历（不足/改点）+ 胜出图。只要终稿时加 `--quiet`。
+A：到了第 4 轮仍未达 9.6 分时，`converge finish` 会自动停止循环，从 1~4 轮里挑出**综合评分最高**的那一张作为阶段最优交付图；默认给你全轮评分履历（不足/改点）+ 胜出图。只要终稿时加 `--quiet`。
 
 **Q2：丢入一张图让 `/pmem-draw` 生成时，它会怎么处理那张图？**  
-A：它会先做 **Step 0 参考图深度解构**（分析构图、提取主辅色 HEX、判断光影与笔触、识别头身结构），把解构结论记入收敛会话基准，然后带着这份基准进入 1~8 轮自评收敛循环。
+A：它会先做 **Step 0 参考图深度解构**（分析构图、提取主辅色 HEX、判断光影与笔触、识别头身结构），把解构结论记入收敛会话基准，然后带着这份基准进入 1~4 轮自评收敛循环。
 
 **Q3：以后升级了 `pmem-art`，怎么刷新已安装项目的技能文件？**  
 A：在项目根目录运行 `python3 pmem_art.py skills --install` 即可一键无损刷新 `.cursor`、`.claude`、`.agents` 下的全部技能定义。

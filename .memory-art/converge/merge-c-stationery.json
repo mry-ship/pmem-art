@@ -1,0 +1,334 @@
+{
+  "session_id": "merge-c-stationery",
+  "started_at": "2026-10-27 15:59:56 UTC+8",
+  "goal": "Mode C 垫市场整梯只锁 medium+网格。新域文具八件：回形针、图钉、橡皮、铅笔、便利贴、订书机、桌面收纳、打印机。",
+  "module": "prop.StationeryMerge",
+  "mode": "text_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "medium",
+  "scale_profile": {
+    "scale": "medium",
+    "label": "中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.6)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 8,
+    "min_rounds_before_stop": 1,
+    "target_score_threshold": 9.6,
+    "dim_weights": {
+      "composition": 0.2,
+      "lighting_color": 0.25,
+      "perspective_anatomy": 0.2,
+      "texture_detail": 0.2,
+      "spec_style": 0.15
+    },
+    "retention_set": [
+      "viewpoint_frame",
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "第 2 轮起垫目前最高分的那张，只补它没过的那一处（提示词改动仍 ≤40%）",
+    "max_prompt_delta_ratio": 0.4,
+    "max_prompt_delta_vs_first": 0.6,
+    "allow_recompose": false,
+    "allow_viewpoint_change": false,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "viewpoint_angle (不改机位与镜头视角)",
+      "element_count (不增删主体元素清单)",
+      "no_full_recompose (不做整体 recompose / 换景别故事)",
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)"
+    ],
+    "min_round_leap": 0.15,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "原图画风优先：保画风与机位，表面那一句不动，只修没过的那一格",
+    "best_direction_hint": "最优方向：光影·空气·介质；可小幅姿态/局部布局",
+    "goal": "Mode C 垫市场整梯只锁 medium+网格。新域文具八件：回形针、图钉、橡皮、铅笔、便利贴、订书机、桌面收纳、打印机。",
+    "module": "prop.StationeryMerge",
+    "ref_image": "",
+    "ref_analysis": "参考整梯：统一棚拍软光、等大格、无脸。不抄参考 motif。"
+  },
+  "target_score_threshold": 9.6,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "",
+  "ref_analysis": "参考整梯：统一棚拍软光、等大格、无脸。不抄参考 motif。",
+  "default_aspect_ratio": "16:9",
+  "default_reference_image_paths": [],
+  "aspect_ratio": "16:9",
+  "reference_image_paths": [],
+  "ref_physical_traits": {},
+  "param_validation": {},
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.6,
+  "accept_threshold": 9.6,
+  "max_rounds": 8,
+  "ready_to_finish": false,
+  "status": "finished",
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "16:9",
+      "reference_image_paths": [],
+      "param_validation": {
+        "three_step_verified": true,
+        "three_step_stage": "step3_judge",
+        "validation_passed": true
+      },
+      "generated_at": "15:59:59",
+      "image": "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\modes_merge_c_stationery.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 139545,
+        "size_kb": 136.3,
+        "width": 1280,
+        "height": 720,
+        "aspect_ratio": "16:9",
+        "canonical_aspect_ratio": "16:9",
+        "color_entropy": 7.11
+      },
+      "raw_score": 8.82,
+      "score": 8.82,
+      "target_score_threshold": 9.6,
+      "dims": "构图8.8/光影8.9/透视8.7/质感8.8/风格8.9",
+      "dims_parsed": {
+        "composition": 8.8,
+        "lighting_color": 8.9,
+        "perspective_anatomy": 8.7,
+        "texture_detail": 8.8,
+        "spec_style": 8.9
+      },
+      "weighted_score": 8.82,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.6；像素离线仅为旁证）",
+        "像素离线 Absolute-5D 旁证=8.85，coverage=0.75（仅参考，不改门槛、不替代本模型五维分）"
+      ],
+      "stagnated": false,
+      "strengths": "构图与基础色调符合要求",
+      "defects": "medium 跟市场棚拍软光；文具身份齐。打印机与收纳相邻体量差可再拉开。",
+      "next_fix": "末档打印机再大一点。",
+      "prompt": "原图画风优先：保画风与机位，表面那一句不动，只修没过的那一格| Mode C stationery ladder from market medium| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.7,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_absolute_5d",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "offline_advisory": {
+          "version": "v9.1_audit_patch",
+          "score": 8.85,
+          "coverage": 0.75,
+          "rankable": false,
+          "contract": "docs/gpt6sol_absolute_5d_quant_rubric.md",
+          "role": "advisory_only"
+        },
+        "offline_advisory_note": "像素离线 Absolute-5D 旁证=8.85，coverage=0.75（仅参考，不改门槛、不替代本模型五维分）"
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：medium 跟市场棚拍软光；文具身份齐。打印机与收纳相邻体量差可再拉开。",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.82"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "16:00:02"
+    }
+  ],
+  "warm_start": {
+    "project_id": "cursor-pmem-art",
+    "project_name": "Cursor-Pmem-Art",
+    "active_project": {
+      "project_id": "cursor-pmem-art",
+      "project_slug": "cursor-pmem-art",
+      "project_name": "Cursor-Pmem-Art",
+      "layer_scope": "private",
+      "bound_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "origin_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "root_name": "Cursor-Pmem-Art",
+      "library_dir": ".memory-art/projects/cursor-pmem-art",
+      "copied_from_project": "pmem-art",
+      "copied_from_root": "/Users/yanghu/Desktop/pmem-art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-26 18:01:04 UTC+8",
+      "updated_at": "2026-10-26 18:01:04 UTC+8"
+    },
+    "module": "prop.StationeryMerge",
+    "goal": "Mode C 垫市场整梯只锁 medium+网格。新域文具八件：回形针、图钉、橡皮、铅笔、便利贴、订书机、桌面收纳、打印机。",
+    "confidence": 0.3,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "红线可控（0 条）",
+      "挂载 0 张项目知识卡 + 2 张全局美术底层基础卡"
+    ],
+    "top_recipes": [],
+    "top_redlines": [],
+    "art_decisions": [],
+    "private_knowledge": [],
+    "shared_knowledge": [
+      {
+        "id": "icon-stroke-grid-spec",
+        "title": "图标工程规范：线宽统一、安全网格与剪影可读性",
+        "body": "成套技能/功能图标必须锁定统一的描边线宽（如全局统一 2px 描边，严禁 1px 与 6px 混杂）、统一圆角半径与 16px~24px 安全内边距网格，确保在 64x64px 极小缩略尺寸下主体几何剪影依然一眼可辨、不与背景杂光粘连。",
+        "layer_scope": "shared"
+      },
+      {
+        "id": "palette-70-20-10",
+        "title": "色彩构成：70-20-10 色板比例黄金法则",
+        "body": "画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+        "layer_scope": "shared"
+      }
+    ],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [],
+      "preferred_composition": [],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [],
+      "banned_habits": []
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: Cursor-Pmem-Art (.memory-art/projects/cursor-pmem-art/)\n- 目标模块: prop.StationeryMerge\n- 置信度: 0.30（fast-track 资格: 否）\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [icon-stroke-grid-spec] 图标工程规范：线宽统一、安全网格与剪影可读性: 成套技能/功能图标必须锁定统一的描边线宽（如全局统一 2px 描边，严禁 1px 与 6px 混杂）、统一圆角半径与 16px~24px 安全内边距网格，确保在 64x64px 极小缩略尺寸下主体几何剪影依然一眼可辨、不与背景杂光粘连。\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+    "built_at": "2026-10-27 15:59:56 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：medium 跟市场棚拍软光；文具身份齐。打印机与收纳相邻体量差可再拉开。",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.82"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 4,
+  "regression_drop": 0.5,
+  "ActionRequired": "GENERATE_ROUND_2",
+  "winner": {
+    "round": 1,
+    "round_label": "第 1 轮初稿",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "16:9",
+    "reference_image_paths": [],
+    "param_validation": {
+      "three_step_verified": true,
+      "three_step_stage": "step3_judge",
+      "validation_passed": true
+    },
+    "generated_at": "15:59:59",
+    "image": "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\modes_merge_c_stationery.jpg",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 139545,
+      "size_kb": 136.3,
+      "width": 1280,
+      "height": 720,
+      "aspect_ratio": "16:9",
+      "canonical_aspect_ratio": "16:9",
+      "color_entropy": 7.11
+    },
+    "raw_score": 8.82,
+    "score": 8.82,
+    "target_score_threshold": 9.6,
+    "dims": "构图8.8/光影8.9/透视8.7/质感8.8/风格8.9",
+    "dims_parsed": {
+      "composition": 8.8,
+      "lighting_color": 8.9,
+      "perspective_anatomy": 8.7,
+      "texture_detail": 8.8,
+      "spec_style": 8.9
+    },
+    "weighted_score": 8.82,
+    "audit_warnings": [
+      "Agent Absolute-5D 已采纳（门槛 9.6；像素离线仅为旁证）",
+      "像素离线 Absolute-5D 旁证=8.85，coverage=0.75（仅参考，不改门槛、不替代本模型五维分）"
+    ],
+    "stagnated": false,
+    "strengths": "构图与基础色调符合要求",
+    "defects": "medium 跟市场棚拍软光；文具身份齐。打印机与收纳相邻体量差可再拉开。",
+    "next_fix": "末档打印机再大一点。",
+    "prompt": "原图画风优先：保画风与机位，表面那一句不动，只修没过的那一格| Mode C stationery ladder from market medium| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观",
+    "continuation": false,
+    "passed": false,
+    "gate_blocked": false,
+    "image_gate_blocked": false,
+    "anatomy_score": 8.7,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "unknown",
+    "judge_source": "agent_absolute_5d",
+    "remote_vlm": {
+      "source": "agent_absolute_5d",
+      "provider": "",
+      "model": "",
+      "error": "",
+      "active": false,
+      "offline_advisory": {
+        "version": "v9.1_audit_patch",
+        "score": 8.85,
+        "coverage": 0.75,
+        "rankable": false,
+        "contract": "docs/gpt6sol_absolute_5d_quant_rubric.md",
+        "role": "advisory_only"
+      },
+      "offline_advisory_note": "像素离线 Absolute-5D 旁证=8.85，coverage=0.75（仅参考，不改门槛、不替代本模型五维分）"
+    },
+    "should_continue_next_round": true,
+    "decision": "CONTINUE_NEXT_ROUND",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "style_lock",
+        "lesson": "本轮短板偏「style_lock」：medium 跟市场棚拍软光；文具身份齐。打印机与收纳相邻体量差可再拉开。",
+        "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+        "from_score": "8.82"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "16:00:02"
+  },
+  "rounds_to_converge": 1,
+  "convergence_badge": "共 1 轮未达阈值，采用最高分"
+}

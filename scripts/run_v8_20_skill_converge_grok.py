@@ -44,18 +44,17 @@ from run_v8_20_skill_converge_v2fix import (  # noqa: E402
     sha256_file,
 )
 from skills_kit import find_affirmative_lock_hits  # noqa: E402
-from absolute_5d_scorer import absolute_5d  # noqa: E402
+from skills_kit.converge_judge_bridge import offline_advisory_only, score_for_converge  # noqa: E402
+from skills_kit import get_converge_scale_profile  # noqa: E402
 
 DEFAULT_OUT = REPO / "generated_v8_20_skill_grok_v4"
 STATE_NAME = "orchestrator_state.json"
 
 AR_OK = {"1:1", "4:3", "3:4", "16:9", "9:16"}
 
-# --- v2 levers (user-approved) ---
-FORCE_REF_PAD_IF_R1_GE = 8.2
-# Round2: NEVER chain a weak gen as pad — if this round < bar, next pad = style_ref
-FORCE_REF_IF_TOTAL_LT = 8.2
-EARLY_STOP_R1_GE = 8.2  # Round3: align with force_ref bar; save gens on strong r1
+# low/medium/high/recompose pad the original ref every round. Style jump pads nothing.
+# Disabled for skill-contract testing: high/recompose require min_rounds≥2; stop only at ≥9.6.
+EARLY_STOP_R1_GE = 99.0  # was 8.2 — do not early-stop on strong R1
 ANATOMY_LOCK = (
     "解剖锁：correct human anatomy, five fingers on each hand, coherent joints, "
     "no warped limbs; portraits: clear iris/pupils, both eyes aligned"
@@ -138,7 +137,8 @@ def compose_prompt_v2(bot: dict, best_doc: dict, round_num: int = 1, defects: li
         p = p.rstrip(" |") + " | " + MICRO_DETAIL_LOCK
     if TEXTURE_MATERIAL_LOCK not in p:
         p = p.rstrip(" |") + " | " + TEXTURE_MATERIAL_LOCK
-    if slug == "ishtar_canyon" and SCENE_LOCK_ISHTAR not in p:
+    # Eye-level terrace lock is the recompose camera only. High stays on the shaft and only lifts light.
+    if slug == "ishtar_canyon" and is_recompose and SCENE_LOCK_ISHTAR not in p:
         p = p.rstrip(" |") + " | " + SCENE_LOCK_ISHTAR
     if slug == "night_city" and CONTACT_LOCK_NIGHT not in p:
         p = p.rstrip(" |") + " | " + CONTACT_LOCK_NIGHT
@@ -203,35 +203,25 @@ def bot_stem(bot: dict) -> str:
 
 
 
-def score_offline(path: Path, bot: dict, round_num: int | None = None) -> dict[str, Any]:
-    """Offline Absolute-5D checklist (used when VLM balance is exhausted)."""
+def score_offline_advisory(path: Path, bot: dict, round_num: int | None = None) -> dict[str, Any]:
+    """Offline Absolute-5D for comparison only — never ok_for_stop."""
     ref = REPO / (bot.get("ref_image") or "")
     api = bot.get("api_scale") or "medium"
     mode = bot.get("prompt_mode") or ""
-    r = absolute_5d(
-        str(path),
+    adv = offline_advisory_only(
+        path,
         api_scale=api,
         prompt_mode=mode,
         ref_path=str(ref) if ref.is_file() else None,
     )
-    dims = dict(r.get("dims") or {})
-    total = float(r.get("score") or 0)
-    defects = r.get("defects") or []
-    if isinstance(defects, str):
-        defects = [defects] if defects.strip() else []
-    # Heuristic defect hints from low dims
-    low = sorted(((k, float(v)) for k, v in dims.items() if v is not None), key=lambda x: x[1])
-    for k, v in low[:2]:
-        if v < 8.0:
-            defects.append(f"{k}偏低({v:.2f})")
     return {
-        "ok": True,
-        "total": round(total, 3),
-        "dims": {k: round(float(v), 3) for k, v in dims.items()},
-        "defects": defects[:6],
-        "grade": (r.get("bands") or {}).get("total") if isinstance(r.get("bands"), dict) else None,
-        "score_backend": "offline_absolute_5d",
-        "coverage": r.get("coverage"),
+        "ok": False,
+        "ok_for_stop": False,
+        "judge_source": "offline_advisory_only",
+        "offline_advisory": adv,
+        "total": adv.get("score"),
+        "dims": adv.get("dims") or {},
+        "defects": [],
         "id": f"round::{path.name}" + (f"::r{round_num}" if round_num else ""),
         "filename": path.name,
         "path": str(path),
@@ -241,15 +231,46 @@ def score_offline(path: Path, bot: dict, round_num: int | None = None) -> dict[s
         "api_scale": api,
         "display_scale": bot.get("display_scale") or "",
         "round": round_num,
-        "track": "A_absolute_5d_offline_checklist",
     }
+
+
+def score_vlm_auto(path: Path, bot: dict, env: dict, model: str, round_num: int, max_rounds: int) -> dict[str, Any]:
+    """VLM first; Agent pending if unavailable; offline attached as advisory."""
+    scale_prof = get_converge_scale_profile(
+        str(bot.get("api_scale") or "medium"),
+        goal=bot.get("goal") or "",
+        ref_image=bot.get("ref_image") or "",
+    )
+    item = {
+        "id": f"round::{bot_stem(bot)}::r{round_num}",
+        "filename": path.name,
+        "path": str(path),
+        "sha256": sha256_file(path),
+        "role": "round" if round_num < max_rounds else "bot",
+        "bot_id": bot.get("bot_id") or "",
+        "slug": bot.get("slug") or "",
+        "api_scale": bot.get("api_scale") or "medium",
+        "display_scale": bot.get("display_scale") or "",
+        "prompt_mode": bot.get("prompt_mode") or "",
+        "round": round_num,
+        "goal": bot.get("goal") or "",
+        "ref_image": bot.get("ref_image") or "",
+    }
+    return score_for_converge(
+        item,
+        env,
+        model,
+        root=REPO,
+        scale_prof=scale_prof,
+        goal=bot.get("goal") or "",
+    )
 
 
 def init_state(args: argparse.Namespace) -> int:
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
-    doc = json.loads((REPO / "bot_tasks_v8.json").read_text())
-    best = json.loads((REPO / "best_prompts_by_scale.json").read_text())
+    doc = json.loads((REPO / "bot_tasks_v8.json").read_text(encoding="utf-8"))
+    best = json.loads((REPO / "best_prompts_by_scale.json").read_text(encoding="utf-8"))
     bots = select_bots(doc)
     if args.only:
         keys = [k.strip() for k in args.only.split(",") if k.strip()]
@@ -285,8 +306,8 @@ def init_state(args: argparse.Namespace) -> int:
         "bot_ids": [b["bot_id"] for b in bots],
         "count": len(bots),
         "concurrency_hint": args.concurrency,
-        "scorer": "offline_absolute_5d",
-        "scorer_note": "gpt-6-sol VLM not used (quota will not be restored); offline Absolute-5D checklist",
+        "scorer": "vlm_first_agent_fallback",
+        "scorer_note": "VLM (independent + quant) → Agent pending → offline advisory only",
         "levers": ["force_ref_pad_if_r1_ge_8.2", "force_ref_if_total_lt_8.2", "soften_recompose_bold", "anatomy_micro_locks", "early_stop_r1_ge_8.5", "texture_material_lock", "scene_lock_ishtar", "lighting_night_lock", "bold_no_style_ref_pad"],
         "priority_bots": PRIORITY_BOT_ORDER,
     }
@@ -358,7 +379,7 @@ def next_jobs(args: argparse.Namespace) -> int:
     if not state:
         print(json.dumps({"ok": False, "error": "no state; run init"}, ensure_ascii=False))
         return 1
-    best = json.loads((REPO / "best_prompts_by_scale.json").read_text())
+    best = json.loads((REPO / "best_prompts_by_scale.json").read_text(encoding="utf-8"))
     jobs = []
     def _prio(bid: str) -> tuple:
         try:
@@ -434,13 +455,13 @@ def ingest(args: argparse.Namespace) -> int:
 
     scores_path = out_dir / "vlm_scores.json"
     scores = load_json(scores_path, {"images": {}, "failures": {}})
-    backend = (state.get("score_backend") or "offline").lower()  # default offline (VLM balance exhausted)
+    backend = (state.get("score_backend") or "auto").lower()
 
     scored: dict[str, Any]
+    env = load_env(Path(state["env_path"]))
     if backend == "offline":
-        scored = score_offline(r_path, bot, r)
+        scored = score_offline_advisory(r_path, bot, r)
     elif backend == "vlm":
-        env = load_env(Path(state["env_path"]))
         scored = score_with_retry(
             path=r_path,
             env=env,
@@ -450,29 +471,32 @@ def ingest(args: argparse.Namespace) -> int:
             round_num=r,
             goal=bot.get("goal") or "",
         )
-    else:  # auto: try VLM once lightly, fall back offline on balance/403
-        try:
-            env = load_env(Path(state["env_path"]))
-            scored = score_with_retry(
-                path=r_path,
-                env=env,
-                model=state["score_model"],
-                role="round" if r < state["max_rounds"] else "bot",
-                bot=bot,
-                round_num=r,
-                goal=bot.get("goal") or "",
+        if not scored.get("offline_advisory"):
+            adv = score_offline_advisory(r_path, bot, r).get("offline_advisory")
+            scored["offline_advisory"] = adv
+    else:  # auto: VLM → Agent pending; offline advisory only
+        scored = score_vlm_auto(r_path, bot, env, state["score_model"], r, int(state["max_rounds"]))
+        if not scored.get("ok") and scored.get("judge_pending") == "agent":
+            adv_only = score_offline_advisory(r_path, bot, r)
+            scored.setdefault("offline_advisory", adv_only.get("offline_advisory"))
+    if not scored.get("ok") and scored.get("judge_pending") == "agent":
+        print(
+            json.dumps(
+                {
+                    "ok": False,
+                    "error": "agent_judge_required",
+                    "bot_id": bid,
+                    "round": r,
+                    "image": str(r_path),
+                    "judge_source": scored.get("judge_source"),
+                    "offline_advisory": scored.get("offline_advisory"),
+                    "vlm_error": scored.get("error"),
+                },
+                ensure_ascii=False,
             )
-            err = str(scored.get("error") or scored.get("raw") or "")
-            if (not scored.get("ok")) and (
-                "INSUFFICIENT_BALANCE" in err
-                or "Insufficient account balance" in err
-                or "HTTP 403" in err
-            ):
-                scored = score_offline(r_path, bot, r)
-                scored["vlm_fallback"] = "offline_absolute_5d"
-        except Exception as e:
-            scored = score_offline(r_path, bot, r)
-            scored["vlm_fallback"] = f"offline_after_exc:{type(e).__name__}"
+        )
+        return 1
+
     score_ok = bool(scored.get("ok"))
     total = float(scored.get("total") or 0) if score_ok else None
     dims = scored.get("dims") or {} if score_ok else {}
@@ -486,7 +510,7 @@ def ingest(args: argparse.Namespace) -> int:
         round_defects = list(st.get("defects") or [])
 
     # read prompt from compose for record
-    best_doc = json.loads((REPO / "best_prompts_by_scale.json").read_text())
+    best_doc = json.loads((REPO / "best_prompts_by_scale.json").read_text(encoding="utf-8"))
     prompt = compose_prompt_v2(bot, best_doc, r, defects=st.get("defects") if r >= 2 else None)
 
     rec = {
@@ -515,20 +539,11 @@ def ingest(args: argparse.Namespace) -> int:
     atomic_write_json(scores_path, scores)
 
     anat = anat_of(rec) if score_ok else None
-    # Offline Absolute-5D fills perspective_anatomy with NEUTRAL_PRIOR=7.0 (N/A).
-    # Treat that prior as non-blocking so early-stop / promote still work.
-    backend = (state.get("score_backend") or "offline").lower()
-    scored_backend = str(scored.get("score_backend") or "")
-    offline_anat_na = (
-        backend == "offline"
-        or "offline" in scored_backend
-        or scored.get("track") == "A_absolute_5d_offline_checklist"
-    ) and anat is not None and abs(float(anat) - 7.0) < 1e-6
-    if offline_anat_na:
-        anat_ok = bool(score_ok)
-        rec["anat_na_offline"] = True
-    else:
-        anat_ok = bool(score_ok and anat is not None and anat >= float(state["anat_gate"]))
+    anat_ok = bool(score_ok and anat is not None and anat >= float(state["anat_gate"]))
+    if scored.get("offline_advisory"):
+        rec["offline_advisory"] = scored.get("offline_advisory")
+    if scored.get("judge_source"):
+        rec["judge_source"] = scored.get("judge_source")
     rec["anat_ok"] = anat_ok
 
     best_round = st.get("best_round")
@@ -559,15 +574,8 @@ def ingest(args: argparse.Namespace) -> int:
     pad_mode = state["pad"]
     ref = REPO / bot["ref_image"]
 
-    # Early-stop: R1 >= 8.5 with anat ok (Grok v2 lever; overrides min_rounds)
-    if (
-        r == 1
-        and total is not None
-        and total >= float(EARLY_STOP_R1_GE)
-        and anat_ok
-    ):
-        stop_reason = "STOP_EARLY_R1_GE_8_5"
-        best_round = rec
+    # Skill contract: never early-stop on R1 strength alone (high/recompose need min_rounds).
+    # Only STOP_TARGET_REACHED (≥threshold + anat_ok + min_rounds) or R4+ drop-stop / max_rounds.
 
     if stop_reason is None and total is not None and total >= threshold and anat_ok and r >= min_r:
         stop_reason = "STOP_TARGET_REACHED"
@@ -593,71 +601,28 @@ def ingest(args: argparse.Namespace) -> int:
         ):
             stop_reason = "STOP_DROP"
 
-    # advance pad / defects if continuing
+    # low/medium/high/recompose: every later round pads the original ref.
+    # style_jump pads nothing. pad=previous is the explicit chain override.
     next_pad = pad_src
-    # Lever: if this round scored >= 8.2, force later pads back to style_ref
-    force_ref_pad = bool(total is not None and total >= float(FORCE_REF_PAD_IF_R1_GE))
-    # Round2: if THIS round is weak (<8.2), do NOT chain it as pad — snap to style_ref
-    force_ref_weak = bool(total is not None and total < float(FORCE_REF_IF_TOTAL_LT))
-    # Also honor any prior round that already crossed the bar
-    if not force_ref_pad:
-        for prev in (st.get("rounds") or []):
-            try:
-                if float(prev.get("total") or 0) >= float(FORCE_REF_PAD_IF_R1_GE) and prev.get("score_ok"):
-                    force_ref_pad = True
-                    break
-            except (TypeError, ValueError):
-                pass
-    # ishtar always prefers style/web_ref pad (scene drift was Round1 killer)
-    # Round3: bold/style_jump must NOT pad with source style_ref (medium fight)
-    slug = bot.get("slug") or ""
     display = bot.get("display_scale") or ""
     mode = bot.get("prompt_mode") or ""
     is_bold = display == "recompose_bold" or mode == "style_jump"
-    force_ref_slug = slug == "ishtar_canyon" and not is_bold
     if stop_reason is None and r < max_rounds:
         if not score_ok:
             next_pad = None if is_bold else ref
-            # defects unchanged
         else:
             st["defects"] = list(round_defects[:2])
             if is_bold:
-                # free medium jump — no style_ref pad; optional previous if strong
-                if (
-                    anat_ok
-                    and total is not None
-                    and total >= float(FORCE_REF_PAD_IF_R1_GE)
-                    and improved
-                ):
-                    next_pad = r_path
-                    rec["pad_force_ref"] = False
-                    rec["pad_force_ref_reason"] = "bold_chain_strong_prev"
-                else:
-                    next_pad = None
-                    rec["pad_force_ref"] = False
-                    rec["pad_force_ref_reason"] = "bold_no_style_ref_pad"
-            elif force_ref_weak or force_ref_slug or force_ref_pad or pad_mode == "ref":
-                next_pad = ref
-                rec["pad_force_ref"] = True
-                if force_ref_weak:
-                    rec["pad_force_ref_reason"] = "weak_total_lt_8_2"
-                elif force_ref_slug:
-                    rec["pad_force_ref_reason"] = "ishtar_scene_lock"
+                next_pad = None
+                rec["pad_force_ref"] = False
+                rec["pad_force_ref_reason"] = "bold_no_style_ref_pad"
             elif pad_mode == "previous":
                 next_pad = r_path
-            else:  # auto — only chain previous when strong (>=8.2) AND non-decreasing
-                if (
-                    anat_ok
-                    and total is not None
-                    and total >= float(FORCE_REF_PAD_IF_R1_GE)
-                    and (
-                        (last_ok_total is not None and total >= last_ok_total)
-                        or improved
-                    )
-                ):
-                    next_pad = r_path
-                else:
-                    next_pad = ref
+                rec["pad_force_ref"] = False
+            else:
+                next_pad = ref
+                rec["pad_force_ref"] = True
+                rec["pad_force_ref_reason"] = "always_original_ref"
             if total is not None and anat_ok:
                 last_ok_total = total
     elif stop_reason is None and r >= max_rounds:
@@ -952,8 +917,8 @@ def main() -> int:
     ap.add_argument("--out-dir", default=str(DEFAULT_OUT))
     ap.add_argument("--env", default="/home/box/.config/pmem-art/apikey_fan.env")
     ap.add_argument("--score-model", default="gpt-6-sol")
-    ap.add_argument("--score-backend", choices=("auto", "vlm", "offline"), default="offline",
-                    help="offline=Absolute-5D checklist; vlm=gpt-6-sol; auto=vlm then offline on balance fail")
+    ap.add_argument("--score-backend", choices=("auto", "vlm", "offline"), default="auto",
+                    help="auto=VLM→Agent pending (offline advisory only); vlm=quant only; offline=旁证不推进 STOP")
     ap.add_argument("--threshold", type=float, default=9.6)
     ap.add_argument("--anat-gate", type=float, default=7.5)
     ap.add_argument("--max-rounds", type=int, default=8)

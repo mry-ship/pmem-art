@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Skill Full Modes · 2026-10-27 · 按技能闭环</title>
+<style>
+  :root { --bg:#111; --card:#1b1b1b; --fg:#eee; --mut:#9a9a9a; --ok:#6dcf8a; --warn:#e0b35a; --bad:#e07a7a; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: "Segoe UI", "PingFang SC", sans-serif; background:var(--bg); color:var(--fg); line-height:1.45; }
+  header { padding:28px 24px 8px; max-width:1440px; margin:0 auto; }
+  h1 { font-size:22px; margin:0 0 6px; }
+  .sub { color:var(--mut); font-size:13px; }
+  main { max-width:1440px; margin:0 auto; padding:12px 24px 48px; display:grid; gap:18px; }
+  section { background:var(--card); border-radius:12px; padding:16px 18px; }
+  h2 { font-size:16px; margin:0 0 8px; }
+  .meta { font-size:12px; color:var(--mut); margin-bottom:10px; }
+  .ok { color:var(--ok); } .warn { color:var(--warn); } .bad { color:var(--bad); }
+  img.sheet { width:100%; border-radius:8px; background:#000; }
+  img.sq { width:min(320px,100%); border-radius:8px; background:#000; }
+  .row { display:flex; flex-wrap:wrap; gap:12px; align-items:flex-start; }
+  .cells { display:grid; grid-template-columns:repeat(var(--n, 8), minmax(0, 1fr)); gap:10px; margin-top:8px; }
+  .cells figure { margin:0; }
+  .cells figure img { width:100%; aspect-ratio:1; object-fit:contain; background:#f6efe4; display:block; border-radius:10px; }
+  .cells figcaption { font-size:12px; color:var(--mut); text-align:center; padding:6px 0 0; }
+  img.sheet { margin-top:14px; }
+  table { width:100%; border-collapse:collapse; font-size:12px; }
+  th,td { border-bottom:1px solid #2a2a2a; padding:6px 4px; text-align:left; }
+  a { color:#8ec7ff; }
+  ul.lens { margin:6px 0 0; padding-left:18px; font-size:13px; color:#ddd; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Skill Full Modes · 按技能完整闭环（非采样）</h1>
+  <p class="sub">2026-10-27 · Merge <b class="ok">再出一轮一件一格</b> · 前景平涂贴图 · 方框 0 · 体量 audit 过 · 第二段未跑 · 无 9.6</p>
+</header>
+<main>
+
+<section>
+  <h2>总表</h2>
+  <table>
+    <tr><th>技能</th><th>Mode</th><th>结果</th><th>分</th><th>轮次</th></tr>
+    <tr><td>Merge</td><td>A 厨房零参考</td><td class="ok">再出一轮 · 身份对齐 · 方框 0</td><td>—</td><td>关系核对</td></tr>
+    <tr><td>Merge</td><td>B 情人节</td><td class="ok">再出一轮 · 身份对齐 · 方框 0</td><td>—</td><td>关系核对</td></tr>
+    <tr><td>Merge</td><td>C 文具市场纪律</td><td class="ok">再出一轮 · 身份对齐 · 方框 0</td><td>—</td><td>关系核对</td></tr>
+    <tr><td>Clone</td><td>A 指南针</td><td class="warn">v2 r1</td><td>—</td><td>1</td></tr>
+    <tr><td>Clone</td><td>B Icon 钥匙</td><td class="warn">v2 r1</td><td>—</td><td>1</td></tr>
+    <tr><td>Clone</td><td>B UI 弹窗</td><td class="warn">v2 空内容区 r1</td><td>—</td><td>1</td></tr>
+    <tr><td>Clone</td><td>B Char 甜品师</td><td class="warn">v2 r1</td><td>—</td><td>1</td></tr>
+    <tr><td>Icon</td><td>A 青瓷币 1024</td><td class="warn">v2 母版 r1</td><td>—</td><td>1</td></tr>
+    <tr><td>Icon</td><td>B Clean SVG 集</td><td class="ok">矢量未重出（非 raster）</td><td>—</td><td>—</td></tr>
+    <tr><td>Icon</td><td>C 药水透明底</td><td class="warn">v2 r1 + export_mode_c</td><td>—</td><td>1</td></tr>
+    <tr><td>UI</td><td>概念稿</td><td class="warn">v2 r1</td><td>—</td><td>1</td></tr>
+    <tr><td>UI</td><td>组件表→九宫格</td><td class="warn">v2 r1 · manifest 待更</td><td>—</td><td>1</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>Merge A · 厨房 · 一件一个正方形</h2>
+  <p class="meta"><span class="ok">独立正方形</span> · 开罐器/刨丝器/甩干器/面包机按档位重出 · normalize + audit 过</p>
+  <div class="cells" id="cells-a" style="--n:8"></div>
+</section>
+
+<section>
+  <h2>Merge B · 情人节 · 一件一个正方形</h2>
+  <p class="meta"><span class="ok">独立正方形</span> · L7 心形音乐盒（开盖金齿轮）· normalize + audit 过</p>
+  <div class="cells" id="cells-b" style="--n:8"></div>
+</section>
+
+<section>
+  <h2>Merge C · 文具 · 一件一个正方形</h2>
+  <p class="meta"><span class="ok">独立正方形</span> · L7 桌面收纳篮整件 · L8 打印机整件 · normalize + audit 过</p>
+  <div class="cells" id="cells-c" style="--n:8"></div>
+</section>
+
+<section>
+  <h2>Clone</h2>
+  <div class="row">
+    <div><p class="meta">A 指南针 · <span class="warn">v2 r1</span></p><img class="sq" src="images/clone_a/final.jpg?v=fullredo"/></div>
+    <div><p class="meta">B 钥匙 · <span class="warn">v2 r1</span></p><img class="sq" src="images/clone_b_key/final.jpg?v=fullredo"/></div>
+    <div><p class="meta">B UI 弹窗 · <span class="warn">v2 空内容 r1</span></p><img class="sq" src="images/clone_b_ui/final.jpg?v=fullredo"/></div>
+    <div><p class="meta">B 甜品师 · <span class="warn">v2 r1</span></p><img class="sq" src="images/clone_b_char/final.jpg?v=fullredo"/></div>
+  </div>
+</section>
+
+<section>
+  <h2>Icon</h2>
+  <p class="meta">A 母版 · <span class="warn">v2 r1</span> · 导出矩阵待重跑</p>
+  <img class="sq" src="images/icon_a/master_1024.jpg?v=fullredo" alt="icon A"/>
+  <p class="meta">B · <a href="icons/preview.html">Clean 24px preview</a> · <code>icons/style-spec.json</code></p>
+  <p class="meta">C 药水 · <span class="warn">v2 r1</span> · GenerateImage 灰底 → <code>export_mode_c_icon.py</code></p>
+  <div class="row">
+    <img class="sq" src="images/icon_c/potion_256.png?v=fullredo" style="background:repeating-conic-gradient(#333 0% 25%,#222 0% 50%) 50%/16px 16px"/>
+    <img class="sq" src="images/icon_c/potion_64.png?v=fullredo" style="background:repeating-conic-gradient(#333 0% 25%,#222 0% 50%) 50%/16px 16px"/>
+  </div>
+</section>
+
+<section>
+  <h2>UI · 概念 → 组件表 → 九宫格</h2>
+  <p class="meta">概念 · 组件表 · <span class="warn">v2 r1</span> · manifest 仍为上轮</p>
+  <img class="sheet" src="images/ui/concept_final.jpg?v=fullredo" alt="UI concept"/>
+  <img class="sheet" src="images/ui/sheet_final.jpg?v=fullredo" alt="UI sheet" style="margin-top:10px"/>
+</section>
+
+<section>
+  <h2>/art-lens 提案（点选后再进收敛 · 本页只提案）</h2>
+  <p class="meta">参考：心形礼盒 · 待你点选 1 套</p>
+  <ul class="lens">
+    <li><b>L1 橱窗静物</b>：微俯 3/4 · 左上暖桃棚光 · 道具：单枚钥匙居中浅空底</li>
+    <li><b>L2 桌面特写</b>：平视贴桌 · 侧逆暖光 · 道具：钥匙+心形吊牌（motif≤1）</li>
+    <li><b>L3 漂浮图标</b>：正视居中 · 柔环境光 · 道具：钥匙剪影清晰无地面</li>
+    <li><b>L4 礼盒语境</b>：斜俯 · 桃金反射 · 道具：钥匙靠浅粉丝带（不抄礼盒外形）</li>
+  </ul>
+</section>
+
+<section>
+  <h2>辅助技能</h2>
+  <p class="meta">style-lock / critique 红线 / variant 计划已写入反馈（心形礼盒色板；MergeA 体量爬升红线；指南针可派生水彩/像素）。</p>
+  <p class="meta">圣经：<a href="BIBLES.md">BIBLES.md</a></p>
+</section>
+
+</main>
+<script>
+function fillCells(id, folder, labels) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  labels.forEach((label, i) => {
+    const n = String(i + 1).padStart(2, "0");
+    const f = document.createElement("figure");
+    f.innerHTML = `<img src="images/${folder}/L${n}.jpg?v=mergelook" alt="${label}"/><figcaption>${i + 1} ${label}</figcaption>`;
+    el.appendChild(f);
+  });
+}
+fillCells("cells-a", "merge_a", ["量勺", "打蛋器", "开罐器", "刨丝器", "甩干器", "搅拌机", "料理机", "面包机"]);
+fillCells("cells-b", "merge_b", ["心形糖", "玫瑰", "情书", "丘比特之箭", "爱心气球", "礼物盒", "心形音乐盒", "婚礼蛋糕"]);
+fillCells("cells-c", "merge_c", ["回形针", "图钉", "橡皮", "铅笔", "便利贴本", "订书机", "桌面收纳篮", "打印机"]);
+</script>
+</body>
+</html>

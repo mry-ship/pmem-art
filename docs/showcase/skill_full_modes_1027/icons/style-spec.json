@@ -1,0 +1,20 @@
+{
+  "preset": "Clean",
+  "grid": 24,
+  "viewBox": "0 0 24 24",
+  "strokeWidth": 1.5,
+  "strokeLinecap": "round",
+  "strokeLinejoin": "round",
+  "cornerRadius": 2,
+  "padding": 2,
+  "color": "currentColor",
+  "opticalBalance": true,
+  "icons": [
+    {"name": "home", "group": "navigation"},
+    {"name": "map", "group": "navigation"},
+    {"name": "inventory", "group": "inventory"},
+    {"name": "craft", "group": "actions"},
+    {"name": "quest", "group": "actions"},
+    {"name": "settings", "group": "system"}
+  ]
+}

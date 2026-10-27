@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>/pmem-clone-image · Mode 对照 · 2026-10-27</title>
+  <style>
+    :root { --bg:#0b0f19; --card:#111827; --border:#1e293b; --text:#f1f5f9; --muted:#94a3b8; --ok:#34d399; --violet:#a78bfa; }
+    * { box-sizing: border-box; }
+    body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI","PingFang SC",sans-serif; line-height:1.55; padding-bottom:48px; }
+    .wrap { max-width:1080px; margin:0 auto; padding:24px 20px; }
+    h1 { font-size:clamp(22px,4vw,28px); margin:0 0 8px; }
+    h2 { font-size:18px; margin:0 0 10px; }
+    .muted { color:var(--muted); font-size:14px; }
+    .hero { background:linear-gradient(135deg,#111827,#312e81 50%,#0f172a); border:1px solid #4338ca; border-radius:16px; padding:22px 24px; margin-bottom:24px; }
+    .pills { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+    .pill { font-size:12px; padding:4px 12px; border-radius:999px; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.06); }
+    .pill.ok { color:var(--ok); border-color:rgba(52,211,153,.4); font-weight:700; }
+    section { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:16px 18px; margin-bottom:18px; }
+    .tag { font-family:ui-monospace,Consolas,monospace; font-size:11px; color:var(--violet); background:rgba(167,139,250,.12); padding:2px 8px; border-radius:6px; }
+    img { width:100%; border-radius:10px; display:block; margin-top:10px; background:#000; }
+    table { width:100%; border-collapse:collapse; font-size:13px; margin-top:10px; }
+    th,td { text-align:left; padding:8px 6px; border-bottom:1px solid var(--border); }
+    th { color:var(--muted); }
+    code { font-size:12px; color:#7dd3fc; }
+    ul { margin:8px 0 0; padding-left:20px; font-size:14px; color:#cbd5e1; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <h1>/pmem-clone-image 技能 · 模式对照</h1>
+    <p class="muted">策略修复后重跑：<code>clone-fix1027-*</code>（2026-10-27 17:44）· search → start → generate/judge → finish。UI 注入 <code>ui_shell</code> 结构底线 + 回声一票否决；warm-start 过滤旧「奖励弹窗」recipe。</p>
+    <div class="pills">
+      <span class="pill">Mode A · 2 轮 · 9.58 best</span>
+      <span class="pill">Mode B Icon · 2 轮 · 9.56 best</span>
+      <span class="pill ok">Mode B UI · 1 轮 · 9.62 ✓</span>
+      <span class="pill">Mode B Char · 2 轮 · 9.56 best</span>
+      <span class="pill ok">UI 结构门禁 · 空中心 PASS</span>
+    </div>
+  </header>
+
+  <section>
+    <span class="tag">Modes（技能定义）</span>
+    <h2>两种入口 × 四类合同</h2>
+    <table>
+      <thead><tr><th>模式</th><th>参考</th><th>锁什么</th><th>本页样例</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Mode A</strong> 零参考</td>
+          <td>无 <code>reference_image_paths</code></td>
+          <td>自写 bible 的 medium / 光感 / 色板；brief 必须写明 medium</td>
+          <td>Icon · 冒险指南针</td>
+        </tr>
+        <tr>
+          <td><strong>Mode B</strong> 有参考</td>
+          <td>每轮垫风格参考（本组：<code>val_heart_ref.png</code>）</td>
+          <td>~95%：medium + 色板 + 光感；按类加 Icon 框/UI chrome/角色眼语法</td>
+          <td>钥匙 · 弹窗 · 甜品师（题材全新）</td>
+        </tr>
+      </tbody>
+    </table>
+    <ul>
+      <li><strong>Icon 合同</strong>：构图框 + 材质 + BG 习惯；主体新；motif≤1；玩具参考才用 vinyl 散文 stub。</li>
+      <li><strong>UI 合同</strong>：外框 + 内描边双层 chrome（参考有则两层都锁）；禁发明可读 UI 字。</li>
+      <li><strong>Character 合同</strong>：双眼分穴、大虹膜 + 巩膜月牙 + 高光；禁独眼 / 黑点瞳。</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>总览四格</h2>
+    <p class="muted">左上 Mode A；其余三格 Mode B 同一张心形礼盒垫图，三类新题材。</p>
+    <img src="images/overview_grid.jpg" alt="Clone modes overview"/>
+  </section>
+
+  <section>
+    <h2>Mode A · Icon（零参考）</h2>
+    <p class="muted">模块 <code>icon.Compass</code> · bible：cute cartoon toy icon · pastel · 左上软光 · NO catalog lighting</p>
+    <img src="images/cmp_mode_a_icon.jpg" alt="Mode A 对照"/>
+  </section>
+
+  <section>
+    <h2>Mode B · Icon（垫礼盒 → 钥匙）</h2>
+    <p class="muted">模块 <code>icon.KeyClone</code> · 锁亮粉桃黄光洁圆润 · 不抄礼盒外形</p>
+    <img src="images/cmp_mode_b_icon.jpg" alt="Mode B icon 对照"/>
+  </section>
+
+  <section>
+    <h2>Mode B · UI（垫礼盒 → 空内容弹框母版）</h2>
+    <p class="muted">模块 <code>ui.PopupClone</code> · 锁 medium + 双层 chrome · <strong>内容区空白可 9-slice 拉伸</strong> · 禁止礼盒/道具进中心 · 底栏符号钮 · 禁可读字（工程透明 PNG 另导出）</p>
+    <img src="images/cmp_mode_b_ui.jpg" alt="Mode B UI 对照"/>
+  </section>
+
+  <section>
+    <h2>Mode B · Character（垫礼盒 → Q 版甜品师）</h2>
+    <p class="muted">模块 <code>character.PastryChef</code> · 虹膜眼 · 换装自由 · 禁 turnaround</p>
+    <img src="images/cmp_mode_b_char.jpg" alt="Mode B character 对照"/>
+  </section>
+
+  <section>
+    <h2>收敛报告（CLI finish 产出）</h2>
+    <p class="muted">完整评分履历见仓库内：</p>
+    <ul>
+      <li><code>.memory-art/converge/clone-fix1027-a-icon_report.md</code></li>
+      <li><code>.memory-art/converge/clone-fix1027-b-key_report.md</code></li>
+      <li><code>.memory-art/converge/clone-fix1027-b-ui_report.md</code></li>
+      <li><code>.memory-art/converge/clone-fix1027-b-char_report.md</code></li>
+      <li class="muted">上一趟 rerun：<code>clone-rerun-*</code> 报告仍保留作对照</li>
+    </ul>
+  </section>
+</div>
+</body>
+</html>

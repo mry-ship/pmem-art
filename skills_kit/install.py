@@ -22,11 +22,30 @@ def _render_skill_md(spec: dict[str, Any], command_name: str) -> str:
     )
 
 
+def command_names(spec: dict[str, Any]) -> list[str]:
+    names: list[str] = []
+    for nm in [spec["name"], spec.get("alias"), *list(spec.get("aliases") or [])]:
+        if nm and nm not in names:
+            names.append(nm)
+    return names
+
+
+def _route_banner(spec: dict[str, Any], command_name: str) -> str:
+    route = (spec.get("alias_routes") or {}).get(command_name)
+    if not route:
+        return ""
+    return (
+        f"> **点名锁定**：玩家用了 `/{command_name}`，类型固定为 **{route}**。"
+        "不要改判，不要改问。下面只执行这一支。\n\n"
+    )
+
+
 def _render_command_md(spec: dict[str, Any], command_name: str) -> str:
     return (
         f"---\n"
         f"description: {spec['title']}（pmem-art）\n"
         f"---\n\n"
+        f"{_route_banner(spec, command_name)}"
         f"{spec['body'].strip()}\n"
     )
 
@@ -41,31 +60,33 @@ def _render_agent_doc_block() -> str:
 
 本项目挂载了 **pmem-art**（面向 Cursor / Claude Code / Codex 的个人美术积累记忆与闭环自评生图系统）。
 
-### 1. 内置快捷技能（在对话框直接输入 `/技能名` 即可触发）
+### 1. 生图自动分流（玩家点名优先）
+- 玩家点名了界面、图标、合成梯、原画、克隆、变体或镜头包，就按点名走。
+- 没点名：看这句话和附图自己认，回显一句「按 XX 走了」，然后直接做，不问选哪条技能。
+- 一次只走一支。判成界面、图标或合成梯时，先读对应技能再动手，禁止用普通单张合同交差。
+- 有参考但没说新题材 → 普通图，不进克隆。没人要几套机位 → 不进镜头包，点选前不生图。
+- 锁风格、只审图、归档、教练不进这条自动生图。
+- 生图闭环最多 **4 轮**，合格线仍是 ≥9.6。不到线就改，满 4 轮挑最高分。合成梯的八件档位不变。关系讨论固定 8 稿，合成说不通就不能出图；那一段不是跑图，不能缩成 4 稿。
+
+### 2. 内置快捷技能（在对话框直接输入 `/技能名` 即可触发）
 
 | 技能指令 | 简短别名 | 用途说明 |
 | :--- | :--- | :--- |
-| **`/pmem-draw`** | **`/art-draw`** | **【强制 8轮 ≥9.6 收敛】** 通用生图：纯文本或垫图 → 生1张→打分挑刺→展示不足/改点→`<9.6`叠加修正→满8轮挑最高分→评分履历可见 |
-| **`/pmem-ui`** | **`/art-ui`** | **【强制 8轮 ≥9.6 收敛】** SpriteCook 式 UI Kit/HUD/九宫格：概念先行→组件表→9-slice→状态族 |
-| **`/pmem-concept`** | **`/art-concept`** | **【强制 8轮 ≥9.6 收敛】** 原画/概念图/Key Art（ZHO·FLUX 完整句 Prompt）— **与 draw 同等强制闭环，禁止只生一张** |
-| **`/pmem-icon`** | **`/art-icon`** | **【强制 8轮 ≥9.6 收敛】** 三模式隔离：Mode A（1024 App Icon 母版）· Mode B（24px SVG 矢量集）· Mode C（游戏透明底道具栅格图标） |
-| **`/pmem-style-lock`** | **`/art-style`** | **样张一键提炼风格圣经与色板锁定**：丢入样张提取 HEX 色板、光影笔触与禁用词，锁定进项目记忆 |
-| **`/pmem-critique`** | **`/art-check`** | **主美级五维审稿与红线入库**：对照项目记忆给图片打分挑刺，并将翻车点记入 `style_redline` |
-| **`/pmem-variant`** | **`/art-variant`** | **跨画风分叉与表情/动作差分**：继承角色核心锚点，派生水彩/Q版/像素子模块或序列帧差分 |
-| **`/pmem-atlas`** | **`/art-map`** | **一键整理散图并刷新 `art-atlas.html` 可视化图谱** |
-| **`/pmem-improve`** | **`/art-improve`** | **【进阶 peek】** 自我迭代报告（日常 finish 已静默跑） |
-| **`/pmem-coach`** | **`/art-coach`** | **【进阶 peek】** 能力教练练习计划 |
-| **`/pmem-learn`** | **`/art-learn`** | **【进阶 peek】** 知识广度建议（finish 已静默 enqueue） |
-| **`/pmem-lens-propose`** | **`/art-lens`** | **具象镜头包提案**：生图前基于参考图给 4 套机位/光影/道具包，点选后再进收敛 |
-| **`/pmem-clone-image`** | **`/art-clone`** | **【强制 8轮 ≥9.6 收敛】** ~95% 锁参考画风克隆到新题材（含角色双眼/UI双层描边硬门禁） |
-| **`/pmem-merge-ladder`** | **`/art-ladder`** | **【强制 8轮 ≥9.6 收敛】** Merge-2 棋盘 L1–L8 整梯同框生成与切格审计 |
+| **`/pmem-draw`** | **`/art-draw`** | **生图总入口**。玩家点名了类型就听玩家的；没点名则模型自己认，认完直接做。普通图 / 原画 / 克隆 / 变体 / 镜头包在这一条里。旧名 `/pmem-concept`、`/pmem-clone-image`、`/pmem-variant`、`/pmem-lens-propose` 仍锁定对应那一支 |
+| **`/pmem-ui`** | **`/art-ui`** | **整套界面**。概念先行→组件表→九宫格→状态族。判成界面才走，禁止用单张插画代替 |
+| **`/pmem-icon`** | **`/art-icon`** | **图标**。A 桌面母版 / B 线性 SVG / C 道具格，三档不混 |
+| **`/pmem-merge-ladder`** | **`/art-ladder`** | **合成梯**。先过八件关系，再一档一张正方形。`/art-merge` 同这一条。同框只是体量预览，不是成品 |
+| **`/pmem-style-lock`** | **`/art-style`** | **锁风格**。从样张抽色板、光影、禁用词。不进自动生图 |
+| **`/pmem-critique`** | **`/art-check`** | **只审图**。五维挑刺，翻车点记入红线。不生图 |
+| **`/pmem-atlas`** | **`/art-map`** | **归档**。散图归位并刷新 `art-atlas.html` |
+| **`/pmem-coach`** | **`/art-coach`** | **进阶偷看**。进步 / 短板 / 知识合成一条。`/pmem-improve`、`/pmem-learn` 仍可用。知识卡要玩家说收下才写入 |
 
-### 2. 评分履历可见 · 记忆静默写入（默认）
+### 3. 评分履历可见 · 记忆静默写入（默认）
 - 闭环每轮须向用户展示：五维分、不足、下一轮改点；`converge finish` 默认打印全轮评分履历并写记忆（`--no-apply` 可跳过；只要终稿加 `--quiet`）。
 - `finish` / 高信号 `feedback` 后仍自动写反思、更新 taste、强化 recipe/红线、悄悄排队 learn——**不要**旁白记忆写入；最多转述一行「小提示」。
-- 教练 / 广度报告用进阶技能 `/pmem-improve` · `/pmem-coach` · `/pmem-learn`。
+- 进步、短板、知识卡用 `/pmem-coach`。知识卡没有玩家明确收下，不要写入。
 
-### 3. 日常自然语言反馈沉淀（无需手写 YAML）
+### 4. 日常自然语言反馈沉淀（无需手写 YAML）
 - 生图前先运行：`python3 pmem_art.py search --module <模块>` 或 `python3 pmem_art.py search "<关键词>"`
 - 当画师说「太赛博 / 头太大 / 别这样画 / 这版留着 / 换成水彩 / 以后都用…」时，立即运行：
   `python3 pmem_art.py feedback "<画师原话>" --module <模块> [--asset <图片路径>]`
@@ -105,39 +126,28 @@ def install_skills_and_agent_configs(root: Path, quiet: bool = False) -> dict[st
     }
 
     for spec in SKILL_SPECS:
-        names = [spec["name"], spec["alias"]]
-        for nm in names:
-            # 1. Cursor skill & slash command
-            c_skill = root / ".cursor" / "skills" / nm / "SKILL.md"
-            c_skill.parent.mkdir(parents=True, exist_ok=True)
-            c_skill.write_text(_render_skill_md(spec, nm), encoding="utf-8")
-            installed["cursor_skills"].append(str(c_skill.relative_to(root)))
+        # One skill folder per contract. Old slash names stay as commands, not extra skills.
+        for base in (root / ".cursor" / "skills", root / ".claude" / "skills", root / ".agents" / "skills"):
+            skill_path = base / spec["name"] / "SKILL.md"
+            skill_path.parent.mkdir(parents=True, exist_ok=True)
+            skill_path.write_text(_render_skill_md(spec, spec["name"]), encoding="utf-8")
+        installed["cursor_skills"].append(str((root / ".cursor" / "skills" / spec["name"] / "SKILL.md").relative_to(root)))
+        installed["claude_skills"].append(str((root / ".claude" / "skills" / spec["name"] / "SKILL.md").relative_to(root)))
+        installed["codex_skills"].append(str((root / ".agents" / "skills" / spec["name"] / "SKILL.md").relative_to(root)))
 
-            c_cmd = root / ".cursor" / "commands" / f"{nm}.md"
-            c_cmd.parent.mkdir(parents=True, exist_ok=True)
-            c_cmd.write_text(_render_command_md(spec, nm), encoding="utf-8")
-            installed["cursor_commands"].append(str(c_cmd.relative_to(root)))
+        for nm in command_names(spec):
+            for folder, key in (
+                (root / ".cursor" / "commands", "cursor_commands"),
+                (root / ".claude" / "commands", "claude_commands"),
+                (root / ".agents" / "commands", "codex_skills"),
+            ):
+                cmd = folder / f"{nm}.md"
+                cmd.parent.mkdir(parents=True, exist_ok=True)
+                cmd.write_text(_render_command_md(spec, nm), encoding="utf-8")
+                if key != "codex_skills":
+                    installed[key].append(str(cmd.relative_to(root)))
 
-            # 2. Claude Code skill & slash command
-            cl_skill = root / ".claude" / "skills" / nm / "SKILL.md"
-            cl_skill.parent.mkdir(parents=True, exist_ok=True)
-            cl_skill.write_text(_render_skill_md(spec, nm), encoding="utf-8")
-            installed["claude_skills"].append(str(cl_skill.relative_to(root)))
-
-            cl_cmd = root / ".claude" / "commands" / f"{nm}.md"
-            cl_cmd.parent.mkdir(parents=True, exist_ok=True)
-            cl_cmd.write_text(_render_command_md(spec, nm), encoding="utf-8")
-            installed["claude_commands"].append(str(cl_cmd.relative_to(root)))
-
-            # 3. Codex (.agents/skills/<nm>/SKILL.md)
-            cx_skill = root / ".agents" / "skills" / nm / "SKILL.md"
-            cx_skill.parent.mkdir(parents=True, exist_ok=True)
-            cx_skill.write_text(_render_skill_md(spec, nm), encoding="utf-8")
-            installed["codex_skills"].append(str(cx_skill.relative_to(root)))
-
-            cx_cmd = root / ".agents" / "commands" / f"{nm}.md"
-            cx_cmd.parent.mkdir(parents=True, exist_ok=True)
-            cx_cmd.write_text(_render_command_md(spec, nm), encoding="utf-8")
+    _prune_retired_skill_dirs(root)
 
     # 4. Upsert CLAUDE.md and AGENTS.md
     claude_md = root / "CLAUDE.md"
@@ -166,10 +176,33 @@ def install_skills_and_agent_configs(root: Path, quiet: bool = False) -> dict[st
     installed["agent_docs"].append(".cursor/rules/pmem-art.mdc")
 
     if not quiet:
-        print(f"✨ 已自动安装 pmem-art {len(SKILL_SPECS)} 项美术技能（含别名共 {len(SKILL_SPECS)*2} 个斜杠入口）到 Cursor / Claude Code / Codex：")
+        entry_count = sum(len(command_names(spec)) for spec in SKILL_SPECS)
+        print(f"✨ 已自动安装 pmem-art {len(SKILL_SPECS)} 项美术技能（斜杠入口 {entry_count} 个，旧名仍指向合并后的合同）到 Cursor / Claude Code / Codex：")
         for spec in SKILL_SPECS:
-            print(f"   · /{spec['name']:<16} (别名 /{spec['alias']:<11}) — {spec['title']}")
+            extras = [n for n in command_names(spec) if n != spec["name"]]
+            extra_txt = " ".join(f"/{n}" for n in extras)
+            print(f"   · /{spec['name']:<18} {extra_txt} — {spec['title']}")
         print("   · 安装路径: .cursor/{skills,commands}/ · .claude/{skills,commands}/ · .agents/skills/ · CLAUDE.md · AGENTS.md · .cursor/rules/pmem-art.mdc")
     return installed
+
+
+_OWNED_SKILL_PREFIXES = ("pmem-", "art-", "source-command-pmem-", "source-command-art-")
+
+
+def _prune_retired_skill_dirs(root: Path) -> None:
+    """Drop skill folders that are no longer their own contract.
+
+    Slash commands for old names are rewritten above. Leaving the old skill
+    folders would make the model pick a second, conflicting contract.
+    """
+    keep = {spec["name"] for spec in SKILL_SPECS}
+    for base in (root / ".cursor" / "skills", root / ".claude" / "skills", root / ".agents" / "skills"):
+        if not base.exists():
+            continue
+        for child in list(base.iterdir()):
+            if not child.is_dir() or child.name in keep:
+                continue
+            if child.name.startswith(_OWNED_SKILL_PREFIXES):
+                shutil.rmtree(child)
 
 

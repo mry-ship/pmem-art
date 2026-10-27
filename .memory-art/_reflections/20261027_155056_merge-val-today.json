@@ -1,0 +1,63 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "cursor-pmem-art",
+  "project_name": "Cursor-Pmem-Art",
+  "layer_scope": "private",
+  "written_at": "2026-10-27 15:50:56 UTC+8",
+  "session_id": "merge-val-today",
+  "goal": "Mode B 情人节整梯 L1-L8。顺序：心形糖、玫瑰、情书、丘比特之箭、爱心气球、方礼盒、心形音乐盒、婚礼蛋糕。一件一格同框。亮粉与桃黄，表面光洁圆润，浅空底。不抄礼盒外形。",
+  "module": "prop.ValentineMerge",
+  "converge_mode": "quality",
+  "guided_mode": "text_guided",
+  "threshold": 9.6,
+  "max_rounds": 8,
+  "rounds_used": 2,
+  "winner_round": 1,
+  "winner_score": 9.04,
+  "winner_image": "assets/prop/valentinemerge/merge_val_today_r1_sheet.jpg",
+  "winner_passed": false,
+  "outcome": "⚠️ **共执行 2 轮审图（目标阈值 `9.60` 分），未达标，已挑选全阶段最高分**（胜出：第 1 轮 `9.04 / 10.0` 分）",
+  "what_fixed": [
+    "第2轮箭尖改成尖头、羽在另一头；表面那一句不动。",
+    "留下第1轮整梯。"
+  ],
+  "what_still_weak": "八件同框站住了，亮粉桃黄一致。箭尖仍偏心形，音乐盒舞者略小。",
+  "strengths": "构图与基础色调符合要求",
+  "taste_deltas": {
+    "from_strengths": [
+      "构图与基础色调符合要求"
+    ],
+    "from_defects": [
+      "八件同框站住了，亮粉桃黄一致。箭尖仍偏心形，音乐盒舞者略小。",
+      "糖的扭结离开主体，情书漂成奶油色，整体不如第1轮。"
+    ]
+  },
+  "warm_start_confidence": 0.75,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 9.04,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 8.62,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：八件同框站住了，亮粉桃黄一致。箭尖仍偏心形，音乐盒舞者略小。",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.04"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：糖的扭结离开主体，情书漂成奶油色，整体不如第1轮。",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.62"
+    }
+  ]
+}

@@ -1,0 +1,1248 @@
+{
+  "version": "v8_20_skill_grok_v2",
+  "model": "gpt-6-sol",
+  "threshold": 9.6,
+  "images": {
+    "round::v8_bot_06_night_city_high_best::r1": {
+      "ok": true,
+      "total": 8.45,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 9.12,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 7.59,
+        "spec_style": 9.32
+      },
+      "defects": [
+        "perspective_anatomy偏低(7.00)",
+        "texture_detail偏低(7.59)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.7,
+      "id": "round::v8_bot_06_night_city_high_best_r1.jpg::r1",
+      "filename": "v8_bot_06_night_city_high_best_r1.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_06_night_city_high_best_r1.jpg",
+      "role": "round",
+      "bot_id": "v8_bot_06",
+      "slug": "night_city",
+      "api_scale": "high",
+      "display_scale": "high_best",
+      "round": 1,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "bot::v8_bot_06_night_city_high_best.jpg": {
+      "ok": true,
+      "total": 8.45,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 9.12,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 7.59,
+        "spec_style": 9.32
+      },
+      "defects": [
+        "perspective_anatomy偏低(7.00)",
+        "texture_detail偏低(7.59)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.7,
+      "id": "bot::v8_bot_06_night_city_high_best.jpg",
+      "filename": "v8_bot_06_night_city_high_best.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_06_night_city_high_best.jpg",
+      "role": "bot",
+      "bot_id": "v8_bot_06",
+      "slug": "night_city",
+      "api_scale": "high",
+      "display_scale": "high_best",
+      "round": 1,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "round::v8_bot_02_night_city_low_best::r1": {
+      "ok": true,
+      "total": 7.71,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 7.1,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 7.59,
+        "spec_style": 7.78
+      },
+      "defects": [
+        "perspective_anatomy偏低(7.00)",
+        "lighting_color偏低(7.10)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.75,
+      "id": "round::v8_bot_02_night_city_low_best_r1.jpg::r1",
+      "filename": "v8_bot_02_night_city_low_best_r1.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_02_night_city_low_best_r1.jpg",
+      "role": "round",
+      "bot_id": "v8_bot_02",
+      "slug": "night_city",
+      "api_scale": "low",
+      "display_scale": "low_best",
+      "round": 1,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "round::v8_bot_16_pastel_sketch_recompose_bold::r1": {
+      "ok": true,
+      "total": 7.78,
+      "dims": {
+        "composition": 8.0,
+        "lighting_color": 9.12,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 8.0,
+        "spec_style": 7.0
+      },
+      "defects": [
+        "与参考规格偏离",
+        "perspective_anatomy偏低(7.00)",
+        "spec_style偏低(7.00)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.85,
+      "id": "round::v8_bot_16_pastel_sketch_recompose_bold_r1.jpg::r1",
+      "filename": "v8_bot_16_pastel_sketch_recompose_bold_r1.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_16_pastel_sketch_recompose_bold_r1.jpg",
+      "role": "round",
+      "bot_id": "v8_bot_16",
+      "slug": "pastel_sketch",
+      "api_scale": "recompose",
+      "display_scale": "recompose_bold",
+      "round": 1,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "round::v8_bot_26_ishtar_canyon_low_best::r1": {
+      "ok": true,
+      "total": 8.08,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 9.12,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 6.33,
+        "spec_style": 9.32
+      },
+      "defects": [
+        "texture_detail偏低(6.33)",
+        "perspective_anatomy偏低(7.00)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.75,
+      "id": "round::v8_bot_26_ishtar_canyon_low_best_r1.jpg::r1",
+      "filename": "v8_bot_26_ishtar_canyon_low_best_r1.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_26_ishtar_canyon_low_best_r1.jpg",
+      "role": "round",
+      "bot_id": "v8_bot_26",
+      "slug": "ishtar_canyon",
+      "api_scale": "low",
+      "display_scale": "low_best",
+      "round": 1,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "round::v8_bot_06_night_city_high_best::r2": {
+      "ok": true,
+      "total": 8.45,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 9.12,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 7.59,
+        "spec_style": 9.32
+      },
+      "defects": [
+        "perspective_anatomy偏低(7.00)",
+        "texture_detail偏低(7.59)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.7,
+      "id": "round::v8_bot_06_night_city_high_best_r2.jpg::r2",
+      "filename": "v8_bot_06_night_city_high_best_r2.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_06_night_city_high_best_r2.jpg",
+      "role": "round",
+      "bot_id": "v8_bot_06",
+      "slug": "night_city",
+      "api_scale": "high",
+      "display_scale": "high_best",
+      "round": 2,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "round::v8_bot_02_night_city_low_best::r2": {
+      "ok": true,
+      "total": 7.71,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 7.1,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 7.59,
+        "spec_style": 7.78
+      },
+      "defects": [
+        "perspective_anatomy偏低(7.00)",
+        "lighting_color偏低(7.10)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.75,
+      "id": "round::v8_bot_02_night_city_low_best_r2.jpg::r2",
+      "filename": "v8_bot_02_night_city_low_best_r2.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_02_night_city_low_best_r2.jpg",
+      "role": "round",
+      "bot_id": "v8_bot_02",
+      "slug": "night_city",
+      "api_scale": "low",
+      "display_scale": "low_best",
+      "round": 2,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "round::v8_bot_16_pastel_sketch_recompose_bold::r2": {
+      "ok": true,
+      "total": 7.65,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 5.0,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 9.26,
+        "spec_style": 7.0
+      },
+      "defects": [
+        "死黑/过曝失控；与参考规格偏离",
+        "lighting_color偏低(5.00)",
+        "perspective_anatomy偏低(7.00)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.85,
+      "id": "round::v8_bot_16_pastel_sketch_recompose_bold_r2.jpg::r2",
+      "filename": "v8_bot_16_pastel_sketch_recompose_bold_r2.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_16_pastel_sketch_recompose_bold_r2.jpg",
+      "role": "round",
+      "bot_id": "v8_bot_16",
+      "slug": "pastel_sketch",
+      "api_scale": "recompose",
+      "display_scale": "recompose_bold",
+      "round": 2,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "round::v8_bot_26_ishtar_canyon_low_best::r2": {
+      "ok": true,
+      "total": 8.08,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 9.12,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 6.33,
+        "spec_style": 9.32
+      },
+      "defects": [
+        "texture_detail偏低(6.33)",
+        "perspective_anatomy偏低(7.00)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.75,
+      "id": "round::v8_bot_26_ishtar_canyon_low_best_r2.jpg::r2",
+      "filename": "v8_bot_26_ishtar_canyon_low_best_r2.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_26_ishtar_canyon_low_best_r2.jpg",
+      "role": "round",
+      "bot_id": "v8_bot_26",
+      "slug": "ishtar_canyon",
+      "api_scale": "low",
+      "display_scale": "low_best",
+      "round": 2,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "round::v8_bot_06_night_city_high_best::r3": {
+      "ok": true,
+      "total": 7.97,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 7.1,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 7.59,
+        "spec_style": 9.32
+      },
+      "defects": [
+        "perspective_anatomy偏低(7.00)",
+        "lighting_color偏低(7.10)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.7,
+      "id": "round::v8_bot_06_night_city_high_best_r3.jpg::r3",
+      "filename": "v8_bot_06_night_city_high_best_r3.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_06_night_city_high_best_r3.jpg",
+      "role": "round",
+      "bot_id": "v8_bot_06",
+      "slug": "night_city",
+      "api_scale": "high",
+      "display_scale": "high_best",
+      "round": 3,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "round::v8_bot_02_night_city_low_best::r3": {
+      "ok": true,
+      "total": 7.71,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 7.1,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 7.59,
+        "spec_style": 7.78
+      },
+      "defects": [
+        "perspective_anatomy偏低(7.00)",
+        "lighting_color偏低(7.10)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.75,
+      "id": "round::v8_bot_02_night_city_low_best_r3.jpg::r3",
+      "filename": "v8_bot_02_night_city_low_best_r3.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_02_night_city_low_best_r3.jpg",
+      "role": "round",
+      "bot_id": "v8_bot_02",
+      "slug": "night_city",
+      "api_scale": "low",
+      "display_scale": "low_best",
+      "round": 3,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "round::v8_bot_16_pastel_sketch_recompose_bold::r3": {
+      "ok": true,
+      "total": 8.32,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 9.12,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 9.26,
+        "spec_style": 7.0
+      },
+      "defects": [
+        "与参考规格偏离",
+        "perspective_anatomy偏低(7.00)",
+        "spec_style偏低(7.00)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.85,
+      "id": "round::v8_bot_16_pastel_sketch_recompose_bold_r3.jpg::r3",
+      "filename": "v8_bot_16_pastel_sketch_recompose_bold_r3.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_16_pastel_sketch_recompose_bold_r3.jpg",
+      "role": "round",
+      "bot_id": "v8_bot_16",
+      "slug": "pastel_sketch",
+      "api_scale": "recompose",
+      "display_scale": "recompose_bold",
+      "round": 3,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "round::v8_bot_26_ishtar_canyon_low_best::r3": {
+      "ok": true,
+      "total": 8.08,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 9.12,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 6.33,
+        "spec_style": 9.32
+      },
+      "defects": [
+        "texture_detail偏低(6.33)",
+        "perspective_anatomy偏低(7.00)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.75,
+      "id": "round::v8_bot_26_ishtar_canyon_low_best_r3.jpg::r3",
+      "filename": "v8_bot_26_ishtar_canyon_low_best_r3.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_26_ishtar_canyon_low_best_r3.jpg",
+      "role": "round",
+      "bot_id": "v8_bot_26",
+      "slug": "ishtar_canyon",
+      "api_scale": "low",
+      "display_scale": "low_best",
+      "round": 3,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "round::v8_bot_06_night_city_high_best::r4": {
+      "ok": true,
+      "total": 8.45,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 9.12,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 7.59,
+        "spec_style": 9.32
+      },
+      "defects": [
+        "perspective_anatomy偏低(7.00)",
+        "texture_detail偏低(7.59)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.7,
+      "id": "round::v8_bot_06_night_city_high_best_r4.jpg::r4",
+      "filename": "v8_bot_06_night_city_high_best_r4.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_06_night_city_high_best_r4.jpg",
+      "role": "round",
+      "bot_id": "v8_bot_06",
+      "slug": "night_city",
+      "api_scale": "high",
+      "display_scale": "high_best",
+      "round": 4,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "round::v8_bot_02_night_city_low_best::r4": {
+      "ok": true,
+      "total": 7.98,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 7.1,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 7.59,
+        "spec_style": 9.32
+      },
+      "defects": [
+        "perspective_anatomy偏低(7.00)",
+        "lighting_color偏低(7.10)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.75,
+      "id": "round::v8_bot_02_night_city_low_best_r4.jpg::r4",
+      "filename": "v8_bot_02_night_city_low_best_r4.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_02_night_city_low_best_r4.jpg",
+      "role": "round",
+      "bot_id": "v8_bot_02",
+      "slug": "night_city",
+      "api_scale": "low",
+      "display_scale": "low_best",
+      "round": 4,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "round::v8_bot_16_pastel_sketch_recompose_bold::r4": {
+      "ok": true,
+      "total": 8.05,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 9.12,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 7.59,
+        "spec_style": 7.0
+      },
+      "defects": [
+        "与参考规格偏离",
+        "perspective_anatomy偏低(7.00)",
+        "spec_style偏低(7.00)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.85,
+      "id": "round::v8_bot_16_pastel_sketch_recompose_bold_r4.jpg::r4",
+      "filename": "v8_bot_16_pastel_sketch_recompose_bold_r4.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_16_pastel_sketch_recompose_bold_r4.jpg",
+      "role": "round",
+      "bot_id": "v8_bot_16",
+      "slug": "pastel_sketch",
+      "api_scale": "recompose",
+      "display_scale": "recompose_bold",
+      "round": 4,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "round::v8_bot_26_ishtar_canyon_low_best::r4": {
+      "ok": true,
+      "total": 8.08,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 9.12,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 6.33,
+        "spec_style": 9.32
+      },
+      "defects": [
+        "texture_detail偏低(6.33)",
+        "perspective_anatomy偏低(7.00)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.75,
+      "id": "round::v8_bot_26_ishtar_canyon_low_best_r4.jpg::r4",
+      "filename": "v8_bot_26_ishtar_canyon_low_best_r4.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_26_ishtar_canyon_low_best_r4.jpg",
+      "role": "round",
+      "bot_id": "v8_bot_26",
+      "slug": "ishtar_canyon",
+      "api_scale": "low",
+      "display_scale": "low_best",
+      "round": 4,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "round::v8_bot_06_night_city_high_best::r5": {
+      "ok": true,
+      "total": 7.97,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 7.1,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 7.59,
+        "spec_style": 9.32
+      },
+      "defects": [
+        "perspective_anatomy偏低(7.00)",
+        "lighting_color偏低(7.10)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.7,
+      "id": "round::v8_bot_06_night_city_high_best_r5.jpg::r5",
+      "filename": "v8_bot_06_night_city_high_best_r5.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_06_night_city_high_best_r5.jpg",
+      "role": "round",
+      "bot_id": "v8_bot_06",
+      "slug": "night_city",
+      "api_scale": "high",
+      "display_scale": "high_best",
+      "round": 5,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "round::v8_bot_02_night_city_low_best::r5": {
+      "ok": true,
+      "total": 7.78,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 7.1,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 7.59,
+        "spec_style": 8.16
+      },
+      "defects": [
+        "perspective_anatomy偏低(7.00)",
+        "lighting_color偏低(7.10)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.75,
+      "id": "round::v8_bot_02_night_city_low_best_r5.jpg::r5",
+      "filename": "v8_bot_02_night_city_low_best_r5.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_02_night_city_low_best_r5.jpg",
+      "role": "round",
+      "bot_id": "v8_bot_02",
+      "slug": "night_city",
+      "api_scale": "low",
+      "display_scale": "low_best",
+      "round": 5,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "round::v8_bot_16_pastel_sketch_recompose_bold::r5": {
+      "ok": true,
+      "total": 8.05,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 9.12,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 7.59,
+        "spec_style": 7.0
+      },
+      "defects": [
+        "与参考规格偏离",
+        "perspective_anatomy偏低(7.00)",
+        "spec_style偏低(7.00)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.85,
+      "id": "round::v8_bot_16_pastel_sketch_recompose_bold_r5.jpg::r5",
+      "filename": "v8_bot_16_pastel_sketch_recompose_bold_r5.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_16_pastel_sketch_recompose_bold_r5.jpg",
+      "role": "round",
+      "bot_id": "v8_bot_16",
+      "slug": "pastel_sketch",
+      "api_scale": "recompose",
+      "display_scale": "recompose_bold",
+      "round": 5,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "round::v8_bot_26_ishtar_canyon_low_best::r5": {
+      "ok": true,
+      "total": 8.08,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 9.12,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 6.33,
+        "spec_style": 9.32
+      },
+      "defects": [
+        "texture_detail偏低(6.33)",
+        "perspective_anatomy偏低(7.00)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.75,
+      "id": "round::v8_bot_26_ishtar_canyon_low_best_r5.jpg::r5",
+      "filename": "v8_bot_26_ishtar_canyon_low_best_r5.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_26_ishtar_canyon_low_best_r5.jpg",
+      "role": "round",
+      "bot_id": "v8_bot_26",
+      "slug": "ishtar_canyon",
+      "api_scale": "low",
+      "display_scale": "low_best",
+      "round": 5,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "round::v8_bot_06_night_city_high_best::r6": {
+      "ok": true,
+      "total": 8.45,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 9.12,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 7.59,
+        "spec_style": 9.32
+      },
+      "defects": [
+        "perspective_anatomy偏低(7.00)",
+        "texture_detail偏低(7.59)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.7,
+      "id": "round::v8_bot_06_night_city_high_best_r6.jpg::r6",
+      "filename": "v8_bot_06_night_city_high_best_r6.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_06_night_city_high_best_r6.jpg",
+      "role": "round",
+      "bot_id": "v8_bot_06",
+      "slug": "night_city",
+      "api_scale": "high",
+      "display_scale": "high_best",
+      "round": 6,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "round::v8_bot_02_night_city_low_best::r6": {
+      "ok": true,
+      "total": 8.08,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 9.12,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 6.33,
+        "spec_style": 9.32
+      },
+      "defects": [
+        "texture_detail偏低(6.33)",
+        "perspective_anatomy偏低(7.00)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.75,
+      "id": "round::v8_bot_02_night_city_low_best_r6.jpg::r6",
+      "filename": "v8_bot_02_night_city_low_best_r6.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_02_night_city_low_best_r6.jpg",
+      "role": "round",
+      "bot_id": "v8_bot_02",
+      "slug": "night_city",
+      "api_scale": "low",
+      "display_scale": "low_best",
+      "round": 6,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "round::v8_bot_16_pastel_sketch_recompose_bold::r6": {
+      "ok": true,
+      "total": 7.38,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 5.0,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 7.59,
+        "spec_style": 7.0
+      },
+      "defects": [
+        "死黑/过曝失控；与参考规格偏离",
+        "lighting_color偏低(5.00)",
+        "perspective_anatomy偏低(7.00)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.85,
+      "id": "round::v8_bot_16_pastel_sketch_recompose_bold_r6.jpg::r6",
+      "filename": "v8_bot_16_pastel_sketch_recompose_bold_r6.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_16_pastel_sketch_recompose_bold_r6.jpg",
+      "role": "round",
+      "bot_id": "v8_bot_16",
+      "slug": "pastel_sketch",
+      "api_scale": "recompose",
+      "display_scale": "recompose_bold",
+      "round": 6,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "round::v8_bot_26_ishtar_canyon_low_best::r6": {
+      "ok": true,
+      "total": 8.08,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 9.12,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 6.33,
+        "spec_style": 9.32
+      },
+      "defects": [
+        "texture_detail偏低(6.33)",
+        "perspective_anatomy偏低(7.00)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.75,
+      "id": "round::v8_bot_26_ishtar_canyon_low_best_r6.jpg::r6",
+      "filename": "v8_bot_26_ishtar_canyon_low_best_r6.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_26_ishtar_canyon_low_best_r6.jpg",
+      "role": "round",
+      "bot_id": "v8_bot_26",
+      "slug": "ishtar_canyon",
+      "api_scale": "low",
+      "display_scale": "low_best",
+      "round": 6,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "round::v8_bot_06_night_city_high_best::r7": {
+      "ok": true,
+      "total": 8.45,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 9.12,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 7.59,
+        "spec_style": 9.32
+      },
+      "defects": [
+        "perspective_anatomy偏低(7.00)",
+        "texture_detail偏低(7.59)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.7,
+      "id": "round::v8_bot_06_night_city_high_best_r7.jpg::r7",
+      "filename": "v8_bot_06_night_city_high_best_r7.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_06_night_city_high_best_r7.jpg",
+      "role": "round",
+      "bot_id": "v8_bot_06",
+      "slug": "night_city",
+      "api_scale": "high",
+      "display_scale": "high_best",
+      "round": 7,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "round::v8_bot_02_night_city_low_best::r7": {
+      "ok": true,
+      "total": 7.81,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 9.12,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 6.33,
+        "spec_style": 7.78
+      },
+      "defects": [
+        "texture_detail偏低(6.33)",
+        "perspective_anatomy偏低(7.00)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.75,
+      "id": "round::v8_bot_02_night_city_low_best_r7.jpg::r7",
+      "filename": "v8_bot_02_night_city_low_best_r7.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_02_night_city_low_best_r7.jpg",
+      "role": "round",
+      "bot_id": "v8_bot_02",
+      "slug": "night_city",
+      "api_scale": "low",
+      "display_scale": "low_best",
+      "round": 7,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "round::v8_bot_16_pastel_sketch_recompose_bold::r7": {
+      "ok": true,
+      "total": 7.65,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 5.0,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 9.26,
+        "spec_style": 7.0
+      },
+      "defects": [
+        "死黑/过曝失控；与参考规格偏离",
+        "lighting_color偏低(5.00)",
+        "perspective_anatomy偏低(7.00)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.85,
+      "id": "round::v8_bot_16_pastel_sketch_recompose_bold_r7.jpg::r7",
+      "filename": "v8_bot_16_pastel_sketch_recompose_bold_r7.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_16_pastel_sketch_recompose_bold_r7.jpg",
+      "role": "round",
+      "bot_id": "v8_bot_16",
+      "slug": "pastel_sketch",
+      "api_scale": "recompose",
+      "display_scale": "recompose_bold",
+      "round": 7,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "bot::v8_bot_16_pastel_sketch_recompose_bold.jpg": {
+      "ok": true,
+      "total": 8.32,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 9.12,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 9.26,
+        "spec_style": 7.0
+      },
+      "defects": [
+        "与参考规格偏离",
+        "perspective_anatomy偏低(7.00)",
+        "spec_style偏低(7.00)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.85,
+      "id": "bot::v8_bot_16_pastel_sketch_recompose_bold.jpg",
+      "filename": "v8_bot_16_pastel_sketch_recompose_bold.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_16_pastel_sketch_recompose_bold.jpg",
+      "role": "bot",
+      "bot_id": "v8_bot_16",
+      "slug": "pastel_sketch",
+      "api_scale": "recompose",
+      "display_scale": "recompose_bold",
+      "round": 3,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "round::v8_bot_26_ishtar_canyon_low_best::r7": {
+      "ok": true,
+      "total": 8.08,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 9.12,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 6.33,
+        "spec_style": 9.32
+      },
+      "defects": [
+        "texture_detail偏低(6.33)",
+        "perspective_anatomy偏低(7.00)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.75,
+      "id": "round::v8_bot_26_ishtar_canyon_low_best_r7.jpg::r7",
+      "filename": "v8_bot_26_ishtar_canyon_low_best_r7.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_26_ishtar_canyon_low_best_r7.jpg",
+      "role": "round",
+      "bot_id": "v8_bot_26",
+      "slug": "ishtar_canyon",
+      "api_scale": "low",
+      "display_scale": "low_best",
+      "round": 7,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "round::v8_bot_06_night_city_high_best::r8": {
+      "ok": true,
+      "total": 8.45,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 9.12,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 7.59,
+        "spec_style": 9.32
+      },
+      "defects": [
+        "perspective_anatomy偏低(7.00)",
+        "texture_detail偏低(7.59)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.7,
+      "id": "round::v8_bot_06_night_city_high_best_r8.jpg::r8",
+      "filename": "v8_bot_06_night_city_high_best_r8.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_06_night_city_high_best_r8.jpg",
+      "role": "round",
+      "bot_id": "v8_bot_06",
+      "slug": "night_city",
+      "api_scale": "high",
+      "display_scale": "high_best",
+      "round": 8,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "round::v8_bot_02_night_city_low_best::r8": {
+      "ok": true,
+      "total": 7.37,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 5.58,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 7.59,
+        "spec_style": 7.78
+      },
+      "defects": [
+        "lighting_color偏低(5.58)",
+        "perspective_anatomy偏低(7.00)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.75,
+      "id": "round::v8_bot_02_night_city_low_best_r8.jpg::r8",
+      "filename": "v8_bot_02_night_city_low_best_r8.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_02_night_city_low_best_r8.jpg",
+      "role": "round",
+      "bot_id": "v8_bot_02",
+      "slug": "night_city",
+      "api_scale": "low",
+      "display_scale": "low_best",
+      "round": 8,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "bot::v8_bot_02_night_city_low_best.jpg": {
+      "ok": true,
+      "total": 8.08,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 9.12,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 6.33,
+        "spec_style": 9.32
+      },
+      "defects": [
+        "texture_detail偏低(6.33)",
+        "perspective_anatomy偏低(7.00)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.75,
+      "id": "bot::v8_bot_02_night_city_low_best.jpg",
+      "filename": "v8_bot_02_night_city_low_best.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_02_night_city_low_best.jpg",
+      "role": "bot",
+      "bot_id": "v8_bot_02",
+      "slug": "night_city",
+      "api_scale": "low",
+      "display_scale": "low_best",
+      "round": 6,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "round::v8_bot_26_ishtar_canyon_low_best::r8": {
+      "ok": true,
+      "total": 8.08,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 9.12,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 6.33,
+        "spec_style": 9.32
+      },
+      "defects": [
+        "texture_detail偏低(6.33)",
+        "perspective_anatomy偏低(7.00)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.75,
+      "id": "round::v8_bot_26_ishtar_canyon_low_best_r8.jpg::r8",
+      "filename": "v8_bot_26_ishtar_canyon_low_best_r8.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_26_ishtar_canyon_low_best_r8.jpg",
+      "role": "round",
+      "bot_id": "v8_bot_26",
+      "slug": "ishtar_canyon",
+      "api_scale": "low",
+      "display_scale": "low_best",
+      "round": 8,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "bot::v8_bot_26_ishtar_canyon_low_best.jpg": {
+      "ok": true,
+      "total": 8.08,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 9.12,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 6.33,
+        "spec_style": 9.32
+      },
+      "defects": [
+        "texture_detail偏低(6.33)",
+        "perspective_anatomy偏低(7.00)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.75,
+      "id": "bot::v8_bot_26_ishtar_canyon_low_best.jpg",
+      "filename": "v8_bot_26_ishtar_canyon_low_best.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_26_ishtar_canyon_low_best.jpg",
+      "role": "bot",
+      "bot_id": "v8_bot_26",
+      "slug": "ishtar_canyon",
+      "api_scale": "low",
+      "display_scale": "low_best",
+      "round": 1,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "round::v8_bot_04_night_city_medium_best::r1": {
+      "ok": true,
+      "total": 8.17,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 7.1,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 7.59,
+        "spec_style": 9.32
+      },
+      "defects": [
+        "perspective_anatomy偏低(7.00)",
+        "lighting_color偏低(7.10)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.75,
+      "id": "round::v8_bot_04_night_city_medium_best_r1.jpg::r1",
+      "filename": "v8_bot_04_night_city_medium_best_r1.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_04_night_city_medium_best_r1.jpg",
+      "role": "round",
+      "bot_id": "v8_bot_04",
+      "slug": "night_city",
+      "api_scale": "medium",
+      "display_scale": "medium_best",
+      "round": 1,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "round::v8_bot_04_night_city_medium_best::r2": {
+      "ok": true,
+      "total": 8.17,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 7.1,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 7.59,
+        "spec_style": 9.32
+      },
+      "defects": [
+        "perspective_anatomy偏低(7.00)",
+        "lighting_color偏低(7.10)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.75,
+      "id": "round::v8_bot_04_night_city_medium_best_r2.jpg::r2",
+      "filename": "v8_bot_04_night_city_medium_best_r2.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_04_night_city_medium_best_r2.jpg",
+      "role": "round",
+      "bot_id": "v8_bot_04",
+      "slug": "night_city",
+      "api_scale": "medium",
+      "display_scale": "medium_best",
+      "round": 2,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "round::v8_bot_10_pastel_sketch_low_best::r1": {
+      "ok": true,
+      "total": 7.86,
+      "dims": {
+        "composition": 8.0,
+        "lighting_color": 9.12,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 6.33,
+        "spec_style": 9.32
+      },
+      "defects": [
+        "texture_detail偏低(6.33)",
+        "perspective_anatomy偏低(7.00)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.75,
+      "id": "round::v8_bot_10_pastel_sketch_low_best_r1.jpg::r1",
+      "filename": "v8_bot_10_pastel_sketch_low_best_r1.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_10_pastel_sketch_low_best_r1.jpg",
+      "role": "round",
+      "bot_id": "v8_bot_10",
+      "slug": "pastel_sketch",
+      "api_scale": "low",
+      "display_scale": "low_best",
+      "round": 1,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "round::v8_bot_30_ishtar_canyon_high_best::r1": {
+      "ok": true,
+      "total": 7.94,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 9.12,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 6.33,
+        "spec_style": 8.16
+      },
+      "defects": [
+        "texture_detail偏低(6.33)",
+        "perspective_anatomy偏低(7.00)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.7,
+      "id": "round::v8_bot_30_ishtar_canyon_high_best_r1.jpg::r1",
+      "filename": "v8_bot_30_ishtar_canyon_high_best_r1.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_30_ishtar_canyon_high_best_r1.jpg",
+      "role": "round",
+      "bot_id": "v8_bot_30",
+      "slug": "ishtar_canyon",
+      "api_scale": "high",
+      "display_scale": "high_best",
+      "round": 1,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "round::v8_bot_28_ishtar_canyon_medium_best::r1": {
+      "ok": true,
+      "total": 8.42,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 9.12,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 6.33,
+        "spec_style": 9.32
+      },
+      "defects": [
+        "texture_detail偏低(6.33)",
+        "perspective_anatomy偏低(7.00)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.75,
+      "id": "round::v8_bot_28_ishtar_canyon_medium_best_r1.jpg::r1",
+      "filename": "v8_bot_28_ishtar_canyon_medium_best_r1.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_28_ishtar_canyon_medium_best_r1.jpg",
+      "role": "round",
+      "bot_id": "v8_bot_28",
+      "slug": "ishtar_canyon",
+      "api_scale": "medium",
+      "display_scale": "medium_best",
+      "round": 1,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "round::v8_bot_04_night_city_medium_best::r3": {
+      "ok": true,
+      "total": 8.17,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 7.1,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 7.59,
+        "spec_style": 9.32
+      },
+      "defects": [
+        "perspective_anatomy偏低(7.00)",
+        "lighting_color偏低(7.10)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.75,
+      "id": "round::v8_bot_04_night_city_medium_best_r3.jpg::r3",
+      "filename": "v8_bot_04_night_city_medium_best_r3.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_04_night_city_medium_best_r3.jpg",
+      "role": "round",
+      "bot_id": "v8_bot_04",
+      "slug": "night_city",
+      "api_scale": "medium",
+      "display_scale": "medium_best",
+      "round": 3,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "round::v8_bot_10_pastel_sketch_low_best::r2": {
+      "ok": true,
+      "total": 8.22,
+      "dims": {
+        "composition": 8.0,
+        "lighting_color": 9.12,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 7.59,
+        "spec_style": 9.32
+      },
+      "defects": [
+        "perspective_anatomy偏低(7.00)",
+        "texture_detail偏低(7.59)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.75,
+      "id": "round::v8_bot_10_pastel_sketch_low_best_r2.jpg::r2",
+      "filename": "v8_bot_10_pastel_sketch_low_best_r2.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_10_pastel_sketch_low_best_r2.jpg",
+      "role": "round",
+      "bot_id": "v8_bot_10",
+      "slug": "pastel_sketch",
+      "api_scale": "low",
+      "display_scale": "low_best",
+      "round": 2,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "round::v8_bot_30_ishtar_canyon_high_best::r2": {
+      "ok": true,
+      "total": 7.94,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 9.12,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 6.33,
+        "spec_style": 8.16
+      },
+      "defects": [
+        "texture_detail偏低(6.33)",
+        "perspective_anatomy偏低(7.00)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.7,
+      "id": "round::v8_bot_30_ishtar_canyon_high_best_r2.jpg::r2",
+      "filename": "v8_bot_30_ishtar_canyon_high_best_r2.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_30_ishtar_canyon_high_best_r2.jpg",
+      "role": "round",
+      "bot_id": "v8_bot_30",
+      "slug": "ishtar_canyon",
+      "api_scale": "high",
+      "display_scale": "high_best",
+      "round": 2,
+      "track": "A_absolute_5d_offline_checklist"
+    },
+    "round::v8_bot_28_ishtar_canyon_medium_best::r2": {
+      "ok": true,
+      "total": 8.42,
+      "dims": {
+        "composition": 9.26,
+        "lighting_color": 9.12,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 6.33,
+        "spec_style": 9.32
+      },
+      "defects": [
+        "texture_detail偏低(6.33)",
+        "perspective_anatomy偏低(7.00)"
+      ],
+      "grade": null,
+      "score_backend": "offline_absolute_5d",
+      "coverage": 0.75,
+      "id": "round::v8_bot_28_ishtar_canyon_medium_best_r2.jpg::r2",
+      "filename": "v8_bot_28_ishtar_canyon_medium_best_r2.jpg",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\generated_v8_20_skill_opt1027\\v8_bot_28_ishtar_canyon_medium_best_r2.jpg",
+      "role": "round",
+      "bot_id": "v8_bot_28",
+      "slug": "ishtar_canyon",
+      "api_scale": "medium",
+      "display_scale": "medium_best",
+      "round": 2,
+      "track": "A_absolute_5d_offline_checklist"
+    }
+  },
+  "failures": {}
+}

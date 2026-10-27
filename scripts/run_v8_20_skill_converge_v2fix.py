@@ -43,8 +43,9 @@ from skills_kit import (  # noqa: E402
     strip_affirmative_locks_from_prompt,
 )
 from skills_kit.prompt_scale import DEFAULT_MAX_ROUNDS, DEFAULT_THRESHOLD  # noqa: E402
+from skills_kit.converge_judge_bridge import score_for_converge  # noqa: E402
+from skills_kit.skill_image_gen import fan_or_generate_image_job, try_apikey_fan  # noqa: E402
 from absolute_5d_scorer import rewrite_prompt_from_defects  # noqa: E402
-import vlm_quant_5d_scorer as vlm  # noqa: E402
 
 AR_SIZE = {
     "9:16": "1024x1536",
@@ -259,59 +260,37 @@ def compose_prompt(
     return composed
 
 
-def edit_image(*, env: dict[str, str], model: str, src: Path, prompt: str, size: str, out_path: Path, timeout: int = 240) -> dict[str, Any]:
-    out_path.parent.mkdir(parents=True, exist_ok=True)
-    with tempfile.NamedTemporaryFile(suffix=".json", delete=False) as tf:
-        resp_path = Path(tf.name)
-    cmd = [
-        "curl", "-sS", "-o", str(resp_path), "-w", "%{http_code}",
-        "-H", f"Authorization: Bearer {env['APIKEY_FAN_KEY']}",
-        "-F", f"model={model}",
-        "-F", f"prompt={prompt[:3500]}",
-        "-F", f"image=@{src}",
-        "-F", f"size={size}",
-        "-F", "response_format=b64_json",
-        f"{env['APIKEY_FAN_BASE'].rstrip('/')}/v1/images/edits",
-    ]
+def edit_image(
+    *,
+    env: dict[str, str],
+    model: str,
+    src: Path | None,
+    prompt: str,
+    size: str,
+    out_path: Path,
+    timeout: int = 240,
+    aspect_ratio: str = "1:1",
+    bot_id: str = "",
+    round_num: int = 0,
+) -> dict[str, Any]:
+    del env, model, timeout  # apikey-image script owns auth/model
     t0 = time.time()
-    last_err = ""
-    for attempt in range(1, 5):
-        try:
-            proc = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
-            http = (proc.stdout or "").strip()
-            raw = resp_path.read_text(encoding="utf-8", errors="replace")
-            if http != "200":
-                raise RuntimeError(f"HTTP {http}: {raw[:400]}")
-            data = json.loads(raw)
-            b64 = (data.get("data") or [{}])[0].get("b64_json")
-            if not b64:
-                raise RuntimeError(f"no b64_json: {raw[:300]}")
-            out_path.write_bytes(base64.b64decode(b64))
-            try:
-                resp_path.unlink(missing_ok=True)
-            except Exception:
-                pass
-            return {
-                "ok": True,
-                "path": str(out_path),
-                "bytes": out_path.stat().st_size,
-                "elapsed": round(time.time() - t0, 1),
-                "attempt": attempt,
-            }
-        except Exception as e:
-            last_err = f"{type(e).__name__}: {e}"
-            if "insufficient_quota" in last_err or "额度已用完" in last_err:
-                _quota_abort.set()
-                log(f"  QUOTA EXHAUSTED on {out_path.name}: aborting further retries")
-                break
-            sleep = min(60, 4 * attempt)
-            log(f"  retry {attempt}/4 {out_path.name}: {last_err[:160]} (sleep {sleep}s)")
-            time.sleep(sleep)
-    try:
-        resp_path.unlink(missing_ok=True)
-    except Exception:
-        pass
-    return {"ok": False, "error": last_err, "path": str(out_path)}
+    fan = try_apikey_fan(prompt=prompt, out_path=out_path, pad_src=src, aspect_ratio=aspect_ratio)
+    if fan.get("ok"):
+        fan["elapsed"] = round(time.time() - t0, 1)
+        return fan
+    job = fan_or_generate_image_job(
+        prompt=prompt,
+        out_path=out_path,
+        pad_src=src,
+        aspect_ratio=aspect_ratio,
+        bot_id=bot_id,
+        round_num=round_num,
+    )
+    job["elapsed"] = round(time.time() - t0, 1)
+    if job.get("balance_exhausted"):
+        log(f"  apikey.fan balance low on {out_path.name} → defer to cursor.GenerateImage")
+    return job
 
 
 def score_image(
@@ -338,7 +317,20 @@ def score_image(
         "round": round_num,
         "goal": goal or (bot or {}).get("goal") or "",
     }
-    return vlm.score_one(item, env, model, max_side=1024)
+    scale_prof = get_converge_scale_profile(
+        str((bot or {}).get("api_scale") or "medium"),
+        goal=goal or (bot or {}).get("goal") or "",
+        ref_image=(bot or {}).get("ref_image") or "",
+    )
+    item["ref_image"] = (bot or {}).get("ref_image") or ""
+    return score_for_converge(
+        item,
+        env,
+        model,
+        root=REPO,
+        scale_prof=scale_prof,
+        goal=goal or (bot or {}).get("goal") or "",
+    )
 
 
 def score_with_retry(
@@ -536,7 +528,8 @@ def main() -> int:
         no_improve = 0
         drop_streak = 0
         last_ok_total: float | None = None
-        pad_src = ref  # always start from ref
+        is_bold = (bot.get("prompt_mode") == "style_jump") or (bot.get("display_scale") == "recompose_bold")
+        pad_src: Path | None = None if is_bold else ref
 
         for r in range(1, args.max_rounds + 1):
             if _quota_abort.is_set():
@@ -547,23 +540,42 @@ def main() -> int:
             prompt = compose_prompt(bot, best, r, defects=defects if r >= 2 else None)
             r_path = out_dir / f"{stem}_r{r}.jpg"
 
-            # choose pad
-            if args.pad == "ref":
+            # low/medium/high/recompose: every round pads the original ref.
+            # style_jump pads nothing. pad=previous is the explicit chain override.
+            if is_bold:
+                pad_src = None
+            elif args.pad != "previous":
                 pad_src = ref
-            elif args.pad == "previous":
-                pad_src = pad_src  # already chained below
-            else:  # auto
-                # pad_src already set: reset to ref if last score dropped
-                pass
 
-            log(f"GEN {bid} R{r}/{args.max_rounds} min_stop={min_r} pad={args.pad}:{pad_src.name} -> {r_path.name}")
-            gen = edit_image(env=env, model=args.gen_model, src=pad_src, prompt=prompt, size=size, out_path=r_path)
+            ar = bot.get("aspect_ratio") or "1:1"
+            pad_name = pad_src.name if pad_src is not None else "(no pad)"
+            log(f"GEN {bid} R{r}/{args.max_rounds} min_stop={min_r} pad={args.pad}:{pad_name} -> {r_path.name}")
+            gen = edit_image(
+                env=env,
+                model=args.gen_model,
+                src=pad_src,
+                prompt=prompt,
+                size=size,
+                out_path=r_path,
+                aspect_ratio=ar,
+                bot_id=bid,
+                round_num=r,
+            )
+            if gen.get("needs_agent_gen"):
+                return {
+                    "bot_id": bid,
+                    "ok": False,
+                    "phase": f"r{r}_gen_pending",
+                    "pending_gen": gen.get("agent_job"),
+                    "fan_error": gen.get("fan_error"),
+                    "rounds": rounds,
+                }
             if not gen.get("ok"):
                 return {
                     "bot_id": bid,
                     "ok": False,
                     "phase": f"r{r}",
-                    "error": gen.get("error"),
+                    "error": gen.get("error") or gen.get("fan_error"),
                     "rounds": rounds,
                 }
 
@@ -588,15 +600,27 @@ def main() -> int:
             if score_ok:
                 round_defects = defects_from_dims(dims, raw_defects, slug=bot.get("slug") or "")
             else:
-                # do NOT update defects with boilerplate; keep previous
                 round_defects = list(defects) if defects else []
+                if scored.get("judge_pending") == "agent":
+                    log(f"  {bid} R{r} VLM unavailable — need Agent judge (offline advisory only)")
+                    return {
+                        "bot_id": bid,
+                        "ok": False,
+                        "phase": f"r{r}_judge_pending",
+                        "pending_judge": {
+                            "image": str(r_path),
+                            "offline_advisory": scored.get("offline_advisory"),
+                            "error": scored.get("error"),
+                        },
+                        "rounds": rounds,
+                    }
                 log(f"  {bid} R{r} SCORE FAIL (double) — keep prior defects, skip pad chain")
 
             rec = {
                 "round": r,
                 "filename": r_path.name,
                 "prompt": prompt,
-                "pad_src": pad_src.name,
+                "pad_src": pad_src.name if pad_src is not None else None,
                 "pad_mode": args.pad,
                 "elapsed": gen.get("elapsed"),
                 "bytes": gen.get("bytes"),
@@ -693,31 +717,22 @@ def main() -> int:
 
             # prepare next round pad + defects
             if not score_ok:
-                # keep previous defects; do not chain bad pad — reset to ref for safety
-                if args.pad == "previous":
-                    # stay on last good pad if any, else ref
-                    if best_round is not None:
-                        pad_src = out_dir / best_round["filename"]
-                    else:
-                        pad_src = ref
+                # keep previous defects; do not chain an unscored plate
+                if is_bold:
+                    pad_src = None
+                elif args.pad == "previous" and best_round is not None:
+                    pad_src = out_dir / best_round["filename"]
                 else:
                     pad_src = ref
-                # defects unchanged
                 continue
 
             defects = list(round_defects[:2])
-            if args.pad == "ref":
-                pad_src = ref
+            if is_bold:
+                pad_src = None
             elif args.pad == "previous":
                 pad_src = r_path
-            else:  # auto
-                if anat_ok and (
-                    (last_ok_total is not None and total is not None and total >= last_ok_total)
-                    or improved
-                ):
-                    pad_src = r_path  # chain only when score improved/held AND anatomy not vetoed
-                else:
-                    pad_src = ref  # reset to ref on score drop or anatomy meltdown (<7.5)
+            else:
+                pad_src = ref
             last_ok_total = total if (total is not None and anat_ok) else last_ok_total
 
         if best_round is None:

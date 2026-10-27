@@ -62,6 +62,17 @@ python3 pmem_art.py converge start --session s_rec --scale recompose \
 5. **规格与风格完成度 (`Spec & Style`, 10%–15%)**：
    - 仅作为基础底线项，防止「不出错即高分」掩盖画面冲击力与质感短板。
 
+### 3.1 克隆结构门禁（与总分并行，fail-closed）
+
+门禁写在 `/pmem-draw` 的克隆合同里。`/pmem-clone-image` 只是点名锁定这一支的旧入口，不是另一套技能。
+
+| 合同 | 触发条件 | 一票否决 / 压分 | R1 Prompt 结构底线 |
+| :--- | :--- | :--- | :--- |
+| **UI 弹框母版** | 模块 `ui.*`；`ui.PopupClone` **默认**空壳（除非 brief 写「中心插画/奖励插画」） | defects 含「中心礼盒/回声参考」→ 压分 ≤8.85 且 **不可 STOP**；九宫格或构图 &lt;8.5 不可 STOP | `ui_shell` |
+| **Mode B Icon/Character** | `icon.*` / `character.*` + 有 `ref_image` + brief 含「新题材/Clone Mode B/垫…」 | defects 含「抄参考/礼盒主体」或 **构图 &lt;6.0** → 压分 ≤8.85 且 **不可 STOP**。每一轮只垫最初的风格参考，修正写进提示词，不垫上一轮成图 | `clone_subject` |
+
+`converge finish` 选终稿时优先剔除未过结构门的轮次；`audit_score_inflation()` 依赖 `scale_prof.goal/ref_image/ref_analysis`（judge 会合并会话字段）。
+
 ---
 
 ## 4. 独立 VLM 盲评对照与反向分析修复报告 (Blind VLM Judge vs. Self-Score)
@@ -88,11 +99,11 @@ python3 pmem_art.py converge start --session s_rec --scale recompose \
    - 生成端同时担任裁判时存在「Prompt 锚定效应（Prompt Confirmation Bias）」：模型看到自己写了“300g 粗纹纸”或“木漏日”，就默认画出来了并给出 `9.6+`；且对「不出错/不乱加配饰」过度奖励。
 2. **已落地的代码修复**：
    - `parse_5d_dims()`：强制从五维单项分按当前 `scale` 权重加权计算总分，禁止手填虚高总分。
-   - `audit_score_inflation()`：当缺陷描述含 `缺乏飞白 / 数字化噪点|痕迹|滤镜 / 照搬 / 呆板 / 平光` 等短板词时，自动将分数硬顶封死在 `<= 8.90`，强制进入下一轮（R3..R8）。否定说法（`非数字化` / `未出现`）不误杀。
+   - `audit_score_inflation()`：当缺陷描述含 `缺乏飞白 / 数字化噪点|痕迹|滤镜 / 照搬 / 呆板 / 平光` 等短板词时，自动将分数硬顶封死在 `<= 8.90`，强制进入下一轮（直到满 4 轮）。否定说法（`非数字化` / `未出现`）不误杀。
    - 缺陷栏为空或仅套话（`无明显硬伤` 等）时拒绝 `STOP_TARGET_REACHED`。
    - 收敛停滞预警 (`stagnated`)：当相邻两轮分差 `< min_round_leap` 且未达阈值时提示升级重构力度（**软预警**：不改分、不单独拒绝达标；真正挡达标的是分数/缺陷实质/物理图闸门/prompt Δ 超限）。
    - **安全收敛五项护栏（硬接线：`skills_kit/converge_policy.py` → `judge_auto` / `converge generate|judge`；批跑经 `scripts/v8_skill_converge_policy.py` 再导出）**：
-     1. **`pad=auto` 智能垫图**：人物/动物仅当历史最佳板 `透视与解剖 >= 7.5` 时链式垫该板；缺失或低于 7.5 退回 `style_ref`。纯场景透视低于 `5.5`、缺维，或缺陷写了塌缩，就退回 `style_ref`。`pad=previous` 可强制链式。
+     1. **每轮垫最初参考图**：`low` / `medium` / `high` / `recompose` 的 `pad=auto` 每一轮都垫最初的 `style_ref`，修正只写进提示词，不链成图。风格跳跃（`recompose_bold` / `style_jump` / 目标里写了「风格跳跃」）不垫旧风格参考，也不垫上一轮成图。`pad=previous` 仍可显式链式。会话同时记下策略建议垫图和本轮实际垫图。
      2. **解剖一票否决（缺维 fail-closed）**：人物/动物/机械 `透视与解剖 < 7.5` 禁止 `STOP_TARGET`。纯场景低于 `4.0`，或缺陷写了结构塌缩，才禁停。场景透视在 `5.5`–`8.5` 且没写塌缩时，加权按 `8.5` 计，原始分仍留在卡片上；审图已经压过的上限（噪点、多手）不会被抬回去。五维尺缺了这一维，人物仍然不能停。UI、图标，以及场景用的技能加和尺，本身没有这一维，不拿它否决。
      3. **R4 起掉分/平台安全早停**：`round >= 4` 且相对历史最高掉 `≥ 0.5` 或连续不创新高 ≥2 轮时早停，保底历史最高分轮次。
      4. **按主体注入 R1 结构底线（`classify_subject` + `build_r1_structure_floor`，非 continuation 才注入）**：词表中英都参与匹配，不设条数上限。写入提示词的是英文结构句，中文只在回显里给画师看。人物写关节与双眼；动物按物种；机械写接缝、不写人类瞳孔；`character.*` 没写物种只写轮廓连续；纯场景只写灭点。任务型 UI（模块 ui/icon、HUD、九宫格）不注入。button/menu/icon/界面单独出现才算 UI，和人物或场景写在一句里时跟主体走。认不出的 brief 返回空串。

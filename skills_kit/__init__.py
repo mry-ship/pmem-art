@@ -63,6 +63,7 @@ from .converge_policy import (
     choose_next_pad,
     decide_round_stop,
     plate_safe_to_pad,
+    scale_lock_marked,
     rewrite_reflow_by_dims,
     should_force_ref_pad,
 )

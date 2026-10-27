@@ -326,6 +326,22 @@ class TestGateFixes(unittest.TestCase):
             self.assertTrue(ok["validation_passed"])
             self.assertTrue(any("目前最高分的成图" in w for w in ok["warnings"]))
 
+    def test_style_jump_empty_pad_does_not_inherit_style_ref(self) -> None:
+        from skills_kit.validate_params import validate_converge_params
+
+        res = validate_converge_params(
+            session_id="Case 01",
+            scale="recompose",
+            ref_image="comparison/style_refs/style_ref_01_night_city.png",
+            aspect_ratio="9:16",
+            reference_image_paths=[],
+            allow_empty_pad=True,
+            root=ROOT,
+        )
+        self.assertEqual(res["reference_image_paths"], [])
+        self.assertFalse(res["inherited_default_pad_image"])
+        self.assertEqual(res["aspect_ratio"], "9:16")
+
     def test_best_plate_skips_a_later_worse_round(self) -> None:
         from skills_kit.converge import _best_plate
 

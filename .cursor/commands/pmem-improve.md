@@ -1,24 +1,38 @@
 ---
-description: 【进阶/可选】自我迭代 peek：反思→口味→进步（日常已静默自动驾驶）（pmem-art）
+description: 【进阶/可选】进步、短板与知识卡（日常已静默写过）（pmem-art）
 ---
 
-# `/pmem-improve`（别名 `/art-improve`）— 【进阶/可选】自我迭代 peek
+> **点名锁定**：玩家用了 `/pmem-improve`，类型固定为 **进步**。不要改判，不要改问。下面只执行这一支。
 
-> **日常不用喊这个。** `converge finish` / 高信号 `feedback` 后系统已**静默自动驾驶**：写反思、更新口味、强化配方、排队知识建议，最多一行「小提示」。
+# `/pmem-coach` — 进步 / 短板 / 知识（三条偷看合成一条）
 
-## 什么时候用
-想**主动偷看**进步曲线、口味档案变了什么时：
-```text
-/pmem-improve
-/art-improve 总结最近几次，看看我哪里变强了
-```
+日常 `converge finish` 已经在后台写过反思、口味和知识队列。只有玩家来要报告时才跑。一次只出一份，不要把三份一起倒出来。
 
-## 原理
-`finish`（默认写记忆；`--no-apply` 可跳过） → 反思 JSON + silent autopilot → taste.json；本技能只是把后台已经做过的事**大声读一遍**。
+文件开头若写着「点名锁定」，就按锁定的那一支。否则看用词：
 
+| 玩家在说 | 跑 |
+| :--- | :--- |
+| `/pmem-improve`、`/art-improve`、总结、进步、口味 | 进步 |
+| `/pmem-learn`、`/art-learn`、知识、技法、广度 | 知识 |
+| `/pmem-coach`、`/art-coach`、短板、练习、练什么，或没点明 | 短板 |
+
+## 进步
 ```bash
-python3 pmem_art.py improve run          # 完整报告（peek）
-python3 pmem_art.py progress             # 进步曲线
+python3 pmem_art.py improve run
+python3 pmem_art.py progress
 python3 pmem_art.py taste show
-python3 pmem_art.py coach                # 能力教练（进阶）
 ```
+
+## 短板
+```bash
+python3 pmem_art.py coach
+python3 pmem_art.py progress
+```
+红线加会话反思，收成构图、光影、解剖、九宫格等短板，给下一张该练什么。
+
+## 知识
+```bash
+python3 pmem_art.py learn suggest
+python3 pmem_art.py learn list
+```
+只列出建议。玩家明确说「收下」或「写入」之后，才运行 `python3 pmem_art.py learn accept`。禁止自动 `accept --all`。

@@ -1,9 +1,11 @@
 ---
 name: pmem-icon
-description: 【截图可见·必读】/pmem-icon 与 /art-icon 支持三大模式：(A) iOS/Android 1024×1024 App Icon 桌面启动图标母版（满幅直角出图+72%~80%圆角安全区+多尺寸导出矩阵+深浅色自适应）；(B) jezweb 式一致化 SVG 矢量图标集；(C) 游戏道具 64/128/256px 透明底栅格图标。全部支持 converge generate 与 converge judge 两步分离，以及动态阈值收敛闭环。
+description: 仅当玩家点名图标，或生图分流判成桌面图标、SVG 图标集、游戏道具格时使用。A/B/C 不混用。不要用来画普通插画或合成梯。(A) iOS/Android 1024×1024 App Icon 桌面启动图标母版（满幅直角出图+72%~80%圆角安全区+多尺寸导出矩阵+深浅色自适应）；(B) jezweb 式一致化 SVG 矢量图标集；(C) 游戏道具 64/128/256px 透明底栅格图标。全部支持 converge generate 与 converge judge 两步分离，以及动态阈值收敛闭环。
 ---
 
 # `/pmem-icon`（别名 `/art-icon`）— jezweb 式一致化图标集 / SVG 取向生成
+
+只在玩家点名图标，或 `/pmem-draw` 判成「图标」之后执行。先分 A/B/C，三条不混用。单张「按这张画风换一个新道具」走 `/pmem-draw` 的克隆合同，不在这里做成一整套。
 
 ## 怎么用（复制即用）
 ```text
@@ -59,7 +61,7 @@ description: 【截图可见·必读】/pmem-icon 与 /art-icon 支持三大模�
 5. 路径尽量少；简单图标略加重以平衡视觉重量
 
 ### 二之三、Mode C：游戏道具透明底栅格图标（64/128/256px PNG，非 SVG）
-若用户要的是 **游戏道具栅格图标**：先锁「线宽/圆角/色板/投影」style-spec，再批量生成透明底 PNG（同色板、同描边、同光源投影、中心缩略轮廓清晰、无文字），关键单枚可用 `converge` 跑 8 轮 ≥9.6 打磨。
+若用户要的是 **游戏道具栅格图标**：先锁「线宽/圆角/色板/投影」style-spec，再批量生成透明底 PNG（同色板、同描边、同光源投影、中心缩略轮廓清晰、无文字），关键单枚可用 `converge` 跑 4 轮 ≥9.6 打磨。
 
 ### Step 4：分批生成（约每批 5 个）+ 一致性审查
 每批完成后检查：stroke 是否漂移、圆角是否混用、有无图标明显偏轻/偏重、是否贴边。
@@ -72,8 +74,8 @@ icons/
 └── …
 ```
 
-### Step 5：关键图标 8轮9.6 收敛（可选）
-用户点名某枚「不对」或一致性审查不通过时：
+### Step 5：关键图标 4轮9.6 收敛（可选）
+用户点名某枚「不对」或一致性审查不通过时，每一轮垫最初的风格参考或 style-spec 样张，不垫上一轮成图：
 ```bash
 python3 pmem_art.py converge start --goal "图标 <name> 对齐 style-spec" --module brand.WorldStyle
 # 生成 → 自评 → converge generate / converge judge → finish

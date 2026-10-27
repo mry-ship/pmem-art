@@ -28,6 +28,7 @@ def validate_case_generation_params(
     root: Path | None = None,
     output_image_path: str = "",
     continuation_pad: bool = False,
+    allow_empty_pad: bool = False,
 ) -> dict[str, Any]:
     """
     Hard pre-GenerateImage parameter validator:
@@ -49,10 +50,46 @@ def validate_case_generation_params(
     case_label = case_cfg["case_id"] if case_cfg else (case_id_or_session or "UnknownCase")
 
     if not ref_list:
-        raise FileNotFoundError(
-            f"[{case_label}] Parameter 'reference_image_paths' is empty; expected reference image "
-            f"'{case_cfg['ref_image'] if case_cfg else '<valid path>'}'"
-        )
+        if not allow_empty_pad:
+            raise FileNotFoundError(
+                f"[{case_label}] Parameter 'reference_image_paths' is empty; expected reference image "
+                f"'{case_cfg['ref_image'] if case_cfg else '<valid path>'}'"
+            )
+        expected_ar = (case_cfg["aspect_ratio"] if case_cfg else "") or str(aspect_ratio or "").strip() or "1:1"
+        actual_ar = str(aspect_ratio or "").strip() or expected_ar
+        warnings: list[str] = ["本轮不垫风格参考，也不垫上一轮成图。"]
+        if case_cfg is not None and actual_ar != expected_ar:
+            raise ValueError(
+                f"[{case_label}] Parameter 'aspect_ratio' mismatch: expected '{expected_ar}', got '{actual_ar}'."
+            )
+        if output_image_path:
+            p_out = Path(output_image_path)
+            if not p_out.is_file():
+                p_out = base_root / output_image_path
+            if p_out.is_file():
+                out_traits = _inspect_image_physical_traits(p_out)
+                out_rel = _aspect_relation(
+                    int(out_traits.get("width") or 0),
+                    int(out_traits.get("height") or 0),
+                    actual_ar,
+                )
+                if out_rel["hard_fail"]:
+                    raise ValueError(
+                        f"[{case_label}] Parameter 'output_image_aspect_ratio' mismatch on '{output_image_path}': "
+                        f"expected '{actual_ar}', got '{out_rel['simplified']}' "
+                        f"({out_traits.get('width')}x{out_traits.get('height')})."
+                    )
+        return {
+            "valid": True,
+            "validation_passed": True,
+            "case_id": case_label,
+            "aspect_ratio": actual_ar,
+            "ref_aspect_ratio": expected_ar,
+            "reference_image": "",
+            "reference_image_paths": [],
+            "reference_traits": {},
+            "warnings": warnings,
+        }
 
     resolved_refs: list[Path] = []
     for raw_ref in ref_list:
@@ -195,6 +232,7 @@ def validate_converge_params(
     root: Path | None = None,
     three_step_stage: str = "step2_generate",
     continuation_pad: bool = False,
+    allow_empty_pad: bool = False,
 ) -> dict[str, Any]:
     """
     Validate converge generation/session parameters with default inheritance from `ref_image`:
@@ -212,7 +250,7 @@ def validate_converge_params(
         raw_refs = []
 
     inherited_default_pad_image = False
-    if not raw_refs and (ref_image or "").strip():
+    if not raw_refs and (ref_image or "").strip() and not allow_empty_pad:
         raw_refs = [str(ref_image).strip()]
         inherited_default_pad_image = True
 
@@ -238,6 +276,7 @@ def validate_converge_params(
         root=base_root,
         output_image_path=output_image_path,
         continuation_pad=continuation_pad,
+        allow_empty_pad=allow_empty_pad,
     )
     out_traits: dict[str, Any] = {}
     if output_image_path:

@@ -1,0 +1,462 @@
+{
+  "session_id": "clone-v3-b-ui",
+  "started_at": "2026-10-27 19:09:42 UTC+8",
+  "goal": "Clone Mode B UI。垫心形礼盒只锁medium与双层chrome。新题材：空内容弹框九宫格母版（非奖励插画）。中心大面积留白可双向拉伸，禁止礼盒/礼物/道具画进内容区。顶栏仅小装饰徽章motif<=1。底栏三枚圆形按钮纯图形符号。禁一切可读字母数字。",
+  "module": "ui.PopupClone",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "medium",
+  "scale_profile": {
+    "scale": "medium",
+    "label": "中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.6)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 8,
+    "min_rounds_before_stop": 1,
+    "target_score_threshold": 9.6,
+    "dim_weights": {
+      "composition": 0.2,
+      "lighting_color": 0.25,
+      "perspective_anatomy": 0.2,
+      "texture_detail": 0.2,
+      "spec_style": 0.15
+    },
+    "retention_set": [
+      "viewpoint_frame",
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "第 2 轮起垫目前最高分的那张，只补它没过的那一处（提示词改动仍 ≤40%）",
+    "max_prompt_delta_ratio": 0.4,
+    "max_prompt_delta_vs_first": 0.6,
+    "allow_recompose": false,
+    "allow_viewpoint_change": false,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "viewpoint_angle (不改机位与镜头视角)",
+      "element_count (不增删主体元素清单)",
+      "no_full_recompose (不做整体 recompose / 换景别故事)",
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)"
+    ],
+    "min_round_leap": 0.15,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "原图画风优先：保画风与机位，小幅姿态/局部布局；加强色块边界与材质可读性",
+    "best_direction_hint": "最优方向：光影·空气·介质；可小幅姿态/局部布局",
+    "goal": "Clone Mode B UI。垫心形礼盒只锁medium与双层chrome。新题材：空内容弹框九宫格母版（非奖励插画）。中心大面积留白可双向拉伸，禁止礼盒/礼物/道具画进内容区。顶栏仅小装饰徽章motif<=1。底栏三枚圆形按钮纯图形符号。禁一切可读字母数字。",
+    "module": "ui.PopupClone",
+    "ref_image": "docs/showcase/clone-merge-corrected/images/val_heart_ref.png",
+    "ref_analysis": "参考是道具icon不是弹窗布局，弹窗只借材质与描边语法。"
+  },
+  "target_score_threshold": 9.6,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "docs/showcase/clone-merge-corrected/images/val_heart_ref.png",
+  "ref_analysis": "参考是道具icon不是弹窗布局，弹窗只借材质与描边语法。",
+  "default_aspect_ratio": "1:1",
+  "default_reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\clone-merge-corrected\\images\\val_heart_ref.png"
+  ],
+  "aspect_ratio": "1:1",
+  "reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\clone-merge-corrected\\images\\val_heart_ref.png"
+  ],
+  "ref_physical_traits": {
+    "exists": true,
+    "size_bytes": 19335,
+    "size_kb": 18.9,
+    "width": 134,
+    "height": 123,
+    "aspect_ratio": "134:123",
+    "canonical_aspect_ratio": "1:1",
+    "color_entropy": 7.98
+  },
+  "param_validation": {
+    "valid": true,
+    "validation_passed": true,
+    "case_id": "clone-v3-b-ui",
+    "scale": "medium",
+    "aspect_ratio": "1:1",
+    "ref_aspect_ratio": "1:1",
+    "ref_dimensions": "134x123",
+    "output_aspect_ratio": "",
+    "output_dimensions": "",
+    "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\clone-merge-corrected\\images\\val_heart_ref.png",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\clone-merge-corrected\\images\\val_heart_ref.png"
+    ],
+    "inherited_default_aspect_ratio": true,
+    "inherited_default_pad_image": true,
+    "matched_ref_aspect_ratio": true,
+    "matched_ref_pad_image": true,
+    "matched_output_aspect_ratio": true,
+    "three_step_stage": "step1_start",
+    "three_step_verified": false,
+    "warnings": []
+  },
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.6,
+  "accept_threshold": 9.6,
+  "max_rounds": 8,
+  "ready_to_finish": true,
+  "status": "finished",
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "经过 1 轮达标定稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "1:1",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\clone-merge-corrected\\images\\val_heart_ref.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "clone-v3-b-ui",
+        "scale": "medium",
+        "aspect_ratio": "1:1",
+        "ref_aspect_ratio": "1:1",
+        "ref_dimensions": "134x123",
+        "output_aspect_ratio": "1:1",
+        "output_dimensions": "1024x1024",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\clone-merge-corrected\\images\\val_heart_ref.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\clone-merge-corrected\\images\\val_heart_ref.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": false,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false
+      },
+      "generated_at": "19:13:01",
+      "image": "assets/ui/popupclone/clone_v3_b_ui_r1.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 147788,
+        "size_kb": 144.3,
+        "width": 1024,
+        "height": 1024,
+        "aspect_ratio": "1:1",
+        "canonical_aspect_ratio": "1:1",
+        "color_entropy": 7.1
+      },
+      "raw_score": 9.62,
+      "score": 9.62,
+      "target_score_threshold": 9.6,
+      "dims": "风格色板9.7/九宫格9.7/光影材质9.6/透明底合规9.4/状态族9.6",
+      "dims_parsed": {
+        "style_palette": 9.7,
+        "nine_slice_structure": 9.7,
+        "lighting_material": 9.6,
+        "rgba_pipeline_compliance": 9.4,
+        "state_suite_cohesion": 9.6
+      },
+      "weighted_score": 9.62,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.6；像素离线仅为旁证）",
+        "像素离线 Absolute-5D 旁证=7.45，coverage=0.75（仅参考，不改门槛、不替代本模型五维分）"
+      ],
+      "stagnated": false,
+      "strengths": "空中心可拉伸，双层粉金chrome，底栏三符号钮无字",
+      "defects": "空中心合格；按钮略侵入内容区下沿；角部金属略硬",
+      "next_fix": "已达标，无需继续叠加",
+      "prompt": "原图画风优先：保画风与机位，小幅姿态/局部布局；加强色块边界与材质可读性| v3 r1 空内容九宫格弹框母版 禁中心礼盒| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: 9-slice popup shell — large empty stretchable plain content zone, NO gift box or prop illustration inside the content area; corner chrome only plus at most one top badge motif; bottom symbol buttons only, NO readable text",
+      "continuation": false,
+      "passed": true,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": null,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "ui",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_absolute_5d",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "offline_advisory": {
+          "version": "v9.1_audit_patch",
+          "score": 7.45,
+          "coverage": 0.75,
+          "rankable": false,
+          "contract": "docs/gpt6sol_absolute_5d_quant_rubric.md",
+          "role": "advisory_only"
+        },
+        "offline_advisory_note": "像素离线 Absolute-5D 旁证=7.45，coverage=0.75（仅参考，不改门槛、不替代本模型五维分）"
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_TARGET_REACHED",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "material",
+          "lesson": "本轮短板偏「material」：空中心合格；按钮略侵入内容区下沿；角部金属略硬",
+          "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+          "from_score": "9.62"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：空中心可拉伸，双层粉金chrome，底栏三符号钮无字",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "9.62"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "21:28:33"
+    }
+  ],
+  "warm_start": {
+    "project_id": "cursor-pmem-art",
+    "project_name": "Cursor-Pmem-Art",
+    "active_project": {
+      "project_id": "cursor-pmem-art",
+      "project_slug": "cursor-pmem-art",
+      "project_name": "Cursor-Pmem-Art",
+      "layer_scope": "private",
+      "bound_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "origin_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "root_name": "Cursor-Pmem-Art",
+      "library_dir": ".memory-art/projects/cursor-pmem-art",
+      "copied_from_project": "pmem-art",
+      "copied_from_root": "/Users/yanghu/Desktop/pmem-art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-26 18:01:04 UTC+8",
+      "updated_at": "2026-10-26 18:01:04 UTC+8"
+    },
+    "module": "ui.PopupClone",
+    "goal": "Clone Mode B UI。垫心形礼盒只锁medium与双层chrome。新题材：空内容弹框九宫格母版（非奖励插画）。中心大面积留白可双向拉伸，禁止礼盒/礼物/道具画进内容区。顶栏仅小装饰徽章motif<=1。底栏三枚圆形按钮纯图形符号。禁一切可读字母数字。",
+    "confidence": 0.85,
+    "fast_track_eligible": true,
+    "confidence_reasons": [
+      "命中 3 条定稿 recipe",
+      "红线可控（2 条）",
+      "目标与 recipe 关键词重叠 3",
+      "挂载 2 张项目知识卡 + 0 张全局美术底层基础卡"
+    ],
+    "top_recipes": [
+      {
+        "id": "CHAT20261027173120086RECIPE",
+        "summary": "[收敛胜出 9.68分] Clone Mode B UI。垫心形礼盒只锁medium与双层chrome。新题材：空内容奖励弹窗 — 空中心九宫格母版；双层chrome角部可读；无字符号钮",
+        "module": "ui.PopupClone"
+      },
+      {
+        "id": "CHAT20261027174505649RECIPE",
+        "summary": "[收敛胜出 9.62分] Clone Mode B UI。垫心形礼盒只锁medium与双层chrome。新题材：空内容弹框九宫 — 构图与基础色调符合要求",
+        "module": "ui.PopupClone"
+      },
+      {
+        "id": "CHAT20261027180108771RECIPE",
+        "summary": "[收敛胜出 9.62分] Clone Mode B UI。垫心形礼盒只锁medium与双层chrome。新题材：空内容弹框九宫 — 构图与基础色调符合要求",
+        "module": "ui.PopupClone"
+      }
+    ],
+    "top_redlines": [
+      {
+        "id": "CHAT20261027173120327REDLINE",
+        "summary": "[收敛踩坑红线] Clone Mode B UI。垫心形礼盒只锁medium与：避免「无硬伤」",
+        "module": "ui.PopupClone"
+      },
+      {
+        "id": "CHAT20261027162842231REDLINE",
+        "summary": "[收敛踩坑红线] Clone Mode B UI。垫心形礼盒。新题材：奖励弹窗：避免「发明了REWARD/CLAIM等可读英文与数字，违反禁造UI字。」",
+        "module": "ui.PopupClone"
+      }
+    ],
+    "art_decisions": [],
+    "private_knowledge": [
+      {
+        "id": "tech-9slice",
+        "title": "九宫格切图",
+        "body": "四角固定、中心可拉伸；中心禁止复杂装饰。",
+        "layer_scope": "private"
+      },
+      {
+        "id": "tech-watercolor",
+        "title": "水彩渲染",
+        "body": "边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。",
+        "layer_scope": "private"
+      }
+    ],
+    "shared_knowledge": [],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [],
+      "preferred_composition": [],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [],
+      "banned_habits": [
+        "critique MergeA厨房梯：体量爬升弱是红线，相邻档缩略必须可读差",
+        "[收敛踩坑红线] Clone Mode B UI。垫心形礼盒只锁medium与：避免「无硬伤」"
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: Cursor-Pmem-Art (.memory-art/projects/cursor-pmem-art/)\n- 目标模块: ui.PopupClone\n- 置信度: 0.85（fast-track 资格: 是）\n- 优先复用定稿方向:\n  · [CHAT20261027173120086RECIPE] [收敛胜出 9.68分] Clone Mode B UI。垫心形礼盒只锁medium与双层chrome。新题材：空内容奖励弹窗 — 空中心九宫格母版；双层chrome角部可读；无字符号钮\n  · [CHAT20261027174505649RECIPE] [收敛胜出 9.62分] Clone Mode B UI。垫心形礼盒只锁medium与双层chrome。新题材：空内容弹框九宫 — 构图与基础色调符合要求\n  · [CHAT20261027180108771RECIPE] [收敛胜出 9.62分] Clone Mode B UI。垫心形礼盒只锁medium与双层chrome。新题材：空内容弹框九宫 — 构图与基础色调符合要求\n- 必须避开红线:\n  · [CHAT20261027173120327REDLINE] [收敛踩坑红线] Clone Mode B UI。垫心形礼盒只锁medium与：避免「无硬伤」\n  · [CHAT20261027162842231REDLINE] [收敛踩坑红线] Clone Mode B UI。垫心形礼盒。新题材：奖励弹窗：避免「发明了REWARD/CLAIM等可读英文与数字，违反禁造UI字。」\n- 个人禁用习惯: critique MergeA厨房梯：体量爬升弱是红线，相邻档缩略必须可读差；[收敛踩坑红线] Clone Mode B UI。垫心形礼盒只锁medium与：避免「无硬伤」\n- 项目私有知识卡 (Private Layer):\n  · [tech-9slice] 九宫格切图: 四角固定、中心可拉伸；中心禁止复杂装饰。\n  · [tech-watercolor] 水彩渲染: 边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。",
+    "built_at": "2026-10-27 19:09:42 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "material",
+      "lesson": "本轮短板偏「material」：空中心合格；按钮略侵入内容区下沿；角部金属略硬",
+      "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+      "from_score": "9.62"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：空中心可拉伸，双层粉金chrome，底栏三符号钮无字",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.62"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 4,
+  "regression_drop": 0.5,
+  "ActionRequired": "STOP_AND_FINISH",
+  "converged_at_round": 1,
+  "rounds_to_converge": 1,
+  "winner": {
+    "round": 1,
+    "round_label": "经过 1 轮达标定稿",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "1:1",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\clone-merge-corrected\\images\\val_heart_ref.png"
+    ],
+    "param_validation": {
+      "valid": true,
+      "validation_passed": true,
+      "case_id": "clone-v3-b-ui",
+      "scale": "medium",
+      "aspect_ratio": "1:1",
+      "ref_aspect_ratio": "1:1",
+      "ref_dimensions": "134x123",
+      "output_aspect_ratio": "1:1",
+      "output_dimensions": "1024x1024",
+      "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\clone-merge-corrected\\images\\val_heart_ref.png",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\clone-merge-corrected\\images\\val_heart_ref.png"
+      ],
+      "inherited_default_aspect_ratio": true,
+      "inherited_default_pad_image": false,
+      "matched_ref_aspect_ratio": true,
+      "matched_ref_pad_image": true,
+      "matched_output_aspect_ratio": true,
+      "three_step_stage": "step3_judge",
+      "three_step_verified": true,
+      "warnings": [],
+      "continuation_pad": false
+    },
+    "generated_at": "19:13:01",
+    "image": "assets/ui/popupclone/clone_v3_b_ui_r1.jpg",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 147788,
+      "size_kb": 144.3,
+      "width": 1024,
+      "height": 1024,
+      "aspect_ratio": "1:1",
+      "canonical_aspect_ratio": "1:1",
+      "color_entropy": 7.1
+    },
+    "raw_score": 9.62,
+    "score": 9.62,
+    "target_score_threshold": 9.6,
+    "dims": "风格色板9.7/九宫格9.7/光影材质9.6/透明底合规9.4/状态族9.6",
+    "dims_parsed": {
+      "style_palette": 9.7,
+      "nine_slice_structure": 9.7,
+      "lighting_material": 9.6,
+      "rgba_pipeline_compliance": 9.4,
+      "state_suite_cohesion": 9.6
+    },
+    "weighted_score": 9.62,
+    "audit_warnings": [
+      "Agent Absolute-5D 已采纳（门槛 9.6；像素离线仅为旁证）",
+      "像素离线 Absolute-5D 旁证=7.45，coverage=0.75（仅参考，不改门槛、不替代本模型五维分）"
+    ],
+    "stagnated": false,
+    "strengths": "空中心可拉伸，双层粉金chrome，底栏三符号钮无字",
+    "defects": "空中心合格；按钮略侵入内容区下沿；角部金属略硬",
+    "next_fix": "已达标，无需继续叠加",
+    "prompt": "原图画风优先：保画风与机位，小幅姿态/局部布局；加强色块边界与材质可读性| v3 r1 空内容九宫格弹框母版 禁中心礼盒| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: 9-slice popup shell — large empty stretchable plain content zone, NO gift box or prop illustration inside the content area; corner chrome only plus at most one top badge motif; bottom symbol buttons only, NO readable text",
+    "continuation": false,
+    "passed": true,
+    "gate_blocked": false,
+    "image_gate_blocked": false,
+    "anatomy_score": null,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "ui",
+    "judge_source": "agent_absolute_5d",
+    "remote_vlm": {
+      "source": "agent_absolute_5d",
+      "provider": "",
+      "model": "",
+      "error": "",
+      "active": false,
+      "offline_advisory": {
+        "version": "v9.1_audit_patch",
+        "score": 7.45,
+        "coverage": 0.75,
+        "rankable": false,
+        "contract": "docs/gpt6sol_absolute_5d_quant_rubric.md",
+        "role": "advisory_only"
+      },
+      "offline_advisory_note": "像素离线 Absolute-5D 旁证=7.45，coverage=0.75（仅参考，不改门槛、不替代本模型五维分）"
+    },
+    "should_continue_next_round": false,
+    "decision": "STOP_TARGET_REACHED",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "material",
+        "lesson": "本轮短板偏「material」：空中心合格；按钮略侵入内容区下沿；角部金属略硬",
+        "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+        "from_score": "9.62"
+      },
+      {
+        "category": "keep",
+        "lesson": "保留本轮已做对的：空中心可拉伸，双层粉金chrome，底栏三符号钮无字",
+        "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+        "from_score": "9.62"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "21:28:33"
+  },
+  "convergence_badge": "经过 1 轮达标定稿"
+}

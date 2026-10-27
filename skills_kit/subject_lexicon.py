@@ -176,7 +176,189 @@ FLOORS: dict[str, dict[str, str]] = {
             "do not melt the structure"
         ),
     },
+    "ui_shell": {
+        "zh": (
+            "结构底线：可九宫格弹框母版——内容区必须大块留白/纯色可双向拉伸，"
+            "禁止礼盒道具插画进内容区；仅角花与顶栏小徽章(motif≤1)；底栏符号钮禁可读字"
+        ),
+        "en": (
+            "Structure floor: 9-slice popup shell — large empty stretchable plain content zone, "
+            "NO gift box or prop illustration inside the content area; corner chrome only plus "
+            "at most one top badge motif; bottom symbol buttons only, NO readable text"
+        ),
+    },
+    "clone_subject": {
+        "zh": (
+            "结构底线：Mode B 垫参考只锁 medium/材质/描边——新题材主体 silhouette 必须独占画面，"
+            "禁止复制参考 prop（如礼盒）外形；brief 写清新主体名词"
+        ),
+        "en": (
+            "Structure floor: Mode B style ref locks medium/chrome only — the NEW subject silhouette "
+            "must dominate the frame; do NOT photocopy the reference prop shape (e.g. gift box); "
+            "name the new subject explicitly in the brief"
+        ),
+    },
 }
+
+_UI_SHELL_GOAL_MARKERS: tuple[str, ...] = (
+    "空内容",
+    "空中心",
+    "留白",
+    "可拉伸",
+    "九宫格母版",
+    "弹框母版",
+    "弹窗母版",
+    "popup shell",
+    "empty content",
+    "9-slice mother",
+    "stretchable center",
+    "content area empty",
+    "禁止礼盒",
+    "禁礼盒",
+    "禁止礼物",
+    "no props in center",
+    "no gift box in center",
+)
+
+_UI_SHELL_ECHO_MARKERS: tuple[str, ...] = (
+    "中心有礼盒",
+    "心形礼盒",
+    "抄礼盒",
+    "礼盒进内容",
+    "内容区有",
+    "非空中心",
+    "奖励插画",
+    "换皮手游",
+    "礼物盒画进",
+    "抄参考主体",
+    "回声参考",
+    "gift box in center",
+    "reference motif in center",
+    "prop in content area",
+)
+
+
+_UI_SHELL_CENTER_ART_MARKERS: tuple[str, ...] = (
+    "中心插画",
+    "奖励插画",
+    "center illustration",
+    "reward illustration",
+    "center motif art",
+    "内容区有物",
+)
+
+_NEGATION_BEFORE_UI_CENTER_ART = re.compile(
+    r"(?:非|并非|无|禁止|不要|勿|未|别|no\s|not\s)[\s\S]{0,6}$",
+    re.IGNORECASE,
+)
+
+
+def _affirmative_ui_center_art_marker(blob: str, marker: str) -> bool:
+    """True if ``marker`` appears in ``blob`` and is not negated (e.g. 非奖励插画)."""
+    low = (blob or "").lower()
+    m = (marker or "").lower()
+    if not m or m not in low:
+        return False
+    start = 0
+    while True:
+        idx = low.find(m, start)
+        if idx < 0:
+            return False
+        prefix = low[max(0, idx - 14) : idx]
+        if not _NEGATION_BEFORE_UI_CENTER_ART.search(prefix):
+            return True
+        start = idx + len(m)
+    return False
+
+
+def ui_shell_clone_task(
+    *,
+    goal: str = "",
+    ref_analysis: Any = "",
+    module: str = "",
+) -> bool:
+    """True when a ui.* converge goal is an empty 9-slice popup chrome shell (Clone UI path)."""
+    mod_l = (module or "").strip().lower()
+    if mod_l not in ("ui",) and not mod_l.startswith("ui."):
+        return False
+    if isinstance(ref_analysis, dict):
+        ra_str = " ".join(str(v or "") for v in ref_analysis.values())
+    else:
+        ra_str = str(ref_analysis or "")
+    blob = f"{goal or ''} {ra_str}".lower()
+    if mod_l == "ui.popupclone" or mod_l.endswith(".popupclone"):
+        if any(_affirmative_ui_center_art_marker(blob, m) for m in _UI_SHELL_CENTER_ART_MARKERS):
+            return False
+        return True
+    return any(m.lower() in blob for m in _UI_SHELL_GOAL_MARKERS)
+
+
+def ui_shell_echo_marked(text: str) -> bool:
+    """Defects/strengths text flags reference-subject echo inside popup content zone."""
+    low = (text or "").lower()
+    return any(m.lower() in low for m in _UI_SHELL_ECHO_MARKERS)
+
+
+_CLONE_NEW_SUBJECT_GOAL_MARKERS: tuple[str, ...] = (
+    "clone mode b",
+    "mode b",
+    "新题材",
+    "垫",
+    "只锁medium",
+    "只借",
+    "不抄",
+    "换新",
+)
+
+_CLONE_SUBJECT_ECHO_MARKERS: tuple[str, ...] = (
+    "完全抄参考",
+    "抄参考主体",
+    "抄参考",
+    "抄礼盒",
+    "复制参考",
+    "未生成钥匙",
+    "未换题材",
+    "题材回声",
+    "礼盒主体",
+    "心形礼盒",
+    "仍是参考",
+    "主体仍是",
+    "photocopy",
+    "near-duplicate",
+    "reference prop copied",
+    "prop copied",
+    "gift box as subject",
+    "回声参考",
+)
+
+
+def clone_style_lock_new_subject_task(
+    *,
+    goal: str = "",
+    ref_analysis: Any = "",
+    module: str = "",
+    ref_image: str = "",
+) -> bool:
+    """Mode B icon/character clone: style ref present and brief expects a NEW subject."""
+    if not str(ref_image or "").strip():
+        return False
+    mod_l = (module or "").strip().lower()
+    if not (mod_l.startswith("icon.") or mod_l.startswith("character.")):
+        return False
+    if isinstance(ref_analysis, dict):
+        ra_str = " ".join(str(v or "") for v in ref_analysis.values())
+    else:
+        ra_str = str(ref_analysis or "")
+    blob = f"{goal or ''} {ra_str}".lower()
+    if "clone mode b" in blob or ("mode b" in blob and "clone" in blob):
+        return True
+    return any(m.lower() in blob for m in _CLONE_NEW_SUBJECT_GOAL_MARKERS)
+
+
+def clone_subject_echo_marked(text: str) -> bool:
+    """Defects flag copying reference prop instead of the briefed new subject."""
+    low = (text or "").lower()
+    return any(m.lower() in low for m in _CLONE_SUBJECT_ECHO_MARKERS)
 
 # 回流模板。judge 回显用 zh，生图提示词用 en。
 REFLOW: dict[str, dict[str, str]] = {

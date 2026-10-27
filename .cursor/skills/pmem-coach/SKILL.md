@@ -1,22 +1,37 @@
 ---
 name: pmem-coach
-description: 当用户输入 /pmem-coach 或 /art-coach，或说「练什么/我的短板/能力提升计划」时触发。把红线与会话反思归类为构图/光影/解剖/九宫格等能力维，输出个人练习计划与下一张绘制目标。
+description: 玩家要看进步、口味、短板练习或知识卡时使用。/pmem-improve、/pmem-learn 及其 art 别名并进这一条。日常 converge finish 已经在后台写过，不要主动推销。知识卡没有玩家明确说收下，就不要写入。
 ---
 
-# `/pmem-coach`（别名 `/art-coach`）— 【进阶/可选】能力教练 peek
+# `/pmem-coach` — 进步 / 短板 / 知识（三条偷看合成一条）
 
-> 日常收敛只会给一行「小提示」。本技能用于你**主动要练习计划**时。
+日常 `converge finish` 已经在后台写过反思、口味和知识队列。只有玩家来要报告时才跑。一次只出一份，不要把三份一起倒出来。
 
-## 怎么用
-```text
-/pmem-coach
-/art-coach 我最近老是翻车，给我练习计划
+文件开头若写着「点名锁定」，就按锁定的那一支。否则看用词：
+
+| 玩家在说 | 跑 |
+| :--- | :--- |
+| `/pmem-improve`、`/art-improve`、总结、进步、口味 | 进步 |
+| `/pmem-learn`、`/art-learn`、知识、技法、广度 | 知识 |
+| `/pmem-coach`、`/art-coach`、短板、练习、练什么，或没点明 | 短板 |
+
+## 进步
+```bash
+python3 pmem_art.py improve run
+python3 pmem_art.py progress
+python3 pmem_art.py taste show
 ```
 
-## 原理
-红线 + `_reflections/` → 短板类别 → drills → `next_draw_goals`。
-
+## 短板
 ```bash
 python3 pmem_art.py coach
 python3 pmem_art.py progress
 ```
+红线加会话反思，收成构图、光影、解剖、九宫格等短板，给下一张该练什么。
+
+## 知识
+```bash
+python3 pmem_art.py learn suggest
+python3 pmem_art.py learn list
+```
+只列出建议。玩家明确说「收下」或「写入」之后，才运行 `python3 pmem_art.py learn accept`。禁止自动 `accept --all`。

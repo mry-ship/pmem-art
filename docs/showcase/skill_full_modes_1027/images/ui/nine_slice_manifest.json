@@ -1,0 +1,11 @@
+﻿{
+  "panel": {
+    "source": "images/ui/sheet_final.jpg",
+    "slice": {"left": 48, "right": 48, "top": 48, "bottom": 48},
+    "padding": 4,
+    "notes": "corners locked 48px; center flat parchment for bidirectional stretch"
+  },
+  "buttons": ["normal", "selected"],
+  "resource_bar": true,
+  "no_invented_text": true
+}

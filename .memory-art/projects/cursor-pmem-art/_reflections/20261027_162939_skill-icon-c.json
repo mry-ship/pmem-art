@@ -1,0 +1,141 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "cursor-pmem-art",
+  "project_name": "Cursor-Pmem-Art",
+  "layer_scope": "private",
+  "written_at": "2026-10-27 16:29:39 UTC+8",
+  "session_id": "skill-icon-c",
+  "goal": "Icon Mode C 游戏道具透明底药水瓶 256px风格再缩64/128。锁描边色板软投影。无字。",
+  "module": "icon.PotionProp",
+  "converge_mode": "quality",
+  "guided_mode": "text_guided",
+  "threshold": 9.6,
+  "max_rounds": 8,
+  "rounds_used": 6,
+  "winner_round": 6,
+  "winner_score": 9.62,
+  "winner_image": "assets/icon/potionprop/skill_icon_c_r6.jpg",
+  "winner_passed": true,
+  "outcome": "✅ **经过 6 轮迭代达标定稿**（generate 与 judge 分步收敛，第 6 轮达到 `9.62 / 10.0` 分 ≥ `9.60` 分档位目标线即刻停机）",
+  "what_fixed": [
+    "改成纯透明感单色浅底无棋盘无卡片，仅药水+软投影。",
+    "纯白或纯浅灰实心底，禁止任何棋盘。",
+    "只收瓶塞高光与外轮廓。",
+    "只收窄液体高光带。",
+    "解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁止糊边融边；接触影可再贴半档"
+  ],
+  "what_still_weak": "残余可接受点：无明显缺陷",
+  "strengths": "接触影贴；剪影清；实心底",
+  "taste_deltas": {
+    "from_strengths": [
+      "接触影贴；剪影清；实心底"
+    ],
+    "from_defects": [
+      "瓶塞高光略跳；边缘可再干净。",
+      "液体高光带略宽。",
+      "接触影可再贴半档"
+    ]
+  },
+  "warm_start_confidence": 0.3,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 8.68,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 8.79,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 9.16,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 9.32,
+      "passed": false
+    },
+    {
+      "round": 5,
+      "score": 9.52,
+      "passed": false
+    },
+    {
+      "round": 6,
+      "score": 9.62,
+      "passed": true
+    }
+  ],
+  "lessons": [
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：棋盘格底与白卡片不是透明底道具规范。",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.68"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：仍有棋盘格底。",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.79"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：瓶塞高光略跳；边缘可再干净。",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.16"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：瓶塞高光略跳；边缘可再干净。",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "9.16"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：无棋盘；剪影清",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.16"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：液体高光带略宽。",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.32"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：实心底剪影清",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.32"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：接触影可再贴半档",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "9.52"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：接触影可再贴半档",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.52"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：接触影可再贴半档",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "9.52"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：接触影贴；剪影清；实心底",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.62"
+    }
+  ]
+}

@@ -1,0 +1,147 @@
+{
+  "active": 16,
+  "done": 4,
+  "failed": 0,
+  "bots": {
+    "v8_bot_02": {
+      "status": "done",
+      "next_round": 8,
+      "rounds_done": 8,
+      "best_total": 8.08,
+      "stop_reason": "max_rounds_reached"
+    },
+    "v8_bot_04": {
+      "status": "active",
+      "next_round": 4,
+      "rounds_done": 3,
+      "best_total": 8.17,
+      "stop_reason": null
+    },
+    "v8_bot_06": {
+      "status": "done",
+      "next_round": 8,
+      "rounds_done": 8,
+      "best_total": 8.45,
+      "stop_reason": "max_rounds_reached"
+    },
+    "v8_bot_07": {
+      "status": "active",
+      "next_round": 1,
+      "rounds_done": 0,
+      "best_total": null,
+      "stop_reason": null
+    },
+    "v8_bot_08": {
+      "status": "active",
+      "next_round": 1,
+      "rounds_done": 0,
+      "best_total": null,
+      "stop_reason": null
+    },
+    "v8_bot_10": {
+      "status": "active",
+      "next_round": 3,
+      "rounds_done": 2,
+      "best_total": 8.22,
+      "stop_reason": null
+    },
+    "v8_bot_12": {
+      "status": "active",
+      "next_round": 1,
+      "rounds_done": 0,
+      "best_total": null,
+      "stop_reason": null
+    },
+    "v8_bot_14": {
+      "status": "active",
+      "next_round": 1,
+      "rounds_done": 0,
+      "best_total": null,
+      "stop_reason": null
+    },
+    "v8_bot_15": {
+      "status": "active",
+      "next_round": 1,
+      "rounds_done": 0,
+      "best_total": null,
+      "stop_reason": null
+    },
+    "v8_bot_16": {
+      "status": "done",
+      "next_round": 7,
+      "rounds_done": 7,
+      "best_total": 8.32,
+      "stop_reason": "STOP_DROP"
+    },
+    "v8_bot_18": {
+      "status": "active",
+      "next_round": 1,
+      "rounds_done": 0,
+      "best_total": null,
+      "stop_reason": null
+    },
+    "v8_bot_20": {
+      "status": "active",
+      "next_round": 1,
+      "rounds_done": 0,
+      "best_total": null,
+      "stop_reason": null
+    },
+    "v8_bot_22": {
+      "status": "active",
+      "next_round": 1,
+      "rounds_done": 0,
+      "best_total": null,
+      "stop_reason": null
+    },
+    "v8_bot_23": {
+      "status": "active",
+      "next_round": 1,
+      "rounds_done": 0,
+      "best_total": null,
+      "stop_reason": null
+    },
+    "v8_bot_24": {
+      "status": "active",
+      "next_round": 1,
+      "rounds_done": 0,
+      "best_total": null,
+      "stop_reason": null
+    },
+    "v8_bot_26": {
+      "status": "done",
+      "next_round": 8,
+      "rounds_done": 8,
+      "best_total": 8.08,
+      "stop_reason": "max_rounds_reached"
+    },
+    "v8_bot_28": {
+      "status": "active",
+      "next_round": 3,
+      "rounds_done": 2,
+      "best_total": 8.42,
+      "stop_reason": null
+    },
+    "v8_bot_30": {
+      "status": "active",
+      "next_round": 3,
+      "rounds_done": 2,
+      "best_total": 7.94,
+      "stop_reason": null
+    },
+    "v8_bot_31": {
+      "status": "active",
+      "next_round": 1,
+      "rounds_done": 0,
+      "best_total": null,
+      "stop_reason": null
+    },
+    "v8_bot_32": {
+      "status": "active",
+      "next_round": 1,
+      "rounds_done": 0,
+      "best_total": null,
+      "stop_reason": null
+    }
+  }
+}

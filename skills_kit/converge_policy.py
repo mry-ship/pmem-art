@@ -87,6 +87,92 @@ def anatomy_ok_for_stop(
     return anat is not None and anat >= float(anatomy_floor)
 
 
+_SCALE_LOCK_MARKERS = (
+    "尺度",
+    "比例失调",
+    "比例偏",
+    "比例不对",
+    "比例过",
+    "头身",
+    "偏小",
+    "偏大",
+    "过小",
+    "过大",
+    "太小",
+    "太大",
+    "略小",
+    "略大",
+    "仍小",
+    "仍大",
+    "偏窄",
+    "过窄",
+    "太窄",
+    "偏短",
+    "过短",
+    "巩膜",
+    "黑点瞳",
+    "独眼",
+    "sclera",
+    "cyclops",
+    "black-dot",
+    "black dot pupil",
+    "relative scale",
+    "out of scale",
+    "out of proportion",
+    "too small",
+    "too large",
+)
+_SCALE_LOCK_NEGATION = re.compile(
+    r"(?:禁止|不要|勿|别|不是|并非|没有|无|禁|not\s|no\s)[\s\S]{0,4}$",
+    re.IGNORECASE,
+)
+
+
+def _scale_clause(text: str, index: int) -> str:
+    start = 0
+    for i, ch in enumerate(text[:index]):
+        if ch in "，。；,.;":
+            start = i + 1
+    end = len(text)
+    for i in range(index, len(text)):
+        if text[i] in "，。；,.;":
+            end = i
+            break
+    return text[start:end]
+
+
+def _scale_clause_resolved(clause: str) -> bool:
+    """A clause that already says the scale/eye issue is fixed is not a lock."""
+    if any(k in clause for k in ("仍", "还", "依旧", "未达", "不合格", "不正确")):
+        return False
+    return any(k in clause for k in ("合格", "正确", "已解决", "已修复", "已放大", "已修好"))
+
+
+def scale_lock_marked(text: str) -> bool:
+    """True when defects are relative scale, proportion, or eye grammar.
+
+    Chaining that plate locks the bug. Negated or already-fixed clauses do not count.
+    """
+    raw = text or ""
+    low = raw.lower()
+    for marker in _SCALE_LOCK_MARKERS:
+        start = 0
+        needle = marker.lower()
+        while True:
+            idx = low.find(needle, start)
+            if idx < 0:
+                break
+            prefix = low[max(0, idx - 12) : idx]
+            if _SCALE_LOCK_NEGATION.search(prefix):
+                start = idx + len(needle)
+                continue
+            if _scale_clause_resolved(_scale_clause(low, idx)):
+                start = idx + len(needle)
+                continue
+            return True
+    return False
+
+
 def collapse_marked(text: str) -> bool:
     """True when defects describe a collapsed structure, not a prohibition against one."""
     raw = text or ""
@@ -338,19 +424,15 @@ def choose_next_pad(
     best_total: float | None,
     auto_drop: float = DEFAULT_AUTO_PAD_DROP,
 ) -> Path:
-    """Pick pad image for the *next* round."""
+    """Pick pad image for the *next* round.
+
+    auto and ref always return the original reference. previous chains the
+    current plate only when that round scored. Fixes belong in the prompt.
+    """
+    del total, best_total, auto_drop
     m = (mode or DEFAULT_PAD_MODE).lower().strip()
     if m == "previous":
         return current_out if score_ok else ref
-    if m == "auto":
-        if not score_ok or total is None:
-            return ref
-        # New high (or first score): chain. Big drop: force ref. Slight drop: keep chain.
-        if best_total is None or total >= float(best_total):
-            return current_out
-        if total < float(best_total) - float(auto_drop):
-            return ref
-        return current_out
     return ref
 
 
@@ -378,20 +460,99 @@ def plate_safe_to_pad(
     anatomy_floor: float = DEFAULT_ANATOMY_FLOOR,
     subject_kind: str = "",
     defects: str = "",
+    goal: str = "",
+    module: str = "",
+    ref_image: str = "",
+    ref_analysis: str = "",
 ) -> bool:
-    """Whether a historical best plate is safe to chain under pad=auto (fail-closed on missing anat)."""
-    m = (pad_mode or DEFAULT_PAD_MODE).lower().strip()
-    if m == "previous":
+    """pad=auto and pad=ref never chain a generated plate. Only pad=previous may."""
+    del dims, anatomy_floor, subject_kind, defects, goal, module, ref_image, ref_analysis
+    return (pad_mode or DEFAULT_PAD_MODE).lower().strip() == "previous"
+
+
+def ui_shell_structure_ok_for_stop(
+    *,
+    goal: str = "",
+    ref_analysis: str = "",
+    module: str = "",
+    defects: str = "",
+    dims: dict[str, Any] | None = None,
+) -> bool:
+    """Fail-closed for Clone UI popup shells: echo in content zone blocks STOP."""
+    from .subject_lexicon import ui_shell_clone_task, ui_shell_echo_marked
+
+    if not ui_shell_clone_task(goal=goal, ref_analysis=ref_analysis, module=module):
         return True
-    if m == "ref":
+    if ui_shell_echo_marked(defects):
         return False
-    if (subject_kind or "").strip().lower() == "scene":
-        anat = anatomy_score(dims)
-        # A 4.2 plate is not a mild nit. Don't chain it. 5.9 and above can chain.
-        if anat is None or anat < SCENE_MILD_CREDIT_MIN:
+    parsed = coerce_dims_dict(dims)
+    if parsed:
+        nine = dim_float(parsed, "nine_slice_structure")
+        if nine is not None and nine < 8.5:
             return False
-        return not collapse_marked(defects)
-    return anatomy_ok_for_stop(dims, anatomy_floor)
+        comp = dim_float(parsed, "composition")
+        if comp is not None and comp < 8.5:
+            return False
+    return True
+
+
+def clone_subject_structure_ok_for_stop(
+    *,
+    goal: str = "",
+    ref_analysis: str = "",
+    module: str = "",
+    ref_image: str = "",
+    defects: str = "",
+    dims: dict[str, Any] | None = None,
+) -> bool:
+    """Fail-closed for Mode B icon/character: reference prop echo blocks STOP/pad/winner."""
+    from .subject_lexicon import (
+        clone_style_lock_new_subject_task,
+        clone_subject_echo_marked,
+    )
+
+    if not clone_style_lock_new_subject_task(
+        goal=goal,
+        ref_analysis=ref_analysis,
+        module=module,
+        ref_image=ref_image,
+    ):
+        return True
+    if clone_subject_echo_marked(defects):
+        return False
+    parsed = coerce_dims_dict(dims)
+    comp = dim_float(parsed, "composition") if parsed else None
+    if comp is not None and comp < 6.0:
+        return False
+    return True
+
+
+def round_passes_structure_gates(
+    *,
+    goal: str = "",
+    ref_analysis: str = "",
+    module: str = "",
+    ref_image: str = "",
+    defects: str = "",
+    dims: dict[str, Any] | None = None,
+) -> bool:
+    """Combined UI shell + clone subject gates for finish winner selection."""
+    if not ui_shell_structure_ok_for_stop(
+        goal=goal,
+        ref_analysis=ref_analysis,
+        module=module,
+        defects=defects,
+        dims=dims,
+    ):
+        return False
+    return clone_subject_structure_ok_for_stop(
+        goal=goal,
+        ref_analysis=ref_analysis,
+        module=module,
+        ref_image=ref_image,
+        defects=defects,
+        dims=dims,
+    )
 
 
 def pick_best_round_on_stop(

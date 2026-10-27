@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>pmem-art · 14 技能工作流程图</title>
+  <title>pmem-art · 技能流程</title>
   <style>
     :root {
       --bg: #f7f6f3;
@@ -117,8 +117,8 @@
 </head>
 <body>
   <header>
-    <h1>pmem-art · 14 技能工作流程图</h1>
-    <p>点选技能看流程。完整说明见 <a href="../../USER_MANUAL.md">USER_MANUAL.md · 第一章附</a>。</p>
+    <h1>pmem-art · 技能流程</h1>
+    <p>现在是 8 个技能。原画、克隆、变体、镜头包收在 draw 里；合成梯先过关系，再一档一张，同框不是成品。完整说明见 <a href="../../USER_MANUAL.md">USER_MANUAL.md · 第一章附</a>。</p>
   </header>
   <main>
     <div class="pick" id="pick" role="group" aria-label="选择技能"></div>
@@ -134,7 +134,7 @@
       <div id="svg-host" role="img" aria-labelledby="title aria"></div>
       <p id="aria" class="visually-hidden" style="position:absolute;left:-9999px"></p>
     </div>
-    <p class="hint">强制收敛类统一：最多 8 轮、合格线 <code>≥ 9.6</code>；履历可见、记忆静默。进阶 peek 日常不用喊，<code>finish</code> 已后台跑过。</p>
+    <p class="hint">强制收敛类统一：最多 4 轮、合格线 <code>≥ 9.6</code>；履历可见、记忆静默。进阶 peek 日常不用喊，<code>finish</code> 已后台跑过。</p>
   </main>
   <script>
 (function () {
@@ -150,7 +150,7 @@
         { id: "c", x: 420, y: 20, w: 160, h: 48, t1: "3 五维打分", t2: "judge 展示不足", c: "n-neu" },
         { id: "d", x: 420, y: 110, w: 160, h: 48, t1: "≥9.6 ?", t2: "解剖硬伤否决", c: "n-neu" },
         { id: "e", x: 230, y: 110, w: 150, h: 48, t1: "<9.6 且 i<8", t2: "≤2 条部位修正", c: "n-bad" },
-        { id: "f", x: 610, y: 110, w: 100, h: 48, t1: "达标停", t2: "或 Best-of-8", c: "n-ok" },
+        { id: "f", x: 610, y: 110, w: 100, h: 48, t1: "达标停", t2: "或 Best-of-4", c: "n-ok" },
         { id: "g", x: 580, y: 200, w: 130, h: 48, t1: "finish", t2: "履历 + 静默记忆", c: "n-mem" }
       ],
       edges: [["a","b"],["b","c"],["c","d"],["d","e","no"],["d","f","yes"],["e","b","下一轮",true],["f","g"]]
@@ -158,7 +158,7 @@
     concept: {
       label: "concept",
       title: "/pmem-concept",
-      sub: "别名 /art-concept · Key Art",
+      sub: "已并入 /pmem-draw · 原画这一支",
       aria: "可选垫图解构，FLUX 完整句 Prompt，再进与 draw 相同的八轮收敛。",
       nodes: [
         { id: "a", x: 30, y: 24, w: 140, h: 48, t1: "0 垫图解构", t2: "可选", c: "n-neu" },
@@ -202,7 +202,7 @@
     clone: {
       label: "clone",
       title: "/pmem-clone-image",
-      sub: "别名 /art-clone · ~95% 锁风格",
+      sub: "已并入 /pmem-draw · 克隆这一支",
       aria: "写圣经与新题材 brief，Mode B 每轮垫参考，八轮打分，连续三组过线才算稳。",
       nodes: [
         { id: "a", x: 30, y: 20, w: 160, h: 48, t1: "1 圣经+Brief", t2: "Mode A/B", c: "n-neu" },
@@ -217,22 +217,22 @@
     ladder: {
       label: "ladder",
       title: "/pmem-merge-ladder",
-      sub: "别名 /art-ladder · 整梯同框",
-      aria: "先写 ladder bible，一次出整梯 contact sheet，切格审计，任一格不及格优先整梯重生。",
+      sub: "别名 /art-ladder /art-merge · 先关系后逐张",
+      aria: "先写八行关系，relation-judge 必须通过，再每一档单独一张正方形，关系还在且达到 9.6 才交付。",
       nodes: [
-        { id: "a", x: 30, y: 24, w: 150, h: 48, t1: "0 Ladder bible", t2: "域·类·L1…L8", c: "n-neu" },
-        { id: "b", x: 220, y: 24, w: 170, h: 48, t1: "1 整梯 sheet", t2: "同框一次生成", c: "n-blue" },
-        { id: "c", x: 430, y: 24, w: 140, h: 48, t1: "2 切格", t2: "N-count gate", c: "n-neu" },
-        { id: "d", x: 430, y: 110, w: 140, h: 48, t1: "全格≥9.6?", t2: "升级路径审计", c: "n-neu" },
-        { id: "e", x: 220, y: 110, w: 170, h: 48, t1: "整梯重生", t2: "最多 8 轮", c: "n-bad" },
-        { id: "f", x: 600, y: 110, w: 110, h: 48, t1: "交付", t2: "sheet+各格分", c: "n-ok" }
+        { id: "a", x: 30, y: 24, w: 150, h: 48, t1: "0 八行关系", t2: "先不出图", c: "n-neu" },
+        { id: "b", x: 220, y: 24, w: 170, h: 48, t1: "1 relation-judge", t2: "exit 0 才能出图", c: "n-blue" },
+        { id: "c", x: 430, y: 24, w: 150, h: 48, t1: "2 一档一张", t2: "正方形核对", c: "n-neu" },
+        { id: "d", x: 430, y: 110, w: 150, h: 48, t1: "关系在且≥9.6?", t2: "第二段只抬质感", c: "n-neu" },
+        { id: "e", x: 210, y: 110, w: 180, h: 48, t1: "关系散了不算过", t2: "回到过关稿", c: "n-bad" },
+        { id: "f", x: 610, y: 110, w: 110, h: 48, t1: "交付", t2: "八张正方形", c: "n-ok" }
       ],
       edges: [["a","b"],["b","c"],["c","d"],["d","e","no"],["d","f","yes"],["e","b","",true]]
     },
     lens: {
       label: "lens",
       title: "/pmem-lens-propose",
-      sub: "别名 /art-lens · 生图前点选",
+      sub: "已并入 /pmem-draw · 玩家要几套机位才走",
       aria: "读参考图，提案四套镜头光影道具包，用户点选后写入 goal，再决定是否开收敛。",
       nodes: [
         { id: "a", x: 30, y: 40, w: 130, h: 48, t1: "读参考图", t2: "身份/媒介", c: "n-neu" },
@@ -272,7 +272,7 @@
     variant: {
       label: "variant",
       title: "/pmem-variant",
-      sub: "别名 /art-variant · 换风不丢人设",
+      sub: "已并入 /pmem-draw · 变体这一支",
       aria: "读父模块锚点，定子模块规格，按九六点六收敛生图并 ingest 归档。",
       nodes: [
         { id: "a", x: 40, y: 50, w: 150, h: 48, t1: "读父锚点", t2: "发色瞳色配饰", c: "n-neu" },
@@ -297,7 +297,7 @@
     improve: {
       label: "improve",
       title: "/pmem-improve",
-      sub: "别名 /art-improve · 进阶 peek",
+      sub: "已并入 /pmem-coach · 进步",
       aria: "日常 finish 已静默跑；本技能大声读出进步曲线与 taste 变化。",
       nodes: [
         { id: "a", x: 40, y: 50, w: 170, h: 48, t1: "后台已写入", t2: "finish 静默", c: "n-mem" },
@@ -321,7 +321,7 @@
     learn: {
       label: "learn",
       title: "/pmem-learn",
-      sub: "别名 /art-learn · 进阶 peek",
+      sub: "已并入 /pmem-coach · 知识，收下才写入",
       aria: "finish 已静默入队建议；本技能列出、接受并写入知识卡。",
       nodes: [
         { id: "a", x: 30, y: 50, w: 160, h: 48, t1: "静默 enqueue", t2: "finish 后台", c: "n-mem" },

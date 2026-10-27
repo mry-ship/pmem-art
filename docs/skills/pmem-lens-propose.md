@@ -5,14 +5,16 @@ description: Use when the user drops a reference image (or names a style_ref) an
 
 # pmem-lens-propose
 
+这不是单独技能。只有玩家明确要几套机位时，才走 `/pmem-draw` 里的镜头包合同。没人要镜头，不要因为 `high` 或 `recompose` 打开这一页。点选前不生图。
+
 Off-line **lens pack** step before converge / edits. Look at a reference image, propose several concrete cinematic packages (camera, light, props, forbids), let the user pick, then hand the chosen pack into goal / recompose_dir / best_direction—do **not** invent Absolute-5D scores.
 
 ## When
 
-- User wants V2-like strong lens language but from **this** image, not a canned script.
-- Before a batch or a single high / recompose / bold run.
-- Not for style-clone locks only → use pmem-clone-image.
-- Not for scoring-only reviews.
+- 玩家明确要几套机位、镜头或光来挑。
+- 不是 `high` / `recompose` 的默认前置。没人要镜头就继续当前这一支。
+- 换题材锁画风走 `/pmem-draw` 的克隆合同，不走这里。
+- 只审图不走这里。
 
 ## Inputs
 

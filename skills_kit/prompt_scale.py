@@ -11,7 +11,7 @@ from typing import Any
 from ._time import _now_cst
 
 DEFAULT_THRESHOLD = 9.6
-DEFAULT_MAX_ROUNDS = 8
+DEFAULT_MAX_ROUNDS = 4
 FAST_SOFT_THRESHOLD = 9.0  # fast-track: prefer fewer regens when score>=9.0 & delta small; final accept still >=9.6 unless draft
 # Physical image gate: solid-gray probes sit ~2.5–2.9; real art JPEGs are typically ≥6.
 MIN_IMAGE_BYTE_ENTROPY = 3.2
@@ -22,7 +22,7 @@ CONVERGE_SCALE_PROFILES: dict[str, dict[str, Any]] = {
         "scale": "low",
         "label": "低强度 · 保守修瑕动态达标闭环 (Defect-Fix Dynamic Threshold >=9.6)",
         "stop_policy": "dynamic_threshold",
-        "max_rounds": 8,
+        "max_rounds": 4,
         "min_rounds_before_stop": 1,
         "target_score_threshold": 9.6,
         "dim_weights": {
@@ -34,7 +34,7 @@ CONVERGE_SCALE_PROFILES: dict[str, dict[str, Any]] = {
         },
         # Retention: one pose/viewpoint lock + medium/identity. Do NOT stack "垫图一致性高" or coordinate DNA.
         "retention_set": ("viewpoint_or_pose", "style_medium", "identity"),
-        "next_fix_budget": "第 2 轮起垫目前最高分的那张，只补它没过的那一处（提示词改动仍 ≤20%）",
+        "next_fix_budget": "每轮都垫最初的参考图，只在提示词上补还没过的那一处（提示词改动仍 ≤20%）",
         "max_prompt_delta_ratio": 0.20,
         "allow_recompose": False,
         "allow_viewpoint_change": False,
@@ -59,7 +59,7 @@ CONVERGE_SCALE_PROFILES: dict[str, dict[str, Any]] = {
         "scale": "medium",
         "label": "中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.6)",
         "stop_policy": "dynamic_threshold",
-        "max_rounds": 8,
+        "max_rounds": 4,
         "min_rounds_before_stop": 1,
         "target_score_threshold": 9.6,
         "dim_weights": {
@@ -72,7 +72,7 @@ CONVERGE_SCALE_PROFILES: dict[str, dict[str, Any]] = {
         },
         # Keep viewpoint + medium + identity; allow small pose / local layout / lighting polish.
         "retention_set": ("viewpoint_frame", "style_medium", "identity"),
-        "next_fix_budget": "第 2 轮起垫目前最高分的那张，只补它没过的那一处（提示词改动仍 ≤40%）",
+        "next_fix_budget": "每轮都垫最初的参考图，只在提示词上补还没过的那一处（提示词改动仍 ≤40%）",
         "max_prompt_delta_ratio": 0.40,
         "max_prompt_delta_vs_first": 0.60,
         "allow_recompose": False,
@@ -98,7 +98,7 @@ CONVERGE_SCALE_PROFILES: dict[str, dict[str, Any]] = {
         "scale": "high",
         "label": "高强度 · 大胆跃升+可叙事动态达标闭环 (Showcase Overhaul Dynamic Threshold >=9.6)",
         "stop_policy": "dynamic_threshold",
-        "max_rounds": 8,
+        "max_rounds": 4,
         # Prevent 1-round "locked DNA photocopy" stop — drama needs at least one refine pass.
         "min_rounds_before_stop": 2,
         "target_score_threshold": 9.6,
@@ -112,7 +112,7 @@ CONVERGE_SCALE_PROFILES: dict[str, dict[str, Any]] = {
         },
         # Only medium gene + identity — NOT original camera coordinates / 垫图一致性.
         "retention_set": ("style_medium", "identity"),
-        "next_fix_budget": "第 1 轮可以拉开光影；之后垫目前最高分的那张，只补它没过的那一处（提示词改动仍 ≤80%）",
+        "next_fix_budget": "每轮都垫最初的参考图；第 1 轮可以拉开光影，之后只在提示词上补还没过的那一处（提示词改动仍 ≤80%）",
         "max_prompt_delta_ratio": 0.80,
         "max_prompt_delta_vs_first": 0.90,
         "allow_recompose": True,
@@ -136,7 +136,7 @@ CONVERGE_SCALE_PROFILES: dict[str, dict[str, Any]] = {
         "scale": "recompose",
         "label": "定向改构图模式 · 按用户指定新构图动态达标闭环 (Directed Re-Composition Dynamic Threshold >=9.6)",
         "stop_policy": "dynamic_threshold",
-        "max_rounds": 8,
+        "max_rounds": 4,
         "min_rounds_before_stop": 2,
         "target_score_threshold": 9.6,
         "dim_weights": {
@@ -148,7 +148,7 @@ CONVERGE_SCALE_PROFILES: dict[str, dict[str, Any]] = {
         },
         # Inherit brush/palette/identity; camera target = --recompose-dir, NOT the ref overhead/pose.
         "retention_set": ("style_medium", "identity", "recompose_dir_target"),
-        "next_fix_budget": "第 1 轮落到指定机位；之后垫目前最高分的那张，只补它没过的那一处（提示词改动仍 ≤85%）",
+        "next_fix_budget": "每轮都垫最初的参考图；第 1 轮落到指定机位，之后只在提示词上补还没过的那一处（提示词改动仍 ≤85%）",
         "max_prompt_delta_ratio": 0.85,
         "max_prompt_delta_vs_first": 0.95,
         "allow_recompose": True,
@@ -360,10 +360,23 @@ def build_r1_structure_floor(
 ) -> str:
     """Structure sentence for the prompt (English) or the chat echo (``lang='zh'``).
 
-    Unknown and UI briefs return "" (no default mountain).
+    Unknown UI briefs return "". Clone UI shell briefs (ui.* + empty-center markers) inject ui_shell floor.
     """
-    from .subject_lexicon import floor_sentence
+    from .subject_lexicon import (
+        clone_style_lock_new_subject_task,
+        floor_sentence,
+        ui_shell_clone_task,
+    )
 
+    if ui_shell_clone_task(goal=goal, ref_analysis=ref_analysis, module=module):
+        return floor_sentence("ui_shell", lang)
+    if clone_style_lock_new_subject_task(
+        goal=goal,
+        ref_analysis=ref_analysis,
+        module=module,
+        ref_image=ref_image,
+    ):
+        return floor_sentence("clone_subject", lang)
     kind = classify_subject(
         goal=goal, ref_analysis=ref_analysis, ref_image=ref_image, module=module
     )

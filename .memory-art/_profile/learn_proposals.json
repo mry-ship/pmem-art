@@ -1,0 +1,36 @@
+{
+  "proposals": [
+    {
+      "kind": "knowledge_card",
+      "id": "palette-70-20-10",
+      "title": "色彩构成：70-20-10 色板比例黄金法则",
+      "tags": [
+        "brand",
+        "color_palette",
+        "character",
+        "scene",
+        "ui"
+      ],
+      "body": "画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+      "reason": "你已有 brand 域模块，但知识库缺少「色彩构成：70-20-10 色板比例黄金法则」",
+      "optional_module_stub": ""
+    },
+    {
+      "kind": "knowledge_card",
+      "id": "material-surface-physics",
+      "title": "材质表现：金属/织物/陶瓷高光形状与粗糙度区分",
+      "tags": [
+        "brand",
+        "material",
+        "character",
+        "ui"
+      ],
+      "body": "不同材质必须通过高光锐度与菲涅尔反射率严格拉开质感：金属具备高对比硬边高光与环境反光，哑光织物采用宽缓漫反射柔光，釉面/玉石保留温润半透明次表面散射；严禁全图使用同质化油腻塑料感高光。",
+      "reason": "你已有 brand 域模块，但知识库缺少「材质表现：金属/织物/陶瓷高光形状与粗糙度区分」",
+      "optional_module_stub": ""
+    }
+  ],
+  "at": "2026-10-27 21:33:27 UTC+8",
+  "source": "converge_finish",
+  "silent": true
+}

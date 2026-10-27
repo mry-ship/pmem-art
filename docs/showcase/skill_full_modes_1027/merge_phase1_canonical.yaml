@@ -1,0 +1,46 @@
+# art-merge 第一段 · canonical（机读 · relation-judge 门禁）
+version: canonical-20261027
+pipeline: art-merge-two-phase  # 文字定稿 → 关系核对出图 → converge 第二段
+
+tracks:
+  kitchen:
+    module: prop.KitchenMerge
+    mode: A
+    surface: pastel candy brand glue，圆润胶塑块面，饱和友好粉彩，左上软光短接触影，光洁不油亮，非产品棚拍；props 无脸无黑眼
+    rows:
+      - { level: 1, name: 量勺, silhouette: 单柄浅勺, scale_delta: 基档, scale_pct: 0.60, parts_add: "—" }
+      - { level: 2, name: 打蛋器, silhouette: 线框球+直柄, scale_delta: "+小", scale_pct: 0.63, parts_add: 金属丝球 }
+      - { level: 3, name: 手动开罐器, silhouette: 钳口+转柄, scale_delta: "+小", scale_pct: 0.66, parts_add: 侧向钳口 }
+      - { level: 4, name: 盒式刨丝器, silhouette: 盒体+顶面, scale_delta: "+中", scale_pct: 0.69, parts_add: 刨孔区 }
+      - { level: 5, name: 手摇沙拉甩干器, silhouette: 圆碗+曲柄, scale_delta: "+中", scale_pct: 0.72, parts_add: 碗盖与曲柄 }
+      - { level: 6, name: 立式搅拌机, silhouette: 塔形+搅拌杯, scale_delta: "+大", scale_pct: 0.75, parts_add: 电机塔与杯 }
+      - { level: 7, name: 杯式料理机, silhouette: 矮罐+短杯, scale_delta: "+中", scale_pct: 0.77, parts_add: 短宽杯体 }
+      - { level: 8, name: 面包机, silhouette: 方盒+顶槽, scale_delta: "+大", scale_pct: 0.79, parts_add: 顶盖槽；全梯最大 }
+
+  valentine:
+    module: prop.ValentineMerge
+    mode: B
+    surface: 亮粉 E02060 与桃黄 F0B080 光洁胶塑，圆润倒角，左上暖桃软光，浅空底 F6EFE4 托物，非油亮；不垫礼盒外形
+    rows:
+      - { level: 1, name: 心形扭结糖, silhouette: 糖体+双扭结尾, scale_delta: 基档, scale_pct: 0.60, parts_add: "—" }
+      - { level: 2, name: 玫瑰花, silhouette: 花头+茎叶, scale_delta: "+小", scale_pct: 0.63, parts_add: 多层花瓣 }
+      - { level: 3, name: 情书, silhouette: 信封+心形封蜡, scale_delta: "+小", scale_pct: 0.66, parts_add: 亮粉封蜡 }
+      - { level: 4, name: 丘比特之箭, silhouette: 箭杆+羽尾, scale_delta: "+中", scale_pct: 0.69, parts_add: 箭羽；箭尖非心形 }
+      - { level: 5, name: 爱心气球, silhouette: 心形球+线, scale_delta: "+中", scale_pct: 0.72, parts_add: 加粗气球线 }
+      - { level: 6, name: 方礼盒, silhouette: 方盒+十字丝带, scale_delta: "+大", scale_pct: 0.75, parts_add: 亮粉盒体 }
+      - { level: 7, name: 心形音乐盒, silhouette: 心形盒+铰链盖, scale_delta: "+大", scale_pct: 0.77, parts_add: 盖铰链；内为金齿轮无小人 }
+      - { level: 8, name: 婚礼蛋糕, silhouette: 双层蛋糕+顶饰, scale_delta: "+大", scale_pct: 0.79, parts_add: 第二层；全梯最大 }
+
+  stationery:
+    module: prop.StationeryMerge
+    mode: C
+    surface: 绿色棱纹圆柱握把、圆头端帽、闷灰 satin 金属，左上棚拍软光短影，浅空底 F6EFE4；小高光不油亮
+    rows:
+      - { level: 1, name: 回形针, silhouette: 单环金属线, scale_delta: 基档, scale_pct: 0.60, parts_add: "—" }
+      - { level: 2, name: 图钉, silhouette: 钉帽+针, scale_delta: "+小", scale_pct: 0.63, parts_add: 钉帽 }
+      - { level: 3, name: 橡皮, silhouette: 砖块, scale_delta: "+小", scale_pct: 0.66, parts_add: 体积块 }
+      - { level: 4, name: 铅笔, silhouette: 六角杆+尖, scale_delta: "+中", scale_pct: 0.69, parts_add: 笔尖；杆身可选棱纹握持区 }
+      - { level: 5, name: 便利贴本, silhouette: 方形本, scale_delta: "+中", scale_pct: 0.72, parts_add: 本册厚度 }
+      - { level: 6, name: 订书机, silhouette: 钳形+棱纹握把, scale_delta: "+大", scale_pct: 0.75, parts_add: 绿色棱纹握把 }
+      - { level: 7, name: 桌面收纳篮, silhouette: 篮+笔, scale_delta: "+大", scale_pct: 0.77, parts_add: 篮筐与笔 }
+      - { level: 8, name: 桌面打印机, silhouette: 方盒机身, scale_delta: "+大", scale_pct: 0.79, parts_add: 整件机身；全梯最大 }

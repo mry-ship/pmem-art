@@ -1,0 +1,176 @@
+{
+  "session_id": "redo-merge-a-v3",
+  "started_at": "2026-10-27 17:40:41 UTC+8",
+  "goal": "Merge A v3 art-merge 八张方图 brand glue",
+  "module": "prop.KitchenMerge",
+  "mode": "text_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "medium",
+  "scale_profile": {
+    "scale": "medium",
+    "label": "中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.6)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 8,
+    "min_rounds_before_stop": 1,
+    "target_score_threshold": 9.6,
+    "dim_weights": {
+      "composition": 0.2,
+      "lighting_color": 0.25,
+      "perspective_anatomy": 0.2,
+      "texture_detail": 0.2,
+      "spec_style": 0.15
+    },
+    "retention_set": [
+      "viewpoint_frame",
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "第 2 轮起垫目前最高分的那张，只补它没过的那一处（提示词改动仍 ≤40%）",
+    "max_prompt_delta_ratio": 0.4,
+    "max_prompt_delta_vs_first": 0.6,
+    "allow_recompose": false,
+    "allow_viewpoint_change": false,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "viewpoint_angle (不改机位与镜头视角)",
+      "element_count (不增删主体元素清单)",
+      "no_full_recompose (不做整体 recompose / 换景别故事)",
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)"
+    ],
+    "min_round_leap": 0.15,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "原图画风优先：保画风与机位，表面那一句不动，只修没过的那一格",
+    "best_direction_hint": "最优方向：光影·空气·介质；可小幅姿态/局部布局",
+    "goal": "Merge A v3 art-merge 八张方图 brand glue",
+    "module": "prop.KitchenMerge",
+    "ref_image": "",
+    "ref_analysis": ""
+  },
+  "target_score_threshold": 9.6,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "",
+  "ref_analysis": "",
+  "default_aspect_ratio": "",
+  "default_reference_image_paths": [],
+  "aspect_ratio": "",
+  "reference_image_paths": [],
+  "ref_physical_traits": {},
+  "param_validation": {},
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.6,
+  "accept_threshold": 9.6,
+  "max_rounds": 8,
+  "ready_to_finish": false,
+  "status": "running",
+  "rounds": [],
+  "warm_start": {
+    "project_id": "cursor-pmem-art",
+    "project_name": "Cursor-Pmem-Art",
+    "active_project": {
+      "project_id": "cursor-pmem-art",
+      "project_slug": "cursor-pmem-art",
+      "project_name": "Cursor-Pmem-Art",
+      "layer_scope": "private",
+      "bound_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "origin_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "root_name": "Cursor-Pmem-Art",
+      "library_dir": ".memory-art/projects/cursor-pmem-art",
+      "copied_from_project": "pmem-art",
+      "copied_from_root": "/Users/yanghu/Desktop/pmem-art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-26 18:01:04 UTC+8",
+      "updated_at": "2026-10-26 18:01:04 UTC+8"
+    },
+    "module": "prop.KitchenMerge",
+    "goal": "Merge A v3 art-merge 八张方图 brand glue",
+    "confidence": 0.65,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "命中 3 条定稿 recipe",
+      "红线中等（4 条）",
+      "挂载 0 张项目知识卡 + 1 张全局美术底层基础卡"
+    ],
+    "top_recipes": [
+      {
+        "id": "CHAT20261027162153847RECIPE",
+        "summary": "[收敛胜出 9.23分] Mode A 零参考卡通可爱厨房整梯。exactly 8：1量勺 2打蛋器 3手动开罐器 4盒式刨丝 — 构图与基础色调符合要求",
+        "module": "prop.KitchenMerge"
+      },
+      {
+        "id": "CHAT20261027160004917RECIPE",
+        "summary": "[收敛胜出 8.71分] Mode A 零参考。卡通可爱整梯 L1-L8：量勺、打蛋器、手动开罐器、盒式刨丝器、手摇沙拉甩干器 — 构图与基础色调符合要求",
+        "module": "prop.KitchenMerge"
+      },
+      {
+        "id": "CHAT20261026180738276RECIPE",
+        "summary": "[收敛胜出 7.70分] 水彩绘本厨房炊具八级合成梯。一格一件，低档略小高档略大，同类不挨着，末档不撑成场景。 — 水彩还在，末档是一件，整体从左到右变大",
+        "module": "prop.KitchenMerge"
+      }
+    ],
+    "top_redlines": [
+      {
+        "id": "CHAT20261027160004961REDLINE",
+        "summary": "[收敛踩坑红线] Mode A 零参考。卡通可爱整梯 L1-L8：量勺、打蛋器：避免「八件卡通可读；相邻档体量差偏小；面包机身份偏弱。」",
+        "module": "prop.KitchenMerge"
+      },
+      {
+        "id": "CHAT20261027162153912REDLINE",
+        "summary": "[收敛踩坑红线] Mode A 零参考卡通可爱厨房整梯。exactly 8：1：避免「每格多了白底牌；第5格像料理机不是沙拉甩干器；末档体量差不够。」",
+        "module": "prop.KitchenMerge"
+      },
+      {
+        "id": "CHAT20261026180738369REDLINE",
+        "summary": "[收敛踩坑红线] 水彩绘本厨房炊具八级合成梯。一格一件，低档略小高档略大，同类：避免「中间有一档比左边更小，末档变成叠在一起的一组，且和左边同类挨着；prompt 相对第一轮改」",
+        "module": "prop.KitchenMerge"
+      },
+      {
+        "id": "CHAT20261027162952929REDLINE",
+        "summary": "critique MergeA厨房梯：体量爬升弱是红线，相邻档缩略必须可读差",
+        "module": "prop.KitchenMerge"
+      }
+    ],
+    "art_decisions": [],
+    "private_knowledge": [],
+    "shared_knowledge": [
+      {
+        "id": "palette-70-20-10",
+        "title": "色彩构成：70-20-10 色板比例黄金法则",
+        "body": "画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+        "layer_scope": "shared"
+      }
+    ],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [],
+      "preferred_composition": [],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [],
+      "banned_habits": [
+        "critique MergeA厨房梯：体量爬升弱是红线，相邻档缩略必须可读差",
+        "[收敛踩坑红线] Clone Mode B UI。垫心形礼盒只锁medium与：避免「无硬伤」"
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: Cursor-Pmem-Art (.memory-art/projects/cursor-pmem-art/)\n- 目标模块: prop.KitchenMerge\n- 置信度: 0.65（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261027162153847RECIPE] [收敛胜出 9.23分] Mode A 零参考卡通可爱厨房整梯。exactly 8：1量勺 2打蛋器 3手动开罐器 4盒式刨丝 — 构图与基础色调符合要求\n  · [CHAT20261027160004917RECIPE] [收敛胜出 8.71分] Mode A 零参考。卡通可爱整梯 L1-L8：量勺、打蛋器、手动开罐器、盒式刨丝器、手摇沙拉甩干器 — 构图与基础色调符合要求\n  · [CHAT20261026180738276RECIPE] [收敛胜出 7.70分] 水彩绘本厨房炊具八级合成梯。一格一件，低档略小高档略大，同类不挨着，末档不撑成场景。 — 水彩还在，末档是一件，整体从左到右变大\n- 必须避开红线:\n  · [CHAT20261027160004961REDLINE] [收敛踩坑红线] Mode A 零参考。卡通可爱整梯 L1-L8：量勺、打蛋器：避免「八件卡通可读；相邻档体量差偏小；面包机身份偏弱。」\n  · [CHAT20261027162153912REDLINE] [收敛踩坑红线] Mode A 零参考卡通可爱厨房整梯。exactly 8：1：避免「每格多了白底牌；第5格像料理机不是沙拉甩干器；末档体量差不够。」\n  · [CHAT20261026180738369REDLINE] [收敛踩坑红线] 水彩绘本厨房炊具八级合成梯。一格一件，低档略小高档略大，同类：避免「中间有一档比左边更小，末档变成叠在一起的一组，且和左边同类挨着；prompt 相对第一轮改」\n  · [CHAT20261027162952929REDLINE] critique MergeA厨房梯：体量爬升弱是红线，相邻档缩略必须可读差\n- 个人禁用习惯: critique MergeA厨房梯：体量爬升弱是红线，相邻档缩略必须可读差；[收敛踩坑红线] Clone Mode B UI。垫心形礼盒只锁medium与：避免「无硬伤」\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+    "built_at": "2026-10-27 17:40:41 UTC+8"
+  },
+  "lessons_all": [],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 4,
+  "regression_drop": 0.5
+}

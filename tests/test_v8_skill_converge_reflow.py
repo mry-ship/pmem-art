@@ -43,28 +43,26 @@ class TestPadAndStop(unittest.TestCase):
             ref,
         )
 
-    def test_auto_pad_requires_new_high(self) -> None:
+    def test_auto_pad_stays_on_original_ref(self) -> None:
         ref = Path("/tmp/ref.png")
         cur = Path("/tmp/r3.jpg")
         self.assertEqual(
             choose_next_pad(
                 mode="auto", ref=ref, current_out=cur, score_ok=True, total=9.2, best_total=9.0
             ),
-            cur,
+            ref,
         )
-        # Big drop below best - auto_drop → ref
         self.assertEqual(
             choose_next_pad(
                 mode="auto", ref=ref, current_out=cur, score_ok=True, total=8.5, best_total=9.0, auto_drop=0.2
             ),
             ref,
         )
-        # Slight drop within auto_drop → keep chain
         self.assertEqual(
             choose_next_pad(
                 mode="auto", ref=ref, current_out=cur, score_ok=True, total=8.95, best_total=9.0, auto_drop=0.2
             ),
-            cur,
+            ref,
         )
 
     def test_stop_requires_anatomy_floor(self) -> None:

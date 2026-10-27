@@ -382,6 +382,44 @@ def audit_score_inflation(
         "anatomical artifact", "extra weapon", "extra sheath",
     )
     defects_lower = (defects_str or "").lower()
+    from .subject_lexicon import (
+        clone_style_lock_new_subject_task,
+        clone_subject_echo_marked,
+        ui_shell_clone_task,
+        ui_shell_echo_marked,
+    )
+
+    goal_blob = str(scale_prof.get("goal") or "")
+    ref_blob = str(scale_prof.get("ref_analysis") or "")
+    ref_img_blob = str(scale_prof.get("ref_image") or "")
+    if ui_shell_clone_task(module=module, goal=goal_blob, ref_analysis=ref_blob):
+        if ui_shell_echo_marked(defects_str or ""):
+            warnings.append(
+                "UI弹框母版回声拦截：内容区出现参考主体/礼盒等，禁止达标 (<=8.85)"
+            )
+            calibrated = min(calibrated, 8.85)
+    if clone_style_lock_new_subject_task(
+        module=module,
+        goal=goal_blob,
+        ref_analysis=ref_blob,
+        ref_image=ref_img_blob,
+    ):
+        parsed_gate = w_info.get("parsed") or {}
+        try:
+            comp_val = float(parsed_gate.get("composition")) if parsed_gate.get("composition") is not None else None
+        except (TypeError, ValueError):
+            comp_val = None
+        if clone_subject_echo_marked(defects_str or ""):
+            warnings.append(
+                "Clone 题材回声拦截：复制参考 prop 而非 brief 新主体，禁止达标 (<=8.85)"
+            )
+            calibrated = min(calibrated, 8.85)
+        elif comp_val is not None and comp_val < 6.0:
+            warnings.append(
+                f"Clone 构图门禁：构图 {comp_val:.1f} < 6.0（题材/主体错误），禁止达标 (<=8.85)"
+            )
+            calibrated = min(calibrated, 8.85)
+
     hit_limb = _keyword_hits(defects_lower, limb_artifact_keywords)
     if hit_limb:
         warnings.append(

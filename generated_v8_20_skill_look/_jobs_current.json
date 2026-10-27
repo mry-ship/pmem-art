@@ -1,0 +1,202 @@
+[
+  {
+    "bot_id": "v8_bot_02",
+    "round": 6,
+    "slug": "night_city",
+    "scale": "low_best",
+    "aspect_ratio": "9:16",
+    "pad_src": "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\v8_bot_02_r5.jpg",
+    "prompt": "仙侠水墨夜色风：锁视角与姿态，仅微修局部质感| 仙侠水墨夜色风：保持俯瞰孤侠背影站位，微修质感| 低强度修瑕 (low ≤20%): 保持俯瞰孤侠背影站位，仅精修局部质感；仙侠水墨夜色风| 最优方向：近景瓦当咬合与剑身细冷钢高光微锐| 约束：保持原图画风笔触与色板；不改男侠背影站位与俯瞰构图；严禁增删飞檐楼阁与暖金灯笼布局；保持原图男性持剑侠客身份，禁止改成女侠 | 【回流修正】背影侧要看见拇指扣剑柄的轮廓，不要整只手黑块；中轴主街灯火再亮半档，两侧仍暗",
+    "gen_filename": "v8_bot_02_r6.png"
+  },
+  {
+    "bot_id": "v8_bot_04",
+    "round": 6,
+    "slug": "night_city",
+    "scale": "medium_best",
+    "aspect_ratio": "9:16",
+    "pad_src": "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\v8_bot_04_r5.jpg",
+    "prompt": "仙侠水墨夜色风：保画风与机位，小幅姿态/局部布局；柔化光影与留白层次| 仙侠水墨夜色风：保画风与主体，柔化光影层次| 中幅提升 (medium 25%–45%): 保持画风色板与主体，强化光雾纵深与介质质感；仙侠水墨夜色风；可轻度点缀风格内叙事道具，不锁死道具归零| 最优方向：青黛夜雾纵深；衣袂冷银轮廓光；中轴暖金灯火冷暖；可轻度点缀升空灯点| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | 【回流修正】剑身保持冷钢刃口高光，不要收成纯黑线；握剑手背面要分出拇指与四指",
+    "gen_filename": "v8_bot_04_r6.png"
+  },
+  {
+    "bot_id": "v8_bot_06",
+    "round": 6,
+    "slug": "night_city",
+    "scale": "high_best",
+    "aspect_ratio": "9:16",
+    "pad_src": "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\v8_bot_06_r5.jpg",
+    "prompt": "仙侠水墨夜色风：保媒介与身份，提升光影张力；可加风格内叙事点缀| 仙侠水墨夜色风：保媒介与身份，青银剑气·升空孔明灯·万家灯火体积光| 高强度跃升 (high 50%–80%): 保持剑孤侠与万家灯火夜城媒介基因，升级戏剧光与叙事——青银剑气、升空孔明灯、冷暖灯火碰撞、体积光；可加风格内叙事点缀，不换主体身份；禁止平庸平移| 最优方向：青银剑气+升空孔明灯+万家灯火体积光+冷暖碰撞（可加风格内叙事点缀）| 约束：保持原图核心艺术媒介与画风基因；保持原图性别、物种、年龄段与核心外观；可加风格内叙事点缀，不换主体身份 | 【回流修正】去掉刃口蓝色电弧，只留窄冷银体积光；右手指节分开，剑格被拇指压住",
+    "gen_filename": "v8_bot_06_r6.png"
+  },
+  {
+    "bot_id": "v8_bot_07",
+    "round": 6,
+    "slug": "night_city",
+    "scale": "recompose",
+    "aspect_ratio": "9:16",
+    "pad_src": "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\v8_bot_07_r5.jpg",
+    "prompt": "仙侠水墨夜色风：保画风色板，按「从高空飞檐俯瞰改为底层运河水道乌篷船与低机位仰高拱石桥全景」重构机位| 仙侠水墨夜色风：保画风色板，按「运河水道乌篷船·低机位仰高拱石桥」重构机位| recompose: 保画风色板与持剑男侠身份，改为运河水道乌篷船低机位仰高拱石桥全景；禁止旧俯瞰飞檐DNA| 约束：保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观；不偏离指定构图方向 | 【回流修正】机位再压低，拱桥拱圈占上半画；右手剑格露出，拇指与四指分开",
+    "gen_filename": "v8_bot_07_r6.png"
+  },
+  {
+    "bot_id": "v8_bot_08",
+    "round": 5,
+    "slug": "night_city",
+    "scale": "recompose_bold",
+    "aspect_ratio": "9:16",
+    "pad_src": "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\v8_bot_08_r4.jpg",
+    "prompt": "赛博霓虹雨夜不夜城：AR+剪影，湿铬飞檐·品红青全息·积水反射 | 大改 style_jump: 仅保留持剑孤侠与万家灯火夜城剪影与 9:16；风格圣经跳变赛博霓虹雨夜——湿铬飞檐、品红青全息旗、低机位积水反射；禁止混装旧俯瞰阳台机位与保色板套话 | 最优方向：9:16+持剑孤侠剪影；赛博霓虹雨夜圣经（勿混阳台机位） | 约束：画幅 9:16；仅保留主体剪影；风格圣经按目标大跳；禁止混装旧机位与保色板套话 | 【回流修正】双靴在积水里各有一块分开的暗接触影；握剑手拇指指节再锐一档",
+    "gen_filename": "v8_bot_08_r5.png"
+  },
+  {
+    "bot_id": "v8_bot_10",
+    "round": 5,
+    "slug": "pastel_sketch",
+    "scale": "low_best",
+    "aspect_ratio": "4:3",
+    "pad_src": "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\v8_bot_10_r4.jpg",
+    "prompt": "粉彩速写轻盈风：锁视角与姿态，仅微修局部质感| 粉彩速写轻盈风：保持侧面屈膝坐姿与双手开合，微修质感| 低强度修瑕 (low ≤20%): 保持侧面屈膝坐姿与双手开合，仅精修局部质感；粉彩速写轻盈风| 最优方向：纸齿颗粒与排线密度微增| 约束：不改场景布局；保持原图性别、物种、年龄段与核心外观；严禁改变坐姿与镜头视角；严禁改变粉彩速写干爽笔触与米白纸留白；严禁增删主体元素或涂黑背景 | 【回流修正】背景斜线再淡半档，别抢主体；靠地那只鞋阴影再贴边",
+    "gen_filename": "v8_bot_10_r5.png"
+  },
+  {
+    "bot_id": "v8_bot_12",
+    "round": 5,
+    "slug": "pastel_sketch",
+    "scale": "medium_best",
+    "aspect_ratio": "4:3",
+    "pad_src": "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\v8_bot_12_r4.jpg",
+    "prompt": "粉彩速写轻盈风：保画风与机位，小幅姿态/局部布局；柔化光影与留白层次| 粉彩速写轻盈风：保画风与主体，柔化光影层次| 中幅提升 (medium 25%–45%): 保持画风色板与主体，强化光雾纵深与介质质感；粉彩速写轻盈风；可轻度点缀风格内叙事道具，不锁死道具归零| 最优方向：斜向侧光起伏；蜡质厚度；留白呼吸；暖金粉尘轻点缀| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | 【回流修正】铅笔尖再收回本子内缘；拇指按在本子边缘要看见指甲",
+    "gen_filename": "v8_bot_12_r5.png"
+  },
+  {
+    "bot_id": "v8_bot_14",
+    "round": 5,
+    "slug": "pastel_sketch",
+    "scale": "high_best",
+    "aspect_ratio": "4:3",
+    "pad_src": "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\v8_bot_14_r4.jpg",
+    "prompt": "粉彩速写轻盈风：保媒介与身份，提升光影张力；可加风格内叙事点缀| 粉彩速写轻盈风：保媒介与身份，颈间耳机·暖金粉尘·朱红钴蓝排线| 高强度跃升 (high 50%–80%): 保屈膝坐姿红卫衣少女媒介基因，升级戏剧光与叙事——颈间耳机、暖金粉尘、朱红/钴蓝排线、斜向侧光；可加风格内叙事点缀，不换主体身份；禁止平庸平移| 最优方向：颈间耳机+暖金粉尘+朱红/钴蓝排线+戏剧侧光| 约束：保持原图核心艺术媒介与画风基因；保持原图性别、物种、年龄段与核心外观；可加风格内叙事点缀，不换主体身份 | 【回流修正】暖金粉尘只在暗部，不要亮边金点；耳机头梁再贴发际",
+    "gen_filename": "v8_bot_14_r5.png"
+  },
+  {
+    "bot_id": "v8_bot_15",
+    "round": 4,
+    "slug": "pastel_sketch",
+    "scale": "recompose",
+    "aspect_ratio": "4:3",
+    "pad_src": "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\v8_bot_15_r3.jpg",
+    "prompt": "粉彩速写轻盈风：保画风色板，按「改为天台铁艺栏杆旁站立远眺夕阳海港的过肩侧机位」重构机位| 粉彩速写轻盈风：保画风色板，按「天台铁艺栏杆旁站立远眺夕阳海港过肩侧机位」重构机位| recompose: 保画风色板与红卫衣少女身份，改为天台铁艺栏杆旁站立远眺夕阳海港的过肩侧机位| 约束：保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观；不偏离指定构图方向 | 【回流修正】右肩后过肩再偏一点，要看见侧脸轮廓；拇指扣在栏外，其余四指分开",
+    "gen_filename": "v8_bot_15_r4.png"
+  },
+  {
+    "bot_id": "v8_bot_16",
+    "round": 4,
+    "slug": "pastel_sketch",
+    "scale": "recompose_bold",
+    "aspect_ratio": "4:3",
+    "pad_src": null,
+    "prompt": "波普赛璐璐粗描边：AR+剪影，品红电青网点 | 大改 style_jump: 仅保留屈膝坐姿红卫衣少女剪影与 4:3；风格圣经跳变波普赛璐璐粗描边品红电青网点；禁止混装天台机位与保色板套话 | 最优方向：4:3+屈膝红卫衣剪影；波普赛璐璐品红电青 | 约束：画幅 4:3；仅保留主体剪影；风格圣经按目标大跳；禁止混装旧机位与保色板套话 | 【回流修正】改回侧面屈膝坐姿，一腿屈一腿伸；品红电青网点再密一档，不要灰底",
+    "gen_filename": "v8_bot_16_r4.png"
+  },
+  {
+    "bot_id": "v8_bot_18",
+    "round": 4,
+    "slug": "sunlit_portrait",
+    "scale": "low_best",
+    "aspect_ratio": "3:4",
+    "pad_src": "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\v8_bot_18_r3.jpg",
+    "prompt": "胶片逆光轻厚涂：锁视角与姿态，仅微修局部质感| 胶片逆光轻厚涂：保持正面胸像幅面，微修质感| 低强度修瑕 (low ≤20%): 保持正面胸像幅面，仅精修局部质感；胶片逆光轻厚涂| 最优方向：瞳孔高光点与发丝边缘微锐| 约束：不改动作与姿态；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观；严禁改变正面胸像视角与二分光影；严禁增删人物或改变雏菊壁纸背景 | 【回流修正】暗部眼虹膜再圆，与亮部瞳孔同高；鼻梁高光不要断在眼下",
+    "gen_filename": "v8_bot_18_r4.png"
+  },
+  {
+    "bot_id": "v8_bot_20",
+    "round": 4,
+    "slug": "sunlit_portrait",
+    "scale": "medium_best",
+    "aspect_ratio": "3:4",
+    "pad_src": "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\v8_bot_20_r3.jpg",
+    "prompt": "胶片逆光轻厚涂：保画风与机位，小幅姿态/局部布局；柔化光影与次表面散射| 胶片逆光轻厚涂：保画风与主体，柔化光影层次| 中幅提升 (medium 25%–45%): 保持画风色板与主体，强化光雾纵深与介质质感；胶片逆光轻厚涂；可轻度点缀风格内叙事道具，不锁死道具归零| 最优方向：交界线SSS；壁纸花型层次；环境反光；胶片微尘| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | 【回流修正】眼白再清一点，不要发灰；雏菊茎贴在锁骨上",
+    "gen_filename": "v8_bot_20_r4.png"
+  },
+  {
+    "bot_id": "v8_bot_22",
+    "round": 4,
+    "slug": "sunlit_portrait",
+    "scale": "high_best",
+    "aspect_ratio": "3:4",
+    "pad_src": "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\v8_bot_22_r3.jpg",
+    "prompt": "胶片逆光轻厚涂：保媒介与身份，提升光影张力；可加风格内叙事点缀| 胶片逆光轻厚涂：保媒介与身份，雏菊墙·胶片尘·二分光| 高强度跃升 (high 50%–80%): 保短发白衣窗边少女媒介基因，升级戏剧光与叙事——雏菊墙、胶片尘、高反差二分光、发丝边缘光；可加风格内叙事点缀，不换主体身份；禁止平庸平移| 最优方向：雏菊墙+胶片尘+高反差二分光+发丝边缘光| 约束：保持原图核心艺术媒介与画风基因；保持原图性别、物种、年龄段与核心外观；可加风格内叙事点缀，不换主体身份 | 【回流修正】胶片尘只在暗部细颗粒；发丝边缘光只留受光一侧",
+    "gen_filename": "v8_bot_22_r4.png"
+  },
+  {
+    "bot_id": "v8_bot_23",
+    "round": 3,
+    "slug": "sunlit_portrait",
+    "scale": "recompose",
+    "aspect_ratio": "3:4",
+    "pad_src": "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\v8_bot_23_r2.jpg",
+    "prompt": "胶片逆光轻厚涂：保画风色板，按「改为阳光温室画室藤椅中景，手捧速写本被绿植雏菊环绕的3/4侧机位」重构机位| 胶片逆光轻厚涂：保画风色板，按「温室画室藤椅中景·雏菊环绕」重构机位| recompose: 保画风色板与短发白衣身份，改为阳光温室画室藤椅中景，手捧速写本被绿植雏菊环绕| 约束：保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观；不偏离指定构图方向 | 【回流修正】远手四指分开按在书脊上，近手拇指露在书角外；窗框高光改成胶片颗粒，不要光滑玻璃",
+    "gen_filename": "v8_bot_23_r3.png"
+  },
+  {
+    "bot_id": "v8_bot_24",
+    "round": 3,
+    "slug": "sunlit_portrait",
+    "scale": "recompose_bold",
+    "aspect_ratio": "3:4",
+    "pad_src": "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\v8_bot_24_r2.jpg",
+    "prompt": "动漫硬边青绿光：AR+剪影，几何雏菊 | 大改 style_jump: 仅保留短发白衣窗边少女剪影与 3:4；风格圣经跳变动漫硬边青绿光与几何雏菊；禁止混装温室机位与保色板套话 | 最优方向：3:4+短发白衣剪影；动漫硬边青绿几何雏菊 | 约束：画幅 3:4；仅保留主体剪影；风格圣经按目标大跳；禁止混装旧机位与保色板套话 | 【回流修正】窗框上的手五指全分开，拇指扣在框外；几何雏菊再大一档贴在墙面",
+    "gen_filename": "v8_bot_24_r3.png"
+  },
+  {
+    "bot_id": "v8_bot_26",
+    "round": 3,
+    "slug": "ishtar_canyon",
+    "scale": "low_best",
+    "aspect_ratio": "4:3",
+    "pad_src": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\comparison\\web_refs\\web_ref_01_concept_ishtar.png",
+    "prompt": "奇幻厚涂概念风：锁视角与布局，仅微修局部质感| 奇幻厚涂概念风：保持俯视天井主体锚点数量，微修质感| 低强度修瑕 (low ≤20%): 保持俯视天井主体锚点数量，仅精修局部质感；奇幻厚涂概念风| 最优方向：砖缝木纹微痕可读| 约束：不改动作与姿态；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观；严禁改变垂直俯视天井视角；严禁增删左上绿龙与右侧雕花石拱门 | 【回流修正】红斗篷下分开双肩和两只手臂，不要缩成一块红布；脚下加接触阴影，人站在木栈上",
+    "gen_filename": "v8_bot_26_r3.png"
+  },
+  {
+    "bot_id": "v8_bot_28",
+    "round": 3,
+    "slug": "ishtar_canyon",
+    "scale": "medium_best",
+    "aspect_ratio": "4:3",
+    "pad_src": "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\v8_bot_28_r2.jpg",
+    "prompt": "奇幻厚涂概念风：保画风与机位，小幅姿态/局部布局；柔化光影与次表面散射| 奇幻厚涂概念风：保画风与主体，柔化光影层次| 中幅提升 (medium 25%–45%): 保持画风色板与主体，强化光雾纵深与介质质感；奇幻厚涂概念风；可轻度点缀风格内叙事道具，不锁死道具归零| 最优方向：体积光；冷暖分离；栈桥进深雾层| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | 【回流修正】旅人再近一点，斗篷下露出两只手臂；龙只留左上角探头，身体不要伸进天井",
+    "gen_filename": "v8_bot_28_r3.png"
+  },
+  {
+    "bot_id": "v8_bot_30",
+    "round": 3,
+    "slug": "ishtar_canyon",
+    "scale": "high_best",
+    "aspect_ratio": "4:3",
+    "pad_src": "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\v8_bot_30_r2.jpg",
+    "prompt": "奇幻厚涂概念风：保媒介与身份，提升光影张力；可加风格内叙事点缀| 奇幻厚涂概念风：保媒介与身份，体积光·龙锚点·冷暖深渊| 高强度跃升 (high 50%–80%): 保天井栈桥红斗篷旅人与飞龙媒介基因，升级戏剧光与叙事——天井体积光束、冷暖深渊、龙锚点戏剧光；可加风格内叙事点缀，不换主体身份；禁止平庸平移| 最优方向：天井体积光束+龙锚点戏剧光+冷暖深渊| 约束：保持原图核心艺术媒介与画风基因；保持原图性别、物种、年龄段与核心外观；可加风格内叙事点缀，不换主体身份 | 【回流修正】绿龙回到屋顶探身，不要盘在天井地面；旅人右手握杖五指分开，斗篷保持红色",
+    "gen_filename": "v8_bot_30_r3.png"
+  },
+  {
+    "bot_id": "v8_bot_31",
+    "round": 3,
+    "slug": "ishtar_canyon",
+    "scale": "recompose",
+    "aspect_ratio": "4:3",
+    "pad_src": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\comparison\\web_refs\\web_ref_01_concept_ishtar.png",
+    "prompt": "奇幻厚涂概念风：保画风色板，按「改为石露台平视跨谷三孔石拱桥，飞龙在远景天际」重构机位| 奇幻厚涂概念风：保画风色板，按「石露台平视跨谷三孔石拱桥·远景龙」重构机位| recompose: 保画风色板与红斗篷旅人身份，改为石露台平视跨谷三孔石拱桥，飞龙在远景天际| 约束：保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观；不偏离指定构图方向 | 【回流修正】石桥改成三孔拱，不要两孔；垂下的那只手五指分开，能数清",
+    "gen_filename": "v8_bot_31_r3.png"
+  },
+  {
+    "bot_id": "v8_bot_32",
+    "round": 3,
+    "slug": "ishtar_canyon",
+    "scale": "recompose_bold",
+    "aspect_ratio": "4:3",
+    "pad_src": "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\v8_bot_32_r2.jpg",
+    "prompt": "浮世绘版画靛蓝朱红：AR+剪影，大斜线 | 大改 style_jump: 仅保留天井栈桥红斗篷旅人与飞龙剪影与 4:3；风格圣经跳变浮世绘版画靛蓝朱红大斜线；禁止混装石桥机位与保色板套话 | 最优方向：4:3+红斗篷与龙剪影；浮世绘靛蓝朱红大斜线 | 约束：画幅 4:3；仅保留主体剪影；风格圣经按目标大跳；禁止混装旧机位与保色板套话 | 【回流修正】举起的手五指再分开，拇指独立；龙鳞全用版画排线，不要光滑渐变",
+    "gen_filename": "v8_bot_32_r3.png"
+  }
+]
