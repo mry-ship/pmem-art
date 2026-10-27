@@ -503,6 +503,7 @@ def audit_score_inflation(
         "raw_score": round(float(raw_score if raw_score is not None and float(raw_score) > 0 else calibrated), 2),
         "calibrated_score": round(calibrated, 2),
         "dims_parsed": w_info.get("parsed", {}),
+        "rubric_mode": w_info.get("rubric_mode") or "",
         "weighted_score": weighted,
         "stagnated": stagnated,
         "warnings": warnings,

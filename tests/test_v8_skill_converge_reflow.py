@@ -269,9 +269,10 @@ class TestReflowAndTruncate(unittest.TestCase):
             max_fixes=2,
         )
         self.assertIn("【回流修正】", out)
-        self.assertIn("解剖", out)
+        self.assertIn("joint", out.lower())
         self.assertNotIn("加强体积光", out)
         self.assertNotIn("体积光", out)
+        self.assertNotIn("volumetric", out.lower())
         self.assertIn("乌篷船", out)
 
     def test_reflow_lighting_tip_avoids_volume_when_anat_weak(self) -> None:
@@ -284,7 +285,8 @@ class TestReflowAndTruncate(unittest.TestCase):
             max_fixes=2,
         )
         self.assertNotIn("体积光", out)
-        self.assertIn("光影", out)
+        self.assertNotIn("volumetric", out.lower())
+        self.assertIn("key-light", out.lower())
 
     def test_reflow_no_empty_volume_fallback(self) -> None:
         out = rewrite_reflow_by_dims(
@@ -293,7 +295,7 @@ class TestReflowAndTruncate(unittest.TestCase):
             dims={"perspective_anatomy": 7.2, "texture_detail": 9.0},
             api_scale="high",
         )
-        self.assertIn("结构", out)
+        self.assertIn("joint", out.lower())
         self.assertNotIn("体积光/材质区分", out)
 
     def test_truncate_keeps_head_drops_reflow(self) -> None:

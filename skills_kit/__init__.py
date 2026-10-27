@@ -53,6 +53,19 @@ from .prompt_scale import (
     strip_affirmative_locks_from_prompt,
     strip_redline_tags_from_generation_text,
 )
+from .converge_policy import (
+    DEFAULT_ANATOMY_FLOOR,
+    DEFAULT_EARLY_STOP_MIN_ROUND,
+    DEFAULT_PAD_MODE,
+    DEFAULT_REGRESSION_DROP,
+    anatomy_ok_for_stop,
+    anatomy_score,
+    choose_next_pad,
+    decide_round_stop,
+    plate_safe_to_pad,
+    rewrite_reflow_by_dims,
+    should_force_ref_pad,
+)
 from .scoring import (
     _clause_text,
     _is_app_icon_5d_context,

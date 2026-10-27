@@ -330,62 +330,46 @@ def _infer_case_style_and_subject(
     return style_head, has_char, case_redlines
 
 
-def build_r1_structure_floor(
+def classify_subject(
     *,
     goal: str = "",
     ref_analysis: Any = "",
     ref_image: str = "",
     module: str = "",
 ) -> str:
-    """Subject/module-aware R1 structure floor:
-    - UI / icon: returns "" (no anatomy or scene perspective floor).
-    - Character / creature detected: returns joint/grip/pupil structure floor.
-    - Pure scene / landscape / architecture: returns vanishing-point & contact-shadow floor (no finger/pupil words).
+    """ui | humanoid | creature | both | mechanical | scene | generic | unknown.
+
+    Latin cues match whole tokens. Unrecognized briefs stay ``unknown``.
+    Chinese phrases are for reading the lexicon; the sentence written into the
+    prompt is the English twin (see ``build_r1_structure_floor``).
     """
-    mod_l = (module or "").strip().lower()
-    if isinstance(ref_analysis, dict):
-        ra_str = " ".join(str(v or "") for v in ref_analysis.values())
-    else:
-        ra_str = str(ref_analysis or "")
-    blob = f"{goal or ''} {ra_str} {ref_image or ''} {mod_l}".lower()
+    from .subject_lexicon import classify_subject_kind
 
-    # 1) UI / Icon tasks skip anatomy & scene perspective floor
-    ui_icon_cues = ("ui kit", "hud", "九宫格", "app icon", "svg图标", "矢量图标", "图标集", "界面面板", "按钮面板")
-    if mod_l in ("ui", "icon") or mod_l.startswith(("ui.", "icon.")) or (
-        not mod_l.startswith(("character.", "scene.")) and any(k in blob for k in ui_icon_cues)
-    ):
-        return ""
-
-    # 2) Explicit empty-scene cues without character keywords -> pure scene floor
-    char_cues = (
-        "人物", "少女", "少年", "女侠", "男侠", "孤侠", "角色", "肖像", "女孩", "男孩",
-        "女人", "男人", "人像", "半身", "全身", "坐姿", "站姿", "手部", "手指", "握持",
-        "持剑", "双肩", "瞳孔", "旅人", "骑士", "法师", "战士", "飞龙", "巨龙", "幼龙",
-        "动物", "猫咪", "小狗", "portrait", "girl", "boy", "woman", "man", "character",
+    return classify_subject_kind(
+        goal=goal, ref_analysis=ref_analysis, ref_image=ref_image, module=module
     )
-    empty_scene_cues = ("空镜", "无人", "纯风景", "纯场景", "无人物")
-    has_char_kw = any(k in blob for k in char_cues)
-    if any(k in blob for k in empty_scene_cues) and not has_char_kw:
-        return "结构底线：空间透视灭点收束与体块接触阴影清楚；建筑/山体结构承托可读；禁止体块融化"
 
-    # 3) Known reference cases (Case 01/02/03 have characters; Case 04 canyon also has dragon/traveler in goal)
-    from .image_gates import resolve_case_config
-    cfg = resolve_case_config("", ref_image or "")
-    case_has_char = False
-    if cfg and cfg.get("case_id") in _CASE_ID_STYLE:
-        case_has_char = bool(_CASE_ID_STYLE[str(cfg["case_id"])][1])
-    else:
-        ref_hit = _match_style_keywords(ref_image or "", allow_weak_sketch=True)
-        if ref_hit is not None:
-            case_has_char = bool(ref_hit[1])
-        else:
-            prose_hit = _match_style_keywords(f"{goal or ''} {ra_str} {mod_l}", allow_weak_sketch=False)
-            if prose_hit is not None:
-                case_has_char = bool(prose_hit[1])
 
-    if mod_l.startswith("character.") or case_has_char or has_char_kw:
-        return "结构底线：双肩双肘双腕关节自然连续，握持受力真实，双眼瞳孔同向同高；接触阴影与承托可读；禁止肢体融化进道具"
-    return "结构底线：空间透视灭点收束与体块接触阴影清楚；建筑/山体结构承托可读；禁止体块融化"
+def build_r1_structure_floor(
+    *,
+    goal: str = "",
+    ref_analysis: Any = "",
+    ref_image: str = "",
+    module: str = "",
+    lang: str = "en",
+) -> str:
+    """Structure sentence for the prompt (English) or the chat echo (``lang='zh'``).
+
+    Unknown and UI briefs return "" (no default mountain).
+    """
+    from .subject_lexicon import floor_sentence
+
+    kind = classify_subject(
+        goal=goal, ref_analysis=ref_analysis, ref_image=ref_image, module=module
+    )
+    if kind in ("ui", "unknown"):
+        return ""
+    return floor_sentence(kind, lang)
 
 
 def build_dynamic_prompt_directive(
@@ -688,7 +672,32 @@ def _prompt_change_ratio(prev: str, curr: str, directive: str = "") -> float:
     return 1.0 - difflib.SequenceMatcher(None, a, b).ratio()
 
 
-def compose_continuation_prompt(fix: str, scale_prof: dict[str, Any]) -> str:
+def _apply_prompt_language_and_stubs(
+    text: str,
+    scale_prof: dict[str, Any],
+    stub_notes: list[str] | None,
+) -> str:
+    """Known Chinese clauses become English. Toy-medium words drop unless the brief declared them."""
+    from .subject_lexicon import strip_foreign_medium_stubs, to_prompt_english
+
+    english = to_prompt_english(text)
+    cleaned, removed = strip_foreign_medium_stubs(
+        english,
+        goal=str(scale_prof.get("goal") or ""),
+        module=str(scale_prof.get("module") or ""),
+        ref_analysis=scale_prof.get("ref_analysis") or "",
+    )
+    if stub_notes is not None and removed:
+        stub_notes.extend(removed)
+    return cleaned
+
+
+def compose_continuation_prompt(
+    fix: str,
+    scale_prof: dict[str, Any],
+    *,
+    stub_notes: list[str] | None = None,
+) -> str:
     """Round 2+: the pad is the previous plate. Name one repair; do not restate the scene."""
     scale = str(scale_prof.get("scale") or "")
     directive = strip_affirmative_locks_from_prompt(
@@ -710,10 +719,15 @@ def compose_continuation_prompt(fix: str, scale_prof: dict[str, Any]) -> str:
     for part in (directive, edit):
         if part and part not in ordered:
             ordered.append(part)
-    return " | ".join(ordered)
+    return _apply_prompt_language_and_stubs(" | ".join(ordered), scale_prof, stub_notes)
 
 
-def compose_style_first_prompt(prompt: str, scale_prof: dict[str, Any]) -> str:
+def compose_style_first_prompt(
+    prompt: str,
+    scale_prof: dict[str, Any],
+    *,
+    stub_notes: list[str] | None = None,
+) -> str:
     """Style directive first, user brief in the middle, redlines last."""
     scale = str(scale_prof.get("scale") or "")
     clean_p = strip_redline_tags_from_generation_text(prompt or "")
@@ -729,7 +743,7 @@ def compose_style_first_prompt(prompt: str, scale_prof: dict[str, Any]) -> str:
     for part in parts:
         if part not in ordered:
             ordered.append(part)
-    return " | ".join(ordered)
+    return _apply_prompt_language_and_stubs(" | ".join(ordered), scale_prof, stub_notes)
 
 
 _DIM_WEIGHT_ZH: dict[str, str] = {
@@ -1146,6 +1160,13 @@ def get_converge_scale_profile(
     )
     if recompose_dir:
         prof["recompose_dir"] = recompose_dir
+    prof["goal"] = goal or ""
+    prof["module"] = module or ""
+    prof["ref_image"] = ref_image or ""
+    if isinstance(ref_analysis, dict):
+        prof["ref_analysis"] = " ".join(str(v or "") for v in ref_analysis.values())
+    else:
+        prof["ref_analysis"] = str(ref_analysis or "")
     return prof
 
 

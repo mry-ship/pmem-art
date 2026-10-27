@@ -356,6 +356,27 @@ def _round_counts_as_passed(round_entry: dict[str, Any], threshold: float, root:
         return False
     if r.get("passed") is False:
         return False
+    if r.get("anatomy_veto_blocked"):
+        return False
+    # Absolute-5D: fail-closed when perspective_anatomy is present and below floor.
+    try:
+        from .converge_policy import (
+            DEFAULT_ANATOMY_FLOOR,
+            anatomy_ok_for_stop,
+            coerce_dims_dict,
+            scene_structure_ok_for_stop,
+        )
+
+        dims_p = coerce_dims_dict(r.get("dims_parsed"))
+        if str(r.get("subject_kind") or "") == "scene":
+            if not scene_structure_ok_for_stop(dims_p, str(r.get("defects") or "")):
+                return False
+        elif isinstance(dims_p, dict) and "perspective_anatomy" in dims_p:
+            floor = float(r.get("anatomy_floor") or DEFAULT_ANATOMY_FLOOR)
+            if not anatomy_ok_for_stop(dims_p, floor):
+                return False
+    except Exception:  # noqa: BLE001 — never break pass detection on import issues
+        pass
     # Keep finish aligned with judge soft-defect gate (forged JSON cannot rubber-stamp 达标).
     if not defects_are_substantive(str(r.get("defects") or "")):
         return False

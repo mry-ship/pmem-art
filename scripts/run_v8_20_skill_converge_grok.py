@@ -528,7 +528,7 @@ def ingest(args: argparse.Namespace) -> int:
         anat_ok = bool(score_ok)
         rec["anat_na_offline"] = True
     else:
-        anat_ok = bool(score_ok and (anat is None or anat >= float(state["anat_gate"])))
+        anat_ok = bool(score_ok and anat is not None and anat >= float(state["anat_gate"]))
     rec["anat_ok"] = anat_ok
 
     best_round = st.get("best_round")
@@ -701,7 +701,8 @@ def ingest(args: argparse.Namespace) -> int:
         reached = (
             final_score is not None
             and final_score >= threshold
-            and (anat_val is None or anat_val >= float(state["anat_gate"]))
+            and anat_val is not None
+            and anat_val >= float(state["anat_gate"])
         )
         reached_anat_85 = (
             final_score is not None
@@ -808,7 +809,8 @@ def finalize(args: argparse.Namespace) -> int:
             reached = (
                 final_score is not None
                 and final_score >= float(state.get("threshold") or 9.6)
-                and (anat_val is None or anat_val >= float(state.get("anat_gate") or 7.5))
+                and anat_val is not None
+                and anat_val >= float(state.get("anat_gate") or 7.5)
             )
             manifest.setdefault("items", {})[bid] = {
                 "bot_id": bid,

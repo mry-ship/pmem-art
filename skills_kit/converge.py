@@ -26,6 +26,8 @@ from .prompt_scale import (
     _constraint_tail,
     _prompt_change_ratio,
     _recompose_change_evidence,
+    build_r1_structure_floor,
+    classify_subject,
     compose_continuation_prompt,
     compose_style_first_prompt,
     get_converge_scale_profile,
@@ -34,6 +36,17 @@ from .prompt_scale import (
 from .image_gates import _inspect_image_physical_traits, resolve_case_config
 from .validate_params import _physical_image_gate, _round_counts_as_passed, validate_converge_params
 from .judge_auto import auto_vlm_judge_image
+from .converge_policy import (
+    DEFAULT_ANATOMY_FLOOR,
+    DEFAULT_EARLY_STOP_MIN_ROUND,
+    DEFAULT_PAD_MODE,
+    DEFAULT_PLATEAU_ROUNDS,
+    DEFAULT_REGRESSION_DROP,
+    anatomy_score,
+    coerce_dims_dict,
+    decide_round_stop,
+    plate_safe_to_pad,
+)
 
 
 def converge_start(
@@ -290,7 +303,7 @@ def _best_plate(rounds: list, round_num: int, root: Path) -> tuple[str, str, int
         r for r in rounds
         if int(r.get("round") or 0) < int(round_num) and str(r.get("image") or "").strip()
     ]
-    scored: list[tuple[float, int, str, str]] = []
+    scored: list[tuple[float, int, str, str, dict]] = []
     unscored: list[tuple[int, str, str]] = []
     for row in prior:
         image = _plate_file(str(row.get("image") or "").strip(), root)
@@ -305,14 +318,73 @@ def _best_plate(rounds: list, round_num: int, root: Path) -> tuple[str, str, int
         except (TypeError, ValueError):
             unscored.append((number, image, fix))
             continue
-        scored.append((score, number, image, fix))
+        scored.append((score, number, image, fix, row))
     if scored:
-        _score, number, image, fix = max(scored, key=lambda item: (item[0], item[1]))
+        _score, number, image, fix, _row = max(scored, key=lambda item: (item[0], item[1]))
         return image, fix, number
     if unscored:
         number, image, fix = max(unscored, key=lambda item: item[0])
         return image, fix, number
     return "", "", 0
+
+
+def _round_dims_dict(row: dict[str, Any] | None) -> dict[str, Any] | None:
+    if not isinstance(row, dict):
+        return None
+    parsed = coerce_dims_dict(row.get("dims_parsed"))
+    if parsed is not None:
+        return parsed
+    return coerce_dims_dict(row.get("dims"))
+
+
+def _resolve_pad_auto(
+    rounds: list,
+    round_num: int,
+    root: Path,
+    *,
+    style_ref: str,
+    pad_mode: str = DEFAULT_PAD_MODE,
+    anatomy_floor: float = DEFAULT_ANATOMY_FLOOR,
+    subject_kind: str = "",
+) -> tuple[str, str, int, bool, str]:
+    """Pick pad under pad=auto: chain best plate only when structure-safe; else style_ref.
+
+    Returns (pad_image, fix, pad_round, continuation, reason).
+    """
+    mode = (pad_mode or DEFAULT_PAD_MODE).lower().strip()
+    carry_image, carry_fix, carry_round = _best_plate(rounds, round_num, root)
+    style = (style_ref or "").strip()
+    if mode == "ref" or not carry_image:
+        return style, "", 0, False, "pad=ref" if mode == "ref" else "no_prior_plate"
+    best_row = next((r for r in rounds if int(r.get("round") or 0) == int(carry_round)), None)
+    dims = _round_dims_dict(best_row)
+    defects = str((best_row or {}).get("defects") or "")
+    if mode == "previous":
+        return carry_image, carry_fix, carry_round, True, "pad=previous"
+    # auto: refuse to chain plates with missing/low anatomy (fail-closed).
+    # Scenes chain unless the plate is missing, under 4.0, or marked collapsed.
+    if not plate_safe_to_pad(
+        pad_mode=mode,
+        dims=dims,
+        anatomy_floor=anatomy_floor,
+        subject_kind=subject_kind,
+        defects=defects,
+    ):
+        anat = anatomy_score(dims)
+        if (subject_kind or "") == "scene":
+            why = (
+                "pad=auto→style_ref（场景结构缺失、低于 4.0，或缺陷写了塌缩"
+                + (f"，当前 {anat:.1f}" if anat is not None else "")
+                + "）"
+            )
+        else:
+            why = (
+                f"pad=auto→style_ref（最佳板解剖缺失或 <{anatomy_floor}"
+                + (f"，当前 {anat:.1f}" if anat is not None else "，缺维")
+                + "）"
+            )
+        return style, carry_fix, 0, False, why
+    return carry_image, carry_fix, carry_round, True, f"pad=auto→R{carry_round}"
 
 
 def cmd_converge(
@@ -447,6 +519,14 @@ def cmd_converge(
             "lessons_all": [],
             "dim_lock_overrides": {},
             "dim_lock_history": [],
+            "pad_mode": str(cfg_conv.get("pad_mode") or DEFAULT_PAD_MODE),
+            "anatomy_floor": float(cfg_conv.get("anatomy_floor") or DEFAULT_ANATOMY_FLOOR),
+            "early_stop_min_round": int(
+                cfg_conv.get("early_stop_min_round") or DEFAULT_EARLY_STOP_MIN_ROUND
+            ),
+            "regression_drop": float(
+                cfg_conv.get("regression_drop") or DEFAULT_REGRESSION_DROP
+            ),
         }
         if lock_text or goal:
             from skills_kit.prompt_scale import merge_dim_lock_overrides, format_dim_lock_summary_zh
@@ -598,10 +678,27 @@ def cmd_converge(
 
         eff_ref_img = (ref_image or sess.get("ref_image") or "").strip()
         eff_ar = (aspect_ratio or sess.get("default_aspect_ratio") or sess.get("aspect_ratio") or "").strip()
-        carry_image, carry_fix, carry_round = _best_plate(rounds, r_no, root)
-        continuation = bool(carry_image)
-        if continuation:
+        pad_mode = str(sess.get("pad_mode") or DEFAULT_PAD_MODE)
+        subject_kind = classify_subject(
+            goal=str(sess.get("goal") or goal or ""),
+            ref_analysis=sess.get("ref_analysis") or "",
+            ref_image=eff_ref_img,
+            module=str(sess.get("module") or module or ""),
+        )
+        anatomy_floor = float(sess.get("anatomy_floor") or DEFAULT_ANATOMY_FLOOR)
+        carry_image, carry_fix, carry_round, continuation, pad_reason = _resolve_pad_auto(
+            rounds,
+            r_no,
+            root,
+            style_ref=eff_ref_img,
+            pad_mode=pad_mode,
+            anatomy_floor=anatomy_floor,
+            subject_kind=subject_kind,
+        )
+        if continuation and carry_image:
             reference_image_paths = [carry_image]
+        elif not continuation and eff_ref_img and reference_image_paths is None:
+            reference_image_paths = [eff_ref_img]
         eff_ref_paths = (
             reference_image_paths
             if reference_image_paths is not None
@@ -646,10 +743,24 @@ def cmd_converge(
         ov_now = _apply_lock_texts(lock_text or "", next_fix or "", prompt or "", source=f"generate_r{r_no}")
         from skills_kit.prompt_scale import format_lock_override_prompt_hint
         lock_hint = format_lock_override_prompt_hint(str(sess.get("scale") or "medium"), ov_now)
+        stub_notes: list[str] = []
+        floor_zh = ""
         if continuation:
-            composed_prompt = compose_continuation_prompt(carry_fix or prompt, s_prof)
+            composed_prompt = compose_continuation_prompt(carry_fix or prompt, s_prof, stub_notes=stub_notes)
         else:
-            composed_prompt = compose_style_first_prompt(prompt, s_prof)
+            composed_prompt = compose_style_first_prompt(prompt, s_prof, stub_notes=stub_notes)
+            # R1 (and any non-continuation round) inject the English structure floor.
+            # The Chinese twin is printed for the artist and is not sent to the model.
+            floor_args = dict(
+                goal=str(sess.get("goal") or goal or ""),
+                ref_analysis=sess.get("ref_analysis") or ref_analysis or "",
+                ref_image=eff_ref_img,
+                module=str(sess.get("module") or module or ""),
+            )
+            floor = build_r1_structure_floor(**floor_args, lang="en")
+            floor_zh = build_r1_structure_floor(**floor_args, lang="zh")
+            if floor and floor not in composed_prompt:
+                composed_prompt = f"{composed_prompt} | {floor}".strip(" |")
         if lock_hint:
             composed_prompt = f"{composed_prompt} | {lock_hint}".strip(" |")
 
@@ -714,6 +825,8 @@ def cmd_converge(
             "step_trace": ["step1_start", "step2_generate"],
             "prompt": composed_prompt,
             "continuation": continuation,
+            "pad_mode": pad_mode,
+            "pad_reason": pad_reason,
             "score": None,
             "dims": "",
             "passed": False,
@@ -733,10 +846,25 @@ def cmd_converge(
             if img_v.get("exists")
             else "待检出文件"
         )
-        pad_line = f"   · 垫目前最高分的第 {carry_round} 轮: {carry_image}\n" if continuation else ""
+        if continuation:
+            pad_line = f"   · 垫目前最高分的第 {carry_round} 轮: {carry_image}（{pad_reason}）\n"
+        elif eff_ref_img:
+            pad_line = f"   · 垫 style_ref: {eff_ref_img}（{pad_reason}）\n"
+        else:
+            pad_line = f"   · 垫图策略: {pad_reason}\n"
+        floor_line = f"   · 结构底线: {floor_zh}\n" if floor_zh else ""
+        stub_line = ""
+        if stub_notes:
+            stub_line = "   · 已从生图提示词去掉玩具媒介词: " + "、".join(stub_notes) + "\n"
+        fix_line = ""
+        if continuation and carry_fix and carry_fix not in composed_prompt:
+            fix_line = f"   · 改点: {carry_fix}\n"
         print(
             f"🎨 [Step 2A · 仅生图阶段完成] 第 {r_no}/{mr} 轮图像已生成: `{image}` ({v_badge})\n"
             f"{pad_line}"
+            f"{floor_line}"
+            f"{fix_line}"
+            f"{stub_line}"
             f"   · 置顶风格指令 Prompt: {composed_prompt}\n"
             f"   · 当前未执行任何自评或 VLM 裁判；请下一步独立调用 `python3 pmem_art.py converge judge --id {session_id} --round {r_no} --image {image} --dims ...`"
         )
@@ -893,6 +1021,7 @@ def cmd_converge(
                     )
         if cli_score > 0 and judge_res.get("weighted_score") is None:
             gate_notes.append(f"已忽略命令行 --score {cli_score:.2f}，五维未解析成功")
+        early_safe_stop: str | None = None
         if gate_notes:
             passed = False
             score = min(float(score), round(th - 0.05, 2))
@@ -903,6 +1032,62 @@ def cmd_converge(
             judge_res["decision"] = "CONTINUE_NEXT_ROUND" if r_no < mr else "STOP_MAX_ROUNDS"
             judge_res["ready_to_finish"] = r_no >= mr
         should_continue = bool((not passed) and r_no < mr)
+
+        # R4+ safe early-stop (drop / plateau) — hard-wired, not agent prose.
+        if not passed and should_continue and not gate_notes:
+            hist = [
+                r for r in rounds
+                if r.get("judged")
+                and r.get("score") is not None
+                and int(r.get("round") or 0) != r_no
+            ]
+            running_best: float | None = None
+            no_improve = 0
+            for r in sorted(hist, key=lambda x: int(x.get("round") or 0)):
+                try:
+                    sc_h = float(r.get("score"))
+                except (TypeError, ValueError):
+                    continue
+                if running_best is None or sc_h > running_best + 1e-9:
+                    running_best = sc_h
+                    no_improve = 0
+                else:
+                    no_improve += 1
+            best_before = running_best
+            if best_before is None or float(score) > float(best_before) + 1e-9:
+                no_improve_now = 0
+            else:
+                no_improve_now = no_improve + 1
+            dims_now = coerce_dims_dict(judge_res.get("dims_parsed")) or _round_dims_dict(
+                {"dims": judge_res.get("dims"), "dims_parsed": judge_res.get("dims_parsed")}
+            )
+            early_safe_stop = decide_round_stop(
+                score_ok=True,
+                total=float(score),
+                dims=dims_now,
+                round_num=r_no,
+                min_rounds=int(s_prof.get("min_rounds_before_stop") or 1),
+                threshold=th,
+                anatomy_floor=float(sess.get("anatomy_floor") or DEFAULT_ANATOMY_FLOOR),
+                best_total=best_before,
+                no_improve_streak=no_improve_now,
+                plateau_rounds=DEFAULT_PLATEAU_ROUNDS,
+                regression_drop=float(sess.get("regression_drop") or DEFAULT_REGRESSION_DROP),
+                early_stop_min_round=int(
+                    sess.get("early_stop_min_round") or DEFAULT_EARLY_STOP_MIN_ROUND
+                ),
+            )
+            if early_safe_stop in ("STOP_REGRESSION", "STOP_PLATEAU"):
+                should_continue = False
+                judge_res["decision"] = early_safe_stop
+                judge_res["ready_to_finish"] = True
+                warn_es = (
+                    f"安全早停 {early_safe_stop}：第 {r_no} 轮起连续掉分/平台，"
+                    f"保底结算历史最高分轮次（门槛 drop≥{sess.get('regression_drop') or DEFAULT_REGRESSION_DROP}，"
+                    f"R≥{sess.get('early_stop_min_round') or DEFAULT_EARLY_STOP_MIN_ROUND}）"
+                )
+                judge_res["audit_warnings"] = list(judge_res.get("audit_warnings") or []) + [warn_es]
+
         merged_defects = judge_res.get("defects") or defects
 
         skip_ahead = False
@@ -978,10 +1163,15 @@ def cmd_converge(
             "passed": passed,
             "gate_blocked": bool(gate_notes),
             "image_gate_blocked": bool(judge_res.get("image_gate_blocked")),
+            "anatomy_score": judge_res.get("anatomy_score"),
+            "anatomy_floor": judge_res.get("anatomy_floor"),
+            "anatomy_veto_blocked": bool(judge_res.get("anatomy_veto_blocked")),
+            "subject_kind": judge_res.get("subject_kind") or "",
             "judge_source": judge_res.get("judge_source") or "agent_self_judge",
             "remote_vlm": judge_res.get("remote_vlm") or {},
             "should_continue_next_round": should_continue,
             "decision": judge_res["decision"],
+            "early_safe_stop": early_safe_stop,
             "lessons": lessons,
             "skip_ahead_hint": skip_ahead,
             "recorded_at": _now_cst().strftime("%H:%M:%S"),
@@ -1025,6 +1215,18 @@ def cmd_converge(
             msg = (
                 f"⚡ Fast-track 草稿软达标：第 {r_no} 轮 {score:.2f} ≥ {soft_th} 且 Δ 很小。"
                 f"用户已允许草稿 — 可 `converge finish --id {session_id}`；正式交付仍建议冲到 ≥{th:.2f}。"
+            )
+        elif early_safe_stop in ("STOP_REGRESSION", "STOP_PLATEAU"):
+            scored_rounds = [r for r in rounds if r.get("score") is not None]
+            best = max(scored_rounds, key=lambda x: x["score"]) if scored_rounds else entry
+            sess["status"] = "early_safe_stop"
+            sess["ActionRequired"] = "STOP_PICK_BEST"
+            sess["ready_to_finish"] = True
+            msg = (
+                f"🛑 [安全早停 · {early_safe_stop}] 第 {r_no}/{mr} 轮得分 {score:.2f}，"
+                f"后半程掉分/平台，停止继续糊化。\n"
+                f"   · 保底最高分：第 {best.get('round')} 轮 ({best.get('score'):.2f} 分: {best.get('image')})。\n"
+                f"   · 请运行 `python3 pmem_art.py converge finish --id {session_id}` 结算。"
             )
         elif r_no >= mr:
             best = max([r for r in rounds if r.get("score") is not None], key=lambda x: x["score"])

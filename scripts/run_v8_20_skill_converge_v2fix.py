@@ -618,7 +618,8 @@ def main() -> int:
                 atomic_write_json(scores_path, scores)
 
             anat = anat_of(rec) if score_ok else None
-            anat_ok = bool(score_ok and (anat is None or anat >= args.anat_gate))
+            # Fail-closed: missing anatomy cannot unlock STOP / chain pad.
+            anat_ok = bool(score_ok and anat is not None and anat >= args.anat_gate)
             rec["anat_ok"] = anat_ok
 
             improved = False
@@ -750,7 +751,8 @@ def main() -> int:
         reached = (
             final_score is not None
             and final_score >= args.threshold
-            and (anat_val is None or anat_val >= args.anat_gate)
+            and anat_val is not None
+            and anat_val >= args.anat_gate
         )
         reached_anat_85 = (
             final_score is not None

@@ -17,14 +17,14 @@ Default lock **~95%**。可选四档 polish 仅在达标后。
 ## 合同（~95%）
 **LOCK**：medium；色板角色；光感；材质语法；红线；按类：
 - Scene/原画：medium+光感；构图自由
-- UI：chrome 分层（外框+内描边若参考有则**两层都锁**）；文案=brief；奖励物无脸除非 brief 要求。**GenerateImage 织入（散文，禁清单子弹）**：dual-rim chrome with a thick gold outer rim plus a distinct orange/amber inner bevel, edge-readable laminate at mid-edges, reward prop with NO face, and NO gold-only single rim.
-- Icon：构图框+材质+BG 习惯；主体新；motif≤1；缩略轮廓清晰。**GenerateImage 织入（散文，禁清单子弹）**：chunky vinyl-toy plastic volumes under soft studio key from upper-left; NO jewelry product render; NO micro metal scratches.
-- Character：脸部+体型语法。**GenerateImage 织入（散文，禁清单子弹）**：TWO separate eye sockets, large iris fills most of oval with white sclera crescent and specular highlight, soft cheeks short limbs barrel torso, empty-hand T-pose with clothing badge preferred; NOT cyclops NOT black-dot pupils. 换装/身份自由；禁 turnaround。
+- UI：chrome 分层（外框+内描边若参考有则**两层都锁**）；文案=brief；奖励物无脸除非 brief 要求。金/琥珀 dual-rim **仅当参考本身是这套描边**才织入；其它参考锁它自己的层数和颜色，禁止改成金边。
+- Icon：构图框+材质+BG 习惯；主体新；motif≤1；缩略轮廓清晰。**仅当参考或 brief 是玩具/Q版/软塑胶**才织入散文：chunky vinyl-toy plastic volumes, soft studio key from upper-left, NO jewelry product render, NO micro metal scratches。写实、像素、金属、赛博**禁止**套 vinyl。
+- Character：通用只锁双眼分穴、大虹膜+巩膜月牙+高光、禁独眼/黑点瞳。soft cheeks / short limbs / barrel torso / 空手 T-pose **仅卡通或 Q 版**。写实或像素参考写该参考的头身与体型，禁止改成玩具比例。换装/身份自由；禁 turnaround。
 **FREE**：构图/题材/身份（除非要求保留）
 **Hard**：Mode B 必须垫参考；motif≤1；尺寸硬锁；禁无 brief 造 UI 字；角色 DNA≠名人脸/著名服装
 
 ## Stub 织入规则（A/B 试词 KEEP）
-从失败模式抽出的可验证 stub：写入 Mode B icon/UI/char LOCK 与 GenerateImage overlay 时，**必须织成散文句**，**禁止**裸 bullet checklist（清单会印进画面）。不要堆空「masterpiece」形容词。Chinese OK for section headers；stub 短语可保留英文试词原文。
+从失败模式抽出的可验证 stub：写入 Mode B icon/UI/char LOCK 与 GenerateImage overlay 时，**必须织成散文句**，**禁止**裸 bullet checklist（清单会印进画面）。不要堆空「masterpiece」形容词。Chinese OK for section headers；stub 短语可保留英文试词原文。 这些 KEEP 短语只在媒介匹配时使用，禁止抄进 `/pmem-draw` 或写实/像素/赛博题材。
 
 ## Size
 用户 W×H → 每轮一致；否则跟参考；AR 不符则 Pillow 锁后再评。

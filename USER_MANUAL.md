@@ -3,6 +3,7 @@
 > **版本**：`v0.12+`  
 > **核心理念**：日常入口就是 **Cursor / Claude Code / Codex 对话框**（外加开箱即用的 `/pmem-draw` 等 14 个斜杠技能，含简短别名共 28 个入口）。不用背 CLI、不用手写 YAML。  
 > **先看总览？** → 仓库首页 [README.md](README.md)（作用 · 接入 · 使用 · V4 效果摘要）  
+> **技能流程图（一眼看懂）？** → [第一章附](#第一章附14-技能工作流程图一眼看懂) · 网页点选版 [docs/skills/flows.html](docs/skills/flows.html)  
 > **看图墙？** → [docs/showcase/pmem_art_images_v4_20bots_showcase.html](docs/showcase/pmem_art_images_v4_20bots_showcase.html)（20 Bot 冷启动 · 一排六列）
 
 ---
@@ -10,14 +11,17 @@
 ## 目录
 
 1. [第一章：初始化即自动安装的 14 大美术技能](#第一章初始化即自动安装的-14-大美术技能)
-2. [第二章：王牌技能 `/pmem-draw`（8轮9.6分自评收敛生图 & 垫图生图）](#第二章王牌技能-pmem-draw8轮96分自评收敛生图--垫图生图)
-3. [第三章：日常对话反馈怎么变成长期记忆](#第三章日常对话反馈怎么变成长期记忆)
-4. [第四章：三种项目接入方式（空项目 / 老项目 / 持续生图）](#第四章三种项目接入方式空项目--老项目--持续生图)
-5. [第五章：后台自动分类与多画风分叉（水彩 / Q版 / 像素）](#第五章后台自动分类与多画风分叉水彩--q版--像素)
-6. [第六章：命令与收敛追踪器参考](#第六章命令与收敛追踪器参考)
-7. [第七章：常见问题 FAQ](#第七章常见问题-faq)
-8. [附录 A：四档 `--scale` 细则与示例](#附录-a四档---scale-细则与示例)
-9. [附录 B：V4 冷启动验收摘要](#附录-bv4-冷启动验收摘要)
+2. [第一章附：14 技能工作流程图（一眼看懂）](#第一章附14-技能工作流程图一眼看懂)
+3. [第二章：王牌技能 `/pmem-draw`（8轮9.6分自评收敛生图 & 垫图生图）](#第二章王牌技能-pmem-draw8轮96分自评收敛生图--垫图生图)
+4. [第三章：日常对话反馈怎么变成长期记忆](#第三章日常对话反馈怎么变成长期记忆)
+5. [第四章：三种项目接入方式（空项目 / 老项目 / 持续生图）](#第四章三种项目接入方式空项目--老项目--持续生图)
+6. [第五章：后台自动分类与多画风分叉（水彩 / Q版 / 像素）](#第五章后台自动分类与多画风分叉水彩--q版--像素)
+7. [第六章：命令与收敛追踪器参考](#第六章命令与收敛追踪器参考)
+8. [第七章：常见问题 FAQ](#第七章常见问题-faq)
+9. [附录 A：四档 `--scale` 细则与示例](#附录-a四档---scale-细则与示例)
+10. [附录 B：V4 冷启动验收摘要](#附录-bv4-冷启动验收摘要)
+
+> **流程图网页版（可点选切换）**：[docs/skills/flows.html](docs/skills/flows.html)
 
 ---
 
@@ -49,6 +53,231 @@
 | **`/pmem-merge-ladder`** | **`/art-ladder`** | **同域合成进阶梯**：Merge-2 棋盘 L1–L8 整梯同框生成与切格审计（≥9.6） |
 
 进步曲线 CLI：`python3 pmem_art.py progress`（无独立斜杠技能，也可用 `/pmem-improve`）。
+
+---
+
+## 第一章附：14 技能工作流程图（一眼看懂）
+
+> 新人只看本章也能分清「该用哪个、跑完会怎样」。细则仍以各 `SKILL.md` 为准。  
+> 可交互点选版：[docs/skills/flows.html](docs/skills/flows.html)
+
+### 先分三类
+
+| 类型 | 技能 | 一句话 |
+| :--- | :--- | :--- |
+| **强制 8 轮 ≥9.6** | draw · concept · ui · icon · clone · merge-ladder | 生图→打分→不够就改，最多 8 轮；达标或挑最高分 |
+| **前置 / 审稿 / 整理** | lens · style-lock · critique · variant · atlas | 先提案/锁风/只审/分叉/归档，不一定立刻开满收敛 |
+| **进阶 peek** | improve · coach · learn | 日常 `finish` 已静默跑过；主动喊才大声读报告 |
+
+### 共享收敛环（六大生图技能都套这层）
+
+```mermaid
+flowchart LR
+  A[查记忆 search] --> B[converge start]
+  B --> C[生 1 张]
+  C --> D[五维 judge]
+  D -->|≥9.6 且护栏过| E[停 · 胜出]
+  D -->|<9.6 且未满 8| F[≤2 条部位修正]
+  F --> C
+  D -->|满 8 轮| G[Best-of-8]
+  E --> H[finish 履历可见]
+  G --> H
+  H --> I[记忆静默写入]
+```
+
+要点：评分履历对你可见；`recipe` / 红线 / taste 在后台静默写，不旁白。
+
+---
+
+### `/pmem-draw`（`/art-draw`）— 通用生图
+
+```mermaid
+flowchart TD
+  S{有参考图?} -->|是| R0[Step0 视觉解构]
+  S -->|否| R1
+  R0 --> R1[search + Warm-Start]
+  R1 --> G[生 1 张 · pad=auto]
+  G --> J[五维打分 + 展示不足/改点]
+  J -->|≥9.6| OK[定稿]
+  J -->|解剖熔断 / 未达标| FIX[部位级修正]
+  FIX --> G
+  J -->|满 8 或早停| BEST[取历史最高]
+  OK --> F[finish]
+  BEST --> F
+```
+
+---
+
+### `/pmem-concept`（`/art-concept`）— Key Art
+
+```mermaid
+flowchart LR
+  A[可选垫图解构] --> B[Warm-Start]
+  B --> C[FLUX 完整句 Prompt]
+  C --> D[同 draw 的 8×≥9.6]
+  D --> E[finish]
+```
+
+与 draw 同等强制闭环；差别在 **完整句 Prompt + 叙事构图侧重**。
+
+---
+
+### `/pmem-ui`（`/art-ui`）— UI Kit
+
+```mermaid
+flowchart TD
+  A[定屏幕规格 + search] --> B[概念先行 8×≥9.6]
+  B --> C[透明组件表]
+  C --> D[九宫格 + manifest]
+  D --> E[关键件可再 converge]
+  E --> F[ingest / feedback]
+```
+
+禁止各控件散生再硬拼；概念未过线不进组件表。
+
+---
+
+### `/pmem-icon`（`/art-icon`）— 三模式
+
+```mermaid
+flowchart TD
+  IN[入口 /pmem-icon] --> M{选模式}
+  M --> A[A · 1024 App Icon 母版]
+  M --> B[B · SVG 集：spec→分批→preview]
+  M --> C[C · 道具栅格 64/128/256]
+  A --> K[关键枚可选 8×≥9.6]
+  B --> K
+  C --> K
+  K --> OUT[沉淀 style-spec]
+```
+
+三模式严禁串味（别把 SVG 规则套到道具 PNG）。
+
+---
+
+### `/pmem-clone-image`（`/art-clone`）— ~95% 锁风克隆
+
+```mermaid
+flowchart TD
+  A[圣经 + 新题材 Brief] --> B{Mode}
+  B -->|A 零参考| G
+  B -->|B 有参考| P[每轮必须垫风格参考]
+  P --> G[生图]
+  G --> J[五维 · 眼/chrome/尺度硬门]
+  J -->|≥9.6| D[交付 + 稳测连续 3 组]
+  J -->|未过| F[叠加修正 · 尺度缺陷勿链式垫结果]
+  F --> G
+```
+
+---
+
+### `/pmem-merge-ladder`（`/art-ladder`）— 整梯棋盘
+
+```mermaid
+flowchart TD
+  A[Ladder bible：域·类·L1…L8] --> B[一次出整梯 contact sheet]
+  B --> C[切格 + N-count gate]
+  C --> J[每格五维 + 升级路径审计]
+  J -->|全格≥9.6| D[交付 sheet + 各格分]
+  J -->|任一格不过| R[优先整梯重生 · ≤8 轮]
+  R --> B
+```
+
+---
+
+### `/pmem-lens-propose`（`/art-lens`）— 生图前点选
+
+```mermaid
+flowchart LR
+  A[读参考图] --> B[短 debrief]
+  B --> C[提案 4 套镜头包]
+  C --> D[用户点选]
+  D --> E[写入 goal / recompose_dir]
+  E --> F{是否立刻 converge?}
+```
+
+本步**不出图**；批量脚本已写明构图时不要弹窗打断。
+
+---
+
+### `/pmem-style-lock`（`/art-style`）
+
+```mermaid
+flowchart LR
+  A[丢入 1～3 张样张] --> B[提 HEX / 光影 / 笔触 / 禁用词]
+  B --> C[feedback → decision + 红线]
+  C --> D[输出风格锁定卡片]
+```
+
+---
+
+### `/pmem-critique`（`/art-check`）
+
+```mermaid
+flowchart LR
+  A[search + classify] --> B[五维挑刺]
+  B --> C{<9.6 或用户认可?}
+  C -->|是| D[feedback 写红线]
+  C -->|否| E[只给审稿卡]
+  D --> E
+```
+
+只审不出图。
+
+---
+
+### `/pmem-variant`（`/art-variant`）
+
+```mermaid
+flowchart LR
+  A[读父模块锚点] --> B[定子模块规格]
+  B --> C[按 ≥9.6 收敛生图]
+  C --> D[ingest 独立归档]
+```
+
+换画风 / 表情差分，不崩人设核心。
+
+---
+
+### `/pmem-atlas`（`/art-map`）
+
+```mermaid
+flowchart LR
+  A[classify-watch 扫散图] --> B[list 模块总览]
+  B --> C[atlas → art-atlas.html]
+```
+
+---
+
+### 进阶 peek：`improve` / `coach` / `learn`
+
+```mermaid
+flowchart TD
+  F[日常 converge finish] --> S[静默：反思 / taste / 红线 / learn 入队]
+  S --> P{用户主动喊?}
+  P -->|/pmem-improve| I[大声读进步曲线]
+  P -->|/pmem-coach| C[短板 → 练习计划]
+  P -->|/pmem-learn| L[列出建议 → accept 写 knowledge]
+```
+
+---
+
+### 怎么选（30 秒）
+
+| 你想… | 用 |
+| :--- | :--- |
+| 随便画一张并打磨到过线 | `/pmem-draw` |
+| 主视觉 / 气氛图 | `/pmem-concept` |
+| 一整套菜单 / HUD | `/pmem-ui` |
+| App 图标 / SVG / 道具图标 | `/pmem-icon` |
+| 照着某张图的风画新题材 | `/pmem-clone-image` |
+| 同域 L1–L8 升级棋盘 | `/pmem-merge-ladder` |
+| 先挑镜头再画 | `/pmem-lens-propose` → 再 draw/concept |
+| 把样张锁成项目标准 | `/pmem-style-lock` |
+| 只打分挑刺 | `/pmem-critique` |
+| Q 版 / 水彩 / 表情差分 | `/pmem-variant` |
+| 整理散图看图谱 | `/pmem-atlas` |
+| 看进步 / 练什么 / 学什么 | improve / coach / learn |
 
 ---
 

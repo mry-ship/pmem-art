@@ -1,6 +1,6 @@
 ---
 name: pmem-merge-ladder
-description: 【截图可见·必读】merge-2 棋盘进阶梯（默认L1–L8）。同任务域。优先整梯一次出 sheet；≥9.6。无参考默认卡通可爱（Mode A 必写 vinyl/chibi stub）；有参考跟参考 medium。稳测连续3组过线。
+description: 【截图可见·必读】merge-2 棋盘进阶梯（默认L1–L8）。同任务域。优先整梯一次出 sheet；≥9.6。无参考默认卡通可爱（Mode A 须在 brief 写明卡通/玩具才保留 vinyl/chibi，否则生成前剥掉）；有参考跟参考 medium。稳测连续3组过线。
 ---
 
 # `/pmem-merge-ladder` — Merge-2 棋盘进阶梯（整梯优先 · ≥9.6）
@@ -29,7 +29,7 @@ Banned：跨域杂物串；同瓶叠光；纯 FX；茶杯修复分镜。
 ## 硬：Medium
 1. **有参考（B/C）** — 整梯 medium **锁参考**（材质/光影/边缘/色温/BG）。抄纪律不抄 motif。参考写实就跟写实；参考卡通就跟卡通。
 2. **零参考（A）默认** — **卡通可爱**（cute cartoon / casual chibi-toy merge 图标：圆润块面、软阴影、饱和友好色、微笑感造型但**道具本身仍无脸**除非 brief 要求）。brief 另写 medium 则以 brief 为准。
-3. **Mode A 生成必写 stub（防「口头可爱、画面半写实」）** — 每次 GenerateImage description **必须**包含（可英可中，语义等价即可）：`vinyl toy merge icon` · `chibi proportions` · `soft rounded bevels` · `soft painted shadows` · `NO metal specular` · `NO photoreal` · `NO product photography`。缺任一项视为未按 Mode A 执行。
+3. **Mode A 媒介** — 零参考默认卡通可爱。goal、模块或参考分析里写明「卡通可爱」「玩具」「Q版」或 vinyl/chibi 时，生图词才可以保留 vinyl、chibi、搪胶、桶身。没声明时，生成前会剥掉 vinyl、chibi、搪胶、桶身、金琥珀双描边、barrel torso、dual-rim，避免抄进写实、像素、赛博或 `/pmem-draw`。Mode B/C 只有参考本身是该媒介才写这些词。圆润倒角、软阴影、禁止金属高光和产品摄影，仍然是卡通可爱的画面要求，不必靠 vinyl 这个词。
 4. **实拍漂移** — 在默认卡通可爱或 stylized 参考下，重扣产品实拍/油光不锈钢 HDR/真实木纹微细节；仅当参考/brief 明确写实才允许写实。Mode A 若 dim1 偏产品目录感 → 整梯重生并加码 stub，不得硬过。
 
 ## Step 0：Ladder bible

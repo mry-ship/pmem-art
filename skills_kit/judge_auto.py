@@ -10,11 +10,30 @@ from typing import Any
 
 from ._time import _now_cst
 
-from .prompt_scale import DEFAULT_MAX_ROUNDS, DEFAULT_THRESHOLD, get_converge_scale_profile
+from .prompt_scale import (
+    DEFAULT_MAX_ROUNDS,
+    DEFAULT_THRESHOLD,
+    classify_subject,
+    get_converge_scale_profile,
+)
 from .scoring import audit_score_inflation, defects_are_substantive, parse_5d_dims
 from .image_gates import _aspect_relation, _inspect_image_physical_traits, resolve_case_config
 from .validate_params import _physical_image_gate
 from .absolute_5d_agent_rubric import AGENT_JUDGE_SOURCE, annotate_advisory_offline
+from .subject_lexicon import clause
+from .converge_policy import (
+    DEFAULT_ANATOMY_FLOOR,
+    NON_ANATOMY_RUBRICS,
+    SCENE_COLLAPSE_FLOOR,
+    anatomy_ok_for_stop,
+    anatomy_score,
+    coerce_dims_dict,
+    next_fix_is_weak,
+    reconcile_fix_with_subject,
+    reflow_fix_text,
+    scene_perspective_credit,
+    scene_structure_ok_for_stop,
+)
 
 def auto_vlm_judge_image(
     image_path: str,
@@ -268,6 +287,35 @@ def auto_vlm_judge_image(
         if warn not in audit_res["warnings"]:
             audit_res["warnings"].append(warn)
 
+    subject_kind = classify_subject(
+        goal=goal or str(scale_prof.get("goal") or ""),
+        module=module,
+        ref_image=ref_image or str(scale_prof.get("ref_image") or ""),
+        ref_analysis=scale_prof.get("ref_analysis") or "",
+    )
+    rubric_mode = str(audit_res.get("rubric_mode") or "")
+    dims_for_anat = coerce_dims_dict(audit_res.get("dims_parsed"))
+    if dims_for_anat is None and str(eff_dims or "").strip():
+        parsed_now = parse_5d_dims(eff_dims, scale_prof.get("dim_weights"), module=module) or {}
+        dims_for_anat = coerce_dims_dict(parsed_now.get("parsed"))
+        if not rubric_mode:
+            rubric_mode = str(parsed_now.get("rubric_mode") or "")
+    # general_5d scene: a mild perspective nit must not drag the weighted total under 9.6.
+    if subject_kind == "scene" and not soft_defects_blocked and rubric_mode in ("", "general_5d"):
+        credited, credit_warn = scene_perspective_credit(
+            dims_for_anat, defects or "", scale_prof.get("dim_weights")
+        )
+        if credited is not None:
+            weighted_now = audit_res.get("weighted_score")
+            already_capped = weighted_now is None or (
+                float(calibrated) + 0.05 < float(weighted_now)
+            )
+            # A noise / extra-limb cap already lowered the score. Do not lift it back over 9.6.
+            if not already_capped:
+                calibrated = float(credited)
+                if credit_warn and credit_warn not in audit_res["warnings"]:
+                    audit_res["warnings"].append(credit_warn)
+
     passed = bool(calibrated >= target_th) and not image_gate_blocked and not soft_defects_blocked
     min_rounds = int(scale_prof.get("min_rounds_before_stop") or 1)
     early_stop_blocked = False
@@ -284,6 +332,94 @@ def auto_vlm_judge_image(
             audit_res["warnings"].append(warn)
         if not next_fix:
             next_fix = "在目前最高分的那张上只补还没到位的那一处，其余保持那张"
+
+    # Anatomy hard veto on general_5d. UI / icon / skill-additive rubrics have no
+    # perspective_anatomy key — skip so they are not fail-closed forever.
+    # Scenes: under 4.0 or collapse language blocks; a mild score may stop.
+    if subject_kind == "scene":
+        anatomy_floor = float(scale_prof.get("scene_structure_floor") or SCENE_COLLAPSE_FLOOR)
+    else:
+        anatomy_floor = float(scale_prof.get("anatomy_floor") or DEFAULT_ANATOMY_FLOOR)
+    anat_val = anatomy_score(dims_for_anat)
+    mod_l = (module or "").strip().lower()
+    # style_palette is shared with the additive rubric, so it cannot by itself mean "this is UI".
+    _ui_icon_dim_keys = (
+        "nine_slice_structure",
+        "glyph_silhouette",
+        "squircle_safe_zone",
+        "rgba_pipeline_compliance",
+        "state_suite_cohesion",
+    )
+    looks_like_ui_icon_rubric = bool(
+        isinstance(dims_for_anat, dict)
+        and dims_for_anat
+        and "perspective_anatomy" not in dims_for_anat
+        and any(k in dims_for_anat for k in _ui_icon_dim_keys)
+    )
+    body_subject = subject_kind in {"humanoid", "creature", "both", "mechanical", "generic"}
+    skip_anatomy_veto = (
+        subject_kind == "ui"
+        or mod_l in ("ui", "icon")
+        or mod_l.startswith(("ui.", "icon."))
+        or looks_like_ui_icon_rubric
+        or (rubric_mode in NON_ANATOMY_RUBRICS and not body_subject)
+    )
+    if subject_kind == "scene":
+        structure_ok = scene_structure_ok_for_stop(dims_for_anat, defects or "")
+    else:
+        structure_ok = anatomy_ok_for_stop(dims_for_anat, anatomy_floor)
+    anatomy_veto_blocked = False
+    if passed and not skip_anatomy_veto and not structure_ok:
+        anatomy_veto_blocked = True
+        passed = False
+        calibrated = min(float(calibrated), round(target_th - 0.05, 2))
+        if anat_val is None:
+            warn = (
+                f"解剖硬伤一票否决：缺少 perspective_anatomy 维（fail-closed），"
+                f"总分达线仍禁止停机（门槛 ≥{anatomy_floor}）"
+            )
+            anat_fix = clause("missing_dim", "zh")
+        elif subject_kind == "scene" and anat_val < SCENE_COLLAPSE_FLOOR:
+            warn = (
+                f"场景结构 {anat_val:.1f} < {SCENE_COLLAPSE_FLOOR}，按结构塌缩禁止停机"
+            )
+            anat_fix = clause("scene_fix", "zh")
+        elif subject_kind == "scene":
+            warn = (
+                f"场景缺陷写了结构塌缩，透视 {anat_val:.1f} 仍禁止停机"
+            )
+            anat_fix = clause("scene_fix", "zh")
+        else:
+            warn = (
+                f"解剖硬伤一票否决：透视与解剖 {anat_val:.1f} < {anatomy_floor}，"
+                f"总分达线仍禁止停机；下一轮优先修结构"
+            )
+            if subject_kind == "creature":
+                anat_fix = clause("creature_fix", "zh")
+            elif subject_kind == "mechanical":
+                anat_fix = clause("mech_fix", "zh")
+            else:
+                anat_fix = clause("anatomy", "zh")
+        if warn not in audit_res["warnings"]:
+            audit_res["warnings"].append(warn)
+        if anat_fix and anat_fix not in str(defects or ""):
+            defects = f"{defects}；{anat_fix}".strip("； ") if defects else anat_fix
+        if not next_fix or "已达标" in str(next_fix):
+            next_fix = anat_fix
+
+    if not passed and next_fix_is_weak(next_fix):
+        hint = reflow_fix_text(
+            defects=[str(defects or "")],
+            dims=dims_for_anat,
+            api_scale=str(scale_prof.get("scale") or "medium"),
+            recompose_dir=str(scale_prof.get("recompose_dir") or ""),
+            intent=str(next_fix or ""),
+            lang="zh",
+        )
+        if hint:
+            next_fix = hint
+    if not passed:
+        next_fix = reconcile_fix_with_subject(next_fix, subject_kind, dims_for_anat)
 
     should_continue_next_round = bool((not passed) and (round_num < max_rounds))
     if passed:
@@ -304,6 +440,11 @@ def auto_vlm_judge_image(
         "min_rounds_before_stop": min_rounds,
         "dims": eff_dims,
         "dims_parsed": audit_res["dims_parsed"],
+        "anatomy_score": anat_val,
+        "anatomy_floor": anatomy_floor,
+        "anatomy_veto_blocked": anatomy_veto_blocked,
+        "subject_kind": subject_kind,
+        "rubric_mode": rubric_mode,
         "weighted_score": audit_res["weighted_score"],
         "raw_score": audit_res["raw_score"],
         "calibrated_score": round(float(calibrated), 2),

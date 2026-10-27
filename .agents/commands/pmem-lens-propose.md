@@ -15,7 +15,7 @@ Off-line **lens pack** step before converge / edits. Look at a reference image, 
 
 ## Inputs
 
-- Required: one reference image path (box or user machine) **or** a known slug (`night_city` / `pastel_sketch` / `sunlit_portrait` / `ishtar_canyon`).
+- Required: one reference image (any subject). Known slugs (`night_city` / `pastel_sketch` / `sunlit_portrait` / `ishtar_canyon`) are optional shortcuts only — do not refuse other images.
 - Optional: target scales (`low` `medium` `high` `recompose` `recompose_bold`), count of packs (default **4**), language (default zh + short en keywords), identity lock notes from the user.
 
 ## Steps

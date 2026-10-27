@@ -14,7 +14,7 @@
 ![Skills](https://img.shields.io/badge/斜杠技能-14-8B5CF6)
 ![Threshold](https://img.shields.io/badge/合格线-≥9.60-blue)
 
-[📖 使用手册](USER_MANUAL.md) · [效果图墙](#效果长什么样) · [Merge / Clone 实测](#merge-ladder--clone-mode-b另外两技能实测) · [架构](ARCHITECTURE.md)
+[📖 使用手册](USER_MANUAL.md) · [技能流程图](docs/skills/flows.html) · [效果图墙](#效果长什么样) · [Merge / Clone 实测](#merge-ladder--clone-mode-b另外两技能实测) · [架构](ARCHITECTURE.md)
 
 </div>
 
@@ -57,6 +57,8 @@ python3 pmem_art.py skills --install
 ```
 
 ### 14 个斜杠技能（含简短别名共 28 个入口）
+
+工作流一眼看懂：[手册 · 第一章附（Mermaid）](USER_MANUAL.md#第一章附14-技能工作流程图一眼看懂) · [可点选网页](docs/skills/flows.html)
 
 | 想做什么 | 输入 | 说明 |
 | :--- | :--- | :--- |
