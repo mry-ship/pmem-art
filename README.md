@@ -29,7 +29,7 @@ python3 pmem_art.py init --name "MyArtProject"
 python3 pmem_art.py skills --install
 ```
 
-装好后，在 Cursor / Claude Code / Codex 对话框输入 `/`，就能看到下面这些技能。
+装好后，在 Cursor / Claude Code / Codex 对话框输入 `/`。技能一共 **8 个**，见下一节的 8 行表。多出来的斜杠名字是旧入口，点了会锁进这 8 个里的某一个。
 
 | 场景 | 命令 |
 | :--- | :--- |
@@ -44,8 +44,10 @@ python3 pmem_art.py skills --install
 ```text
 1. 丢图（可选）   把参考图拖进对话
 2. 选档           --scale low | medium | high | recompose
-3. 出图           Agent 自动：生 1 张 → 打分挑刺 → <9.60 继续修（最多 4 轮）
+3. 出图           生 1 张 → 打分挑刺 → 不到 9.60 就改（最多 4 轮）
 ```
+
+合成梯多一步：先用文字把八件关系谈到说通（最多 8 稿，这一段不出图），通过后再按上面的 4 轮出图。同框大图只是体量预览。
 
 ### 复制即用
 
@@ -56,24 +58,45 @@ python3 pmem_art.py skills --install
 /pmem-draw --scale recompose --recompose-dir "改为运河石拱桥仰视" [拖入参考图]
 ```
 
-### 8 个技能（旧斜杠名还能用，会锁进对应那一支）
+第三行的 `/pmem-concept` 是旧名字，锁进第 1 行「生图」的原画，不是第 9 个技能。
 
-没点名类型时，直接说想画什么。模型自己认，回显一句后就做，不用再选技能。点了旧名字就锁定那一支。
+### 8 个技能
 
-| 想做什么 | 输入 | 说明 |
-| :--- | :--- | :--- |
-| 生图（没想好类型也从这里进） | `/pmem-draw`（`/art-draw`） | 自己认成普通图、原画、克隆、变体或镜头包。4 轮 ≥9.6。有参考但没说新题材时不进克隆 |
-| 原画 / Key Art | `/pmem-concept`（`/art-concept`） | 仍可用。锁进 draw 的原画合同：完整句提示词 |
-| 按参考画风换新题材 | `/pmem-clone-image`（`/art-clone`） | 仍可用。锁进克隆合同：垫最初参考，界面空壳和角色眼睛没过不能停 |
-| 换画风 / 表情差分 | `/pmem-variant`（`/art-variant`） | 仍可用。锁进变体合同 |
-| 先挑几套机位 | `/pmem-lens-propose`（`/art-lens`） | 仍可用。只出方案，点选前不生图。没人要几套机位时不会自动走进来 |
-| UI Kit / HUD / 九宫格 | `/pmem-ui`（`/art-ui`） | 整套界面。不会用单张插画代替 |
-| App / SVG / 道具图标 | `/pmem-icon`（`/art-icon`） | A 桌面母版 · B 线性 SVG · C 道具格，不混用 |
-| 同域合成梯 | `/pmem-merge-ladder`（`/art-ladder`、`/art-merge`） | 先过八件关系，再一档一张正方形。同框只是体量预览 |
-| 从样张锁风格 | `/pmem-style-lock`（`/art-style`） | 抽色板、光影、禁用词。不进自动生图 |
-| 审图挑刺 | `/pmem-critique`（`/art-check`） | 只打分，不生图 |
-| 散图归位 + 图谱 | `/pmem-atlas`（`/art-map`） | 刷新 `art-atlas.html` |
-| 进步 / 短板 / 知识 | `/pmem-coach`（`/pmem-improve`、`/pmem-learn`） | 三条偷看合成一条。知识卡要你说收下才写入 |
+技能文件是 **8 个**，下表正好 **8 行**。没点名类型时，直接说想画什么，模型自己认，回显一句后就做。
+
+<table>
+<thead>
+<tr><th></th><th>技能</th><th>输入</th><th>做什么</th></tr>
+</thead>
+<tbody>
+<tr><td>1</td><td>生图</td><td><code>/pmem-draw</code><br><small><code>/art-draw</code></small></td><td>总入口。自己认成普通图、原画、克隆、变体或镜头包。生图最多 4 轮，合格线 ≥9.6。有参考但没说新题材时，不进克隆。</td></tr>
+<tr><td>2</td><td>界面</td><td><code>/pmem-ui</code><br><small><code>/art-ui</code></small></td><td>一整套 HUD / 菜单 / 九宫格。不用单张插画代替。</td></tr>
+<tr><td>3</td><td>图标</td><td><code>/pmem-icon</code><br><small><code>/art-icon</code></small></td><td>三档不混：A 桌面母版、B 线性 SVG、C 道具格。</td></tr>
+<tr><td>4</td><td>合成梯</td><td><code>/pmem-merge-ladder</code><br><small><code>/art-ladder</code> · <code>/art-merge</code></small></td><td>先用文字过八件关系（最多 8 稿，说不通就不出图），再一档一张正方形。同框只是体量预览。出图最多 4 轮。</td></tr>
+<tr><td>5</td><td>锁风格</td><td><code>/pmem-style-lock</code><br><small><code>/art-style</code></small></td><td>从样张抽色板、光影、禁用词。不进自动生图。</td></tr>
+<tr><td>6</td><td>审图</td><td><code>/pmem-critique</code><br><small><code>/art-check</code></small></td><td>只打分挑刺，不生图。</td></tr>
+<tr><td>7</td><td>归档</td><td><code>/pmem-atlas</code><br><small><code>/art-map</code></small></td><td>散图归位，刷新 <code>art-atlas.html</code>。</td></tr>
+<tr><td>8</td><td>教练</td><td><code>/pmem-coach</code><br><small><code>/art-coach</code></small></td><td>进步、短板、知识合在这一条里看。知识卡要你说收下才写入。</td></tr>
+</tbody>
+</table>
+
+<p><small><strong>旧斜杠名仍能用。</strong> 它们锁进上面某一行，不是额外的技能。</small></p>
+
+<table>
+<thead>
+<tr><th><small>你输入</small></th><th><small>锁进</small></th></tr>
+</thead>
+<tbody>
+<tr><td><small><code>/pmem-concept</code> · <code>/art-concept</code></small></td><td><small>第 1 行 · 原画。完整句提示词</small></td></tr>
+<tr><td><small><code>/pmem-clone-image</code> · <code>/art-clone</code></small></td><td><small>第 1 行 · 克隆。每轮垫最初那张参考；界面空壳、角色眼睛没过不能停</small></td></tr>
+<tr><td><small><code>/pmem-variant</code> · <code>/art-variant</code></small></td><td><small>第 1 行 · 变体。换画风，或同一角色的表情 / 动作差分</small></td></tr>
+<tr><td><small><code>/pmem-lens-propose</code> · <code>/art-lens</code></small></td><td><small>第 1 行 · 镜头包。只出方案，点选前不生图。没人要几套机位时，不会自动走进来</small></td></tr>
+<tr><td><small><code>/pmem-improve</code> · <code>/art-improve</code></small></td><td><small>第 8 行 · 只看进步</small></td></tr>
+<tr><td><small><code>/pmem-learn</code> · <code>/art-learn</code></small></td><td><small>第 8 行 · 只看知识。要你说收下才写入</small></td></tr>
+</tbody>
+</table>
+
+<a id="四档闸门每档允许变什么--禁止变什么"></a>
 
 ### 四档改动幅度（选错了用嘴改就行）
 
@@ -144,7 +167,7 @@ Grok 三轮优化 best-of（离线 Absolute-5D 均值 **8.504**）：[docs/showc
 
 | 技能 | 在测什么 | 稳定性门槛 | 本批结果 |
 | :--- | :--- | :--- | :--- |
-| **`pmem-merge-ladder`** | Mode A/B/C 同域 beach-candy 整梯；另有早期 Mode C 三新域连胜 | 每格 Absolute-5D ≥9.6 · N=8 | **A PASS** min 9.8 · **B/C FAIL**（L6 脸红线）· 早期 G1–G3 MET |
+| **`pmem-merge-ladder`** | Mode A/B/C 同域 beach-candy 整梯；另有早期 Mode C 三新域连胜 | 八格每一格 Absolute-5D ≥9.6 | **A PASS** min 9.8 · **B/C FAIL**（L6 脸红线）· 早期 G1–G3 MET |
 | 风格克隆 | Mode B：锁风格 ~95% + **新主体** · REF\|RESULT。现在用 `/pmem-clone-image` 锁进 draw 的克隆合同 | 连续 3 组 OK（每组 icon+char+UI） | **MET** · G1→G2→G3 |
 
 #### Merge ladder · Mode A / B / C（beach-candy）

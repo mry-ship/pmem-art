@@ -442,6 +442,8 @@ python3 pmem_art.py learn suggest && python3 pmem_art.py learn accept --all
 
 ---
 
+<a id="附录-a四档---scale-细则与示例"></a>
+
 ## 附录 A：四档 `--scale` 细则与示例
 
 > **首页已有闸门总表**：[README · 四档闸门](README.md#四档闸门每档允许变什么--禁止变什么)。本附录补「怎么自己调」与 CLI。
