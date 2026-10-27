@@ -359,3 +359,18 @@ modules:
       resolution: 1024x1024
       alpha_required: false
       max_size_kb: 2048
+  prop.XmasChestPair:
+    title: prop·XmasChestPair
+    category: prop
+    status: active
+    description: "原图画风优先：保画风色板，按「略俯四分之三，上下两态同一机位，上关下开」重构机位| 竖图灰底。上关下开，圣诞箱身份不变。下面的箱子必须是上面那只的同一转角，只把 · 自动归类至 prop (prop.XmasChestPair) · 置信度 0.78"
+    paths:
+      - "assets/prop/xmaschestpair/**"
+    aliases:
+      - XmasChestPair
+    entities: []
+    palette: []
+    specs:
+      resolution: 720x1280
+      alpha_required: false
+      max_size_kb: 2048

@@ -1,0 +1,840 @@
+{
+  "session_id": "xmas-chest-pair",
+  "started_at": "2026-10-27 23:17:50 UTC+8",
+  "goal": "把圣诞箱做成上下配套：上关下开，机位对齐图1，身份保持图2",
+  "module": "prop.XmasChestPair",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "recompose",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "recompose",
+    "label": "定向改构图模式 · 按用户指定新构图动态达标闭环 (Directed Re-Composition Dynamic Threshold >=9.6)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 2,
+    "target_score_threshold": 9.6,
+    "dim_weights": {
+      "composition": 0.3,
+      "lighting_color": 0.2,
+      "perspective_anatomy": 0.2,
+      "texture_detail": 0.15,
+      "spec_style": 0.15
+    },
+    "retention_set": [
+      "style_medium",
+      "identity",
+      "recompose_dir_target"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图；第 1 轮落到指定机位，之后只在提示词上补还没过的那一处（提示词改动仍 ≤85%）",
+    "max_prompt_delta_ratio": 0.85,
+    "max_prompt_delta_vs_first": 0.95,
+    "allow_recompose": true,
+    "allow_viewpoint_change": true,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)",
+      "recompose_direction (不偏离指定构图方向)"
+    ],
+    "prompt_delta_baseline": "previous",
+    "min_round_leap": 0.2,
+    "prompt_directive": "原图画风优先：保画风色板，按「略俯四分之三，上下两态同一机位，上关下开」重构机位",
+    "best_direction_hint": "最优方向：只写目标机位与布局",
+    "recompose_dir": "略俯四分之三，上下两态同一机位，上关下开",
+    "goal": "把圣诞箱做成上下配套：上关下开，机位对齐图1，身份保持图2",
+    "module": "prop.XmasChestPair",
+    "ref_image": "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\c__Users_ZhengLangPC_AppData_Roaming_Cursor_User_workspaceStorage_63435cb9bf039051b91ae8cfcd8100a8_images_0555abee01c6fe7d2fd297b689a26fb1-0c2f14eb-f197-49bd-9a9f-e97840d56eac.png",
+    "ref_analysis": "图1只锁上下版式与略俯四分之三机位；图2锁圣诞箱身份。雪、绿带、雪花、金圈树随盖；拐杖柱与冬青留箱身。"
+  },
+  "target_score_threshold": 9.6,
+  "recompose_dir": "略俯四分之三，上下两态同一机位，上关下开",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\c__Users_ZhengLangPC_AppData_Roaming_Cursor_User_workspaceStorage_63435cb9bf039051b91ae8cfcd8100a8_images_0555abee01c6fe7d2fd297b689a26fb1-0c2f14eb-f197-49bd-9a9f-e97840d56eac.png",
+  "ref_analysis": "图1只锁上下版式与略俯四分之三机位；图2锁圣诞箱身份。雪、绿带、雪花、金圈树随盖；拐杖柱与冬青留箱身。",
+  "default_aspect_ratio": "9:16",
+  "default_reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\c__Users_ZhengLangPC_AppData_Roaming_Cursor_User_workspaceStorage_63435cb9bf039051b91ae8cfcd8100a8_images_995d275e03e22a03ed8a2bccf2bffce5-6996f20e-6710-44a1-a76f-7a1c92a580ef.png",
+    "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\c__Users_ZhengLangPC_AppData_Roaming_Cursor_User_workspaceStorage_63435cb9bf039051b91ae8cfcd8100a8_images_0555abee01c6fe7d2fd297b689a26fb1-0c2f14eb-f197-49bd-9a9f-e97840d56eac.png"
+  ],
+  "aspect_ratio": "9:16",
+  "reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\c__Users_ZhengLangPC_AppData_Roaming_Cursor_User_workspaceStorage_63435cb9bf039051b91ae8cfcd8100a8_images_995d275e03e22a03ed8a2bccf2bffce5-6996f20e-6710-44a1-a76f-7a1c92a580ef.png",
+    "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\c__Users_ZhengLangPC_AppData_Roaming_Cursor_User_workspaceStorage_63435cb9bf039051b91ae8cfcd8100a8_images_0555abee01c6fe7d2fd297b689a26fb1-0c2f14eb-f197-49bd-9a9f-e97840d56eac.png"
+  ],
+  "ref_physical_traits": {
+    "exists": true,
+    "size_bytes": 365773,
+    "size_kb": 357.2,
+    "width": 469,
+    "height": 901,
+    "aspect_ratio": "469:901",
+    "canonical_aspect_ratio": "9:16",
+    "color_entropy": 7.99
+  },
+  "param_validation": {
+    "valid": true,
+    "validation_passed": true,
+    "case_id": "xmas-chest-pair",
+    "scale": "recompose",
+    "aspect_ratio": "9:16",
+    "ref_aspect_ratio": "9:16",
+    "ref_dimensions": "469x901",
+    "output_aspect_ratio": "",
+    "output_dimensions": "",
+    "reference_image": "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\c__Users_ZhengLangPC_AppData_Roaming_Cursor_User_workspaceStorage_63435cb9bf039051b91ae8cfcd8100a8_images_995d275e03e22a03ed8a2bccf2bffce5-6996f20e-6710-44a1-a76f-7a1c92a580ef.png",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\c__Users_ZhengLangPC_AppData_Roaming_Cursor_User_workspaceStorage_63435cb9bf039051b91ae8cfcd8100a8_images_995d275e03e22a03ed8a2bccf2bffce5-6996f20e-6710-44a1-a76f-7a1c92a580ef.png",
+      "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\c__Users_ZhengLangPC_AppData_Roaming_Cursor_User_workspaceStorage_63435cb9bf039051b91ae8cfcd8100a8_images_0555abee01c6fe7d2fd297b689a26fb1-0c2f14eb-f197-49bd-9a9f-e97840d56eac.png"
+    ],
+    "inherited_default_aspect_ratio": false,
+    "inherited_default_pad_image": false,
+    "matched_ref_aspect_ratio": true,
+    "matched_ref_pad_image": true,
+    "matched_output_aspect_ratio": true,
+    "three_step_stage": "step1_start",
+    "three_step_verified": false,
+    "warnings": []
+  },
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.6,
+  "accept_threshold": 9.6,
+  "max_rounds": 4,
+  "ready_to_finish": true,
+  "status": "finished",
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\c__Users_ZhengLangPC_AppData_Roaming_Cursor_User_workspaceStorage_63435cb9bf039051b91ae8cfcd8100a8_images_995d275e03e22a03ed8a2bccf2bffce5-6996f20e-6710-44a1-a76f-7a1c92a580ef.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "xmas-chest-pair",
+        "scale": "recompose",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "469x901",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\c__Users_ZhengLangPC_AppData_Roaming_Cursor_User_workspaceStorage_63435cb9bf039051b91ae8cfcd8100a8_images_995d275e03e22a03ed8a2bccf2bffce5-6996f20e-6710-44a1-a76f-7a1c92a580ef.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\c__Users_ZhengLangPC_AppData_Roaming_Cursor_User_workspaceStorage_63435cb9bf039051b91ae8cfcd8100a8_images_995d275e03e22a03ed8a2bccf2bffce5-6996f20e-6710-44a1-a76f-7a1c92a580ef.png"
+        ],
+        "inherited_default_aspect_ratio": false,
+        "inherited_default_pad_image": false,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": true
+      },
+      "generated_at": "23:21:44",
+      "image": "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\xmas-chest-pair-r1.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 195202,
+        "size_kb": 190.6,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.19
+      },
+      "raw_score": 9.11,
+      "score": 9.11,
+      "target_score_threshold": 9.6,
+      "dims": "构图9.3/光影9.1/透视8.7/质感9.2/风格9.2",
+      "dims_parsed": {
+        "composition": 9.3,
+        "lighting_color": 9.1,
+        "perspective_anatomy": 8.7,
+        "texture_detail": 9.2,
+        "spec_style": 9.2
+      },
+      "weighted_score": 9.11,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.6；像素离线仅为旁证）",
+        "像素离线 Absolute-5D 旁证=8.70，coverage=0.85（仅参考，不改门槛、不替代本模型五维分）"
+      ],
+      "stagnated": false,
+      "strengths": "上关下开，圣诞身份还在，树徽跟着盖子，没有厨师箱元素",
+      "defects": "关闭态更侧，右侧立面露得更多；打开态箱身更正，两态机位还没重合",
+      "next_fix": "上下两只用同一方位角和同一俯角，打开态右侧立面的露出量对齐关闭态",
+      "prompt": "原图画风优先：保画风色板，按「略俯四分之三，上下两态同一机位，上关下开」重构机位| 竖图灰底。图1只锁略俯四分之三与上关下开；图2锁圣诞箱。雪、绿带、雪花、金圈树随盖，拐杖柱留箱身。两态同一机位。| 约束：保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观；不偏离指定构图方向",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.7,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_absolute_5d",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "offline_advisory": {
+          "version": "v9.1_audit_patch",
+          "score": 8.7,
+          "coverage": 0.85,
+          "rankable": true,
+          "contract": "docs/gpt6sol_absolute_5d_quant_rubric.md",
+          "role": "advisory_only"
+        },
+        "offline_advisory_note": "像素离线 Absolute-5D 旁证=8.70，coverage=0.85（仅参考，不改门槛、不替代本模型五维分）"
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "narrative_camera",
+          "lesson": "本轮短板偏「narrative_camera」：关闭态更侧，右侧立面露得更多；打开态箱身更正，两态机位还没重合",
+          "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+          "from_score": "9.11"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：上关下开，圣诞身份还在，树徽跟着盖子，没有厨师箱元素",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "9.11"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "23:21:54"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\c__Users_ZhengLangPC_AppData_Roaming_Cursor_User_workspaceStorage_63435cb9bf039051b91ae8cfcd8100a8_images_995d275e03e22a03ed8a2bccf2bffce5-6996f20e-6710-44a1-a76f-7a1c92a580ef.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "xmas-chest-pair",
+        "scale": "recompose",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "469x901",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\c__Users_ZhengLangPC_AppData_Roaming_Cursor_User_workspaceStorage_63435cb9bf039051b91ae8cfcd8100a8_images_995d275e03e22a03ed8a2bccf2bffce5-6996f20e-6710-44a1-a76f-7a1c92a580ef.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\c__Users_ZhengLangPC_AppData_Roaming_Cursor_User_workspaceStorage_63435cb9bf039051b91ae8cfcd8100a8_images_995d275e03e22a03ed8a2bccf2bffce5-6996f20e-6710-44a1-a76f-7a1c92a580ef.png"
+        ],
+        "inherited_default_aspect_ratio": false,
+        "inherited_default_pad_image": false,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": true
+      },
+      "generated_at": "23:24:03",
+      "image": "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\xmas-chest-pair-r2.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 203161,
+        "size_kb": 198.4,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.2
+      },
+      "raw_score": 9.11,
+      "score": 9.11,
+      "target_score_threshold": 9.6,
+      "dims": "构图9.3/光影9.1/透视8.7/质感9.2/风格9.2",
+      "dims_parsed": {
+        "composition": 9.3,
+        "lighting_color": 9.1,
+        "perspective_anatomy": 8.7,
+        "texture_detail": 9.2,
+        "spec_style": 9.2
+      },
+      "weighted_score": 9.11,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.00 低于当前档位 (recompose) 的最小跃升 +0.20。下一轮更贴近指定构图方向",
+        "Agent Absolute-5D 已采纳（门槛 9.6；像素离线仅为旁证）",
+        "像素离线 Absolute-5D 旁证=8.70，coverage=0.85（仅参考，不改门槛、不替代本模型五维分）"
+      ],
+      "stagnated": true,
+      "strengths": "上关下开，圣诞身份稳定，树徽在盖上",
+      "defects": "打开态仍然更正，右侧立面比关闭态窄，机位没有对齐",
+      "next_fix": "把打开的箱身转到和关闭态一样侧，右侧橙色内壁和右侧拐杖糖的侧面宽度对齐关闭态",
+      "prompt": "原图画风优先：保画风色板，按「略俯四分之三，上下两态同一机位，上关下开」重构机位| 竖图灰底。上关下开，圣诞箱身份不变。改点：打开态与关闭态同一方位角和俯角，右侧立面露出量对齐。| 约束：保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观；不偏离指定构图方向 | 上下两只用同一方位角和同一俯角，打开态右侧立面的露出量对齐关闭态",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.7,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_absolute_5d",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "offline_advisory": {
+          "version": "v9.1_audit_patch",
+          "score": 8.7,
+          "coverage": 0.85,
+          "rankable": true,
+          "contract": "docs/gpt6sol_absolute_5d_quant_rubric.md",
+          "role": "advisory_only"
+        },
+        "offline_advisory_note": "像素离线 Absolute-5D 旁证=8.70，coverage=0.85（仅参考，不改门槛、不替代本模型五维分）"
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "narrative_camera",
+          "lesson": "本轮短板偏「narrative_camera」：打开态仍然更正，右侧立面比关闭态窄，机位没有对齐",
+          "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+          "from_score": "9.11"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：上关下开，圣诞身份稳定，树徽在盖上",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "9.11"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "23:24:28"
+    },
+    {
+      "round": 3,
+      "round_label": "第 3 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\c__Users_ZhengLangPC_AppData_Roaming_Cursor_User_workspaceStorage_63435cb9bf039051b91ae8cfcd8100a8_images_995d275e03e22a03ed8a2bccf2bffce5-6996f20e-6710-44a1-a76f-7a1c92a580ef.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "xmas-chest-pair",
+        "scale": "recompose",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "469x901",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\c__Users_ZhengLangPC_AppData_Roaming_Cursor_User_workspaceStorage_63435cb9bf039051b91ae8cfcd8100a8_images_995d275e03e22a03ed8a2bccf2bffce5-6996f20e-6710-44a1-a76f-7a1c92a580ef.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\c__Users_ZhengLangPC_AppData_Roaming_Cursor_User_workspaceStorage_63435cb9bf039051b91ae8cfcd8100a8_images_995d275e03e22a03ed8a2bccf2bffce5-6996f20e-6710-44a1-a76f-7a1c92a580ef.png"
+        ],
+        "inherited_default_aspect_ratio": false,
+        "inherited_default_pad_image": false,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": true
+      },
+      "generated_at": "23:24:46",
+      "image": "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\xmas-chest-pair-r3.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 198560,
+        "size_kb": 193.9,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.21
+      },
+      "raw_score": 9.11,
+      "score": 9.11,
+      "target_score_threshold": 9.6,
+      "dims": "构图9.3/光影9.1/透视8.7/质感9.2/风格9.2",
+      "dims_parsed": {
+        "composition": 9.3,
+        "lighting_color": 9.1,
+        "perspective_anatomy": 8.7,
+        "texture_detail": 9.2,
+        "spec_style": 9.2
+      },
+      "weighted_score": 9.11,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.00 低于当前档位 (recompose) 的最小跃升 +0.20。下一轮更贴近指定构图方向",
+        "Agent Absolute-5D 已采纳（门槛 9.6；像素离线仅为旁证）",
+        "像素离线 Absolute-5D 旁证=8.70，coverage=0.85（仅参考，不改门槛、不替代本模型五维分）"
+      ],
+      "stagnated": true,
+      "strengths": "上关下开，圣诞身份稳定，树徽在盖上",
+      "defects": "打开态仍然更正，右侧立面还是比关闭态窄",
+      "next_fix": "下面的箱子必须是上面那只的同一转角，只把盖子掀开，正面红板要有透视缩短",
+      "prompt": "原图画风优先：保画风色板，按「略俯四分之三，上下两态同一机位，上关下开」重构机位| 竖图灰底。上关下开，圣诞箱身份不变。改点：打开的箱身转到和关闭态一样侧，右侧橙色内壁与右侧拐杖糖侧面宽度对齐。| 约束：保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观；不偏离指定构图方向 | 把打开的箱身转到和关闭态一样侧，右侧橙色内壁和右侧拐杖糖的侧面宽度对齐关闭态",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.7,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_absolute_5d",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "offline_advisory": {
+          "version": "v9.1_audit_patch",
+          "score": 8.7,
+          "coverage": 0.85,
+          "rankable": true,
+          "contract": "docs/gpt6sol_absolute_5d_quant_rubric.md",
+          "role": "advisory_only"
+        },
+        "offline_advisory_note": "像素离线 Absolute-5D 旁证=8.70，coverage=0.85（仅参考，不改门槛、不替代本模型五维分）"
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "composition",
+          "lesson": "本轮短板偏「composition」：打开态仍然更正，右侧立面还是比关闭态窄",
+          "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+          "from_score": "9.11"
+        },
+        {
+          "category": "ui_9slice",
+          "lesson": "本轮短板偏「ui_9slice」：打开态仍然更正，右侧立面还是比关闭态窄",
+          "drill": "主面板只画九宫格线框 → 再填中心色，确认中心可双向拉伸",
+          "from_score": "9.11"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：上关下开，圣诞身份稳定，树徽在盖上",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "9.11"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "23:25:22"
+    },
+    {
+      "round": 4,
+      "round_label": "第 4 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\c__Users_ZhengLangPC_AppData_Roaming_Cursor_User_workspaceStorage_63435cb9bf039051b91ae8cfcd8100a8_images_995d275e03e22a03ed8a2bccf2bffce5-6996f20e-6710-44a1-a76f-7a1c92a580ef.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "xmas-chest-pair",
+        "scale": "recompose",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "469x901",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\c__Users_ZhengLangPC_AppData_Roaming_Cursor_User_workspaceStorage_63435cb9bf039051b91ae8cfcd8100a8_images_995d275e03e22a03ed8a2bccf2bffce5-6996f20e-6710-44a1-a76f-7a1c92a580ef.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\c__Users_ZhengLangPC_AppData_Roaming_Cursor_User_workspaceStorage_63435cb9bf039051b91ae8cfcd8100a8_images_995d275e03e22a03ed8a2bccf2bffce5-6996f20e-6710-44a1-a76f-7a1c92a580ef.png"
+        ],
+        "inherited_default_aspect_ratio": false,
+        "inherited_default_pad_image": false,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": true
+      },
+      "generated_at": "23:25:33",
+      "image": "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\xmas-chest-pair-r4.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 195055,
+        "size_kb": 190.5,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.19
+      },
+      "raw_score": 9.11,
+      "score": 9.11,
+      "target_score_threshold": 9.6,
+      "dims": "构图9.3/光影9.1/透视8.7/质感9.2/风格9.2",
+      "dims_parsed": {
+        "composition": 9.3,
+        "lighting_color": 9.1,
+        "perspective_anatomy": 8.7,
+        "texture_detail": 9.2,
+        "spec_style": 9.2
+      },
+      "weighted_score": 9.11,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.00 低于当前档位 (recompose) 的最小跃升 +0.20。下一轮更贴近指定构图方向",
+        "Agent Absolute-5D 已采纳（门槛 9.6；像素离线仅为旁证）",
+        "像素离线 Absolute-5D 旁证=8.70，coverage=0.85（仅参考，不改门槛、不替代本模型五维分）"
+      ],
+      "stagnated": true,
+      "strengths": "上关下开，圣诞身份稳定，树徽在盖上",
+      "defects": "打开态仍然更正，右侧立面还是比关闭态窄，四轮机位都没对齐",
+      "next_fix": "打开态要转到和关闭态同一个侧角，右侧立面一样宽",
+      "prompt": "原图画风优先：保画风色板，按「略俯四分之三，上下两态同一机位，上关下开」重构机位| 竖图灰底。上关下开，圣诞箱身份不变。下面的箱子必须是上面那只的同一转角，只把盖子掀开，正面红板要有透视缩短。| 约束：保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观；不偏离指定构图方向",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.7,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_absolute_5d",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "offline_advisory": {
+          "version": "v9.1_audit_patch",
+          "score": 8.7,
+          "coverage": 0.85,
+          "rankable": true,
+          "contract": "docs/gpt6sol_absolute_5d_quant_rubric.md",
+          "role": "advisory_only"
+        },
+        "offline_advisory_note": "像素离线 Absolute-5D 旁证=8.70，coverage=0.85（仅参考，不改门槛、不替代本模型五维分）"
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_MAX_ROUNDS",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "narrative_camera",
+          "lesson": "本轮短板偏「narrative_camera」：打开态仍然更正，右侧立面还是比关闭态窄，四轮机位都没对齐",
+          "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+          "from_score": "9.11"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：上关下开，圣诞身份稳定，树徽在盖上",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "9.11"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "23:25:40"
+    }
+  ],
+  "warm_start": {
+    "project_id": "cursor-pmem-art",
+    "project_name": "Cursor-Pmem-Art",
+    "active_project": {
+      "project_id": "cursor-pmem-art",
+      "project_slug": "cursor-pmem-art",
+      "project_name": "Cursor-Pmem-Art",
+      "layer_scope": "private",
+      "bound_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "origin_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "root_name": "Cursor-Pmem-Art",
+      "library_dir": ".memory-art/projects/cursor-pmem-art",
+      "copied_from_project": "pmem-art",
+      "copied_from_root": "/Users/yanghu/Desktop/pmem-art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-26 18:01:04 UTC+8",
+      "updated_at": "2026-10-26 18:01:04 UTC+8"
+    },
+    "module": "prop.XmasChestPair",
+    "goal": "把圣诞箱做成上下配套：上关下开，机位对齐图1，身份保持图2",
+    "confidence": 0.3,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "红线可控（0 条）",
+      "挂载 0 张项目知识卡 + 1 张全局美术底层基础卡"
+    ],
+    "top_recipes": [],
+    "top_redlines": [],
+    "art_decisions": [],
+    "private_knowledge": [],
+    "shared_knowledge": [
+      {
+        "id": "palette-70-20-10",
+        "title": "色彩构成：70-20-10 色板比例黄金法则",
+        "body": "画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+        "layer_scope": "shared"
+      }
+    ],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [],
+      "preferred_composition": [],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [],
+      "banned_habits": [
+        "critique MergeA厨房梯：体量爬升弱是红线，相邻档缩略必须可读差",
+        "[收敛踩坑红线] Clone Mode B UI。垫心形礼盒只锁medium与：避免「无硬伤」"
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: Cursor-Pmem-Art (.memory-art/projects/cursor-pmem-art/)\n- 目标模块: prop.XmasChestPair\n- 置信度: 0.30（fast-track 资格: 否）\n- 个人禁用习惯: critique MergeA厨房梯：体量爬升弱是红线，相邻档缩略必须可读差；[收敛踩坑红线] Clone Mode B UI。垫心形礼盒只锁medium与：避免「无硬伤」\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+    "built_at": "2026-10-27 23:17:50 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：关闭态更侧，右侧立面露得更多；打开态箱身更正，两态机位还没重合",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "9.11"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：上关下开，圣诞身份还在，树徽跟着盖子，没有厨师箱元素",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.11"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：打开态仍然更正，右侧立面比关闭态窄，机位没有对齐",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "9.11"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：上关下开，圣诞身份稳定，树徽在盖上",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.11"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：打开态仍然更正，右侧立面还是比关闭态窄",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "9.11"
+    },
+    {
+      "category": "ui_9slice",
+      "lesson": "本轮短板偏「ui_9slice」：打开态仍然更正，右侧立面还是比关闭态窄",
+      "drill": "主面板只画九宫格线框 → 再填中心色，确认中心可双向拉伸",
+      "from_score": "9.11"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：上关下开，圣诞身份稳定，树徽在盖上",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.11"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：打开态仍然更正，右侧立面还是比关闭态窄，四轮机位都没对齐",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "9.11"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：上关下开，圣诞身份稳定，树徽在盖上",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.11"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 4,
+  "regression_drop": 0.5,
+  "ActionRequired": "STOP_PICK_BEST",
+  "winner": {
+    "round": 4,
+    "round_label": "第 4 轮精修",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "9:16",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\c__Users_ZhengLangPC_AppData_Roaming_Cursor_User_workspaceStorage_63435cb9bf039051b91ae8cfcd8100a8_images_995d275e03e22a03ed8a2bccf2bffce5-6996f20e-6710-44a1-a76f-7a1c92a580ef.png"
+    ],
+    "param_validation": {
+      "valid": true,
+      "validation_passed": true,
+      "case_id": "xmas-chest-pair",
+      "scale": "recompose",
+      "aspect_ratio": "9:16",
+      "ref_aspect_ratio": "9:16",
+      "ref_dimensions": "469x901",
+      "output_aspect_ratio": "9:16",
+      "output_dimensions": "720x1280",
+      "reference_image": "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\c__Users_ZhengLangPC_AppData_Roaming_Cursor_User_workspaceStorage_63435cb9bf039051b91ae8cfcd8100a8_images_995d275e03e22a03ed8a2bccf2bffce5-6996f20e-6710-44a1-a76f-7a1c92a580ef.png",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\c__Users_ZhengLangPC_AppData_Roaming_Cursor_User_workspaceStorage_63435cb9bf039051b91ae8cfcd8100a8_images_995d275e03e22a03ed8a2bccf2bffce5-6996f20e-6710-44a1-a76f-7a1c92a580ef.png"
+      ],
+      "inherited_default_aspect_ratio": false,
+      "inherited_default_pad_image": false,
+      "matched_ref_aspect_ratio": true,
+      "matched_ref_pad_image": true,
+      "matched_output_aspect_ratio": true,
+      "three_step_stage": "step3_judge",
+      "three_step_verified": true,
+      "warnings": [],
+      "continuation_pad": false,
+      "pad_diverged": true
+    },
+    "generated_at": "23:25:33",
+    "image": "C:\\Users\\ZhengLangPC\\.cursor\\projects\\c-Users-ZhengLangPC-Desktop-Cursor-Pmem-Art\\assets\\xmas-chest-pair-r4.jpg",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 195055,
+      "size_kb": 190.5,
+      "width": 720,
+      "height": 1280,
+      "aspect_ratio": "9:16",
+      "canonical_aspect_ratio": "9:16",
+      "color_entropy": 7.19
+    },
+    "raw_score": 9.11,
+    "score": 9.11,
+    "target_score_threshold": 9.6,
+    "dims": "构图9.3/光影9.1/透视8.7/质感9.2/风格9.2",
+    "dims_parsed": {
+      "composition": 9.3,
+      "lighting_color": 9.1,
+      "perspective_anatomy": 8.7,
+      "texture_detail": 9.2,
+      "spec_style": 9.2
+    },
+    "weighted_score": 9.11,
+    "audit_warnings": [
+      "收敛停滞预警：本轮净增 +0.00 低于当前档位 (recompose) 的最小跃升 +0.20。下一轮更贴近指定构图方向",
+      "Agent Absolute-5D 已采纳（门槛 9.6；像素离线仅为旁证）",
+      "像素离线 Absolute-5D 旁证=8.70，coverage=0.85（仅参考，不改门槛、不替代本模型五维分）"
+    ],
+    "stagnated": true,
+    "strengths": "上关下开，圣诞身份稳定，树徽在盖上",
+    "defects": "打开态仍然更正，右侧立面还是比关闭态窄，四轮机位都没对齐",
+    "next_fix": "打开态要转到和关闭态同一个侧角，右侧立面一样宽",
+    "prompt": "原图画风优先：保画风色板，按「略俯四分之三，上下两态同一机位，上关下开」重构机位| 竖图灰底。上关下开，圣诞箱身份不变。下面的箱子必须是上面那只的同一转角，只把盖子掀开，正面红板要有透视缩短。| 约束：保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观；不偏离指定构图方向",
+    "continuation": false,
+    "passed": false,
+    "gate_blocked": false,
+    "image_gate_blocked": false,
+    "anatomy_score": 8.7,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "unknown",
+    "judge_source": "agent_absolute_5d",
+    "remote_vlm": {
+      "source": "agent_absolute_5d",
+      "provider": "",
+      "model": "",
+      "error": "",
+      "active": false,
+      "offline_advisory": {
+        "version": "v9.1_audit_patch",
+        "score": 8.7,
+        "coverage": 0.85,
+        "rankable": true,
+        "contract": "docs/gpt6sol_absolute_5d_quant_rubric.md",
+        "role": "advisory_only"
+      },
+      "offline_advisory_note": "像素离线 Absolute-5D 旁证=8.70，coverage=0.85（仅参考，不改门槛、不替代本模型五维分）"
+    },
+    "should_continue_next_round": false,
+    "decision": "STOP_MAX_ROUNDS",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "narrative_camera",
+        "lesson": "本轮短板偏「narrative_camera」：打开态仍然更正，右侧立面还是比关闭态窄，四轮机位都没对齐",
+        "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+        "from_score": "9.11"
+      },
+      {
+        "category": "keep",
+        "lesson": "保留本轮已做对的：上关下开，圣诞身份稳定，树徽在盖上",
+        "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+        "from_score": "9.11"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "23:25:40"
+  },
+  "rounds_to_converge": 4,
+  "convergence_badge": "共 4 轮未达阈值，采用最高分"
+}
