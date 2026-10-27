@@ -1,9 +1,9 @@
 ---
 name: pmem-critique
-description: 当用户输入 /pmem-critique 或 /art-check 对现有图片进行审稿挑刺时触发。对照项目历史红线与模块规格进行五维打分，指出不合理之处，并可将问题一键记入 style_redline。
+description: 当用户输入 /pmem-critique 对现有图片进行审稿挑刺时触发。对照项目历史红线与模块规格进行五维打分，指出不合理之处，并可将问题一键记入 style_redline。
 ---
 
-# `/pmem-critique`（别名 `/art-check`）— 主美级五维审稿与红线入库
+# `/pmem-critique` — 主美级五维审稿与红线入库
 
 当用户丢入一张或多张图让 Agent「审一下 / 看看哪里不合理 / 打个分」时执行：
 

@@ -2,7 +2,7 @@
 description: 单图/批量图主美级五维审稿与红线入库（pmem-art）
 ---
 
-# `/pmem-critique`（别名 `/art-check`）— 主美级五维审稿与红线入库
+# `/pmem-critique` — 主美级五维审稿与红线入库
 
 当用户丢入一张或多张图让 Agent「审一下 / 看看哪里不合理 / 打个分」时执行：
 

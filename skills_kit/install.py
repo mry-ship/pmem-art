@@ -70,16 +70,16 @@ def _render_agent_doc_block() -> str:
 
 ### 2. 内置快捷技能（在对话框直接输入 `/技能名` 即可触发）
 
-| 技能指令 | 简短别名 | 用途说明 |
-| :--- | :--- | :--- |
-| **`/pmem-draw`** | **`/art-draw`** | **生图总入口**。玩家点名了类型就听玩家的；没点名则模型自己认，认完直接做。普通图 / 原画 / 克隆 / 变体 / 镜头包在这一条里。旧名 `/pmem-concept`、`/pmem-clone-image`、`/pmem-variant`、`/pmem-lens-propose` 仍锁定对应那一支 |
-| **`/pmem-ui`** | **`/art-ui`** | **整套界面**。概念先行→组件表→九宫格→状态族。判成界面才走，禁止用单张插画代替 |
-| **`/pmem-icon`** | **`/art-icon`** | **图标**。A 桌面母版 / B 线性 SVG / C 道具格，三档不混 |
-| **`/pmem-merge-ladder`** | **`/art-ladder`** | **合成梯**。先过八件关系，再一档一张正方形。`/art-merge` 同这一条。同框只是体量预览，不是成品 |
-| **`/pmem-style-lock`** | **`/art-style`** | **锁风格**。从样张抽色板、光影、禁用词。不进自动生图 |
-| **`/pmem-critique`** | **`/art-check`** | **只审图**。五维挑刺，翻车点记入红线。不生图 |
-| **`/pmem-atlas`** | **`/art-map`** | **归档**。散图归位并刷新 `art-atlas.html` |
-| **`/pmem-coach`** | **`/art-coach`** | **进阶偷看**。进步 / 短板 / 知识合成一条。`/pmem-improve`、`/pmem-learn` 仍可用。知识卡要玩家说收下才写入 |
+| 技能指令 | 用途说明 |
+| :--- | :--- |
+| **`/pmem-draw`** | **生图总入口**。玩家点名了类型就听玩家的；没点名则模型自己认，认完直接做。普通图 / 原画 / 克隆 / 变体 / 镜头包在这一条里 |
+| **`/pmem-ui`** | **整套界面**。概念先行→组件表→九宫格→状态族。判成界面才走，禁止用单张插画代替 |
+| **`/pmem-icon`** | **图标**。A 桌面母版 / B 线性 SVG / C 道具格，三档不混 |
+| **`/pmem-merge-ladder`** | **合成梯**。先过八件关系，再一档一张正方形。同框只是体量预览，不是成品 |
+| **`/pmem-style-lock`** | **锁风格**。从样张抽色板、光影、禁用词。不进自动生图 |
+| **`/pmem-critique`** | **只审图**。五维挑刺，翻车点记入红线。不生图 |
+| **`/pmem-atlas`** | **归档**。散图归位并刷新 `art-atlas.html` |
+| **`/pmem-coach`** | **进阶偷看**。进步 / 短板 / 知识合成一条。知识卡要玩家说收下才写入 |
 
 ### 3. 评分履历可见 · 记忆静默写入（默认）
 - 闭环每轮须向用户展示：五维分、不足、下一轮改点；`converge finish` 默认打印全轮评分履历并写记忆（`--no-apply` 可跳过；只要终稿加 `--quiet`）。
@@ -126,7 +126,7 @@ def install_skills_and_agent_configs(root: Path, quiet: bool = False) -> dict[st
     }
 
     for spec in SKILL_SPECS:
-        # One skill folder per contract. Old slash names stay as commands, not extra skills.
+        # One skill folder and one /pmem- command per contract.
         for base in (root / ".cursor" / "skills", root / ".claude" / "skills", root / ".agents" / "skills"):
             skill_path = base / spec["name"] / "SKILL.md"
             skill_path.parent.mkdir(parents=True, exist_ok=True)
@@ -148,6 +148,7 @@ def install_skills_and_agent_configs(root: Path, quiet: bool = False) -> dict[st
                     installed[key].append(str(cmd.relative_to(root)))
 
     _prune_retired_skill_dirs(root)
+    _prune_retired_commands(root)
 
     # 4. Upsert CLAUDE.md and AGENTS.md
     claude_md = root / "CLAUDE.md"
@@ -176,12 +177,9 @@ def install_skills_and_agent_configs(root: Path, quiet: bool = False) -> dict[st
     installed["agent_docs"].append(".cursor/rules/pmem-art.mdc")
 
     if not quiet:
-        entry_count = sum(len(command_names(spec)) for spec in SKILL_SPECS)
-        print(f"✨ 已自动安装 pmem-art {len(SKILL_SPECS)} 项美术技能（斜杠入口 {entry_count} 个，旧名仍指向合并后的合同）到 Cursor / Claude Code / Codex：")
+        print(f"✨ 已自动安装 pmem-art {len(SKILL_SPECS)} 项美术技能（每个技能一个 /pmem- 入口）到 Cursor / Claude Code / Codex：")
         for spec in SKILL_SPECS:
-            extras = [n for n in command_names(spec) if n != spec["name"]]
-            extra_txt = " ".join(f"/{n}" for n in extras)
-            print(f"   · /{spec['name']:<18} {extra_txt} — {spec['title']}")
+            print(f"   · /{spec['name']:<18} — {spec['title']}")
         print("   · 安装路径: .cursor/{skills,commands}/ · .claude/{skills,commands}/ · .agents/skills/ · CLAUDE.md · AGENTS.md · .cursor/rules/pmem-art.mdc")
     return installed
 
@@ -189,12 +187,23 @@ def install_skills_and_agent_configs(root: Path, quiet: bool = False) -> dict[st
 _OWNED_SKILL_PREFIXES = ("pmem-", "art-", "source-command-pmem-", "source-command-art-")
 
 
-def _prune_retired_skill_dirs(root: Path) -> None:
-    """Drop skill folders that are no longer their own contract.
+def _prune_retired_commands(root: Path) -> None:
+    """Delete slash commands that are no longer a /pmem- skill."""
+    keep = {spec["name"] for spec in SKILL_SPECS}
+    for folder in (
+        root / ".cursor" / "commands",
+        root / ".claude" / "commands",
+        root / ".agents" / "commands",
+    ):
+        if not folder.exists():
+            continue
+        for child in list(folder.glob("*.md")):
+            if child.stem.startswith(_OWNED_SKILL_PREFIXES) and child.stem not in keep:
+                child.unlink()
 
-    Slash commands for old names are rewritten above. Leaving the old skill
-    folders would make the model pick a second, conflicting contract.
-    """
+
+def _prune_retired_skill_dirs(root: Path) -> None:
+    """Drop skill folders that are no longer their own contract."""
     keep = {spec["name"] for spec in SKILL_SPECS}
     for base in (root / ".cursor" / "skills", root / ".claude" / "skills", root / ".agents" / "skills"):
         if not base.exists():

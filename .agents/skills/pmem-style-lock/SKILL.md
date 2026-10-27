@@ -1,9 +1,9 @@
 ---
 name: pmem-style-lock
-description: 当用户输入 /pmem-style-lock 或 /art-style 并附带样张/参考图时触发。自动解构样张的主辅色板 HEX、光影法则、笔触特征与禁用词，一键锁定为项目或模块的风格基准（art_decision + recipe）。
+description: 当用户输入 /pmem-style-lock 并附带样张/参考图时触发。自动解构样张的主辅色板 HEX、光影法则、笔触特征与禁用词，一键锁定为项目或模块的风格基准（art_decision + recipe）。
 ---
 
-# `/pmem-style-lock`（别名 `/art-style`）— 样张提炼风格圣经与色板锁定
+# `/pmem-style-lock` — 样张提炼风格圣经与色板锁定
 
 当用户丢入 1~3 张满意的样张或概念图，希望「以后项目/这个角色就按这个画风来」时执行：
 

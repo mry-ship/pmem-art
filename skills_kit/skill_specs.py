@@ -13,42 +13,19 @@ from ._time import _now_cst
 SKILL_SPECS: list[dict[str, Any]] = [
     {
         "name": "pmem-draw",
-        "alias": "art-draw",
-        "aliases": [
-            "art-draw",
-            "pmem-concept",
-            "art-concept",
-            "pmem-clone-image",
-            "art-clone",
-            "pmem-variant",
-            "art-variant",
-            "pmem-lens-propose",
-            "art-lens",
-        ],
-        "alias_routes": {
-            "pmem-concept": "原画",
-            "art-concept": "原画",
-            "pmem-clone-image": "克隆",
-            "art-clone": "克隆",
-            "pmem-variant": "变体",
-            "art-variant": "变体",
-            "pmem-lens-propose": "镜头包",
-            "art-lens": "镜头包",
-        },
         "title": "【强制4轮≥9.6收敛】生图总入口：先认类型再进对应合同",
         "description": (
             "玩家要生图时使用。玩家点名了原画、克隆、变体、镜头包、界面、图标或合成梯就听玩家的；"
             "没点名则看这句话和附图自己认，认完直接做，不问选哪条技能。"
             "普通图、原画、克隆、变体、镜头包在本技能里做。整套 UI、图标集、合成梯读对应技能再做，禁止用单张插画合同代替。"
-            "旧入口 /pmem-concept、/pmem-clone-image、/pmem-variant、/pmem-lens-propose 及其 art 别名仍可用，点名即锁定该支。"
         ),
-        "body": r"""# `/pmem-draw`（别名 `/art-draw`）— 生图总入口
+        "body": r"""# `/pmem-draw` — 生图总入口
 
 玩家点名了类型就听玩家的。没点名就看这句话和附图自己认，认完直接往下做，中间不再让人选技能。先回显一句，例如「按原画走了」。这句只供改口，不等确认。
 
 ## 零、先认类型（一次只走一支）
 
-点名锁定优先于模型判断。文件开头若写着「点名锁定」，就用那一支。
+玩家这句话里点了类型，就按点名走，不要改判。
 
 | 认成 | 什么时候 | 接着做什么 |
 | :--- | :--- | :--- |
@@ -107,7 +84,7 @@ SKILL_SPECS: list[dict[str, Any]] = [
    ```bash
    python3 pmem_art.py converge start --goal "<用户目标描述>" --module <目标模块> [--mode quality|fast] [--scale low|medium|high|recompose] [--recompose-dir "<新构图方向>"] [--ref-image <参考图>] [--ref-analysis "<参考图分析>"]
    ```
-   - 默认 `--mode quality` = 完整 8×≥9.6。
+   - 默认 `--mode quality` = 完整 4 轮、合格线 ≥9.6。
    - `--scale`：`low` 贴原修瑕 · `medium` 小优化锁机位（默认）· `high` 大胆跃升+可叙事 · `recompose` 须配 `--recompose-dir`。
    - `--mode fast`：warm-start 置信度高时可走 **fast track**（仍须每张打分；最终采纳默认仍要 ≥9.6，除非用户明确说「草稿/fast/先看看」）。
    - 把打印出的 **Warm-Start `prompt_block` 完整并入第 1 轮 Prompt**。
@@ -186,7 +163,7 @@ python3 pmem_art.py converge judge \
 python3 pmem_art.py converge finish
 ```
 该命令会自动：
-1. 选出达标轮次（`>= 9.6`）或全阶段最高分轮次（`Best of 8`）。
+1. 选出达标轮次（`>= 9.6`）或全阶段最高分轮次（`Best of 4`）。
 2. 将最终胜出图通过 `ingest` / `feedback` 写入 `.memory-art` 的 `recipe`（正向定稿锚点），并把迭代过程中暴露的典型不合理点写入 `style_redline` / `visual_correction`。
 3. 生成并**默认打印**标准 Markdown 评分履历表（只要一行结论时加 `--quiet`）。
 
@@ -260,13 +237,12 @@ improve/coach/learn 推销仅在用户主动要时再给。
     },
     {
         "name": "pmem-style-lock",
-        "alias": "art-style",
         "title": "参考图/样张一键提炼风格圣经与色板锁定",
         "description": (
-            "当用户输入 /pmem-style-lock 或 /art-style 并附带样张/参考图时触发。"
+            "当用户输入 /pmem-style-lock 并附带样张/参考图时触发。"
             "自动解构样张的主辅色板 HEX、光影法则、笔触特征与禁用词，一键锁定为项目或模块的风格基准（art_decision + recipe）。"
         ),
-        "body": r"""# `/pmem-style-lock`（别名 `/art-style`）— 样张提炼风格圣经与色板锁定
+        "body": r"""# `/pmem-style-lock` — 样张提炼风格圣经与色板锁定
 
 当用户丢入 1~3 张满意的样张或概念图，希望「以后项目/这个角色就按这个画风来」时执行：
 
@@ -283,13 +259,12 @@ improve/coach/learn 推销仅在用户主动要时再给。
     },
     {
         "name": "pmem-critique",
-        "alias": "art-check",
         "title": "单图/批量图主美级五维审稿与红线入库",
         "description": (
-            "当用户输入 /pmem-critique 或 /art-check 对现有图片进行审稿挑刺时触发。"
+            "当用户输入 /pmem-critique 对现有图片进行审稿挑刺时触发。"
             "对照项目历史红线与模块规格进行五维打分，指出不合理之处，并可将问题一键记入 style_redline。"
         ),
-        "body": r"""# `/pmem-critique`（别名 `/art-check`）— 主美级五维审稿与红线入库
+        "body": r"""# `/pmem-critique` — 主美级五维审稿与红线入库
 
 当用户丢入一张或多张图让 Agent「审一下 / 看看哪里不合理 / 打个分」时执行：
 
@@ -306,13 +281,12 @@ improve/coach/learn 推销仅在用户主动要时再给。
     },
     {
         "name": "pmem-atlas",
-        "alias": "art-map",
         "title": "一键归档散图、记忆体检并刷新可视化图谱工作台",
         "description": (
-            "当用户输入 /pmem-atlas 或 /art-map 时触发。"
+            "当用户输入 /pmem-atlas 时触发。"
             "自动扫描归位未分类散图、运行管线与记忆过期体检，并重新生成 art-atlas.html。"
         ),
-        "body": r"""# `/pmem-atlas`（别名 `/art-map`）— 整理散图与刷新可视化图谱
+        "body": r"""# `/pmem-atlas` — 整理散图与刷新可视化图谱
 
 当用户想阶段性整理项目里的生成图、查看目前积累了多少条红线与定稿配方时执行：
 
@@ -335,22 +309,21 @@ improve/coach/learn 推销仅在用户主动要时再给。
 
     {
         "name": "pmem-ui",
-        "alias": "art-ui",
         "title": "【强制4轮≥9.6收敛】SpriteCook式 UI Kit/HUD/九宫格整套",
         "description": (
             "仅当玩家点名 UI/HUD/九宫格，或生图分流判成整套界面时使用。不要用来画普通插画、单张克隆或合成梯。"
             "概念稿与关键组件均强制「最多4轮、合格线≥9.6」闭环自评收敛（生1张→打分挑刺→展示不足与改点→<9.6叠加修正→满4轮挑最高分→评分履历可见）。"
             "流水线对标 SpriteCook：概念先行 → 透明组件表 → 九宫格切线 → 状态族。"
-            "触发例：「/pmem-ui 生成一套蒸汽朋克主菜单 HUD」「/art-ui [附概念图] 拆出九宫格弹窗与按钮态」。"
+            "触发例：「/pmem-ui 生成一套蒸汽朋克主菜单 HUD」「/pmem-ui [附概念图] 拆出九宫格弹窗与按钮态」。"
         ),
-        "body": r"""# `/pmem-ui`（别名 `/art-ui`）— SpriteCook 式 UI Kit / HUD / 九宫格整套生成
+        "body": r"""# `/pmem-ui` — SpriteCook 式 UI Kit / HUD / 九宫格整套生成
 
 只在玩家点名界面，或 `/pmem-draw` 判成「界面」之后执行。不要用单张插画合同代替这套管线。
 
 ## 怎么用（复制即用）
 ```text
 /pmem-ui 生成一套青瓷幻想风主菜单：九宫格面板 + 按钮 normal/pressed/disabled
-/art-ui 做一套蒸汽朋克战斗 HUD（血条空满、技能槽），透明底
+/pmem-ui 做一套蒸汽朋克战斗 HUD（血条空满、技能槽），透明底
 /pmem-ui [拖入概念图] 按概念拆出主面板九宫格、主按钮四态、进度条空/满、Tab 两态
 ```
 
@@ -427,14 +400,13 @@ python3 pmem_art.py feedback "UI套件色板与九宫格规范：<摘要>" --mod
 
 
 ## 记忆静默 / 履历可见（Agent 必读）
-- `converge finish` 后系统自动写反思/口味/learn 队列——**无需**再跑 `/pmem-improve`。
+- `converge finish` 后系统自动写反思/口味/learn 队列——**无需**再跑 `/pmem-coach`。
 - 对用户默认展示：**每轮五维分 + 不足 + 改点 + 胜出图 + 全轮履历**；若有「小提示」原样转述（每会话最多 1 条）。**禁止**旁白记忆写入。
 - 只要终稿：`--quiet`。教练 / 广度：用户明确要求或进阶技能时再给。
 """,
     },
     {
         "name": "pmem-icon",
-        "alias": "art-icon",
         "title": "【强制4轮≥9.6收敛】iOS/Android App Icon 应用图标母版 + jezweb式一致化 SVG 图标集 + 游戏道具栅格图标",
         "description": (
             "仅当玩家点名图标，或生图分流判成桌面图标、SVG 图标集、游戏道具格时使用。A/B/C 不混用。不要用来画普通插画或合成梯。"
@@ -442,25 +414,25 @@ python3 pmem_art.py feedback "UI套件色板与九宫格规范：<摘要>" --mod
             "(B) jezweb 式一致化 SVG 矢量图标集；(C) 游戏道具 64/128/256px 透明底栅格图标。"
             "全部支持 converge generate 与 converge judge 两步分离，以及动态阈值收敛闭环。"
         ),
-        "body": r"""# `/pmem-icon`（别名 `/art-icon`）— jezweb 式一致化图标集 / SVG 取向生成
+        "body": r"""# `/pmem-icon` — jezweb 式一致化图标集 / SVG 取向生成
 
 只在玩家点名图标，或 `/pmem-draw` 判成「图标」之后执行。先分 A/B/C，三条不混用。单张「按这张画风换一个新道具」走 `/pmem-draw` 的克隆合同，不在这里做成一整套。
 
 ## 怎么用（复制即用）
 ```text
 /pmem-icon 给本项目做一套 24px Clean 预设导航+背包图标（SVG），输出 style-spec 与 preview.html
-/art-icon home settings inventory craft map quest
+/pmem-icon home settings inventory craft map quest
 /pmem-icon [拖入品牌样张] 按这个线宽与圆角补齐：phone email location
 ```
 
 ## 原理（截图摘要）
-1. 先锁 **style-spec** → 2. SVG 硬规则 → 3. 分批生成 → 4. 交付 preview → 5. 关键枚 **Warm-Start + 8×≥9.6** → 6. 反思 / improve / learn 扩图标技法卡
+1. 先锁 **style-spec** → 2. SVG 硬规则 → 3. 分批生成 → 4. 交付 preview → 5. 关键枚 **Warm-Start + 最多 4 轮 ≥9.6** → 6. 反思写进记忆，要看报告再用 /pmem-coach
 
 你现在运行在 **pmem-art 图标集模式**（对标 jezweb `icon-set-generator`）：先锁 **一份 style-spec**，再批量生成，保证 stroke、圆角、视口、视觉重量一致——**禁止**从 Lucide/Heroicons 随便拼一套「看起来差不多」的通用库图标冒充项目定制集。
 
 ---
 
-## 一、三大模式分流（入口 `/pmem-icon` · `/art-icon` 保持不变，按需求进对应分节，严禁串味）
+## 一、三大模式分流（入口只有 `/pmem-icon`，按需求进对应分节，严禁串味）
 - **【Mode A · App Icon 1024 母版】**（手机桌面启动图标 / iOS App Store / Android Adaptive / 产品 Logo）→ 直接跳至下方 **「## 二之二、Mode A：App Icon 1024×1024 母版专项」**（满幅直角 + 72%–80% 安全区 + 微立体光影，不用 SVG 规则）。
 - **【Mode B · 24px 线性 SVG 图标集】**（网页 / App 导航栏 / HUD 矢量图标）→ 执行下方 **「## 二、Mode B：一致化 SVG 矢量图标集流程」**（只用 `currentColor` + 统一 stroke/viewBox）。
 - **【Mode C · 游戏道具栅格图标】**（背包 64/128/256px 透明底 PNG 道具）→ 执行下方 **「## 二之三、Mode C：游戏道具透明底栅格图标」**（锁描边/色板/投影，不用 SVG 代码）。
@@ -566,37 +538,29 @@ python3 pmem_art.py converge judge --session appicon --round 1 --image app_icon_
 - [ ] 若跑了收敛：默认展示每轮评分/不足/改点 + 胜出图（只要终稿用 --quiet）
 
 ## 记忆静默 / 履历可见（Agent 必读）
-- `converge finish` 后系统自动写反思/口味/learn 队列——**无需**再跑 `/pmem-improve`。
+- `converge finish` 后系统自动写反思/口味/learn 队列——**无需**再跑 `/pmem-coach`。
 - 对用户默认展示：**每轮五维分 + 不足 + 改点 + 胜出图 + 全轮履历**；若有「小提示」原样转述（每会话最多 1 条）。**禁止**旁白记忆写入。
 - 只要终稿：`--quiet`。教练 / 广度：用户明确要求或进阶技能时再给。
 """,
     },
     {
         "name": "pmem-coach",
-        "alias": "art-coach",
-        "aliases": ["art-coach", "pmem-improve", "art-improve", "pmem-learn", "art-learn"],
-        "alias_routes": {
-            "pmem-improve": "进步",
-            "art-improve": "进步",
-            "pmem-learn": "知识",
-            "art-learn": "知识",
-        },
         "title": "【进阶/可选】进步、短板与知识卡（日常已静默写过）",
         "description": (
-            "玩家要看进步、口味、短板练习或知识卡时使用。/pmem-improve、/pmem-learn 及其 art 别名并进这一条。"
+            "玩家要看进步、口味、短板练习或知识卡时使用。只有 /pmem-coach 这一条。"
             "日常 converge finish 已经在后台写过，不要主动推销。知识卡没有玩家明确说收下，就不要写入。"
         ),
         "body": r"""# `/pmem-coach` — 进步 / 短板 / 知识（三条偷看合成一条）
 
 日常 `converge finish` 已经在后台写过反思、口味和知识队列。只有玩家来要报告时才跑。一次只出一份，不要把三份一起倒出来。
 
-文件开头若写着「点名锁定」，就按锁定的那一支。否则看用词：
+看玩家这句话里要哪一份。没点明就只出短板。
 
 | 玩家在说 | 跑 |
 | :--- | :--- |
-| `/pmem-improve`、`/art-improve`、总结、进步、口味 | 进步 |
-| `/pmem-learn`、`/art-learn`、知识、技法、广度 | 知识 |
-| `/pmem-coach`、`/art-coach`、短板、练习、练什么，或没点明 | 短板 |
+| 总结、进步、口味 | 进步 |
+| 知识、技法、广度 | 知识 |
+| 短板、练习、练什么，或没点明 | 短板 |
 
 ## 进步
 ```bash
@@ -622,21 +586,15 @@ python3 pmem_art.py learn list
     },
     {
         "name": "pmem-merge-ladder",
-        "alias": "art-ladder",
-        "aliases": ["art-ladder", "art-merge"],
-        "alias_routes": {
-            "art-ladder": "合成梯",
-            "art-merge": "合成梯",
-        },
         "title": "同域合成梯：先过八件关系，再逐张抬到 ≥9.6",
         "description": (
             "玩家要一条同域合成升级梯，或生图分流判成合成梯时使用。"
-            "/art-ladder、/art-merge、/pmem-merge-ladder 都走这一条：先文字定稿八件关系，再每一档单独一张正方形。"
+            "只有 /pmem-merge-ladder：先文字定稿八件关系，再每一档单独一张正方形。"
             "同框整梯只作体量预览，不是交付物。关系讨论固定 8 稿，合成说不通就不能出图；第二段跑图最多 4 轮。"
         ),
-        "body": r"""# `/pmem-merge-ladder`（别名 `/art-ladder`、`/art-merge`）— 同域合成梯
+        "body": r"""# `/pmem-merge-ladder` — 同域合成梯
 
-一条合同。玩家用哪个旧名字进来都一样，不要再分成「整梯同框交货」和「一档一张」两套。
+一条合同。同框不是交货，交货是一档一张正方形。
 
 交付物是八张同样大的正方形，每张只有一件、居中。16:9 八格同框只允许当体量预览；预览切格切进了邻件，整张预览作废，不能拿去当成品。
 

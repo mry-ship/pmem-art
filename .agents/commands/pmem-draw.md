@@ -2,13 +2,13 @@
 description: 【强制4轮≥9.6收敛】生图总入口：先认类型再进对应合同（pmem-art）
 ---
 
-# `/pmem-draw`（别名 `/art-draw`）— 生图总入口
+# `/pmem-draw` — 生图总入口
 
 玩家点名了类型就听玩家的。没点名就看这句话和附图自己认，认完直接往下做，中间不再让人选技能。先回显一句，例如「按原画走了」。这句只供改口，不等确认。
 
 ## 零、先认类型（一次只走一支）
 
-点名锁定优先于模型判断。文件开头若写着「点名锁定」，就用那一支。
+玩家这句话里点了类型，就按点名走，不要改判。
 
 | 认成 | 什么时候 | 接着做什么 |
 | :--- | :--- | :--- |
@@ -67,7 +67,7 @@ description: 【强制4轮≥9.6收敛】生图总入口：先认类型再进对
    ```bash
    python3 pmem_art.py converge start --goal "<用户目标描述>" --module <目标模块> [--mode quality|fast] [--scale low|medium|high|recompose] [--recompose-dir "<新构图方向>"] [--ref-image <参考图>] [--ref-analysis "<参考图分析>"]
    ```
-   - 默认 `--mode quality` = 完整 8×≥9.6。
+   - 默认 `--mode quality` = 完整 4 轮、合格线 ≥9.6。
    - `--scale`：`low` 贴原修瑕 · `medium` 小优化锁机位（默认）· `high` 大胆跃升+可叙事 · `recompose` 须配 `--recompose-dir`。
    - `--mode fast`：warm-start 置信度高时可走 **fast track**（仍须每张打分；最终采纳默认仍要 ≥9.6，除非用户明确说「草稿/fast/先看看」）。
    - 把打印出的 **Warm-Start `prompt_block` 完整并入第 1 轮 Prompt**。
@@ -146,7 +146,7 @@ python3 pmem_art.py converge judge \
 python3 pmem_art.py converge finish
 ```
 该命令会自动：
-1. 选出达标轮次（`>= 9.6`）或全阶段最高分轮次（`Best of 8`）。
+1. 选出达标轮次（`>= 9.6`）或全阶段最高分轮次（`Best of 4`）。
 2. 将最终胜出图通过 `ingest` / `feedback` 写入 `.memory-art` 的 `recipe`（正向定稿锚点），并把迭代过程中暴露的典型不合理点写入 `style_redline` / `visual_correction`。
 3. 生成并**默认打印**标准 Markdown 评分履历表（只要一行结论时加 `--quiet`）。
 

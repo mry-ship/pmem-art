@@ -2,14 +2,14 @@
 description: 【强制4轮≥9.6收敛】SpriteCook式 UI Kit/HUD/九宫格整套（pmem-art）
 ---
 
-# `/pmem-ui`（别名 `/art-ui`）— SpriteCook 式 UI Kit / HUD / 九宫格整套生成
+# `/pmem-ui` — SpriteCook 式 UI Kit / HUD / 九宫格整套生成
 
 只在玩家点名界面，或 `/pmem-draw` 判成「界面」之后执行。不要用单张插画合同代替这套管线。
 
 ## 怎么用（复制即用）
 ```text
 /pmem-ui 生成一套青瓷幻想风主菜单：九宫格面板 + 按钮 normal/pressed/disabled
-/art-ui 做一套蒸汽朋克战斗 HUD（血条空满、技能槽），透明底
+/pmem-ui 做一套蒸汽朋克战斗 HUD（血条空满、技能槽），透明底
 /pmem-ui [拖入概念图] 按概念拆出主面板九宫格、主按钮四态、进度条空/满、Tab 两态
 ```
 
@@ -86,6 +86,6 @@ python3 pmem_art.py feedback "UI套件色板与九宫格规范：<摘要>" --mod
 
 
 ## 记忆静默 / 履历可见（Agent 必读）
-- `converge finish` 后系统自动写反思/口味/learn 队列——**无需**再跑 `/pmem-improve`。
+- `converge finish` 后系统自动写反思/口味/learn 队列——**无需**再跑 `/pmem-coach`。
 - 对用户默认展示：**每轮五维分 + 不足 + 改点 + 胜出图 + 全轮履历**；若有「小提示」原样转述（每会话最多 1 条）。**禁止**旁白记忆写入。
 - 只要终稿：`--quiet`。教练 / 广度：用户明确要求或进阶技能时再给。

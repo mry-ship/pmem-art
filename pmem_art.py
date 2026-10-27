@@ -1462,7 +1462,7 @@ def main() -> int:
     p_conv.add_argument("--silent", action="store_true", help="同 --quiet（兼容旧参数）")
     p_conv.add_argument("--no-silent", action="store_true", help="兼容旧参数：强制打印评分履历（现为默认）")
 
-    p_improve = sub.add_parser("improve", help="自我迭代：扫描反思+反馈 → 更新口味档案（/pmem-improve）")
+    p_improve = sub.add_parser("improve", help="自我迭代：扫描反思+反馈 → 更新口味档案（/pmem-coach）")
     p_improve.add_argument("action", nargs="?", default="run", choices=("run", "progress", "reflect"), help="run|progress|reflect")
     p_improve.add_argument("--last", type=int, default=20, help="扫描最近 N 份反思")
     p_improve.add_argument("--dry-run", action="store_true", help="只报告不写档案")
@@ -1479,7 +1479,7 @@ def main() -> int:
     p_coach = sub.add_parser("coach", help="能力教练：短板→练习→下一张目标（/pmem-coach）")
     p_coach.add_argument("--last", type=int, default=20, help="扫描最近 N 份反思")
 
-    p_learn = sub.add_parser("learn", help="双层知识广度扩展 suggest|accept|list|promote（/pmem-learn）")
+    p_learn = sub.add_parser("learn", help="双层知识广度扩展 suggest|accept|list|promote（/pmem-coach）")
     p_learn.add_argument("action", nargs="?", default="suggest", choices=("suggest", "accept", "list", "propose", "promote"), help="子操作")
     p_learn.add_argument("--limit", type=int, default=5, help="建议条数")
     p_learn.add_argument("--all", dest="accept_all", action="store_true", help="accept 全部建议")

@@ -3,25 +3,25 @@ name: pmem-icon
 description: 仅当玩家点名图标，或生图分流判成桌面图标、SVG 图标集、游戏道具格时使用。A/B/C 不混用。不要用来画普通插画或合成梯。(A) iOS/Android 1024×1024 App Icon 桌面启动图标母版（满幅直角出图+72%~80%圆角安全区+多尺寸导出矩阵+深浅色自适应）；(B) jezweb 式一致化 SVG 矢量图标集；(C) 游戏道具 64/128/256px 透明底栅格图标。全部支持 converge generate 与 converge judge 两步分离，以及动态阈值收敛闭环。
 ---
 
-# `/pmem-icon`（别名 `/art-icon`）— jezweb 式一致化图标集 / SVG 取向生成
+# `/pmem-icon` — jezweb 式一致化图标集 / SVG 取向生成
 
 只在玩家点名图标，或 `/pmem-draw` 判成「图标」之后执行。先分 A/B/C，三条不混用。单张「按这张画风换一个新道具」走 `/pmem-draw` 的克隆合同，不在这里做成一整套。
 
 ## 怎么用（复制即用）
 ```text
 /pmem-icon 给本项目做一套 24px Clean 预设导航+背包图标（SVG），输出 style-spec 与 preview.html
-/art-icon home settings inventory craft map quest
+/pmem-icon home settings inventory craft map quest
 /pmem-icon [拖入品牌样张] 按这个线宽与圆角补齐：phone email location
 ```
 
 ## 原理（截图摘要）
-1. 先锁 **style-spec** → 2. SVG 硬规则 → 3. 分批生成 → 4. 交付 preview → 5. 关键枚 **Warm-Start + 8×≥9.6** → 6. 反思 / improve / learn 扩图标技法卡
+1. 先锁 **style-spec** → 2. SVG 硬规则 → 3. 分批生成 → 4. 交付 preview → 5. 关键枚 **Warm-Start + 最多 4 轮 ≥9.6** → 6. 反思写进记忆，要看报告再用 /pmem-coach
 
 你现在运行在 **pmem-art 图标集模式**（对标 jezweb `icon-set-generator`）：先锁 **一份 style-spec**，再批量生成，保证 stroke、圆角、视口、视觉重量一致——**禁止**从 Lucide/Heroicons 随便拼一套「看起来差不多」的通用库图标冒充项目定制集。
 
 ---
 
-## 一、三大模式分流（入口 `/pmem-icon` · `/art-icon` 保持不变，按需求进对应分节，严禁串味）
+## 一、三大模式分流（入口只有 `/pmem-icon`，按需求进对应分节，严禁串味）
 - **【Mode A · App Icon 1024 母版】**（手机桌面启动图标 / iOS App Store / Android Adaptive / 产品 Logo）→ 直接跳至下方 **「## 二之二、Mode A：App Icon 1024×1024 母版专项」**（满幅直角 + 72%–80% 安全区 + 微立体光影，不用 SVG 规则）。
 - **【Mode B · 24px 线性 SVG 图标集】**（网页 / App 导航栏 / HUD 矢量图标）→ 执行下方 **「## 二、Mode B：一致化 SVG 矢量图标集流程」**（只用 `currentColor` + 统一 stroke/viewBox）。
 - **【Mode C · 游戏道具栅格图标】**（背包 64/128/256px 透明底 PNG 道具）→ 执行下方 **「## 二之三、Mode C：游戏道具透明底栅格图标」**（锁描边/色板/投影，不用 SVG 代码）。
@@ -127,6 +127,6 @@ python3 pmem_art.py converge judge --session appicon --round 1 --image app_icon_
 - [ ] 若跑了收敛：默认展示每轮评分/不足/改点 + 胜出图（只要终稿用 --quiet）
 
 ## 记忆静默 / 履历可见（Agent 必读）
-- `converge finish` 后系统自动写反思/口味/learn 队列——**无需**再跑 `/pmem-improve`。
+- `converge finish` 后系统自动写反思/口味/learn 队列——**无需**再跑 `/pmem-coach`。
 - 对用户默认展示：**每轮五维分 + 不足 + 改点 + 胜出图 + 全轮履历**；若有「小提示」原样转述（每会话最多 1 条）。**禁止**旁白记忆写入。
 - 只要终稿：`--quiet`。教练 / 广度：用户明确要求或进阶技能时再给。
