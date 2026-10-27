@@ -63,3 +63,10 @@ comparison/pmem_vs_market_showcase.html
 !docs/showcase/v8_frames/**
 !docs/showcase/skills-homepage/
 !docs/showcase/skills-homepage/**
+
+# Local Grok converge artifacts (publish curated docs/showcase/grok_best only)
+generated_v8_20_skill_grok/
+generated_v8_20_skill_grok_*/
+generated_v8_20_skill_v2fix/
+/images/
+*.tar.gz
