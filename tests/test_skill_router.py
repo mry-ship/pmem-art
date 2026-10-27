@@ -72,9 +72,10 @@ class SkillRouterTests(unittest.TestCase):
         self.assertIn("过程板", draw)
         self.assertIn("converge discuss", _spec("pmem-merge-ladder")["body"])
         merge_body = _spec("pmem-merge-ladder")["body"]
-        self.assertIn("最多改 **8 稿**", merge_body)
+        self.assertIn("固定 **3 稿**", merge_body)
+        self.assertIn("不再拉到 8 稿", merge_body)
+        self.assertIn("画风已经写成一句", merge_body)
         self.assertIn("合成说不通，仍然不算定稿", merge_body)
-        self.assertIn("不能拿来缩短这里", merge_body)
 
         merge = _spec("pmem-merge-ladder")["body"]
         self.assertIn("relation-judge", merge)
@@ -93,7 +94,12 @@ class SkillRouterTests(unittest.TestCase):
 
         console = _spec("pmem-agent")["body"]
         self.assertIn("总控自己不生图", console)
-        self.assertIn("两句相同", console)
+        self.assertIn("固定 2 轮", console)
+        self.assertIn("查合理性", console)
+        self.assertIn("理解错误", console)
+        self.assertIn("不要替玩家挑一个合理的", console)
+        self.assertNotIn("不合理的改合理", console)
+        self.assertIn("定稿是第 2 轮", console)
         self.assertIn("打回给玩家一起矫正", console)
         self.assertIn("不进入第二段", console)
         self.assertIn("格式不改", console)

@@ -55,7 +55,7 @@ python3 pmem_art.py skills --install
 ## 日常怎么用（Skill）
 
 ```text
-1. 没点名技能     走 /pmem-agent。最多 4 轮收成同一句需求；收不稳就打回，不生图
+1. 没点名技能     走 /pmem-agent。固定 2 轮，第 2 轮查合理性、缺漏和理解错误；还不确定就打回，不生图
 2. 丢图（可选）   参考图全部留下。交出去之前不收成一张
 3. 选档           --scale low | medium | high | recompose
 4. 出图           生 1 张 → 打分挑刺 → 不到 9.60 就改（最多 4 轮）
@@ -66,7 +66,7 @@ python3 pmem_art.py skills --install
 
 点名了某一条，就跳过总控，直接走那一条。
 
-合成梯多一步：先用文字把八件关系谈到说通（最多 8 稿，这一段不出图），通过后再按上面的 4 轮出图。同框大图只是体量预览。
+合成梯多一步：先用 3 稿把八件升级链和画风定清楚（这一段不出图），说不通就不出图，通过后再按上面的 4 轮出图。同框大图只是体量预览。
 
 ### 复制即用
 
@@ -92,7 +92,7 @@ python3 pmem_art.py skills --install
 <tr><td>2</td><td>生图</td><td><code>/pmem-draw</code></td><td>普通图、原画、克隆、变体或镜头包。生图最多 4 轮，合格线 ≥9.6。结算给一张可点开的过程板。有参考但没说新题材时，不进克隆。</td></tr>
 <tr><td>3</td><td>界面</td><td><code>/pmem-ui</code></td><td>一整套 HUD / 菜单 / 九宫格。不用单张插画代替。</td></tr>
 <tr><td>4</td><td>图标</td><td><code>/pmem-icon</code></td><td>三档不混：A 桌面母版、B 线性 SVG、C 道具格。</td></tr>
-<tr><td>5</td><td>合成梯</td><td><code>/pmem-merge-ladder</code></td><td>先用文字过八件关系（最多 8 稿，说不通就不出图），再一档一张正方形。同框只是体量预览。出图最多 4 轮。八稿论述和出图轮都留在过程板上。</td></tr>
+<tr><td>5</td><td>合成梯</td><td><code>/pmem-merge-ladder</code></td><td>先用 3 稿把升级链和画风定清楚（说不通就不出图），再一档一张正方形。同框只是体量预览。出图最多 4 轮。论述和出图轮都留在过程板上。</td></tr>
 <tr><td>6</td><td>锁风格</td><td><code>/pmem-style-lock</code></td><td>从样张抽色板、光影、禁用词。不进自动生图。</td></tr>
 <tr><td>7</td><td>审图</td><td><code>/pmem-critique</code></td><td>只打分挑刺，不生图。</td></tr>
 <tr><td>8</td><td>归档</td><td><code>/pmem-atlas</code></td><td>散图归位，刷新 <code>art-atlas.html</code>。</td></tr>
@@ -104,7 +104,7 @@ python3 pmem_art.py skills --install
 
 ### 没点名时
 
-`/pmem-agent` 自己不生图。第一段最多 4 轮，把需求收成同一句：交付物是什么、每张图锁什么、不锁什么。写不清就标「还不确定」。连续两句相同，并且没有「还不确定」，才进入第二段。满 4 轮还对不齐，或者话和图对不上，就打回，一次只问还晃的那一处。
+`/pmem-agent` 自己不生图。固定 2 轮：第 1 轮写出交付物、每张图锁什么、不锁什么；第 2 轮查合理性、缺漏和理解错误。第 2 轮没有「还不确定」，并且话和图对得上，这句就是定稿。还有写不清的地方，就打回，一次只问还晃的那一处。
 
 第二段把定稿、每一张图、现有技能文件交给一个 agent。由它读现稿选一支并执行。回显一句「按 XX 走了」。出图结算仍是那一支自己的过程板。
 

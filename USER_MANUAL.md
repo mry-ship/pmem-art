@@ -43,7 +43,7 @@
 | **`/pmem-draw`** | 生图。普通图、原画、克隆、变体或镜头包，打磨到 9.6。要锁某一支，把「原画 / 克隆 / 变体 / 镜头包」写在句子里 |
 | **`/pmem-ui`** | 一整套 HUD/菜单。判成界面才走 |
 | **`/pmem-icon`** | 图标三档不混：桌面母版、线性 SVG、道具格 |
-| **`/pmem-merge-ladder`** | 合成梯。先过八件关系，再一档一张正方形。同框只是预览 |
+| **`/pmem-merge-ladder`** | 合成梯。先用 3 稿把升级链和画风定清楚，再一档一张正方形。同框只是预览 |
 | **`/pmem-style-lock`** | 从样张锁色板、光影、禁用词。不进自动生图 |
 | **`/pmem-critique`** | 只审图，并可以把毛病记入红线 |
 | **`/pmem-atlas`** | 整理散图，刷新 `art-atlas.html` |
@@ -196,7 +196,7 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-  A[关系讨论最多 8 稿] --> B[六条说通且 relation-judge exit 0]
+  A[3 稿定升级链和画风] --> B[六条说通且 relation-judge exit 0]
   B --> C[每一档单独一张正方形]
   C --> D[像素对上才进第二段]
   D --> E[medium 抬质感 · 最多 4 轮]
@@ -205,7 +205,7 @@ flowchart TD
   F -->|关系散了| H[不算过，回到过关稿改质感]
 ```
 
-同框 16:9 只作体量预览，切坏了就作废，不能当成品。机读数字过了、八件合成说不通，仍然不算定稿，也不能出图。这一段固定 8 稿，不跟着生图的 4 轮缩短。
+同框 16:9 只作体量预览，切坏了就作废，不能当成品。机读数字过了、八件合成说不通，或者画风还没写成一句，仍然不算定稿，也不能出图。这一段固定 3 稿，不再拉到 8 稿。
 
 ---
 
@@ -465,7 +465,7 @@ python3 pmem_art.py coach
 python3 pmem_art.py learn suggest && python3 pmem_art.py learn accept --all
 ```
 
-闭环（v0.13 履历可见）：`warm-start → 生图最多 4 轮、≥9.6（每轮展示评分/不足/改点）→ finish 打印履历 + 记忆静默自动驾驶 → 最多一行小提示 → 越用越好`。合成梯的关系讨论仍是 8 稿，不跟这 4 轮缩短。只要终稿用 `--quiet`；`improve/coach/learn/progress` 为进阶 peek。
+闭环（v0.13 履历可见）：`warm-start → 生图最多 4 轮、≥9.6（每轮展示评分/不足/改点）→ finish 打印履历 + 记忆静默自动驾驶 → 最多一行小提示 → 越用越好`。合成梯的关系讨论是 3 稿，用来定升级链和画风。只要终稿用 `--quiet`；`improve/coach/learn/progress` 为进阶 peek。
 
 ---
 
