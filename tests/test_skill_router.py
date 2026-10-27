@@ -1,4 +1,4 @@
-"""Eight skills, one /pmem- command each."""
+"""Nine skills, one /pmem- command each."""
 from __future__ import annotations
 
 import sys
@@ -15,6 +15,7 @@ from skills_kit.skill_specs import SKILL_SPECS
 
 
 PRIMARY = [
+    "pmem-agent",
     "pmem-draw",
     "pmem-style-lock",
     "pmem-critique",
@@ -42,7 +43,7 @@ def _spec(name: str) -> dict:
 
 
 class SkillRouterTests(unittest.TestCase):
-    def test_eight_primary_contracts(self):
+    def test_primary_contracts(self):
         self.assertEqual([s["name"] for s in SKILL_SPECS], PRIMARY)
         self.assertTrue(set(RETIRED_FOLDERS).isdisjoint(s["name"] for s in SKILL_SPECS))
 
@@ -87,6 +88,23 @@ class SkillRouterTests(unittest.TestCase):
         self.assertIn("再跑一次 audit", merge)
         self.assertNotIn("一次生成整梯 contact sheet", merge)
         self.assertIn("有参考又要换题材的这一张，走克隆", draw)
+        self.assertIn("--reference-image-paths", draw)
+        self.assertIn("不能只看垫进去的那一张就给分", draw)
+
+        console = _spec("pmem-agent")["body"]
+        self.assertIn("总控自己不生图", console)
+        self.assertIn("两句相同", console)
+        self.assertIn("打回给玩家一起矫正", console)
+        self.assertIn("不进入第二段", console)
+        self.assertIn("格式不改", console)
+        self.assertIn("不能在交出去之前收成一张", console)
+        self.assertIn("--reference-image-paths", console)
+        self.assertIn("停和打回的条件与上面相同", console)
+        self.assertNotIn("和上一句相同才停", console)
+        for name in PRIMARY:
+            if name == "pmem-agent":
+                continue
+            self.assertIn(f".cursor/skills/{name}/SKILL.md", console)
 
     def test_install_keeps_one_command_per_skill(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -105,6 +123,7 @@ class SkillRouterTests(unittest.TestCase):
             self.assertNotIn("/art-draw", draw)
             rule = (root / ".cursor" / "rules" / "pmem-art.mdc").read_text(encoding="utf-8")
             self.assertIn("按 XX 走了", rule)
+            self.assertIn("/pmem-agent", rule)
             self.assertIn("不进克隆", rule)
             self.assertNotIn("/art-", rule)
 

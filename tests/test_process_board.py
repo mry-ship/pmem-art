@@ -19,13 +19,18 @@ class ProcessBoardTests(unittest.TestCase):
     def test_board_lists_rounds_and_discussion_and_opens_images(self):
         td = Path(tempfile.mkdtemp())
         real = ROOT / "comparison" / "scale_01_night_city_high.jpg"
+        layout = td / "layout.png"
+        ident = td / "identity.png"
         img = td / "r1.jpg"
+        shutil.copy2(real, layout)
+        shutil.copy2(real, ident)
         shutil.copy2(real, img)
         sess = {
             "session_id": "board-demo",
             "goal": "圣诞箱上下配套",
             "ref_analysis": "图1锁机位，图2锁箱子。",
-            "ref_image": str(img),
+            "ref_image": str(ident),
+            "default_reference_image_paths": [str(layout), str(ident)],
             "discussions": [{
                 "round": 1,
                 "prompt": "八件关系稿",
@@ -47,6 +52,8 @@ class ProcessBoardTests(unittest.TestCase):
         page = index.read_text(encoding="utf-8")
         self.assertIn("参考图分析", page)
         self.assertIn("图1锁机位", page)
+        self.assertIn("<b>图1</b>", page)
+        self.assertIn("<b>图2</b>", page)
         self.assertIn("论述第 1 稿", page)
         self.assertIn("第3行合成说不通", page)
         self.assertIn("第 1 轮 · 9.11", page)

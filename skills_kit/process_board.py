@@ -51,6 +51,31 @@ def _copy_image(src: Path, dest_dir: Path, stem: str) -> str:
     return name
 
 
+def _reference_images(root: Path, sess: dict[str, Any]) -> list[Path]:
+    """Every comparison still, in the order the session recorded them. ref_image alone drops the others."""
+    raw: list[str] = []
+    for key in ("default_reference_image_paths", "reference_image_paths"):
+        val = sess.get(key) or []
+        if isinstance(val, str):
+            raw.extend(part.strip() for part in val.split(",") if part.strip())
+        else:
+            raw.extend(str(part).strip() for part in val if str(part).strip())
+    if sess.get("ref_image"):
+        raw.append(str(sess.get("ref_image")))
+    found: list[Path] = []
+    seen: set[str] = set()
+    for item in raw:
+        path = _find_image(root, item)
+        if path is None:
+            continue
+        key = str(path.resolve()).lower()
+        if key in seen:
+            continue
+        seen.add(key)
+        found.append(path)
+    return found
+
+
 def write_process_board(root: Path, sess: dict[str, Any], *, winner: dict[str, Any] | None = None) -> Path:
     """Write `.memory-art/converge/boards/<session>/index.html` and return that path."""
     root = Path(root)
@@ -65,10 +90,8 @@ def write_process_board(root: Path, sess: dict[str, Any], *, winner: dict[str, A
     win_round = int((winner or sess.get("winner") or {}).get("round") or 0)
     rounds = list(sess.get("rounds") or [])
     discussions = list(sess.get("discussions") or [])
-    ref_name = ""
-    ref_path = _find_image(root, str(sess.get("ref_image") or ""))
-    if ref_path:
-        ref_name = _copy_image(ref_path, img_dir, "ref")
+    ref_paths = _reference_images(root, sess)
+    ref_names = [_copy_image(path, img_dir, f"ref{i}") for i, path in enumerate(ref_paths, start=1)]
 
     cards: list[str] = []
     for row in rounds:
@@ -137,16 +160,19 @@ def write_process_board(root: Path, sess: dict[str, Any], *, winner: dict[str, A
         end = "还没有胜出轮。"
     goal = _esc(sess.get("goal") or session_id)
     ref_block = ""
-    if ref_name or sess.get("ref_analysis"):
-        img = (
-            f'<button type="button" class="shot" data-full="images/{_esc(ref_name)}">'
-            f'<img src="images/{_esc(ref_name)}" alt="参考图"></button>'
-            if ref_name else ""
-        )
+    if ref_names or sess.get("ref_analysis"):
+        ref_cards = []
+        for i, name in enumerate(ref_names, start=1):
+            label = f"图{i}" if len(ref_names) > 1 else "参考图"
+            ref_cards.append(
+                f'<figure class="card ref"><figcaption><b>{label}</b></figcaption>'
+                f'<button type="button" class="shot" data-full="images/{_esc(name)}">'
+                f'<img src="images/{_esc(name)}" alt="{label}"></button></figure>'
+            )
+        note = f'<p class="note">{_esc(sess.get("ref_analysis") or "")}</p>' if sess.get("ref_analysis") else ""
         ref_block = (
-            f'<section><h2>参考图分析</h2><div class="row">'
-            f'<figure class="card ref">{img}<p>{_esc(sess.get("ref_analysis") or "没有写下分析。")}</p>'
-            f'</figure></div></section>'
+            f'<section><h2>参考图分析</h2>{note}<div class="row">'
+            f'{"".join(ref_cards)}</div></section>'
         )
     talk_block = ""
     if talk_cards:

@@ -118,7 +118,7 @@
 <body>
   <header>
     <h1>pmem-art · 技能流程</h1>
-    <p>现在是 8 个技能。原画、克隆、变体、镜头包收在 draw 里；合成梯先过关系，再一档一张，同框不是成品。完整说明见 <a href="../../USER_MANUAL.md">USER_MANUAL.md · 第一章附</a>。</p>
+    <p>现在是 9 个技能。没点名走 /pmem-agent：先把需求定稳，再交给其余技能。原画、克隆、变体、镜头包收在 draw 里；合成梯先过关系，再一档一张，同框不是成品。完整说明见 <a href="../../USER_MANUAL.md">USER_MANUAL.md · 第一章附</a>。</p>
   </header>
   <main>
     <div class="pick" id="pick" role="group" aria-label="选择技能"></div>
@@ -139,6 +139,19 @@
   <script>
 (function () {
   const SKILLS = {
+    agent: {
+      label: "agent",
+      title: "/pmem-agent",
+      sub: "/pmem-agent · 总控",
+      aria: "多轮把需求定成同一句，再把定稿和每一张图交给一个 agent，按现稿选择一支技能并写明选了谁。",
+      nodes: [
+        { id: "a", x: 24, y: 24, w: 150, h: 48, t1: "1 定需求", t2: "定不稳就打回", c: "n-neu" },
+        { id: "b", x: 220, y: 24, w: 170, h: 48, t1: "2 交给 agent", t2: "定稿 + 每一张图 + 技能现稿", c: "n-blue" },
+        { id: "c", x: 430, y: 24, w: 150, h: 48, t1: "3 选一支", t2: "写明按哪一节", c: "n-ok" },
+        { id: "d", x: 250, y: 120, w: 180, h: 48, t1: "执行那一支", t2: "图不收成一张", c: "n-mem" }
+      ],
+      edges: [["a","b"],["b","c"],["c","d"]]
+    },
     draw: {
       label: "draw",
       title: "/pmem-draw",
@@ -333,7 +346,7 @@
     }
   };
 
-  const order = ["draw","concept","ui","icon","clone","ladder","lens","style","critique","variant","atlas","improve","coach","learn"];
+  const order = ["agent","draw","concept","ui","icon","clone","ladder","lens","style","critique","variant","atlas","improve","coach","learn"];
   const pick = document.getElementById("pick");
   const host = document.getElementById("svg-host");
   const titleEl = document.getElementById("title");

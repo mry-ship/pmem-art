@@ -8,13 +8,13 @@
 
 常用技能就这几个，都是 `/pmem-` 开头：
 
-`/pmem-draw` 生图 · `/pmem-ui` 整套界面 · `/pmem-icon` 图标 · `/pmem-merge-ladder` 合成梯
+`/pmem-agent` 总控 · `/pmem-draw` 生图 · `/pmem-ui` 整套界面 · `/pmem-icon` 图标 · `/pmem-merge-ladder` 合成梯
 
 ![License](https://img.shields.io/badge/license-see%20LICENSE-green)
 ![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
 ![Cursor](https://img.shields.io/badge/Cursor-支持-000000)
 ![Claude Code](https://img.shields.io/badge/Claude%20Code-支持-D97757)
-![Skills](https://img.shields.io/badge/美术技能-8-8B5CF6)
+![Skills](https://img.shields.io/badge/美术技能-9-8B5CF6)
 ![Threshold](https://img.shields.io/badge/合格线-≥9.60-blue)
 
 [📖 使用手册](USER_MANUAL.md) · [技能流程图](docs/skills/flows.html) · [效果图墙](#效果长什么样) · [合成梯 / 克隆实测](#合成梯与风格克隆旧跑分) · [架构](ARCHITECTURE.md)
@@ -31,7 +31,7 @@
 - **收敛**：每轮打分挑刺，不到 9.60 只改那一两处，满 4 轮交最高分
 - **稳住**：同一张脸不换人，同一套画风不漂，说过不要的不再出现
 
-技能是配套工具。斜杠命令负责把这一张尽快收到已经记住的标准上：原画、克隆、变体都从 `/pmem-draw` 进去，界面、图标、合成梯各有自己的一条。
+技能是配套工具。没点名具体技能时走 `/pmem-agent`：先把需求定稳，再交给合适的那一支。原画、克隆、变体都在 `/pmem-draw` 里，界面、图标、合成梯各有自己的一条。
 
 ## 一分钟接入
 
@@ -42,7 +42,7 @@ python3 pmem_art.py init --name "MyArtProject"
 python3 pmem_art.py skills --install
 ```
 
-装好后，在 Cursor / Claude Code / Codex 对话框输入 `/`。技能一共 **8 个**，每个只有一个 `/pmem-` 名字，见下一节。
+装好后，在 Cursor / Claude Code / Codex 对话框输入 `/`。技能一共 **9 个**，每个只有一个 `/pmem-` 名字，见下一节。没点名时用 `/pmem-agent`。
 
 | 场景 | 命令 |
 | :--- | :--- |
@@ -55,13 +55,16 @@ python3 pmem_art.py skills --install
 ## 日常怎么用（Skill）
 
 ```text
-1. 丢图（可选）   把参考图拖进对话
-2. 选档           --scale low | medium | high | recompose
-3. 出图           生 1 张 → 打分挑刺 → 不到 9.60 就改（最多 4 轮）
-4. 看过程         结算打开过程板：参考分析、每轮图、五维和总分，点图片看大图
+1. 没点名技能     走 /pmem-agent。最多 4 轮收成同一句需求；收不稳就打回，不生图
+2. 丢图（可选）   参考图全部留下。交出去之前不收成一张
+3. 选档           --scale low | medium | high | recompose
+4. 出图           生 1 张 → 打分挑刺 → 不到 9.60 就改（最多 4 轮）
+5. 看过程         结算打开过程板：每张参考图、每轮图、五维和总分，点图片看大图
 ```
 
-过程板在 `.memory-art/converge/boards/<会话>/index.html`。红框是胜出轮。合成梯的关系论述也会留在同一张板上。
+过程板在 `.memory-art/converge/boards/<会话>/index.html`。多张参考图按图1、图2分开列，分析写在图上方。红框是胜出轮。总控把需求收成同一句的那几轮，以及合成梯的关系论述，都留在同一张板上。
+
+点名了某一条，就跳过总控，直接走那一条。
 
 合成梯多一步：先用文字把八件关系谈到说通（最多 8 稿，这一段不出图），通过后再按上面的 4 轮出图。同框大图只是体量预览。
 
@@ -76,27 +79,34 @@ python3 pmem_art.py skills --install
 
 第三行写了「原画」，`/pmem-draw` 会按原画做，不用另开一个命令。
 
-### 8 个技能
+### 9 个技能
 
-技能文件是 **8 个**，下表正好 **8 行**。没点名类型时，直接说想画什么，模型自己认，回显一句后就做。
+技能文件是 **9 个**，下表正好 **9 行**。没点名具体技能时走总控。点名了某一条，就直接走那一条。
 
 <table>
 <thead>
 <tr><th></th><th>技能</th><th>输入</th><th>做什么</th></tr>
 </thead>
 <tbody>
-<tr><td>1</td><td>生图</td><td><code>/pmem-draw</code></td><td>总入口。自己认成普通图、原画、克隆、变体或镜头包。生图最多 4 轮，合格线 ≥9.6。结算给一张可点开的过程板。有参考但没说新题材时，不进克隆。</td></tr>
-<tr><td>2</td><td>界面</td><td><code>/pmem-ui</code></td><td>一整套 HUD / 菜单 / 九宫格。不用单张插画代替。</td></tr>
-<tr><td>3</td><td>图标</td><td><code>/pmem-icon</code></td><td>三档不混：A 桌面母版、B 线性 SVG、C 道具格。</td></tr>
-<tr><td>4</td><td>合成梯</td><td><code>/pmem-merge-ladder</code></td><td>先用文字过八件关系（最多 8 稿，说不通就不出图），再一档一张正方形。同框只是体量预览。出图最多 4 轮。八稿论述和出图轮都留在过程板上。</td></tr>
-<tr><td>5</td><td>锁风格</td><td><code>/pmem-style-lock</code></td><td>从样张抽色板、光影、禁用词。不进自动生图。</td></tr>
-<tr><td>6</td><td>审图</td><td><code>/pmem-critique</code></td><td>只打分挑刺，不生图。</td></tr>
-<tr><td>7</td><td>归档</td><td><code>/pmem-atlas</code></td><td>散图归位，刷新 <code>art-atlas.html</code>。</td></tr>
-<tr><td>8</td><td>教练</td><td><code>/pmem-coach</code></td><td>进步、短板、知识合在这一条里看。说「进步」或「知识」就看那一份。知识卡要你说收下才写入。</td></tr>
+<tr><td>1</td><td>总控</td><td><code>/pmem-agent</code></td><td>没点名具体技能时走这一条。多轮把需求定稳，再把定稿和每一张图交给现有技能。出图结算仍是那一支的格式：参考分析、每轮图和分数、过程板、总结。满 4 轮还定不稳，就打回问你，不往下生图。</td></tr>
+<tr><td>2</td><td>生图</td><td><code>/pmem-draw</code></td><td>普通图、原画、克隆、变体或镜头包。生图最多 4 轮，合格线 ≥9.6。结算给一张可点开的过程板。有参考但没说新题材时，不进克隆。</td></tr>
+<tr><td>3</td><td>界面</td><td><code>/pmem-ui</code></td><td>一整套 HUD / 菜单 / 九宫格。不用单张插画代替。</td></tr>
+<tr><td>4</td><td>图标</td><td><code>/pmem-icon</code></td><td>三档不混：A 桌面母版、B 线性 SVG、C 道具格。</td></tr>
+<tr><td>5</td><td>合成梯</td><td><code>/pmem-merge-ladder</code></td><td>先用文字过八件关系（最多 8 稿，说不通就不出图），再一档一张正方形。同框只是体量预览。出图最多 4 轮。八稿论述和出图轮都留在过程板上。</td></tr>
+<tr><td>6</td><td>锁风格</td><td><code>/pmem-style-lock</code></td><td>从样张抽色板、光影、禁用词。不进自动生图。</td></tr>
+<tr><td>7</td><td>审图</td><td><code>/pmem-critique</code></td><td>只打分挑刺，不生图。</td></tr>
+<tr><td>8</td><td>归档</td><td><code>/pmem-atlas</code></td><td>散图归位，刷新 <code>art-atlas.html</code>。</td></tr>
+<tr><td>9</td><td>教练</td><td><code>/pmem-coach</code></td><td>进步、短板、知识合在这一条里看。说「进步」或「知识」就看那一份。知识卡要你说收下才写入。</td></tr>
 </tbody>
 </table>
 
 要原画、克隆、变体或镜头包时，还是用 `/pmem-draw`，把类型写在句子里，例如「原画」「按这张风格画一把新钥匙」「换个表情」「先给 4 套机位」。
+
+### 没点名时
+
+`/pmem-agent` 自己不生图。第一段最多 4 轮，把需求收成同一句：交付物是什么、每张图锁什么、不锁什么。写不清就标「还不确定」。连续两句相同，并且没有「还不确定」，才进入第二段。满 4 轮还对不齐，或者话和图对不上，就打回，一次只问还晃的那一处。
+
+第二段把定稿、每一张图、现有技能文件交给一个 agent。由它读现稿选一支并执行。回显一句「按 XX 走了」。出图结算仍是那一支自己的过程板。
 
 <a id="四档闸门每档允许变什么--禁止变什么"></a>
 
