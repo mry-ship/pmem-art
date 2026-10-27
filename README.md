@@ -86,12 +86,44 @@ python3 pmem_art.py skills --install
 
 ### 四档改动幅度（选错了用嘴改就行）
 
-| 档位 | 大致在干什么 | 默认锁住什么 |
-| :--- | :--- | :--- |
-| **`low`** | 修瑕：手、透视毛刺、小边缘 | 机位、姿态、布局、画风、身份 |
-| **`medium`**（默认） | 构图不动，补光影与材质 | 同上；允许加强轮廓光 / 空气感 |
-| **`high`** | 可以换机位、姿态、戏剧光影 | 画风基因、身份；别塞原图没有的道具 |
-| **`recompose`** | 按你写的方向改构图 | 色板笔触、身份；方向写进 `--recompose-dir` |
+百分比都是提示词能离开原句多远。「这一轮」相对上一轮；「累计」相对第 1 轮。`low` 只跟第 1 轮比，所以只有一个数。四档合格线都是 ≥9.60，生图最多 4 轮。
+
+<table>
+<thead>
+<tr>
+<th>档位</th>
+<th>提示词最多改多少</th>
+<th>锁住，不能动</th>
+<th>可以变</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>low</code><br><small>第 1 轮达标就能停</small></td>
+<td>相对第 1 轮 ≤ <strong>20%</strong></td>
+<td>机位、姿态、主体数量、场景布局、画风色板、身份</td>
+<td>局部瑕疵：手、透视毛刺、小边缘、局部质感</td>
+</tr>
+<tr>
+<td><code>medium</code>（默认）<br><small>第 1 轮达标就能停</small></td>
+<td>这一轮 ≤ <strong>40%</strong><br>累计 ≤ <strong>60%</strong></td>
+<td>机位、主体数量、画风色板、身份。不能整张换构图</td>
+<td>小幅姿态、局部布局、光影和材质</td>
+</tr>
+<tr>
+<td><code>high</code><br><small>至少跑 2 轮</small></td>
+<td>这一轮 ≤ <strong>80%</strong><br>累计 ≤ <strong>90%</strong></td>
+<td>画风媒介、身份。不能换成另一个主体</td>
+<td>机位、姿态、布局、主体数量、戏剧光影、风格里的小叙事</td>
+</tr>
+<tr>
+<td><code>recompose</code><br><small>至少跑 2 轮。必须写 <code>--recompose-dir</code></small></td>
+<td>这一轮 ≤ <strong>85%</strong><br>累计 ≤ <strong>95%</strong></td>
+<td>画风色板、身份、你写的那句构图方向</td>
+<td>机位和布局按这句改。姿态和光影可以跟着动。不增删主体</td>
+</tr>
+</tbody>
+</table>
 
 停机线统一：**≥ 9.60**（`high` / `recompose` 至少跑 2 轮），并内置 **5 项安全收敛护栏**：
 1. **每轮垫最初参考图**：`low` / `medium` / `high` / `recompose` 每一轮都垫最初的 `style_ref`，修正只追加进提示词。风格跳跃不垫旧风格图，也不垫上一轮成图。`pad=previous` 仍是显式链式覆盖。
