@@ -99,13 +99,13 @@ python3 pmem_art.py skills --install
 
 ### 四档改动幅度（选错了用嘴改就行）
 
-百分比都是提示词能离开原句多远。「这一轮」相对上一轮；「累计」相对第 1 轮。`low` 只跟第 1 轮比，所以只有一个数。四档合格线都是 ≥9.60，生图最多 4 轮。
+百分比是这一轮提示词允许改多少。`low` 跟第 1 轮的句子比，另外三档跟上一轮的句子比。四档合格线都是 ≥9.60，生图最多 4 轮。
 
 <table>
 <thead>
 <tr>
 <th>档位</th>
-<th>提示词最多改多少</th>
+<th>提示词改动</th>
 <th>锁住，不能动</th>
 <th>可以变</th>
 </tr>
@@ -113,25 +113,25 @@ python3 pmem_art.py skills --install
 <tbody>
 <tr>
 <td><code>low</code><br><small>第 1 轮达标就能停</small></td>
-<td>相对第 1 轮 ≤ <strong>20%</strong></td>
+<td>≤ <strong>20%</strong></td>
 <td>机位、姿态、主体数量、场景布局、画风色板、身份</td>
 <td>局部瑕疵：手、透视毛刺、小边缘、局部质感</td>
 </tr>
 <tr>
 <td><code>medium</code>（默认）<br><small>第 1 轮达标就能停</small></td>
-<td>这一轮 ≤ <strong>40%</strong><br>累计 ≤ <strong>60%</strong></td>
+<td>≤ <strong>40%</strong></td>
 <td>机位、主体数量、画风色板、身份。不能整张换构图</td>
 <td>小幅姿态、局部布局、光影和材质</td>
 </tr>
 <tr>
 <td><code>high</code><br><small>至少跑 2 轮</small></td>
-<td>这一轮 ≤ <strong>80%</strong><br>累计 ≤ <strong>90%</strong></td>
+<td>≤ <strong>80%</strong></td>
 <td>画风媒介、身份。不能换成另一个主体</td>
 <td>机位、姿态、布局、主体数量、戏剧光影、风格里的小叙事</td>
 </tr>
 <tr>
 <td><code>recompose</code><br><small>至少跑 2 轮。必须写 <code>--recompose-dir</code></small></td>
-<td>这一轮 ≤ <strong>85%</strong><br>累计 ≤ <strong>95%</strong></td>
+<td>≤ <strong>85%</strong></td>
 <td>画风色板、身份、你写的那句构图方向</td>
 <td>机位和布局按这句改。姿态和光影可以跟着动。不增删主体</td>
 </tr>

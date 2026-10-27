@@ -249,7 +249,7 @@ class TestGateFixes(unittest.TestCase):
         self.assertNotIn("严格锁死", prof["prompt_directive"])
         self.assertEqual(find_affirmative_lock_hits(prof["prompt_directive"]), [])
 
-    def test_scale_leap_and_cumulative_delta_ladder(self) -> None:
+    def test_scale_leap_and_prompt_delta_ladder(self) -> None:
         low = get_converge_scale_profile("low")
         med = get_converge_scale_profile("medium")
         high = get_converge_scale_profile("high")
@@ -259,12 +259,12 @@ class TestGateFixes(unittest.TestCase):
         # recompose is orthogonal to intensity but must not undercut high leap.
         self.assertGreaterEqual(rec["min_round_leap"], high["min_round_leap"])
         self.assertEqual(med["max_prompt_delta_ratio"], 0.40)
-        self.assertEqual(med["max_prompt_delta_vs_first"], 0.60)
         self.assertEqual(high["max_prompt_delta_ratio"], 0.80)
-        self.assertEqual(high["max_prompt_delta_vs_first"], 0.90)
         self.assertEqual(rec["max_prompt_delta_ratio"], 0.85)
-        self.assertEqual(rec["max_prompt_delta_vs_first"], 0.95)
         self.assertIsNone(low.get("max_prompt_delta_vs_first"))
+        self.assertIsNone(med.get("max_prompt_delta_vs_first"))
+        self.assertIsNone(high.get("max_prompt_delta_vs_first"))
+        self.assertIsNone(rec.get("max_prompt_delta_vs_first"))
         self.assertIsNone(low.get("min_prompt_delta_ratio"))
         self.assertEqual(low["max_prompt_delta_ratio"], 0.20)
         self.assertIsNone(med.get("min_prompt_delta_ratio"))
@@ -561,26 +561,10 @@ class TestGateFixes(unittest.TestCase):
         self.assertNotIn("style_medium", keys)  # replaced by pastel-specific medium lock
         self.assertIn("identity_lock", keys)
 
-    def test_high_cumulative_delta_exceeds_cap(self) -> None:
-        """Judge gate reads max_prompt_delta_vs_first; total rewrite vs first must exceed the cap."""
-        from skills_kit import _prompt_change_ratio
-
-        for scale, dir_kw in (("high", ""), ("recompose", "改为仰视运河")):
-            prof = get_converge_scale_profile(scale, recompose_dir=dir_kw)
-            directive = prof["prompt_directive"]
-            first = f"{directive} | lock identity night city pavilion lantern back pose"
-            drifted = (
-                f"{directive} | "
-                "totally rewritten cinematic crane shot volumetric god rays emerald dragon "
-                "waterfall bridge orchestra of foreign narrative props and alternate wardrobe "
-                "palette shift neon alley cyberpunk rain reflections unrelated subjects"
-            )
-            cumulative = _prompt_change_ratio(first, drifted, directive)
-            self.assertGreater(
-                cumulative,
-                float(prof["max_prompt_delta_vs_first"]),
-                f"{scale}: cumulative={cumulative:.2f} vs cap={prof['max_prompt_delta_vs_first']}",
-            )
+    def test_scale_has_no_cumulative_prompt_cap(self) -> None:
+        for scale in ("low", "medium", "high", "recompose"):
+            prof = get_converge_scale_profile(scale)
+            self.assertNotIn("max_prompt_delta_vs_first", prof)
 
     def test_redlines_follow_the_subject(self) -> None:
         from skills_kit import compose_style_first_prompt

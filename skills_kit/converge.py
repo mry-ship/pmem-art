@@ -588,6 +588,27 @@ def cmd_converge(
         return 1
 
     sess = json.loads(sf.read_text(encoding="utf-8"))
+    if action == "discuss":
+        body = (prompt or goal or "").strip()
+        if not body:
+            print("❌ converge discuss 需要 --prompt，把这一稿正文写进去。")
+            return 1
+        notes = [d for d in (sess.get("discussions") or []) if int(d.get("round") or 0) != (round_num or 0)]
+        n = round_num if round_num > 0 else (len(sess.get("discussions") or []) + 1)
+        notes = [d for d in notes if int(d.get("round") or 0) != n]
+        notes.append({
+            "round": n,
+            "prompt": body,
+            "strengths": (strengths or "").strip(),
+            "defects": (defects or "").strip(),
+            "next_fix": (next_fix or "").strip(),
+        })
+        notes.sort(key=lambda d: int(d.get("round") or 0))
+        sess["discussions"] = notes
+        _write_session_json(sf, sess)
+        print(f"📝 已记下论述第 {n} 稿。finish 的过程板会列出全部 {len(notes)} 稿。")
+        return 0
+
     th = float(sess.get("accept_threshold") or sess.get("threshold", DEFAULT_THRESHOLD))
     soft_th = FAST_SOFT_THRESHOLD if sess.get("fast_track") or sess.get("converge_mode") == "fast" else th
     mr = int(sess.get("max_rounds", DEFAULT_MAX_ROUNDS))
@@ -1098,13 +1119,6 @@ def cmd_converge(
             limit = float(s_prof.get("max_prompt_delta_ratio") or 1.0)
             if change > limit:
                 gate_notes.append(f"prompt 改动 {change:.0%} 超过档位上限 {limit:.0%}")
-            vs_first = s_prof.get("max_prompt_delta_vs_first")
-            if vs_first is not None and baseline != "first":
-                cumulative = _prompt_change_ratio(first_prompt, recorded_gen_prompt, directive)
-                if cumulative > float(vs_first):
-                    gate_notes.append(
-                        f"prompt 相对第一轮改动 {cumulative:.0%} 超过累计上限 {float(vs_first):.0%}"
-                    )
         if cli_score > 0 and judge_res.get("weighted_score") is None:
             gate_notes.append(f"已忽略命令行 --score {cli_score:.2f}，五维未解析成功")
         early_safe_stop: str | None = None
@@ -1688,6 +1702,17 @@ def cmd_converge(
                 refresh_atlas_silent(root)
             except Exception:
                 pass
+        board_rel = ""
+        try:
+            from skills_kit.process_board import write_process_board
+            board_path = write_process_board(root, sess, winner=winner)
+            board_rel = board_path.relative_to(root).as_posix()
+            sess["process_board"] = board_rel
+            _write_session_json(sf, sess)
+            md_lines.extend(["", f"过程板（点开每张图）：`{board_rel}`", ""])
+        except Exception as exc:
+            md_lines.extend(["", f"过程板未写出：{exc}", ""])
+
         report_text = "\n".join(md_lines)
         report_file = root / ".memory-art" / "converge" / f"{session_id}_report.md"
         report_file.parent.mkdir(parents=True, exist_ok=True)
@@ -1700,6 +1725,8 @@ def cmd_converge(
                 f"{badge} 收敛完成（{badge_text}）· 第 {winner.get('round')} 轮 "
                 f"{_score_of(winner):.2f}/10 · `{winner.get('image')}`"
             )
+            if board_rel:
+                print(f"过程板（点开每张图）：{board_rel}")
             if tip:
                 from improve import print_whisper_tip
                 print_whisper_tip(tip)
