@@ -42,9 +42,10 @@ def rank_memory_entry(
     target_module: str = "",
     query: str = "",
     prioritize_kind: bool = False,
-) -> tuple[int, int, int, float, int, str]:
+) -> tuple[int, int, int, int, float, int, str]:
     """Simplest unified weighting key across all pmem-art recall points (Two-Layer Aware):
-    (kind_priority, private_layer_priority, exact_module_match, round_score, query_token_overlap, date_str)
+    (kind_priority, private_layer_priority, settled_priority, exact_module_match, round_score, query_token_overlap, date_str)
+    settled_priority is 0 for provisional (未达阈值) recipes so they rank under confirmed entries.
     - private_layer_priority: 1 for project-private memories/cards (.memory-art/), 0 for cross-project shared (~/.pmem-art/shared/).
       Ensures project-private layer always ranks above shared layer when both match!
     Higher tuple sorts first with reverse=True.
@@ -70,7 +71,8 @@ def rank_memory_entry(
     ) else 0
     kind_prio = (10 - int(e.get("kind_order", 9))) if prioritize_kind else 0
     date_str = str(e.get("verified") or e.get("note_date") or e.get("updated_at") or e.get("id") or "")
-    return (kind_prio, private_prio, exact_mod, extract_entry_score(e), overlap, date_str)
+    settled = 0 if str(e.get("status") or "active").lower() == "provisional" else 1
+    return (kind_prio, private_prio, settled, exact_mod, extract_entry_score(e), overlap, date_str)
 
 
 def build_warm_start_pack(
@@ -92,7 +94,7 @@ def build_warm_start_pack(
         return (em in lineage_set) or (not module)
 
     def _entry_live(e: dict) -> bool:
-        return str(e.get("status") or "active").lower() not in ("archived", "superseded", "inactive")
+        return str(e.get("status") or "active").lower() not in ("archived", "superseded", "inactive", "pending")
 
     from skills_kit.subject_lexicon import ui_shell_clone_task
 
@@ -142,9 +144,15 @@ def build_warm_start_pack(
     # Confidence: strong recipe match + few redlines → fast-track eligible
     conf = 0.0
     reasons: list[str] = []
-    if recipes:
+    confirmed_recipes = [
+        e for e in recipes
+        if str(e.get("status") or "active").lower() != "provisional"
+    ]
+    if confirmed_recipes:
         conf += 0.45
-        reasons.append(f"命中 {len(recipes)} 条定稿 recipe")
+        reasons.append(f"命中 {len(confirmed_recipes)} 条达标 recipe")
+    elif recipes:
+        reasons.append("只有未达标 provisional recipe，不计入定稿置信")
     if decisions:
         conf += 0.15
         reasons.append(f"命中 {len(decisions)} 条审美拍板")
@@ -159,9 +167,9 @@ def build_warm_start_pack(
         reasons.append(f"红线中等（{len(redlines)} 条）")
     else:
         reasons.append(f"红线较多（{len(redlines)} 条）— 首轮需更谨慎")
-    if goal and recipes:
+    if goal and confirmed_recipes:
         g_low = goal.lower()
-        hit = sum(1 for e in recipes if any(
+        hit = sum(1 for e in confirmed_recipes if any(
             tok and tok in (e.get("summary") or "").lower()
             for tok in re.split(r"\s+|，|。|,", g_low) if len(tok) >= 2
         ))

@@ -1,0 +1,32 @@
+🔥 Warm-Start 包已注入收敛会话（第 1 轮 Prompt 请完整吸收）
+   · 置信度: 0.90 | fast-track 资格: ✅
+   · 命中 3 条达标 recipe
+   · 个人口味档案非空
+   · 红线可控（1 条）
+   · 挂载 2 张项目知识卡 + 0 张全局美术底层基础卡
+
+【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】
+- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)
+- 目标模块: character.SunlitGirl
+- 置信度: 0.90（fast-track 资格: 是）
+- 优先复用定稿方向:
+  · [CHAT20261028024201007RECIPE] [收敛胜出 9.55分] 表情变体：同一窗边日光耳机少女，只改成惊喜张嘴（双眼睁圆、眉毛微抬、口型O），机位画风发色瞳色白猫发 — 惊喜张嘴清晰自然；身份机位全锁；口型边缘更干净
+  · [CHAT20261028023222435RECIPE] [收敛胜出 9.52分] 窗边逆光少女变体：发丝透光皮肤SSS尘埃光斑 — 逆光发丝；暖金商业
+  · [CHAT20261028023932758RECIPE] [收敛胜出 9.40分] 窗边逆光少女肖像——保画风色板与身份，按新机位重构。 — 回望机位与左下花稳定；暖金与身份保持
+- 必须避开红线:
+  · [CHAT20261028023222456REDLINE] [收敛踩坑红线] 表情变体：同一窗边日光耳机少女，只改成惊喜张嘴（双眼睁圆、眉：避免「口型O略夸张偏喊叫；下颌开合与脸颊体积可再自然半档」
+- 个人口味: 光影=暖光；构图=半身 / 全身
+- 个人禁用习惯: 漏抠/黑底/毛边；赛博霓虹/霓虹紫
+- 项目私有知识卡 (Private Layer):
+  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。
+  · [tech-celshade] 赛璐珞分层: 硬边色块分层，高光形状干净，层数克制。
+🎯 [收敛会话已启动] 模块: character.SunlitGirl | 模式: quality | 强度(scale): medium (中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.6)) | 动态达标线: >= 9.6 分即停 | 最大兜底轮次: 4 | 最早停机轮次: 1
+🎚️  Scale 内部权重与约束: weights={'composition': 0.2, 'lighting_color': 0.25, 'perspective_anatomy': 0.2, 'texture_detail': 0.2, 'spec_style': 0.15} | budget=每轮都垫最初的参考图，只在提示词上补还没过的那一处（提示词改动仍 ≤40%）
+🧭 Scale 指令: 胶片逆光轻厚涂：保画风与机位，小幅姿态/局部布局；柔化光影与次表面散射
+✨ 最优方向（按档加法，勿当第二份DNA锁）: 最优方向：光影·空气·介质；可小幅姿态/局部布局
+🧷 本档保留集: ('viewpoint_frame', 'style_medium', 'identity')
+📌 约束写在生成词末尾: 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观
+🖼️  垫图/参考图模式: /Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen/draw_matrix/c03/ref.jpg
+🔍 参考图解构基准: 竖3:4胸像。黑短发蓝瞳少女，白猫发夹、黑耳机、白T，窗边雏菊。暖金窗光从右侧打在脸上，发丝有透光。锁这个人和这扇窗。不继承糊掉的手指。
+
+👉 Agent：请先执行第 1 步 `converge generate`（仅生图，不打分），生成完成后再独立执行第 2 步 `converge judge`（独立 VLM 审图打分）。

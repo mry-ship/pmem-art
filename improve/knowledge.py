@@ -379,7 +379,7 @@ def recall_layered_knowledge_cards(
         tags = {str(t).lower() for t in (c.get("tags") or [])}
         if not target_dom or (tags & domain_adj) or ("brand" in tags) or ("color_palette" in tags):
             filtered.append(c)
-        elif query and rank_memory_entry(c, target_module=target_module, query=query)[4] > 0:
+        elif query and rank_memory_entry(c, target_module=target_module, query=query)[5] > 0:
             filtered.append(c)
 
     filtered.sort(

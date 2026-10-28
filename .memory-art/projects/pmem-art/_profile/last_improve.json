@@ -1,86 +1,94 @@
 {
-  "ran_at": "2026-10-26 03:26:15 UTC+8",
-  "reflections_scanned": 8,
-  "avg_winner_score": 9.38,
-  "avg_rounds": 3.62,
+  "ran_at": "2026-10-28 12:24:33 UTC+8",
+  "reflections_scanned": 20,
+  "avg_winner_score": 9.08,
+  "avg_rounds": 3.6,
   "top_recurring_defects": [
     {
-      "text": "远处尖塔与消失点仍接近中轴，空间骨架较常规。两侧建筑暗部压黑较重，材质与结构层次有所流失；大型招牌对邻近墙体、雨棚及地面",
+      "text": "几乎无",
+      "count": 2
+    },
+    {
+      "text": "灯火近中远层次与雾带还可更分明",
+      "count": 2
+    },
+    {
+      "text": "仍然是头肩特写，袖口和弯曲的膝都没进画",
       "count": 1
     },
     {
-      "text": "巷道仍以接近中轴的单点透视组织，远塔与道路消失点的视觉引导略有分离。大面积墙体暗部压黑，材质和空间层次损失；青色主招牌很",
+      "text": "背景粉笔掺进桃粉和紫，不再是蓝灰斜线",
       "count": 1
     },
     {
-      "text": "画面下半部压暗较重，暗部细节在边缘和地面趋于糊化；远处高楼与雾气融合过度，空间层级略显单一；地面霓虹倒影虽存在，但大面积",
+      "text": "裁切又停在肩线，胸口没有露出来；prompt 改动 92% 超过档位上限 85%",
       "count": 1
     },
     {
-      "text": "中心对称和正中消失点略显规整，画面下半部反射面积偏大，主体焦点主要依赖两块霓虹招牌；远景建筑在雾气中层次压缩，部分墙面与",
+      "text": "糖纸是光滑塑料高光，和周围粉笔斜线不是同一种笔触",
       "count": 1
     },
     {
-      "text": "消失点接近中轴，两侧建筑夹景较规整，构图略显惯常；建筑立面与消防梯细节密集，削弱简洁感。大面积暗部层次压缩，部分栏杆与管",
+      "text": "四枚指尖仍粘成一块肤色；prompt 改动 81% 超过档位上限 80%",
       "count": 1
     },
     {
-      "text": "剑刃冷钢高光仍不够锋利连续；近中景灯点锐度仍略逊原图；远楼密纹增益有限；局部雾仍盖脊",
-      "count": 1
-    },
-    {
-      "text": "剑刃冷钢高光仍略弱于原图；近中景灯点锐度仍差一点；远楼密纹增益有限；局部瓦脊高光略散",
-      "count": 1
-    },
-    {
-      "text": "近中景灯点锐度与原图仍有微差；远楼密纹仍略软；剑刃高光仍未完全贴原图；雾层局部仍盖脊",
+      "text": "四枚指尖仍粘成一块",
       "count": 1
     }
   ],
   "recipe_strengthen": [
     {
+      "module": "ui.HUD",
+      "id": "CHAT20261028030611394RECIPE",
+      "summary": "[收敛胜出 9.57分] 【Royal Match 式手游主菜单概念 · 16:9 商店截图级】 整体气质：轻松、甜美、宫廷糖 — 角花更贴角；糖果清漆与接触影；中心空；三消上架气质",
+      "hint": "下次 warm-start 优先注入本条 recipe"
+    },
+    {
       "module": "character.SunlitGirl",
-      "id": "CHAT20261025025802847RECIPE",
-      "summary": "[收敛胜出 9.8分] 窗边逆光斑驳树影黑耳机白猫发夹少女特写肖像 — 木漏日丁达尔光斑、皮肤次表面散射、发丝逆光金边与左侧白猫发夹",
+      "id": "CHAT20261028024201007RECIPE",
+      "summary": "[收敛胜出 9.55分] 表情变体：同一窗边日光耳机少女，只改成惊喜张嘴（双眼睁圆、眉毛微抬、口型O），机位画风发色瞳色白猫发 — 惊喜张嘴清晰自然；身份机位全锁；口型边缘更干净",
+      "hint": "下次 warm-start 优先注入本条 recipe"
+    },
+    {
+      "module": "icon.AppIcon",
+      "id": "CHAT20261028023149318RECIPE",
+      "summary": "[收敛胜出 9.55分] 商业级 iOS 桌面母版：天穹浮城夜景 App Icon，满幅直角，可读小尺寸剪影，无字 — 顶缘高光与底板环境改善；剪影可读；满幅直角",
+      "hint": "下次 warm-start 优先注入本条 recipe"
+    },
+    {
+      "module": "icon.Item",
+      "id": "CHAT20261028023150276RECIPE",
+      "summary": "[收敛胜出 9.55分] 商业级 RPG 道具格：祖母绿治疗药水瓶，透明友好，厚剪影 — 暗底干净；接触影软；切面玻璃与叶饰完成",
       "hint": "下次 warm-start 优先注入本条 recipe"
     },
     {
       "module": "scene.CelestialCity",
-      "id": "CHAT20261025025801151RECIPE",
-      "summary": "[合同对齐定稿 9:16] 俯瞰天穹仙侠万家灯火夜城与飞檐持剑男侠 — 以 retest high R2 720×1280 替换旧 3:4 冷启动稿",
+      "id": "CHAT20261028023410674RECIPE",
+      "summary": "[收敛胜出 9.54分] 正版冷灰不夜城recompose：过肩侧望更大侠客 — 过肩侧望侠客占比更大；冷灰灯海对角线延伸；云带与雾层可读",
       "hint": "下次 warm-start 优先注入本条 recipe"
     },
     {
       "module": "character.PastelGirl",
-      "id": "CHAT20261025025801796RECIPE",
-      "summary": "[合同对齐·临时定稿] Case02 风格参考 720×580（4:3 白名单）— 原 3:4 冷启动收敛稿已降为 aspect 反例，待 1152×864 重生",
+      "id": "CHAT20261028025708487RECIPE",
+      "summary": "[收敛胜出 9.53分] 允许构图重组保留粉彩少女身份：可换机位景别，仍锁黑波波头红帽衫蓝短裤三杠白鞋与粉彩纸感。 — 左近景右留白稳；粉彩纸感身份锁；发丝与褶有改善",
       "hint": "下次 warm-start 优先注入本条 recipe"
     },
     {
-      "module": "scene.celestial_night_city",
-      "id": "CHAT20261025180033247RECIPE",
-      "summary": "[收敛胜出 9.14分] 【垫图low】严格贴合原图：男性浅灰白袍持剑背影小占比飞檐俯瞰，只精修近景瓦垄咬合与长剑金属反光，不 — 男侠浅灰白袍背影与俯瞰机位锁死；近景瓦垄咬合扎实；中轴暖灯大",
+      "module": "character.SunlitGirl",
+      "id": "CHAT20261028023222435RECIPE",
+      "summary": "[收敛胜出 9.52分] 窗边逆光少女变体：发丝透光皮肤SSS尘埃光斑 — 逆光发丝；暖金商业",
       "hint": "下次 warm-start 优先注入本条 recipe"
     },
     {
-      "module": "scene.celestial_night_city",
-      "id": "CHAT20261026014329614RECIPE",
-      "summary": "[收敛胜出 8.71分] 一张简洁的赛博夜景小巷，霓虹倒影在湿地面，无人，竖构图 key art，9:16（续跑收敛：允许赛博 — 更简洁霓虹与静水倒影；雾分层",
-      "hint": "下次 warm-start 优先注入本条 recipe"
-    },
-    {
-      "module": "scene.celestial_night_city",
-      "id": "CHAT20261026011542927RECIPE",
-      "summary": "[收敛胜出 8.61分] 一张简洁的赛博夜景小巷，霓虹倒影在湿地面，无人，竖构图 key art，9:16 — 竖构图一点透视纵深清晰；湿地面霓虹倒影完整；无人空巷氛围到位",
-      "hint": "下次 warm-start 优先注入本条 recipe"
-    },
-    {
-      "module": "character.Astra",
-      "id": "01ART005ASTRARECIPE",
-      "summary": "阿斯特拉标准生图配方 v3：Flux.1-dev + eastern_celadon_astra_v3(0.85) + Seed 42819204",
+      "module": "scene.CelestialCity",
+      "id": "CHAT20261028025600519RECIPE",
+      "summary": "[收敛胜出 9.52分] 仙侠不夜城正版原图精修：冷灰炭黑夜色、屋脊侠客背影、暖金灯火海与中央长街轴、雾气地平曲率；禁止蓝电剑 — 灯火纵深与雾带更清晰；冷灰正版气质锁住",
       "hint": "下次 warm-start 优先注入本条 recipe"
     }
   ],
-  "taste_changes": [],
+  "taste_changes": [
+    "preferred_composition: +半身"
+  ],
   "taste_path": ".memory-art/_profile/taste.json"
 }

@@ -44,7 +44,7 @@ from run_v8_20_skill_converge_v2fix import (  # noqa: E402
     sha256_file,
 )
 from skills_kit import find_affirmative_lock_hits  # noqa: E402
-from skills_kit.converge_judge_bridge import offline_advisory_only, score_for_converge  # noqa: E402
+from skills_kit.converge_judge_bridge import score_for_converge  # noqa: E402
 from skills_kit import get_converge_scale_profile  # noqa: E402
 
 DEFAULT_OUT = REPO / "generated_v8_20_skill_grok_v4"
@@ -202,40 +202,8 @@ def bot_stem(bot: dict) -> str:
     return f"{bot['bot_id']}_{bot['slug']}_{bot['display_scale']}"
 
 
-
-def score_offline_advisory(path: Path, bot: dict, round_num: int | None = None) -> dict[str, Any]:
-    """Offline Absolute-5D for comparison only — never ok_for_stop."""
-    ref = REPO / (bot.get("ref_image") or "")
-    api = bot.get("api_scale") or "medium"
-    mode = bot.get("prompt_mode") or ""
-    adv = offline_advisory_only(
-        path,
-        api_scale=api,
-        prompt_mode=mode,
-        ref_path=str(ref) if ref.is_file() else None,
-    )
-    return {
-        "ok": False,
-        "ok_for_stop": False,
-        "judge_source": "offline_advisory_only",
-        "offline_advisory": adv,
-        "total": adv.get("score"),
-        "dims": adv.get("dims") or {},
-        "defects": [],
-        "id": f"round::{path.name}" + (f"::r{round_num}" if round_num else ""),
-        "filename": path.name,
-        "path": str(path),
-        "role": "round",
-        "bot_id": bot.get("bot_id") or "",
-        "slug": bot.get("slug") or "",
-        "api_scale": api,
-        "display_scale": bot.get("display_scale") or "",
-        "round": round_num,
-    }
-
-
 def score_vlm_auto(path: Path, bot: dict, env: dict, model: str, round_num: int, max_rounds: int) -> dict[str, Any]:
-    """VLM first; Agent pending if unavailable; offline attached as advisory."""
+    """VLM first; Agent pending if unavailable."""
     scale_prof = get_converge_scale_profile(
         str(bot.get("api_scale") or "medium"),
         goal=bot.get("goal") or "",
@@ -460,7 +428,14 @@ def ingest(args: argparse.Namespace) -> int:
     scored: dict[str, Any]
     env = load_env(Path(state["env_path"]))
     if backend == "offline":
-        scored = score_offline_advisory(r_path, bot, r)
+        print(json.dumps({
+            "ok": False,
+            "error": "offline_score_removed",
+            "bot_id": bid,
+            "round": r,
+            "image": str(r_path),
+        }, ensure_ascii=False))
+        return 1
     elif backend == "vlm":
         scored = score_with_retry(
             path=r_path,
@@ -471,14 +446,8 @@ def ingest(args: argparse.Namespace) -> int:
             round_num=r,
             goal=bot.get("goal") or "",
         )
-        if not scored.get("offline_advisory"):
-            adv = score_offline_advisory(r_path, bot, r).get("offline_advisory")
-            scored["offline_advisory"] = adv
-    else:  # auto: VLM → Agent pending; offline advisory only
+    else:  # auto: VLM → Agent pending
         scored = score_vlm_auto(r_path, bot, env, state["score_model"], r, int(state["max_rounds"]))
-        if not scored.get("ok") and scored.get("judge_pending") == "agent":
-            adv_only = score_offline_advisory(r_path, bot, r)
-            scored.setdefault("offline_advisory", adv_only.get("offline_advisory"))
     if not scored.get("ok") and scored.get("judge_pending") == "agent":
         print(
             json.dumps(
@@ -489,7 +458,6 @@ def ingest(args: argparse.Namespace) -> int:
                     "round": r,
                     "image": str(r_path),
                     "judge_source": scored.get("judge_source"),
-                    "offline_advisory": scored.get("offline_advisory"),
                     "vlm_error": scored.get("error"),
                 },
                 ensure_ascii=False,
@@ -540,8 +508,6 @@ def ingest(args: argparse.Namespace) -> int:
 
     anat = anat_of(rec) if score_ok else None
     anat_ok = bool(score_ok and anat is not None and anat >= float(state["anat_gate"]))
-    if scored.get("offline_advisory"):
-        rec["offline_advisory"] = scored.get("offline_advisory")
     if scored.get("judge_source"):
         rec["judge_source"] = scored.get("judge_source")
     rec["anat_ok"] = anat_ok

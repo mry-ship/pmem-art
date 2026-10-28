@@ -113,7 +113,7 @@ def _snapshot_surface_to_library_dir(
         if src.is_file():
             shutil.copy2(src, lib_dir / fname)
 
-    for dname in ("entries", "_profile", "_knowledge", "_reflections"):
+    for dname in ("entries", "_profile", "_knowledge", "_reflections", "inbox"):
         src_d = mem_dir / dname
         dst_d = lib_dir / dname
         if src_d.is_dir():
@@ -327,6 +327,11 @@ def ensure_project_library_bound(
         conv_d = mem / "converge"
         if conv_d.is_dir():
             shutil.rmtree(conv_d)
+
+        inbox_d = mem / "inbox"
+        if inbox_d.is_dir():
+            shutil.rmtree(inbox_d)
+        inbox_d.mkdir(parents=True, exist_ok=True)
 
         (mem / "candidates.json").write_text("[]\n", encoding="utf-8")
 

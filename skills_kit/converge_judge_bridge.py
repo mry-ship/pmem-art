@@ -1,6 +1,6 @@
 """Converge scoring priority: independent VLM → quant VLM (gpt.py) → Agent pending.
 
-Offline Absolute-5D is **advisory only** — never drives STOP, pad chain, or record totals.
+Pixel offline scores are not computed.
 """
 from __future__ import annotations
 
@@ -27,11 +27,12 @@ def _dim_weights(scale_prof: dict[str, Any] | None) -> dict[str, float]:
 
 
 def weighted_total(dims: dict[str, Any], scale_prof: dict[str, Any] | None) -> float:
+    from .scoring import weighted_geometric
+
     w = _dim_weights(scale_prof)
-    total = 0.0
-    for k, wt in w.items():
-        total += float(dims.get(k) or 0) * wt
-    return round(total, 2)
+    scores = {k: float(dims.get(k) or 0) for k in w}
+    total = weighted_geometric(scores, w, tuple(w))
+    return 0.0 if total is None else total
 
 
 def offline_advisory_only(
@@ -41,43 +42,97 @@ def offline_advisory_only(
     prompt_mode: str = "",
     ref_path: str | None = None,
 ) -> dict[str, Any]:
-    if str(_SCRIPTS) not in sys.path:
-        sys.path.insert(0, str(_SCRIPTS))
-    try:
-        from absolute_5d_scorer import absolute_5d  # noqa: WPS433
+    """Retired. Blur used to raise this score, so the live judge no longer calls it."""
+    del path, api_scale, prompt_mode, ref_path
+    return {"role": "removed", "ok_for_stop": False, "score": None}
 
-        r = absolute_5d(
-            str(path),
-            api_scale=api_scale,
-            prompt_mode=prompt_mode,
-            ref_path=ref_path,
-        )
-        dims = {k: round(float(v), 3) for k, v in (r.get("dims") or {}).items()}
-        return {
-            "role": "advisory_only",
-            "ok_for_stop": False,
-            "score": round(float(r.get("score") or 0), 3),
-            "dims": dims,
-            "coverage": r.get("coverage"),
-            "version": (r.get("meta") or {}).get("version"),
-            "track": r.get("track"),
-        }
-    except Exception as exc:  # noqa: BLE001
-        return {"role": "advisory_only", "ok_for_stop": False, "error": str(exc)}
+
+_GENERAL_DIM_KEYS = (
+    "composition",
+    "lighting_color",
+    "perspective_anatomy",
+    "texture_detail",
+    "spec_style",
+)
+
+
+def _official_total(dims: dict[str, Any], item: dict[str, Any], defects: str = "") -> float | None:
+    """Geometric mean of the general five. Other rubrics keep the total they already computed.
+
+    Missing general keys are not filled with 0. That used to turn a UI or icon score into 0.
+    """
+    if not isinstance(dims, dict) or not dims:
+        return None
+    if any(k not in dims for k in _GENERAL_DIM_KEYS):
+        return None
+    from .converge_policy import (
+        DEFAULT_ANATOMY_FLOOR,
+        SCENE_COLLAPSE_FLOOR,
+        anatomy_score,
+        infer_style_family,
+        scene_structure_ok_for_stop,
+        style_body_floor,
+        style_scene_floor,
+        style_soft_credit,
+    )
+    from .prompt_scale import classify_subject
+
+    scale_prof = item.get("scale_prof") if isinstance(item.get("scale_prof"), dict) else {}
+    goal = str(item.get("goal") or scale_prof.get("goal") or "")
+    module = str(item.get("module") or "")
+    ref_image = str(item.get("ref_image") or "")
+    family = infer_style_family(goal, module, ref_image)
+    raw_total = weighted_total(dims, scale_prof)
+    total = raw_total
+    credited, _note = style_soft_credit(dims, family, defects)
+    if credited:
+        lifted_total = weighted_total(credited, scale_prof)
+        if lifted_total > raw_total:
+            lifted = min(lifted_total, raw_total + 0.30)
+            threshold = float(scale_prof.get("pass_threshold") or scale_prof.get("threshold") or 9.6)
+            if raw_total < threshold:
+                lifted = min(lifted, threshold - 0.01)
+            total = round(lifted, 2)
+    kind = classify_subject(
+        goal=goal,
+        module=module,
+        ref_image=ref_image,
+        ref_analysis=str(item.get("ref_analysis") or ""),
+    )
+    anat = anatomy_score(dims)
+    if kind == "scene":
+        requested = float(scale_prof.get("scene_structure_floor") or SCENE_COLLAPSE_FLOOR)
+        floor = style_scene_floor(family, requested, defects)
+        if not scene_structure_ok_for_stop(dims, defects, floor=floor) and anat is not None:
+            total = min(float(total), float(anat))
+    elif kind in {"humanoid", "creature", "both", "mechanical", "generic"}:
+        requested = float(scale_prof.get("anatomy_floor") or DEFAULT_ANATOMY_FLOOR)
+        floor = style_body_floor(family, defects, requested)
+        if anat is None:
+            total = min(float(total), round(floor - 0.05, 2))
+        elif anat < floor:
+            total = min(float(total), float(anat))
+    return round(float(total), 2)
 
 
 def _normalize_vlm_result(
     parsed: dict[str, Any],
     item: dict[str, Any],
     judge_source: str,
-    offline: dict[str, Any],
 ) -> dict[str, Any]:
     out = dict(parsed)
     out["judge_source"] = judge_source
-    out["offline_advisory"] = offline
     out["ok_for_stop"] = bool(parsed.get("ok"))
-    if parsed.get("ok") and "total" not in parsed and parsed.get("dims"):
-        out["total"] = weighted_total(parsed["dims"], item.get("scale_prof"))
+    dims = parsed.get("dims") if isinstance(parsed.get("dims"), dict) else None
+    if parsed.get("ok") and dims:
+        defects = parsed.get("defects") or []
+        if isinstance(defects, list):
+            defect_text = "；".join(str(x) for x in defects)
+        else:
+            defect_text = str(defects or "")
+        official = _official_total(dims, item, defect_text)
+        if official is not None:
+            out["total"] = official
     return out
 
 
@@ -97,17 +152,7 @@ def score_for_converge(
     bot = item
     api_scale = str(item.get("api_scale") or "medium")
     prompt_mode = str(item.get("prompt_mode") or "")
-    ref = item.get("ref_image") or ""
-    ref_path = str((root / ref).resolve()) if ref and not Path(ref).is_file() else str(ref)
-    if ref and Path(ref).is_file():
-        ref_path = str(Path(ref).resolve())
 
-    offline = offline_advisory_only(
-        path,
-        api_scale=api_scale,
-        prompt_mode=prompt_mode,
-        ref_path=ref_path if ref_path and Path(ref_path).is_file() else None,
-    )
     item = {**item, "scale_prof": scale_prof or {}, "goal": goal or item.get("goal") or ""}
 
     # 1) Project independent VLM (vlm_judge.local.yaml / PMEM_VLM_API_KEY)
@@ -132,7 +177,11 @@ def score_for_converge(
                 if dims_raw:
                     from skills_kit.scoring import parse_5d_dims  # noqa: WPS433
 
-                    w_info = parse_5d_dims(dims_raw, _dim_weights(scale_prof))
+                    w_info = parse_5d_dims(
+                        dims_raw,
+                        _dim_weights(scale_prof),
+                        module=str(item.get("module") or ""),
+                    )
                     dims = w_info.get("parsed") or {}
                     defects = remote.get("defects") or []
                     if isinstance(defects, str):
@@ -140,13 +189,21 @@ def score_for_converge(
                     parsed = {
                         "ok": True,
                         "dims": dims,
-                        "total": w_info.get("weighted_score") or weighted_total(dims, scale_prof),
+                        "total": (
+                            w_info.get("weighted_score")
+                            if w_info.get("weighted_score") is not None
+                            else (
+                                weighted_total(dims, scale_prof)
+                                if dims and all(k in dims for k in _GENERAL_DIM_KEYS)
+                                else 0
+                            )
+                        ),
                         "defects": [str(x) for x in defects][:4],
                         "grade": remote.get("grade"),
                         "model": remote.get("model"),
                         "provider": remote.get("provider"),
                     }
-                    return _normalize_vlm_result(parsed, item, "independent_vlm", offline)
+                    return _normalize_vlm_result(parsed, item, "independent_vlm")
         except Exception as exc:  # noqa: BLE001
             vlm_err = str(exc)
         else:
@@ -161,7 +218,7 @@ def score_for_converge(
 
     quant = vlm.score_one(item, env, model)
     if quant.get("ok"):
-        return _normalize_vlm_result(quant, item, "vlm_quant_5d", offline)
+        return _normalize_vlm_result(quant, item, "vlm_quant_5d")
 
     # 3) Agent must judge — do not treat offline as authoritative
     err = quant.get("error") or vlm_err or "vlm_unavailable"
@@ -171,7 +228,6 @@ def score_for_converge(
         "judge_pending": "agent",
         "judge_source": "agent_required",
         "error": err,
-        "offline_advisory": offline,
         "total": 0,
         "dims": {},
         "defects": [],

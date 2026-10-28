@@ -229,6 +229,7 @@ def write_memory_entry(
     aliases: list[str] | None = None,
     extra_meta: dict[str, Any] | None = None,
     replace_same_asset: bool = False,
+    status: str = "active",
 ) -> Path:
     proj_id = ""
     proj_name = ""
@@ -240,7 +241,47 @@ def write_memory_entry(
     except Exception:
         proj_id = root.name.lower()
         proj_name = root.name
+    from lifecycle import memory_write_lock
+
     entries_root = root / ".memory-art" / "entries" / module
+    with memory_write_lock(root):
+        return _write_memory_entry_unlocked(
+            root,
+            entries_root=entries_root,
+            module=module,
+            kind=kind,
+            summary=summary,
+            body=body,
+            asset=asset,
+            role=role,
+            caption=caption,
+            aliases=aliases,
+            extra_meta=extra_meta,
+            replace_same_asset=replace_same_asset,
+            status=status,
+            proj_id=proj_id,
+            proj_name=proj_name,
+        )
+
+
+def _write_memory_entry_unlocked(
+    root: Path,
+    *,
+    entries_root: Path,
+    module: str,
+    kind: str,
+    summary: str,
+    body: str,
+    asset: str,
+    role: str,
+    caption: str,
+    aliases: list[str] | None,
+    extra_meta: dict[str, Any] | None,
+    replace_same_asset: bool,
+    status: str,
+    proj_id: str,
+    proj_name: str,
+) -> Path:
     entries_root.mkdir(parents=True, exist_ok=True)
     existing_same: Path | None = None
     if replace_same_asset and asset:
@@ -252,6 +293,8 @@ def write_memory_entry(
             except (UnicodeDecodeError, OSError):
                 continue
             if f"kind: {kind}" in prior_text and f"path: {rel_probe}" in prior_text:
+                if status == "provisional" and re.search(r"^status:\s*active\s*$", prior_text, re.M):
+                    continue
                 existing_same = prior
                 break
     if existing_same is not None:
@@ -308,7 +351,7 @@ def write_memory_entry(
         f"layer_scope: private\n"
         f"module: {module}\n"
         f"kind: {kind}\n"
-        f"status: active\n"
+        f"status: {status}\n"
         f"note_date: '{now}'\n"
         f"verified: '{now}'\n"
         f"author: Cursor对话·画师反馈\n"
@@ -321,13 +364,49 @@ def write_memory_entry(
         f"{body.strip()}\n"
     )
     out = existing_same or (entries_root / f"{eid}.md")
-    out.write_text(content, encoding="utf-8")
+    tmp = out.with_suffix(".md.tmp")
+    tmp.write_text(content, encoding="utf-8")
+    tmp.replace(out)
     try:
         from improve import sync_active_project_to_library
         sync_active_project_to_library(root)
     except Exception:
         pass
+    # Docs/config claim writing art_decision (and high-signal kinds) promotes scaffold → active.
+    _maybe_auto_promote_module(root, module, kind)
     return out
+
+
+_PROMOTABLE_KINDS = frozenset({"art_decision", "recipe", "style_redline"})
+
+
+def _maybe_auto_promote_module(root: Path, module: str, kind: str) -> None:
+    """If module is scaffold|candidate and kind is high-signal, promote to active."""
+    if kind not in _PROMOTABLE_KINDS or not module or module.startswith("_"):
+        return
+    try:
+        from pmem_art import load_yaml
+        from lifecycle import promote_module
+    except Exception:
+        return
+    mod_path = root / ".memory-art" / "modules.yaml"
+    if not mod_path.is_file():
+        return
+    try:
+        doc = load_yaml(mod_path.read_text(encoding="utf-8")) or {}
+    except Exception:
+        return
+    modules = doc.get("modules") or {}
+    cfg = modules.get(module) or {}
+    status = str(cfg.get("status") or "active")
+    if status not in ("scaffold", "candidate"):
+        return
+    categories = doc.get("categories") or {}
+    synonyms = doc.get("synonyms")
+    try:
+        promote_module(root, modules, categories, module, None, synonyms)
+    except Exception:
+        return
 
 
 def build_body(kind: str, text: str, style_fork: str | None) -> str:
@@ -386,7 +465,8 @@ def cmd_feedback(
 
     detected = kind or detect_kind(text)
     style_fork = detect_style_fork(text) if detected == "visual_correction" else None
-    mod = module or infer_module_from_text(text, data)
+    explicit_module = bool((module or "").strip())
+    mod = module.strip() if explicit_module else ""
 
     # keep → approved；reject → rejected；其余 reference
     role = "reference"
@@ -413,6 +493,41 @@ def cmd_feedback(
     if not apply:
         if not silent:
             print("（dry-run，未写入；加默认即写入，或显式 --apply）")
+        return 0
+
+    if not explicit_module:
+        from lifecycle import inbox_dir, memory_write_lock
+
+        proj_id, proj_name = "", root.name
+        try:
+            from improve import ensure_project_library_bound, slugify_project_id
+            meta = ensure_project_library_bound(root)
+            proj_id = meta.get("project_id") or slugify_project_id(root.name)
+            proj_name = meta.get("project_name") or root.name
+        except Exception:
+            proj_id = root.name.lower()
+        box = inbox_dir(root)
+        with memory_write_lock(root):
+            path = _write_memory_entry_unlocked(
+                root,
+                entries_root=box,
+                module="_inbox",
+                kind=detected,
+                summary=summary,
+                body=body,
+                asset=asset,
+                role=role,
+                caption="",
+                aliases=[style_fork] if style_fork else None,
+                extra_meta={"style_fork": style_fork} if style_fork else None,
+                replace_same_asset=False,
+                status="pending",
+                proj_id=proj_id,
+                proj_name=proj_name,
+            )
+        if not silent:
+            print(f"📥 模块未写明，已放入待确认区: {path.relative_to(root)}")
+            print("医生巡检时能唯一对上模块才归位，对不上则丢弃。")
         return 0
 
     # 确保模块目录存在

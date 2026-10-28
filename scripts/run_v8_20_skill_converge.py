@@ -235,7 +235,24 @@ def score_image(
     }
     # Lazy import: helpers stay importable when scorer module is only on the bot host.
     import vlm_quant_5d_scorer as vlm  # noqa: E402
-    return vlm.score_one(item, env, model, max_side=1024)
+    from skills_kit import get_converge_scale_profile
+    from skills_kit.converge_judge_bridge import _normalize_vlm_result
+
+    quant = vlm.score_one(item, env, model, max_side=1024)
+    if not quant.get("ok"):
+        return quant
+    scale_prof = get_converge_scale_profile(
+        str(item.get("api_scale") or "medium"),
+        goal=str(item.get("goal") or ""),
+        ref_image=str((bot or {}).get("ref_image") or ""),
+    )
+    item = {
+        **item,
+        "scale_prof": scale_prof,
+        "module": str((bot or {}).get("module") or ""),
+        "ref_image": str((bot or {}).get("ref_image") or ""),
+    }
+    return _normalize_vlm_result(quant, item, "vlm_quant_5d", {})
 
 
 def min_rounds_for(bot: dict) -> int:
@@ -484,11 +501,25 @@ def main() -> int:
                     no_improve_streak = 0
                 else:
                     no_improve_streak += 1
-                anat_now = anatomy_score(dims)
+                from skills_kit.converge_policy import target_dims_allow_stop
+                from skills_kit.prompt_scale import classify_subject
+
                 if (
                     total >= args.threshold
                     and r >= min_r
-                    and (anat_now is None or float(anat_now) < args.anatomy_floor)
+                    and not target_dims_allow_stop(
+                        dims,
+                        args.anatomy_floor,
+                        subject_kind=classify_subject(
+                            goal=str(bot.get("goal") or ""),
+                            module=str(bot.get("module") or ""),
+                            ref_image=str(bot.get("ref_image") or ""),
+                        ),
+                        defects="；".join(str(x) for x in (round_defects or [])),
+                        style_text=" ".join(
+                            str(bot.get(k) or "") for k in ("goal", "module", "ref_image")
+                        ),
+                    )
                 ):
                     anatomy_blocked += 1
 
@@ -498,6 +529,14 @@ def main() -> int:
             )
 
             best_total = float(best_round["total"]) if best_round and best_round.get("total") is not None else None
+            from skills_kit.prompt_scale import classify_subject
+
+            subject_kind = classify_subject(
+                goal=str(bot.get("goal") or ""),
+                module=str(bot.get("module") or ""),
+                ref_image=str(bot.get("ref_image") or ""),
+            )
+            defect_text = "；".join(str(x) for x in (round_defects or []))
             stop = decide_round_stop(
                 score_ok=score_ok,
                 total=total,
@@ -510,6 +549,11 @@ def main() -> int:
                 no_improve_streak=no_improve_streak,
                 plateau_rounds=args.plateau_rounds,
                 regression_drop=args.regression_drop,
+                subject_kind=subject_kind,
+                defects=defect_text,
+                style_text=" ".join(
+                    str(bot.get(k) or "") for k in ("goal", "module", "ref_image")
+                ),
             )
             if stop:
                 stop_reason = stop
@@ -518,6 +562,10 @@ def main() -> int:
                     best_round=best_round,
                     current=rec,
                     anatomy_floor=args.anatomy_floor,
+                    subject_kind=subject_kind,
+                    style_text=" ".join(
+                        str(bot.get(k) or "") for k in ("goal", "module", "ref_image")
+                    ),
                 )
                 break
 

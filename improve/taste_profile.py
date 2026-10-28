@@ -157,6 +157,47 @@ def clip_phrase(text: str, max_len: int) -> str:
     return window.rstrip()
 
 
+
+# Soft / non-actionable defect phrases that must not enter banned_habits
+_SOFT_DEFECT_EXACT = frozenset({"微瑕", "几乎无", "几乎无瑕", "无明显问题", "无", "无硬伤", "无明显瑕疵"})
+
+
+def is_soft_defect_phrase(text: str) -> bool:
+    """True for junk soft summaries like 避免「微瑕」/「几乎无」/empty 避免「」/可再* polish."""
+    s = (text or "").strip()
+    if not s:
+        return True
+
+    def _core_soft(x: str) -> bool:
+        x = (x or "").strip()
+        if not x:
+            return True
+        if x in _SOFT_DEFECT_EXACT:
+            return True
+        if x.startswith("几乎无") and len(x) <= 12:
+            return True
+        if x.startswith("无硬伤") and len(x) <= 10:
+            return True
+        if x == "微瑕" or (x.startswith("微瑕") and len(x) <= 6):
+            return True
+        if "可再" in x and len(x) <= 16 and not any(k in x for k in ("漏", "黑底", "毛边", "霓虹", "抠")):
+            return True
+        if re.fullmatch(r"(微瑕|几乎无|几乎无瑕)", x):
+            return True
+        return False
+
+    if _core_soft(s):
+        return True
+    m = re.search(r"避免「([^」]*)」", s)
+    if m and _core_soft(m.group(1)):
+        return True
+    # full redline summary that is ONLY soft inside 避免「…」
+    m2 = re.search(r"避免「([^」]*)」\s*$", s)
+    if m2 and _core_soft(m2.group(1)):
+        return True
+    return False
+
+
 def apply_feedback_to_taste(
     root: Path,
     text: str,
@@ -181,11 +222,13 @@ def apply_feedback_to_taste(
     elif kind == "style_redline":
         sc["rejects"] = int(sc.get("rejects", 0)) + 1
         taste["reject_phrases"] = _uniq_append(taste.get("reject_phrases") or [], clip_phrase(t, 80))
-        for h in _extract_hints(t, BAN_HINTS):
-            taste["banned_habits"] = _uniq_append(taste.get("banned_habits") or [], h)
-        # raw short reject also becomes banned habit
-        if len(t) <= 40:
-            taste["banned_habits"] = _uniq_append(taste.get("banned_habits") or [], t)
+        if not is_soft_defect_phrase(t):
+            for h in _extract_hints(t, BAN_HINTS):
+                if not is_soft_defect_phrase(h):
+                    taste["banned_habits"] = _uniq_append(taste.get("banned_habits") or [], h)
+            # raw short reject also becomes banned habit (skip soft junk)
+            if len(t) <= 40:
+                taste["banned_habits"] = _uniq_append(taste.get("banned_habits") or [], t)
     elif kind in ("visual_correction", "art_decision"):
         sc["style_fixes"] = int(sc.get("style_fixes", 0)) + 1
         taste["style_notes"] = _uniq_append(taste.get("style_notes") or [], clip_phrase(t, 100))
@@ -200,7 +243,13 @@ def apply_feedback_to_taste(
             elif h in [x[1] for x in TEMP_HINTS]:
                 taste["preferred_color_temperature"] = _uniq_append(taste.get("preferred_color_temperature") or [], h)
         for h in _extract_hints(t, BAN_HINTS):
-            taste["banned_habits"] = _uniq_append(taste.get("banned_habits") or [], h)
+            if not is_soft_defect_phrase(h):
+                taste["banned_habits"] = _uniq_append(taste.get("banned_habits") or [], h)
+
+    # Drop any soft junk that snuck in from older paths
+    taste["banned_habits"] = [
+        h for h in (taste.get("banned_habits") or []) if not is_soft_defect_phrase(str(h))
+    ]
 
     save_taste(root, taste)
     return taste

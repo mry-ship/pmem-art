@@ -5,6 +5,7 @@ Guarantees a mountable memory workflow that is never fully blind magic — auto-
 """
 from __future__ import annotations
 
+import fcntl
 import fnmatch
 import json
 import re
@@ -12,12 +13,19 @@ import shutil
 import os
 import subprocess
 import sys
+import threading
+import time
 from collections import defaultdict
+from contextlib import contextmanager
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterator
 
 MEMORY_DIR = ".memory-art"
+INBOX_DIR = "inbox"
+INBOX_DISCARDED = "_discarded"
+MEMORY_WRITE_LOCK = "memory_write.lock"
+_memory_write_depth = threading.local()
 # Maximum module hierarchy / inherits chain depth (PMEM-aligned 4-layer hard cap)
 MAX_MODULE_DEPTH = 4
 MAX_INHERITS_DEPTH = 4
@@ -224,8 +232,8 @@ STARTER_MODULES: dict[str, dict[str, Any]] = {
         "title": "主角立绘（脚手架 · 请改名为实际角色）",
         "category": "character",
         "status": "scaffold",
-        "description": "冷启动脚手架：将主角立绘/三视图放入 assets/character/<Name>/ 后，sync 会提出 character.<Name> 候选。",
-        "paths": ["assets/character/**"],
+        "description": "冷启动脚手架：将主角立绘/三视图放入 assets/character/hero/（或改名后 sync 提出 character.<Name>）。勿用 assets/character/** 通配以免吞掉其他角色。",
+        "paths": ["assets/character/hero/**"],
         "aliases": ["Hero", "主角"],
         "entities": ["Proportions", "Turnaround"],
         "palette": [],
@@ -243,13 +251,29 @@ STARTER_MODULES: dict[str, dict[str, Any]] = {
         "specs": {"resolution": "1024x576", "aspect_ratio": "16:9", "alpha_required": False, "max_size_kb": 2048},
     },
     "ui.HUD": {
-        "title": "主界面 HUD / 弹窗（脚手架）",
+        "title": "主菜单 / HUD 概念板（脚手架）",
         "category": "ui",
         "status": "scaffold",
-        "description": "冷启动脚手架：九宫格底板、图标、字体规范放入 assets/ui/。",
-        "paths": ["assets/ui/**"],
-        "aliases": ["HUD", "UI", "九宫格"],
-        "entities": ["NineSlice", "Icon"],
+        "description": "冷启动脚手架：主菜单/HUD 16:9 概念板放入 assets/ui/hud/ 或 assets/ui/mainmenu/。九宫格弹窗见 ui.InventoryHUD。",
+        "paths": ["assets/ui/hud/**", "assets/ui/mainmenu/**"],
+        "aliases": ["HUD", "MainMenu", "主菜单", "UI概念"],
+        "entities": ["MainMenuConcept", "ConceptBoard"],
+        "palette": [],
+        "specs": {
+            "resolution": "1280x720",
+            "aspect_ratio": "16:9",
+            "alpha_required": False,
+            "max_size_kb": 2048,
+        },
+    },
+    "ui.InventoryHUD": {
+        "title": "库存 / 弹窗九宫格底板（脚手架）",
+        "category": "ui",
+        "status": "scaffold",
+        "description": "冷启动脚手架：512 RGBA 九宫格弹窗/库存底板放入 assets/ui/inventory/ 或 modal_frame*.png。",
+        "paths": ["assets/ui/modal_frame*.png", "assets/ui/inventory/**"],
+        "aliases": ["InventoryHUD", "NineSlice", "弹窗底板", "九宫格底板"],
+        "entities": ["NineSlice", "ModalFrame"],
         "palette": [],
         "specs": {
             "resolution": "512x512",
@@ -504,36 +528,8 @@ def write_config_yaml(root: Path, config: dict) -> Path:
 
 
 def ensure_cursor_stubs(root: Path) -> None:
-    """写入/刷新 Cursor 对话驱动的规则、hooks 以及自动安装 Cursor / Claude Code / Codex 技能（Skills & Commands）。"""
-    rules = root / ".cursor" / "rules"
-    rules.mkdir(parents=True, exist_ok=True)
-    mdc = rules / "pmem-art.mdc"
-    mdc.write_text(
-        "---\n"
-        "description: pmem-art — Cursor 对话驱动的个人美术积累记忆与 /pmem-draw 闭环收敛生图规则\n"
-        "globs:\n  - assets/**\n  - Art/**\n  - .memory-art/**\n  - .cursor/generated/**\n"
-        "alwaysApply: true\n"
-        "---\n\n"
-        "# pmem-art：个人美术积累记忆 & 内置生图技能\n\n"
-        "## 1. 内置斜杠技能（用户输入即触发）\n"
-        "- **生图先分流**：玩家点名了类型就听玩家的；没点名则模型自己认，回显一句后直接做。一次只走一支。\n"
-        "- **`/pmem-draw`**：生图总入口。普通图、原画、克隆、变体、镜头包都在这一条。玩家点了类型就按点名走。\n"
-        "  - 普通图 / 原画：每轮 `converge generate` 再生，`converge judge` 打五维，`< 9.6` 继续，最多 4 轮，然后 `converge finish`。\n"
-        "  - 有参考但没说新题材 → 普通图，不进克隆。没人要几套机位 → 不进镜头包，点选前不生图。\n"
-        "- **`/pmem-ui`**：整套界面。判成界面才走，禁止用单张插画代替。\n"
-        "- **`/pmem-icon`**：图标。A/B/C 不混用。\n"
-        "- **`/pmem-merge-ladder`**：合成梯。先过八件关系，再一档一张。同框只是预览。\n"
-        "- **`/pmem-style-lock`**：锁风格，不进自动生图。\n"
-        "- **`/pmem-critique`**：只审图。\n"
-        "- **`/pmem-atlas`**：归档并刷新 `art-atlas.html`。\n"
-        "- **`/pmem-coach`**：进步 / 短板 / 知识。知识卡要玩家说收下才写入。\n\n"
-        "## 2. 日常生图前必查与对话反馈沉淀\n"
-        "- 生图前：`python3 pmem_art.py search --module <模块>` 或 `search <关键词>`，把历史红线/定稿写进约束。\n"
-        "- 用户说「太赛博/头太大/别这样画/这版留着/换成水彩/以后都用…」时立刻：\n"
-        "  `python3 pmem_art.py feedback \"<原话>\" --module <模块> [--asset <图>]`\n"
-        "- 新图可 `ingest <路径> -p \"...\" --apply`；用户说「跳过美术记忆」时可跳过。\n",
-        encoding="utf-8",
-    )
+    """写入/刷新 Cursor hooks，并安装 Cursor / Claude Code / Codex 技能。规则正文由 install_skills 写入 pmem-art.mdc。"""
+    (root / ".cursor" / "rules").mkdir(parents=True, exist_ok=True)
     hooks = root / ".cursor" / "hooks.json"
     hooks.write_text(
         json.dumps(
@@ -647,6 +643,288 @@ def list_image_files(root: Path, asset_roots: list[str]) -> list[Path]:
             if p.suffix.lower() in IMAGE_EXTS:
                 files.append(p)
     return files
+
+
+@contextmanager
+def memory_write_lock(root: Path, *, timeout_sec: float = 30.0) -> Iterator[None]:
+    """Cross-process exclusive lock for entry writes. Re-entrant in the same thread."""
+    depth = int(getattr(_memory_write_depth, "n", 0) or 0)
+    if depth > 0:
+        _memory_write_depth.n = depth + 1
+        try:
+            yield
+        finally:
+            _memory_write_depth.n = depth
+        return
+
+    lock = root / MEMORY_DIR / "_profile" / MEMORY_WRITE_LOCK
+    lock.parent.mkdir(parents=True, exist_ok=True)
+    deadline = time.time() + timeout_sec
+    fd = os.open(str(lock), os.O_CREAT | os.O_RDWR, 0o644)
+    while True:
+        try:
+            fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            break
+        except BlockingIOError:
+            if time.time() >= deadline:
+                os.close(fd)
+                raise TimeoutError(f"memory write lock busy: {lock}")
+            time.sleep(0.05)
+    _memory_write_depth.n = 1
+    try:
+        os.ftruncate(fd, 0)
+        os.write(fd, f"{os.getpid()}\n".encode("utf-8"))
+        yield
+    finally:
+        _memory_write_depth.n = 0
+        try:
+            fcntl.flock(fd, fcntl.LOCK_UN)
+        finally:
+            os.close(fd)
+
+
+def _lock_holder_alive(lock: Path) -> bool | None:
+    """True if the recorded pid is running, False if dead, None if unknown."""
+    try:
+        raw = lock.read_text(encoding="utf-8").strip().splitlines()
+    except OSError:
+        return None
+    if not raw or not raw[0].isdigit():
+        return None
+    pid = int(raw[0])
+    if pid <= 0:
+        return False
+    try:
+        os.kill(pid, 0)
+    except ProcessLookupError:
+        return False
+    except PermissionError:
+        return True
+    except OSError:
+        return None
+    return True
+
+
+def _lock_pid_alive(pid: int) -> bool | None:
+    if pid <= 0:
+        return False
+    try:
+        os.kill(pid, 0)
+    except ProcessLookupError:
+        return False
+    except PermissionError:
+        return True
+    except OSError:
+        return None
+    return True
+
+
+_MODULE_TOKEN_RE = re.compile(
+    r"(?<![A-Za-z0-9_])([A-Za-z][A-Za-z0-9_]*(?:\.[A-Za-z0-9_]+)+)(?![A-Za-z0-9_])"
+)
+
+
+def _module_id_votes(blob: str, modules: dict[str, Any]) -> set[str] | None:
+    """Registered module ids named in text.
+
+    A dot-led extra segment (``Hero.Sidekick`` / ``Hero.跟班``) or an underscore
+    suffix (``Hero_v2``) is unregistered and rejects the parent.
+    Chinese glued on without a dot (``Hero头太大``) still counts as that id.
+    """
+    votes: set[str] = set()
+    for match in _MODULE_TOKEN_RE.finditer(blob or ""):
+        token = match.group(1)
+        rest = (blob or "")[match.end():]
+        if rest.startswith(".") and len(rest) > 1:
+            return None
+        if token in modules:
+            votes.add(token)
+            continue
+        if any(token.startswith(mid + ".") or token.startswith(mid + "_") for mid in modules):
+            return None
+    return votes
+
+
+def inbox_dir(root: Path) -> Path:
+    d = root / MEMORY_DIR / INBOX_DIR
+    d.mkdir(parents=True, exist_ok=True)
+    return d
+
+
+def confirm_inbox_module(
+    text: str,
+    asset: str,
+    modules: dict[str, Any],
+    entries: list[dict[str, Any]] | None = None,
+) -> str | None:
+    """Return a module id only when exactly one strict signal agrees.
+
+    Strict signals: full module id in the text, a unique entry alias, or an asset
+    path already mapped to one module. Domain keywords (立绘/弹窗) do not count.
+    """
+    hits: set[str] = set()
+    blob = text or ""
+    module_votes = _module_id_votes(blob, modules)
+    if module_votes is None:
+        return None
+    hits.update(module_votes)
+
+    def _alias_exact(alias: str, hay: str) -> bool:
+        if re.search(r"[A-Za-z0-9]", alias):
+            return re.search(
+                rf"(?<![A-Za-z0-9]){re.escape(alias)}(?![A-Za-z0-9])",
+                hay,
+            ) is not None
+        return re.search(
+            rf"(?<![\u4e00-\u9fff]){re.escape(alias)}(?![\u4e00-\u9fff])",
+            hay,
+        ) is not None
+
+    alias_hits: set[str] = set()
+    for e in entries or []:
+        mod = str(e.get("module") or "")
+        if not mod or mod not in modules:
+            continue
+        for alias in e.get("aliases") or []:
+            if isinstance(alias, str) and len(alias) >= 2 and _alias_exact(alias, blob):
+                alias_hits.add(mod)
+    if len(alias_hits) > 1:
+        return None
+    hits |= alias_hits
+
+    if asset:
+        rel = asset.replace("\\", "/").lstrip("./")
+        path_hits: set[str] = set()
+        for mid, cfg in modules.items():
+            for pat in (cfg or {}).get("paths") or []:
+                folder = str(pat).split("*")[0].rstrip("/")
+                if fnmatch.fnmatch(rel, pat) or (
+                    folder and (rel == folder or rel.startswith(folder + "/"))
+                ):
+                    path_hits.add(mid)
+                    break
+        if len(path_hits) == 1:
+            hits |= path_hits
+    if len(hits) == 1:
+        return next(iter(hits))
+    return None
+
+
+def _inbox_asset_rel(root: Path, asset: str) -> str:
+    raw = (asset or "").replace("\\", "/").strip()
+    if not raw:
+        return ""
+    path = Path(raw)
+    if path.is_absolute():
+        try:
+            return path.resolve().relative_to(root.resolve()).as_posix()
+        except ValueError:
+            return raw
+    return raw.lstrip("./")
+
+
+def _inbox_already_filed(root: Path, marker: str) -> bool:
+    entries = root / MEMORY_DIR / "entries"
+    if not entries.is_dir() or not marker:
+        return False
+    for md in entries.rglob("*.md"):
+        if is_junk_sidecar_name(md.name):
+            continue
+        try:
+            if marker in md.read_text(encoding="utf-8"):
+                return True
+        except OSError:
+            continue
+    return False
+
+
+def triage_memory_inbox(root: Path, data: dict[str, Any]) -> dict[str, Any]:
+    """File uniquely confirmed inbox notes; discard the rest. Does not touch live entries."""
+    from feedback import write_memory_entry
+
+    box = inbox_dir(root)
+    discarded_dir = box / INBOX_DISCARDED
+    modules = data.get("modules") or {}
+    entries = list(data.get("entries") or [])
+    filed: list[str] = []
+    discarded: list[str] = []
+    for md in sorted(box.glob("*.md")):
+        if not md.is_file():
+            continue
+        try:
+            raw = md.read_text(encoding="utf-8")
+        except OSError:
+            continue
+        m = re.match(r"\A---\r?\n(.*?)\r?\n---\r?\n?(.*)\Z", raw, re.DOTALL)
+        if not m:
+            discarded.append(md.name)
+            discarded_dir.mkdir(parents=True, exist_ok=True)
+            md.replace(discarded_dir / md.name)
+            continue
+        # lightweight: reuse project parser if available
+        try:
+            from pmem_art import load_yaml
+            meta = load_yaml(m.group(1)) or {}
+        except Exception:
+            meta = {}
+        body = m.group(2).strip()
+        quote = ""
+        qm = re.search(r"^>\s*(.+)$", body, re.M)
+        if qm:
+            quote = qm.group(1).strip()
+        text = quote or str(meta.get("summary") or "")
+        asset = ""
+        assets = meta.get("assets") or []
+        if isinstance(assets, list) and assets and isinstance(assets[0], dict):
+            asset = str(assets[0].get("path") or "")
+        asset = _inbox_asset_rel(root, asset)
+        target = confirm_inbox_module(text + "\n" + body, asset, modules, entries)
+        marker = f"inbox_source: {json.dumps(md.name, ensure_ascii=False)}"
+        kind = str(meta.get("kind") or "visual_correction")
+        role = str((assets[0].get("role") if isinstance(assets, list) and assets and isinstance(assets[0], dict) else "") or "reference")
+        with memory_write_lock(root):
+            if not md.is_file():
+                continue
+            if _inbox_already_filed(root, marker):
+                md.unlink(missing_ok=True)
+                filed.append(f"{md.name} → already")
+                continue
+            if not target:
+                discarded_dir.mkdir(parents=True, exist_ok=True)
+                dest = discarded_dir / md.name
+                if dest.exists():
+                    dest = discarded_dir / f"{md.stem}_{int(time.time())}{md.suffix}"
+                md.replace(dest)
+                discarded.append(md.name)
+                continue
+            write_memory_entry(
+                root,
+                module=target,
+                kind=kind,
+                summary=str(meta.get("summary") or text)[:80],
+                body=body,
+                asset=asset,
+                role=role,
+                caption="",
+                status="active",
+                extra_meta={"inbox_source": md.name},
+            )
+            md.unlink(missing_ok=True)
+            filed.append(f"{md.name} → {target}")
+        try:
+            from improve import apply_feedback_to_taste
+            apply_feedback_to_taste(root, text, kind)
+        except Exception:
+            pass
+    log = {
+        "filed": filed,
+        "discarded": discarded,
+    }
+    log["at"] = _doctor_now_str()
+    audit = root / MEMORY_DIR / "_profile" / "inbox_triage.json"
+    audit.parent.mkdir(parents=True, exist_ok=True)
+    audit.write_text(json.dumps(log, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return log
 
 
 def path_mapped_to_module(rel: str, modules: dict[str, Any]) -> str | None:
@@ -1547,8 +1825,16 @@ def print_doctor_summary(summary: dict[str, Any]) -> None:
 
 
 def cmd_doctor_lifecycle(root: Path, data: dict[str, Any]) -> int:
+    triage = triage_memory_inbox(root, data)
     summary = collect_doctor_summary(root, data)
+    summary["inbox_filed"] = triage.get("filed") or []
+    summary["inbox_discarded"] = triage.get("discarded") or []
     print_doctor_summary(summary)
+    if triage.get("filed") or triage.get("discarded"):
+        print(
+            f"   inbox          : filed={len(triage.get('filed') or [])}  "
+            f"discarded={len(triage.get('discarded') or [])}"
+        )
     cov = float(summary.get("coverage_pct") or 100.0)
     total = int(summary.get("assets_total") or 0)
     return 0 if cov >= 50 or total == 0 else 0
@@ -1562,13 +1848,17 @@ def run_doctor_quiet(
     offer_tip: bool = True,
 ) -> dict[str, Any]:
     """
-    Inspect-only silent doctor.
+    Silent doctor.
 
-    Writes solely ``.memory-art/_profile/last_doctor.json`` (+ clears claim lock).
-    Never creates/updates/deletes entries、modules.yaml、assets、specs、library.
+    Coverage/orphan report stays inspect-only.
+    Inbox triage may file a pending note into exactly one module, or move it to
+    ``inbox/_discarded/``. It does not edit live entries, modules.yaml, or assets.
     """
     try:
+        triage = triage_memory_inbox(root, data)
         summary = collect_doctor_summary(root, data)
+        summary["inbox_filed"] = list(triage.get("filed") or [])
+        summary["inbox_discarded"] = list(triage.get("discarded") or [])
         needs = bool(summary.get("needs_attention"))
         state = load_doctor_state(root)
         state.update(
@@ -1589,6 +1879,8 @@ def run_doctor_quiet(
                 "conflicts": list(summary.get("conflicts") or []),
                 "missing_specs": list(summary.get("missing_specs") or [])[:20],
                 "missing_specs_count": len(summary.get("missing_specs") or []),
+                "inbox_filed": list(summary.get("inbox_filed") or []),
+                "inbox_discarded": list(summary.get("inbox_discarded") or []),
                 "inspect_only": True,
             }
         )

@@ -1,0 +1,867 @@
+{
+  "session_id": "hp_scale_high",
+  "started_at": "2026-10-28 02:07:38 UTC+8",
+  "goal": "high档：锁窗边耳机少女身份与媒介，大胆抬高侧逆光张力，可加风格内叙事光斑",
+  "module": "character.Hero",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "high",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "high",
+    "label": "高强度 · 大胆跃升+可叙事动态达标闭环 (Showcase Overhaul Dynamic Threshold >=9.6)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 2,
+    "target_score_threshold": 9.6,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.3,
+      "perspective_anatomy": 0.15,
+      "texture_detail": 0.2,
+      "spec_style": 0.2
+    },
+    "retention_set": [
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图；第 1 轮可以拉开光影，之后只在提示词上补还没过的那一处（提示词改动仍 ≤80%）",
+    "max_prompt_delta_ratio": 0.8,
+    "allow_recompose": true,
+    "allow_viewpoint_change": true,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": true,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "style_medium (保持原图核心艺术媒介与画风基因)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)",
+      "no_identity_swap (可加风格内叙事点缀，不换主体身份)"
+    ],
+    "min_round_leap": 0.2,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "胶片逆光轻厚涂：保媒介与身份，提升光影张力；可加风格内叙事点缀",
+    "best_direction_hint": "最优方向：体积光/冷暖碰撞/轮廓光/叙事点缀",
+    "goal": "high档：锁窗边耳机少女身份与媒介，大胆抬高侧逆光张力，可加风格内叙事光斑",
+    "module": "character.Hero",
+    "ref_image": "assets/character/sunlitgirl/pmem_03_sunlit_window_portrait.jpg",
+    "ref_analysis": "锁身份耳机猫夹；允许更戏剧侧逆光与空气层；可小改姿态"
+  },
+  "target_score_threshold": 9.6,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "assets/character/sunlitgirl/pmem_03_sunlit_window_portrait.jpg",
+  "ref_analysis": "锁身份耳机猫夹；允许更戏剧侧逆光与空气层；可小改姿态",
+  "default_aspect_ratio": "3:4",
+  "default_reference_image_paths": [
+    "/Users/yanghu/Desktop/pmem-art/assets/character/sunlitgirl/pmem_03_sunlit_window_portrait.jpg"
+  ],
+  "aspect_ratio": "3:4",
+  "reference_image_paths": [
+    "/Users/yanghu/Desktop/pmem-art/assets/character/sunlitgirl/pmem_03_sunlit_window_portrait.jpg"
+  ],
+  "ref_physical_traits": {
+    "exists": true,
+    "size_bytes": 384656,
+    "size_kb": 375.6,
+    "width": 864,
+    "height": 1152,
+    "aspect_ratio": "3:4",
+    "canonical_aspect_ratio": "3:4",
+    "color_entropy": 7.23
+  },
+  "param_validation": {
+    "valid": true,
+    "validation_passed": true,
+    "case_id": "hp_scale_high",
+    "scale": "high",
+    "aspect_ratio": "3:4",
+    "ref_aspect_ratio": "3:4",
+    "ref_dimensions": "864x1152",
+    "output_aspect_ratio": "",
+    "output_dimensions": "",
+    "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/character/sunlitgirl/pmem_03_sunlit_window_portrait.jpg",
+    "reference_image_paths": [
+      "/Users/yanghu/Desktop/pmem-art/assets/character/sunlitgirl/pmem_03_sunlit_window_portrait.jpg"
+    ],
+    "inherited_default_aspect_ratio": false,
+    "inherited_default_pad_image": false,
+    "matched_ref_aspect_ratio": true,
+    "matched_ref_pad_image": true,
+    "matched_output_aspect_ratio": true,
+    "three_step_stage": "step1_start",
+    "three_step_verified": false,
+    "warnings": []
+  },
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.6,
+  "accept_threshold": 9.6,
+  "max_rounds": 4,
+  "ready_to_finish": true,
+  "status": "finished",
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "3:4",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/character/sunlitgirl/pmem_03_sunlit_window_portrait.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "hp_scale_high",
+        "scale": "high",
+        "aspect_ratio": "3:4",
+        "ref_aspect_ratio": "3:4",
+        "ref_dimensions": "864x1152",
+        "output_aspect_ratio": "3:4",
+        "output_dimensions": "864x1152",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/character/sunlitgirl/pmem_03_sunlit_window_portrait.jpg",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/assets/character/sunlitgirl/pmem_03_sunlit_window_portrait.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "02:08:16",
+      "image": "docs/showcase/homepage_rerun_1028/scale/high/r1.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 376284,
+        "size_kb": 367.5,
+        "width": 864,
+        "height": 1152,
+        "aspect_ratio": "3:4",
+        "canonical_aspect_ratio": "3:4",
+        "color_entropy": 7.23
+      },
+      "raw_score": 9.33,
+      "score": 9.33,
+      "target_score_threshold": 9.6,
+      "dims": "构图9.3/光影9.4/透视9.3/质感9.2/风格9.4",
+      "dims_parsed": {
+        "composition": 9.3,
+        "lighting_color": 9.4,
+        "perspective_anatomy": 9.3,
+        "texture_detail": 9.2,
+        "spec_style": 9.4
+      },
+      "weighted_score": 9.33,
+      "audit_warnings": [
+        "独立视觉 API 不可用，改由本模型按 Absolute-5D 检查表评分（门槛仍 9.6）：HTTP Error 403: Forbidden",
+        "Agent Absolute-5D 已采纳（门槛 9.6；像素离线仅为旁证）",
+        "像素离线 Absolute-5D 旁证=8.45，coverage=0.7（仅参考，不改门槛、不替代本模型五维分）"
+      ],
+      "stagnated": false,
+      "strengths": "侧逆光张力起来；叶影更戏剧",
+      "defects": "下巴抬得过多偏离身份；耳机比例略大；发丝糊",
+      "next_fix": "下巴回到参考高度；耳机缩小贴头；发丝分层",
+      "prompt": "胶片逆光轻厚涂：保媒介与身份，提升光影张力；可加风格内叙事点缀| high r1: stronger rim backlight; denser leaf caustics; air haze; slight chin lift| 约束：保持原图核心艺术媒介与画风基因；保持原图性别、物种、年龄段与核心外观；可加风格内叙事点缀，不换主体身份 | Structure floor: the person's joints and grip stay clear and both pupils share a direction; the animal's limbs follow its species and are not converted into human elbows; contact shadows read; do not melt limbs into props",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.3,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "both",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_absolute_5d",
+        "provider": "",
+        "model": "",
+        "error": "HTTP Error 403: Forbidden",
+        "active": true,
+        "offline_advisory": {
+          "version": "v9.1_audit_patch",
+          "score": 8.45,
+          "coverage": 0.7,
+          "rankable": false,
+          "contract": "docs/gpt6sol_absolute_5d_quant_rubric.md",
+          "role": "advisory_only"
+        },
+        "offline_advisory_note": "像素离线 Absolute-5D 旁证=8.45，coverage=0.7（仅参考，不改门槛、不替代本模型五维分）"
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "anatomy",
+          "lesson": "本轮短板偏「anatomy」：下巴抬得过多偏离身份；耳机比例略大；发丝糊",
+          "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+          "from_score": "9.33"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：侧逆光张力起来；叶影更戏剧",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "9.33"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "02:08:20"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "3:4",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/character/sunlitgirl/pmem_03_sunlit_window_portrait.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "hp_scale_high",
+        "scale": "high",
+        "aspect_ratio": "3:4",
+        "ref_aspect_ratio": "3:4",
+        "ref_dimensions": "864x1152",
+        "output_aspect_ratio": "3:4",
+        "output_dimensions": "864x1152",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/character/sunlitgirl/pmem_03_sunlit_window_portrait.jpg",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/assets/character/sunlitgirl/pmem_03_sunlit_window_portrait.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "02:08:51",
+      "image": "docs/showcase/homepage_rerun_1028/scale/high/r2.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 357700,
+        "size_kb": 349.3,
+        "width": 864,
+        "height": 1152,
+        "aspect_ratio": "3:4",
+        "canonical_aspect_ratio": "3:4",
+        "color_entropy": 7.23
+      },
+      "raw_score": 9.51,
+      "score": 9.51,
+      "target_score_threshold": 9.6,
+      "dims": "构图9.5/光影9.6/透视9.5/质感9.4/风格9.5",
+      "dims_parsed": {
+        "composition": 9.5,
+        "lighting_color": 9.6,
+        "perspective_anatomy": 9.5,
+        "texture_detail": 9.4,
+        "spec_style": 9.5
+      },
+      "weighted_score": 9.51,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.18 低于当前档位 (high) 的最小跃升 +0.20。下一轮加强机位或戏剧光影，不要只改局部笔触",
+        "独立视觉 API 不可用，改由本模型按 Absolute-5D 检查表评分（门槛仍 9.6）：HTTP Error 403: Forbidden",
+        "Agent Absolute-5D 已采纳（门槛 9.6；像素离线仅为旁证）",
+        "像素离线 Absolute-5D 旁证=8.62，coverage=0.7（仅参考，不改门槛、不替代本模型五维分）",
+        "prompt 改动 95% 超过档位上限 80%"
+      ],
+      "stagnated": true,
+      "strengths": "下巴回正；耳机更贴；侧逆光保留",
+      "defects": "猫发夹细节弱；前景花景深偏糊；prompt 改动 95% 超过档位上限 80%",
+      "next_fix": "猫发夹轮廓清楚；前景雏菊景深分层",
+      "prompt": "胶片逆光轻厚涂：保媒介与身份，提升光影张力；可加风格内叙事点缀| high r2: chin match ref; smaller headphones; bang layers; keep dramatic rim| 约束：保持原图核心艺术媒介与画风基因；保持原图性别、物种、年龄段与核心外观；可加风格内叙事点缀，不换主体身份 | Structure floor: the person's joints and grip stay clear and both pupils share a direction; the animal's limbs follow its species and are not converted into human elbows; contact shadows read; do not melt limbs into props | 下巴回到参考高度；耳机缩小贴头；发丝分层",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.5,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "both",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_absolute_5d",
+        "provider": "",
+        "model": "",
+        "error": "HTTP Error 403: Forbidden",
+        "active": true,
+        "offline_advisory": {
+          "version": "v9.1_audit_patch",
+          "score": 8.62,
+          "coverage": 0.7,
+          "rankable": false,
+          "contract": "docs/gpt6sol_absolute_5d_quant_rubric.md",
+          "role": "advisory_only"
+        },
+        "offline_advisory_note": "像素离线 Absolute-5D 旁证=8.62，coverage=0.7（仅参考，不改门槛、不替代本模型五维分）"
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：猫发夹细节弱；前景花景深偏糊；prompt 改动 95% 超过档位上限 80%",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "9.51"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：下巴回正；耳机更贴；侧逆光保留",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "9.51"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "02:08:55"
+    },
+    {
+      "round": 3,
+      "round_label": "第 3 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "3:4",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/character/sunlitgirl/pmem_03_sunlit_window_portrait.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "hp_scale_high",
+        "scale": "high",
+        "aspect_ratio": "3:4",
+        "ref_aspect_ratio": "3:4",
+        "ref_dimensions": "864x1152",
+        "output_aspect_ratio": "3:4",
+        "output_dimensions": "864x1152",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/character/sunlitgirl/pmem_03_sunlit_window_portrait.jpg",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/assets/character/sunlitgirl/pmem_03_sunlit_window_portrait.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "02:09:33",
+      "image": "docs/showcase/homepage_rerun_1028/scale/high/r3.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 352292,
+        "size_kb": 344.0,
+        "width": 864,
+        "height": 1152,
+        "aspect_ratio": "3:4",
+        "canonical_aspect_ratio": "3:4",
+        "color_entropy": 7.23
+      },
+      "raw_score": 9.59,
+      "score": 9.55,
+      "target_score_threshold": 9.6,
+      "dims": "构图9.6/光影9.7/透视9.5/质感9.5/风格9.6",
+      "dims_parsed": {
+        "composition": 9.6,
+        "lighting_color": 9.7,
+        "perspective_anatomy": 9.5,
+        "texture_detail": 9.5,
+        "spec_style": 9.6
+      },
+      "weighted_score": 9.59,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.08 低于当前档位 (high) 的最小跃升 +0.20。下一轮加强机位或戏剧光影，不要只改局部笔触",
+        "独立视觉 API 不可用，改由本模型按 Absolute-5D 检查表评分（门槛仍 9.6）：HTTP Error 403: Forbidden",
+        "Agent Absolute-5D 已采纳（门槛 9.6；像素离线仅为旁证）",
+        "像素离线 Absolute-5D 旁证=8.62，coverage=0.7（仅参考，不改门槛、不替代本模型五维分）",
+        "prompt 改动 94% 超过档位上限 80%"
+      ],
+      "stagnated": true,
+      "strengths": "发夹清楚；花景深更好；戏剧光保留",
+      "defects": "右肩裁切略紧；prompt 改动 94% 超过档位上限 80%",
+      "next_fix": "解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁止糊边融边；右肩裁切略紧",
+      "prompt": "胶片逆光轻厚涂：保媒介与身份，提升光影张力；可加风格内叙事点缀| high r3: clear cat clip; daisy depth layers| 约束：保持原图核心艺术媒介与画风基因；保持原图性别、物种、年龄段与核心外观；可加风格内叙事点缀，不换主体身份 | Structure floor: the person's joints and grip stay clear and both pupils share a direction; the animal's limbs follow its species and are not converted into human elbows; contact shadows read; do not melt limbs into props | 猫发夹轮廓清楚；前景雏菊景深分层",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.5,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "both",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_absolute_5d",
+        "provider": "",
+        "model": "",
+        "error": "HTTP Error 403: Forbidden",
+        "active": true,
+        "offline_advisory": {
+          "version": "v9.1_audit_patch",
+          "score": 8.62,
+          "coverage": 0.7,
+          "rankable": false,
+          "contract": "docs/gpt6sol_absolute_5d_quant_rubric.md",
+          "role": "advisory_only"
+        },
+        "offline_advisory_note": "像素离线 Absolute-5D 旁证=8.62，coverage=0.7（仅参考，不改门槛、不替代本模型五维分）"
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "composition",
+          "lesson": "本轮短板偏「composition」：右肩裁切略紧；prompt 改动 94% 超过档位上限 80%",
+          "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+          "from_score": "9.55"
+        },
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：右肩裁切略紧；prompt 改动 94% 超过档位上限 80%",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "9.55"
+        },
+        {
+          "category": "anatomy",
+          "lesson": "本轮短板偏「anatomy」：右肩裁切略紧；prompt 改动 94% 超过档位上限 80%",
+          "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+          "from_score": "9.55"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "02:09:37"
+    },
+    {
+      "round": 4,
+      "round_label": "第 4 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "3:4",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/character/sunlitgirl/pmem_03_sunlit_window_portrait.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "hp_scale_high",
+        "scale": "high",
+        "aspect_ratio": "3:4",
+        "ref_aspect_ratio": "3:4",
+        "ref_dimensions": "864x1152",
+        "output_aspect_ratio": "3:4",
+        "output_dimensions": "864x1152",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/character/sunlitgirl/pmem_03_sunlit_window_portrait.jpg",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/assets/character/sunlitgirl/pmem_03_sunlit_window_portrait.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "02:10:12",
+      "image": "docs/showcase/homepage_rerun_1028/scale/high/r4.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 350179,
+        "size_kb": 342.0,
+        "width": 864,
+        "height": 1152,
+        "aspect_ratio": "3:4",
+        "canonical_aspect_ratio": "3:4",
+        "color_entropy": 7.24
+      },
+      "raw_score": 9.59,
+      "score": 9.55,
+      "target_score_threshold": 9.6,
+      "dims": "构图9.6/光影9.7/透视9.5/质感9.5/风格9.6",
+      "dims_parsed": {
+        "composition": 9.6,
+        "lighting_color": 9.7,
+        "perspective_anatomy": 9.5,
+        "texture_detail": 9.5,
+        "spec_style": 9.6
+      },
+      "weighted_score": 9.59,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.04 低于当前档位 (high) 的最小跃升 +0.20。下一轮加强机位或戏剧光影，不要只改局部笔触",
+        "独立视觉 API 不可用，改由本模型按 Absolute-5D 检查表评分（门槛仍 9.6）：HTTP Error 403: Forbidden",
+        "Agent Absolute-5D 已采纳（门槛 9.6；像素离线仅为旁证）",
+        "像素离线 Absolute-5D 旁证=8.62，coverage=0.7（仅参考，不改门槛、不替代本模型五维分）",
+        "prompt 改动 95% 超过档位上限 80%"
+      ],
+      "stagnated": true,
+      "strengths": "肩部呼吸边更好；戏剧光仍在",
+      "defects": "发丝局部粘连；prompt 改动 95% 超过档位上限 80%",
+      "next_fix": "解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁止糊边融边；发丝局部粘连",
+      "prompt": "胶片逆光轻厚涂：保媒介与身份，提升光影张力；可加风格内叙事点缀| high r4: looser right shoulder crop| 约束：保持原图核心艺术媒介与画风基因；保持原图性别、物种、年龄段与核心外观；可加风格内叙事点缀，不换主体身份 | Structure floor: the person's joints and grip stay clear and both pupils share a direction; the animal's limbs follow its species and are not converted into human elbows; contact shadows read; do not melt limbs into props | 解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁止糊边融边；右肩裁切略紧",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.5,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "both",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_absolute_5d",
+        "provider": "",
+        "model": "",
+        "error": "HTTP Error 403: Forbidden",
+        "active": true,
+        "offline_advisory": {
+          "version": "v9.1_audit_patch",
+          "score": 8.62,
+          "coverage": 0.7,
+          "rankable": false,
+          "contract": "docs/gpt6sol_absolute_5d_quant_rubric.md",
+          "role": "advisory_only"
+        },
+        "offline_advisory_note": "像素离线 Absolute-5D 旁证=8.62，coverage=0.7（仅参考，不改门槛、不替代本模型五维分）"
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_MAX_ROUNDS",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "composition",
+          "lesson": "本轮短板偏「composition」：发丝局部粘连；prompt 改动 95% 超过档位上限 80%",
+          "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+          "from_score": "9.55"
+        },
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：发丝局部粘连；prompt 改动 95% 超过档位上限 80%",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "9.55"
+        },
+        {
+          "category": "anatomy",
+          "lesson": "本轮短板偏「anatomy」：发丝局部粘连；prompt 改动 95% 超过档位上限 80%",
+          "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+          "from_score": "9.55"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "02:10:16"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "/Users/yanghu/Desktop/pmem-art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-10-28 01:28:36 UTC+8"
+    },
+    "module": "character.Hero",
+    "goal": "high档：锁窗边耳机少女身份与媒介，大胆抬高侧逆光张力，可加风格内叙事光斑",
+    "confidence": 0.3,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "红线可控（0 条）",
+      "挂载 2 张项目知识卡 + 0 张全局美术底层基础卡"
+    ],
+    "top_recipes": [],
+    "top_redlines": [],
+    "art_decisions": [],
+    "private_knowledge": [
+      {
+        "id": "tech-celshade",
+        "title": "赛璐珞分层",
+        "body": "硬边色块分层，高光形状干净，层数克制。",
+        "layer_scope": "private"
+      },
+      {
+        "id": "tech-painterly",
+        "title": "厚涂笔触",
+        "body": "可见笔触方向跟随形体，暗部透气勿脏。",
+        "layer_scope": "private"
+      }
+    ],
+    "shared_knowledge": [],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [],
+      "preferred_composition": [],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [],
+      "banned_habits": [
+        "赛博霓虹/霓虹紫"
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.Hero\n- 置信度: 0.30（fast-track 资格: 否）\n- 个人禁用习惯: 赛博霓虹/霓虹紫\n- 项目私有知识卡 (Private Layer):\n  · [tech-celshade] 赛璐珞分层: 硬边色块分层，高光形状干净，层数克制。\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。",
+    "built_at": "2026-10-28 02:07:38 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：下巴抬得过多偏离身份；耳机比例略大；发丝糊",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "9.33"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：侧逆光张力起来；叶影更戏剧",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.33"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：猫发夹细节弱；前景花景深偏糊；prompt 改动 95% 超过档位上限 80%",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.51"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：下巴回正；耳机更贴；侧逆光保留",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.51"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：右肩裁切略紧；prompt 改动 94% 超过档位上限 80%",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "9.55"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：右肩裁切略紧；prompt 改动 94% 超过档位上限 80%",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.55"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：右肩裁切略紧；prompt 改动 94% 超过档位上限 80%",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "9.55"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：发丝局部粘连；prompt 改动 95% 超过档位上限 80%",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "9.55"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：发丝局部粘连；prompt 改动 95% 超过档位上限 80%",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.55"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：发丝局部粘连；prompt 改动 95% 超过档位上限 80%",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "9.55"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 4,
+  "regression_drop": 0.5,
+  "ActionRequired": "STOP_PICK_BEST",
+  "winner": {
+    "round": 4,
+    "round_label": "第 4 轮精修",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "3:4",
+    "reference_image_paths": [
+      "/Users/yanghu/Desktop/pmem-art/assets/character/sunlitgirl/pmem_03_sunlit_window_portrait.jpg"
+    ],
+    "param_validation": {
+      "valid": true,
+      "validation_passed": true,
+      "case_id": "hp_scale_high",
+      "scale": "high",
+      "aspect_ratio": "3:4",
+      "ref_aspect_ratio": "3:4",
+      "ref_dimensions": "864x1152",
+      "output_aspect_ratio": "3:4",
+      "output_dimensions": "864x1152",
+      "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/character/sunlitgirl/pmem_03_sunlit_window_portrait.jpg",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/character/sunlitgirl/pmem_03_sunlit_window_portrait.jpg"
+      ],
+      "inherited_default_aspect_ratio": true,
+      "inherited_default_pad_image": true,
+      "matched_ref_aspect_ratio": true,
+      "matched_ref_pad_image": true,
+      "matched_output_aspect_ratio": true,
+      "three_step_stage": "step3_judge",
+      "three_step_verified": true,
+      "warnings": [],
+      "continuation_pad": false,
+      "pad_diverged": false
+    },
+    "generated_at": "02:10:12",
+    "image": "docs/showcase/homepage_rerun_1028/scale/high/r4.jpg",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 350179,
+      "size_kb": 342.0,
+      "width": 864,
+      "height": 1152,
+      "aspect_ratio": "3:4",
+      "canonical_aspect_ratio": "3:4",
+      "color_entropy": 7.24
+    },
+    "raw_score": 9.59,
+    "score": 9.55,
+    "target_score_threshold": 9.6,
+    "dims": "构图9.6/光影9.7/透视9.5/质感9.5/风格9.6",
+    "dims_parsed": {
+      "composition": 9.6,
+      "lighting_color": 9.7,
+      "perspective_anatomy": 9.5,
+      "texture_detail": 9.5,
+      "spec_style": 9.6
+    },
+    "weighted_score": 9.59,
+    "audit_warnings": [
+      "收敛停滞预警：本轮净增 +0.04 低于当前档位 (high) 的最小跃升 +0.20。下一轮加强机位或戏剧光影，不要只改局部笔触",
+      "独立视觉 API 不可用，改由本模型按 Absolute-5D 检查表评分（门槛仍 9.6）：HTTP Error 403: Forbidden",
+      "Agent Absolute-5D 已采纳（门槛 9.6；像素离线仅为旁证）",
+      "像素离线 Absolute-5D 旁证=8.62，coverage=0.7（仅参考，不改门槛、不替代本模型五维分）",
+      "prompt 改动 95% 超过档位上限 80%"
+    ],
+    "stagnated": true,
+    "strengths": "肩部呼吸边更好；戏剧光仍在",
+    "defects": "发丝局部粘连；prompt 改动 95% 超过档位上限 80%",
+    "next_fix": "解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁止糊边融边；发丝局部粘连",
+    "prompt": "胶片逆光轻厚涂：保媒介与身份，提升光影张力；可加风格内叙事点缀| high r4: looser right shoulder crop| 约束：保持原图核心艺术媒介与画风基因；保持原图性别、物种、年龄段与核心外观；可加风格内叙事点缀，不换主体身份 | Structure floor: the person's joints and grip stay clear and both pupils share a direction; the animal's limbs follow its species and are not converted into human elbows; contact shadows read; do not melt limbs into props | 解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁止糊边融边；右肩裁切略紧",
+    "continuation": false,
+    "passed": false,
+    "gate_blocked": true,
+    "image_gate_blocked": false,
+    "anatomy_score": 9.5,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "both",
+    "judge_source": "agent_absolute_5d",
+    "remote_vlm": {
+      "source": "agent_absolute_5d",
+      "provider": "",
+      "model": "",
+      "error": "HTTP Error 403: Forbidden",
+      "active": true,
+      "offline_advisory": {
+        "version": "v9.1_audit_patch",
+        "score": 8.62,
+        "coverage": 0.7,
+        "rankable": false,
+        "contract": "docs/gpt6sol_absolute_5d_quant_rubric.md",
+        "role": "advisory_only"
+      },
+      "offline_advisory_note": "像素离线 Absolute-5D 旁证=8.62，coverage=0.7（仅参考，不改门槛、不替代本模型五维分）"
+    },
+    "should_continue_next_round": false,
+    "decision": "STOP_MAX_ROUNDS",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "composition",
+        "lesson": "本轮短板偏「composition」：发丝局部粘连；prompt 改动 95% 超过档位上限 80%",
+        "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+        "from_score": "9.55"
+      },
+      {
+        "category": "lighting",
+        "lesson": "本轮短板偏「lighting」：发丝局部粘连；prompt 改动 95% 超过档位上限 80%",
+        "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+        "from_score": "9.55"
+      },
+      {
+        "category": "anatomy",
+        "lesson": "本轮短板偏「anatomy」：发丝局部粘连；prompt 改动 95% 超过档位上限 80%",
+        "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+        "from_score": "9.55"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "02:10:16"
+  },
+  "rounds_to_converge": 4,
+  "convergence_badge": "共 4 轮未达阈值，采用最高分",
+  "process_board": ".memory-art/converge/boards/hp_scale_high/index.html"
+}

@@ -1085,7 +1085,7 @@ def cmd_search(data: dict[str, Any], module: str, path: str, query: str) -> int:
     matched = []
     for e in data["entries"]:
         # Hide retired lessons so superseded STOP=8.50-style advice cannot resurface.
-        if str(e.get("status") or "active").lower() in ("superseded", "archived", "inactive"):
+        if str(e.get("status") or "active").lower() in ("superseded", "archived", "inactive", "pending"):
             continue
         em = e.get("module", "")
         if target_mod and em not in lineage_set and e.get("scope") != "project":
@@ -1211,7 +1211,7 @@ def cmd_hook(root: Path, data: dict[str, Any], event: str) -> int:
         matched = []
         if module:
             def _live(e: dict[str, Any]) -> bool:
-                return str(e.get("status") or "active").lower() not in ("superseded", "archived", "inactive")
+                return str(e.get("status") or "active").lower() not in ("superseded", "archived", "inactive", "pending")
 
             matched = [
                 e
@@ -1349,7 +1349,7 @@ def main() -> int:
     p_fb = sub.add_parser("feedback", help="把画师自然语言反馈沉淀为记忆（太赛博/头太大/这版留着/换成水彩…）")
     p_fb.add_argument("text", nargs="?", default="", help="画师原话；也可 --text")
     p_fb.add_argument("--text", dest="text_opt", default="", help="画师原话（与位置参数二选一）")
-    p_fb.add_argument("--module", "-m", default="", help="目标模块；省略则从原文推断")
+    p_fb.add_argument("--module", "-m", default="", help="目标模块；省略则进待确认区，由 doctor 归位或丢弃")
     p_fb.add_argument("--asset", "-a", default="", help="关联图片路径（正例/反例）")
     p_fb.add_argument("--kind", default="", help="强制记忆类型；默认自动判定")
     p_fb.add_argument("--dry-run", action="store_true", help="只打印判定，不写文件")
@@ -1359,7 +1359,7 @@ def main() -> int:
     p_note = sub.add_parser("note", help="feedback 的别名（更短）")
     p_note.add_argument("text", nargs="?", default="")
     p_note.add_argument("--text", dest="text_opt", default="")
-    p_note.add_argument("--module", "-m", default="")
+    p_note.add_argument("--module", "-m", default="", help="省略则进待确认区")
     p_note.add_argument("--asset", "-a", default="")
     p_note.add_argument("--kind", default="")
     p_note.add_argument("--dry-run", action="store_true")
@@ -1424,15 +1424,20 @@ def main() -> int:
     p_conv.add_argument("--reference-image-paths", dest="reference_image_paths", default="", help="垫图路径列表（逗号分隔；默认跟随 --ref-image）")
     p_conv.add_argument("--ref-analysis", default="", help="参考图视觉解构结论摘要")
     p_conv.add_argument("--threshold", type=float, default=9.6, help="合格分数线（默认 9.6）")
-    p_conv.add_argument("--max-rounds", type=int, default=8, help="最大收敛轮次（默认 8）")
+    p_conv.add_argument(
+        "--max-rounds",
+        type=int,
+        default=None,
+        help="最大收敛轮次（默认 4：≥9.6 停，满 4 轮取最高分）",
+    )
     p_conv.add_argument("--mode", dest="converge_mode", choices=("quality", "fast"), default="quality",
-                        help="quality=完整8×9.6（默认）；fast=warm-start 置信高时可 fast-track")
+                        help="quality=最多4轮×≥9.6（默认）；fast=warm-start 置信高时可 fast-track")
     p_conv.add_argument("--scale", dest="converge_scale", choices=("low", "medium", "high", "recompose"), default="",
                         help="收敛强度：low=只修缺陷，medium=补足加小优化（默认），high=允许重构构图和重做光影，recompose=按用户指定方向改构图")
     p_conv.add_argument("--recompose-dir", dest="recompose_dir", default="",
                         help="当用户明确要求改变构图时指定新构图方向（如：从特写改为全景 / 把主体移到画面左侧三分点）")
     p_conv.add_argument("--draft", action="store_true", help="用户明确要草稿/fast 时允许软合格线（仅 fast 模式）")
-    p_conv.add_argument("--round", dest="round_num", type=int, default=0, help="当前轮次序号 (1..8)")
+    p_conv.add_argument("--round", dest="round_num", type=int, default=0, help="当前轮次序号 (1..4)")
     p_conv.add_argument("--image", "-i", default="", help="本轮生成图片路径")
     p_conv.add_argument("--score", "-s", type=float, default=0.0, help="本轮综合评分（满分 10.0）")
     p_conv.add_argument("--dims", default="", help="五维细分得分说明")
@@ -1698,6 +1703,8 @@ def main() -> int:
         )
     if args.command == "converge":
         from skills_kit import cmd_converge
+        from skills_kit.prompt_scale import DEFAULT_MAX_ROUNDS
+        _max_rounds = DEFAULT_MAX_ROUNDS if args.max_rounds is None else int(args.max_rounds)
         return cmd_converge(
             root,
             data,
@@ -1708,7 +1715,7 @@ def main() -> int:
             ref_image=args.ref_image,
             ref_analysis=args.ref_analysis,
             threshold=args.threshold,
-            max_rounds=args.max_rounds,
+            max_rounds=_max_rounds,
             round_num=args.round_num,
             image=args.image,
             generate_cmd=getattr(args, "generate_cmd", "") or "",

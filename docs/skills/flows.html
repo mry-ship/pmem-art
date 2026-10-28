@@ -118,7 +118,7 @@
 <body>
   <header>
     <h1>pmem-art · 技能流程</h1>
-    <p>现在是 9 个技能。没点名走 /pmem-agent：先把需求定稳，再交给其余技能。原画、克隆、变体、镜头包收在 draw 里；合成梯先过关系，再一档一张，同框不是成品。完整说明见 <a href="../../USER_MANUAL.md">USER_MANUAL.md · 第一章附</a>。</p>
+    <p>现在是 10 个技能。没点名走 /pmem-agent：可默认则默认，硬歧义才打回；整页对比可依次多支。原画、克隆、变体、镜头包收在 draw 里；合成梯先过关系，再一档一张，同框不是成品。完整说明见 <a href="../../USER_MANUAL.md">USER_MANUAL.md · 第一章附</a>。</p>
   </header>
   <main>
     <div class="pick" id="pick" role="group" aria-label="选择技能"></div>
@@ -143,11 +143,11 @@
       label: "agent",
       title: "/pmem-agent",
       sub: "/pmem-agent · 总控",
-      aria: "多轮把需求定成同一句，再把定稿和每一张图交给一个 agent，按现稿选择一支技能并写明选了谁。",
+      aria: "两轮把需求定稳：可默认项写入定稿，只有硬歧义才打回。再把定稿和每一张图交给现稿，单交付选一支，整页对比可依次多支。",
       nodes: [
-        { id: "a", x: 24, y: 24, w: 150, h: 48, t1: "1 定需求", t2: "定不稳就打回", c: "n-neu" },
+        { id: "a", x: 24, y: 24, w: 160, h: 48, t1: "1 定需求", t2: "可默认 / 硬歧义才打回", c: "n-neu" },
         { id: "b", x: 220, y: 24, w: 170, h: 48, t1: "2 交给 agent", t2: "定稿 + 每一张图 + 技能现稿", c: "n-blue" },
-        { id: "c", x: 430, y: 24, w: 150, h: 48, t1: "3 选一支", t2: "写明按哪一节", c: "n-ok" },
+        { id: "c", x: 430, y: 24, w: 160, h: 48, t1: "3 选一支或依次", t2: "写明按哪一节", c: "n-ok" },
         { id: "d", x: 250, y: 120, w: 180, h: 48, t1: "执行那一支", t2: "图不收成一张", c: "n-mem" }
       ],
       edges: [["a","b"],["b","c"],["c","d"]]
@@ -256,6 +256,19 @@
       ],
       edges: [["a","b"],["b","c"],["c","d"],["d","e"]]
     },
+    prompt: {
+      label: "prompt",
+      title: "/pmem-prompt",
+      sub: "/pmem-prompt · 按类型扩写 brief",
+      aria: "先判定交付类型，再按该类清单扩成两到四套同类型方案。不生图，点选后再交给对应技能。",
+      nodes: [
+        { id: "a", x: 30, y: 50, w: 150, h: 48, t1: "0 判定类型", t2: "写进第一行", c: "n-neu" },
+        { id: "b", x: 220, y: 50, w: 170, h: 48, t1: "1 按类扩写", t2: "合理性/美观/禁忌", c: "n-blue" },
+        { id: "c", x: 430, y: 50, w: 150, h: 48, t1: "2 出 2～4 套", t2: "同类型不混", c: "n-ok" },
+        { id: "d", x: 620, y: 50, w: 90, h: 48, t1: "点选", t2: "再生图", c: "n-mem" }
+      ],
+      edges: [["a","b"],["b","c"],["c","d"]]
+    },
     style: {
       label: "style",
       title: "/pmem-style-lock",
@@ -346,7 +359,7 @@
     }
   };
 
-  const order = ["agent","draw","concept","ui","icon","clone","ladder","lens","style","critique","variant","atlas","improve","coach","learn"];
+  const order = ["agent","draw","concept","ui","icon","clone","ladder","prompt","lens","style","critique","variant","atlas","improve","coach","learn"];
   const pick = document.getElementById("pick");
   const host = document.getElementById("svg-host");
   const titleEl = document.getElementById("title");

@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import math
 import re
 import shutil
 from datetime import datetime, timezone, timedelta
@@ -21,6 +22,24 @@ def _is_app_icon_5d_context(dims_str: str = "", module: str = "") -> bool:
     return sum(1 for kw in icon_markers if kw in s) >= 2
 
 
+def _is_icon_prop_5d_context(dims_str: str = "", module: str = "") -> bool:
+    mod = (module or "").strip().lower()
+    if mod.startswith("icon.prop") or mod in ("icon.item", "icon.c"):
+        return True
+    s = dims_str or ""
+    markers = ("剪影识别", "描边色板", "棚拍", "无字")
+    return sum(1 for kw in markers if kw in s) >= 2
+
+
+def _is_icon_svg_5d_context(dims_str: str = "", module: str = "") -> bool:
+    mod = (module or "").strip().lower()
+    if mod.startswith("icon.svg") or mod in ("icon.b", "icon.linear"):
+        return True
+    s = dims_str or ""
+    markers = ("笔画一致", "视觉重量", "光学居中", "留白", "功能识别")
+    return sum(1 for kw in markers if kw in s) >= 2
+
+
 def _is_ui_5d_context(dims_str: str = "", module: str = "") -> bool:
     mod = (module or "").strip().lower()
     if mod == "ui" or mod.startswith("ui."):
@@ -30,11 +49,14 @@ def _is_ui_5d_context(dims_str: str = "", module: str = "") -> bool:
     return sum(1 for kw in ui_markers if kw in s) >= 2
 
 
-_CLAUSE_PUNCT = "，。；"
+_CLAUSE_PUNCT = "，。；但"
 _CLAUSE_CLEAR = re.compile(
-    r"已彻底解决|彻底解决|已解决|解决了|已修复|已消除|已去掉|不再出现|未出现|并未出现|并未发现|并非|严禁|禁止|不得出现|不得有"
+    r"已彻底解决|彻底解决|已经解决|已解决|解决了|已修复|已消除|已去掉|不再出现|未出现|并未出现|并未发现|严禁|禁止|不得出现|不得有"
 )
-_CLAUSE_STILL_BROKEN = re.compile(r"(?:没有|并未|还不|仍未|尚未|未|不)(?:彻底)?解决")
+_CLAUSE_STILL_BROKEN = re.compile(
+    r"(?:不是已经|没有已经|并非已经|并未已经|不是已)解决|"
+    r"(?:没有|没能|未能|无法|需要|并未|还不|仍未|尚未|未|不|没)(?:彻底)?解决"
+)
 _LOCAL_NEGATORS = (
     "没有发生", "未出现", "未发现", "不存在", "并未", "并非", "不是",
     "没有", "不要", "别再", "never ", "without ", "not ", "no ",
@@ -74,6 +96,36 @@ def _locally_negated(text: str, index: int) -> bool:
     return False
 
 
+def _clause_fixed(low: str, index: int, key_len: int, clause: str) -> bool:
+    """A defect is gone when this clause says so, or the next 但-clause is only a fix."""
+    if _CLAUSE_STILL_BROKEN.search(clause):
+        return False
+    if re.search(r"(?:不是|没有|并非|并未).{0,12}解决", clause):
+        return False
+    if re.search(r"(?:解决了|已经解决|已解决|已修复).{0,6}(?:不了|又出现|又不|没有|不|没|吗)", clause):
+        return False
+    if _CLAUSE_CLEAR.search(clause):
+        return True
+    end = index + key_len
+    while end < len(low) and low[end] not in _CLAUSE_PUNCT:
+        end += 1
+    if end >= len(low) or low[end] not in _CLAUSE_PUNCT:
+        return False
+    nxt = low[end + 1 :]
+    for ch in _CLAUSE_PUNCT:
+        if ch == "但":
+            continue
+        cut = nxt.find(ch)
+        if cut >= 0:
+            nxt = nxt[:cut]
+    nxt_s = nxt.strip()
+    if nxt_s.startswith("但是"):
+        nxt_s = nxt_s[2:].strip()
+    elif nxt_s.startswith("但") or nxt_s.startswith("是"):
+        nxt_s = nxt_s[1:].strip()
+    return bool(re.fullmatch(r"(?:已经解决了?|已解决了?|解决了|已修复了?|已消除了?)", nxt_s))
+
+
 def _keyword_hits(text: str, keywords: tuple[str, ...]) -> list[str]:
     """Match keywords. A resolved or forbidden clause does not count, nor does a directly negated hit."""
     low = (text or "").lower()
@@ -86,7 +138,7 @@ def _keyword_hits(text: str, keywords: tuple[str, ...]) -> list[str]:
             if i < 0:
                 break
             clause = _clause_text(low, i)
-            if _CLAUSE_CLEAR.search(clause) and not _CLAUSE_STILL_BROKEN.search(clause):
+            if _clause_fixed(low, i, len(k), clause):
                 start = i + len(k)
                 continue
             if _locally_negated(low, i):
@@ -97,6 +149,121 @@ def _keyword_hits(text: str, keywords: tuple[str, ...]) -> list[str]:
     return hits
 
 
+def weighted_geometric(
+    scores: dict[str, float],
+    weights: dict[str, float],
+    keys: tuple[str, ...],
+) -> float | None:
+    """Weighted geometric mean. Weights on `keys` are renormalized to 1."""
+    if any(k not in scores for k in keys):
+        return None
+    wsum = sum(float(weights.get(k) or 0) for k in keys)
+    if wsum <= 0:
+        return None
+    acc = 0.0
+    for k in keys:
+        x = float(scores[k])
+        if x <= 0:
+            return 0.0
+        acc += (float(weights.get(k) or 0) / wsum) * math.log(x)
+    return round(math.exp(acc), 2)
+
+
+def apply_hurdles(
+    score: float,
+    scores: dict[str, float],
+    hurdles: tuple[tuple[str, float], ...],
+) -> tuple[float, dict[str, Any] | None]:
+    """If a hurdle dimension is under its floor, the official score becomes that dimension."""
+    hit: dict[str, Any] | None = None
+    for key, floor in hurdles:
+        if key not in scores:
+            continue
+        val = float(scores[key])
+        if val < float(floor) and (hit is None or val < float(hit["value"])):
+            hit = {"key": key, "floor": float(floor), "value": val}
+    if hit:
+        score = min(float(score), float(hit["value"]))
+    return round(float(score), 2), hit
+
+
+def _bundle_score(
+    parsed: dict[str, float],
+    weights: dict[str, float],
+    score_keys: tuple[str, ...],
+    hurdles: tuple[tuple[str, float], ...],
+    mode: str,
+) -> dict[str, Any] | None:
+    geo = weighted_geometric(parsed, weights, score_keys)
+    if geo is None:
+        return None
+    official, hit = apply_hurdles(geo, parsed, hurdles)
+    out: dict[str, Any] = {
+        "parsed": parsed,
+        "weighted_score": official,
+        "geometric_score": geo,
+        "rubric_mode": mode,
+    }
+    if hit:
+        out["hurdle"] = hit
+    return out
+
+
+# UI: pipeline is scored and can veto, but it is not inside the product.
+UI_SCORE_KEYS = (
+    "style_palette",
+    "nine_slice_structure",
+    "lighting_material",
+    "state_suite_cohesion",
+)
+UI_HURDLES = (("nine_slice_structure", 7.5), ("rgba_pipeline_compliance", 8.0))
+ICON_A_SCORE_KEYS = (
+    "glyph_silhouette",
+    "squircle_safe_zone",
+    "tactile_lighting",
+    "multisize_adaptive",
+    "palette_purity",
+)
+ICON_A_HURDLES = (("glyph_silhouette", 8.0), ("squircle_safe_zone", 8.0))
+ICON_PROP_WEIGHTS = {"silhouette": 0.30, "stroke_palette": 0.20, "studio_light": 0.20}
+ICON_PROP_SCORE_KEYS = ("silhouette", "stroke_palette", "studio_light")
+ICON_PROP_HURDLES = (("silhouette", 8.0), ("alpha", 8.0), ("no_text", 8.0))
+ICON_SVG_WEIGHTS = {
+    "stroke_consistency": 0.25,
+    "visual_weight": 0.25,
+    "optical_center": 0.25,
+    "recognizability": 0.25,
+}
+ICON_SVG_SCORE_KEYS = tuple(ICON_SVG_WEIGHTS)
+ICON_SVG_HURDLES = (("stroke_consistency", 8.0), ("recognizability", 8.0))
+GENERAL_5D_KEYS = (
+    "composition",
+    "lighting_color",
+    "perspective_anatomy",
+    "texture_detail",
+    "spec_style",
+)
+
+
+_KV_5D_ALIAS = {
+    "composition": "composition",
+    "comp": "composition",
+    "lighting_color": "lighting_color",
+    "lighting": "lighting_color",
+    "light": "lighting_color",
+    "color": "lighting_color",
+    "perspective_anatomy": "perspective_anatomy",
+    "perspective": "perspective_anatomy",
+    "anatomy": "perspective_anatomy",
+    "craft": "perspective_anatomy",
+    "texture_detail": "texture_detail",
+    "texture": "texture_detail",
+    "detail": "texture_detail",
+    "spec_style": "spec_style",
+    "style": "spec_style",
+}
+
+
 def _parse_kv_5d(dims_str: str, weights: dict[str, float]) -> dict[str, Any] | None:
     pairs = re.findall(
         r"([A-Za-z_][A-Za-z0-9_]*)\s*=\s*([0-9]+(?:\.[0-9]+)?)",
@@ -105,47 +272,45 @@ def _parse_kv_5d(dims_str: str, weights: dict[str, float]) -> dict[str, Any] | N
     if len(pairs) < 4:
         return None
     bucket: dict[str, list[float]] = {}
-    alias = {
-        "composition": "composition",
-        "comp": "composition",
-        "lighting": "lighting_color",
-        "light": "lighting_color",
-        "color": "lighting_color",
-        "perspective": "perspective_anatomy",
-        "anatomy": "perspective_anatomy",
-        "craft": "perspective_anatomy",
-        "texture": "texture_detail",
-        "detail": "texture_detail",
-        "style": "spec_style",
-        "spec": "perspective_anatomy",
-    }
-    saw_style = False
+    pair_keys = {key.lower() for key, _val in pairs}
+    has_style_key = bool(pair_keys & {"style", "spec_style"})
     for key, val in pairs:
         k = key.lower()
-        if k == "style":
-            saw_style = True
-        dest = alias.get(k)
+        if k == "spec":
+            # Bare spec: style dim unless a real style key is already present
+            # (legacy four-key: style= + spec= → spec means perspective).
+            dest = "perspective_anatomy" if has_style_key else "spec_style"
+        else:
+            dest = _KV_5D_ALIAS.get(k)
         if dest is None:
             continue
-        if k == "spec" and not saw_style and "style" not in {p[0].lower() for p in pairs}:
-            dest = "spec_style"
         bucket.setdefault(dest, []).append(float(val))
     parsed = {k: round(sum(v) / len(v), 2) for k, v in bucket.items()}
     needed = ("composition", "lighting_color", "perspective_anatomy", "texture_detail", "spec_style")
-    if "lighting_color" not in parsed and all(k in parsed for k in ("composition", "perspective_anatomy", "texture_detail", "spec_style")):
+    # Only the old four-key dialect may invent lighting. Any other missing dim fails closed.
+    if (
+        "lighting_color" not in parsed
+        and pair_keys <= {"style", "comp", "spec", "detail"}
+        and all(k in parsed for k in ("composition", "perspective_anatomy", "texture_detail", "spec_style"))
+    ):
         others = [parsed[k] for k in ("composition", "perspective_anatomy", "texture_detail", "spec_style")]
         parsed["lighting_color"] = round(sum(others) / len(others), 2)
     if any(k not in parsed for k in needed):
         return None
-    weighted = sum(parsed[k] * weights.get(k, 0.2) for k in needed)
-    return {"parsed": {k: parsed[k] for k in needed}, "weighted_score": round(weighted, 2), "rubric_mode": "general_5d"}
+    geo = weighted_geometric(parsed, weights, needed)
+    return {
+        "parsed": {k: parsed[k] for k in needed},
+        "weighted_score": geo,
+        "geometric_score": geo,
+        "rubric_mode": "general_5d",
+    }
 
 
 def _parse_skill_additive(dims_str: str) -> dict[str, Any] | None:
-    """Skill rubric: 风格2.5 + 结构2.5 + 光影2.0 + 合规1.5 + 还原1.5, summed to 10.
+    """Old slip only: 风格2.5 + 结构2.5 + 光影2.0 + 合规1.5 + 还原1.5, summed to 10.
 
-    Values on the 10-point scale (e.g. 风格9.5/结构9.0/…) are normalized into the
-    additive caps instead of failing open with a silent 0.
+    A 10-point reading of those same five labels is scaled back into the caps.
+    Strings that name 套件 / 九宫格 / 剪影 / 识别度 return None and use the geometric rubric.
     """
     spec = (
         ("style_palette", r"(?:风格色板|风格|色板)[^0-9]*([0-9]+(?:\.[0-9]+)?)", 2.5),
@@ -157,6 +322,12 @@ def _parse_skill_additive(dims_str: str) -> dict[str, Any] | None:
     )
     # Require skill-only markers so general 「构图/透视/质感」 strings stay on general_5d.
     probe = dims_str or ""
+    # Dedicated UI / icon strings must not be folded back into the old 10-point sum.
+    if re.search(
+        r"(?:套件|九宫格|剪影识别|笔画一致|棚拍|识别度|安全区|风格色板|光影材质|管线合规|构图叙事)",
+        probe,
+    ):
+        return None
     if not re.search(r"(?:合规|红线|还原|意图|氛围)", probe):
         return None
     if not re.search(r"(?:风格|色板)", probe) or not re.search(r"(?:结构|构图)", probe):
@@ -186,6 +357,24 @@ def _parse_skill_additive(dims_str: str) -> dict[str, Any] | None:
     return {"parsed": raw, "weighted_score": total, "rubric_mode": "skill_additive_5d"}
 
 
+def _read_labeled(dims_str: str, patterns: dict[str, tuple[str, float]]) -> dict[str, float]:
+    raw: dict[str, float] = {}
+    for key, (pat, _cap) in patterns.items():
+        m = re.search(pat, dims_str or "", flags=re.IGNORECASE)
+        if m:
+            raw[key] = float(m.group(1))
+    return raw
+
+
+def _to_ten_point(raw: dict[str, float], patterns: dict[str, tuple[str, float]]) -> dict[str, float]:
+    subscale = all(raw[k] <= patterns[k][1] + 0.05 for k in raw)
+    out: dict[str, float] = {}
+    for key, val in raw.items():
+        cap = patterns[key][1]
+        out[key] = round((val / cap) * 10.0, 2) if subscale else val
+    return out
+
+
 def parse_5d_dims(
     dims_str: str,
     weights: dict[str, float] | None = None,
@@ -197,7 +386,7 @@ def parse_5d_dims(
     Supports:
     1) General art / character / concept 5D: 构图 / 光影 / 透视 / 质感 / 风格 (leaves /pmem-draw untouched)
     2) Dedicated /pmem-ui 5D rubric when module starts with 'ui' or UI keywords are present:
-       风格色板契合(25%) · 九宫格/结构(25%) · 光影材质(20%) · 透明底/RGBA管线合规(15%) · 套件状态族一致性(15%)
+       风格色板契合(25%，复刻看渲染品类和色彩面积) · 结构(25%，组件表才按九宫格；主界面概念按镜头裁切和分区) · 光影材质(20%) · 红线(15%，组件表查透明底；复刻概念查文案) · 套件或还原(15%，复刻看疏密和控件工艺)
        Automatically normalizes 2.5/2.5/2.0/1.5/1.5 point scales or 10-point scales to /10.0.
     """
     import re as _re
@@ -217,6 +406,45 @@ def parse_5d_dims(
     if kv_hit is not None:
         return kv_hit
 
+    if _is_icon_prop_5d_context(dims_str, module=module):
+        prop_patterns = {
+            "silhouette": (r"(?:剪影识别|剪影)[^0-9]*([0-9]+(?:\.[0-9]+)?)", 3.0),
+            "stroke_palette": (r"(?:描边色板|描边)[^0-9]*([0-9]+(?:\.[0-9]+)?)", 2.0),
+            "studio_light": (r"(?:棚拍光|棚拍)[^0-9]*([0-9]+(?:\.[0-9]+)?)", 2.0),
+            "alpha": (r"(?:透明底|脏底)[^0-9]*([0-9]+(?:\.[0-9]+)?)", 1.5),
+            "no_text": (r"(?:无字|文字)[^0-9]*([0-9]+(?:\.[0-9]+)?)", 1.5),
+        }
+        raw_prop = _read_labeled(dims_str, prop_patterns)
+        if len(raw_prop) == 5:
+            bundled = _bundle_score(
+                _to_ten_point(raw_prop, prop_patterns),
+                ICON_PROP_WEIGHTS,
+                ICON_PROP_SCORE_KEYS,
+                ICON_PROP_HURDLES,
+                "icon_prop_5d",
+            )
+            if bundled is not None:
+                return bundled
+
+    if _is_icon_svg_5d_context(dims_str, module=module):
+        svg_patterns = {
+            "stroke_consistency": (r"(?:笔画一致|笔画)[^0-9]*([0-9]+(?:\.[0-9]+)?)", 2.5),
+            "visual_weight": (r"(?:视觉重量|重量)[^0-9]*([0-9]+(?:\.[0-9]+)?)", 2.5),
+            "optical_center": (r"(?:光学居中|留白)[^0-9]*([0-9]+(?:\.[0-9]+)?)", 2.5),
+            "recognizability": (r"(?:功能识别|能对上|识别)[^0-9]*([0-9]+(?:\.[0-9]+)?)", 2.5),
+        }
+        raw_svg = _read_labeled(dims_str, svg_patterns)
+        if len(raw_svg) == 4:
+            bundled = _bundle_score(
+                _to_ten_point(raw_svg, svg_patterns),
+                ICON_SVG_WEIGHTS,
+                ICON_SVG_SCORE_KEYS,
+                ICON_SVG_HURDLES,
+                "icon_svg_5d",
+            )
+            if bundled is not None:
+                return bundled
+
     if _is_app_icon_5d_context(dims_str, module=module):
         icon_patterns = {
             "glyph_silhouette": (r"(?:识别度|品牌符号|符号|小尺寸|glyph|silhouette)[^0-9]*([0-9]+(?:\.[0-9]+)?)", 2.5),
@@ -225,52 +453,52 @@ def parse_5d_dims(
             "multisize_adaptive": (r"(?:多尺寸合规|多尺寸|深浅色|自适应|multisize|adaptive)[^0-9]*([0-9]+(?:\.[0-9]+)?)", 1.5),
             "palette_purity": (r"(?:色板纯粹|无文字红线|色板|纯粹|palette|purity)[^0-9]*([0-9]+(?:\.[0-9]+)?)", 1.5),
         }
-        icon_parsed: dict[str, float] = {}
         raw_vals_ic: dict[str, float] = {}
         for k, (pat, max_pt) in icon_patterns.items():
             m = _re.search(pat, dims_str or "", flags=_re.IGNORECASE)
             if m:
                 raw_vals_ic[k] = float(m.group(1))
         if len(raw_vals_ic) == 5:
-            is_subscale = all(raw_vals_ic[k] <= icon_patterns[k][1] + 0.05 for k in raw_vals_ic)
-            for k, val in raw_vals_ic.items():
-                max_pt = icon_patterns[k][1]
-                icon_parsed[k] = round((val / max_pt) * 10.0, 2) if is_subscale else val
-            ic_w = APP_ICON_DIM_WEIGHTS
-            weighted = sum(icon_parsed[k] * ic_w[k] for k in icon_parsed)
-            return {
-                "parsed": icon_parsed,
-                "weighted_score": round(weighted, 2),
-                "rubric_mode": "app_icon_5d",
-            }
+            bundled = _bundle_score(
+                _to_ten_point(raw_vals_ic, icon_patterns),
+                APP_ICON_DIM_WEIGHTS,
+                ICON_A_SCORE_KEYS,
+                ICON_A_HURDLES,
+                "app_icon_5d",
+            )
+            if bundled is not None:
+                return bundled
 
-    if _is_ui_5d_context(dims_str, module=module):
+    dedicated_ui = bool(
+        _re.search(r"(?:风格色板|光影材质|管线合规|构图叙事|套件|九宫格)", dims_str or "")
+    )
+    if _is_ui_5d_context(dims_str, module=module) or dedicated_ui:
         ui_patterns = {
             "style_palette": (r"(?:风格色板|风格|色板|style_palette)[^0-9]*([0-9]+(?:\.[0-9]+)?)", 2.5),
-            "nine_slice_structure": (r"(?:九宫格|9-slice|结构|nine_slice)[^0-9]*([0-9]+(?:\.[0-9]+)?)", 2.5),
+            "nine_slice_structure": (
+                r"(?:九宫格|9-slice|结构透视|构图叙事(?:与透视)?|结构|nine_slice)"
+                r"[^0-9]*([0-9]+(?:\.[0-9]+)?)",
+                2.5,
+            ),
             "lighting_material": (r"(?:光影材质|光影|材质|lighting_material)[^0-9]*([0-9]+(?:\.[0-9]+)?)", 2.0),
             "rgba_pipeline_compliance": (r"(?:透明底|rgba|管线合规|合规|红线|pipeline)[^0-9]*([0-9]+(?:\.[0-9]+)?)", 1.5),
             "state_suite_cohesion": (r"(?:状态族|套件一致性|套件|状态|一致性|还原|state_suite)[^0-9]*([0-9]+(?:\.[0-9]+)?)", 1.5),
         }
-        ui_parsed: dict[str, float] = {}
         raw_vals: dict[str, float] = {}
         for k, (pat, max_pt) in ui_patterns.items():
             m = _re.search(pat, dims_str or "", flags=_re.IGNORECASE)
             if m:
                 raw_vals[k] = float(m.group(1))
         if len(raw_vals) == 5:
-            # Check if scored on sub-weights (<=2.5) vs 10-point scale
-            is_subscale = all(raw_vals[k] <= ui_patterns[k][1] + 0.05 for k in raw_vals)
-            for k, val in raw_vals.items():
-                max_pt = ui_patterns[k][1]
-                ui_parsed[k] = round((val / max_pt) * 10.0, 2) if is_subscale else val
-            ui_w = UI_DEDICATED_DIM_WEIGHTS
-            weighted = sum(ui_parsed[k] * ui_w[k] for k in ui_parsed)
-            return {
-                "parsed": ui_parsed,
-                "weighted_score": round(weighted, 2),
-                "rubric_mode": "ui_5d",
-            }
+            bundled = _bundle_score(
+                _to_ten_point(raw_vals, ui_patterns),
+                UI_DEDICATED_DIM_WEIGHTS,
+                UI_SCORE_KEYS,
+                UI_HURDLES,
+                "ui_5d",
+            )
+            if bundled is not None:
+                return bundled
 
     w = weights or {
         "composition": 0.20,
@@ -279,12 +507,18 @@ def parse_5d_dims(
         "texture_detail": 0.20,
         "spec_style": 0.15,
     }
+    # Do not let `spec` match the substring inside `perspective`.
     patterns = {
         "composition": r"(?:构图|composition)[^0-9]*([0-9]+(?:\.[0-9]+)?)",
         "lighting_color": r"(?:光影|色彩|lighting)[^0-9]*([0-9]+(?:\.[0-9]+)?)",
         "perspective_anatomy": r"(?:透视|解剖|结构|perspective|anatomy)[^0-9]*([0-9]+(?:\.[0-9]+)?)",
         "texture_detail": r"(?:质感|肌理|细节|texture)[^0-9]*([0-9]+(?:\.[0-9]+)?)",
-        "spec_style": r"(?:风格|规格|spec|style)[^0-9]*([0-9]+(?:\.[0-9]+)?)",
+        "spec_style": (
+            r"(?:风格|规格|spec_style|"
+            r"(?<![A-Za-z])spec(?![A-Za-z_])|"
+            r"(?<![A-Za-z])style(?![A-Za-z_]))"
+            r"[^0-9]*([0-9]+(?:\.[0-9]+)?)"
+        ),
     }
     parsed: dict[str, float] = {}
     for k, pat in patterns.items():
@@ -292,8 +526,13 @@ def parse_5d_dims(
         if m:
             parsed[k] = float(m.group(1))
     if len(parsed) == 5:
-        weighted = sum(parsed[k] * w.get(k, 0.2) for k in parsed)
-        return {"parsed": parsed, "weighted_score": round(weighted, 2), "rubric_mode": "general_5d"}
+        geo = weighted_geometric(parsed, w, GENERAL_5D_KEYS)
+        return {
+            "parsed": parsed,
+            "weighted_score": geo,
+            "geometric_score": geo,
+            "rubric_mode": "general_5d",
+        }
     return {"parsed": parsed, "weighted_score": None, "rubric_mode": "general_5d"}
 
 
@@ -366,7 +605,7 @@ def audit_score_inflation(
         if raw_score is not None and float(raw_score) > 0 and abs(float(raw_score) - float(weighted)) > 0.05:
             if float(raw_score) > float(weighted):
                 warnings.append(
-                    f"检测到报送总分 ({float(raw_score):.2f}) 高于五维加权计算分 ({float(weighted):.2f})，已改用五维加权分"
+                    f"检测到报送总分 ({float(raw_score):.2f}) 高于五维几何平均 ({float(weighted):.2f})，已改用几何平均"
                 )
         calibrated = float(weighted)
     else:
@@ -442,6 +681,16 @@ def audit_score_inflation(
         "aspect ratio mismatch",
     )
     hit_kw = _keyword_hits(defects_lower, severe_defect_keywords)
+    from .converge_policy import STYLE_INFLATION_IGNORE, infer_style_family
+
+    style_family = infer_style_family(
+        str(scale_prof.get("goal") or ""),
+        module,
+        str(scale_prof.get("ref_image") or ""),
+    )
+    ignored = STYLE_INFLATION_IGNORE.get(style_family) or set()
+    if ignored:
+        hit_kw = [h for h in hit_kw if h not in ignored]
     if hit_kw and calibrated > 9.0:
         warnings.append(
             f"反虚高拦截：缺陷栏包含关键短板词 {hit_kw}，禁止因基础完成度达标而给 9.0+ 虚高分，已触发严苛上限校准 (<=8.90)"
@@ -469,7 +718,13 @@ def audit_score_inflation(
             light = float(parsed.get("lighting_color") or 0)
         except (TypeError, ValueError):
             comp, light = 0.0, 0.0
-        if scale_name == "high" and comp >= 9.5 and 0 < light <= 8.6 and calibrated > 9.0:
+        if (
+            scale_name == "high"
+            and style_family not in {"pixel", "flat", "graphic", "wash"}
+            and comp >= 9.5
+            and 0 < light <= 8.6
+            and calibrated > 9.0
+        ):
             warnings.append(
                 "反贴原拦截（high）：构图≥9.5 且光影≤8.6，疑闷贴原图，压分 (<=8.95)"
             )
@@ -545,6 +800,24 @@ def audit_score_inflation(
         "weighted_score": weighted,
         "stagnated": stagnated,
         "warnings": warnings,
+    }
+
+
+def calibrate_against_offline(
+    calibrated: float,
+    offline_score: float | None = None,
+    coverage: float | None = None,
+    *,
+    judge_source: str = "",
+    rubric_mode: str = "",
+    module: str = "",
+) -> dict[str, Any]:
+    """Retired. Pixel offline scores are not computed and never change the official score."""
+    del offline_score, coverage, judge_source, rubric_mode, module
+    return {
+        "calibrated_score": round(float(calibrated), 2),
+        "capped": False,
+        "warning": "",
     }
 
 

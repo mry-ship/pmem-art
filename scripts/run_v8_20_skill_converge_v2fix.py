@@ -602,14 +602,13 @@ def main() -> int:
             else:
                 round_defects = list(defects) if defects else []
                 if scored.get("judge_pending") == "agent":
-                    log(f"  {bid} R{r} VLM unavailable — need Agent judge (offline advisory only)")
+                    log(f"  {bid} R{r} VLM unavailable — need Agent judge")
                     return {
                         "bot_id": bid,
                         "ok": False,
                         "phase": f"r{r}_judge_pending",
                         "pending_judge": {
                             "image": str(r_path),
-                            "offline_advisory": scored.get("offline_advisory"),
                             "error": scored.get("error"),
                         },
                         "rounds": rounds,

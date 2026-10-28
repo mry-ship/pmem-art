@@ -19,6 +19,7 @@ from .taste_profile import (
     TEMP_HINTS,
     _extract_hints,
     _uniq_append,
+    is_soft_defect_phrase,
     load_taste,
     profile_dir,
     save_taste,
@@ -62,8 +63,11 @@ def run_improve_pass(
                 pass
         for d in (ref.get("taste_deltas") or {}).get("from_defects") or []:
             defect_counter[str(d)[:60]] += 1
+            if is_soft_defect_phrase(str(d)):
+                continue
             for h in _extract_hints(str(d), BAN_HINTS):
-                taste["banned_habits"] = _uniq_append(taste.get("banned_habits") or [], h)
+                if not is_soft_defect_phrase(h):
+                    taste["banned_habits"] = _uniq_append(taste.get("banned_habits") or [], h)
         for s in (ref.get("taste_deltas") or {}).get("from_strengths") or []:
             strength_bits.append(str(s)[:80])
             for h in _extract_hints(str(s), LIGHTING_HINTS + COMPOSITION_HINTS + TEMP_HINTS):
@@ -79,9 +83,12 @@ def run_improve_pass(
     recent_red = [e for e in entries if e.get("kind") == "style_redline"][-15:]
     for e in recent_red:
         summary = str(e.get("summary") or "")
+        if is_soft_defect_phrase(summary):
+            continue
         for h in _extract_hints(summary, BAN_HINTS):
-            taste["banned_habits"] = _uniq_append(taste.get("banned_habits") or [], h)
-        if summary and len(summary) <= 50:
+            if not is_soft_defect_phrase(h):
+                taste["banned_habits"] = _uniq_append(taste.get("banned_habits") or [], h)
+        if summary and len(summary) <= 50 and not is_soft_defect_phrase(summary):
             taste["banned_habits"] = _uniq_append(taste.get("banned_habits") or [], summary)
 
     recent_rec = sorted(
@@ -124,6 +131,11 @@ def run_improve_pass(
         added = [x for x in after_list if x not in before_set]
         if added:
             changes.append(f"{key}: +{', '.join(added[-5:])}")
+
+    # Strip soft junk before persist (defensive — covers prior polluted profiles)
+    taste["banned_habits"] = [
+        h for h in (taste.get("banned_habits") or []) if not is_soft_defect_phrase(str(h))
+    ]
 
     if apply:
         save_taste(root, taste)

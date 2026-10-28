@@ -1129,7 +1129,7 @@ def format_scale_artist_footer(
             "> 💬 **画师可写一句**（对照上表点名维度）：",
             "> `构图松一点` → **75%（默认95%，-20%）**；`光影锁定降到 40%` → **40%（默认75%，-35%）**；或 `升到 medium`",
             "",
-            f"<small>裁判内部加权（合成总分用，不是上表锁定%）：{weights_line}</small>",
+            f"<small>裁判用加权几何平均（门槛没过就改取那一维，不是上表锁定%）：{weights_line}</small>",
         ]
     )
     return "\n".join(lines)

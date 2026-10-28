@@ -1,104 +1,18 @@
 [
   {
-    "folder": "assets/character",
-    "module_id": "character.Main",
-    "category": "character",
-    "file_count": 5,
-    "confidence": 0.85,
-    "sample_files": [
-      "assets/character/astra_expressions_2x2.png",
-      "assets/character/astra_expr_shock_draft.png",
-      "assets/character/astra_rejected_chibi_neon.png",
-      "assets/character/astra_turnaround_sheet.png",
-      "assets/character/astra_standing_v3.png"
-    ],
-    "paths_glob": [
-      "assets/character/**"
-    ],
-    "created_at": "2026-10-24T21:16:43+0800",
-    "status": "dismissed",
-    "dismiss_reason": "broad folder shell already covered by specific active modules"
-  },
-  {
-    "folder": "assets/ui",
-    "module_id": "ui.Main",
-    "category": "ui",
-    "file_count": 2,
-    "confidence": 0.75,
-    "sample_files": [
-      "assets/ui/modal_frame_rejected_center_ornament.png",
-      "assets/ui/modal_frame_9slice_v2.png"
-    ],
-    "paths_glob": [
-      "assets/ui/**"
-    ],
-    "created_at": "2026-10-24T21:16:43+0800",
-    "status": "dismissed",
-    "dismiss_reason": "broad folder shell already covered by specific active modules"
-  },
-  {
-    "folder": "assets/brand",
-    "module_id": "brand.Main",
-    "category": "brand",
-    "file_count": 2,
-    "confidence": 0.75,
-    "sample_files": [
-      "assets/brand/rejected_neon_cyber_v1.png",
-      "assets/brand/world_color_script_v2.png"
-    ],
-    "paths_glob": [
-      "assets/brand/**"
-    ],
-    "created_at": "2026-10-24T21:16:43+0800",
-    "status": "dismissed",
-    "dismiss_reason": "broad folder shell already covered by specific active modules"
-  },
-  {
-    "folder": "assets/scene",
-    "module_id": "scene.Main",
-    "category": "scene",
+    "module_id": "misc.Random",
+    "category": "misc",
+    "folder": "assets/misc/random",
     "file_count": 1,
-    "confidence": 0.75,
+    "confidence": 0.4,
     "sample_files": [
-      "assets/scene/floating_ruins_keyart_v2.png"
+      ".cursor/generated/random_blob.png"
     ],
     "paths_glob": [
-      "assets/scene/**"
-    ],
-    "created_at": "2026-10-24T21:16:43+0800",
-    "status": "dismissed",
-    "dismiss_reason": "broad folder shell already covered by specific active modules"
-  },
-  {
-    "folder": "assets/vfx",
-    "module_id": "vfx.Main",
-    "category": "vfx",
-    "file_count": 1,
-    "confidence": 0.75,
-    "sample_files": [
-      "assets/vfx/arcane_slash_4f_sheet.png"
-    ],
-    "paths_glob": [
-      "assets/vfx/**"
-    ],
-    "created_at": "2026-10-24T21:16:43+0800",
-    "status": "dismissed",
-    "dismiss_reason": "broad folder shell already covered by specific active modules"
-  },
-  {
-    "module_id": "ui.Audit",
-    "category": "ui",
-    "folder": "assets/ui/audit",
-    "file_count": 1,
-    "confidence": 0.643,
-    "sample_files": [
-      "_audit_tmp.html"
-    ],
-    "paths_glob": [
-      "assets/ui/audit/**"
+      "assets/misc/random/**"
     ],
     "source": "classify_auto_add",
-    "created_at": "2026-10-26T03:47:14+0800",
+    "created_at": "2026-10-28T01:33:05+0800",
     "status": "candidate"
   }
 ]

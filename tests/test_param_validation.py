@@ -7,6 +7,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
@@ -693,10 +694,77 @@ class TestGateFixes(unittest.TestCase):
         info = _inspect_image_physical_traits(path)
         self.assertEqual((info["width"], info["height"]), (768, 1344))
 
+    def test_offline_score_does_not_change_official(self) -> None:
+        from skills_kit.scoring import calibrate_against_offline
+
+        kept = calibrate_against_offline(9.59, 7.70, 0.75, judge_source="agent_absolute_5d")
+        self.assertFalse(kept["capped"])
+        self.assertAlmostEqual(kept["calibrated_score"], 9.59)
+        self.assertEqual(kept["warning"], "")
+        low = calibrate_against_offline(7.10, 8.80, 0.80, judge_source="agent_absolute_5d")
+        self.assertAlmostEqual(low["calibrated_score"], 7.10)
+        self.assertEqual(low["warning"], "")
+
+    def test_judge_does_not_call_offline_scorer(self) -> None:
+        from skills_kit import auto_vlm_judge_image, get_converge_scale_profile
+
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import absolute_5d_scorer
+
+        img = ROOT / "comparison" / "scale_01_night_city_high.jpg"
+        with mock.patch.object(
+            absolute_5d_scorer, "absolute_5d", side_effect=AssertionError("offline scorer called")
+        ):
+            res = auto_vlm_judge_image(
+                str(img),
+                get_converge_scale_profile("medium"),
+                round_num=2,
+                dims="构图9.6/光影9.65/透视9.55/质感9.55/风格9.65",
+                defects="远景楼块仍略糊半档",
+                use_remote_vlm=False,
+            )
+        self.assertGreater(res["calibrated_score"], 9.0)
+        blob = " ".join(str(w) for w in (res.get("audit_warnings") or []))
+        self.assertNotIn("旁证", blob)
+        self.assertNotIn("离线", blob)
+
     def test_legacy_four_key_dims_parse(self) -> None:
         from skills_kit import parse_5d_dims
         info = parse_5d_dims("style=7.0,comp=6.5,spec=7.0,detail=6.7")
         self.assertIsNotNone(info["weighted_score"])
+        self.assertAlmostEqual(info["parsed"]["spec_style"], 7.0)
+        self.assertAlmostEqual(info["parsed"]["perspective_anatomy"], 7.0)
+
+    def test_english_kv_spec_style_not_eaten_by_perspective(self) -> None:
+        from skills_kit import parse_5d_dims
+        info = parse_5d_dims(
+            "composition=9.35,lighting_color=9.3,perspective_anatomy=9.35,"
+            "texture_detail=9.25,spec_style=9.4"
+        )
+        self.assertEqual(info["rubric_mode"], "general_5d")
+        self.assertAlmostEqual(info["parsed"]["perspective_anatomy"], 9.35)
+        self.assertAlmostEqual(info["parsed"]["spec_style"], 9.4)
+        self.assertNotEqual(info["parsed"]["spec_style"], info["parsed"]["perspective_anatomy"])
+
+    def test_slash_english_spec_not_substring_of_perspective(self) -> None:
+        from skills_kit import parse_5d_dims
+        info = parse_5d_dims(
+            "composition 9.35 / lighting 9.3 / perspective 9.35 / texture 9.25 / spec_style 8.1"
+        )
+        self.assertIsNotNone(info["weighted_score"])
+        self.assertAlmostEqual(info["parsed"]["spec_style"], 8.1)
+        self.assertAlmostEqual(info["parsed"]["perspective_anatomy"], 9.35)
+
+    def test_modern_long_keys_missing_lighting_do_not_invent_score(self) -> None:
+        from skills_kit import parse_5d_dims
+        info = parse_5d_dims(
+            "composition=9.9,perspective_anatomy=9.9,texture_detail=9.9,spec_style=9.9"
+        )
+        self.assertIsNone(info["weighted_score"])
+        self.assertNotIn("lighting_color", info["parsed"])
+        mixed = parse_5d_dims("composition=9.9,perspective=9.9,texture=9.9,style=9.9")
+        self.assertIsNone(mixed["weighted_score"])
+        self.assertNotIn("lighting_color", mixed["parsed"])
 
     def test_unpassed_finish_recipe_does_not_claim_success(self) -> None:
         from skills_kit import converge_finish
@@ -803,12 +871,219 @@ class TestGateFixes(unittest.TestCase):
         )
         self.assertLessEqual(hit["calibrated_score"], 8.90)
 
+    def test_geometric_mean_and_hurdles(self) -> None:
+        from skills_kit import parse_5d_dims, get_converge_scale_profile
+
+        low = get_converge_scale_profile("low")
+        info = parse_5d_dims("构图9.4/光影9.4/透视6.7/质感9.3/风格9.4", low["dim_weights"])
+        self.assertEqual(info["rubric_mode"], "general_5d")
+        self.assertGreater(info["weighted_score"], 8.0)
+        self.assertLess(info["weighted_score"], 9.0)
+        ui = parse_5d_dims(
+            "风格色板9.5/结构7.2/光影材质9.4/管线合规9.0/套件一致9.3",
+            module="ui.hud",
+        )
+        self.assertEqual(ui["rubric_mode"], "ui_5d")
+        self.assertAlmostEqual(ui["weighted_score"], 7.2)
+        icon = parse_5d_dims(
+            "识别度7.5/安全区9.5/光影质感9.4/多尺寸合规9.2/色板纯粹9.3",
+            module="icon.appicon",
+        )
+        self.assertEqual(icon["rubric_mode"], "app_icon_5d")
+        self.assertAlmostEqual(icon["weighted_score"], 7.5)
+        prop = parse_5d_dims("剪影识别9.2/描边色板9.0/棚拍光8.8/透明底6.0/无字9.5")
+        self.assertEqual(prop["rubric_mode"], "icon_prop_5d")
+        self.assertAlmostEqual(prop["weighted_score"], 6.0)
+        svg = parse_5d_dims("笔画一致7.0/视觉重量8.5/留白8.8/功能识别9.0")
+        self.assertEqual(svg["rubric_mode"], "icon_svg_5d")
+        self.assertAlmostEqual(svg["weighted_score"], 7.0)
+        ordinary = parse_5d_dims(
+            "构图7.6/光影8.0/透视7.8/质感8.1/风格7.9",
+            get_converge_scale_profile("medium")["dim_weights"],
+        )
+        self.assertGreaterEqual(ordinary["weighted_score"], 7.0)
+        self.assertLessEqual(ordinary["weighted_score"], 8.5)
+        flat = parse_5d_dims(
+            "构图9.3/光影9.3/透视9.3/质感9.3/风格9.3",
+            get_converge_scale_profile("medium")["dim_weights"],
+        )
+        self.assertAlmostEqual(flat["weighted_score"], 9.3, places=2)
+        self.assertLess(flat["weighted_score"], 9.6)
+        weak = parse_5d_dims("构图9.4/光影9.4/透视6.7/质感9.3/风格9.4", low["dim_weights"])
+        self.assertGreater(weak["weighted_score"], 8.4)
+        self.assertLess(weak["weighted_score"], 8.9)
+        pipe_hi = parse_5d_dims(
+            "风格色板9.2/结构9.2/光影材质9.2/管线合规10/套件一致9.2", module="ui.hud"
+        )
+        pipe_ok = parse_5d_dims(
+            "风格色板9.2/结构9.2/光影材质9.2/管线合规8.0/套件一致9.2", module="ui.hud"
+        )
+        pipe_low = parse_5d_dims(
+            "风格色板9.2/结构9.2/光影材质9.2/管线合规7.9/套件一致9.2", module="ui.hud"
+        )
+        self.assertAlmostEqual(pipe_hi["geometric_score"], pipe_ok["geometric_score"])
+        self.assertAlmostEqual(pipe_low["weighted_score"], 7.9)
+        self.assertGreater(pipe_low["geometric_score"], 7.9)
+        texty = parse_5d_dims("剪影识别9.4/描边色板9.2/棚拍光9.1/透明底9.0/无字4.0")
+        self.assertAlmostEqual(texty["weighted_score"], 4.0)
+        self.assertGreater(texty["geometric_score"], 4.0)
+
     def test_skill_ten_point_scale_normalizes(self) -> None:
         from skills_kit import parse_5d_dims
         info = parse_5d_dims("风格9.5/结构9.0/光影9.0/合规9.0/还原9.0")
         self.assertEqual(info["rubric_mode"], "skill_additive_5d")
         self.assertIsNotNone(info["weighted_score"])
         self.assertGreater(info["weighted_score"], 8.5)
+        self.assertLess(info["weighted_score"], 9.6)
+        leaked = parse_5d_dims(
+            "风格色板10/结构10/光影材质10/管线合规7.9/还原10",
+            module="ui.hud",
+        )
+        self.assertEqual(leaked["rubric_mode"], "ui_5d")
+        self.assertAlmostEqual(leaked["weighted_score"], 7.9)
+        weak_ui = parse_5d_dims(
+            "风格色板10/结构7.2/光影材质10/管线合规10/还原10",
+            module="ui.hud",
+        )
+        self.assertAlmostEqual(weak_ui["weighted_score"], 7.2)
+
+    def test_quant_total_is_recomputed_geometrically(self) -> None:
+        from skills_kit.converge_judge_bridge import _normalize_vlm_result
+        from skills_kit import get_converge_scale_profile
+
+        high = get_converge_scale_profile("high")
+        parsed = {
+            "ok": True,
+            "dims": {
+                "composition": 10,
+                "lighting_color": 10,
+                "perspective_anatomy": 8,
+                "texture_detail": 10,
+                "spec_style": 10,
+            },
+            "total": 9.60,
+        }
+        out = _normalize_vlm_result(
+            parsed,
+            {"scale_prof": {"dim_weights": {k: 0.2 for k in parsed["dims"]}}, "goal": "空镜峡谷", "module": "scene.Canyon"},
+            "vlm_quant_5d",
+            {},
+        )
+        self.assertLess(out["total"], 9.6)
+        body = _normalize_vlm_result(
+            {
+                "ok": True,
+                "dims": {
+                    "composition": 10,
+                    "lighting_color": 10,
+                    "perspective_anatomy": 7.4,
+                    "texture_detail": 10,
+                    "spec_style": 10,
+                },
+                "total": 9.60,
+            },
+            {"scale_prof": high, "goal": "少女全身立绘", "module": "character.Hero"},
+            "vlm_quant_5d",
+            {},
+        )
+        self.assertAlmostEqual(body["total"], 7.4)
+        pixel = _normalize_vlm_result(
+            {
+                "ok": True,
+                "dims": {
+                    "composition": 10,
+                    "lighting_color": 10,
+                    "perspective_anatomy": 6.6,
+                    "texture_detail": 10,
+                    "spec_style": 10,
+                },
+                "total": 9.6,
+            },
+            {"scale_prof": high, "goal": "像素少女立绘", "module": "character.Hero"},
+            "vlm_quant_5d",
+            {},
+        )
+        self.assertGreater(pixel["total"], 6.6)
+        self.assertLess(pixel["total"], 9.6)
+        iso = _normalize_vlm_result(
+            {
+                "ok": True,
+                "dims": {
+                    "composition": 10,
+                    "lighting_color": 10,
+                    "perspective_anatomy": 5.7,
+                    "texture_detail": 10,
+                    "spec_style": 10,
+                },
+                "total": 9.6,
+            },
+            {"scale_prof": high, "goal": "等轴测房间空镜", "module": "scene.Room"},
+            "vlm_quant_5d",
+            {},
+        )
+        self.assertGreater(iso["total"], 5.7)
+        self.assertLess(iso["total"], 9.6)
+        ui_kept = _normalize_vlm_result(
+            {
+                "ok": True,
+                "dims": {
+                    "style_palette": 10,
+                    "nine_slice_structure": 7.2,
+                    "lighting_material": 10,
+                    "rgba_pipeline_compliance": 10,
+                    "state_suite_cohesion": 10,
+                },
+                "total": 7.2,
+            },
+            {"module": "ui.hud", "goal": "主界面"},
+            "independent_vlm",
+            {},
+        )
+        self.assertAlmostEqual(ui_kept["total"], 7.2)
+        from skills_kit.converge_policy import decide_round_stop
+        self.assertEqual(
+            decide_round_stop(
+                score_ok=True,
+                total=9.7,
+                dims={"composition": 10, "lighting_color": 10, "perspective_anatomy": 6.5, "texture_detail": 10, "spec_style": 10},
+                round_num=2,
+                min_rounds=1,
+                threshold=9.6,
+                anatomy_floor=7.5,
+                best_total=9.0,
+                no_improve_streak=0,
+                subject_kind="scene",
+            ),
+            "STOP_TARGET_REACHED",
+        )
+        self.assertIsNone(
+            decide_round_stop(
+                score_ok=True,
+                total=9.8,
+                dims={"composition": 10, "lighting_color": 10, "perspective_anatomy": 9.8, "texture_detail": 10, "spec_style": 10},
+                round_num=2,
+                min_rounds=1,
+                threshold=9.6,
+                anatomy_floor=7.5,
+                best_total=9.0,
+                no_improve_streak=0,
+                subject_kind="scene",
+                defects="楼体结构崩了",
+            )
+        )
+        self.assertIsNone(
+            decide_round_stop(
+                score_ok=True,
+                total=9.7,
+                dims={"nine_slice_structure": 7.2, "style_palette": 9.8},
+                round_num=2,
+                min_rounds=1,
+                threshold=9.6,
+                anatomy_floor=7.5,
+                best_total=9.0,
+                no_improve_streak=0,
+            )
+        )
 
     def test_concept_legacy_emphasis_dims_do_not_zero(self) -> None:
         """旧 concept 侧重标签不得再把 converge judge 打成 0 分。"""

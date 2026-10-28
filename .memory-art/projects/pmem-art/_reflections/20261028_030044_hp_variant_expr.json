@@ -1,0 +1,118 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-10-28 03:00:44 UTC+8",
+  "session_id": "hp_variant_expr",
+  "goal": "表情变体：同一窗边日光耳机少女，只改成惊喜张嘴（双眼睁圆、眉毛微抬、口型O），机位画风发色瞳色白猫发夹耳机白T全锁，其他别动",
+  "module": "character.SunlitGirl",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.6,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 4,
+  "winner_score": 9.55,
+  "winner_image": "assets/character/sunlitgirl/r4.jpg",
+  "winner_passed": false,
+  "outcome": "⚠️ **共执行 4 轮审图（目标阈值 `9.60` 分），未达标，已挑选全阶段最高分**（胜出：第 4 轮 `9.55 / 10.0` 分）",
+  "what_fixed": [
+    "口型收成惊喜轻张O，下颌与颊侧体积更自然，其余全锁",
+    "双眼高光形状略统一",
+    "口型外轮廓略收干净",
+    "解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁止糊边融边；几乎无"
+  ],
+  "what_still_weak": "几乎无",
+  "strengths": "惊喜张嘴清晰自然；身份机位全锁；口型边缘更干净",
+  "taste_deltas": {
+    "from_strengths": [
+      "惊喜张嘴清晰自然；身份机位全锁；口型边缘更干净"
+    ],
+    "from_defects": [
+      "眼白高光可再统一半档；prompt 改动 99% 超过档位上限 40%",
+      "口型边缘可再干净半档；prompt 改动 97% 超过档位上限 40%",
+      "几乎无"
+    ]
+  },
+  "warm_start_confidence": 0.9,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 9.48,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 9.54,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 9.53,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 9.55,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：口型O略夸张偏喊叫；下颌开合与脸颊体积可再自然半档",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.48"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：惊喜张嘴明确；身份耳机白猫发夹白T锁住；窗边木漏光与花虚化保留",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.48"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：眼白高光可再统一半档；prompt 改动 99% 超过档位上限 40%",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.54"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：惊喜轻张更自然；身份机位光色锁；表情变体合同清楚",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.54"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：口型边缘可再干净半档；prompt 改动 97% 超过档位上限 40%",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "9.53"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：惊喜张嘴清楚可读；身份耳机猫夹白T与木漏光锁；表情变体成立",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.53"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：几乎无",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "9.55"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：几乎无",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.55"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：几乎无",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "9.55"
+    }
+  ]
+}

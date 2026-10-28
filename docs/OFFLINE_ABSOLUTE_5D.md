@@ -18,7 +18,7 @@
 
 1. Agent 读 `agent_absolute_5d_judge_prompt()`，对生成图按 Absolute-5D 出 `构图x/光影x/透视x/质感x/风格x` + 可核验 defects。  
 2. `converge judge` 吃 CLI dims；加权分与物理闸 / 软缺陷闸同有 Key 路径。  
-3. 像素 `absolute_5d` 写入 warning/旁证，**不覆盖** calibrated。  
+3. 像素 `absolute_5d` 写入 warning/旁证；**不改 9.60 门槛、不单独早停**。Agent 五维若高于旁证超过 **0.80**，正式分压到 `旁证+0.80`（独立 VLM 不套这顶）。  
 4. `<9.6` → `CONTINUE`；满轮 → `STOP_MAX_ROUNDS`，finish 取历史最高分。
 
 ## 像素尺还做什么

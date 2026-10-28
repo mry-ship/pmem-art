@@ -1,59 +1,35 @@
 {
   "version": 1,
-  "updated_at": "2026-10-26 03:26:15 UTC+8",
+  "updated_at": "2026-10-28 12:24:33 UTC+8",
   "preferred_lighting": [
-    "侧逆光 / rim light",
-    "左上45°暖金主光 + 冷黛环境阴影",
-    "黄金时刻光"
+    "暖光"
   ],
   "preferred_composition": [
-    "7.5头身标准立绘留白 (>16px)",
-    "30°等轴测游戏镜头 (Isometric)",
-    "九宫格四角48px固定 + 中央纯色拉伸",
-    "居中/对称构图",
-    "特写"
+    "半身",
+    "全身"
   ],
-  "preferred_line_weight": [
-    "干净金墨细描边 (Cel-shaded clean ink line)"
-  ],
-  "preferred_color_temperature": [
-    "青瓷白+墨蓝+鎏金倾向 (70/20/10 色板定律)",
-    "外青瓷内鎏金双层色阶",
-    "青瓷白+墨蓝+鎏金倾向"
-  ],
+  "preferred_line_weight": [],
+  "preferred_color_temperature": [],
   "banned_habits": [
-    "赛博霓虹/霓虹紫 (#FF00FF / #00FFFF)",
-    "错误头身比/5头身幼态大头",
-    "九宫格中央拉伸区画圆盘暗纹或斜线",
-    "漏画左眼黄铜星盘义眼",
-    "RGB白底/黑底未去背伪透明网格",
-    "严禁使用高饱和赛博洋红",
-    "过曝高光",
+    "漏抠/黑底/毛边",
     "赛博霓虹/霓虹紫"
   ],
-  "keep_phrases": [
-    "这版7.5头身和左眼星盘义眼很准，留着当立绘锚点",
-    "四角黄铜雕花收在48px内，中间纯色可拉伸，定稿"
-  ],
+  "keep_phrases": [],
   "reject_phrases": [
-    "太赛博了，禁止洋红和电光青霓虹",
-    "九宫格中间不能有圆盘花纹，拉宽会变形"
+    "禁止偏离样张画风：禁止赛璐珞平涂油光、禁止霓虹赛博高饱和、禁止厚涂柔边融合、禁止写实皮肤毛孔、禁止干净矢量线稿替代蜡笔颗粒"
   ],
   "style_notes": [
-    "70%玄青墨蓝主调 + 20%秘色青瓷与宣纸白 + 10%鎏金点睛",
-    "每次生图或入库自动归档至对应分类并刷新 art-atlas.html",
-    "无 VLM Key 时主分改走 gpt-6-sol 检查项离线尺 absolute_5d_scorer v9.0（0/1/2→/10、硬封顶、N/A 重归一）；",
-    "离线 Absolute-5D 暂定 v9.1_audit_patch：弱语义代理 N/A、撤销 short_side/P5/假融化封顶、缺项向先验7.0轻收缩；有 Key 仍优先 VLM；",
-    "赛博夜景小巷左侧竖条霓虹偏电光青(#00FFFF倾向)，触碰品牌禁用赛博霓虹；构图中轴对称呆板；工业防火梯/管线堆纹过密削弱简洁 key art；",
-    "无 Key 时主分是 Agent Absolute-5D（门槛仍>=9.6，满轮 best-of-N）；"
+    "窗边人像：发型刘海分区偶发糊边；耳机垫与脸交界线略软；前景花瓣边缘偶发锯齿感——后续同题材需锁发丝分层与硬边耳机轮廓",
+    "以后统一按此样张画风：粉蜡笔/油画棒颗粒笔触；主色鲜红卫衣#E23B2E(70%)；辅色牛仔蓝#4A6FA5+深灰袜#2B2B2B(20%)；",
+    "图标集 style-spec：Clean 24px stroke1.5 round/round currentColor viewBox24"
   ],
   "signal_counts": {
-    "keeps": 6,
-    "rejects": 4,
-    "style_fixes": 7,
-    "sessions": 8
+    "keeps": 0,
+    "rejects": 1,
+    "style_fixes": 3,
+    "sessions": 20
   },
   "project_id": "pmem-art",
-  "project_name": "Project-Celadon (东方青瓷星盘幻想)",
+  "project_name": "pmem-art",
   "layer_scope": "private"
 }

@@ -18,7 +18,7 @@ sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(REPO / "scripts"))
 
 from run_v8_20_skill_converge_v2fix import compose_prompt, load_env, min_rounds_for, select_bots  # noqa: E402
-from skills_kit.converge_judge_bridge import offline_advisory_only, score_for_converge  # noqa: E402
+from skills_kit.converge_judge_bridge import score_for_converge  # noqa: E402
 from skills_kit.skill_image_gen import fan_or_generate_image_job  # noqa: E402
 from skills_kit import get_converge_scale_profile  # noqa: E402
 
@@ -128,6 +128,7 @@ def record(out: Path, bot_id: str, round_num: int, image: str, dims: dict, defec
     anat_ok = anat >= 7.5
     rec = {"round": round_num, "image": image, "dims": dims, "total": total, "defects": defects[:2], "anat_ok": anat_ok}
     st["rounds"].append(rec)
+    st["rounds"].append(rec)
     best = st.get("best_round")
     if best is None or (anat_ok and not best.get("anat_ok")) or (anat_ok == best.get("anat_ok") and total > best["total"]):
         st["best_round"] = rec
@@ -154,15 +155,9 @@ def record(out: Path, bot_id: str, round_num: int, image: str, dims: dict, defec
         bold = bot.get("display_scale") == "recompose_bold"
         ref = str((REPO / bot["ref_image"]).resolve())
         st["pad_src"] = None if bold else ref
-    adv = offline_advisory_only(
-        Path(image),
-        api_scale=api if api in WEIGHTS else "medium",
-        ref_path=str((REPO / bot["ref_image"]).resolve()),
-    )
-    rec["offline_advisory"] = adv
     st["rounds"][-1] = rec
     save(out / STATE_NAME, state)
-    print(json.dumps({"bot_id": bot_id, "round": round_num, "total": total, "anat": anat, "status": st["status"], "stop": st.get("stop_reason"), "next": st.get("next_round"), "fixes": st.get("defects"), "offline_advisory": adv.get("score")}, ensure_ascii=False))
+    print(json.dumps({"bot_id": bot_id, "round": round_num, "total": total, "anat": anat, "status": st["status"], "stop": st.get("stop_reason"), "next": st.get("next_round"), "fixes": st.get("defects")}, ensure_ascii=False))
 
 
 def try_gen(out: Path, bot_id: str, assets_dir: Path) -> None:
@@ -212,7 +207,7 @@ def try_vlm_record(out: Path, bot_id: str, image: str, env_path: Path) -> None:
         defects = scored.get("defects") or []
         record(out, bot_id, r, image, dims, defects)
         return
-    print(json.dumps({"ok": False, "judge_pending": scored.get("judge_pending"), "offline_advisory": scored.get("offline_advisory"), "error": scored.get("error")}, ensure_ascii=False, indent=2))
+    print(json.dumps({"ok": False, "judge_pending": scored.get("judge_pending"), "error": scored.get("error")}, ensure_ascii=False, indent=2))
 
 
 def build_html(out: Path) -> None:

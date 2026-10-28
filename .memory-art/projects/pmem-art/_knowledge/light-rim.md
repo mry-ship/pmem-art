@@ -1,8 +1,10 @@
 ---
 id: light-rim
 title: "侧逆光"
+layer_scope: private
+universal: true
 tags: ["lighting"]
-source: converge_start
+source: converge_finish
 ---
 
 # 侧逆光

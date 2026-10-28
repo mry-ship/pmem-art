@@ -76,6 +76,7 @@ from .scoring import (
     _parse_kv_5d,
     _parse_skill_additive,
     audit_score_inflation,
+    calibrate_against_offline,
     defects_are_substantive,
     parse_5d_dims,
 )

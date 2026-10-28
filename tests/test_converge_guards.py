@@ -341,7 +341,7 @@ class TestJudgeAnatomyVeto(unittest.TestCase):
         return get_converge_scale_profile("medium")
 
     def test_high_total_low_anat_blocks_stop(self) -> None:
-        # high 档解剖权 15%：构图10/光影10/透视7.4/质感10/风格10 → 加权约 9.61，但解剖 <7.5 应熔断。
+        # 几何平均约 9.56，解剖 7.4 低于 7.5，正式分改取 7.4，不能停。
         with tempfile.TemporaryDirectory() as td:
             img = Path(td) / "x.png"
             img.write_bytes(b"\x89PNG\r\n\x1a\n" + b"\x00" * 200)
@@ -370,11 +370,347 @@ class TestJudgeAnatomyVeto(unittest.TestCase):
                         use_remote_vlm=False,
                         module="character.Hero",
                     )
-        self.assertGreaterEqual(float(res.get("weighted_score") or 0), 9.6)
+        self.assertAlmostEqual(float(res.get("calibrated_score") or 0), 7.4, places=2)
         self.assertTrue(res.get("anatomy_veto_blocked"))
         self.assertFalse(res.get("passed"))
         self.assertNotEqual(res.get("decision"), "STOP_TARGET_REACHED")
         self.assertLess(float(res.get("anatomy_score") or 0), 7.5)
+
+    def _judge(self, dims: str, *, goal: str, module: str, defects: str, scale: str = "medium"):
+        with tempfile.TemporaryDirectory() as td:
+            img = Path(td) / "x.png"
+            img.write_bytes(b"\x89PNG\r\n\x1a\n" + b"\x00" * 200)
+            with mock.patch("skills_kit.judge_auto._physical_image_gate", return_value={"blocked": False, "reasons": [], "score_cap": None}):
+                with mock.patch(
+                    "skills_kit.judge_auto._inspect_image_physical_traits",
+                    return_value={
+                        "exists": True, "size_bytes": 5000, "size_kb": 5.0,
+                        "width": 1024, "height": 1024, "aspect_ratio": "1:1", "color_entropy": 4.0,
+                    },
+                ):
+                    return auto_vlm_judge_image(
+                        str(img),
+                        get_converge_scale_profile(scale),
+                        round_num=2,
+                        dims=dims,
+                        defects=defects,
+                        next_fix="保持这套媒介",
+                        use_remote_vlm=False,
+                        module=module,
+                        goal=goal,
+                    )
+
+    def test_chibi_proportion_is_not_a_hard_miss(self) -> None:
+        ok = self._judge(
+            "构图9.4/光影9.2/透视6.9/质感9.1/风格9.3",
+            goal="Q版二头身少女",
+            module="character.Hero",
+            defects="头大是二头身设定，肩肘还连着",
+        )
+        self.assertFalse(ok.get("anatomy_veto_blocked"))
+        self.assertGreater(float(ok.get("calibrated_score") or 0), 6.9)
+        self.assertFalse(ok.get("passed"))
+        broken = self._judge(
+            "构图9.4/光影9.2/透视6.9/质感9.1/风格9.3",
+            goal="Q版二头身少女",
+            module="character.Hero",
+            defects="左手腕融化进袖口",
+        )
+        self.assertTrue(broken.get("anatomy_veto_blocked"))
+        self.assertAlmostEqual(float(broken.get("calibrated_score") or 0), 6.9, places=2)
+
+    def test_pixel_flat_light_gets_a_small_credit_only(self) -> None:
+        res = self._judge(
+            "构图9.4/光影7.2/透视8.6/质感8.4/风格9.2",
+            goal="像素少女立绘",
+            module="character.Hero",
+            defects="色块边界清楚，网格还在",
+        )
+        self.assertFalse(res.get("passed"))
+        self.assertGreater(float(res.get("calibrated_score") or 0), 7.2)
+        self.assertLess(float(res.get("calibrated_score") or 0), 9.6)
+        self.assertTrue(any("风格容错" in w for w in (res.get("audit_warnings") or [])))
+
+    def test_isometric_scene_uses_a_lower_perspective_line(self) -> None:
+        res = self._judge(
+            "构图9.2/光影8.8/透视5.7/质感8.6/风格9.0",
+            goal="等轴测房间空镜",
+            module="scene.Room",
+            defects="正交投影，没有摄影灭点",
+            scale="high",
+        )
+        self.assertFalse(res.get("anatomy_veto_blocked"))
+        self.assertGreater(float(res.get("calibrated_score") or 0), 5.7)
+        self.assertFalse(res.get("passed"))
+
+    def test_flat_light_keyword_does_not_cap_pixel(self) -> None:
+        pixel = self._judge(
+            "构图9.6/光影9.4/透视9.5/质感9.4/风格9.5",
+            goal="像素少女立绘",
+            module="character.Hero",
+            defects="平光",
+        )
+        self.assertGreater(float(pixel.get("calibrated_score") or 0), 9.0)
+        painted = self._judge(
+            "构图9.6/光影9.4/透视9.5/质感9.4/风格9.5",
+            goal="写实少女立绘",
+            module="character.Hero",
+            defects="平光",
+        )
+        self.assertLessEqual(float(painted.get("calibrated_score") or 0), 8.90)
+        sharp = self._judge(
+            "构图9.6/光影9.4/透视9.5/质感9.4/风格9.5",
+            goal="写实肖像，要像素级细节",
+            module="character.Hero",
+            defects="平光",
+        )
+        self.assertLessEqual(float(sharp.get("calibrated_score") or 0), 8.90)
+        dense = self._judge(
+            "构图9.6/光影9.4/透视9.5/质感9.4/风格9.5",
+            goal="写实肖像，高像素细节",
+            module="character.Hero",
+            defects="平光",
+        )
+        self.assertLessEqual(float(dense.get("calibrated_score") or 0), 8.90)
+
+    def test_negated_break_keeps_chibi_tolerance(self) -> None:
+        res = self._judge(
+            "构图9.4/光影9.2/透视6.9/质感9.1/风格9.3",
+            goal="Q版二头身少女",
+            module="character.Hero",
+            defects="没有多手，融化已经解决",
+        )
+        self.assertFalse(res.get("anatomy_veto_blocked"))
+        self.assertGreater(float(res.get("calibrated_score") or 0), 6.9)
+
+    def test_isometric_melt_returns_to_the_strict_line(self) -> None:
+        res = self._judge(
+            "构图9.2/光影8.8/透视5.7/质感8.6/风格9.0",
+            goal="等轴测房间空镜",
+            module="scene.Room",
+            defects="窗框融化",
+            scale="high",
+        )
+        self.assertTrue(res.get("anatomy_veto_blocked"))
+        self.assertAlmostEqual(float(res.get("calibrated_score") or 0), 5.7, places=2)
+
+    def test_style_words_are_not_cancelled_by_nearby_phrases(self) -> None:
+        pixel = self._judge(
+            "构图9.4/光影9.2/透视6.6/质感9.1/风格9.3",
+            goal="特别的像素风，已经解决手指",
+            module="character.Hero",
+            defects="没有问题",
+        )
+        self.assertFalse(pixel.get("anatomy_veto_blocked"))
+        self.assertGreater(float(pixel.get("calibrated_score") or 0), 6.6)
+        banned = self._judge(
+            "构图9.4/光影9.2/透视6.6/质感9.1/风格9.3",
+            goal="不要使用像素风",
+            module="character.Hero",
+            defects="肩肘还连着",
+        )
+        self.assertTrue(banned.get("anatomy_veto_blocked"))
+        self.assertAlmostEqual(float(banned.get("calibrated_score") or 0), 6.6, places=2)
+        iso = self._judge(
+            "构图9.2/光影8.8/透视5.7/质感8.6/风格9.0",
+            goal="无灭点等轴测房间",
+            module="scene.Room",
+            defects="正交投影",
+            scale="high",
+        )
+        self.assertFalse(iso.get("anatomy_veto_blocked"))
+        self.assertGreater(float(iso.get("calibrated_score") or 0), 5.7)
+
+    def test_break_language_follows_the_clause(self) -> None:
+        still = self._judge(
+            "构图9.4/光影9.2/透视6.9/质感9.1/风格9.3",
+            goal="Q版二头身少女",
+            module="character.Hero",
+            defects="多手需要解决",
+        )
+        self.assertTrue(still.get("anatomy_veto_blocked"))
+        self.assertAlmostEqual(float(still.get("calibrated_score") or 0), 6.9, places=2)
+        joined = self._judge(
+            "构图9.2/光影8.8/透视5.7/质感8.6/风格9.0",
+            goal="等轴测房间空镜",
+            module="scene.Room",
+            defects="多手已解决但窗框融化",
+            scale="high",
+        )
+        self.assertTrue(joined.get("anatomy_veto_blocked"))
+        cleared = self._judge(
+            "构图9.2/光影8.8/透视5.7/质感8.6/风格9.0",
+            goal="等轴测房间空镜",
+            module="scene.Room",
+            defects="塌缩已经解决",
+            scale="high",
+        )
+        self.assertFalse(cleared.get("anatomy_veto_blocked"))
+        self.assertGreater(float(cleared.get("calibrated_score") or 0), 5.7)
+        special = self._judge(
+            "构图9.2/光影8.8/透视5.7/质感8.6/风格9.0",
+            goal="等轴测房间空镜",
+            module="scene.Room",
+            defects="特别塌缩",
+            scale="high",
+        )
+        self.assertTrue(special.get("anatomy_veto_blocked"))
+        dull = self._judge(
+            "构图9.6/光影8.1/透视9.5/质感9.4/风格9.5",
+            goal="像素少女立绘",
+            module="character.Hero",
+            defects="呆板",
+        )
+        self.assertLessEqual(float(dull.get("calibrated_score") or 0), 8.90)
+        low_pixel = self._judge(
+            "构图10/光影10/透视6.6/质感10/风格10",
+            goal="低像素画少女",
+            module="character.Hero",
+            defects="肩肘还连着，五指清楚",
+        )
+        self.assertFalse(low_pixel.get("anatomy_veto_blocked"))
+        self.assertGreater(float(low_pixel.get("calibrated_score") or 0), 6.6)
+        bit = self._judge(
+            "构图10/光影10/透视6.6/质感10/风格10",
+            goal="16bit角色立绘",
+            module="character.Hero",
+            defects="方块关节还连着",
+        )
+        self.assertFalse(bit.get("anatomy_veto_blocked"))
+        unresolved = self._judge(
+            "构图9.9/光影9.9/透视9.9/质感9.9/风格9.9",
+            goal="Q版二头身少女",
+            module="character.Hero",
+            defects="多手没解决了",
+        )
+        self.assertFalse(unresolved.get("passed"))
+        self.assertLessEqual(float(unresolved.get("calibrated_score") or 0), 7.90)
+        fixed = self._judge(
+            "构图9.9/光影9.9/透视9.9/质感9.9/风格9.9",
+            goal="写实少女立绘",
+            module="character.Hero",
+            defects="平光已经解决",
+        )
+        self.assertGreater(float(fixed.get("calibrated_score") or 0), 9.0)
+        still_flat = self._judge(
+            "构图9.9/光影9.9/透视9.9/质感9.9/风格9.9",
+            goal="写实少女立绘",
+            module="character.Hero",
+            defects="手指解决了但平光",
+        )
+        self.assertLessEqual(float(still_flat.get("calibrated_score") or 0), 8.90)
+        photo = self._judge(
+            "构图9.9/光影9.9/透视9.9/质感9.9/风格9.9",
+            goal="写实肖像，高像素画质",
+            module="character.Hero",
+            defects="画面整体平光",
+        )
+        self.assertLessEqual(float(photo.get("calibrated_score") or 0), 8.90)
+        quality = self._judge(
+            "构图9.9/光影9.9/透视7.4/质感9.9/风格9.9",
+            goal="写实照片，像素画质",
+            module="character.Hero",
+            defects="画面整体平光",
+        )
+        self.assertAlmostEqual(float(quality.get("calibrated_score") or 0), 7.4, places=2)
+        self.assertTrue(quality.get("anatomy_veto_blocked"))
+        repaired_le = self._judge(
+            "构图9.9/光影9.9/透视9.9/质感9.9/风格9.9",
+            goal="写实少女立绘",
+            module="character.Hero",
+            defects="平光但已经解决了",
+        )
+        self.assertGreater(float(repaired_le.get("calibrated_score") or 0), 9.0)
+        hi_res = self._judge(
+            "构图10/光影10/透视7.0/质感10/风格10",
+            goal="高像素画少女立绘",
+            module="character.Hero",
+            defects="肩肘还连着",
+        )
+        self.assertTrue(hi_res.get("anatomy_veto_blocked"))
+        self.assertAlmostEqual(float(hi_res.get("calibrated_score") or 0), 7.0, places=2)
+        but_fixed = self._judge(
+            "构图9.9/光影9.9/透视9.9/质感9.9/风格9.9",
+            goal="Q版二头身少女",
+            module="character.Hero",
+            defects="多手但是已经解决了",
+        )
+        self.assertFalse(but_fixed.get("anatomy_veto_blocked"))
+        self.assertGreater(float(but_fixed.get("calibrated_score") or 0), 9.0)
+        banned_low = self._judge(
+            "构图9.9/光影9.9/透视9.9/质感9.9/风格9.9",
+            goal="不要低像素画",
+            module="character.Hero",
+            defects="平光",
+        )
+        self.assertLessEqual(float(banned_low.get("calibrated_score") or 0), 8.90)
+        comma_fixed = self._judge(
+            "构图9.9/光影9.9/透视9.9/质感9.9/风格9.9",
+            goal="写实少女立绘",
+            module="character.Hero",
+            defects="平光，但是已经解决了",
+        )
+        self.assertGreater(float(comma_fixed.get("calibrated_score") or 0), 9.0)
+        not_fixed = self._judge(
+            "构图9.9/光影9.9/透视9.9/质感9.9/风格9.9",
+            goal="写实少女立绘",
+            module="character.Hero",
+            defects="平光不是已经解决",
+        )
+        self.assertLessEqual(float(not_fixed.get("calibrated_score") or 0), 8.90)
+        stacked = self._judge(
+            "构图10/光影10/透视7.4/质感10/风格10",
+            goal="不要使用低像素画",
+            module="character.Hero",
+            defects="肩肘还连着",
+        )
+        self.assertTrue(stacked.get("anatomy_veto_blocked"))
+        self.assertAlmostEqual(float(stacked.get("calibrated_score") or 0), 7.4, places=2)
+        not_on_purpose = self._judge(
+            "构图9.9/光影9.9/透视9.9/质感9.9/风格9.9",
+            goal="写实少女立绘",
+            module="character.Hero",
+            defects="画面平光并非故意",
+        )
+        self.assertLessEqual(float(not_on_purpose.get("calibrated_score") or 0), 8.90)
+        no_pixel = self._judge(
+            "构图10/光影10/透视7.4/质感10/风格10",
+            goal="不用像素画",
+            module="character.Hero",
+            defects="肩肘还连着",
+        )
+        self.assertTrue(no_pixel.get("anatomy_veto_blocked"))
+        self.assertAlmostEqual(float(no_pixel.get("calibrated_score") or 0), 7.4, places=2)
+        not_done = self._judge(
+            "构图9.9/光影9.9/透视9.9/质感9.9/风格9.9",
+            goal="写实少女立绘",
+            module="character.Hero",
+            defects="平光解决了不",
+        )
+        self.assertLessEqual(float(not_done.get("calibrated_score") or 0), 8.90)
+        not_flat = self._judge(
+            "构图10/光影10/透视7.4/质感10/风格10",
+            goal="并不扁平",
+            module="character.Hero",
+            defects="肩肘还连着",
+        )
+        self.assertTrue(not_flat.get("anatomy_veto_blocked"))
+        self.assertAlmostEqual(float(not_flat.get("calibrated_score") or 0), 7.4, places=2)
+        repaired = self._judge(
+            "构图9.9/光影9.9/透视9.9/质感9.9/风格9.9",
+            goal="写实少女立绘",
+            module="character.Hero",
+            defects="平光但已经解决",
+        )
+        self.assertGreater(float(repaired.get("calibrated_score") or 0), 9.0)
+        open_collapse = self._judge(
+            "构图9.9/光影9.9/透视9.9/质感9.9/风格9.9",
+            goal="等轴测房间空镜",
+            module="scene.Room",
+            defects="塌缩不解决了",
+            scale="high",
+        )
+        self.assertFalse(open_collapse.get("passed"))
 
     def test_missing_anat_dim_fail_closed(self) -> None:
         # 缺 perspective_anatomy 时即使其它维满分也不能 STOP（fail-closed）。
@@ -564,6 +900,34 @@ class TestJudgeAnatomyVeto(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             img = Path(td) / "s.png"
             img.write_bytes(b"\x89PNG\r\n\x1a\n" + b"\x00" * 200)
+            dims = "构图10/光影10/透视9.2/质感10/风格10"
+            with mock.patch("skills_kit.judge_auto._physical_image_gate", return_value={"blocked": False, "reasons": [], "score_cap": None}):
+                with mock.patch(
+                    "skills_kit.judge_auto._inspect_image_physical_traits",
+                    return_value={
+                        "exists": True, "size_bytes": 5000, "size_kb": 5.0,
+                        "width": 1024, "height": 1024, "aspect_ratio": "1:1", "color_entropy": 4.0,
+                    },
+                ):
+                    res = auto_vlm_judge_image(
+                        str(img),
+                        get_converge_scale_profile("high"),
+                        round_num=2,
+                        dims=dims,
+                        defects="远处楼群灭点略散，接触阴影偏轻",
+                        next_fix="收紧远景灭点",
+                        use_remote_vlm=False,
+                        module="scene.Canyon",
+                        goal="空镜无人峡谷",
+                    )
+        self.assertFalse(res.get("anatomy_veto_blocked"))
+        self.assertGreaterEqual(float(res.get("calibrated_score") or 0), 9.6)
+        self.assertAlmostEqual(float(res.get("weighted_score") or 0), float(res.get("calibrated_score") or 0), places=2)
+
+    def test_scene_mild_perspective_is_not_lifted_to_stop(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            img = Path(td) / "s.png"
+            img.write_bytes(b"\x89PNG\r\n\x1a\n" + b"\x00" * 200)
             dims = "构图10/光影10/透视7.4/质感10/风格10"
             with mock.patch("skills_kit.judge_auto._physical_image_gate", return_value={"blocked": False, "reasons": [], "score_cap": None}):
                 with mock.patch(
@@ -585,7 +949,9 @@ class TestJudgeAnatomyVeto(unittest.TestCase):
                         goal="空镜无人峡谷",
                     )
         self.assertFalse(res.get("anatomy_veto_blocked"))
-        self.assertGreaterEqual(float(res.get("weighted_score") or 0), 9.6)
+        self.assertGreater(float(res.get("calibrated_score") or 0), 7.4)
+        self.assertLess(float(res.get("calibrated_score") or 0), 9.6)
+        self.assertFalse(res.get("passed"))
 
     def test_weak_next_fix_is_rewritten(self) -> None:
         with tempfile.TemporaryDirectory() as td:
@@ -615,7 +981,7 @@ class TestJudgeAnatomyVeto(unittest.TestCase):
         self.assertIn("关节", str(res.get("next_fix") or ""))
         self.assertIn("joint", to_prompt_english(str(res.get("next_fix") or "")).lower())
 
-    def test_scene_mild_5_9_can_stop(self) -> None:
+    def test_scene_under_6_cannot_stop(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             img = Path(td) / "s.png"
             img.write_bytes(b"\x89PNG\r\n\x1a\n" + b"\x00" * 200)
@@ -639,11 +1005,10 @@ class TestJudgeAnatomyVeto(unittest.TestCase):
                         module="scene.Canyon",
                         goal="空镜无人峡谷",
                     )
-        self.assertFalse(res.get("anatomy_veto_blocked"))
+        self.assertTrue(res.get("anatomy_veto_blocked"))
         self.assertAlmostEqual(float(res.get("anatomy_score") or 0), 5.9, places=1)
-        self.assertGreaterEqual(float(res.get("calibrated_score") or 0), 9.6)
-        self.assertTrue(res.get("passed"))
-        self.assertTrue(any("轻微" in w for w in (res.get("audit_warnings") or [])))
+        self.assertAlmostEqual(float(res.get("calibrated_score") or 0), 5.9, places=2)
+        self.assertFalse(res.get("passed"))
 
     def test_scene_collapse_language_blocks_stop(self) -> None:
         with tempfile.TemporaryDirectory() as td:
@@ -769,6 +1134,35 @@ class TestJudgeAnatomyVeto(unittest.TestCase):
                     )
         self.assertTrue(res.get("anatomy_veto_blocked"))
         self.assertFalse(res.get("passed"))
+
+    def test_icon_rubric_on_a_person_does_not_invent_anatomy_cap(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            img = Path(td) / "c.png"
+            img.write_bytes(b"\x89PNG\r\n\x1a\n" + b"\x00" * 200)
+            dims = "剪影识别9.6/描边色板9.6/棚拍光9.6/透明底9.6/无字9.6"
+            with mock.patch("skills_kit.judge_auto._physical_image_gate", return_value={"blocked": False, "reasons": [], "score_cap": None}):
+                with mock.patch(
+                    "skills_kit.judge_auto._inspect_image_physical_traits",
+                    return_value={
+                        "exists": True, "size_bytes": 5000, "size_kb": 5.0,
+                        "width": 256, "height": 256, "aspect_ratio": "1:1", "color_entropy": 4.0,
+                    },
+                ):
+                    res = auto_vlm_judge_image(
+                        str(img),
+                        get_converge_scale_profile("medium"),
+                        round_num=2,
+                        dims=dims,
+                        defects="瓶塞高光偏硬",
+                        next_fix="把瓶塞高光收圆",
+                        use_remote_vlm=False,
+                        module="character.Hero",
+                        goal="少女全身立绘",
+                    )
+        self.assertEqual(res.get("rubric_mode"), "icon_prop_5d")
+        self.assertFalse(res.get("anatomy_veto_blocked"))
+        self.assertGreaterEqual(float(res.get("calibrated_score") or 0), 9.6)
+        self.assertTrue(res.get("passed"))
 
     def test_scene_credit_does_not_lift_a_hard_cap(self) -> None:
         with tempfile.TemporaryDirectory() as td:

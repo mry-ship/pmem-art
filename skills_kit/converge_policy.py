@@ -9,15 +9,18 @@ DEFAULT_PAD_MODE = "auto"
 DEFAULT_ANATOMY_FLOOR = 7.5
 # Scenes share perspective_anatomy with characters. A score under this is treated as
 # collapsed structure. Between this and the character floor, only collapse language blocks stop.
-SCENE_COLLAPSE_FLOOR = 4.0
-# Mild scene perspective is credited up to this when weighting, so a 5.9 vanishing-point
-# nit does not pull an otherwise finished plate under 9.6. The raw score stays on the card.
+# Under this, a scene is structurally collapsed and cannot stop.
+# The official score then becomes min(geometric mean, this dimension).
+SCENE_COLLAPSE_FLOOR = 6.0
+# Kept so older imports still resolve. Mild perspective is no longer rewritten
+# upward: a 6.x score stays inside the geometric mean.
 SCENE_MILD_PERSPECTIVE_CREDIT = 8.5
-# Only a high-but-not-collapsed perspective (5.9) is reweighted. 4.2 stays a real miss.
-SCENE_MILD_CREDIT_MIN = 5.5
-# Kept so older imports still resolve. Scene stop no longer uses 6.0 as a cutoff.
+SCENE_MILD_CREDIT_MIN = 6.0
+# Alias of the collapse floor. Older imports still resolve.
 SCENE_STRUCTURE_FLOOR = 6.0
-NON_ANATOMY_RUBRICS = frozenset({"skill_additive_5d", "ui_5d", "app_icon_5d"})
+NON_ANATOMY_RUBRICS = frozenset(
+    {"skill_additive_5d", "ui_5d", "app_icon_5d", "icon_prop_5d", "icon_svg_5d"}
+)
 _COLLAPSE_MARKERS = (
     "结构崩",
     "结构塌",
@@ -27,6 +30,7 @@ _COLLAPSE_MARKERS = (
     "几何崩",
     "融成一团",
     "结构散架",
+    "塌缩",
     "边缘融化",
     "结构融化",
     "collapsed geometry",
@@ -34,7 +38,7 @@ _COLLAPSE_MARKERS = (
     "perspective collapsed",
     "melting into",
 )
-_COLLAPSE_NEGATION = ("禁止", "不要", "勿", "别", "不是", "并非", "没有", "无", "not ", "no ")
+_NEG_GAP = {"", "的", "地", "得", "使用", "用", "任何", "再", "去", "低", "高", "画"}
 DEFAULT_PLATEAU_ROUNDS = 2
 # Match skill docs / v2fix: R4+ consecutive drop >0.5 early-stop.
 DEFAULT_REGRESSION_DROP = 0.5
@@ -173,38 +177,269 @@ def scale_lock_marked(text: str) -> bool:
     return False
 
 
+_CLAUSE_SPLIT = set("，。；、,;！？!?\n")
+_STILL_BROKEN = (
+    "没有解决", "没解决", "未解决", "还没解决", "尚未解决", "待解决",
+    "无法解决", "没能解决", "未能解决", "需要解决", "不解决",
+    "不是已经解决", "没有已经解决", "并非已经解决", "不是已解决", "并未已经解决",
+)
+_ALREADY_FIXED = ("已经解决", "已解决", "解决了")
+_PURE_FIX = re.compile(r"^(?:已经解决了?|已解决了?|解决了|已修复了?|已消除了?)$")
+_DIRECT_NEGATION = ("不要", "不用", "并不", "别用", "不是", "并非", "没有", "禁止", "未出现", "勿", "不", "非")
+
+
+def _clause_around(low: str, idx: int, key_len: int) -> tuple[str, str]:
+    """Text before the hit, and the whole clause. Commas, pauses, and 但 split clauses."""
+    start = 0
+    for i in range(idx - 1, -1, -1):
+        if low[i] in _CLAUSE_SPLIT or low[i] == "但":
+            start = i + 1
+            break
+    end = len(low)
+    for j in range(idx + key_len, len(low)):
+        if low[j] in _CLAUSE_SPLIT or low[j] == "但":
+            end = j
+            break
+    return low[start:idx], low[start:end]
+
+
 def collapse_marked(text: str) -> bool:
     """True when defects describe a collapsed structure, not a prohibition against one."""
-    raw = text or ""
-    low = raw.lower()
-    for marker in _COLLAPSE_MARKERS:
-        start = 0
-        needle = marker.lower()
-        while True:
-            idx = low.find(needle, start)
-            if idx < 0:
-                break
-            prefix = low[max(0, idx - 6) : idx]
-            if any(neg in prefix for neg in _COLLAPSE_NEGATION):
-                start = idx + len(needle)
-                continue
-            return True
-    return False
+    low = (text or "").lower()
+    return any(_mentioned(low, marker, as_break=True) for marker in _COLLAPSE_MARKERS)
 
 
 def scene_structure_ok_for_stop(
     dims: dict[str, Any] | None,
     defects: str = "",
+    floor: float | None = None,
 ) -> bool:
-    """Scene stop: missing dim fails closed; under 4.0 or collapse language blocks; a mild 5.9 may pass."""
+    """Scene stop: missing dim fails closed; under the floor or collapse language blocks."""
     anat = anatomy_score(dims)
     if anat is None:
         return False
-    if anat < SCENE_COLLAPSE_FLOOR:
+    limit = SCENE_COLLAPSE_FLOOR if floor is None else float(floor)
+    if anat < limit:
         return False
     if collapse_marked(defects):
         return False
     return True
+
+
+# Special media are scored against their own ruler. A low lighting or proportion
+# score is not the same miss as a melted joint. Break language cancels the tolerance.
+_STYLE_FAMILY_KEYS: tuple[tuple[str, tuple[str, ...]], ...] = (
+    ("pixel", ("像素风", "像素画", "像素", "pixel art", "pixel-art", "点阵", "8-bit", "8bit", "16-bit", "16bit")),
+    ("chibi", ("q版", "chibi", "二头身", "三头身", "大头娃娃", "sd比例")),
+    ("iso", ("等轴", "轴测", "正交", "isometric", "orthographic")),
+    ("graphic", ("剪影", "剪纸", "皮影", "papercut", "paper-cut")),
+    ("flat", ("扁平", "平涂", "矢量", "vector", "赛璐璐", "cel-shad", "cel shad", "cel shading")),
+    ("wash", ("水彩", "水墨", "速写", "粉彩", "线稿", "浮世绘", "pastel", "watercolor")),
+)
+_STYLE_BODY_FLOOR = {
+    "pixel": 6.5,
+    "chibi": 6.8,
+    "flat": 7.0,
+    "wash": 7.2,
+    "graphic": 6.5,
+}
+_STYLE_SCENE_FLOOR = {"iso": 5.5}
+# (dimension, low inclusive, credit ceiling). Raw below `low` is a real miss.
+_STYLE_SOFT_WINDOW: dict[str, tuple[tuple[str, float, float], ...]] = {
+    "pixel": (("lighting_color", 6.8, 8.2), ("texture_detail", 6.8, 8.2)),
+    "flat": (("lighting_color", 6.8, 8.2),),
+    "wash": (("texture_detail", 6.8, 8.2),),
+    "graphic": (("lighting_color", 6.8, 8.0), ("texture_detail", 6.5, 8.0)),
+    "iso": (("perspective_anatomy", 5.5, 6.4),),
+}
+STYLE_INFLATION_IGNORE = {
+    "pixel": {"平光", "颗粒太均匀", "数字化", "数字化噪点", "数字化痕迹", "数字化滤镜"},
+    "flat": {"平光", "颗粒太均匀"},
+    "wash": {"数字化", "数字化噪点", "数字化痕迹", "数字化滤镜"},
+    "graphic": {"平光"},
+}
+_STYLE_BREAK_MARKERS = (
+    "融化", "断肢", "粘连", "多手", "三只手", "六指", "关节断", "多指",
+    "extra hand", "fused finger", "melted",
+)
+
+
+def _gap_is_filler(gap: str) -> bool:
+    """True when the words between a negation and the keyword are only fillers."""
+    rest = gap.strip()
+    pieces = sorted((p for p in _NEG_GAP if p), key=len, reverse=True)
+    while rest:
+        for piece in pieces:
+            if rest.startswith(piece):
+                rest = rest[len(piece) :]
+                break
+        else:
+            return False
+    return True
+
+
+def _mentioned(blob: str, needle: str, *, as_break: bool = False) -> bool:
+    """True when needle is present and this clause is not a negation or an already-fixed note.
+
+    Style words ignore 「解决」. Only a break marker is cleared by 已解决 / 解决了.
+    """
+    low = blob.lower()
+    key = needle.lower()
+    start = 0
+    while True:
+        idx = low.find(key, start)
+        if idx < 0:
+            return False
+        if key == "像素" and low[idx + len(key) : idx + len(key) + 1] == "级":
+            start = idx + len(key)
+            continue
+        prev = low[idx - 1 : idx] if idx else ""
+        if key == "像素" and low[idx + len(key) : idx + len(key) + 2] in {"画质", "画面"}:
+            start = idx + len(key)
+            continue
+        if key == "像素" and prev in {"高", "低", "超", "万"}:
+            start = idx + len(key)
+            continue
+        if key in {"像素画", "像素风"} and low[idx + len(key) : idx + len(key) + 1] in {"质", "面"}:
+            start = idx + len(key)
+            continue
+        if key in {"像素画", "像素风"} and prev in {"高", "超", "万"}:
+            start = idx + len(key)
+            continue
+        if key in {"8-bit", "8bit", "16-bit", "16bit"} and prev.isdigit():
+            start = idx + len(key)
+            continue
+        before, same = _clause_around(low, idx, len(key))
+        if as_break and any(s in same for s in _STILL_BROKEN):
+            return True
+        if as_break and re.search(r"(?:不是|没有|并非|并未).{0,12}解决", same):
+            return True
+        if as_break and re.search(
+            r"(?:解决了|已经解决|已解决|已修复).{0,6}(?:不了|又出现|又不|没有|不|没|吗)",
+            same,
+        ):
+            return True
+        if as_break and any(s in same for s in _ALREADY_FIXED):
+            start = idx + len(key)
+            continue
+        tail = before[-12:]
+        if "是不是" in tail or "有没有" in tail:
+            return True
+        negated = False
+        for n in _DIRECT_NEGATION:
+            pos = tail.rfind(n)
+            if pos < 0:
+                continue
+            if _gap_is_filler(tail[pos + len(n) :].strip()):
+                negated = True
+                break
+        if negated:
+            start = idx + len(key)
+            continue
+        end = idx + len(key)
+        while end < len(low) and low[end] not in _CLAUSE_SPLIT and low[end] != "但":
+            end += 1
+        if end < len(low) and (low[end] in _CLAUSE_SPLIT or low[end] == "但"):
+            nxt = low[end + 1 :]
+            for ch in _CLAUSE_SPLIT:
+                if ch == "但":
+                    continue
+                cut = nxt.find(ch)
+                if cut >= 0:
+                    nxt = nxt[:cut]
+            nxt_s = nxt.strip()
+            if nxt_s.startswith("但是"):
+                nxt_s = nxt_s[2:].strip()
+            elif nxt_s.startswith("但") or nxt_s.startswith("是"):
+                nxt_s = nxt_s[1:].strip()
+            if _PURE_FIX.match(nxt_s):
+                start = idx + len(key)
+                continue
+        return True
+
+
+def infer_style_family(*parts: str) -> str:
+    """pixel / chibi / iso / graphic / flat / wash / standard. From the brief, not the critique."""
+    blob = " ".join(str(p or "") for p in parts)
+    for name, keys in _STYLE_FAMILY_KEYS:
+        if any(_mentioned(blob, k, as_break=False) for k in keys):
+            return name
+    return "standard"
+
+
+def style_break_marked(text: str) -> bool:
+    """A real structural break, not a medium that is supposed to look simple."""
+    if collapse_marked(text):
+        return True
+    low = (text or "").lower()
+    for marker in _STYLE_BREAK_MARKERS:
+        if _mentioned(low, marker, as_break=True):
+            return True
+    return False
+
+
+def style_body_floor(family: str, defects: str = "", requested: float = DEFAULT_ANATOMY_FLOOR) -> float:
+    """Keep an explicit non-default floor. A break cancels the style tolerance."""
+    if abs(float(requested) - DEFAULT_ANATOMY_FLOOR) > 1e-6:
+        return float(requested)
+    if style_break_marked(defects):
+        return DEFAULT_ANATOMY_FLOOR
+    return float(_STYLE_BODY_FLOOR.get(family, DEFAULT_ANATOMY_FLOOR))
+
+
+def style_scene_floor(
+    family: str,
+    requested: float = SCENE_COLLAPSE_FLOOR,
+    defects: str = "",
+) -> float:
+    if abs(float(requested) - SCENE_COLLAPSE_FLOOR) > 1e-6:
+        return float(requested)
+    if style_break_marked(defects):
+        return SCENE_COLLAPSE_FLOOR
+    return float(_STYLE_SCENE_FLOOR.get(family, SCENE_COLLAPSE_FLOOR))
+
+
+def style_soft_credit(
+    dims: dict[str, Any] | None,
+    family: str,
+    defects: str = "",
+) -> tuple[dict[str, Any] | None, str]:
+    """Nudge one style-expected dim up by at most 0.8, inside its window.
+
+    Returns (credited dims, note). (None, "") means leave the geometric mean alone.
+    The raw dimension stays on the card. This cannot by itself clear 9.6.
+    """
+    if style_break_marked(defects):
+        return None, ""
+    windows = _STYLE_SOFT_WINDOW.get(family) or ()
+    parsed = coerce_dims_dict(dims)
+    if not parsed or not windows:
+        return None, ""
+    best: tuple[float, str, float] | None = None
+    for key, low, ceiling in windows:
+        if key not in parsed:
+            continue
+        try:
+            raw = float(parsed[key])
+        except (TypeError, ValueError):
+            continue
+        if raw < low or raw >= ceiling:
+            continue
+        credited = min(ceiling, raw + 0.8)
+        gap = credited - raw
+        if best is None or gap > best[0]:
+            best = (gap, key, credited)
+    if best is None:
+        return None, ""
+    _gap, key, credited = best
+    out = dict(parsed)
+    raw_val = float(parsed[key])
+    out[key] = round(credited, 2)
+    note = (
+        f"风格容错（{family}）：{key} {raw_val:.1f} 落在该媒介的正常偏低带，"
+        f"乘积里按 {credited:.1f} 计，原始分仍保留，且不能单靠这次抬分停机"
+    )
+    return out, note
 
 
 def scene_perspective_credit(
@@ -212,31 +447,13 @@ def scene_perspective_credit(
     defects: str,
     weights: dict[str, Any] | None,
 ) -> tuple[float | None, str]:
-    """Reweight a mild scene perspective score so it does not sink an otherwise finished total.
+    """No longer raises a scene score.
 
-    Returns (adjusted_weighted, warning). (None, "") means leave the audited total alone.
-    The stored dimension stays at the raw value.
+    A mild vanishing-point nit stays in the geometric mean. Rewriting it to 8.5
+    manufactured stops above 9.6. Collapse under 6.0 is handled by the hurdle.
     """
-    parsed = coerce_dims_dict(dims)
-    anat = anatomy_score(parsed)
-    if anat is None or parsed is None or "perspective_anatomy" not in parsed:
-        return None, ""
-    if anat >= SCENE_MILD_PERSPECTIVE_CREDIT or anat < SCENE_MILD_CREDIT_MIN:
-        return None, ""
-    if collapse_marked(defects):
-        return None, ""
-    w = weights or {}
-    credited = dict(parsed)
-    credited["perspective_anatomy"] = SCENE_MILD_PERSPECTIVE_CREDIT
-    keys = [k for k in credited if k in w]
-    if len(keys) < 4:
-        return None, ""
-    total = sum(float(credited[k]) * float(w.get(k) or 0) for k in keys)
-    warn = (
-        f"场景透视 {anat:.1f} 属轻微偏差（未写结构塌缩），"
-        f"加权时这一维按 {SCENE_MILD_PERSPECTIVE_CREDIT} 计，原始分仍保留"
-    )
-    return round(total, 2), warn
+    del dims, defects, weights
+    return None, ""
 
 
 def _tip_pushes_volume(tip: str) -> bool:
@@ -561,23 +778,123 @@ def pick_best_round_on_stop(
     best_round: dict[str, Any] | None,
     current: dict[str, Any],
     anatomy_floor: float,
+    subject_kind: str = "",
+    style_text: str = "",
 ) -> dict[str, Any]:
     """On STOP_TARGET, prefer anatomy-OK rounds; otherwise keep historical max total."""
     if stop_reason != "STOP_TARGET_REACHED":
         return best_round or current
+    family = infer_style_family(style_text) if style_text else "standard"
+
+    def _broken(row: dict[str, Any] | None) -> bool:
+        if not row:
+            return False
+        raw = row.get("defects") or ""
+        if isinstance(raw, list):
+            raw = "；".join(str(x) for x in raw)
+        return style_break_marked(str(raw))
+
+    cur_broken = _broken(current)
+    best_broken = _broken(best_round)
+    if cur_broken and not best_broken and best_round is not None:
+        return best_round
+    if best_broken and not cur_broken:
+        return current
+
+    def _row_defects(row: dict[str, Any] | None) -> str:
+        if not row:
+            return ""
+        raw = row.get("defects") or ""
+        if isinstance(raw, list):
+            raw = "；".join(str(x) for x in raw)
+        return str(raw)
+
+    def _row_floor(row: dict[str, Any] | None) -> float:
+        text = _row_defects(row)
+        if subject_kind == "scene":
+            return style_scene_floor(family, defects=text)
+        return style_body_floor(family, text, float(anatomy_floor))
+
+    floor = _row_floor(current)
     cur_dims = coerce_dims_dict(current.get("dims"))
     cur_anat = anatomy_score(cur_dims)
-    if cur_anat is None or cur_anat < float(anatomy_floor):
+    cur_is_rubric = bool(
+        cur_dims
+        and "perspective_anatomy" not in cur_dims
+        and any(k in cur_dims for k in _UI_ICON_DIM_KEYS)
+    )
+    if not cur_is_rubric and (cur_anat is None or cur_anat < floor):
         return best_round or current
     if best_round is None:
         return current
     br_dims = coerce_dims_dict(best_round.get("dims"))
     br_anat = anatomy_score(br_dims)
-    if br_anat is None or br_anat < float(anatomy_floor):
+    br_is_rubric = bool(
+        br_dims
+        and "perspective_anatomy" not in br_dims
+        and any(k in br_dims for k in _UI_ICON_DIM_KEYS)
+    )
+    if not br_is_rubric and (br_anat is None or br_anat < _row_floor(best_round)):
         return current
     if float(current.get("total") or 0) >= float(best_round.get("total") or 0):
         return current
     return best_round
+
+
+_UI_ICON_DIM_KEYS = (
+    "nine_slice_structure",
+    "glyph_silhouette",
+    "squircle_safe_zone",
+    "rgba_pipeline_compliance",
+    "state_suite_cohesion",
+    "silhouette",
+    "alpha",
+    "no_text",
+    "stroke_consistency",
+    "recognizability",
+)
+
+
+def target_dims_allow_stop(
+    dims: dict[str, Any] | None,
+    anatomy_floor: float,
+    *,
+    subject_kind: str = "",
+    defects: str = "",
+    style_text: str = "",
+) -> bool:
+    """Body subjects need anatomy >= floor. Scenes use the 6.0 collapse line. UI/icon have their own hurdles."""
+    parsed = coerce_dims_dict(dims) or {}
+    family = infer_style_family(style_text) if style_text else "standard"
+    if parsed and "perspective_anatomy" not in parsed and any(k in parsed for k in _UI_ICON_DIM_KEYS):
+        floors = {
+            "nine_slice_structure": 7.5,
+            "rgba_pipeline_compliance": 8.0,
+            "glyph_silhouette": 8.0,
+            "squircle_safe_zone": 8.0,
+            "silhouette": 8.0,
+            "alpha": 8.0,
+            "no_text": 8.0,
+            "stroke_consistency": 8.0,
+            "recognizability": 8.0,
+        }
+        for key, floor in floors.items():
+            if key not in parsed:
+                continue
+            try:
+                val = float(parsed[key])
+            except (TypeError, ValueError):
+                return False
+            if val < floor:
+                return False
+        return True
+    if subject_kind == "scene":
+        return scene_structure_ok_for_stop(
+            parsed, defects, floor=style_scene_floor(family, defects=defects)
+        )
+    floor = style_body_floor(family, defects, float(anatomy_floor))
+    anat = anatomy_score(parsed)
+    return anat is not None and anat >= floor
 
 
 def decide_round_stop(
@@ -594,18 +911,25 @@ def decide_round_stop(
     plateau_rounds: int = DEFAULT_PLATEAU_ROUNDS,
     regression_drop: float = DEFAULT_REGRESSION_DROP,
     early_stop_min_round: int = DEFAULT_EARLY_STOP_MIN_ROUND,
+    subject_kind: str = "",
+    defects: str = "",
+    style_text: str = "",
 ) -> str | None:
     """Return stop_reason or None to continue. Score failures never stop here."""
     if not score_ok or total is None:
         return None
-    anat = anatomy_score(dims)
-    # Missing anatomy dims must NOT unlock STOP_TARGET_REACHED (fail closed).
-    # When anatomy blocks target, still allow plateau/regression below (after min early-stop round).
+    # Missing anatomy on a person must NOT unlock STOP_TARGET_REACHED.
+    # Scenes stop on the 6.0 collapse line. UI / icon dims carry their own hurdles.
     if (
         total >= threshold
         and round_num >= min_rounds
-        and anat is not None
-        and anat >= anatomy_floor
+        and target_dims_allow_stop(
+            dims,
+            anatomy_floor,
+            subject_kind=subject_kind,
+            defects=defects,
+            style_text=style_text,
+        )
     ):
         return "STOP_TARGET_REACHED"
     if round_num >= int(early_stop_min_round):

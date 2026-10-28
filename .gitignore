@@ -68,5 +68,11 @@ comparison/pmem_vs_market_showcase.html
 generated_v8_20_skill_grok/
 generated_v8_20_skill_grok_*/
 generated_v8_20_skill_v2fix/
+generated_v8_20_skill_look/
+generated_v8_20_skill_opt1027/
 /images/
 *.tar.gz
+_hash_needed.json
+
+# Local process-board copies (session JSON stays; images rebuild from the run)
+.memory-art/converge/boards/

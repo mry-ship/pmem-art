@@ -16,23 +16,31 @@ from .prompt_scale import (
     classify_subject,
     get_converge_scale_profile,
 )
-from .scoring import audit_score_inflation, defects_are_substantive, parse_5d_dims
+from .scoring import (
+    audit_score_inflation,
+    defects_are_substantive,
+    parse_5d_dims,
+)
 from .image_gates import _aspect_relation, _inspect_image_physical_traits, resolve_case_config
 from .validate_params import _physical_image_gate
-from .absolute_5d_agent_rubric import AGENT_JUDGE_SOURCE, annotate_advisory_offline
+from .absolute_5d_agent_rubric import AGENT_JUDGE_SOURCE
 from .subject_lexicon import clause
 from .converge_policy import (
     DEFAULT_ANATOMY_FLOOR,
     NON_ANATOMY_RUBRICS,
     SCENE_COLLAPSE_FLOOR,
     anatomy_ok_for_stop,
+    collapse_marked,
     anatomy_score,
     coerce_dims_dict,
     next_fix_is_weak,
     reconcile_fix_with_subject,
     reflow_fix_text,
-    scene_perspective_credit,
     scene_structure_ok_for_stop,
+    infer_style_family,
+    style_body_floor,
+    style_scene_floor,
+    style_soft_credit,
     clone_subject_structure_ok_for_stop,
     ui_shell_structure_ok_for_stop,
 )
@@ -65,7 +73,7 @@ def auto_vlm_judge_image(
     - By default (`require_image=True`) a missing / blank / tiny file cannot reach STOP_TARGET_REACHED.
     - If `vlm_judge` API key is configured, calls the remote vision model first.
     - If no key: current multimodal Agent scores Absolute-5D via CLI `dims`/`defects`
-      (`agent_absolute_5d`); pixel offline scorer is **advisory only**. Threshold stays
+      (`agent_absolute_5d`). Pixel offline scores are not computed. Threshold stays
       scale profile (default 9.6) — no no-key hard STOP / 8.50 early exit.
     - Case aspect checks use `session_id` + `ref_image` only — never the output filename.
     """
@@ -94,7 +102,6 @@ def auto_vlm_judge_image(
 
     judge_source = "agent_self_judge"
     remote_meta: dict[str, Any] = {}
-    offline_meta: dict[str, Any] = {}
     eff_strengths = strengths or ""
     if use_remote_vlm:
         try:
@@ -131,53 +138,12 @@ def auto_vlm_judge_image(
             remote_meta = {"source": "vlm_import_error", "error": str(exc), "active": False}
             judge_source = "agent_self_judge"
 
-    # No independent VLM → Agent Absolute-5D (same 9.6 gate). Pixel offline = advisory only.
+    # No independent VLM → Agent Absolute-5D (same 9.6 gate).
     if judge_source != "independent_vlm":
         if dims.strip():
             judge_source = AGENT_JUDGE_SOURCE
         else:
             judge_source = "agent_self_judge"
-        if p.is_file():
-            try:
-                import sys as _sys
-
-                _scripts = Path(__file__).resolve().parent.parent / "scripts"
-                if str(_scripts) not in _sys.path:
-                    _sys.path.insert(0, str(_scripts))
-                from absolute_5d_scorer import absolute_5d as _offline_a5d  # noqa: WPS433
-
-                offline = _offline_a5d(
-                    str(p),
-                    api_scale=str(scale_prof.get("scale") or "medium"),
-                    prompt_mode=str(scale_prof.get("prompt_mode") or ""),
-                    ref_path=str(ref_image or scale_prof.get("ref_image") or "") or None,
-                )
-                offline_meta = {
-                    "version": (offline.get("meta") or {}).get("version"),
-                    "score": offline.get("score"),
-                    "coverage": offline.get("coverage"),
-                    "rankable": (offline.get("meta") or {}).get("rankable"),
-                    "contract": (offline.get("meta") or {}).get("contract"),
-                    "role": "advisory_only",
-                }
-                note = annotate_advisory_offline(
-                    offline.get("score"), offline.get("coverage")
-                )
-                remote_meta = {
-                    **remote_meta,
-                    "offline_advisory": offline_meta,
-                    "source": judge_source,
-                    "offline_advisory_note": note,
-                }
-                # Hint only — never splice into defects (would defeat soft-defect STOP gate).
-                # Warning path below already surfaces annotate_advisory_offline(...).
-            except Exception as exc:  # noqa: BLE001
-                offline_meta = {"error": str(exc), "role": "advisory_only"}
-                remote_meta = {
-                    **remote_meta,
-                    "offline_advisory": offline_meta,
-                    "source": judge_source,
-                }
 
     w_info = parse_5d_dims(dims, scale_prof.get("dim_weights"), module=module)
     weighted = w_info.get("weighted_score")
@@ -271,11 +237,7 @@ def auto_vlm_judge_image(
         )
     if judge_source == "agent_absolute_5d":
         audit_res["warnings"].append(
-            f"Agent Absolute-5D 已采纳（门槛 {target_th}；像素离线仅为旁证）"
-        )
-    if offline_meta.get("score") is not None and judge_source != "independent_vlm":
-        audit_res["warnings"].append(
-            annotate_advisory_offline(offline_meta.get("score"), offline_meta.get("coverage"))
+            f"Agent Absolute-5D 已采纳（门槛 {target_th}）"
         )
 
     # Rubber-stamp defects cannot justify STOP (Agent / independent VLM alike).
@@ -310,22 +272,8 @@ def auto_vlm_judge_image(
         dims_for_anat = coerce_dims_dict(parsed_now.get("parsed"))
         if not rubric_mode:
             rubric_mode = str(parsed_now.get("rubric_mode") or "")
-    # general_5d scene: a mild perspective nit must not drag the weighted total under 9.6.
-    if subject_kind == "scene" and not soft_defects_blocked and rubric_mode in ("", "general_5d"):
-        credited, credit_warn = scene_perspective_credit(
-            dims_for_anat, defects or "", scale_prof.get("dim_weights")
-        )
-        if credited is not None:
-            weighted_now = audit_res.get("weighted_score")
-            already_capped = weighted_now is None or (
-                float(calibrated) + 0.05 < float(weighted_now)
-            )
-            # A noise / extra-limb cap already lowered the score. Do not lift it back over 9.6.
-            if not already_capped:
-                calibrated = float(credited)
-                if credit_warn and credit_warn not in audit_res["warnings"]:
-                    audit_res["warnings"].append(credit_warn)
-
+    # Scene perspective is not rewritten upward. A 6.x vanishing-point score stays in the
+    # geometric mean; only a collapse under 6.0 (or collapse language) pulls the official score down.
     passed = bool(calibrated >= target_th) and not image_gate_blocked and not soft_defects_blocked
     min_rounds = int(scale_prof.get("min_rounds_before_stop") or 1)
     early_stop_blocked = False
@@ -343,13 +291,48 @@ def auto_vlm_judge_image(
         if not next_fix:
             next_fix = "下一轮仍垫最初的参考图，只在提示词上补还没到位的那一处"
 
+    # Special media use a narrower floor. A melted joint or collapse still uses the strict line.
+    style_family = infer_style_family(
+        goal or str(scale_prof.get("goal") or ""),
+        module,
+        ref_image or str(scale_prof.get("ref_image") or ""),
+    )
+    if (
+        not early_stop_blocked
+        and not image_gate_blocked
+        and not soft_defects_blocked
+        and rubric_mode in ("", "general_5d")
+        and isinstance(dims_for_anat, dict)
+        and not any(("反虚高" in w or "反贴原" in w) for w in audit_res["warnings"])
+    ):
+        credited_dims, credit_note = style_soft_credit(dims_for_anat, style_family, defects or "")
+        if credited_dims is not None:
+            from .scoring import weighted_geometric
+
+            weights = scale_prof.get("dim_weights") or {}
+            keys = tuple(k for k in credited_dims if k in weights)
+            new_geo = weighted_geometric(credited_dims, weights, keys) if len(keys) >= 4 else None
+            if new_geo is not None and new_geo > float(calibrated):
+                lifted = min(float(new_geo), float(calibrated) + 0.30)
+                if float(calibrated) < target_th:
+                    lifted = min(lifted, target_th - 0.01)
+                calibrated = round(lifted, 2)
+                if credit_note and credit_note not in audit_res["warnings"]:
+                    audit_res["warnings"].append(credit_note)
+                passed = (
+                    calibrated >= target_th
+                    and not image_gate_blocked
+                    and not soft_defects_blocked
+                )
     # Anatomy hard veto on general_5d. UI / icon / skill-additive rubrics have no
     # perspective_anatomy key — skip so they are not fail-closed forever.
-    # Scenes: under 4.0 or collapse language blocks; a mild score may stop.
+    # Scenes: under 6.0 (isometric 5.5) or collapse language blocks.
     if subject_kind == "scene":
-        anatomy_floor = float(scale_prof.get("scene_structure_floor") or SCENE_COLLAPSE_FLOOR)
+        requested_scene = float(scale_prof.get("scene_structure_floor") or SCENE_COLLAPSE_FLOOR)
+        anatomy_floor = style_scene_floor(style_family, requested_scene, defects or "")
     else:
-        anatomy_floor = float(scale_prof.get("anatomy_floor") or DEFAULT_ANATOMY_FLOOR)
+        requested_body = float(scale_prof.get("anatomy_floor") or DEFAULT_ANATOMY_FLOOR)
+        anatomy_floor = style_body_floor(style_family, defects or "", requested_body)
     anat_val = anatomy_score(dims_for_anat)
     mod_l = (module or "").strip().lower()
     # style_palette is shared with the additive rubric, so it cannot by itself mean "this is UI".
@@ -359,6 +342,15 @@ def auto_vlm_judge_image(
         "squircle_safe_zone",
         "rgba_pipeline_compliance",
         "state_suite_cohesion",
+        "silhouette",
+        "stroke_palette",
+        "studio_light",
+        "alpha",
+        "no_text",
+        "stroke_consistency",
+        "visual_weight",
+        "optical_center",
+        "recognizability",
     )
     looks_like_ui_icon_rubric = bool(
         isinstance(dims_for_anat, dict)
@@ -367,31 +359,41 @@ def auto_vlm_judge_image(
         and any(k in dims_for_anat for k in _ui_icon_dim_keys)
     )
     body_subject = subject_kind in {"humanoid", "creature", "both", "mechanical", "generic"}
+    # Icon and UI rubrics have no anatomy axis. skill_additive on a person still fail-closes.
+    icon_ui_rubric = rubric_mode in {"ui_5d", "app_icon_5d", "icon_prop_5d", "icon_svg_5d"}
     skip_anatomy_veto = (
         subject_kind == "ui"
         or mod_l in ("ui", "icon")
         or mod_l.startswith(("ui.", "icon."))
         or looks_like_ui_icon_rubric
+        or icon_ui_rubric
         or (rubric_mode in NON_ANATOMY_RUBRICS and not body_subject)
     )
+    if subject_kind == "scene" and collapse_marked(defects or ""):
+        skip_anatomy_veto = False
     if subject_kind == "scene":
-        structure_ok = scene_structure_ok_for_stop(dims_for_anat, defects or "")
+        structure_ok = scene_structure_ok_for_stop(
+            dims_for_anat, defects or "", floor=anatomy_floor
+        )
     else:
         structure_ok = anatomy_ok_for_stop(dims_for_anat, anatomy_floor)
     anatomy_veto_blocked = False
-    if passed and not skip_anatomy_veto and not structure_ok:
+    if not skip_anatomy_veto and not structure_ok:
         anatomy_veto_blocked = True
         passed = False
-        calibrated = min(float(calibrated), round(target_th - 0.05, 2))
+        if anat_val is not None:
+            calibrated = min(float(calibrated), float(anat_val))
+        else:
+            calibrated = min(float(calibrated), round(target_th - 0.05, 2))
         if anat_val is None:
             warn = (
                 f"解剖硬伤一票否决：缺少 perspective_anatomy 维（fail-closed），"
                 f"总分达线仍禁止停机（门槛 ≥{anatomy_floor}）"
             )
             anat_fix = clause("missing_dim", "zh")
-        elif subject_kind == "scene" and anat_val < SCENE_COLLAPSE_FLOOR:
+        elif subject_kind == "scene" and anat_val < anatomy_floor:
             warn = (
-                f"场景结构 {anat_val:.1f} < {SCENE_COLLAPSE_FLOOR}，按结构塌缩禁止停机"
+                f"场景结构 {anat_val:.1f} < {anatomy_floor}，禁止停机"
             )
             anat_fix = clause("scene_fix", "zh")
         elif subject_kind == "scene":
@@ -431,7 +433,16 @@ def auto_vlm_judge_image(
     ):
         ui_shell_veto_blocked = True
         passed = False
-        calibrated = min(float(calibrated), round(target_th - 0.05, 2))
+        shell_dim = None
+        if isinstance(dims_for_anat, dict):
+            for key in ("nine_slice_structure", "composition"):
+                try:
+                    val = float(dims_for_anat[key])
+                except (KeyError, TypeError, ValueError):
+                    continue
+                if val < 8.5 and (shell_dim is None or val < shell_dim):
+                    shell_dim = val
+        calibrated = min(float(calibrated), 8.85 if shell_dim is None else shell_dim)
         warn = (
             "UI弹框母版结构一票否决：内容区不得回声参考主体/礼盒，"
             "或九宫格/构图结构分不足；总分达线仍禁止停机"
@@ -454,7 +465,15 @@ def auto_vlm_judge_image(
     ):
         clone_subject_veto_blocked = True
         passed = False
-        calibrated = min(float(calibrated), round(target_th - 0.05, 2))
+        clone_dim = None
+        if isinstance(dims_for_anat, dict) and dims_for_anat.get("composition") is not None:
+            try:
+                comp_now = float(dims_for_anat["composition"])
+            except (TypeError, ValueError):
+                comp_now = None
+            if comp_now is not None and comp_now < 6.0:
+                clone_dim = comp_now
+        calibrated = min(float(calibrated), 8.85 if clone_dim is None else clone_dim)
         warn = (
             "Clone 题材结构一票否决：不得复制参考 prop 主体，或构图<6；"
             "总分达线仍禁止停机"
@@ -507,7 +526,11 @@ def auto_vlm_judge_image(
         "clone_subject_veto_blocked": clone_subject_veto_blocked,
         "subject_kind": subject_kind,
         "rubric_mode": rubric_mode,
-        "weighted_score": audit_res["weighted_score"],
+        "weighted_score": (
+            round(float(calibrated), 2)
+            if audit_res.get("weighted_score") is not None
+            else None
+        ),
         "raw_score": audit_res["raw_score"],
         "calibrated_score": round(float(calibrated), 2),
         "defects": defects,

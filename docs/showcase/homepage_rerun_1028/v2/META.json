@@ -1,0 +1,38 @@
+{
+  "note": "Test-only rich briefs; not baked into skills. Enrichment batch 2026-10-28.",
+  "ui": {
+    "royal": {"rounds": 3, "best": 9.57, "path": "ui_royal/"},
+    "steam": {"path": "ui_steam/", "note": "showcase fill"},
+    "celadon": {"path": "ui_celadon/", "note": "showcase fill"}
+  },
+  "icon_a": [
+    {"id": "sky_city", "rounds": 3, "best": 9.55, "path": "icon_a/"},
+    {"id": "celadon_coin", "rounds": 2, "path": "icon_a2/"},
+    {"id": "forge", "rounds": 2, "path": "icon_a3/"}
+  ],
+  "icon_c_set": ["heal", "mana", "key", "ruby", "scroll"],
+  "clone": [
+    {"id": "pastel_polish", "rounds": 1, "best": 9.49, "path": "clone/"},
+    {"id": "rabbit", "path": "clone_rabbit/"},
+    {"id": "lantern_market", "path": "clone_lantern/"}
+  ],
+  "variant": [
+    {"id": "lighting", "rounds": 1, "best": 9.52, "path": "variant/"},
+    {"id": "surprise", "rounds": 4, "best": 9.55, "path": "variant_expr/"},
+    {"id": "wink", "path": "variant_wink/"},
+    {"id": "sleepy", "path": "variant_sleepy/"},
+    {"id": "angry", "path": "variant_angry/", "note": "identity drift visible — useful for stability compare"}
+  ],
+  "merge": {
+    "potion_l16": "merge_potion_l16/",
+    "candy_l16": "merge_candy_l16/",
+    "t5_single": {"rounds": 1, "best": 9.51, "path": "merge/"}
+  },
+  "style_lock": ["style_lock/", "style_lock_b/", "style_lock_c/"],
+  "prompt_samples": "prompt_samples/SAMPLES.md",
+  "c01_full_rerun": {
+    "sessions": ["hp_c01full_low", "hp_c01full_medium", "hp_c01full_high", "hp_c01full_recompose"],
+    "scores": {"low": 9.51, "medium": 9.52, "high": 9.59, "recompose": 9.54},
+    "rounds": 4
+  }
+}

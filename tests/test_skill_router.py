@@ -1,4 +1,4 @@
-"""Nine skills, one /pmem- command each."""
+"""Ten skills, one /pmem- command each."""
 from __future__ import annotations
 
 import sys
@@ -24,6 +24,7 @@ PRIMARY = [
     "pmem-icon",
     "pmem-coach",
     "pmem-merge-ladder",
+    "pmem-prompt",
 ]
 
 RETIRED_FOLDERS = [
@@ -97,11 +98,15 @@ class SkillRouterTests(unittest.TestCase):
         self.assertIn("固定 2 轮", console)
         self.assertIn("查合理性", console)
         self.assertIn("理解错误", console)
-        self.assertIn("不要替玩家挑一个合理的", console)
+        self.assertIn("默认 vs 硬不确定", console)
+        self.assertIn("可默认", console)
+        self.assertIn("硬不确定", console)
+        self.assertIn("禁止**标成「还不确定」来打回", console)
+        self.assertIn("依次点名", console)
         self.assertNotIn("不合理的改合理", console)
         self.assertIn("定稿是第 2 轮", console)
-        self.assertIn("打回给玩家一起矫正", console)
-        self.assertIn("不进入第二段", console)
+        self.assertIn("一次只问**一处硬不确定**", console)
+        self.assertIn("停在第一段，不生图，打回", console)
         self.assertIn("格式不改", console)
         self.assertIn("不能在交出去之前收成一张", console)
         self.assertIn("--reference-image-paths", console)
@@ -127,6 +132,15 @@ class SkillRouterTests(unittest.TestCase):
             draw = (root / ".cursor" / "commands" / "pmem-draw.md").read_text(encoding="utf-8")
             self.assertIn("合同 · 原画", draw)
             self.assertNotIn("/art-draw", draw)
+            overview = (root / "AGENTS.md").read_text(encoding="utf-8")
+            self.assertIn("可默认项直接写入定稿", overview)
+            self.assertIn("可默认则默认，硬歧义才打回", overview)
+            self.assertNotIn("定不稳就打回。", overview)
+            self.assertIn("依次点名多支", overview)
+            rule = (root / ".cursor" / "rules" / "pmem-art.mdc").read_text(encoding="utf-8")
+            self.assertIn("可默认项直接写入定稿", rule)
+            prompt = (root / ".cursor" / "skills" / "pmem-prompt" / "SKILL.md").read_text(encoding="utf-8")
+            self.assertIn("本技能不生图", prompt)
             rule = (root / ".cursor" / "rules" / "pmem-art.mdc").read_text(encoding="utf-8")
             self.assertIn("按 XX 走了", rule)
             self.assertIn("/pmem-agent", rule)

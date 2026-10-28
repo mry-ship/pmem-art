@@ -36,6 +36,7 @@ from .prompt_scale import (
 from .image_gates import _inspect_image_physical_traits, resolve_case_config
 from .validate_params import _physical_image_gate, _round_counts_as_passed, validate_converge_params
 from .judge_auto import auto_vlm_judge_image
+from .absolute_5d_agent_rubric import agent_absolute_5d_judge_prompt
 from .converge_policy import (
     DEFAULT_ANATOMY_FLOOR,
     DEFAULT_EARLY_STOP_MIN_ROUND,
@@ -430,7 +431,7 @@ def cmd_converge(
     lock_text: str = "",
 ) -> int:
     """
-    converge_mode: quality (default, dynamic threshold per scale up to 8 rounds) | fast (warm-start fast-track hints).
+    converge_mode: quality (default, dynamic threshold per scale, max 4 rounds, stop ≥9.6 or best-of-4) | fast (warm-start fast-track hints).
     draft_ok: if True (user said 草稿/fast), final accept may use soft threshold in fast mode.
     silent: default False — 默认打印评分履历；True/--quiet 仅一行结论；记忆写入始终后台静默。verbose=True 等同强制打印全量报告。
     lock_text: artist one-liner to loosen/tighten per-dim locks (e.g. 「构图松一点」→ show 95%→75%).
@@ -973,7 +974,9 @@ def cmd_converge(
             f"{fix_line}"
             f"{stub_line}"
             f"   · 置顶风格指令 Prompt: {composed_prompt}\n"
-            f"   · 当前未执行任何自评或 VLM 裁判；请下一步独立调用 `python3 pmem_art.py converge judge --id {session_id} --round {r_no} --image {image} --dims ...`"
+            f"   · 当前未执行任何自评或 VLM 裁判；请先看图再打五维，不要从 9.3 起跳：\n"
+            f"{agent_absolute_5d_judge_prompt(round_num=r_no, max_rounds=mr)}\n"
+            f"   · 然后：`python3 pmem_art.py converge judge --id {session_id} --round {r_no} --image {image} --dims ...`"
         )
         return 0
 
@@ -1051,7 +1054,7 @@ def cmd_converge(
 
         cli_score = float(score or 0)
         # Independent VLM if keyed; else Agent Absolute-5D (threshold stays session 9.6).
-        # Pixel offline scorer is advisory only — never lower accept_threshold.
+        # Official score is the judge's five dimensions. Pixel offline scores are not used.
         judge_res = auto_vlm_judge_image(
             image_path=eff_image,
             scale_prof=s_prof,
@@ -1374,7 +1377,8 @@ def cmd_converge(
             return 0
 
         s_prof_fin = sess.get("scale_profile") or get_converge_scale_profile(sess.get("scale", "medium"))
-        accept_th = float(sess.get("accept_threshold") or s_prof_fin.get("target_score_threshold", th))
+        canonical_th = float(sess.get("accept_threshold") or s_prof_fin.get("target_score_threshold", th))
+        accept_th = canonical_th
         if sess.get("draft_ok") and (sess.get("fast_track") or sess.get("converge_mode") == "fast"):
             accept_th = min(accept_th, FAST_SOFT_THRESHOLD)
 
@@ -1601,6 +1605,8 @@ def cmd_converge(
                 win_body += f"- **参考垫图**：`{sess.get('ref_image')}`（解构：{sess.get('ref_analysis')}）\n"
             if warm.get("prompt_block"):
                 win_body += f"\n<details><summary>Warm-Start 包</summary>\n\n```\n{warm.get('prompt_block')}\n```\n</details>\n"
+            met_bar = _score_of(winner) >= canonical_th
+            recipe_status = "active" if met_bar else "provisional"
             p_rec = write_memory_entry(
                 root,
                 module=mod,
@@ -1608,8 +1614,9 @@ def cmd_converge(
                 summary=win_summary,
                 body=win_body,
                 asset=win_img,
-                role="approved",
+                role="approved" if met_bar else "reference",
                 caption=win_caption,
+                status=recipe_status,
                 extra_meta={
                     "ai_params": {
                         "prompt": str(winner.get("prompt") or sess.get("goal") or ""),
@@ -1618,43 +1625,57 @@ def cmd_converge(
                         "dims": winner.get("dims", ""),
                     }
                 },
-                replace_same_asset=True,
+                replace_same_asset=met_bar,
             )
             saved_paths.append(str(p_rec.relative_to(root)))
 
             failed = [r for r in rounds if not r.get("passed") and r.get("defects")]
             if failed:
-                worst = min(failed, key=lambda x: x["score"])
-                worst_img = _ensure_conv_asset(
-                    worst.get("image", ""),
-                    mod,
-                    str(worst.get("prompt") or sess.get("goal") or ""),
-                )
-                red_summary = f"[收敛踩坑红线] {sess.get('goal', '')[:30]}：避免「{worst.get('defects', '')[:45]}」"
-                red_caption = (
-                    f"❌ 第{worst['round']}轮收敛打回 ({worst['score']:.2f}分)："
-                    f"{worst.get('defects', '')} → 修正：{worst.get('next_fix', '')}"
-                )
-                defect_bullets = "\n".join(
-                    f"- 第 {r['round']} 轮 ({float(r.get('score') or 0):.2f}分) 不合理处：{r['defects']} → 修正：{r['next_fix']}"
-                    for r in failed
-                )
-                red_body = (
-                    f"**【迭代过程中暴露的不合理项（下次生图直接规避）】**\n\n"
-                    f"{defect_bullets}\n"
-                )
-                p_red = write_memory_entry(
-                    root,
-                    module=mod,
-                    kind="style_redline",
-                    summary=red_summary,
-                    body=red_body,
-                    asset=worst_img,
-                    role="rejected",
-                    caption=red_caption,
-                    replace_same_asset=True,
-                )
-                saved_paths.append(str(p_red.relative_to(root)))
+                def _soft_defects(text: object) -> bool:
+                    try:
+                        from improve.taste_profile import is_soft_defect_phrase
+                        return is_soft_defect_phrase(str(text or ""))
+                    except Exception:
+                        s = str(text or "").strip()
+                        return (not s) or s in ("微瑕", "几乎无") or s.startswith("几乎无")
+
+                actionable = [r for r in failed if not _soft_defects(r.get("defects", ""))]
+                if not actionable:
+                    # Soft-only defects: keep audit in session reflection, skip redline habit seed
+                    worst = None
+                else:
+                    worst = min(actionable, key=lambda x: x["score"])
+                if worst is not None:
+                    worst_img = _ensure_conv_asset(
+                        worst.get("image", ""),
+                        mod,
+                        str(worst.get("prompt") or sess.get("goal") or ""),
+                    )
+                    red_summary = f"[收敛踩坑红线] {sess.get('goal', '')[:30]}：避免「{worst.get('defects', '')[:45]}」"
+                    red_caption = (
+                        f"❌ 第{worst['round']}轮收敛打回 ({worst['score']:.2f}分)："
+                        f"{worst.get('defects', '')} → 修正：{worst.get('next_fix', '')}"
+                    )
+                    defect_bullets = "\n".join(
+                        f"- 第 {r['round']} 轮 ({float(r.get('score') or 0):.2f}分) 不合理处：{r['defects']} → 修正：{r['next_fix']}"
+                        for r in actionable
+                    )
+                    red_body = (
+                        f"**【迭代过程中暴露的不合理项（下次生图直接规避）】**\n\n"
+                        f"{defect_bullets}\n"
+                    )
+                    p_red = write_memory_entry(
+                        root,
+                        module=mod,
+                        kind="style_redline",
+                        summary=red_summary,
+                        body=red_body,
+                        asset=worst_img,
+                        role="rejected",
+                        caption=red_caption,
+                        replace_same_asset=True,
+                    )
+                    saved_paths.append(str(p_red.relative_to(root)))
 
             sess["lessons_all"] = all_lessons
             reflection_path = write_session_reflection(root, sess, winner=winner, outcome=outcome_str)
