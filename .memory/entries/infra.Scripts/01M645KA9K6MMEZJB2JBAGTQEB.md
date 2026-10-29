@@ -18,6 +18,8 @@ aliases:
 - 不带pmem
 - 单独打包
 - standalone
+verified: '2026-10-30'
+verified_at: '2026-10-30T01:52:48.704+08:00'
 ---
 需求来源：用户要求提交 GitHub 后生成最新 pmem-art 包，且不带 mry-ship/pmem。
 必须保持：python scripts/pack_pmem_art.py 打出的 zip 含 pmem_art.py 与 10 条美术技能，不含 .memory/、pmem.mdc、.mcp.json、pmem hook、mcpServers.pmem。

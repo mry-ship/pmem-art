@@ -1,0 +1,801 @@
+{
+  "session_id": "regen2-var-sleepy",
+  "started_at": "2026-10-30 01:07:15 UTC+8",
+  "goal": "同一窗边耳机少女的表情差分：只把睁开的双眼改成困倦半眯。机位、半厚涂窗边光、深蓝黑短发、蓝瞳、白猫发夹、黑耳机、白T全锁。上眼睑下垂盖住虹膜约一半，双眼仍同高同向。不要眨眼单闭、不要张嘴、不要鼓嘴、不要改姿势。",
+  "module": "character.WindowBust",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "medium",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "medium",
+    "label": "中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.6)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 1,
+    "target_score_threshold": 9.6,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.1875,
+      "perspective_anatomy": 0.1125,
+      "texture_detail": 0.1875,
+      "spec_style": 0.1125,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "viewpoint_frame",
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图，只在提示词上补还没过的那一处（提示词改动仍 ≤40%）",
+    "max_prompt_delta_ratio": 0.4,
+    "allow_recompose": false,
+    "allow_viewpoint_change": false,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "viewpoint_angle (不改机位与镜头视角)",
+      "element_count (不增删主体元素清单)",
+      "no_full_recompose (不做整体 recompose / 换景别故事)",
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)"
+    ],
+    "min_round_leap": 0.15,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "胶片逆光轻厚涂：保画风与机位，柔化光影与次表面散射",
+    "medium_family": "impasto",
+    "best_direction_hint": "最优方向：光影·空气·介质；可小幅姿态/局部布局",
+    "goal": "同一窗边耳机少女的表情差分：只把睁开的双眼改成困倦半眯。机位、半厚涂窗边光、深蓝黑短发、蓝瞳、白猫发夹、黑耳机、白T全锁。上眼睑下垂盖住虹膜约一半，双眼仍同高同向。不要眨眼单闭、不要张嘴、不要鼓嘴、不要改姿势。",
+    "module": "character.WindowBust",
+    "ref_image": "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen2/v2/variant_expr/ref.jpg",
+    "ref_analysis": "3:4半身，头略侧、双眼看向观者；右后木窗暖光，叶影斑驳落在脸和白T，右下白雏菊。锁：机位、半厚涂、深蓝黑短发暖边、蓝瞳、左发际白猫发夹、黑头戴耳机、宽松白T、五官比例。只改眼睛：困倦半眯，上眼睑盖住虹膜约一半，下眼睑略抬，双眼同高同向。不继承原图那双完全睁开的眼睛。不要眨眼单闭、张嘴露齿、鼓嘴、改姿势或换装。"
+  },
+  "medium_family": "impasto",
+  "contract": "",
+  "target_score_threshold": 9.6,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen2/v2/variant_expr/ref.jpg",
+  "ref_analysis": "3:4半身，头略侧、双眼看向观者；右后木窗暖光，叶影斑驳落在脸和白T，右下白雏菊。锁：机位、半厚涂、深蓝黑短发暖边、蓝瞳、左发际白猫发夹、黑头戴耳机、宽松白T、五官比例。只改眼睛：困倦半眯，上眼睑盖住虹膜约一半，下眼睑略抬，双眼同高同向。不继承原图那双完全睁开的眼睛。不要眨眼单闭、张嘴露齿、鼓嘴、改姿势或换装。",
+  "default_aspect_ratio": "3:4",
+  "default_reference_image_paths": [
+    "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen2/v2/variant_expr/ref.jpg"
+  ],
+  "aspect_ratio": "3:4",
+  "reference_image_paths": [
+    "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen2/v2/variant_expr/ref.jpg"
+  ],
+  "ref_physical_traits": {
+    "exists": true,
+    "size_bytes": 384656,
+    "size_kb": 375.6,
+    "width": 864,
+    "height": 1152,
+    "aspect_ratio": "3:4",
+    "canonical_aspect_ratio": "3:4",
+    "color_entropy": 7.23
+  },
+  "param_validation": {
+    "valid": true,
+    "validation_passed": true,
+    "case_id": "regen2-var-sleepy",
+    "scale": "medium",
+    "aspect_ratio": "3:4",
+    "ref_aspect_ratio": "3:4",
+    "ref_dimensions": "864x1152",
+    "output_aspect_ratio": "",
+    "output_dimensions": "",
+    "reference_image": "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen2/v2/variant_expr/ref.jpg",
+    "reference_image_paths": [
+      "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen2/v2/variant_expr/ref.jpg"
+    ],
+    "inherited_default_aspect_ratio": false,
+    "inherited_default_pad_image": false,
+    "matched_ref_aspect_ratio": true,
+    "matched_ref_pad_image": true,
+    "matched_output_aspect_ratio": true,
+    "three_step_stage": "step1_start",
+    "three_step_verified": false,
+    "warnings": []
+  },
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.6,
+  "accept_threshold": 9.6,
+  "max_rounds": 4,
+  "ready_to_finish": true,
+  "status": "finished",
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "3:4",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen2/v2/variant_expr/ref.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "regen2-var-sleepy",
+        "scale": "medium",
+        "aspect_ratio": "3:4",
+        "ref_aspect_ratio": "3:4",
+        "ref_dimensions": "864x1152",
+        "output_aspect_ratio": "3:4",
+        "output_dimensions": "864x1152",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen2/v2/variant_expr/ref.jpg",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen2/v2/variant_expr/ref.jpg"
+        ],
+        "inherited_default_aspect_ratio": false,
+        "inherited_default_pad_image": false,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "01:07:20",
+      "image": "assets/character/windowbust/r1.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 372440,
+        "size_kb": 363.7,
+        "width": 864,
+        "height": 1152,
+        "aspect_ratio": "3:4",
+        "canonical_aspect_ratio": "3:4",
+        "color_entropy": 7.22
+      },
+      "raw_score": 8.06,
+      "score": 8.06,
+      "target_score_threshold": 9.6,
+      "dims": "构图8.9/光影9.0/透视8.7/质感8.6/风格6.0/无瑕疵7.6",
+      "dims_parsed": {
+        "composition": 8.9,
+        "lighting_color": 9.0,
+        "perspective_anatomy": 8.7,
+        "texture_detail": 8.6,
+        "spec_style": 6.0,
+        "flawlessness": 7.6
+      },
+      "weighted_score": 8.06,
+      "audit_warnings": [
+        "独立视觉 API 不可用，改由本模型按 Absolute-5D 检查表评分（门槛仍 9.6）：HTTP Error 403: Forbidden",
+        "Agent Absolute-5D 已采纳（门槛 9.6）"
+      ],
+      "stagnated": false,
+      "strengths": "窗边机位、深蓝黑短发、蓝瞳、白猫发夹、黑耳机和宽松白T都还在；叶影暖边光跟原图同一套。",
+      "defects": "左右上眼睑仍抬起，蓝色虹膜几乎整只露在外面，眼裂和原图一样睁开，没有困倦半眯。",
+      "next_fix": "左右上眼睑压到蓝虹膜中线，下眼睑略抬，眼裂收成困倦半眯；嘴、发夹、耳机、白T和窗边机位保持原样。",
+      "prompt": "胶片逆光轻厚涂：保画风与机位，柔化光影与次表面散射| Same 3:4 bust portrait of the same window-side girl as the reference. Lock the camera, pose, and framing: head slightly turned, shoulders relaxed, both eyes looking toward the viewer at the same height, wooden window behind her on the right, white cosmos flowers in the lower right. Painterly anime with soft directional brushstrokes that follow the hair strands and the folds of the shirt, warm afternoon window light, dappled leaf shadows across her face and loose white T-shirt, gentle subsurface warmth on the cheeks. Short messy dark blue-black hair with a warm rim light, large blue irises, a small white cat-face hair clip on the left side of her hair, black over-ear headphones covering both ears, loose off-white T-shirt. Neck and shoulders stay continuous and the same as the reference. Only change the eyes: both upper eyelids droop halfway over the blue irises in a sleepy half-lidded look, lower lids slightly raised, both eyes equally drowsy and still aligned at the same height, still facing the viewer, not a wink, not one eye closed, not fully shut, not wide awake. The mouth stays the original closed relaxed line. Cheeks stay smooth and not puffed. Do not change hair color, eye color, the cat clip, the headphones, the white shirt, the pose, or the window background. Shoulder, elbow, and wrist joints stay continuous. No text, no watermark.| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: the person's joints and grip stay clear and both pupils share a direction; the animal's limbs follow its species and are not converted into human elbows; contact shadows read; do not melt limbs into props",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.7,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "both",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "vlm_error",
+        "provider": "",
+        "model": "",
+        "error": "HTTP Error 403: Forbidden",
+        "active": true
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "narrative_camera",
+          "lesson": "本轮短板偏「narrative_camera」：左右上眼睑仍抬起，蓝色虹膜几乎整只露在外面，眼裂和原图一样睁开，没有困倦半眯。",
+          "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+          "from_score": "8.06"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：窗边机位、深蓝黑短发、蓝瞳、白猫发夹、黑耳机和宽松白T都还在；叶影暖边光跟原图同一套。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.06"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "01:07:47"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "3:4",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen2/v2/variant_expr/ref.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "regen2-var-sleepy",
+        "scale": "medium",
+        "aspect_ratio": "3:4",
+        "ref_aspect_ratio": "3:4",
+        "ref_dimensions": "864x1152",
+        "output_aspect_ratio": "3:4",
+        "output_dimensions": "864x1152",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen2/v2/variant_expr/ref.jpg",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen2/v2/variant_expr/ref.jpg"
+        ],
+        "inherited_default_aspect_ratio": false,
+        "inherited_default_pad_image": false,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "01:07:53",
+      "image": "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen2/v2/variant_sleepy/r2.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 371659,
+        "size_kb": 362.9,
+        "width": 864,
+        "height": 1152,
+        "aspect_ratio": "3:4",
+        "canonical_aspect_ratio": "3:4",
+        "color_entropy": 7.22
+      },
+      "raw_score": 8.01,
+      "score": 8.01,
+      "target_score_threshold": 9.6,
+      "dims": "构图8.8/光影8.9/透视8.6/质感8.6/风格6.1/无瑕疵7.5",
+      "dims_parsed": {
+        "composition": 8.8,
+        "lighting_color": 8.9,
+        "perspective_anatomy": 8.6,
+        "texture_detail": 8.6,
+        "spec_style": 6.1,
+        "flawlessness": 7.5
+      },
+      "weighted_score": 8.01,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +-0.05 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "独立视觉 API 不可用，改由本模型按 Absolute-5D 检查表评分（门槛仍 9.6）：HTTP Error 403: Forbidden",
+        "Agent Absolute-5D 已采纳（门槛 9.6）"
+      ],
+      "stagnated": true,
+      "strengths": "身份锁还在：深蓝黑短发、蓝瞳、左发际白猫发夹、黑耳机、宽松白T，窗右雏菊和叶影光都跟原图同机位。",
+      "defects": "上眼睑仍停在虹膜上沿，瞳孔完整露出，眼裂高度接近原图睁眼，没有收到虹膜中线的困倦半眯。",
+      "next_fix": "把每只眼的睁开高度收到原来的一半，上眼睑横过瞳孔中心，只留虹膜下半的困倦细缝；发色、蓝瞳、猫发夹、耳机、白T和窗边机位不动。",
+      "prompt": "胶片逆光轻厚涂：保画风与机位，柔化光影与次表面散射| Same 3:4 bust portrait of the same window-side girl as the reference. Lock the camera, pose, and framing: head slightly turned, shoulders relaxed, both eyes looking toward the viewer at the same height, wooden window behind her on the right, white cosmos flowers in the lower right. Painterly anime with soft directional brushstrokes that follow the hair strands and the folds of the shirt, warm afternoon window light, dappled leaf shadows across her face and loose white T-shirt, gentle subsurface warmth on the cheeks. Short messy dark blue-black hair with a warm rim light, blue irises, a small white cat-face hair clip on the left side of her hair, black over-ear headphones covering both ears, loose off-white T-shirt. Neck and shoulders stay continuous and the same as the reference. Only change the eyes: both upper eyelids rest on the midline of each blue iris, covering the upper half of the iris and the top of the pupil, lower lids lift a little, and the opening is a narrow sleepy slit; both eyes stay the same height and still face the viewer. The mouth stays the original closed relaxed line. Cheeks stay smooth and not puffed. Do not change hair color, eye color, the cat clip, the headphones, the white shirt, the pose, or the window background. Shoulder, elbow, and wrist joints stay continuous. No text, no watermark.| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: the person's joints and grip stay clear and both pupils share a direction; the animal's limbs follow its species and are not converted into human elbows; contact shadows read; do not melt limbs into props | 左右上眼睑压到蓝虹膜中线，下眼睑略抬，眼裂收成困倦半眯；嘴、发夹、耳机、白T和窗边机位保持原样。",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.6,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "both",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "vlm_error",
+        "provider": "",
+        "model": "",
+        "error": "HTTP Error 403: Forbidden",
+        "active": true
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "narrative_camera",
+          "lesson": "本轮短板偏「narrative_camera」：上眼睑仍停在虹膜上沿，瞳孔完整露出，眼裂高度接近原图睁眼，没有收到虹膜中线的困倦半眯。",
+          "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+          "from_score": "8.01"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：身份锁还在：深蓝黑短发、蓝瞳、左发际白猫发夹、黑耳机、宽松白T，窗右雏菊和叶影光都跟原图同机位。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.01"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "01:08:06"
+    },
+    {
+      "round": 3,
+      "round_label": "第 3 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "3:4",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen2/v2/variant_expr/ref.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "regen2-var-sleepy",
+        "scale": "medium",
+        "aspect_ratio": "3:4",
+        "ref_aspect_ratio": "3:4",
+        "ref_dimensions": "864x1152",
+        "output_aspect_ratio": "3:4",
+        "output_dimensions": "864x1152",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen2/v2/variant_expr/ref.jpg",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen2/v2/variant_expr/ref.jpg"
+        ],
+        "inherited_default_aspect_ratio": false,
+        "inherited_default_pad_image": false,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "01:08:13",
+      "image": "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen2/v2/variant_sleepy/r3.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 368849,
+        "size_kb": 360.2,
+        "width": 864,
+        "height": 1152,
+        "aspect_ratio": "3:4",
+        "canonical_aspect_ratio": "3:4",
+        "color_entropy": 7.23
+      },
+      "raw_score": 7.97,
+      "score": 7.97,
+      "target_score_threshold": 9.6,
+      "dims": "构图8.8/光影8.9/透视8.6/质感8.6/风格6.0/无瑕疵7.4",
+      "dims_parsed": {
+        "composition": 8.8,
+        "lighting_color": 8.9,
+        "perspective_anatomy": 8.6,
+        "texture_detail": 8.6,
+        "spec_style": 6.0,
+        "flawlessness": 7.4
+      },
+      "weighted_score": 7.97,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +-0.04 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "独立视觉 API 不可用，改由本模型按 Absolute-5D 检查表评分（门槛仍 9.6）：HTTP Error 403: Forbidden",
+        "Agent Absolute-5D 已采纳（门槛 9.6）"
+      ],
+      "stagnated": true,
+      "strengths": "机位、深蓝黑短发、蓝瞳、白猫发夹、黑耳机、白T和窗边雏菊都锁住了，叶影还在脸上。",
+      "defects": "上眼睑仍贴在虹膜上沿，瞳孔整只露出，眼裂没有收到一半，不是困倦半眯。",
+      "next_fix": "左右眼裂压成原来高度的一半，上眼睑横过瞳孔正中，只露出虹膜下半；发色瞳色、猫发夹、耳机、白T和窗边机位保持不动。",
+      "prompt": "胶片逆光轻厚涂：保画风与机位，柔化光影与次表面散射| Redraw both eyes of this same girl as sleepy half-closed slits: each upper eyelid lies across the center of the pupil, only the lower half of each blue iris is visible, the lower lid is slightly raised, both eyes match in height and still face the viewer. Same 3:4 bust portrait of the same window-side girl as the reference. Lock the camera, pose, and framing: head slightly turned, shoulders relaxed, wooden window behind her on the right, white cosmos flowers in the lower right. Painterly anime with soft directional brushstrokes that follow the hair strands and the folds of the shirt, warm afternoon window light, dappled leaf shadows across her face and loose white T-shirt, gentle subsurface warmth on the cheeks. Short messy dark blue-black hair with a warm rim light, blue irises, a small white cat-face hair clip on the left side of her hair, black over-ear headphones covering both ears, loose off-white T-shirt. Neck and shoulders stay continuous and the same as the reference. The mouth stays the original closed relaxed line. Cheeks stay smooth and not puffed. Do not change hair color, eye color, the cat clip, the headphones, the white shirt, the pose, or the window background. Shoulder, elbow, and wrist joints stay continuous. No text, no watermark.| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: the person's joints and grip stay clear and both pupils share a direction; the animal's limbs follow its species and are not converted into human elbows; contact shadows read; do not melt limbs into props | 左右上眼睑压到蓝虹膜中线，下眼睑略抬，眼裂收成困倦半眯；嘴、发夹、耳机、白T和窗边机位保持原样。",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.6,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "both",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "vlm_error",
+        "provider": "",
+        "model": "",
+        "error": "HTTP Error 403: Forbidden",
+        "active": true
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "narrative_camera",
+          "lesson": "本轮短板偏「narrative_camera」：上眼睑仍贴在虹膜上沿，瞳孔整只露出，眼裂没有收到一半，不是困倦半眯。",
+          "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+          "from_score": "7.97"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：机位、深蓝黑短发、蓝瞳、白猫发夹、黑耳机、白T和窗边雏菊都锁住了，叶影还在脸上。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "7.97"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "01:08:23"
+    },
+    {
+      "round": 4,
+      "round_label": "第 4 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "3:4",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen2/v2/variant_expr/ref.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "regen2-var-sleepy",
+        "scale": "medium",
+        "aspect_ratio": "3:4",
+        "ref_aspect_ratio": "3:4",
+        "ref_dimensions": "864x1152",
+        "output_aspect_ratio": "3:4",
+        "output_dimensions": "864x1152",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen2/v2/variant_expr/ref.jpg",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen2/v2/variant_expr/ref.jpg"
+        ],
+        "inherited_default_aspect_ratio": false,
+        "inherited_default_pad_image": false,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "01:11:01",
+      "image": "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen2/v2/variant_sleepy/r4.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 369124,
+        "size_kb": 360.5,
+        "width": 864,
+        "height": 1152,
+        "aspect_ratio": "3:4",
+        "canonical_aspect_ratio": "3:4",
+        "color_entropy": 7.22
+      },
+      "raw_score": 7.95,
+      "score": 7.95,
+      "target_score_threshold": 9.6,
+      "dims": "构图8.8/光影8.9/透视8.6/质感8.6/风格5.9/无瑕疵7.4",
+      "dims_parsed": {
+        "composition": 8.8,
+        "lighting_color": 8.9,
+        "perspective_anatomy": 8.6,
+        "texture_detail": 8.6,
+        "spec_style": 5.9,
+        "flawlessness": 7.4
+      },
+      "weighted_score": 7.95,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +-0.02 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "独立视觉 API 不可用，改由本模型按 Absolute-5D 检查表评分（门槛仍 9.6）：HTTP Error 403: Forbidden",
+        "Agent Absolute-5D 已采纳（门槛 9.6）"
+      ],
+      "stagnated": true,
+      "strengths": "窗边半身、深蓝黑短发暖边、蓝瞳、白猫发夹、黑耳机和白T还在，嘴仍是原来的闭唇。",
+      "defects": "左右眼仍大睁，上眼睑停在虹膜上沿，瞳孔没有被压到中线，困倦半眯没有出现。",
+      "next_fix": "上眼睑压到瞳孔水平中线，眼裂只留虹膜下半；发色、猫发夹、耳机、白T和窗边机位不动。",
+      "prompt": "胶片逆光轻厚涂：保画风与机位，柔化光影与次表面散射| Sleepy half-closed eyes only: both upper eyelids drop to the horizontal center of the pupils so each eye opening is half its open height, a drowsy slit showing only the lower half of the blue iris, lower lids slightly raised, both eyes the same height and still looking at the viewer. Same 3:4 bust portrait of the same window-side girl as the reference. Lock the camera, pose, and framing: head slightly turned, shoulders relaxed, wooden window behind her on the right, white cosmos flowers in the lower right. Painterly anime with soft directional brushstrokes that follow the hair strands and the folds of the shirt, warm afternoon window light, dappled leaf shadows across her face and loose white T-shirt, gentle subsurface warmth on the cheeks. Short messy dark blue-black hair with a warm rim light, blue irises, a small white cat-face hair clip on the left side of her hair, black over-ear headphones covering both ears, loose off-white T-shirt. Neck and shoulders stay continuous and the same as the reference. The mouth stays the original closed relaxed line. Cheeks stay smooth and not puffed. Do not change hair color, eye color, the cat clip, the headphones, the white shirt, the pose, or the window background. Shoulder, elbow, and wrist joints stay continuous. No text, no watermark. Both eyes stay half shut in that sleepy slit.| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: the person's joints and grip stay clear and both pupils share a direction; the animal's limbs follow its species and are not converted into human elbows; contact shadows read; do not melt limbs into props | 左右上眼睑压到蓝虹膜中线，下眼睑略抬，眼裂收成困倦半眯；嘴、发夹、耳机、白T和窗边机位保持原样。",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.6,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "both",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "vlm_error",
+        "provider": "",
+        "model": "",
+        "error": "HTTP Error 403: Forbidden",
+        "active": true
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_MAX_ROUNDS",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "narrative_camera",
+          "lesson": "本轮短板偏「narrative_camera」：左右眼仍大睁，上眼睑停在虹膜上沿，瞳孔没有被压到中线，困倦半眯没有出现。",
+          "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+          "from_score": "7.95"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：窗边半身、深蓝黑短发暖边、蓝瞳、白猫发夹、黑耳机和白T还在，嘴仍是原来的闭唇。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "7.95"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "01:11:13"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "/Users/yanghu/Desktop/pmem-art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-10-28 01:28:36 UTC+8"
+    },
+    "module": "character.WindowBust",
+    "goal": "同一窗边耳机少女的表情差分：只把睁开的双眼改成困倦半眯。机位、半厚涂窗边光、深蓝黑短发、蓝瞳、白猫发夹、黑耳机、白T全锁。上眼睑下垂盖住虹膜约一半，双眼仍同高同向。不要眨眼单闭、不要张嘴、不要鼓嘴、不要改姿势。",
+    "confidence": 0.45,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "个人口味档案非空",
+      "红线可控（0 条）",
+      "挂载 2 张项目知识卡 + 0 张全局美术底层基础卡"
+    ],
+    "top_recipes": [],
+    "top_redlines": [],
+    "art_decisions": [],
+    "private_knowledge": [
+      {
+        "id": "tech-painterly",
+        "title": "厚涂笔触",
+        "body": "可见笔触方向跟随形体，暗部透气勿脏。",
+        "layer_scope": "private"
+      },
+      {
+        "id": "tech-celshade",
+        "title": "赛璐珞分层",
+        "body": "硬边色块分层，高光形状干净，层数克制。",
+        "layer_scope": "private"
+      }
+    ],
+    "shared_knowledge": [],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [
+        "暖光"
+      ],
+      "preferred_composition": [
+        "半身",
+        "全身"
+      ],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [],
+      "banned_habits": [
+        "漏抠/黑底/毛边",
+        "赛博霓虹/霓虹紫"
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.WindowBust\n- 置信度: 0.45（fast-track 资格: 否）\n- 个人口味: 光影=暖光；构图=半身 / 全身\n- 个人禁用习惯: 漏抠/黑底/毛边；赛博霓虹/霓虹紫\n- 项目私有知识卡 (Private Layer):\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n  · [tech-celshade] 赛璐珞分层: 硬边色块分层，高光形状干净，层数克制。",
+    "built_at": "2026-10-30 01:07:15 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：左右上眼睑仍抬起，蓝色虹膜几乎整只露在外面，眼裂和原图一样睁开，没有困倦半眯。",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "8.06"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：窗边机位、深蓝黑短发、蓝瞳、白猫发夹、黑耳机和宽松白T都还在；叶影暖边光跟原图同一套。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.06"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：上眼睑仍停在虹膜上沿，瞳孔完整露出，眼裂高度接近原图睁眼，没有收到虹膜中线的困倦半眯。",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "8.01"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：身份锁还在：深蓝黑短发、蓝瞳、左发际白猫发夹、黑耳机、宽松白T，窗右雏菊和叶影光都跟原图同机位。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.01"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：上眼睑仍贴在虹膜上沿，瞳孔整只露出，眼裂没有收到一半，不是困倦半眯。",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "7.97"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：机位、深蓝黑短发、蓝瞳、白猫发夹、黑耳机、白T和窗边雏菊都锁住了，叶影还在脸上。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "7.97"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：左右眼仍大睁，上眼睑停在虹膜上沿，瞳孔没有被压到中线，困倦半眯没有出现。",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "7.95"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：窗边半身、深蓝黑短发暖边、蓝瞳、白猫发夹、黑耳机和白T还在，嘴仍是原来的闭唇。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "7.95"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 4,
+  "regression_drop": 0.5,
+  "ActionRequired": "STOP_PICK_BEST",
+  "winner": {
+    "round": 1,
+    "round_label": "第 1 轮初稿",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "3:4",
+    "reference_image_paths": [
+      "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen2/v2/variant_expr/ref.jpg"
+    ],
+    "param_validation": {
+      "valid": true,
+      "validation_passed": true,
+      "case_id": "regen2-var-sleepy",
+      "scale": "medium",
+      "aspect_ratio": "3:4",
+      "ref_aspect_ratio": "3:4",
+      "ref_dimensions": "864x1152",
+      "output_aspect_ratio": "3:4",
+      "output_dimensions": "864x1152",
+      "reference_image": "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen2/v2/variant_expr/ref.jpg",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen2/v2/variant_expr/ref.jpg"
+      ],
+      "inherited_default_aspect_ratio": false,
+      "inherited_default_pad_image": false,
+      "matched_ref_aspect_ratio": true,
+      "matched_ref_pad_image": true,
+      "matched_output_aspect_ratio": true,
+      "three_step_stage": "step3_judge",
+      "three_step_verified": true,
+      "warnings": [],
+      "continuation_pad": false,
+      "pad_diverged": false
+    },
+    "generated_at": "01:07:20",
+    "image": "assets/character/windowbust/r1.jpg",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 372440,
+      "size_kb": 363.7,
+      "width": 864,
+      "height": 1152,
+      "aspect_ratio": "3:4",
+      "canonical_aspect_ratio": "3:4",
+      "color_entropy": 7.22
+    },
+    "raw_score": 8.06,
+    "score": 8.06,
+    "target_score_threshold": 9.6,
+    "dims": "构图8.9/光影9.0/透视8.7/质感8.6/风格6.0/无瑕疵7.6",
+    "dims_parsed": {
+      "composition": 8.9,
+      "lighting_color": 9.0,
+      "perspective_anatomy": 8.7,
+      "texture_detail": 8.6,
+      "spec_style": 6.0,
+      "flawlessness": 7.6
+    },
+    "weighted_score": 8.06,
+    "audit_warnings": [
+      "独立视觉 API 不可用，改由本模型按 Absolute-5D 检查表评分（门槛仍 9.6）：HTTP Error 403: Forbidden",
+      "Agent Absolute-5D 已采纳（门槛 9.6）"
+    ],
+    "stagnated": false,
+    "strengths": "窗边机位、深蓝黑短发、蓝瞳、白猫发夹、黑耳机和宽松白T都还在；叶影暖边光跟原图同一套。",
+    "defects": "左右上眼睑仍抬起，蓝色虹膜几乎整只露在外面，眼裂和原图一样睁开，没有困倦半眯。",
+    "next_fix": "左右上眼睑压到蓝虹膜中线，下眼睑略抬，眼裂收成困倦半眯；嘴、发夹、耳机、白T和窗边机位保持原样。",
+    "prompt": "胶片逆光轻厚涂：保画风与机位，柔化光影与次表面散射| Same 3:4 bust portrait of the same window-side girl as the reference. Lock the camera, pose, and framing: head slightly turned, shoulders relaxed, both eyes looking toward the viewer at the same height, wooden window behind her on the right, white cosmos flowers in the lower right. Painterly anime with soft directional brushstrokes that follow the hair strands and the folds of the shirt, warm afternoon window light, dappled leaf shadows across her face and loose white T-shirt, gentle subsurface warmth on the cheeks. Short messy dark blue-black hair with a warm rim light, large blue irises, a small white cat-face hair clip on the left side of her hair, black over-ear headphones covering both ears, loose off-white T-shirt. Neck and shoulders stay continuous and the same as the reference. Only change the eyes: both upper eyelids droop halfway over the blue irises in a sleepy half-lidded look, lower lids slightly raised, both eyes equally drowsy and still aligned at the same height, still facing the viewer, not a wink, not one eye closed, not fully shut, not wide awake. The mouth stays the original closed relaxed line. Cheeks stay smooth and not puffed. Do not change hair color, eye color, the cat clip, the headphones, the white shirt, the pose, or the window background. Shoulder, elbow, and wrist joints stay continuous. No text, no watermark.| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: the person's joints and grip stay clear and both pupils share a direction; the animal's limbs follow its species and are not converted into human elbows; contact shadows read; do not melt limbs into props",
+    "continuation": false,
+    "passed": false,
+    "gate_blocked": false,
+    "image_gate_blocked": false,
+    "anatomy_score": 8.7,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "both",
+    "judge_source": "agent_absolute_5d",
+    "remote_vlm": {
+      "source": "vlm_error",
+      "provider": "",
+      "model": "",
+      "error": "HTTP Error 403: Forbidden",
+      "active": true
+    },
+    "should_continue_next_round": true,
+    "decision": "CONTINUE_NEXT_ROUND",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "narrative_camera",
+        "lesson": "本轮短板偏「narrative_camera」：左右上眼睑仍抬起，蓝色虹膜几乎整只露在外面，眼裂和原图一样睁开，没有困倦半眯。",
+        "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+        "from_score": "8.06"
+      },
+      {
+        "category": "keep",
+        "lesson": "保留本轮已做对的：窗边机位、深蓝黑短发、蓝瞳、白猫发夹、黑耳机和宽松白T都还在；叶影暖边光跟原图同一套。",
+        "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+        "from_score": "8.06"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "01:07:47"
+  },
+  "rounds_to_converge": 4,
+  "convergence_badge": "共 4 轮未达阈值，采用最高分",
+  "process_board": ".memory-art/converge/boards/regen2-var-sleepy/index.html"
+}

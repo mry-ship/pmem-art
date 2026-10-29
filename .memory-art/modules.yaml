@@ -638,3 +638,63 @@ modules:
         - 48
       safe_margin_px: 4
       max_size_kb: 512
+  icon.PotionSet:
+    title: icon·PotionSet
+    category: icon
+    status: active
+    description: 正方形游戏道具格治疗药，厚剪影，棚拍，无字，真透明底。 · 自动归类至 icon (icon.PotionSet) · 置信度 0.78
+    paths:
+      - "assets/icon/potionset/**"
+    aliases:
+      - PotionSet
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      alpha_required: true
+      max_size_kb: 2048
+  ui.Preview:
+    title: 界面与九宫格·Preview
+    category: ui
+    status: active
+    description: icon set preview · 自动归类至 界面与九宫格 (ui.Preview) · 置信度 0.78
+    paths:
+      - "assets/ui/preview/**"
+    aliases:
+      - Preview
+    entities: []
+    palette: []
+    specs:
+      resolution: 512x512
+      allowed_resolutions:
+        - 512x512
+        - 256x256
+        - 128x128
+      alpha_required: true
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512
+  character.WindowBust:
+    title: 角色与立绘·WindowBust (CelShade)
+    category: character
+    status: active
+    description: "胶片逆光轻厚涂：保画风与机位，柔化光影与次表面散射| Same 3:4 bust portrait of the same window-side girl a · 自动归类至 角色与立绘 (character.WindowBust) · 置信度 0.92"
+    paths:
+      - "assets/character/windowbust/**"
+    aliases:
+      - WindowBust
+    entities: []
+    palette: []
+    specs:
+      resolution: 864x1152
+      allowed_resolutions:
+        - 864x1152
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+    parent: brand.WorldStyle
+    inherits: brand.WorldStyle

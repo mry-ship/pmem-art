@@ -1,0 +1,112 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-10-30 01:11:21 UTC+8",
+  "session_id": "regen2-var-sleepy",
+  "goal": "同一窗边耳机少女的表情差分：只把睁开的双眼改成困倦半眯。机位、半厚涂窗边光、深蓝黑短发、蓝瞳、白猫发夹、黑耳机、白T全锁。上眼睑下垂盖住虹膜约一半，双眼仍同高同向。不要眨眼单闭、不要张嘴、不要鼓嘴、不要改姿势。",
+  "module": "character.WindowBust",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.6,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 1,
+  "winner_score": 8.06,
+  "winner_image": "assets/character/windowbust/r1.jpg",
+  "winner_passed": false,
+  "outcome": "⚠️ **共执行 4 轮审图（目标阈值 `9.60` 分），未达标，已挑选全阶段最高分**（胜出：第 1 轮 `8.06 / 10.0` 分）",
+  "what_fixed": [
+    "左右上眼睑压到蓝虹膜中线，下眼睑略抬，眼裂收成困倦半眯；嘴、发夹、耳机、白T和窗边机位保持原样。",
+    "把每只眼的睁开高度收到原来的一半，上眼睑横过瞳孔中心，只留虹膜下半的困倦细缝；发色、蓝瞳、猫发夹、耳机、白T和窗边机位不动。",
+    "左右眼裂压成原来高度的一半，上眼睑横过瞳孔正中，只露出虹膜下半；发色瞳色、猫发夹、耳机、白T和窗边机位保持不动。",
+    "上眼睑压到瞳孔水平中线，眼裂只留虹膜下半；发色、猫发夹、耳机、白T和窗边机位不动。"
+  ],
+  "what_still_weak": "左右上眼睑仍抬起，蓝色虹膜几乎整只露在外面，眼裂和原图一样睁开，没有困倦半眯。",
+  "strengths": "窗边机位、深蓝黑短发、蓝瞳、白猫发夹、黑耳机和宽松白T都还在；叶影暖边光跟原图同一套。",
+  "taste_deltas": {
+    "from_strengths": [
+      "窗边机位、深蓝黑短发、蓝瞳、白猫发夹、黑耳机和宽松白T都还在；叶影暖边光跟原图同一套。"
+    ],
+    "from_defects": [
+      "上眼睑仍停在虹膜上沿，瞳孔完整露出，眼裂高度接近原图睁眼，没有收到虹膜中线的困倦半眯。",
+      "上眼睑仍贴在虹膜上沿，瞳孔整只露出，眼裂没有收到一半，不是困倦半眯。",
+      "左右眼仍大睁，上眼睑停在虹膜上沿，瞳孔没有被压到中线，困倦半眯没有出现。"
+    ]
+  },
+  "warm_start_confidence": 0.45,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 8.06,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 8.01,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 7.97,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 7.95,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：左右上眼睑仍抬起，蓝色虹膜几乎整只露在外面，眼裂和原图一样睁开，没有困倦半眯。",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "8.06"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：窗边机位、深蓝黑短发、蓝瞳、白猫发夹、黑耳机和宽松白T都还在；叶影暖边光跟原图同一套。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.06"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：上眼睑仍停在虹膜上沿，瞳孔完整露出，眼裂高度接近原图睁眼，没有收到虹膜中线的困倦半眯。",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "8.01"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：身份锁还在：深蓝黑短发、蓝瞳、左发际白猫发夹、黑耳机、宽松白T，窗右雏菊和叶影光都跟原图同机位。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.01"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：上眼睑仍贴在虹膜上沿，瞳孔整只露出，眼裂没有收到一半，不是困倦半眯。",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "7.97"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：机位、深蓝黑短发、蓝瞳、白猫发夹、黑耳机、白T和窗边雏菊都锁住了，叶影还在脸上。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "7.97"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：左右眼仍大睁，上眼睑停在虹膜上沿，瞳孔没有被压到中线，困倦半眯没有出现。",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "7.95"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：窗边半身、深蓝黑短发暖边、蓝瞳、白猫发夹、黑耳机和白T还在，嘴仍是原来的闭唇。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "7.95"
+    }
+  ]
+}

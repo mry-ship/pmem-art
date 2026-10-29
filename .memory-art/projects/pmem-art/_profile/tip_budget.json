@@ -16,11 +16,8 @@
     "converge_finish:hp_dm_c02_high_v2": "2026-10-28 02:38:24 UTC+8",
     "converge_finish:hp_dm_c01_medium": "2026-10-28 02:39:00 UTC+8",
     "converge_finish:hp_dm_c03_high": "2026-10-28 02:39:32 UTC+8",
-    "converge_finish:hp_c04_low_q": "2026-10-28 02:40:01 UTC+8",
     "converge_finish:hp_c04_medium_q": "2026-10-28 02:40:08 UTC+8",
-    "converge_finish:hp_c04_high_q": "2026-10-28 02:40:16 UTC+8",
     "converge_finish:hp_c04_rec_q": "2026-10-28 02:40:31 UTC+8",
-    "converge_finish:hp_c02_rec_q": "2026-10-28 02:40:38 UTC+8",
     "converge_finish:hp_dm_c03_low": "2026-10-28 02:40:49 UTC+8",
     "converge_finish:hp_dm_c03_medium": "2026-10-28 02:40:51 UTC+8",
     "converge_finish:hp_dm_c03_recompose": "2026-10-28 02:40:56 UTC+8",
@@ -39,7 +36,10 @@
     "converge_finish:regen-c02-low": "2026-10-28 12:24:29 UTC+8",
     "converge_finish:regen-c02-med": "2026-10-28 12:24:30 UTC+8",
     "converge_finish:regen-c02-high": "2026-10-28 12:24:32 UTC+8",
-    "converge_finish:regen-c02-rec": "2026-10-28 12:24:33 UTC+8"
+    "converge_finish:regen-c02-rec": "2026-10-28 12:24:33 UTC+8",
+    "converge_finish:regen2-icon-c-heal": "2026-10-30 01:07:30 UTC+8",
+    "converge_finish:regen2-var-sleepy": "2026-10-30 01:11:21 UTC+8",
+    "doctor:20261030": "2026-10-30 01:43:21 UTC+8"
   },
-  "updated_at": "2026-10-28 12:24:33 UTC+8"
+  "updated_at": "2026-10-30 01:43:21 UTC+8"
 }
