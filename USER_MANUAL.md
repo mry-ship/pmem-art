@@ -70,8 +70,9 @@
 
 ## 第一章附：工作流程图（一眼看懂）
 
-> 原画、克隆、变体、镜头包已经收进 `/pmem-draw`。下面仍按那一支合同画流程，不再是互相竞争的入口。合成梯以「先过关系、再一档一张」为准，同框不是成品。细则以各 `SKILL.md` 为准。  
-> 可交互点选版：[docs/skills/flows.html](docs/skills/flows.html)
+> **认路总图（推荐）**：[docs/route_pipeline.html](docs/route_pipeline.html) — 大白话从提需到出图，含有图/无图与各变体。  
+> 原画、克隆、变体、镜头包已经收进生图技能。合成梯以「先过关系、再一档一张」为准。  
+> 进阶技能点选版：[docs/skills/flows.html](docs/skills/flows.html)
 
 ### 先分三类
 
