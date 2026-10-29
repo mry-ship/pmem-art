@@ -200,6 +200,8 @@ def install_skills_and_agent_configs(root: Path, quiet: bool = False) -> dict[st
         for spec in SKILL_SPECS:
             print(f"   · /{spec['name']:<18} — {spec['title']}")
         print("   · 安装路径: .cursor/{skills,commands}/ · .claude/{skills,commands}/ · .agents/skills/ · CLAUDE.md · AGENTS.md · .cursor/rules/pmem-art.mdc")
+        print("\n🎨 美术零门槛：对话框直接说「画一张窗边女孩水彩半身」即可（不必先敲 /）。")
+        print("   认路白话图：docs/route_pipeline.html · 手册：USER_MANUAL.md")
     return installed
 
 
