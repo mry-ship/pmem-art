@@ -6,18 +6,60 @@
         "command": "python3 pmem_art.py hook pre-gen || py -3 pmem_art.py hook pre-gen",
         "matcher": "GenerateImage|Write|Edit|StrReplace|MCP",
         "failClosed": false
+      },
+      {
+        "command": "pmem hook pre-tool",
+        "matcher": "Write|StrReplace|Edit|MultiEdit|EditNotebook|Delete|Shell|MCP|record_memory|search_memory",
+        "failClosed": false
       }
     ],
     "postToolUse": [
       {
         "command": "python3 pmem_art.py hook post-asset || py -3 pmem_art.py hook post-asset",
         "matcher": "GenerateImage|Write|Edit"
+      },
+      {
+        "command": "pmem hook post-tool",
+        "matcher": "Read|Grep|Glob|SemanticSearch|codebase_search|Shell"
       }
     ],
     "stop": [
       {
         "command": "python3 pmem_art.py hook stop || py -3 pmem_art.py hook stop",
+        "loop_limit": 8
+      },
+      {
+        "command": "pmem hook stop",
         "loop_limit": 1
+      }
+    ],
+    "sessionStart": [
+      {
+        "command": "python3 pmem_art.py hook session || py -3 pmem_art.py hook session",
+        "failClosed": false
+      },
+      {
+        "command": ".memory/bin/pmem-hook session"
+      }
+    ],
+    "beforeSubmitPrompt": [
+      {
+        "command": "pmem hook prompt"
+      }
+    ],
+    "afterMCPExecution": [
+      {
+        "command": "pmem hook after-mcp"
+      }
+    ],
+    "afterFileEdit": [
+      {
+        "command": "pmem hook edited"
+      }
+    ],
+    "preCompact": [
+      {
+        "command": "pmem hook compact"
       }
     ]
   }

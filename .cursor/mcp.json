@@ -8,6 +8,14 @@
         "--root",
         "${workspaceFolder}"
       ]
+    },
+    "pmem": {
+      "command": "pmem",
+      "args": [
+        "serve",
+        "--root",
+        "${workspaceFolder}"
+      ]
     }
   }
 }

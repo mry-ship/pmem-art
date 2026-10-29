@@ -9,6 +9,16 @@
             "command": "python3 pmem_art.py hook pre-gen || py -3 pmem_art.py hook pre-gen"
           }
         ]
+      },
+      {
+        "matcher": "^(Bash|apply_patch|mcp__pmem__.*)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pmem hook pre-tool --agent codex",
+            "timeout": 30
+          }
+        ]
       }
     ],
     "PostToolUse": [
@@ -18,6 +28,49 @@
           {
             "type": "command",
             "command": "python3 pmem_art.py hook post-asset || py -3 pmem_art.py hook post-asset"
+          }
+        ]
+      },
+      {
+        "matcher": "^(Bash|apply_patch|mcp__pmem__.*)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pmem hook post-tool --agent codex",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pmem hook prompt --agent codex",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pmem hook compact --agent codex",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pmem hook stop --agent codex",
+            "timeout": 30
           }
         ]
       }
