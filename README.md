@@ -203,7 +203,7 @@ python3 pmem_art.py skills --install
 | :---: | :---: | :---: | :---: | :---: |
 | ![ui](docs/showcase/homepage_rerun_1028/v2/ui_royal/portrait/final.jpg) | ![ia](docs/showcase/homepage_rerun_1028/v2/icon_a/final.jpg) | ![ia2](docs/showcase/homepage_rerun_1028/v2/icon_a2/final.jpg) | ![ia3](docs/showcase/homepage_rerun_1028/v2/icon_a3/final.jpg) | ![heal](docs/showcase/homepage_rerun_1028/v2/icon_c_set/heal.jpg) |
 
-| 少年纸风筝 · **9.48** | 白兔 · **9.54** | 光影变体 · **9.53** | 惊喜 · **9.54** | 晶冠瓶 · **9.51** |
+| 少年纸风筝 · **9.48** | 白兔 · **9.54** | 光影变体 · **9.53** | 惊喜 · **9.42** | 晶冠瓶 · **9.51** |
 | :---: | :---: | :---: | :---: | :---: |
 | ![kite](docs/showcase/homepage_rerun_1028/v2/clone/final.jpg) | ![rabbit](docs/showcase/homepage_rerun_1028/v2/clone_rabbit/final.jpg) | ![light](docs/showcase/homepage_rerun_1028/v2/variant/final.jpg) | ![surprise](docs/showcase/homepage_rerun_1028/v2/variant_expr/final.jpg) | ![crown](docs/showcase/homepage_rerun_1028/v2/merge/final.jpg) |
 
