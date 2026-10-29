@@ -1235,6 +1235,23 @@ def parse_hook_payload(payload: dict[str, Any]) -> tuple[str, dict[str, Any], st
     return tool, args, user_msg
 
 
+def hook_conversation_id(payload: dict[str, Any]) -> str:
+    """Cursor conversation id only — do not fall back to session_id (host session ≠ composer)."""
+    return str(
+        payload.get("conversation_id")
+        or payload.get("conversationId")
+        or ""
+    ).strip()
+
+
+def is_generate_image_tool(tool: str, args: dict[str, Any]) -> bool:
+    """True only for GenerateImage / nested CallDynamicTool GenerateImage — not Write/Edit heuristics."""
+    if re.search(r"GenerateImage", tool or "", re.I):
+        return True
+    nested = str(args.get("toolName") or args.get("tool_name") or "")
+    return bool(re.search(r"GenerateImage", nested, re.I))
+
+
 def image_gen_arg_view(tool: str, args: dict[str, Any]) -> tuple[str, dict[str, Any]]:
     """Locate GenerateImage arguments. ('flat', args) or ('nested', inner_args) or ('', {})."""
     nested_name = str(args.get("toolName") or args.get("tool_name") or "")
@@ -1279,6 +1296,7 @@ def cmd_hook(root: Path, data: dict[str, Any], event: str) -> int:
         payload = {}
 
     tool, args_obj, user_msg = parse_hook_payload(payload)
+    conv_id = hook_conversation_id(payload)
     prompt = ""
     path = ""
     if args_obj:
@@ -1299,7 +1317,11 @@ def cmd_hook(root: Path, data: dict[str, Any], event: str) -> int:
         warm: dict[str, Any] = {}
         sess: dict[str, Any] = {}
         try:
-            from skills_kit.converge_loop import active_session_id, load_session
+            from skills_kit.converge_loop import (
+                active_session_id,
+                claim_active_conversation,
+                load_session,
+            )
             sid = active_session_id(root)
             sess = load_session(root, sid) if sid else {}
             if sess:
@@ -1307,6 +1329,14 @@ def cmd_hook(root: Path, data: dict[str, Any], event: str) -> int:
                 warm = sess.get("warm_start") if isinstance(sess.get("warm_start"), dict) else {}
                 if not q:
                     q = str(sess.get("goal") or "")
+            # 仅 pre-gen + 真 GenerateImage 认领；_active 有 sid 即可（不要求会话 JSON 已可读）
+            if (
+                event == "pre-gen"
+                and conv_id
+                and sid
+                and is_generate_image_tool(tool, args_obj)
+            ):
+                claim_active_conversation(root, conv_id)
         except Exception:
             sess = {}
         # 软提醒：没 route 缓存时提示 Agent（不阻断已开的会话）
@@ -1392,13 +1422,20 @@ def cmd_hook(root: Path, data: dict[str, Any], event: str) -> int:
 
     followup = ""
     if event == "stop":
-        from skills_kit.converge_loop import loop_followup
-        blocker = loop_followup(root)
+        from skills_kit.converge_loop import (
+            followup_allowed_for_conversation,
+            loop_followup,
+        )
+        # 全局 _active 只服务「认领了出图」的那个 conversation；
+        # 别的任务窗 stop 时禁止发 followup_message，否则会挤占并抢走焦点。
+        allow_followup = followup_allowed_for_conversation(root, conv_id)
+        blocker = loop_followup(root) if allow_followup else None
         if blocker:
             followup = blocker["message"]
             advice.append("🛑 生图闭环还没停：" + followup)
-        else:
+        elif allow_followup:
             advice.append("🧠 pmem-art：本轮若有审美拍板，记得一句话留下（「以后都用这色板」「别再画霓虹」）。")
+        # allow_followup=False：静默放行，不要往无关对话塞闭环催办
 
     # 懒巡检：距上次 doctor ≥24h 则后台静默跑；高信号才可能多一行小提示
     try:
