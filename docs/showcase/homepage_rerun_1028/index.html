@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>pmem-art · 主页候选展陈 v2（2026-10-28）</title>
+<style>
+  :root {
+    --bg: #0b0f19; --card: #111827; --line: #1e293b;
+    --text: #f1f5f9; --muted: #94a3b8; --dim: #64748b;
+    --accent: #38bdf8; --ok: #34d399; --warn: #fbbf24; --speech: #c4b5fd;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; color: var(--text);
+    font: 14px/1.55 "PingFang SC", "Noto Sans SC", system-ui, sans-serif;
+    background: var(--bg);
+  }
+  a { color: var(--accent); }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 28px 18px 72px; }
+  .hero {
+    border: 1px solid #312e81; border-radius: 18px; padding: 24px 26px;
+    background: linear-gradient(135deg, #111827, #1e1b4b 55%, #0f172a);
+    margin-bottom: 22px;
+  }
+  .hero h1 { margin: 0 0 8px; font-size: 26px; }
+  .hero p { margin: 0; color: #cbd5e1; max-width: 72ch; }
+  .pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .pill {
+    font-size: 12px; padding: 4px 12px; border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.14); color: var(--muted);
+  }
+  .pill.warn { color: var(--warn); border-color: rgba(251,191,36,.4); }
+  .pill.ok { color: var(--ok); border-color: rgba(52,211,153,.4); }
+  nav.toc {
+    position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; gap: 8px;
+    padding: 10px 0 14px; background: rgba(11,15,25,.92); backdrop-filter: blur(8px);
+  }
+  nav.toc a {
+    font-size: 12px; color: var(--muted); padding: 4px 12px; border-radius: 999px;
+    border: 1px solid transparent; text-decoration: none;
+  }
+  nav.toc a:hover { color: var(--text); border-color: var(--line); }
+  section {
+    border: 1px solid var(--line); border-radius: 16px; background: var(--card);
+    padding: 18px; margin-bottom: 16px;
+    scroll-margin-top: 96px;
+  }
+  section h2 { margin: 0 0 6px; font-size: 18px; }
+  section .lead { color: var(--muted); margin: 0 0 14px; font-size: 13px; }
+  .invoke {
+    border: 1px solid rgba(196,181,253,.28); background: rgba(196,181,253,.08);
+    border-radius: 12px; padding: 12px 14px; margin-bottom: 12px;
+  }
+  .invoke .slash {
+    font-family: ui-monospace, Menlo, monospace; color: var(--accent);
+    background: rgba(56,189,248,.12); padding: 2px 8px; border-radius: 6px; font-size: 13px;
+  }
+  .invoke p { margin: 8px 0 0; }
+  .invoke em { font-style: normal; color: #f5e8ff; }
+  .meta { color: var(--muted); font-size: 13px; margin-top: 6px; }
+  .meta b { color: var(--warn); }
+  .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 8px; align-items: center; }
+  .tag {
+    font-size: 11px; font-weight: 600; letter-spacing: .02em;
+    padding: 3px 10px; border-radius: 6px; border: 1px solid transparent;
+  }
+  .tag.has-ref {
+    color: #7dd3fc; background: rgba(56,189,248,.14); border-color: rgba(56,189,248,.45);
+  }
+  .tag.no-ref {
+    color: #fcd34d; background: rgba(251,191,36,.12); border-color: rgba(251,191,36,.5);
+  }
+  .grid {
+    display: grid; gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+  .grid.pair { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grid.portrait { grid-template-columns: minmax(0, 420px); justify-content: start; }
+  figure.port img { aspect-ratio: 9/16; object-fit: contain; }
+  #style .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: center;
+  }
+  #style figure img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: auto;
+    object-fit: contain;
+    object-position: center;
+  }
+  @media (max-width: 900px) {
+    #style .grid { grid-template-columns: 1fr; }
+  }
+  .grid.five { grid-template-columns: repeat(5, 1fr); }
+  .grid.six { grid-template-columns: repeat(6, 1fr); }
+  @media (max-width: 900px) {
+    .grid.pair { grid-template-columns: 1fr; }
+    .grid.five { grid-template-columns: repeat(2, 1fr); }
+    .grid.six { grid-template-columns: repeat(3, 1fr); }
+  }
+  figure {
+    margin: 0; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: #0b1220;
+  }
+  figure.win { border-color: rgba(251,191,36,.55); }
+  figure.ref { border-color: rgba(56,189,248,.45); }
+  figure.pending { opacity: .55; border-style: dashed; }
+  figure img { display: block; width: 100%; aspect-ratio: 3/4; object-fit: cover; }
+  figure.land img { aspect-ratio: 16/9; }
+  figure.sq img { aspect-ratio: 1; }
+  figure.wide img { aspect-ratio: 4/3; }
+  figcaption {
+    padding: 8px 10px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--line);
+  }
+  figcaption strong { display: block; color: var(--text); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { border-bottom: 1px solid var(--line); padding: 8px 6px; text-align: left; vertical-align: top; }
+  th { color: var(--dim); font-size: 12px; }
+  .note {
+    margin-top: 12px; padding: 10px 12px; border-left: 3px solid var(--accent);
+    background: rgba(56,189,248,.08); color: var(--muted); font-size: 13px; border-radius: 0 8px 8px 0;
+  }
+  footer { text-align: center; color: var(--dim); font-size: 12px; margin-top: 20px; }
+  .case-title { margin: 18px 0 8px; font-size: 15px; color: #e2e8f0; }
+  details.brief {
+    margin-top: 10px; border: 1px solid rgba(56,189,248,.25); border-radius: 10px;
+    background: rgba(15,23,42,.55); padding: 8px 12px;
+  }
+  details.brief summary {
+    cursor: pointer; color: var(--accent); font-size: 13px; font-weight: 600;
+  }
+  details.brief pre {
+    margin: 10px 0 4px; white-space: pre-wrap; word-break: break-word;
+    font: 12px/1.55 ui-monospace, Menlo, monospace; color: #cbd5e1; max-height: 280px; overflow: auto;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <h1>主页候选展陈 v2 · 2026-10-28</h1>
+    <p>
+      生图闭环最多 4 轮 · ≥9.6 停 · 满 4 轮取最高分。锁风格和提示词不生图。图标的四轮只在关键枚，而且可选。合成梯先把关系定稿，再按档出图。
+      本页玩家话术为<strong>本次测试专用丰满 brief</strong>（未写入技能文件）。新增 <code>/pmem-prompt</code> 提示词生成器（不生图）。
+      确认后再替换 README / skills-homepage。
+    </p>
+    <div class="pills">
+      <span class="pill ok">非 draw 多组样例已铺厚</span>
+      <span class="pill ok">draw 四案例×四档 + 克隆/变体多组</span>
+      <span class="pill ok">合成梯 L1–L6 ×2 组</span>
+      <span class="pill ok">技能数 10（含 /pmem-prompt）</span>
+      <span class="pill" style="color:#7dd3fc;border-color:rgba(56,189,248,.45)">蓝标 = 带原图参考</span>
+      <span class="pill warn">黄标 = 不带原图参考</span>
+    </div>
+  </header>
+
+  <nav class="toc">
+    <a href="#matrix">四案例×四档</a>
+    <a href="#ui">界面</a>
+    <a href="#icon">图标</a>
+    <a href="#draw-extra">克隆/变体</a>
+    <a href="#merge">合成梯</a>
+    <a href="#style">锁风格</a>
+    <a href="#prompt">提示词</a>
+  </nav>
+
+  <section id="matrix">
+    <h2>draw · GitHub 主页四案例 × 四档 scale</h2>
+    <p class="lead">从左到右：原图、low、medium、high、recompose。每档下面是这一趟的轮次和逐轮分数，图用的是胜出那一轮。</p>
+
+    <div class="case-title">案例 01 · 仙侠不夜城</div>
+    <div class="grid five">
+      <figure class="ref"><img src="draw_matrix/c01/ref.jpg" alt="c01 ref" /><figcaption><strong>原图</strong></figcaption></figure>
+      <figure id="c01-low"><img src="draw_matrix/c01/low/r4.jpg" alt="c01 low" /><figcaption><strong>low · 4 轮</strong>9.34 → 9.45 → 9.52 → 9.54</figcaption></figure>
+      <figure><img src="draw_matrix/c01/medium/r4.jpg" alt="c01 med" /><figcaption><strong>medium · 4 轮</strong>9.36 → 9.46 → 9.50 → 9.54</figcaption></figure>
+      <figure><img src="draw_matrix/c01/high/r4.jpg" alt="c01 high" /><figcaption><strong>high · 4 轮</strong>9.40 → 9.49 → 9.45 → 9.54</figcaption></figure>
+      <figure><img src="draw_matrix/c01/recompose/r4.jpg" alt="c01 rec" /><figcaption><strong>recompose · 4 轮</strong>9.01 → 9.20 → 9.34 → 9.40<br>换机位：站在中央长街仰看屋脊，侠客变成屋脊上的小背影，雾带隔开街道与灯海。冷灰炭黑与暖金窗火保持。</figcaption></figure>
+    </div>
+
+    <div class="case-title">案例 02 · 粉彩速写少女</div>
+    <div class="grid five">
+      <figure class="ref wide"><img src="draw_matrix/c02/ref.jpg" alt="c02 ref" /><figcaption><strong>原图</strong></figcaption></figure>
+      <figure class="wide"><img src="draw_matrix/c02/low/r3.jpg" alt="c02 low" /><figcaption><strong>low · 4 轮 · 胜出第 3 轮</strong>9.41 → 9.46 → 9.50 → 9.49</figcaption></figure>
+      <figure class="wide"><img src="draw_matrix/c02/medium/r4.jpg" alt="c02 med" /><figcaption><strong>medium · 4 轮</strong>9.37 → 9.49 → 9.51 → 9.52</figcaption></figure>
+      <figure class="wide"><img src="draw_matrix/c02/high/r4.jpg" alt="c02 high" /><figcaption><strong>high · 4 轮</strong>9.40 → 9.45 → 9.51 → 9.52</figcaption></figure>
+      <figure class="wide"><img src="draw_matrix/c02/recompose/r4.jpg" alt="c02 rec" /><figcaption><strong>recompose · 4 轮</strong>9.38 → 9.46 → 9.51 → 9.53<br>换机位：同一粉彩少女改成侧面半身，红帽衫与蜡笔纸感保留，背景仍是斜向色粉笔。</figcaption></figure>
+    </div>
+
+    <div class="case-title">案例 03 · 窗边日光胸像</div>
+    <div class="grid five">
+      <figure class="ref"><img src="draw_matrix/c03/ref.jpg" alt="c03 ref" /><figcaption><strong>原图</strong></figcaption></figure>
+      <figure><img src="draw_matrix/c03/low/r4.jpg" alt="c03 low" /><figcaption><strong>low · 4 轮</strong>9.18 → 9.46 → 9.55 → 9.55</figcaption></figure>
+      <figure><img src="draw_matrix/c03/medium/r4.jpg" alt="c03 med" /><figcaption><strong>medium · 4 轮</strong>9.30 → 9.48 → 9.55 → 9.55</figcaption></figure>
+      <figure><img src="draw_matrix/c03/high/r3.jpg" alt="c03 high" /><figcaption><strong>high · 3 轮 · 达标停</strong>9.32 → 9.46 → 9.60</figcaption></figure>
+      <figure><img src="draw_matrix/c03/recompose/r3.jpg" alt="c03 rec" /><figcaption><strong>recompose · 4 轮 · 胜出第 3 轮</strong>9.05 → 9.28 → 9.40 → 9.36<br>换机位：同一耳机少女转到四分之三背侧，脸仍看向窗光。白猫发夹、黑耳机、白 T 与窗边雏菊都在。</figcaption></figure>
+    </div>
+
+    <div class="case-title">案例 04 · 天井石院</div>
+    <div class="grid five">
+      <figure class="ref wide"><img src="draw_matrix/c04/ref.jpg" alt="c04 ref" /><figcaption><strong>原图</strong></figcaption></figure>
+      <figure class="wide"><img src="draw_matrix/c04/low/r4.jpg" alt="c04 low" /><figcaption><strong>low · 4 轮</strong>8.47 → 9.16 → 9.41 → 9.51</figcaption></figure>
+      <figure class="wide"><img src="draw_matrix/c04/medium/r4.jpg" alt="c04 med" /><figcaption><strong>medium · 4 轮</strong>8.71 → 9.27 → 9.41 → 9.53</figcaption></figure>
+      <figure class="wide"><img src="draw_matrix/c04/high/r4.jpg" alt="c04 high" /><figcaption><strong>high · 4 轮</strong>9.11 → 9.38 → 9.55 → 9.55</figcaption></figure>
+      <figure class="wide"><img src="draw_matrix/c04/recompose/r4.jpg" alt="c04 rec" /><figcaption><strong>recompose · 4 轮</strong>8.36 → 9.17 → 9.33 → 9.42<br>换机位：从天井井口平视向下，仍是同一座石院、破楼梯和暖色墙，墨线淡彩不变。</figcaption></figure>
+    </div>
+  </section>
+
+  <section id="ui">
+    <h2>界面 · Royal Match 主界面</h2>
+    <p class="lead">这张直接用 Royal Match 原图锁风格和品质。房间换成花房，界面换成另一套：浇水壶进度、花朵茶盏太阳、Garden 12 和 Room 3。釉面、高光和按钮厚度跟原图走。画幅 9:16。</p>
+    <div class="tag-row"><span class="tag no-ref">不带原图参考</span><span class="slash">/pmem-ui</span></div>
+    <div class="grid portrait">
+      <figure class="port"><img src="v2/ui_royal/portrait/final.jpg" alt="royal match home" /></figure>
+    </div>
+    <div class="note">
+      <p>背景是黄油黄花房：拱窗、盆栽架、红丝绒沙发、茶具、金洒水壶、柠檬树、蓝毯和一块小黄圆毯。界面是金币 2860、红心、01:12:05、星星 6，进度 120/500 和 x3，左上三枚圆徽，右上金铃，底部 Garden 12 与 Room 3，底栏只写 Home。</p>
+    </div>
+  </section>
+
+  <section id="icon">
+    <h2>图标 A / C</h2>
+    <p class="lead">只放终稿。提示词写在各自图下。</p>
+
+    <div class="tag-row"><span class="tag no-ref">不带原图参考</span><span class="slash">/pmem-icon</span> Mode A</div>
+    <div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr));max-width:720px">
+      <figure class="sq"><img src="v2/icon_a/final.jpg" alt="浮城" /><figcaption><strong>浮城 · 3 轮</strong>9.47 → 9.52 → 9.55<br>关键枚可选收敛，记到第 3 轮，没有第 4 轮。天穹浮城加一轮月，满幅直角，无字。</figcaption></figure>
+      <figure class="sq"><img src="v2/icon_a2/final.jpg" alt="青瓷金" /><figcaption><strong>青瓷金 · 未记分</strong>两张成图，没有逐轮分。图标四轮不是每枚必跑。青釉金币，满幅直角，无字。</figcaption></figure>
+      <figure class="sq"><img src="v2/icon_a3/final.jpg" alt="锻炉" /><figcaption><strong>锻炉 · 未记分</strong>两张成图，没有逐轮分。锤砧余烬，满幅直角，无字。</figcaption></figure>
+    </div>
+
+    <div class="tag-row" style="margin-top:16px"><span class="tag no-ref">不带原图参考</span><span class="slash">/pmem-icon</span> Mode C</div>
+    <div class="grid five">
+      <figure class="sq"><img src="v2/icon_c_set/heal.jpg" alt="heal" /><figcaption><strong>治疗药 · 3 轮</strong>9.52 → 9.53 → 9.55<br>关键枚记到第 3 轮。厚剪影，棚拍，暗角，无字。</figcaption></figure>
+      <figure class="sq"><img src="v2/icon_c_set/mana.jpg" alt="mana" /><figcaption><strong>法力药 · 未记分</strong>和治疗药同套一次出图，没有逐轮分。厚剪影，暗角，无字。</figcaption></figure>
+      <figure class="sq"><img src="v2/icon_c_set/key.jpg" alt="key" /><figcaption><strong>钥匙 · 未记分</strong>同套一次出图，没有逐轮分。暖金属高光，暗角，无字。</figcaption></figure>
+      <figure class="sq"><img src="v2/icon_c_set/ruby.jpg" alt="ruby" /><figcaption><strong>宝石 · 未记分</strong>同套一次出图，没有逐轮分。切面高光，暗角，无字。</figcaption></figure>
+      <figure class="sq"><img src="v2/icon_c_set/scroll.jpg" alt="scroll" /><figcaption><strong>卷轴 · 未记分</strong>同套一次出图，没有逐轮分。红蜡印，暗角，无字。</figcaption></figure>
+    </div>
+  </section>
+
+  <section id="draw-extra">
+    <h2>克隆 / 变体 · 多提示词对照</h2>
+    <p class="lead">克隆换题材锁画风；变体锁身份只改一项——多组并排看稳定性。</p>
+
+    <div class="case-title">克隆 · 组1 锁粉彩纸感 → 少年与纸风筝</div>
+    <div class="grid">
+      <figure class="ref wide"><img src="draw_matrix/c02/ref.jpg" alt="clone1 ref" /><figcaption><strong>风格参考</strong>只锁蜡笔纸感，不锁这个人</figcaption></figure>
+      <figure class="wide"><img src="v2/clone/final.jpg" alt="clone1" /><figcaption><strong>4 轮 · 胜出第 4 轮</strong>9.41 → 9.48 → 9.37 → 9.48<br>短发少年坐在台阶上，手里一卷纸风筝。蜡笔斜线、暖纸底。人不再是红帽衫少女。</figcaption></figure>
+    </div>
+
+    <div class="case-title">克隆 · 组2 锁粉彩纸感 → 白兔抱胡萝卜</div>
+    <div class="invoke">
+      <div class="tag-row"><span class="tag has-ref">带原图参考</span><span class="slash">/pmem-draw</span> 克隆</div>
+      <p>玩家说：<em>锁参考粉彩线稿纸感与腮红空气，题材换成白兔抱胡萝卜；新构图；勿赛博霓虹。</em></p>
+      <div class="meta"><b>4 轮 · 胜出第 4 轮</b>　9.49 → 9.43 → 9.48 → 9.54</div>
+    </div>
+    <div class="grid">
+      <figure class="ref"><img src="v2/clone_rabbit/ref.jpg" alt="rabbit ref" /><figcaption><strong>风格参考</strong></figcaption></figure>
+      <figure class="win"><img src="v2/clone_rabbit/final.jpg" alt="rabbit" /><figcaption><strong>白兔 · 4 轮</strong>9.49 → 9.43 → 9.48 → 9.54</figcaption></figure>
+    </div>
+
+    <div class="case-title">变体 · 光影加码</div>
+    <div class="invoke">
+      <div class="tag-row"><span class="tag has-ref">带原图参考</span><span class="slash">/pmem-draw</span> 变体</div>
+      <p>玩家说：<em>同一窗边日光少女，加强发丝透光、皮肤 SSS、尘埃光斑与暖金逆光张力。</em></p>
+      <div class="meta"><b>4 轮 · 胜出第 4 轮</b>　9.52 → 9.53 → 9.50 → 9.53</div>
+    </div>
+    <div class="grid">
+      <figure class="ref"><img src="draw_matrix/c03/ref.jpg" alt="var light ref" /><figcaption><strong>参考</strong></figcaption></figure>
+      <figure class="win"><img src="v2/variant/final.jpg" alt="var light" /><figcaption><strong>光影加码 · 4 轮</strong>9.52 → 9.53 → 9.50 → 9.53</figcaption></figure>
+    </div>
+
+    <div class="case-title">变体 · 表情差分（同一身份 · 四套提示词对照）</div>
+    <div class="invoke">
+      <div class="tag-row"><span class="tag has-ref">带原图参考</span><span class="slash">/pmem-draw</span> 变体</div>
+      <p>玩家说：<em>同一窗边耳机少女，机位/画风/发色瞳色/白猫发夹/耳机/白T全锁；分别只改：①惊喜张嘴 ②俏皮眨眼 ③困倦半眯 ④微怒鼓嘴。</em></p>
+      <div class="meta">四套都走满 4 轮。闭嘴那趟旧分不再挂在这张张嘴图上。</div>
+    </div>
+    <div class="grid five">
+      <figure class="ref"><img src="v2/variant_expr/ref.jpg" alt="expr ref" /><figcaption><strong>身份参考 · 中性</strong></figcaption></figure>
+      <figure class="win"><img src="v2/variant_expr/final.jpg" alt="surprise" /><figcaption><strong>惊喜 · 4 轮</strong>9.48 → 9.50 → 9.50 → 9.54<br>嘴张开，露出上齿。</figcaption></figure>
+      <figure class="win"><img src="v2/variant_wink/final.jpg" alt="wink" /><figcaption><strong>眨眼 · 4 轮</strong>9.48 → 9.50 → 9.50 → 9.52</figcaption></figure>
+      <figure class="win"><img src="v2/variant_sleepy/final.jpg" alt="sleepy" /><figcaption><strong>困倦 · 4 轮</strong>9.42 → 9.46 → 9.46 → 9.48</figcaption></figure>
+      <figure class="win"><img src="v2/variant_angry/final.jpg" alt="angry" /><figcaption><strong>微怒 · 4 轮 · 胜出第 3 轮</strong>9.46 → 9.46 → 9.50 → 9.48</figcaption></figure>
+    </div>
+  </section>
+
+  <section id="merge">
+    <h2>合成梯 · L1–L6 两组 + T5 单档</h2>
+    <p class="lead">关系段是三稿文字，不出图。每一档正方形才进入最多 4 轮。下面两组 L1–L6 目前各只有一张，没有逐轮分，所以不写成四轮。T5 只记了 1 轮。</p>
+
+    <div class="invoke">
+      <div class="tag-row"><span class="tag no-ref">不带原图参考</span><span class="slash">/pmem-merge-ladder</span> · 组1 青金治疗药 L1–L6</div>
+      <p>玩家说：<em>空瓶→塞→半药→满药→签环叶饰→金托；切面玻璃+暖金；一档一张正方形，单件居中无脸无等级字。</em></p>
+    </div>
+    <div class="grid six">
+      <figure class="win sq"><img src="v2/merge_potion_l16/L01.jpg" alt="p1" /><figcaption><strong>L1 空瓶</strong></figcaption></figure>
+      <figure class="win sq"><img src="v2/merge_potion_l16/L02.jpg" alt="p2" /><figcaption><strong>L2 +塞</strong></figcaption></figure>
+      <figure class="win sq"><img src="v2/merge_potion_l16/L03.jpg" alt="p3" /><figcaption><strong>L3 半药</strong></figcaption></figure>
+      <figure class="win sq"><img src="v2/merge_potion_l16/L04.jpg" alt="p4" /><figcaption><strong>L4 满药</strong></figcaption></figure>
+      <figure class="win sq"><img src="v2/merge_potion_l16/L05.jpg" alt="p5" /><figcaption><strong>L5 签环</strong></figcaption></figure>
+      <figure class="win sq"><img src="v2/merge_potion_l16/L06.jpg" alt="p6" /><figcaption><strong>L6 金托</strong></figcaption></figure>
+    </div>
+
+    <div class="invoke">
+      <div class="tag-row"><span class="tag no-ref">不带原图参考</span><span class="slash">/pmem-merge-ladder</span> · 组2 蜜桃糖 L1–L6</div>
+      <p>玩家说：<em>裸糖→糖纸→贴纸→纸托→丝带→托盘；软塑胶糖果宫廷；一档一张正方形。</em></p>
+    </div>
+    <div class="grid six">
+      <figure class="win sq"><img src="v2/merge_candy_l16/L01.jpg" alt="c1" /><figcaption><strong>L1 裸糖</strong></figcaption></figure>
+      <figure class="win sq"><img src="v2/merge_candy_l16/L02.jpg" alt="c2" /><figcaption><strong>L2 糖纸</strong></figcaption></figure>
+      <figure class="win sq"><img src="v2/merge_candy_l16/L03.jpg" alt="c3" /><figcaption><strong>L3 贴纸</strong></figcaption></figure>
+      <figure class="win sq"><img src="v2/merge_candy_l16/L04.jpg" alt="c4" /><figcaption><strong>L4 纸托</strong></figcaption></figure>
+      <figure class="win sq"><img src="v2/merge_candy_l16/L05.jpg" alt="c5" /><figcaption><strong>L5 丝带</strong></figcaption></figure>
+      <figure class="win sq"><img src="v2/merge_candy_l16/L06.jpg" alt="c6" /><figcaption><strong>L6 托盘</strong></figcaption></figure>
+    </div>
+
+    <div class="invoke">
+      <div class="tag-row"><span class="tag no-ref">不带原图参考</span><span class="slash">/pmem-merge-ladder</span> · 高档单件</div>
+      <p>玩家说：<em>八档链里的晶冠瓶单档成品（同框整梯只作体量预览，不算交付）。</em></p>
+      <div class="meta">T5 单档 <b>1 轮 · 9.51</b></div>
+    </div>
+    <div class="grid"><figure class="win sq"><img src="v2/merge/final.jpg" alt="merge t5" /><figcaption><strong>T5 晶冠瓶 · 9.51</strong></figcaption></figure></div>
+  </section>
+
+  <section id="style">
+    <h2>锁风格 · 两组</h2>
+    <p class="lead">这一支只从样张抽色板、光影和禁用词，不跑四轮生图，所以没有逐轮分。</p>
+    <div class="invoke">
+      <div class="tag-row"><span class="tag has-ref">带原图参考</span><span class="slash">/pmem-style-lock</span> · 组2 水墨苔绿</div>
+      <p>玩家说：<em>从水墨淡彩样张锁苔绿主色、墨黑、米宣纸底与漫射纸感光；禁用霓虹与硬边赛璐珞。</em></p>
+    </div>
+    <div class="grid">
+      <figure class="ref land"><img src="v2/style_lock_b/ref1.jpg" alt="s2a" /><figcaption><strong>样张 1 · 松雾</strong></figcaption></figure>
+      <figure class="ref"><img src="v2/style_lock_b/ref2.jpg" alt="s2b" /><figcaption><strong>样张 2 · 茶盏</strong></figcaption></figure>
+      <figure class="win land"><img src="v2/style_lock_b/final.jpg" alt="s2c" /><figcaption><strong>锁定卡 · Ink Wash Sage</strong></figcaption></figure>
+    </div>
+
+    <div class="invoke">
+      <div class="tag-row"><span class="tag has-ref">带原图参考</span><span class="slash">/pmem-style-lock</span> · 组3 粗线赛璐珞</div>
+      <p>玩家说：<em>从粗黑线平涂样张锁橙暖描边高光与色块分层；禁用水彩软边与写实皮肤毛孔。</em></p>
+    </div>
+    <div class="grid">
+      <figure class="ref"><img src="v2/style_lock_c/ref1.jpg" alt="s3a" /><figcaption><strong>样张 1 · 角色</strong></figcaption></figure>
+      <figure class="ref sq"><img src="v2/style_lock_c/ref2.jpg" alt="s3b" /><figcaption><strong>样张 2 · 道具</strong></figcaption></figure>
+      <figure class="win land"><img src="v2/style_lock_c/final.jpg" alt="s3c" /><figcaption><strong>锁定卡 · Bold Cel</strong></figcaption></figure>
+    </div>
+  </section>
+
+  <section id="prompt">
+    <h2>/pmem-prompt · 多类型样例</h2>
+    <div class="invoke">
+      <div class="tag-row"><span class="tag no-ref">不带原图参考</span><span class="slash">/pmem-prompt</span></div>
+      <p>玩家说：<em>帮我把需求扩成能直接交给对应技能的几套提示词。</em></p>
+      <div class="meta">不生图 · 先判定类型 · 默认 2～4 套同类型方案</div>
+    </div>
+
+    <div class="case-title">P1 · 普通图 · 交给 /pmem-draw</div>
+    <p class="lead">玩家原话：青瓷小猫</p>
+    <table>
+      <tr><th>方案</th><th>提示词</th><th>侧重</th></tr>
+      <tr><td>A 静物棚拍</td><td>一只青釉小猫陶偶坐在米白绒布上，顶 45° 柔光，釉面湿润高光一条，浅景深</td><td>材质与高光</td></tr>
+      <tr><td>B 窗边半身</td><td>青瓷色短毛小猫趴窗台，侧逆光透毛尖，纸感淡彩描边</td><td>光色与媒介</td></tr>
+      <tr><td>C 俯视特写</td><td>俯拍青瓷小猫脸与一对尖耳占画面 70%，背景虚化苔绿</td><td>景别特写</td></tr>
+    </table>
+
+    <div class="case-title">P2 · 原画 · 交给 /pmem-draw</div>
+    <p class="lead">玩家原话：浮空遗迹黄昏 Key Art</p>
+    <table>
+      <tr><th>方案</th><th>提示词</th><th>侧重</th></tr>
+      <tr><td>A 神视角</td><td>黄昏暖金侧光下浮空石遗迹全景，空气透视远山淡紫，孤影旅人在前景崖边，9:16 商业主视觉</td><td>史诗全景</td></tr>
+      <tr><td>B 低机位</td><td>自碎阶仰望断裂浮空城门，逆光剪影飞鸟，冷暖交界在门洞</td><td>机位戏剧</td></tr>
+      <tr><td>C 中景叙事</td><td>旅人与发光符文碑同框，黄昏体积尘，碑面裂纹可读，无 UI 乱码</td><td>记忆点叙事</td></tr>
+    </table>
+
+    <div class="case-title">P3 · 界面 · 交给 /pmem-ui</div>
+    <p class="lead">玩家原话：青瓷金主菜单，上架截图密度</p>
+    <table>
+      <tr><th>方案</th><th>提示词</th><th>侧重</th></tr>
+      <tr><td>A 疏朗</td><td>16:9 青釉加暖金；中心大空九宫格；顶栏细金纹章；底栏三软釉主钮；侧栏两资源珠；无可读乱码</td><td>分区疏</td></tr>
+      <tr><td>B 商店密度</td><td>同材质加顶栏三资源珠，角花锁在角内；底栏异形主钮带接触影；控件上架级密度</td><td>商业密度</td></tr>
+      <tr><td>C 竖屏</td><td>9:16 同色板；顶资源条；中空面板；底双主钮加设置圆；角花不侵拉伸区</td><td>画幅适配</td></tr>
+    </table>
+
+    <div class="case-title">P4 · 图标 A · 交给 /pmem-icon</div>
+    <p class="lead">玩家原话：天穹浮城 App Icon</p>
+    <table>
+      <tr><th>方案</th><th>提示词</th><th>侧重</th></tr>
+      <tr><td>A 月城剪影</td><td>满幅直角；靛蓝底板；单枚浮城加大月盘，落在 75% 安全区；微金星点；无字</td><td>剪影识别</td></tr>
+      <tr><td>B 塔楼灯窗</td><td>同底板；少塔楼加暖窗点阵；顶缘微高光；缩到小尺寸仍能认出</td><td>小尺寸可读</td></tr>
+      <tr><td>C 深色态</td><td>同一符号，更深底板，边缘自发光，给深色模式对照</td><td>深浅自适应</td></tr>
+    </table>
+
+    <div class="case-title">P5 · 合成梯 · 交给 /pmem-merge-ladder</div>
+    <p class="lead">玩家原话：治疗药八档升级。先写关系，说通后再一档一张。</p>
+    <table>
+      <tr><th>方案</th><th>升级链</th><th>画风</th></tr>
+      <tr><td>A 青金药</td><td>空瓶 → 塞 → 半药 → 满药 → 签环 → 金托 → 晶冠 → 罩瓶</td><td>切面玻璃，暖金饰卡通道具</td></tr>
+      <tr><td>B 蜜桃糖</td><td>裸糖 → 糖纸 → 贴纸 → 纸托 → 丝带 → 托盘 → 罩盒 → 礼盒</td><td>软塑胶糖果</td></tr>
+    </table>
+  </section>
+
+  <div class="note">
+    <b>下一步（等你点头）</b>：用本目录图替换 README「效果长什么样」与
+    <code>docs/showcase/skills-homepage/index.html</code>。未确认前不改 GitHub 主页正文。
+    四案例 × 四档共 16 终图已写入 <code>draw_matrix/**/final.jpg</code>。
+  </div>
+
+  <footer>路径：docs/showcase/homepage_rerun_1028/index.html · v2 资产：v2/ · 矩阵：draw_matrix/</footer>
+</div>
+</body>
+</html>

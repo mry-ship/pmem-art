@@ -1,0 +1,75 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "cursor-pmem-art",
+  "project_name": "Cursor-Pmem-Art",
+  "layer_scope": "private",
+  "written_at": "2026-10-27 18:00:52 UTC+8",
+  "session_id": "merge-kitchen-p2",
+  "goal": "Merge A 第二段美术 medium",
+  "module": "prop.KitchenMerge",
+  "converge_mode": "quality",
+  "guided_mode": "text_guided",
+  "threshold": 9.6,
+  "max_rounds": 8,
+  "rounds_used": 2,
+  "winner_round": 2,
+  "winner_score": 9.05,
+  "winner_image": "assets/prop/kitchenmerge/sheet.jpg",
+  "winner_passed": false,
+  "outcome": "⚠️ **共执行 2 轮审图（目标阈值 `9.60` 分），未达标，已挑选全阶段最高分**（胜出：第 2 轮 `9.05 / 10.0` 分）",
+  "what_fixed": [
+    "垫本线 sheet 抛光：统一接触影，L5 加透明碗盖+曲柄，L8 顶槽加深",
+    "仅 L5 单列重绘"
+  ],
+  "what_still_weak": "L5 仍偏研磨碗非甩干器；质感距 9.6 差一档",
+  "strengths": "粉彩统一、接触影更齐、末档面包机可读",
+  "taste_deltas": {
+    "from_strengths": [
+      "粉彩统一、接触影更齐、末档面包机可读"
+    ],
+    "from_defects": [
+      "L5 沙拉甩干器身份仍偏料理碗；相邻档阴影深浅不一；末档顶槽不够醒目",
+      "L5 仍偏研磨碗非甩干器；质感距 9.6 差一档"
+    ]
+  },
+  "warm_start_confidence": 0.65,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 8.73,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 9.05,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：L5 沙拉甩干器身份仍偏料理碗；相邻档阴影深浅不一；末档顶槽不够醒目",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.73"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：八件可读、粉彩胶塑统一、体量阶梯像素已过 audit",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.73"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：L5 仍偏研磨碗非甩干器；质感距 9.6 差一档",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.05"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：粉彩统一、接触影更齐、末档面包机可读",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.05"
+    }
+  ]
+}

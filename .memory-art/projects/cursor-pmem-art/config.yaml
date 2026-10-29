@@ -1,0 +1,71 @@
+# pmem-art config.yaml — 挂载式美术记忆生命周期配置
+schema_version: 1
+project:
+  name: Cursor-Pmem-Art
+  art_style: ""
+  color_space: sRGB
+  engine: ""
+  lifecycle_mode: young
+vcs: auto
+gate:
+  mode: warn
+  auto_validate_on_save: true
+  stale_check:
+    hash: true
+    dimensions: true
+    alpha: true
+    png_metadata: true
+  skip_markers:
+    - 跳过美术记忆
+    - skip-art-memory
+write:
+  default_status: active
+  require_visual_anchor: true
+  max_per_day_per_entity: 10
+  auto_promote_candidate_on_record: true
+bootstrap:
+  asset_roots:
+    - assets
+  auto_accept_depth: 2
+  candidate_min_files: 1
+  never_auto_move: true
+  scaffold_dirs: true
+  confirmed: false
+  last_sync_at: null
+  auto_place: true
+classify:
+  auto_add_modules: true
+  max_module_depth: 4
+  max_inherits_depth: 4
+  low_confidence_threshold: 0.55
+  high_confidence_threshold: 0.78
+  unknown_domain: misc
+  style_fork_parent: brand.WorldStyle
+  watch_dirs:
+    - assets
+    - .cursor/generated
+    - generated
+  prompt_weight: 0.35
+  path_weight: 0.25
+  image_trait_weight: 0.25
+  module_match_weight: 0.15
+converge:
+  merged_generate_and_judge: false
+  stop_policy: dynamic_threshold
+  default_scale: medium
+  max_rounds: 8
+  target_thresholds:
+    low: 9.6
+    medium: 9.6
+    high: 9.6
+    recompose: 9.6
+vlm_judge:
+  enabled: auto
+  provider: openai
+  api_key: ""
+  api_key_env: PMEM_VLM_API_KEY
+  base_url: ""
+  model: ""
+  timeout_sec: 90
+  on_error: fallback
+  write_sidecar: true

@@ -1,0 +1,62 @@
+# 全面重制 · Cursor GenerateImage + art-merge 一件一方
+# 状态: pending | wip | r1 | done
+version: redo-20261027
+generator: cursor-GenerateImage
+apikey_image: false
+
+merge_a_kitchen:
+  module: prop.KitchenMerge
+  session: redo-merge-a
+  style: 质感好的卡通可爱
+  bg: "#F6EFE4"
+  items:
+    - { level: 1, file: L01.jpg, name: 量勺, en: small plastic measuring spoon }
+    - { level: 2, file: L02.jpg, name: 打蛋器, en: hand whisk with handle }
+    - { level: 3, file: L03.jpg, name: 开罐器, en: can opener }
+    - { level: 4, file: L04.jpg, name: 刨丝器, en: box grater }
+    - { level: 5, file: L05.jpg, name: 甩干器, en: salad spinner }
+    - { level: 6, file: L06.jpg, name: 搅拌机, en: countertop blender }
+    - { level: 7, file: L07.jpg, name: 料理机, en: food processor }
+    - { level: 8, file: L08.jpg, name: 面包机, en: bread maker toaster oven }
+
+merge_b_valentine:
+  module: prop.ValentineMerge
+  session: redo-merge-b
+  ref: docs/showcase/clone-merge-corrected/images/val_heart_ref.png
+  items:
+    - { level: 1, file: L01.jpg, name: 心形糖, en: heart shaped candy }
+    - { level: 2, file: L02.jpg, name: 玫瑰, en: rose flower }
+    - { level: 3, file: L03.jpg, name: 情书, en: love letter envelope with heart seal }
+    - { level: 4, file: L04.jpg, name: 丘比特之箭, en: cupid arrow with heart tip }
+    - { level: 5, file: L05.jpg, name: 爱心气球, en: heart balloon on string }
+    - { level: 6, file: L06.jpg, name: 礼物盒, en: gift box with ribbon }
+    - { level: 7, file: L07.jpg, name: 心形音乐盒, en: heart shaped music box }
+    - { level: 8, file: L08.jpg, name: 婚礼蛋糕, en: small wedding tiered cake with hearts }
+
+merge_c_stationery:
+  module: prop.StationeryMerge
+  session: redo-merge-c
+  ref: docs/showcase/clone-merge-corrected/images/market_ref.jpg
+  items:
+    - { level: 1, file: L01.jpg, name: 回形针, en: paperclip }
+    - { level: 2, file: L02.jpg, name: 图钉, en: push pin }
+    - { level: 3, file: L03.jpg, name: 橡皮, en: eraser }
+    - { level: 4, file: L04.jpg, name: 铅笔, en: pencil }
+    - { level: 5, file: L05.jpg, name: 便签, en: sticky note pad }
+    - { level: 6, file: L06.jpg, name: 订书机, en: stapler }
+    - { level: 7, file: L07.jpg, name: 笔筒, en: pen holder cup with pens }
+    - { level: 8, file: L08.jpg, name: 打印机, en: compact desktop printer }
+
+clone:
+  - { id: clone_a, session: redo-clone-a, module: icon.Compass, ref: none }
+  - { id: clone_b_key, session: redo-clone-b-key, module: icon.KeyClone }
+  - { id: clone_b_ui, session: redo-clone-b-ui, module: ui.PopupClone }
+  - { id: clone_b_char, session: redo-clone-b-char, module: character.PastryChef }
+
+icon:
+  - { id: icon_a, session: redo-icon-a, mode: app-1024 }
+  - { id: icon_c, session: redo-icon-c, mode: prop-transparent }
+
+ui:
+  - { id: ui_concept, session: redo-ui-concept, module: ui.MainMenu }
+  - { id: ui_sheet, session: redo-ui-sheet, module: ui.MainMenu }

@@ -1,0 +1,135 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "cursor-pmem-art",
+  "project_name": "Cursor-Pmem-Art",
+  "layer_scope": "private",
+  "written_at": "2026-10-27 17:34:37 UTC+8",
+  "session_id": "clone-rerun-b-char",
+  "goal": "Clone Mode B character。垫心形礼盒 medium。新题材甜品师Q版。空手T-pose，胸章/帽徽职业信号，脚边小蛋糕道具。双眼分穴大虹膜巩膜月牙高光。禁独眼黑点瞳。禁turnaround。",
+  "module": "character.PastryChef",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.6,
+  "max_rounds": 8,
+  "rounds_used": 5,
+  "winner_round": 5,
+  "winner_score": 9.62,
+  "winner_image": "assets/character/pastrychef/clone_rerun_b_char_r5.jpg",
+  "winner_passed": true,
+  "outcome": "✅ **经过 5 轮迭代达标定稿**（generate 与 judge 分步收敛，第 5 轮达到 `9.62 / 10.0` 分 ≥ `9.60` 分档位目标线即刻停机）",
+  "what_fixed": [
+    "正常Q版圆头；删礼盒；空手T-pose脚边小蛋糕",
+    "只加强双眼大虹膜巩膜月牙高光",
+    "解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁止糊边融边；头仍是奶油造型非人脸",
+    "删礼盒只留小蛋糕"
+  ],
+  "what_still_weak": "残余可接受点：眼还可更虹膜化",
+  "strengths": "圆脸T-pose；虹膜可读；脚边仅小蛋糕；色板锁",
+  "taste_deltas": {
+    "from_strengths": [
+      "圆脸T-pose；虹膜可读；脚边仅小蛋糕；色板锁"
+    ],
+    "from_defects": [
+      "虹膜层次偏弱偏黑点眼",
+      "头仍是奶油造型非人脸",
+      "脚边又出现心形礼盒"
+    ]
+  },
+  "warm_start_confidence": 0.85,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 8.83,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 9.48,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 9.21,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 9.38,
+      "passed": false
+    },
+    {
+      "round": 5,
+      "score": 9.62,
+      "passed": true
+    }
+  ],
+  "lessons": [
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：心形头抄参考；脚边礼盒；非空手T-pose",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.83"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：色板贴参考",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.83"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：虹膜层次偏弱偏黑点眼",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.48"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：圆头T-pose；脚边单蛋糕；无礼盒",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.48"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：头仍是奶油造型非人脸",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "9.21"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：头仍是奶油造型非人脸",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.21"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：头仍是奶油造型非人脸",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "9.21"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：脚边又出现心形礼盒",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.38"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：圆脸虹膜眼；T-pose",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.38"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：眼还可更虹膜化",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.62"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：圆脸T-pose；虹膜可读；脚边仅小蛋糕；色板锁",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.62"
+    }
+  ]
+}

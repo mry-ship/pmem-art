@@ -1,0 +1,33 @@
+{
+  "workflow_name": "Project-Celadon_Astra_Standing_v3",
+  "pmem_module": "character.Astra",
+  "base_model": "flux1-dev-fp8.safetensors",
+  "loras": [
+    {
+      "name": "eastern_celadon_astra_v3.safetensors",
+      "strength_model": 0.85,
+      "strength_clip": 0.8
+    },
+    {
+      "name": "cel_shaded_ink_gold_v2.safetensors",
+      "strength_model": 0.45,
+      "strength_clip": 0.45
+    }
+  ],
+  "sampler": {
+    "name": "euler",
+    "scheduler": "beta",
+    "steps": 28,
+    "cfg": 3.5,
+    "seed": 42819204
+  },
+  "controlnet": {
+    "type": "openpose_full + canny_turnaround",
+    "strength": 0.72
+  },
+  "post_process": [
+    "RMBG-2.0 (Alpha Matting)",
+    "Alpha-Premultiply-4px-Defringe",
+    "sRGB-ColorProfile-Embed"
+  ]
+}

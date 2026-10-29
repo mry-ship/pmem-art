@@ -1,0 +1,178 @@
+{
+  "night_city_ref.png": {
+    "score": 8.5,
+    "reason": "宏大的城市与孤独人物营造出强烈的史诗感，但画面整体偏暗，细节略显模糊。",
+    "model": "gpt-5.6-terra",
+    "mine": 8.2,
+    "a5d": 8.08,
+    "dims": "8.6/7.6/8.2/7.4/8.6"
+  },
+  "night_city_low.jpg": {
+    "score": 8.7,
+    "reason": "宏大的俯瞰构图、冷暖光点与前景人物形成了强烈叙事感，但局部细节略显混杂且主体辨识度偏弱。",
+    "model": "gpt-5.6-terra",
+    "mine": 8.3,
+    "a5d": 7.88,
+    "dims": "8.4/7.8/8.0/7.2/8.4",
+    "round": 1
+  },
+  "night_city_medium.jpg": {
+    "score": 8.4,
+    "reason": "氛围、尺度感和人物剪影极有张力，但远景细节略显同质化，视觉焦点还可以更凝练。",
+    "model": "gpt-5.6-terra",
+    "mine": 8.1,
+    "a5d": 7.89,
+    "dims": "8.2/8.0/7.8/7.3/8.2",
+    "round": 1
+  },
+  "night_city_high.jpg": {
+    "score": 8.6,
+    "reason": "氛围、构图和光色都很有电影感，人物与剑的视觉焦点明确，但局部建筑和材质细节略显生成式堆叠。",
+    "model": "gpt-5.6-terra",
+    "mine": 8.0,
+    "a5d": 7.79,
+    "dims": "8.0/8.3/7.6/7.2/7.6",
+    "round": 1
+  },
+  "night_city_recompose.jpg": {
+    "score": 8.7,
+    "reason": "氛围、光影和纵深极其统一，人物与巨桥形成很强的叙事画面，但局部纹理仍有些生成感。",
+    "model": "gpt-5.6-terra",
+    "mine": 8.4,
+    "a5d": 8.26,
+    "dims": "8.7/8.4/8.0/7.6/8.2",
+    "round": 1
+  },
+  "pastel_sketch_ref.png": {
+    "score": 8.2,
+    "reason": "蜡笔质感和轻松的神态很讨喜，整体色彩也协调，但手部与腿脚的衔接略显生硬，离我愿意收下的成品还有一点距离。",
+    "model": "gpt-5.6-terra",
+    "mine": 8.0,
+    "a5d": 7.88,
+    "dims": "8.2/7.4/7.2/8.0/8.6"
+  },
+  "pastel_sketch_low.jpg": {
+    "score": 8.7,
+    "reason": "蜡笔质感统一、姿态自然且配色温暖，人物表情和轮廓很有感染力，但局部手部与鞋子的线条略显松散。",
+    "model": "gpt-5.6-terra",
+    "mine": 8.2,
+    "a5d": 7.93,
+    "dims": "8.2/7.6/7.4/8.2/8.5",
+    "round": 1
+  },
+  "pastel_sketch_medium.jpg": {
+    "score": 8.6,
+    "reason": "构图自然、角色表情和姿态很有感染力，蜡笔质感与暖冷背景协调，但局部线条和手脚结构仍略显粗糙。",
+    "model": "gpt-5.6-terra",
+    "mine": 8.1,
+    "a5d": 7.89,
+    "dims": "8.1/8.0/7.3/7.8/8.3",
+    "round": 1
+  },
+  "pastel_sketch_high.jpg": {
+    "score": 8.5,
+    "reason": "画面氛围温暖生动，色彩和笔触很有感染力，但手部与双腿的衔接略显别扭，还差一点成品的精致感。",
+    "model": "gpt-5.6-terra",
+    "mine": 8.0,
+    "a5d": 7.75,
+    "dims": "7.8/8.4/7.2/7.4/7.5",
+    "round": 1
+  },
+  "pastel_sketch_recompose.jpg": {
+    "score": 8.7,
+    "reason": "夕阳色彩、人物姿态与城市海港景深共同营造出很完整的情绪，细腻的手绘质感出色，但局部细节略显重复和松散。",
+    "model": "gpt-5.6-terra",
+    "mine": 8.5,
+    "a5d": 8.25,
+    "dims": "8.6/8.5/8.0/7.8/8.0",
+    "round": 1
+  },
+  "sunlit_portrait_ref.png": {
+    "score": 8.7,
+    "reason": "光影氛围、发丝层次和表情都很有感染力，整体完成度很高，但暗部细节略显浑浊。",
+    "model": "gpt-5.6-terra",
+    "mine": 8.4,
+    "a5d": 8.36,
+    "dims": "8.4/8.6/8.3/8.0/8.5"
+  },
+  "sunlit_portrait_low.jpg": {
+    "score": 8.7,
+    "reason": "光影切分、色调和人物情绪都很成熟，笔触统一且有绘画感，但局部发丝与衣领细节略显重复和松散。",
+    "model": "gpt-5.6-terra",
+    "mine": 8.3,
+    "a5d": 8.16,
+    "dims": "8.2/8.4/8.2/7.8/8.3",
+    "round": 1
+  },
+  "sunlit_portrait_medium.jpg": {
+    "score": 8.6,
+    "reason": "暖光与油画肌理营造出动人的氛围，人物神情也很有感染力，但脸部明暗分界略显生硬。",
+    "model": "gpt-5.6-terra",
+    "mine": 8.1,
+    "a5d": 7.92,
+    "dims": "8.1/7.8/8.0/7.6/8.2",
+    "round": 1
+  },
+  "sunlit_portrait_high.jpg": {
+    "score": 8.7,
+    "reason": "暖金色窗光、人物神态与发丝笔触形成了很强的氛围和焦点，但局部纹理与花墙细节略显重复和生成感。",
+    "model": "gpt-5.6-terra",
+    "mine": 8.4,
+    "a5d": 8.22,
+    "dims": "8.3/8.6/8.1/7.7/8.2",
+    "round": 1
+  },
+  "sunlit_portrait_recompose.jpg": {
+    "score": 9.0,
+    "reason": "光影、色彩和人物氛围极其统一，构图成熟细腻，只有局部发丝与衣物纹理略显生成感。",
+    "model": "gpt-5.6-terra",
+    "mine": 8.6,
+    "a5d": 8.2,
+    "dims": "8.6/8.5/7.8/7.7/8.0",
+    "round": 1
+  },
+  "ishtar_canyon_ref.png": {
+    "score": 8.4,
+    "reason": "强烈的俯视透视和细密线稿营造出独特压迫感，色彩与构图成熟，但局部信息略显拥挤且焦点不够明确。",
+    "model": "gpt-5.6-terra",
+    "mine": 7.8,
+    "a5d": 7.64,
+    "dims": "7.2/7.6/7.8/7.4/8.2"
+  },
+  "ishtar_canyon_low.jpg": {
+    "score": 8.3,
+    "reason": "俯视构图和密集线稿营造出很强的奇幻场景感，细节丰富且光影统一，但中心叙事焦点略显拥挤。",
+    "model": "gpt-5.6-terra",
+    "mine": 7.7,
+    "a5d": 7.48,
+    "dims": "7.0/7.5/7.6/7.3/8.0",
+    "round": 1
+  },
+  "ishtar_canyon_medium.jpg": {
+    "score": 8.4,
+    "reason": "俯视构图、光影和古老图书馆的氛围都很出色，但局部细节略显糊散，中心叙事焦点不够鲜明。",
+    "model": "gpt-5.6-terra",
+    "mine": 7.9,
+    "a5d": 7.55,
+    "dims": "7.2/8.0/7.5/7.2/7.8",
+    "round": 1
+  },
+  "ishtar_canyon_high.jpg": {
+    "score": 8.7,
+    "reason": "构图张力、光影和史诗氛围都很出色，主体叙事清晰，但局部建筑纹理略显杂乱且细节有些生成式重复感。",
+    "model": "gpt-5.6-terra",
+    "mine": 8.0,
+    "a5d": 7.7,
+    "dims": "8.0/8.3/7.4/7.3/7.2",
+    "round": 1
+  },
+  "ishtar_canyon_recompose.jpg": {
+    "score": 8.7,
+    "reason": "构图、光影和史诗感都很成熟，人物与飞龙形成清晰叙事焦点，但局部建筑纹理略显重复且细节有些生成式的松散感。",
+    "model": "gpt-5.6-terra",
+    "mine": 8.5,
+    "a5d": 8.02,
+    "dims": "8.5/8.3/8.0/7.4/7.3",
+    "round": 1
+  }
+}

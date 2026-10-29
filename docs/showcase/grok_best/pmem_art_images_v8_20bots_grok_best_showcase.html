@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>pmem-art · V8×20 Bot Showcase (skills_kit · ≥9.60 / 8 rounds)</title>
+<style>
+
+:root{--bg:#0b0f19;--card:#111827;--border:#1e293b;--text:#f1f5f9;--muted:#94a3b8}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;padding:24px 18px 60px;line-height:1.45}
+header{max-width:2200px;margin:0 auto 28px;padding:24px 28px;background:linear-gradient(135deg,#111827,#1e1b4b);border:1px solid #312e81;border-radius:16px}
+header h1{font-size:22px;font-weight:800;margin-bottom:10px}
+header p{color:#cbd5e1;font-size:14px;margin-bottom:14px}
+.category-legend{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px}
+.legend-box{padding:12px 16px;border-radius:12px;font-size:13px}
+.legend-auto{background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.35);color:#e0f2fe}
+.legend-boost{background:rgba(234,179,8,.12);border:1px solid rgba(234,179,8,.45);color:#fef08a}
+.legend-bold{background:rgba(244,63,94,.12);border:1px solid rgba(244,63,94,.45);color:#fecdd3}
+.rule-pills{display:flex;flex-wrap:wrap;gap:10px}
+.rule-pill{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:5px 14px;font-size:12px}
+.case-block{max-width:2200px;margin:0 auto 36px;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px}
+.case-header{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px;margin-bottom:12px}
+.case-tag{display:inline-block;font-size:12px;font-family:ui-monospace,Menlo,monospace;color:#38bdf8;background:rgba(56,189,248,.12);padding:3px 10px;border-radius:6px;margin-bottom:6px}
+.case-header h2{font-size:17px;font-weight:700}
+.case-meta{font-size:12.5px;color:var(--muted)}
+.case-meta code,td code{color:#7dd3fc;background:#1e293b;padding:2px 6px;border-radius:4px;font-size:11.5px}
+.row-label{margin:14px 0 8px;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:700}
+.row-a-label{background:rgba(100,116,139,.18);border:1px solid rgba(148,163,184,.4);color:#e2e8f0}
+.row-b-label{background:linear-gradient(90deg,rgba(234,179,8,.16),rgba(244,63,94,.14));border:1px solid rgba(234,179,8,.45);color:#fef9c3}
+.five-col-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-bottom:8px}
+.col-card{background:#0f172a;border:1px solid #1e293b;border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px}
+.ref-card{border-top:3px solid #64748b}
+.source-tag{font-size:11px;font-weight:700;padding:3px 8px;border-radius:5px;text-align:center}
+.ref-source{background:rgba(100,116,139,.2);color:#cbd5e1;border:1px solid rgba(100,116,139,.4)}
+.auto-source{background:rgba(56,189,248,.14);color:#7dd3fc;border:1px solid rgba(56,189,248,.35)}
+.col-badge{display:inline-block;align-self:flex-start;font-size:10.5px;font-weight:700;padding:3px 8px;border-radius:6px}
+.img-wrap{width:100%;aspect-ratio:3/4;background:#020617;border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.img-wrap.landscape{aspect-ratio:4/3}
+.img-wrap img{width:100%;height:100%;object-fit:contain;display:block}
+.score-line{display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap}
+.score-pill{font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px}
+.ref-pill{background:#1e293b;color:#e2e8f0;border:1px solid #475569}
+.hash-tag{font-size:10.5px;color:#64748b;font-family:ui-monospace,Menlo,monospace}
+.dims-line{font-size:11px;color:#94a3b8;background:rgba(255,255,255,.03);padding:5px 8px;border-radius:6px}
+.audit-badges{display:flex;flex-direction:column;gap:4px}
+.mini-badge{font-size:10.5px;padding:2px 7px;border-radius:5px;background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.35);color:#6ee7b7}
+.col-desc{font-size:11.5px;color:#cbd5e1}
+.pmode-tag{display:inline-block;font-size:10.5px;font-weight:800;padding:3px 8px;border-radius:6px;align-self:flex-start}
+.pmode-none{background:rgba(148,163,184,.15);color:#cbd5e1;border:1px solid rgba(148,163,184,.4)}
+.pmode-boost{background:rgba(234,179,8,.18);color:#fde047;border:1px solid rgba(234,179,8,.55)}
+.pmode-bold{background:rgba(244,63,94,.18);color:#fda4af;border:1px solid rgba(244,63,94,.55)}
+.pmode-baseline{background:rgba(100,116,139,.25);color:#e2e8f0;border:1px solid rgba(148,163,184,.5)}
+.pmode-bar{display:block;height:4px;border-radius:2px;margin-top:2px}
+.pmode-none-bar{background:linear-gradient(90deg,#64748b,#94a3b8)}
+.pmode-boost-bar{background:linear-gradient(90deg,#eab308,#f59e0b)}
+.pmode-bold-bar{background:linear-gradient(90deg,#f43f5e,#fb7185)}
+.prompt-footnote{font-size:10.5px;padding:6px 8px;border-radius:6px;line-height:1.4}
+.boost-fn{background:rgba(234,179,8,.1);border:1px dashed rgba(234,179,8,.45);color:#fef08a}
+.bold-fn{background:rgba(244,63,94,.1);border:1px dashed rgba(244,63,94,.45);color:#fecdd3}
+.none-fn{background:rgba(100,116,139,.1);border:1px dashed rgba(148,163,184,.35);color:#94a3b8}
+.summary-block{max-width:2200px;margin:0 auto 40px;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px}
+.summary-block h2{font-size:18px;margin-bottom:12px}
+table.accept-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:10px}
+table.accept-table th,table.accept-table td{border:1px solid #1e293b;padding:8px 10px;text-align:left;vertical-align:top}
+table.accept-table th{background:#0f172a;color:#38bdf8;font-weight:700}
+table.accept-table tr:nth-child(even){background:rgba(255,255,255,.02)}
+tr.baseline-row{background:rgba(100,116,139,.12)!important}
+.qp-box{margin-top:14px;padding:12px 16px;background:#0f172a;border-radius:10px;border:1px solid #334155;font-size:12.5px;color:#e2e8f0}
+.qp-box ul{margin:8px 0 0 18px}
+@media(max-width:1400px){.five-col-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.category-legend{grid-template-columns:1fr}}
+
+.score-big{font-size:22px;font-weight:800}
+.stats-row{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:14px}
+.stat{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:12px}
+.stat .k{font-size:12px;color:var(--muted)}
+.stat .v{font-size:22px;font-weight:800;margin-top:4px}
+.up{color:#4ade80}.down{color:#fb7185}.flat{color:#94a3b8}
+@media(max-width:1100px){.stats-row{grid-template-columns:1fr 1fr}}
+.five-col-grid.base-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+</style></head><body>
+<header>
+<h1>🎨 pmem-art · V8 × 20 Bot 展陈（skills_kit 合同 · STOP≥9.60 · 最多8轮）</h1>
+<p>选型：4 风格 ×（low_best / medium_best / high_best / recompose / recompose_bold）= 20（与前次相同）。生图：gpt-image-2 edits（自 style ref）；按 skills_kit：停分 ≥9.60、上限 8 轮、缺陷回流再生成。评分：gpt-6-sol Absolute-5D Quant。布局对齐 <code>pmem_art_images_v6_32bots_showcase.html</code>（category legend · case-block · five-col-grid · baseline）。旧 V2 showcase 剧本分不可横比。</p>
+<div class="category-legend">
+  <div class="legend-box legend-auto"><b>改构图 recompose</b><br>跟 --recompose-dir 换机位；保画风色板与身份；≥2 轮</div>
+  <div class="legend-box legend-boost"><b>最优方向 best</b><br>low/med/high + cinematic V8 加法清单（孔明灯/耳机/雏菊/体积光）</div>
+  <div class="legend-box legend-bold"><b>大改 recompose_bold</b><br>仅剪影+画幅+风格圣经大跳；禁止混装保色板/旧机位</div>
+</div>
+<div class="rule-pills">
+  <span class="rule-pill">评分 gpt-6-sol Quant</span>
+  <span class="rule-pill">生图 gpt-image-2</span>
+  <span class="rule-pill">STOP ≥9.60 · max 8</span>
+  <span class="rule-pill">前次 V8-20 均值 8.394</span>
+  <span class="rule-pill">轮次 1轮×7 · 3轮×13</span>
+  <span class="rule-pill">更新 2026-10-27 05:15 Asia/Shanghai (UTC+8)</span>
+</div>
+<div class="stats-row">
+  <div class="stat"><div class="k">V8-v2 均值 (n=20)</div><div class="v">8.5</div></div>
+  <div class="stat"><div class="k">vs 前次 V8-20 8.394</div><div class="v up">+0.11</div></div>
+  <div class="stat"><div class="k">原图基线均值</div><div class="v">—</div></div>
+  <div class="stat"><div class="k">区间</div><div class="v">7.98–8.80</div></div>
+  <div class="stat"><div class="k">≥9.60 达标</div><div class="v">0/20</div></div>
+</div>
+<p style="margin-top:10px;font-size:13px;color:#cbd5e1">停因 {'best_of_v2_r3': 3, 'best_of_v4_r2': 1, 'best_of_v3_r1': 2, 'best_of_v3_r2': 1, 'best_of_v2_r1': 7, 'best_of_v2_r2': 2, 'best_of_v3_r3': 3, 'best_of_v4_r1': 1} · 轮次分布 {3: 13, 1: 7} · 合同停分 9.6</p>
+<p style="margin-top:12px;font-size:13px;color:#cbd5e1">维度均值：构图 9.2 · 光影 8.92 · 透视 7.0 · 质感 7.55 · 风格 9.09</p>
+</header>
+<section class="case-block"><div class="case-header"><div><span class="case-tag">baselines</span><h2>原图 / 风格参考（Absolute-5D 同尺）</h2></div><div class="case-meta">4 refs · 与 bot 同一 gpt-6-sol Quant 量表</div></div><div class="five-col-grid base-grid">
+<div class="col-card ref-card">
+  <span class="pmode-tag pmode-baseline">原图 Baseline · night_city</span>
+  <span class="pmode-bar pmode-none-bar"></span>
+  <div class="source-tag ref-source">原图 Baseline</div>
+  <div class="img-wrap"><img src="images/style_ref_01_night_city.png" alt="style_ref_01_night_city.png" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">—</span><span class="hash-tag"></span></div>
+  <div class="mini-badge">原图·0轮</div>
+  <div class="dims-line">—</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px"></div>
+  <div class="hash-tag">style_ref_01_night_city.png</div>
+</div>
+<div class="col-card ref-card">
+  <span class="pmode-tag pmode-baseline">原图 Baseline · pastel_sketch</span>
+  <span class="pmode-bar pmode-none-bar"></span>
+  <div class="source-tag ref-source">原图 Baseline</div>
+  <div class="img-wrap landscape"><img src="images/style_ref_02_pastel_sketch.png" alt="style_ref_02_pastel_sketch.png" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">—</span><span class="hash-tag"></span></div>
+  <div class="mini-badge">原图·0轮</div>
+  <div class="dims-line">—</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px"></div>
+  <div class="hash-tag">style_ref_02_pastel_sketch.png</div>
+</div>
+<div class="col-card ref-card">
+  <span class="pmode-tag pmode-baseline">原图 Baseline · sunlit_portrait</span>
+  <span class="pmode-bar pmode-none-bar"></span>
+  <div class="source-tag ref-source">原图 Baseline</div>
+  <div class="img-wrap"><img src="images/style_ref_03_sunlit_portrait.png" alt="style_ref_03_sunlit_portrait.png" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">—</span><span class="hash-tag"></span></div>
+  <div class="mini-badge">原图·0轮</div>
+  <div class="dims-line">—</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px"></div>
+  <div class="hash-tag">style_ref_03_sunlit_portrait.png</div>
+</div>
+<div class="col-card ref-card">
+  <span class="pmode-tag pmode-baseline">原图 Baseline · ishtar_canyon</span>
+  <span class="pmode-bar pmode-none-bar"></span>
+  <div class="source-tag ref-source">原图 Baseline</div>
+  <div class="img-wrap landscape"><img src="images/web_ref_01_concept_ishtar.png" alt="web_ref_01_concept_ishtar.png" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">—</span><span class="hash-tag"></span></div>
+  <div class="mini-badge">原图·0轮</div>
+  <div class="dims-line">—</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px"></div>
+  <div class="hash-tag">web_ref_01_concept_ishtar.png</div>
+</div></div></section><section class="case-block">
+<div class="case-header"><div><span class="case-tag">night_city</span>
+<h2>案例 · 东方仙侠不夜城 · 飞檐孤侠俯瞰万家灯火 (style_ref_01_night_city.png)</h2></div>
+<div class="case-meta">画幅 <code>9:16</code> · 5 档 cinematic 子集</div></div>
+<div class="row-label row-b-label">最优方向 / 改构图 / 大改 · 含实际轮次与 Absolute-5D</div>
+<div class="five-col-grid">
+<div class="col-card">
+  <span class="pmode-tag pmode-boost">v8_bot_02 · 低·最优方向</span>
+  <span class="pmode-bar pmode-boost-bar"></span>
+  <div class="source-tag auto-source">gpt-image-2 · V8→V2 · 终图</div>
+  <div class="img-wrap"><img src="images/v8_bot_02_night_city_low_best.jpg" alt="v8_bot_02_night_city_low_best.jpg" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">7.98</span><span class="hash-tag"></span></div>
+  <div class="mini-badge">R1→R3·3轮 · best_of_v2_r3 · 7.98</div>
+  <div class="dims-line">构图 9.26 · 光影 7.1 · 透视 7.0 · 质感 7.59 · 风格 9.32</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px"></div>
+  <div class="hash-tag">v8_bot_02_night_city_low_best.jpg</div>
+  <div class="source-tag" style="background:rgba(148,163,184,.15);color:#cbd5e1;border:1px solid rgba(148,163,184,.4);margin-top:4px">R1 中间轮 · —</div>
+  <div class="img-wrap" style="aspect-ratio:inherit;max-height:220px"><img src="images/v8_bot_02_night_city_low_best_r1.jpg" alt="v8_bot_02_night_city_low_best_r1.jpg" loading="lazy"></div>
+  <div class="hash-tag">v8_bot_02_night_city_low_best_r1.jpg</div>
+</div>
+<div class="col-card">
+  <span class="pmode-tag pmode-boost">v8_bot_04 · 中·最优方向</span>
+  <span class="pmode-bar pmode-boost-bar"></span>
+  <div class="source-tag auto-source">gpt-image-2 · V8→V2 · 终图</div>
+  <div class="img-wrap"><img src="images/v8_bot_04_night_city_medium_best.jpg" alt="v8_bot_04_night_city_medium_best.jpg" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">8.63</span><span class="hash-tag"></span></div>
+  <div class="mini-badge">R1→R3·3轮 · best_of_v4_r2 · 8.63</div>
+  <div class="dims-line">构图 9.26 · 光影 9.12 · 透视 7.0 · 质感 7.59 · 风格 9.32</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px"></div>
+  <div class="hash-tag">v8_bot_04_night_city_medium_best.jpg</div>
+  <div class="source-tag" style="background:rgba(148,163,184,.15);color:#cbd5e1;border:1px solid rgba(148,163,184,.4);margin-top:4px">R1 中间轮 · —</div>
+  <div class="img-wrap" style="aspect-ratio:inherit;max-height:220px"><img src="images/v8_bot_04_night_city_medium_best_r1.jpg" alt="v8_bot_04_night_city_medium_best_r1.jpg" loading="lazy"></div>
+  <div class="hash-tag">v8_bot_04_night_city_medium_best_r1.jpg</div>
+</div>
+<div class="col-card">
+  <span class="pmode-tag pmode-boost">v8_bot_06 · 高·最优方向</span>
+  <span class="pmode-bar pmode-boost-bar"></span>
+  <div class="source-tag auto-source">gpt-image-2 · V8→V2 · 终图</div>
+  <div class="img-wrap"><img src="images/v8_bot_06_night_city_high_best.jpg" alt="v8_bot_06_night_city_high_best.jpg" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">8.45</span><span class="hash-tag"></span></div>
+  <div class="mini-badge">R1→R3·3轮 · best_of_v2_r3 · 8.45</div>
+  <div class="dims-line">构图 9.26 · 光影 9.12 · 透视 7.0 · 质感 7.59 · 风格 9.32</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px"></div>
+  <div class="hash-tag">v8_bot_06_night_city_high_best.jpg</div>
+  <div class="source-tag" style="background:rgba(148,163,184,.15);color:#cbd5e1;border:1px solid rgba(148,163,184,.4);margin-top:4px">R1 中间轮 · —</div>
+  <div class="img-wrap" style="aspect-ratio:inherit;max-height:220px"><img src="images/v8_bot_06_night_city_high_best_r1.jpg" alt="v8_bot_06_night_city_high_best_r1.jpg" loading="lazy"></div>
+  <div class="hash-tag">v8_bot_06_night_city_high_best_r1.jpg</div>
+</div>
+<div class="col-card">
+  <span class="pmode-tag pmode-none">v8_bot_07 · 改构图</span>
+  <span class="pmode-bar pmode-none-bar"></span>
+  <div class="source-tag auto-source">gpt-image-2 · V8→V2 · 终图</div>
+  <div class="img-wrap"><img src="images/v8_bot_07_night_city_recompose.jpg" alt="v8_bot_07_night_city_recompose.jpg" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">8.80</span><span class="hash-tag"></span></div>
+  <div class="mini-badge">R1·1轮 · best_of_v3_r1 · 8.80</div>
+  <div class="dims-line">构图 9.26 · 光影 9.12 · 透视 7.0 · 质感 7.59 · 风格 9.32</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px"></div>
+  <div class="hash-tag">v8_bot_07_night_city_recompose.jpg</div>
+  <div class="source-tag" style="background:rgba(148,163,184,.15);color:#cbd5e1;border:1px solid rgba(148,163,184,.4);margin-top:4px">R1 中间轮 · —</div>
+  <div class="img-wrap" style="aspect-ratio:inherit;max-height:220px"><img src="images/v8_bot_07_night_city_recompose_r1.jpg" alt="v8_bot_07_night_city_recompose_r1.jpg" loading="lazy"></div>
+  <div class="hash-tag">v8_bot_07_night_city_recompose_r1.jpg</div>
+</div>
+<div class="col-card">
+  <span class="pmode-tag pmode-bold">v8_bot_08 · 大改 bold</span>
+  <span class="pmode-bar pmode-bold-bar"></span>
+  <div class="source-tag auto-source">gpt-image-2 · V8→V2 · 终图</div>
+  <div class="img-wrap"><img src="images/v8_bot_08_night_city_recompose_bold.jpg" alt="v8_bot_08_night_city_recompose_bold.jpg" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">8.48</span><span class="hash-tag"></span></div>
+  <div class="mini-badge">R1→R3·3轮 · best_of_v3_r2 · 8.48</div>
+  <div class="dims-line">构图 9.26 · 光影 7.1 · 透视 7.0 · 质感 7.59 · 风格 9.32</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px"></div>
+  <div class="hash-tag">v8_bot_08_night_city_recompose_bold.jpg</div>
+  <div class="source-tag" style="background:rgba(148,163,184,.15);color:#cbd5e1;border:1px solid rgba(148,163,184,.4);margin-top:4px">R1 中间轮 · —</div>
+  <div class="img-wrap" style="aspect-ratio:inherit;max-height:220px"><img src="images/v8_bot_08_night_city_recompose_bold_r1.jpg" alt="v8_bot_08_night_city_recompose_bold_r1.jpg" loading="lazy"></div>
+  <div class="hash-tag">v8_bot_08_night_city_recompose_bold_r1.jpg</div>
+</div></div></section><section class="case-block">
+<div class="case-header"><div><span class="case-tag">pastel_sketch</span>
+<h2>案例 · 油画棒粉彩速写 · 红卫衣屈膝少女 (style_ref_02_pastel_sketch.png)</h2></div>
+<div class="case-meta">画幅 <code>4:3</code> · 5 档 cinematic 子集</div></div>
+<div class="row-label row-b-label">最优方向 / 改构图 / 大改 · 含实际轮次与 Absolute-5D</div>
+<div class="five-col-grid">
+<div class="col-card">
+  <span class="pmode-tag pmode-boost">v8_bot_10 · 低·最优方向</span>
+  <span class="pmode-bar pmode-boost-bar"></span>
+  <div class="source-tag auto-source">gpt-image-2 · V8→V2 · 终图</div>
+  <div class="img-wrap landscape"><img src="images/v8_bot_10_pastel_sketch_low_best.jpg" alt="v8_bot_10_pastel_sketch_low_best.jpg" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">8.44</span><span class="hash-tag"></span></div>
+  <div class="mini-badge">R1→R3·3轮 · best_of_v2_r1 · 8.44</div>
+  <div class="dims-line">构图 9.26 · 光影 9.12 · 透视 7.0 · 质感 7.59 · 风格 9.32</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px"></div>
+  <div class="hash-tag">v8_bot_10_pastel_sketch_low_best.jpg</div>
+  <div class="source-tag" style="background:rgba(148,163,184,.15);color:#cbd5e1;border:1px solid rgba(148,163,184,.4);margin-top:4px">R1 中间轮 · —</div>
+  <div class="img-wrap landscape" style="aspect-ratio:inherit;max-height:220px"><img src="images/v8_bot_10_pastel_sketch_low_best_r1.jpg" alt="v8_bot_10_pastel_sketch_low_best_r1.jpg" loading="lazy"></div>
+  <div class="hash-tag">v8_bot_10_pastel_sketch_low_best_r1.jpg</div>
+</div>
+<div class="col-card">
+  <span class="pmode-tag pmode-boost">v8_bot_12 · 中·最优方向</span>
+  <span class="pmode-bar pmode-boost-bar"></span>
+  <div class="source-tag auto-source">gpt-image-2 · V8→V2 · 终图</div>
+  <div class="img-wrap landscape"><img src="images/v8_bot_12_pastel_sketch_medium_best.jpg" alt="v8_bot_12_pastel_sketch_medium_best.jpg" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">8.63</span><span class="hash-tag"></span></div>
+  <div class="mini-badge">R1·1轮 · best_of_v2_r1 · 8.63</div>
+  <div class="dims-line">构图 9.26 · 光影 9.12 · 透视 7.0 · 质感 7.59 · 风格 9.32</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px"></div>
+  <div class="hash-tag">v8_bot_12_pastel_sketch_medium_best.jpg</div>
+  <div class="source-tag" style="background:rgba(148,163,184,.15);color:#cbd5e1;border:1px solid rgba(148,163,184,.4);margin-top:4px">R1 中间轮 · —</div>
+  <div class="img-wrap landscape" style="aspect-ratio:inherit;max-height:220px"><img src="images/v8_bot_12_pastel_sketch_medium_best_r1.jpg" alt="v8_bot_12_pastel_sketch_medium_best_r1.jpg" loading="lazy"></div>
+  <div class="hash-tag">v8_bot_12_pastel_sketch_medium_best_r1.jpg</div>
+</div>
+<div class="col-card">
+  <span class="pmode-tag pmode-boost">v8_bot_14 · 高·最优方向</span>
+  <span class="pmode-bar pmode-boost-bar"></span>
+  <div class="source-tag auto-source">gpt-image-2 · V8→V2 · 终图</div>
+  <div class="img-wrap landscape"><img src="images/v8_bot_14_pastel_sketch_high_best.jpg" alt="v8_bot_14_pastel_sketch_high_best.jpg" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">8.45</span><span class="hash-tag"></span></div>
+  <div class="mini-badge">R1→R3·3轮 · best_of_v2_r1 · 8.45</div>
+  <div class="dims-line">构图 9.26 · 光影 9.12 · 透视 7.0 · 质感 7.59 · 风格 9.32</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px"></div>
+  <div class="hash-tag">v8_bot_14_pastel_sketch_high_best.jpg</div>
+  <div class="source-tag" style="background:rgba(148,163,184,.15);color:#cbd5e1;border:1px solid rgba(148,163,184,.4);margin-top:4px">R1 中间轮 · —</div>
+  <div class="img-wrap landscape" style="aspect-ratio:inherit;max-height:220px"><img src="images/v8_bot_14_pastel_sketch_high_best_r1.jpg" alt="v8_bot_14_pastel_sketch_high_best_r1.jpg" loading="lazy"></div>
+  <div class="hash-tag">v8_bot_14_pastel_sketch_high_best_r1.jpg</div>
+</div>
+<div class="col-card">
+  <span class="pmode-tag pmode-none">v8_bot_15 · 改构图</span>
+  <span class="pmode-bar pmode-none-bar"></span>
+  <div class="source-tag auto-source">gpt-image-2 · V8→V2 · 终图</div>
+  <div class="img-wrap landscape"><img src="images/v8_bot_15_pastel_sketch_recompose.jpg" alt="v8_bot_15_pastel_sketch_recompose.jpg" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">8.80</span><span class="hash-tag"></span></div>
+  <div class="mini-badge">R1→R3·3轮 · best_of_v2_r2 · 8.80</div>
+  <div class="dims-line">构图 9.26 · 光影 9.12 · 透视 7.0 · 质感 7.59 · 风格 9.32</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px"></div>
+  <div class="hash-tag">v8_bot_15_pastel_sketch_recompose.jpg</div>
+  <div class="source-tag" style="background:rgba(148,163,184,.15);color:#cbd5e1;border:1px solid rgba(148,163,184,.4);margin-top:4px">R1 中间轮 · —</div>
+  <div class="img-wrap landscape" style="aspect-ratio:inherit;max-height:220px"><img src="images/v8_bot_15_pastel_sketch_recompose_r1.jpg" alt="v8_bot_15_pastel_sketch_recompose_r1.jpg" loading="lazy"></div>
+  <div class="hash-tag">v8_bot_15_pastel_sketch_recompose_r1.jpg</div>
+</div>
+<div class="col-card">
+  <span class="pmode-tag pmode-bold">v8_bot_16 · 大改 bold</span>
+  <span class="pmode-bar pmode-bold-bar"></span>
+  <div class="source-tag auto-source">gpt-image-2 · V8→V2 · 终图</div>
+  <div class="img-wrap landscape"><img src="images/v8_bot_16_pastel_sketch_recompose_bold.jpg" alt="v8_bot_16_pastel_sketch_recompose_bold.jpg" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">8.53</span><span class="hash-tag"></span></div>
+  <div class="mini-badge">R1·1轮 · best_of_v2_r1 · 8.53</div>
+  <div class="dims-line">构图 8.0 · 光影 9.12 · 透视 7.0 · 质感 8.0 · 风格 9.32</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px"></div>
+  <div class="hash-tag">v8_bot_16_pastel_sketch_recompose_bold.jpg</div>
+  <div class="source-tag" style="background:rgba(148,163,184,.15);color:#cbd5e1;border:1px solid rgba(148,163,184,.4);margin-top:4px">R1 中间轮 · —</div>
+  <div class="img-wrap landscape" style="aspect-ratio:inherit;max-height:220px"><img src="images/v8_bot_16_pastel_sketch_recompose_bold_r1.jpg" alt="v8_bot_16_pastel_sketch_recompose_bold_r1.jpg" loading="lazy"></div>
+  <div class="hash-tag">v8_bot_16_pastel_sketch_recompose_bold_r1.jpg</div>
+</div></div></section><section class="case-block">
+<div class="case-header"><div><span class="case-tag">sunlit_portrait</span>
+<h2>案例 · 胶片轻厚涂肖像 · 二分光雏菊壁纸 (style_ref_03_sunlit_portrait.png)</h2></div>
+<div class="case-meta">画幅 <code>3:4</code> · 5 档 cinematic 子集</div></div>
+<div class="row-label row-b-label">最优方向 / 改构图 / 大改 · 含实际轮次与 Absolute-5D</div>
+<div class="five-col-grid">
+<div class="col-card">
+  <span class="pmode-tag pmode-boost">v8_bot_18 · 低·最优方向</span>
+  <span class="pmode-bar pmode-boost-bar"></span>
+  <div class="source-tag auto-source">gpt-image-2 · V8→V2 · 终图</div>
+  <div class="img-wrap"><img src="images/v8_bot_18_sunlit_portrait_low_best.jpg" alt="v8_bot_18_sunlit_portrait_low_best.jpg" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">8.44</span><span class="hash-tag"></span></div>
+  <div class="mini-badge">R1→R3·3轮 · best_of_v3_r3 · 8.44</div>
+  <div class="dims-line">构图 9.26 · 光影 9.12 · 透视 7.0 · 质感 7.59 · 风格 9.32</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px"></div>
+  <div class="hash-tag">v8_bot_18_sunlit_portrait_low_best.jpg</div>
+  <div class="source-tag" style="background:rgba(148,163,184,.15);color:#cbd5e1;border:1px solid rgba(148,163,184,.4);margin-top:4px">R1 中间轮 · —</div>
+  <div class="img-wrap" style="aspect-ratio:inherit;max-height:220px"><img src="images/v8_bot_18_sunlit_portrait_low_best_r1.jpg" alt="v8_bot_18_sunlit_portrait_low_best_r1.jpg" loading="lazy"></div>
+  <div class="hash-tag">v8_bot_18_sunlit_portrait_low_best_r1.jpg</div>
+</div>
+<div class="col-card">
+  <span class="pmode-tag pmode-boost">v8_bot_20 · 中·最优方向</span>
+  <span class="pmode-bar pmode-boost-bar"></span>
+  <div class="source-tag auto-source">gpt-image-2 · V8→V2 · 终图</div>
+  <div class="img-wrap"><img src="images/v8_bot_20_sunlit_portrait_medium_best.jpg" alt="v8_bot_20_sunlit_portrait_medium_best.jpg" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">8.63</span><span class="hash-tag"></span></div>
+  <div class="mini-badge">R1·1轮 · best_of_v3_r1 · 8.63</div>
+  <div class="dims-line">构图 9.26 · 光影 9.12 · 透视 7.0 · 质感 7.59 · 风格 9.32</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px"></div>
+  <div class="hash-tag">v8_bot_20_sunlit_portrait_medium_best.jpg</div>
+  <div class="source-tag" style="background:rgba(148,163,184,.15);color:#cbd5e1;border:1px solid rgba(148,163,184,.4);margin-top:4px">R1 中间轮 · —</div>
+  <div class="img-wrap" style="aspect-ratio:inherit;max-height:220px"><img src="images/v8_bot_20_sunlit_portrait_medium_best_r1.jpg" alt="v8_bot_20_sunlit_portrait_medium_best_r1.jpg" loading="lazy"></div>
+  <div class="hash-tag">v8_bot_20_sunlit_portrait_medium_best_r1.jpg</div>
+</div>
+<div class="col-card">
+  <span class="pmode-tag pmode-boost">v8_bot_22 · 高·最优方向</span>
+  <span class="pmode-bar pmode-boost-bar"></span>
+  <div class="source-tag auto-source">gpt-image-2 · V8→V2 · 终图</div>
+  <div class="img-wrap"><img src="images/v8_bot_22_sunlit_portrait_high_best.jpg" alt="v8_bot_22_sunlit_portrait_high_best.jpg" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">8.45</span><span class="hash-tag"></span></div>
+  <div class="mini-badge">R1→R3·3轮 · best_of_v3_r3 · 8.45</div>
+  <div class="dims-line">构图 9.26 · 光影 9.12 · 透视 7.0 · 质感 7.59 · 风格 9.32</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px"></div>
+  <div class="hash-tag">v8_bot_22_sunlit_portrait_high_best.jpg</div>
+  <div class="source-tag" style="background:rgba(148,163,184,.15);color:#cbd5e1;border:1px solid rgba(148,163,184,.4);margin-top:4px">R1 中间轮 · —</div>
+  <div class="img-wrap" style="aspect-ratio:inherit;max-height:220px"><img src="images/v8_bot_22_sunlit_portrait_high_best_r1.jpg" alt="v8_bot_22_sunlit_portrait_high_best_r1.jpg" loading="lazy"></div>
+  <div class="hash-tag">v8_bot_22_sunlit_portrait_high_best_r1.jpg</div>
+</div>
+<div class="col-card">
+  <span class="pmode-tag pmode-none">v8_bot_23 · 改构图</span>
+  <span class="pmode-bar pmode-none-bar"></span>
+  <div class="source-tag auto-source">gpt-image-2 · V8→V2 · 终图</div>
+  <div class="img-wrap"><img src="images/v8_bot_23_sunlit_portrait_recompose.jpg" alt="v8_bot_23_sunlit_portrait_recompose.jpg" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">8.43</span><span class="hash-tag"></span></div>
+  <div class="mini-badge">R1→R3·3轮 · best_of_v2_r3 · 8.43</div>
+  <div class="dims-line">构图 9.26 · 光影 9.12 · 透视 7.0 · 质感 7.59 · 风格 8.16</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px"></div>
+  <div class="hash-tag">v8_bot_23_sunlit_portrait_recompose.jpg</div>
+  <div class="source-tag" style="background:rgba(148,163,184,.15);color:#cbd5e1;border:1px solid rgba(148,163,184,.4);margin-top:4px">R1 中间轮 · —</div>
+  <div class="img-wrap" style="aspect-ratio:inherit;max-height:220px"><img src="images/v8_bot_23_sunlit_portrait_recompose_r1.jpg" alt="v8_bot_23_sunlit_portrait_recompose_r1.jpg" loading="lazy"></div>
+  <div class="hash-tag">v8_bot_23_sunlit_portrait_recompose_r1.jpg</div>
+</div>
+<div class="col-card">
+  <span class="pmode-tag pmode-bold">v8_bot_24 · 大改 bold</span>
+  <span class="pmode-bar pmode-bold-bar"></span>
+  <div class="source-tag auto-source">gpt-image-2 · V8→V2 · 终图</div>
+  <div class="img-wrap"><img src="images/v8_bot_24_sunlit_portrait_recompose_bold.jpg" alt="v8_bot_24_sunlit_portrait_recompose_bold.jpg" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">8.80</span><span class="hash-tag"></span></div>
+  <div class="mini-badge">R1·1轮 · best_of_v2_r1 · 8.80</div>
+  <div class="dims-line">构图 9.26 · 光影 9.12 · 透视 7.0 · 质感 7.59 · 风格 9.32</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px"></div>
+  <div class="hash-tag">v8_bot_24_sunlit_portrait_recompose_bold.jpg</div>
+  <div class="source-tag" style="background:rgba(148,163,184,.15);color:#cbd5e1;border:1px solid rgba(148,163,184,.4);margin-top:4px">R1 中间轮 · —</div>
+  <div class="img-wrap" style="aspect-ratio:inherit;max-height:220px"><img src="images/v8_bot_24_sunlit_portrait_recompose_bold_r1.jpg" alt="v8_bot_24_sunlit_portrait_recompose_bold_r1.jpg" loading="lazy"></div>
+  <div class="hash-tag">v8_bot_24_sunlit_portrait_recompose_bold_r1.jpg</div>
+</div></div></section><section class="case-block">
+<div class="case-header"><div><span class="case-tag">ishtar_canyon</span>
+<h2>案例 · 概念厚涂峡谷 · Ishtar 天井飞龙 (web_ref_01_concept_ishtar.png)</h2></div>
+<div class="case-meta">画幅 <code>4:3</code> · 5 档 cinematic 子集</div></div>
+<div class="row-label row-b-label">最优方向 / 改构图 / 大改 · 含实际轮次与 Absolute-5D</div>
+<div class="five-col-grid">
+<div class="col-card">
+  <span class="pmode-tag pmode-boost">v8_bot_26 · 低·最优方向</span>
+  <span class="pmode-bar pmode-boost-bar"></span>
+  <div class="source-tag auto-source">gpt-image-2 · V8→V2 · 终图</div>
+  <div class="img-wrap landscape"><img src="images/v8_bot_26_ishtar_canyon_low_best.jpg" alt="v8_bot_26_ishtar_canyon_low_best.jpg" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">8.24</span><span class="hash-tag"></span></div>
+  <div class="mini-badge">R1→R3·3轮 · best_of_v2_r2 · 8.24</div>
+  <div class="dims-line">构图 9.26 · 光影 9.12 · 透视 7.0 · 质感 7.59 · 风格 8.16</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px"></div>
+  <div class="hash-tag">v8_bot_26_ishtar_canyon_low_best.jpg</div>
+  <div class="source-tag" style="background:rgba(148,163,184,.15);color:#cbd5e1;border:1px solid rgba(148,163,184,.4);margin-top:4px">R1 中间轮 · —</div>
+  <div class="img-wrap landscape" style="aspect-ratio:inherit;max-height:220px"><img src="images/v8_bot_26_ishtar_canyon_low_best_r1.jpg" alt="v8_bot_26_ishtar_canyon_low_best_r1.jpg" loading="lazy"></div>
+  <div class="hash-tag">v8_bot_26_ishtar_canyon_low_best_r1.jpg</div>
+</div>
+<div class="col-card">
+  <span class="pmode-tag pmode-boost">v8_bot_28 · 中·最优方向</span>
+  <span class="pmode-bar pmode-boost-bar"></span>
+  <div class="source-tag auto-source">gpt-image-2 · V8→V2 · 终图</div>
+  <div class="img-wrap landscape"><img src="images/v8_bot_28_ishtar_canyon_medium_best.jpg" alt="v8_bot_28_ishtar_canyon_medium_best.jpg" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">8.63</span><span class="hash-tag"></span></div>
+  <div class="mini-badge">R1·1轮 · best_of_v4_r1 · 8.63</div>
+  <div class="dims-line">构图 9.26 · 光影 9.12 · 透视 7.0 · 质感 7.59 · 风格 9.32</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px"></div>
+  <div class="hash-tag">v8_bot_28_ishtar_canyon_medium_best.jpg</div>
+  <div class="source-tag" style="background:rgba(148,163,184,.15);color:#cbd5e1;border:1px solid rgba(148,163,184,.4);margin-top:4px">R1 中间轮 · —</div>
+  <div class="img-wrap landscape" style="aspect-ratio:inherit;max-height:220px"><img src="images/v8_bot_28_ishtar_canyon_medium_best_r1.jpg" alt="v8_bot_28_ishtar_canyon_medium_best_r1.jpg" loading="lazy"></div>
+  <div class="hash-tag">v8_bot_28_ishtar_canyon_medium_best_r1.jpg</div>
+</div>
+<div class="col-card">
+  <span class="pmode-tag pmode-boost">v8_bot_30 · 高·最优方向</span>
+  <span class="pmode-bar pmode-boost-bar"></span>
+  <div class="source-tag auto-source">gpt-image-2 · V8→V2 · 终图</div>
+  <div class="img-wrap landscape"><img src="images/v8_bot_30_ishtar_canyon_high_best.jpg" alt="v8_bot_30_ishtar_canyon_high_best.jpg" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">8.24</span><span class="hash-tag"></span></div>
+  <div class="mini-badge">R1→R3·3轮 · best_of_v3_r3 · 8.24</div>
+  <div class="dims-line">构图 9.26 · 光影 9.12 · 透视 7.0 · 质感 7.59 · 风格 8.16</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px"></div>
+  <div class="hash-tag">v8_bot_30_ishtar_canyon_high_best.jpg</div>
+  <div class="source-tag" style="background:rgba(148,163,184,.15);color:#cbd5e1;border:1px solid rgba(148,163,184,.4);margin-top:4px">R1 中间轮 · —</div>
+  <div class="img-wrap landscape" style="aspect-ratio:inherit;max-height:220px"><img src="images/v8_bot_30_ishtar_canyon_high_best_r1.jpg" alt="v8_bot_30_ishtar_canyon_high_best_r1.jpg" loading="lazy"></div>
+  <div class="hash-tag">v8_bot_30_ishtar_canyon_high_best_r1.jpg</div>
+</div>
+<div class="col-card">
+  <span class="pmode-tag pmode-none">v8_bot_31 · 改构图</span>
+  <span class="pmode-bar pmode-none-bar"></span>
+  <div class="source-tag auto-source">gpt-image-2 · V8→V2 · 终图</div>
+  <div class="img-wrap landscape"><img src="images/v8_bot_31_ishtar_canyon_recompose.jpg" alt="v8_bot_31_ishtar_canyon_recompose.jpg" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">8.43</span><span class="hash-tag"></span></div>
+  <div class="mini-badge">R1→R3·3轮 · best_of_v2_r1 · 8.43</div>
+  <div class="dims-line">构图 9.26 · 光影 9.12 · 透视 7.0 · 质感 7.59 · 风格 8.16</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px"></div>
+  <div class="hash-tag">v8_bot_31_ishtar_canyon_recompose.jpg</div>
+  <div class="source-tag" style="background:rgba(148,163,184,.15);color:#cbd5e1;border:1px solid rgba(148,163,184,.4);margin-top:4px">R1 中间轮 · —</div>
+  <div class="img-wrap landscape" style="aspect-ratio:inherit;max-height:220px"><img src="images/v8_bot_31_ishtar_canyon_recompose_r1.jpg" alt="v8_bot_31_ishtar_canyon_recompose_r1.jpg" loading="lazy"></div>
+  <div class="hash-tag">v8_bot_31_ishtar_canyon_recompose_r1.jpg</div>
+</div>
+<div class="col-card">
+  <span class="pmode-tag pmode-bold">v8_bot_32 · 大改 bold</span>
+  <span class="pmode-bar pmode-bold-bar"></span>
+  <div class="source-tag auto-source">gpt-image-2 · V8→V2 · 终图</div>
+  <div class="img-wrap landscape"><img src="images/v8_bot_32_ishtar_canyon_recompose_bold.jpg" alt="v8_bot_32_ishtar_canyon_recompose_bold.jpg" loading="lazy"></div>
+  <div class="score-line"><span class="score-pill ref-pill">8.60</span><span class="hash-tag"></span></div>
+  <div class="mini-badge">R1·1轮 · best_of_v2_r1 · 8.60</div>
+  <div class="dims-line">构图 9.26 · 光影 9.12 · 透视 7.0 · 质感 6.33 · 风格 9.32</div>
+  <div class="col-desc" style="color:#fda4af;font-size:11px"></div>
+  <div class="hash-tag">v8_bot_32_ishtar_canyon_recompose_bold.jpg</div>
+  <div class="source-tag" style="background:rgba(148,163,184,.15);color:#cbd5e1;border:1px solid rgba(148,163,184,.4);margin-top:4px">R1 中间轮 · —</div>
+  <div class="img-wrap landscape" style="aspect-ratio:inherit;max-height:220px"><img src="images/v8_bot_32_ishtar_canyon_recompose_bold_r1.jpg" alt="v8_bot_32_ishtar_canyon_recompose_bold_r1.jpg" loading="lazy"></div>
+  <div class="hash-tag">v8_bot_32_ishtar_canyon_recompose_bold_r1.jpg</div>
+</div></div></section><section class="summary-block"><h2>分数汇总</h2><table class="accept-table"><tr><th>Bot</th><th>档</th><th>总分</th><th>等级</th><th>轮次</th><th>五维</th></tr><tr><td><code>v8_bot_02</code></td><td>low_best</td><td><b>7.98</b></td><td></td><td>R1→R3·3轮 · best_of_v2_r3 · 7.98</td><td>9.26/7.1/7.0/7.59/9.32</td></tr><tr><td><code>v8_bot_04</code></td><td>medium_best</td><td><b>8.63</b></td><td></td><td>R1→R3·3轮 · best_of_v4_r2 · 8.63</td><td>9.26/9.12/7.0/7.59/9.32</td></tr><tr><td><code>v8_bot_06</code></td><td>high_best</td><td><b>8.45</b></td><td></td><td>R1→R3·3轮 · best_of_v2_r3 · 8.45</td><td>9.26/9.12/7.0/7.59/9.32</td></tr><tr><td><code>v8_bot_07</code></td><td>recompose</td><td><b>8.8</b></td><td></td><td>R1·1轮 · best_of_v3_r1 · 8.80</td><td>9.26/9.12/7.0/7.59/9.32</td></tr><tr><td><code>v8_bot_08</code></td><td>recompose_bold</td><td><b>8.48</b></td><td></td><td>R1→R3·3轮 · best_of_v3_r2 · 8.48</td><td>9.26/7.1/7.0/7.59/9.32</td></tr><tr><td><code>v8_bot_10</code></td><td>low_best</td><td><b>8.44</b></td><td></td><td>R1→R3·3轮 · best_of_v2_r1 · 8.44</td><td>9.26/9.12/7.0/7.59/9.32</td></tr><tr><td><code>v8_bot_12</code></td><td>medium_best</td><td><b>8.63</b></td><td></td><td>R1·1轮 · best_of_v2_r1 · 8.63</td><td>9.26/9.12/7.0/7.59/9.32</td></tr><tr><td><code>v8_bot_14</code></td><td>high_best</td><td><b>8.45</b></td><td></td><td>R1→R3·3轮 · best_of_v2_r1 · 8.45</td><td>9.26/9.12/7.0/7.59/9.32</td></tr><tr><td><code>v8_bot_15</code></td><td>recompose</td><td><b>8.8</b></td><td></td><td>R1→R3·3轮 · best_of_v2_r2 · 8.80</td><td>9.26/9.12/7.0/7.59/9.32</td></tr><tr><td><code>v8_bot_16</code></td><td>recompose_bold</td><td><b>8.53</b></td><td></td><td>R1·1轮 · best_of_v2_r1 · 8.53</td><td>8.0/9.12/7.0/8.0/9.32</td></tr><tr><td><code>v8_bot_18</code></td><td>low_best</td><td><b>8.44</b></td><td></td><td>R1→R3·3轮 · best_of_v3_r3 · 8.44</td><td>9.26/9.12/7.0/7.59/9.32</td></tr><tr><td><code>v8_bot_20</code></td><td>medium_best</td><td><b>8.63</b></td><td></td><td>R1·1轮 · best_of_v3_r1 · 8.63</td><td>9.26/9.12/7.0/7.59/9.32</td></tr><tr><td><code>v8_bot_22</code></td><td>high_best</td><td><b>8.45</b></td><td></td><td>R1→R3·3轮 · best_of_v3_r3 · 8.45</td><td>9.26/9.12/7.0/7.59/9.32</td></tr><tr><td><code>v8_bot_23</code></td><td>recompose</td><td><b>8.43</b></td><td></td><td>R1→R3·3轮 · best_of_v2_r3 · 8.43</td><td>9.26/9.12/7.0/7.59/8.16</td></tr><tr><td><code>v8_bot_24</code></td><td>recompose_bold</td><td><b>8.8</b></td><td></td><td>R1·1轮 · best_of_v2_r1 · 8.80</td><td>9.26/9.12/7.0/7.59/9.32</td></tr><tr><td><code>v8_bot_26</code></td><td>low_best</td><td><b>8.24</b></td><td></td><td>R1→R3·3轮 · best_of_v2_r2 · 8.24</td><td>9.26/9.12/7.0/7.59/8.16</td></tr><tr><td><code>v8_bot_28</code></td><td>medium_best</td><td><b>8.63</b></td><td></td><td>R1·1轮 · best_of_v4_r1 · 8.63</td><td>9.26/9.12/7.0/7.59/9.32</td></tr><tr><td><code>v8_bot_30</code></td><td>high_best</td><td><b>8.24</b></td><td></td><td>R1→R3·3轮 · best_of_v3_r3 · 8.24</td><td>9.26/9.12/7.0/7.59/8.16</td></tr><tr><td><code>v8_bot_31</code></td><td>recompose</td><td><b>8.43</b></td><td></td><td>R1→R3·3轮 · best_of_v2_r1 · 8.43</td><td>9.26/9.12/7.0/7.59/8.16</td></tr><tr><td><code>v8_bot_32</code></td><td>recompose_bold</td><td><b>8.6</b></td><td></td><td>R1·1轮 · best_of_v2_r1 · 8.60</td><td>9.26/9.12/7.0/6.33/9.32</td></tr></table><div class="qp-box"><b>对照说明</b><ul><li>前次 V8-20 均值 <b>8.394</b>（do_r2=false，单轮）；本批 V8→V2 调整 + 真 R2。</li><li>本批均值 <b>8.5</b>，Δ = <b>0.11</b>。</li><li>原图基线均值 <b>None</b>（同尺）。</li><li>旧 V2 showcase 分为 scripted，不可与本批 Absolute-5D 横比。</li></ul></div></section></body></html>

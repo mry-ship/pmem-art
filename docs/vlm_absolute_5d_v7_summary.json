@@ -1,0 +1,342 @@
+{
+  "model": "gpt-6-sol",
+  "base": "https://YOUR_VLM_GATEWAY",
+  "n_scored": 52,
+  "n_fail": 0,
+  "failures": {},
+  "distributions": {
+    "all": {
+      "label": "all",
+      "total": {
+        "n": 52,
+        "min": 6.95,
+        "median": 7.84,
+        "mean": 7.85,
+        "max": 8.78,
+        "stdev": 0.349
+      },
+      "total_mean": {
+        "n": 52,
+        "min": 6.98,
+        "median": 7.84,
+        "mean": 7.82,
+        "max": 8.74,
+        "stdev": 0.321
+      },
+      "bands": {
+        "<7": 1,
+        "7–8": 33,
+        "8–9": 18,
+        "≥9": 0
+      },
+      "dim_means": {
+        "composition": 8.1,
+        "lighting_color": 8.23,
+        "perspective_anatomy": 7.35,
+        "texture_detail": 7.42,
+        "spec_style": 8.02
+      }
+    },
+    "baseline": {
+      "label": "baseline",
+      "total": {
+        "n": 4,
+        "min": 6.95,
+        "median": 7.39,
+        "mean": 7.36,
+        "max": 7.69,
+        "stdev": 0.273
+      },
+      "total_mean": {
+        "n": 4,
+        "min": 6.98,
+        "median": 7.44,
+        "mean": 7.38,
+        "max": 7.64,
+        "stdev": 0.249
+      },
+      "bands": {
+        "<7": 1,
+        "7–8": 3,
+        "8–9": 0,
+        "≥9": 0
+      },
+      "dim_means": {
+        "composition": 7.7,
+        "lighting_color": 7.47,
+        "perspective_anatomy": 7.03,
+        "texture_detail": 7.05,
+        "spec_style": 7.62
+      }
+    },
+    "bot_final": {
+      "label": "bot_final",
+      "total": {
+        "n": 32,
+        "min": 7.16,
+        "median": 7.83,
+        "mean": 7.87,
+        "max": 8.78,
+        "stdev": 0.373
+      },
+      "total_mean": {
+        "n": 32,
+        "min": 7.24,
+        "median": 7.83,
+        "mean": 7.85,
+        "max": 8.74,
+        "stdev": 0.34
+      },
+      "bands": {
+        "<7": 0,
+        "7–8": 19,
+        "8–9": 13,
+        "≥9": 0
+      },
+      "dim_means": {
+        "composition": 8.13,
+        "lighting_color": 8.26,
+        "perspective_anatomy": 7.38,
+        "texture_detail": 7.41,
+        "spec_style": 8.05
+      }
+    },
+    "round_rN": {
+      "label": "round_rN",
+      "total": {
+        "n": 16,
+        "min": 7.55,
+        "median": 7.94,
+        "mean": 7.95,
+        "max": 8.28,
+        "stdev": 0.169
+      },
+      "total_mean": {
+        "n": 16,
+        "min": 7.44,
+        "median": 7.88,
+        "mean": 7.89,
+        "max": 8.2,
+        "stdev": 0.182
+      },
+      "bands": {
+        "<7": 0,
+        "7–8": 11,
+        "8–9": 5,
+        "≥9": 0
+      },
+      "dim_means": {
+        "composition": 8.13,
+        "lighting_color": 8.36,
+        "perspective_anatomy": 7.37,
+        "texture_detail": 7.51,
+        "spec_style": 8.07
+      }
+    }
+  },
+  "notable_lows": [
+    {
+      "filename": "style_ref_01_night_city.png",
+      "role": "baseline",
+      "total": 6.95,
+      "dims": {
+        "composition": 8.0,
+        "lighting_color": 7.2,
+        "perspective_anatomy": 6.7,
+        "texture_detail": 5.9,
+        "spec_style": 7.1
+      }
+    },
+    {
+      "filename": "v7_bot_02_night_city_low_best.jpg",
+      "role": "bot",
+      "total": 7.16,
+      "dims": {
+        "composition": 7.8,
+        "lighting_color": 7.5,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 6.5,
+        "spec_style": 7.4
+      }
+    },
+    {
+      "filename": "v7_bot_01_night_city_low.jpg",
+      "role": "bot",
+      "total": 7.23,
+      "dims": {
+        "composition": 8.1,
+        "lighting_color": 7.7,
+        "perspective_anatomy": 7.1,
+        "texture_detail": 6.3,
+        "spec_style": 7.5
+      }
+    },
+    {
+      "filename": "style_ref_02_pastel_sketch.png",
+      "role": "baseline",
+      "total": 7.3,
+      "dims": {
+        "composition": 7.6,
+        "lighting_color": 7.1,
+        "perspective_anatomy": 6.8,
+        "texture_detail": 7.5,
+        "spec_style": 7.8
+      }
+    },
+    {
+      "filename": "v7_bot_11_pastel_sketch_medium.jpg",
+      "role": "bot",
+      "total": 7.3,
+      "dims": {
+        "composition": 7.6,
+        "lighting_color": 7.8,
+        "perspective_anatomy": 6.8,
+        "texture_detail": 6.7,
+        "spec_style": 7.5
+      }
+    },
+    {
+      "filename": "v7_bot_09_pastel_sketch_low.jpg",
+      "role": "bot",
+      "total": 7.34,
+      "dims": {
+        "composition": 7.8,
+        "lighting_color": 7.5,
+        "perspective_anatomy": 6.7,
+        "texture_detail": 7.3,
+        "spec_style": 7.8
+      }
+    },
+    {
+      "filename": "web_ref_01_concept_ishtar.png",
+      "role": "baseline",
+      "total": 7.49,
+      "dims": {
+        "composition": 7.6,
+        "lighting_color": 7.4,
+        "perspective_anatomy": 7.1,
+        "texture_detail": 7.7,
+        "spec_style": 7.8
+      }
+    },
+    {
+      "filename": "v7_bot_12_pastel_sketch_medium_best.jpg",
+      "role": "bot",
+      "total": 7.49,
+      "dims": {
+        "composition": 7.8,
+        "lighting_color": 7.4,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 7.5,
+        "spec_style": 8.0
+      }
+    }
+  ],
+  "notable_highs": [
+    {
+      "filename": "v7_bot_32_ishtar_canyon_recompose_bold.jpg",
+      "role": "bot",
+      "total": 8.78,
+      "dims": {
+        "composition": 9.0,
+        "lighting_color": 9.1,
+        "perspective_anatomy": 8.4,
+        "texture_detail": 8.3,
+        "spec_style": 8.9
+      }
+    },
+    {
+      "filename": "v7_bot_30_ishtar_canyon_high_best.jpg",
+      "role": "bot",
+      "total": 8.72,
+      "dims": {
+        "composition": 9.1,
+        "lighting_color": 9.3,
+        "perspective_anatomy": 7.8,
+        "texture_detail": 8.2,
+        "spec_style": 8.8
+      }
+    },
+    {
+      "filename": "v7_bot_21_sunlit_portrait_high.jpg",
+      "role": "bot",
+      "total": 8.29,
+      "dims": {
+        "composition": 8.1,
+        "lighting_color": 8.8,
+        "perspective_anatomy": 7.8,
+        "texture_detail": 7.9,
+        "spec_style": 8.4
+      }
+    },
+    {
+      "filename": "v7_bot_30_ishtar_canyon_high_best_r1.jpg",
+      "role": "round_r1",
+      "total": 8.28,
+      "dims": {
+        "composition": 8.5,
+        "lighting_color": 8.8,
+        "perspective_anatomy": 7.6,
+        "texture_detail": 7.8,
+        "spec_style": 8.3
+      }
+    },
+    {
+      "filename": "v7_bot_15_pastel_sketch_recompose_r1.jpg",
+      "role": "round_r1",
+      "total": 8.21,
+      "dims": {
+        "composition": 8.2,
+        "lighting_color": 8.7,
+        "perspective_anatomy": 7.8,
+        "texture_detail": 7.9,
+        "spec_style": 8.4
+      }
+    },
+    {
+      "filename": "v7_bot_06_night_city_high_best.jpg",
+      "role": "bot",
+      "total": 8.2,
+      "dims": {
+        "composition": 8.5,
+        "lighting_color": 8.7,
+        "perspective_anatomy": 7.7,
+        "texture_detail": 7.5,
+        "spec_style": 8.3
+      }
+    },
+    {
+      "filename": "v7_bot_05_night_city_high.jpg",
+      "role": "bot",
+      "total": 8.19,
+      "dims": {
+        "composition": 8.7,
+        "lighting_color": 8.8,
+        "perspective_anatomy": 7.5,
+        "texture_detail": 7.3,
+        "spec_style": 8.3
+      }
+    },
+    {
+      "filename": "v7_bot_08_night_city_recompose_bold.jpg",
+      "role": "bot",
+      "total": 8.17,
+      "dims": {
+        "composition": 8.7,
+        "lighting_color": 8.8,
+        "perspective_anatomy": 7.2,
+        "texture_detail": 7.4,
+        "spec_style": 8.3
+      }
+    }
+  ],
+  "prior_heuristic_note": "Prior heuristic Absolute-5D (v7_image_scorer / early absolute) clustered near ~9.0, partly because baseline used (ref,ref)+struct and soft plates were not gated. This VLM pass (model=gpt-6-sol) spreads roughly 6.95–8.78 (mean 7.85, median 7.84), showing why the old ~9 cluster was not an honest absolute ruler.",
+  "dim_keys": [
+    "composition",
+    "lighting_color",
+    "perspective_anatomy",
+    "texture_detail",
+    "spec_style"
+  ],
+  "aggregation": "total = scale-weighted (absolute_5d_scorer.py weights); total_mean = unweighted mean of 5 dims"
+}

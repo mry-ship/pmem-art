@@ -1,0 +1,114 @@
+[
+  {
+    "slug": "night_city",
+    "scale": "low_best",
+    "aspect": "9:16",
+    "ref": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\comparison\\style_refs\\style_ref_01_night_city.png",
+    "prompt": "仙侠水墨夜色风：锁视角与姿态，仅微修局部质感 | 提示词改动区间 0% 到 20%：可以只修局部 | 仙侠水墨夜色风：保持俯瞰孤侠背影站位，微修质感 | 低强度修瑕 (low ≤20%): 保持俯瞰孤侠背影站位，仅精修局部质感；仙侠水墨夜色风 | 最优方向：近景瓦当咬合与剑身细冷钢高光微锐 | 约束：保持原图画风笔触与色板；不改男侠背影站位与俯瞰构图；严禁增删飞檐楼阁与暖金灯笼布局；保持原图男性持剑侠客身份，禁止改成女侠"
+  },
+  {
+    "slug": "night_city",
+    "scale": "medium_best",
+    "aspect": "9:16",
+    "ref": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\comparison\\style_refs\\style_ref_01_night_city.png",
+    "prompt": "仙侠水墨夜色风：保画风与机位，小幅姿态/局部布局；柔化光影与留白层次 | 提示词改动区间 10% 到 40%：锁机位，做小优化 | 仙侠水墨夜色风：保画风与主体，柔化光影层次 | 中幅提升 (medium 25%–45%): 保持画风色板与主体，强化光雾纵深与介质质感；仙侠水墨夜色风；可轻度点缀风格内叙事道具，不锁死道具归零 | 最优方向：青黛夜雾纵深；衣袂冷银轮廓光；中轴暖金灯火冷暖；可轻度点缀升空灯点 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观"
+  },
+  {
+    "slug": "night_city",
+    "scale": "high_best",
+    "aspect": "9:16",
+    "ref": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\comparison\\style_refs\\style_ref_01_night_city.png",
+    "prompt": "仙侠水墨夜色风：保媒介与身份，提升光影张力；可加风格内叙事点缀 | 提示词改动区间 30% 到 80%：必须拉开，媒介与身份留下 | 仙侠水墨夜色风：保媒介与身份，青银剑气·升空孔明灯·万家灯火体积光 | 高强度跃升 (high 50%–80%): 保持剑孤侠与万家灯火夜城媒介基因，升级戏剧光与叙事——青银剑气、升空孔明灯、冷暖灯火碰撞、体积光；可加风格内叙事点缀，不换主体身份；禁止平庸平移 | 最优方向：青银剑气+升空孔明灯+万家灯火体积光+冷暖碰撞（可加风格内叙事点缀） | 约束：保持原图核心艺术媒介与画风基因；保持原图性别、物种、年龄段与核心外观；可加风格内叙事点缀，不换主体身份"
+  },
+  {
+    "slug": "night_city",
+    "scale": "recompose",
+    "aspect": "9:16",
+    "ref": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\comparison\\style_refs\\style_ref_01_night_city.png",
+    "prompt": "仙侠水墨夜色风：保画风色板，按「从高空飞檐俯瞰改为底层运河水道乌篷船与低机位仰高拱石桥全景」重构机位 | 提示词改动区间 50% 到 85%：必须落到指定机位，画风色板与身份留下 | 仙侠水墨夜色风：保画风色板，按「运河水道乌篷船·低机位仰高拱石桥」重构机位 | recompose: 保画风色板与持剑男侠身份，改为运河水道乌篷船低机位仰高拱石桥全景；禁止旧俯瞰飞檐DNA | 约束：保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观；不偏离指定构图方向"
+  },
+  {
+    "slug": "pastel_sketch",
+    "scale": "low_best",
+    "aspect": "4:3",
+    "ref": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\comparison\\style_refs\\style_ref_02_pastel_sketch.png",
+    "prompt": "粉彩速写轻盈风：锁视角与姿态，仅微修局部质感 | 提示词改动区间 0% 到 20%：可以只修局部 | 粉彩速写轻盈风：保持侧面屈膝坐姿与双手开合，微修质感 | 低强度修瑕 (low ≤20%): 保持侧面屈膝坐姿与双手开合，仅精修局部质感；粉彩速写轻盈风 | 最优方向：纸齿颗粒与排线密度微增 | 约束：不改场景布局；保持原图性别、物种、年龄段与核心外观；严禁改变坐姿与镜头视角；严禁改变粉彩速写干爽笔触与米白纸留白；严禁增删主体元素或涂黑背景"
+  },
+  {
+    "slug": "pastel_sketch",
+    "scale": "medium_best",
+    "aspect": "4:3",
+    "ref": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\comparison\\style_refs\\style_ref_02_pastel_sketch.png",
+    "prompt": "粉彩速写轻盈风：保画风与机位，小幅姿态/局部布局；柔化光影与留白层次 | 提示词改动区间 10% 到 40%：锁机位，做小优化 | 粉彩速写轻盈风：保画风与主体，柔化光影层次 | 中幅提升 (medium 25%–45%): 保持画风色板与主体，强化光雾纵深与介质质感；粉彩速写轻盈风；可轻度点缀风格内叙事道具，不锁死道具归零 | 最优方向：斜向侧光起伏；蜡质厚度；留白呼吸；暖金粉尘轻点缀 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观"
+  },
+  {
+    "slug": "pastel_sketch",
+    "scale": "high_best",
+    "aspect": "4:3",
+    "ref": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\comparison\\style_refs\\style_ref_02_pastel_sketch.png",
+    "prompt": "粉彩速写轻盈风：保媒介与身份，提升光影张力；可加风格内叙事点缀 | 提示词改动区间 30% 到 80%：必须拉开，媒介与身份留下 | 粉彩速写轻盈风：保媒介与身份，颈间耳机·暖金粉尘·朱红钴蓝排线 | 高强度跃升 (high 50%–80%): 保屈膝坐姿红卫衣少女媒介基因，升级戏剧光与叙事——颈间耳机、暖金粉尘、朱红/钴蓝排线、斜向侧光；可加风格内叙事点缀，不换主体身份；禁止平庸平移 | 最优方向：颈间耳机+暖金粉尘+朱红/钴蓝排线+戏剧侧光 | 约束：保持原图核心艺术媒介与画风基因；保持原图性别、物种、年龄段与核心外观；可加风格内叙事点缀，不换主体身份"
+  },
+  {
+    "slug": "pastel_sketch",
+    "scale": "recompose",
+    "aspect": "4:3",
+    "ref": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\comparison\\style_refs\\style_ref_02_pastel_sketch.png",
+    "prompt": "粉彩速写轻盈风：保画风色板，按「改为天台铁艺栏杆旁站立远眺夕阳海港的过肩侧机位」重构机位 | 提示词改动区间 50% 到 85%：必须落到指定机位，画风色板与身份留下 | 粉彩速写轻盈风：保画风色板，按「天台铁艺栏杆旁站立远眺夕阳海港过肩侧机位」重构机位 | recompose: 保画风色板与红卫衣少女身份，改为天台铁艺栏杆旁站立远眺夕阳海港的过肩侧机位 | 约束：保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观；不偏离指定构图方向"
+  },
+  {
+    "slug": "sunlit_portrait",
+    "scale": "low_best",
+    "aspect": "3:4",
+    "ref": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\comparison\\style_refs\\style_ref_03_sunlit_portrait.png",
+    "prompt": "胶片逆光轻厚涂：锁视角与姿态，仅微修局部质感 | 提示词改动区间 0% 到 20%：可以只修局部 | 胶片逆光轻厚涂：保持正面胸像幅面，微修质感 | 低强度修瑕 (low ≤20%): 保持正面胸像幅面，仅精修局部质感；胶片逆光轻厚涂 | 最优方向：瞳孔高光点与发丝边缘微锐 | 约束：不改动作与姿态；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观；严禁改变正面胸像视角与二分光影；严禁增删人物或改变雏菊壁纸背景"
+  },
+  {
+    "slug": "sunlit_portrait",
+    "scale": "medium_best",
+    "aspect": "3:4",
+    "ref": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\comparison\\style_refs\\style_ref_03_sunlit_portrait.png",
+    "prompt": "胶片逆光轻厚涂：保画风与机位，小幅姿态/局部布局；柔化光影与次表面散射 | 提示词改动区间 10% 到 40%：锁机位，做小优化 | 胶片逆光轻厚涂：保画风与主体，柔化光影层次 | 中幅提升 (medium 25%–45%): 保持画风色板与主体，强化光雾纵深与介质质感；胶片逆光轻厚涂；可轻度点缀风格内叙事道具，不锁死道具归零 | 最优方向：交界线SSS；壁纸花型层次；环境反光；胶片微尘 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观"
+  },
+  {
+    "slug": "sunlit_portrait",
+    "scale": "high_best",
+    "aspect": "3:4",
+    "ref": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\comparison\\style_refs\\style_ref_03_sunlit_portrait.png",
+    "prompt": "胶片逆光轻厚涂：保媒介与身份，提升光影张力；可加风格内叙事点缀 | 提示词改动区间 30% 到 80%：必须拉开，媒介与身份留下 | 胶片逆光轻厚涂：保媒介与身份，雏菊墙·胶片尘·二分光 | 高强度跃升 (high 50%–80%): 保短发白衣窗边少女媒介基因，升级戏剧光与叙事——雏菊墙、胶片尘、高反差二分光、发丝边缘光；可加风格内叙事点缀，不换主体身份；禁止平庸平移 | 最优方向：雏菊墙+胶片尘+高反差二分光+发丝边缘光 | 约束：保持原图核心艺术媒介与画风基因；保持原图性别、物种、年龄段与核心外观；可加风格内叙事点缀，不换主体身份"
+  },
+  {
+    "slug": "sunlit_portrait",
+    "scale": "recompose",
+    "aspect": "3:4",
+    "ref": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\comparison\\style_refs\\style_ref_03_sunlit_portrait.png",
+    "prompt": "胶片逆光轻厚涂：保画风色板，按「改为阳光温室画室藤椅中景，手捧速写本被绿植雏菊环绕的3/4侧机位」重构机位 | 提示词改动区间 50% 到 85%：必须落到指定机位，画风色板与身份留下 | 胶片逆光轻厚涂：保画风色板，按「温室画室藤椅中景·雏菊环绕」重构机位 | recompose: 保画风色板与短发白衣身份，改为阳光温室画室藤椅中景，手捧速写本被绿植雏菊环绕 | 约束：保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观；不偏离指定构图方向"
+  },
+  {
+    "slug": "ishtar_canyon",
+    "scale": "low_best",
+    "aspect": "4:3",
+    "ref": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\comparison\\web_refs\\web_ref_01_concept_ishtar.png",
+    "prompt": "奇幻厚涂概念风：锁视角与布局，仅微修局部质感 | 提示词改动区间 0% 到 20%：可以只修局部 | 奇幻厚涂概念风：保持俯视天井主体锚点数量，微修质感 | 低强度修瑕 (low ≤20%): 保持俯视天井主体锚点数量，仅精修局部质感；奇幻厚涂概念风 | 最优方向：砖缝木纹微痕可读 | 约束：不改动作与姿态；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观；严禁改变垂直俯视天井视角；严禁增删左上绿龙与右侧雕花石拱门"
+  },
+  {
+    "slug": "ishtar_canyon",
+    "scale": "medium_best",
+    "aspect": "4:3",
+    "ref": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\comparison\\web_refs\\web_ref_01_concept_ishtar.png",
+    "prompt": "奇幻厚涂概念风：保画风与机位，小幅姿态/局部布局；柔化光影与次表面散射 | 提示词改动区间 10% 到 40%：锁机位，做小优化 | 奇幻厚涂概念风：保画风与主体，柔化光影层次 | 中幅提升 (medium 25%–45%): 保持画风色板与主体，强化光雾纵深与介质质感；奇幻厚涂概念风；可轻度点缀风格内叙事道具，不锁死道具归零 | 最优方向：体积光；冷暖分离；栈桥进深雾层 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观"
+  },
+  {
+    "slug": "ishtar_canyon",
+    "scale": "high_best",
+    "aspect": "4:3",
+    "ref": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\comparison\\web_refs\\web_ref_01_concept_ishtar.png",
+    "prompt": "奇幻厚涂概念风：保媒介与身份，提升光影张力；可加风格内叙事点缀 | 提示词改动区间 30% 到 80%：必须拉开，媒介与身份留下 | 奇幻厚涂概念风：保媒介与身份，体积光·龙锚点·冷暖深渊 | 高强度跃升 (high 50%–80%): 保天井栈桥红斗篷旅人与飞龙媒介基因，升级戏剧光与叙事——天井体积光束、冷暖深渊、龙锚点戏剧光；可加风格内叙事点缀，不换主体身份；禁止平庸平移 | 最优方向：天井体积光束+龙锚点戏剧光+冷暖深渊 | 约束：保持原图核心艺术媒介与画风基因；保持原图性别、物种、年龄段与核心外观；可加风格内叙事点缀，不换主体身份"
+  },
+  {
+    "slug": "ishtar_canyon",
+    "scale": "recompose",
+    "aspect": "4:3",
+    "ref": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\comparison\\web_refs\\web_ref_01_concept_ishtar.png",
+    "prompt": "奇幻厚涂概念风：保画风色板，按「改为石露台平视跨谷三孔石拱桥，飞龙在远景天际」重构机位 | 提示词改动区间 50% 到 85%：必须落到指定机位，画风色板与身份留下 | 奇幻厚涂概念风：保画风色板，按「石露台平视跨谷三孔石拱桥·远景龙」重构机位 | recompose: 保画风色板与红斗篷旅人身份，改为石露台平视跨谷三孔石拱桥，飞龙在远景天际 | 约束：保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观；不偏离指定构图方向"
+  }
+]

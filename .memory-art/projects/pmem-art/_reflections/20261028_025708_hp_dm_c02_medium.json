@@ -1,0 +1,124 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-10-28 02:57:08 UTC+8",
+  "session_id": "hp_dm_c02_medium",
+  "goal": "保机位小优化粉彩线稿少女：发丝分层、腮红空气、衣褶微高光；低对比粉彩商业；勿赛博硬边。",
+  "module": "character.PastelGirl",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.6,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 4,
+  "winner_score": 9.52,
+  "winner_image": "assets/character/pastelgirl/r4.jpg",
+  "winner_passed": false,
+  "outcome": "⚠️ **共执行 4 轮审图（目标阈值 `9.60` 分），未达标，已挑选全阶段最高分**（胜出：第 4 轮 `9.52 / 10.0` 分）",
+  "what_fixed": [
+    "锁回双臂抱膝坐姿；发丝分层；腮红更空气；褶软高光",
+    "发丝分层更清楚；腮红边缘更虚；肘腰褶软高光",
+    "发丝再分几缕；肘腰褶软高光加强",
+    "解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁止糊边融边；发丝分层仍可再清；衣褶高光仍偏克制"
+  ],
+  "what_still_weak": "发丝分层仍可再清；衣褶高光仍偏克制",
+  "strengths": "抱膝姿态纸感锁；粉彩商业完成度稳；软线非硬边",
+  "taste_deltas": {
+    "from_strengths": [
+      "抱膝姿态纸感锁；粉彩商业完成度稳；软线非硬边"
+    ],
+    "from_defects": [
+      "发丝分层仍可更清楚；腮红可再空气；肘腰褶微高光仍弱；prompt 改动 99% 超过档位上限 40%",
+      "发丝分层仍偏弱；衣褶微高光仍不足；prompt 改动 86% 超过档位上限 40%",
+      "发丝分层仍可再清；衣褶高光仍偏克制"
+    ]
+  },
+  "warm_start_confidence": 0.9,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 9.37,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 9.49,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 9.51,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 9.52,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：发丝分层偏简；腮红空气不足；帽衫褶微高光弱；手臂支撑相对原图略漂",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.37"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：粉彩纸感与身份锁；软线非硬边；红帽衫三杠鞋保留",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.37"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：发丝分层仍可更清楚；腮红可再空气；肘腰褶微高光仍弱；prompt 改动 99% 超过档位上限 40%",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.49"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：发丝分层仍可更清楚；腮红可再空气；肘腰褶微高光仍弱；prompt 改动 99% 超过档位上限 40%",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "9.49"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：抱膝坐姿回锁；粉彩纸感；发丝有高光分层迹象",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.49"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：发丝分层仍偏弱；衣褶微高光仍不足；prompt 改动 86% 超过档位上限 40%",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.51"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：纸感粉彩锁；抱膝姿态稳；红帽衫质感好",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.51"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：发丝分层仍可再清；衣褶高光仍偏克制",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "9.52"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：发丝分层仍可再清；衣褶高光仍偏克制",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.52"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：发丝分层仍可再清；衣褶高光仍偏克制",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "9.52"
+    }
+  ]
+}

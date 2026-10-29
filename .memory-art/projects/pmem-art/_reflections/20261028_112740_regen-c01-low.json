@@ -1,0 +1,124 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-10-28 11:27:40 UTC+8",
+  "session_id": "regen-c01-low",
+  "goal": "low贴原修瑕：同一灰袍长发侠客立于同一屋脊俯瞰同一座不夜城，不换机位不换姿态，只修瓦脊边缘、剑柄握持与靴底接触阴影",
+  "module": "scene.CelestialCity",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.6,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 1,
+  "winner_score": 8.41,
+  "winner_image": "assets/scene/celestialcity/r1.jpg",
+  "winner_passed": false,
+  "outcome": "⚠️ **共执行 4 轮审图（目标阈值 `9.60` 分），未达标，已挑选全阶段最高分**（胜出：第 1 轮 `8.41 / 10.0` 分）",
+  "what_fixed": [
+    "把侠客放回屋脊中线原站位并缩小到原图占比；露出握剑的拇指与靴底压出的窄接触影",
+    "剑改成无光的深色钢刃，只留金属细高光；人回到屋脊中线并露出握柄拇指",
+    "人移到屋脊中线，拇指扣住深色剑柄",
+    "解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁止糊边融边；头发束成顶髻，和原图披发不一致；拇指仍看不清"
+  ],
+  "what_still_weak": "侠客偏到屋脊左下，比原图更大；剑柄握持被袖口挡住，靴底接触影偏软",
+  "strengths": "机位与灰袍背影锁住，长街暖金轴还在，瓦垄比原图更可读",
+  "taste_deltas": {
+    "from_strengths": [
+      "机位与灰袍背影锁住，长街暖金轴还在，瓦垄比原图更可读"
+    ],
+    "from_defects": [
+      "剑身发出蓝白电光，踩了禁止蓝电剑的红线；人仍偏在屋脊左侧，拇指看不清；prompt 改动 98% 超过档位上限 20%",
+      "人仍偏在屋脊左侧，拇指仍被袖口挡住",
+      "头发束成顶髻，和原图披发不一致；拇指仍看不清"
+    ]
+  },
+  "warm_start_confidence": 0.9,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 8.41,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 7.7,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 8.29,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 8.36,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：侠客偏到屋脊左下，比原图更大；剑柄握持被袖口挡住，靴底接触影偏软",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.41"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：机位与灰袍背影锁住，长街暖金轴还在，瓦垄比原图更可读",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.41"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：剑身发出蓝白电光，踩了禁止蓝电剑的红线；人仍偏在屋脊左侧，拇指看不清；prompt 改动 98% 超过档位上限 20%",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "7.7"
+    },
+    {
+      "category": "material",
+      "lesson": "本轮短板偏「material」：剑身发出蓝白电光，踩了禁止蓝电剑的红线；人仍偏在屋脊左侧，拇指看不清；prompt 改动 98% 超过档位上限 20%",
+      "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+      "from_score": "7.7"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：俯瞰长街还在，人仍是灰袍背影",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "7.7"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：人仍偏在屋脊左侧，拇指仍被袖口挡住",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.29"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：深色钢剑，没有蓝电光",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.29"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：头发束成顶髻，和原图披发不一致；拇指仍看不清",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "8.36"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：头发束成顶髻，和原图披发不一致；拇指仍看不清",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.36"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：头发束成顶髻，和原图披发不一致；拇指仍看不清",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "8.36"
+    }
+  ]
+}

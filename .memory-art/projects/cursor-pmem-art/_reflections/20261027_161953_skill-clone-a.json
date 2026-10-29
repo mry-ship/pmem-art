@@ -1,0 +1,135 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "cursor-pmem-art",
+  "project_name": "Cursor-Pmem-Art",
+  "layer_scope": "private",
+  "written_at": "2026-10-27 16:19:53 UTC+8",
+  "session_id": "skill-clone-a",
+  "goal": "Clone Mode A。bible medium=cute cartoon toy icon soft rounded soft upper-left light pastel candy NO catalog lighting. brief=单枚冒险指南针居中浅空底 motif<=1。",
+  "module": "icon.Compass",
+  "converge_mode": "quality",
+  "guided_mode": "text_guided",
+  "threshold": 9.6,
+  "max_rounds": 8,
+  "rounds_used": 6,
+  "winner_round": 6,
+  "winner_score": 9.65,
+  "winner_image": "assets/icon/compass/skill_clone_a_r6.jpg",
+  "winner_passed": true,
+  "outcome": "✅ **经过 6 轮迭代达标定稿**（generate 与 judge 分步收敛，第 6 轮达到 `9.65 / 10.0` 分 ≥ `9.60` 分档位目标线即刻停机）",
+  "what_fixed": [
+    "只加强指针对比。",
+    "只收清楚表盘刻度楔并贴紧接触影。",
+    "只 sharpen 针尖高光与外环边缘。",
+    "只再收干净枢轴高光与南半针尖。",
+    "解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁止糊边融边；无硬伤"
+  ],
+  "what_still_weak": "残余可接受点：无明显缺陷",
+  "strengths": "指南针完整可读；边缘干净；接触影贴",
+  "taste_deltas": {
+    "from_strengths": [
+      "指南针完整可读；边缘干净；接触影贴"
+    ],
+    "from_defects": [
+      "针尖高光与外环边缘还可再干净一点。",
+      "南半针尖与枢轴高光还可再干净半档。",
+      "无硬伤"
+    ]
+  },
+  "warm_start_confidence": 0.3,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 8.89,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 9.15,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 9.36,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 9.5,
+      "passed": false
+    },
+    {
+      "round": 5,
+      "score": 9.55,
+      "passed": false
+    },
+    {
+      "round": 6,
+      "score": 9.65,
+      "passed": true
+    }
+  ],
+  "lessons": [
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：指针对比略弱。",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.89"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：表盘刻度楔形略糊；接触阴影可更贴。",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.15"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：红半针对比够",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.15"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：针尖高光与外环边缘还可再干净一点。",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.36"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：针尖高光与外环边缘还可再干净一点。",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "9.36"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：刻度楔清晰；红半针醒目",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.36"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：南半针尖与枢轴高光还可再干净半档。",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.5"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：玩具指南针完整可读",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.5"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：玩具指南针完整；指针对比；边缘干净",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.55"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：指南针完整可读；边缘干净；接触影贴",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.65"
+    }
+  ]
+}

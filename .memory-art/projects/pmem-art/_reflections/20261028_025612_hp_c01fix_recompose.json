@@ -1,0 +1,62 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-10-28 02:56:12 UTC+8",
+  "session_id": "hp_c01fix_recompose",
+  "goal": "仙侠不夜城正版原图 recompose：过肩侧望更大侠客，冷灰夜城暖灯海",
+  "module": "scene.CelestialCity",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.6,
+  "max_rounds": 4,
+  "rounds_used": 1,
+  "winner_round": 1,
+  "winner_score": 9.42,
+  "winner_image": "assets/scene/celestialcity/r1.jpg",
+  "winner_passed": false,
+  "outcome": "⚠️ **共执行 1 轮审图（目标阈值 `9.60` 分），未达标，已挑选全阶段最高分**（胜出：第 1 轮 `9.42 / 10.0` 分）",
+  "what_fixed": [
+    "解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁止糊边融边；灯海层次可再分明"
+  ],
+  "what_still_weak": "灯海层次可再分明",
+  "strengths": "新机位；冷灰暖灯锁；无蓝电剑紫银河",
+  "taste_deltas": {
+    "from_strengths": [
+      "新机位；冷灰暖灯锁；无蓝电剑紫银河"
+    ],
+    "from_defects": [
+      "灯海层次可再分明"
+    ]
+  },
+  "warm_start_confidence": 0.9,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 9.42,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：灯海层次可再分明",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "9.42"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：灯海层次可再分明",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.42"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：灯海层次可再分明",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "9.42"
+    }
+  ]
+}

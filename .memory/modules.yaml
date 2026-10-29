@@ -1,0 +1,63 @@
+# pmem 模块目录：模块是“业务单元”而不是目录，一个模块可以拥有多个路径。
+# 首次划分：对 Agent 说“按 pmem-bootstrap 技能划分模块”。之后新增模块直接在这里加。
+#
+# modules:
+#   gameplay.Jigsaw:
+#     paths: ["Assets/Game/Jigsaw/**", "Assets/UI/JigsawPanel/**"]
+#     aliases: [Puzzle]            # 别名，写入/检索时自动归一
+#     entities: [Reward, Config]   # 模块内常用议题
+#   gameplay.Jigsaw.Daily:         # 子模块：名字用点号续写（最多 4 段），父模块必须已登记
+#     paths: ["Assets/Game/Jigsaw/Daily/**"]
+#     related: [{ module: infra.Build, reason: 每日关卡随包下发 }]   # 名字看不出的深层关联
+# synonyms: 同一件事的不同叫法，检索时互相展开，如 - [闪退, 崩溃, crash]（可按 pmem-normalize 技能整理）
+# candidates: 冷门目录，先登记路径，有记忆写入后再转为正式模块
+# third_party / ignored: 第三方 SDK、示例、生成代码，不参与闸门
+schema_version: 1
+categories:
+  feature:
+    label: 业务功能
+  infra:
+    label: 技术底座
+entities: {}
+synonyms:
+  - [闭环, converge, 自评收敛]
+  - [闸门, gate, showcase-gate]
+  - [记忆, pmem, pmem-art]
+modules:
+  infra.Cli:
+    description: pmem-art 总入口、Hook、MCP serve、生命周期、分类与反馈命令
+    paths: [pmem_art.py, lifecycle.py, classify.py, feedback.py, build_atlas.py]
+    aliases: [CLI, 入口, pmem_art]
+    entities: [Hook, MCP, Atlas, Feedback]
+  feature.SkillsKit:
+    description: 技能引擎：路由、规格、闭环 converge、评分、生图与展陈闸门
+    paths: [skills_kit/**]
+    aliases: [技能引擎, 闭环, Converge]
+    entities: [Converge, Router, Spec, Scoring, Judge, Showcase]
+  feature.Improve:
+    description: 教练/学习/口味：知识卡、反思、autopilot、taste
+    paths: [improve/**]
+    aliases: [教练, 学习, Coach]
+    entities: [Taste, Knowledge, Autopilot]
+  infra.Judge:
+    description: VLM 打分入口，与 skills_kit 评分联动
+    paths: [vlm_judge.py]
+    aliases: [VLM]
+    related: [{ module: feature.SkillsKit, reason: 打分口径与 converge judge 共用 }]
+  infra.Scripts:
+    description: 展陈重跑与批处理脚本，不是产品入口
+    paths: [scripts/**, benchmark_evolution.py]
+  infra.Tests:
+    paths: [tests/**]
+candidates:
+  feature.Docs:
+    paths: [docs/**]
+    origin: sync
+third_party: []
+ignored:
+  - _tmp_*.py
+  - generated_*/
+  - generated/
+  - assets/
+  - images/
+  - .memory-art/**

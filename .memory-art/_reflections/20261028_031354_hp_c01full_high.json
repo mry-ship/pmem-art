@@ -1,0 +1,118 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-10-28 03:13:54 UTC+8",
+  "session_id": "hp_c01full_high",
+  "goal": "正版冷灰不夜城high精修：体积雾与暖灯戏剧分层拉满；禁止蓝电剑紫银河青瀑",
+  "module": "scene.CelestialCity",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.6,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 4,
+  "winner_score": 9.59,
+  "winner_image": "assets/scene/celestialcity/r4.jpg",
+  "winner_passed": false,
+  "outcome": "⚠️ **共执行 4 轮审图（目标阈值 `9.60` 分），未达标，已挑选全阶段最高分**（胜出：第 4 轮 `9.59 / 10.0` 分）",
+  "what_fixed": [
+    "加强近中远暖灯分层与雾带体积；瓦面接触影收实",
+    "雾带前后层边缘分清；中景窗光点分离；白袍衣褶微高光收边",
+    "地平线云带加薄体积；个别窗光边缘收锐",
+    "已达阈值；可结算"
+  ],
+  "what_still_weak": "极远景楼块仍略糊半档（俯瞰尺度可接受）",
+  "strengths": "近中远暖灯分层与雾带体积到位；飞檐瓦脊剪影清晰；冷灰正版无蓝电剑紫银河青瀑；商业级氛围拉满",
+  "taste_deltas": {
+    "from_strengths": [
+      "近中远暖灯分层与雾带体积到位；飞檐瓦脊剪影清晰；冷灰正版无蓝电剑紫银河青瀑；商业级氛围拉满"
+    ],
+    "from_defects": [
+      "雾带前后层交界仍偏软；中景窗光偶发粘片；侠客衣褶微高光不足；prompt 改动 96% 超过档位上限 80%",
+      "地平线云带体积仍略扁；个别窗光边缘软；prompt 改动 96% 超过档位上限 80%",
+      "极远景楼块仍略糊半档（俯瞰尺度可接受）"
+    ]
+  },
+  "warm_start_confidence": 0.9,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 9.31,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 9.42,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 9.48,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 9.59,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：暖灯近中远分层不足；雾带体积偏薄；瓦面接触影偏软",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.31"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：正版冷灰气质锁；机位身份对",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.31"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：雾带前后层交界仍偏软；中景窗光偶发粘片；侠客衣褶微高光不足；prompt 改动 96% 超过档位上限 80%",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.42"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：雾带前后层交界仍偏软；中景窗光偶发粘片；侠客衣褶微高光不足；prompt 改动 96% 超过档位上限 80%",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "9.42"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：灯火分层改善；冷灰正版锁",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.42"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：地平线云带体积仍略扁；个别窗光边缘软；prompt 改动 96% 超过档位上限 80%",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "9.48"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：雾层与灯火更清晰；正版冷灰锁",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.48"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：极远景楼块仍略糊半档（俯瞰尺度可接受）",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.59"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：近中远暖灯分层与雾带体积到位；飞檐瓦脊剪影清晰；冷灰正版无蓝电剑紫银河青瀑；商业级氛围拉满",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.59"
+    }
+  ]
+}

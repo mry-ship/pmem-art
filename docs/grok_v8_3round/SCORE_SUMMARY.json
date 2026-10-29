@@ -1,0 +1,18 @@
+{
+  "version": "v8_20_skill_grok_best_of_3rounds",
+  "n_ok": 20,
+  "mean_final": 8.504,
+  "min_final": 7.98,
+  "max_final": 8.8,
+  "source_counts": {
+    "v2": 12,
+    "v4": 2,
+    "v3": 6
+  },
+  "rounds": {
+    "v2": 8.394,
+    "v3": 8.371,
+    "v4": 8.341
+  },
+  "updated_at": "2026-10-27 05:14 Asia/Shanghai"
+}

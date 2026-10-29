@@ -1,0 +1,124 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-10-28 02:34:10 UTC+8",
+  "session_id": "hp_dm_c01_low",
+  "goal": "在原图机位与身份上精修天穹浮城夜景——加强建筑窗暖光层次、星座连线锐度、月缘空气透视与云层体积；保持史诗插画商业完成度，勿改成扁平图标风。",
+  "module": "scene.CelestialCity",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.6,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 4,
+  "winner_score": 9.54,
+  "winner_image": "assets/scene/celestialcity/r4.jpg",
+  "winner_passed": false,
+  "outcome": "⚠️ **共执行 4 轮审图（目标阈值 `9.60` 分），未达标，已挑选全阶段最高分**（胜出：第 4 轮 `9.54 / 10.0` 分）",
+  "what_fixed": [
+    "锐化银河与星座连线边缘；近景窗暖光点更密更亮、远景更稀更淡；瀑布两侧体积云分出前后两层",
+    "星座细线一次收锐；瀑布雾前层边缘清楚于后层；白袍衣褶微高光收边",
+    "红飘带外缘一次收干净；中景窗光点分离不粘片；地平线云带加一层薄体积",
+    "透视：收束灭点与体块接触阴影，禁止结构融化"
+  ],
+  "what_still_weak": "中景个别窗光仍略糊成片；瀑布雾后层体积仍稍薄；prompt 改动 97% 超过档位上限 20%",
+  "strengths": "红飘带外缘更干净；星座连线锐；窗暖光层次与史诗商业完成度稳；机位身份锁死",
+  "taste_deltas": {
+    "from_strengths": [
+      "红飘带外缘更干净；星座连线锐；窗暖光层次与史诗商业完成度稳；机位身份锁死"
+    ],
+    "from_defects": [
+      "星座细连线仍偶发糊边；瀑布雾气前层与后层交界偏软；侠客衣褶高光略糊；prompt 改动 99% 超过档位上限 20%",
+      "红飘带外缘偶发毛边；中景部分窗光点粘连成片；地平线云带体积略扁；prompt 改动 97% 超过档位上限 20%",
+      "中景个别窗光仍略糊成片；瀑布雾后层体积仍稍薄；prompt 改动 97% 超过档位上限 20%"
+    ]
+  },
+  "warm_start_confidence": 0.3,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 9.34,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 9.45,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 9.52,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 9.54,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：星空星座连线仍偏软糊；近中远窗暖光层次不够分层；瀑布边体积云雾略糊成片",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "9.34"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：机位与男侠背影身份锁住；瀑布冷蓝与城暖金对比清晰；屋顶瓦面接触阴影可读",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.34"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：星座细连线仍偶发糊边；瀑布雾气前层与后层交界偏软；侠客衣褶高光略糊；prompt 改动 99% 超过档位上限 20%",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.45"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：星座细连线仍偶发糊边；瀑布雾气前层与后层交界偏软；侠客衣褶高光略糊；prompt 改动 99% 超过档位上限 20%",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "9.45"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：机位身份仍锁；近远窗暖光层次更清晰；星点更锐；地平线空气透视更好",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.45"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：红飘带外缘偶发毛边；中景部分窗光点粘连成片；地平线云带体积略扁；prompt 改动 97% 超过档位上限 20%",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "9.52"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：星座细线更锐；机位身份锁死；窗暖金与银河对比稳；瀑布雾有前后层",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.52"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：中景个别窗光仍略糊成片；瀑布雾后层体积仍稍薄；prompt 改动 97% 超过档位上限 20%",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "9.54"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：中景个别窗光仍略糊成片；瀑布雾后层体积仍稍薄；prompt 改动 97% 超过档位上限 20%",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.54"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：红飘带外缘更干净；星座连线锐；窗暖光层次与史诗商业完成度稳；机位身份锁死",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.54"
+    }
+  ]
+}

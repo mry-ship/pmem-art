@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<title>Icon Mode B · Clean 24px preview</title>
+<style>
+  :root { color-scheme: light dark; }
+  body { font-family: ui-sans-serif, system-ui, sans-serif; margin: 24px; }
+  h1 { font-size: 18px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 16px; }
+  .card { border: 1px solid #ccc3; border-radius: 8px; padding: 16px; text-align: center; }
+  .card svg { width: 24px; height: 24px; }
+  .row { display: flex; gap: 24px; justify-content: center; align-items: center; margin-top: 8px; }
+  .on-dark { background: #1a1a1a; color: #f2f2f2; border-radius: 6px; padding: 8px 12px; }
+  .on-light { background: #f7f7f7; color: #111; border-radius: 6px; padding: 8px 12px; }
+  code { font-size: 12px; opacity: .7; }
+</style>
+</head>
+<body>
+<h1>Icon Mode B · Clean preset · stroke 1.5 · viewBox 24 · currentColor</h1>
+<p><code>style-spec.json</code> · home / map / inventory / craft / quest / settings</p>
+<div class="grid" id="g"></div>
+<script>
+const names = ["home","map","inventory","craft","quest","settings"];
+const g = document.getElementById("g");
+Promise.all(names.map(n => fetch(n + ".svg").then(r => r.text()).then(t => ({n,t}))))
+.then(list => list.forEach(({n,t}) => {
+  const d = document.createElement("div");
+  d.className = "card";
+  d.innerHTML = `<strong>${n}</strong><div class="row"><div class="on-light">${t}</div><div class="on-dark">${t}</div></div><div class="row" style="transform:scale(2);transform-origin:top center;margin-top:20px"><div class="on-light">${t}</div></div>`;
+  g.appendChild(d);
+}));
+</script>
+</body>
+</html>

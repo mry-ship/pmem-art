@@ -1,0 +1,158 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "cursor-pmem-art",
+  "project_name": "Cursor-Pmem-Art",
+  "layer_scope": "private",
+  "written_at": "2026-10-26 23:11:48 UTC+8",
+  "session_id": "merge-val-heart",
+  "goal": "情人节八件正方形第二段。顺序锁死：心形糖、一朵花、情书、丘比特之箭、爱心气球、方礼盒、心形音乐盒、婚礼蛋糕。一件一格。亮粉与暖桃，圆润光洁的图标体积，浅空底。不垫参考图。",
+  "module": "prop.ValentineMerge",
+  "converge_mode": "quality",
+  "guided_mode": "text_guided",
+  "threshold": 9.6,
+  "max_rounds": 8,
+  "rounds_used": 8,
+  "winner_round": 7,
+  "winner_score": 8.85,
+  "winner_image": "assets/prop/valentinemerge/merge_val_r7_08.jpg",
+  "winner_passed": false,
+  "outcome": "⚠️ **共执行 8 轮审图（目标阈值 `9.60` 分），未达标，已挑选全阶段最高分**（胜出：第 7 轮 `8.85 / 10.0` 分）",
+  "what_fixed": [
+    "去掉底板和长反光",
+    "包装和丝带重新分开",
+    "浅处必须是同色，不能另成一颗",
+    "箭只朝一个方向，糖纸改光洁",
+    "把箭画大，心尖和羽毛靠近对角",
+    "满八轮，采用各轮关系仍在的最好一张"
+  ],
+  "what_still_weak": "箭又变瘦，四周空",
+  "strengths": "糖、盒、蛋糕站住了",
+  "taste_deltas": {
+    "from_strengths": [
+      "糖、盒、蛋糕站住了"
+    ],
+    "from_defects": [
+      "箭变成两边羽毛，糖纸起皱",
+      "箭又变瘦，四周空",
+      "箭改成横条，上下仍空，不如斜向那张"
+    ]
+  },
+  "warm_start_confidence": 0.3,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 8.51,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 7.9,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 8.33,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 8.19,
+      "passed": false
+    },
+    {
+      "round": 5,
+      "score": 8.68,
+      "passed": false
+    },
+    {
+      "round": 6,
+      "score": 8.5,
+      "passed": false
+    },
+    {
+      "round": 7,
+      "score": 8.85,
+      "passed": false
+    },
+    {
+      "round": 8,
+      "score": 8.83,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：表面不统一，糖有亮斑",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.51"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：颜色回到亮粉和桃黄",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.51"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：漂成纸纹，空地上多了小点",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "7.9"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：八件还在",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "7.9"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：两张出现圆角底板，信封有长反光；prompt 改动 29% 低于档位下限 30%",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.33"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：颜色齐",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.33"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：糖看不出包装，蛋糕色带化开",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.19"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：信封干净",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.19"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：信封盖、盒盖和蛋糕顶多了单独白点",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.68"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：件数和颜色最齐",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.68"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：箭变成两边羽毛，糖纸起皱",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.5"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：气球和信封安静了",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.5"
+    }
+  ]
+}

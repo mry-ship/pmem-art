@@ -1,0 +1,118 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-10-28 02:43:42 UTC+8",
+  "session_id": "hp_dm_c01_high",
+  "goal": "更大改动仍锁身份：强化天穹浮城夜景窗暖光层次、星座连线锐度、地平空气透视与云层体积；可加风格内叙事点缀；史诗商业完成度；勿扁平图标。",
+  "module": "scene.CelestialCity",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.6,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 4,
+  "winner_score": 9.54,
+  "winner_image": "assets/scene/celestialcity/r4.jpg",
+  "winner_passed": false,
+  "outcome": "⚠️ **共执行 4 轮审图（目标阈值 `9.60` 分），未达标，已挑选全阶段最高分**（胜出：第 4 轮 `9.54 / 10.0` 分）",
+  "what_fixed": [
+    "加强银河体积光与剑刃轮廓光；窗光近中远三档戏剧差；瀑云加冷色轮廓光",
+    "剑与袍缘青轮廓光加亮；近景窗点更戏剧；瀑云冷轮廓收边",
+    "恢复锐利星座连线；瀑云冷轮廓收干净；银河体积光收束成束",
+    "解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁止糊边融边；瀑云局部仍略糊；近景瓦面微细节略软"
+  ],
+  "what_still_weak": "瀑云局部仍略糊；近景瓦面微细节略软",
+  "strengths": "星座连线恢复锐利；体积光成束；冷暖戏剧与身份锁稳",
+  "taste_deltas": {
+    "from_strengths": [
+      "星座连线恢复锐利；体积光成束；冷暖戏剧与身份锁稳"
+    ],
+    "from_defects": [
+      "剑刃轮廓光可再亮；近景窗光戏剧性仍不足；瀑云轮廓偶糊；prompt 改动 99% 超过档位上限 80%",
+      "星座连线变弱偏淡；瀑云轮廓仍偶糊；银河体积光略散；prompt 改动 85% 超过档位上限 80%",
+      "瀑云局部仍略糊；近景瓦面微细节略软"
+    ]
+  },
+  "warm_start_confidence": 0.9,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 9.4,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 9.49,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 9.45,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 9.54,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：体积光/轮廓光仍偏弱；窗暖光近中远分层不够戏剧；瀑云轮廓光不足",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.4"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：身份与媒介锁住；星座线已出现；城瀑冷暖对比有张力",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.4"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：剑刃轮廓光可再亮；近景窗光戏剧性仍不足；瀑云轮廓偶糊；prompt 改动 99% 超过档位上限 80%",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.49"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：银河体积光更强；星座线清晰；冷暖碰撞与身份锁稳",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.49"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：星座连线变弱偏淡；瀑云轮廓仍偶糊；银河体积光略散；prompt 改动 85% 超过档位上限 80%",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.45"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：剑袍青光更亮；近景窗点更戏剧；身份媒介锁",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.45"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：瀑云局部仍略糊；近景瓦面微细节略软",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "9.54"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：瀑云局部仍略糊；近景瓦面微细节略软",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.54"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：瀑云局部仍略糊；近景瓦面微细节略软",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "9.54"
+    }
+  ]
+}

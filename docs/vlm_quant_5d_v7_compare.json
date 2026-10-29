@@ -1,0 +1,1794 @@
+{
+  "model": "gpt-6-sol",
+  "rubric": "gpt6sol_quant_checklist_v1",
+  "weights": {
+    "composition": 0.2,
+    "lighting_color": 0.2,
+    "perspective_anatomy": 0.25,
+    "texture_detail": 0.15,
+    "spec_style": 0.2
+  },
+  "updated_at": "2026-10-26 00:22 Asia/Shanghai (UTC+8)",
+  "old": {
+    "path": "/workspace/pmem-art-v7-vlm/vlm_quant_5d_v7.json",
+    "n_ok": 52,
+    "n_finals": 32,
+    "n_r1": 16,
+    "n_baseline": 4,
+    "finals_mean": 8.45,
+    "r1_mean": 8.3,
+    "baseline_mean": 7.51,
+    "all_mean": 8.33,
+    "grade_dist_finals": {
+      "良好": 17,
+      "优秀": 10,
+      "近乎无瑕": 4,
+      "合格": 1
+    }
+  },
+  "new": {
+    "path": "/workspace/pmem-art-v7-vlm/vlm_quant_5d_v7_rescore.json",
+    "n_ok": 32,
+    "finals_mean": 8.41,
+    "grade_dist": {
+      "良好": 18,
+      "优秀": 12,
+      "近乎无瑕": 2
+    },
+    "img_dir": "/workspace/pmem-art-v7-images/generated_v7_rescore"
+  },
+  "paired": {
+    "n": 32,
+    "old_mean": 8.45,
+    "new_mean": 8.41,
+    "mean_delta": -0.04,
+    "improved": 16,
+    "regressed": 16,
+    "unchanged": 0,
+    "median_delta": -0.01
+  },
+  "dim_delta": {
+    "composition": {
+      "old_mean": 9.23,
+      "new_mean": 9.16,
+      "delta": -0.07
+    },
+    "lighting_color": {
+      "old_mean": 8.45,
+      "new_mean": 8.48,
+      "delta": 0.03
+    },
+    "perspective_anatomy": {
+      "old_mean": 7.74,
+      "new_mean": 7.77,
+      "delta": 0.03
+    },
+    "texture_detail": {
+      "old_mean": 7.68,
+      "new_mean": 7.8,
+      "delta": 0.12
+    },
+    "spec_style": {
+      "old_mean": 9.13,
+      "new_mean": 8.82,
+      "delta": -0.31
+    }
+  },
+  "by_slug": [
+    {
+      "slug": "ishtar_canyon",
+      "n": 8,
+      "old_mean": 8.42,
+      "new_mean": 8.52,
+      "delta": 0.1,
+      "improved": 5,
+      "regressed": 3
+    },
+    {
+      "slug": "night_city",
+      "n": 8,
+      "old_mean": 8.01,
+      "new_mean": 8.36,
+      "delta": 0.35,
+      "improved": 4,
+      "regressed": 4
+    },
+    {
+      "slug": "pastel_sketch",
+      "n": 8,
+      "old_mean": 8.6,
+      "new_mean": 8.21,
+      "delta": -0.39,
+      "improved": 4,
+      "regressed": 4
+    },
+    {
+      "slug": "sunlit_portrait",
+      "n": 8,
+      "old_mean": 8.77,
+      "new_mean": 8.54,
+      "delta": -0.23,
+      "improved": 3,
+      "regressed": 5
+    }
+  ],
+  "top_improvements": [
+    {
+      "filename": "v7_bot_25_ishtar_canyon_low.jpg",
+      "old": 6.64,
+      "new": 8.44,
+      "delta": 1.8,
+      "old_grade": "合格",
+      "new_grade": "良好",
+      "old_defects": [
+        "C1/C6：缩略后中央主体偏暗，人物与杂物难以分离。",
+        "C3/C4：斜向梁柱和密集砖缝争夺注意力，空间层级不够清楚。",
+        "L1/L6：局部亮面与遮挡关系交代不足，梁木、桶及墙饰的接触阴影偏弱。",
+        "P1/P2/P3/P4：多组建筑边线汇聚不统一，中央木构连接及承重关系含混。",
+        "T1/T2/T4/T6：石材、木材与金属依赖相似描线，中央暗部局部边缘粘连。",
+        "S1：天井空间可辨，但俯视方向缺少明确地面与尺度线索。"
+      ],
+      "new_defects": [
+        "局部屋顶与木结构透视关系略松散",
+        "中心及底部人物细节偏小且解剖不够清晰",
+        "部分边缘和阴影区域笔触软化，材质区分减弱",
+        "接触阴影在部分木构件下方不够统一"
+      ],
+      "slug": "ishtar_canyon",
+      "old_dims": {
+        "composition": 6.75,
+        "lighting_color": 6.75,
+        "perspective_anatomy": 5.75,
+        "texture_detail": 5.75,
+        "spec_style": 8.21
+      },
+      "new_dims": {
+        "composition": 9.25,
+        "lighting_color": 8.25,
+        "perspective_anatomy": 7.25,
+        "texture_detail": 8.5,
+        "spec_style": 9.25
+      }
+    },
+    {
+      "filename": "v7_bot_08_night_city_recompose_bold.jpg",
+      "old": 7.34,
+      "new": 8.84,
+      "delta": 1.5,
+      "old_grade": "良好",
+      "new_grade": "优秀",
+      "old_defects": [
+        "孤侠身上未见可辨识的剑，缺少核心持剑设定",
+        "人物手臂与手部被暗部和衣袖遮挡，动作结构不够清楚",
+        "缺少明显全息旗帜；积水反射虽有呈现但局部细节偏糊"
+      ],
+      "new_defects": [
+        "栏杆与屋檐局部结构变软，透视和花格重复关系不够稳定",
+        "人物手臂、剑柄与栏杆交接处细节较糊",
+        "低机位积水反射表现有限，画面主要仍是高位阳台俯视",
+        "全息旗帜感偏弱，更多呈现为霓虹竖向招牌"
+      ],
+      "slug": "night_city",
+      "old_dims": {
+        "composition": 9.25,
+        "lighting_color": 8.5,
+        "perspective_anatomy": 6.5,
+        "texture_detail": 7.75,
+        "spec_style": 5.0
+      },
+      "new_dims": {
+        "composition": 10.0,
+        "lighting_color": 9.25,
+        "perspective_anatomy": 8.0,
+        "texture_detail": 8.25,
+        "spec_style": 8.75
+      }
+    },
+    {
+      "filename": "v7_bot_31_ishtar_canyon_recompose.jpg",
+      "old": 8.41,
+      "new": 9.81,
+      "delta": 1.4,
+      "old_grade": "良好",
+      "new_grade": "近乎无瑕",
+      "old_defects": [
+        "桥体局部砖石结构和拱券透视略显软化",
+        "前景人物肢体与轮廓细节较弱",
+        "前景暗部接触阴影不够明确",
+        "远景龙体量偏大，距离感略弱"
+      ],
+      "new_defects": [
+        "人物背影细节较软，个别肢体比例略显僵硬",
+        "飞龙尺寸较小，远景识别度有限"
+      ],
+      "slug": "ishtar_canyon",
+      "old_dims": {
+        "composition": 9.25,
+        "lighting_color": 8.5,
+        "perspective_anatomy": 6.75,
+        "texture_detail": 8.5,
+        "spec_style": 9.5
+      },
+      "new_dims": {
+        "composition": 10.0,
+        "lighting_color": 10.0,
+        "perspective_anatomy": 9.25,
+        "texture_detail": 10.0,
+        "spec_style": 10.0
+      }
+    },
+    {
+      "filename": "v7_bot_06_night_city_high_best.jpg",
+      "old": 8.62,
+      "new": 9.5,
+      "delta": 0.88,
+      "old_grade": "优秀",
+      "new_grade": "近乎无瑕",
+      "old_defects": [
+        "水墨媒介感偏弱，整体更接近数字概念艺术质感",
+        "人物面部与手部被深色剪影遮蔽，人体细节和关节可信度有限",
+        "远景城市与部分灯笼细节偏软，局部结构辨识度不足",
+        "剑身与剑气边缘略显碎裂，实体剑的结构不够明确"
+      ],
+      "new_defects": [
+        "人物与屋脊接触阴影略弱",
+        "剑柄与手部连接细节略显模糊",
+        "远景城市与云层局部边缘偏软"
+      ],
+      "slug": "night_city",
+      "old_dims": {
+        "composition": 10.0,
+        "lighting_color": 9.25,
+        "perspective_anatomy": 7.25,
+        "texture_detail": 7.75,
+        "spec_style": 9.0
+      },
+      "new_dims": {
+        "composition": 10.0,
+        "lighting_color": 9.25,
+        "perspective_anatomy": 9.5,
+        "texture_detail": 8.5,
+        "spec_style": 10.0
+      }
+    },
+    {
+      "filename": "v7_bot_04_night_city_medium_best.jpg",
+      "old": 7.49,
+      "new": 8.19,
+      "delta": 0.7,
+      "old_grade": "良好",
+      "new_grade": "良好",
+      "old_defects": [
+        "远景城市与中景树海细节偏软，局部呈现糊化笔触",
+        "前景屋脊和人物接触阴影不够明确",
+        "人物肢体与衣摆轮廓较模糊，结构识别度一般",
+        "冷色雾层削弱了局部明暗对比和材质区分",
+        "建筑与屋顶纹理缺少更清晰的介质质感"
+      ],
+      "new_defects": [
+        "远景建筑与屋顶结构偏软，局部透视和线条不够稳定",
+        "人物四肢与手部细节被暗部和雾气吞没",
+        "前景屋瓦与树林材质区分度不足，微观纹理略显糊化",
+        "画面整体偏密，留白和主体边缘分离度有限"
+      ],
+      "slug": "night_city",
+      "old_dims": {
+        "composition": 8.5,
+        "lighting_color": 6.5,
+        "perspective_anatomy": 6.75,
+        "texture_detail": 6.0,
+        "spec_style": 9.5
+      },
+      "new_dims": {
+        "composition": 9.25,
+        "lighting_color": 9.25,
+        "perspective_anatomy": 6.5,
+        "texture_detail": 6.75,
+        "spec_style": 9.25
+      }
+    },
+    {
+      "filename": "v7_bot_18_sunlit_portrait_low_best.jpg",
+      "old": 8.25,
+      "new": 8.9,
+      "delta": 0.65,
+      "old_grade": "良好",
+      "new_grade": "优秀",
+      "old_defects": [
+        "暗部面部和颈部细节偏少",
+        "头发边缘与背景局部融合偏软",
+        "眼睛与嘴部的细节刻画略显平滑",
+        "肩颈和衣领结构存在轻微软化"
+      ],
+      "new_defects": [
+        "颈部与衣领接触阴影略弱，明暗交界偏生硬",
+        "局部五官对称性略有偏差，眼部结构不完全一致",
+        "背景花朵与发丝边缘部分偏软，材质区分度下降",
+        "整体质感完成度较高，低强度局部修瑕感略弱"
+      ],
+      "slug": "sunlit_portrait",
+      "old_dims": {
+        "composition": 9.25,
+        "lighting_color": 8.5,
+        "perspective_anatomy": 7.75,
+        "texture_detail": 5.75,
+        "spec_style": 9.5
+      },
+      "new_dims": {
+        "composition": 9.25,
+        "lighting_color": 9.25,
+        "perspective_anatomy": 8.25,
+        "texture_detail": 8.25,
+        "spec_style": 9.5
+      }
+    },
+    {
+      "filename": "v7_bot_29_ishtar_canyon_high.jpg",
+      "old": 8.45,
+      "new": 8.91,
+      "delta": 0.46,
+      "old_grade": "良好",
+      "new_grade": "优秀",
+      "old_defects": [
+        "红斗篷旅人过小，缩略图下叙事辨识度不足",
+        "栈桥与峡壁结构局部透视关系含混",
+        "部分木梁和深色区域细节融化",
+        "旅人与平台的接触阴影偏弱"
+      ],
+      "new_defects": [
+        "红斗篷旅人比例过小，身份与动作在缩略图中不够清晰",
+        "局部砖石与木栈桥纹理偏软，边缘细节有融化感",
+        "龙的爪部和翼膜细节较弱，结构辨识度略降",
+        "部分高光区域接近过曝，削弱了建筑与光束的局部层次"
+      ],
+      "slug": "ishtar_canyon",
+      "old_dims": {
+        "composition": 8.5,
+        "lighting_color": 9.25,
+        "perspective_anatomy": 7.5,
+        "texture_detail": 8.5,
+        "spec_style": 8.75
+      },
+      "new_dims": {
+        "composition": 8.5,
+        "lighting_color": 9.25,
+        "perspective_anatomy": 8.75,
+        "texture_detail": 8.5,
+        "spec_style": 9.5
+      }
+    },
+    {
+      "filename": "v7_bot_22_sunlit_portrait_high_best.jpg",
+      "old": 8.8,
+      "new": 9.18,
+      "delta": 0.38,
+      "old_grade": "优秀",
+      "new_grade": "优秀",
+      "old_defects": [
+        "发型偏长蓬乱，不够符合短发设定",
+        "右侧眼部贴近画面边缘，构图略显局促",
+        "白衣与肩颈交界被阴影吞没，接触关系不够清楚"
+      ],
+      "new_defects": [
+        "右侧脸部与肩部裁切略紧，构图完整性受影响",
+        "窗边与发丝高光局部过曝，细节损失",
+        "衣料与发丝边缘存在轻微软化和融边",
+        "叙事信息偏弱，主要依赖光影而非明确情境"
+      ],
+      "slug": "sunlit_portrait",
+      "old_dims": {
+        "composition": 8.25,
+        "lighting_color": 9.25,
+        "perspective_anatomy": 9.25,
+        "texture_detail": 9.25,
+        "spec_style": 8.0
+      },
+      "new_dims": {
+        "composition": 9.25,
+        "lighting_color": 8.5,
+        "perspective_anatomy": 10.0,
+        "texture_detail": 8.5,
+        "spec_style": 9.25
+      }
+    }
+  ],
+  "top_regressions": [
+    {
+      "filename": "v7_bot_16_pastel_sketch_recompose_bold.jpg",
+      "old": 9.9,
+      "new": 7.39,
+      "delta": -2.51,
+      "old_grade": "近乎无瑕",
+      "new_grade": "良好",
+      "old_defects": [
+        "人物姿态改为站立，未保留原要求的屈膝坐姿",
+        "部分远景城市与栏杆细节较密，缩小后辨识度会下降"
+      ],
+      "new_defects": [
+        "未保留目标明确要求的屈膝坐姿少女剪影，改成站姿",
+        "夕阳逆光与人物正面、腿部亮面对应不充分",
+        "鞋底接地阴影偏弱，脚部略有漂浮感",
+        "栏杆圆饰的透视压缩与间距变化不够统一",
+        "天空、海面、建筑和地面网点密度偏高，缩图后背景抢眼",
+        "服装、皮肤与地面共享颗粒处理，材质区分有限"
+      ],
+      "slug": "pastel_sketch",
+      "old_dims": {
+        "composition": 10.0,
+        "lighting_color": 10.0,
+        "perspective_anatomy": 10.0,
+        "texture_detail": 10.0,
+        "spec_style": 9.5
+      },
+      "new_dims": {
+        "composition": 8.5,
+        "lighting_color": 7.5,
+        "perspective_anatomy": 8.25,
+        "texture_detail": 7.5,
+        "spec_style": 5.0
+      }
+    },
+    {
+      "filename": "v7_bot_32_ishtar_canyon_recompose_bold.jpg",
+      "old": 9.66,
+      "new": 8.51,
+      "delta": -1.15,
+      "old_grade": "近乎无瑕",
+      "new_grade": "优秀",
+      "old_defects": [
+        "人物面部与肢体细节被背影和斗篷遮挡",
+        "人物主体受暗部影响，局部焦点照明略弱"
+      ],
+      "new_defects": [
+        "飞龙占幅过大、翼尖贴边，未形成远景天际的小尺度剪影",
+        "天空旋涡与密集斜向纹理抢眼，削弱旅人主焦点",
+        "人物脚底接触阴影与石柱投影不够明确，光向一致性偏弱",
+        "飞龙翼根及爪部结构含混，人物握剑手细节不清",
+        "岩壁、石桥与衣料共用较重碎纹，局部材质区分不足",
+        "仍混有概念插画式体积塑造，浮世绘平面色块与轮廓语言不够彻底"
+      ],
+      "slug": "ishtar_canyon",
+      "old_dims": {
+        "composition": 10.0,
+        "lighting_color": 9.25,
+        "perspective_anatomy": 9.25,
+        "texture_detail": 10.0,
+        "spec_style": 10.0
+      },
+      "new_dims": {
+        "composition": 9.25,
+        "lighting_color": 8.25,
+        "perspective_anatomy": 8.5,
+        "texture_detail": 8.25,
+        "spec_style": 8.25
+      }
+    },
+    {
+      "filename": "v7_bot_27_ishtar_canyon_medium.jpg",
+      "old": 8.88,
+      "new": 7.75,
+      "delta": -1.13,
+      "old_grade": "优秀",
+      "new_grade": "良好",
+      "old_defects": [
+        "局部砖石与远景结构偏软，细节层次被光雾吞没",
+        "部分建筑连接处接触阴影不足，空间咬合略弱",
+        "高光区域层次略压平，局部存在轻微过曝感",
+        "装饰门框与周边结构的透视衔接不够严谨"
+      ],
+      "new_defects": [
+        "中心焦点不够明确，缩小后建筑纹理与光雾容易混成一片",
+        "局部砖墙和木梁透视变形，结构边缘不够稳定",
+        "雾区细节偏软，材质层次与远近分离不足",
+        "顶部高光略显过曝，局部接触阴影不够清晰"
+      ],
+      "slug": "ishtar_canyon",
+      "old_dims": {
+        "composition": 10.0,
+        "lighting_color": 8.25,
+        "perspective_anatomy": 8.25,
+        "texture_detail": 7.75,
+        "spec_style": 10.0
+      },
+      "new_dims": {
+        "composition": 7.5,
+        "lighting_color": 8.5,
+        "perspective_anatomy": 6.75,
+        "texture_detail": 6.75,
+        "spec_style": 9.25
+      }
+    },
+    {
+      "filename": "v7_bot_17_sunlit_portrait_low.jpg",
+      "old": 9.25,
+      "new": 8.15,
+      "delta": -1.1,
+      "old_grade": "优秀",
+      "new_grade": "良好",
+      "old_defects": [
+        "颈肩交界与衣领接触阴影略弱",
+        "受光与阴影侧双眼明暗差较大，眼部细节略不均",
+        "发丝局部线条较密，脸侧边缘略显松散"
+      ],
+      "new_defects": [
+        "实际画幅约2:3，未满足指定3:4",
+        "明暗分界近乎竖直，贯穿面部、颈部与衣服，局部缺少随体积变化",
+        "面部皮肤偏平滑，颗粒质感较统一",
+        "发梢局部线条缠绕，深色区域层次略混",
+        "颈部略显修长，锁骨与颈肌转折偏刻画",
+        "厚涂笔触偏弱，更接近柔化写实插画"
+      ],
+      "slug": "sunlit_portrait",
+      "old_dims": {
+        "composition": 10.0,
+        "lighting_color": 9.25,
+        "perspective_anatomy": 8.5,
+        "texture_detail": 8.5,
+        "spec_style": 10.0
+      },
+      "new_dims": {
+        "composition": 8.5,
+        "lighting_color": 8.25,
+        "perspective_anatomy": 9.06,
+        "texture_detail": 7.5,
+        "spec_style": 7.06
+      }
+    },
+    {
+      "filename": "v7_bot_19_sunlit_portrait_medium.jpg",
+      "old": 9.15,
+      "new": 8.25,
+      "delta": -0.9,
+      "old_grade": "优秀",
+      "new_grade": "良好",
+      "old_defects": [
+        "肩颈与衣领结构略显含混，接触阴影偏弱",
+        "背景花形和发丝局部融合，细节边缘稍软"
+      ],
+      "new_defects": [
+        "高光区域局部偏亮，逆光细节略有丢失",
+        "衣物与头发边缘较软，材质区分度不足",
+        "接触阴影偏弱，颈部与肩部立体感不足",
+        "轻厚涂介质质感不够明确，部分区域偏平滑"
+      ],
+      "slug": "sunlit_portrait",
+      "old_dims": {
+        "composition": 9.25,
+        "lighting_color": 9.25,
+        "perspective_anatomy": 9.0,
+        "texture_detail": 9.0,
+        "spec_style": 9.25
+      },
+      "new_dims": {
+        "composition": 9.25,
+        "lighting_color": 8.25,
+        "perspective_anatomy": 8.25,
+        "texture_detail": 6.25,
+        "spec_style": 8.75
+      }
+    },
+    {
+      "filename": "v7_bot_28_ishtar_canyon_medium_best.jpg",
+      "old": 8.63,
+      "new": 7.85,
+      "delta": -0.78,
+      "old_grade": "优秀",
+      "new_grade": "良好",
+      "old_defects": [
+        "部分建筑结构透视扭曲，平面衔接不够稳定",
+        "烟雾与暗部边缘偏软，局部细节被吞没",
+        "底部和中景缺少明确接触阴影，空间落地感不足"
+      ],
+      "new_defects": [
+        "主体焦点不够明确，缩小后建筑群容易混成复杂斜向纹理",
+        "部分屋顶与木构件的透视关系偏软，结构边缘不够稳定",
+        "雾气覆盖区域较大，局部材质细节与边界被明显软化",
+        "高光区域略有泛白，暗部层次受到雾化影响"
+      ],
+      "slug": "ishtar_canyon",
+      "old_dims": {
+        "composition": 9.25,
+        "lighting_color": 9.25,
+        "perspective_anatomy": 7.06,
+        "texture_detail": 7.75,
+        "spec_style": 10.0
+      },
+      "new_dims": {
+        "composition": 7.5,
+        "lighting_color": 8.25,
+        "perspective_anatomy": 6.75,
+        "texture_detail": 6.75,
+        "spec_style": 10.0
+      }
+    },
+    {
+      "filename": "v7_bot_15_pastel_sketch_recompose.jpg",
+      "old": 9.51,
+      "new": 8.79,
+      "delta": -0.72,
+      "old_grade": "近乎无瑕",
+      "new_grade": "优秀",
+      "old_defects": [
+        "手部与手指结构略显模糊",
+        "局部粉彩笔触导致细节锐度不足",
+        "栏杆接触处阴影略弱"
+      ],
+      "new_defects": [
+        "S5：画幅约为3:2，未满足指定4:3。",
+        "P3：扶栏手指局部叠合，指节及抓握关系略含糊。",
+        "P6：栏杆局部连接与远景建筑线条交织，结构精度不足。",
+        "L5/L6：衣背明暗转折偏弱，手掌与扶栏接触阴影不够明确。",
+        "T3/T6：远景建筑与港口设施笔触较同质，细部辨识有限。"
+      ],
+      "slug": "pastel_sketch",
+      "old_dims": {
+        "composition": 10.0,
+        "lighting_color": 9.25,
+        "perspective_anatomy": 9.25,
+        "texture_detail": 9.0,
+        "spec_style": 10.0
+      },
+      "new_dims": {
+        "composition": 10.0,
+        "lighting_color": 8.5,
+        "perspective_anatomy": 8.5,
+        "texture_detail": 8.75,
+        "spec_style": 8.24
+      }
+    },
+    {
+      "filename": "v7_bot_21_sunlit_portrait_high.jpg",
+      "old": 9.55,
+      "new": 8.94,
+      "delta": -0.61,
+      "old_grade": "近乎无瑕",
+      "new_grade": "优秀",
+      "old_defects": [
+        "白衣与肩部褶皱细节略软，材质层次有限",
+        "颈肩接触阴影偏弱"
+      ],
+      "new_defects": [
+        "面部皮肤与阴影过度平滑，厚涂媒介质感不足",
+        "局部五官对称性略弱，眼部结构存在轻微不一致",
+        "衣领与头发边缘部分偏软，接触阴影不够明确"
+      ],
+      "slug": "sunlit_portrait",
+      "old_dims": {
+        "composition": 9.25,
+        "lighting_color": 9.25,
+        "perspective_anatomy": 10.0,
+        "texture_detail": 9.0,
+        "spec_style": 10.0
+      },
+      "new_dims": {
+        "composition": 9.25,
+        "lighting_color": 8.25,
+        "perspective_anatomy": 9.12,
+        "texture_detail": 8.75,
+        "spec_style": 9.25
+      }
+    }
+  ],
+  "all_deltas": [
+    {
+      "filename": "v7_bot_01_night_city_low.jpg",
+      "old": 7.58,
+      "new": 7.46,
+      "delta": -0.12,
+      "old_grade": "良好",
+      "new_grade": "良好",
+      "old_defects": [
+        "缩小后人物与暗色屋脊局部粘连，腿脚辨识偏弱",
+        "中远景屋群颗粒化，部分檐线与建筑体块糊合",
+        "人物足部落点及接触阴影不够明确",
+        "衣料、瓦面与雾气的局部质感区分不足",
+        "暖色灯点密集重复，局部争夺主体注意力",
+        "缺少原图，无法核验低于20%的修饰幅度及站位保留"
+      ],
+      "new_defects": [
+        "缩小后侠客较难辨认",
+        "屋脊与人物脚部结构含混",
+        "远景建筑细节重复、局部糊成一片",
+        "整体更偏厚涂奇幻，水墨笔意不足"
+      ],
+      "slug": "night_city",
+      "old_dims": {
+        "composition": 8.5,
+        "lighting_color": 7.5,
+        "perspective_anatomy": 6.75,
+        "texture_detail": 5.75,
+        "spec_style": 9.17
+      },
+      "new_dims": {
+        "composition": 9.25,
+        "lighting_color": 8.5,
+        "perspective_anatomy": 6.0,
+        "texture_detail": 6.75,
+        "spec_style": 7.0
+      }
+    },
+    {
+      "filename": "v7_bot_02_night_city_low_best.jpg",
+      "old": 7.54,
+      "new": 7.25,
+      "delta": -0.29,
+      "old_grade": "良好",
+      "new_grade": "良好",
+      "old_defects": [
+        "缩略后人物躯干与屋顶暗部粘连，主要依赖亮剑辨识",
+        "城市中远景屋宇与灯点偏碎，局部结构糊化、材质区分不足",
+        "弧形天际线带出球面感，与近景屋顶的透视衔接略生硬",
+        "脚部落点及接触阴影不够明确",
+        "剑身亮度突出，但邻近手部与衣料受光反馈偏弱",
+        "整体偏厚重数字绘景，水墨笔触与留白表现有限"
+      ],
+      "new_defects": [
+        "远景建筑轮廓偏糊，局部屋顶纹理重复",
+        "天际线弧度突兀，削弱城市纵深的可信度",
+        "水墨笔触不明显，更接近数字奇幻绘画",
+        "人物较小且偏暗，缩图后细节难辨"
+      ],
+      "slug": "night_city",
+      "old_dims": {
+        "composition": 8.5,
+        "lighting_color": 7.5,
+        "perspective_anatomy": 6.75,
+        "texture_detail": 5.5,
+        "spec_style": 9.12
+      },
+      "new_dims": {
+        "composition": 8.5,
+        "lighting_color": 8.5,
+        "perspective_anatomy": 5.75,
+        "texture_detail": 5.75,
+        "spec_style": 7.75
+      }
+    },
+    {
+      "filename": "v7_bot_03_night_city_medium.jpg",
+      "old": 7.91,
+      "new": 7.85,
+      "delta": -0.06,
+      "old_grade": "良好",
+      "new_grade": "良好",
+      "old_defects": [
+        "中远景屋群与灯点密度偏高，局部层级拥挤",
+        "雾带明度与颗粒重复，远景对比衰减不够充分",
+        "部分楼阁屋檐粘连，建筑结构与尺度关系含混",
+        "人物脚部与屋脊接触关系不够清晰",
+        "瓦面、衣料与雾气共享碎斑笔触，介质区分不足"
+      ],
+      "new_defects": [
+        "画幅接近2:3，不符合9:16要求",
+        "中景建筑细节偏糊，局部结构难辨",
+        "人物双脚与屋脊的接触关系不够清楚"
+      ],
+      "slug": "night_city",
+      "old_dims": {
+        "composition": 9.25,
+        "lighting_color": 7.75,
+        "perspective_anatomy": 7.25,
+        "texture_detail": 6.0,
+        "spec_style": 9.0
+      },
+      "new_dims": {
+        "composition": 9.25,
+        "lighting_color": 7.5,
+        "perspective_anatomy": 6.75,
+        "texture_detail": 7.0,
+        "spec_style": 8.82
+      }
+    },
+    {
+      "filename": "v7_bot_04_night_city_medium_best.jpg",
+      "old": 7.49,
+      "new": 8.19,
+      "delta": 0.7,
+      "old_grade": "良好",
+      "new_grade": "良好",
+      "old_defects": [
+        "远景城市与中景树海细节偏软，局部呈现糊化笔触",
+        "前景屋脊和人物接触阴影不够明确",
+        "人物肢体与衣摆轮廓较模糊，结构识别度一般",
+        "冷色雾层削弱了局部明暗对比和材质区分",
+        "建筑与屋顶纹理缺少更清晰的介质质感"
+      ],
+      "new_defects": [
+        "远景建筑与屋顶结构偏软，局部透视和线条不够稳定",
+        "人物四肢与手部细节被暗部和雾气吞没",
+        "前景屋瓦与树林材质区分度不足，微观纹理略显糊化",
+        "画面整体偏密，留白和主体边缘分离度有限"
+      ],
+      "slug": "night_city",
+      "old_dims": {
+        "composition": 8.5,
+        "lighting_color": 6.5,
+        "perspective_anatomy": 6.75,
+        "texture_detail": 6.0,
+        "spec_style": 9.5
+      },
+      "new_dims": {
+        "composition": 9.25,
+        "lighting_color": 9.25,
+        "perspective_anatomy": 6.5,
+        "texture_detail": 6.75,
+        "spec_style": 9.25
+      }
+    },
+    {
+      "filename": "v7_bot_05_night_city_high.jpg",
+      "old": 8.44,
+      "new": 8.66,
+      "delta": 0.22,
+      "old_grade": "良好",
+      "new_grade": "优秀",
+      "old_defects": [
+        "远景城市与屋顶区域偏软，细节解析力不足",
+        "人物手部、剑柄连接和部分肢体结构不够明确",
+        "屋顶与树林边缘有局部融化和笔触混杂",
+        "人物与屋面的接触阴影偏弱"
+      ],
+      "new_defects": [
+        "人物比例较小，手臂与剑柄结构不够清晰",
+        "剑气边缘偏碎裂，剑体与能量形态融合",
+        "远景城市场景局部细节偏软",
+        "屋顶与人物接触阴影不足",
+        "水墨媒介感较弱，整体更接近数字绘画"
+      ],
+      "slug": "night_city",
+      "old_dims": {
+        "composition": 9.25,
+        "lighting_color": 9.25,
+        "perspective_anatomy": 7.5,
+        "texture_detail": 5.75,
+        "spec_style": 10.0
+      },
+      "new_dims": {
+        "composition": 9.25,
+        "lighting_color": 8.5,
+        "perspective_anatomy": 8.25,
+        "texture_detail": 8.0,
+        "spec_style": 9.25
+      }
+    },
+    {
+      "filename": "v7_bot_06_night_city_high_best.jpg",
+      "old": 8.62,
+      "new": 9.5,
+      "delta": 0.88,
+      "old_grade": "优秀",
+      "new_grade": "近乎无瑕",
+      "old_defects": [
+        "水墨媒介感偏弱，整体更接近数字概念艺术质感",
+        "人物面部与手部被深色剪影遮蔽，人体细节和关节可信度有限",
+        "远景城市与部分灯笼细节偏软，局部结构辨识度不足",
+        "剑身与剑气边缘略显碎裂，实体剑的结构不够明确"
+      ],
+      "new_defects": [
+        "人物与屋脊接触阴影略弱",
+        "剑柄与手部连接细节略显模糊",
+        "远景城市与云层局部边缘偏软"
+      ],
+      "slug": "night_city",
+      "old_dims": {
+        "composition": 10.0,
+        "lighting_color": 9.25,
+        "perspective_anatomy": 7.25,
+        "texture_detail": 7.75,
+        "spec_style": 9.0
+      },
+      "new_dims": {
+        "composition": 10.0,
+        "lighting_color": 9.25,
+        "perspective_anatomy": 9.5,
+        "texture_detail": 8.5,
+        "spec_style": 10.0
+      }
+    },
+    {
+      "filename": "v7_bot_07_night_city_recompose.jpg",
+      "old": 9.19,
+      "new": 9.15,
+      "delta": -0.04,
+      "old_grade": "优秀",
+      "new_grade": "优秀",
+      "old_defects": [
+        "持剑手部与剑柄连接略显含混",
+        "局部衣袍和城市细节偏软，材质区分有限"
+      ],
+      "new_defects": [
+        "整体更偏写实电影感，仙侠水墨风格不明显",
+        "人物背部与衣袍处于较重暗部，局部细节可读性下降",
+        "人物手部与武器区域被遮挡，人体结构验证有限"
+      ],
+      "slug": "night_city",
+      "old_dims": {
+        "composition": 10.0,
+        "lighting_color": 9.25,
+        "perspective_anatomy": 8.25,
+        "texture_detail": 8.5,
+        "spec_style": 10.0
+      },
+      "new_dims": {
+        "composition": 10.0,
+        "lighting_color": 9.0,
+        "perspective_anatomy": 9.0,
+        "texture_detail": 10.0,
+        "spec_style": 8.0
+      }
+    },
+    {
+      "filename": "v7_bot_08_night_city_recompose_bold.jpg",
+      "old": 7.34,
+      "new": 8.84,
+      "delta": 1.5,
+      "old_grade": "良好",
+      "new_grade": "优秀",
+      "old_defects": [
+        "孤侠身上未见可辨识的剑，缺少核心持剑设定",
+        "人物手臂与手部被暗部和衣袖遮挡，动作结构不够清楚",
+        "缺少明显全息旗帜；积水反射虽有呈现但局部细节偏糊"
+      ],
+      "new_defects": [
+        "栏杆与屋檐局部结构变软，透视和花格重复关系不够稳定",
+        "人物手臂、剑柄与栏杆交接处细节较糊",
+        "低机位积水反射表现有限，画面主要仍是高位阳台俯视",
+        "全息旗帜感偏弱，更多呈现为霓虹竖向招牌"
+      ],
+      "slug": "night_city",
+      "old_dims": {
+        "composition": 9.25,
+        "lighting_color": 8.5,
+        "perspective_anatomy": 6.5,
+        "texture_detail": 7.75,
+        "spec_style": 5.0
+      },
+      "new_dims": {
+        "composition": 10.0,
+        "lighting_color": 9.25,
+        "perspective_anatomy": 8.0,
+        "texture_detail": 8.25,
+        "spec_style": 8.75
+      }
+    },
+    {
+      "filename": "v7_bot_09_pastel_sketch_low.jpg",
+      "old": 7.85,
+      "new": 7.68,
+      "delta": -0.17,
+      "old_grade": "良好",
+      "new_grade": "良好",
+      "old_defects": [
+        "双手开合未能清楚呈现，画面中主要只读到一只手",
+        "手指与手腕连接略显僵硬，鞋和脚踝结构较含混",
+        "光影与接触阴影较弱，整体更偏平面速写"
+      ],
+      "new_defects": [
+        "头顶与右侧鞋尖留白偏紧，画面略显拥挤。",
+        "双手手指分叉与指节转折简化，手掌体积和开合关系不够明确。",
+        "远侧腿的遮挡连接、两鞋的空间关系略含混。",
+        "臀部和鞋底接触阴影偏弱，落地感不足。",
+        "衣料、皮肤与背景共用较强排线，局部材质区分不足。",
+        "画幅约为3:2，不符合指定4:3。"
+      ],
+      "slug": "pastel_sketch",
+      "old_dims": {
+        "composition": 9.25,
+        "lighting_color": 8.25,
+        "perspective_anatomy": 6.5,
+        "texture_detail": 7.5,
+        "spec_style": 8.0
+      },
+      "new_dims": {
+        "composition": 8.5,
+        "lighting_color": 8.5,
+        "perspective_anatomy": 6.75,
+        "texture_detail": 7.25,
+        "spec_style": 7.5
+      }
+    },
+    {
+      "filename": "v7_bot_10_pastel_sketch_low_best.jpg",
+      "old": 8.14,
+      "new": 7.75,
+      "delta": -0.39,
+      "old_grade": "良好",
+      "new_grade": "良好",
+      "old_defects": [
+        "膝部与大腿连接略显含混，腿部结构不够准确",
+        "手指和鞋部轮廓有局部僵硬、粘连感",
+        "光影塑造偏弱，接触阴影不够稳定",
+        "局部粉彩颗粒过密，边缘细节略显糊化"
+      ],
+      "new_defects": [
+        "手指与手腕结构略显僵硬，局部关节关系不够准确",
+        "膝盖、脚踝和鞋部透视略有软化与变形",
+        "整体明暗层次偏平，光向表现不够明确",
+        "部分轮廓与细节被粉彩颗粒吞没"
+      ],
+      "slug": "pastel_sketch",
+      "old_dims": {
+        "composition": 10.0,
+        "lighting_color": 7.5,
+        "perspective_anatomy": 6.5,
+        "texture_detail": 7.75,
+        "spec_style": 9.25
+      },
+      "new_dims": {
+        "composition": 9.25,
+        "lighting_color": 7.25,
+        "perspective_anatomy": 5.75,
+        "texture_detail": 7.75,
+        "spec_style": 9.25
+      }
+    },
+    {
+      "filename": "v7_bot_11_pastel_sketch_medium.jpg",
+      "old": 8.07,
+      "new": 8.39,
+      "delta": 0.32,
+      "old_grade": "良好",
+      "new_grade": "良好",
+      "old_defects": [
+        "背景光雾较均匀，前中后景分层不足",
+        "臀部与鞋底接触阴影偏淡，落地感稍弱",
+        "双手指形与腕部衔接略生硬，局部轮廓粘连",
+        "远侧腿脚的遮挡与体积关系交代不足",
+        "皮肤、衣料与鞋面共享相似粉彩纹理，材质区分有限",
+        "右侧鞋尖贴近画框，构图略显局促"
+      ],
+      "new_defects": [
+        "高光区域偏白，局部色阶和细节被冲淡",
+        "主体与明亮背景的局部分离度不足",
+        "手指、膝踝和鞋部结构略显软化",
+        "服装、皮肤与鞋面材质区分度有限",
+        "接触阴影较弱，人物落地感不足"
+      ],
+      "slug": "pastel_sketch",
+      "old_dims": {
+        "composition": 9.25,
+        "lighting_color": 7.5,
+        "perspective_anatomy": 7.5,
+        "texture_detail": 6.75,
+        "spec_style": 9.17
+      },
+      "new_dims": {
+        "composition": 10.0,
+        "lighting_color": 7.5,
+        "perspective_anatomy": 7.5,
+        "texture_detail": 6.75,
+        "spec_style": 10.0
+      }
+    },
+    {
+      "filename": "v7_bot_12_pastel_sketch_medium_best.jpg",
+      "old": 7.92,
+      "new": 7.93,
+      "delta": 0.01,
+      "old_grade": "良好",
+      "new_grade": "良好",
+      "old_defects": [
+        "右下鞋尖贴边，构图略显局促。",
+        "右上暖光明确，但人物受光与投影呼应较弱。",
+        "背景主要依赖冷暖涂抹，光雾纵深不足。",
+        "双手指形与腕部衔接略含混，前臂比例稍显拉长。",
+        "双腿及鞋履重叠处结构交代不足。",
+        "衣料、皮肤与鞋面共用类似排线，材质区分有限。"
+      ],
+      "new_defects": [
+        "手指形态略僵且局部粘连，腿部关节连接不够清晰",
+        "背景光雾层次较均匀，主体与地面的接触阴影偏弱"
+      ],
+      "slug": "pastel_sketch",
+      "old_dims": {
+        "composition": 9.25,
+        "lighting_color": 6.75,
+        "perspective_anatomy": 7.25,
+        "texture_detail": 7.25,
+        "spec_style": 9.12
+      },
+      "new_dims": {
+        "composition": 9.25,
+        "lighting_color": 8.5,
+        "perspective_anatomy": 6.0,
+        "texture_detail": 8.5,
+        "spec_style": 8.0
+      }
+    },
+    {
+      "filename": "v7_bot_13_pastel_sketch_high.jpg",
+      "old": 8.41,
+      "new": 8.71,
+      "delta": 0.3,
+      "old_grade": "良好",
+      "new_grade": "优秀",
+      "old_defects": [
+        "手指与腕部结构略僵硬、相互交叠不清",
+        "前景高光偏强，接触阴影不足",
+        "背景虽有呼吸感但排线较均匀，叙事提升有限"
+      ],
+      "new_defects": [
+        "背景排线较密，负空间呼吸感不足",
+        "手指交叠略显含混，腿部比例稍不稳定",
+        "构图与坐姿较常规，跃升感有限"
+      ],
+      "slug": "pastel_sketch",
+      "old_dims": {
+        "composition": 9.25,
+        "lighting_color": 8.5,
+        "perspective_anatomy": 6.5,
+        "texture_detail": 9.25,
+        "spec_style": 9.25
+      },
+      "new_dims": {
+        "composition": 9.25,
+        "lighting_color": 9.25,
+        "perspective_anatomy": 7.5,
+        "texture_detail": 9.25,
+        "spec_style": 8.75
+      }
+    },
+    {
+      "filename": "v7_bot_14_pastel_sketch_high_best.jpg",
+      "old": 8.99,
+      "new": 9.0,
+      "delta": 0.01,
+      "old_grade": "优秀",
+      "new_grade": "优秀",
+      "old_defects": [
+        "手指形态略僵硬且指节不够清楚",
+        "背景排线覆盖较满，负空间呼吸感稍弱",
+        "人物与地面的接触阴影偏轻"
+      ],
+      "new_defects": [
+        "手指与手腕结构略显僵硬，局部比例不够稳定",
+        "鞋部与膝部透视细节略软",
+        "右上方高光偏亮，背景负空间被密集排线部分削弱"
+      ],
+      "slug": "pastel_sketch",
+      "old_dims": {
+        "composition": 10.0,
+        "lighting_color": 9.25,
+        "perspective_anatomy": 7.75,
+        "texture_detail": 9.0,
+        "spec_style": 9.25
+      },
+      "new_dims": {
+        "composition": 10.0,
+        "lighting_color": 9.25,
+        "perspective_anatomy": 7.0,
+        "texture_detail": 10.0,
+        "spec_style": 9.5
+      }
+    },
+    {
+      "filename": "v7_bot_15_pastel_sketch_recompose.jpg",
+      "old": 9.51,
+      "new": 8.79,
+      "delta": -0.72,
+      "old_grade": "近乎无瑕",
+      "new_grade": "优秀",
+      "old_defects": [
+        "手部与手指结构略显模糊",
+        "局部粉彩笔触导致细节锐度不足",
+        "栏杆接触处阴影略弱"
+      ],
+      "new_defects": [
+        "S5：画幅约为3:2，未满足指定4:3。",
+        "P3：扶栏手指局部叠合，指节及抓握关系略含糊。",
+        "P6：栏杆局部连接与远景建筑线条交织，结构精度不足。",
+        "L5/L6：衣背明暗转折偏弱，手掌与扶栏接触阴影不够明确。",
+        "T3/T6：远景建筑与港口设施笔触较同质，细部辨识有限。"
+      ],
+      "slug": "pastel_sketch",
+      "old_dims": {
+        "composition": 10.0,
+        "lighting_color": 9.25,
+        "perspective_anatomy": 9.25,
+        "texture_detail": 9.0,
+        "spec_style": 10.0
+      },
+      "new_dims": {
+        "composition": 10.0,
+        "lighting_color": 8.5,
+        "perspective_anatomy": 8.5,
+        "texture_detail": 8.75,
+        "spec_style": 8.24
+      }
+    },
+    {
+      "filename": "v7_bot_16_pastel_sketch_recompose_bold.jpg",
+      "old": 9.9,
+      "new": 7.39,
+      "delta": -2.51,
+      "old_grade": "近乎无瑕",
+      "new_grade": "良好",
+      "old_defects": [
+        "人物姿态改为站立，未保留原要求的屈膝坐姿",
+        "部分远景城市与栏杆细节较密，缩小后辨识度会下降"
+      ],
+      "new_defects": [
+        "未保留目标明确要求的屈膝坐姿少女剪影，改成站姿",
+        "夕阳逆光与人物正面、腿部亮面对应不充分",
+        "鞋底接地阴影偏弱，脚部略有漂浮感",
+        "栏杆圆饰的透视压缩与间距变化不够统一",
+        "天空、海面、建筑和地面网点密度偏高，缩图后背景抢眼",
+        "服装、皮肤与地面共享颗粒处理，材质区分有限"
+      ],
+      "slug": "pastel_sketch",
+      "old_dims": {
+        "composition": 10.0,
+        "lighting_color": 10.0,
+        "perspective_anatomy": 10.0,
+        "texture_detail": 10.0,
+        "spec_style": 9.5
+      },
+      "new_dims": {
+        "composition": 8.5,
+        "lighting_color": 7.5,
+        "perspective_anatomy": 8.25,
+        "texture_detail": 7.5,
+        "spec_style": 5.0
+      }
+    },
+    {
+      "filename": "v7_bot_17_sunlit_portrait_low.jpg",
+      "old": 9.25,
+      "new": 8.15,
+      "delta": -1.1,
+      "old_grade": "优秀",
+      "new_grade": "良好",
+      "old_defects": [
+        "颈肩交界与衣领接触阴影略弱",
+        "受光与阴影侧双眼明暗差较大，眼部细节略不均",
+        "发丝局部线条较密，脸侧边缘略显松散"
+      ],
+      "new_defects": [
+        "实际画幅约2:3，未满足指定3:4",
+        "明暗分界近乎竖直，贯穿面部、颈部与衣服，局部缺少随体积变化",
+        "面部皮肤偏平滑，颗粒质感较统一",
+        "发梢局部线条缠绕，深色区域层次略混",
+        "颈部略显修长，锁骨与颈肌转折偏刻画",
+        "厚涂笔触偏弱，更接近柔化写实插画"
+      ],
+      "slug": "sunlit_portrait",
+      "old_dims": {
+        "composition": 10.0,
+        "lighting_color": 9.25,
+        "perspective_anatomy": 8.5,
+        "texture_detail": 8.5,
+        "spec_style": 10.0
+      },
+      "new_dims": {
+        "composition": 8.5,
+        "lighting_color": 8.25,
+        "perspective_anatomy": 9.06,
+        "texture_detail": 7.5,
+        "spec_style": 7.06
+      }
+    },
+    {
+      "filename": "v7_bot_18_sunlit_portrait_low_best.jpg",
+      "old": 8.25,
+      "new": 8.9,
+      "delta": 0.65,
+      "old_grade": "良好",
+      "new_grade": "优秀",
+      "old_defects": [
+        "暗部面部和颈部细节偏少",
+        "头发边缘与背景局部融合偏软",
+        "眼睛与嘴部的细节刻画略显平滑",
+        "肩颈和衣领结构存在轻微软化"
+      ],
+      "new_defects": [
+        "颈部与衣领接触阴影略弱，明暗交界偏生硬",
+        "局部五官对称性略有偏差，眼部结构不完全一致",
+        "背景花朵与发丝边缘部分偏软，材质区分度下降",
+        "整体质感完成度较高，低强度局部修瑕感略弱"
+      ],
+      "slug": "sunlit_portrait",
+      "old_dims": {
+        "composition": 9.25,
+        "lighting_color": 8.5,
+        "perspective_anatomy": 7.75,
+        "texture_detail": 5.75,
+        "spec_style": 9.5
+      },
+      "new_dims": {
+        "composition": 9.25,
+        "lighting_color": 9.25,
+        "perspective_anatomy": 8.25,
+        "texture_detail": 8.25,
+        "spec_style": 9.5
+      }
+    },
+    {
+      "filename": "v7_bot_19_sunlit_portrait_medium.jpg",
+      "old": 9.15,
+      "new": 8.25,
+      "delta": -0.9,
+      "old_grade": "优秀",
+      "new_grade": "良好",
+      "old_defects": [
+        "肩颈与衣领结构略显含混，接触阴影偏弱",
+        "背景花形和发丝局部融合，细节边缘稍软"
+      ],
+      "new_defects": [
+        "高光区域局部偏亮，逆光细节略有丢失",
+        "衣物与头发边缘较软，材质区分度不足",
+        "接触阴影偏弱，颈部与肩部立体感不足",
+        "轻厚涂介质质感不够明确，部分区域偏平滑"
+      ],
+      "slug": "sunlit_portrait",
+      "old_dims": {
+        "composition": 9.25,
+        "lighting_color": 9.25,
+        "perspective_anatomy": 9.0,
+        "texture_detail": 9.0,
+        "spec_style": 9.25
+      },
+      "new_dims": {
+        "composition": 9.25,
+        "lighting_color": 8.25,
+        "perspective_anatomy": 8.25,
+        "texture_detail": 6.25,
+        "spec_style": 8.75
+      }
+    },
+    {
+      "filename": "v7_bot_20_sunlit_portrait_medium_best.jpg",
+      "old": 8.1,
+      "new": 8.41,
+      "delta": 0.31,
+      "old_grade": "良好",
+      "new_grade": "良好",
+      "old_defects": [
+        "面部至颈胸的明暗分界过于笔直，削弱体积转折",
+        "逆光主要靠发丝亮边表达，光雾纵深与空气层次偏弱",
+        "皮肤、衣料与背景共享相近颗粒，材质区分不足",
+        "颈部偏长，锁骨与颈根衔接略显生硬",
+        "花朵与头发局部竞争注意力，右侧发缘裁切偏紧"
+      ],
+      "new_defects": [
+        "高光区域略有泛白，局部层次被压平",
+        "衣物与背景的介质纹理区分不足",
+        "下半身衣料笔触偏软，厚涂质感不够明确",
+        "颈部与衣领接触阴影偏弱"
+      ],
+      "slug": "sunlit_portrait",
+      "old_dims": {
+        "composition": 8.5,
+        "lighting_color": 6.75,
+        "perspective_anatomy": 8.82,
+        "texture_detail": 6.75,
+        "spec_style": 9.17
+      },
+      "new_dims": {
+        "composition": 9.25,
+        "lighting_color": 7.5,
+        "perspective_anatomy": 9.25,
+        "texture_detail": 6.0,
+        "spec_style": 9.25
+      }
+    },
+    {
+      "filename": "v7_bot_21_sunlit_portrait_high.jpg",
+      "old": 9.55,
+      "new": 8.94,
+      "delta": -0.61,
+      "old_grade": "近乎无瑕",
+      "new_grade": "优秀",
+      "old_defects": [
+        "白衣与肩部褶皱细节略软，材质层次有限",
+        "颈肩接触阴影偏弱"
+      ],
+      "new_defects": [
+        "面部皮肤与阴影过度平滑，厚涂媒介质感不足",
+        "局部五官对称性略弱，眼部结构存在轻微不一致",
+        "衣领与头发边缘部分偏软，接触阴影不够明确"
+      ],
+      "slug": "sunlit_portrait",
+      "old_dims": {
+        "composition": 9.25,
+        "lighting_color": 9.25,
+        "perspective_anatomy": 10.0,
+        "texture_detail": 9.0,
+        "spec_style": 10.0
+      },
+      "new_dims": {
+        "composition": 9.25,
+        "lighting_color": 8.25,
+        "perspective_anatomy": 9.12,
+        "texture_detail": 8.75,
+        "spec_style": 9.25
+      }
+    },
+    {
+      "filename": "v7_bot_22_sunlit_portrait_high_best.jpg",
+      "old": 8.8,
+      "new": 9.18,
+      "delta": 0.38,
+      "old_grade": "优秀",
+      "new_grade": "优秀",
+      "old_defects": [
+        "发型偏长蓬乱，不够符合短发设定",
+        "右侧眼部贴近画面边缘，构图略显局促",
+        "白衣与肩颈交界被阴影吞没，接触关系不够清楚"
+      ],
+      "new_defects": [
+        "右侧脸部与肩部裁切略紧，构图完整性受影响",
+        "窗边与发丝高光局部过曝，细节损失",
+        "衣料与发丝边缘存在轻微软化和融边",
+        "叙事信息偏弱，主要依赖光影而非明确情境"
+      ],
+      "slug": "sunlit_portrait",
+      "old_dims": {
+        "composition": 8.25,
+        "lighting_color": 9.25,
+        "perspective_anatomy": 9.25,
+        "texture_detail": 9.25,
+        "spec_style": 8.0
+      },
+      "new_dims": {
+        "composition": 9.25,
+        "lighting_color": 8.5,
+        "perspective_anatomy": 10.0,
+        "texture_detail": 8.5,
+        "spec_style": 9.25
+      }
+    },
+    {
+      "filename": "v7_bot_23_sunlit_portrait_recompose.jpg",
+      "old": 8.44,
+      "new": 8.15,
+      "delta": -0.29,
+      "old_grade": "良好",
+      "new_grade": "良好",
+      "old_defects": [
+        "视线更接近镜头而非明确望向窗外",
+        "肩部与衣物边缘较软，材质区分不足",
+        "暗部对比偏弱，接触阴影不够明确",
+        "背景花纹与部分发丝出现轻微笔触糊化"
+      ],
+      "new_defects": [
+        "头发与毛衣局部边缘偏软，细节有融化感",
+        "面部与毛衣暗部层次偏平，局部纹理不够清晰",
+        "窗框和人物接触阴影不够明确"
+      ],
+      "slug": "sunlit_portrait",
+      "old_dims": {
+        "composition": 10.0,
+        "lighting_color": 8.5,
+        "perspective_anatomy": 9.0,
+        "texture_detail": 6.25,
+        "spec_style": 7.75
+      },
+      "new_dims": {
+        "composition": 9.25,
+        "lighting_color": 7.5,
+        "perspective_anatomy": 7.75,
+        "texture_detail": 5.75,
+        "spec_style": 10.0
+      }
+    },
+    {
+      "filename": "v7_bot_24_sunlit_portrait_recompose_bold.jpg",
+      "old": 8.6,
+      "new": 8.32,
+      "delta": -0.28,
+      "old_grade": "优秀",
+      "new_grade": "良好",
+      "old_defects": [
+        "衣服偏深青灰，白衣特征不明显",
+        "整体偏厚涂纹理，硬边动漫质感不够纯粹",
+        "面部和头发局部暗部细节较弱",
+        "窗框与人物接触处阴影关系偏弱"
+      ],
+      "new_defects": [
+        "面部与衣物局部偏暗，青绿色染色削弱白衣辨识度",
+        "头发边缘和衣物纹理有一定软化、糊化",
+        "窗框与肩颈结构略显平面化",
+        "高光区域对比偏强，局部细节丢失",
+        "主体与背景的空间层次较弱"
+      ],
+      "slug": "sunlit_portrait",
+      "old_dims": {
+        "composition": 9.25,
+        "lighting_color": 8.25,
+        "perspective_anatomy": 8.5,
+        "texture_detail": 7.5,
+        "spec_style": 9.25
+      },
+      "new_dims": {
+        "composition": 9.25,
+        "lighting_color": 7.5,
+        "perspective_anatomy": 8.0,
+        "texture_detail": 6.5,
+        "spec_style": 10.0
+      }
+    },
+    {
+      "filename": "v7_bot_25_ishtar_canyon_low.jpg",
+      "old": 6.64,
+      "new": 8.44,
+      "delta": 1.8,
+      "old_grade": "合格",
+      "new_grade": "良好",
+      "old_defects": [
+        "C1/C6：缩略后中央主体偏暗，人物与杂物难以分离。",
+        "C3/C4：斜向梁柱和密集砖缝争夺注意力，空间层级不够清楚。",
+        "L1/L6：局部亮面与遮挡关系交代不足，梁木、桶及墙饰的接触阴影偏弱。",
+        "P1/P2/P3/P4：多组建筑边线汇聚不统一，中央木构连接及承重关系含混。",
+        "T1/T2/T4/T6：石材、木材与金属依赖相似描线，中央暗部局部边缘粘连。",
+        "S1：天井空间可辨，但俯视方向缺少明确地面与尺度线索。"
+      ],
+      "new_defects": [
+        "局部屋顶与木结构透视关系略松散",
+        "中心及底部人物细节偏小且解剖不够清晰",
+        "部分边缘和阴影区域笔触软化，材质区分减弱",
+        "接触阴影在部分木构件下方不够统一"
+      ],
+      "slug": "ishtar_canyon",
+      "old_dims": {
+        "composition": 6.75,
+        "lighting_color": 6.75,
+        "perspective_anatomy": 5.75,
+        "texture_detail": 5.75,
+        "spec_style": 8.21
+      },
+      "new_dims": {
+        "composition": 9.25,
+        "lighting_color": 8.25,
+        "perspective_anatomy": 7.25,
+        "texture_detail": 8.5,
+        "spec_style": 9.25
+      }
+    },
+    {
+      "filename": "v7_bot_26_ishtar_canyon_low_best.jpg",
+      "old": 7.48,
+      "new": 7.56,
+      "delta": 0.08,
+      "old_grade": "良好",
+      "new_grade": "良好",
+      "old_defects": [
+        "C1/C3/C6：缩小后中央人物与木构杂物混合，天井焦点不够突出",
+        "L4/L6：暗部层级偏挤，部分木板与墙体接触阴影不足",
+        "P1/P2/P3/P4/P6：多组墙面、窗框及木构件的透视衔接不够统一，局部连接含混",
+        "T2/T3/T5：石材、灰泥与木材共享较强描线和碎纹理，材质区别有限",
+        "S3：线描与刻蚀感偏强，厚涂笔触及体块塑造不足"
+      ],
+      "new_defects": [
+        "缩小后天井轮廓清楚，但中央人物与杂物黏连，焦点偏弱。",
+        "中央木板、平台及右下棚架的支承与衔接关系不够清楚。",
+        "人物四肢和随身物件辨识不足，局部轮廓混杂。",
+        "木材与石材的笔触、色阶接近，部分材质区分不足。",
+        "局部木板和杂物接触阴影偏弱，落地感不均。",
+        "画面约为3:2，不符合指定4:3。",
+        "缺少原图，无法核验主体锚点数量保持及修改幅度≤20%。"
+      ],
+      "slug": "ishtar_canyon",
+      "old_dims": {
+        "composition": 7.5,
+        "lighting_color": 8.5,
+        "perspective_anatomy": 5.75,
+        "texture_detail": 7.5,
+        "spec_style": 8.57
+      },
+      "new_dims": {
+        "composition": 7.75,
+        "lighting_color": 8.5,
+        "perspective_anatomy": 6.5,
+        "texture_detail": 7.25,
+        "spec_style": 8.0
+      }
+    },
+    {
+      "filename": "v7_bot_27_ishtar_canyon_medium.jpg",
+      "old": 8.88,
+      "new": 7.75,
+      "delta": -1.13,
+      "old_grade": "优秀",
+      "new_grade": "良好",
+      "old_defects": [
+        "局部砖石与远景结构偏软，细节层次被光雾吞没",
+        "部分建筑连接处接触阴影不足，空间咬合略弱",
+        "高光区域层次略压平，局部存在轻微过曝感",
+        "装饰门框与周边结构的透视衔接不够严谨"
+      ],
+      "new_defects": [
+        "中心焦点不够明确，缩小后建筑纹理与光雾容易混成一片",
+        "局部砖墙和木梁透视变形，结构边缘不够稳定",
+        "雾区细节偏软，材质层次与远近分离不足",
+        "顶部高光略显过曝，局部接触阴影不够清晰"
+      ],
+      "slug": "ishtar_canyon",
+      "old_dims": {
+        "composition": 10.0,
+        "lighting_color": 8.25,
+        "perspective_anatomy": 8.25,
+        "texture_detail": 7.75,
+        "spec_style": 10.0
+      },
+      "new_dims": {
+        "composition": 7.5,
+        "lighting_color": 8.5,
+        "perspective_anatomy": 6.75,
+        "texture_detail": 6.75,
+        "spec_style": 9.25
+      }
+    },
+    {
+      "filename": "v7_bot_28_ishtar_canyon_medium_best.jpg",
+      "old": 8.63,
+      "new": 7.85,
+      "delta": -0.78,
+      "old_grade": "优秀",
+      "new_grade": "良好",
+      "old_defects": [
+        "部分建筑结构透视扭曲，平面衔接不够稳定",
+        "烟雾与暗部边缘偏软，局部细节被吞没",
+        "底部和中景缺少明确接触阴影，空间落地感不足"
+      ],
+      "new_defects": [
+        "主体焦点不够明确，缩小后建筑群容易混成复杂斜向纹理",
+        "部分屋顶与木构件的透视关系偏软，结构边缘不够稳定",
+        "雾气覆盖区域较大，局部材质细节与边界被明显软化",
+        "高光区域略有泛白，暗部层次受到雾化影响"
+      ],
+      "slug": "ishtar_canyon",
+      "old_dims": {
+        "composition": 9.25,
+        "lighting_color": 9.25,
+        "perspective_anatomy": 7.06,
+        "texture_detail": 7.75,
+        "spec_style": 10.0
+      },
+      "new_dims": {
+        "composition": 7.5,
+        "lighting_color": 8.25,
+        "perspective_anatomy": 6.75,
+        "texture_detail": 6.75,
+        "spec_style": 10.0
+      }
+    },
+    {
+      "filename": "v7_bot_29_ishtar_canyon_high.jpg",
+      "old": 8.45,
+      "new": 8.91,
+      "delta": 0.46,
+      "old_grade": "良好",
+      "new_grade": "优秀",
+      "old_defects": [
+        "红斗篷旅人过小，缩略图下叙事辨识度不足",
+        "栈桥与峡壁结构局部透视关系含混",
+        "部分木梁和深色区域细节融化",
+        "旅人与平台的接触阴影偏弱"
+      ],
+      "new_defects": [
+        "红斗篷旅人比例过小，身份与动作在缩略图中不够清晰",
+        "局部砖石与木栈桥纹理偏软，边缘细节有融化感",
+        "龙的爪部和翼膜细节较弱，结构辨识度略降",
+        "部分高光区域接近过曝，削弱了建筑与光束的局部层次"
+      ],
+      "slug": "ishtar_canyon",
+      "old_dims": {
+        "composition": 8.5,
+        "lighting_color": 9.25,
+        "perspective_anatomy": 7.5,
+        "texture_detail": 8.5,
+        "spec_style": 8.75
+      },
+      "new_dims": {
+        "composition": 8.5,
+        "lighting_color": 9.25,
+        "perspective_anatomy": 8.75,
+        "texture_detail": 8.5,
+        "spec_style": 9.5
+      }
+    },
+    {
+      "filename": "v7_bot_30_ishtar_canyon_high_best.jpg",
+      "old": 9.19,
+      "new": 9.3,
+      "delta": 0.11,
+      "old_grade": "优秀",
+      "new_grade": "优秀",
+      "old_defects": [
+        "人物比例偏小，披风与肢体轮廓在缩略图下略显模糊",
+        "飞龙局部解剖结构以剪影为主，关节与翼膜细节不足",
+        "近景砖墙和木构件部分边缘偏软，材质刻画不够均匀",
+        "人物与栈桥接触阴影较弱，落地关系略欠明确"
+      ],
+      "new_defects": [
+        "人物比例偏小，面部与装备细节不可辨",
+        "飞龙局部肢体与翼膜结构略显模糊",
+        "部分栈桥和建筑连接处透视关系不够严谨",
+        "暗部材质层次有轻微糊化"
+      ],
+      "slug": "ishtar_canyon",
+      "old_dims": {
+        "composition": 10.0,
+        "lighting_color": 9.25,
+        "perspective_anatomy": 8.25,
+        "texture_detail": 8.5,
+        "spec_style": 10.0
+      },
+      "new_dims": {
+        "composition": 10.0,
+        "lighting_color": 9.25,
+        "perspective_anatomy": 8.25,
+        "texture_detail": 9.25,
+        "spec_style": 10.0
+      }
+    },
+    {
+      "filename": "v7_bot_31_ishtar_canyon_recompose.jpg",
+      "old": 8.41,
+      "new": 9.81,
+      "delta": 1.4,
+      "old_grade": "良好",
+      "new_grade": "近乎无瑕",
+      "old_defects": [
+        "桥体局部砖石结构和拱券透视略显软化",
+        "前景人物肢体与轮廓细节较弱",
+        "前景暗部接触阴影不够明确",
+        "远景龙体量偏大，距离感略弱"
+      ],
+      "new_defects": [
+        "人物背影细节较软，个别肢体比例略显僵硬",
+        "飞龙尺寸较小，远景识别度有限"
+      ],
+      "slug": "ishtar_canyon",
+      "old_dims": {
+        "composition": 9.25,
+        "lighting_color": 8.5,
+        "perspective_anatomy": 6.75,
+        "texture_detail": 8.5,
+        "spec_style": 9.5
+      },
+      "new_dims": {
+        "composition": 10.0,
+        "lighting_color": 10.0,
+        "perspective_anatomy": 9.25,
+        "texture_detail": 10.0,
+        "spec_style": 10.0
+      }
+    },
+    {
+      "filename": "v7_bot_32_ishtar_canyon_recompose_bold.jpg",
+      "old": 9.66,
+      "new": 8.51,
+      "delta": -1.15,
+      "old_grade": "近乎无瑕",
+      "new_grade": "优秀",
+      "old_defects": [
+        "人物面部与肢体细节被背影和斗篷遮挡",
+        "人物主体受暗部影响，局部焦点照明略弱"
+      ],
+      "new_defects": [
+        "飞龙占幅过大、翼尖贴边，未形成远景天际的小尺度剪影",
+        "天空旋涡与密集斜向纹理抢眼，削弱旅人主焦点",
+        "人物脚底接触阴影与石柱投影不够明确，光向一致性偏弱",
+        "飞龙翼根及爪部结构含混，人物握剑手细节不清",
+        "岩壁、石桥与衣料共用较重碎纹，局部材质区分不足",
+        "仍混有概念插画式体积塑造，浮世绘平面色块与轮廓语言不够彻底"
+      ],
+      "slug": "ishtar_canyon",
+      "old_dims": {
+        "composition": 10.0,
+        "lighting_color": 9.25,
+        "perspective_anatomy": 9.25,
+        "texture_detail": 10.0,
+        "spec_style": 10.0
+      },
+      "new_dims": {
+        "composition": 9.25,
+        "lighting_color": 8.25,
+        "perspective_anatomy": 8.5,
+        "texture_detail": 8.25,
+        "spec_style": 8.25
+      }
+    }
+  ]
+}

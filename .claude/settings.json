@@ -1,0 +1,66 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pmem hook prompt --agent claude",
+            "timeout": 30,
+            "onFailure": "continue"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "^(Write|Edit|MultiEdit|NotebookEdit|Bash|PowerShell|mcp__pmem__.*)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pmem hook pre-tool --agent claude",
+            "timeout": 30,
+            "onFailure": "continue"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "^(Write|Edit|MultiEdit|NotebookEdit|Read|Grep|Glob|Bash|PowerShell|mcp__pmem__.*)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pmem hook post-tool --agent claude",
+            "timeout": 30,
+            "onFailure": "continue"
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pmem hook compact --agent claude",
+            "timeout": 30,
+            "onFailure": "continue"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pmem hook stop --agent claude",
+            "timeout": 30,
+            "onFailure": "continue"
+          }
+        ]
+      }
+    ]
+  }
+}

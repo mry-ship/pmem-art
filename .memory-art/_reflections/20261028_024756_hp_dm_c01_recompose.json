@@ -1,0 +1,118 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-10-28 02:47:56 UTC+8",
+  "session_id": "hp_dm_c01_recompose",
+  "goal": "允许构图重组但保留题材身份：天穹浮城夜景侠客俯瞰，可换机位景别，仍锁男侠白袍红飘带蓝电剑与暖金窗城冷蓝瀑银河星座史诗画风。",
+  "module": "scene.CelestialCity",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.6,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 4,
+  "winner_score": 9.4,
+  "winner_image": "assets/scene/celestialcity/r4.jpg",
+  "winner_passed": false,
+  "outcome": "⚠️ **共执行 4 轮审图（目标阈值 `9.60` 分），未达标，已挑选全阶段最高分**（胜出：第 4 轮 `9.40 / 10.0` 分）",
+  "what_fixed": [
+    "必须换成侧俯更低机位；侠客大半身占右下三分；城与瀑向左上斜伸；银河斜切",
+    "再压低机位到肩高侧望；侠客半身放大占右下三分；城瀑强对角线拉向左上",
+    "再压低到肩高侧望；侠客半身更大；城瀑对角线更强拉向左上",
+    "解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁止糊边融边；机位仍略偏高；半身放大距肩高目标仍差一点"
+  ],
+  "what_still_weak": "机位仍略偏高；半身放大距肩高目标仍差一点",
+  "strengths": "侠客右下更稳；银河星座斜切；身份色板锁；城瀑对角线可读",
+  "taste_deltas": {
+    "from_strengths": [
+      "侠客右下更稳；银河星座斜切；身份色板锁；城瀑对角线可读"
+    ],
+    "from_defects": [
+      "机位仍偏高俯瞰；侠客半身占比仍偏小未稳占右下；城瀑对角线左上牵引不够强；prompt 改动 98% 超过档位上限 85%",
+      "机位仍略高未到肩高侧望；侠客半身放大仍不够；对角线左上牵引可更强",
+      "机位仍略偏高；半身放大距肩高目标仍差一点"
+    ]
+  },
+  "warm_start_confidence": 0.9,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 9.01,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 9.2,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 9.34,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 9.4,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：机位仍接近原俯瞰未落到侧俯低机位；侠客占比不够大且未稳居右下三分；城瀑未明显向左上延伸",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "9.01"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：身份色板锁住；星座线清晰；冷暖对比好",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.01"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：机位仍偏高俯瞰；侠客半身占比仍偏小未稳占右下；城瀑对角线左上牵引不够强；prompt 改动 98% 超过档位上限 85%",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "9.2"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：略偏侧背；身份色板星座线锁住；冷暖对比稳",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.2"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：机位仍略高未到肩高侧望；侠客半身放大仍不够；对角线左上牵引可更强",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "9.34"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：侠客已落右下；星座线锐；身份色板锁；冷暖戏剧稳",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.34"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：机位仍略偏高；半身放大距肩高目标仍差一点",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "9.4"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：机位仍略偏高；半身放大距肩高目标仍差一点",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.4"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：机位仍略偏高；半身放大距肩高目标仍差一点",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "9.4"
+    }
+  ]
+}

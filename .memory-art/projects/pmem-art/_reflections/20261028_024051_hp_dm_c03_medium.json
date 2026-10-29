@@ -1,0 +1,100 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-10-28 02:40:51 UTC+8",
+  "session_id": "hp_dm_c03_medium",
+  "goal": "窗边逆光少女肖像精修——加强发丝透光、皮肤次表面散射、窗框几何透视与尘埃光斑体积；暖金日光商业人像完成度，锁身份与机位。medium档小幅优化光影与局部布局，锁机位。",
+  "module": "character.SunlitGirl",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.6,
+  "max_rounds": 4,
+  "rounds_used": 3,
+  "winner_round": 3,
+  "winner_score": 9.55,
+  "winner_image": "assets/character/sunlitgirl/r3.jpg",
+  "winner_passed": false,
+  "outcome": "⚠️ **共执行 3 轮审图（目标阈值 `9.60` 分），未达标，已挑选全阶段最高分**（胜出：第 3 轮 `9.55 / 10.0` 分）",
+  "what_fixed": [
+    "加强窗框透视灭点可读；清耳罩与发丝压边；颧骨与耳廓补次表面暖透",
+    "木窗框边线锐化并显灭点；耳罩压发边干净；衬衫叶影边缘干净不抖",
+    "窗框灭点再锐一点；耳罩压发边干净"
+  ],
+  "what_still_weak": "窗框灭点仍略软；耳罩压发边极轻糊；prompt 改动 80% 超过档位上限 40%",
+  "strengths": "窗框边线更锐；衬衫叶影更干净；身份光影保持",
+  "taste_deltas": {
+    "from_strengths": [
+      "窗框边线更锐；衬衫叶影更干净；身份光影保持"
+    ],
+    "from_defects": [
+      "窗框几何透视仍偏软；耳罩与发丝压边略糊；皮肤次表面散射在颧骨处略平",
+      "窗框透视线条仍偏软糊；耳罩压发边偶糊；衬衫叶影边缘略抖；prompt 改动 79% 超过档位上限 40%",
+      "窗框灭点仍略软；耳罩压发边极轻糊；prompt 改动 80% 超过档位上限 40%"
+    ]
+  },
+  "warm_start_confidence": 0.3,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 9.3,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 9.48,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 9.55,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：窗框几何透视仍偏软；耳罩与发丝压边略糊；皮肤次表面散射在颧骨处略平",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "9.3"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：体积光尘埃与发丝透光明显加强；叶影层次更好；身份锁稳",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.3"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：窗框透视线条仍偏软糊；耳罩压发边偶糊；衬衫叶影边缘略抖；prompt 改动 79% 超过档位上限 40%",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "9.48"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：窗框透视线条仍偏软糊；耳罩压发边偶糊；衬衫叶影边缘略抖；prompt 改动 79% 超过档位上限 40%",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "9.48"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：颧骨耳廓次表面更暖；发丝透光与尘埃保持；身份锁稳",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.48"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：窗框灭点仍略软；耳罩压发边极轻糊；prompt 改动 80% 超过档位上限 40%",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.55"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：窗框边线更锐；衬衫叶影更干净；身份光影保持",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.55"
+    }
+  ]
+}

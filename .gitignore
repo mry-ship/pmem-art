@@ -1,0 +1,84 @@
+# Python bytecode & caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# OS & editor junk
+.DS_Store
+Thumbs.db
+._*
+**/.DS_Store
+**/._*
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+
+# Temp / scratch
+.cache/
+dist/
+*.tmp
+*.bak
+_tmp_*
+_probe_*
+
+# Local secrets (VLM judge API keys — never commit)
+.memory-art/vlm_judge.local.yaml
+**/.memory-art/**/vlm_judge.local.yaml
+**/vlm_judge.local.yaml
+.env
+.env.*
+!.env.example
+.local/
+
+# Local VLM / batch run artifacts (do not publish)
+generated_v8_20/
+generated_v8_20_v2/
+generated_v8_20_skill/
+_box_sync/
+_sync_parts/
+.memory-art/_profile/last_doctor.json
+.memory-art/_profile/last_doctor.claim
+.memory-art/_profile/last_doctor.json.bak
+.memory-art/_profile/memory_write.lock
+.memory-art/projects/**/_profile/last_doctor.json
+.memory-art/projects/**/_profile/last_doctor.claim
+.memory-art/projects/**/_profile/memory_write.lock
+.memory-art/_e2e_test_pmemart2/
+.pmem-art-commit
+
+# Generated / bulky HTML (rebuild via atlas / benchmark scripts)
+art-atlas.html
+benchmark-*.html
+*_showcase.html
+**/pmem_*_showcase.html
+reference_fresh/
+comparison/pmem_vs_*.html
+comparison/pmem_vs_market_showcase.html
+
+# Allow curated showcase pages under docs/
+!docs/showcase/
+!docs/showcase/**
+!docs/showcase/v4_frames/
+!docs/showcase/v4_frames/**
+!docs/showcase/v8_frames/
+!docs/showcase/v8_frames/**
+!docs/showcase/skills-homepage/
+!docs/showcase/skills-homepage/**
+
+# Local Grok converge artifacts (publish curated docs/showcase/grok_best only)
+generated_v8_20_skill_grok/
+generated_v8_20_skill_grok_*/
+generated_v8_20_skill_v2fix/
+generated_v8_20_skill_look/
+generated_v8_20_skill_opt1027/
+/images/
+*.tar.gz
+_hash_needed.json
+
+# Local process-board copies (session JSON stays; images rebuild from the run)
+.memory-art/converge/boards/
