@@ -1,0 +1,676 @@
+{
+  "session_id": "hp29_clone_rabbit",
+  "started_at": "2026-10-29 18:08:40 UTC+8",
+  "goal": "White rabbit hugging a carrot, new composition, pastel crayon paper, no cyber neon, not the hoodie girl.",
+  "module": "character.PastelRabbit",
+  "mode": "text_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "medium",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "medium",
+    "label": "中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.6)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 1,
+    "target_score_threshold": 9.6,
+    "dim_weights": {
+      "composition": 0.1125,
+      "lighting_color": 0.1125,
+      "perspective_anatomy": 0.15,
+      "texture_detail": 0.225,
+      "spec_style": 0.15,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "viewpoint_frame",
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图，只在提示词上补还没过的那一处（提示词改动仍 ≤40%）",
+    "max_prompt_delta_ratio": 0.4,
+    "allow_recompose": false,
+    "allow_viewpoint_change": false,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "viewpoint_angle (不改机位与镜头视角)",
+      "element_count (不增删主体元素清单)",
+      "no_full_recompose (不做整体 recompose / 换景别故事)",
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)"
+    ],
+    "min_round_leap": 0.15,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "粉彩速写轻盈风：保画风与机位，柔化光影和留白，保持干爽笔触",
+    "medium_family": "dry",
+    "best_direction_hint": "最优方向：光影·空气·介质；可小幅姿态/局部布局",
+    "goal": "White rabbit hugging a carrot, new composition, pastel crayon paper, no cyber neon, not the hoodie girl.",
+    "module": "character.PastelRabbit",
+    "ref_image": "",
+    "ref_analysis": "Lock crayon paper and blush air only. Style ref is 4:3 girl; delivery is 1:1 new animal. Do not copy the girl."
+  },
+  "medium_family": "dry",
+  "contract": "",
+  "target_score_threshold": 9.6,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "",
+  "ref_analysis": "Lock crayon paper and blush air only. Style ref is 4:3 girl; delivery is 1:1 new animal. Do not copy the girl.",
+  "default_aspect_ratio": "1:1",
+  "default_reference_image_paths": [],
+  "aspect_ratio": "1:1",
+  "reference_image_paths": [],
+  "ref_physical_traits": {},
+  "param_validation": {},
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.6,
+  "accept_threshold": 9.6,
+  "max_rounds": 4,
+  "ready_to_finish": true,
+  "status": "finished",
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "1:1",
+      "reference_image_paths": [],
+      "param_validation": {
+        "three_step_verified": true,
+        "three_step_stage": "step3_judge",
+        "validation_passed": true
+      },
+      "generated_at": "18:08:43",
+      "image": "docs/showcase/homepage_rerun_1029/v2/clone_rabbit/r1.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 463027,
+        "size_kb": 452.2,
+        "width": 1024,
+        "height": 1024,
+        "aspect_ratio": "1:1",
+        "canonical_aspect_ratio": "1:1",
+        "color_entropy": 7.98
+      },
+      "raw_score": 8.98,
+      "score": 8.98,
+      "target_score_threshold": 9.6,
+      "dims": "构图9.3/光影8.9/透视9.0/质感9.2/风格9.1/无瑕疵8.6",
+      "dims_parsed": {
+        "composition": 9.3,
+        "lighting_color": 8.9,
+        "perspective_anatomy": 9.0,
+        "texture_detail": 9.2,
+        "spec_style": 9.1,
+        "flawlessness": 8.6
+      },
+      "weighted_score": 8.98,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.6）"
+      ],
+      "stagnated": false,
+      "strengths": "新主体是白兔抱胡萝卜，没有抄回女孩；粉彩纸纹和腮红气锁住；兔子后肢和爪子结构清楚。",
+      "defects": "眼睛接近黑点瞳，缺少虹膜环与高光月牙。",
+      "next_fix": "给兔子双眼加上深琥珀虹膜环和一点白高光，保持抱胡萝卜构图和粉彩纸纹。",
+      "prompt": "粉彩速写轻盈风：保画风与机位，柔化光影和留白，保持干爽笔触| Oil-pastel white rabbit hugging a carrot, crayon paper tooth, blush air, not the hoodie girl.| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: the person's joints and grip stay clear and both pupils share a direction; the animal's limbs follow its species and are not converted into human elbows; contact shadows read; do not melt limbs into props",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.0,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "both",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "composition",
+          "lesson": "本轮短板偏「composition」：眼睛接近黑点瞳，缺少虹膜环与高光月牙。",
+          "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+          "from_score": "8.98"
+        },
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：眼睛接近黑点瞳，缺少虹膜环与高光月牙。",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.98"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：新主体是白兔抱胡萝卜，没有抄回女孩；粉彩纸纹和腮红气锁住；兔子后肢和爪子结构清楚。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.98"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "18:08:44"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "1:1",
+      "reference_image_paths": [],
+      "param_validation": {
+        "three_step_verified": true,
+        "three_step_stage": "step3_judge",
+        "validation_passed": true
+      },
+      "generated_at": "18:12:24",
+      "image": "docs/showcase/homepage_rerun_1029/v2/clone_rabbit/r2.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 460931,
+        "size_kb": 450.1,
+        "width": 1024,
+        "height": 1024,
+        "aspect_ratio": "1:1",
+        "canonical_aspect_ratio": "1:1",
+        "color_entropy": 7.98
+      },
+      "raw_score": 8.93,
+      "score": 8.93,
+      "target_score_threshold": 9.6,
+      "dims": "构图9.2/光影9.0/透视8.8/质感9.3/风格8.7/无瑕疵8.7",
+      "dims_parsed": {
+        "composition": 9.2,
+        "lighting_color": 9.0,
+        "perspective_anatomy": 8.8,
+        "texture_detail": 9.3,
+        "spec_style": 8.7,
+        "flawlessness": 8.7
+      },
+      "weighted_score": 8.93,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +-0.05 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "Agent Absolute-5D 已采纳（门槛 9.6）",
+        "prompt 改动 98% 超过档位上限 40%"
+      ],
+      "stagnated": true,
+      "strengths": "左眼已有琥珀虹膜和高光；粉彩纸纹和抱胡萝卜还在。",
+      "defects": "右眼被画成眨眼，任务是双眼都要虹膜，不是一只闭眼。；prompt 改动 98% 超过档位上限 40%",
+      "next_fix": "双眼都睁开，都画琥珀虹膜环加小白高光，不要眨眼。",
+      "prompt": "粉彩速写轻盈风：保画风与机位，柔化光影和留白，保持干爽笔触| Same rabbit hugging carrot. BOTH eyes amber iris plus catchlight, not black dots.| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: the person's joints and grip stay clear and both pupils share a direction; the animal's limbs follow its species and are not converted into human elbows; contact shadows read; do not melt limbs into props | 给兔子双眼加上深琥珀虹膜环和一点白高光，保持抱胡萝卜构图和粉彩纸纹。",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.8,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "both",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：右眼被画成眨眼，任务是双眼都要虹膜，不是一只闭眼。；prompt 改动 98% 超过档位上限 40%",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.93"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：左眼已有琥珀虹膜和高光；粉彩纸纹和抱胡萝卜还在。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.93"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "18:12:25"
+    },
+    {
+      "round": 3,
+      "round_label": "第 3 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "1:1",
+      "reference_image_paths": [],
+      "param_validation": {
+        "three_step_verified": true,
+        "three_step_stage": "step3_judge",
+        "validation_passed": true
+      },
+      "generated_at": "18:15:21",
+      "image": "docs/showcase/homepage_rerun_1029/v2/clone_rabbit/r3.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 468572,
+        "size_kb": 457.6,
+        "width": 1024,
+        "height": 1024,
+        "aspect_ratio": "1:1",
+        "canonical_aspect_ratio": "1:1",
+        "color_entropy": 7.98
+      },
+      "raw_score": 9.33,
+      "score": 9.33,
+      "target_score_threshold": 9.6,
+      "dims": "构图9.4/光影9.2/透视9.3/质感9.4/风格9.5/无瑕疵9.2",
+      "dims_parsed": {
+        "composition": 9.4,
+        "lighting_color": 9.2,
+        "perspective_anatomy": 9.3,
+        "texture_detail": 9.4,
+        "spec_style": 9.5,
+        "flawlessness": 9.2
+      },
+      "weighted_score": 9.33,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.6）"
+      ],
+      "stagnated": false,
+      "strengths": "双眼都睁开并有琥珀虹膜和高光；没有抄回女孩。",
+      "defects": "笔触仍偏光滑，纸齿比参考女孩那张干粉彩更弱。",
+      "next_fix": "保持双眼虹膜和抱胡萝卜，把油画棒颗粒和米白纸齿画得更粗更干。",
+      "prompt": "粉彩速写轻盈风：保画风与机位，柔化光影和留白，保持干爽笔触| White rabbit hugging carrot, BOTH eyes open with amber iris and catchlight.| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: the person's joints and grip stay clear and both pupils share a direction; the animal's limbs follow its species and are not converted into human elbows; contact shadows read; do not melt limbs into props | 给兔子双眼加上深琥珀虹膜环和一点白高光，保持抱胡萝卜构图和粉彩纸纹。",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.3,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "both",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "material",
+          "lesson": "本轮短板偏「material」：笔触仍偏光滑，纸齿比参考女孩那张干粉彩更弱。",
+          "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+          "from_score": "9.33"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：双眼都睁开并有琥珀虹膜和高光；没有抄回女孩。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "9.33"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "18:15:22"
+    },
+    {
+      "round": 4,
+      "round_label": "第 4 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "1:1",
+      "reference_image_paths": [],
+      "param_validation": {
+        "three_step_verified": true,
+        "three_step_stage": "step3_judge",
+        "validation_passed": true
+      },
+      "generated_at": "18:19:56",
+      "image": "docs/showcase/homepage_rerun_1029/v2/clone_rabbit/r4.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 499630,
+        "size_kb": 487.9,
+        "width": 1024,
+        "height": 1024,
+        "aspect_ratio": "1:1",
+        "canonical_aspect_ratio": "1:1",
+        "color_entropy": 7.98
+      },
+      "raw_score": 9.41,
+      "score": 9.41,
+      "target_score_threshold": 9.6,
+      "dims": "构图9.4/光影9.3/透视9.3/质感9.6/风格9.5/无瑕疵9.3",
+      "dims_parsed": {
+        "composition": 9.4,
+        "lighting_color": 9.3,
+        "perspective_anatomy": 9.3,
+        "texture_detail": 9.6,
+        "spec_style": 9.5,
+        "flawlessness": 9.3
+      },
+      "weighted_score": 9.41,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.08 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "Agent Absolute-5D 已采纳（门槛 9.6）",
+        "prompt 改动 86% 超过档位上限 40%"
+      ],
+      "stagnated": true,
+      "strengths": "双眼琥珀虹膜加高光；粉彩纸齿加重；没有抄回女孩。",
+      "defects": "爪子仍偏连指手套。；prompt 改动 86% 超过档位上限 40%",
+      "next_fix": "解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁止糊边融边；爪子仍偏连指手套。",
+      "prompt": "粉彩速写轻盈风：保画风与机位，柔化光影和留白，保持干爽笔触| White rabbit hugging carrot, both amber irises, heavier crayon tooth.| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: the person's joints and grip stay clear and both pupils share a direction; the animal's limbs follow its species and are not converted into human elbows; contact shadows read; do not melt limbs into props | 保持双眼虹膜和抱胡萝卜，把油画棒颗粒和米白纸齿画得更粗更干。",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.3,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "both",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_MAX_ROUNDS",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "composition",
+          "lesson": "本轮短板偏「composition」：爪子仍偏连指手套。；prompt 改动 86% 超过档位上限 40%",
+          "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+          "from_score": "9.41"
+        },
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：爪子仍偏连指手套。；prompt 改动 86% 超过档位上限 40%",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "9.41"
+        },
+        {
+          "category": "anatomy",
+          "lesson": "本轮短板偏「anatomy」：爪子仍偏连指手套。；prompt 改动 86% 超过档位上限 40%",
+          "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+          "from_score": "9.41"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "18:19:57"
+    }
+  ],
+  "warm_start": {
+    "project_id": "cursor-pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "cursor-pmem-art",
+      "project_slug": "cursor-pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-10-29 18:03:42 UTC+8"
+    },
+    "module": "character.PastelRabbit",
+    "goal": "White rabbit hugging a carrot, new composition, pastel crayon paper, no cyber neon, not the hoodie girl.",
+    "confidence": 0.3,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "红线可控（0 条）",
+      "挂载 0 张项目知识卡 + 2 张全局美术底层基础卡"
+    ],
+    "top_recipes": [],
+    "top_redlines": [],
+    "art_decisions": [],
+    "private_knowledge": [],
+    "shared_knowledge": [
+      {
+        "id": "composition-thirds-grid",
+        "title": "构图法则：九宫格三分法与呼吸留白安全区",
+        "body": "将核心视觉焦点布置在九宫格三分线交点（黄金分割点 0.618）上，利用引导线与前景暗角汇聚视线；独立资产四周必须预留 16px~24px 纯透明呼吸安全边距，严禁发冠、武器或特效贴死画布边缘被裁切。",
+        "layer_scope": "shared"
+      },
+      {
+        "id": "palette-70-20-10",
+        "title": "色彩构成：70-20-10 色板比例黄金法则",
+        "body": "画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+        "layer_scope": "shared"
+      }
+    ],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [],
+      "preferred_composition": [],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [],
+      "banned_habits": []
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/cursor-pmem-art/)\n- 目标模块: character.PastelRabbit\n- 置信度: 0.30（fast-track 资格: 否）\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [composition-thirds-grid] 构图法则：九宫格三分法与呼吸留白安全区: 将核心视觉焦点布置在九宫格三分线交点（黄金分割点 0.618）上，利用引导线与前景暗角汇聚视线；独立资产四周必须预留 16px~24px 纯透明呼吸安全边距，严禁发冠、武器或特效贴死画布边缘被裁切。\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+    "built_at": "2026-10-29 18:08:40 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：眼睛接近黑点瞳，缺少虹膜环与高光月牙。",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "8.98"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：眼睛接近黑点瞳，缺少虹膜环与高光月牙。",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.98"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：新主体是白兔抱胡萝卜，没有抄回女孩；粉彩纸纹和腮红气锁住；兔子后肢和爪子结构清楚。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.98"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：右眼被画成眨眼，任务是双眼都要虹膜，不是一只闭眼。；prompt 改动 98% 超过档位上限 40%",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.93"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：左眼已有琥珀虹膜和高光；粉彩纸纹和抱胡萝卜还在。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.93"
+    },
+    {
+      "category": "material",
+      "lesson": "本轮短板偏「material」：笔触仍偏光滑，纸齿比参考女孩那张干粉彩更弱。",
+      "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+      "from_score": "9.33"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：双眼都睁开并有琥珀虹膜和高光；没有抄回女孩。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.33"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：爪子仍偏连指手套。；prompt 改动 86% 超过档位上限 40%",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "9.41"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：爪子仍偏连指手套。；prompt 改动 86% 超过档位上限 40%",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.41"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：爪子仍偏连指手套。；prompt 改动 86% 超过档位上限 40%",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "9.41"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 4,
+  "regression_drop": 0.5,
+  "ActionRequired": "STOP_PICK_BEST",
+  "showcase_ready": true,
+  "winner": {
+    "round": 4,
+    "round_label": "第 4 轮精修",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "1:1",
+    "reference_image_paths": [],
+    "param_validation": {
+      "three_step_verified": true,
+      "three_step_stage": "step3_judge",
+      "validation_passed": true
+    },
+    "generated_at": "18:19:56",
+    "image": "docs/showcase/homepage_rerun_1029/v2/clone_rabbit/r4.jpg",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 499630,
+      "size_kb": 487.9,
+      "width": 1024,
+      "height": 1024,
+      "aspect_ratio": "1:1",
+      "canonical_aspect_ratio": "1:1",
+      "color_entropy": 7.98
+    },
+    "raw_score": 9.41,
+    "score": 9.41,
+    "target_score_threshold": 9.6,
+    "dims": "构图9.4/光影9.3/透视9.3/质感9.6/风格9.5/无瑕疵9.3",
+    "dims_parsed": {
+      "composition": 9.4,
+      "lighting_color": 9.3,
+      "perspective_anatomy": 9.3,
+      "texture_detail": 9.6,
+      "spec_style": 9.5,
+      "flawlessness": 9.3
+    },
+    "weighted_score": 9.41,
+    "audit_warnings": [
+      "收敛停滞预警：本轮净增 +0.08 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+      "Agent Absolute-5D 已采纳（门槛 9.6）",
+      "prompt 改动 86% 超过档位上限 40%"
+    ],
+    "stagnated": true,
+    "strengths": "双眼琥珀虹膜加高光；粉彩纸齿加重；没有抄回女孩。",
+    "defects": "爪子仍偏连指手套。；prompt 改动 86% 超过档位上限 40%",
+    "next_fix": "解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁止糊边融边；爪子仍偏连指手套。",
+    "prompt": "粉彩速写轻盈风：保画风与机位，柔化光影和留白，保持干爽笔触| White rabbit hugging carrot, both amber irises, heavier crayon tooth.| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: the person's joints and grip stay clear and both pupils share a direction; the animal's limbs follow its species and are not converted into human elbows; contact shadows read; do not melt limbs into props | 保持双眼虹膜和抱胡萝卜，把油画棒颗粒和米白纸齿画得更粗更干。",
+    "continuation": false,
+    "passed": false,
+    "gate_blocked": true,
+    "image_gate_blocked": false,
+    "anatomy_score": 9.3,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "both",
+    "judge_source": "agent_absolute_5d",
+    "remote_vlm": {
+      "source": "agent_self_judge",
+      "provider": "",
+      "model": "",
+      "error": "",
+      "active": false
+    },
+    "should_continue_next_round": false,
+    "decision": "STOP_MAX_ROUNDS",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "composition",
+        "lesson": "本轮短板偏「composition」：爪子仍偏连指手套。；prompt 改动 86% 超过档位上限 40%",
+        "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+        "from_score": "9.41"
+      },
+      {
+        "category": "lighting",
+        "lesson": "本轮短板偏「lighting」：爪子仍偏连指手套。；prompt 改动 86% 超过档位上限 40%",
+        "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+        "from_score": "9.41"
+      },
+      {
+        "category": "anatomy",
+        "lesson": "本轮短板偏「anatomy」：爪子仍偏连指手套。；prompt 改动 86% 超过档位上限 40%",
+        "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+        "from_score": "9.41"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "18:19:57"
+  },
+  "rounds_to_converge": 4,
+  "convergence_badge": "共 4 轮未达阈值，采用最高分",
+  "process_board": ".memory-art/converge/boards/hp29_clone_rabbit/index.html"
+}

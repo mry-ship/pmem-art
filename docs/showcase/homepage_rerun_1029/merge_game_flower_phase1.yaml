@@ -1,0 +1,18 @@
+# 游戏花 · 对标 Merge Mansion Exotic Plants：类型=花卉。每种花用自己的本色，叶子保持绿色。
+version: game-flower-identity-20261029
+pipeline: art-merge-two-phase
+tracks:
+  game_flower:
+    module: prop.GameFlowerMerge
+    mode: A
+    surface: Merge Mansion / Travel Town 风格化卡通3D棋盘图标，不是写实植物摄影。轻微3/4居中，浅灰正方形格，短接触影。每档一株，整株落在格内不得切顶。无脸无等级字。
+    family: { type: 花卉, style: 卡通单株植物 }
+    rows:
+    - { level: 1, name: 花籽, silhouette: 卵形种子, scale_delta: 基档, scale_pct: 0.56, parts_add: "—", look: 哑光褐色种皮，棱脊，不是糖豆, role: 入门件, merge_why: "" }
+    - { level: 2, name: 嫩芽, silhouette: 两片小叶芽, scale_delta: "+小", scale_pct: 0.59, parts_add: 对生绿色子叶, look: 鲜绿子叶，浅茎，叶绿素质感, role: 换件, merge_why: 两件花籽合成嫩芽，种子换成对生绿叶，同属植物 }
+    - { level: 3, name: 雏菊, silhouette: 扁圆盘花+细瓣, scale_delta: "+小", scale_pct: 0.62, parts_add: 白瓣黄盘心, look: 白细瓣，黄盘心，绿茎绿叶, role: 换件, merge_why: 两件嫩芽合成雏菊，芽换成盘花，仍是一株花 }
+    - { level: 4, name: 郁金香, silhouette: 杯形花头+短茎, scale_delta: "+中", scale_pct: 0.65, parts_add: 杯形红瓣, look: 饱和红杯形郁金香，绿茎，两片披针叶, role: 职能件, merge_why: 两件雏菊合成郁金香，盘花换成杯形花头，花卉套件 }
+    - { level: 5, name: 康乃馨, silhouette: 皱边复瓣+萼, scale_delta: "+中", scale_pct: 0.68, parts_add: 皱边复瓣与绿萼, look: 粉红皱边康乃馨，绿萼，绿茎, role: 职能件, merge_why: 两件郁金香合成康乃馨，杯瓣换成皱边复瓣，仍是一株花 }
+    - { level: 6, name: 玫瑰, silhouette: 螺旋花心+外瓣, scale_delta: "+大", scale_pct: 0.71, parts_add: 螺旋花心与刺, look: 经典红玫瑰，绿萼绿锯齿叶，小刺, role: 稀有件, merge_why: 两件康乃馨合成玫瑰，皱边换成螺旋花心，稀有花卉 }
+    - { level: 7, name: 牡丹, silhouette: 多层蓬瓣, scale_delta: "+大", scale_pct: 0.74, parts_add: 多层蓬瓣, look: 洋红多层牡丹，绿掌状叶, role: 稀有件, merge_why: 两件玫瑰合成牡丹，螺旋换成多层蓬瓣，仍是一株花 }
+    - { level: 8, name: 绣球, silhouette: 圆球小花团, scale_delta: "+大", scale_pct: 0.77, parts_add: 四瓣小花球团, look: 蓝紫绣球，许多四瓣小花，绿锯齿叶, role: 展陈件, merge_why: 两件牡丹合成绣球，蓬瓣收成圆球花团，花卉展陈件，仍是一株 }

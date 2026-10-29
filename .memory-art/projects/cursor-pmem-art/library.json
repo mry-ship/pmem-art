@@ -1,16 +1,16 @@
 {
   "project_id": "cursor-pmem-art",
   "project_slug": "cursor-pmem-art",
-  "project_name": "Cursor-Pmem-Art",
+  "project_name": "pmem-art",
   "layer_scope": "private",
   "origin_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
   "origin_path": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
   "bound_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
   "root_fingerprint": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
-  "entry_count": 78,
-  "entries_count": 78,
-  "modules_count": 17,
-  "copied_from_project": "pmem-art",
-  "created_at": "2026-10-26 18:01:04 UTC+8",
-  "updated_at": "2026-10-28 01:28:36 UTC+8"
+  "entry_count": 18,
+  "entries_count": 18,
+  "modules_count": 34,
+  "copied_from_project": "cursor-pmem-art",
+  "created_at": "2026-10-28 01:28:36 UTC+8",
+  "updated_at": "2026-10-29 23:04:12 UTC+8"
 }

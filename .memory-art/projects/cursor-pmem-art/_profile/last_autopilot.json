@@ -1,13 +1,13 @@
 {
-  "ran_at": "2026-10-27 23:25:45 UTC+8",
+  "ran_at": "2026-10-29 18:19:04 UTC+8",
   "source": "converge_finish",
-  "session_id": "xmas-chest-pair",
-  "tip": "「小提示」下次注意：镜头叙事",
-  "tip_candidate": "「小提示」下次注意：镜头叙事",
+  "session_id": "hp29_candy_L08",
+  "tip": "「小提示」下次注意：画风锁定",
+  "tip_candidate": "「小提示」下次注意：画风锁定",
   "taste_changes": [],
   "learn_queued": [
     "palette-70-20-10",
     "material-surface-physics"
   ],
-  "avg_winner_score": 9.5
+  "avg_winner_score": 9.62
 }

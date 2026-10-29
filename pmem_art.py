@@ -1177,6 +1177,54 @@ def cmd_validate(data: dict[str, Any]) -> int:
                 print(f"         ↳ 原因: {r}")
     return 0 if not data["qa_issues"] else 1
 
+def parse_hook_payload(payload: dict[str, Any]) -> tuple[str, dict[str, Any], str]:
+    """Normalize Cursor / Claude hook stdin: (tool_name, tool_input, user_message)."""
+    tool = str(
+        payload.get("tool_name")
+        or payload.get("toolName")
+        or payload.get("tool")
+        or ""
+    )
+    args = payload.get("tool_input") or payload.get("arguments") or payload.get("args") or {}
+    if not isinstance(args, dict):
+        args = {}
+    user_msg = str(payload.get("user_message") or payload.get("message") or "")
+    return tool, args, user_msg
+
+
+def image_gen_arg_view(tool: str, args: dict[str, Any]) -> tuple[str, dict[str, Any]]:
+    """Locate GenerateImage arguments. ('flat', args) or ('nested', inner_args) or ('', {})."""
+    nested_name = str(args.get("toolName") or args.get("tool_name") or "")
+    nested_args = args.get("arguments") if isinstance(args.get("arguments"), dict) else None
+    if re.search(r"GenerateImage", nested_name, re.I) and nested_args is not None:
+        return "nested", nested_args
+    if re.search(r"GenerateImage", tool, re.I):
+        return "flat", args
+    if (
+        isinstance(args.get("description"), str)
+        and str(args.get("description")).strip()
+        and not args.get("contents")
+        and not args.get("path")
+        and any(k in args for k in ("filename", "aspect_ratio", "reference_image_paths"))
+    ):
+        return "flat", args
+    return "", {}
+
+
+def merge_block_into_image_args(args: dict[str, Any], block: str) -> dict[str, Any]:
+    """Prepend Warm-Start into prompt/description without duplicating."""
+    from improve import merge_warm_start_prompt
+
+    out = dict(args)
+    pack = {"prompt_block": block}
+    for key in ("prompt", "description"):
+        if str(out.get(key) or "").strip():
+            out[key] = merge_warm_start_prompt(str(out[key]), pack)
+            return out
+    out["description"] = block
+    return out
+
+
 def cmd_hook(root: Path, data: dict[str, Any], event: str) -> int:
     """Cursor / Claude Code hooks：生图前召回记忆；落盘后轻量提示；不阻断对话。"""
     payload: dict[str, Any] = {}
@@ -1187,25 +1235,38 @@ def cmd_hook(root: Path, data: dict[str, Any], event: str) -> int:
     except Exception:
         payload = {}
 
-    tool = str(payload.get("toolName") or payload.get("tool") or "")
-    # 尝试从常见字段抠出路径 / prompt / 用户话
-    user_msg = str(payload.get("user_message") or payload.get("message") or "")
+    tool, args_obj, user_msg = parse_hook_payload(payload)
     prompt = ""
     path = ""
-    args_obj = payload.get("arguments") or payload.get("args") or {}
-    if isinstance(args_obj, dict):
+    if args_obj:
         prompt = str(args_obj.get("prompt") or args_obj.get("description") or "")
         path = str(args_obj.get("path") or args_obj.get("file") or args_obj.get("outputPath") or "")
+        nested_args = args_obj.get("arguments") if isinstance(args_obj.get("arguments"), dict) else {}
+        if not prompt and nested_args:
+            prompt = str(nested_args.get("prompt") or nested_args.get("description") or "")
     if not prompt and user_msg:
         prompt = user_msg
 
     advice: list[str] = []
-    # 生图前 / 写资产前：自动 search 相关记忆
-    if event in ("pre-tool", "pre-gen") or (event == "pre-tool" and re.search(r"GenerateImage|image|Write|Edit", tool, re.I)):
-        # 推断模块
-        module = ""
+    updated_input: dict[str, Any] | None = None
+    # 生图前 / 写资产前：自动 search 相关记忆（有活跃 converge 会话时用会话模块，不靠猜）
+    if event in ("pre-tool", "pre-gen"):
         q = prompt or user_msg or path
-        if q:
+        module = ""
+        warm: dict[str, Any] = {}
+        sess: dict[str, Any] = {}
+        try:
+            from skills_kit.converge_loop import active_session_id, load_session
+            sid = active_session_id(root)
+            sess = load_session(root, sid) if sid else {}
+            if sess:
+                module = str(sess.get("module") or "")
+                warm = sess.get("warm_start") if isinstance(sess.get("warm_start"), dict) else {}
+                if not q:
+                    q = str(sess.get("goal") or "")
+        except Exception:
+            sess = {}
+        if not module and q:
             from feedback import infer_module_from_text
             module = infer_module_from_text(q, data)
         matched = []
@@ -1219,10 +1280,10 @@ def cmd_hook(root: Path, data: dict[str, Any], event: str) -> int:
                 if _live(e)
                 and (
                     e.get("module") == module
-                    or str(e.get("module", "")).startswith(module.split(".")[0])
+                    or str(e.get("module", "")).startswith(module.split(".")[0] + ".")
+                    or e.get("module") == module.split(".")[0]
                 )
             ]
-            # 优先红线与定稿 + 最简加权（精确模块 > 胜出评分 > 关键词重叠 > 日期）
             from improve import rank_memory_entry
             matched = sorted(
                 matched,
@@ -1232,18 +1293,43 @@ def cmd_hook(root: Path, data: dict[str, Any], event: str) -> int:
                 ),
                 reverse=True,
             )[:6]
-        from improve import recall_layered_knowledge_cards
+        from improve import build_warm_start_pack, recall_layered_knowledge_cards
         layered_k = recall_layered_knowledge_cards(root, target_module=module, query=q, limit=4)
-        if matched or layered_k:
+        if not str(warm.get("prompt_block") or "").strip():
+            try:
+                warm = build_warm_start_pack(
+                    root,
+                    data if isinstance(data, dict) else {},
+                    module=module or "brand.WorldStyle",
+                    goal=q or "",
+                )
+            except Exception:
+                pass
+        block = str(warm.get("prompt_block") or "").strip()
+        if not block and matched:
+            block = "\n".join(
+                f"- [{e.get('kind')}] {e.get('summary')}" for e in matched if e.get("summary")
+            )
+        if matched or layered_k or block:
             advice.append(
-                f"🎨 pmem-art 双层记忆召回 · 模块 {module or '?'}（私有条目 {len(matched)} 条 + 知识卡 {len(layered_k)} 张）"
+                f"【pmem-art记忆】模块 {module or '?'} · 私有 {len(matched)} 条 · 知识卡 {len(layered_k)} 张"
+                + (" · 已并入 GenerateImage" if block else "")
             )
             for e in matched:
                 advice.append(f"  · [private:{e.get('kind')}] {e.get('summary', '')[:100]}")
             for kc in layered_k:
                 advice.append(f"  · [{kc.get('layer_scope', 'shared')}:knowledge] {kc.get('title')}: {kc.get('body', '')[:80]}")
+            kind, view = image_gen_arg_view(tool, args_obj)
+            if kind and block:
+                patched = merge_block_into_image_args(view, block)
+                if kind == "nested":
+                    new_outer = dict(args_obj)
+                    new_outer["arguments"] = patched
+                    updated_input = new_outer
+                else:
+                    updated_input = patched
         elif q:
-            advice.append(f"🎨 pmem-art：模块 {module or '未识别'} 暂无私有记忆，生图后请用自然语言反馈沉淀（如「太赛博」「这版留着」）。")
+            advice.append(f"【pmem-art记忆】模块 {module or '未识别'} 暂无私有记忆。生图后请说「太赛博 / 这版留着」沉淀。")
 
     if event in ("post-tool", "post-asset"):
         advice.append("💬 若这张不对/要留着：直接说「太赛博 / 头太大 / 这版留着 / 换成水彩」，我会写入 pmem-art 记忆。")
@@ -1251,10 +1337,17 @@ def cmd_hook(root: Path, data: dict[str, Any], event: str) -> int:
         if path and re.search(r"\.(png|jpe?g|webp)$", path, re.I):
             advice.append(f'📥 可选归档：python3 pmem_art.py ingest {path} -p "{(prompt or "")[:80]}" --apply')
 
+    followup = ""
     if event == "stop":
-        advice.append("🧠 pmem-art：本轮若有审美拍板，记得一句话留下（「以后都用这色板」「别再画霓虹」）。")
+        from skills_kit.converge_loop import loop_followup
+        blocker = loop_followup(root)
+        if blocker:
+            followup = blocker["message"]
+            advice.append("🛑 生图闭环还没停：" + followup)
+        else:
+            advice.append("🧠 pmem-art：本轮若有审美拍板，记得一句话留下（「以后都用这色板」「别再画霓虹」）。")
 
-    # 懒巡检：距上次 doctor ≥48h 则后台静默跑；高信号才可能多一行小提示
+    # 懒巡检：距上次 doctor ≥24h 则后台静默跑；高信号才可能多一行小提示
     try:
         from lifecycle import maybe_lazy_doctor_on_hook
         doctor_tip = maybe_lazy_doctor_on_hook(root, event)
@@ -1266,12 +1359,20 @@ def cmd_hook(root: Path, data: dict[str, Any], event: str) -> int:
 
     # Cursor hook 协议：输出 JSON，附加 agentMessage 提示（兼容 continue）
     out = {
-        "continue": True,
+        "continue": not bool(followup),
         "server": "pmem-art",
         "version": VERSION,
         "event": event,
         "agentMessage": "\n".join(advice) if advice else "",
     }
+    if followup:
+        out["followup_message"] = followup
+    agent_text = str(out.get("agentMessage") or "")
+    if agent_text:
+        out["agent_message"] = agent_text
+    if updated_input is not None:
+        out["updated_input"] = updated_input
+        out["permission"] = "allow"
     print(json.dumps(out, ensure_ascii=False))
     return 0
 
@@ -1379,13 +1480,20 @@ def main() -> int:
     p_merge.add_argument("--track", "-t", default="", help="tracks 下 id：kitchen | valentine | stationery")
     p_merge.add_argument("--all", action="store_true", help="relation-judge 审全部 track")
     p_merge.add_argument("--dir", "-d", default="", help="audit：方图目录；split-sheet：输出目录")
-    p_merge.add_argument("--sheet", default="", help="split-sheet：整梯 16:9 图路径")
+    p_merge.add_argument("--sheet", default="", help="split-sheet：整梯组图路径")
     p_merge.add_argument("--phase1", default="", help="audit 时对照 scale_pct")
-    p_merge.add_argument("--columns", type=int, default=8, help="split-sheet 列数，默认 8")
+    p_merge.add_argument("--rows", type=int, default=2, help="split-sheet 行数，默认 2（与 --columns 4 组成 2×4）")
+    p_merge.add_argument("--columns", type=int, default=4, help="split-sheet 列数，默认 4")
 
     p_skills = sub.add_parser("skills", help="安装/刷新或列出内置的 Cursor / Claude Code / Codex 美术技能 (/pmem-draw 等)")
     p_skills.add_argument("--install", action="store_true", help="安装或刷新全部技能文件到 .cursor / .claude / .agents")
     p_skills.add_argument("--list", action="store_true", help="列出所有内置美术技能与触发方式")
+
+    p_sgate = sub.add_parser(
+        "showcase-gate",
+        help="展陈 HTML 终稿闸门：正式分 <9.6 且未满 4 轮不能当终稿（不调生图）",
+    )
+    p_sgate.add_argument("--html", required=True, help="展陈 index.html 路径")
 
     p_gate = sub.add_parser(
         "check-scale-gates",
@@ -1498,7 +1606,10 @@ def main() -> int:
     p_learn.add_argument("--silent", action="store_true", help="只写提案不打印（后台用）")
 
     p_hook = sub.add_parser("hook", help="处理 Cursor / Claude Code / Codex 的 Hook 闸门事件")
-    p_hook.add_argument("event", choices=("pre-tool", "post-tool", "stop", "pre-gen", "post-asset"))
+    p_hook.add_argument(
+        "event",
+        choices=("pre-tool", "post-tool", "stop", "pre-gen", "post-asset", "session"),
+    )
 
     args = parser.parse_args()
     root = Path(args.root).resolve()
@@ -1527,6 +1638,14 @@ def main() -> int:
             return 0
         install_skills_and_agent_configs(root, quiet=False)
         return 0
+    if args.command == "showcase-gate":
+        from skills_kit.showcase_gate import audit_showcase_file, format_report
+        html_path = Path(args.html)
+        if not html_path.is_absolute():
+            html_path = (root / html_path).resolve()
+        issues = audit_showcase_file(html_path)
+        print(format_report(issues))
+        return 1 if issues else 0
 
     # Soft-load when memory missing (bootstrap/legacy on half-empty trees)
     mem = root / MEMORY_DIR
@@ -1583,7 +1702,7 @@ def main() -> int:
             if not args.sheet or not args.dir:
                 print("需要 --sheet 与 --dir")
                 return 1
-            return cmd_split(Path(args.sheet), Path(args.dir), args.columns)
+            return cmd_split(Path(args.sheet), Path(args.dir), args.columns, rows=args.rows)
         if args.action == "normalize":
             if not args.dir or not args.phase1 or not args.track:
                 print("需要 --dir --phase1 --track")
@@ -1595,7 +1714,7 @@ def main() -> int:
                 return 1
             from skills_kit.merge_relation import audit_ladder_dir, load_phase1, parse_rows
 
-            rc = cmd_split(Path(args.sheet), Path(args.dir), args.columns)
+            rc = cmd_split(Path(args.sheet), Path(args.dir), args.columns, rows=args.rows)
             if rc:
                 return rc
             rows = parse_rows(load_phase1(Path(args.phase1))["tracks"][args.track])

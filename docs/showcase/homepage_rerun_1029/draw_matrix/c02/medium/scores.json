@@ -1,0 +1,81 @@
+{
+  "id": "c02_medium",
+  "session": "hp29_c02_medium",
+  "skill": "draw",
+  "module": "character.PastelHoodie",
+  "scale": "medium",
+  "family": "dry",
+  "threshold": 9.6,
+  "max_rounds": 4,
+  "n": 4,
+  "best": 9.1,
+  "winner_round": 4,
+  "winner": "draw_matrix/c02/medium/final.jpg",
+  "remaining_defect": "远鞋条纹仍略软，未到 9.6。",
+  "rounds": [
+    {
+      "round": 1,
+      "image": "draw_matrix/c02/medium/r1.jpg",
+      "score": 7.3,
+      "dims": {
+        "composition": 8.1,
+        "lighting_color": 8.6,
+        "perspective_anatomy": 7.3,
+        "texture_detail": 9.0,
+        "spec_style": 9.0,
+        "flawlessness": 7.5
+      },
+      "dims_str": "构图8.1/光影8.6/透视7.3/质感9.0/风格9.0/无瑕疵7.5",
+      "defects": "抬膝前景白鞋缺失，只看见伸直腿侧向的一只鞋；双脚没有参考里的前后层次。；解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁止糊边融边",
+      "next_fix": "锁机位：抬膝脚回到前景白鞋，远鞋后缩到右缘；双过膝黑袜、近腿大腿裸露不动。"
+    },
+    {
+      "round": 2,
+      "image": "draw_matrix/c02/medium/r2.jpg",
+      "score": 8.93,
+      "dims": {
+        "composition": 9.0,
+        "lighting_color": 8.8,
+        "perspective_anatomy": 8.7,
+        "texture_detail": 9.1,
+        "spec_style": 9.2,
+        "flawlessness": 8.8
+      },
+      "dims_str": "构图9.0/光影8.8/透视8.7/质感9.1/风格9.2/无瑕疵8.8",
+      "defects": "远鞋仍偏侧立偏大；近手手指略糊。",
+      "next_fix": "远鞋改成后缩小鞋底；近手五指分开。锁机位和双过膝黑袜。"
+    },
+    {
+      "round": 3,
+      "image": "draw_matrix/c02/medium/r3.jpg",
+      "score": 9.06,
+      "dims": {
+        "composition": 9.2,
+        "lighting_color": 8.9,
+        "perspective_anatomy": 8.9,
+        "texture_detail": 9.2,
+        "spec_style": 9.3,
+        "flawlessness": 8.9
+      },
+      "dims_str": "构图9.2/光影8.9/透视8.9/质感9.2/风格9.3/无瑕疵8.9",
+      "defects": "近手手指仍略简；远鞋条纹略糊。；prompt 改动 85% 超过档位上限 40%",
+      "next_fix": "近手五指分开但仍自然搭膝；远鞋后缩小底三条杠更清楚。锁机位双袜。"
+    },
+    {
+      "round": 4,
+      "image": "draw_matrix/c02/medium/r4.jpg",
+      "score": 9.1,
+      "dims": {
+        "composition": 9.2,
+        "lighting_color": 8.9,
+        "perspective_anatomy": 9.0,
+        "texture_detail": 9.2,
+        "spec_style": 9.3,
+        "flawlessness": 9.0
+      },
+      "dims_str": "构图9.2/光影8.9/透视9.0/质感9.2/风格9.3/无瑕疵9.0",
+      "defects": "远鞋条纹仍略软，未到9.6。；prompt 改动 94% 超过档位上限 40%",
+      "next_fix": "光影：理顺主光方向与明暗交接，只抬画面里已经有的光；远鞋条纹仍略软，未到9.6。"
+    }
+  ]
+}

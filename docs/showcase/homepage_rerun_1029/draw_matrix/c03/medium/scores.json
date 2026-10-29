@@ -1,0 +1,36 @@
+{
+  "id": "c03_medium",
+  "skill": "draw",
+  "rel_dir": "draw_matrix/c03/medium",
+  "winner": "draw_matrix/c03/medium/final.jpg",
+  "winner_round": 3,
+  "best": 8.7,
+  "n": 4,
+  "rounds": [
+    {
+      "round": 1,
+      "dims": "构图8.6/光影8.8/透视8.4/质感8.4/风格8.5/无瑕疵8.3",
+      "defects": "右侧飞发偏冷；头带偏露",
+      "score": 8.49
+    },
+    {
+      "round": 2,
+      "dims": "构图8.7/光影8.8/透视8.5/质感8.6/风格8.7/无瑕疵8.4",
+      "defects": "头带仍偏高；右下发梢一点冷",
+      "score": 8.6
+    },
+    {
+      "round": 3,
+      "dims": "构图8.8/光影8.9/透视8.6/质感8.7/风格8.8/无瑕疵8.5",
+      "defects": "头顶头带仍露出；左眼被刘海挡略多",
+      "score": 8.7
+    },
+    {
+      "round": 4,
+      "dims": "构图8.4/光影8.8/透视8.6/质感8.6/风格8.3/无瑕疵7.8",
+      "defects": "猫夹跑到右侧",
+      "score": 8.36
+    }
+  ],
+  "remaining_defect": "头顶头带仍露出一截；左眼被刘海挡略多"
+}

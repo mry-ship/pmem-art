@@ -30,11 +30,14 @@ categories:
     label: 未归类 / 待提升 (Misc)
     icon: 📦
     short: 待归类资产
-  prop:
-    label: prop
-    icon: 📦
   icon:
     label: icon
+    icon: 📦
+  item:
+    label: item
+    icon: 📦
+  prop:
+    label: prop
     icon: 📦
 synonyms:
   -
@@ -92,9 +95,9 @@ modules:
     title: 主角立绘（脚手架 · 请改名为实际角色）
     category: character
     status: scaffold
-    description: "冷启动脚手架：将主角立绘/三视图放入 assets/character/<Name>/ 后，sync 会提出 character.<Name> 候选。"
+    description: "冷启动脚手架：将主角立绘/三视图放入 assets/character/hero/ （或改名为实际角色目录后 sync 提出 character.<Name>）。禁止再用 assets/character/** 以免吞掉其他角色模块。"
     paths:
-      - "assets/character/**"
+      - "assets/character/hero/**"
     aliases:
       - Hero
       - 主角
@@ -128,31 +131,29 @@ modules:
       alpha_required: false
       max_size_kb: 2048
   ui.HUD:
-    title: 主界面 HUD / 弹窗（脚手架）
+    title: "主菜单 / HUD 概念板（16:9）"
     category: ui
-    status: scaffold
-    description: 冷启动脚手架：九宫格底板、图标、字体规范放入 assets/ui/。
+    status: active
+    description: "主菜单与 HUD 概念板：16:9 RGB 商店截图级概念稿（非九宫格切图）。九宫格弹窗底板见 ui.InventoryHUD。"
     paths:
-      - "assets/ui/**"
+      - "assets/ui/hud/**"
+      - "assets/ui/mainmenu/**"
     aliases:
       - HUD
-      - UI
-      - 九宫格
+      - MainMenu
+      - 主菜单
+      - UI概念
     entities:
-      - NineSlice
-      - Icon
+      - MainMenuConcept
+      - ConceptBoard
     palette: []
     specs:
-      resolution: 512x512
-      aspect_ratio: "1:1"
-      alpha_required: true
-      nine_slice:
-        - 48
-        - 48
-        - 48
-        - 48
-      safe_margin_px: 4
-      max_size_kb: 512
+      resolution: 1280x720
+      allowed_resolutions:
+        - 1280x720
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
   vfx.Combat:
     title: 战斗特效（脚手架）
     category: vfx
@@ -190,151 +191,15 @@ modules:
     specs:
       alpha_required: true
       max_size_kb: 2048
-  prop.KitchenMerge:
-    title: prop·KitchenMerge (Watercolor)
-    category: prop
-    status: active
-    description: "原图画风优先：保画风与机位，小幅姿态/局部布局；柔化光影与留白层次 | A watercolor storybook mobile-game merge lad · 自动归类至 prop (prop.KitchenMerge) · 置信度 0.893"
-    paths:
-      - "assets/prop/kitchenmerge/**"
-    aliases:
-      - KitchenMerge
-    entities: []
-    palette: []
-    specs:
-      resolution: 1280x720
-      alpha_required: false
-      max_size_kb: 2048
-  prop.ValentineMerge:
-    title: prop·ValentineMerge
-    category: prop
-    status: active
-    description: "原图画风优先：保媒介与身份，提升光影张力；可加风格内叙事点缀 | 提示词改动区间 30% 到 80%：必须拉开，媒介与身份留下 | 糖的两端是光洁桃扭，箭只朝一 · 自动归类至 prop (prop.ValentineMerge) · 置信度 0.893"
-    paths:
-      - "assets/prop/valentinemerge/**"
-    aliases:
-      - ValentineMerge
-    entities: []
-    palette: []
-    specs:
-      resolution: 1024x1024
-      alpha_required: false
-      max_size_kb: 2048
-  prop.ChristmasMerge:
-    title: prop·ChristmasMerge
-    category: prop
-    status: active
-    description: "原图画风优先：保画风与机位，表面那一句不动，只修没过的那一格| 垫图是目前分数最高的那张成图。只改这一处：球内仍要小树。表面那一句不动。。没点名的地方保持垫图。 · 自动归类至 prop (prop.ChristmasMerge) · 置信度 0.893"
-    paths:
-      - "assets/prop/christmasmerge/**"
-    aliases:
-      - ChristmasMerge
-    entities: []
-    palette: []
-    specs:
-      resolution: 1280x720
-      alpha_required: false
-      max_size_kb: 2048
-  prop.StationeryMerge:
-    title: prop·StationeryMerge
-    category: prop
-    status: active
-    description: "原图画风优先：保画风与机位，表面那一句不动，只修没过的那一格| Mode C stationery ladder from market medium| 约束： · 自动归类至 prop (prop.StationeryMerge) · 置信度 0.893"
-    paths:
-      - "assets/prop/stationerymerge/**"
-    aliases:
-      - StationeryMerge
-    entities: []
-    palette: []
-    specs:
-      resolution: 1280x720
-      alpha_required: false
-      max_size_kb: 2048
-  icon.Compass:
-    title: icon·Compass
-    category: icon
-    status: active
-    description: "粉彩速写轻盈风：保画风与机位，小幅姿态/局部布局；加强色块边界与材质可读性 | 垫图是目前分数最高的那张成图。只改这一处：Anatomy and perspec · 自动归类至 icon (icon.Compass) · 置信度 0.78"
-    paths:
-      - "assets/icon/compass/**"
-    aliases:
-      - Compass
-    entities: []
-    palette: []
-    specs:
-      resolution: 1024x1024
-      alpha_required: false
-      max_size_kb: 2048
-  icon.KeyClone:
-    title: icon·KeyClone
-    category: icon
-    status: active
-    description: "原图画风优先：保画风与机位，小幅姿态/局部布局；加强色块边界与材质可读性 | 垫图是目前分数最高的那张成图。只改这一处：Anatomy and perspect · 自动归类至 icon (icon.KeyClone) · 置信度 0.78"
-    paths:
-      - "assets/icon/keyclone/**"
-    aliases:
-      - KeyClone
-    entities: []
-    palette: []
-    specs:
-      resolution: 1024x1024
-      alpha_required: false
-      max_size_kb: 2048
-  ui.MainMenu:
-    title: 界面与九宫格·MainMenu
-    category: ui
-    status: active
-    description: "原图画风优先：保画风与机位，小幅姿态/局部布局；加强色块边界与材质可读性| 垫图是目前分数最高的那张成图。只改这一处：只收干净选中按钮内高光。。没点名的地方保持 · 自动归类至 界面与九宫格 (ui.MainMenu) · 置信度 0.81"
-    paths:
-      - "assets/ui/mainmenu/**"
-    aliases:
-      - MainMenu
-    entities: []
-    palette: []
-    specs:
-      resolution: 1280x720
-      allowed_resolutions:
-        - 1280x720
-      alpha_required: true
-      nine_slice:
-        - 48
-        - 48
-        - 48
-        - 48
-      safe_margin_px: 4
-      max_size_kb: 512
-  ui.PopupClone:
-    title: 界面与九宫格·PopupClone
-    category: ui
-    status: active
-    description: "原图画风优先：保画风与机位，小幅姿态/局部布局；加强色块边界与材质可读性| 垫图是目前分数最高的那张成图。只改这一处：只均分底栏三钮间距。。没点名的地方保持垫图 · 自动归类至 界面与九宫格 (ui.PopupClone) · 置信度 0.796"
-    paths:
-      - "assets/ui/popupclone/**"
-    aliases:
-      - PopupClone
-    entities: []
-    palette: []
-    specs:
-      resolution: 1024x1024
-      allowed_resolutions:
-        - 1024x1024
-      alpha_required: true
-      nine_slice:
-        - 48
-        - 48
-        - 48
-        - 48
-      safe_margin_px: 4
-      max_size_kb: 512
-  character.PastryChef:
-    title: 角色与立绘·PastryChef
+  character.Hero.Chibi:
+    title: 角色与立绘·Astra (Chibi)
     category: character
     status: active
-    description: "原图画风优先：保画风与机位，小幅姿态/局部布局；柔化光影与次表面散射 | 垫图是目前分数最高的那张成图。只改这一处：只收清帽徽边缘。。没点名的地方保持垫图。 · 自动归类至 角色与立绘 (character.PastryChef) · 置信度 0.82"
+    description: 自动归类至 角色与立绘 (character.Hero.Chibi) · 置信度 0.828
     paths:
-      - "assets/character/pastrychef/**"
+      - "assets/character/astra/chibi/**"
     aliases:
-      - PastryChef
+      - Astra
     entities: []
     palette: []
     specs:
@@ -344,33 +209,464 @@ modules:
       alpha_required: true
       safe_margin_px: 16
       max_size_kb: 1024
-  icon.PotionProp:
-    title: icon·PotionProp
+    parent: character.Hero
+    inherits: character.Hero
+  brand.WorldStyle.Cyber:
+    title: 风格圣经·Untitled (Cyber)
+    category: brand
+    status: active
+    description: 自动归类至 风格圣经 (brand.WorldStyle.Cyber) · 置信度 0.847
+    paths:
+      - "assets/brand/untitled/cyber/**"
+    aliases:
+      - Untitled
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x576
+      alpha_required: true
+      max_size_kb: 2048
+    parent: brand.WorldStyle
+    inherits: brand.WorldStyle
+  scene.MainArea.Cyber:
+    title: 场景与原画·E2e (Cyber)
+    category: scene
+    status: active
+    description: 自动归类至 场景与原画 (scene.MainArea.Cyber) · 置信度 0.787
+    paths:
+      - "assets/scene/e2e/cyber/**"
+    aliases:
+      - E2e
+    entities: []
+    palette: []
+    specs:
+      resolution: 720x1280
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+    parent: scene.MainArea
+    inherits: scene.MainArea
+  ui.Clone:
+    title: 界面与九宫格·Clone
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.Clone) · 置信度 0.78
+    paths:
+      - "assets/ui/clone/**"
+    aliases:
+      - Clone
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      allowed_resolutions:
+        - 1024x1024
+      alpha_required: true
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512
+  ui.Skill:
+    title: 界面与九宫格·Skill
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.Skill) · 置信度 0.78
+    paths:
+      - "assets/ui/skill/**"
+    aliases:
+      - Skill
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      allowed_resolutions:
+        - 1024x1024
+      alpha_required: true
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512
+  scene.Skill:
+    title: 场景与原画·Skill
+    category: scene
+    status: active
+    description: 自动归类至 场景与原画 (scene.Skill) · 置信度 0.893
+    paths:
+      - "assets/scene/skill/**"
+    aliases:
+      - Skill
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  scene.Redo:
+    title: 场景与原画·Redo
+    category: scene
+    status: active
+    description: 自动归类至 场景与原画 (scene.Redo) · 置信度 0.893
+    paths:
+      - "assets/scene/redo/**"
+    aliases:
+      - Redo
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  scene.Stationerymerge:
+    title: 场景与原画·Stationerymerge
+    category: scene
+    status: active
+    description: 自动归类至 场景与原画 (scene.Stationerymerge) · 置信度 0.893
+    paths:
+      - "assets/scene/stationerymerge/**"
+    aliases:
+      - Stationerymerge
+    entities: []
+    palette: []
+    specs:
+      resolution: 1280x720
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  scene.Modes:
+    title: 场景与原画·Modes
+    category: scene
+    status: active
+    description: 自动归类至 场景与原画 (scene.Modes) · 置信度 0.893
+    paths:
+      - "assets/scene/modes/**"
+    aliases:
+      - Modes
+    entities: []
+    palette: []
+    specs:
+      resolution: 1280x720
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  scene.Xmas:
+    title: 场景与原画·Xmas
+    category: scene
+    status: active
+    description: 自动归类至 场景与原画 (scene.Xmas) · 置信度 0.78
+    paths:
+      - "assets/scene/xmas/**"
+    aliases:
+      - Xmas
+    entities: []
+    palette: []
+    specs:
+      resolution: 720x1280
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  scene.Merge:
+    title: 场景与原画·Merge
+    category: scene
+    status: active
+    description: 自动归类至 场景与原画 (scene.Merge) · 置信度 0.893
+    paths:
+      - "assets/scene/merge/**"
+    aliases:
+      - Merge
+    entities: []
+    palette: []
+    specs:
+      resolution: 1280x720
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  scene.Valentinemerge:
+    title: 场景与原画·Valentinemerge
+    category: scene
+    status: active
+    description: 自动归类至 场景与原画 (scene.Valentinemerge) · 置信度 0.893
+    paths:
+      - "assets/scene/valentinemerge/**"
+    aliases:
+      - Valentinemerge
+    entities: []
+    palette: []
+    specs:
+      resolution: 1280x720
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  scene.Kitchenmerge:
+    title: 场景与原画·Kitchenmerge
+    category: scene
+    status: active
+    description: 自动归类至 场景与原画 (scene.Kitchenmerge) · 置信度 0.893
+    paths:
+      - "assets/scene/kitchenmerge/**"
+    aliases:
+      - Kitchenmerge
+    entities: []
+    palette: []
+    specs:
+      resolution: 1280x720
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  scene.V3:
+    title: 场景与原画·V3
+    category: scene
+    status: active
+    description: 自动归类至 场景与原画 (scene.V3) · 置信度 0.893
+    paths:
+      - "assets/scene/v3/**"
+    aliases:
+      - V3
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  misc.Random:
+    title: 待归类资产·Random
+    category: misc
+    status: candidate
+    description: 自动归类至 待归类资产 (misc.Random) · 置信度 0.4
+    paths:
+      - "assets/misc/random/**"
+    aliases:
+      - Random
+    entities: []
+    palette: []
+    specs:
+      resolution: 640x480
+      alpha_required: false
+      max_size_kb: 2048
+  brand.Try2:
+    title: 风格圣经·Try2
+    category: brand
+    status: active
+    description: 自动归类至 风格圣经 (brand.Try2) · 置信度 0.78
+    paths:
+      - "assets/brand/try2/**"
+    aliases:
+      - Try2
+    entities: []
+    palette: []
+    specs:
+      resolution: 495x865
+      alpha_required: false
+      max_size_kb: 2048
+  brand.20261026:
+    title: 风格圣经·20261026
+    category: brand
+    status: active
+    description: 自动归类至 风格圣经 (brand.20261026) · 置信度 0.78
+    paths:
+      - "assets/brand/20261026/**"
+    aliases:
+      - 20261026
+    entities: []
+    palette: []
+    specs:
+      resolution: 495x865
+      alpha_required: false
+      max_size_kb: 2048
+  brand.Try3:
+    title: 风格圣经·Try3
+    category: brand
+    status: active
+    description: 自动归类至 风格圣经 (brand.Try3) · 置信度 0.78
+    paths:
+      - "assets/brand/try3/**"
+    aliases:
+      - Try3
+    entities: []
+    palette: []
+    specs:
+      resolution: 495x865
+      alpha_required: false
+      max_size_kb: 2048
+  icon.AppIcon:
+    title: icon·AppIcon
     category: icon
     status: active
-    description: "原图画风优先：保画风与机位，小幅姿态/局部布局；加强色块边界与材质可读性| 垫图是目前分数最高的那张成图。只改这一处：Anatomy and perspecti · 自动归类至 icon (icon.PotionProp) · 置信度 0.893"
+    description: "原图画风优先：保画风与机位，小幅姿态/局部布局；加强色块边界与材质可读性| Clearer top specular rim; soft radial plat · 自动归类至 icon (icon.AppIcon) · 置信度 0.78"
     paths:
-      - "assets/icon/potionprop/**"
+      - "assets/icon/appicon/**"
     aliases:
-      - PotionProp
+      - AppIcon
     entities: []
     palette: []
     specs:
       resolution: 1024x1024
       alpha_required: false
       max_size_kb: 2048
-  prop.XmasChestPair:
-    title: prop·XmasChestPair
-    category: prop
+  icon.Item:
+    title: icon·Item
+    category: icon
     status: active
-    description: "原图画风优先：保画风色板，按「略俯四分之三，上下两态同一机位，上关下开」重构机位| 竖图灰底。上关下开，圣诞箱身份不变。下面的箱子必须是上面那只的同一转角，只把 · 自动归类至 prop (prop.XmasChestPair) · 置信度 0.78"
+    description: "原图画风优先：保画风与机位，小幅姿态/局部布局；加强色块边界与材质可读性| Softer bottle contact shadow only| 约束：不改机位 · 自动归类至 icon (icon.Item) · 置信度 0.78"
     paths:
-      - "assets/prop/xmaschestpair/**"
+      - "assets/icon/item/**"
     aliases:
-      - XmasChestPair
+      - Item
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      alpha_required: false
+      max_size_kb: 2048
+  character.SunlitGirl:
+    title: 角色与立绘·SunlitGirl
+    category: character
+    status: active
+    description: "胶片逆光轻厚涂：保媒介与身份，提升光影张力；可加风格内叙事点缀| sunlit variant polish| 约束：保持原图核心艺术媒介与画风基因；保持原图性 · 自动归类至 角色与立绘 (character.SunlitGirl) · 置信度 0.82"
+    paths:
+      - "assets/character/sunlitgirl/**"
+    aliases:
+      - SunlitGirl
+    entities: []
+    palette: []
+    specs:
+      resolution: 864x1152
+      allowed_resolutions:
+        - 864x1152
+      alpha_required: false
+      safe_margin_px: 16
+      max_size_kb: 1024
+  item.MergeLadder:
+    title: item·MergeLadder
+    category: item
+    status: active
+    description: "原图画风优先：保画风与机位，小幅姿态/局部布局；柔化光影与次表面散射| merge ladder tier5 crystal flask| 约束：不改机位与镜头 · 自动归类至 item (item.MergeLadder) · 置信度 0.705"
+    paths:
+      - "assets/item/mergeladder/**"
+    aliases:
+      - MergeLadder
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      alpha_required: false
+      max_size_kb: 2048
+  character.PastelGirl:
+    title: 角色与立绘·PastelGirl
+    category: character
+    status: active
+    description: "粉彩速写轻盈风：保画风与机位，小幅姿态/局部布局；柔化光影与留白层次| pastel sketch girl clone polish 4:3: hair la · 自动归类至 角色与立绘 (character.PastelGirl) · 置信度 0.82"
+    paths:
+      - "assets/character/pastelgirl/**"
+    aliases:
+      - PastelGirl
+    entities: []
+    palette: []
+    specs:
+      resolution: 1152x864
+      allowed_resolutions:
+        - 1152x864
+      alpha_required: false
+      safe_margin_px: 16
+      max_size_kb: 1024
+  scene.CelestialCity:
+    title: 场景与原画·CelestialCity (Watercolor)
+    category: scene
+    status: active
+    description: "仙侠水墨夜色风：锁视角与姿态，仅微修局部质感| Micro-polish reference celestial night city only. Same g · 自动归类至 场景与原画 (scene.CelestialCity) · 置信度 0.787"
+    paths:
+      - "assets/scene/celestialcity/**"
+    aliases:
+      - CelestialCity
     entities: []
     palette: []
     specs:
       resolution: 720x1280
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+    parent: scene.MainArea
+    inherits: scene.MainArea
+  scene.IshtarCanyon:
+    title: 场景与原画·IshtarCanyon
+    category: scene
+    status: active
+    description: "奇幻厚涂概念风：锁视角与布局，仅微修局部质感| canyon low polish commercial| 约束：不改动作与姿态；保持原图画风笔触与色板；保持原 · 自动归类至 场景与原画 (scene.IshtarCanyon) · 置信度 0.819"
+    paths:
+      - "assets/scene/ishtarcanyon/**"
+    aliases:
+      - IshtarCanyon
+    entities: []
+    palette: []
+    specs:
+      resolution: 1152x864
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  ui.InventoryHUD:
+    title: 库存 / 弹窗九宫格底板
+    category: ui
+    status: active
+    description: 512 RGBA 九宫格弹窗/库存底板；中央拉伸区禁圆盘暗纹；外圈留 4px 透明安全边。
+    paths:
+      - "assets/ui/modal_frame*.png"
+      - "assets/ui/inventory/**"
+    aliases:
+      - InventoryHUD
+      - NineSlice
+      - 弹窗底板
+      - 九宫格底板
+    entities:
+      - NineSlice
+      - ModalFrame
+    palette: []
+    specs:
+      resolution: 512x512
+      allowed_resolutions:
+        - 512x512
+      aspect_ratio: "1:1"
+      alpha_required: true
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512
+  misc.Doctor:
+    title: 记忆医生（懒巡检）
+    category: misc
+    status: active
+    description: 产品自身的懒巡检：只出报告、不改条目；触发间隔与抢槽事件写在记忆里，不按生图资产归类。
+    paths: []
+    aliases:
+      - 记忆医生
+      - lazy doctor
+      - doctor
+    entities:
+      - LazyTrigger
+    palette: []
+    specs: {}
+  prop.PeachCandyMerge:
+    title: prop·PeachCandyMerge
+    category: prop
+    status: active
+    description: "原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光，表面那一句不动，只修没过的那一格| L01 small peach gummy on FLAT m · 自动归类至 prop (prop.PeachCandyMerge) · 置信度 0.893"
+    paths:
+      - "assets/prop/peachcandymerge/**"
+    aliases:
+      - PeachCandyMerge
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
       alpha_required: false
       max_size_kb: 2048

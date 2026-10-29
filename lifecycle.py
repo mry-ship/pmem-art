@@ -5,7 +5,6 @@ Guarantees a mountable memory workflow that is never fully blind magic — auto-
 """
 from __future__ import annotations
 
-import fcntl
 import fnmatch
 import json
 import re
@@ -20,6 +19,44 @@ from contextlib import contextmanager
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Iterator
+
+try:
+    import fcntl as _fcntl
+    _fcntl.LOCK_EX
+    _fcntl.flock
+except (ImportError, AttributeError):
+    _fcntl = None
+
+_LOCK_EX = getattr(_fcntl, "LOCK_EX", 2)
+_LOCK_NB = getattr(_fcntl, "LOCK_NB", 4)
+_LOCK_UN = getattr(_fcntl, "LOCK_UN", 8)
+
+
+def _flock(fd: int, flags: int) -> None:
+    if _fcntl is not None:
+        _fcntl.flock(fd, flags)
+        return
+    try:
+        import msvcrt
+    except ImportError:
+        return
+    os.lseek(fd, 0, os.SEEK_SET)
+    if flags & _LOCK_UN:
+        try:
+            msvcrt.locking(fd, msvcrt.LK_UNLCK, 1)
+        except OSError:
+            pass
+        return
+    if os.fstat(fd).st_size < 1:
+        os.write(fd, b"\0")
+        os.lseek(fd, 0, os.SEEK_SET)
+    mode = msvcrt.LK_NBLCK if flags & _LOCK_NB else msvcrt.LK_LOCK
+    try:
+        msvcrt.locking(fd, mode, 1)
+    except OSError:
+        if flags & _LOCK_NB:
+            raise BlockingIOError("memory write lock busy")
+        raise
 
 MEMORY_DIR = ".memory-art"
 INBOX_DIR = "inbox"
@@ -549,7 +586,13 @@ def ensure_cursor_stubs(root: Path) -> None:
                             "matcher": "GenerateImage|Write|Edit",
                         }
                     ],
-                    "stop": [{"command": "python3 pmem_art.py hook stop || py -3 pmem_art.py hook stop", "loop_limit": 1}],
+                    "stop": [{"command": "python3 pmem_art.py hook stop || py -3 pmem_art.py hook stop", "loop_limit": 8}],
+                    "sessionStart": [
+                        {
+                            "command": "python3 pmem_art.py hook session || py -3 pmem_art.py hook session",
+                            "failClosed": False,
+                        }
+                    ],
                 },
             },
             ensure_ascii=False,
@@ -663,7 +706,7 @@ def memory_write_lock(root: Path, *, timeout_sec: float = 30.0) -> Iterator[None
     fd = os.open(str(lock), os.O_CREAT | os.O_RDWR, 0o644)
     while True:
         try:
-            fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            _flock(fd, _LOCK_EX | _LOCK_NB)
             break
         except BlockingIOError:
             if time.time() >= deadline:
@@ -678,7 +721,7 @@ def memory_write_lock(root: Path, *, timeout_sec: float = 30.0) -> Iterator[None
     finally:
         _memory_write_depth.n = 0
         try:
-            fcntl.flock(fd, fcntl.LOCK_UN)
+            _flock(fd, _LOCK_UN)
         finally:
             os.close(fd)
 
@@ -1552,14 +1595,23 @@ def cmd_bootstrap(root: Path, data: dict[str, Any], mode: str, auto_accept_depth
 
 
 # ---------------------------------------------------------------------------
-# Doctor state · lazy hook 巡检（≥48h 才后台跑；默认用户无感）
+# Doctor state · lazy 巡检（≥24h 才后台跑；默认用户无感）
 # ---------------------------------------------------------------------------
 
 DOCTOR_STATE_FILE = "last_doctor.json"
 DOCTOR_CLAIM_LOCK = "last_doctor.claim"
-DOCTOR_INTERVAL_HOURS = 48.0
+DOCTOR_INTERVAL_HOURS = 24.0
 DOCTOR_CLAIM_TTL_MINUTES = 30.0
-DOCTOR_HOOK_EVENTS = frozenset({"pre-tool", "pre-gen", "stop"})
+# Cursor hooks + CLI 结算都可抢槽；未列入的事件只消费已写好的高信号提示。
+DOCTOR_HOOK_EVENTS = frozenset({
+    "pre-tool",
+    "pre-gen",
+    "post-tool",
+    "post-asset",
+    "stop",
+    "session",
+    "converge_finish",
+})
 
 
 def _doctor_now() -> datetime:
@@ -1651,7 +1703,7 @@ def try_claim_lazy_doctor(
     Claim a background doctor slot via O_EXCL lock.
 
     ``last_run_at`` is only written by a successful ``run_doctor_quiet`` — so a
-    crashed child does not burn the full 48h window. In-flight is gated by the
+    crashed child does not burn the full 24h window. In-flight is gated by the
     claim lock TTL (default 30m) instead.
     """
     state = load_doctor_state(root)
@@ -1964,7 +2016,7 @@ def consume_doctor_tip(root: Path) -> str | None:
 
 def maybe_lazy_doctor_on_hook(root: Path, event: str) -> str | None:
     """
-    On use-hooks: if doctor due (>48h), claim + background spawn.
+    On spawn events (hooks + converge_finish): if doctor due (>24h), claim + background spawn.
     Always try to surface at most one high-signal whisper tip (from a finished quiet run).
     Never dumps the full doctor report into the hook message.
     """

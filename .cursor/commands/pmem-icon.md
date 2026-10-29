@@ -15,7 +15,7 @@ description: 【强制4轮≥9.6收敛】iOS/Android App Icon 应用图标母版
 ```
 
 ## 原理（截图摘要）
-1. 先锁 **style-spec** → 2. SVG 硬规则 → 3. 分批生成 → 4. 交付 preview → 5. 关键枚 **Warm-Start + 最多 4 轮 ≥9.6** → 6. 反思写进记忆，要看报告再用 /pmem-coach
+1. 先锁 **style-spec** → 2. SVG 硬规则 → 3. 分批生成 → 4. 交付 preview → 5. 关键枚 **强制 4 轮 ≥9.6** → 6. 反思写进记忆，要看报告再用 /pmem-coach
 
 你现在运行在 **pmem-art 图标集模式**（对标 jezweb `icon-set-generator`）：先锁 **一份 style-spec**，再批量生成，保证 stroke、圆角、视口、视觉重量一致——**禁止**从 Lucide/Heroicons 随便拼一套「看起来差不多」的通用库图标冒充项目定制集。
 
@@ -92,8 +92,10 @@ icons/
 └── …
 ```
 
-### Step 5：关键图标 4轮9.6 收敛（可选）
-用户点名某枚「不对」或一致性审查不通过时，每一轮垫最初的风格参考或 style-spec 样张，不垫上一轮成图：
+### Step 5：Mode A / C 关键枚 4 轮 ≥9.6（强制）
+Mode A 母版和 Mode C 关键道具格走和 `/pmem-draw` 同一条停机：不到 9.6 必须再出，满 4 轮取最高。禁止 8.x 停机，禁止把竖幅插画或 3:4 海报当 1024 正方形母版。
+Mode B 可以先批量出 preview；一致性审查不过、或玩家点名某枚不对时，那一枚同样强制 4 轮 ≥9.6。
+每一轮垫最初的风格参考或 style-spec 样张，不垫上一轮成图：
 ```bash
 python3 pmem_art.py converge start --goal "图标 <name> 对齐 style-spec" --module brand.WorldStyle
 # 生成 → 自评 → converge generate / converge judge → finish
@@ -110,7 +112,8 @@ python3 pmem_art.py ingest icons/preview.html -p "icon set preview" --apply   # 
 当用户要求制作 **App Icon / 手机桌面图标 / iOS 启动图标 / Android 自适应图标 / 产品 Logo 图标** 时，自动切换至 **App Icon 专项模式**：
 
 ### 1. 1024×1024 满幅直角母版与系统圆角安全区铁律
-- **严禁预裁透明圆角**：母版必须输出 **`1024×1024` 满幅直角正方形（Full-bleed Square PNG，无 Alpha 透明缺角）**，防止系统套用 iOS 超椭圆（Superellipse Squircle）或 Android Adaptive 遮罩时露出黑边/白边裂隙。
+- **严禁预裁透明圆角**：母版必须输出 **`1024×1024` 满幅直角正方形（Full-bleed Square PNG，无 Alpha 透明缺角）**，防止系统套用 iOS 超椭圆（Superellipse Squircle）或 Android Adaptive 遮罩时露出黑边/白边裂隙。展陈页也必须按 1:1 显示，禁止套用插画默认 3:4。
+- **停机与普通图相同**：母版不到 9.6 不能当终稿，满 4 轮取最高。禁止复杂场景插画冒充单符号 App Icon。
 - **核心图形安全区（Center 72%–80% Safe Zone）**：核心主符号（Hero Glyph）必须收束在画布中心 **`72%–80%`（约 `740×740 px`）安全圆/超椭圆内**，四周留出充足呼吸负空间，绝不贴边。
 - **零细碎文字红线**：App Icon 严禁堆砌 Slogan、副标题或复杂多角色场景；只保留 **1 个高辨识度核心记忆符号**，确保缩放到 `29×29 px`（设置页）与 `60×60 px`（通知栏）时依然一眼认出。
 

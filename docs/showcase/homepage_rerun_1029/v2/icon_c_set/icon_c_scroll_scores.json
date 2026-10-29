@@ -1,0 +1,16 @@
+{
+  "id": "icon_c_scroll",
+  "session": "hp29_icon_c_scroll",
+  "rounds": 4,
+  "scores": [
+    8.75,
+    8.37,
+    9.12,
+    8.74
+  ],
+  "winner_round": 3,
+  "winner_score": 9.12,
+  "winner_dims": "剪影识别9.3/描边色板9.0/棚拍光8.9/透明底8.6/无字9.7/无瑕疵9.2",
+  "winner_path": "v2\\icon_c_set\\scroll.jpg",
+  "remaining_defect": "studio rim a bit soft"
+}

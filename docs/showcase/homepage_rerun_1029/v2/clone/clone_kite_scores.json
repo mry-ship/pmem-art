@@ -1,0 +1,41 @@
+{
+  "id": "clone_kite",
+  "session": "hp29_clone_kite",
+  "rounds": 4,
+  "scores": [
+    8.53,
+    8.71,
+    8.85,
+    9.03
+  ],
+  "best": 9.03,
+  "winner": "v2/clone/final.jpg",
+  "winner_round": 4,
+  "remaining_defect": "左手仍略连指，纸筒还偏粗。",
+  "round_details": [
+    {
+      "round": 1,
+      "image": "v2/clone/r1.jpg",
+      "score": 8.53,
+      "dims": "构图8.2/光影8.6/透视8.4/质感8.8/风格8.9/无瑕疵8.3"
+    },
+    {
+      "round": 2,
+      "image": "v2/clone/r2.jpg",
+      "score": 8.71,
+      "dims": "构图8.8/光影8.8/透视8.2/质感9.0/风格9.1/无瑕疵8.5"
+    },
+    {
+      "round": 3,
+      "image": "v2/clone/r3.jpg",
+      "score": 8.85,
+      "dims": "构图9.0/光影8.9/透视8.8/质感9.0/风格8.6/无瑕疵8.8"
+    },
+    {
+      "round": 4,
+      "image": "v2/clone/r4.jpg",
+      "score": 9.03,
+      "dims": "构图9.2/光影9.0/透视8.9/质感9.1/风格9.2/无瑕疵8.9"
+    }
+  ]
+}

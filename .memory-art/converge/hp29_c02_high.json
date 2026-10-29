@@ -1,0 +1,802 @@
+{
+  "session_id": "hp29_c02_high",
+  "started_at": "2026-10-29 18:05:51 UTC+8",
+  "goal": "4:3 oil-pastel crayon paper. Black bob, red hoodie, blue shorts, BOTH legs over-knee BLACK socks, near thigh of the closer leg bare above the sock, white sneakers with black stripes. Diagonal blue-grey crayon background, blush air. No ankle socks, no missing sock, no extra limbs. Scale=high. Bolder lighting and finish, keep identity. Same girl, same sitting silhouette, BOTH over-knee black socks, closer thigh bare. Bolder layered oil-pastel on the red hoodie, stronger paper tooth and flywhite, richer diagonal blue-grey hatch, still soft light and short contact shadow. Do not drop a sock, do not add studio volume light.",
+  "module": "character.PastelHoodie",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "high",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "high",
+    "label": "高强度 · 大胆跃升+可叙事动态达标闭环 (Showcase Overhaul Dynamic Threshold >=9.6)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 2,
+    "target_score_threshold": 9.6,
+    "dim_weights": {
+      "composition": 0.1125,
+      "lighting_color": 0.1125,
+      "perspective_anatomy": 0.15,
+      "texture_detail": 0.225,
+      "spec_style": 0.15,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图；第 1 轮可以拉开光影，之后只在提示词上补还没过的那一处（提示词改动仍 ≤80%）",
+    "max_prompt_delta_ratio": 0.8,
+    "allow_recompose": true,
+    "allow_viewpoint_change": true,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": true,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "style_medium (保持原图核心艺术媒介与画风基因)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)",
+      "no_identity_swap (可加风格内叙事点缀，不换主体身份)"
+    ],
+    "min_round_leap": 0.2,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "粉彩速写轻盈风：抬纸纹、飞白、留白和构图张力，光仍是软光、短接触影",
+    "medium_family": "dry",
+    "best_direction_hint": "最优方向：只抬这一媒介已经有的长处",
+    "goal": "4:3 oil-pastel crayon paper. Black bob, red hoodie, blue shorts, BOTH legs over-knee BLACK socks, near thigh of the closer leg bare above the sock, white sneakers with black stripes. Diagonal blue-grey crayon background, blush air. No ankle socks, no missing sock, no extra limbs. Scale=high. Bolder lighting and finish, keep identity. Same girl, same sitting silhouette, BOTH over-knee black socks, closer thigh bare. Bolder layered oil-pastel on the red hoodie, stronger paper tooth and flywhite, richer diagonal blue-grey hatch, still soft light and short contact shadow. Do not drop a sock, do not add studio volume light.",
+    "module": "character.PastelHoodie",
+    "ref_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c02\\ref.jpg",
+    "ref_analysis": "4:3 oil-pastel sitting girl. Camera slight 3/4 from her right-back, body faces right, head turns looking up-right. Left-weighted hip on ground, closer knee raised, far leg extended, far sneaker recedes to the right edge (rear/side of shoe). Black bob, red hoodie #E7554D, blue shorts, BOTH legs over-knee BLACK socks, closer thigh BARE above sock cuff, white sneakers with three black stripes. Paper #FBF7F0, diagonal blue-grey hatch #647893, beige hatch upper-right, peach blush, dry crayon tooth, soft flat light, short hip contact shadow. Do not inherit glued near fingers or far shoe as a crayon smear."
+  },
+  "medium_family": "dry",
+  "contract": "",
+  "target_score_threshold": 9.6,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c02\\ref.jpg",
+  "ref_analysis": "4:3 oil-pastel sitting girl. Camera slight 3/4 from her right-back, body faces right, head turns looking up-right. Left-weighted hip on ground, closer knee raised, far leg extended, far sneaker recedes to the right edge (rear/side of shoe). Black bob, red hoodie #E7554D, blue shorts, BOTH legs over-knee BLACK socks, closer thigh BARE above sock cuff, white sneakers with three black stripes. Paper #FBF7F0, diagonal blue-grey hatch #647893, beige hatch upper-right, peach blush, dry crayon tooth, soft flat light, short hip contact shadow. Do not inherit glued near fingers or far shoe as a crayon smear.",
+  "default_aspect_ratio": "4:3",
+  "default_reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c02\\ref.jpg"
+  ],
+  "aspect_ratio": "4:3",
+  "reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c02\\ref.jpg"
+  ],
+  "ref_physical_traits": {
+    "exists": true,
+    "size_bytes": 187182,
+    "size_kb": 182.8,
+    "width": 720,
+    "height": 580,
+    "aspect_ratio": "36:29",
+    "canonical_aspect_ratio": "4:3",
+    "color_entropy": 7.97
+  },
+  "param_validation": {
+    "valid": true,
+    "validation_passed": true,
+    "case_id": "hp29_c02_high",
+    "scale": "high",
+    "aspect_ratio": "4:3",
+    "ref_aspect_ratio": "4:3",
+    "ref_dimensions": "720x580",
+    "output_aspect_ratio": "",
+    "output_dimensions": "",
+    "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c02\\ref.jpg",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c02\\ref.jpg"
+    ],
+    "inherited_default_aspect_ratio": false,
+    "inherited_default_pad_image": false,
+    "matched_ref_aspect_ratio": true,
+    "matched_ref_pad_image": true,
+    "matched_output_aspect_ratio": true,
+    "three_step_stage": "step1_start",
+    "three_step_verified": false,
+    "warnings": []
+  },
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.6,
+  "accept_threshold": 9.6,
+  "max_rounds": 4,
+  "ready_to_finish": true,
+  "status": "finished",
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "4:3",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c02\\ref.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "hp29_c02_high",
+        "scale": "high",
+        "aspect_ratio": "4:3",
+        "ref_aspect_ratio": "4:3",
+        "ref_dimensions": "720x580",
+        "output_aspect_ratio": "4:3",
+        "output_dimensions": "1152x864",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c02\\ref.jpg",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c02\\ref.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "18:09:01",
+      "image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c02\\high\\r1.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 534474,
+        "size_kb": 521.9,
+        "width": 1152,
+        "height": 864,
+        "aspect_ratio": "4:3",
+        "canonical_aspect_ratio": "4:3",
+        "color_entropy": 7.24
+      },
+      "raw_score": 8.81,
+      "score": 8.81,
+      "target_score_threshold": 9.6,
+      "dims": "构图8.8/光影8.8/透视8.4/质感9.1/风格9.2/无瑕疵8.6",
+      "dims_parsed": {
+        "composition": 8.8,
+        "lighting_color": 8.8,
+        "perspective_anatomy": 8.4,
+        "texture_detail": 9.1,
+        "spec_style": 9.2,
+        "flawlessness": 8.6
+      },
+      "weighted_score": 8.81,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.6）"
+      ],
+      "stagnated": false,
+      "strengths": "双袜双鞋层次对上参考：抬膝前景鞋+远鞋后缩，近腿大腿裸露，粉彩层更厚。",
+      "defects": "近手手指仍有粘连；帽衫体积光仍偏平，大胆完成度还不够。",
+      "next_fix": "分开近手五指；加一层更密的红帽衫粉彩叠层和纸齿飞白，双袜双鞋不要动。",
+      "prompt": "粉彩速写轻盈风：抬纸纹、飞白、留白和构图张力，光仍是软光、短接触影| Bolder oil-pastel finish, keep identity and both over-knee black socks, two sneakers.| 约束：保持原图核心艺术媒介与画风基因；保持原图性别、物种、年龄段与核心外观；可加风格内叙事点缀，不换主体身份 | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.4,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "anatomy",
+          "lesson": "本轮短板偏「anatomy」：近手手指仍有粘连；帽衫体积光仍偏平，大胆完成度还不够。",
+          "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+          "from_score": "8.81"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：双袜双鞋层次对上参考：抬膝前景鞋+远鞋后缩，近腿大腿裸露，粉彩层更厚。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.81"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "18:09:02"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "4:3",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c02\\ref.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "hp29_c02_high",
+        "scale": "high",
+        "aspect_ratio": "4:3",
+        "ref_aspect_ratio": "4:3",
+        "ref_dimensions": "720x580",
+        "output_aspect_ratio": "4:3",
+        "output_dimensions": "1152x864",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c02\\ref.jpg",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c02\\ref.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "18:11:41",
+      "image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c02\\high\\r2.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 580871,
+        "size_kb": 567.3,
+        "width": 1152,
+        "height": 864,
+        "aspect_ratio": "4:3",
+        "canonical_aspect_ratio": "4:3",
+        "color_entropy": 7.24
+      },
+      "raw_score": 8.36,
+      "score": 8.36,
+      "target_score_threshold": 9.6,
+      "dims": "构图7.8/光影8.6/透视8.0/质感9.0/风格8.8/无瑕疵8.0",
+      "dims_parsed": {
+        "composition": 7.8,
+        "lighting_color": 8.6,
+        "perspective_anatomy": 8.0,
+        "texture_detail": 9.0,
+        "spec_style": 8.8,
+        "flawlessness": 8.0
+      },
+      "weighted_score": 8.36,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +-0.45 低于当前档位 (high) 的最小跃升 +0.20。下一轮加强机位或戏剧光影，不要只改局部笔触",
+        "Agent Absolute-5D 已采纳（门槛 9.6）",
+        "prompt 改动 95% 超过档位上限 80%"
+      ],
+      "stagnated": true,
+      "strengths": "双过膝黑袜和近腿裸膝还在，粉彩层更密。",
+      "defects": "坐姿被打开成双膝并拢、两只鞋并排朝向镜头，丢掉参考里抬一膝、远鞋后缩的剪影。；prompt 改动 95% 超过档位上限 80%",
+      "next_fix": "恢复一膝抬起、一腿前伸、远鞋后缩的坐姿剪影；五指分开；帽衫粉彩加厚。双过膝黑袜不动。",
+      "prompt": "粉彩速写轻盈风：抬纸纹、飞白、留白和构图张力，光仍是软光、短接触影| Bolder crayon but restore one-knee-up far-shoe-receding silhouette, both over-knee black socks.| 约束：保持原图核心艺术媒介与画风基因；保持原图性别、物种、年龄段与核心外观；可加风格内叙事点缀，不换主体身份 | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props | 分开近手五指；加一层更密的红帽衫粉彩叠层和纸齿飞白，双袜双鞋不要动。",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.0,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "narrative_camera",
+          "lesson": "本轮短板偏「narrative_camera」：坐姿被打开成双膝并拢、两只鞋并排朝向镜头，丢掉参考里抬一膝、远鞋后缩的剪影。；prompt 改动 95% 超过档位上限 80%",
+          "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+          "from_score": "8.36"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：双过膝黑袜和近腿裸膝还在，粉彩层更密。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.36"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "18:11:42"
+    },
+    {
+      "round": 3,
+      "round_label": "第 3 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "4:3",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c02\\ref.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "hp29_c02_high",
+        "scale": "high",
+        "aspect_ratio": "4:3",
+        "ref_aspect_ratio": "4:3",
+        "ref_dimensions": "720x580",
+        "output_aspect_ratio": "4:3",
+        "output_dimensions": "1152x864",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c02\\ref.jpg",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c02\\ref.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "18:14:22",
+      "image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c02\\high\\r3.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 575099,
+        "size_kb": 561.6,
+        "width": 1152,
+        "height": 864,
+        "aspect_ratio": "4:3",
+        "canonical_aspect_ratio": "4:3",
+        "color_entropy": 7.24
+      },
+      "raw_score": 8.77,
+      "score": 8.77,
+      "target_score_threshold": 9.6,
+      "dims": "构图9.0/光影8.7/透视8.6/质感8.8/风格8.9/无瑕疵8.7",
+      "dims_parsed": {
+        "composition": 9.0,
+        "lighting_color": 8.7,
+        "perspective_anatomy": 8.6,
+        "texture_detail": 8.8,
+        "spec_style": 8.9,
+        "flawlessness": 8.7
+      },
+      "weighted_score": 8.77,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.6）"
+      ],
+      "stagnated": false,
+      "strengths": "一膝抬起一腿前伸、远鞋后缩的剪影已找回，双过膝黑袜。",
+      "defects": "粉彩被抹得更滑，纸齿飞白不够；手指仍略大。",
+      "next_fix": "加回干粉彩纸齿和飞白，不要抹成光滑厚涂；五指自然搭膝。剪影和双袜不动。",
+      "prompt": "粉彩速写轻盈风：抬纸纹、飞白、留白和构图张力，光仍是软光、短接触影| Bolder dry crayon tooth, keep one-knee-up receding far shoe, both over-knee black socks.| 约束：保持原图核心艺术媒介与画风基因；保持原图性别、物种、年龄段与核心外观；可加风格内叙事点缀，不换主体身份 | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props | 分开近手五指；加一层更密的红帽衫粉彩叠层和纸齿飞白，双袜双鞋不要动。",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.6,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "anatomy",
+          "lesson": "本轮短板偏「anatomy」：粉彩被抹得更滑，纸齿飞白不够；手指仍略大。",
+          "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+          "from_score": "8.77"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：一膝抬起一腿前伸、远鞋后缩的剪影已找回，双过膝黑袜。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.77"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "18:14:23"
+    },
+    {
+      "round": 4,
+      "round_label": "第 4 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "4:3",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c02\\ref.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "hp29_c02_high",
+        "scale": "high",
+        "aspect_ratio": "4:3",
+        "ref_aspect_ratio": "4:3",
+        "ref_dimensions": "720x580",
+        "output_aspect_ratio": "4:3",
+        "output_dimensions": "1152x864",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c02\\ref.jpg",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c02\\ref.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "18:16:41",
+      "image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c02\\high\\r4.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 561090,
+        "size_kb": 547.9,
+        "width": 1152,
+        "height": 864,
+        "aspect_ratio": "4:3",
+        "canonical_aspect_ratio": "4:3",
+        "color_entropy": 7.24
+      },
+      "raw_score": 8.99,
+      "score": 8.99,
+      "target_score_threshold": 9.6,
+      "dims": "构图9.1/光影8.9/透视8.7/质感9.2/风格9.3/无瑕疵8.8",
+      "dims_parsed": {
+        "composition": 9.1,
+        "lighting_color": 8.9,
+        "perspective_anatomy": 8.7,
+        "texture_detail": 9.2,
+        "spec_style": 9.3,
+        "flawlessness": 8.8
+      },
+      "weighted_score": 8.99,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.6）"
+      ],
+      "stagnated": false,
+      "strengths": "一膝抬起远鞋后缩剪影稳住，干粉彩纸齿回来，双过膝黑袜。",
+      "defects": "手指仍略大，大胆完成度还差一层更密的排线。",
+      "next_fix": "解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁止糊边融边；手指仍略大，大胆完成度还差一层更密的排线。",
+      "prompt": "粉彩速写轻盈风：抬纸纹、飞白、留白和构图张力，光仍是软光、短接触影| Bolder dry crayon, one-knee-up receding far shoe, both over-knee black socks.| 约束：保持原图核心艺术媒介与画风基因；保持原图性别、物种、年龄段与核心外观；可加风格内叙事点缀，不换主体身份 | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props | 分开近手五指；加一层更密的红帽衫粉彩叠层和纸齿飞白，双袜双鞋不要动。",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.7,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_MAX_ROUNDS",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "composition",
+          "lesson": "本轮短板偏「composition」：手指仍略大，大胆完成度还差一层更密的排线。",
+          "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+          "from_score": "8.99"
+        },
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：手指仍略大，大胆完成度还差一层更密的排线。",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.99"
+        },
+        {
+          "category": "anatomy",
+          "lesson": "本轮短板偏「anatomy」：手指仍略大，大胆完成度还差一层更密的排线。",
+          "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+          "from_score": "8.99"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "18:16:42"
+    }
+  ],
+  "warm_start": {
+    "project_id": "cursor-pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "cursor-pmem-art",
+      "project_slug": "cursor-pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-10-29 18:03:42 UTC+8"
+    },
+    "module": "character.PastelHoodie",
+    "goal": "4:3 oil-pastel crayon paper. Black bob, red hoodie, blue shorts, BOTH legs over-knee BLACK socks, near thigh of the closer leg bare above the sock, white sneakers with black stripes. Diagonal blue-grey crayon background, blush air. No ankle socks, no missing sock, no extra limbs. Scale=high. Bolder lighting and finish, keep identity. Same girl, same sitting silhouette, BOTH over-knee black socks, closer thigh bare. Bolder layered oil-pastel on the red hoodie, stronger paper tooth and flywhite, richer diagonal blue-grey hatch, still soft light and short contact shadow. Do not drop a sock, do not add studio volume light.",
+    "confidence": 0.3,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "红线可控（0 条）",
+      "挂载 0 张项目知识卡 + 2 张全局美术底层基础卡"
+    ],
+    "top_recipes": [],
+    "top_redlines": [],
+    "art_decisions": [],
+    "private_knowledge": [],
+    "shared_knowledge": [
+      {
+        "id": "palette-70-20-10",
+        "title": "色彩构成：70-20-10 色板比例黄金法则",
+        "body": "画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+        "layer_scope": "shared"
+      },
+      {
+        "id": "composition-thirds-grid",
+        "title": "构图法则：九宫格三分法与呼吸留白安全区",
+        "body": "将核心视觉焦点布置在九宫格三分线交点（黄金分割点 0.618）上，利用引导线与前景暗角汇聚视线；独立资产四周必须预留 16px~24px 纯透明呼吸安全边距，严禁发冠、武器或特效贴死画布边缘被裁切。",
+        "layer_scope": "shared"
+      }
+    ],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [],
+      "preferred_composition": [],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [],
+      "banned_habits": []
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/cursor-pmem-art/)\n- 目标模块: character.PastelHoodie\n- 置信度: 0.30（fast-track 资格: 否）\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n  · [composition-thirds-grid] 构图法则：九宫格三分法与呼吸留白安全区: 将核心视觉焦点布置在九宫格三分线交点（黄金分割点 0.618）上，利用引导线与前景暗角汇聚视线；独立资产四周必须预留 16px~24px 纯透明呼吸安全边距，严禁发冠、武器或特效贴死画布边缘被裁切。",
+    "built_at": "2026-10-29 18:05:51 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：近手手指仍有粘连；帽衫体积光仍偏平，大胆完成度还不够。",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "8.81"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：双袜双鞋层次对上参考：抬膝前景鞋+远鞋后缩，近腿大腿裸露，粉彩层更厚。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.81"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：坐姿被打开成双膝并拢、两只鞋并排朝向镜头，丢掉参考里抬一膝、远鞋后缩的剪影。；prompt 改动 95% 超过档位上限 80%",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "8.36"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：双过膝黑袜和近腿裸膝还在，粉彩层更密。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.36"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：粉彩被抹得更滑，纸齿飞白不够；手指仍略大。",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "8.77"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：一膝抬起一腿前伸、远鞋后缩的剪影已找回，双过膝黑袜。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.77"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：手指仍略大，大胆完成度还差一层更密的排线。",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "8.99"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：手指仍略大，大胆完成度还差一层更密的排线。",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.99"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：手指仍略大，大胆完成度还差一层更密的排线。",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "8.99"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 4,
+  "regression_drop": 0.5,
+  "ActionRequired": "STOP_PICK_BEST",
+  "showcase_ready": true,
+  "winner": {
+    "round": 4,
+    "round_label": "第 4 轮精修",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "4:3",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c02\\ref.jpg"
+    ],
+    "param_validation": {
+      "valid": true,
+      "validation_passed": true,
+      "case_id": "hp29_c02_high",
+      "scale": "high",
+      "aspect_ratio": "4:3",
+      "ref_aspect_ratio": "4:3",
+      "ref_dimensions": "720x580",
+      "output_aspect_ratio": "4:3",
+      "output_dimensions": "1152x864",
+      "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c02\\ref.jpg",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c02\\ref.jpg"
+      ],
+      "inherited_default_aspect_ratio": true,
+      "inherited_default_pad_image": true,
+      "matched_ref_aspect_ratio": true,
+      "matched_ref_pad_image": true,
+      "matched_output_aspect_ratio": true,
+      "three_step_stage": "step3_judge",
+      "three_step_verified": true,
+      "warnings": [],
+      "continuation_pad": false,
+      "pad_diverged": false
+    },
+    "generated_at": "18:16:41",
+    "image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c02\\high\\r4.jpg",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 561090,
+      "size_kb": 547.9,
+      "width": 1152,
+      "height": 864,
+      "aspect_ratio": "4:3",
+      "canonical_aspect_ratio": "4:3",
+      "color_entropy": 7.24
+    },
+    "raw_score": 8.99,
+    "score": 8.99,
+    "target_score_threshold": 9.6,
+    "dims": "构图9.1/光影8.9/透视8.7/质感9.2/风格9.3/无瑕疵8.8",
+    "dims_parsed": {
+      "composition": 9.1,
+      "lighting_color": 8.9,
+      "perspective_anatomy": 8.7,
+      "texture_detail": 9.2,
+      "spec_style": 9.3,
+      "flawlessness": 8.8
+    },
+    "weighted_score": 8.99,
+    "audit_warnings": [
+      "Agent Absolute-5D 已采纳（门槛 9.6）"
+    ],
+    "stagnated": false,
+    "strengths": "一膝抬起远鞋后缩剪影稳住，干粉彩纸齿回来，双过膝黑袜。",
+    "defects": "手指仍略大，大胆完成度还差一层更密的排线。",
+    "next_fix": "解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁止糊边融边；手指仍略大，大胆完成度还差一层更密的排线。",
+    "prompt": "粉彩速写轻盈风：抬纸纹、飞白、留白和构图张力，光仍是软光、短接触影| Bolder dry crayon, one-knee-up receding far shoe, both over-knee black socks.| 约束：保持原图核心艺术媒介与画风基因；保持原图性别、物种、年龄段与核心外观；可加风格内叙事点缀，不换主体身份 | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props | 分开近手五指；加一层更密的红帽衫粉彩叠层和纸齿飞白，双袜双鞋不要动。",
+    "continuation": false,
+    "passed": false,
+    "gate_blocked": false,
+    "image_gate_blocked": false,
+    "anatomy_score": 8.7,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "humanoid",
+    "judge_source": "agent_absolute_5d",
+    "remote_vlm": {
+      "source": "agent_self_judge",
+      "provider": "",
+      "model": "",
+      "error": "",
+      "active": false
+    },
+    "should_continue_next_round": false,
+    "decision": "STOP_MAX_ROUNDS",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "composition",
+        "lesson": "本轮短板偏「composition」：手指仍略大，大胆完成度还差一层更密的排线。",
+        "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+        "from_score": "8.99"
+      },
+      {
+        "category": "lighting",
+        "lesson": "本轮短板偏「lighting」：手指仍略大，大胆完成度还差一层更密的排线。",
+        "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+        "from_score": "8.99"
+      },
+      {
+        "category": "anatomy",
+        "lesson": "本轮短板偏「anatomy」：手指仍略大，大胆完成度还差一层更密的排线。",
+        "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+        "from_score": "8.99"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "18:16:42"
+  },
+  "rounds_to_converge": 4,
+  "convergence_badge": "共 4 轮未达阈值，采用最高分",
+  "process_board": ".memory-art/converge/boards/hp29_c02_high/index.html"
+}

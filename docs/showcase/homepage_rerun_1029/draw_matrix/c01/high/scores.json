@@ -1,0 +1,79 @@
+{
+  "id": "c01_high",
+  "scale": "high",
+  "module": "scene.NightCity",
+  "session": "hp29fix_c01_high",
+  "threshold": 9.6,
+  "medium_family": "generic",
+  "rounds": 4,
+  "scores": [
+    {
+      "round": 1,
+      "image": "r1.jpg",
+      "dims": {
+        "构图": 9.0,
+        "光影": 7.6,
+        "透视": 9.0,
+        "质感": 8.0,
+        "风格": 8.8,
+        "无瑕疵": 8.4
+      },
+      "total": 8.43,
+      "strengths": "Camera locked; charcoal not green; planetary limb holds.",
+      "defects": "No visible HIGH lighting beat versus the reference; near tiles still read as timber logs.",
+      "next_fix": "Overlapping charcoal clay scales plus denser avenue window-fire clusters."
+    },
+    {
+      "round": 2,
+      "image": "r2.jpg",
+      "dims": {
+        "构图": 9.0,
+        "光影": 7.8,
+        "透视": 9.0,
+        "质感": 8.1,
+        "风格": 8.8,
+        "无瑕疵": 8.4
+      },
+      "total": 8.48,
+      "strengths": "Avenue slightly denser; identity held.",
+      "defects": "Tiles still log-ridged; lighting still not a high-scale leap.",
+      "next_fix": "Force overlapping clay fish-scales and a clearer cool-versus-warm split."
+    },
+    {
+      "round": 3,
+      "image": "r3.jpg",
+      "dims": {
+        "构图": 9.0,
+        "光影": 7.7,
+        "透视": 9.0,
+        "质感": 8.0,
+        "风格": 8.8,
+        "无瑕疵": 8.3
+      },
+      "total": 8.42,
+      "strengths": "Camera and identity still locked.",
+      "defects": "Still a near-clone of the reference; no added lighting beat.",
+      "next_fix": "One visible upgrade only: overlapping clay tiles plus denser clustered window fires."
+    },
+    {
+      "round": 4,
+      "image": "r4.jpg",
+      "dims": {
+        "构图": 9.0,
+        "光影": 7.9,
+        "透视": 9.0,
+        "质感": 8.3,
+        "风格": 8.9,
+        "无瑕疵": 8.5
+      },
+      "total": 8.57,
+      "strengths": "Near tiles a little more scale-like; identity held; no lanterns.",
+      "defects": "High still lacks a bold lighting leap versus low/ref.",
+      "next_fix": "Stop. Best-of-4 is r4."
+    }
+  ],
+  "winner_round": 4,
+  "winner_score": 8.57,
+  "winner_path": "C:/Users/ZhengLangPC/Desktop/Cursor-Pmem-Art/docs/showcase/homepage_rerun_1029/draw_matrix/c01/high/final.jpg",
+  "remaining_defect": "High lighting leap still weak versus the reference; near tiles not fully clay."
+}

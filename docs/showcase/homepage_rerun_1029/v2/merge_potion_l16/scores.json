@@ -1,0 +1,394 @@
+{
+  "L01": {
+    "id": "hp29_potion_L01",
+    "module": "prop.HealPotionMerge",
+    "winner": "v2/merge_potion_l16/L01.jpg",
+    "winner_round": 3,
+    "best": 9.63,
+    "n": 3,
+    "rounds": [
+      {
+        "round": 1,
+        "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L01_r1.jpg",
+        "dims": "剪影识别8.4/描边色板8.8/棚拍光9.3/透明底9.5/无字9.9/无瑕疵8.7",
+        "score": 8.74,
+        "bbox_h": 1.0,
+        "bbox_w": 1.0,
+        "fill": 0.373,
+        "defects": "gradient bg, sparkles, photoreal"
+      },
+      {
+        "round": 2,
+        "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L01_r2.jpg",
+        "dims": "剪影识别8.8/描边色板8.6/棚拍光9.2/透明底9.6/无字9.9/无瑕疵8.5",
+        "score": 8.76,
+        "bbox_h": 0.597,
+        "bbox_w": 0.496,
+        "fill": 0.176,
+        "defects": "opaque ceramic not empty glass"
+      },
+      {
+        "round": 3,
+        "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L01_r3.jpg",
+        "dims": "剪影识别9.7/描边色板9.6/棚拍光9.6/透明底9.8/无字9.9/无瑕疵9.6",
+        "score": 9.63,
+        "bbox_h": 0.6,
+        "bbox_w": 0.478,
+        "fill": 0.206,
+        "defects": "tiny outline only"
+      }
+    ],
+    "remaining_defect": "tiny outline only"
+  },
+  "L02": {
+    "id": "hp29_potion_L02",
+    "module": "prop.HealPotionMerge",
+    "winner": "v2/merge_potion_l16/L02.jpg",
+    "winner_round": 4,
+    "best": 9.45,
+    "n": 4,
+    "rounds": [
+      {
+        "round": 1,
+        "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L02_r1.jpg",
+        "dims": "剪影识别8.5/描边色板8.8/棚拍光9.3/透明底9.5/无字9.9/无瑕疵8.8",
+        "score": 8.8,
+        "bbox_h": 1.0,
+        "bbox_w": 1.0,
+        "fill": 0.42,
+        "defects": "gradient bg"
+      },
+      {
+        "round": 2,
+        "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L02_r2.jpg",
+        "dims": "剪影识别9.3/描边色板9.2/棚拍光9.4/透明底9.7/无字9.9/无瑕疵9.1",
+        "score": 9.25,
+        "bbox_h": 0.687,
+        "bbox_w": 0.476,
+        "fill": 0.22,
+        "defects": "occupancy a bit large"
+      },
+      {
+        "round": 3,
+        "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L02_r3.jpg",
+        "dims": "剪影识别8.4/描边色板9.3/棚拍光9.4/透明底9.6/无字9.9/无瑕疵8.6",
+        "score": 8.84,
+        "bbox_h": 0.839,
+        "bbox_w": 1.0,
+        "fill": 0.269,
+        "defects": "bbox too large"
+      },
+      {
+        "round": 4,
+        "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L02_r4.jpg",
+        "dims": "剪影识别9.5/描边色板9.4/棚拍光9.5/透明底9.7/无字9.9/无瑕疵9.4",
+        "score": 9.45,
+        "bbox_h": 0.689,
+        "bbox_w": 0.555,
+        "fill": 0.248,
+        "defects": "slightly more 3D than L01"
+      }
+    ],
+    "remaining_defect": "slightly more 3D than L01"
+  },
+  "L03": {
+    "id": "hp29_potion_L03",
+    "module": "prop.HealPotionMerge",
+    "winner": "v2/merge_potion_l16/L03.jpg",
+    "winner_round": 3,
+    "best": 9.6,
+    "n": 3,
+    "rounds": [
+      {
+        "round": 1,
+        "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L03_r1.jpg",
+        "dims": "剪影识别8.6/描边色板8.7/棚拍光9.2/透明底9.5/无字9.9/无瑕疵8.8",
+        "score": 8.79,
+        "bbox_h": 1.0,
+        "bbox_w": 1.0,
+        "fill": 0.689,
+        "defects": "gradient bg"
+      },
+      {
+        "round": 2,
+        "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L03_r2.jpg",
+        "dims": "剪影识别8.4/描边色板9.0/棚拍光9.3/透明底9.6/无字9.9/无瑕疵8.3",
+        "score": 8.68,
+        "bbox_h": 0.756,
+        "bbox_w": 0.522,
+        "fill": 0.239,
+        "defects": "gold collar too early, occupancy large"
+      },
+      {
+        "round": 3,
+        "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L03_r3.jpg",
+        "dims": "剪影识别9.6/描边色板9.6/棚拍光9.6/透明底9.8/无字9.9/无瑕疵9.6",
+        "score": 9.6,
+        "bbox_h": 0.676,
+        "bbox_w": 0.493,
+        "fill": 0.204,
+        "defects": "occupancy may sit under L02"
+      }
+    ],
+    "remaining_defect": "occupancy lifted 10px from r3 so ladder is monotonic; half-fill still correct",
+    "occupancy_fix": {
+      "from": "L03_r3.jpg",
+      "bbox_h": 0.689
+    }
+  },
+  "L04": {
+    "id": "hp29_potion_L04",
+    "module": "prop.HealPotionMerge",
+    "winner": "v2/merge_potion_l16/L04.jpg",
+    "winner_round": 4,
+    "best": 9.55,
+    "n": 4,
+    "rounds": [
+      {
+        "round": 1,
+        "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L04_r1.jpg",
+        "dims": "剪影识别8.3/描边色板8.6/棚拍光9.2/透明底9.5/无字9.9/无瑕疵8.2",
+        "score": 8.52,
+        "bbox_h": 1.0,
+        "bbox_w": 1.0,
+        "fill": 0.741,
+        "defects": "not full, shape drift"
+      },
+      {
+        "round": 2,
+        "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L04_r2.jpg",
+        "dims": "剪影识别9.4/描边色板9.3/棚拍光9.4/透明底9.7/无字9.9/无瑕疵9.2",
+        "score": 9.33,
+        "bbox_h": 0.715,
+        "bbox_w": 0.508,
+        "fill": 0.244,
+        "defects": "small air gap"
+      },
+      {
+        "round": 3,
+        "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L04_r3.jpg",
+        "dims": "剪影识别9.4/描边色板9.5/棚拍光9.5/透明底9.7/无字9.9/无瑕疵9.4",
+        "score": 9.44,
+        "bbox_h": 0.774,
+        "bbox_w": 0.607,
+        "fill": 0.309,
+        "defects": "occupancy a bit large"
+      },
+      {
+        "round": 4,
+        "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L04_r4.jpg",
+        "dims": "剪影识别9.6/描边色板9.6/棚拍光9.6/透明底9.8/无字9.9/无瑕疵9.4",
+        "score": 9.55,
+        "bbox_h": 0.7,
+        "bbox_w": 0.485,
+        "fill": 0.227,
+        "defects": "small neck air gap"
+      }
+    ],
+    "remaining_defect": "small neck air gap"
+  },
+  "L05": {
+    "id": "hp29_potion_L05",
+    "module": "prop.HealPotionMerge",
+    "winner": "v2/merge_potion_l16/L05.jpg",
+    "winner_round": 3,
+    "best": 9.37,
+    "n": 4,
+    "rounds": [
+      {
+        "round": 1,
+        "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L05_r1.jpg",
+        "dims": "剪影识别8.8/描边色板8.7/棚拍光9.2/透明底9.5/无字9.7/无瑕疵8.6",
+        "score": 8.81,
+        "bbox_h": 0.913,
+        "bbox_w": 1.0,
+        "fill": 0.462,
+        "defects": "photoreal"
+      },
+      {
+        "round": 2,
+        "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L05_r2.jpg",
+        "dims": "剪影识别8.3/描边色板8.8/棚拍光9.2/透明底9.6/无字9.9/无瑕疵8.4",
+        "score": 8.61,
+        "bbox_h": 0.653,
+        "bbox_w": 0.468,
+        "fill": 0.206,
+        "defects": "occupancy small, collar not hanging tag"
+      },
+      {
+        "round": 3,
+        "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L05_r3.jpg",
+        "dims": "剪影识别9.4/描边色板9.4/棚拍光9.5/透明底9.7/无字9.8/无瑕疵9.2",
+        "score": 9.37,
+        "bbox_h": 0.75,
+        "bbox_w": 0.564,
+        "fill": 0.273,
+        "defects": "liquid not fully to neck"
+      },
+      {
+        "round": 4,
+        "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L05_r4.jpg",
+        "dims": "剪影识别8.2/描边色板9.3/棚拍光9.4/透明底9.6/无字9.8/无瑕疵8.5",
+        "score": 8.74,
+        "bbox_h": 0.888,
+        "bbox_w": 1.0,
+        "fill": 0.284,
+        "defects": "occupancy too large, half fill"
+      }
+    ],
+    "remaining_defect": "liquid not fully to neck"
+  },
+  "L06": {
+    "id": "hp29_potion_L06",
+    "module": "prop.HealPotionMerge",
+    "winner": "v2/merge_potion_l16/L06.jpg",
+    "winner_round": 4,
+    "best": 9.47,
+    "n": 4,
+    "rounds": [
+      {
+        "round": 1,
+        "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L06_r1.jpg",
+        "dims": "剪影识别8.2/描边色板8.4/棚拍光9.0/透明底9.5/无字9.8/无瑕疵8.0",
+        "score": 8.35,
+        "bbox_h": 1.0,
+        "bbox_w": 1.0,
+        "fill": 0.767,
+        "defects": "gold pedestal reads as table"
+      },
+      {
+        "round": 2,
+        "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L06_r2.jpg",
+        "dims": "剪影识别8.7/描边色板9.1/棚拍光9.3/透明底9.6/无字9.8/无瑕疵8.5",
+        "score": 8.85,
+        "bbox_h": 0.777,
+        "bbox_w": 0.575,
+        "fill": 0.301,
+        "defects": "liquid only half"
+      },
+      {
+        "round": 3,
+        "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L06_r3.jpg",
+        "dims": "剪影识别8.8/描边色板9.2/棚拍光9.3/透明底9.6/无字9.8/无瑕疵8.7",
+        "score": 8.96,
+        "bbox_h": 0.722,
+        "bbox_w": 0.599,
+        "fill": 0.245,
+        "defects": "not full, occupancy a bit small"
+      },
+      {
+        "round": 4,
+        "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L06_r4.jpg",
+        "dims": "剪影识别9.5/描边色板9.5/棚拍光9.5/透明底9.7/无字9.8/无瑕疵9.4",
+        "score": 9.47,
+        "bbox_h": 0.822,
+        "bbox_w": 0.617,
+        "fill": 0.331,
+        "defects": "gold bezel slightly disc-like"
+      }
+    ],
+    "remaining_defect": "gold bezel slightly disc-like"
+  },
+  "L07": {
+    "id": "hp29_potion_L07",
+    "module": "prop.HealPotionMerge",
+    "winner": "v2/merge_potion_l16/L07.jpg",
+    "winner_round": 4,
+    "best": 9.42,
+    "n": 4,
+    "rounds": [
+      {
+        "round": 1,
+        "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L07_r1.jpg",
+        "dims": "剪影识别8.6/描边色板8.7/棚拍光9.1/透明底9.5/无字9.8/无瑕疵8.4",
+        "score": 8.67,
+        "bbox_h": 1.0,
+        "bbox_w": 1.0,
+        "fill": 0.71,
+        "defects": "gold plate, photoreal"
+      },
+      {
+        "round": 2,
+        "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L07_r2.jpg",
+        "dims": "剪影识别8.8/描边色板9.3/棚拍光9.4/透明底9.7/无字9.9/无瑕疵9.0",
+        "score": 9.08,
+        "bbox_h": 0.715,
+        "bbox_w": 0.472,
+        "fill": 0.201,
+        "defects": "occupancy small"
+      },
+      {
+        "round": 3,
+        "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L07_r3.jpg",
+        "dims": "剪影识别9.4/描边色板9.4/棚拍光9.5/透明底9.7/无字9.9/无瑕疵9.2",
+        "score": 9.37,
+        "bbox_h": 0.776,
+        "bbox_w": 0.525,
+        "fill": 0.212,
+        "defects": "not fully full"
+      },
+      {
+        "round": 4,
+        "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L07_r4.jpg",
+        "dims": "剪影识别9.5/描边色板9.5/棚拍光9.5/透明底9.7/无字9.9/无瑕疵9.2",
+        "score": 9.42,
+        "bbox_h": 0.834,
+        "bbox_w": 0.492,
+        "fill": 0.236,
+        "defects": "liquid not fully to neck"
+      }
+    ],
+    "remaining_defect": "liquid not fully to neck"
+  },
+  "L08": {
+    "id": "hp29_potion_L08",
+    "module": "prop.HealPotionMerge",
+    "winner": "v2/merge_potion_l16/L08.jpg",
+    "winner_round": 4,
+    "best": 9.48,
+    "n": 4,
+    "rounds": [
+      {
+        "round": 1,
+        "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L08_r1.jpg",
+        "dims": "剪影识别8.2/描边色板8.5/棚拍光9.0/透明底9.4/无字9.8/无瑕疵8.0",
+        "score": 8.37,
+        "bbox_h": 1.0,
+        "bbox_w": 1.0,
+        "fill": 0.741,
+        "defects": "ornate gold furniture base"
+      },
+      {
+        "round": 2,
+        "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L08_r2.jpg",
+        "dims": "剪影识别9.5/描边色板9.4/棚拍光9.5/透明底9.7/无字9.9/无瑕疵9.3",
+        "score": 9.43,
+        "bbox_h": 0.804,
+        "bbox_w": 0.472,
+        "fill": 0.243,
+        "defects": "slightly photoreal"
+      },
+      {
+        "round": 3,
+        "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L08_r3.jpg",
+        "dims": "剪影识别8.8/描边色板9.3/棚拍光9.4/透明底9.6/无字9.8/无瑕疵8.7",
+        "score": 9.0,
+        "bbox_h": 0.848,
+        "bbox_w": 0.611,
+        "fill": 0.286,
+        "defects": "diamond gem not crystal crown"
+      },
+      {
+        "round": 4,
+        "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L08_r4.jpg",
+        "dims": "剪影识别9.6/描边色板9.5/棚拍光9.5/透明底9.7/无字9.9/无瑕疵9.3",
+        "score": 9.48,
+        "bbox_h": 0.845,
+        "bbox_w": 0.521,
+        "fill": 0.264,
+        "defects": "liquid not fully to neck"
+      }
+    ],
+    "remaining_defect": "liquid not fully to neck"
+  }
+}

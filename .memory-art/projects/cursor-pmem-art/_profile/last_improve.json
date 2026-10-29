@@ -1,89 +1,83 @@
 {
-  "ran_at": "2026-10-27 23:25:45 UTC+8",
-  "reflections_scanned": 20,
-  "avg_winner_score": 9.5,
-  "avg_rounds": 2.25,
+  "ran_at": "2026-10-29 18:19:04 UTC+8",
+  "reflections_scanned": 8,
+  "avg_winner_score": 9.62,
+  "avg_rounds": 3.12,
   "top_recurring_defects": [
     {
-      "text": "打开态仍然更正，右侧立面比关闭态窄，机位没有对齐",
+      "text": "暗角撑满占格",
+      "count": 4
+    },
+    {
+      "text": "米白底占格撑满",
+      "count": 3
+    },
+    {
+      "text": "嵌宝偏青绿，和前档红宝家族不完全同色；r4 切边作废",
       "count": 1
     },
     {
-      "text": "打开态仍然更正，右侧立面还是比关闭态窄",
+      "text": "占格修补切掉糖体下沿，作废",
       "count": 1
     },
     {
-      "text": "打开态仍然更正，右侧立面还是比关闭态窄，四轮机位都没对齐",
+      "text": "仍有暗角，bbox=1",
       "count": 1
     },
     {
-      "text": "巩膜月牙仍窄，眼仍接近深色圆点；蛋糕仍小",
+      "text": "叶片改到侧面；满4轮最高 9.57",
       "count": 1
     },
     {
-      "text": "巩膜月牙仍窄，蛋糕仍偏小，pad链锁定同一张脸",
+      "text": "宝石漂成青紫，不像前档红宝",
       "count": 1
     },
     {
-      "text": "巩膜仍窄接近深色圆点；蛋糕仍小；眼语法未抬",
-      "count": 1
-    },
-    {
-      "text": "钥匙主体正确；金齿略珠宝光洁",
-      "count": 1
-    },
-    {
-      "text": "金齿仍偏珠宝光洁，与R1几乎同板",
+      "text": "两颗宝石，且偏真桃",
       "count": 1
     }
   ],
   "recipe_strengthen": [
     {
-      "module": "ui.PopupClone",
-      "id": "CHAT20261027173120086RECIPE",
-      "summary": "[收敛胜出 9.68分] Clone Mode B UI。垫心形礼盒只锁medium与双层chrome。新题材：空内容奖励弹窗 — 空中心九宫格母版；双层chrome角部可读；无字符号钮",
+      "module": "prop.PeachCandyMerge",
+      "id": "CHAT20261029181838124RECIPE",
+      "summary": "[收敛胜出 9.68分] L05 a gem embedded IN the candy, same-family peach — 灰棚卡通软糖家族，无糖纸无托盘无字",
       "hint": "下次 warm-start 优先注入本条 recipe"
     },
     {
-      "module": "icon.Compass",
-      "id": "CHAT20261027161953652RECIPE",
-      "summary": "[收敛胜出 9.65分] Clone Mode A。bible medium=cute cartoon toy icon so — 指南针完整可读；边缘干净；接触影贴",
+      "module": "prop.PeachCandyMerge",
+      "id": "CHAT20261029181819179RECIPE",
+      "summary": "[收敛胜出 9.65分] L02 fatter peach gummy, still one candy, same-fami — 灰棚卡通软糖家族，无糖纸无托盘无字",
       "hint": "下次 warm-start 优先注入本条 recipe"
     },
     {
-      "module": "icon.KeyClone",
-      "id": "CHAT20261027161955763RECIPE",
-      "summary": "[收敛胜出 9.65分] Clone Mode B icon。垫心形礼盒。新题材钥匙。亮粉桃黄光洁圆润。chunky viny — 齿清；内嵌对比；阴影贴",
+      "module": "prop.PeachCandyMerge",
+      "id": "CHAT20261029181812886RECIPE",
+      "summary": "[收敛胜出 9.63分] L01 small peach gummy, no wrapper, large in frame, — 灰棚卡通软糖家族，无糖纸无托盘无字",
       "hint": "下次 warm-start 优先注入本条 recipe"
     },
     {
-      "module": "character.PastryChef",
-      "id": "CHAT20261027162845017RECIPE",
-      "summary": "[收敛胜出 9.63分] Clone Mode B character。垫心形礼盒 medium。新题材甜品师Q版。双眼分穴大 — 双眼虹膜；握持；色板；帽徽",
+      "module": "prop.PeachCandyMerge",
+      "id": "CHAT20261029181825579RECIPE",
+      "summary": "[收敛胜出 9.63分] L03 frosting grown on the candy surface, no wrappe — 灰棚卡通软糖家族，无糖纸无托盘无字",
       "hint": "下次 warm-start 优先注入本条 recipe"
     },
     {
-      "module": "icon.KeyClone",
-      "id": "CHAT20261027173109488RECIPE",
-      "summary": "[收敛胜出 9.63分] Clone Mode B icon。垫心形礼盒。新题材钥匙。亮粉桃黄光洁圆润。chunky viny — 齿阶清；一体弓部；色板锁",
+      "module": "prop.PeachCandyMerge",
+      "id": "CHAT20261029181832995RECIPE",
+      "summary": "[收敛胜出 9.61分] L04 a leaf growing OUT OF the candy, same-family p — 灰棚卡通软糖家族，无糖纸无托盘无字",
       "hint": "下次 warm-start 优先注入本条 recipe"
     },
     {
-      "module": "prop.ValentineMerge",
-      "id": "CHAT20261027162155704RECIPE",
-      "summary": "[收敛胜出 9.63分] Mode B 情人节整梯。exactly 8：1心形糖 2玫瑰 3情书 4丘比特之箭 5爱心气球 6 — 气球线更粗；箭净；齿轮；蛋糕；无人偶共享底亮粉",
+      "module": "prop.PeachCandyMerge",
+      "id": "CHAT20261029181846512RECIPE",
+      "summary": "[收敛胜出 9.61分] L06 a small crown growing ON the candy, no tray, s — 灰棚卡通软糖家族，无糖纸无托盘无字",
       "hint": "下次 warm-start 优先注入本条 recipe"
     },
     {
-      "module": "ui.MainMenu",
-      "id": "CHAT20261027162205606RECIPE",
-      "summary": "[收敛胜出 9.63分] UI概念稿：蒸汽幻想主菜单 HUD，黄铜羊皮纸色板，外框+内描边分层 chrome，主按钮无可读字。 — 选中钮高光干净；双层chrome；无字",
-      "hint": "下次 warm-start 优先注入本条 recipe"
-    },
-    {
-      "module": "ui.PopupClone",
-      "id": "CHAT20261027162842149RECIPE",
-      "summary": "[收敛胜出 9.63分] Clone Mode B UI。垫心形礼盒。新题材：奖励弹窗面板。双层chrome若参考有则锁。br — 无字；双层chrome；底栏均分；色板锁",
+      "module": "prop.PeachCandyMerge",
+      "id": "CHAT20261029181855536RECIPE",
+      "summary": "[收敛胜出 9.57分] L07 star points on the crown, same-family peach gu — 灰棚卡通软糖家族，无糖纸无托盘无字",
       "hint": "下次 warm-start 优先注入本条 recipe"
     }
   ],

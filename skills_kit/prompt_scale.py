@@ -531,12 +531,34 @@ def check_scale_task_text(
     }
 
 
+_RECOMPOSE_NEGATIVE = (
+    "没换机位",
+    "未换机位",
+    "机位没换",
+    "不改机位",
+    "仍是原机位",
+    "仍偏俯看",
+    "did not recompose",
+    "still the original",
+    "still high-roof",
+    "camera still",
+    "warrior still a large",
+    "four-round recompose miss",
+)
+
+
 def _recompose_change_evidence(text: str, recompose_dir: str = "") -> bool:
-    """True if judge text / prompt shows camera or layout actually moved toward recompose-dir."""
+    """True if the look-at-image writeup shows the plate moved toward recompose-dir.
+
+    Prompt text does not count: 「重构机位」 is an instruction, not proof.
+    Explicit 'did not recompose / 没换机位' always returns False.
+    """
     blob = str(text or "")
     if not blob.strip():
         return False
     low = blob.lower()
+    if any(n.lower() in low for n in _RECOMPOSE_NEGATIVE):
+        return False
     cues = (
         "机位", "视角", "仰视", "俯视", "侧视", "平视", "低机位", "高机位",
         "改为", "换机位", "重构机位", "重排", "新构图", "viewpoint", "camera",

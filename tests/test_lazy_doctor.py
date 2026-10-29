@@ -1,4 +1,4 @@
-"""Lazy doctor: 48h throttle on hook, quiet report, whisper tip only on high signal."""
+"""Lazy doctor: 24h throttle on spawn events, quiet report, whisper tip only on high signal."""
 from __future__ import annotations
 
 import json
@@ -21,7 +21,12 @@ class TestDoctorDueAndClaim(unittest.TestCase):
 
         self.assertTrue(is_doctor_due(self.td))
 
-    def test_not_due_within_48h(self) -> None:
+    def test_default_interval_is_24h(self) -> None:
+        from lifecycle import DOCTOR_INTERVAL_HOURS
+
+        self.assertEqual(DOCTOR_INTERVAL_HOURS, 24.0)
+
+    def test_not_due_within_24h(self) -> None:
         from lifecycle import (
             _doctor_now_str,
             is_doctor_due,
@@ -29,15 +34,15 @@ class TestDoctorDueAndClaim(unittest.TestCase):
         )
 
         save_doctor_state(self.td, {"last_run_at": _doctor_now_str(), "status": "ok"})
-        self.assertFalse(is_doctor_due(self.td, interval_hours=48))
+        self.assertFalse(is_doctor_due(self.td))
 
     def test_due_after_interval(self) -> None:
         from lifecycle import is_doctor_due, save_doctor_state
         from lifecycle import _doctor_now
 
-        old = (_doctor_now() - timedelta(hours=49)).strftime("%Y-%m-%d %H:%M:%S UTC+8")
+        old = (_doctor_now() - timedelta(hours=25)).strftime("%Y-%m-%d %H:%M:%S UTC+8")
         save_doctor_state(self.td, {"last_run_at": old, "status": "ok"})
-        self.assertTrue(is_doctor_due(self.td, interval_hours=48))
+        self.assertTrue(is_doctor_due(self.td))
 
     def test_claim_blocks_double_spawn(self) -> None:
         from lifecycle import try_claim_lazy_doctor
@@ -194,6 +199,24 @@ class TestDoctorQuietAndTip(unittest.TestCase):
         with mock.patch("lifecycle.spawn_lazy_doctor") as sp:
             maybe_lazy_doctor_on_hook(self.td, "pre-gen")
         sp.assert_not_called()
+
+    def test_spawn_events_include_post_session_and_finish(self) -> None:
+        from lifecycle import maybe_lazy_doctor_on_hook
+
+        for event in ("post-asset", "post-tool", "session", "converge_finish"):
+            with mock.patch("lifecycle.spawn_lazy_doctor", return_value=True) as sp:
+                with mock.patch("lifecycle.try_claim_lazy_doctor", return_value=True):
+                    maybe_lazy_doctor_on_hook(self.td, event)
+            sp.assert_called_once()
+
+    def test_unknown_event_only_consumes_tip(self) -> None:
+        from lifecycle import maybe_lazy_doctor_on_hook
+
+        with mock.patch("lifecycle.spawn_lazy_doctor") as sp:
+            with mock.patch("lifecycle.try_claim_lazy_doctor") as claim:
+                maybe_lazy_doctor_on_hook(self.td, "prompt")
+        sp.assert_not_called()
+        claim.assert_not_called()
 
 
 class TestDoctorCliQuiet(unittest.TestCase):

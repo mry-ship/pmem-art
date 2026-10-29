@@ -1,0 +1,54 @@
+[
+  {
+    "id": "c04_low",
+    "rounds": 4,
+    "scores": [
+      8.69,
+      8.8,
+      8.94,
+      8.98
+    ],
+    "winner": "draw_matrix/c04/low/final.jpg",
+    "best": 8.98,
+    "remaining_defect": "扇状木板仍偏完整梯级；左壁仍有少量悬挂碎板。"
+  },
+  {
+    "id": "c04_medium",
+    "rounds": 4,
+    "scores": [
+      8.75,
+      8.89,
+      8.94,
+      8.95
+    ],
+    "winner": "draw_matrix/c04/medium/final.jpg",
+    "best": 8.95,
+    "remaining_defect": "左壁仍剩少量悬挂碎板；远角四肢仍偏软。"
+  },
+  {
+    "id": "c04_high",
+    "rounds": 4,
+    "scores": [
+      8.4,
+      8.5,
+      8.84,
+      8.88
+    ],
+    "winner": "draw_matrix/c04/high/final.jpg",
+    "best": 8.88,
+    "remaining_defect": "左上仍有悬挂杂物；远角小人仍偏糊。"
+  },
+  {
+    "id": "c04_recompose",
+    "rounds": 4,
+    "scores": [
+      8.46,
+      8.69,
+      8.63,
+      8.61
+    ],
+    "winner": "draw_matrix/c04/recompose/final.jpg",
+    "best": 8.69,
+    "remaining_defect": "井筒仍偏浅、庭院贴在圆洞上；四角纸白飞出实色；小人仍糊。"
+  }
+]

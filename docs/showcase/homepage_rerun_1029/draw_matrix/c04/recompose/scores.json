@@ -1,0 +1,46 @@
+{
+  "id": "c04_recompose",
+  "session": "hp29_c04_recompose",
+  "module": "scene.CourtWell",
+  "scale": "recompose",
+  "rounds": [
+    {
+      "round": 1,
+      "image": "draw_matrix/c04/recompose/r1.jpg",
+      "dims": "构图8.8/光影8.4/透视8.3/质感8.6/风格8.9/无瑕疵8.0",
+      "score": 8.46,
+      "defects": "井筒深度不够、庭院被压扁；丢失左下冷青与右壁蜜色对比；四角纸白飞出实色；小人仍糊。",
+      "next_fix": "保持井口俯视。只改：加深井筒纵深让墙面向下收；恢复左下冷青对右壁蜜赭的冷暖。"
+    },
+    {
+      "round": 2,
+      "image": "draw_matrix/c04/recompose/r2.jpg",
+      "dims": "构图9.0/光影8.8/透视8.5/质感8.8/风格9.0/无瑕疵8.3",
+      "score": 8.69,
+      "defects": "井筒仍偏浅、庭院贴在圆洞上；四角纸白飞出实色；小人仍糊。",
+      "next_fix": "保持井口俯视。只改：四角用石沿或水墨实色填满不要纸白；井筒再加深，墙面向下收。"
+    },
+    {
+      "round": 3,
+      "image": "draw_matrix/c04/recompose/r3.jpg",
+      "dims": "构图8.9/光影8.8/透视8.6/质感8.8/风格9.0/无瑕疵8.1",
+      "score": 8.63,
+      "defects": "四角纸白仍在；井筒深度仍不够。",
+      "next_fix": "保持井口俯视。只改：石沿铺满四边，画面里不要露出白纸三角；井筒再加深。"
+    },
+    {
+      "round": 4,
+      "image": "draw_matrix/c04/recompose/r4.jpg",
+      "dims": "构图8.9/光影8.8/透视8.6/质感8.8/风格9.0/无瑕疵8.0",
+      "score": 8.61,
+      "defects": "四角纸白仍在，石沿没有铺满画幅；井筒深度仍一般。",
+      "next_fix": "已满4轮。若续跑：石沿铺满四边不要白纸三角。"
+    }
+  ],
+  "n": 4,
+  "best": 8.69,
+  "winner_round": 2,
+  "winner": "draw_matrix/c04/recompose/final.jpg",
+  "remaining_defect": "井筒仍偏浅、庭院贴在圆洞上；四角纸白飞出实色；小人仍糊。",
+  "passed_9_6": false
+}

@@ -1,0 +1,41 @@
+{
+  "id": "variant_surprise",
+  "session": "hp29_variant_surprise",
+  "rounds": 4,
+  "scores": [
+    8.73,
+    9.12,
+    9.31,
+    9.42
+  ],
+  "best": 9.42,
+  "winner": "v2/variant_expr/final.jpg",
+  "winner_round": 4,
+  "remaining_defect": "门牙面积仍偏小。",
+  "round_details": [
+    {
+      "round": 1,
+      "image": "v2/variant_expr/r1.jpg",
+      "score": 8.73,
+      "dims": "构图9.2/光影9.1/透视9.0/质感9.2/风格7.5/无瑕疵8.4"
+    },
+    {
+      "round": 2,
+      "image": "v2/variant_expr/r2.jpg",
+      "score": 9.12,
+      "dims": "构图9.3/光影9.2/透视8.8/质感9.3/风格9.3/无瑕疵8.9"
+    },
+    {
+      "round": 3,
+      "image": "v2/variant_expr/r3.jpg",
+      "score": 9.31,
+      "dims": "构图9.4/光影9.3/透视9.2/质感9.4/风格9.2/无瑕疵9.3"
+    },
+    {
+      "round": 4,
+      "image": "v2/variant_expr/r4.jpg",
+      "score": 9.42,
+      "dims": "构图9.5/光影9.4/透视9.3/质感9.4/风格9.5/无瑕疵9.4"
+    }
+  ]
+}

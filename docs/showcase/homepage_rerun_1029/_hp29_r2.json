@@ -1,0 +1,65 @@
+[
+  {
+    "session": "hp29_clone_kite",
+    "image": "docs/showcase/homepage_rerun_1029/v2/clone/r2.jpg",
+    "prompt": "Three-quarter boy on steps with rolled kite showing bamboo spars and kite print. Not the girl. Five fingers. Rougher crayon.",
+    "dims": "构图8.8/光影8.8/透视8.2/质感9.0/风格9.1/无瑕疵8.5",
+    "strengths": "构图换成四分之三正面，不再抄女孩侧坐；纸筒上有风筝纹样和竹骨端头。",
+    "defects": "双手仍是连指，分不出五指；右脚球鞋被裁切。",
+    "next_fix": "双手分出五指握住纸鸢，整双白球鞋留在画面里，纸鸢略缩小。"
+  },
+  {
+    "session": "hp29_clone_rabbit",
+    "image": "docs/showcase/homepage_rerun_1029/v2/clone_rabbit/r2.jpg",
+    "prompt": "Same rabbit hugging carrot. BOTH eyes amber iris plus catchlight, not black dots.",
+    "dims": "构图9.2/光影9.0/透视8.8/质感9.3/风格8.7/无瑕疵8.7",
+    "strengths": "左眼已有琥珀虹膜和高光；粉彩纸纹和抱胡萝卜还在。",
+    "defects": "右眼被画成眨眼，任务是双眼都要虹膜，不是一只闭眼。",
+    "next_fix": "双眼都睁开，都画琥珀虹膜环加小白高光，不要眨眼。"
+  },
+  {
+    "session": "hp29_variant_light",
+    "image": "docs/showcase/homepage_rerun_1029/v2/variant/r2.jpg",
+    "prompt": "Same girl, stronger SSS, dust, gold rim, messy near-black hair, clip headphones tee locked.",
+    "dims": "构图9.4/光影9.5/透视9.3/质感9.4/风格9.5/无瑕疵9.2",
+    "strengths": "近黑发未蓝染；猫夹耳机白Tee锁住；发丝透光、窗金边和尘埃比原图强。",
+    "defects": "下颌仍略圆；耳廓透光还可以再亮一档。",
+    "next_fix": "锁同一张脸骨，只把耳廓和面颊SSS再抬一点，头发主体仍炭黑。"
+  },
+  {
+    "session": "hp29_variant_surprise",
+    "image": "docs/showcase/homepage_rerun_1029/v2/variant_expr/r2.jpg",
+    "prompt": "Same girl, surprised open mouth showing upper teeth.",
+    "dims": "构图9.3/光影9.2/透视8.8/质感9.3/风格9.3/无瑕疵8.9",
+    "strengths": "上排牙齿已经露出；身份和机位锁住。",
+    "defects": "嘴张得接近大喊，门牙边缘略乱。",
+    "next_fix": "改成中等惊讶张嘴，上排两颗门牙整齐清楚，不要喊叫。"
+  },
+  {
+    "session": "hp29_variant_wink",
+    "image": "docs/showcase/homepage_rerun_1029/v2/variant_wink/r2.jpg",
+    "prompt": "Same girl, playful wink, mouth back to thin closed line.",
+    "dims": "构图9.5/光影9.4/透视9.4/质感9.4/风格9.6/无瑕疵9.3",
+    "strengths": "眨眼成立且嘴已收回细线；近黑发和配饰锁住。",
+    "defects": "睁着的那只眼仍略大于参考。",
+    "next_fix": "保持眨眼和抿嘴，把睁开的那只眼缩小到参考尺寸。"
+  },
+  {
+    "session": "hp29_variant_sleepy",
+    "image": "docs/showcase/homepage_rerun_1029/v2/variant_sleepy/r2.jpg",
+    "prompt": "Same girl, closed mouth, heavier half-lidded sleepy eyes.",
+    "dims": "构图8.8/光影9.2/透视9.2/质感9.3/风格8.4/无瑕疵8.7",
+    "strengths": "嘴已抿上；睡眼方向对。",
+    "defects": "猫夹被换到右边，锁住的配饰位置被改掉了。",
+    "next_fix": "把白猫夹放回画面左侧头发上，只保留半睑睡眼。"
+  },
+  {
+    "session": "hp29_variant_angry",
+    "image": "docs/showcase/homepage_rerun_1029/v2/variant_angry/r2.jpg",
+    "prompt": "Same girl, slight pout, inner brows drop a little, not full frown.",
+    "dims": "构图9.4/光影9.3/透视9.3/质感9.4/风格9.4/无瑕疵9.2",
+    "strengths": "怒意已经降到轻皱眉加轻嘟嘴；身份锁住。",
+    "defects": "下唇前嘟还可以再明确一点。",
+    "next_fix": "保持轻皱内眉，把下唇再轻轻往前嘟一点。"
+  }
+]

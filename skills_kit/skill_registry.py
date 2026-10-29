@@ -103,6 +103,21 @@ def _parse_tighten(body: str) -> list[str]:
     return out
 
 
+def _mode_heading(body: str, letter: str) -> str:
+    """Dedicated Mode A/B/C section, not the shared Step 5 converge heading."""
+    hits: list[str] = []
+    for line in body.splitlines():
+        stripped = line.strip()
+        if not stripped.startswith("#"):
+            continue
+        if f"Mode {letter}" not in stripped:
+            continue
+        if "Step" in stripped or "关键枚" in stripped:
+            continue
+        hits.append(stripped)
+    return hits[0] if hits else ""
+
+
 def _icon_routes(body: str) -> list[dict[str, Any]]:
     """Mode A/B/C from the分流 section, pointed at the heading that section names."""
     spec = (
@@ -112,12 +127,7 @@ def _icon_routes(body: str) -> list[dict[str, Any]]:
     )
     routes: list[dict[str, Any]] = []
     for rid, letter, when in spec:
-        heading = ""
-        for line in body.splitlines():
-            stripped = line.strip()
-            if stripped.startswith("#") and f"Mode {letter}" in stripped:
-                heading = stripped
-                break
+        heading = _mode_heading(body, letter)
         routes.append(
             {
                 "id": rid,

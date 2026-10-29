@@ -1,0 +1,36 @@
+{
+  "id": "c03_recompose",
+  "skill": "draw",
+  "rel_dir": "draw_matrix/c03/recompose",
+  "winner": "draw_matrix/c03/recompose/final.jpg",
+  "winner_round": 4,
+  "best": 8.77,
+  "n": 4,
+  "rounds": [
+    {
+      "round": 1,
+      "dims": "构图8.4/光影8.8/透视8.3/质感8.3/风格8.6/无瑕疵8.2",
+      "defects": "仍偏过肩侧脸，后脑不够",
+      "score": 8.41
+    },
+    {
+      "round": 2,
+      "dims": "构图8.9/光影8.8/透视8.5/质感8.5/风格8.7/无瑕疵8.4",
+      "defects": "远侧右眼仍全露；后颈略空",
+      "score": 8.61
+    },
+    {
+      "round": 3,
+      "dims": "构图8.8/光影8.7/透视8.6/质感8.5/风格8.7/无瑕疵8.3",
+      "defects": "远侧右眼仍全露；叶影变弱",
+      "score": 8.57
+    },
+    {
+      "round": 4,
+      "dims": "构图9.0/光影9.0/透视8.7/质感8.6/风格8.8/无瑕疵8.6",
+      "defects": "近乎全侧面，四分之三背面略过头",
+      "score": 8.77
+    }
+  ],
+  "remaining_defect": "机位接近全侧面，远眼几乎被挡住，比四分之三背面略过头"
+}

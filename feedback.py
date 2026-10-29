@@ -153,8 +153,12 @@ def infer_module_from_text(text: str, data: dict[str, Any]) -> str:
     """从反馈文本里猜模块：命中已有模块名 / 实体名 / 领域词。"""
     modules = data.get("modules") or {}
     # 1) 显式模块 id
+    low = text.lower()
     for mid in modules:
-        if mid in text or mid.split(".")[-1] in text:
+        tail = mid.split(".")[-1]
+        if mid in text or tail in text:
+            return mid
+        if len(tail) >= 6 and tail.lower() in low:
             return mid
     # 2) 中文实体别名（从 summary / aliases 粗扫）
     for e in data.get("entries") or []:
@@ -166,7 +170,8 @@ def infer_module_from_text(text: str, data: dict[str, Any]) -> str:
         # skip
     # 3) 领域词
     domain_map = [
-        (r"UI|界面|弹窗|图标|九宫格|按钮", "ui"),
+        (r"合成梯|合成升级|merge.?ladder|道具格|道具|糖果|peach|candy|药瓶|厨房|文具|prop\.", "prop"),
+        (r"UI|界面|弹窗|图标|九宫格|按钮|HUD", "ui"),
         (r"特效|刀光|VFX|序列帧|粒子", "vfx"),
         (r"场景|气氛|背景|ruins|场景图", "scene"),
         (r"动画|Spine|Live2D|骨骼", "anim"),

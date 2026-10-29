@@ -36,6 +36,9 @@ categories:
   item:
     label: item
     icon: 📦
+  prop:
+    label: prop
+    icon: 📦
 synonyms:
   -
     - 立绘
@@ -638,3 +641,32 @@ modules:
         - 48
       safe_margin_px: 4
       max_size_kb: 512
+  misc.Doctor:
+    title: 记忆医生（懒巡检）
+    category: misc
+    status: active
+    description: 产品自身的懒巡检：只出报告、不改条目；触发间隔与抢槽事件写在记忆里，不按生图资产归类。
+    paths: []
+    aliases:
+      - 记忆医生
+      - lazy doctor
+      - doctor
+    entities:
+      - LazyTrigger
+    palette: []
+    specs: {}
+  prop.PeachCandyMerge:
+    title: prop·PeachCandyMerge
+    category: prop
+    status: active
+    description: "原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光，表面那一句不动，只修没过的那一格| L01 small peach gummy on FLAT m · 自动归类至 prop (prop.PeachCandyMerge) · 置信度 0.893"
+    paths:
+      - "assets/prop/peachcandymerge/**"
+    aliases:
+      - PeachCandyMerge
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      alpha_required: false
+      max_size_kb: 2048

@@ -96,7 +96,7 @@ class ProcessBoardTests(unittest.TestCase):
             "max_rounds": 4,
             "status": "running",
             "rounds": [{
-                "round": 1,
+                "round": i,
                 "score": 8.5,
                 "dims": "构图8.5/光影8.5/透视8.5/质感8.5/风格8.5",
                 "image": str(img),
@@ -106,7 +106,7 @@ class ProcessBoardTests(unittest.TestCase):
                 "defects": "角度偏了",
                 "next_fix": "转正",
                 "prompt": "x",
-            }],
+            } for i in range(1, 5)],
         }
         (mem / "fin-board.json").write_text(json.dumps(sess, ensure_ascii=False), encoding="utf-8")
         rc = cmd_converge(
@@ -119,6 +119,95 @@ class ProcessBoardTests(unittest.TestCase):
         self.assertIn("第 1 轮 · 8.50", page)
         self.assertIn("未到 9.60", page)
         self.assertIn("boards/fin-board/index.html", report)
+
+    def test_finish_refuses_before_four_rounds_under_threshold(self):
+        td = Path(tempfile.mkdtemp())
+        mem = td / ".memory-art" / "converge"
+        mem.mkdir(parents=True)
+        img = td / "round.jpg"
+        shutil.copy2(ROOT / "comparison" / "scale_01_night_city_high.jpg", img)
+        sess = {
+            "session_id": "too-soon",
+            "goal": "不能提前结算",
+            "module": "prop.Check",
+            "scale": "medium",
+            "accept_threshold": 9.6,
+            "threshold": 9.6,
+            "max_rounds": 4,
+            "status": "running",
+            "rounds": [{
+                "round": 1,
+                "score": 8.3,
+                "dims": "构图8.3/光影8.3/透视8.3/质感8.3/风格8.3",
+                "image": str(img),
+                "judged": True,
+                "passed": False,
+                "strengths": "清楚",
+                "defects": "还没跑满",
+                "next_fix": "继续",
+                "prompt": "x",
+            }],
+        }
+        (mem / "too-soon.json").write_text(json.dumps(sess, ensure_ascii=False), encoding="utf-8")
+        rc = cmd_converge(
+            td, {"config": {}, "entries": [], "modules": {}}, "finish",
+            session_id="too-soon", apply_memory=False, silent=True,
+        )
+        self.assertEqual(rc, 1)
+        after = json.loads((mem / "too-soon.json").read_text(encoding="utf-8"))
+        self.assertNotEqual(after.get("status"), "finished")
+        self.assertFalse(after.get("showcase_ready"))
+
+    def test_status_and_table_do_not_settle_an_unready_session(self):
+        td = Path(tempfile.mkdtemp())
+        mem = td / ".memory-art" / "converge"
+        mem.mkdir(parents=True)
+        img = td / "r1.jpg"
+        img.write_bytes(b"x")
+        sess = {
+            "session_id": "preview-only",
+            "goal": "不能用 status 结算",
+            "module": "prop.Check",
+            "scale": "medium",
+            "accept_threshold": 9.6,
+            "threshold": 9.6,
+            "max_rounds": 4,
+            "status": "continue",
+            "rounds": [{
+                "round": 1,
+                "score": 8.3,
+                "dims": "构图8.3/光影8.3/透视8.3/质感8.3/风格8.3",
+                "image": str(img),
+                "judged": True,
+                "passed": False,
+                "strengths": "清楚",
+                "defects": "还没跑满",
+                "next_fix": "继续",
+                "prompt": "x",
+            }],
+        }
+        path = mem / "preview-only.json"
+        path.write_text(json.dumps(sess, ensure_ascii=False), encoding="utf-8")
+        for action in ("status", "table"):
+            rc = cmd_converge(
+                td, {"config": {}, "entries": [], "modules": {}}, action,
+                session_id="preview-only", apply_memory=False, silent=True,
+            )
+            self.assertEqual(rc, 0, action)
+            after = json.loads(path.read_text(encoding="utf-8"))
+            self.assertNotEqual(after.get("status"), "finished", action)
+            self.assertIsNone(after.get("winner"), action)
+            self.assertFalse(after.get("showcase_ready"), action)
+        import io
+        from contextlib import redirect_stdout
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            cmd_converge(
+                td, {"config": {}, "entries": [], "modules": {}}, "status",
+                session_id="preview-only", apply_memory=False, silent=True,
+            )
+        self.assertIn("这是预览", buf.getvalue())
+        self.assertIn("还没结算", buf.getvalue())
 
 
 if __name__ == "__main__":

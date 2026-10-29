@@ -20,8 +20,11 @@ Thumbs.db
 
 # Temp / scratch
 .cache/
+dist/
 *.tmp
 *.bak
+_tmp_*
+_probe_*
 
 # Local secrets (VLM judge API keys — never commit)
 .memory-art/vlm_judge.local.yaml
@@ -30,6 +33,7 @@ Thumbs.db
 .env
 .env.*
 !.env.example
+.local/
 
 # Local VLM / batch run artifacts (do not publish)
 generated_v8_20/
@@ -40,8 +44,10 @@ _sync_parts/
 .memory-art/_profile/last_doctor.json
 .memory-art/_profile/last_doctor.claim
 .memory-art/_profile/last_doctor.json.bak
+.memory-art/_profile/memory_write.lock
 .memory-art/projects/**/_profile/last_doctor.json
 .memory-art/projects/**/_profile/last_doctor.claim
+.memory-art/projects/**/_profile/memory_write.lock
 .memory-art/_e2e_test_pmemart2/
 .pmem-art-commit
 

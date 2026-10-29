@@ -268,8 +268,24 @@ def build_warm_start_pack(
     }
 
 
+WARM_START_MARK = "【Warm-Start 注入包"
+
+
+def merge_warm_start_prompt(prompt: str, pack: dict[str, Any] | None) -> str:
+    """Prepend the session warm-start block unless it is already in the prompt."""
+    block = str((pack or {}).get("prompt_block") or "").strip()
+    text = str(prompt or "").strip()
+    if not block:
+        return text
+    if WARM_START_MARK in text or block in text:
+        return text
+    if not text:
+        return block
+    return f"{block}\n{text}"
+
+
 def print_warm_start(pack: dict[str, Any]) -> None:
-    print("🔥 Warm-Start 包已注入收敛会话（第 1 轮 Prompt 请完整吸收）")
+    print("🔥 Warm-Start 包已写入会话；`converge generate` 会自动并入提示词，不必手贴")
     print(f"   · 置信度: {pack.get('confidence', 0):.2f} | fast-track 资格: {'✅' if pack.get('fast_track_eligible') else '❌'}")
     for reason in pack.get("confidence_reasons") or []:
         print(f"   · {reason}")

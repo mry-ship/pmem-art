@@ -798,7 +798,7 @@ function renderModuleBanner() {
             <span class="autopilot-chip">🎨 色温定律：${esc((taste.preferred_color_temperature||["青瓷+墨蓝+鎏金"])[0])}</span>
             <span class="autopilot-chip">🚫 已免疫红线：${(taste.banned_habits||[]).length} 项</span>
             <span class="autopilot-chip">📚 知识广度卡：${kCards.length} 张</span>
-            <span class="autopilot-chip">🏆 8轮≥9.6分收敛记录：${refls.length} 场</span>
+            <span class="autopilot-chip">🏆 4轮≥9.6分收敛记录：${refls.length} 场</span>
           </div>
           <button class="btn-copy" onclick="switchTab('improve')">查看口味档案与收敛评分曲线 →</button>
         </div>
@@ -1024,15 +1024,15 @@ function renderImproveTab() {
       </div>
 
       <div class="improve-card" style="margin-bottom:0;">
-        <h3><span>⚡ 8轮 ≥9.6分 自评收敛与静默进化工作流</span><span style="font-size:11px;color:var(--teal);font-family:ui-monospace,monospace;">Whisper Autopilot</span></h3>
+        <h3><span>⚡ 4轮 ≥9.6分 自评收敛与静默进化工作流</span><span style="font-size:11px;color:var(--teal);font-family:ui-monospace,monospace;">Whisper Autopilot</span></h3>
         <div style="font-size:12px;color:var(--text-main);line-height:1.6;">
           <div style="padding:8px 10px;background:#090d16;border-radius:8px;border:1px solid var(--border);margin-bottom:8px;">
             <strong style="color:var(--gold);">1️⃣ 各类型图片自动入库带描述：</strong><br>
             无论是 <code>python3 pmem_art.py ingest &lt;图片&gt; -p "中文描述/Prompt" --apply</code>，还是 <code>/pmem-draw</code>、<code>/pmem-ui</code>、<code>/pmem-concept</code>、<code>/pmem-icon</code> 收敛胜出，都会<b>自动识别分类（角色/场景/UI/特效/风格圣经）</b>、生成中文描述并立即重建本看板。
           </div>
           <div style="padding:8px 10px;background:#090d16;border-radius:8px;border:1px solid var(--border);margin-bottom:8px;">
-            <strong style="color:var(--teal);">2️⃣ 8轮 ≥9.6分 闭环自评收敛 (Converge Engine)：</strong><br>
-            每次生图最多迭代 <b>8 轮</b>，每轮按【项目红线与色板 35% + 构图解剖/透视 30% + 管线规格 20% + 质感细节 15%】打分，满 <b>9.6 / 10 分</b>且零硬伤才交付；胜出图与踩坑红线自动写回记忆。
+            <strong style="color:var(--teal);">2️⃣ 4轮 ≥9.6分 闭环自评收敛 (Converge Engine)：</strong><br>
+            每次生图最多迭代 <b>4 轮</b>，六维加权调和平均，满 <b>9.6 / 10 分</b>才交付，满 4 轮取最高分；胜出图与踩坑红线自动写回记忆。
           </div>
           <div style="padding:8px 10px;background:#090d16;border-radius:8px;border:1px solid var(--border);">
             <strong style="color:#d8b4fe;">3️⃣ 浏览器 3 秒无感自动刷新：</strong><br>

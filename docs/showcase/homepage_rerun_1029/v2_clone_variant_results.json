@@ -1,0 +1,289 @@
+[
+  {
+    "id": "clone_kite",
+    "session": "hp29_clone_kite",
+    "rounds": 4,
+    "scores": [
+      8.53,
+      8.71,
+      8.85,
+      9.03
+    ],
+    "best": 9.03,
+    "winner": "v2/clone/final.jpg",
+    "winner_round": 4,
+    "remaining_defect": "左手仍略连指，纸筒还偏粗。",
+    "round_details": [
+      {
+        "round": 1,
+        "image": "v2/clone/r1.jpg",
+        "score": 8.53,
+        "dims": "构图8.2/光影8.6/透视8.4/质感8.8/风格8.9/无瑕疵8.3"
+      },
+      {
+        "round": 2,
+        "image": "v2/clone/r2.jpg",
+        "score": 8.71,
+        "dims": "构图8.8/光影8.8/透视8.2/质感9.0/风格9.1/无瑕疵8.5"
+      },
+      {
+        "round": 3,
+        "image": "v2/clone/r3.jpg",
+        "score": 8.85,
+        "dims": "构图9.0/光影8.9/透视8.8/质感9.0/风格8.6/无瑕疵8.8"
+      },
+      {
+        "round": 4,
+        "image": "v2/clone/r4.jpg",
+        "score": 9.03,
+        "dims": "构图9.2/光影9.0/透视8.9/质感9.1/风格9.2/无瑕疵8.9"
+      }
+    ]
+  },
+  {
+    "id": "clone_rabbit",
+    "session": "hp29_clone_rabbit",
+    "rounds": 4,
+    "scores": [
+      8.98,
+      8.93,
+      9.33,
+      9.41
+    ],
+    "best": 9.41,
+    "winner": "v2/clone_rabbit/final.jpg",
+    "winner_round": 4,
+    "remaining_defect": "爪子仍偏连指手套。",
+    "round_details": [
+      {
+        "round": 1,
+        "image": "v2/clone_rabbit/r1.jpg",
+        "score": 8.98,
+        "dims": "构图9.3/光影8.9/透视9.0/质感9.2/风格9.1/无瑕疵8.6"
+      },
+      {
+        "round": 2,
+        "image": "v2/clone_rabbit/r2.jpg",
+        "score": 8.93,
+        "dims": "构图9.2/光影9.0/透视8.8/质感9.3/风格8.7/无瑕疵8.7"
+      },
+      {
+        "round": 3,
+        "image": "v2/clone_rabbit/r3.jpg",
+        "score": 9.33,
+        "dims": "构图9.4/光影9.2/透视9.3/质感9.4/风格9.5/无瑕疵9.2"
+      },
+      {
+        "round": 4,
+        "image": "v2/clone_rabbit/r4.jpg",
+        "score": 9.41,
+        "dims": "构图9.4/光影9.3/透视9.3/质感9.6/风格9.5/无瑕疵9.3"
+      }
+    ]
+  },
+  {
+    "id": "variant_light",
+    "session": "hp29_variant_light",
+    "rounds": 4,
+    "scores": [
+      9.27,
+      9.37,
+      9.21,
+      9.38
+    ],
+    "best": 9.38,
+    "winner": "v2/variant/final.jpg",
+    "winner_round": 4,
+    "remaining_defect": "眼睛比参考略大。",
+    "round_details": [
+      {
+        "round": 1,
+        "image": "v2/variant/r1.jpg",
+        "score": 9.27,
+        "dims": "构图9.3/光影9.4/透视9.2/质感9.3/风格9.4/无瑕疵9.1"
+      },
+      {
+        "round": 2,
+        "image": "v2/variant/r2.jpg",
+        "score": 9.37,
+        "dims": "构图9.4/光影9.5/透视9.3/质感9.4/风格9.5/无瑕疵9.2"
+      },
+      {
+        "round": 3,
+        "image": "v2/variant/r3.jpg",
+        "score": 9.21,
+        "dims": "构图9.3/光影9.3/透视9.3/质感9.3/风格9.0/无瑕疵9.1"
+      },
+      {
+        "round": 4,
+        "image": "v2/variant/r4.jpg",
+        "score": 9.38,
+        "dims": "构图9.4/光影9.5/透视9.3/质感9.4/风格9.4/无瑕疵9.3"
+      }
+    ]
+  },
+  {
+    "id": "variant_surprise",
+    "session": "hp29_variant_surprise",
+    "rounds": 4,
+    "scores": [
+      8.73,
+      9.12,
+      9.31,
+      9.42
+    ],
+    "best": 9.42,
+    "winner": "v2/variant_expr/final.jpg",
+    "winner_round": 4,
+    "remaining_defect": "门牙面积仍偏小。",
+    "round_details": [
+      {
+        "round": 1,
+        "image": "v2/variant_expr/r1.jpg",
+        "score": 8.73,
+        "dims": "构图9.2/光影9.1/透视9.0/质感9.2/风格7.5/无瑕疵8.4"
+      },
+      {
+        "round": 2,
+        "image": "v2/variant_expr/r2.jpg",
+        "score": 9.12,
+        "dims": "构图9.3/光影9.2/透视8.8/质感9.3/风格9.3/无瑕疵8.9"
+      },
+      {
+        "round": 3,
+        "image": "v2/variant_expr/r3.jpg",
+        "score": 9.31,
+        "dims": "构图9.4/光影9.3/透视9.2/质感9.4/风格9.2/无瑕疵9.3"
+      },
+      {
+        "round": 4,
+        "image": "v2/variant_expr/r4.jpg",
+        "score": 9.42,
+        "dims": "构图9.5/光影9.4/透视9.3/质感9.4/风格9.5/无瑕疵9.4"
+      }
+    ]
+  },
+  {
+    "id": "variant_wink",
+    "session": "hp29_variant_wink",
+    "rounds": 4,
+    "scores": [
+      9.28,
+      9.41,
+      9.36,
+      9.44
+    ],
+    "best": 9.44,
+    "winner": "v2/variant_wink/final.jpg",
+    "winner_round": 4,
+    "remaining_defect": "睁着的左眼仍略大于参考。",
+    "round_details": [
+      {
+        "round": 1,
+        "image": "v2/variant_wink/r1.jpg",
+        "score": 9.28,
+        "dims": "构图9.4/光影9.2/透视9.3/质感9.3/风格9.4/无瑕疵9.2"
+      },
+      {
+        "round": 2,
+        "image": "v2/variant_wink/r2.jpg",
+        "score": 9.41,
+        "dims": "构图9.5/光影9.4/透视9.4/质感9.4/风格9.6/无瑕疵9.3"
+      },
+      {
+        "round": 3,
+        "image": "v2/variant_wink/r3.jpg",
+        "score": 9.36,
+        "dims": "构图9.4/光影9.3/透视9.3/质感9.4/风格9.5/无瑕疵9.3"
+      },
+      {
+        "round": 4,
+        "image": "v2/variant_wink/r4.jpg",
+        "score": 9.44,
+        "dims": "构图9.5/光影9.4/透视9.4/质感9.4/风格9.6/无瑕疵9.4"
+      }
+    ]
+  },
+  {
+    "id": "variant_sleepy",
+    "session": "hp29_variant_sleepy",
+    "rounds": 4,
+    "scores": [
+      9.23,
+      8.93,
+      9.36,
+      9.44
+    ],
+    "best": 9.44,
+    "winner": "v2/variant_sleepy/final.jpg",
+    "winner_round": 4,
+    "remaining_defect": "睡意还可以再沉半档。",
+    "round_details": [
+      {
+        "round": 1,
+        "image": "v2/variant_sleepy/r1.jpg",
+        "score": 9.23,
+        "dims": "构图9.3/光影9.2/透视9.2/质感9.3/风格9.4/无瑕疵9.1"
+      },
+      {
+        "round": 2,
+        "image": "v2/variant_sleepy/r2.jpg",
+        "score": 8.93,
+        "dims": "构图8.8/光影9.2/透视9.2/质感9.3/风格8.4/无瑕疵8.7"
+      },
+      {
+        "round": 3,
+        "image": "v2/variant_sleepy/r3.jpg",
+        "score": 9.36,
+        "dims": "构图9.4/光影9.3/透视9.3/质感9.4/风格9.5/无瑕疵9.3"
+      },
+      {
+        "round": 4,
+        "image": "v2/variant_sleepy/r4.jpg",
+        "score": 9.44,
+        "dims": "构图9.5/光影9.4/透视9.4/质感9.4/风格9.6/无瑕疵9.4"
+      }
+    ]
+  },
+  {
+    "id": "variant_angry",
+    "session": "hp29_variant_angry",
+    "rounds": 4,
+    "scores": [
+      9.01,
+      9.32,
+      9.13,
+      9.35
+    ],
+    "best": 9.35,
+    "winner": "v2/variant_angry/final.jpg",
+    "winner_round": 4,
+    "remaining_defect": "内眉仍略重于“轻微生气”。",
+    "round_details": [
+      {
+        "round": 1,
+        "image": "v2/variant_angry/r1.jpg",
+        "score": 9.01,
+        "dims": "构图9.2/光影9.1/透视9.2/质感9.3/风格8.5/无瑕疵8.8"
+      },
+      {
+        "round": 2,
+        "image": "v2/variant_angry/r2.jpg",
+        "score": 9.32,
+        "dims": "构图9.4/光影9.3/透视9.3/质感9.4/风格9.4/无瑕疵9.2"
+      },
+      {
+        "round": 3,
+        "image": "v2/variant_angry/r3.jpg",
+        "score": 9.13,
+        "dims": "构图9.3/光影9.2/透视9.3/质感9.4/风格8.7/无瑕疵8.9"
+      },
+      {
+        "round": 4,
+        "image": "v2/variant_angry/r4.jpg",
+        "score": 9.35,
+        "dims": "构图9.4/光影9.3/透视9.3/质感9.4/风格9.4/无瑕疵9.3"
+      }
+    ]
+  }
+]

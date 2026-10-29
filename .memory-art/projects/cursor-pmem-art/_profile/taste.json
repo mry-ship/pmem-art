@@ -1,32 +1,21 @@
 {
   "version": 1,
-  "updated_at": "2026-10-27 23:25:45 UTC+8",
+  "updated_at": "2026-10-29 18:19:04 UTC+8",
   "preferred_lighting": [],
   "preferred_composition": [],
   "preferred_line_weight": [],
   "preferred_color_temperature": [],
-  "banned_habits": [
-    "critique MergeA厨房梯：体量爬升弱是红线，相邻档缩略必须可读差"
-  ],
+  "banned_habits": [],
   "keep_phrases": [],
-  "reject_phrases": [
-    "critique MergeA厨房梯：体量爬升弱是红线，相邻档缩略必须可读差"
-  ],
-  "style_notes": [
-    "style-lock样张心形礼盒：主色亮粉#E02060 辅桃黄#F0B080；光洁圆润；左上暖桃浅色；浅空底；禁用毛毡油画黑点眼",
-    "variant计划：指南针母版可派生水彩/像素子模块，继承圆盘+红半针锚点",
-    "出的UI弹框狗屎一样：中心抄了心形礼盒当奖励物，像换皮手游弹窗不是可九宫格弹框母版；要锁参考medium和双层chrome，题材必须是空内容弹窗面板，禁可读字，中心留白可拉伸",
-    "药水瓶也是完全有毛病的，全都是问题",
-    "生图不要用 apikey 额度，用 Cursor 自带 GenerateImage 走技能闭环",
-    "全部重新画：展示页 raster 全换 v2，仅 GenerateImage，merge 一件一方"
-  ],
+  "reject_phrases": [],
+  "style_notes": [],
   "signal_counts": {
     "keeps": 0,
-    "rejects": 1,
-    "style_fixes": 6,
-    "sessions": 20
+    "rejects": 0,
+    "style_fixes": 0,
+    "sessions": 8
   },
   "project_id": "cursor-pmem-art",
-  "project_name": "Cursor-Pmem-Art",
+  "project_name": "pmem-art",
   "layer_scope": "private"
 }

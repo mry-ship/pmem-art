@@ -37,6 +37,7 @@ from .image_gates import _inspect_image_physical_traits, resolve_case_config
 from .validate_params import _physical_image_gate, _round_counts_as_passed, validate_converge_params
 from .judge_auto import auto_vlm_judge_image
 from .absolute_5d_agent_rubric import agent_absolute_5d_judge_prompt
+from .converge_loop import clear_active_session, mark_active_session
 from .converge_policy import (
     DEFAULT_ANATOMY_FLOOR,
     DEFAULT_EARLY_STOP_MIN_ROUND,
@@ -354,6 +355,17 @@ def _round_dims_dict(row: dict[str, Any] | None) -> dict[str, Any] | None:
     return coerce_dims_dict(row.get("dims"))
 
 
+def _defect_text_copied(prev: str, curr: str) -> bool:
+    """True when this round's defects are a paste of the previous round."""
+    a = re.sub(r"\s+", "", (prev or "").strip().lower())
+    b = re.sub(r"\s+", "", (curr or "").strip().lower())
+    if len(b) < 16 or not a:
+        return False
+    if a == b:
+        return True
+    return (a in b or b in a) and min(len(a), len(b)) >= 24
+
+
 def _style_jump_requested(scale: str = "", goal: str = "", flagged: bool = False) -> bool:
     if flagged:
         return True
@@ -382,6 +394,8 @@ def _resolve_pad_auto(
     """Pad policy: auto/ref always use the original style_ref. Fixes stay in the prompt.
 
     pad=previous is an explicit chain of the best plate. Style jump pads nothing.
+    high/recompose do not chain generated plates: 「重构机位」 in a prompt is an
+    instruction, not proof the camera already changed.
     Returns (pad_image, fix, pad_round, continuation, reason).
     """
     del anatomy_floor, subject_kind, module, ref_analysis
@@ -390,32 +404,6 @@ def _resolve_pad_auto(
     style = (style_ref or "").strip()
     if _style_jump_requested(scale, goal, style_jump):
         return "", carry_fix, 0, False, "style_jump：不垫风格参考，也不链成图"
-    if (scale or "").strip().lower() in {"high", "recompose"}:
-        best_img, best_fix, best_round, best_score = "", carry_fix, 0, -1.0
-        for row in rounds:
-            if not isinstance(row, dict):
-                continue
-            if int(row.get("round") or 0) >= int(round_num):
-                continue
-            blob = " ".join(str(row.get(k) or "") for k in ("defects", "next_fix", "prompt"))
-            if any(n in blob for n in ("不改机位", "没改机位", "不要改机位", "别改机位")):
-                continue
-            if not any(k in blob for k in ("换机位", "改了机位", "重构机位", "机位已换")):
-                continue
-            image = str(row.get("image") or "").strip()
-            if not image or not Path(image).is_file():
-                continue
-            try:
-                score = float(row.get("score") or 0)
-            except (TypeError, ValueError):
-                score = 0.0
-            if score >= best_score:
-                best_img = image
-                best_fix = str(row.get("next_fix") or "") or carry_fix
-                best_round = int(row.get("round") or 0)
-                best_score = score
-        if best_img:
-            return best_img, best_fix, best_round, True, "pad=changed_camera（机位已换，垫换过机位的最高分）"
     if mode == "previous" and carry_image:
         return carry_image, carry_fix, carry_round, True, "pad=previous"
     why = "pad=ref" if mode == "ref" else "pad=auto→style_ref（每轮垫最初参考，修正只写进提示词）"
@@ -591,6 +579,7 @@ def cmd_converge(
                 )
                 print(f"🔓 画师锁定微调已生效：{format_dim_lock_summary_zh(eff_scale, ov)}")
         _write_session_json(sf, sess)
+        mark_active_session(root, session_id)
         print(
             f"🎯 [收敛会话已启动] 模块: {sess['module']} | 模式: {converge_mode} | 强度(scale): {eff_scale} ({scale_prof['label']})"
             f"{' · FAST-TRACK' if fast_track else ''} | 动态达标线: >= {sess['accept_threshold']} 分即停"
@@ -703,7 +692,7 @@ def cmd_converge(
         if pending:
             pending_no = int(pending[-1].get("round") or 0)
             print(f"第 {pending_no} 轮还没审图。先 `converge judge --id {session_id} --round {pending_no}`，再 `converge next`。")
-            return 0
+            return 1
         judged_nums = [int(r.get("round") or 0) for r in rounds if r.get("judged")]
         nxt = (max(judged_nums) if judged_nums else 0) + 1
         image, fix, number = _best_plate(rounds, nxt, root)
@@ -778,6 +767,18 @@ def cmd_converge(
             return 1
 
         r_no = round_num if round_num > 0 else (len(rounds) + 1)
+        pending_unjudged = [
+            r for r in rounds
+            if not r.get("judged") and str(r.get("image") or "").strip()
+        ]
+        if pending_unjudged:
+            pno = int(pending_unjudged[-1].get("round") or 0)
+            if r_no > pno:
+                print(
+                    f"❌ 第 {pno} 轮还没 `converge judge`，不能开第 {r_no} 轮。"
+                    f"先审第 {pno} 轮，不到 9.6 再出下一张。"
+                )
+                return 1
         already_passed = [r for r in rounds if _round_counts_as_passed(r, th, root=root)]
         if already_passed and r_no > already_passed[0].get("round", 1):
             p_r = already_passed[0]
@@ -912,6 +913,19 @@ def cmd_converge(
         if not continuation and carry_fix and carry_fix not in composed_prompt:
             composed_prompt = f"{composed_prompt} | {carry_fix}".strip(" |")
 
+        from improve import build_warm_start_pack, merge_warm_start_prompt
+        warm = sess.get("warm_start") if isinstance(sess.get("warm_start"), dict) else {}
+        if apply_memory:
+            if not str(warm.get("prompt_block") or "").strip():
+                warm = build_warm_start_pack(
+                    root,
+                    data if isinstance(data, dict) else {},
+                    module=str(sess.get("module") or module or "brand.WorldStyle"),
+                    goal=str(sess.get("goal") or goal or ""),
+                )
+                sess["warm_start"] = warm
+            composed_prompt = merge_warm_start_prompt(composed_prompt, warm)
+
         if generate_cmd:
             proc = subprocess.run(
                 generate_cmd,
@@ -992,6 +1006,7 @@ def cmd_converge(
         sess["ready_to_finish"] = False
         sess["ActionRequired"] = f"JUDGE_ROUND_{r_no}"
         _write_session_json(sf, sess)
+        mark_active_session(root, session_id)
 
         v_badge = (
             f"{img_v.get('width')}x{img_v.get('height')} ({img_v.get('aspect_ratio')}, {img_v.get('size_kb')}KB)"
@@ -1006,6 +1021,14 @@ def cmd_converge(
             f"   · 本轮实际垫图: {actual_shown}{diverge_bit}\n"
         )
         floor_line = f"   · 结构底线: {floor_zh}\n" if floor_zh else ""
+        warm_n_red = len((warm or {}).get("top_redlines") or [])
+        warm_n_rec = len((warm or {}).get("top_recipes") or [])
+        memory_line = ""
+        if apply_memory and str((warm or {}).get("prompt_block") or "").strip():
+            memory_line = (
+                f"   · 📚 pmem-art 已自动并入记忆：模块 {warm.get('module') or sess.get('module') or '?'} "
+                f"（recipe {warm_n_rec} · 红线 {warm_n_red}）\n"
+            )
         stub_line = ""
         if stub_notes:
             stub_line = "   · 已从生图提示词去掉玩具媒介词: " + "、".join(stub_notes) + "\n"
@@ -1015,6 +1038,7 @@ def cmd_converge(
         print(
             f"🎨 [Step 2A · 仅生图阶段完成] 第 {r_no}/{mr} 轮图像已生成: `{image}` ({v_badge})\n"
             f"{pad_line}"
+            f"{memory_line}"
             f"{floor_line}"
             f"{fix_line}"
             f"{stub_line}"
@@ -1143,13 +1167,12 @@ def cmd_converge(
             direction = str(sess.get("recompose_dir") or "").strip()
             if not direction or direction not in (recorded_gen_prompt or ""):
                 gate_notes.append("生成 prompt 未包含指定构图方向")
-            # Refuse stop when text still only validates the original camera DNA.
+            # Only the look-at-image writeup counts. Prompt / next_fix always
+            # contain 「重构机位」 or --recompose-dir, which is not proof the plate moved.
             evidence_blob = " ".join(
                 [
-                    str(recorded_gen_prompt or ""),
                     str(judge_res.get("strengths") or strengths or ""),
                     str(judge_res.get("defects") or defects or ""),
-                    str(judge_res.get("next_fix") or next_fix or ""),
                 ]
             )
             if not _recompose_change_evidence(evidence_blob, direction):
@@ -1239,6 +1262,16 @@ def cmd_converge(
                 judge_res["audit_warnings"] = list(judge_res.get("audit_warnings") or []) + [warn_es]
 
         merged_defects = judge_res.get("defects") or defects
+        prior_defect_rows = [
+            r for r in rounds
+            if isinstance(r, dict) and int(r.get("round") or 0) < int(r_no)
+        ]
+        if prior_defect_rows and merged_defects:
+            prev_def = str(max(prior_defect_rows, key=lambda x: int(x.get("round") or 0)).get("defects") or "")
+            if _defect_text_copied(prev_def, str(merged_defects)):
+                copied_warn = "裁判缺陷与上一轮几乎相同：必须对着本张像素重写，禁止复制上一轮 defects"
+                print(f"⚠️ {copied_warn}")
+                judge_res["audit_warnings"] = list(judge_res.get("audit_warnings") or []) + [copied_warn]
 
         skip_ahead = False
         delta = abs(float(score) - prev_sc) if prev_sc is not None else None
@@ -1414,6 +1447,7 @@ def cmd_converge(
             msg += f"   👉 先用上面这张垫图出第 {r_no + 1} 轮，再 `converge generate`，然后 `converge judge`。"
 
         _write_session_json(sf, sess)
+        mark_active_session(root, session_id)
         print(msg)
         print_round_lessons(lessons, silent=silent)
         return 0
@@ -1460,6 +1494,9 @@ def cmd_converge(
             r for r in pool
             if _round_counts_as_passed(r, accept_th, root=root)
         ]
+        from .showcase_gate import can_accept_winner
+        n_judged = len(judged_for_finish)
+        mr = int(sess.get("max_rounds") or DEFAULT_MAX_ROUNDS)
         if passing_rounds:
             first_pass = min(passing_rounds, key=lambda x: x["round"])
             rounds = [r for r in rounds if r.get("round", 0) <= first_pass["round"]]
@@ -1479,11 +1516,36 @@ def cmd_converge(
             )
             badge_text = f"共 {len(judged_for_finish)} 轮未达阈值，采用最高分"
 
-        sess["winner"] = winner
-        sess["rounds_to_converge"] = len(rounds)
-        sess["convergence_badge"] = badge_text
-        sess["status"] = "finished"
-        _write_session_json(sf, sess)
+        win_score = _score_of(winner)
+        sess["showcase_ready"] = can_accept_winner(
+            n_judged, win_score, threshold=float(accept_th), max_rounds=mr
+        )
+        if action == "finish" and not sess["showcase_ready"]:
+            print(
+                f"❌ 还不能 finish：最高 {win_score:.2f} < {float(accept_th):.2f}，"
+                f"且只审了 {n_judged}/{mr} 轮。继续 converge generate / judge。"
+                " 未满 4 轮且不到线时不能结算终稿，也不能复制成 final.jpg。"
+            )
+            _write_session_json(sf, sess)
+            return 1
+
+        if action == "finish":
+            sess["winner"] = winner
+            sess["rounds_to_converge"] = len(rounds)
+            sess["convergence_badge"] = badge_text
+            sess["status"] = "finished"
+            _write_session_json(sf, sess)
+            clear_active_session(root, session_id)
+        else:
+            # status / table 只预览，不能把会话标成 finished，否则 stop hook 会放行。
+            _write_session_json(sf, sess)
+            if not sess["showcase_ready"]:
+                print(
+                    "ℹ️ 这是预览，会话还没结算。未满 4 轮且不到 9.6 时不能当终稿，"
+                    "继续 converge generate / judge。"
+                )
+            else:
+                print("ℹ️ 这是预览。可以 `converge finish` 结算终稿。")
 
         warm = sess.get("warm_start") or {}
         md_lines = [
@@ -1579,6 +1641,7 @@ def cmd_converge(
         saved_paths: list[str] = []
         reflection_path = None
         tip = None
+        doctor_tip = None
         if action == "finish" and apply_memory:
             from feedback import write_memory_entry
             from improve import write_session_reflection, ingest_term_to_knowledge
@@ -1764,6 +1827,13 @@ def cmd_converge(
                 if verbose:
                     print(f"⚠️ autopilot 跳过: {ex}")
 
+        if action == "finish":
+            try:
+                from lifecycle import maybe_lazy_doctor_on_hook
+                doctor_tip = maybe_lazy_doctor_on_hook(root, "converge_finish")
+            except Exception:
+                doctor_tip = None
+
         if action == "finish" and apply_memory:
             try:
                 from pmem_art import refresh_atlas_silent
@@ -1800,12 +1870,17 @@ def cmd_converge(
                 print_whisper_tip(tip)
             elif not apply_memory:
                 print("（未写入记忆：已指定 --no-apply）")
+            if doctor_tip:
+                print(doctor_tip)
             print(f"📎 评分履历已写盘: {report_file.relative_to(root)} （去掉 --quiet 可在终端打印）")
         else:
             print(report_text)
-            if tip and action == "finish":
-                from improve import print_whisper_tip
-                print_whisper_tip(tip)
+            if action == "finish":
+                if tip:
+                    from improve import print_whisper_tip
+                    print_whisper_tip(tip)
+                if doctor_tip:
+                    print(doctor_tip)
         return 0
 
     if action == "warm":

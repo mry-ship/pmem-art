@@ -1,0 +1,800 @@
+{
+  "session_id": "hp29_c03_low",
+  "started_at": "2026-10-29 18:03:49 UTC+8",
+  "goal": "NEAR-BLACK ink hair (charcoal #1A1C22) with only cool window sheen on surface strands. NOT blue dye, NOT teal, NOT navy fashion dye. Light blue eyes, white cat clip, black over-ear headphones, loose opaque white cotton tee, warm gold window light and leaf shadows, white cosmos flowers. Commercial anime paint. 3:4 window portrait. Scale=low. Only repair one local flaw: lock hair pigment to ink-black. Keep camera, pose, identity.",
+  "module": "character.SunlitGirl",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "low",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "low",
+    "label": "低强度 · 保守修瑕动态达标闭环 (Defect-Fix Dynamic Threshold >=9.6)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 1,
+    "target_score_threshold": 9.6,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.1875,
+      "perspective_anatomy": 0.15,
+      "texture_detail": 0.15,
+      "spec_style": 0.1125,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "viewpoint_or_pose",
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图，只在提示词上补还没过的那一处（提示词改动仍 ≤20%）",
+    "max_prompt_delta_ratio": 0.2,
+    "allow_recompose": false,
+    "allow_viewpoint_change": false,
+    "allow_action_pose_change": false,
+    "allow_element_count_change": false,
+    "allow_layout_change": false,
+    "allow_lighting_overhaul": false,
+    "forbidden_changes": [
+      "character_action_and_pose (不改动作与姿态)",
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)",
+      "frontal_bust_viewpoint (严禁改变正面胸像视角与二分光影)",
+      "element_count_and_daisy_wallpaper (严禁增删人物或改变雏菊壁纸背景)"
+    ],
+    "min_round_leap": 0.1,
+    "prompt_delta_baseline": "first",
+    "prompt_directive": "胶片逆光轻厚涂：修线的断口和影形溢色，不把影晕开",
+    "medium_family": "cel",
+    "best_direction_hint": "最优方向：微质感（瓦当/纸齿/发丝），≤40字",
+    "goal": "NEAR-BLACK ink hair (charcoal #1A1C22) with only cool window sheen on surface strands. NOT blue dye, NOT teal, NOT navy fashion dye. Light blue eyes, white cat clip, black over-ear headphones, loose opaque white cotton tee, warm gold window light and leaf shadows, white cosmos flowers. Commercial anime paint. 3:4 window portrait. Scale=low. Only repair one local flaw: lock hair pigment to ink-black. Keep camera, pose, identity.",
+    "module": "character.SunlitGirl",
+    "ref_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c03\\ref.jpg",
+    "ref_analysis": "构图与视角：3:4竖幅窗边胸像。镜头略低于眼平、近正面微侧，人物朝右窗外。头占上半，肩胸占下半。人物略偏左，右侧木窗框与白色大波斯菊压前景角。色板：发色素近黑墨色#1A1C22，阴影#2A2C32，冠顶暖金高光#D4B48A，少量冷窗钢灰反光#4A5568（不是染蓝）。瞳浅蓝#7EB4D8。肤暖金#E8C4A0。白T米白#E8E2D6带叶影。主光右上偏后暖金窗光，叶影打在颊、锁骨、白T。笔触：商业二次元半厚涂/赛璐璐，软发丝，清晰五官线，耳机磨砂黑塑料，棉质不透明宽松白T。锁：近黑发、白猫夹、黑包耳耳机、浅蓝眼、白T、窗光叶影、白波斯菊、3:4胸像机位。不要把头发画成染蓝/青发。"
+  },
+  "medium_family": "cel",
+  "contract": "",
+  "target_score_threshold": 9.6,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c03\\ref.jpg",
+  "ref_analysis": "构图与视角：3:4竖幅窗边胸像。镜头略低于眼平、近正面微侧，人物朝右窗外。头占上半，肩胸占下半。人物略偏左，右侧木窗框与白色大波斯菊压前景角。色板：发色素近黑墨色#1A1C22，阴影#2A2C32，冠顶暖金高光#D4B48A，少量冷窗钢灰反光#4A5568（不是染蓝）。瞳浅蓝#7EB4D8。肤暖金#E8C4A0。白T米白#E8E2D6带叶影。主光右上偏后暖金窗光，叶影打在颊、锁骨、白T。笔触：商业二次元半厚涂/赛璐璐，软发丝，清晰五官线，耳机磨砂黑塑料，棉质不透明宽松白T。锁：近黑发、白猫夹、黑包耳耳机、浅蓝眼、白T、窗光叶影、白波斯菊、3:4胸像机位。不要把头发画成染蓝/青发。",
+  "default_aspect_ratio": "3:4",
+  "default_reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c03\\ref.jpg"
+  ],
+  "aspect_ratio": "3:4",
+  "reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c03\\ref.jpg"
+  ],
+  "ref_physical_traits": {
+    "exists": true,
+    "size_bytes": 384656,
+    "size_kb": 375.6,
+    "width": 864,
+    "height": 1152,
+    "aspect_ratio": "3:4",
+    "canonical_aspect_ratio": "3:4",
+    "color_entropy": 7.23
+  },
+  "param_validation": {
+    "valid": true,
+    "validation_passed": true,
+    "case_id": "hp29_c03_low",
+    "scale": "low",
+    "aspect_ratio": "3:4",
+    "ref_aspect_ratio": "3:4",
+    "ref_dimensions": "864x1152",
+    "output_aspect_ratio": "",
+    "output_dimensions": "",
+    "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c03\\ref.jpg",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c03\\ref.jpg"
+    ],
+    "inherited_default_aspect_ratio": false,
+    "inherited_default_pad_image": false,
+    "matched_ref_aspect_ratio": true,
+    "matched_ref_pad_image": true,
+    "matched_output_aspect_ratio": true,
+    "three_step_stage": "step1_start",
+    "three_step_verified": false,
+    "warnings": []
+  },
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.6,
+  "accept_threshold": 9.6,
+  "max_rounds": 4,
+  "ready_to_finish": true,
+  "status": "finished",
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "3:4",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c03\\ref.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "hp29_c03_low",
+        "scale": "low",
+        "aspect_ratio": "3:4",
+        "ref_aspect_ratio": "3:4",
+        "ref_dimensions": "864x1152",
+        "output_aspect_ratio": "3:4",
+        "output_dimensions": "864x1152",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c03\\ref.jpg",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c03\\ref.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "18:06:50",
+      "image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c03\\low\\r1.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 369268,
+        "size_kb": 360.6,
+        "width": 864,
+        "height": 1152,
+        "aspect_ratio": "3:4",
+        "canonical_aspect_ratio": "3:4",
+        "color_entropy": 7.23
+      },
+      "raw_score": 8.43,
+      "score": 8.43,
+      "target_score_threshold": 9.6,
+      "dims": "构图8.6/光影8.7/透视8.4/质感8.3/风格8.5/无瑕疵8.2",
+      "dims_parsed": {
+        "composition": 8.6,
+        "lighting_color": 8.7,
+        "perspective_anatomy": 8.4,
+        "texture_detail": 8.3,
+        "spec_style": 8.5,
+        "flawlessness": 8.2
+      },
+      "weighted_score": 8.43,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.6）"
+      ],
+      "stagnated": false,
+      "strengths": "机位锁住；发块已近黑墨色，不再是染蓝；窗金叶影和白花身份锚点在",
+      "defects": "耳机头带露得太多，刘海未盖住；右下颌发梢仍偏冷钢蓝",
+      "next_fix": "用近黑刘海盖住更多头带；把右下颌发梢改成炭黑，只留表面冷反光",
+      "prompt": "胶片逆光轻厚涂：修线的断口和影形溢色，不把影晕开| Local repair of this exact 3:4 window portrait. Keep camera, crop, pose. ONLY repair hair pigment to ink-black near-black charcoal. NOT blue dye, NOT teal. Cool window sheen on surface strands only. White cat clip, black headphones, opaque white tee, light blue eyes, warm gold window light, leaf shadows, white cosmos. Commercial anime paint.| 约束：不改动作与姿态；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观；严禁改变正面胸像视角与二分光影；严禁增删人物或改变雏菊壁纸背景 | Structure floor: the person's joints and grip stay clear and both pupils share a direction; the animal's limbs follow its species and are not converted into human elbows; contact shadows read; do not melt limbs into props",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.4,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "both",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：耳机头带露得太多，刘海未盖住；右下颌发梢仍偏冷钢蓝",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.43"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：机位锁住；发块已近黑墨色，不再是染蓝；窗金叶影和白花身份锚点在",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.43"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "18:06:52"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "3:4",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c03\\ref.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "hp29_c03_low",
+        "scale": "low",
+        "aspect_ratio": "3:4",
+        "ref_aspect_ratio": "3:4",
+        "ref_dimensions": "864x1152",
+        "output_aspect_ratio": "3:4",
+        "output_dimensions": "864x1152",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c03\\ref.jpg",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c03\\ref.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "18:09:42",
+      "image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c03\\low\\r2.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 358554,
+        "size_kb": 350.2,
+        "width": 864,
+        "height": 1152,
+        "aspect_ratio": "3:4",
+        "canonical_aspect_ratio": "3:4",
+        "color_entropy": 7.23
+      },
+      "raw_score": 8.44,
+      "score": 8.44,
+      "target_score_threshold": 9.6,
+      "dims": "构图8.5/光影8.7/透视8.5/质感8.5/风格8.6/无瑕疵8.1",
+      "dims_parsed": {
+        "composition": 8.5,
+        "lighting_color": 8.7,
+        "perspective_anatomy": 8.5,
+        "texture_detail": 8.5,
+        "spec_style": 8.6,
+        "flawlessness": 8.1
+      },
+      "weighted_score": 8.44,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.01 低于当前档位 (low) 的最小跃升 +0.10。下一轮只改缺陷部位；若原图离 9.6 远，换 medium 或 high",
+        "Agent Absolute-5D 已采纳（门槛 9.6）",
+        "prompt 改动 91% 超过档位上限 20%"
+      ],
+      "stagnated": true,
+      "strengths": "发块更墨黑；机位仍是窗边胸像",
+      "defects": "点名的头带遮盖没做到，头带整圈更暴露；prompt 改动 91% 超过档位上限 20%",
+      "next_fix": "用近黑碎发盖住头带中段，只留猫夹旁一小段头带",
+      "prompt": "胶片逆光轻厚涂：修线的断口和影形溢色，不把影晕开| Keep camera. Cover more headphone headband with ink-black bangs. Chin-length tips charcoal black. NOT blue dye.| 约束：不改动作与姿态；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观；严禁改变正面胸像视角与二分光影；严禁增删人物或改变雏菊壁纸背景 | Structure floor: the person's joints and grip stay clear and both pupils share a direction; the animal's limbs follow its species and are not converted into human elbows; contact shadows read; do not melt limbs into props | 用近黑刘海盖住更多头带；把右下颌发梢改成炭黑，只留表面冷反光",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.5,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "both",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：点名的头带遮盖没做到，头带整圈更暴露；prompt 改动 91% 超过档位上限 20%",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.44"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：发块更墨黑；机位仍是窗边胸像",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.44"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "18:09:45"
+    },
+    {
+      "round": 3,
+      "round_label": "第 3 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "3:4",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c03\\ref.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "hp29_c03_low",
+        "scale": "low",
+        "aspect_ratio": "3:4",
+        "ref_aspect_ratio": "3:4",
+        "ref_dimensions": "864x1152",
+        "output_aspect_ratio": "3:4",
+        "output_dimensions": "864x1152",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c03\\ref.jpg",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c03\\ref.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "18:12:13",
+      "image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c03\\low\\r3.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 355446,
+        "size_kb": 347.1,
+        "width": 864,
+        "height": 1152,
+        "aspect_ratio": "3:4",
+        "canonical_aspect_ratio": "3:4",
+        "color_entropy": 7.23
+      },
+      "raw_score": 8.56,
+      "score": 8.56,
+      "target_score_threshold": 9.6,
+      "dims": "构图8.6/光影8.8/透视8.6/质感8.6/风格8.6/无瑕疵8.3",
+      "dims_parsed": {
+        "composition": 8.6,
+        "lighting_color": 8.8,
+        "perspective_anatomy": 8.6,
+        "texture_detail": 8.6,
+        "spec_style": 8.6,
+        "flawlessness": 8.3
+      },
+      "weighted_score": 8.56,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.6）",
+        "prompt 改动 93% 超过档位上限 20%"
+      ],
+      "stagnated": false,
+      "strengths": "发块近黑；窗金叶影身份锚点在",
+      "defects": "头带整圈仍露出，未按参考用碎发盖住中段；prompt 改动 93% 超过档位上限 20%",
+      "next_fix": "碎发盖住头带中段，只留猫夹旁一小段，发色保持墨黑",
+      "prompt": "胶片逆光轻厚涂：修线的断口和影形溢色，不把影晕开| Bury headphone headband middle under ink-black bangs. Only short segment near cat clip. Keep camera. NOT blue dye.| 约束：不改动作与姿态；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观；严禁改变正面胸像视角与二分光影；严禁增删人物或改变雏菊壁纸背景 | Structure floor: the person's joints and grip stay clear and both pupils share a direction; the animal's limbs follow its species and are not converted into human elbows; contact shadows read; do not melt limbs into props | 用近黑碎发盖住头带中段，只留猫夹旁一小段头带",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.6,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "both",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：头带整圈仍露出，未按参考用碎发盖住中段；prompt 改动 93% 超过档位上限 20%",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.56"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：发块近黑；窗金叶影身份锚点在",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.56"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "18:12:16"
+    },
+    {
+      "round": 4,
+      "round_label": "第 4 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "3:4",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c03\\ref.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "hp29_c03_low",
+        "scale": "low",
+        "aspect_ratio": "3:4",
+        "ref_aspect_ratio": "3:4",
+        "ref_dimensions": "864x1152",
+        "output_aspect_ratio": "3:4",
+        "output_dimensions": "864x1152",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c03\\ref.jpg",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c03\\ref.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "18:15:22",
+      "image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c03\\low\\r4.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 345528,
+        "size_kb": 337.4,
+        "width": 864,
+        "height": 1152,
+        "aspect_ratio": "3:4",
+        "canonical_aspect_ratio": "3:4",
+        "color_entropy": 7.23
+      },
+      "raw_score": 8.52,
+      "score": 8.52,
+      "target_score_threshold": 9.6,
+      "dims": "构图8.5/光影8.8/透视8.6/质感8.6/风格8.6/无瑕疵8.2",
+      "dims_parsed": {
+        "composition": 8.5,
+        "lighting_color": 8.8,
+        "perspective_anatomy": 8.6,
+        "texture_detail": 8.6,
+        "spec_style": 8.6,
+        "flawlessness": 8.2
+      },
+      "weighted_score": 8.52,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +-0.04 低于当前档位 (low) 的最小跃升 +0.10。下一轮只改缺陷部位；若原图离 9.6 远，换 medium 或 high",
+        "Agent Absolute-5D 已采纳（门槛 9.6）",
+        "prompt 改动 92% 超过档位上限 20%"
+      ],
+      "stagnated": true,
+      "strengths": "发块近黑；窗金叶影在",
+      "defects": "头带整圈仍露出；prompt 改动 92% 超过档位上限 20%",
+      "next_fix": "碎发盖住头带中段",
+      "prompt": "胶片逆光轻厚涂：修线的断口和影形溢色，不把影晕开| Bury headband middle under ink-black bangs. Keep camera. NOT blue dye.| 约束：不改动作与姿态；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观；严禁改变正面胸像视角与二分光影；严禁增删人物或改变雏菊壁纸背景 | Structure floor: the person's joints and grip stay clear and both pupils share a direction; the animal's limbs follow its species and are not converted into human elbows; contact shadows read; do not melt limbs into props | 碎发盖住头带中段，只留猫夹旁一小段，发色保持墨黑",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.6,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "both",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_MAX_ROUNDS",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：头带整圈仍露出；prompt 改动 92% 超过档位上限 20%",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.52"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：发块近黑；窗金叶影在",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.52"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "18:15:25"
+    }
+  ],
+  "warm_start": {
+    "project_id": "cursor-pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "cursor-pmem-art",
+      "project_slug": "cursor-pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-10-29 18:03:42 UTC+8"
+    },
+    "module": "character.SunlitGirl",
+    "goal": "NEAR-BLACK ink hair (charcoal #1A1C22) with only cool window sheen on surface strands. NOT blue dye, NOT teal, NOT navy fashion dye. Light blue eyes, white cat clip, black over-ear headphones, loose opaque white cotton tee, warm gold window light and leaf shadows, white cosmos flowers. Commercial anime paint. 3:4 window portrait. Scale=low. Only repair one local flaw: lock hair pigment to ink-black. Keep camera, pose, identity.",
+    "confidence": 0.3,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "红线可控（0 条）",
+      "挂载 0 张项目知识卡 + 2 张全局美术底层基础卡"
+    ],
+    "top_recipes": [],
+    "top_redlines": [],
+    "art_decisions": [],
+    "private_knowledge": [],
+    "shared_knowledge": [
+      {
+        "id": "composition-thirds-grid",
+        "title": "构图法则：九宫格三分法与呼吸留白安全区",
+        "body": "将核心视觉焦点布置在九宫格三分线交点（黄金分割点 0.618）上，利用引导线与前景暗角汇聚视线；独立资产四周必须预留 16px~24px 纯透明呼吸安全边距，严禁发冠、武器或特效贴死画布边缘被裁切。",
+        "layer_scope": "shared"
+      },
+      {
+        "id": "palette-70-20-10",
+        "title": "色彩构成：70-20-10 色板比例黄金法则",
+        "body": "画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+        "layer_scope": "shared"
+      }
+    ],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [],
+      "preferred_composition": [],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [],
+      "banned_habits": []
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/cursor-pmem-art/)\n- 目标模块: character.SunlitGirl\n- 置信度: 0.30（fast-track 资格: 否）\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [composition-thirds-grid] 构图法则：九宫格三分法与呼吸留白安全区: 将核心视觉焦点布置在九宫格三分线交点（黄金分割点 0.618）上，利用引导线与前景暗角汇聚视线；独立资产四周必须预留 16px~24px 纯透明呼吸安全边距，严禁发冠、武器或特效贴死画布边缘被裁切。\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+    "built_at": "2026-10-29 18:03:49 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：耳机头带露得太多，刘海未盖住；右下颌发梢仍偏冷钢蓝",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.43"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：机位锁住；发块已近黑墨色，不再是染蓝；窗金叶影和白花身份锚点在",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.43"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：点名的头带遮盖没做到，头带整圈更暴露；prompt 改动 91% 超过档位上限 20%",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.44"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：发块更墨黑；机位仍是窗边胸像",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.44"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：头带整圈仍露出，未按参考用碎发盖住中段；prompt 改动 93% 超过档位上限 20%",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.56"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：发块近黑；窗金叶影身份锚点在",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.56"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：头带整圈仍露出；prompt 改动 92% 超过档位上限 20%",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.52"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：发块近黑；窗金叶影在",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.52"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 4,
+  "regression_drop": 0.5,
+  "discussions": [
+    {
+      "round": 1,
+      "prompt": "构图与视角：3:4竖幅窗边胸像。镜头略低于眼平、近正面微侧，人物朝右窗外。头占上半，肩胸占下半。人物略偏左，右侧木窗框与白色大波斯菊压前景角。色板：发色素近黑墨色#1A1C22，阴影#2A2C32，冠顶暖金高光#D4B48A，少量冷窗钢灰反光#4A5568（不是染蓝）。瞳浅蓝#7EB4D8。肤暖金#E8C4A0。白T米白#E8E2D6带叶影。主光右上偏后暖金窗光，叶影打在颊、锁骨、白T。笔触：商业二次元半厚涂/赛璐璐，软发丝，清晰五官线，耳机磨砂黑塑料，棉质不透明宽松白T。锁：近黑发、白猫夹、黑包耳耳机、浅蓝眼、白T、窗光叶影、白波斯菊、3:4胸像机位。不要把头发画成染蓝/青发。 | NEAR-BLACK ink hair (charcoal #1A1C22) with only cool window sheen on surface strands. NOT blue dye, NOT teal, NOT navy fashion dye. Light blue eyes, white cat clip, black over-ear headphones, loose opaque white cotton tee, warm gold window light and leaf shadows, white cosmos flowers. Commercial anime paint. 3:4 window portrait. Scale=low. Only repair one local flaw: lock hair pigment to ink-black. Keep camera, pose, identity.",
+      "strengths": "",
+      "defects": "待出图",
+      "next_fix": "按锁出第1轮，发色素必须近黑墨色"
+    }
+  ],
+  "ActionRequired": "STOP_PICK_BEST",
+  "showcase_ready": true,
+  "winner": {
+    "round": 3,
+    "round_label": "第 3 轮精修",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "3:4",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c03\\ref.jpg"
+    ],
+    "param_validation": {
+      "valid": true,
+      "validation_passed": true,
+      "case_id": "hp29_c03_low",
+      "scale": "low",
+      "aspect_ratio": "3:4",
+      "ref_aspect_ratio": "3:4",
+      "ref_dimensions": "864x1152",
+      "output_aspect_ratio": "3:4",
+      "output_dimensions": "864x1152",
+      "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c03\\ref.jpg",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c03\\ref.jpg"
+      ],
+      "inherited_default_aspect_ratio": true,
+      "inherited_default_pad_image": true,
+      "matched_ref_aspect_ratio": true,
+      "matched_ref_pad_image": true,
+      "matched_output_aspect_ratio": true,
+      "three_step_stage": "step3_judge",
+      "three_step_verified": true,
+      "warnings": [],
+      "continuation_pad": false,
+      "pad_diverged": false
+    },
+    "generated_at": "18:12:13",
+    "image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c03\\low\\r3.jpg",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 355446,
+      "size_kb": 347.1,
+      "width": 864,
+      "height": 1152,
+      "aspect_ratio": "3:4",
+      "canonical_aspect_ratio": "3:4",
+      "color_entropy": 7.23
+    },
+    "raw_score": 8.56,
+    "score": 8.56,
+    "target_score_threshold": 9.6,
+    "dims": "构图8.6/光影8.8/透视8.6/质感8.6/风格8.6/无瑕疵8.3",
+    "dims_parsed": {
+      "composition": 8.6,
+      "lighting_color": 8.8,
+      "perspective_anatomy": 8.6,
+      "texture_detail": 8.6,
+      "spec_style": 8.6,
+      "flawlessness": 8.3
+    },
+    "weighted_score": 8.56,
+    "audit_warnings": [
+      "Agent Absolute-5D 已采纳（门槛 9.6）",
+      "prompt 改动 93% 超过档位上限 20%"
+    ],
+    "stagnated": false,
+    "strengths": "发块近黑；窗金叶影身份锚点在",
+    "defects": "头带整圈仍露出，未按参考用碎发盖住中段；prompt 改动 93% 超过档位上限 20%",
+    "next_fix": "碎发盖住头带中段，只留猫夹旁一小段，发色保持墨黑",
+    "prompt": "胶片逆光轻厚涂：修线的断口和影形溢色，不把影晕开| Bury headphone headband middle under ink-black bangs. Only short segment near cat clip. Keep camera. NOT blue dye.| 约束：不改动作与姿态；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观；严禁改变正面胸像视角与二分光影；严禁增删人物或改变雏菊壁纸背景 | Structure floor: the person's joints and grip stay clear and both pupils share a direction; the animal's limbs follow its species and are not converted into human elbows; contact shadows read; do not melt limbs into props | 用近黑碎发盖住头带中段，只留猫夹旁一小段头带",
+    "continuation": false,
+    "passed": false,
+    "gate_blocked": true,
+    "image_gate_blocked": false,
+    "anatomy_score": 8.6,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "both",
+    "judge_source": "agent_absolute_5d",
+    "remote_vlm": {
+      "source": "agent_self_judge",
+      "provider": "",
+      "model": "",
+      "error": "",
+      "active": false
+    },
+    "should_continue_next_round": true,
+    "decision": "CONTINUE_NEXT_ROUND",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "style_lock",
+        "lesson": "本轮短板偏「style_lock」：头带整圈仍露出，未按参考用碎发盖住中段；prompt 改动 93% 超过档位上限 20%",
+        "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+        "from_score": "8.56"
+      },
+      {
+        "category": "keep",
+        "lesson": "保留本轮已做对的：发块近黑；窗金叶影身份锚点在",
+        "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+        "from_score": "8.56"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "18:12:16"
+  },
+  "rounds_to_converge": 4,
+  "convergence_badge": "共 4 轮未达阈值，采用最高分",
+  "process_board": ".memory-art/converge/boards/hp29_c03_low/index.html"
+}

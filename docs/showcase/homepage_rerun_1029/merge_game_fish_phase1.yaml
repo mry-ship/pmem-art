@@ -1,0 +1,18 @@
+# 游戏鱼 · 对标异种植物链：类型=鱼。每一种鱼用自己的本色斑纹，不刷成同一青绿。
+version: game-fish-identity-20261029
+pipeline: art-merge-two-phase
+tracks:
+  game_fish:
+    module: prop.GameFishMerge
+    mode: A
+    surface: Merge Mansion / Travel Town 风格化卡通3D棋盘图标，不是写实鱼类摄影。轻微3/4侧视，浅灰正方形格，短接触影。无等级字。
+    family: { type: 鱼, style: 卡通侧视鱼 }
+    rows:
+    - { level: 1, name: 鱼苗, silhouette: 小豆身+短尾, scale_delta: 基档, scale_pct: 0.56, parts_add: "—", look: 半透明银灰鱼苗，隐约脊骨，小尾, role: 入门件, merge_why: "" }
+    - { level: 2, name: 孔雀鱼, silhouette: 细身+帆尾, scale_delta: "+小", scale_pct: 0.59, parts_add: 虹彩帆状尾, look: 细橙身，蓝橙虹彩大帆尾, role: 换件, merge_why: 两件鱼苗合成孔雀鱼，豆身换成细身帆尾，同属观赏鱼 }
+    - { level: 3, name: 金鱼, silhouette: 圆腹+双尾, scale_delta: "+小", scale_pct: 0.62, parts_add: 圆腹与流动双尾, look: 金属橙红金鱼，圆腹，白腹，流动双尾, role: 换件, merge_why: 两件孔雀鱼合成金鱼，细身换成圆腹双尾，仍是观赏鱼 }
+    - { level: 4, name: 锦鲤, silhouette: 长身+红黑斑, scale_delta: "+中", scale_pct: 0.65, parts_add: 体侧红黑斑与须, look: 白底锦鲤，朱红与墨斑，短须, role: 职能件, merge_why: 两件金鱼合成锦鲤，圆腹换成修长斑纹身，观赏鱼套件 }
+    - { level: 5, name: 神仙鱼, silhouette: 侧扁三角+长鳍, scale_delta: "+中", scale_pct: 0.68, parts_add: 三角体与曳地长鳍, look: 银白神仙鱼，粗黑竖条，尖三角长鳍, role: 职能件, merge_why: 两件锦鲤合成神仙鱼，长身换成侧扁三角，仍是鱼 }
+    - { level: 6, name: 狮子鱼, silhouette: 扇鳍+刺条, scale_delta: "+大", scale_pct: 0.71, parts_add: 放射毒刺鳍, look: 红白斑马纹狮子鱼，扇形毒刺鳍, role: 稀有件, merge_why: 两件神仙鱼合成狮子鱼，三角鳍换成放射刺条，稀有观赏鱼 }
+    - { level: 7, name: 龙鱼, silhouette: 长体+硬鳞, scale_delta: "+大", scale_pct: 0.74, parts_add: 大硬鳞与须, look: 金属金鳞龙鱼，长体，粗须, role: 稀有件, merge_why: 两件狮子鱼合成龙鱼，刺鳍换成硬鳞长体，仍是鱼 }
+    - { level: 8, name: 旗鱼, silhouette: 长吻+高背旗鳍, scale_delta: "+大", scale_pct: 0.77, parts_add: 长吻与高旗鳍, look: 藏青旗鱼，银腹，长吻，高背斑点旗鳍, role: 展陈件, merge_why: 两件龙鱼合成旗鱼，长体换成吻旗英雄件，鱼类展陈 }

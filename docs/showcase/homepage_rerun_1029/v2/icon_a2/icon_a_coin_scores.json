@@ -1,0 +1,16 @@
+{
+  "id": "icon_a_coin",
+  "session": "hp29_icon_a_coin",
+  "rounds": 4,
+  "scores": [
+    8.63,
+    8.95,
+    9.17,
+    6.8
+  ],
+  "winner_round": 3,
+  "winner_score": 9.17,
+  "winner_dims": "识别度8.8/安全区9.3/光影质感9.2/多尺寸合规9.3/色板纯粹9.4/无瑕疵9.2",
+  "winner_path": "v2\\icon_a2\\final.jpg",
+  "remaining_defect": "coin a bit small and slightly cabochon-like"
+}

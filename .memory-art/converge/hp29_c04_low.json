@@ -1,0 +1,791 @@
+{
+  "session_id": "hp29_c04_low",
+  "started_at": "2026-10-29 18:05:58 UTC+8",
+  "goal": "4:3 ink-and-wash courtyard well looking UP. Ochre/honey/amber brick, readable ink lines, broken wooden stairs, warm light. NOT charcoal grayscale, NOT a spiral staircase as the whole well. Scale=low. Only repair one local flaw: keep wooden structure as BROKEN radiating plank stairs (not a complete spiral filling the shaft) and make the small wall-figure limbs readable. Lock ochre wash and the well camera.",
+  "module": "scene.CourtWell",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "low",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "low",
+    "label": "低强度 · 保守修瑕动态达标闭环 (Defect-Fix Dynamic Threshold >=9.6)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 1,
+    "target_score_threshold": 9.6,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.1125,
+      "perspective_anatomy": 0.1125,
+      "texture_detail": 0.225,
+      "spec_style": 0.15,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "viewpoint_or_pose",
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图，只在提示词上补还没过的那一处（提示词改动仍 ≤20%）",
+    "max_prompt_delta_ratio": 0.2,
+    "allow_recompose": false,
+    "allow_viewpoint_change": false,
+    "allow_action_pose_change": false,
+    "allow_element_count_change": false,
+    "allow_layout_change": false,
+    "allow_lighting_overhaul": false,
+    "forbidden_changes": [
+      "character_action_and_pose (不改动作与姿态)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)",
+      "viewpoint_angle (严禁改变机位视角)",
+      "scene_layout_and_elements (严禁改变场景布局与主体元素数量)",
+      "style_medium (严禁背离原图画风笔触与色板)"
+    ],
+    "min_round_leap": 0.1,
+    "prompt_delta_baseline": "first",
+    "prompt_directive": "原图画风优先：修脏渍和糊成一团的积水，不改成厚涂",
+    "medium_family": "wash",
+    "best_direction_hint": "最优方向：微质感（瓦当/纸齿/发丝），≤40字",
+    "goal": "4:3 ink-and-wash courtyard well looking UP. Ochre/honey/amber brick, readable ink lines, broken wooden stairs, warm light. NOT charcoal grayscale, NOT a spiral staircase as the whole well. Scale=low. Only repair one local flaw: keep wooden structure as BROKEN radiating plank stairs (not a complete spiral filling the shaft) and make the small wall-figure limbs readable. Lock ochre wash and the well camera.",
+    "module": "scene.CourtWell",
+    "ref_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c04\\ref.jpg",
+    "ref_analysis": "4:3 worm's-eye looking UP the courtyard well. Four walls converge to a far upper corner. Ochre/honey/amber brick #B49257 #E0A86A, ink-beam #392F1F, paper-white #FEF7DF, cool teal shade #5A6B70. Readable dark ink contours + watercolor wash, edge bloom, highlight as reserved paper white. Broken wooden plank stairs fan across the shaft — NOT a complete spiral staircase filling the well. Warm honey light from upper-left, pale stone slabs upper-right, dark iron scrollwork at far landing. Tiny wall figure on right ochre brick. Solid painted corners, not transparent. Do NOT inherit: charcoal grayscale, monochrome, oily impasto, neon, black studio void, plastic smoothness."
+  },
+  "medium_family": "wash",
+  "contract": "",
+  "target_score_threshold": 9.6,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c04\\ref.jpg",
+  "ref_analysis": "4:3 worm's-eye looking UP the courtyard well. Four walls converge to a far upper corner. Ochre/honey/amber brick #B49257 #E0A86A, ink-beam #392F1F, paper-white #FEF7DF, cool teal shade #5A6B70. Readable dark ink contours + watercolor wash, edge bloom, highlight as reserved paper white. Broken wooden plank stairs fan across the shaft — NOT a complete spiral staircase filling the well. Warm honey light from upper-left, pale stone slabs upper-right, dark iron scrollwork at far landing. Tiny wall figure on right ochre brick. Solid painted corners, not transparent. Do NOT inherit: charcoal grayscale, monochrome, oily impasto, neon, black studio void, plastic smoothness.",
+  "default_aspect_ratio": "4:3",
+  "default_reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c04\\ref.jpg"
+  ],
+  "aspect_ratio": "4:3",
+  "reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c04\\ref.jpg"
+  ],
+  "ref_physical_traits": {
+    "exists": true,
+    "size_bytes": 295176,
+    "size_kb": 288.3,
+    "width": 960,
+    "height": 677,
+    "aspect_ratio": "960:677",
+    "canonical_aspect_ratio": "4:3",
+    "color_entropy": 7.98
+  },
+  "param_validation": {
+    "valid": true,
+    "validation_passed": true,
+    "case_id": "hp29_c04_low",
+    "scale": "low",
+    "aspect_ratio": "4:3",
+    "ref_aspect_ratio": "4:3",
+    "ref_dimensions": "960x677",
+    "output_aspect_ratio": "",
+    "output_dimensions": "",
+    "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c04\\ref.jpg",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c04\\ref.jpg"
+    ],
+    "inherited_default_aspect_ratio": false,
+    "inherited_default_pad_image": false,
+    "matched_ref_aspect_ratio": true,
+    "matched_ref_pad_image": true,
+    "matched_output_aspect_ratio": true,
+    "three_step_stage": "step1_start",
+    "three_step_verified": false,
+    "warnings": []
+  },
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.6,
+  "accept_threshold": 9.6,
+  "max_rounds": 4,
+  "ready_to_finish": true,
+  "status": "finished",
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "4:3",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c04\\ref.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "hp29_c04_low",
+        "scale": "low",
+        "aspect_ratio": "4:3",
+        "ref_aspect_ratio": "4:3",
+        "ref_dimensions": "960x677",
+        "output_aspect_ratio": "4:3",
+        "output_dimensions": "1152x864",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c04\\ref.jpg",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c04\\ref.jpg"
+        ],
+        "inherited_default_aspect_ratio": false,
+        "inherited_default_pad_image": false,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "18:07:36",
+      "image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c04\\low\\r1.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 668683,
+        "size_kb": 653.0,
+        "width": 1152,
+        "height": 864,
+        "aspect_ratio": "4:3",
+        "canonical_aspect_ratio": "4:3",
+        "color_entropy": 7.22
+      },
+      "raw_score": 8.69,
+      "score": 8.69,
+      "target_score_threshold": 9.6,
+      "dims": "构图9.1/光影8.9/透视8.5/质感8.8/风格9.0/无瑕疵8.2",
+      "dims_parsed": {
+        "composition": 9.1,
+        "lighting_color": 8.9,
+        "perspective_anatomy": 8.5,
+        "texture_detail": 8.8,
+        "spec_style": 9.0,
+        "flawlessness": 8.2
+      },
+      "weighted_score": 8.69,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.6）"
+      ],
+      "stagnated": false,
+      "strengths": "井底仰视机位锁住；赭蜜砖色与墨线成立，不是炭笔灰；碎木梯仍是扇状散板。",
+      "defects": "远角落点小人肢体不可读，仍是一团；右壁小人仍是绿lump+黑团；部分木板不跟同一灭点。",
+      "next_fix": "只改两处：远角落点小人画出可读头胸四肢；扇状碎木板全部指向同一远上角灭点，保持断裂不要修成完整楼梯。",
+      "prompt": "原图画风优先：修脏渍和糊成一团的积水，不改成厚涂| FULL-COLOR 4:3 ink-and-wash courtyard well looking UP. Ochre honey amber brick, readable ink lines, broken radiating plank stairs not a spiral filling the well, warm gold from upper-left, cool teal lower-left. LOW: only keep broken planks and readable wall-figure limbs. Lock camera. NOT charcoal grayscale.| 约束：不改动作与姿态；保持原图性别、物种、年龄段与核心外观；严禁改变机位视角；严禁改变场景布局与主体元素数量；严禁背离原图画风笔触与色板 | Structure floor: vanishing points converge and mass contact shadows read; do not melt the structure",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.5,
+      "anatomy_floor": 6.0,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "scene",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：远角落点小人肢体不可读，仍是一团；右壁小人仍是绿lump+黑团；部分木板不跟同一灭点。",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.69"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：井底仰视机位锁住；赭蜜砖色与墨线成立，不是炭笔灰；碎木梯仍是扇状散板。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.69"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "18:07:37"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "4:3",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c04\\ref.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "hp29_c04_low",
+        "scale": "low",
+        "aspect_ratio": "4:3",
+        "ref_aspect_ratio": "4:3",
+        "ref_dimensions": "960x677",
+        "output_aspect_ratio": "4:3",
+        "output_dimensions": "1152x864",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c04\\ref.jpg",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c04\\ref.jpg"
+        ],
+        "inherited_default_aspect_ratio": false,
+        "inherited_default_pad_image": false,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "18:10:12",
+      "image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c04\\low\\r2.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 623789,
+        "size_kb": 609.2,
+        "width": 1152,
+        "height": 864,
+        "aspect_ratio": "4:3",
+        "canonical_aspect_ratio": "4:3",
+        "color_entropy": 7.22
+      },
+      "raw_score": 8.8,
+      "score": 8.8,
+      "target_score_threshold": 9.6,
+      "dims": "构图9.1/光影9.0/透视8.6/质感8.9/风格9.1/无瑕疵8.4",
+      "dims_parsed": {
+        "composition": 9.1,
+        "lighting_color": 9.0,
+        "perspective_anatomy": 8.6,
+        "texture_detail": 8.9,
+        "spec_style": 9.1,
+        "flawlessness": 8.4
+      },
+      "weighted_score": 8.8,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.6）",
+        "prompt 改动 64% 超过档位上限 20%"
+      ],
+      "stagnated": false,
+      "strengths": "仰视机位与赭蜜水墨仍锁住；右壁小人略可辨；不是灰度。",
+      "defects": "远角落点小人仍偏糊；扇状木板被修得太像完整梯级；左壁仍有多余悬挂碎板。；prompt 改动 64% 超过档位上限 20%",
+      "next_fix": "只改：远角小人画出帽/头、肩、两腿；木板保持断裂空隙，不要连成完整楼梯。",
+      "prompt": "原图画风优先：修脏渍和糊成一团的积水，不改成厚涂| R2 LOW: keep camera and ochre wash. Far landing figure readable limbs. Fan planks share one vanishing corner, stay broken not a complete stair. NOT grayscale.| 约束：不改动作与姿态；保持原图性别、物种、年龄段与核心外观；严禁改变机位视角；严禁改变场景布局与主体元素数量；严禁背离原图画风笔触与色板 | Structure floor: vanishing points converge and mass contact shadows read; do not melt the structure | 只改两处：远角落点小人画出可读头胸四肢；扇状碎木板全部指向同一远上角灭点，保持断裂不要修成完整楼梯。",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.6,
+      "anatomy_floor": 6.0,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "scene",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：远角落点小人仍偏糊；扇状木板被修得太像完整梯级；左壁仍有多余悬挂碎板。；prompt 改动 64% 超过档位上限 20%",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.8"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：仰视机位与赭蜜水墨仍锁住；右壁小人略可辨；不是灰度。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.8"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "18:10:13"
+    },
+    {
+      "round": 3,
+      "round_label": "第 3 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "4:3",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c04\\ref.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "hp29_c04_low",
+        "scale": "low",
+        "aspect_ratio": "4:3",
+        "ref_aspect_ratio": "4:3",
+        "ref_dimensions": "960x677",
+        "output_aspect_ratio": "4:3",
+        "output_dimensions": "1152x864",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c04\\ref.jpg",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c04\\ref.jpg"
+        ],
+        "inherited_default_aspect_ratio": false,
+        "inherited_default_pad_image": false,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "18:11:52",
+      "image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c04\\low\\r3.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 679842,
+        "size_kb": 663.9,
+        "width": 1152,
+        "height": 864,
+        "aspect_ratio": "4:3",
+        "canonical_aspect_ratio": "4:3",
+        "color_entropy": 7.21
+      },
+      "raw_score": 8.94,
+      "score": 8.94,
+      "target_score_threshold": 9.6,
+      "dims": "构图9.2/光影9.1/透视8.8/质感9.0/风格9.2/无瑕疵8.6",
+      "dims_parsed": {
+        "composition": 9.2,
+        "lighting_color": 9.1,
+        "perspective_anatomy": 8.8,
+        "texture_detail": 9.0,
+        "spec_style": 9.2,
+        "flawlessness": 8.6
+      },
+      "weighted_score": 8.94,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.6）",
+        "prompt 改动 59% 超过档位上限 20%"
+      ],
+      "stagnated": false,
+      "strengths": "远角小人开始能看出帽与身形；仰视机位与赭色水墨锁住。",
+      "defects": "扇状木板仍偏完整梯级；左壁仍有多余碎板；远角四肢还不够分开。；prompt 改动 59% 超过档位上限 20%",
+      "next_fix": "只改：木板之间留出断裂空隙，不要连成完整楼梯；远角小人两臂两腿再分开一点。",
+      "prompt": "原图画风优先：修脏渍和糊成一团的积水，不改成厚涂| R3 LOW: far landing figure hat/head/shoulders/legs. Keep planks gapped broken not a complete stair. Lock camera ochre wash. NOT grayscale.| 约束：不改动作与姿态；保持原图性别、物种、年龄段与核心外观；严禁改变机位视角；严禁改变场景布局与主体元素数量；严禁背离原图画风笔触与色板 | Structure floor: vanishing points converge and mass contact shadows read; do not melt the structure | 只改：远角小人画出帽/头、肩、两腿；木板保持断裂空隙，不要连成完整楼梯。",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.8,
+      "anatomy_floor": 6.0,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "scene",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：扇状木板仍偏完整梯级；左壁仍有多余碎板；远角四肢还不够分开。；prompt 改动 59% 超过档位上限 20%",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.94"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：远角小人开始能看出帽与身形；仰视机位与赭色水墨锁住。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.94"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "18:11:53"
+    },
+    {
+      "round": 4,
+      "round_label": "第 4 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "4:3",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c04\\ref.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "hp29_c04_low",
+        "scale": "low",
+        "aspect_ratio": "4:3",
+        "ref_aspect_ratio": "4:3",
+        "ref_dimensions": "960x677",
+        "output_aspect_ratio": "4:3",
+        "output_dimensions": "1152x864",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c04\\ref.jpg",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c04\\ref.jpg"
+        ],
+        "inherited_default_aspect_ratio": false,
+        "inherited_default_pad_image": false,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "18:13:57",
+      "image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c04\\low\\r4.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 667169,
+        "size_kb": 651.5,
+        "width": 1152,
+        "height": 864,
+        "aspect_ratio": "4:3",
+        "canonical_aspect_ratio": "4:3",
+        "color_entropy": 7.22
+      },
+      "raw_score": 8.98,
+      "score": 8.98,
+      "target_score_threshold": 9.6,
+      "dims": "构图9.2/光影9.1/透视8.9/质感9.0/风格9.2/无瑕疵8.7",
+      "dims_parsed": {
+        "composition": 9.2,
+        "lighting_color": 9.1,
+        "perspective_anatomy": 8.9,
+        "texture_detail": 9.0,
+        "spec_style": 9.2,
+        "flawlessness": 8.7
+      },
+      "weighted_score": 8.98,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.04 低于当前档位 (low) 的最小跃升 +0.10。下一轮只改缺陷部位；若原图离 9.6 远，换 medium 或 high",
+        "Agent Absolute-5D 已采纳（门槛 9.6）",
+        "prompt 改动 61% 超过档位上限 20%"
+      ],
+      "stagnated": true,
+      "strengths": "远角小人帽与腿比前轮清楚；仰视机位与赭色水墨锁住，不是灰度。",
+      "defects": "扇状木板仍偏完整梯级；左壁仍有少量悬挂碎板。；prompt 改动 61% 超过档位上限 20%",
+      "next_fix": "已满4轮。若续跑：木板再留断裂空隙。",
+      "prompt": "原图画风优先：修脏渍和糊成一团的积水，不改成厚涂| R4 LOW: gapped broken planks not a complete stair. Far figure arms and legs more separated. Lock camera ochre wash. NOT grayscale.| 约束：不改动作与姿态；保持原图性别、物种、年龄段与核心外观；严禁改变机位视角；严禁改变场景布局与主体元素数量；严禁背离原图画风笔触与色板 | Structure floor: vanishing points converge and mass contact shadows read; do not melt the structure | 只改：木板之间留出断裂空隙，不要连成完整楼梯；远角小人两臂两腿再分开一点。",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.9,
+      "anatomy_floor": 6.0,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "scene",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_MAX_ROUNDS",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：扇状木板仍偏完整梯级；左壁仍有少量悬挂碎板。；prompt 改动 61% 超过档位上限 20%",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.98"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：远角小人帽与腿比前轮清楚；仰视机位与赭色水墨锁住，不是灰度。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.98"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "18:13:58"
+    }
+  ],
+  "warm_start": {
+    "project_id": "cursor-pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "cursor-pmem-art",
+      "project_slug": "cursor-pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-10-29 18:03:42 UTC+8"
+    },
+    "module": "scene.CourtWell",
+    "goal": "4:3 ink-and-wash courtyard well looking UP. Ochre/honey/amber brick, readable ink lines, broken wooden stairs, warm light. NOT charcoal grayscale, NOT a spiral staircase as the whole well. Scale=low. Only repair one local flaw: keep wooden structure as BROKEN radiating plank stairs (not a complete spiral filling the shaft) and make the small wall-figure limbs readable. Lock ochre wash and the well camera.",
+    "confidence": 0.3,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "红线可控（0 条）",
+      "挂载 0 张项目知识卡 + 2 张全局美术底层基础卡"
+    ],
+    "top_recipes": [],
+    "top_redlines": [],
+    "art_decisions": [],
+    "private_knowledge": [],
+    "shared_knowledge": [
+      {
+        "id": "palette-70-20-10",
+        "title": "色彩构成：70-20-10 色板比例黄金法则",
+        "body": "画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+        "layer_scope": "shared"
+      },
+      {
+        "id": "atmospheric-perspective",
+        "title": "空间景深：近中远三层大气透视法则",
+        "body": "场景必须划分近景（高对比暗部压角剪影）、中景（视觉主体与最高明暗对比度）、远景（随空气介质距离递减对比度与饱和度，融入天光雾气），严禁远中近三景饱和度相同导致画面扁平粘连。",
+        "layer_scope": "shared"
+      }
+    ],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [],
+      "preferred_composition": [],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [],
+      "banned_habits": []
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/cursor-pmem-art/)\n- 目标模块: scene.CourtWell\n- 置信度: 0.30（fast-track 资格: 否）\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n  · [atmospheric-perspective] 空间景深：近中远三层大气透视法则: 场景必须划分近景（高对比暗部压角剪影）、中景（视觉主体与最高明暗对比度）、远景（随空气介质距离递减对比度与饱和度，融入天光雾气），严禁远中近三景饱和度相同导致画面扁平粘连。",
+    "built_at": "2026-10-29 18:05:58 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：远角落点小人肢体不可读，仍是一团；右壁小人仍是绿lump+黑团；部分木板不跟同一灭点。",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.69"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：井底仰视机位锁住；赭蜜砖色与墨线成立，不是炭笔灰；碎木梯仍是扇状散板。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.69"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：远角落点小人仍偏糊；扇状木板被修得太像完整梯级；左壁仍有多余悬挂碎板。；prompt 改动 64% 超过档位上限 20%",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.8"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：仰视机位与赭蜜水墨仍锁住；右壁小人略可辨；不是灰度。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.8"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：扇状木板仍偏完整梯级；左壁仍有多余碎板；远角四肢还不够分开。；prompt 改动 59% 超过档位上限 20%",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.94"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：远角小人开始能看出帽与身形；仰视机位与赭色水墨锁住。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.94"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：扇状木板仍偏完整梯级；左壁仍有少量悬挂碎板。；prompt 改动 61% 超过档位上限 20%",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.98"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：远角小人帽与腿比前轮清楚；仰视机位与赭色水墨锁住，不是灰度。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.98"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 4,
+  "regression_drop": 0.5,
+  "ActionRequired": "STOP_PICK_BEST",
+  "showcase_ready": true,
+  "winner": {
+    "round": 4,
+    "round_label": "第 4 轮精修",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "4:3",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c04\\ref.jpg"
+    ],
+    "param_validation": {
+      "valid": true,
+      "validation_passed": true,
+      "case_id": "hp29_c04_low",
+      "scale": "low",
+      "aspect_ratio": "4:3",
+      "ref_aspect_ratio": "4:3",
+      "ref_dimensions": "960x677",
+      "output_aspect_ratio": "4:3",
+      "output_dimensions": "1152x864",
+      "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c04\\ref.jpg",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c04\\ref.jpg"
+      ],
+      "inherited_default_aspect_ratio": false,
+      "inherited_default_pad_image": false,
+      "matched_ref_aspect_ratio": true,
+      "matched_ref_pad_image": true,
+      "matched_output_aspect_ratio": true,
+      "three_step_stage": "step3_judge",
+      "three_step_verified": true,
+      "warnings": [],
+      "continuation_pad": false,
+      "pad_diverged": false
+    },
+    "generated_at": "18:13:57",
+    "image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c04\\low\\r4.jpg",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 667169,
+      "size_kb": 651.5,
+      "width": 1152,
+      "height": 864,
+      "aspect_ratio": "4:3",
+      "canonical_aspect_ratio": "4:3",
+      "color_entropy": 7.22
+    },
+    "raw_score": 8.98,
+    "score": 8.98,
+    "target_score_threshold": 9.6,
+    "dims": "构图9.2/光影9.1/透视8.9/质感9.0/风格9.2/无瑕疵8.7",
+    "dims_parsed": {
+      "composition": 9.2,
+      "lighting_color": 9.1,
+      "perspective_anatomy": 8.9,
+      "texture_detail": 9.0,
+      "spec_style": 9.2,
+      "flawlessness": 8.7
+    },
+    "weighted_score": 8.98,
+    "audit_warnings": [
+      "收敛停滞预警：本轮净增 +0.04 低于当前档位 (low) 的最小跃升 +0.10。下一轮只改缺陷部位；若原图离 9.6 远，换 medium 或 high",
+      "Agent Absolute-5D 已采纳（门槛 9.6）",
+      "prompt 改动 61% 超过档位上限 20%"
+    ],
+    "stagnated": true,
+    "strengths": "远角小人帽与腿比前轮清楚；仰视机位与赭色水墨锁住，不是灰度。",
+    "defects": "扇状木板仍偏完整梯级；左壁仍有少量悬挂碎板。；prompt 改动 61% 超过档位上限 20%",
+    "next_fix": "已满4轮。若续跑：木板再留断裂空隙。",
+    "prompt": "原图画风优先：修脏渍和糊成一团的积水，不改成厚涂| R4 LOW: gapped broken planks not a complete stair. Far figure arms and legs more separated. Lock camera ochre wash. NOT grayscale.| 约束：不改动作与姿态；保持原图性别、物种、年龄段与核心外观；严禁改变机位视角；严禁改变场景布局与主体元素数量；严禁背离原图画风笔触与色板 | Structure floor: vanishing points converge and mass contact shadows read; do not melt the structure | 只改：木板之间留出断裂空隙，不要连成完整楼梯；远角小人两臂两腿再分开一点。",
+    "continuation": false,
+    "passed": false,
+    "gate_blocked": true,
+    "image_gate_blocked": false,
+    "anatomy_score": 8.9,
+    "anatomy_floor": 6.0,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "scene",
+    "judge_source": "agent_absolute_5d",
+    "remote_vlm": {
+      "source": "agent_self_judge",
+      "provider": "",
+      "model": "",
+      "error": "",
+      "active": false
+    },
+    "should_continue_next_round": false,
+    "decision": "STOP_MAX_ROUNDS",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "style_lock",
+        "lesson": "本轮短板偏「style_lock」：扇状木板仍偏完整梯级；左壁仍有少量悬挂碎板。；prompt 改动 61% 超过档位上限 20%",
+        "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+        "from_score": "8.98"
+      },
+      {
+        "category": "keep",
+        "lesson": "保留本轮已做对的：远角小人帽与腿比前轮清楚；仰视机位与赭色水墨锁住，不是灰度。",
+        "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+        "from_score": "8.98"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "18:13:58"
+  },
+  "rounds_to_converge": 4,
+  "convergence_badge": "共 4 轮未达阈值，采用最高分",
+  "process_board": ".memory-art/converge/boards/hp29_c04_low/index.html"
+}

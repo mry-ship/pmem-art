@@ -1,0 +1,16 @@
+{
+  "id": "icon_c_ruby",
+  "session": "hp29_icon_c_ruby",
+  "rounds": 4,
+  "scores": [
+    8.98,
+    8.39,
+    9.16,
+    8.65
+  ],
+  "winner_round": 3,
+  "winner_score": 9.16,
+  "winner_dims": "剪影识别9.3/描边色板8.6/棚拍光9.4/透明底8.6/无字9.8/无瑕疵9.3",
+  "winner_path": "v2\\icon_c_set\\ruby.jpg",
+  "remaining_defect": "stroke too thin"
+}

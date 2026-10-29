@@ -1,0 +1,65 @@
+[
+  {
+    "session": "hp29_clone_kite",
+    "image": "docs/showcase/homepage_rerun_1029/v2/clone/r3.jpg",
+    "prompt": "Boy on steps, five fingers, full sneakers, compact rolled kite.",
+    "dims": "构图9.0/光影8.9/透视8.8/质感9.0/风格8.6/无瑕疵8.8",
+    "strengths": "五指更清楚，两只球鞋完整；仍是男孩不是女孩。",
+    "defects": "纸筒丢掉了风筝纹样和尾巴，更像包装纸卷。",
+    "next_fix": "保持五指和完整球鞋，纸卷重新画上风筝彩绘、竹骨端头和折叠尾。"
+  },
+  {
+    "session": "hp29_clone_rabbit",
+    "image": "docs/showcase/homepage_rerun_1029/v2/clone_rabbit/r3.jpg",
+    "prompt": "White rabbit hugging carrot, BOTH eyes open with amber iris and catchlight.",
+    "dims": "构图9.4/光影9.2/透视9.3/质感9.4/风格9.5/无瑕疵9.2",
+    "strengths": "双眼都睁开并有琥珀虹膜和高光；没有抄回女孩。",
+    "defects": "笔触仍偏光滑，纸齿比参考女孩那张干粉彩更弱。",
+    "next_fix": "保持双眼虹膜和抱胡萝卜，把油画棒颗粒和米白纸齿画得更粗更干。"
+  },
+  {
+    "session": "hp29_variant_light",
+    "image": "docs/showcase/homepage_rerun_1029/v2/variant/r3.jpg",
+    "prompt": "Same girl, charcoal hair bulk, SSS ears, gold rim, dust motes.",
+    "dims": "构图9.3/光影9.3/透视9.3/质感9.3/风格9.0/无瑕疵9.1",
+    "strengths": "窗金边和尘埃还在；猫夹耳机白Tee锁住。",
+    "defects": "头发主体偏暖棕，离开了近黑炭黑。",
+    "next_fix": "把头发主体收回炭黑，只在受光发丝留金透光，耳廓SSS保留。"
+  },
+  {
+    "session": "hp29_variant_surprise",
+    "image": "docs/showcase/homepage_rerun_1029/v2/variant_expr/r3.jpg",
+    "prompt": "Same girl, moderate surprise, two clean upper incisors.",
+    "dims": "构图9.4/光影9.3/透视9.2/质感9.4/风格9.2/无瑕疵9.3",
+    "strengths": "惊讶变温和，不再大喊；身份机位锁住。",
+    "defects": "上排门牙只露出一点，不够清楚。",
+    "next_fix": "中等张嘴，两颗上门牙整齐清楚，不要回到大喊。"
+  },
+  {
+    "session": "hp29_variant_wink",
+    "image": "docs/showcase/homepage_rerun_1029/v2/variant_wink/r3.jpg",
+    "prompt": "Same girl, playful wink, thin closed mouth.",
+    "dims": "构图9.4/光影9.3/透视9.3/质感9.4/风格9.5/无瑕疵9.3",
+    "strengths": "眨眼和抿嘴成立；近黑发和配饰锁住。",
+    "defects": "闭的是另一只眼，开着的眼仍略大。",
+    "next_fix": "画面右侧那只眼闭合眨眼，左侧开眼缩小到参考大小，嘴保持细线。"
+  },
+  {
+    "session": "hp29_variant_sleepy",
+    "image": "docs/showcase/homepage_rerun_1029/v2/variant_sleepy/r3.jpg",
+    "prompt": "Same girl, cat clip on the left, sleepy half-lids, closed mouth.",
+    "dims": "构图9.4/光影9.3/透视9.3/质感9.4/风格9.5/无瑕疵9.3",
+    "strengths": "猫夹回到左侧；半睑睡眼和抿嘴成立。",
+    "defects": "眼睑还可以更沉，睡意不够。",
+    "next_fix": "猫夹留在左侧，只把上下眼睑压得更沉。"
+  },
+  {
+    "session": "hp29_variant_angry",
+    "image": "docs/showcase/homepage_rerun_1029/v2/variant_angry/r3.jpg",
+    "prompt": "Same girl, slight pout, inner brows only.",
+    "dims": "构图9.3/光影9.2/透视9.3/质感9.4/风格8.7/无瑕疵8.9",
+    "strengths": "近黑发和配饰锁住。",
+    "defects": "眉又压得太满，嘴是下撇不是轻嘟。",
+    "next_fix": "只轻轻压内眉角，下唇往前轻嘟，不要整条眉皱满。"
+  }
+]

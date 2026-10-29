@@ -1,0 +1,41 @@
+{
+  "id": "hp29_potion_L01",
+  "module": "prop.HealPotionMerge",
+  "winner": "v2/merge_potion_l16/L01.jpg",
+  "winner_round": 3,
+  "best": 9.63,
+  "n": 3,
+  "rounds": [
+    {
+      "round": 1,
+      "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L01_r1.jpg",
+      "dims": "剪影识别8.4/描边色板8.8/棚拍光9.3/透明底9.5/无字9.9/无瑕疵8.7",
+      "score": 8.74,
+      "bbox_h": 1.0,
+      "bbox_w": 1.0,
+      "fill": 0.373,
+      "defects": "gradient bg, sparkles, photoreal"
+    },
+    {
+      "round": 2,
+      "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L01_r2.jpg",
+      "dims": "剪影识别8.8/描边色板8.6/棚拍光9.2/透明底9.6/无字9.9/无瑕疵8.5",
+      "score": 8.76,
+      "bbox_h": 0.597,
+      "bbox_w": 0.496,
+      "fill": 0.176,
+      "defects": "opaque ceramic not empty glass"
+    },
+    {
+      "round": 3,
+      "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L01_r3.jpg",
+      "dims": "剪影识别9.7/描边色板9.6/棚拍光9.6/透明底9.8/无字9.9/无瑕疵9.6",
+      "score": 9.63,
+      "bbox_h": 0.6,
+      "bbox_w": 0.478,
+      "fill": 0.206,
+      "defects": "tiny outline only"
+    }
+  ],
+  "remaining_defect": "tiny outline only"
+}

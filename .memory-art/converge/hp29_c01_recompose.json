@@ -1,0 +1,800 @@
+{
+  "session_id": "hp29_c01_recompose",
+  "started_at": "2026-10-29 18:09:42 UTC+8",
+  "goal": "PIXEL LOCK: 9:16 epic night. Pale-robe dark-hair swordsman standing on CHARCOAL WET dark roof tiles (NOT green glaze). Warm WINDOW FIRE lights in the vast city below, cool fog, planetary limb. No lantern as key light. No starfield replacing the city. No neon. Scale=recompose. Camera in the central long street looking UP at ridges; warrior a small silhouette on a ridge; fog separates street from window-fire sea. Keep charcoal tiles and window fire. Old high-roof looking-down camera is void.",
+  "module": "scene.NightCity",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "recompose",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "recompose",
+    "label": "定向改构图模式 · 按用户指定新构图动态达标闭环 (Directed Re-Composition Dynamic Threshold >=9.6)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 2,
+    "target_score_threshold": 9.6,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.15,
+      "perspective_anatomy": 0.15,
+      "texture_detail": 0.15,
+      "spec_style": 0.15,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "style_medium",
+      "identity",
+      "recompose_dir_target"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图；第 1 轮落到指定机位，之后只在提示词上补还没过的那一处（提示词改动仍 ≤85%）",
+    "max_prompt_delta_ratio": 0.85,
+    "allow_recompose": true,
+    "allow_viewpoint_change": true,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)",
+      "recompose_direction (不偏离指定构图方向)"
+    ],
+    "prompt_delta_baseline": "previous",
+    "min_round_leap": 0.2,
+    "prompt_directive": "原图画风优先：保画风色板，按「Stand in the central long street looking UP at ridges; warrior becomes a small silhouette on a ridge; fog separates street from window-fire sea. Old high-roof looking-down camera is void.」重构机位，笔触和光的类型跟参考图",
+    "medium_family": "generic",
+    "best_direction_hint": "最优方向：只写目标机位与布局",
+    "recompose_dir": "Stand in the central long street looking UP at ridges; warrior becomes a small silhouette on a ridge; fog separates street from window-fire sea. Old high-roof looking-down camera is void.",
+    "goal": "PIXEL LOCK: 9:16 epic night. Pale-robe dark-hair swordsman standing on CHARCOAL WET dark roof tiles (NOT green glaze). Warm WINDOW FIRE lights in the vast city below, cool fog, planetary limb. No lantern as key light. No starfield replacing the city. No neon. Scale=recompose. Camera in the central long street looking UP at ridges; warrior a small silhouette on a ridge; fog separates street from window-fire sea. Keep charcoal tiles and window fire. Old high-roof looking-down camera is void.",
+    "module": "scene.NightCity",
+    "ref_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c01\\ref.jpg",
+    "ref_analysis": "9:16 epic night cinematic still. Extreme high three-quarter looking down a central avenue that vanishes into a curved planetary city limb. Pale-robe dark-hair swordsman back-view on the lower-left roof ridge, near-silhouette, sheathed sword at left hip. CHARCOAL WET overlapping clay tiles, soot-black, faint dirty frost on ridges — not green glaze. Warm WINDOW FIRE as small amber rectangles in windows; cool blue-grey fog in streets. Palette: charcoal tiles #1A1C1E, pale robe #C9C4BB, cool fog #6B7480, window fire #E8A040, night #243038. Window-fires are the only warm sources. Do not inherit lanterns, neon, starfields, or green tiles."
+  },
+  "medium_family": "generic",
+  "contract": "",
+  "target_score_threshold": 9.6,
+  "recompose_dir": "Stand in the central long street looking UP at ridges; warrior becomes a small silhouette on a ridge; fog separates street from window-fire sea. Old high-roof looking-down camera is void.",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c01\\ref.jpg",
+  "ref_analysis": "9:16 epic night cinematic still. Extreme high three-quarter looking down a central avenue that vanishes into a curved planetary city limb. Pale-robe dark-hair swordsman back-view on the lower-left roof ridge, near-silhouette, sheathed sword at left hip. CHARCOAL WET overlapping clay tiles, soot-black, faint dirty frost on ridges — not green glaze. Warm WINDOW FIRE as small amber rectangles in windows; cool blue-grey fog in streets. Palette: charcoal tiles #1A1C1E, pale robe #C9C4BB, cool fog #6B7480, window fire #E8A040, night #243038. Window-fires are the only warm sources. Do not inherit lanterns, neon, starfields, or green tiles.",
+  "default_aspect_ratio": "9:16",
+  "default_reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c01\\ref.jpg"
+  ],
+  "aspect_ratio": "9:16",
+  "reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c01\\ref.jpg"
+  ],
+  "ref_physical_traits": {
+    "exists": true,
+    "size_bytes": 132495,
+    "size_kb": 129.4,
+    "width": 405,
+    "height": 720,
+    "aspect_ratio": "9:16",
+    "canonical_aspect_ratio": "9:16",
+    "color_entropy": 7.97
+  },
+  "param_validation": {
+    "valid": true,
+    "validation_passed": true,
+    "case_id": "hp29_c01_recompose",
+    "scale": "recompose",
+    "aspect_ratio": "9:16",
+    "ref_aspect_ratio": "9:16",
+    "ref_dimensions": "405x720",
+    "output_aspect_ratio": "",
+    "output_dimensions": "",
+    "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c01\\ref.jpg",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c01\\ref.jpg"
+    ],
+    "inherited_default_aspect_ratio": false,
+    "inherited_default_pad_image": false,
+    "matched_ref_aspect_ratio": true,
+    "matched_ref_pad_image": true,
+    "matched_output_aspect_ratio": true,
+    "three_step_stage": "step1_start",
+    "three_step_verified": false,
+    "warnings": []
+  },
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.6,
+  "accept_threshold": 9.6,
+  "max_rounds": 4,
+  "ready_to_finish": true,
+  "status": "finished",
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c01\\ref.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "hp29_c01_recompose",
+        "scale": "recompose",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "405x720",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c01\\ref.jpg",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c01\\ref.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "18:10:03",
+      "image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c01\\recompose\\r1.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 357395,
+        "size_kb": 349.0,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.97
+      },
+      "raw_score": 7.07,
+      "score": 7.07,
+      "target_score_threshold": 9.6,
+      "dims": "构图5.2/光影8.0/透视8.0/质感8.2/风格8.2/无瑕疵6.5",
+      "dims_parsed": {
+        "composition": 5.2,
+        "lighting_color": 8.0,
+        "perspective_anatomy": 8.0,
+        "texture_detail": 8.2,
+        "spec_style": 8.2,
+        "flawlessness": 6.5
+      },
+      "weighted_score": 7.07,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.6）"
+      ],
+      "stagnated": false,
+      "strengths": "Charcoal tiles, cool fog, window fires, warrior still present.",
+      "defects": "Did not recompose: still high-roof looking down; warrior still a large foreground figure.",
+      "next_fix": "Move camera into the street looking UP; make the warrior a tiny ridge silhouette, not a large foreground person.",
+      "prompt": "原图画风优先：保画风色板，按「Stand in the central long street looking UP at ridges; warrior becomes a small silhouette on a ridge; fog separates street from window-fire sea. Old high-roof looking-down camera is void.」重构机位，笔触和光的类型跟参考图| NEW CAMERA. Stand IN the central long street looking UP at ridges. Warrior becomes a SMALL silhouette on a distant ridge. Fog separates street from window-fire sea. Charcoal wet tiles. Old looking-down roof shot is void.| 约束：保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观；不偏离指定构图方向 | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.0,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "narrative_camera",
+          "lesson": "本轮短板偏「narrative_camera」：Did not recompose: still high-roof looking down; warrior still a large foregroun",
+          "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+          "from_score": "7.07"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：Charcoal tiles, cool fog, window fires, warrior still present.",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "7.07"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "18:10:04"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c01\\recompose\\r1.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "hp29_c01_recompose",
+        "scale": "recompose",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "720x1280",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c01\\recompose\\r1.jpg",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c01\\recompose\\r1.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": true,
+        "pad_diverged": false
+      },
+      "generated_at": "18:10:05",
+      "image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c01\\recompose\\r2.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 296861,
+        "size_kb": 289.9,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.97
+      },
+      "raw_score": 7.03,
+      "score": 7.03,
+      "target_score_threshold": 9.6,
+      "dims": "构图5.0/光影8.2/透视8.0/质感8.3/风格8.3/无瑕疵6.4",
+      "dims_parsed": {
+        "composition": 5.0,
+        "lighting_color": 8.2,
+        "perspective_anatomy": 8.0,
+        "texture_detail": 8.3,
+        "spec_style": 8.3,
+        "flawlessness": 6.4
+      },
+      "weighted_score": 7.03,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +-0.04 低于当前档位 (recompose) 的最小跃升 +0.20。下一轮更贴近指定构图方向",
+        "Agent Absolute-5D 已采纳（门槛 9.6）"
+      ],
+      "stagnated": true,
+      "strengths": "Materials still charcoal and cool-fog; no green tiles.",
+      "defects": "Camera still the old high-roof looking-down shot; warrior still large in the foreground.",
+      "next_fix": "Force worm's-eye street camera looking UP; warrior only 5 percent of frame height on a distant ridge.",
+      "prompt": "原图画风优先：保画风色板，按「Stand in the central long street looking UP at ridges; warrior becomes a small silhouette on a ridge; fog separates street from window-fire sea. Old high-roof looking-down camera is void.」重构机位，笔触和光的类型跟参考图| 机位保持指定方向：Stand in the central long street looking UP at ridges; warrior becomes a small silhouette on a ridge; fog separates street from window-fire sea. Old high-roof looking-down camera is void.。垫图是目前分数最高的那张成图。只改这一处：Move camera into the street looking UP; make the warrior a tiny ridge silhouette, not a large foreground person.。没点名的地方保持垫图。",
+      "continuation": true,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.0,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "narrative_camera",
+          "lesson": "本轮短板偏「narrative_camera」：Camera still the old high-roof looking-down shot; warrior still large in the for",
+          "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+          "from_score": "7.03"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：Materials still charcoal and cool-fog; no green tiles.",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "7.03"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "18:10:06"
+    },
+    {
+      "round": 3,
+      "round_label": "第 3 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c01\\recompose\\r1.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "hp29_c01_recompose",
+        "scale": "recompose",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "720x1280",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c01\\recompose\\r1.jpg",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c01\\recompose\\r1.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": true,
+        "pad_diverged": false
+      },
+      "generated_at": "18:10:07",
+      "image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c01\\recompose\\r3.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 301034,
+        "size_kb": 294.0,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.97
+      },
+      "raw_score": 7.11,
+      "score": 7.11,
+      "target_score_threshold": 9.6,
+      "dims": "构图5.0/光影8.3/透视8.1/质感8.5/风格8.4/无瑕疵6.5",
+      "dims_parsed": {
+        "composition": 5.0,
+        "lighting_color": 8.3,
+        "perspective_anatomy": 8.1,
+        "texture_detail": 8.5,
+        "spec_style": 8.4,
+        "flawlessness": 6.5
+      },
+      "weighted_score": 7.11,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.08 低于当前档位 (recompose) 的最小跃升 +0.20。下一轮更贴近指定构图方向",
+        "Agent Absolute-5D 已采纳（门槛 9.6）"
+      ],
+      "stagnated": true,
+      "strengths": "Better clay-tile material and cool fog; window fires stay window-fires.",
+      "defects": "Camera still looking down from a roof; warrior still large. Recompose failed.",
+      "next_fix": "Last attempt: cobblestone worm's-eye looking straight up the avenue; no large near-roof person.",
+      "prompt": "原图画风优先：保画风色板，按「Stand in the central long street looking UP at ridges; warrior becomes a small silhouette on a ridge; fog separates street from window-fire sea. Old high-roof looking-down camera is void.」重构机位，笔触和光的类型跟参考图| 机位保持指定方向：Stand in the central long street looking UP at ridges; warrior becomes a small silhouette on a ridge; fog separates street from window-fire sea. Old high-roof looking-down camera is void.。垫图是目前分数最高的那张成图。只改这一处：Move camera into the street looking UP; make the warrior a tiny ridge silhouette, not a large foreground person.。没点名的地方保持垫图。",
+      "continuation": true,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.1,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "narrative_camera",
+          "lesson": "本轮短板偏「narrative_camera」：Camera still looking down from a roof; warrior still large. Recompose failed.",
+          "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+          "from_score": "7.11"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：Better clay-tile material and cool fog; window fires stay window-fires.",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "7.11"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "18:10:08"
+    },
+    {
+      "round": 4,
+      "round_label": "第 4 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c01\\recompose\\r3.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "hp29_c01_recompose",
+        "scale": "recompose",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "720x1280",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c01\\recompose\\r3.jpg",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c01\\recompose\\r3.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": true,
+        "pad_diverged": false
+      },
+      "generated_at": "18:10:09",
+      "image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c01\\recompose\\r4.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 369867,
+        "size_kb": 361.2,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.98
+      },
+      "raw_score": 6.99,
+      "score": 6.99,
+      "target_score_threshold": 9.6,
+      "dims": "构图5.0/光影8.0/透视8.0/质感8.2/风格8.2/无瑕疵6.4",
+      "dims_parsed": {
+        "composition": 5.0,
+        "lighting_color": 8.0,
+        "perspective_anatomy": 8.0,
+        "texture_detail": 8.2,
+        "spec_style": 8.2,
+        "flawlessness": 6.4
+      },
+      "weighted_score": 6.99,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +-0.12 低于当前档位 (recompose) 的最小跃升 +0.20。下一轮更贴近指定构图方向",
+        "Agent Absolute-5D 已采纳（门槛 9.6）"
+      ],
+      "stagnated": true,
+      "strengths": "Tiles remain charcoal; lights remain window fires.",
+      "defects": "Still the original high-roof camera; warrior still a large foreground figure. Four-round recompose miss.",
+      "next_fix": "Stop. Best-of-4 is r3 for material quality despite the failed camera change.",
+      "prompt": "原图画风优先：保画风色板，按「Stand in the central long street looking UP at ridges; warrior becomes a small silhouette on a ridge; fog separates street from window-fire sea. Old high-roof looking-down camera is void.」重构机位，笔触和光的类型跟参考图| 机位保持指定方向：Stand in the central long street looking UP at ridges; warrior becomes a small silhouette on a ridge; fog separates street from window-fire sea. Old high-roof looking-down camera is void.。垫图是目前分数最高的那张成图。只改这一处：Last attempt: cobblestone worm's-eye looking straight up the avenue; no large near-roof person.。没点名的地方保持垫图。",
+      "continuation": true,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.0,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_MAX_ROUNDS",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "material",
+          "lesson": "本轮短板偏「material」：Still the original high-roof camera; warrior still a large foreground figure. Fo",
+          "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+          "from_score": "6.99"
+        },
+        {
+          "category": "narrative_camera",
+          "lesson": "本轮短板偏「narrative_camera」：Still the original high-roof camera; warrior still a large foreground figure. Fo",
+          "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+          "from_score": "6.99"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：Tiles remain charcoal; lights remain window fires.",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "6.99"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "18:10:09"
+    }
+  ],
+  "warm_start": {
+    "project_id": "cursor-pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "cursor-pmem-art",
+      "project_slug": "cursor-pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-10-29 18:03:42 UTC+8"
+    },
+    "module": "scene.NightCity",
+    "goal": "PIXEL LOCK: 9:16 epic night. Pale-robe dark-hair swordsman standing on CHARCOAL WET dark roof tiles (NOT green glaze). Warm WINDOW FIRE lights in the vast city below, cool fog, planetary limb. No lantern as key light. No starfield replacing the city. No neon. Scale=recompose. Camera in the central long street looking UP at ridges; warrior a small silhouette on a ridge; fog separates street from window-fire sea. Keep charcoal tiles and window fire. Old high-roof looking-down camera is void.",
+    "confidence": 0.3,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "红线可控（0 条）",
+      "挂载 0 张项目知识卡 + 2 张全局美术底层基础卡"
+    ],
+    "top_recipes": [],
+    "top_redlines": [],
+    "art_decisions": [],
+    "private_knowledge": [],
+    "shared_knowledge": [
+      {
+        "id": "atmospheric-perspective",
+        "title": "空间景深：近中远三层大气透视法则",
+        "body": "场景必须划分近景（高对比暗部压角剪影）、中景（视觉主体与最高明暗对比度）、远景（随空气介质距离递减对比度与饱和度，融入天光雾气），严禁远中近三景饱和度相同导致画面扁平粘连。",
+        "layer_scope": "shared"
+      },
+      {
+        "id": "composition-thirds-grid",
+        "title": "构图法则：九宫格三分法与呼吸留白安全区",
+        "body": "将核心视觉焦点布置在九宫格三分线交点（黄金分割点 0.618）上，利用引导线与前景暗角汇聚视线；独立资产四周必须预留 16px~24px 纯透明呼吸安全边距，严禁发冠、武器或特效贴死画布边缘被裁切。",
+        "layer_scope": "shared"
+      }
+    ],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [],
+      "preferred_composition": [],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [],
+      "banned_habits": []
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/cursor-pmem-art/)\n- 目标模块: scene.NightCity\n- 置信度: 0.30（fast-track 资格: 否）\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [atmospheric-perspective] 空间景深：近中远三层大气透视法则: 场景必须划分近景（高对比暗部压角剪影）、中景（视觉主体与最高明暗对比度）、远景（随空气介质距离递减对比度与饱和度，融入天光雾气），严禁远中近三景饱和度相同导致画面扁平粘连。\n  · [composition-thirds-grid] 构图法则：九宫格三分法与呼吸留白安全区: 将核心视觉焦点布置在九宫格三分线交点（黄金分割点 0.618）上，利用引导线与前景暗角汇聚视线；独立资产四周必须预留 16px~24px 纯透明呼吸安全边距，严禁发冠、武器或特效贴死画布边缘被裁切。",
+    "built_at": "2026-10-29 18:09:42 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：Did not recompose: still high-roof looking down; warrior still a large foregroun",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "7.07"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：Charcoal tiles, cool fog, window fires, warrior still present.",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "7.07"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：Camera still the old high-roof looking-down shot; warrior still large in the for",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "7.03"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：Materials still charcoal and cool-fog; no green tiles.",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "7.03"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：Camera still looking down from a roof; warrior still large. Recompose failed.",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "7.11"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：Better clay-tile material and cool fog; window fires stay window-fires.",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "7.11"
+    },
+    {
+      "category": "material",
+      "lesson": "本轮短板偏「material」：Still the original high-roof camera; warrior still a large foreground figure. Fo",
+      "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+      "from_score": "6.99"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：Still the original high-roof camera; warrior still a large foreground figure. Fo",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "6.99"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：Tiles remain charcoal; lights remain window fires.",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "6.99"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 4,
+  "regression_drop": 0.5,
+  "ActionRequired": "STOP_PICK_BEST",
+  "showcase_ready": true,
+  "winner": {
+    "round": 3,
+    "round_label": "第 3 轮精修",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "9:16",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c01\\recompose\\r1.jpg"
+    ],
+    "param_validation": {
+      "valid": true,
+      "validation_passed": true,
+      "case_id": "hp29_c01_recompose",
+      "scale": "recompose",
+      "aspect_ratio": "9:16",
+      "ref_aspect_ratio": "9:16",
+      "ref_dimensions": "720x1280",
+      "output_aspect_ratio": "9:16",
+      "output_dimensions": "720x1280",
+      "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c01\\recompose\\r1.jpg",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c01\\recompose\\r1.jpg"
+      ],
+      "inherited_default_aspect_ratio": true,
+      "inherited_default_pad_image": true,
+      "matched_ref_aspect_ratio": true,
+      "matched_ref_pad_image": true,
+      "matched_output_aspect_ratio": true,
+      "three_step_stage": "step3_judge",
+      "three_step_verified": true,
+      "warnings": [],
+      "continuation_pad": true,
+      "pad_diverged": false
+    },
+    "generated_at": "18:10:07",
+    "image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c01\\recompose\\r3.jpg",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 301034,
+      "size_kb": 294.0,
+      "width": 720,
+      "height": 1280,
+      "aspect_ratio": "9:16",
+      "canonical_aspect_ratio": "9:16",
+      "color_entropy": 7.97
+    },
+    "raw_score": 7.11,
+    "score": 7.11,
+    "target_score_threshold": 9.6,
+    "dims": "构图5.0/光影8.3/透视8.1/质感8.5/风格8.4/无瑕疵6.5",
+    "dims_parsed": {
+      "composition": 5.0,
+      "lighting_color": 8.3,
+      "perspective_anatomy": 8.1,
+      "texture_detail": 8.5,
+      "spec_style": 8.4,
+      "flawlessness": 6.5
+    },
+    "weighted_score": 7.11,
+    "audit_warnings": [
+      "收敛停滞预警：本轮净增 +0.08 低于当前档位 (recompose) 的最小跃升 +0.20。下一轮更贴近指定构图方向",
+      "Agent Absolute-5D 已采纳（门槛 9.6）"
+    ],
+    "stagnated": true,
+    "strengths": "Better clay-tile material and cool fog; window fires stay window-fires.",
+    "defects": "Camera still looking down from a roof; warrior still large. Recompose failed.",
+    "next_fix": "Last attempt: cobblestone worm's-eye looking straight up the avenue; no large near-roof person.",
+    "prompt": "原图画风优先：保画风色板，按「Stand in the central long street looking UP at ridges; warrior becomes a small silhouette on a ridge; fog separates street from window-fire sea. Old high-roof looking-down camera is void.」重构机位，笔触和光的类型跟参考图| 机位保持指定方向：Stand in the central long street looking UP at ridges; warrior becomes a small silhouette on a ridge; fog separates street from window-fire sea. Old high-roof looking-down camera is void.。垫图是目前分数最高的那张成图。只改这一处：Move camera into the street looking UP; make the warrior a tiny ridge silhouette, not a large foreground person.。没点名的地方保持垫图。",
+    "continuation": true,
+    "passed": false,
+    "gate_blocked": false,
+    "image_gate_blocked": false,
+    "anatomy_score": 8.1,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "humanoid",
+    "judge_source": "agent_absolute_5d",
+    "remote_vlm": {
+      "source": "agent_self_judge",
+      "provider": "",
+      "model": "",
+      "error": "",
+      "active": false
+    },
+    "should_continue_next_round": true,
+    "decision": "CONTINUE_NEXT_ROUND",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "narrative_camera",
+        "lesson": "本轮短板偏「narrative_camera」：Camera still looking down from a roof; warrior still large. Recompose failed.",
+        "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+        "from_score": "7.11"
+      },
+      {
+        "category": "keep",
+        "lesson": "保留本轮已做对的：Better clay-tile material and cool fog; window fires stay window-fires.",
+        "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+        "from_score": "7.11"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "18:10:08"
+  },
+  "rounds_to_converge": 4,
+  "convergence_badge": "共 4 轮未达阈值，采用最高分",
+  "process_board": ".memory-art/converge/boards/hp29_c01_recompose/index.html"
+}

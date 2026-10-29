@@ -1,15 +1,13 @@
 {
-  "ran_at": "2026-10-28 12:24:33 UTC+8",
+  "ran_at": "2026-10-29 18:19:04 UTC+8",
   "source": "converge_finish",
-  "session_id": "regen-c02-rec",
+  "session_id": "hp29_candy_L08",
   "tip": "「小提示」下次注意：画风锁定",
   "tip_candidate": "「小提示」下次注意：画风锁定",
-  "taste_changes": [
-    "preferred_composition: +半身"
-  ],
+  "taste_changes": [],
   "learn_queued": [
     "palette-70-20-10",
     "material-surface-physics"
   ],
-  "avg_winner_score": 9.08
+  "avg_winner_score": 9.62
 }

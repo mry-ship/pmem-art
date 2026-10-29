@@ -1,0 +1,46 @@
+{
+  "id": "c04_low",
+  "session": "hp29_c04_low",
+  "module": "scene.CourtWell",
+  "scale": "low",
+  "rounds": [
+    {
+      "round": 1,
+      "image": "draw_matrix/c04/low/r1.jpg",
+      "dims": "构图9.1/光影8.9/透视8.5/质感8.8/风格9.0/无瑕疵8.2",
+      "score": 8.69,
+      "defects": "远角落点小人肢体不可读，仍是一团；右壁小人仍是绿lump+黑团；部分木板不跟同一灭点。",
+      "next_fix": "只改两处：远角落点小人画出可读头胸四肢；扇状碎木板全部指向同一远上角灭点，保持断裂不要修成完整楼梯。"
+    },
+    {
+      "round": 2,
+      "image": "draw_matrix/c04/low/r2.jpg",
+      "dims": "构图9.1/光影9.0/透视8.6/质感8.9/风格9.1/无瑕疵8.4",
+      "score": 8.8,
+      "defects": "远角落点小人仍偏糊；扇状木板被修得太像完整梯级；左壁仍有多余悬挂碎板。",
+      "next_fix": "只改：远角小人画出帽/头、肩、两腿；木板保持断裂空隙，不要连成完整楼梯。"
+    },
+    {
+      "round": 3,
+      "image": "draw_matrix/c04/low/r3.jpg",
+      "dims": "构图9.2/光影9.1/透视8.8/质感9.0/风格9.2/无瑕疵8.6",
+      "score": 8.94,
+      "defects": "扇状木板仍偏完整梯级；左壁仍有多余碎板；远角四肢还不够分开。",
+      "next_fix": "只改：木板之间留出断裂空隙，不要连成完整楼梯；远角小人两臂两腿再分开一点。"
+    },
+    {
+      "round": 4,
+      "image": "draw_matrix/c04/low/r4.jpg",
+      "dims": "构图9.2/光影9.1/透视8.9/质感9.0/风格9.2/无瑕疵8.7",
+      "score": 8.98,
+      "defects": "扇状木板仍偏完整梯级；左壁仍有少量悬挂碎板。",
+      "next_fix": "已满4轮。若续跑：木板再留断裂空隙。"
+    }
+  ],
+  "n": 4,
+  "best": 8.98,
+  "winner_round": 4,
+  "winner": "draw_matrix/c04/low/final.jpg",
+  "remaining_defect": "扇状木板仍偏完整梯级；左壁仍有少量悬挂碎板。",
+  "passed_9_6": false
+}

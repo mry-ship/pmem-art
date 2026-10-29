@@ -1,0 +1,146 @@
+[
+  {
+    "id": "ui_royal",
+    "session": "hp29_ui_royal",
+    "rounds": 4,
+    "scores": [
+      8.67,
+      8.36,
+      8.41,
+      8.47
+    ],
+    "winner_round": 1,
+    "winner_score": 8.67,
+    "winner_dims": "构图8.8/光影8.9/透视8.7/质感8.6/风格8.8/无瑕疵8.4",
+    "winner_path": "v2/ui_royal/portrait/final.jpg",
+    "remaining_defect": "HUD过大挡住沙发地毯，Home钮过大，Garden/Room过饱和，x3绿圆不是金釉"
+  },
+  {
+    "id": "icon_a_city",
+    "session": "hp29_icon_a_city",
+    "rounds": 4,
+    "scores": [
+      8.62,
+      7.4,
+      6.5,
+      8.59
+    ],
+    "winner_round": 1,
+    "winner_score": 8.62,
+    "winner_dims": "识别度8.6/安全区9.0/光影质感8.3/多尺寸合规8.4/色板纯粹9.0/无瑕疵8.5",
+    "winner_path": "v2/icon_a/final.jpg",
+    "remaining_defect": "city sits on a double platter not floating; weak micro-bevel; group sits low"
+  },
+  {
+    "id": "icon_a_coin",
+    "session": "hp29_icon_a_coin",
+    "rounds": 4,
+    "scores": [
+      8.63,
+      8.95,
+      9.17,
+      6.8
+    ],
+    "winner_round": 3,
+    "winner_score": 9.17,
+    "winner_dims": "识别度8.8/安全区9.3/光影质感9.2/多尺寸合规9.3/色板纯粹9.4/无瑕疵9.2",
+    "winner_path": "v2/icon_a2/final.jpg",
+    "remaining_defect": "coin a bit small and slightly cabochon-like"
+  },
+  {
+    "id": "icon_a_forge",
+    "session": "hp29_icon_a_forge",
+    "rounds": 4,
+    "scores": [
+      9.07,
+      8.58,
+      8.87,
+      7.2
+    ],
+    "winner_round": 1,
+    "winner_score": 9.07,
+    "winner_dims": "识别度9.2/安全区9.0/光影质感9.1/多尺寸合规9.0/色板纯粹9.2/无瑕疵9.0",
+    "winner_path": "v2/icon_a3/final.jpg",
+    "remaining_defect": "hammer separated from anvil, splits at 29px"
+  },
+  {
+    "id": "icon_c_heal",
+    "session": "hp29_icon_c_heal",
+    "rounds": 4,
+    "scores": [
+      8.91,
+      8.15,
+      9.14,
+      8.66
+    ],
+    "winner_round": 3,
+    "winner_score": 9.14,
+    "winner_dims": "剪影识别9.3/描边色板9.2/棚拍光8.8/透明底8.6/无字9.8/无瑕疵9.2",
+    "winner_path": "v2/icon_c_set/heal.jpg",
+    "remaining_defect": "studio rim light a bit flat vs product"
+  },
+  {
+    "id": "icon_c_mana",
+    "session": "hp29_icon_c_mana",
+    "rounds": 4,
+    "scores": [
+      8.9,
+      8.14,
+      9.04,
+      8.57
+    ],
+    "winner_round": 3,
+    "winner_score": 9.04,
+    "winner_dims": "剪影识别9.2/描边色板8.9/棚拍光8.9/透明底8.6/无字9.8/无瑕疵9.1",
+    "winner_path": "v2/icon_c_set/mana.jpg",
+    "remaining_defect": "stroke thinner than heal set"
+  },
+  {
+    "id": "icon_c_key",
+    "session": "hp29_icon_c_key",
+    "rounds": 4,
+    "scores": [
+      8.75,
+      8.41,
+      9.0,
+      8.79
+    ],
+    "winner_round": 3,
+    "winner_score": 9.0,
+    "winner_dims": "剪影识别9.2/描边色板8.4/棚拍光9.1/透明底8.6/无字9.8/无瑕疵9.2",
+    "winner_path": "v2/icon_c_set/key.jpg",
+    "remaining_defect": "outline too thin"
+  },
+  {
+    "id": "icon_c_ruby",
+    "session": "hp29_icon_c_ruby",
+    "rounds": 4,
+    "scores": [
+      8.98,
+      8.39,
+      9.16,
+      8.65
+    ],
+    "winner_round": 3,
+    "winner_score": 9.16,
+    "winner_dims": "剪影识别9.3/描边色板8.6/棚拍光9.4/透明底8.6/无字9.8/无瑕疵9.3",
+    "winner_path": "v2/icon_c_set/ruby.jpg",
+    "remaining_defect": "stroke too thin"
+  },
+  {
+    "id": "icon_c_scroll",
+    "session": "hp29_icon_c_scroll",
+    "rounds": 4,
+    "scores": [
+      8.75,
+      8.37,
+      9.12,
+      8.74
+    ],
+    "winner_round": 3,
+    "winner_score": 9.12,
+    "winner_dims": "剪影识别9.3/描边色板9.0/棚拍光8.9/透明底8.6/无字9.7/无瑕疵9.2",
+    "winner_path": "v2/icon_c_set/scroll.jpg",
+    "remaining_defect": "studio rim a bit soft"
+  }
+]

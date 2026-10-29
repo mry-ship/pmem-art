@@ -1,0 +1,82 @@
+[
+  {
+    "id": "icon_c_heal",
+    "session": "hp29_icon_c_heal",
+    "rounds": 4,
+    "scores": [
+      8.91,
+      8.15,
+      9.14,
+      8.66
+    ],
+    "winner_round": 3,
+    "winner_score": 9.14,
+    "winner_dims": "剪影识别9.3/描边色板9.2/棚拍光8.8/透明底8.6/无字9.8/无瑕疵9.2",
+    "winner_path": "v2/icon_c_set/heal.jpg",
+    "remaining_defect": "studio rim light a bit flat vs product"
+  },
+  {
+    "id": "icon_c_mana",
+    "session": "hp29_icon_c_mana",
+    "rounds": 4,
+    "scores": [
+      8.9,
+      8.14,
+      9.04,
+      8.57
+    ],
+    "winner_round": 3,
+    "winner_score": 9.04,
+    "winner_dims": "剪影识别9.2/描边色板8.9/棚拍光8.9/透明底8.6/无字9.8/无瑕疵9.1",
+    "winner_path": "v2/icon_c_set/mana.jpg",
+    "remaining_defect": "stroke thinner than heal set"
+  },
+  {
+    "id": "icon_c_key",
+    "session": "hp29_icon_c_key",
+    "rounds": 4,
+    "scores": [
+      8.75,
+      8.41,
+      9.0,
+      8.79
+    ],
+    "winner_round": 3,
+    "winner_score": 9.0,
+    "winner_dims": "剪影识别9.2/描边色板8.4/棚拍光9.1/透明底8.6/无字9.8/无瑕疵9.2",
+    "winner_path": "v2/icon_c_set/key.jpg",
+    "remaining_defect": "outline too thin"
+  },
+  {
+    "id": "icon_c_ruby",
+    "session": "hp29_icon_c_ruby",
+    "rounds": 4,
+    "scores": [
+      8.98,
+      8.39,
+      9.16,
+      8.65
+    ],
+    "winner_round": 3,
+    "winner_score": 9.16,
+    "winner_dims": "剪影识别9.3/描边色板8.6/棚拍光9.4/透明底8.6/无字9.8/无瑕疵9.3",
+    "winner_path": "v2/icon_c_set/ruby.jpg",
+    "remaining_defect": "stroke too thin"
+  },
+  {
+    "id": "icon_c_scroll",
+    "session": "hp29_icon_c_scroll",
+    "rounds": 4,
+    "scores": [
+      8.75,
+      8.37,
+      9.12,
+      8.74
+    ],
+    "winner_round": 3,
+    "winner_score": 9.12,
+    "winner_dims": "剪影识别9.3/描边色板9.0/棚拍光8.9/透明底8.6/无字9.7/无瑕疵9.2",
+    "winner_path": "v2/icon_c_set/scroll.jpg",
+    "remaining_defect": "studio rim a bit soft"
+  }
+]

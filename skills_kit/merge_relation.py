@@ -23,6 +23,9 @@ class LadderRow:
     scale_delta: str
     scale_pct: float
     parts_add: str
+    merge_why: str = ""
+    role: str = ""
+    look: str = ""
 
 
 def load_phase1(path: Path) -> dict[str, Any]:
@@ -46,6 +49,9 @@ def parse_rows(track: dict[str, Any]) -> list[LadderRow]:
                 scale_delta=str(r.get("scale_delta", "")).strip(),
                 scale_pct=float(r["scale_pct"]),
                 parts_add=str(r.get("parts_add", "")).strip(),
+                merge_why=str(r.get("merge_why", "")).strip(),
+                role=str(r.get("role", "")).strip(),
+                look=str(r.get("look", "")).strip(),
             )
         )
     out.sort(key=lambda x: x.level)
@@ -78,15 +84,84 @@ def _parts_not_concrete(text: str) -> bool:
     return s in _EMPTY_PARTS or s in _WEAK_PARTS
 
 
-def judge_relation_rows(rows: list[LadderRow]) -> tuple[bool, list[str]]:
-    """按 art-merge 六条做可机读检查（文字定稿门禁）。"""
+_FAMILY_KEYS = ("hue", "form", "type", "style")
+_WEAK_WHY = _WEAK_PARTS | {"因为更高级", "升级", "变强", "随便加", "更好看"}
+_L1_ROLES = {"入门件", "基物", "starter", "base", "l1"}
+_L8_ROLES = {"展陈件", "终档", "终物", "hero", "l8"}
+
+
+def _judge_family(track: dict[str, Any], rows: list[LadderRow]) -> list[str]:
     issues: list[str] = []
-    # 件数 / 八行已在 parse 保证。合成是否说得通仍由讨论稿判定，这里只拦住空零件和只加光效。
+    fam = track.get("family")
+    if not isinstance(fam, dict):
+        issues.append("缺少 family：必须写死 type（类型相似就够锁链，不必再锁颜色）")
+        return issues
+    if not str(fam.get("type") or "").strip():
+        issues.append("family.type 必填：类型相似就够锁链，不要靠同色冒充一条链")
+    return issues
+
+
+def _judge_identity(track: dict[str, Any], rows: list[LadderRow]) -> list[str]:
+    """每件必须像那一件：本色+材质。有 look 就审；旧稿没写 look 不拦。"""
+    issues: list[str] = []
+    looks = [r.look.strip() for r in rows]
+    filled = [x for x in looks if x]
+    if not filled:
+        return issues
+    if len(filled) != 8:
+        issues.append("look 要八档都写：该物件自己的本色+材质+辨认零件，不能只写几档")
+        return issues
+    for r in rows:
+        if len(r.look) < 6:
+            issues.append(f"L{r.level:02d} look 太短，要写清这一件自己的本色和材质")
+    if len(set(looks)) == 1:
+        issues.append("八档 look 相同：禁止白模同材质罩染，每件要用自己的外观")
+    hue = str((track.get("family") or {}).get("hue") or "").strip()
+    if hue and len(hue) >= 2:
+        n = sum(1 for x in looks if hue in x)
+        if n >= 7:
+            issues.append("look 几乎都含 family.hue：类型相似就够，不要把整组刷成同一色")
+    return issues
+
+
+def _judge_merge_why(rows: list[LadderRow]) -> list[str]:
+    issues: list[str] = []
+    for r in rows[1:]:
+        why = (r.merge_why or "").strip()
+        if len(why) < 8:
+            issues.append(
+                f"L{r.level:02d} 缺少 merge_why（要写清：两件上一档为什么合成这一件、相似性在哪）"
+            )
+            continue
+        if why.lower() in _WEAK_WHY or _parts_not_concrete(why):
+            issues.append(f"L{r.level:02d} merge_why 说不通：{why!r}（不能只写更华丽/加光/升级）")
+    return issues
+
+
+def judge_relation_rows(
+    rows: list[LadderRow],
+    track: dict[str, Any] | None = None,
+) -> tuple[bool, list[str]]:
+    """按 art-merge 关系门禁做可机读检查。track 传入时加审家族锁与合成因果。"""
+    issues: list[str] = []
     pcts = [r.scale_pct for r in rows]
-    if pcts[0] < 0.55:
-        issues.append(f"L1 scale_pct={pcts[0]:.2f} 过低（低档应占格大半，建议 ≥0.58）")
+    if pcts[0] < 0.52:
+        issues.append(
+            f"L1 scale_pct={pcts[0]:.2f} 过小（棋盘共用一格，初级物也要能认，建议 0.56～0.62，不要豆粒）"
+        )
+    if pcts[0] > 0.64:
+        issues.append(
+            f"L1 scale_pct={pcts[0]:.2f} 过大（建议 0.56～0.62，不要占格大半的成品特写）"
+        )
     if pcts[-1] > 0.82:
-        issues.append(f"L8 scale_pct={pcts[-1]:.2f} 过高（应留边不顶格，建议 ≤0.80）")
+        issues.append(f"L8 scale_pct={pcts[-1]:.2f} 过高（应留边不顶格，建议 0.74～0.80）")
+    span = pcts[-1] - pcts[0]
+    if span < 0.12:
+        issues.append(f"体量跨度 {span:.2f} 不够（L8−L1 应 ≥0.12，剪影要能分档）")
+    if span > 0.24:
+        issues.append(
+            f"体量跨度 {span:.2f} 过大（商业 merge 共用一格，只轻跳；不要 L1 豆粒、L8 占满）"
+        )
     for i in range(1, 8):
         if pcts[i] <= pcts[i - 1]:
             issues.append(
@@ -105,6 +180,14 @@ def judge_relation_rows(rows: list[LadderRow]) -> tuple[bool, list[str]]:
     for r in rows:
         if not r.name or not r.silhouette:
             issues.append(f"L{r.level:02d} 物件名或剪影家族为空")
+    if track is not None:
+        issues.extend(_judge_family(track, rows))
+        issues.extend(_judge_identity(track, rows))
+        issues.extend(_judge_merge_why(rows))
+        if rows[0].role and rows[0].role not in _L1_ROLES:
+            issues.append(f"L01 role={rows[0].role!r} 应为入门件")
+        if rows[-1].role and rows[-1].role not in _L8_ROLES:
+            issues.append(f"L08 role={rows[-1].role!r} 应为展陈件")
     return (len(issues) == 0, issues)
 
 
@@ -187,9 +270,10 @@ def audit_ladder_dir(
     expected_pcts: list[float] | None = None,
     tol: float = 0.04,
 ) -> tuple[bool, list[str]]:
-    """像素级阶梯审计：框高单调、L8 最大。"""
+    """像素级阶梯审计：占格用 max(高,宽)，允许换物件带来的横竖差。"""
     issues: list[str] = []
-    heights: list[tuple[int, float]] = []
+    occs: list[tuple[int, float]] = []
+    slack = max(tol, 0.20)
     for i in range(1, 9):
         p = folder / f"L{i:02d}.jpg"
         if not p.is_file():
@@ -197,30 +281,143 @@ def audit_ladder_dir(
         if not p.is_file():
             issues.append(f"缺少 L{i:02d} 方图")
             continue
-        bh, _bw, _fill = _bbox_fill(p)
-        heights.append((i, bh))
+        bh, bw, _fill = _bbox_fill(p)
+        occ = max(bh, bw)
+        occs.append((i, occ))
         import numpy as np
 
         cell = np.array(Image.open(p).convert("RGB"))
         if has_inset_card(cell):
             issues.append(f"L{i:02d} 有内嵌方框（整图贴底，底色接不上）")
+        if occ < 0.45:
+            issues.append(f"L{i:02d} 占格 {occ:.2f} 过小（棋盘共用一格，不要豆粒）")
+        if occ > 0.98:
+            issues.append(f"L{i:02d} 占格 {occ:.2f} 过大（不要顶满格）")
         if expected_pcts and i <= len(expected_pcts):
             exp = expected_pcts[i - 1]
-            if abs(bh - exp) > tol + 0.08:
+            if abs(occ - exp) > slack + 0.22:
                 issues.append(
-                    f"L{i:02d} bbox_h={bh:.2f} 偏离关系稿 scale_pct={exp:.2f} 过多（>|{tol+0.08:.2f}|）"
+                    f"L{i:02d} 占格 {occ:.2f} 偏离关系稿 scale_pct={exp:.2f} 过多"
                 )
-    if len(heights) < 8:
+    if len(occs) < 8:
         return False, issues
-    hs = [h for _, h in heights]
+    vs = [v for _, v in occs]
     for i in range(1, 8):
-        if hs[i] <= hs[i - 1] - 0.01:
+        if vs[i] < vs[i - 1] - slack:
             issues.append(
-                f"体量非单调：L{heights[i][0]:02d} h={hs[i]:.2f} ≤ L{heights[i-1][0]:02d} h={hs[i-1]:.2f}"
+                f"占格轻跳过大：L{occs[i][0]:02d} {vs[i]:.2f} 比 L{occs[i-1][0]:02d} {vs[i-1]:.2f} 小太多"
             )
-    if hs[-1] < max(hs[:-1]) - 0.01:
-        issues.append(f"L08 框高 {hs[-1]:.2f} 不是全梯最大（max={max(hs):.2f}）")
     return (len(issues) == 0, issues)
+
+
+def cell_to_square_contain(im: Image.Image, size: int = 1024) -> Image.Image:
+    """整格 contain 进方图，不单独抽主体缩放，保住组内体量关系。"""
+    import numpy as np
+
+    rgb = im.convert("RGB")
+    arr = np.array(rgb)
+    bg = _border_median(arr)
+    color = tuple(int(round(float(c))) for c in bg)
+    w, h = rgb.size
+    scale = min(size / max(w, 1), size / max(h, 1))
+    nw, nh = max(1, int(w * scale)), max(1, int(h * scale))
+    resized = rgb.resize((nw, nh), Image.Resampling.LANCZOS)
+    canvas = Image.new("RGB", (size, size), color)
+    canvas.paste(resized, ((size - nw) // 2, (size - nh) // 2))
+    return canvas
+
+
+def _tile_fill_color(arr):
+    """棋盘格底色：有内嵌方卡就用卡纸色，否则用外圈底。"""
+    import numpy as np
+
+    bg = _border_median(arr)
+    diff = np.linalg.norm(arr.astype(np.float32) - bg, axis=2)
+    paper_sel = (diff > 5) & (diff < 22)
+    if float(paper_sel.mean()) > 0.12:
+        return np.median(arr[paper_sel].astype(np.float32), axis=0)
+    return bg
+
+
+def cell_to_equal_square(im: Image.Image, size: int = 1024) -> Image.Image:
+    """抽出主体（不要内嵌方卡），铺到平涂正方形正中。展陈格里必须居中。"""
+    import numpy as np
+
+    rgb = im.convert("RGB")
+    arr = np.array(rgb)
+    dist, _bg = _subject_distance(arr)
+    mask = dist > 25
+    if not mask.any():
+        return cell_to_square_contain(rgb, size)
+    h, w = mask.shape
+    ys, xs = np.where(mask)
+    sub_h = int(ys.max() - ys.min() + 1)
+    sub_w = int(xs.max() - xs.min() + 1)
+    occ = max(sub_h / max(h, 1), sub_w / max(w, 1))
+    occ = float(np.clip(occ, 0.56, 0.82))
+    return place_subject_on_square(rgb, occ, size)
+
+
+def square_grid_boxes(
+    width: int,
+    height: int,
+    *,
+    rows: int = 2,
+    columns: int = 4,
+) -> list[tuple[int, int, int, int]]:
+    """16:9 画布里嵌 2×4 个相同正方形格，上下或左右留边。"""
+    if rows < 1 or columns < 1:
+        raise ValueError("rows/columns 必须 ≥1")
+    side = min(width / columns, height / rows)
+    grid_w = side * columns
+    grid_h = side * rows
+    ox = (width - grid_w) / 2.0
+    oy = (height - grid_h) / 2.0
+    boxes: list[tuple[int, int, int, int]] = []
+    for r in range(rows):
+        for c in range(columns):
+            x0 = ox + c * side
+            y0 = oy + r * side
+            boxes.append((int(round(x0)), int(round(y0)), int(round(x0 + side)), int(round(y0 + side))))
+    return boxes
+
+
+def split_sheet_grid(
+    sheet: Path,
+    out_dir: Path,
+    *,
+    rows: int = 2,
+    columns: int = 4,
+    size: int = 1024,
+) -> list[Path]:
+    """组图 2×4 格 → 八张 1024 方图。
+
+    生成合同是 8 个相同正方形格。16:9 画布上若模型把格铺满，先取 2×4 整格
+    再 contain 进正方形，避免把花、旗鳍、糖葫芦签切掉。
+    """
+    if Image is None:
+        raise RuntimeError("需要 Pillow")
+    if rows < 1 or columns < 1 or rows * columns != 8:
+        raise ValueError("整梯切格必须正好 8 格（默认 rows=2 columns=4）")
+    out_dir.mkdir(parents=True, exist_ok=True)
+    im = Image.open(sheet).convert("RGB")
+    w, h = im.size
+    written: list[Path] = []
+    cw, ch = w // columns, h // rows
+    n = 0
+    for r in range(rows):
+        for c in range(columns):
+            n += 1
+            x0, y0 = c * cw, r * ch
+            x1 = (c + 1) * cw if c < columns - 1 else w
+            y1 = (r + 1) * ch if r < rows - 1 else h
+            inset = max(2, int(0.05 * min(x1 - x0, y1 - y0)))
+            cell = im.crop((x0 + inset, y0 + inset, x1 - inset, y1 - inset))
+            dest = out_dir / f"L{n:02d}.jpg"
+            centered = cell_to_equal_square(cell, size)
+            cell_to_equal_square(centered, size).save(dest, quality=92)
+            written.append(dest)
+    return written
 
 
 def split_sheet_equal_columns(
@@ -230,22 +427,8 @@ def split_sheet_equal_columns(
     columns: int = 8,
     size: int = 1024,
 ) -> list[Path]:
-    """16:9 整梯等分 8 列 → 各 1024 方图（object-fit contain 于列内）。"""
-    if Image is None:
-        raise RuntimeError("需要 Pillow")
-    out_dir.mkdir(parents=True, exist_ok=True)
-    im = Image.open(sheet).convert("RGB")
-    w, h = im.size
-    col_w = w // columns
-    written: list[Path] = []
-    for i in range(columns):
-        x0, x1 = i * col_w, (i + 1) * col_w if i < columns - 1 else w
-        cell = im.crop((x0, 0, x1, h))
-        placed = place_subject_on_square(cell, 0.70, size)
-        dest = out_dir / f"L{i + 1:02d}.jpg"
-        placed.save(dest, quality=92)
-        written.append(dest)
-    return written
+    """兼容旧的 1×8 列切。新任务用 split_sheet_grid。"""
+    return split_sheet_grid(sheet, out_dir, rows=1, columns=columns, size=size)
 
 
 def cmd_relation_judge(file_path: Path, track_id: str | None, all_tracks: bool) -> int:
@@ -264,12 +447,18 @@ def cmd_relation_judge(file_path: Path, track_id: str | None, all_tracks: bool) 
             print(f"❌ {e}")
             any_fail = True
             continue
-        ok, issues = judge_relation_rows(rows)
+        ok, issues = judge_relation_rows(rows, track=tracks[tid])
         if ok:
-            print("✅ 六条机读检查通过 → 可标记「文字定稿」并进入关系核对出图")
-            for r in rows:
+            fam = tracks[tid].get("family") or {}
+            print("✅ 关系机读检查通过 → 可标记「文字定稿」并进入关系核对出图")
+            if fam:
                 print(
-                    f"  L{r.level:02d} {r.name} | {r.silhouette} | pct={r.scale_pct:.2f} | +{r.parts_add or '—'}"
+                    f"  family hue={fam.get('hue') or '—'} form={fam.get('form') or '—'} type={fam.get('type') or '—'}"
+                )
+            for r in rows:
+                extra = f" | {r.merge_why}" if r.merge_why else ""
+                print(
+                    f"  L{r.level:02d} {r.name} | {r.silhouette} | pct={r.scale_pct:.2f} | +{r.parts_add or '—'}{extra}"
                 )
         else:
             any_fail = True
@@ -296,8 +485,11 @@ def cmd_audit(folder: Path, phase1: Path | None, track_id: str | None) -> int:
     return 1
 
 
-def cmd_split(sheet: Path, out_dir: Path, columns: int) -> int:
-    paths = split_sheet_equal_columns(sheet, out_dir, columns=columns)
+def cmd_split(sheet: Path, out_dir: Path, columns: int, rows: int = 1) -> int:
+    if rows <= 1:
+        paths = split_sheet_equal_columns(sheet, out_dir, columns=columns)
+    else:
+        paths = split_sheet_grid(sheet, out_dir, rows=rows, columns=columns)
     print(f"已切 {len(paths)} 格 → {out_dir}")
     for p in paths:
         print(f"  {p}")
@@ -331,7 +523,8 @@ def place_subject_on_square(im: Image.Image, target_h_ratio: float, size: int = 
     scale = min(target_h / max(sub_h, 1), max_w / max(sub_w, 1))
     nw, nh = max(1, int(cw * scale)), max(1, int(ch * scale))
     resized = crop.resize((nw, nh), Image.Resampling.LANCZOS)
-    color = tuple(int(round(float(c))) for c in bg)
+    fill = _tile_fill_color(arr)
+    color = tuple(int(round(float(c))) for c in fill)
     canvas = Image.new("RGBA", (size, size), color + (255,))
     canvas.paste(resized, ((size - nw) // 2, (size - nh) // 2), resized)
     return canvas.convert("RGB")

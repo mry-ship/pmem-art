@@ -1,0 +1,51 @@
+{
+  "id": "hp29_potion_L05",
+  "module": "prop.HealPotionMerge",
+  "winner": "v2/merge_potion_l16/L05.jpg",
+  "winner_round": 3,
+  "best": 9.37,
+  "n": 4,
+  "rounds": [
+    {
+      "round": 1,
+      "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L05_r1.jpg",
+      "dims": "剪影识别8.8/描边色板8.7/棚拍光9.2/透明底9.5/无字9.7/无瑕疵8.6",
+      "score": 8.81,
+      "bbox_h": 0.913,
+      "bbox_w": 1.0,
+      "fill": 0.462,
+      "defects": "photoreal"
+    },
+    {
+      "round": 2,
+      "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L05_r2.jpg",
+      "dims": "剪影识别8.3/描边色板8.8/棚拍光9.2/透明底9.6/无字9.9/无瑕疵8.4",
+      "score": 8.61,
+      "bbox_h": 0.653,
+      "bbox_w": 0.468,
+      "fill": 0.206,
+      "defects": "occupancy small, collar not hanging tag"
+    },
+    {
+      "round": 3,
+      "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L05_r3.jpg",
+      "dims": "剪影识别9.4/描边色板9.4/棚拍光9.5/透明底9.7/无字9.8/无瑕疵9.2",
+      "score": 9.37,
+      "bbox_h": 0.75,
+      "bbox_w": 0.564,
+      "fill": 0.273,
+      "defects": "liquid not fully to neck"
+    },
+    {
+      "round": 4,
+      "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L05_r4.jpg",
+      "dims": "剪影识别8.2/描边色板9.3/棚拍光9.4/透明底9.6/无字9.8/无瑕疵8.5",
+      "score": 8.74,
+      "bbox_h": 0.888,
+      "bbox_w": 1.0,
+      "fill": 0.284,
+      "defects": "occupancy too large, half fill"
+    }
+  ],
+  "remaining_defect": "liquid not fully to neck"
+}

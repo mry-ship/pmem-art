@@ -29,7 +29,7 @@ from skills_kit.prompt_scale import (  # noqa: E402
     get_converge_scale_profile,
 )
 from skills_kit.subject_lexicon import to_prompt_english  # noqa: E402
-from skills_kit.converge import _resolve_pad_auto  # noqa: E402
+from skills_kit.converge import _defect_text_copied, _resolve_pad_auto  # noqa: E402
 
 
 class TestPolicyDefaults(unittest.TestCase):
@@ -201,6 +201,14 @@ class TestR1Floor(unittest.TestCase):
         self.assertEqual(build_r1_structure_floor(goal="a pet project", module=""), "")
 
 
+class TestDefectCopy(unittest.TestCase):
+    def test_same_sentence_counts_as_copy(self) -> None:
+        text = "Did not recompose: still high-roof looking down; warrior still a large foreground figure."
+        self.assertTrue(_defect_text_copied(text, text))
+        self.assertTrue(_defect_text_copied(text, text + " Recompose failed."))
+        self.assertFalse(_defect_text_copied(text, "Worm's-eye street looking UP; warrior is a tiny ridge silhouette."))
+
+
 class TestPadAuto(unittest.TestCase):
     def test_unsafe_plate_falls_back_to_ref(self) -> None:
         with tempfile.TemporaryDirectory() as td:
@@ -250,6 +258,38 @@ class TestPadAuto(unittest.TestCase):
             self.assertEqual(fix, "修光影")
             self.assertIn("style_ref", reason)
             self.assertFalse(plate_safe_to_pad(pad_mode="auto", dims={"perspective_anatomy": 8.8}))
+
+    def test_recompose_prompt_keyword_does_not_chain(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            img = root / "r1.png"
+            img.write_bytes(b"\x89PNG\r\n\x1a\n" + b"\x00" * 64)
+            ref = root / "ref.png"
+            ref.write_bytes(b"\x89PNG\r\n\x1a\n" + b"\x00" * 64)
+            rounds = [
+                {
+                    "round": 1,
+                    "image": str(img),
+                    "score": 7.07,
+                    "prompt": "保画风色板，按「仰看屋脊」重构机位",
+                    "defects": "Did not recompose: still high-roof looking down",
+                    "next_fix": "换机位到长街仰看",
+                    "dims_parsed": {"perspective_anatomy": 8.0, "composition": 5.2},
+                }
+            ]
+            pad, _fix, num, cont, reason = _resolve_pad_auto(
+                rounds,
+                2,
+                root,
+                style_ref=str(ref),
+                pad_mode="auto",
+                scale="recompose",
+            )
+            self.assertFalse(cont)
+            self.assertEqual(Path(pad).resolve(), ref.resolve())
+            self.assertEqual(num, 0)
+            self.assertIn("style_ref", reason)
+            self.assertNotIn("changed_camera", reason)
 
     def test_style_jump_pads_nothing(self) -> None:
         with tempfile.TemporaryDirectory() as td:

@@ -1,0 +1,46 @@
+{
+  "id": "c04_high",
+  "session": "hp29_c04_high",
+  "module": "scene.CourtWell",
+  "scale": "high",
+  "rounds": [
+    {
+      "round": 1,
+      "image": "draw_matrix/c04/high/r1.jpg",
+      "dims": "构图9.0/光影9.2/透视8.4/质感8.9/风格9.1/无瑕疵8.1",
+      "score": 8.4,
+      "defects": "远角小人融化；左上多出悬挂杂物挡住砖墙；过曝把左上砖缝冲掉。透视：收束灭点与体块接触阴影，禁止结构融化。",
+      "next_fix": "保住蜜金光柱。只改：远角小人肢体可读；收掉左上多余悬挂杂物，让砖缝在暖光里仍能读。"
+    },
+    {
+      "round": 2,
+      "image": "draw_matrix/c04/high/r2.jpg",
+      "dims": "构图9.1/光影9.3/透视8.5/质感8.9/风格9.2/无瑕疵8.3",
+      "score": 8.5,
+      "defects": "远角小人仍融化；左上悬挂杂物还在，暖光把砖缝冲淡。透视：收束灭点与体块接触阴影，禁止结构融化。",
+      "next_fix": "保住蜜金光柱。只改：远角小人肢体可读；收掉左上悬挂杂物并让暖光里的砖缝仍能读。"
+    },
+    {
+      "round": 3,
+      "image": "draw_matrix/c04/high/r3.jpg",
+      "dims": "构图9.1/光影9.2/透视8.6/质感8.9/风格9.2/无瑕疵8.4",
+      "score": 8.84,
+      "defects": "左上暖光过曝冲掉砖缝；远角小人仍偏糊；左上悬挂杂物还在。",
+      "next_fix": "保住光柱但收回左上过曝，让砖缝可读；远角小人头肩腿分开。"
+    },
+    {
+      "round": 4,
+      "image": "draw_matrix/c04/high/r4.jpg",
+      "dims": "构图9.1/光影9.3/透视8.6/质感8.9/风格9.2/无瑕疵8.5",
+      "score": 8.88,
+      "defects": "左上仍有悬挂杂物；远角小人仍偏糊。",
+      "next_fix": "已满4轮。若续跑：收掉左上悬挂并让远角小人肢体分开。"
+    }
+  ],
+  "n": 4,
+  "best": 8.88,
+  "winner_round": 4,
+  "winner": "draw_matrix/c04/high/final.jpg",
+  "remaining_defect": "左上仍有悬挂杂物；远角小人仍偏糊。",
+  "passed_9_6": false
+}

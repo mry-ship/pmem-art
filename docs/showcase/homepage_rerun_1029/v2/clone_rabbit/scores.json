@@ -1,0 +1,41 @@
+{
+  "id": "clone_rabbit",
+  "session": "hp29_clone_rabbit",
+  "rounds": 4,
+  "scores": [
+    8.98,
+    8.93,
+    9.33,
+    9.41
+  ],
+  "best": 9.41,
+  "winner": "v2/clone_rabbit/final.jpg",
+  "winner_round": 4,
+  "remaining_defect": "爪子仍偏连指手套。",
+  "round_details": [
+    {
+      "round": 1,
+      "image": "v2/clone_rabbit/r1.jpg",
+      "score": 8.98,
+      "dims": "构图9.3/光影8.9/透视9.0/质感9.2/风格9.1/无瑕疵8.6"
+    },
+    {
+      "round": 2,
+      "image": "v2/clone_rabbit/r2.jpg",
+      "score": 8.93,
+      "dims": "构图9.2/光影9.0/透视8.8/质感9.3/风格8.7/无瑕疵8.7"
+    },
+    {
+      "round": 3,
+      "image": "v2/clone_rabbit/r3.jpg",
+      "score": 9.33,
+      "dims": "构图9.4/光影9.2/透视9.3/质感9.4/风格9.5/无瑕疵9.2"
+    },
+    {
+      "round": 4,
+      "image": "v2/clone_rabbit/r4.jpg",
+      "score": 9.41,
+      "dims": "构图9.4/光影9.3/透视9.3/质感9.6/风格9.5/无瑕疵9.3"
+    }
+  ]
+}

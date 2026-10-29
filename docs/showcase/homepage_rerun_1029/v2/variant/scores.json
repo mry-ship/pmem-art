@@ -1,0 +1,41 @@
+{
+  "id": "variant_light",
+  "session": "hp29_variant_light",
+  "rounds": 4,
+  "scores": [
+    9.27,
+    9.37,
+    9.21,
+    9.38
+  ],
+  "best": 9.38,
+  "winner": "v2/variant/final.jpg",
+  "winner_round": 4,
+  "remaining_defect": "眼睛比参考略大。",
+  "round_details": [
+    {
+      "round": 1,
+      "image": "v2/variant/r1.jpg",
+      "score": 9.27,
+      "dims": "构图9.3/光影9.4/透视9.2/质感9.3/风格9.4/无瑕疵9.1"
+    },
+    {
+      "round": 2,
+      "image": "v2/variant/r2.jpg",
+      "score": 9.37,
+      "dims": "构图9.4/光影9.5/透视9.3/质感9.4/风格9.5/无瑕疵9.2"
+    },
+    {
+      "round": 3,
+      "image": "v2/variant/r3.jpg",
+      "score": 9.21,
+      "dims": "构图9.3/光影9.3/透视9.3/质感9.3/风格9.0/无瑕疵9.1"
+    },
+    {
+      "round": 4,
+      "image": "v2/variant/r4.jpg",
+      "score": 9.38,
+      "dims": "构图9.4/光影9.5/透视9.3/质感9.4/风格9.4/无瑕疵9.3"
+    }
+  ]
+}

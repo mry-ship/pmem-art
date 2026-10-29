@@ -169,7 +169,7 @@ flowchart TD
   M --> A[A · 1024 App Icon 母版]
   M --> B[B · SVG 集：spec→分批→preview]
   M --> C[C · 道具栅格 64/128/256]
-  A --> K[关键枚可选 4×≥9.6]
+  A --> K[关键枚强制 4×≥9.6]
   B --> K
   C --> K
   K --> OUT[沉淀 style-spec]
@@ -431,10 +431,11 @@ python3 pmem_art.py ingest .cursor/generated/new.png -p "角色Astra 水彩 概�
 | `python3 pmem_art.py skills --install` | 安装/刷新 `.cursor`、`.claude`、`.agents` 下的 10 个技能。每个技能一个 `/pmem-` 命令 |
 | `python3 pmem_art.py skills --list` | 查看所有内置技能列表 |
 | `python3 pmem_art.py converge start -g "<目标>" -m <模块> [--scale medium] [--ref-image <图> --ref-analysis "<解构>"]` | 开启一轮最多 4 次、`>=9.6` 分的收敛生图会话 |
-| `python3 pmem_art.py converge generate --round <i> -i <图> -p "<Prompt>"` | **仅生图登记**（禁止带 score/dims；与 judge 必须分两步） |
+| `python3 pmem_art.py converge generate --round <i> -i <图> -p "<Prompt>"` | **仅生图登记**（禁止带 score/dims；与 judge 必须分两步）。上一轮没审完不能开下一轮 |
 | `python3 pmem_art.py converge judge --round <i> -i <图> --dims "..." --strengths "..." --defects "..." --next-fix "..."` | **独立审图**：六维打分、亮点、不合理处与下一轮修正（须先有 generate） |
 | `python3 pmem_art.py converge discuss --round <稿次> -p "<正文>" --defects "<没过的行>" --next-fix "<下一稿只改哪里>"` | 记下还没出图的论述稿（合成梯关系讨论）。结算时列进过程板 |
-| `python3 pmem_art.py converge finish` | 结算达标图或 4 轮最高分图；**默认写入记忆、打印评分履历，并写出可点开的过程板**（`--no-apply` 可跳过写记忆；`--quiet` 只要一行结论，过程板路径仍给出） |
+| `python3 pmem_art.py converge finish` | 结算达标图或 4 轮最高分图；**默认写入记忆、打印评分履历，并写出可点开的过程板**（`--no-apply` 可跳过写记忆；`--quiet` 只要一行结论，过程板路径仍给出）。不到 9.6 且未满 4 轮时直接失败，不能当终稿 |
+| `python3 pmem_art.py showcase-gate --html <index.html>` | 展陈 HTML 终稿闸门：正式分 <9.6 且未满 4 轮的格不能交 |
 | `python3 pmem_art.py feedback "<原话>" -m <模块> [-a <图>]` | 把画师自然语言评价沉淀为记忆 |
 | `python3 pmem_art.py search -m <模块>` | 召回该模块（含父模块）的红线、定稿与色板 |
 | `python3 pmem_art.py ingest <图> -p "<说明>" --apply` | 四信号分类并归档图片 |
@@ -445,7 +446,7 @@ python3 pmem_art.py ingest .cursor/generated/new.png -p "角色Astra 水彩 概�
 ## 第七章：常见问题 FAQ
 
 **Q1：如果 4 轮都没有达到 9.6 分怎么办？**  
-A：到了第 4 轮仍未达 9.6 分时，`converge finish` 会自动停止循环，从 1~4 轮里挑出**综合评分最高**的那一张作为阶段最优交付图；默认给你全轮评分履历（不足/改点）+ 胜出图，并写出过程板，红框标在胜出轮上，总结里写明未到 9.60。只要终稿时加 `--quiet`，过程板路径仍会给出。
+A：到了第 4 轮仍未达 9.6 分时，`converge finish` 会自动停止循环，从 1~4 轮里挑出**综合评分最高**的那一张作为阶段最优交付图；默认给你全轮评分履历（不足/改点）+ 胜出图，并写出过程板，红框标在胜出轮上，总结里写明未到 9.60。只要终稿时加 `--quiet`，过程板路径仍会给出。不到 4 轮且 <9.6 时，`finish` 直接失败，`showcase-gate` 也会拒绝把这一格收进展陈 HTML。
 
 **Q2：丢入一张图让 `/pmem-draw` 生成时，它会怎么处理那张图？**  
 A：它会先做 **Step 0 参考图深度解构**（分析构图、提取主辅色 HEX、判断光影与笔触、识别头身结构），把解构结论记入收敛会话基准，然后带着这份基准进入 1~4 轮自评收敛循环。

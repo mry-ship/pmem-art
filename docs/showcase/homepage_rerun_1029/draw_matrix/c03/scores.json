@@ -1,0 +1,146 @@
+[
+  {
+    "id": "c03_low",
+    "skill": "draw",
+    "rel_dir": "draw_matrix/c03/low",
+    "winner": "draw_matrix/c03/low/final.jpg",
+    "winner_round": 3,
+    "best": 8.56,
+    "n": 4,
+    "rounds": [
+      {
+        "round": 1,
+        "dims": "构图8.6/光影8.7/透视8.4/质感8.3/风格8.5/无瑕疵8.2",
+        "defects": "头带偏露；右下发梢偏冷",
+        "score": 8.43
+      },
+      {
+        "round": 2,
+        "dims": "构图8.5/光影8.7/透视8.5/质感8.5/风格8.6/无瑕疵8.1",
+        "defects": "头带更暴露",
+        "score": 8.44
+      },
+      {
+        "round": 3,
+        "dims": "构图8.6/光影8.8/透视8.6/质感8.6/风格8.6/无瑕疵8.3",
+        "defects": "头带整圈仍露出",
+        "score": 8.56
+      },
+      {
+        "round": 4,
+        "dims": "构图8.5/光影8.8/透视8.6/质感8.6/风格8.6/无瑕疵8.2",
+        "defects": "头带整圈仍露出",
+        "score": 8.52
+      }
+    ],
+    "remaining_defect": "头带中段仍未按参考用碎发盖住"
+  },
+  {
+    "id": "c03_medium",
+    "skill": "draw",
+    "rel_dir": "draw_matrix/c03/medium",
+    "winner": "draw_matrix/c03/medium/final.jpg",
+    "winner_round": 3,
+    "best": 8.7,
+    "n": 4,
+    "rounds": [
+      {
+        "round": 1,
+        "dims": "构图8.6/光影8.8/透视8.4/质感8.4/风格8.5/无瑕疵8.3",
+        "defects": "右侧飞发偏冷；头带偏露",
+        "score": 8.49
+      },
+      {
+        "round": 2,
+        "dims": "构图8.7/光影8.8/透视8.5/质感8.6/风格8.7/无瑕疵8.4",
+        "defects": "头带仍偏高；右下发梢一点冷",
+        "score": 8.6
+      },
+      {
+        "round": 3,
+        "dims": "构图8.8/光影8.9/透视8.6/质感8.7/风格8.8/无瑕疵8.5",
+        "defects": "头顶头带仍露出；左眼被刘海挡略多",
+        "score": 8.7
+      },
+      {
+        "round": 4,
+        "dims": "构图8.4/光影8.8/透视8.6/质感8.6/风格8.3/无瑕疵7.8",
+        "defects": "猫夹跑到右侧",
+        "score": 8.36
+      }
+    ],
+    "remaining_defect": "头顶头带仍露出一截；左眼被刘海挡略多"
+  },
+  {
+    "id": "c03_high",
+    "skill": "draw",
+    "rel_dir": "draw_matrix/c03/high",
+    "winner": "draw_matrix/c03/high/final.jpg",
+    "winner_round": 2,
+    "best": 8.62,
+    "n": 4,
+    "rounds": [
+      {
+        "round": 1,
+        "dims": "构图8.6/光影9.0/透视8.4/质感8.4/风格8.6/无瑕疵8.3",
+        "defects": "两侧发块偏冷；刘海挡左眼",
+        "score": 8.53
+      },
+      {
+        "round": 2,
+        "dims": "构图8.7/光影9.1/透视8.5/质感8.5/风格8.6/无瑕疵8.4",
+        "defects": "冠顶金光漂成棕；两侧发块偏冷",
+        "score": 8.62
+      },
+      {
+        "round": 3,
+        "dims": "构图8.6/光影9.0/透视8.5/质感8.5/风格8.2/无瑕疵8.0",
+        "defects": "左侧飞发读成冷蓝；刘海挡左眼",
+        "score": 8.44
+      },
+      {
+        "round": 4,
+        "dims": "构图8.7/光影9.1/透视8.5/质感8.5/风格8.3/无瑕疵8.2",
+        "defects": "左侧飞发仍偏冷蓝；冠顶略漂棕",
+        "score": 8.53
+      }
+    ],
+    "remaining_defect": "冠顶金光把头发略漂成棕；两侧发块仍偏冷"
+  },
+  {
+    "id": "c03_recompose",
+    "skill": "draw",
+    "rel_dir": "draw_matrix/c03/recompose",
+    "winner": "draw_matrix/c03/recompose/final.jpg",
+    "winner_round": 4,
+    "best": 8.77,
+    "n": 4,
+    "rounds": [
+      {
+        "round": 1,
+        "dims": "构图8.4/光影8.8/透视8.3/质感8.3/风格8.6/无瑕疵8.2",
+        "defects": "仍偏过肩侧脸，后脑不够",
+        "score": 8.41
+      },
+      {
+        "round": 2,
+        "dims": "构图8.9/光影8.8/透视8.5/质感8.5/风格8.7/无瑕疵8.4",
+        "defects": "远侧右眼仍全露；后颈略空",
+        "score": 8.61
+      },
+      {
+        "round": 3,
+        "dims": "构图8.8/光影8.7/透视8.6/质感8.5/风格8.7/无瑕疵8.3",
+        "defects": "远侧右眼仍全露；叶影变弱",
+        "score": 8.57
+      },
+      {
+        "round": 4,
+        "dims": "构图9.0/光影9.0/透视8.7/质感8.6/风格8.8/无瑕疵8.6",
+        "defects": "近乎全侧面，四分之三背面略过头",
+        "score": 8.77
+      }
+    ],
+    "remaining_defect": "机位接近全侧面，远眼几乎被挡住，比四分之三背面略过头"
+  }
+]

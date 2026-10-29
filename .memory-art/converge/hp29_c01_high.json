@@ -1,0 +1,789 @@
+{
+  "session_id": "hp29_c01_high",
+  "started_at": "2026-10-29 18:09:41 UTC+8",
+  "goal": "PIXEL LOCK: 9:16 epic night. Pale-robe dark-hair swordsman standing on CHARCOAL WET dark roof tiles (NOT green glaze). Warm WINDOW FIRE lights in the vast city below, cool fog, planetary limb. No lantern as key light. No starfield replacing the city. No neon. Scale=high. Bolder lighting finish, keep identity. Stronger cool fog against hotter window-fire clusters; wet charcoal tiles catch amber bounce. No lanterns, no green tiles.",
+  "module": "scene.NightCity",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "high",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "high",
+    "label": "高强度 · 大胆跃升+可叙事动态达标闭环 (Showcase Overhaul Dynamic Threshold >=9.6)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 2,
+    "target_score_threshold": 9.6,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.15,
+      "perspective_anatomy": 0.15,
+      "texture_detail": 0.15,
+      "spec_style": 0.15,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图；第 1 轮可以拉开光影，之后只在提示词上补还没过的那一处（提示词改动仍 ≤80%）",
+    "max_prompt_delta_ratio": 0.8,
+    "allow_recompose": true,
+    "allow_viewpoint_change": true,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": true,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "style_medium (保持原图核心艺术媒介与画风基因)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)",
+      "no_identity_swap (可加风格内叙事点缀，不换主体身份)"
+    ],
+    "min_round_leap": 0.2,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "原图画风优先：保媒介与身份，只抬已经看得见的层次",
+    "medium_family": "generic",
+    "best_direction_hint": "最优方向：只抬参考里已经有的层次",
+    "goal": "PIXEL LOCK: 9:16 epic night. Pale-robe dark-hair swordsman standing on CHARCOAL WET dark roof tiles (NOT green glaze). Warm WINDOW FIRE lights in the vast city below, cool fog, planetary limb. No lantern as key light. No starfield replacing the city. No neon. Scale=high. Bolder lighting finish, keep identity. Stronger cool fog against hotter window-fire clusters; wet charcoal tiles catch amber bounce. No lanterns, no green tiles.",
+    "module": "scene.NightCity",
+    "ref_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c01\\ref.jpg",
+    "ref_analysis": "9:16 epic night cinematic still. Extreme high three-quarter looking down a central avenue that vanishes into a curved planetary city limb. Pale-robe dark-hair swordsman back-view on the lower-left roof ridge, near-silhouette, sheathed sword at left hip. CHARCOAL WET overlapping clay tiles, soot-black, faint dirty frost on ridges — not green glaze. Warm WINDOW FIRE as small amber rectangles in windows; cool blue-grey fog in streets. Palette: charcoal tiles #1A1C1E, pale robe #C9C4BB, cool fog #6B7480, window fire #E8A040, night #243038. Window-fires are the only warm sources. Do not inherit lanterns, neon, starfields, or green tiles."
+  },
+  "medium_family": "generic",
+  "contract": "",
+  "target_score_threshold": 9.6,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c01\\ref.jpg",
+  "ref_analysis": "9:16 epic night cinematic still. Extreme high three-quarter looking down a central avenue that vanishes into a curved planetary city limb. Pale-robe dark-hair swordsman back-view on the lower-left roof ridge, near-silhouette, sheathed sword at left hip. CHARCOAL WET overlapping clay tiles, soot-black, faint dirty frost on ridges — not green glaze. Warm WINDOW FIRE as small amber rectangles in windows; cool blue-grey fog in streets. Palette: charcoal tiles #1A1C1E, pale robe #C9C4BB, cool fog #6B7480, window fire #E8A040, night #243038. Window-fires are the only warm sources. Do not inherit lanterns, neon, starfields, or green tiles.",
+  "default_aspect_ratio": "9:16",
+  "default_reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c01\\ref.jpg"
+  ],
+  "aspect_ratio": "9:16",
+  "reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c01\\ref.jpg"
+  ],
+  "ref_physical_traits": {
+    "exists": true,
+    "size_bytes": 132495,
+    "size_kb": 129.4,
+    "width": 405,
+    "height": 720,
+    "aspect_ratio": "9:16",
+    "canonical_aspect_ratio": "9:16",
+    "color_entropy": 7.97
+  },
+  "param_validation": {
+    "valid": true,
+    "validation_passed": true,
+    "case_id": "hp29_c01_high",
+    "scale": "high",
+    "aspect_ratio": "9:16",
+    "ref_aspect_ratio": "9:16",
+    "ref_dimensions": "405x720",
+    "output_aspect_ratio": "",
+    "output_dimensions": "",
+    "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c01\\ref.jpg",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c01\\ref.jpg"
+    ],
+    "inherited_default_aspect_ratio": false,
+    "inherited_default_pad_image": false,
+    "matched_ref_aspect_ratio": true,
+    "matched_ref_pad_image": true,
+    "matched_output_aspect_ratio": true,
+    "three_step_stage": "step1_start",
+    "three_step_verified": false,
+    "warnings": []
+  },
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.6,
+  "accept_threshold": 9.6,
+  "max_rounds": 4,
+  "ready_to_finish": true,
+  "status": "finished",
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c01\\ref.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "hp29_c01_high",
+        "scale": "high",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "405x720",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c01\\ref.jpg",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c01\\ref.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "18:09:56",
+      "image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c01\\high\\r1.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 361081,
+        "size_kb": 352.6,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.97
+      },
+      "raw_score": 7.7,
+      "score": 7.7,
+      "target_score_threshold": 9.6,
+      "dims": "构图8.5/光影6.8/透视8.4/质感8.0/风格7.6/无瑕疵7.4",
+      "dims_parsed": {
+        "composition": 8.5,
+        "lighting_color": 6.8,
+        "perspective_anatomy": 8.4,
+        "texture_detail": 8.0,
+        "spec_style": 7.6,
+        "flawlessness": 7.4
+      },
+      "weighted_score": 7.7,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.6）"
+      ],
+      "stagnated": false,
+      "strengths": "Warrior identity and charcoal tiles hold; planetary limb present.",
+      "defects": "Wrong lighting: city became molten fire-glow / lantern-like bloom; cool fog lost.",
+      "next_fix": "Keep bolder contrast but restore cool fog; window fires as dense discrete amber points, not molten bloom.",
+      "prompt": "原图画风优先：保媒介与身份，只抬已经看得见的层次| Same identity. Bolder lighting finish: stronger cool fog against hotter clustered window fires; wet charcoal tiles catch amber bounce. No lantern as key light.| 约束：保持原图核心艺术媒介与画风基因；保持原图性别、物种、年龄段与核心外观；可加风格内叙事点缀，不换主体身份 | Structure floor: vanishing points converge and mass contact shadows read; do not melt the structure",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.4,
+      "anatomy_floor": 6.0,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "scene",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：Wrong lighting: city became molten fire-glow / lantern-like bloom; cool fog lost",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "7.7"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：Warrior identity and charcoal tiles hold; planetary limb present.",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "7.7"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "18:09:57"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c01\\ref.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "hp29_c01_high",
+        "scale": "high",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "405x720",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c01\\ref.jpg",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c01\\ref.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "18:09:58",
+      "image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c01\\high\\r2.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 347568,
+        "size_kb": 339.4,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.97
+      },
+      "raw_score": 8.78,
+      "score": 8.78,
+      "target_score_threshold": 9.6,
+      "dims": "构图9.0/光影8.8/透视8.9/质感8.6/风格8.9/无瑕疵8.6",
+      "dims_parsed": {
+        "composition": 9.0,
+        "lighting_color": 8.8,
+        "perspective_anatomy": 8.9,
+        "texture_detail": 8.6,
+        "spec_style": 8.9,
+        "flawlessness": 8.6
+      },
+      "weighted_score": 8.78,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.6）",
+        "prompt 改动 90% 超过档位上限 80%"
+      ],
+      "stagnated": false,
+      "strengths": "Cool fog back; discrete fires; charcoal tiles; identity; no lanterns.",
+      "defects": "Planetary limb washed with a little warm haze; tiles still slightly woody.；prompt 改动 90% 超过档位上限 80%",
+      "next_fix": "Cool the planetary limb and sky back to dim blue-grey night; keep window fires as points not bloom.",
+      "prompt": "原图画风优先：保媒介与身份，只抬已经看得见的层次| Same identity. Bolder contrast with restored cool blue-grey fog. Dense discrete amber window-fire points, not molten bloom, not lantern glow on the warrior. Wet charcoal bounce.| 约束：保持原图核心艺术媒介与画风基因；保持原图性别、物种、年龄段与核心外观；可加风格内叙事点缀，不换主体身份 | Structure floor: vanishing points converge and mass contact shadows read; do not melt the structure | Keep bolder contrast but restore cool fog; window fires as dense discrete amber points, not molten bloom.",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.9,
+      "anatomy_floor": 6.0,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "scene",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：Planetary limb washed with a little warm haze; tiles still slightly woody.；promp",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.78"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：Cool fog back; discrete fires; charcoal tiles; identity; no lanterns.",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.78"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "18:09:59"
+    },
+    {
+      "round": 3,
+      "round_label": "第 3 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c01\\ref.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "hp29_c01_high",
+        "scale": "high",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "405x720",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c01\\ref.jpg",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c01\\ref.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "18:09:59",
+      "image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c01\\high\\r3.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 356473,
+        "size_kb": 348.1,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.98
+      },
+      "raw_score": 8.82,
+      "score": 8.82,
+      "target_score_threshold": 9.6,
+      "dims": "构图9.1/光影8.7/透视9.0/质感8.8/风格8.9/无瑕疵8.6",
+      "dims_parsed": {
+        "composition": 9.1,
+        "lighting_color": 8.7,
+        "perspective_anatomy": 9.0,
+        "texture_detail": 8.8,
+        "spec_style": 8.9,
+        "flawlessness": 8.6
+      },
+      "weighted_score": 8.82,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.04 低于当前档位 (high) 的最小跃升 +0.20。下一轮加强机位或戏剧光影，不要只改局部笔触",
+        "Agent Absolute-5D 已采纳（门槛 9.6）",
+        "prompt 改动 92% 超过档位上限 80%"
+      ],
+      "stagnated": true,
+      "strengths": "Cooler limb; identity held; charcoal tiles; bolder avenue.",
+      "defects": "City center still bloomed versus sharp small window-fire points.；prompt 改动 92% 超过档位上限 80%",
+      "next_fix": "Reduce center bloom; keep window fires as sharp small points with higher contrast against cool fog.",
+      "prompt": "原图画风优先：保媒介与身份，只抬已经看得见的层次| Same identity. Dense discrete amber window fires on the avenue, cool fog on the sides, dim blue-grey planetary limb. No center molten wash. Charcoal wet clay tiles.| 约束：保持原图核心艺术媒介与画风基因；保持原图性别、物种、年龄段与核心外观；可加风格内叙事点缀，不换主体身份 | Structure floor: vanishing points converge and mass contact shadows read; do not melt the structure | Cool the planetary limb and sky back to dim blue-grey night; keep window fires as points not bloom.",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.0,
+      "anatomy_floor": 6.0,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "scene",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：City center still bloomed versus sharp small window-fire points.；prompt 改动 92% 超",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.82"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：Cooler limb; identity held; charcoal tiles; bolder avenue.",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.82"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "18:10:00"
+    },
+    {
+      "round": 4,
+      "round_label": "第 4 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c01\\ref.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "hp29_c01_high",
+        "scale": "high",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "405x720",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c01\\ref.jpg",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c01\\ref.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "18:10:01",
+      "image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c01\\high\\r4.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 347388,
+        "size_kb": 339.2,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.97
+      },
+      "raw_score": 8.98,
+      "score": 8.98,
+      "target_score_threshold": 9.6,
+      "dims": "构图9.2/光影8.9/透视9.1/质感9.0/风格9.0/无瑕疵8.8",
+      "dims_parsed": {
+        "composition": 9.2,
+        "lighting_color": 8.9,
+        "perspective_anatomy": 9.1,
+        "texture_detail": 9.0,
+        "spec_style": 9.0,
+        "flawlessness": 8.8
+      },
+      "weighted_score": 8.98,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.16 低于当前档位 (high) 的最小跃升 +0.20。下一轮加强机位或戏剧光影，不要只改局部笔触",
+        "Agent Absolute-5D 已采纳（门槛 9.6）",
+        "prompt 改动 94% 超过档位上限 80%"
+      ],
+      "stagnated": true,
+      "strengths": "Bolder avenue versus cool sides; charcoal wet tiles; identity; no lanterns.",
+      "defects": "Central avenue still slightly bloomed versus fully discrete window-fire points.；prompt 改动 94% 超过档位上限 80%",
+      "next_fix": "Stop. Best-of-4 is r4.",
+      "prompt": "原图画风优先：保媒介与身份，只抬已经看得见的层次| Same identity. Reduce center bloom. Sharp small window-fire points, cool fog on the sides, dim blue-grey planetary limb. Wet charcoal tiles catch a little amber bounce. No lantern.| 约束：保持原图核心艺术媒介与画风基因；保持原图性别、物种、年龄段与核心外观；可加风格内叙事点缀，不换主体身份 | Structure floor: vanishing points converge and mass contact shadows read; do not melt the structure | Reduce center bloom; keep window fires as sharp small points with higher contrast against cool fog.",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.1,
+      "anatomy_floor": 6.0,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "scene",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_MAX_ROUNDS",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：Central avenue still slightly bloomed versus fully discrete window-fire points.；",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.98"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：Bolder avenue versus cool sides; charcoal wet tiles; identity; no lanterns.",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.98"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "18:10:02"
+    }
+  ],
+  "warm_start": {
+    "project_id": "cursor-pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "cursor-pmem-art",
+      "project_slug": "cursor-pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-10-29 18:03:42 UTC+8"
+    },
+    "module": "scene.NightCity",
+    "goal": "PIXEL LOCK: 9:16 epic night. Pale-robe dark-hair swordsman standing on CHARCOAL WET dark roof tiles (NOT green glaze). Warm WINDOW FIRE lights in the vast city below, cool fog, planetary limb. No lantern as key light. No starfield replacing the city. No neon. Scale=high. Bolder lighting finish, keep identity. Stronger cool fog against hotter window-fire clusters; wet charcoal tiles catch amber bounce. No lanterns, no green tiles.",
+    "confidence": 0.3,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "红线可控（0 条）",
+      "挂载 0 张项目知识卡 + 2 张全局美术底层基础卡"
+    ],
+    "top_recipes": [],
+    "top_redlines": [],
+    "art_decisions": [],
+    "private_knowledge": [],
+    "shared_knowledge": [
+      {
+        "id": "atmospheric-perspective",
+        "title": "空间景深：近中远三层大气透视法则",
+        "body": "场景必须划分近景（高对比暗部压角剪影）、中景（视觉主体与最高明暗对比度）、远景（随空气介质距离递减对比度与饱和度，融入天光雾气），严禁远中近三景饱和度相同导致画面扁平粘连。",
+        "layer_scope": "shared"
+      },
+      {
+        "id": "composition-thirds-grid",
+        "title": "构图法则：九宫格三分法与呼吸留白安全区",
+        "body": "将核心视觉焦点布置在九宫格三分线交点（黄金分割点 0.618）上，利用引导线与前景暗角汇聚视线；独立资产四周必须预留 16px~24px 纯透明呼吸安全边距，严禁发冠、武器或特效贴死画布边缘被裁切。",
+        "layer_scope": "shared"
+      }
+    ],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [],
+      "preferred_composition": [],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [],
+      "banned_habits": []
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/cursor-pmem-art/)\n- 目标模块: scene.NightCity\n- 置信度: 0.30（fast-track 资格: 否）\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [atmospheric-perspective] 空间景深：近中远三层大气透视法则: 场景必须划分近景（高对比暗部压角剪影）、中景（视觉主体与最高明暗对比度）、远景（随空气介质距离递减对比度与饱和度，融入天光雾气），严禁远中近三景饱和度相同导致画面扁平粘连。\n  · [composition-thirds-grid] 构图法则：九宫格三分法与呼吸留白安全区: 将核心视觉焦点布置在九宫格三分线交点（黄金分割点 0.618）上，利用引导线与前景暗角汇聚视线；独立资产四周必须预留 16px~24px 纯透明呼吸安全边距，严禁发冠、武器或特效贴死画布边缘被裁切。",
+    "built_at": "2026-10-29 18:09:41 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：Wrong lighting: city became molten fire-glow / lantern-like bloom; cool fog lost",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "7.7"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：Warrior identity and charcoal tiles hold; planetary limb present.",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "7.7"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：Planetary limb washed with a little warm haze; tiles still slightly woody.；promp",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.78"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：Cool fog back; discrete fires; charcoal tiles; identity; no lanterns.",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.78"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：City center still bloomed versus sharp small window-fire points.；prompt 改动 92% 超",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.82"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：Cooler limb; identity held; charcoal tiles; bolder avenue.",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.82"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：Central avenue still slightly bloomed versus fully discrete window-fire points.；",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.98"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：Bolder avenue versus cool sides; charcoal wet tiles; identity; no lanterns.",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.98"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 4,
+  "regression_drop": 0.5,
+  "ActionRequired": "STOP_PICK_BEST",
+  "showcase_ready": true,
+  "winner": {
+    "round": 4,
+    "round_label": "第 4 轮精修",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "9:16",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c01\\ref.jpg"
+    ],
+    "param_validation": {
+      "valid": true,
+      "validation_passed": true,
+      "case_id": "hp29_c01_high",
+      "scale": "high",
+      "aspect_ratio": "9:16",
+      "ref_aspect_ratio": "9:16",
+      "ref_dimensions": "405x720",
+      "output_aspect_ratio": "9:16",
+      "output_dimensions": "720x1280",
+      "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c01\\ref.jpg",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1028\\draw_matrix\\c01\\ref.jpg"
+      ],
+      "inherited_default_aspect_ratio": true,
+      "inherited_default_pad_image": true,
+      "matched_ref_aspect_ratio": true,
+      "matched_ref_pad_image": true,
+      "matched_output_aspect_ratio": true,
+      "three_step_stage": "step3_judge",
+      "three_step_verified": true,
+      "warnings": [],
+      "continuation_pad": false,
+      "pad_diverged": false
+    },
+    "generated_at": "18:10:01",
+    "image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\docs\\showcase\\homepage_rerun_1029\\draw_matrix\\c01\\high\\r4.jpg",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 347388,
+      "size_kb": 339.2,
+      "width": 720,
+      "height": 1280,
+      "aspect_ratio": "9:16",
+      "canonical_aspect_ratio": "9:16",
+      "color_entropy": 7.97
+    },
+    "raw_score": 8.98,
+    "score": 8.98,
+    "target_score_threshold": 9.6,
+    "dims": "构图9.2/光影8.9/透视9.1/质感9.0/风格9.0/无瑕疵8.8",
+    "dims_parsed": {
+      "composition": 9.2,
+      "lighting_color": 8.9,
+      "perspective_anatomy": 9.1,
+      "texture_detail": 9.0,
+      "spec_style": 9.0,
+      "flawlessness": 8.8
+    },
+    "weighted_score": 8.98,
+    "audit_warnings": [
+      "收敛停滞预警：本轮净增 +0.16 低于当前档位 (high) 的最小跃升 +0.20。下一轮加强机位或戏剧光影，不要只改局部笔触",
+      "Agent Absolute-5D 已采纳（门槛 9.6）",
+      "prompt 改动 94% 超过档位上限 80%"
+    ],
+    "stagnated": true,
+    "strengths": "Bolder avenue versus cool sides; charcoal wet tiles; identity; no lanterns.",
+    "defects": "Central avenue still slightly bloomed versus fully discrete window-fire points.；prompt 改动 94% 超过档位上限 80%",
+    "next_fix": "Stop. Best-of-4 is r4.",
+    "prompt": "原图画风优先：保媒介与身份，只抬已经看得见的层次| Same identity. Reduce center bloom. Sharp small window-fire points, cool fog on the sides, dim blue-grey planetary limb. Wet charcoal tiles catch a little amber bounce. No lantern.| 约束：保持原图核心艺术媒介与画风基因；保持原图性别、物种、年龄段与核心外观；可加风格内叙事点缀，不换主体身份 | Structure floor: vanishing points converge and mass contact shadows read; do not melt the structure | Reduce center bloom; keep window fires as sharp small points with higher contrast against cool fog.",
+    "continuation": false,
+    "passed": false,
+    "gate_blocked": true,
+    "image_gate_blocked": false,
+    "anatomy_score": 9.1,
+    "anatomy_floor": 6.0,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "scene",
+    "judge_source": "agent_absolute_5d",
+    "remote_vlm": {
+      "source": "agent_self_judge",
+      "provider": "",
+      "model": "",
+      "error": "",
+      "active": false
+    },
+    "should_continue_next_round": false,
+    "decision": "STOP_MAX_ROUNDS",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "style_lock",
+        "lesson": "本轮短板偏「style_lock」：Central avenue still slightly bloomed versus fully discrete window-fire points.；",
+        "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+        "from_score": "8.98"
+      },
+      {
+        "category": "keep",
+        "lesson": "保留本轮已做对的：Bolder avenue versus cool sides; charcoal wet tiles; identity; no lanterns.",
+        "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+        "from_score": "8.98"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "18:10:02"
+  },
+  "rounds_to_converge": 4,
+  "convergence_badge": "共 4 轮未达阈值，采用最高分",
+  "process_board": ".memory-art/converge/boards/hp29_c01_high/index.html"
+}

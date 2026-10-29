@@ -1,0 +1,81 @@
+{
+  "id": "c02_recompose",
+  "session": "hp29_c02_recompose",
+  "skill": "draw",
+  "module": "character.PastelHoodie",
+  "scale": "recompose",
+  "family": "dry",
+  "threshold": 9.6,
+  "max_rounds": 4,
+  "n": 4,
+  "best": 9.02,
+  "winner_round": 4,
+  "winner": "draw_matrix/c02/recompose/final.jpg",
+  "remaining_defect": "袜筒仍偏长，裁切还没完全停在大腿中段。",
+  "rounds": [
+    {
+      "round": 1,
+      "image": "draw_matrix/c02/recompose/r1.jpg",
+      "score": 8.65,
+      "dims": {
+        "composition": 8.6,
+        "lighting_color": 8.7,
+        "perspective_anatomy": 8.2,
+        "texture_detail": 9.0,
+        "spec_style": 9.1,
+        "flawlessness": 8.4
+      },
+      "dims_str": "构图8.6/光影8.7/透视8.2/质感9.0/风格9.1/无瑕疵8.4",
+      "defects": "半身裁切里只看见一条过膝黑袜，另一腿几乎裁掉；帽子更像围在颈前而不是搭在后背。",
+      "next_fix": "半身裁到大腿中段，两条过膝黑袜的袜口都要看见；帽兜仍搭在后背。不要走成全身。"
+    },
+    {
+      "round": 2,
+      "image": "draw_matrix/c02/recompose/r2.jpg",
+      "score": 8.82,
+      "dims": {
+        "composition": 8.8,
+        "lighting_color": 8.8,
+        "perspective_anatomy": 8.5,
+        "texture_detail": 9.1,
+        "spec_style": 9.2,
+        "flawlessness": 8.6
+      },
+      "dims_str": "构图8.8/光影8.8/透视8.5/质感9.1/风格9.2/无瑕疵8.6",
+      "defects": "小腿还露出太多，接近坐姿四分之三身而不是半身；远腿袜口被抬膝挡住一点。",
+      "next_fix": "再往上裁到大腿中段，两条过膝黑袜口都完整露在框里；不要露出鞋子，不要全身。"
+    },
+    {
+      "round": 3,
+      "image": "draw_matrix/c02/recompose/r3.jpg",
+      "score": 8.88,
+      "dims": {
+        "composition": 8.9,
+        "lighting_color": 8.8,
+        "perspective_anatomy": 8.6,
+        "texture_detail": 9.1,
+        "spec_style": 9.2,
+        "flawlessness": 8.7
+      },
+      "dims_str": "构图8.9/光影8.8/透视8.6/质感9.1/风格9.2/无瑕疵8.7",
+      "defects": "小腿袜筒仍占满下沿，不是大腿中段裁切；第二条袜口几乎看不见。",
+      "next_fix": "裁到大腿中段，两条过膝黑袜口都完整露在框里；不要小腿和鞋。"
+    },
+    {
+      "round": 4,
+      "image": "draw_matrix/c02/recompose/r4.jpg",
+      "score": 9.02,
+      "dims": {
+        "composition": 9.2,
+        "lighting_color": 8.9,
+        "perspective_anatomy": 8.8,
+        "texture_detail": 9.1,
+        "spec_style": 9.3,
+        "flawlessness": 8.9
+      },
+      "dims_str": "构图9.2/光影8.9/透视8.8/质感9.1/风格9.3/无瑕疵8.9",
+      "defects": "袜筒仍偏长，裁切还没完全停在大腿中段。",
+      "next_fix": "解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁止糊边融边；袜筒仍偏长，裁切还没完全停在大腿中段。"
+    }
+  ]
+}

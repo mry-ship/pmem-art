@@ -1,0 +1,51 @@
+{
+  "id": "hp29_potion_L06",
+  "module": "prop.HealPotionMerge",
+  "winner": "v2/merge_potion_l16/L06.jpg",
+  "winner_round": 4,
+  "best": 9.47,
+  "n": 4,
+  "rounds": [
+    {
+      "round": 1,
+      "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L06_r1.jpg",
+      "dims": "剪影识别8.2/描边色板8.4/棚拍光9.0/透明底9.5/无字9.8/无瑕疵8.0",
+      "score": 8.35,
+      "bbox_h": 1.0,
+      "bbox_w": 1.0,
+      "fill": 0.767,
+      "defects": "gold pedestal reads as table"
+    },
+    {
+      "round": 2,
+      "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L06_r2.jpg",
+      "dims": "剪影识别8.7/描边色板9.1/棚拍光9.3/透明底9.6/无字9.8/无瑕疵8.5",
+      "score": 8.85,
+      "bbox_h": 0.777,
+      "bbox_w": 0.575,
+      "fill": 0.301,
+      "defects": "liquid only half"
+    },
+    {
+      "round": 3,
+      "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L06_r3.jpg",
+      "dims": "剪影识别8.8/描边色板9.2/棚拍光9.3/透明底9.6/无字9.8/无瑕疵8.7",
+      "score": 8.96,
+      "bbox_h": 0.722,
+      "bbox_w": 0.599,
+      "fill": 0.245,
+      "defects": "not full, occupancy a bit small"
+    },
+    {
+      "round": 4,
+      "image": "docs\\showcase\\homepage_rerun_1029\\v2\\merge_potion_l16\\L06_r4.jpg",
+      "dims": "剪影识别9.5/描边色板9.5/棚拍光9.5/透明底9.7/无字9.8/无瑕疵9.4",
+      "score": 9.47,
+      "bbox_h": 0.822,
+      "bbox_w": 0.617,
+      "fill": 0.331,
+      "defects": "gold bezel slightly disc-like"
+    }
+  ],
+  "remaining_defect": "gold bezel slightly disc-like"
+}

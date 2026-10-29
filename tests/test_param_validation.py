@@ -400,7 +400,7 @@ class TestGateFixes(unittest.TestCase):
             buf = io.StringIO()
             with contextlib.redirect_stdout(buf):
                 rc = cmd_converge(root, {}, "next", session_id="latest")
-            self.assertEqual(rc, 0)
+            self.assertEqual(rc, 1)
             self.assertIn("第 2 轮还没审图", buf.getvalue())
             (sess_dir / "latest.json").write_text(
                 json.dumps({
@@ -483,6 +483,12 @@ class TestGateFixes(unittest.TestCase):
             _recompose_change_evidence("已改为运河石拱桥仰视全景机位", "改为运河石拱桥仰视全景")
         )
         self.assertTrue(_recompose_change_evidence("low angle riverside bridge", "运河仰视"))
+        self.assertFalse(
+            _recompose_change_evidence(
+                "Did not recompose: still high-roof looking down; 机位没换",
+                "Stand in the street looking UP",
+            )
+        )
 
     def test_high_dull_photocopy_scores_below_drama(self) -> None:
         """Same case: dull flat lighting + locked composition must score below cold/warm drama."""
@@ -793,9 +799,9 @@ class TestGateFixes(unittest.TestCase):
             "scale": "medium",
             "accept_threshold": 9.6,
             "threshold": 9.6,
-            "max_rounds": 8,
+            "max_rounds": 4,
             "rounds": [{
-                "round": 1,
+                "round": i,
                 "score": 8.0,
                 "image": "",
                 "judged": True,
@@ -804,7 +810,7 @@ class TestGateFixes(unittest.TestCase):
                 "defects": "手部多指",
                 "next_fix": "分开五指",
                 "prompt": "test",
-            }],
+            } for i in range(1, 5)],
         }
         (mem / "below.json").write_text(json.dumps(sess, ensure_ascii=False), encoding="utf-8")
         converge_finish(
