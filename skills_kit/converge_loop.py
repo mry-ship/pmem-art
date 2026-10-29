@@ -14,14 +14,83 @@ def _converge_dir(root: Path) -> Path:
     return Path(root) / ".memory-art" / "converge"
 
 
-def mark_active_session(root: Path, session_id: str) -> None:
-    sid = (session_id or "latest").strip() or "latest"
+def _read_active(root: Path) -> dict[str, Any]:
+    path = _converge_dir(root) / _ACTIVE
+    if not path.is_file():
+        return {}
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    return data if isinstance(data, dict) else {}
+
+
+def _write_active(root: Path, data: dict[str, Any]) -> None:
     folder = _converge_dir(root)
     folder.mkdir(parents=True, exist_ok=True)
     (folder / _ACTIVE).write_text(
-        json.dumps({"session_id": sid}, ensure_ascii=False),
+        json.dumps(data, ensure_ascii=False),
         encoding="utf-8",
     )
+
+
+def mark_active_session(
+    root: Path,
+    session_id: str,
+    conversation_id: str = "",
+) -> None:
+    """Mark the converge cell that stop-hook may nudge — keep prior owner when possible."""
+    sid = (session_id or "latest").strip() or "latest"
+    prev = _read_active(root)
+    payload: dict[str, Any] = {"session_id": sid}
+    explicit = (conversation_id or "").strip()
+    prev_sid = str(prev.get("session_id") or "").strip()
+    # Same cell (or first write): keep prior owner; switching to a different sid clears it.
+    same_cell = prev_sid in ("", sid) or (prev_sid == "latest" and sid == "latest")
+    if explicit:
+        payload["owner_conversation_id"] = explicit
+    elif same_cell:
+        kept = str(prev.get("owner_conversation_id") or "").strip()
+        if kept:
+            payload["owner_conversation_id"] = kept
+    _write_active(root, payload)
+
+
+def claim_active_conversation(root: Path, conversation_id: str) -> str:
+    """Bind active converge to this composer when unbound; return owner id (may be empty)."""
+    cid = (conversation_id or "").strip()
+    if not cid:
+        return ""
+    data = _read_active(root)
+    if not data.get("session_id"):
+        return ""
+    owner = str(data.get("owner_conversation_id") or "").strip()
+    if not owner:
+        data["owner_conversation_id"] = cid
+        _write_active(root, data)
+        return cid
+    return owner
+
+
+def active_owner_conversation_id(root: Path) -> str:
+    return str(_read_active(root).get("owner_conversation_id") or "").strip()
+
+
+def followup_allowed_for_conversation(root: Path, conversation_id: str) -> bool:
+    """
+    Only the owning composer may receive stop followup_message.
+
+    - No conversation_id in hook payload → allow (CLI / older hosts).
+    - Owner empty → deny for Cursor chats (must claim via GenerateImage pre-gen first).
+    - Owner mismatch → deny (do not hijack unrelated chats).
+    """
+    cid = (conversation_id or "").strip()
+    if not cid:
+        return True
+    owner = active_owner_conversation_id(root)
+    if not owner:
+        return False
+    return owner == cid
 
 
 def clear_active_session(root: Path, session_id: str = "") -> None:
@@ -53,14 +122,7 @@ def load_session(root: Path, session_id: str) -> dict[str, Any]:
 
 
 def active_session_id(root: Path) -> str:
-    path = _converge_dir(root) / _ACTIVE
-    if not path.is_file():
-        return ""
-    try:
-        data = json.loads(path.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError):
-        return ""
-    return str(data.get("session_id") or "").strip()
+    return str(_read_active(root).get("session_id") or "").strip()
 
 
 def loop_followup(root: Path, session_id: str = "") -> dict[str, str] | None:
