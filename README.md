@@ -207,7 +207,23 @@ python3 pmem_art.py skills --install
 | :---: | :---: | :---: | :---: | :---: |
 | ![kite](docs/showcase/homepage_rerun_1028/v2/clone/final.jpg) | ![rabbit](docs/showcase/homepage_rerun_1028/v2/clone_rabbit/final.jpg) | ![light](docs/showcase/homepage_rerun_1028/v2/variant/final.jpg) | ![surprise](docs/showcase/homepage_rerun_1028/v2/variant_expr/final.jpg) | ![crown](docs/showcase/homepage_rerun_1028/v2/merge/final.jpg) |
 
-合成梯 L1–L6（药 / 糖）、锁风格卡、`/pmem-prompt` 样例与完整玩家话术 → [全页展陈](docs/showcase/skills-homepage/index.html)。认路思路 → [route_pipeline.html](docs/route_pipeline.html)。
+#### 合成梯 · 青金治疗药 L1→L6
+
+空瓶 → 塞 → 半药 → 满药 → 签环叶饰 → 金托（一档一张正方形）。
+
+| L1 空瓶 | L2 +塞 | L3 半药 | L4 满药 | L5 签环 | L6 金托 |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| ![p1](docs/showcase/homepage_rerun_1028/v2/merge_potion_l16/L01.jpg) | ![p2](docs/showcase/homepage_rerun_1028/v2/merge_potion_l16/L02.jpg) | ![p3](docs/showcase/homepage_rerun_1028/v2/merge_potion_l16/L03.jpg) | ![p4](docs/showcase/homepage_rerun_1028/v2/merge_potion_l16/L04.jpg) | ![p5](docs/showcase/homepage_rerun_1028/v2/merge_potion_l16/L05.jpg) | ![p6](docs/showcase/homepage_rerun_1028/v2/merge_potion_l16/L06.jpg) |
+
+#### 合成梯 · 蜜桃糖 L1→L6
+
+裸糖 → 糖纸 → 贴纸 → 纸托 → 丝带 → 托盘（一档一张正方形）。
+
+| L1 裸糖 | L2 糖纸 | L3 贴纸 | L4 纸托 | L5 丝带 | L6 托盘 |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| ![c1](docs/showcase/homepage_rerun_1028/v2/merge_candy_l16/L01.jpg) | ![c2](docs/showcase/homepage_rerun_1028/v2/merge_candy_l16/L02.jpg) | ![c3](docs/showcase/homepage_rerun_1028/v2/merge_candy_l16/L03.jpg) | ![c4](docs/showcase/homepage_rerun_1028/v2/merge_candy_l16/L04.jpg) | ![c5](docs/showcase/homepage_rerun_1028/v2/merge_candy_l16/L05.jpg) | ![c6](docs/showcase/homepage_rerun_1028/v2/merge_candy_l16/L06.jpg) |
+
+锁风格卡、`/pmem-prompt` 样例与完整玩家话术 → [全页展陈](docs/showcase/skills-homepage/index.html)。认路思路 → [route_pipeline.html](docs/route_pipeline.html)。
 
 ---
 
