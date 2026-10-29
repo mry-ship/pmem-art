@@ -1,0 +1,192 @@
+{
+  "source": "skills_kit/skill_specs.py",
+  "frontmatter_ok": true,
+  "stale_skills": [],
+  "tighten": [
+    "没人要「几套镜头」→ 不进镜头包。有参考图本身不是镜头包。",
+    "有参考，但没说新题材、新物件、新角色 → 普通图，不进克隆。",
+    "单张弹框、只要一张图标 → 不升成整套界面或图标集。整套才去界面 / 图标。有参考又要换题材的这一张，走克隆。",
+    "只说「画这个角色」→ 普通图或原画，不进变体。变体要出现换画风、表情或动作。",
+    "两张图分工不同，或关/开这类状态和身份不在同一张图上 → 多图分工。一张图改表情仍走变体。",
+    "回显的类型必须和实际执行的合同是同一个。玩家下一句改口，丢掉这一支重来；已经画完的图不能拿去冒充新合同的结果。"
+  ],
+  "routes": [
+    {
+      "id": "ui.kit",
+      "when": "玩家要整屏、HUD、弹窗套件、九宫格、按钮状态",
+      "skill": "pmem-ui",
+      "section": "【强制4轮≥9.6收敛】SpriteCook式 UI Kit/HUD/九宫格整套",
+      "file": ".cursor/skills/pmem-ui/SKILL.md",
+      "heading": "# `/pmem-ui` — SpriteCook 式 UI Kit / HUD / 九宫格整套生成",
+      "routable": true,
+      "simultaneous_pixels": false,
+      "phase": 10
+    },
+    {
+      "id": "icon.a",
+      "when": "桌面图标、1024 母版",
+      "skill": "pmem-icon",
+      "section": "Mode A",
+      "file": ".cursor/skills/pmem-icon/SKILL.md",
+      "heading": "## 二之二、Mode A：App Icon 1024×1024 母版专项（iOS App Store / Android Adaptive 桌面启动图标）",
+      "routable": true,
+      "simultaneous_pixels": false,
+      "phase": 20
+    },
+    {
+      "id": "icon.b",
+      "when": "一套线性 SVG",
+      "skill": "pmem-icon",
+      "section": "Mode B",
+      "file": ".cursor/skills/pmem-icon/SKILL.md",
+      "heading": "## 二、Mode B：一致化 SVG 矢量图标集流程（Brief → Spec → Batch → Review → Converge）",
+      "routable": true,
+      "simultaneous_pixels": false,
+      "phase": 21
+    },
+    {
+      "id": "icon.c",
+      "when": "背包道具格",
+      "skill": "pmem-icon",
+      "section": "Mode C",
+      "file": ".cursor/skills/pmem-icon/SKILL.md",
+      "heading": "### 二之三、Mode C：游戏道具透明底栅格图标（64/128/256px PNG，非 SVG）",
+      "routable": true,
+      "simultaneous_pixels": false,
+      "phase": 22
+    },
+    {
+      "id": "merge.ladder",
+      "when": "同一套东西一档比一档更大，L1–L8",
+      "skill": "pmem-merge-ladder",
+      "section": "同域合成梯：先过八件关系，再逐张抬到 ≥9.6",
+      "file": ".cursor/skills/pmem-merge-ladder/SKILL.md",
+      "heading": "# `/pmem-merge-ladder` — 同域合成梯",
+      "routable": true,
+      "simultaneous_pixels": false,
+      "phase": 30
+    },
+    {
+      "id": "draw.lens",
+      "when": "玩家明确要几套机位 / 镜头 / 光给自己挑",
+      "skill": "pmem-draw",
+      "section": "镜头包",
+      "file": ".cursor/skills/pmem-draw/SKILL.md",
+      "heading": "## 合同 · 镜头包",
+      "routable": true,
+      "simultaneous_pixels": false,
+      "phase": 40
+    },
+    {
+      "id": "draw.clone",
+      "when": "有参考，并且要换一个新题材，锁的是画风",
+      "skill": "pmem-draw",
+      "section": "克隆",
+      "file": ".cursor/skills/pmem-draw/SKILL.md",
+      "heading": "## 合同 · 克隆",
+      "routable": true,
+      "simultaneous_pixels": false,
+      "phase": 50
+    },
+    {
+      "id": "draw.variant",
+      "when": "已有角色要换画风，或做表情 / 动作差分。身份和机位已经在同一张图上",
+      "skill": "pmem-draw",
+      "section": "变体",
+      "file": ".cursor/skills/pmem-draw/SKILL.md",
+      "heading": "## 合同 · 变体",
+      "routable": true,
+      "simultaneous_pixels": false,
+      "phase": 60
+    },
+    {
+      "id": "draw.multi",
+      "when": "两张及以上的图各管一件事，或同一物件的多个状态要锁同一个机位，机位和身份不在同一张图上",
+      "skill": "pmem-draw",
+      "section": "多图分工",
+      "file": ".cursor/skills/pmem-draw/SKILL.md",
+      "heading": "## 合同 · 多图分工",
+      "routable": true,
+      "simultaneous_pixels": false,
+      "phase": 70
+    },
+    {
+      "id": "draw.key",
+      "when": "主视觉、Key Art、气氛图、概念海报",
+      "skill": "pmem-draw",
+      "section": "原画",
+      "file": ".cursor/skills/pmem-draw/SKILL.md",
+      "heading": "## 合同 · 原画",
+      "routable": true,
+      "simultaneous_pixels": false,
+      "phase": 80
+    },
+    {
+      "id": "style.lock",
+      "when": "以后按这张画",
+      "skill": "pmem-style-lock",
+      "section": "参考图/样张一键提炼风格圣经与色板锁定",
+      "file": ".cursor/skills/pmem-style-lock/SKILL.md",
+      "heading": "# `/pmem-style-lock` — 样张提炼风格圣经与色板锁定",
+      "routable": true,
+      "simultaneous_pixels": false,
+      "phase": 90
+    },
+    {
+      "id": "critique.review",
+      "when": "只审、不画",
+      "skill": "pmem-critique",
+      "section": "单图/批量图主美级六维审稿与红线入库",
+      "file": ".cursor/skills/pmem-critique/SKILL.md",
+      "heading": "# `/pmem-critique` — 主美级六维审稿与红线入库",
+      "routable": true,
+      "simultaneous_pixels": false,
+      "phase": 91
+    },
+    {
+      "id": "atlas.file",
+      "when": "散图归位",
+      "skill": "pmem-atlas",
+      "section": "一键归档散图、记忆体检并刷新可视化图谱工作台",
+      "file": ".cursor/skills/pmem-atlas/SKILL.md",
+      "heading": "# `/pmem-atlas` — 整理散图与刷新可视化图谱",
+      "routable": true,
+      "simultaneous_pixels": false,
+      "phase": 92
+    },
+    {
+      "id": "coach.report",
+      "when": "要看进步、短板、知识卡",
+      "skill": "pmem-coach",
+      "section": "【进阶/可选】进步、短板与知识卡（日常已静默写过）",
+      "file": ".cursor/skills/pmem-coach/SKILL.md",
+      "heading": "# `/pmem-coach` — 进步 / 短板 / 知识（三条偷看合成一条）",
+      "routable": true,
+      "simultaneous_pixels": false,
+      "phase": 93
+    },
+    {
+      "id": "prompt.write",
+      "when": "要写提示词、扩写 brief",
+      "skill": "pmem-prompt",
+      "section": "提示词生成器：按交付类型扩写可选方案",
+      "file": ".cursor/skills/pmem-prompt/SKILL.md",
+      "heading": "# `/pmem-prompt` — 提示词生成器（按类型分流）",
+      "routable": true,
+      "simultaneous_pixels": false,
+      "phase": 94
+    },
+    {
+      "id": "draw.ordinary",
+      "when": "以上都不是",
+      "skill": "pmem-draw",
+      "section": "普通图",
+      "file": ".cursor/skills/pmem-draw/SKILL.md",
+      "heading": "## 二、标准执行流程（Step 1 ~ Step 3）",
+      "routable": true,
+      "simultaneous_pixels": false,
+      "phase": 100
+    }
+  ],
+  "unroutable_headings": []
+}

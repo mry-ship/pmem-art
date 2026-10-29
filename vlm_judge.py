@@ -188,15 +188,15 @@ def build_judge_system_prompt(scale_prof: dict[str, Any] | None = None) -> str:
     }
     scale = str((scale_prof or {}).get("scale") or "medium")
     return (
-        "你是独立美术主美裁判，只根据图像像素做五维打分，禁止因 Prompt 写了某效果就默认画出来了。"
-        "分数 0~10，一位小数。严苛：平光/呆板居中/假纸纹/数字化噪点不得虚高到 9.0+。"
-        f"当前收敛档位={scale}。五维权重提示（你仍须给单项分，总分由系统加权）："
-        f"构图{weights.get('composition', 0.2):.0%}、光影{weights.get('lighting_color', 0.25):.0%}、"
-        f"透视解剖{weights.get('perspective_anatomy', 0.2):.0%}、质感{weights.get('texture_detail', 0.2):.0%}、"
-        f"风格规格{weights.get('spec_style', 0.15):.0%}。"
+        "你是独立美术主美裁判，只根据图像像素打六个分，禁止因 Prompt 写了某效果就默认画出来了。"
+        "分数 0~10，一位小数。无瑕疵由你看图盲评，不要套一份瑕疵清单。"
+        f"当前收敛档位={scale}。六维权重（你仍须给单项分，总分由系统做加权调和平均）："
+        f"构图{weights.get('composition', 0.15):.0%}、光影{weights.get('lighting_color', 0.15):.0%}、"
+        f"透视{weights.get('perspective_anatomy', 0.15):.0%}、质感{weights.get('texture_detail', 0.15):.0%}、"
+        f"风格{weights.get('spec_style', 0.15):.0%}、无瑕疵{weights.get('flawlessness', 0.25):.0%}。"
         "只输出一个 JSON 对象，不要 Markdown 围栏，字段："
         '{"composition":0,"lighting_color":0,"perspective_anatomy":0,"texture_detail":0,"spec_style":0,'
-        '"strengths":"...","defects":"...","next_fix":"..."}'
+        '"flawlessness":0,"strengths":"...","defects":"...","next_fix":"..."}'
     )
 
 
@@ -246,6 +246,7 @@ def observations_from_vlm_payload(payload: dict[str, Any]) -> dict[str, Any]:
         "perspective_anatomy": ("perspective_anatomy", "perspective", "anatomy", "透视", "解剖", "结构"),
         "texture_detail": ("texture_detail", "texture", "质感", "肌理", "细节"),
         "spec_style": ("spec_style", "style", "spec", "风格", "规格"),
+        "flawlessness": ("flawlessness", "flawless", "无瑕疵", "无暇"),
     }
     scores: dict[str, float] = {}
     for dest, keys in aliases.items():
@@ -257,12 +258,15 @@ def observations_from_vlm_payload(payload: dict[str, Any]) -> dict[str, Any]:
                 except (TypeError, ValueError):
                     continue
     dims = ""
-    if len(scores) == 5:
+    craft = ("composition", "lighting_color", "perspective_anatomy", "texture_detail", "spec_style")
+    if all(k in scores for k in craft):
         dims = (
             f"构图{scores['composition']:.1f}/光影{scores['lighting_color']:.1f}/"
             f"透视{scores['perspective_anatomy']:.1f}/质感{scores['texture_detail']:.1f}/"
             f"风格{scores['spec_style']:.1f}"
         )
+        if "flawlessness" in scores:
+            dims += f"/无瑕疵{scores['flawlessness']:.1f}"
     return {
         "dims": dims,
         "dims_scores": scores,

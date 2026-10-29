@@ -219,6 +219,117 @@
       ],
       "skip_ahead_hint": false,
       "recorded_at": "12:36:05"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "3:4",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen/draw_matrix/c03/ref.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "regen-c03-rec",
+        "scale": "recompose",
+        "aspect_ratio": "3:4",
+        "ref_aspect_ratio": "3:4",
+        "ref_dimensions": "864x1152",
+        "output_aspect_ratio": "3:4",
+        "output_dimensions": "864x1152",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen/draw_matrix/c03/ref.jpg",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen/draw_matrix/c03/ref.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "12:40:08",
+      "image": "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen/draw_matrix/c03/recompose/r2.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 324338,
+        "size_kb": 316.7,
+        "width": 864,
+        "height": 1152,
+        "aspect_ratio": "3:4",
+        "canonical_aspect_ratio": "3:4",
+        "color_entropy": 7.23
+      },
+      "raw_score": 8.31,
+      "score": 8.31,
+      "target_score_threshold": 9.6,
+      "dims": "构图8.0/光影8.5/透视8.3/质感8.4/风格8.6",
+      "dims_parsed": {
+        "composition": 8.0,
+        "lighting_color": 8.5,
+        "perspective_anatomy": 8.3,
+        "texture_detail": 8.4,
+        "spec_style": 8.6
+      },
+      "weighted_score": 8.31,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.07 低于当前档位 (recompose) 的最小跃升 +0.20。下一轮更贴近指定构图方向",
+        "独立视觉 API 不可用，改由本模型按 Absolute-5D 检查表评分（门槛仍 9.6）：HTTP Error 403: Forbidden",
+        "Agent Absolute-5D 已采纳（门槛 9.6）"
+      ],
+      "stagnated": true,
+      "strengths": "肩背比上一轮更大，锚点都在",
+      "defects": "脸仍占画面主体，还不是四分之一侧脸",
+      "next_fix": "后脑和肩背占左半，脸只露出一条",
+      "prompt": "胶片逆光轻厚涂：保画风色板，按「同一耳机少女转到四分之三背侧，脸仍看向窗光。白猫发夹、黑耳机、白T与窗边雏菊都在」重构机位| 3:4 recompose. Three-quarter back, face toward the window. Cat clip, headphones, white shirt, daisies. More back.| 约束：保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观；不偏离指定构图方向 | Structure floor: the person's joints and grip stay clear and both pupils share a direction; the animal's limbs follow its species and are not converted into human elbows; contact shadows read; do not melt limbs into props | 肩背转到画面左侧，脸只留四分之一侧向窗",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.3,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "both",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "vlm_error",
+        "provider": "",
+        "model": "",
+        "error": "HTTP Error 403: Forbidden",
+        "active": true
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：脸仍占画面主体，还不是四分之一侧脸",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.31"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：肩背比上一轮更大，锚点都在",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.31"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "12:40:14"
     }
   ],
   "warm_start": {
@@ -320,6 +431,18 @@
       "lesson": "保留本轮已做对的：脸看向窗光，发夹耳机白T雏菊都在",
       "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
       "from_score": "8.24"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：脸仍占画面主体，还不是四分之一侧脸",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.31"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：肩背比上一轮更大，锚点都在",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.31"
     }
   ],
   "dim_lock_overrides": {},
@@ -328,5 +451,5 @@
   "anatomy_floor": 7.5,
   "early_stop_min_round": 4,
   "regression_drop": 0.5,
-  "ActionRequired": "GENERATE_ROUND_2"
+  "ActionRequired": "GENERATE_ROUND_3"
 }

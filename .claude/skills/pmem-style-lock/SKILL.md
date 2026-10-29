@@ -15,4 +15,4 @@ description: 当用户输入 /pmem-style-lock 并附带样张/参考图时触发
 2. **自动写入记忆库**：
    - 调用 `python3 pmem_art.py feedback "以后统一按此样张画风：<核心色板+光影+笔触摘要>" --module <目标模块> --asset <样张路径> --kind art_decision`
    - 调用 `python3 pmem_art.py feedback "禁止偏离样张画风：<反例禁用词汇总>" --module <目标模块> --kind style_redline`
-3. **输出《风格锁定卡片》**：用清晰的表格展示色板 HEX、正向风格词、负向禁用词与已写入的记忆路径。
+3. **输出《风格锁定卡片》**：用清晰的表格展示色板 HEX、正向风格词、负向禁用词与已写入的记忆路径。卡片外再附一段可以直接拿去画的完整句子。同模块下一张开场必须带上已锁的 HEX 和禁用词。记忆仍只在这一支里写入。

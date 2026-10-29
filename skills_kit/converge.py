@@ -390,6 +390,32 @@ def _resolve_pad_auto(
     style = (style_ref or "").strip()
     if _style_jump_requested(scale, goal, style_jump):
         return "", carry_fix, 0, False, "style_jump：不垫风格参考，也不链成图"
+    if (scale or "").strip().lower() in {"high", "recompose"}:
+        best_img, best_fix, best_round, best_score = "", carry_fix, 0, -1.0
+        for row in rounds:
+            if not isinstance(row, dict):
+                continue
+            if int(row.get("round") or 0) >= int(round_num):
+                continue
+            blob = " ".join(str(row.get(k) or "") for k in ("defects", "next_fix", "prompt"))
+            if any(n in blob for n in ("不改机位", "没改机位", "不要改机位", "别改机位")):
+                continue
+            if not any(k in blob for k in ("换机位", "改了机位", "重构机位", "机位已换")):
+                continue
+            image = str(row.get("image") or "").strip()
+            if not image or not Path(image).is_file():
+                continue
+            try:
+                score = float(row.get("score") or 0)
+            except (TypeError, ValueError):
+                score = 0.0
+            if score >= best_score:
+                best_img = image
+                best_fix = str(row.get("next_fix") or "") or carry_fix
+                best_round = int(row.get("round") or 0)
+                best_score = score
+        if best_img:
+            return best_img, best_fix, best_round, True, "pad=changed_camera（机位已换，垫换过机位的最高分）"
     if mode == "previous" and carry_image:
         return carry_image, carry_fix, carry_round, True, "pad=previous"
     why = "pad=ref" if mode == "ref" else "pad=auto→style_ref（每轮垫最初参考，修正只写进提示词）"
@@ -429,6 +455,8 @@ def cmd_converge(
     verbose: bool = False,
     silent: bool = False,
     lock_text: str = "",
+    medium_family: str = "",
+    contract: str = "",
 ) -> int:
     """
     converge_mode: quality (default, dynamic threshold per scale, max 4 rounds, stop ≥9.6 or best-of-4) | fast (warm-start fast-track hints).
@@ -447,7 +475,16 @@ def cmd_converge(
         cfg_conv = {}
     requested_scale = (scale or cfg_conv.get("default_scale") or "medium").strip().lower()
     eff_scale = requested_scale
-    scale_prof = get_converge_scale_profile(eff_scale, recompose_dir=recompose_dir, goal=goal, ref_analysis=ref_analysis, ref_image=ref_image, module=module)
+    scale_prof = get_converge_scale_profile(
+        eff_scale,
+        recompose_dir=recompose_dir,
+        goal=goal,
+        ref_analysis=ref_analysis,
+        ref_image=ref_image,
+        module=module,
+        medium_family=medium_family,
+        contract=contract,
+    )
     style_jump_requested = _style_jump_requested(requested_scale, goal or "")
     eff_scale = scale_prof["scale"]
 
@@ -510,6 +547,8 @@ def cmd_converge(
             "scale": eff_scale,
             "style_jump": bool(style_jump_requested),
             "scale_profile": scale_prof,
+            "medium_family": str(scale_prof.get("medium_family") or "generic"),
+            "contract": "split" if str(contract or "").strip().lower() == "split" else "",
             "target_score_threshold": base_th,
             "recompose_dir": recompose_dir,
             "fast_track": fast_track,
@@ -557,6 +596,8 @@ def cmd_converge(
             f"{' · FAST-TRACK' if fast_track else ''} | 动态达标线: >= {sess['accept_threshold']} 分即停"
             f"{'（草稿软线 ' + str(eff_threshold) + '）' if draft_ok else ''} | 最大兜底轮次: {sess['max_rounds']}"
             f" | 最早停机轮次: {int(scale_prof.get('min_rounds_before_stop') or 1)}"
+            f" | 媒介: {sess.get('medium_family')}"
+            f"{' | 合同: split' if sess.get('contract') == 'split' else ''}"
         )
         print(f"🎚️  Scale 内部权重与约束: weights={scale_prof['dim_weights']} | budget={scale_prof['next_fix_budget']}")
         print(f"🧭 Scale 指令: {scale_prof['prompt_directive']}")
@@ -673,6 +714,8 @@ def cmd_converge(
             ref_analysis=sess.get("ref_analysis", ""),
             ref_image=sess.get("ref_image", ""),
             module=sess.get("module", ""),
+            medium_family=str(sess.get("medium_family") or ""),
+            contract=str(sess.get("contract") or ""),
         )
         if not image:
             ref = str(sess.get("ref_image") or "").strip()
@@ -839,6 +882,8 @@ def cmd_converge(
             ref_analysis=sess.get("ref_analysis", ""),
             ref_image=sess.get("ref_image", ""),
             module=sess.get("module", ""),
+            medium_family=str(sess.get("medium_family") or ""),
+            contract=str(sess.get("contract") or ""),
         )
         # Artist may loosen a dim mid-loop (still same --scale); fold into session + prompt.
         ov_now = _apply_lock_texts(lock_text or "", next_fix or "", prompt or "", source=f"generate_r{r_no}")
@@ -974,7 +1019,7 @@ def cmd_converge(
             f"{fix_line}"
             f"{stub_line}"
             f"   · 置顶风格指令 Prompt: {composed_prompt}\n"
-            f"   · 当前未执行任何自评或 VLM 裁判；请先看图再打五维，不要从 9.3 起跳：\n"
+            f"   · 当前未执行任何自评或 VLM 裁判；请先看图再打六维，不要从 9.3 起跳：\n"
             f"{agent_absolute_5d_judge_prompt(round_num=r_no, max_rounds=mr)}\n"
             f"   · 然后：`python3 pmem_art.py converge judge --id {session_id} --round {r_no} --image {image} --dims ...`"
         )
@@ -1047,6 +1092,8 @@ def cmd_converge(
             ref_analysis=sess.get("ref_analysis", ""),
             ref_image=sess.get("ref_image", ""),
             module=sess.get("module", ""),
+            medium_family=str(sess.get("medium_family") or ""),
+            contract=str(sess.get("contract") or ""),
         )
         s_prof = dict(s_prof)
         s_prof["target_score_threshold"] = th
@@ -1120,10 +1167,10 @@ def cmd_converge(
             compare_to = first_prompt if baseline == "first" else prev_prompt
             change = _prompt_change_ratio(compare_to, recorded_gen_prompt, directive)
             limit = float(s_prof.get("max_prompt_delta_ratio") or 1.0)
-            if change > limit:
+            if str(sess.get("contract") or "") != "split" and change > limit:
                 gate_notes.append(f"prompt 改动 {change:.0%} 超过档位上限 {limit:.0%}")
         if cli_score > 0 and judge_res.get("weighted_score") is None:
-            gate_notes.append(f"已忽略命令行 --score {cli_score:.2f}，五维未解析成功")
+            gate_notes.append(f"已忽略命令行 --score {cli_score:.2f}，六维未解析成功")
         early_safe_stop: str | None = None
         if gate_notes:
             passed = False
@@ -1307,8 +1354,8 @@ def cmd_converge(
             sess["status"] = "converged"
             sess["ActionRequired"] = "STOP_AND_FINISH"
             msg = (
-                f"✅ [Step 2B · 五维审图 · {src_badge}] 第 {r_no} 轮得分 {score:.2f} >= 目标阈值 {th:.2f}（经过 {r_no} 轮迭代达标停止）！\n"
-                f"   · 图像校验: {v_badge} | 五维: {judge_res['dims']}\n"
+                f"✅ [Step 2B · 六维审图 · {src_badge}] 第 {r_no} 轮得分 {score:.2f} >= 目标阈值 {th:.2f}（经过 {r_no} 轮迭代达标停止）！\n"
+                f"   · 图像校验: {v_badge} | 六维: {judge_res['dims']}\n"
                 f"   · ready_to_finish = True，请运行 `python3 pmem_art.py converge finish --id {session_id}` 完成定稿。"
             )
         elif skip_ahead and sess.get("draft_ok"):
@@ -1347,8 +1394,8 @@ def cmd_converge(
             nxt_image, nxt_fix, nxt_round = _best_plate(rounds, r_no + 1, root)
             fix_line = nxt_fix or entry["next_fix"]
             msg = (
-                f"🔄 [Step 2B · 五维审图 · {src_badge}] 第 {r_no}/{mr} 轮得分 {score:.2f} < 目标阈值 {th:.2f}（未达标继续下一轮第 {r_no + 1} 轮）。\n"
-                f"   · 图像校验: {v_badge} | 五维: {judge_res['dims']}\n"
+                f"🔄 [Step 2B · 六维审图 · {src_badge}] 第 {r_no}/{mr} 轮得分 {score:.2f} < 目标阈值 {th:.2f}（未达标继续下一轮第 {r_no + 1} 轮）。\n"
+                f"   · 图像校验: {v_badge} | 六维: {judge_res['dims']}\n"
                 f"   · 不合理处: {entry['defects']}\n"
             )
             if nxt_image:

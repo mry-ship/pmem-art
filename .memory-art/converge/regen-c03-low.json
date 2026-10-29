@@ -220,6 +220,117 @@
       ],
       "skip_ahead_hint": false,
       "recorded_at": "12:35:25"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "3:4",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen/draw_matrix/c03/ref.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "regen-c03-low",
+        "scale": "low",
+        "aspect_ratio": "3:4",
+        "ref_aspect_ratio": "3:4",
+        "ref_dimensions": "864x1152",
+        "output_aspect_ratio": "3:4",
+        "output_dimensions": "864x1152",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen/draw_matrix/c03/ref.jpg",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen/draw_matrix/c03/ref.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "12:39:49",
+      "image": "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen/draw_matrix/c03/low/r2.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 347626,
+        "size_kb": 339.5,
+        "width": 864,
+        "height": 1152,
+        "aspect_ratio": "3:4",
+        "canonical_aspect_ratio": "3:4",
+        "color_entropy": 7.23
+      },
+      "raw_score": 8.51,
+      "score": 8.51,
+      "target_score_threshold": 9.6,
+      "dims": "构图8.4/光影8.6/透视8.4/质感8.5/风格8.7",
+      "dims_parsed": {
+        "composition": 8.4,
+        "lighting_color": 8.6,
+        "perspective_anatomy": 8.4,
+        "texture_detail": 8.5,
+        "spec_style": 8.7
+      },
+      "weighted_score": 8.51,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.02 低于当前档位 (low) 的最小跃升 +0.10。下一轮只改缺陷部位；若原图离 9.6 远，换 medium 或 high",
+        "独立视觉 API 不可用，改由本模型按 Absolute-5D 检查表评分（门槛仍 9.6）：HTTP Error 403: Forbidden",
+        "Agent Absolute-5D 已采纳（门槛 9.6）"
+      ],
+      "stagnated": true,
+      "strengths": "领口窄影比上一轮清楚，身份锚点还在",
+      "defects": "靠窗发梢仍融进光斑",
+      "next_fix": "靠窗发梢改成几根分开的深色丝",
+      "prompt": "胶片逆光轻厚涂：锁视角与姿态，仅微修局部质感| 3:4. Same window girl, same camera. Clean hair edges and collar shadow. Dark tips.| 约束：不改动作与姿态；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观；严禁改变正面胸像视角与二分光影；严禁增删人物或改变雏菊壁纸背景 | Structure floor: the person's joints and grip stay clear and both pupils share a direction; the animal's limbs follow its species and are not converted into human elbows; contact shadows read; do not melt limbs into props | 靠窗发梢留出一根根深色发丝，领口压一条窄影",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.4,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "both",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "vlm_error",
+        "provider": "",
+        "model": "",
+        "error": "HTTP Error 403: Forbidden",
+        "active": true
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：靠窗发梢仍融进光斑",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.51"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：领口窄影比上一轮清楚，身份锚点还在",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.51"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "12:39:54"
     }
   ],
   "warm_start": {
@@ -321,6 +432,18 @@
       "lesson": "保留本轮已做对的：白猫发夹、黑耳机、白T和窗边雏菊都在",
       "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
       "from_score": "8.49"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：靠窗发梢仍融进光斑",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.51"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：领口窄影比上一轮清楚，身份锚点还在",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.51"
     }
   ],
   "dim_lock_overrides": {},
@@ -329,5 +452,5 @@
   "anatomy_floor": 7.5,
   "early_stop_min_round": 4,
   "regression_drop": 0.5,
-  "ActionRequired": "GENERATE_ROUND_2"
+  "ActionRequired": "GENERATE_ROUND_3"
 }

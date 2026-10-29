@@ -1434,6 +1434,11 @@ def main() -> int:
                         help="quality=最多4轮×≥9.6（默认）；fast=warm-start 置信高时可 fast-track")
     p_conv.add_argument("--scale", dest="converge_scale", choices=("low", "medium", "high", "recompose"), default="",
                         help="收敛强度：low=只修缺陷，medium=补足加小优化（默认），high=允许重构构图和重做光影，recompose=按用户指定方向改构图")
+    p_conv.add_argument("--medium-family", dest="medium_family", default="",
+                        help="开局媒介家族，四轮不再改。空则从目标句归类，对不上走 generic")
+    p_conv.add_argument("--contract", dest="converge_contract", default="",
+                        choices=("", "split"),
+                        help="split=多图分工，不借用 medium 的不改机位和 40%% 提示词预算")
     p_conv.add_argument("--recompose-dir", dest="recompose_dir", default="",
                         help="当用户明确要求改变构图时指定新构图方向（如：从特写改为全景 / 把主体移到画面左侧三分点）")
     p_conv.add_argument("--draft", action="store_true", help="用户明确要草稿/fast 时允许软合格线（仅 fast 模式）")
@@ -1507,6 +1512,13 @@ def main() -> int:
         if args.list and not args.install:
             print("🎨 pmem-art 内置美术技能列表（Cursor / Claude Code / Codex 通用）：\n")
             from skills_kit.install import command_names
+            from skills_kit.skill_registry import build_registry
+            reg = build_registry(SKILL_SPECS)
+            print("路由：")
+            for route in reg["routes"]:
+                flag = "" if route["routable"] else "  unroutable"
+                print(f"  {route['id']:<16} {route['skill']:<18} {route['heading']}{flag}")
+            print()
             for sp in SKILL_SPECS:
                 extras = " ".join(f"/{n}" for n in command_names(sp) if n != sp["name"])
                 print(f"  /{sp['name']:<18} {extras}")
@@ -1738,6 +1750,8 @@ def main() -> int:
                 and not bool(getattr(args, "verbose", False) or getattr(args, "no_silent", False))
             ),
             lock_text=getattr(args, "lock_text", "") or "",
+            medium_family=getattr(args, "medium_family", "") or "",
+            contract=getattr(args, "converge_contract", "") or "",
         )
     if args.command == "improve":
         from improve import cmd_improve

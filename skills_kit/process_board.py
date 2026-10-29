@@ -123,7 +123,7 @@ def write_process_board(root: Path, sess: dict[str, Any], *, winner: dict[str, A
         cards.append(
             f'<figure class="card{win}">'
             f'<figcaption><b class="{_score_class(sc)}">第 {n} 轮 · {sc_txt}</b>'
-            f'<span class="dims">{_esc(row.get("dims") or "未记五维")}</span></figcaption>'
+            f'<span class="dims">{_esc(row.get("dims") or "未记六维")}</span></figcaption>'
             f'{shot}<ul>{lis}</ul></figure>'
         )
 

@@ -375,8 +375,8 @@ REFLOW: dict[str, dict[str, str]] = {
         "en": "Lighting: settle the key-light direction and the shadow edge; do not hide structure behind effects",
     },
     "light_ok": {
-        "zh": "光影：理顺主光方向与明暗交接，仅在结构已稳时加强体积光",
-        "en": "Lighting: settle the key-light direction and the shadow edge; add volumetric light only when the form is already sound",
+        "zh": "光影：理顺主光方向与明暗交接，只抬画面里已经有的光",
+        "en": "Lighting: settle the key-light direction and the shadow edge; only raise light that is already in the picture",
     },
     "composition": {
         "zh": "构图：稳住主体可读性与层次，勿新增冲突焦点",

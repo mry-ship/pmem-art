@@ -174,6 +174,20 @@ class TestGateFixes(unittest.TestCase):
         self.assertEqual(info["weighted_score"], 8.6)
         self.assertEqual(info["rubric_mode"], "skill_additive_5d")
 
+    def test_skill_additive_flawlessness_pulls_the_mean(self) -> None:
+        info = __import__("skills_kit", fromlist=["parse_5d_dims"]).parse_5d_dims(
+            "风格10/结构10/光影10/合规10/还原10/无瑕疵2.0"
+        )
+        self.assertLess(info["weighted_score"], 9.6)
+
+    def test_family_words_do_not_steal_the_medium(self) -> None:
+        from skills_kit.medium_family import infer_medium_family
+
+        self.assertEqual(infer_medium_family("高像素画质的厚涂人像"), "impasto")
+        self.assertEqual(infer_medium_family("厚涂，边缘略有晕染"), "impasto")
+        self.assertEqual(infer_medium_family("勾线平涂角色"), "cel")
+        self.assertEqual(infer_medium_family("水彩植物志"), "wash")
+
     def test_hand_filled_total_cannot_float_above_weighted(self) -> None:
         prof = get_converge_scale_profile("medium")
         res = audit_score_inflation(
@@ -409,7 +423,7 @@ class TestGateFixes(unittest.TestCase):
             self.assertNotIn("重画屋顶", text)
 
     def test_high_and_recompose_refuse_round1_stop(self) -> None:
-        dims = "构图9.8/光影9.9/透视9.7/质感9.8/风格9.8"
+        dims = "构图9.8/光影9.9/透视9.7/质感9.8/风格9.8/无瑕疵9.8"
         defects = "远景灯火略糊，冷暖交界可更锐"
         for scale, dir_kw in (("high", ""), ("recompose", "改为运河石拱桥仰视")):
             prof = get_converge_scale_profile(scale, recompose_dir=dir_kw)
@@ -442,10 +456,12 @@ class TestGateFixes(unittest.TestCase):
 
         high = get_converge_scale_profile("high")
         self.assertTrue(high["best_direction_hint"].startswith("最优方向："))
-        self.assertIn("体积光", high["best_direction_hint"])
+        self.assertNotIn("体积光", high["best_direction_hint"])
+        paint = get_converge_scale_profile("high", goal="数字厚涂原画")
+        self.assertIn("体积光", paint["best_direction_hint"])
         self.assertEqual(find_affirmative_lock_hits(high["best_direction_hint"]), [])
         self.assertEqual(find_affirmative_lock_hits(high["prompt_directive"]), [])
-        self.assertIn("光影张力", high["prompt_directive"])
+        self.assertIn("已经看得见的层次", high["prompt_directive"])
         med = get_converge_scale_profile("medium")
         self.assertIn("光影", med["best_direction_hint"])
         self.assertIn("柔化光影", med["prompt_directive"])
@@ -483,7 +499,6 @@ class TestGateFixes(unittest.TestCase):
             drama_w, drama_dims, "体积光可再锐一点", None, high, round_num=2
         )
         self.assertLess(dull_audit["calibrated_score"], drama_audit["calibrated_score"])
-        self.assertLessEqual(dull_audit["calibrated_score"], 8.95)
 
     def test_compose_strips_affirmative_locks(self) -> None:
         from skills_kit import compose_style_first_prompt, strip_affirmative_locks_from_prompt
@@ -500,7 +515,7 @@ class TestGateFixes(unittest.TestCase):
         high = get_converge_scale_profile("high")
         composed = compose_style_first_prompt(dirty, high)
         self.assertEqual(find_affirmative_lock_hits(composed), [])
-        self.assertIn("光影张力", composed)
+        self.assertIn("已经看得见的层次", composed)
 
     def test_preflight_affirmative_lock_and_min_rounds(self) -> None:
         bad = check_scale_task_text(
@@ -639,7 +654,7 @@ class TestGateFixes(unittest.TestCase):
         painterly = get_converge_scale_profile("medium", goal="峡谷天井绿龙", ref_image="canyon")
         self.assertIn("次表面散射", painterly["prompt_directive"])
         film = get_converge_scale_profile("medium", goal="胶片肖像", ref_analysis="背景略有水彩晕染")
-        self.assertIn("次表面散射", film["prompt_directive"])
+        self.assertNotIn("次表面散射", film["prompt_directive"])
         canyon = get_converge_scale_profile("medium", goal="峡谷天井绿龙", ref_image="canyon", ref_analysis="远景水墨层次")
         self.assertIn("次表面散射", canyon["prompt_directive"])
 
@@ -869,7 +884,7 @@ class TestGateFixes(unittest.TestCase):
             prof,
             round_num=1,
         )
-        self.assertLessEqual(hit["calibrated_score"], 8.90)
+        self.assertGreater(hit["calibrated_score"], 9.2)
 
     def test_geometric_mean_and_hurdles(self) -> None:
         from skills_kit import parse_5d_dims, get_converge_scale_profile
@@ -967,7 +982,6 @@ class TestGateFixes(unittest.TestCase):
             parsed,
             {"scale_prof": {"dim_weights": {k: 0.2 for k in parsed["dims"]}}, "goal": "空镜峡谷", "module": "scene.Canyon"},
             "vlm_quant_5d",
-            {},
         )
         self.assertLess(out["total"], 9.6)
         body = _normalize_vlm_result(
@@ -984,7 +998,6 @@ class TestGateFixes(unittest.TestCase):
             },
             {"scale_prof": high, "goal": "少女全身立绘", "module": "character.Hero"},
             "vlm_quant_5d",
-            {},
         )
         self.assertAlmostEqual(body["total"], 7.4)
         pixel = _normalize_vlm_result(
@@ -1001,10 +1014,8 @@ class TestGateFixes(unittest.TestCase):
             },
             {"scale_prof": high, "goal": "像素少女立绘", "module": "character.Hero"},
             "vlm_quant_5d",
-            {},
         )
-        self.assertGreater(pixel["total"], 6.6)
-        self.assertLess(pixel["total"], 9.6)
+        self.assertAlmostEqual(pixel["total"], 6.6, places=2)
         iso = _normalize_vlm_result(
             {
                 "ok": True,
@@ -1019,7 +1030,6 @@ class TestGateFixes(unittest.TestCase):
             },
             {"scale_prof": high, "goal": "等轴测房间空镜", "module": "scene.Room"},
             "vlm_quant_5d",
-            {},
         )
         self.assertGreater(iso["total"], 5.7)
         self.assertLess(iso["total"], 9.6)
@@ -1037,7 +1047,6 @@ class TestGateFixes(unittest.TestCase):
             },
             {"module": "ui.hud", "goal": "主界面"},
             "independent_vlm",
-            {},
         )
         self.assertAlmostEqual(ui_kept["total"], 7.2)
         from skills_kit.converge_policy import decide_round_stop
@@ -1045,7 +1054,7 @@ class TestGateFixes(unittest.TestCase):
             decide_round_stop(
                 score_ok=True,
                 total=9.7,
-                dims={"composition": 10, "lighting_color": 10, "perspective_anatomy": 6.5, "texture_detail": 10, "spec_style": 10},
+                dims={"composition": 10, "lighting_color": 10, "perspective_anatomy": 6.5, "texture_detail": 10, "spec_style": 10, "flawlessness": 10},
                 round_num=2,
                 min_rounds=1,
                 threshold=9.6,

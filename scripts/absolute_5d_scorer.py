@@ -969,7 +969,7 @@ def rewrite_prompt_from_defects(
     if s == "recompose" and recompose_dir:
         fix.append(f"强化新机位：{recompose_dir}")
     elif s == "high" and strat == "tail":
-        fix.append("加强体积光/冷暖分离，并提高结构化清晰度（勿用噪点冒充细节）")
+        fix.append("只抬这一家已经有的层次，并提高结构化清晰度（勿用噪点冒充细节）")
     if strat == "by_dim":
         by_dim_defects = list(defects or [])
         if intent and not intent.get("pass"):

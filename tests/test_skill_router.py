@@ -112,10 +112,26 @@ class SkillRouterTests(unittest.TestCase):
         self.assertIn("--reference-image-paths", console)
         self.assertIn("停和打回的条件与上面相同", console)
         self.assertNotIn("和上一句相同才停", console)
-        for name in PRIMARY:
-            if name == "pmem-agent":
-                continue
-            self.assertIn(f".cursor/skills/{name}/SKILL.md", console)
+        self.assertIn(".cursor/skills/registry.md", console)
+        self.assertIn("没有识别到可用技能", console)
+        self.assertIn("也不改走普通图", console)
+        self.assertIn("普通图排在最后", console)
+        self.assertIn("先跑 `tighten`", console)
+        self.assertIn("缺一样这步不能开始", console)
+        self.assertIn("--contract split", console)
+        self.assertIn("skills --install", console)
+        self.assertIn("不改派到多图分工", console)
+        from skills_kit.skill_registry import build_registry
+        reg = build_registry(SKILL_SPECS)
+        bodies = {spec["name"]: spec["body"] for spec in SKILL_SPECS}
+        self.assertGreaterEqual(len(reg["routes"]), 16)
+        for route in reg["routes"]:
+            self.assertTrue(route["routable"], route["id"])
+            self.assertIn(route["heading"], bodies[route["skill"]], route["id"])
+            self.assertFalse(route["simultaneous_pixels"], route["id"])
+        joined = "\n".join(route["heading"] + route["when"] + route["id"] for route in reg["routes"])
+        for banned in ("局部修", "设定表", "分镜", "姿势锁"):
+            self.assertNotIn(banned, joined)
 
     def test_install_keeps_one_command_per_skill(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -125,9 +141,11 @@ class SkillRouterTests(unittest.TestCase):
             (retired / "art-draw.md").write_text("old", encoding="utf-8")
             (retired / "pmem-concept.md").write_text("old", encoding="utf-8")
             install_skills_and_agent_configs(root, quiet=True)
-            skills = {p.name for p in (root / ".cursor" / "skills").iterdir()}
+            skills = {p.name for p in (root / ".cursor" / "skills").iterdir() if p.is_dir()}
             commands = {p.stem for p in (root / ".cursor" / "commands").glob("*.md")}
             self.assertEqual(skills, set(PRIMARY))
+            self.assertTrue((root / ".cursor" / "skills" / "registry.json").is_file())
+            self.assertTrue((root / ".cursor" / "skills" / "registry.md").is_file())
             self.assertEqual(commands, set(PRIMARY))
             draw = (root / ".cursor" / "commands" / "pmem-draw.md").read_text(encoding="utf-8")
             self.assertIn("合同 · 原画", draw)

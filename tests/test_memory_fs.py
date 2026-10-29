@@ -74,7 +74,7 @@ class TestMediumNoSssForUiPixel(unittest.TestCase):
             goal="窗边肖像",
             ref_image="style_ref_03_sunlit_portrait.png",
         )
-        self.assertIn("次表面散射", portrait["prompt_directive"])
+        self.assertNotIn("次表面散射", portrait["prompt_directive"])
         prop = get_converge_scale_profile(
             "medium",
             module="prop.ValentineMerge",

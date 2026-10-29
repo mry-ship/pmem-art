@@ -40,7 +40,6 @@ from .converge_policy import (
     infer_style_family,
     style_body_floor,
     style_scene_floor,
-    style_soft_credit,
     clone_subject_structure_ok_for_stop,
     ui_shell_structure_ok_for_stop,
 )
@@ -255,7 +254,7 @@ def auto_vlm_judge_image(
     if judge_source == "agent_self_judge" and not str(dims or "").strip():
         soft_defects_blocked = True
         calibrated = min(float(calibrated), round(target_th - 0.05, 2))
-        warn = "无独立 VLM 时须由本模型按 Absolute-5D 给出 dims；缺五维分拒绝达标"
+        warn = "无独立 VLM 时须由本模型按 Absolute-5D 给出 dims；缺六维分拒绝达标"
         if warn not in audit_res["warnings"]:
             audit_res["warnings"].append(warn)
 
@@ -291,39 +290,11 @@ def auto_vlm_judge_image(
         if not next_fix:
             next_fix = "下一轮仍垫最初的参考图，只在提示词上补还没到位的那一处"
 
-    # Special media use a narrower floor. A melted joint or collapse still uses the strict line.
     style_family = infer_style_family(
         goal or str(scale_prof.get("goal") or ""),
         module,
         ref_image or str(scale_prof.get("ref_image") or ""),
     )
-    if (
-        not early_stop_blocked
-        and not image_gate_blocked
-        and not soft_defects_blocked
-        and rubric_mode in ("", "general_5d")
-        and isinstance(dims_for_anat, dict)
-        and not any(("反虚高" in w or "反贴原" in w) for w in audit_res["warnings"])
-    ):
-        credited_dims, credit_note = style_soft_credit(dims_for_anat, style_family, defects or "")
-        if credited_dims is not None:
-            from .scoring import weighted_geometric
-
-            weights = scale_prof.get("dim_weights") or {}
-            keys = tuple(k for k in credited_dims if k in weights)
-            new_geo = weighted_geometric(credited_dims, weights, keys) if len(keys) >= 4 else None
-            if new_geo is not None and new_geo > float(calibrated):
-                lifted = min(float(new_geo), float(calibrated) + 0.30)
-                if float(calibrated) < target_th:
-                    lifted = min(lifted, target_th - 0.01)
-                calibrated = round(lifted, 2)
-                if credit_note and credit_note not in audit_res["warnings"]:
-                    audit_res["warnings"].append(credit_note)
-                passed = (
-                    calibrated >= target_th
-                    and not image_gate_blocked
-                    and not soft_defects_blocked
-                )
     # Anatomy hard veto on general_5d. UI / icon / skill-additive rubrics have no
     # perspective_anatomy key — skip so they are not fail-closed forever.
     # Scenes: under 6.0 (isometric 5.5) or collapse language blocks.
@@ -475,7 +446,7 @@ def auto_vlm_judge_image(
                 clone_dim = comp_now
         calibrated = min(float(calibrated), 8.85 if clone_dim is None else clone_dim)
         warn = (
-            "Clone 题材结构一票否决：不得复制参考 prop 主体，或构图<6；"
+            "Clone 题材结构一票否决：不得复制参考主体；"
             "总分达线仍禁止停机"
         )
         if warn not in audit_res["warnings"]:
@@ -485,6 +456,25 @@ def auto_vlm_judge_image(
             defects = f"{defects}；{subj_fix}".strip("； ") if defects else subj_fix
         if not next_fix or "已达标" in str(next_fix):
             next_fix = subj_fix
+
+    needs_flawlessness = rubric_mode in {
+        "general_5d",
+        "ui_5d",
+        "app_icon_5d",
+        "icon_prop_5d",
+        "icon_svg_5d",
+        "skill_additive_5d",
+    }
+    if (
+        passed
+        and needs_flawlessness
+        and isinstance(dims_for_anat, dict)
+        and "flawlessness" not in dims_for_anat
+    ):
+        passed = False
+        warn = "缺无瑕疵这一维，六维没齐，不能停"
+        if warn not in audit_res["warnings"]:
+            audit_res["warnings"].append(warn)
 
     if not passed and next_fix_is_weak(next_fix):
         hint = reflow_fix_text(

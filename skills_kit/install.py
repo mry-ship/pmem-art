@@ -81,12 +81,12 @@ def _render_agent_doc_block() -> str:
 | **`/pmem-merge-ladder`** | **合成梯**。先用 3 稿把升级链和画风定清楚，再一档一张正方形。同框只是体量预览，不是成品 |
 | **`/pmem-prompt`** | **提示词**。把玩家原话按合理性/美观/画风/特写等扩成 2～4 套可选方案（或唯一方案）。不生图 |
 | **`/pmem-style-lock`** | **锁风格**。从样张抽色板、光影、禁用词。不进自动生图 |
-| **`/pmem-critique`** | **只审图**。五维挑刺，翻车点记入红线。不生图 |
+| **`/pmem-critique`** | **只审图**。六维挑刺，翻车点记入红线。不生图 |
 | **`/pmem-atlas`** | **归档**。散图归位并刷新 `art-atlas.html` |
 | **`/pmem-coach`** | **进阶偷看**。进步 / 短板 / 知识合成一条。知识卡要玩家说收下才写入 |
 
 ### 3. 评分履历可见 · 记忆静默写入（默认）
-- 闭环每轮须向用户展示：五维分、不足、下一轮改点；`converge finish` 默认打印全轮评分履历并写记忆（`--no-apply` 可跳过；只要终稿加 `--quiet`）。
+- 闭环每轮须向用户展示：六维分、不足、下一轮改点；`converge finish` 默认打印全轮评分履历并写记忆（`--no-apply` 可跳过；只要终稿加 `--quiet`）。
 - `finish` / 高信号 `feedback` 后仍自动写反思、更新 taste、强化 recipe/红线、悄悄排队 learn——**不要**旁白记忆写入；最多转述一行「小提示」。
 - 进步、短板、知识卡用 `/pmem-coach`。知识卡没有玩家明确收下，不要写入。
 
@@ -153,6 +153,9 @@ def install_skills_and_agent_configs(root: Path, quiet: bool = False) -> dict[st
 
     _prune_retired_skill_dirs(root)
     _prune_retired_commands(root)
+    from .skill_registry import write_registry_files
+
+    write_registry_files(root, SKILL_SPECS)
 
     # 4. Upsert CLAUDE.md and AGENTS.md
     claude_md = root / "CLAUDE.md"

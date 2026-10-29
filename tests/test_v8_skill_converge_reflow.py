@@ -315,7 +315,8 @@ class TestScorerByDimCompat(unittest.TestCase):
             api_scale="high",
             strategy="tail",
         )
-        self.assertIn("体积光", out)
+        self.assertNotIn("体积光", out)
+        self.assertIn("已经有的层次", out)
         self.assertIn("手糊", out)
 
     def test_by_dim_keeps_intent_reason(self) -> None:

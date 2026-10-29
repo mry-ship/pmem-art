@@ -29,6 +29,7 @@ _COLLAPSE_MARKERS = (
     "透视崩",
     "几何崩",
     "融成一团",
+    "融化",
     "结构散架",
     "塌缩",
     "边缘融化",
@@ -214,12 +215,13 @@ def scene_structure_ok_for_stop(
     defects: str = "",
     floor: float | None = None,
 ) -> bool:
-    """Scene stop: missing dim fails closed; under the floor or collapse language blocks."""
+    """Scene stop: missing dim fails closed. Collapse or a real break blocks.
+
+    A low perspective number is left to the harmonic mean. `floor` is kept for callers.
+    """
+    del floor
     anat = anatomy_score(dims)
     if anat is None:
-        return False
-    limit = SCENE_COLLAPSE_FLOOR if floor is None else float(floor)
-    if anat < limit:
         return False
     if collapse_marked(defects):
         return False
@@ -236,22 +238,7 @@ _STYLE_FAMILY_KEYS: tuple[tuple[str, tuple[str, ...]], ...] = (
     ("flat", ("扁平", "平涂", "矢量", "vector", "赛璐璐", "cel-shad", "cel shad", "cel shading")),
     ("wash", ("水彩", "水墨", "速写", "粉彩", "线稿", "浮世绘", "pastel", "watercolor")),
 )
-_STYLE_BODY_FLOOR = {
-    "pixel": 6.5,
-    "chibi": 6.8,
-    "flat": 7.0,
-    "wash": 7.2,
-    "graphic": 6.5,
-}
 _STYLE_SCENE_FLOOR = {"iso": 5.5}
-# (dimension, low inclusive, credit ceiling). Raw below `low` is a real miss.
-_STYLE_SOFT_WINDOW: dict[str, tuple[tuple[str, float, float], ...]] = {
-    "pixel": (("lighting_color", 6.8, 8.2), ("texture_detail", 6.8, 8.2)),
-    "flat": (("lighting_color", 6.8, 8.2),),
-    "wash": (("texture_detail", 6.8, 8.2),),
-    "graphic": (("lighting_color", 6.8, 8.0), ("texture_detail", 6.5, 8.0)),
-    "iso": (("perspective_anatomy", 5.5, 6.4),),
-}
 STYLE_INFLATION_IGNORE = {
     "pixel": {"平光", "颗粒太均匀", "数字化", "数字化噪点", "数字化痕迹", "数字化滤镜"},
     "flat": {"平光", "颗粒太均匀"},
@@ -379,12 +366,9 @@ def style_break_marked(text: str) -> bool:
 
 
 def style_body_floor(family: str, defects: str = "", requested: float = DEFAULT_ANATOMY_FLOOR) -> float:
-    """Keep an explicit non-default floor. A break cancels the style tolerance."""
-    if abs(float(requested) - DEFAULT_ANATOMY_FLOOR) > 1e-6:
-        return float(requested)
-    if style_break_marked(defects):
-        return DEFAULT_ANATOMY_FLOOR
-    return float(_STYLE_BODY_FLOOR.get(family, DEFAULT_ANATOMY_FLOOR))
+    """人物、动物、机械一律用这条线。媒介不再把 7.5 打折。"""
+    del family, defects
+    return float(requested)
 
 
 def style_scene_floor(
@@ -397,49 +381,6 @@ def style_scene_floor(
     if style_break_marked(defects):
         return SCENE_COLLAPSE_FLOOR
     return float(_STYLE_SCENE_FLOOR.get(family, SCENE_COLLAPSE_FLOOR))
-
-
-def style_soft_credit(
-    dims: dict[str, Any] | None,
-    family: str,
-    defects: str = "",
-) -> tuple[dict[str, Any] | None, str]:
-    """Nudge one style-expected dim up by at most 0.8, inside its window.
-
-    Returns (credited dims, note). (None, "") means leave the geometric mean alone.
-    The raw dimension stays on the card. This cannot by itself clear 9.6.
-    """
-    if style_break_marked(defects):
-        return None, ""
-    windows = _STYLE_SOFT_WINDOW.get(family) or ()
-    parsed = coerce_dims_dict(dims)
-    if not parsed or not windows:
-        return None, ""
-    best: tuple[float, str, float] | None = None
-    for key, low, ceiling in windows:
-        if key not in parsed:
-            continue
-        try:
-            raw = float(parsed[key])
-        except (TypeError, ValueError):
-            continue
-        if raw < low or raw >= ceiling:
-            continue
-        credited = min(ceiling, raw + 0.8)
-        gap = credited - raw
-        if best is None or gap > best[0]:
-            best = (gap, key, credited)
-    if best is None:
-        return None, ""
-    _gap, key, credited = best
-    out = dict(parsed)
-    raw_val = float(parsed[key])
-    out[key] = round(credited, 2)
-    note = (
-        f"风格容错（{family}）：{key} {raw_val:.1f} 落在该媒介的正常偏低带，"
-        f"乘积里按 {credited:.1f} 计，原始分仍保留，且不能单靠这次抬分停机"
-    )
-    return out, note
 
 
 def scene_perspective_credit(
@@ -737,10 +678,6 @@ def clone_subject_structure_ok_for_stop(
         return True
     if clone_subject_echo_marked(defects):
         return False
-    parsed = coerce_dims_dict(dims)
-    comp = dim_float(parsed, "composition") if parsed else None
-    if comp is not None and comp < 6.0:
-        return False
     return True
 
 
@@ -823,7 +760,11 @@ def pick_best_round_on_stop(
         and "perspective_anatomy" not in cur_dims
         and any(k in cur_dims for k in _UI_ICON_DIM_KEYS)
     )
-    if not cur_is_rubric and (cur_anat is None or cur_anat < floor):
+    # Scenes ignore the old numeric perspective line. Collapse text still loses.
+    if subject_kind == "scene":
+        if cur_anat is None or collapse_marked(_row_defects(current)):
+            return best_round or current
+    elif not cur_is_rubric and (cur_anat is None or cur_anat < floor):
         return best_round or current
     if best_round is None:
         return current
@@ -834,7 +775,10 @@ def pick_best_round_on_stop(
         and "perspective_anatomy" not in br_dims
         and any(k in br_dims for k in _UI_ICON_DIM_KEYS)
     )
-    if not br_is_rubric and (br_anat is None or br_anat < _row_floor(best_round)):
+    if subject_kind == "scene":
+        if br_anat is None or collapse_marked(_row_defects(best_round)):
+            return current
+    elif not br_is_rubric and (br_anat is None or br_anat < _row_floor(best_round)):
         return current
     if float(current.get("total") or 0) >= float(best_round.get("total") or 0):
         return current
@@ -887,7 +831,17 @@ def target_dims_allow_stop(
                 return False
             if val < floor:
                 return False
+        if "flawlessness" not in parsed:
+            return False
+        try:
+            if float(parsed["flawlessness"]) <= 0:
+                return False
+        except (TypeError, ValueError):
+            return False
         return True
+    craft = {"composition", "lighting_color", "perspective_anatomy", "texture_detail", "spec_style"}
+    if craft <= set(parsed) and "flawlessness" not in parsed:
+        return False
     if subject_kind == "scene":
         return scene_structure_ok_for_stop(
             parsed, defects, floor=style_scene_floor(family, defects=defects)

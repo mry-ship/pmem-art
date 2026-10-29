@@ -149,6 +149,17 @@ def _keyword_hits(text: str, keywords: tuple[str, ...]) -> list[str]:
     return hits
 
 
+def weighted_harmonic(
+    scores: dict[str, float],
+    weights: dict[str, float],
+    keys: tuple[str, ...],
+) -> float | None:
+    """Weighted harmonic mean. Weights on `keys` are renormalized to 1."""
+    from .medium_family import weighted_harmonic as _harmonic
+
+    return _harmonic(scores, weights, keys)
+
+
 def weighted_geometric(
     scores: dict[str, float],
     weights: dict[str, float],
@@ -194,14 +205,24 @@ def _bundle_score(
     hurdles: tuple[tuple[str, float], ...],
     mode: str,
 ) -> dict[str, Any] | None:
-    geo = weighted_geometric(parsed, weights, score_keys)
-    if geo is None:
+    use_weights = dict(weights)
+    use_keys = score_keys
+    if "flawlessness" in parsed:
+        craft = [k for k in score_keys if k != "flawlessness"]
+        base = {k: float(weights.get(k) or 0) for k in craft}
+        total = sum(base.values()) or 1.0
+        use_weights = {k: 0.75 * base[k] / total for k in craft}
+        use_weights["flawlessness"] = 0.25
+        use_keys = tuple(craft) + ("flawlessness",)
+    mean = weighted_harmonic(parsed, use_weights, use_keys)
+    if mean is None:
         return None
-    official, hit = apply_hurdles(geo, parsed, hurdles)
+    official, hit = apply_hurdles(mean, parsed, hurdles)
     out: dict[str, Any] = {
         "parsed": parsed,
         "weighted_score": official,
-        "geometric_score": geo,
+        "geometric_score": mean,
+        "harmonic_score": mean,
         "rubric_mode": mode,
     }
     if hit:
@@ -261,6 +282,8 @@ _KV_5D_ALIAS = {
     "detail": "texture_detail",
     "spec_style": "spec_style",
     "style": "spec_style",
+    "flawlessness": "flawlessness",
+    "flawless": "flawlessness",
 }
 
 
@@ -297,12 +320,21 @@ def _parse_kv_5d(dims_str: str, weights: dict[str, float]) -> dict[str, Any] | N
         parsed["lighting_color"] = round(sum(others) / len(others), 2)
     if any(k not in parsed for k in needed):
         return None
-    geo = weighted_geometric(parsed, weights, needed)
+    from .medium_family import GENERAL_6D_KEYS, ensure_general_weights
+
+    w6 = ensure_general_weights(weights)
+    if "flawlessness" in parsed:
+        mean = weighted_harmonic(parsed, w6, GENERAL_6D_KEYS)
+        kept = GENERAL_6D_KEYS
+    else:
+        mean = weighted_harmonic(parsed, w6, needed)
+        kept = needed
     return {
-        "parsed": {k: parsed[k] for k in needed},
-        "weighted_score": geo,
-        "geometric_score": geo,
-        "rubric_mode": "general_5d",
+        "parsed": {k: parsed[k] for k in kept if k in parsed},
+        "weighted_score": mean,
+        "geometric_score": mean,
+        "harmonic_score": mean,
+        "rubric_mode": "general_6d" if "flawlessness" in parsed else "general_5d",
     }
 
 
@@ -354,7 +386,20 @@ def _parse_skill_additive(dims_str: str) -> dict[str, Any] | None:
             if raw[key] > cap + 0.05:
                 return None
     total = round(sum(raw.values()), 2)
-    return {"parsed": raw, "weighted_score": total, "rubric_mode": "skill_additive_5d"}
+    parsed = _attach_flawlessness(raw, probe)
+    flaw = parsed.get("flawlessness")
+    if flaw is not None:
+        craft10 = min(10.0, float(total))
+        flaw_f = float(flaw)
+        if craft10 <= 0 or flaw_f <= 0:
+            total = 0.0
+        else:
+            total = round(1.0 / (0.75 / craft10 + 0.25 / flaw_f), 2)
+    return {
+        "parsed": parsed,
+        "weighted_score": total,
+        "rubric_mode": "skill_additive_5d",
+    }
 
 
 def _read_labeled(dims_str: str, patterns: dict[str, tuple[str, float]]) -> dict[str, float]:
@@ -364,6 +409,19 @@ def _read_labeled(dims_str: str, patterns: dict[str, tuple[str, float]]) -> dict
         if m:
             raw[key] = float(m.group(1))
     return raw
+
+
+def _attach_flawlessness(raw: dict[str, float], dims_str: str) -> dict[str, float]:
+    m = re.search(
+        r"(?:无瑕疵|无暇|flawlessness|flawless)[^0-9]*([0-9]+(?:\.[0-9]+)?)",
+        dims_str or "",
+        flags=re.IGNORECASE,
+    )
+    if not m:
+        return raw
+    out = dict(raw)
+    out["flawlessness"] = float(m.group(1))
+    return out
 
 
 def _to_ten_point(raw: dict[str, float], patterns: dict[str, tuple[str, float]]) -> dict[str, float]:
@@ -417,7 +475,7 @@ def parse_5d_dims(
         raw_prop = _read_labeled(dims_str, prop_patterns)
         if len(raw_prop) == 5:
             bundled = _bundle_score(
-                _to_ten_point(raw_prop, prop_patterns),
+                _attach_flawlessness(_to_ten_point(raw_prop, prop_patterns), dims_str),
                 ICON_PROP_WEIGHTS,
                 ICON_PROP_SCORE_KEYS,
                 ICON_PROP_HURDLES,
@@ -436,7 +494,7 @@ def parse_5d_dims(
         raw_svg = _read_labeled(dims_str, svg_patterns)
         if len(raw_svg) == 4:
             bundled = _bundle_score(
-                _to_ten_point(raw_svg, svg_patterns),
+                _attach_flawlessness(_to_ten_point(raw_svg, svg_patterns), dims_str),
                 ICON_SVG_WEIGHTS,
                 ICON_SVG_SCORE_KEYS,
                 ICON_SVG_HURDLES,
@@ -460,7 +518,7 @@ def parse_5d_dims(
                 raw_vals_ic[k] = float(m.group(1))
         if len(raw_vals_ic) == 5:
             bundled = _bundle_score(
-                _to_ten_point(raw_vals_ic, icon_patterns),
+                _attach_flawlessness(_to_ten_point(raw_vals_ic, icon_patterns), dims_str),
                 APP_ICON_DIM_WEIGHTS,
                 ICON_A_SCORE_KEYS,
                 ICON_A_HURDLES,
@@ -491,7 +549,7 @@ def parse_5d_dims(
                 raw_vals[k] = float(m.group(1))
         if len(raw_vals) == 5:
             bundled = _bundle_score(
-                _to_ten_point(raw_vals, ui_patterns),
+                _attach_flawlessness(_to_ten_point(raw_vals, ui_patterns), dims_str),
                 UI_DEDICATED_DIM_WEIGHTS,
                 UI_SCORE_KEYS,
                 UI_HURDLES,
@@ -519,19 +577,32 @@ def parse_5d_dims(
             r"(?<![A-Za-z])style(?![A-Za-z_]))"
             r"[^0-9]*([0-9]+(?:\.[0-9]+)?)"
         ),
+        "flawlessness": r"(?:无瑕疵|无暇|flawlessness|flawless)[^0-9]*([0-9]+(?:\.[0-9]+)?)",
     }
     parsed: dict[str, float] = {}
     for k, pat in patterns.items():
         m = _re.search(pat, dims_str or "", flags=_re.IGNORECASE)
         if m:
             parsed[k] = float(m.group(1))
-    if len(parsed) == 5:
-        geo = weighted_geometric(parsed, w, GENERAL_5D_KEYS)
+    from .medium_family import GENERAL_6D_KEYS, ensure_general_weights
+
+    w6 = ensure_general_weights(w)
+    craft = GENERAL_5D_KEYS
+    if all(k in parsed for k in craft):
+        if "flawlessness" in parsed:
+            mean = weighted_harmonic(parsed, w6, GENERAL_6D_KEYS)
+            mode = "general_6d"
+            kept = GENERAL_6D_KEYS
+        else:
+            mean = weighted_harmonic(parsed, w6, craft)
+            mode = "general_5d"
+            kept = craft
         return {
-            "parsed": parsed,
-            "weighted_score": geo,
-            "geometric_score": geo,
-            "rubric_mode": "general_5d",
+            "parsed": {k: parsed[k] for k in kept},
+            "weighted_score": mean,
+            "geometric_score": mean,
+            "harmonic_score": mean,
+            "rubric_mode": mode,
         }
     return {"parsed": parsed, "weighted_score": None, "rubric_mode": "general_5d"}
 
@@ -605,12 +676,12 @@ def audit_score_inflation(
         if raw_score is not None and float(raw_score) > 0 and abs(float(raw_score) - float(weighted)) > 0.05:
             if float(raw_score) > float(weighted):
                 warnings.append(
-                    f"检测到报送总分 ({float(raw_score):.2f}) 高于五维几何平均 ({float(weighted):.2f})，已改用几何平均"
+                    f"检测到报送总分 ({float(raw_score):.2f}) 高于调和平均 ({float(weighted):.2f})，已改用调和平均"
                 )
         calibrated = float(weighted)
     else:
         if raw_score is not None and float(raw_score) > 0:
-            warnings.append("五维字符串无法解析，拒绝采用手填总分，本轮记 0 分")
+            warnings.append("维度字符串无法解析，拒绝采用手填总分，本轮记 0 分")
         calibrated = 0.0
 
     limb_artifact_keywords = (
@@ -643,19 +714,9 @@ def audit_score_inflation(
         ref_analysis=ref_blob,
         ref_image=ref_img_blob,
     ):
-        parsed_gate = w_info.get("parsed") or {}
-        try:
-            comp_val = float(parsed_gate.get("composition")) if parsed_gate.get("composition") is not None else None
-        except (TypeError, ValueError):
-            comp_val = None
         if clone_subject_echo_marked(defects_str or ""):
             warnings.append(
                 "Clone 题材回声拦截：复制参考 prop 而非 brief 新主体，禁止达标 (<=8.85)"
-            )
-            calibrated = min(calibrated, 8.85)
-        elif comp_val is not None and comp_val < 6.0:
-            warnings.append(
-                f"Clone 构图门禁：构图 {comp_val:.1f} < 6.0（题材/主体错误），禁止达标 (<=8.85)"
             )
             calibrated = min(calibrated, 8.85)
 
@@ -667,16 +728,6 @@ def audit_score_inflation(
         calibrated = min(calibrated, 7.90)
 
     severe_defect_keywords = (
-        "缺乏飞白",
-        "数字化噪点",
-        "数字化痕迹",
-        "数字化滤镜",
-        "数字化",
-        "照搬",
-        "呆板",
-        "平光",
-        "无明显变化",
-        "颗粒太均匀",
         "画幅比例错误",
         "aspect ratio mismatch",
     )
@@ -696,39 +747,6 @@ def audit_score_inflation(
             f"反虚高拦截：缺陷栏包含关键短板词 {hit_kw}，禁止因基础完成度达标而给 9.0+ 虚高分，已触发严苛上限校准 (<=8.90)"
         )
         calibrated = min(calibrated, 8.90)
-
-    # high / recompose / bold: do not reward dull photocopies of the ref.
-    scale_name = str(scale_prof.get("scale") or "").strip().lower()
-    photocopy_keywords = (
-        "贴原", "闷贴", "复印", "过度还原", "机位未变", "几乎没换机位",
-        "冷暖分离不足", "对比度不足", "戏剧光不足", "平光证件照",
-        "photocopy", "too close to reference", "near-duplicate",
-    )
-    if scale_name in ("high", "recompose") and calibrated > 9.0:
-        hit_photo = _keyword_hits(defects_str or "", photocopy_keywords)
-        if hit_photo:
-            warnings.append(
-                f"反贴原拦截（{scale_name}）：检测到 {hit_photo}，禁止因「长得像原图」虚高，压分 (<=8.85)"
-            )
-            calibrated = min(calibrated, 8.85)
-        # Dims-only cue: high composition + weak lighting = photocopy-shaped score.
-        parsed = w_info.get("parsed") or {}
-        try:
-            comp = float(parsed.get("composition") or 0)
-            light = float(parsed.get("lighting_color") or 0)
-        except (TypeError, ValueError):
-            comp, light = 0.0, 0.0
-        if (
-            scale_name == "high"
-            and style_family not in {"pixel", "flat", "graphic", "wash"}
-            and comp >= 9.5
-            and 0 < light <= 8.6
-            and calibrated > 9.0
-        ):
-            warnings.append(
-                "反贴原拦截（high）：构图≥9.5 且光影≤8.6，疑闷贴原图，压分 (<=8.95)"
-            )
-            calibrated = min(calibrated, 8.95)
 
     if scale_prof.get("allow_action_pose_change") is False:
         pose_drift_keywords = (

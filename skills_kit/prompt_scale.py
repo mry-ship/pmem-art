@@ -762,6 +762,7 @@ _DIM_WEIGHT_ZH: dict[str, str] = {
     "perspective_anatomy": "透视与解剖",
     "texture_detail": "质感",
     "spec_style": "规格与风格",
+    "flawlessness": "无瑕疵",
 }
 
 _SCALE_LABEL_ZH: dict[str, str] = {
@@ -788,6 +789,7 @@ SCALE_DIM_LOCK_LEVELS: dict[str, dict[str, tuple[int, str]]] = {
         "perspective_anatomy": (80, "可修硬伤，不改姿态动作"),
         "texture_detail": (25, "本档主战场：边缘、材质、小瑕疵"),
         "spec_style": (95, "画风笔触、色板与身份几乎不动"),
+        "flawlessness": (90, "脏点必须修；这一维由看图的人打，不靠空话"),
     },
     "medium": {
         "composition": (85, "锁机位；允许局部布局微调，禁止整体 recompose"),
@@ -795,13 +797,15 @@ SCALE_DIM_LOCK_LEVELS: dict[str, dict[str, tuple[int, str]]] = {
         "perspective_anatomy": (55, "允许小幅姿态；可修局部结构"),
         "texture_detail": (35, "材质与边缘可抛光"),
         "spec_style": (90, "画风与身份几乎不动"),
+        "flawlessness": (90, "脏点必须修；这一维由看图的人打，不靠空话"),
     },
     "high": {
         "composition": (30, "允许机位/布局/元素数为张力与叙事服务"),
-        "lighting_color": (20, "本档主战场：体积光、冷暖、轮廓光"),
+        "lighting_color": (20, "只抬这一家已经有的光；体积光只在厚涂"),
         "perspective_anatomy": (40, "姿态可动，仍保身份可读"),
         "texture_detail": (35, "材质可跟光影一起升级"),
         "spec_style": (70, "锁媒介基因；no_identity_swap 可加风格内点缀"),
+        "flawlessness": (80, "脏点必须修；这一维由看图的人打，不靠空话"),
     },
     "recompose": {
         "composition": (15, "按 --recompose-dir 重构机位/布局（主战场）"),
@@ -809,6 +813,7 @@ SCALE_DIM_LOCK_LEVELS: dict[str, dict[str, tuple[int, str]]] = {
         "perspective_anatomy": (35, "透视随新机位重建"),
         "texture_detail": (40, "材质跟新构图走"),
         "spec_style": (75, "画风色板与身份仍偏锁"),
+        "flawlessness": (80, "脏点必须修；这一维由看图的人打，不靠空话"),
     },
 }
 
@@ -861,6 +866,9 @@ _DIM_ALIAS_TO_KEY: dict[str, str] = {
     "规格风格": "spec_style",
     "style": "spec_style",
     "spec_style": "spec_style",
+    "无瑕疵": "flawlessness",
+    "无暇": "flawlessness",
+    "flawlessness": "flawlessness",
 }
 
 LOCK_RELAX_STEP = 20  # 「松一点」默认下调锁定%
@@ -955,8 +963,8 @@ def parse_dim_lock_overrides(
     found: dict[str, int] = {}
     # Explicit kv: 构图=60 / composition:70 / 光影锁定 40%
     for m in re.finditer(
-        r"(构图|光影色彩|光影|透视与解剖|透视解剖|透视|解剖|质感|材质|规格与风格|规格风格|风格|规格|"
-        r"composition|lighting_color|perspective_anatomy|texture_detail|spec_style)"
+        r"(构图|光影色彩|光影|透视与解剖|透视解剖|透视|解剖|质感|材质|规格与风格|规格风格|风格|规格|无瑕疵|"
+        r"composition|lighting_color|perspective_anatomy|texture_detail|spec_style|flawlessness)"
         r"\s*(?:的?\s*锁定(?:程度)?\s*)?(?:[=:：]|降到|调到|改为|改到|到)\s*(\d{1,3})\s*%?",
         raw,
         flags=re.I,
@@ -967,7 +975,7 @@ def parse_dim_lock_overrides(
 
     # Relative relax / tighten
     for m in re.finditer(
-        r"(构图|光影色彩|光影|透视与解剖|透视解剖|透视|解剖|质感|材质|规格与风格|规格风格|风格|规格)"
+        r"(构图|光影色彩|光影|透视与解剖|透视解剖|透视|解剖|质感|材质|规格与风格|规格风格|风格|规格|无瑕疵)"
         r".{0,10}(再?松一点|松一些|放宽|松点儿|放松|再松)",
         raw,
     ):
@@ -975,7 +983,7 @@ def parse_dim_lock_overrides(
         if key and key not in found:
             found[key] = max(0, _eff(key) - LOCK_RELAX_STEP)
     for m in re.finditer(
-        r"(构图|光影色彩|光影|透视与解剖|透视解剖|透视|解剖|质感|材质|规格与风格|规格风格|风格|规格)"
+        r"(构图|光影色彩|光影|透视与解剖|透视解剖|透视|解剖|质感|材质|规格与风格|规格风格|风格|规格|无瑕疵)"
         r".{0,10}(再?紧一点|紧一些|收紧|再紧)",
         raw,
     ):
@@ -1102,13 +1110,13 @@ def format_scale_artist_footer(
     summary = format_dim_lock_summary_zh(s, ov)
     changed = [r for r in resolve_dim_lock_levels(s, ov) if r["changed"]]
     lines = [
-        "#### 🎚️ 本局档位合同（五维锁定%表 · 画师据此判断大改空间）",
+        "#### 🎚️ 本局档位合同（六维锁定%表 · 画师据此判断大改空间）",
         "",
         f"**目前是 {scale_title} 档**：{label}。"
         + ("（已含画师口头微调）" if changed else ""),
         f"一览：`{summary}`",
         "",
-        "下表 **五维全部列出**（有效% · 本档默认% · 相对增减 ±%），方便对照往哪调；未改的维显示 **+0%**：",
+        "下表 **六维全部列出**（有效% · 本档默认% · 相对增减 ±%），方便对照往哪调；未改的维显示 **+0%**：",
         "",
     ]
     lines.extend(format_dim_lock_levels_zh(s, ov))
@@ -1129,7 +1137,7 @@ def format_scale_artist_footer(
             "> 💬 **画师可写一句**（对照上表点名维度）：",
             "> `构图松一点` → **75%（默认95%，-20%）**；`光影锁定降到 40%` → **40%（默认75%，-35%）**；或 `升到 medium`",
             "",
-            f"<small>裁判用加权几何平均（门槛没过就改取那一维，不是上表锁定%）：{weights_line}</small>",
+            f"<small>裁判用六维加权调和平均（无瑕疵由看图的人盲评；画师锁定%压过默认，不是上表锁定%本身）：{weights_line}</small>",
         ]
     )
     return "\n".join(lines)
@@ -1143,6 +1151,8 @@ def get_converge_scale_profile(
     ref_analysis: str = "",
     ref_image: str = "",
     module: str = "",
+    medium_family: str = "",
+    contract: str = "",
 ) -> dict[str, Any]:
     s = (scale or "medium").strip().lower()
     if s not in CONVERGE_SCALE_PROFILES:
@@ -1156,15 +1166,32 @@ def get_converge_scale_profile(
     if s == "low" and case_redlines:
         merged_limits = _merge_low_forbidden(merged_limits, case_redlines)
     prof["forbidden_changes"] = merged_limits
-    prof["prompt_directive"] = build_dynamic_prompt_directive(
-        s,
-        goal=goal,
-        ref_analysis=ref_analysis,
-        ref_image=ref_image,
-        module=module,
-        recompose_dir=recompose_dir,
+    from .medium_family import apply_family_to_profile, infer_medium_family
+
+    style_head, _, _ = _infer_case_style_and_subject(
+        goal=goal, ref_analysis=ref_analysis, ref_image=ref_image, module=module
     )
-    prof["best_direction_hint"] = build_best_direction_hint(s)
+    family = (medium_family or "").strip().lower()
+    if not family:
+        # 旁注里的「略有水彩 / 远景水墨」不改这一家。先看题材和案例画风。
+        family = infer_medium_family(goal, module, style_head)
+        if family == "generic":
+            ref_text = ref_analysis if isinstance(ref_analysis, str) else ""
+            family = infer_medium_family(goal, ref_text, ref_image, module, style_head)
+    apply_family_to_profile(
+        prof,
+        family=family,
+        recompose_dir=recompose_dir,
+        style_head=style_head,
+        contract=(contract or "").strip().lower(),
+    )
+    mod_l = (module or "").strip().lower()
+    if s == "medium" and mod_l.startswith("prop.") and "pixel" not in mod_l:
+        if "表面那一句不动" not in str(prof.get("prompt_directive") or ""):
+            prof["prompt_directive"] = (
+                str(prof.get("prompt_directive") or "").rstrip("。")
+                + "，表面那一句不动，只修没过的那一格"
+            )
     prof["min_rounds_before_stop"] = int(
         CONVERGE_SCALE_PROFILES[s].get("min_rounds_before_stop") or 1
     )

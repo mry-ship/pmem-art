@@ -220,6 +220,117 @@
       ],
       "skip_ahead_hint": false,
       "recorded_at": "12:35:45"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "3:4",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen/draw_matrix/c03/ref.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "regen-c03-med",
+        "scale": "medium",
+        "aspect_ratio": "3:4",
+        "ref_aspect_ratio": "3:4",
+        "ref_dimensions": "864x1152",
+        "output_aspect_ratio": "3:4",
+        "output_dimensions": "864x1152",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen/draw_matrix/c03/ref.jpg",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen/draw_matrix/c03/ref.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "12:39:55",
+      "image": "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen/draw_matrix/c03/medium/r2.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 366666,
+        "size_kb": 358.1,
+        "width": 864,
+        "height": 1152,
+        "aspect_ratio": "3:4",
+        "canonical_aspect_ratio": "3:4",
+        "color_entropy": 7.23
+      },
+      "raw_score": 8.5,
+      "score": 8.5,
+      "target_score_threshold": 9.6,
+      "dims": "构图8.6/光影8.6/透视8.4/质感8.4/风格8.5",
+      "dims_parsed": {
+        "composition": 8.6,
+        "lighting_color": 8.6,
+        "perspective_anatomy": 8.4,
+        "texture_detail": 8.4,
+        "spec_style": 8.5
+      },
+      "weighted_score": 8.5,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.02 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "独立视觉 API 不可用，改由本模型按 Absolute-5D 检查表评分（门槛仍 9.6）：HTTP Error 403: Forbidden",
+        "Agent Absolute-5D 已采纳（门槛 9.6）"
+      ],
+      "stagnated": true,
+      "strengths": "两肩留在画面里，窗光仍柔",
+      "defects": "雏菊收成两朵细茎，不再是窗边那一丛",
+      "next_fix": "雏菊回到窗台右侧的一小丛",
+      "prompt": "胶片逆光轻厚涂：保画风与机位，小幅姿态/局部布局；柔化光影与次表面散射| 3:4. Same camera and girl. Slight head tilt. Softer window light. Shoulders in.| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: the person's joints and grip stay clear and both pupils share a direction; the animal's limbs follow its species and are not converted into human elbows; contact shadows read; do not melt limbs into props | 肩线留在画面内，雏菊收回原图那一丛",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.4,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "both",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "vlm_error",
+        "provider": "",
+        "model": "",
+        "error": "HTTP Error 403: Forbidden",
+        "active": true
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：雏菊收成两朵细茎，不再是窗边那一丛",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.5"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：两肩留在画面里，窗光仍柔",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.5"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "12:40:00"
     }
   ],
   "warm_start": {
@@ -321,6 +432,18 @@
       "lesson": "保留本轮已做对的：窗光更柔，身份锚点还在",
       "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
       "from_score": "8.48"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：雏菊收成两朵细茎，不再是窗边那一丛",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.5"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：两肩留在画面里，窗光仍柔",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.5"
     }
   ],
   "dim_lock_overrides": {},
@@ -329,5 +452,5 @@
   "anatomy_floor": 7.5,
   "early_stop_min_round": 4,
   "regression_drop": 0.5,
-  "ActionRequired": "GENERATE_ROUND_2"
+  "ActionRequired": "GENERATE_ROUND_3"
 }

@@ -27,11 +27,14 @@ def _dim_weights(scale_prof: dict[str, Any] | None) -> dict[str, float]:
 
 
 def weighted_total(dims: dict[str, Any], scale_prof: dict[str, Any] | None) -> float:
-    from .scoring import weighted_geometric
+    from .medium_family import GENERAL_6D_KEYS, ensure_general_weights, weighted_harmonic
 
-    w = _dim_weights(scale_prof)
-    scores = {k: float(dims.get(k) or 0) for k in w}
-    total = weighted_geometric(scores, w, tuple(w))
+    w = ensure_general_weights(_dim_weights(scale_prof))
+    present = tuple(k for k in GENERAL_6D_KEYS if k in dims and k in w)
+    if len(present) < 5:
+        return 0.0
+    scores = {k: float(dims.get(k) or 0) for k in present}
+    total = weighted_harmonic(scores, w, present)
     return 0.0 if total is None else total
 
 
@@ -73,7 +76,6 @@ def _official_total(dims: dict[str, Any], item: dict[str, Any], defects: str = "
         scene_structure_ok_for_stop,
         style_body_floor,
         style_scene_floor,
-        style_soft_credit,
     )
     from .prompt_scale import classify_subject
 
@@ -82,17 +84,7 @@ def _official_total(dims: dict[str, Any], item: dict[str, Any], defects: str = "
     module = str(item.get("module") or "")
     ref_image = str(item.get("ref_image") or "")
     family = infer_style_family(goal, module, ref_image)
-    raw_total = weighted_total(dims, scale_prof)
-    total = raw_total
-    credited, _note = style_soft_credit(dims, family, defects)
-    if credited:
-        lifted_total = weighted_total(credited, scale_prof)
-        if lifted_total > raw_total:
-            lifted = min(lifted_total, raw_total + 0.30)
-            threshold = float(scale_prof.get("pass_threshold") or scale_prof.get("threshold") or 9.6)
-            if raw_total < threshold:
-                lifted = min(lifted, threshold - 0.01)
-            total = round(lifted, 2)
+    total = weighted_total(dims, scale_prof)
     kind = classify_subject(
         goal=goal,
         module=module,
@@ -133,6 +125,15 @@ def _normalize_vlm_result(
         official = _official_total(dims, item, defect_text)
         if official is not None:
             out["total"] = official
+            craft = {
+                "composition",
+                "lighting_color",
+                "perspective_anatomy",
+                "texture_detail",
+                "spec_style",
+            }
+            if craft <= set(dims) and "flawlessness" not in dims:
+                out["ok_for_stop"] = False
     return out
 
 
