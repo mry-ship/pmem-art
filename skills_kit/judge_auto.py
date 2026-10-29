@@ -65,13 +65,13 @@ def auto_vlm_judge_image(
     ref_image: str = "",
 ) -> dict[str, Any]:
     """
-    Independent 5D VLM Judge & anti-inflation verifier (Step 2B — strictly decoupled from image generation):
-    - Takes ONLY the finished `image_path` and independent VLM 5D observations (`dims`, `defects`, `next_fix`).
-    - Has NO access to the generation prompt or any generator self-assessment (`raw_score` is never trusted over 5D weighted calculation).
+    Independent 6D VLM Judge & anti-inflation verifier (Step 2B — strictly decoupled from image generation):
+    - Takes ONLY the finished `image_path` and independent VLM 6D observations (`dims`, `defects`, `next_fix`).
+    - Has NO access to the generation prompt or any generator self-assessment (`raw_score` is never trusted over 6D harmonic mean).
     - Enforces `scale_prof["dim_weights"]`, `audit_score_inflation()`, and the low-scale pose redline (`allow_action_pose_change=False`).
     - By default (`require_image=True`) a missing / blank / tiny file cannot reach STOP_TARGET_REACHED.
     - If `vlm_judge` API key is configured, calls the remote vision model first.
-    - If no key: current multimodal Agent scores Absolute-5D via CLI `dims`/`defects`
+    - If no key: current multimodal Agent scores the 6D checklist via CLI `dims`/`defects`
       (`agent_absolute_5d`). Pixel offline scores are not computed. Threshold stays
       scale profile (default 9.6) — no no-key hard STOP / 8.50 early exit.
     - Case aspect checks use `session_id` + `ref_image` only — never the output filename.
@@ -254,7 +254,7 @@ def auto_vlm_judge_image(
     if judge_source == "agent_self_judge" and not str(dims or "").strip():
         soft_defects_blocked = True
         calibrated = min(float(calibrated), round(target_th - 0.05, 2))
-        warn = "无独立 VLM 时须由本模型按 Absolute-5D 给出 dims；缺六维分拒绝达标"
+        warn = "无独立 VLM 时须由本模型按六维检查表给出 dims；缺六维分拒绝达标"
         if warn not in audit_res["warnings"]:
             audit_res["warnings"].append(warn)
 
@@ -272,7 +272,7 @@ def auto_vlm_judge_image(
         if not rubric_mode:
             rubric_mode = str(parsed_now.get("rubric_mode") or "")
     # Scene perspective is not rewritten upward. A 6.x vanishing-point score stays in the
-    # geometric mean; only a collapse under 6.0 (or collapse language) pulls the official score down.
+    # harmonic mean; only a collapse under 6.0 (or collapse language) pulls the official score down.
     passed = bool(calibrated >= target_th) and not image_gate_blocked and not soft_defects_blocked
     min_rounds = int(scale_prof.get("min_rounds_before_stop") or 1)
     early_stop_blocked = False

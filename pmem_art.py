@@ -1445,7 +1445,7 @@ def main() -> int:
     p_conv.add_argument("--round", dest="round_num", type=int, default=0, help="当前轮次序号 (1..4)")
     p_conv.add_argument("--image", "-i", default="", help="本轮生成图片路径")
     p_conv.add_argument("--score", "-s", type=float, default=0.0, help="本轮综合评分（满分 10.0）")
-    p_conv.add_argument("--dims", default="", help="五维细分得分说明")
+    p_conv.add_argument("--dims", default="", help="六维细分得分说明（构图/光影/透视/质感/风格/无瑕疵）")
     p_conv.add_argument("--strengths", default="", help="本轮合理/亮点之处")
     p_conv.add_argument("--defects", default="", help="本轮不合理/缺陷之处")
     p_conv.add_argument("--next-fix", default="", help="下一轮叠加修正策略")

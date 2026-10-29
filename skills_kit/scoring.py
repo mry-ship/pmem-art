@@ -1,4 +1,4 @@
-"""5D dimension parsing and score-inflation audit."""
+"""6D dimension parsing (5 craft dims + flawlessness) and score-inflation audit."""
 from __future__ import annotations
 
 import json
@@ -440,12 +440,11 @@ def parse_5d_dims(
     module: str = "",
 ) -> dict[str, Any]:
     """
-    Parse a 5D score string and compute weighted score.
+    Parse a score string and compute the official weighted harmonic mean.
     Supports:
-    1) General art / character / concept 5D: 构图 / 光影 / 透视 / 质感 / 风格 (leaves /pmem-draw untouched)
-    2) Dedicated /pmem-ui 5D rubric when module starts with 'ui' or UI keywords are present:
-       风格色板契合(25%，复刻看渲染品类和色彩面积) · 结构(25%，组件表才按九宫格；主界面概念按镜头裁切和分区) · 光影材质(20%) · 红线(15%，组件表查透明底；复刻概念查文案) · 套件或还原(15%，复刻看疏密和控件工艺)
-       Automatically normalizes 2.5/2.5/2.0/1.5/1.5 point scales or 10-point scales to /10.0.
+    1) General art / character / concept 6D: 构图 / 光影 / 透视 / 质感 / 风格 / 无瑕疵（无瑕疵占 25%）
+    2) Dedicated /pmem-ui rubric when module starts with 'ui' or UI keywords are present:
+       工艺项占 75%，无瑕疵占 25%。Automatically normalizes 2.5/2.5/2.0/1.5/1.5 point scales or 10-point scales to /10.0.
     """
     import re as _re
 

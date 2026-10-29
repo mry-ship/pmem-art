@@ -12,7 +12,7 @@
 ![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
 ![Cursor](https://img.shields.io/badge/Cursor-支持-000000)
 ![Claude Code](https://img.shields.io/badge/Claude%20Code-支持-D97757)
-![Skills](https://img.shields.io/badge/美术技能-9-8B5CF6)
+![Skills](https://img.shields.io/badge/美术技能-10-8B5CF6)
 ![Threshold](https://img.shields.io/badge/合格线-≥9.60-blue)
 
 [📖 使用手册](USER_MANUAL.md) · [技能流程图](docs/skills/flows.html) · [效果图墙](#效果长什么样) · [合成梯 / 克隆实测](#合成梯与风格克隆旧跑分) · [架构](ARCHITECTURE.md)
@@ -57,7 +57,7 @@ python3 pmem_art.py skills --install
 2. 一轮审核             确定就列出分析并直接做；多种情况先列出来等你确认。另提要求则再审一遍，确认后再做
 3. 它自己去调用         生图、界面、图标或合成梯，不用你选；对比展陈可依次多支
 4. 出图                 生 1 张 → 打分挑刺 → 不到 9.60 就改（最多 4 轮）
-5. 看过程               结算打开过程板：每张参考图、每轮图、五维和总分，点图片看大图
+5. 看过程               结算打开过程板：每张参考图、每轮图、六维和总分，点图片看大图
 ```
 
 过程板在 `.memory-art/converge/boards/<会话>/index.html`。多张参考图按图1、图2分开列，分析写在图上方。红框是胜出轮。总控这一轮分析，以及合成梯的关系论述，都留在同一张板上。

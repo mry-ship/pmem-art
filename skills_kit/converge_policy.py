@@ -10,10 +10,10 @@ DEFAULT_ANATOMY_FLOOR = 7.5
 # Scenes share perspective_anatomy with characters. A score under this is treated as
 # collapsed structure. Between this and the character floor, only collapse language blocks stop.
 # Under this, a scene is structurally collapsed and cannot stop.
-# The official score then becomes min(geometric mean, this dimension).
+# The official score then becomes min(harmonic mean, this dimension).
 SCENE_COLLAPSE_FLOOR = 6.0
 # Kept so older imports still resolve. Mild perspective is no longer rewritten
-# upward: a 6.x score stays inside the geometric mean.
+# upward: a 6.x score stays inside the harmonic mean.
 SCENE_MILD_PERSPECTIVE_CREDIT = 8.5
 SCENE_MILD_CREDIT_MIN = 6.0
 # Alias of the collapse floor. Older imports still resolve.
@@ -390,7 +390,7 @@ def scene_perspective_credit(
 ) -> tuple[float | None, str]:
     """No longer raises a scene score.
 
-    A mild vanishing-point nit stays in the geometric mean. Rewriting it to 8.5
+    A mild vanishing-point nit stays in the harmonic mean. Rewriting it to 8.5
     manufactured stops above 9.6. Collapse under 6.0 is handled by the hurdle.
     """
     del dims, defects, weights
