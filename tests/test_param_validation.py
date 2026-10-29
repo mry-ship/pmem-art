@@ -225,6 +225,34 @@ class TestGateFixes(unittest.TestCase):
         self.assertGreater(pose["calibrated_score"], 9.2)
         self.assertFalse(any("动作红线" in w for w in pose["warnings"]))
 
+    def test_soft_quality_shortfall_hard_caps_at_890(self) -> None:
+        """Painted/photo defects with soft-quality keywords cannot keep a 9.0+ official score."""
+        med = get_converge_scale_profile("medium", goal="写实窗边少女", module="character.Hero")
+        dims = "构图9.6/光影9.5/透视9.5/质感9.6/风格9.6/无瑕疵9.7"
+        for phrase in (
+            "平光",
+            "构图呆板",
+            "照搬参考裁切",
+            "贴原证件照",
+            "缺乏飞白",
+            "飞白不够",
+            "数字化噪点滤镜感",
+        ):
+            hit = audit_score_inflation(9.55, dims, phrase, None, med, round_num=1)
+            self.assertLessEqual(hit["calibrated_score"], 8.90, phrase)
+            self.assertTrue(any("反虚高" in w for w in hit["warnings"]), phrase)
+        # Bare「数字化」must not false-cap (SCALE_RETEST); negation / fixed clauses stay open.
+        bare = audit_score_inflation(9.55, dims, "剑气边缘数字化毛刺", None, med, round_num=1)
+        self.assertGreater(bare["calibrated_score"], 9.0)
+        self.assertFalse(any("反虚高" in w for w in bare["warnings"]))
+        fixed = audit_score_inflation(9.55, dims, "平光已经解决", None, med, round_num=1)
+        self.assertGreater(fixed["calibrated_score"], 9.0)
+        denied = audit_score_inflation(9.55, dims, "并非平光，未出现呆板", None, med, round_num=1)
+        self.assertGreater(denied["calibrated_score"], 9.0)
+        pixel = get_converge_scale_profile("medium", goal="像素少女立绘", module="character.Hero")
+        pixel_flat = audit_score_inflation(9.55, dims, "平光", None, pixel, round_num=1)
+        self.assertGreater(pixel_flat["calibrated_score"], 9.0)
+
     def test_low_soft_pose_drift_phrases_hard_cap(self) -> None:
         """c02-style soft wording must fail-closed on low even without『姿态改变』token."""
         low = get_converge_scale_profile("low")
@@ -453,7 +481,8 @@ class TestGateFixes(unittest.TestCase):
             text = buf.getvalue()
             self.assertEqual(rc, 0)
             self.assertIn("下一轮第 3 轮", text)
-            self.assertIn("第 1 轮", text)
+            # pad=auto→style_ref：每轮垫最初参考，正文不再回写「第 1 轮」垫图句。
+            self.assertIn("pad=auto→style_ref", text)
             self.assertIn("修瓦当", text)
             self.assertNotIn("重画屋顶", text)
 
@@ -925,7 +954,8 @@ class TestGateFixes(unittest.TestCase):
             prof,
             round_num=1,
         )
-        self.assertGreater(hit["calibrated_score"], 9.2)
+        self.assertLessEqual(hit["calibrated_score"], 8.90)
+        self.assertTrue(any("反虚高" in w for w in hit["warnings"]))
 
     def test_geometric_mean_and_hurdles(self) -> None:
         from skills_kit import parse_5d_dims, get_converge_scale_profile

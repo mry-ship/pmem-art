@@ -497,21 +497,21 @@ class TestJudgeAnatomyVeto(unittest.TestCase):
             module="character.Hero",
             defects="平光",
         )
-        self.assertGreater(float(painted.get("calibrated_score") or 0), 9.0)
+        self.assertLessEqual(float(painted.get("calibrated_score") or 0), 8.90)
         sharp = self._judge(
             "构图9.6/光影9.4/透视9.5/质感9.4/风格9.5",
             goal="写实肖像，要像素级细节",
             module="character.Hero",
             defects="平光",
         )
-        self.assertGreater(float(sharp.get("calibrated_score") or 0), 9.0)
+        self.assertLessEqual(float(sharp.get("calibrated_score") or 0), 8.90)
         dense = self._judge(
             "构图9.6/光影9.4/透视9.5/质感9.4/风格9.5",
             goal="写实肖像，高像素细节",
             module="character.Hero",
             defects="平光",
         )
-        self.assertGreater(float(dense.get("calibrated_score") or 0), 9.0)
+        self.assertLessEqual(float(dense.get("calibrated_score") or 0), 8.90)
 
     def test_negated_break_keeps_chibi_tolerance(self) -> None:
         res = self._judge(
@@ -601,7 +601,8 @@ class TestJudgeAnatomyVeto(unittest.TestCase):
             module="character.Hero",
             defects="呆板",
         )
-        self.assertGreater(float(dull.get("calibrated_score") or 0), 9.0)
+        # 呆板 is not in pixel STYLE_INFLATION_IGNORE — soft-quality hard cap applies.
+        self.assertLessEqual(float(dull.get("calibrated_score") or 0), 8.90)
         low_pixel = self._judge(
             "构图10/光影10/透视6.6/质感10/风格10",
             goal="低像素画少女",
@@ -638,14 +639,14 @@ class TestJudgeAnatomyVeto(unittest.TestCase):
             module="character.Hero",
             defects="手指解决了但平光",
         )
-        self.assertGreater(float(still_flat.get("calibrated_score") or 0), 9.0)
+        self.assertLessEqual(float(still_flat.get("calibrated_score") or 0), 8.90)
         photo = self._judge(
             "构图9.9/光影9.9/透视9.9/质感9.9/风格9.9",
             goal="写实肖像，高像素画质",
             module="character.Hero",
             defects="画面整体平光",
         )
-        self.assertGreater(float(photo.get("calibrated_score") or 0), 9.0)
+        self.assertLessEqual(float(photo.get("calibrated_score") or 0), 8.90)
         quality = self._judge(
             "构图9.9/光影9.9/透视7.4/质感9.9/风格9.9",
             goal="写实照片，像素画质",
@@ -683,7 +684,7 @@ class TestJudgeAnatomyVeto(unittest.TestCase):
             module="character.Hero",
             defects="平光",
         )
-        self.assertGreater(float(banned_low.get("calibrated_score") or 0), 9.0)
+        self.assertLessEqual(float(banned_low.get("calibrated_score") or 0), 8.90)
         comma_fixed = self._judge(
             "构图9.9/光影9.9/透视9.9/质感9.9/风格9.9",
             goal="写实少女立绘",
@@ -697,7 +698,7 @@ class TestJudgeAnatomyVeto(unittest.TestCase):
             module="character.Hero",
             defects="平光不是已经解决",
         )
-        self.assertGreater(float(not_fixed.get("calibrated_score") or 0), 9.0)
+        self.assertLessEqual(float(not_fixed.get("calibrated_score") or 0), 8.90)
         stacked = self._judge(
             "构图10/光影10/透视7.4/质感10/风格10",
             goal="不要使用低像素画",
@@ -712,7 +713,7 @@ class TestJudgeAnatomyVeto(unittest.TestCase):
             module="character.Hero",
             defects="画面平光并非故意",
         )
-        self.assertGreater(float(not_on_purpose.get("calibrated_score") or 0), 9.0)
+        self.assertLessEqual(float(not_on_purpose.get("calibrated_score") or 0), 8.90)
         no_pixel = self._judge(
             "构图10/光影10/透视7.4/质感10/风格10",
             goal="不用像素画",
@@ -727,7 +728,7 @@ class TestJudgeAnatomyVeto(unittest.TestCase):
             module="character.Hero",
             defects="平光解决了不",
         )
-        self.assertGreater(float(not_done.get("calibrated_score") or 0), 9.0)
+        self.assertLessEqual(float(not_done.get("calibrated_score") or 0), 8.90)
         not_flat = self._judge(
             "构图10/光影10/透视7.4/质感10/风格10",
             goal="并不扁平",

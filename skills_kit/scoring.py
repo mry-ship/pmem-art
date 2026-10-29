@@ -726,9 +726,28 @@ def audit_score_inflation(
         )
         calibrated = min(calibrated, 7.90)
 
+    # Soft-quality shortfalls that must not coexist with a 9.0+ "done" score.
+    # Keep phrases longer than bare「数字化」(SCALE_RETEST: bare 数字化 false-capped high).
+    # Style families may ignore some of these via STYLE_INFLATION_IGNORE (pixel/flat/wash/graphic).
     severe_defect_keywords = (
         "画幅比例错误",
         "aspect ratio mismatch",
+        "平光",
+        "呆板",
+        "照搬",
+        "贴原",
+        "证件照",
+        "缺乏飞白",
+        "飞白不够",
+        "不见飞白",
+        "颗粒太均匀",
+        "数字化噪点",
+        "数字化痕迹",
+        "数字化滤镜",
+        "flat lighting",
+        "flat light",
+        "copy the reference",
+        "copied the reference",
     )
     hit_kw = _keyword_hits(defects_lower, severe_defect_keywords)
     from .converge_policy import STYLE_INFLATION_IGNORE, infer_style_family
