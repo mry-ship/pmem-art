@@ -1266,6 +1266,16 @@ def cmd_hook(root: Path, data: dict[str, Any], event: str) -> int:
                     q = str(sess.get("goal") or "")
         except Exception:
             sess = {}
+        # 软提醒：没 route 缓存时提示 Agent（不阻断已开的会话）
+        if event == "pre-gen":
+            try:
+                from skills_kit.route_gate import check_route_gate
+
+                ok_g, msg_g = check_route_gate(root, goal=q or "")
+                if not ok_g:
+                    advice.append("⚠️ [路由闸门] " + msg_g)
+            except Exception:
+                pass
         if not module and q:
             from feedback import infer_module_from_text
             module = infer_module_from_text(q, data)
@@ -1489,9 +1499,39 @@ def main() -> int:
     p_skills.add_argument("--install", action="store_true", help="安装或刷新全部技能文件到 .cursor / .claude / .agents")
     p_skills.add_argument("--list", action="store_true", help="列出所有内置美术技能与触发方式")
 
+    p_route = sub.add_parser(
+        "route",
+        help="总控本地路由：规则分流 + 话术库 top-k 近邻（不进 LLM 整库；/pmem-agent 第二段前必跑）",
+    )
+    p_route.add_argument("--text", default="", help="玩家原话")
+    p_route.add_argument(
+        "--canonical",
+        default="",
+        help="Agent 写的标准路由句（口语先标准化）；用于检索增强与双路冲突校验",
+    )
+    p_route.add_argument("--image", action="append", default=[], help="附图路径，可重复")
+    p_route.add_argument(
+        "--role",
+        action="append",
+        default=[],
+        help="附图角色（与 --image 顺序对齐），如 identity / structure",
+    )
+    p_route.add_argument("--top", type=int, default=8, help="近邻条数，默认 8")
+    p_route.add_argument("--json", action="store_true", help="只打印 JSON")
+    p_route.add_argument(
+        "--brief",
+        action="store_true",
+        help="只打印给美术看的人话标签（不含技术字段）",
+    )
+    p_route.add_argument(
+        "--rebuild",
+        action="store_true",
+        help="从 2500+ 用例蒸馏重建打包话术库，并同步到 .memory-art/route_bank/",
+    )
+
     p_sgate = sub.add_parser(
         "showcase-gate",
-        help="展陈 HTML 终稿闸门：正式分 <9.6 且未满 4 轮不能当终稿（不调生图）",
+        help="展陈 HTML 终稿闸门：正式分 < 9.5 且未满 4 轮不能当终稿（不调生图）",
     )
     p_sgate.add_argument("--html", required=True, help="展陈 index.html 路径")
 
@@ -1531,15 +1571,15 @@ def main() -> int:
     p_conv.add_argument("--aspect-ratio", dest="aspect_ratio", default="", help="目标画幅比例（如 9:16, 4:3, 3:4；默认跟随参考图比例）")
     p_conv.add_argument("--reference-image-paths", dest="reference_image_paths", default="", help="垫图路径列表（逗号分隔；默认跟随 --ref-image）")
     p_conv.add_argument("--ref-analysis", default="", help="参考图视觉解构结论摘要")
-    p_conv.add_argument("--threshold", type=float, default=9.6, help="合格分数线（默认 9.6）")
+    p_conv.add_argument("--threshold", type=float, default=9.5, help="合格分数线（默认 9.5）")
     p_conv.add_argument(
         "--max-rounds",
         type=int,
         default=None,
-        help="最大收敛轮次（默认 4：≥9.6 停，满 4 轮取最高分）",
+        help="最大收敛轮次（默认 4：≥9.5 停，满 4 轮取最高分）",
     )
     p_conv.add_argument("--mode", dest="converge_mode", choices=("quality", "fast"), default="quality",
-                        help="quality=最多4轮×≥9.6（默认）；fast=warm-start 置信高时可 fast-track")
+                        help="quality=最多4轮×≥9.5（默认）；fast=warm-start 置信高时可 fast-track")
     p_conv.add_argument("--scale", dest="converge_scale", choices=("low", "medium", "high", "recompose"), default="",
                         help="收敛强度：low=只修缺陷，medium=补足加小优化（默认），high=允许重构构图和重做光影，recompose=按用户指定方向改构图")
     p_conv.add_argument("--medium-family", dest="medium_family", default="",
@@ -1579,6 +1619,11 @@ def main() -> int:
     )
     p_conv.add_argument("--silent", action="store_true", help="同 --quiet（兼容旧参数）")
     p_conv.add_argument("--no-silent", action="store_true", help="兼容旧参数：强制打印评分履历（现为默认）")
+    p_conv.add_argument(
+        "--skip-route-gate",
+        action="store_true",
+        help="跳过开画前 route 闸门（仅点名/调试；默认必须先 route）",
+    )
 
     p_improve = sub.add_parser("improve", help="自我迭代：扫描反思+反馈 → 更新口味档案（/pmem-coach）")
     p_improve.add_argument("action", nargs="?", default="run", choices=("run", "progress", "reflect"), help="run|progress|reflect")
@@ -1637,6 +1682,43 @@ def main() -> int:
                 print(f"     ↳ {sp['description']}\n")
             return 0
         install_skills_and_agent_configs(root, quiet=False)
+        return 0
+    if args.command == "route":
+        from skills_kit.route_bank import (
+            advise_route,
+            format_advise_text,
+            rebuild_packaged_bank,
+            sync_project_bank,
+        )
+
+        if args.rebuild:
+            path = rebuild_packaged_bank()
+            synced = sync_project_bank(root)
+            print(f"已重建打包库: {path}")
+            print(f"已同步项目库: {synced}")
+            return 0
+        text = (args.text or "").strip()
+        if not text:
+            print("route 需要 --text，或使用 --rebuild", file=sys.stderr)
+            return 2
+        payload = advise_route(
+            text,
+            images=list(args.image or []),
+            image_roles=list(args.role or []),
+            root=root,
+            top_k=max(1, int(args.top or 8)),
+            canonical=(args.canonical or "").strip() or None,
+        )
+        try:
+            from skills_kit.route_gate import save_route_advise
+
+            save_route_advise(root, payload, text=text)
+        except Exception as exc:  # noqa: BLE001
+            print(f"⚠️  route 结果未写入闸门缓存：{exc}", file=sys.stderr)
+        if args.json:
+            print(json.dumps(payload, ensure_ascii=False, indent=2))
+        else:
+            print(format_advise_text(payload, brief=bool(args.brief)), end="")
         return 0
     if args.command == "showcase-gate":
         from skills_kit.showcase_gate import audit_showcase_file, format_report
@@ -1871,6 +1953,7 @@ def main() -> int:
             lock_text=getattr(args, "lock_text", "") or "",
             medium_family=getattr(args, "medium_family", "") or "",
             contract=getattr(args, "converge_contract", "") or "",
+            skip_route_gate=bool(getattr(args, "skip_route_gate", False)),
         )
     if args.command == "improve":
         from improve import cmd_improve
