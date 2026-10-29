@@ -21,7 +21,7 @@
   · [light-rim] 侧逆光: 轮廓分离主体与背景，高光条沿边缘走。
 - 跨项目共享通用技法卡 (Shared Layer · 无风格污染):
   · [atmospheric-perspective] 空间景深：近中远三层大气透视法则: 场景必须划分近景（高对比暗部压角剪影）、中景（视觉主体与最高明暗对比度）、远景（随空气介质距离递减对比度与饱和度，融入天光雾气），严禁远中近三景饱和度相同导致画面扁平粘连。
-🎯 [收敛会话已启动] 模块: scene.CelestialCity | 模式: quality | 强度(scale): high (高强度 · 大胆跃升+可叙事动态达标闭环 (Showcase Overhaul Dynamic Threshold >=9.6)) | 动态达标线: >= 9.6 分即停 | 最大兜底轮次: 4 | 最早停机轮次: 2
+🎯 [收敛会话已启动] 模块: scene.CelestialCity | 模式: quality | 强度(scale): high (高强度 · 大胆跃升+可叙事动态达标闭环 (Showcase Overhaul Dynamic Threshold >= 9.5)) | 动态达标线: >= 9.5 分即停 | 最大兜底轮次: 4 | 最早停机轮次: 2
 🎚️  Scale 内部权重与约束: weights={'composition': 0.15, 'lighting_color': 0.3, 'perspective_anatomy': 0.15, 'texture_detail': 0.2, 'spec_style': 0.2} | budget=每轮都垫最初的参考图；第 1 轮可以拉开光影，之后只在提示词上补还没过的那一处（提示词改动仍 ≤80%）
 🧭 Scale 指令: 仙侠水墨夜色风：保媒介与身份，提升光影张力；可加风格内叙事点缀
 ✨ 最优方向（按档加法，勿当第二份DNA锁）: 最优方向：体积光/冷暖碰撞/轮廓光/叙事点缀

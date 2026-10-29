@@ -4,7 +4,7 @@
 Scoring priority: VLM (independent / quant) → Agent manual record → offline advisory only.
 Generation: apikey.fan first; on balance error emit cursor.GenerateImage job spec.
 
-Stop only at weighted >= 9.6 after min rounds, anatomy gate, R4+ drop-stop, or round 8.
+Stop only at weighted >= 9.5 after min rounds, anatomy gate, R4+ drop-stop, or round 8.
 """
 from __future__ import annotations
 
@@ -75,7 +75,7 @@ def init(out: Path) -> None:
         bots[b["bot_id"]]["r1_prompt"] = compose_prompt(b, best, 1)
     state = {
         "version": "skill_look_rerun",
-        "threshold": 9.6,
+        "threshold": 9.5,
         "anat_gate": 7.5,
         "max_rounds": 8,
         "judge": "agent_look",
@@ -134,7 +134,7 @@ def record(out: Path, bot_id: str, round_num: int, image: str, dims: dict, defec
         st["best_round"] = rec
     best = st["best_round"]
     stop = None
-    if total >= 9.6 and anat_ok and round_num >= int(st["min_rounds"]):
+    if total >= 9.5 and anat_ok and round_num >= int(st["min_rounds"]):
         stop = "STOP_TARGET_REACHED"
         st["best_round"] = rec
     elif round_num >= 4 and best and best["round"] != round_num and best["total"] - total > 0.5:

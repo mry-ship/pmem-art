@@ -6,7 +6,7 @@ V7 32-bot dry-run runner (NO image generation).
 - Respects min_rounds_before_stop (high / recompose / bold ≥ 2)
 - Strips affirmative DNA locks when composing prompts
 - Applies best overlays from best_prompts_by_scale.json (additive only)
-- Uses v7_image_scorer (no struct→9.60 floor)
+- Uses v7_image_scorer (no struct→9.50 floor)
 
 Usage:
   cd /Users/yanghu/Desktop/pmem-art
@@ -143,7 +143,7 @@ def run_bot(bot: dict, best_doc: dict) -> dict:
                 "mse": 200.0 if r == 1 else 600.0,
             },
         )
-        # Runner must NOT stop solely because scorer ≥ 9.60 on R1.
+        # Runner must NOT stop solely because scorer ≥ 9.50 on R1.
         engine_passed = bool(judge.get("passed"))
         early = bool(judge.get("early_stop_blocked"))
         decision = str(judge.get("decision") or "")

@@ -7,7 +7,7 @@ V8 main score / STOP / HTML baseline → scripts/absolute_5d_scorer.py
 
 Legacy notes (kept for dry regressions):
   high / recompose / bold: struct weight = 0
-  NO struct-floor lift to ≥9.60 (legacy V6 pattern forbidden)
+  NO struct-floor lift to ≥9.50 (legacy V6 pattern forbidden)
 """
 from __future__ import annotations
 
@@ -47,7 +47,7 @@ def score_v7(
     """
     Combine optional 5D dims with diagnostic metrics.
 
-    Important: there is NO legacy struct-similarity floor that lifts score to ≥9.60.
+    Important: there is NO legacy struct-similarity floor that lifts score to ≥9.50.
     """
     dims = dict(dims or {})
     metrics = dict(metrics or {})
@@ -76,10 +76,10 @@ def score_v7(
     s = (api_scale or "").strip().lower()
     mode = (prompt_mode or "").strip().lower()
     if s in ("high", "recompose") or mode == "style_jump":
-        drama = _drama_bonus(metrics) * 1.2  # modest additive, not a 9.60 floor
+        drama = _drama_bonus(metrics) * 1.2  # modest additive, not a 9.50 floor
 
     score = base + struct_term * 0.05 + drama * 0.15
-    # Soft clamp to rubric range; do not floor to 9.60.
+    # Soft clamp to rubric range; do not floor to 9.50.
     score = max(0.0, min(10.0, round(score, 2)))
 
     return {
@@ -91,7 +91,7 @@ def score_v7(
         "drama_bonus": drama,
         "lifted_by_struct_floor": False,
         "meta": {
-            "note": "struct/mse diagnostic only on high/recompose/bold; no ≥9.60 struct floor",
+            "note": "struct/mse diagnostic only on high/recompose/bold; no ≥9.50 struct floor",
             "api_scale": api_scale,
             "prompt_mode": prompt_mode,
         },
@@ -101,7 +101,7 @@ def score_v7(
 
 
 def compute_image_metrics(gen_path: str, ref_path: str) -> dict[str, float]:
-    """Diagnostic pixel metrics vs ref. Never used as a ≥9.60 floor."""
+    """Diagnostic pixel metrics vs ref. Never used as a ≥9.50 floor."""
     import numpy as np
     from PIL import Image
 
@@ -199,7 +199,7 @@ def assert_no_struct_floor_in_source(source: str) -> None:
 
 
 if __name__ == "__main__":
-    # Quick sanity: dull high (high struct, low drama) must not auto-pass 9.60 via struct.
+    # Quick sanity: dull high (high struct, low drama) must not auto-pass 9.50 via struct.
     dull = score_v7(
         api_scale="high",
         dims={

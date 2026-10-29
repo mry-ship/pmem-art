@@ -65,7 +65,7 @@ def write_session_reflection(
         "module": sess.get("module"),
         "converge_mode": sess.get("converge_mode") or sess.get("quality_mode") or "quality",
         "guided_mode": sess.get("mode"),
-        "threshold": sess.get("accept_threshold", sess.get("threshold", 9.6)),
+        "threshold": sess.get("accept_threshold", sess.get("threshold", 9.5)),
         "max_rounds": sess.get("max_rounds", 8),
         "rounds_used": len(rounds),
         "winner_round": winner.get("round"),

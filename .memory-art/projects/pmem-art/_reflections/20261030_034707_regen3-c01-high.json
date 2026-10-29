@@ -1,0 +1,112 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-10-30 03:47:07 UTC+8",
+  "session_id": "regen3-c01-high",
+  "goal": "high保媒介与身份，提升光影张力，加一处风格内叙事（屋脊灯笼或一缕更亮窗火），不换人、不换这座城、不把换机位当目标",
+  "module": "scene.CelestialCity",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 2,
+  "winner_score": 8.62,
+  "winner_image": "assets/scene/celestialcity/r2.jpg",
+  "winner_passed": false,
+  "outcome": "⚠️ **共执行 4 轮审图（目标阈值 `9.50` 分），未达标，已挑选全阶段最高分**（胜出：第 2 轮 `8.62 / 10.0` 分）",
+  "what_fixed": [
+    "灯笼暖光明确打到右靴外侧；发梢留一条细冷灰高光，禁止全身白边",
+    "加强右靴外侧与近瓦的灯笼暖光斑；雾改回冷灰去掉冷蓝",
+    "灯笼固定挂在近处檐下，不提在手里；暖光打右靴外侧",
+    "已满4轮取最高分"
+  ],
+  "what_still_weak": "相对原图多了檐下灯笼，右靴外侧暖光仍偏弱几乎看不清；雾带略带冷蓝冲淡暖金",
+  "strengths": "檐下灯笼仍在；城与机位身份锁住",
+  "taste_deltas": {
+    "from_strengths": [
+      "檐下灯笼仍在；城与机位身份锁住"
+    ],
+    "from_defects": [
+      "相对原图多了檐下灯笼，右靴外侧暖光仍偏弱几乎看不清；雾带略带冷蓝冲淡暖金",
+      "相对原图应是檐下灯笼，但这张灯笼像提在手里靠近剑柄，踩了红线；叙事点位置错了",
+      "相对原图叙事应是檐下挂灯，但这张灯笼仍像手提长杆灯，未固定在檐下；右靴外侧暖光仍不明确"
+    ]
+  },
+  "warm_start_confidence": 0.9,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 8.52,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 8.62,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 8.16,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 8.03,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：相对原图多了檐下灯笼，但暖光主要落在袍摆与瓦面，右靴外侧几乎没接到灯笼暖光；发梢冷轮廓光偏弱",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.52"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：檐下暖金灯笼叙事已出现；冷灰暖金城仍在",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.52"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：相对原图多了檐下灯笼，右靴外侧暖光仍偏弱几乎看不清；雾带略带冷蓝冲淡暖金",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.62"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：檐下灯笼仍在；城与机位身份锁住",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.62"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：相对原图应是檐下灯笼，但这张灯笼像提在手里靠近剑柄，踩了红线；叙事点位置错了",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "8.16"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：冷灰暖金城仍在；俯瞰机位大致保留",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.16"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：相对原图叙事应是檐下挂灯，但这张灯笼仍像手提长杆灯，未固定在檐下；右靴外侧暖光仍不明确",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "8.03"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：冷灰暖金城与俯瞰大布局仍在",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.03"
+    }
+  ]
+}

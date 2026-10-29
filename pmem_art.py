@@ -292,49 +292,58 @@ def _webp_size(raw: bytes) -> tuple[int, int, bool] | None:
     return None
 
 
-def inspect_png(path: Path) -> dict[str, Any]:
-    """Read PNG / JPEG / WebP headers for size, mode, and alpha. PNG also keeps tEXt."""
+def inspect_png(path: Path, *, embed_data_uri: bool = True) -> dict[str, Any]:
+    """Read PNG / JPEG / WebP headers for size, mode, and alpha. PNG also keeps tEXt.
+
+    embed_data_uri=False skips base64 (atlas / index path — keeps HTML small).
+    """
     if not path.is_file():
         return {"exists": False, "path": str(path)}
     raw = path.read_bytes()
     sha16 = hashlib.sha256(raw).hexdigest()[:16]
     size_kb = round(len(raw) / 1024, 1)
     mime = _image_mime(path)
-    b64_uri = f"data:{mime};base64," + base64.b64encode(raw).decode("ascii")
+    b64_uri = ""
+    if embed_data_uri:
+        b64_uri = f"data:{mime};base64," + base64.b64encode(raw).decode("ascii")
+
+    def _pack(**extra: Any) -> dict[str, Any]:
+        out = {
+            "exists": True,
+            "size_kb": size_kb,
+            "sha256_16": sha16,
+            **extra,
+        }
+        if embed_data_uri:
+            out["data_uri"] = b64_uri
+        return out
+
     if raw[:8] != b"\x89PNG\r\n\x1a\n":
         jpeg = _jpeg_size(raw)
         webp = None if jpeg else _webp_size(raw)
         if jpeg:
             width, height = jpeg
-            return {
-                "exists": True,
-                "width": width,
-                "height": height,
-                "resolution": f"{width}x{height}",
-                "bit_depth": 8,
-                "mode": "RGB",
-                "has_alpha": False,
-                "size_kb": size_kb,
-                "sha256_16": sha16,
-                "png_meta": {},
-                "data_uri": b64_uri,
-            }
+            return _pack(
+                width=width,
+                height=height,
+                resolution=f"{width}x{height}",
+                bit_depth=8,
+                mode="RGB",
+                has_alpha=False,
+                png_meta={},
+            )
         if webp:
             width, height, has_alpha = webp
-            return {
-                "exists": True,
-                "width": width,
-                "height": height,
-                "resolution": f"{width}x{height}",
-                "bit_depth": 8,
-                "mode": "RGBA" if has_alpha else "RGB",
-                "has_alpha": has_alpha,
-                "size_kb": size_kb,
-                "sha256_16": sha16,
-                "png_meta": {},
-                "data_uri": b64_uri,
-            }
-        return {"exists": True, "size_kb": size_kb, "sha256_16": sha16, "data_uri": b64_uri}
+            return _pack(
+                width=width,
+                height=height,
+                resolution=f"{width}x{height}",
+                bit_depth=8,
+                mode="RGBA" if has_alpha else "RGB",
+                has_alpha=has_alpha,
+                png_meta={},
+            )
+        return _pack()
 
     pos = 8
     width = height = bit_depth = color_type = 0
@@ -361,19 +370,15 @@ def inspect_png(path: Path) -> dict[str, Any]:
     mode_map = {0: "L", 2: "RGB", 3: "P", 4: "LA", 6: "RGBA"}
     mode = mode_map.get(color_type, f"Type{color_type}")
     has_alpha = color_type in (4, 6)
-    return {
-        "exists": True,
-        "width": width,
-        "height": height,
-        "resolution": f"{width}x{height}",
-        "bit_depth": bit_depth,
-        "mode": mode,
-        "has_alpha": has_alpha,
-        "size_kb": size_kb,
-        "sha256_16": sha16,
-        "png_meta": text_meta,
-        "data_uri": b64_uri,
-    }
+    return _pack(
+        width=width,
+        height=height,
+        resolution=f"{width}x{height}",
+        bit_depth=bit_depth,
+        mode=mode,
+        has_alpha=has_alpha,
+        png_meta=text_meta,
+    )
 
 
 def _paeth(a: int, b: int, c: int) -> int:
@@ -638,7 +643,12 @@ def _load_all_project_libraries(
     return libs
 
 
-def load_project(root: Path) -> dict[str, Any]:
+def load_project(root: Path, *, embed_images: bool = False) -> dict[str, Any]:
+    """Load project memory + assets for CLI / atlas.
+
+    embed_images=False (default): skip base64 data_uri so art-atlas stays small.
+    Pass embed_images=True only for rare offline single-file exports (--embed).
+    """
     root = root.resolve()
     mem_dir = root / MEMORY_DIR
     active_meta: dict[str, Any] = {}
@@ -741,7 +751,7 @@ def load_project(root: Path) -> dict[str, Any]:
 
     assets_info: dict[str, dict[str, Any]] = {}
     for rel_path in sorted(asset_Set):
-        info = inspect_png(root / rel_path)
+        info = inspect_png(root / rel_path, embed_data_uri=embed_images)
         info["path"] = rel_path
         # Match module by path glob or png_meta
         matched_mod = info.get("png_meta", {}).get("pmem_module")
@@ -752,7 +762,20 @@ def load_project(root: Path) -> dict[str, Any]:
                         matched_mod = mod_id
                         break
         info["module"] = matched_mod or "unassigned"
+        info.setdefault("source", "module")
+        info.setdefault("formal", True)
         assets_info[rel_path] = info
+
+    # Visibility index: also surface Cursor/converge/generated images (no formal ingest)
+    index_images: list[dict[str, Any]] = []
+    try:
+        from atlas_index import merge_index_into_assets, scan_project_images, write_atlas_index
+
+        index_images = scan_project_images(root, modules=modules)
+        write_atlas_index(root, index_images, modules=modules)
+        merge_index_into_assets(assets_info, index_images, categories=categories)
+    except Exception:
+        index_images = []
 
     # Paths explicitly marked rejected/draft_violation in entries are intentional
     # counter-examples — still inspect, but do not fail gate / stale on their QA diffs.
@@ -842,7 +865,7 @@ def load_project(root: Path) -> dict[str, Any]:
         "ui":        {"label": "界面与九宫格图标 (UI & 9-Slice HUD)",  "short": "UI与九宫格", "icon": "💠"},
         "vfx":       {"label": "特效与序列帧表现 (VFX & Shaders)",     "short": "特效与序列帧", "icon": "✨"},
         "anim":      {"label": "骨骼与帧动画 (Animation & Spine)",     "short": "骨骼与动画", "icon": "🦴"},
-        "misc":      {"label": "未归类 / 待提升 (Misc)",               "short": "待归类资产", "icon": "📦"},
+        "misc":      {"label": "其他 / 散图（仅工作台可见，不写正式 recipe）", "short": "其他", "icon": "📦"},
     }
     for ck, cv in default_cat_meta.items():
         if ck not in categories:
@@ -924,9 +947,26 @@ def load_project(root: Path) -> dict[str, Any]:
 
         abs_p = root / rel_path
         if abs_p.is_file():
-            info["updated_at"] = datetime.fromtimestamp(abs_p.stat().st_mtime, tz=cst).strftime("%Y-%m-%d %H:%M")
+            mtime = abs_p.stat().st_mtime
+            info["mtime"] = info.get("mtime") or mtime
+            info["updated_at"] = info.get("updated_at") or datetime.fromtimestamp(mtime, tz=cst).strftime("%Y-%m-%d %H:%M")
+            day = datetime.fromtimestamp(mtime, tz=cst).strftime("%Y-%m-%d")
+            info["day"] = info.get("day") or day
+            today_s = datetime.now(cst).strftime("%Y-%m-%d")
+            yday_s = (datetime.now(cst) - timedelta(days=1)).strftime("%Y-%m-%d")
+            if day == today_s:
+                info["day_bucket"] = "today"
+            elif day == yday_s:
+                info["day_bucket"] = "yesterday"
+            else:
+                info["day_bucket"] = "earlier"
         else:
-            info["updated_at"] = ""
+            info.setdefault("updated_at", "")
+            info.setdefault("day_bucket", "earlier")
+        info.setdefault("source", "module" if str(info.get("module") or "").startswith(("brand", "character", "scene", "ui", "vfx", "anim")) or (info.get("module") not in (None, "", "unassigned") and str(rel_path).startswith("assets/")) else "other")
+        info.setdefault("formal", str(rel_path).startswith("assets/") and info.get("module") not in (None, "", "unassigned"))
+        if not embed_images:
+            info.pop("data_uri", None)
 
     # Category summary for Gallery overview
     category_summary: dict[str, dict[str, Any]] = {}
@@ -1015,12 +1055,13 @@ def load_project(root: Path) -> dict[str, Any]:
     sig_src = json.dumps({
         "p": active_pid,
         "pl": [(pl.get("project_id"), pl.get("entries_count"), len(pl.get("knowledge_cards") or [])) for pl in project_libraries],
-        "a": [(k, v.get("sha256_16"), v.get("description"), v.get("role"), v.get("module")) for k, v in sorted(assets_info.items())],
+        "a": [(k, v.get("sha256_16"), v.get("description"), v.get("role"), v.get("module"), v.get("mtime"), v.get("source")) for k, v in sorted(assets_info.items())],
         "e": [(e.get("id"), e.get("summary"), e.get("status"), e.get("stale")) for e in entries],
         "m": list(modules.keys()),
         "t": profile_data["taste"].get("updated_at", ""),
         "k": len(profile_data["knowledge_cards"]),
         "r": len(profile_data["reflections"]),
+        "ix": len(index_images),
     }, ensure_ascii=False, sort_keys=True)
     build_id = hashlib.sha256(sig_src.encode("utf-8")).hexdigest()[:16]
 
@@ -1028,6 +1069,7 @@ def load_project(root: Path) -> dict[str, Any]:
         "root": str(root),
         "built_at": built_at,
         "build_id": build_id,
+        "embed_images": bool(embed_images),
         "active_project": active_meta,
         "project_libraries": project_libraries,
         "config": config,
@@ -1039,6 +1081,7 @@ def load_project(root: Path) -> dict[str, Any]:
         "specs": specs,
         "workflows": workflows,
         "assets": assets_info,
+        "index_images": index_images,
         "qa_issues": qa_issues,
         "stale_entries": stale_entries,
         "profile": profile_data,
@@ -1049,7 +1092,7 @@ def refresh_atlas_silent(root: Path, out_name: str = "art-atlas.html") -> Path |
     """Automatically regenerate art-atlas.html and .memory-art/atlas_ping.js after any write op."""
     try:
         from build_atlas import generate_atlas_html
-        fresh_data = load_project(root)
+        fresh_data = load_project(root, embed_images=False)
         out_file = root / out_name
         generate_atlas_html(fresh_data, out_file)
         return out_file
@@ -1454,8 +1497,18 @@ def main() -> int:
         "--source", default="cli",
         help="写入 last_doctor.source（cli / hook:pre-gen …）",
     )
-    p_atlas = sub.add_parser("atlas", help="生成/更新自包含可视化美术记忆图谱工作台 HTML (art-atlas.html)")
+    p_atlas = sub.add_parser("atlas", help="生成/更新可视化美术记忆图谱工作台 HTML (art-atlas.html)")
     p_atlas.add_argument("--out", default="art-atlas.html")
+    p_atlas.add_argument(
+        "--embed",
+        action="store_true",
+        help="把图片嵌成 data_uri（体积巨大，仅离线单文件导出用；默认用相对路径）",
+    )
+    p_reveal = sub.add_parser(
+        "reveal",
+        help="在系统访达/资源管理器中显示并选中图片（工作台「在文件夹中显示」的命令行版）",
+    )
+    p_reveal.add_argument("path", help="图片相对/绝对路径")
 
     p_fb = sub.add_parser("feedback", help="把画师自然语言反馈沉淀为记忆（太赛博/头太大/这版留着/换成水彩…）")
     p_fb.add_argument("text", nargs="?", default="", help="画师原话；也可 --text")
@@ -1736,7 +1789,15 @@ def main() -> int:
         print("ℹ️  未检测到 .memory-art，先执行隐式 init 脚手架…")
         cmd_init(root, project_name=root.name)
 
-    data = load_project(root)
+    if args.command == "reveal":
+        from atlas_index import reveal_in_os
+
+        raw = Path(args.path)
+        target = raw if raw.is_absolute() else (root / raw)
+        return reveal_in_os(target)
+
+    embed_images = bool(getattr(args, "embed", False)) if args.command == "atlas" else False
+    data = load_project(root, embed_images=embed_images)
     # Normalize missing status → active (demo / mature projects)
     for mid, cfg in (data.get("modules") or {}).items():
         if isinstance(cfg, dict) and "status" not in cfg:
@@ -1847,7 +1908,12 @@ def main() -> int:
         from build_atlas import generate_atlas_html
         out_file = root / args.out
         generate_atlas_html(data, out_file)
-        print(f"✨ 已生成可视化美术记忆图谱工作台: {out_file} ({round(out_file.stat().st_size / 1024, 1)} KB)")
+        n_idx = len(data.get("index_images") or [])
+        mode = "嵌入原图" if embed_images else "相对路径懒加载"
+        print(
+            f"✨ 已生成可视化美术记忆图谱工作台: {out_file} "
+            f"({round(out_file.stat().st_size / 1024, 1)} KB · {mode} · 索引 {n_idx} 张)"
+        )
         return 0
     if args.command in ("feedback", "note"):
         from feedback import cmd_feedback

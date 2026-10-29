@@ -12,13 +12,13 @@
         "style",
         "material"
       ],
-      "source": "converge_finish",
+      "source": "feedback",
       "layer_scope": "private",
       "project_id": "pmem-art",
       "project_name": "pmem-art",
       "universal": false,
       "promoted_to_shared": false,
-      "updated_at": "2026-10-28 03:06:11 UTC+8"
+      "updated_at": "2026-10-30 03:27:10 UTC+8"
     },
     "tech-painterly": {
       "id": "tech-painterly",
@@ -34,7 +34,7 @@
       "project_name": "pmem-art",
       "universal": false,
       "promoted_to_shared": false,
-      "updated_at": "2026-10-30 01:11:21 UTC+8"
+      "updated_at": "2026-10-30 04:10:45 UTC+8"
     },
     "icon-svg-spec": {
       "id": "icon-svg-spec",
@@ -65,7 +65,7 @@
       "project_name": "pmem-art",
       "universal": true,
       "promoted_to_shared": false,
-      "updated_at": "2026-10-28 03:06:11 UTC+8"
+      "updated_at": "2026-10-30 03:49:27 UTC+8"
     },
     "light-rim": {
       "id": "light-rim",
@@ -80,8 +80,24 @@
       "project_name": "pmem-art",
       "universal": true,
       "promoted_to_shared": false,
-      "updated_at": "2026-10-28 02:42:03 UTC+8"
+      "updated_at": "2026-10-30 04:51:18 UTC+8"
+    },
+    "tech-watercolor": {
+      "id": "tech-watercolor",
+      "title": "水彩渲染",
+      "body": "边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。",
+      "tags": [
+        "style",
+        "material"
+      ],
+      "source": "converge_finish",
+      "layer_scope": "private",
+      "project_id": "pmem-art",
+      "project_name": "pmem-art",
+      "universal": false,
+      "promoted_to_shared": false,
+      "updated_at": "2026-10-30 03:35:48 UTC+8"
     }
   },
-  "updated_at": "2026-10-30 01:11:21 UTC+8"
+  "updated_at": "2026-10-30 04:51:18 UTC+8"
 }

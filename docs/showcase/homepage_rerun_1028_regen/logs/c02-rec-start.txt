@@ -20,7 +20,7 @@
 - 项目私有知识卡 (Private Layer):
   · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。
   · [tech-celshade] 赛璐珞分层: 硬边色块分层，高光形状干净，层数克制。
-🎯 [收敛会话已启动] 模块: character.PastelGirl | 模式: quality | 强度(scale): recompose (定向改构图模式 · 按用户指定新构图动态达标闭环 (Directed Re-Composition Dynamic Threshold >=9.6)) | 动态达标线: >= 9.6 分即停 | 最大兜底轮次: 4 | 最早停机轮次: 2
+🎯 [收敛会话已启动] 模块: character.PastelGirl | 模式: quality | 强度(scale): recompose (定向改构图模式 · 按用户指定新构图动态达标闭环 (Directed Re-Composition Dynamic Threshold >= 9.5)) | 动态达标线: >= 9.5 分即停 | 最大兜底轮次: 4 | 最早停机轮次: 2
 🎚️  Scale 内部权重与约束: weights={'composition': 0.3, 'lighting_color': 0.2, 'perspective_anatomy': 0.2, 'texture_detail': 0.15, 'spec_style': 0.15} | budget=每轮都垫最初的参考图；第 1 轮落到指定机位，之后只在提示词上补还没过的那一处（提示词改动仍 ≤85%）
 🧭 Scale 指令: 粉彩速写轻盈风：保画风色板，按「同一粉彩少女改成侧面半身，红帽衫与蜡笔纸感保留，背景仍是斜向色粉笔」重构机位
 ✨ 最优方向（按档加法，勿当第二份DNA锁）: 最优方向：只写目标机位与布局

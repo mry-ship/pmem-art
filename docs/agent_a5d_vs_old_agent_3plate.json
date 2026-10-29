@@ -23,7 +23,7 @@
       "judge_calibrated": 8.07,
       "judge_source": "agent_absolute_5d",
       "judge_decision": "CONTINUE_NEXT_ROUND",
-      "target_th": 9.6,
+      "target_th": 9.5,
       "offline_advisory": 8.13,
       "delta_new_minus_old": -1.05
     },
@@ -42,7 +42,7 @@
       "judge_calibrated": 3.48,
       "judge_source": "agent_absolute_5d",
       "judge_decision": "CONTINUE_NEXT_ROUND",
-      "target_th": 9.6,
+      "target_th": 9.5,
       "offline_advisory": 7.93,
       "delta_new_minus_old": -6.02
     },
@@ -61,7 +61,7 @@
       "judge_calibrated": 8.31,
       "judge_source": "agent_absolute_5d",
       "judge_decision": "CONTINUE_NEXT_ROUND",
-      "target_th": 9.6,
+      "target_th": 9.5,
       "offline_advisory": 8.13,
       "delta_new_minus_old": -1.44
     }

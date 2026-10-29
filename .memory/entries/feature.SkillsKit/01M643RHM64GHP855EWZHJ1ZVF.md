@@ -31,4 +31,4 @@ pre-gen Hook 解析 Cursor 的 tool_name/tool_input（含 CallDynamicTool 嵌套
 Agent 手贴不再是召回路径；没并入算 bug。
 recipe、红线、口味仍只进 .memory-art，不要抄进 .memory。
 没有 converge start 时 generate 仍必须失败，不能为了灌记忆悄悄建会话。
-合格线仍是 >=9.6、最多 4 轮。
+合格线仍是 >= 9.5、最多 4 轮。

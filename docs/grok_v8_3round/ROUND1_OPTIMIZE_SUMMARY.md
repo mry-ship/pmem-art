@@ -6,7 +6,7 @@
 
 ## Scores vs prior
 
-| run | mean | min | max | n≥9.60 |
+| run | mean | min | max | n≥9.50 |
 |---|---|---|---|---|
 | Grok v1 (`generated_v8_20_skill_grok`) | **8.286** | — | — | 0 |
 | **Round 1 / Grok v2** | **8.394** (+0.108) | 7.94 | 8.80 | 0 |

@@ -78,12 +78,41 @@ def _parts_not_concrete(text: str) -> bool:
     return s in _EMPTY_PARTS or s in _WEAK_PARTS
 
 
+def _base_body_tokens(base_body: str) -> list[str]:
+    """Meaningful tokens from base_body for continuity checks (CJK bigrams + latin words)."""
+    raw = (base_body or "").strip()
+    if not raw:
+        return []
+    tokens: list[str] = []
+    for m in re.finditer(r"[A-Za-z0-9_]{3,}", raw):
+        tokens.append(m.group(0).lower())
+    # Prefer explicit separators; else sliding bigrams on CJK runs.
+    for chunk in re.split(r"[\s·|/＋+，,、；;：:]+", raw):
+        chunk = chunk.strip()
+        if not chunk:
+            continue
+        cjk = "".join(ch for ch in chunk if "\u4e00" <= ch <= "\u9fff")
+        if len(cjk) >= 2:
+            if len(cjk) <= 4:
+                tokens.append(cjk)
+            else:
+                tokens.extend(cjk[i : i + 2] for i in range(0, len(cjk) - 1, 2))
+    # de-dup preserve order
+    seen: set[str] = set()
+    out: list[str] = []
+    for t in tokens:
+        if t and t not in seen and t not in {"基档", "物件", "道具"}:
+            seen.add(t)
+            out.append(t)
+    return out[:12]
+
+
 def judge_relation_rows(
     rows: list[LadderRow],
     track: dict[str, Any] | None = None,
 ) -> tuple[bool, list[str]]:
     """按 art-merge 六条做可机读检查（文字定稿门禁）。"""
-    _ = track
+    track = track or {}
     issues: list[str] = []
     # 件数 / 八行已在 parse 保证。合成是否说得通仍由讨论稿判定，这里只拦住空零件和只加光效。
     pcts = [r.scale_pct for r in rows]
@@ -109,6 +138,24 @@ def judge_relation_rows(
     for r in rows:
         if not r.name or not r.silhouette:
             issues.append(f"L{r.level:02d} 物件名或剪影家族为空")
+
+    # Optional but sticky: same-object ladders declare base_body so L2–L8 cannot reinvent the mother mesh.
+    # Species-change ladders (kitchen tools, fish) omit base_body and stay on the light six-rule gate.
+    base_body = str(track.get("base_body") or "").strip()
+    if base_body:
+        tokens = _base_body_tokens(base_body)
+        if not tokens:
+            issues.append(f"base_body 无法抽出可核验词：{base_body!r}")
+        else:
+            need = 1 if len(tokens) == 1 else min(2, len(tokens))
+            for r in rows:
+                blob = f"{r.silhouette} {r.name}".lower()
+                hits = [t for t in tokens if t.lower() in blob]
+                if len(hits) < need:
+                    issues.append(
+                        f"L{r.level:02d} 未锁母体 base_body={base_body!r}："
+                        f"silhouette/name 需保留母体词 {tokens[:4]}（命中 {hits or '无'}）"
+                    )
     return (len(issues) == 0, issues)
 
 

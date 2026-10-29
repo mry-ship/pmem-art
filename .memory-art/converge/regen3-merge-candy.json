@@ -1,0 +1,171 @@
+{
+  "session_id": "regen3-merge-candy",
+  "started_at": "2026-10-30 03:25:02 UTC+8",
+  "goal": "蜜桃糖合成梯八档：裸糖→糖纸→贴纸→纸托→丝带→托盘→罩盒→礼盒；软塑胶糖果宫廷；禁止焊进蛋糕/马卡龙；一档一张正方形；单件居中无脸无等级字",
+  "module": "prop.PeachCandyMerge",
+  "mode": "text_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "medium",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "medium",
+    "label": "中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.5)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 1,
+    "target_score_threshold": 9.5,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.15,
+      "perspective_anatomy": 0.15,
+      "texture_detail": 0.15,
+      "spec_style": 0.15,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "viewpoint_frame",
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图，只在提示词上补还没过的那一处（提示词改动仍 ≤40%）",
+    "max_prompt_delta_ratio": 0.4,
+    "allow_recompose": false,
+    "allow_viewpoint_change": false,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "viewpoint_angle (不改机位与镜头视角)",
+      "element_count (不增删主体元素清单)",
+      "no_full_recompose (不做整体 recompose / 换景别故事)",
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)"
+    ],
+    "min_round_leap": 0.15,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光，表面那一句不动，只修没过的那一格",
+    "medium_family": "generic",
+    "best_direction_hint": "最优方向：光影·空气·介质；可小幅姿态/局部布局",
+    "goal": "蜜桃糖合成梯八档：裸糖→糖纸→贴纸→纸托→丝带→托盘→罩盒→礼盒；软塑胶糖果宫廷；禁止焊进蛋糕/马卡龙；一档一张正方形；单件居中无脸无等级字",
+    "module": "prop.PeachCandyMerge",
+    "ref_image": "",
+    "ref_analysis": ""
+  },
+  "medium_family": "generic",
+  "contract": "",
+  "target_score_threshold": 9.5,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "",
+  "ref_analysis": "",
+  "default_aspect_ratio": "1:1",
+  "default_reference_image_paths": [],
+  "aspect_ratio": "1:1",
+  "reference_image_paths": [],
+  "ref_physical_traits": {},
+  "param_validation": {},
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.5,
+  "accept_threshold": 9.5,
+  "max_rounds": 4,
+  "ready_to_finish": false,
+  "status": "running",
+  "rounds": [],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "/Users/yanghu/Desktop/pmem-art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-10-28 01:28:36 UTC+8"
+    },
+    "module": "prop.PeachCandyMerge",
+    "goal": "蜜桃糖合成梯八档：裸糖→糖纸→贴纸→纸托→丝带→托盘→罩盒→礼盒；软塑胶糖果宫廷；禁止焊进蛋糕/马卡龙；一档一张正方形；单件居中无脸无等级字",
+    "confidence": 0.45,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "个人口味档案非空",
+      "红线可控（0 条）",
+      "挂载 0 张项目知识卡 + 1 张全局美术底层基础卡"
+    ],
+    "top_recipes": [],
+    "top_redlines": [],
+    "art_decisions": [],
+    "private_knowledge": [],
+    "shared_knowledge": [
+      {
+        "id": "palette-70-20-10",
+        "title": "色彩构成：70-20-10 色板比例黄金法则",
+        "body": "画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+        "layer_scope": "shared"
+      }
+    ],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [
+        "暖光"
+      ],
+      "preferred_composition": [
+        "半身",
+        "全身"
+      ],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [],
+      "banned_habits": [
+        "漏抠/黑底/毛边",
+        "赛博霓虹/霓虹紫"
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.PeachCandyMerge\n- 置信度: 0.45（fast-track 资格: 否）\n- 个人口味: 光影=暖光；构图=半身 / 全身\n- 个人禁用习惯: 漏抠/黑底/毛边；赛博霓虹/霓虹紫\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+    "built_at": "2026-10-30 03:25:02 UTC+8"
+  },
+  "lessons_all": [],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 4,
+  "regression_drop": 0.5,
+  "discussions": [
+    {
+      "round": 1,
+      "prompt": "L1 裸糖 | 蜜桃软糖裸体椭圆 | 基档 | 0.60 | —\nL2 糖纸 | 双扭结糖纸裹糖 | +小 | 0.63 | 扭结糖纸\nL3 贴纸 | 扭结糖+中央封口贴纸 | +小 | 0.66 | 封口贴纸\nL4 纸托 | 贴纸糖落入褶边纸托 | +中 | 0.69 | 褶边纸托\nL5 丝带 | 纸托糖+侧边丝带结 | +中 | 0.72 | 丝带结\nL6 托盘 | 丝带糖置于小浅托盘 | +大 | 0.75 | 浅托盘\nL7 罩盒 | 托盘糖+透明罩盖盒 | +大 | 0.77 | 透明罩盖\nL8 礼盒 | 罩盒收入蝴蝶结礼盒 | +大 | 0.79 | 礼盒壳体；全梯最大\n画风：软塑胶糖果宫廷，圆润倒角柔高光，禁止蛋糕/马卡龙/纸杯蛋糕焊入",
+      "strengths": "",
+      "defects": "L4纸托易画成纸杯蛋糕；L6托盘易变木盘餐桌；L2/L3剪影需区分扭结 vs 贴纸圆盘；合成链须保持糖本体同域包装升级",
+      "next_fix": "L4写明褶边纸托不是蛋糕杯胚；L6浅糖果托盘非木桌；强化相邻剪影差"
+    },
+    {
+      "round": 2,
+      "prompt": "L1 裸糖 | 圆润蜜桃软糖光秃 | 0.60 | —\nL2 糖纸 | 糖+两端尖扭结纸翼 | 0.63 | 双扭结糖纸（两裸糖合成多出纸翼）\nL3 贴纸 | 扭结糖+正面圆贴纸封 | 0.66 | 圆封口贴纸\nL4 纸托 | 贴纸糖坐进浅褶边纸托（纸托薄边，非蛋糕胚） | 0.69 | 褶边纸托\nL5 丝带 | 纸托糖侧绑软丝带蝴蝶结 | 0.72 | 丝带结\nL6 托盘 | 丝带糖置于小圆形浅糖果托盘（托盘是零件，不是餐桌） | 0.75 | 圆形浅托盘\nL7 罩盒 | 托盘糖上扣透明圆罩盖 | 0.77 | 透明罩盖\nL8 礼盒 | 罩盒装入方礼盒+顶结 | 0.79 | 方礼盒壳体\n画风锁：软塑胶糖果宫廷清漆，饱和蜜桃粉，左上软光短影；严禁蛋糕层/马卡龙/纸杯蛋糕",
+      "strengths": "",
+      "defects": "检查L5丝带与L6托盘剪影是否足够不同；礼盒是否串成情人节方礼盒无关物——仍同域包装终点可过",
+      "next_fix": "定稿机读；parts全部具体零件"
+    },
+    {
+      "round": 3,
+      "prompt": "定稿八行（六条过）：\n1 裸糖 silhouette=蜜桃软糖光秃椭圆 scale=0.60 parts=—\n2 糖纸 silhouette=糖+双尖扭结纸翼 scale=0.63 parts=双扭结糖纸\n3 贴纸 silhouette=扭结糖+正面圆贴纸 scale=0.66 parts=圆封口贴纸\n4 纸托 silhouette=贴纸糖+浅褶边纸托 scale=0.69 parts=褶边纸托（非蛋糕胚）\n5 丝带 silhouette=纸托糖+侧丝带结 scale=0.72 parts=丝带结\n6 托盘 silhouette=丝带糖+圆形浅托盘 scale=0.75 parts=圆形浅托盘\n7 罩盒 silhouette=托盘糖+透明圆罩 scale=0.77 parts=透明罩盖\n8 礼盒 silhouette=罩盒入方礼盒顶结 scale=0.79 parts=方礼盒壳体\n合成：两同档→下一档只多一块包装零件；糖本体同域；不进蛋糕/马卡龙。\n画风锁死：软塑胶糖果宫廷，蜜桃粉彩圆润清漆，浅棚短接触影，单件居中无脸无等级字",
+      "strengths": "",
+      "defects": "无；六条与画风均过",
+      "next_fix": "写入 merge_phase1.yaml track candy；relation-judge"
+    }
+  ]
+}

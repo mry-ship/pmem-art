@@ -117,7 +117,7 @@ def main() -> int:
             t = total(dims, it["display_scale"]) if dims else None
             if t is not None:
                 totals.append(t)
-            cls = "hit" if t is not None and t >= 9.6 else ("mid" if t is not None and t >= 8.5 else "low")
+            cls = "hit" if t is not None and t >= 9.5 else ("mid" if t is not None and t >= 8.5 else "low")
             dim_line = " · ".join(f"{k[0]}{dims[k]}" for k in DIMS if k in dims) if dims else "—"
             body = f'<img src="{it["file"]}">' if it.get("ok") else '<p class="err">缺失</p>'
             cards.append(

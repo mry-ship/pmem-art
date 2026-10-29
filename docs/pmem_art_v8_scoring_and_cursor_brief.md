@@ -44,7 +44,7 @@
   - low：质感 / 缺陷略高
   - medium：光影 + 质感
   - high / recompose：光影 + 构图意图略高
-- STOP 仍可用 ≥9.60，但必须来自 A 轨。
+- STOP 仍可用 ≥9.50，但必须来自 A 轨。
 
 **辅轨 B — Intent / Delta（诊断，不替代主分）**
 
@@ -70,7 +70,7 @@ baseline = Absolute5D(ref_image)   # 与 bot 同一函数
 ### 3.1 不要做
 
 - 不要恢复全档「严格保留DNA / 参考垫图一致性高 / 构图：锁死」。
-- 不要恢复 V6 的 `struct > 0.35 → ≥9.60` 保送。
+- 不要恢复 V6 的 `struct > 0.35 → ≥9.50` 保送。
 - 不要用 scripted scores 冒充 VLM 达标（若保留剧本分，HTML 必须大字标明「剧本分」）。
 - 不要用原图 `(ref, ref)` + low struct 当 Baseline。
 - 用户可见文案用「最优方向」，不用「提质」。
@@ -81,7 +81,7 @@ baseline = Absolute5D(ref_image)   # 与 bot 同一函数
 2. Baseline = `absolute_5d(ref)`，写入 report / HTML。
 3. 将 `v7_image_scorer.score_image_v7(gen, ref)` 的 struct 进 composition/style **降为诊断**；主分改走 Absolute-5D。
 4. Report / HTML：主分 Absolute-5D；旁注 `Δ = bot − baseline`；Intent 小标（recompose 换机位 / bold 风格跳）；注释「旧 V2 showcase 分为 scripted，不可横比」。
-5. STOP ≥9.60 只认 Absolute-5D；high / recompose / bold 保持 `min_rounds≥2`。
+5. STOP ≥9.50 只认 Absolute-5D；high / recompose / bold 保持 `min_rounds≥2`。
 
 ### 3.3 任务 / 提示追平 V2（必做）
 

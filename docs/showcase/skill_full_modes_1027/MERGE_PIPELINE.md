@@ -11,7 +11,7 @@
 4. **关系核对出图** — **默认每一档单独出一张 1:1 正方形**（画面里只有这一件）。整梯 16:9 八等列只作体量预览；`split-sheet` 若切进邻件或身份错位，**整套作废**，改回逐格重出。**禁止**垫 `val_heart` / `market` 风格 ref 文件。
 5. **像素审计** — `python pmem_art.py merge audit --dir … --phase1 … --track …`。
 6. **体量归一化（仅 audit 未过）** — `merge normalize` 按 YAML `scale_pct` 拉齐框高并 **再次 audit**。只把前景铺到平涂底上，不把原图矩形贴上去。通过则接受，仍不过则 **整梯重出**（normalize 是保险，不是主路径）。`audit` 会拦住内嵌方框。
-7. **第二段** — `converge start --scale medium` → generate/judge **每轮后必跑 merge audit**；≥9.6 且关系仍在才 finish。
+7. **第二段** — `converge start --scale medium` → generate/judge **每轮后必跑 merge audit**；≥9.5 且关系仍在才 finish。
 
 ## 禁止
 - 未定稿 `relation-judge` 通过就上 showcase。

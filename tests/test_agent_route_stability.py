@@ -52,7 +52,7 @@ def _check(case: Case) -> str:
             return "第二行没有只垫通过的那张"
     if case.route_ids == ["draw.ordinary"]:
         note = plan.steps[0].note
-        if "9.60" not in note or "多图分工" not in note:
+        if "9.50" not in note or "多图分工" not in note:
             return f"普通图交接不完整: {note}"
         if "多图分工" in plan.announce and "不" not in plan.announce:
             return "普通图被说成多图分工"

@@ -29,13 +29,50 @@ def detect_vague_ask(
         }
     pics = [p for p in (images or []) if p]
     pl = plan
+    icon_ask = {
+        "reason": "artist_ask_icon",
+        "ask": "你要哪种图标？回一句就行：A 桌面启动 1024 / B 线性 SVG 一套 / C 背包道具格（透明底）。",
+    }
+    merge_ask = {
+        "reason": "artist_ask_merge",
+        "ask": "是继续「合成梯」（同一套东西一档比一档大），还是另画一张普通图？回一句就行。",
+    }
+    clear_merge = bool(
+        re.search(
+            r"合成梯|合成升级|一档比一档|升级链|升级那条|八档|越升越大|merge\s*ladder",
+            raw,
+            re.I,
+        )
+    )
+    # 软口吻＝有合成/升档 + 指代续作；「升档宝石梯子」这类清楚题材升级不算软
+    soft_merge = bool(
+        re.search(r"合成|升档", raw) and re.search(r"继续|那条|那个", raw)
+    ) or bool(re.search(r"合成", raw) and re.search(r"甜品|糖果", raw) and re.search(r"继续|那条", raw))
 
+    # plan 已停时：把已有人话 announce 抬成 artist_ask，勿只甩 reason 码
     if pl is not None and pl.mode == "stop":
+        if pl.reason == "icon_unspecified":
+            return icon_ask
+        ann = str(pl.announce or "").strip()
+        if ann and pl.reason in {"hard_ambiguity", "icon_conflict", "showcase_unspecified"}:
+            return {"reason": f"artist_ask_{pl.reason}", "ask": ann}
         return None
 
-    # 已经认成明确专技：不再用糊话门改判
+    # 软合成口吻（升档那条 / 合成那条继续）一律先问，即使规则已折成 merge.ladder
+    if soft_merge and not clear_merge:
+        return merge_ask
+
+    # 已经认成明确专技：不再用糊话门改判（锁风格无样张仍要问）
     if pl is not None and pl.mode == "skill" and pl.route_ids and pl.route_ids != ["draw.ordinary"]:
-        return None
+        if not (list(pl.route_ids) == ["style.lock"] and not pics):
+            # 无图「继续那条」被折成合成梯、但原话没有清楚合成词 → 仍要问清
+            if not (
+                list(pl.route_ids) == ["merge.ladder"]
+                and not pics
+                and re.search(r"继续那条|昨天|上次|那张|那条|继续(?!写)", raw)
+                and not clear_merge
+            ):
+                return None
 
     # 图标没分档
     if re.search(r"图标|icon", raw, re.I) and not re.search(
@@ -43,20 +80,12 @@ def detect_vague_ask(
         raw,
         re.I,
     ):
-        return {
-            "reason": "artist_ask_icon",
-            "ask": "你要哪种图标？回一句就行：A 桌面启动 1024 / B 线性 SVG 一套 / C 背包道具格（透明底）。",
-        }
+        return icon_ask
 
-    # 合成 / 继续那条，但没认成合成梯
-    if re.search(r"合成梯|合成升级|一档比一档|merge\s*ladder", raw, re.I) or (
-        re.search(r"合成|升级链|升档", raw) and re.search(r"继续|那条|那个|甜品|糖果|梯子|刀|剑", raw)
-    ):
+    # 清楚合成话术：已认成合成梯才放过；否则问
+    if clear_merge:
         if pl is None or "merge.ladder" not in (pl.route_ids or []):
-            return {
-                "reason": "artist_ask_merge",
-                "ask": "是继续「合成梯」（同一套东西一档比一档大），还是另画一张普通图？回一句就行。",
-            }
+            return merge_ask
 
     # 指代昨天/那张/继续，又没附图
     if not pics and re.search(r"昨天|上次|刚才|之前那|那张|那条|那幅|继续(?!写)", raw):
@@ -65,23 +94,41 @@ def detect_vague_ask(
             "ask": "你说的「那张 / 那条 / 昨天」我这边看不到。请再贴一张参考，或把要画的对象说完整（例如「画一张窗边女孩」）。",
         }
 
-    # 像锁风格 / 照感觉，但没样张
-    if not pics and re.search(r"按这张|照这张|按昨天|味道|感觉再|以后都按|锁风格|都用这张", raw):
+    # 像锁风格，但没样张（收窄，避免「感觉再画」「味道不错」误拦）
+    if not pics and re.search(
+        r"按这张|照这张|按昨天|照这张味道|按这张感觉|这张味道|这张手感|味道一样|以后都按|锁风格|都用这张",
+        raw,
+    ):
         return {
             "reason": "artist_ask_style_ref",
             "ask": "要按某张的画风/色板的话，请把样张贴上来；若只是新画一张，直接说「画一张××」即可。",
         }
 
-    # 极短且没有「画一张××」骨架时才问（避免「画一张窗边女孩」被误拦）
+    _DRAW_SKELETON = (
+        r"画一张|出一张|来一张|来一个|来张|画个|做一|帮我画|给我画|搞个|搞张|弄下|弄张|弄个|"
+        r"整一个|整张|出张|做张"
+    )
+
+    # 极短且没有「画一张××」骨架时才问（有附图或已有画骨架则放过）
+    from .route_normalize import normalize_for_route
+
     compact = _compact(raw)
-    if len(compact) < 5 and (pl is None or pl.route_ids == ["draw.ordinary"]):
+    folded = normalize_for_route(raw)
+    has_draw = bool(re.search(_DRAW_SKELETON, raw) or re.search(_DRAW_SKELETON, folded))
+    if pics and (pl is None or pl.route_ids == ["draw.ordinary"]):
+        return None
+    if (
+        len(compact) < 5
+        and not has_draw
+        and (pl is None or pl.route_ids == ["draw.ordinary"])
+    ):
         return {
             "reason": "artist_ask_short",
             "ask": "再说具体一点：画什么？要不要参考？例如「画一张窗边女孩水彩半身」。",
         }
     if (
         len(compact) < 7
-        and not re.search(r"画一张|出一张|来一张|画个|做一|帮我画", raw)
+        and not has_draw
         and (pl is None or pl.route_ids == ["draw.ordinary"])
     ):
         return {

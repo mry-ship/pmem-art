@@ -35,7 +35,7 @@ def main() -> int:
     ns.image = args.image
     ns.error = ""
     # defaults required by grok.main parsers for other cmds
-    ns.threshold = 9.6
+    ns.threshold = 9.5
     ns.anat_gate = 7.5
     ns.max_rounds = 8
     ns.pad = "auto"

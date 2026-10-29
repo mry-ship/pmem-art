@@ -1,0 +1,1 @@
+# 用户追加的路由话术（JSONL）。每行: {"text":"...","mode":"skill|default|stop","route_ids":["draw.clone"],"bucket":"user","hard":true,"source":"user"}

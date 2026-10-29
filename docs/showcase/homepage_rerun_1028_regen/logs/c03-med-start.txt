@@ -20,7 +20,7 @@
 - 项目私有知识卡 (Private Layer):
   · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。
   · [tech-celshade] 赛璐珞分层: 硬边色块分层，高光形状干净，层数克制。
-🎯 [收敛会话已启动] 模块: character.SunlitGirl | 模式: quality | 强度(scale): medium (中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.6)) | 动态达标线: >= 9.6 分即停 | 最大兜底轮次: 4 | 最早停机轮次: 1
+🎯 [收敛会话已启动] 模块: character.SunlitGirl | 模式: quality | 强度(scale): medium (中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >= 9.5)) | 动态达标线: >= 9.5 分即停 | 最大兜底轮次: 4 | 最早停机轮次: 1
 🎚️  Scale 内部权重与约束: weights={'composition': 0.2, 'lighting_color': 0.25, 'perspective_anatomy': 0.2, 'texture_detail': 0.2, 'spec_style': 0.15} | budget=每轮都垫最初的参考图，只在提示词上补还没过的那一处（提示词改动仍 ≤40%）
 🧭 Scale 指令: 胶片逆光轻厚涂：保画风与机位，小幅姿态/局部布局；柔化光影与次表面散射
 ✨ 最优方向（按档加法，勿当第二份DNA锁）: 最优方向：光影·空气·介质；可小幅姿态/局部布局

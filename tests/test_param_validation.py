@@ -178,7 +178,7 @@ class TestGateFixes(unittest.TestCase):
         info = __import__("skills_kit", fromlist=["parse_5d_dims"]).parse_5d_dims(
             "风格10/结构10/光影10/合规10/还原10/无瑕疵2.0"
         )
-        self.assertLess(info["weighted_score"], 9.6)
+        self.assertLess(info["weighted_score"], 9.5)
 
     def test_family_words_do_not_steal_the_medium(self) -> None:
         from skills_kit.medium_family import infer_medium_family
@@ -199,7 +199,8 @@ class TestGateFixes(unittest.TestCase):
             round_num=1,
         )
         self.assertAlmostEqual(res["calibrated_score"], res["weighted_score"], places=2)
-        self.assertLess(res["calibrated_score"], 9.6)
+        self.assertAlmostEqual(res["calibrated_score"], 9.5, places=2)
+        self.assertLess(res["calibrated_score"], 9.64)
 
     def test_negation_and_kept_pose_do_not_hard_cap(self) -> None:
         prof = get_converge_scale_profile("low")
@@ -224,6 +225,40 @@ class TestGateFixes(unittest.TestCase):
         self.assertGreater(pose["calibrated_score"], 9.2)
         self.assertFalse(any("动作红线" in w for w in pose["warnings"]))
 
+    def test_low_soft_pose_drift_phrases_hard_cap(self) -> None:
+        """c02-style soft wording must fail-closed on low even without『姿态改变』token."""
+        low = get_converge_scale_profile("low")
+        dims = "构图9.1/光影9.2/透视8.8/质感9.4/风格9.3/无瑕疵9.1"
+        for phrase in (
+            "撑地双手相对参考略前移像搭在膝侧，机位姿态锁不稳",
+            "仍偏单手撑地，左侧手未清楚落纸；膝部收向略抬高偏离参考侧收腿",
+            "右手撑到身后，相对参考动作不符",
+        ):
+            hit = audit_score_inflation(9.12, dims, phrase, None, low, round_num=2)
+            self.assertLessEqual(hit["calibrated_score"], 8.50, phrase)
+            self.assertTrue(any("动作红线" in w for w in hit["warnings"]), phrase)
+        safe = audit_score_inflation(
+            9.12,
+            dims,
+            "发丝分层仍弱；帽衫褶微高光偏弱；未改动作与姿态",
+            None,
+            low,
+            round_num=2,
+        )
+        self.assertGreater(safe["calibrated_score"], 8.9)
+        self.assertFalse(any("动作红线" in w for w in safe["warnings"]))
+        med = get_converge_scale_profile("medium")
+        med_ok = audit_score_inflation(
+            9.12,
+            dims,
+            "膝部收向略抬高偏离参考侧收腿；允许小幅姿态",
+            None,
+            med,
+            round_num=2,
+        )
+        self.assertGreater(med_ok["calibrated_score"], 8.9)
+        self.assertFalse(any("动作红线" in w for w in med_ok["warnings"]))
+
     def test_near_9_16_is_not_a_hard_aspect_fail(self) -> None:
         from skills_kit import _aspect_relation
         rel = _aspect_relation(768, 1344, "9:16")
@@ -242,7 +277,7 @@ class TestGateFixes(unittest.TestCase):
         from skills_kit import parse_5d_dims
         low = get_converge_scale_profile("low")
         parsed = parse_5d_dims("构图9.9/光影9.9/透视9.9/质感7.0/风格9.9", low["dim_weights"])
-        self.assertLess(parsed["weighted_score"], 9.6)
+        self.assertLess(parsed["weighted_score"], 9.5)
 
     def test_jpeg_header_has_resolution(self) -> None:
         import pmem_art as pa
@@ -605,7 +640,7 @@ class TestGateFixes(unittest.TestCase):
         from skills_kit import parse_5d_dims
         high = get_converge_scale_profile("high")
         parsed = parse_5d_dims("构图9.9/光影9.9/透视9.9/质感9.9/风格7.0", high["dim_weights"])
-        self.assertLess(parsed["weighted_score"], 9.6)
+        self.assertLess(parsed["weighted_score"], 9.5)
 
     def test_compliance_language_does_not_hard_cap(self) -> None:
         from feedback import detect_kind
@@ -797,8 +832,8 @@ class TestGateFixes(unittest.TestCase):
             "goal": "测试未达标",
             "module": "brand.GlobalStyle",
             "scale": "medium",
-            "accept_threshold": 9.6,
-            "threshold": 9.6,
+            "accept_threshold": 9.5,
+            "threshold": 9.5,
             "max_rounds": 4,
             "rounds": [{
                 "round": i,
@@ -854,7 +889,7 @@ class TestGateFixes(unittest.TestCase):
         )
         self.assertFalse(judge["passed"])
         self.assertTrue(judge["image_gate_blocked"])
-        self.assertLess(judge["calibrated_score"], 9.6)
+        self.assertLess(judge["calibrated_score"], 9.5)
 
     def test_flat_color_image_cannot_pass(self) -> None:
         from PIL import Image
@@ -929,7 +964,7 @@ class TestGateFixes(unittest.TestCase):
             get_converge_scale_profile("medium")["dim_weights"],
         )
         self.assertAlmostEqual(flat["weighted_score"], 9.3, places=2)
-        self.assertLess(flat["weighted_score"], 9.6)
+        self.assertLess(flat["weighted_score"], 9.5)
         weak = parse_5d_dims("构图9.4/光影9.4/透视6.7/质感9.3/风格9.4", low["dim_weights"])
         self.assertGreater(weak["weighted_score"], 8.4)
         self.assertLess(weak["weighted_score"], 8.9)
@@ -955,7 +990,7 @@ class TestGateFixes(unittest.TestCase):
         self.assertEqual(info["rubric_mode"], "skill_additive_5d")
         self.assertIsNotNone(info["weighted_score"])
         self.assertGreater(info["weighted_score"], 8.5)
-        self.assertLess(info["weighted_score"], 9.6)
+        self.assertLess(info["weighted_score"], 9.5)
         leaked = parse_5d_dims(
             "风格色板10/结构10/光影材质10/管线合规7.9/还原10",
             module="ui.hud",
@@ -982,14 +1017,16 @@ class TestGateFixes(unittest.TestCase):
                 "texture_detail": 10,
                 "spec_style": 10,
             },
-            "total": 9.60,
+            "total": 9.80,
         }
         out = _normalize_vlm_result(
             parsed,
             {"scale_prof": {"dim_weights": {k: 0.2 for k in parsed["dims"]}}, "goal": "空镜峡谷", "module": "scene.Canyon"},
             "vlm_quant_5d",
         )
-        self.assertLess(out["total"], 9.6)
+        # Hand-filled total is discarded; harmonic of a weak perspective dim stays below the claim.
+        self.assertLess(out["total"], 9.80)
+        self.assertAlmostEqual(out["total"], 9.52, places=2)
         body = _normalize_vlm_result(
             {
                 "ok": True,
@@ -1000,7 +1037,7 @@ class TestGateFixes(unittest.TestCase):
                     "texture_detail": 10,
                     "spec_style": 10,
                 },
-                "total": 9.60,
+                "total": 9.80,
             },
             {"scale_prof": high, "goal": "少女全身立绘", "module": "character.Hero"},
             "vlm_quant_5d",
@@ -1038,7 +1075,7 @@ class TestGateFixes(unittest.TestCase):
             "vlm_quant_5d",
         )
         self.assertGreater(iso["total"], 5.7)
-        self.assertLess(iso["total"], 9.6)
+        self.assertLess(iso["total"], 9.5)
         ui_kept = _normalize_vlm_result(
             {
                 "ok": True,
@@ -1063,7 +1100,7 @@ class TestGateFixes(unittest.TestCase):
                 dims={"composition": 10, "lighting_color": 10, "perspective_anatomy": 6.5, "texture_detail": 10, "spec_style": 10, "flawlessness": 10},
                 round_num=2,
                 min_rounds=1,
-                threshold=9.6,
+                threshold=9.5,
                 anatomy_floor=7.5,
                 best_total=9.0,
                 no_improve_streak=0,
@@ -1078,7 +1115,7 @@ class TestGateFixes(unittest.TestCase):
                 dims={"composition": 10, "lighting_color": 10, "perspective_anatomy": 9.8, "texture_detail": 10, "spec_style": 10},
                 round_num=2,
                 min_rounds=1,
-                threshold=9.6,
+                threshold=9.5,
                 anatomy_floor=7.5,
                 best_total=9.0,
                 no_improve_streak=0,
@@ -1093,7 +1130,7 @@ class TestGateFixes(unittest.TestCase):
                 dims={"nine_slice_structure": 7.2, "style_palette": 9.8},
                 round_num=2,
                 min_rounds=1,
-                threshold=9.6,
+                threshold=9.5,
                 anatomy_floor=7.5,
                 best_total=9.0,
                 no_improve_streak=0,
@@ -1148,8 +1185,8 @@ class TestGateFixes(unittest.TestCase):
             "goal": "跳过审图",
             "module": "brand.GlobalStyle",
             "scale": "medium",
-            "accept_threshold": 9.6,
-            "threshold": 9.6,
+            "accept_threshold": 9.5,
+            "threshold": 9.5,
             "max_rounds": 8,
             "rounds": [{
                 "round": 1,
@@ -1194,8 +1231,8 @@ class TestGateFixes(unittest.TestCase):
             "goal": "伪造 verification",
             "module": "brand.GlobalStyle",
             "scale": "medium",
-            "accept_threshold": 9.6,
-            "threshold": 9.6,
+            "accept_threshold": 9.5,
+            "threshold": 9.5,
             "max_rounds": 8,
             "rounds": [{
                 "round": 1,
@@ -1245,8 +1282,8 @@ class TestGateFixes(unittest.TestCase):
             "goal": "伪造 judged",
             "module": "brand.GlobalStyle",
             "scale": "medium",
-            "accept_threshold": 9.6,
-            "threshold": 9.6,
+            "accept_threshold": 9.5,
+            "threshold": 9.5,
             "max_rounds": 8,
             "rounds": [{
                 "round": 1,
@@ -1320,7 +1357,7 @@ class TestGateFixes(unittest.TestCase):
                 use_remote_vlm=False,
             )
             self.assertFalse(res["passed"], soft)
-            self.assertLess(res["calibrated_score"], 9.6)
+            self.assertLess(res["calibrated_score"], 9.5)
         # finish path must reject rubber-stamp defects even if score/trace look passed
         forged = {
             "round": 1,
@@ -1372,8 +1409,8 @@ class TestGateFixes(unittest.TestCase):
             "goal": "跳过generate",
             "module": "brand.GlobalStyle",
             "scale": "medium",
-            "accept_threshold": 9.6,
-            "threshold": 9.6,
+            "accept_threshold": 9.5,
+            "threshold": 9.5,
             "max_rounds": 8,
             "rounds": [round_row],
         }
@@ -1402,8 +1439,8 @@ class TestGateFixes(unittest.TestCase):
             "goal": "假达标",
             "module": "brand.GlobalStyle",
             "scale": "medium",
-            "accept_threshold": 9.6,
-            "threshold": 9.6,
+            "accept_threshold": 9.5,
+            "threshold": 9.5,
             "max_rounds": 8,
             "rounds": [{
                 "round": 1,
@@ -1446,8 +1483,8 @@ class TestGateFixes(unittest.TestCase):
             "goal": "must generate first",
             "module": "brand.WorldStyle",
             "scale": "medium",
-            "accept_threshold": 9.6,
-            "threshold": 9.6,
+            "accept_threshold": 9.5,
+            "threshold": 9.5,
             "max_rounds": 8,
             "rounds": [],
             "status": "running",

@@ -61,7 +61,7 @@ class ProcessBoardTests(unittest.TestCase):
         self.assertIn('class="card win"', page)
         self.assertIn('class="lightbox"', page)
         self.assertIn("两态角度还没对齐", page)
-        self.assertIn("未到 9.60", page)
+        self.assertIn("未到 9.50", page)
         self.assertTrue(any((index.parent / "images").glob("r1.*")))
 
     def test_discuss_is_stored_on_the_session(self):
@@ -91,8 +91,8 @@ class ProcessBoardTests(unittest.TestCase):
             "goal": "检查过程板",
             "module": "prop.Check",
             "scale": "medium",
-            "accept_threshold": 9.6,
-            "threshold": 9.6,
+            "accept_threshold": 9.5,
+            "threshold": 9.5,
             "max_rounds": 4,
             "status": "running",
             "rounds": [{
@@ -117,7 +117,7 @@ class ProcessBoardTests(unittest.TestCase):
         page = (td / ".memory-art" / "converge" / "boards" / "fin-board" / "index.html").read_text(encoding="utf-8")
         report = (mem / "fin-board_report.md").read_text(encoding="utf-8")
         self.assertIn("第 1 轮 · 8.50", page)
-        self.assertIn("未到 9.60", page)
+        self.assertIn("未到 9.50", page)
         self.assertIn("boards/fin-board/index.html", report)
 
     def test_finish_refuses_before_four_rounds_under_threshold(self):
@@ -131,8 +131,8 @@ class ProcessBoardTests(unittest.TestCase):
             "goal": "不能提前结算",
             "module": "prop.Check",
             "scale": "medium",
-            "accept_threshold": 9.6,
-            "threshold": 9.6,
+            "accept_threshold": 9.5,
+            "threshold": 9.5,
             "max_rounds": 4,
             "status": "running",
             "rounds": [{
@@ -169,8 +169,8 @@ class ProcessBoardTests(unittest.TestCase):
             "goal": "不能用 status 结算",
             "module": "prop.Check",
             "scale": "medium",
-            "accept_threshold": 9.6,
-            "threshold": 9.6,
+            "accept_threshold": 9.5,
+            "threshold": 9.5,
             "max_rounds": 4,
             "status": "continue",
             "rounds": [{

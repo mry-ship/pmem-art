@@ -3,7 +3,7 @@
 
 Each job writes r1.jpg. That is not a winner. Do not copy r1 to final.jpg
 and do not put it on the showcase as 终稿 unless
-`can_accept_winner(rounds, score)` is true (>=9.6 or full 4 rounds).
+`can_accept_winner(rounds, score)` is true (>= 9.5 or full 4 rounds).
 
 After this script: each cell still needs converge generate/judge until
 the gate passes. Check with:

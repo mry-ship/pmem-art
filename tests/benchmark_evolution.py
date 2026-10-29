@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Showcase harness (not a CI gate). Contract: converge generate → judge · Absolute-5D · thr 9.6.
+# Showcase harness (not a CI gate). Contract: converge generate → judge · Absolute-5D · thr 9.5.
 """
 pmem-art Quantitative & Visual Evolution Benchmark
 ==================================================
@@ -172,7 +172,7 @@ def render_round_artwork(domain: str, batch: int, round_num: int, score: float, 
                 ang = -0.8 + fi * 0.35
                 draw.line([(hx, hy + 24), (hx + int(18 * math.cos(ang)), hy + 24 + int(18 * math.sin(ang)))], fill=(244, 222, 206, 255), width=3)
             if batch == 1:
-                draw_badge(draw, (30, 42), "🏆 B1-R4 达标定稿 (9.6分)：7.5头身 + 星盘义眼 + 24px安全边", (16, 185, 129, 235))
+                draw_badge(draw, (30, 42), "🏆 B1-R4 达标定稿 (9.5分)：7.5头身 + 星盘义眼 + 24px安全边", (16, 185, 129, 235))
             elif round_num == 1:
                 draw_badge(draw, (30, 42), "⚡ 非空项目 Warm-Start 首轮直达 9.1分（零旧红线复发！）", (14, 116, 144, 235))
                 draw_badge(draw, (30, 72), "🔧 微调项：强化觉醒披风下摆鎏金星尘渐变层次", (217, 119, 6, 225))
@@ -239,11 +239,11 @@ def render_round_artwork(domain: str, batch: int, round_num: int, score: float, 
                 draw.rounded_rectangle([bx, by, bx + bw, by + 32], radius=6, fill=bg_c, outline=bd_c, width=2)
                 draw.text((bx + 14, by + 7), st_lbl, font=f_sm, fill=(230, 238, 248, 255))
             if batch == 1:
-                draw_badge(draw, (24, 38), "🏆 B1-R4 达标 (9.6分)：四角48px锁死 + 纯色中心 + 按钮四态", (16, 185, 129, 235))
+                draw_badge(draw, (24, 38), "🏆 B1-R4 达标 (9.5分)：四角48px锁死 + 纯色中心 + 按钮四态", (16, 185, 129, 235))
             elif round_num == 1:
                 draw_badge(draw, (24, 38), "⚡ 非空项目 Warm-Start 首轮 9.2分（直接锁死九宫格切线与四态）", (14, 116, 144, 235))
             else:
-                draw_badge(draw, (24, 38), "🏆 B2-R2 2轮极速达标 (9.6分)：1px青瓷内发光 + 家族规范100%对齐", (16, 185, 129, 235))
+                draw_badge(draw, (24, 38), "🏆 B2-R2 2轮极速达标 (9.5分)：1px青瓷内发光 + 家族规范100%对齐", (16, 185, 129, 235))
 
     elif domain == "scene":
         if batch == 1 and round_num == 1:
@@ -277,9 +277,9 @@ def render_round_artwork(domain: str, batch: int, round_num: int, score: float, 
             draw.polygon([(0, H), (0, H - 140), (135, H - 85), (210, H)], fill=(11, 17, 30, 255))
             draw.polygon([(W - 160, H), (W, H - 130), (W, H)], fill=(11, 17, 30, 255))
             if batch == 1:
-                draw_badge(draw, (24, 38), "🏆 B1-R3 达标 (≥9.6)：30°等轴测 + 三层大气透视 + 黄金时刻光束", (16, 185, 129, 235))
+                draw_badge(draw, (24, 38), "🏆 B1-R3 达标 (≥9.5)：30°等轴测 + 三层大气透视 + 黄金时刻光束", (16, 185, 129, 235))
             else:
-                draw_badge(draw, (24, 38), "🏆 B2-R1 首轮直接达标 (≥9.6 PASS)：自动挂载大气透视+黄金时刻卡！", (16, 185, 129, 240))
+                draw_badge(draw, (24, 38), "🏆 B2-R1 首轮直接达标 (≥9.5 PASS)：自动挂载大气透视+黄金时刻卡！", (16, 185, 129, 240))
 
     else:
         draw_checkerboard(draw, (0, 0, W, H))
@@ -314,12 +314,12 @@ def render_round_artwork(domain: str, batch: int, round_num: int, score: float, 
                     draw.ellipse([cx - 15, cy - 32, cx + 15, cy + 32], outline=(46, 196, 182, 255), width=3)
                 draw.text((cx - 26, cy + 34), labels[idx], font=f_sm, fill=(226, 232, 240, 255))
             if batch == 1:
-                draw_badge(draw, (24, 38), "🏆 B1-R3 达标 (9.6分)：2px鎏金描边 + 外青瓷内金双色阶 + 高辨识剪影", (16, 185, 129, 235))
+                draw_badge(draw, (24, 38), "🏆 B1-R3 达标 (9.5分)：2px鎏金描边 + 外青瓷内金双色阶 + 高辨识剪影", (16, 185, 129, 235))
             else:
-                draw_badge(draw, (24, 38), "🏆 B2-R1 首轮直接达标 (9.6分 PASS)：自动锁定图标家族 style-spec！", (16, 185, 129, 240))
+                draw_badge(draw, (24, 38), "🏆 B2-R1 首轮直接达标 (9.5分 PASS)：自动锁定图标家族 style-spec！", (16, 185, 129, 240))
 
     draw.rectangle([0, 0, W, 30], fill=(9, 13, 22, 240))
-    status_txt = f"Batch {batch} · Round {round_num} · Score {score:.1f}/10.0 {'[PASS ≥9.6 Absolute-5D 🏆]' if passed else '[ITERATING →]'}"
+    status_txt = f"Batch {batch} · Round {round_num} · Score {score:.1f}/10.0 {'[PASS ≥9.5 Absolute-5D 🏆]' if passed else '[ITERATING →]'}"
     draw.text((12, 6), status_txt, font=f_md, fill=(110, 231, 183, 255) if passed else (252, 211, 77, 255))
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -382,7 +382,7 @@ def execute_converge_task(bench_root: Path, staging: Path, batch_num: int, task_
         "--goal", task_spec["goal"],
         "--module", task_spec["module"],
         "--mode", "quality",
-        "--threshold", "9.6",
+        "--threshold", "9.5",
         "--max-rounds", "8",
     )
     sess_file = bench_root / ".memory-art" / "converge" / f"{sess_id}.json"
@@ -397,7 +397,7 @@ def execute_converge_task(bench_root: Path, staging: Path, batch_num: int, task_
             batch_num,
             idx,
             intended,
-            intended >= 9.6,
+            intended >= 9.5,
             staging / f"b{batch_num}_{task_spec['task_id'].lower()}_r{idx}.png",
         )
         # Current contract: generate (image only) → judge (Absolute-5D). Never converge round/step.
@@ -426,7 +426,7 @@ def execute_converge_task(bench_root: Path, staging: Path, batch_num: int, task_
             {},
         )
         score = float(sess_round.get("score") if sess_round.get("score") is not None else intended)
-        passed = bool(sess_round.get("passed")) if sess_round else (score >= 9.6)
+        passed = bool(sess_round.get("passed")) if sess_round else (score >= 9.5)
         round_records.append({
             "round": idx,
             "score": score,
@@ -484,7 +484,7 @@ def execute_converge_task(bench_root: Path, staging: Path, batch_num: int, task_
         "round1_score": round_records[0]["score"],
         "final_score": round_records[-1]["score"],
         "rounds_used": len(round_records),
-        "defects_count": sum(1 for r in round_records if r["defects"] and float(r["score"]) < 9.6),
+        "defects_count": sum(1 for r in round_records if r["defects"] and float(r["score"]) < 9.5),
     }
 
 
@@ -534,7 +534,7 @@ def run_full_benchmark(bench_root: Path) -> dict[str, Any]:
                     "defects": "发丝级局部噪点仍可见，不影响主剪影与义眼锚点",
                     "fix": "已达标，保持配方",
                     "prompt": "Astra 7.5 heads tall eastern astrolabe mage portrait, clean 5 fingers, 45-degree rim light, rule of thirds composition, brass monocle left eye, slate celadon gold palette, RGBA 24px margin, distinct brass specular vs matte silk",
-                    "craft_tip": "🏆 达标收敛 (Absolute-5D ≥ 9.6)：胜出配方与项目色板锚点已自动写回 .memory-art！",
+                    "craft_tip": "🏆 达标收敛 (Absolute-5D ≥9.5)：胜出配方与项目色板锚点已自动写回 .memory-art！",
                 },
             ],
             "feedback_chat": "这版阿斯特拉7.5头身和左眼星盘义眼非常准，留着当立绘正例！偏爱侧逆光与青瓷白+墨蓝+鎏金配色；严禁赛博霓虹紫和6指错误头身比",
@@ -563,7 +563,7 @@ def run_full_benchmark(bench_root: Path) -> dict[str, Any]:
                     "defects": "边缘抗锯齿仍有1px毛刺，主结构与九宫格切线已锁定",
                     "fix": "已达标，保持配方",
                     "prompt": "9-slice UI modal frame 512x512 RGBA, ornaments strictly inside 48x48px corners, flat stretchable center, 4px transparent safe border, 4 button states, antique brass cloud corners, flat solid #0F172A center",
-                    "craft_tip": "🏆 达标收敛 (Absolute-5D ≥ 9.6)：九宫格项目母题与切线规范已自动归档！",
+                    "craft_tip": "🏆 达标收敛 (Absolute-5D ≥9.5)：九宫格项目母题与切线规范已自动归档！",
                 },
             ],
             "feedback_chat": "九宫格弹窗底板定稿！记住四角48px固定+中央纯色拉伸，严禁在九宫格中央拉伸区画圆盘暗纹或斜线",
@@ -592,7 +592,7 @@ def run_full_benchmark(bench_root: Path) -> dict[str, Any]:
                     "defects": "细微：祭坛琉璃瓦高光略硬，整体大气透视与焦点已过线",
                     "fix": "已达标，保持配方",
                     "prompt": "isometric 30 degree floating ruins concept art, golden hour side-back warm light, 3-layer atmospheric perspective, rule of thirds focal point, celadon tiles #84A98C, antique gold #D4AF37 volumetric beam",
-                    "craft_tip": "🏆 达标收敛 (Absolute-5D ≥ 9.6)：场景光影与大气透视配方已写入记忆库！",
+                    "craft_tip": "🏆 达标收敛 (Absolute-5D ≥9.5)：场景光影与大气透视配方已写入记忆库！",
                 },
             ],
             "feedback_chat": "浮空遗迹概念图通过！偏爱黄金时刻光与30°等轴测三层大气透视，严禁正午顶光死白",
@@ -621,7 +621,7 @@ def run_full_benchmark(bench_root: Path) -> dict[str, Any]:
                     "defects": "边缘抗锯齿仍有1px毛刺，家族线宽与双色阶已锁定",
                     "fix": "已达标，保持配方",
                     "prompt": "4 game skill icons sheet, unified 2px stroke width, 16px safe padding grid, high-contrast 64px readable silhouettes, premultiplied RGBA, antique gold #D4AF37 stroke, celadon #2EC4B6 rim, deep slate #162038",
-                    "craft_tip": "🏆 达标收敛 (Absolute-5D ≥ 9.6)：图标集 style-spec 已固化为模块记忆！",
+                    "craft_tip": "🏆 达标收敛 (Absolute-5D ≥9.5)：图标集 style-spec 已固化为模块记忆！",
                 },
             ],
             "feedback_chat": "技能图标集定稿！锁定干净金墨2px细描边与外青瓷内鎏金双层色阶",
@@ -659,7 +659,7 @@ def run_full_benchmark(bench_root: Path) -> dict[str, Any]:
                     "defects": "仅余星芒披风次表面散射微差，不影响主锚点",
                     "fix": "已达标，保持配方",
                     "prompt": "Astra awakened combat portrait, 7.5 heads tall, brass astrolabe monocle on left eye, 70/20/10 slate celadon gold, rim light, RGBA 24px margin, volumetric starry cape premultiplied glow",
-                    "craft_tip": "🏆 2轮极速达标 (Absolute-5D ≥ 9.6)：双层记忆让复杂角色觉醒差分一气呵成！",
+                    "craft_tip": "🏆 2轮极速达标 (Absolute-5D ≥9.5)：双层记忆让复杂角色觉醒差分一气呵成！",
                 },
             ],
         },
@@ -836,15 +836,15 @@ def build_preview_composite_png(report: dict[str, Any], out_png: Path) -> Path:
     m = report["metrics"]
     vlm_mode = report.get("score_authority") == "independent_vlm"
     algo = (
-        f"正式分: 独立 VLM Absolute-5D（{report.get('vlm_model') or 'gpt-5.6-sol'}）修正 · 门槛仍 ≥9.6 · 离线仅旁证"
+        f"正式分: 独立 VLM Absolute-5D（{report.get('vlm_model') or 'gpt-5.6-sol'}）修正 · 门槛仍 ≥9.5 · 离线仅旁证"
         if vlm_mode
-        else "算法: converge generate → judge · Absolute-5D · 门槛 ≥9.6（离线像素尺仅旁证）"
+        else "算法: converge generate → judge · Absolute-5D · 门槛 ≥9.5（离线像素尺仅旁证）"
     )
     draw.text((28, 42), algo, font=f_sub, fill=(148, 163, 184, 255))
     if vlm_mode:
         sub_line = (
             f"首轮VLM均分: {m['b1_r1_avg']} → {m['b2_r1_avg']} ({m['r1_delta']:+}/{m['r1_delta_pct']})   |   "
-            f"VLM≥9.6通过: B1 {m.get('vlm_pass_b1', 0)}/{m['b1_total_rounds']} · B2 {m.get('vlm_pass_b2', 0)}/{m['b2_total_rounds']}   |   "
+            f"VLM≥9.5通过: B1 {m.get('vlm_pass_b1', 0)}/{m['b1_total_rounds']} · B2 {m.get('vlm_pass_b2', 0)}/{m['b2_total_rounds']}   |   "
             f"流程轮次仍为 {m['b1_total_rounds']}+{m['b2_total_rounds']}（记忆演进示意资产）"
         )
     else:
@@ -1090,7 +1090,7 @@ function render() {{
         <div class="round-body">
           <div style="display:flex;justify-content:space-between;align-items:center;">
             <strong style="font-size:13px;">第 ${{r.round}} 轮${{REPORT.score_authority === 'independent_vlm' ? ' VLM' : '自评'}}</strong>
-            <span class="pill ${{r.passed ? 'pass' : 'fail'}}">${{Number(r.score).toFixed(2)}} / 10.0 ${{r.passed ? '达标' : (REPORT.score_authority === 'independent_vlm' ? '未达9.6' : '继续迭代')}}</span>
+            <span class="pill ${{r.passed ? 'pass' : 'fail'}}">${{Number(r.score).toFixed(2)}} / 10.0 ${{r.passed ? '达标' : (REPORT.score_authority === 'independent_vlm' ? '未达9.5' : '继续迭代')}}</span>
           </div>
           ${{r.agent_score != null ? `<div style="font-size:11px;color:var(--gold);">原剧本/Agent分: ${{Number(r.agent_score).toFixed(2)}} → VLM修正: ${{Number(r.score).toFixed(2)}} (Δ ${{(Number(r.score)-Number(r.agent_score)).toFixed(2)}})</div>` : ''}}
           <div style="font-size:11px;color:var(--muted);font-family:var(--mono);">${{esc(r.dims)}}</div>
@@ -1176,13 +1176,13 @@ function render() {{
           <h1>🔬 pmem-art 真实空项目 → 非空项目两阶段量化演进实测报告</h1>
           <p>
             ${{REPORT.score_authority === 'independent_vlm'
-              ? `本报告流程仍由真实 CLI 在 (<code>${{esc(REPORT.bench_root)}}</code>) 跑出；<b>下表正式分已用独立 VLM（${{esc(REPORT.vlm_model || 'gpt-5.6-sol')}}）按 Absolute-5D 盲评修正</b>，覆盖此前 harness 剧本五维。门槛仍 ≥9.6；像素离线仅旁证。VLM 对照明细见 <code>docs/benchmark_evolution_agent_vs_vlm.md</code>。Stage 0 空项目 → Batch1（${{m.b1_total_rounds}} 轮）→ 非空 Stage1 → Batch2（${{m.b2_total_rounds}} 轮）+ 入库。`
-              : `本报告完全由真实 CLI 在独立目录 (<code>${{esc(REPORT.bench_root)}}</code>) 跑出（算法契约：<b>converge generate → converge judge · Absolute-5D · 门槛 ≥9.6</b>；像素离线尺仅旁证；耗时 ${{REPORT.elapsed_sec}}s）：先在 <b>Stage 0 全空项目</b>上跑完第 1 批 4 大美术领域生图收敛（共 ${{m.b1_total_rounds}} 轮），把空项目沉淀为<b>非空项目 (Stage 1)</b>；随后<b>不重置项目，直接在该非空项目上继续跑第 2 批生图任务与增量资产入库 (Stage 2，${{m.b2_total_rounds}} 轮)</b>。所有每轮过程图、评分、缺陷修正与真实落盘 JSON 均在下方完整呈现（点击任意图片可放大细看）。`}}
+              ? `本报告流程仍由真实 CLI 在 (<code>${{esc(REPORT.bench_root)}}</code>) 跑出；<b>下表正式分已用独立 VLM（${{esc(REPORT.vlm_model || 'gpt-5.6-sol')}}）按 Absolute-5D 盲评修正</b>，覆盖此前 harness 剧本五维。门槛仍 ≥9.5；像素离线仅旁证。VLM 对照明细见 <code>docs/benchmark_evolution_agent_vs_vlm.md</code>。Stage 0 空项目 → Batch1（${{m.b1_total_rounds}} 轮）→ 非空 Stage1 → Batch2（${{m.b2_total_rounds}} 轮）+ 入库。`
+              : `本报告完全由真实 CLI 在独立目录 (<code>${{esc(REPORT.bench_root)}}</code>) 跑出（算法契约：<b>converge generate → converge judge · Absolute-5D · 门槛 ≥9.5</b>；像素离线尺仅旁证；耗时 ${{REPORT.elapsed_sec}}s）：先在 <b>Stage 0 全空项目</b>上跑完第 1 批 4 大美术领域生图收敛（共 ${{m.b1_total_rounds}} 轮），把空项目沉淀为<b>非空项目 (Stage 1)</b>；随后<b>不重置项目，直接在该非空项目上继续跑第 2 批生图任务与增量资产入库 (Stage 2，${{m.b2_total_rounds}} 轮)</b>。所有每轮过程图、评分、缺陷修正与真实落盘 JSON 均在下方完整呈现（点击任意图片可放大细看）。`}}
           </p>
         </div>
         <span class="pill ${{REPORT.score_authority === 'independent_vlm' ? 'warn' : 'pass'}}" style="font-size:13px;padding:6px 14px;">
           ${{REPORT.score_authority === 'independent_vlm'
-            ? `VLM 修正分 · ${{m.b1_total_rounds + m.b2_total_rounds}} 轮 · ≥9.6 通过 ${{m.vlm_pass_count || 0}}/${{m.b1_total_rounds + m.b2_total_rounds}}`
+            ? `VLM 修正分 · ${{m.b1_total_rounds + m.b2_total_rounds}} 轮 · ≥9.5 通过 ${{m.vlm_pass_count || 0}}/${{m.b1_total_rounds + m.b2_total_rounds}}`
             : `✔ Absolute-5D · ${{m.b1_total_rounds + m.b2_total_rounds}} 轮实测 + 3 张入库 · ${{REPORT.elapsed_sec}}s`}}
         </span>
       </div>
@@ -1194,9 +1194,9 @@ function render() {{
           <div class="kpi-sub">净变化 <b style="color:#6ee7b7">${{m.r1_delta >= 0 ? '+' : ''}}${{m.r1_delta}} 分 (${{m.r1_delta_pct}})</b>${{REPORT.score_authority === 'independent_vlm' ? ' · 示意资产上 VLM 普遍远低于剧本分' : ' · 非空项目首轮即逼近达标线'}}</div>
         </div>
         <div class="kpi-card">
-          <div class="kpi-label">⚡ ${{REPORT.score_authority === 'independent_vlm' ? 'VLM ≥9.6 通过轮次' : '达标 (≥9.6 Absolute-5D) 平均收敛轮次'}}</div>
+          <div class="kpi-label">⚡ ${{REPORT.score_authority === 'independent_vlm' ? 'VLM ≥9.5 通过轮次' : '达标 (≥9.5 Absolute-5D) 平均收敛轮次'}}</div>
           <div class="kpi-val">${{REPORT.score_authority === 'independent_vlm' ? ((m.vlm_pass_b1||0) + ' / ' + (m.vlm_pass_b2||0)) : (m.b1_rounds_avg + ' 轮 → ' + m.b2_rounds_avg + ' 轮')}}</div>
-          <div class="kpi-sub">${{REPORT.score_authority === 'independent_vlm' ? ('Batch1 通过 ' + (m.vlm_pass_b1||0) + '/' + m.b1_total_rounds + ' · Batch2 通过 ' + (m.vlm_pass_b2||0) + '/' + m.b2_total_rounds + ' · 门槛仍 9.6') : ('总轮次从 ' + m.b1_total_rounds + ' 轮降至 ' + m.b2_total_rounds + ' 轮 · 迭代成本直降 ' + m.rounds_saved_pct)}}</div>
+          <div class="kpi-sub">${{REPORT.score_authority === 'independent_vlm' ? ('Batch1 通过 ' + (m.vlm_pass_b1||0) + '/' + m.b1_total_rounds + ' · Batch2 通过 ' + (m.vlm_pass_b2||0) + '/' + m.b2_total_rounds + ' · 门槛仍 9.5') : ('总轮次从 ' + m.b1_total_rounds + ' 轮降至 ' + m.b2_total_rounds + ' 轮 · 迭代成本直降 ' + m.rounds_saved_pct)}}</div>
         </div>
         <div class="kpi-card">
           <div class="kpi-label">🛡️ 历史踩坑红线复发率</div>

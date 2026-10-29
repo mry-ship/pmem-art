@@ -1,0 +1,129 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-10-30 04:10:41 UTC+8",
+  "session_id": "regen3-var-light",
+  "goal": "同一窗边日光少女，加强发丝透光、皮肤SSS、尘埃光斑与暖金逆光张力；机位身份全锁只加光影。锁深蓝黑短发、蓝瞳、白猫发夹、黑耳机、白T。",
+  "module": "character.SunlitGirl",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 4,
+  "winner_score": 9.54,
+  "winner_image": "assets/character/sunlitgirl/r4.jpg",
+  "winner_passed": true,
+  "outcome": "✅ **经过 4 轮迭代达标定稿**（generate 与 judge 分步收敛，第 4 轮达到 `9.54 / 10.0` 分 ≥ `9.50` 分档位目标线即刻停机）",
+  "what_fixed": [
+    "发丝边缘透光再亮半档；颊与耳缘SSS更暖透；空气中尘埃光斑更密一点；机位身份全锁",
+    "颊耳缘SSS再暖透半档；发丝透光高光更干净；机位身份全锁",
+    "耳缘透光高光更干净；其余全锁"
+  ],
+  "what_still_weak": "残余可接受点：叶影对比可再利半档",
+  "strengths": "发丝透光皮肤SSS尘埃光斑暖金逆光均加强；机位身份全锁",
+  "taste_deltas": {
+    "from_strengths": [
+      "发丝透光皮肤SSS尘埃光斑暖金逆光均加强；机位身份全锁"
+    ],
+    "from_defects": [
+      "发丝透光与皮肤SSS相对原图加强幅度还不够半档；尘埃光斑偏稀；耳缘颊侧透光可再暖",
+      "颊与耳缘SSS还可再暖透半档；发丝透光高光形状可更干净",
+      "耳缘透光高光边缘可再干净半档"
+    ]
+  },
+  "warm_start_confidence": 0.9,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 8.98,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 9.16,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 9.46,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 9.54,
+      "passed": true
+    }
+  ],
+  "lessons": [
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：发丝透光与皮肤SSS相对原图加强幅度还不够半档；尘埃光斑偏稀；耳缘颊侧透光可再暖",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "8.98"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：发丝透光与皮肤SSS相对原图加强幅度还不够半档；尘埃光斑偏稀；耳缘颊侧透光可再暖",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "8.98"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：机位身份全锁；发丝边缘有逆光；叶影与暖金仍在",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.98"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：颊与耳缘SSS还可再暖透半档；发丝透光高光形状可更干净",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.16"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：颊与耳缘SSS还可再暖透半档；发丝透光高光形状可更干净",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "9.16"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：机位身份全锁；发丝逆光与尘埃更明显；暖金张力抬升",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.16"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：耳缘透光高光边缘可再干净半档",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.46"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：耳缘透光高光边缘可再干净半档",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "9.46"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：发丝透光与尘埃光斑明显加强；暖金逆光张力到位；身份机位全锁",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.46"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：叶影对比可再利半档",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.54"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：发丝透光皮肤SSS尘埃光斑暖金逆光均加强；机位身份全锁",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.54"
+    }
+  ]
+}

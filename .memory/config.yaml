@@ -11,6 +11,7 @@ gate:
   skip_markers: ["跳过记忆", "skip-memory"]       # 用户这样说时，本对话不查也不写（须是独立短语）
   resume_markers: ["恢复记忆", "resume-memory"]   # 误判或改主意时，说这个重新打开
   analysis_reminder: false  # 默认关：结束 followup 会打断用户阅读；需要时改 true（排查类查过未落结论、纯查阅未写都会催）
+  stop_reminder: false      # 关：改了模块却没写功能记录时，不再发「[pmem] 本轮修改了…」催记 followup
   read_digest: true         # Agent 读某模块的代码时，自动附上该模块的记忆摘要（每个对话每个模块一次）
   question_review: true     # 提问涉及某模块、回答前却没看过它的记忆时，回合结束让 Agent 补查并核对回答
 write:

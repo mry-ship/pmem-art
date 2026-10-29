@@ -155,7 +155,7 @@ def main() -> int:
     scores = load_scores(Path(args.scores))
     manifest = json.loads(Path(args.manifest).read_text()) if Path(args.manifest).is_file() else {"items": {}}
     rounds_map = rounds_from_manifest(manifest)
-    thr = float((manifest.get("threshold") if isinstance(manifest, dict) else None) or 9.6)
+    thr = float((manifest.get("threshold") if isinstance(manifest, dict) else None) or 9.5)
     items = (manifest.get("items") or {}) if isinstance(manifest, dict) else {}
     ok_items = [r for r in items.values() if r.get("ok")]
     def _anat_val(r: dict) -> float | None:
@@ -261,7 +261,7 @@ def main() -> int:
     parts = []
     parts.append(f"""<!DOCTYPE html>
 <html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>pmem-art · V8×20 Bot Showcase (skills_kit v2fix · pad=auto · STOP≥9.60 & 解剖<7.5否决 / 8 rounds)</title>
+<title>pmem-art · V8×20 Bot Showcase (skills_kit v2fix · pad=auto · STOP≥9.50 & 解剖<7.5否决 / 8 rounds)</title>
 <style>
 {style}
 .score-big{{font-size:22px;font-weight:800}}
@@ -274,8 +274,8 @@ def main() -> int:
 .five-col-grid.base-grid{{grid-template-columns:repeat(4,minmax(0,1fr))}}
 </style></head><body>
 <header>
-<h1>🎨 pmem-art · V8 × 20 Bot 展陈（skills_kit v2fix · pad=auto · STOP≥9.60 & 解剖<7.5一票否决 · 最多8轮）</h1>
-<p>选型：同前 4 风格 × 5 档 = 20。v2fix 安全版：默认 pad=auto（涨分链式微修、掉分或解剖&lt;7.5退回 style_ref）、STOP 总分≥9.60（仅当 perspective_anatomy&lt;7.5 结构硬伤时一票否决禁停，看板并列展示「总分≥9.6」与「总分≥9.6 且解剖≥8.5」双指标）、R4 起连续 2 轮掉分 &gt;0.5 安全早停、按题材触发 R1 结构底线、评分失败不灌套话缺陷。</p>
+<h1>🎨 pmem-art · V8 × 20 Bot 展陈（skills_kit v2fix · pad=auto · STOP≥9.50 & 解剖<7.5一票否决 · 最多8轮）</h1>
+<p>选型：同前 4 风格 × 5 档 = 20。v2fix 安全版：默认 pad=auto（涨分链式微修、掉分或解剖&lt;7.5退回 style_ref）、STOP 总分≥9.50（仅当 perspective_anatomy&lt;7.5 结构硬伤时一票否决禁停，看板并列展示「总分≥9.5」与「总分≥9.5 且解剖≥8.5」双指标）、R4 起连续 2 轮掉分 &gt;0.5 安全早停、按题材触发 R1 结构底线、评分失败不灌套话缺陷。</p>
 <div class="category-legend">
   <div class="legend-box legend-auto"><b>改构图 recompose</b><br>跟 --recompose-dir 换机位；保画风色板与身份；≥2 轮</div>
   <div class="legend-box legend-boost"><b>最优方向 best</b><br>low/med/high + cinematic V8 加法清单（孔明灯/耳机/雏菊/体积光）</div>
@@ -284,7 +284,7 @@ def main() -> int:
 <div class="rule-pills">
   <span class="rule-pill">评分 gpt-6-sol Quant</span>
   <span class="rule-pill">生图 gpt-image-2</span>
-  <span class="rule-pill">STOP ≥9.60 · max 8</span>
+  <span class="rule-pill">STOP ≥9.50 · max 8</span>
   <span class="rule-pill">前次 skill 均值 {args.prev_mean}</span>
   <span class="rule-pill">轮次 {' · '.join(f'{k}×{v}' for k,v in sorted(round_counts.items())) or '—'}</span>
   <span class="rule-pill">更新 {now}</span>
@@ -294,7 +294,7 @@ def main() -> int:
   <div class="stat"><div class="k">vs 前次 V8-20 {args.prev_mean}</div><div class="v {'up' if (delta or 0)>0 else 'down' if (delta or 0)<0 else 'flat'}">{('+' if delta and delta>0 else '')}{delta if delta is not None else '—'}</div></div>
   <div class="stat"><div class="k">原图基线均值</div><div class="v">{base_mean if base_mean is not None else '—'}</div></div>
   <div class="stat"><div class="k">区间</div><div class="v">{f"{min(bot_totals):.2f}–{max(bot_totals):.2f}" if bot_totals else '—'}</div></div>
-  <div class="stat"><div class="k">总分≥9.6 (解剖≥7.5) · 严苛(解剖≥8.5)</div><div class="v">{n_reached}/{len(ok_items)} <span style="font-size:14px;color:#94a3b8">· 严苛 {n_reached_strict85}/{len(ok_items)}</span></div></div>
+  <div class="stat"><div class="k">总分≥9.5 (解剖≥7.5) · 严苛(解剖≥8.5)</div><div class="v">{n_reached}/{len(ok_items)} <span style="font-size:14px;color:#94a3b8">· 严苛 {n_reached_strict85}/{len(ok_items)}</span></div></div>
 </div>
 <p style="margin-top:10px;font-size:13px;color:#cbd5e1">停因 {stop_reasons} · 轮次分布 {skill_round_dist} · 合同停分 {thr}</p>
 <p style="margin-top:12px;font-size:13px;color:#cbd5e1">维度均值：{' · '.join(f'{DIM_CN[d]} {dim_means.get(d)}' for d in DIMS)}</p>

@@ -116,7 +116,7 @@ img{{width:100%;display:block;background:#0e0e0e}}
 </style></head><body>
 <header>
 <h1>案例 01–04 · Skill 闭环真实轮次</h1>
-<p class="note">这页替换了早先「20 张都标第 1 轮」的单轮板。数字来自 generated_v8_20_skill_opt1027 编排器：合同 ≤8 轮、合格线 ≥9.6。目前 {started}/20 个 bot 已进入闭环，各跑到第 4 轮，下一轮是第 5 轮。其余 16 个还没开跑，所以不再把旧单轮图标成第 1 轮终稿。分数是离线 Absolute-5D 旁证。</p>
+<p class="note">这页替换了早先「20 张都标第 1 轮」的单轮板。数字来自 generated_v8_20_skill_opt1027 编排器：合同 ≤8 轮、合格线 ≥9.5。目前 {started}/20 个 bot 已进入闭环，各跑到第 4 轮，下一轮是第 5 轮。其余 16 个还没开跑，所以不再把旧单轮图标成第 1 轮终稿。分数是离线 Absolute-5D 旁证。</p>
 </header>
 {''.join(sections)}
 </body></html>"""

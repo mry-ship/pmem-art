@@ -1,0 +1,118 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-10-30 03:49:27 UTC+8",
+  "session_id": "regen3-ui-royal-sheets",
+  "goal": "从概念抽出 Royal Match 花房 UI 组件表：面板/按钮态/进度空满/Tab/圆徽，奶油杏香槟金软塑胶，品红抠像底",
+  "module": "ui.MainMenu",
+  "converge_mode": "quality",
+  "guided_mode": "text_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 4,
+  "winner_score": 9.01,
+  "winner_image": "assets/ui/mainmenu/components_r4.jpg",
+  "winner_passed": false,
+  "outcome": "⚠️ **共执行 4 轮审图（目标阈值 `9.50` 分），未达标，已挑选全阶段最高分**（胜出：第 4 轮 `9.01 / 10.0` 分）",
+  "what_fixed": [
+    "Pressed必须是同形下压；补Disabled；面板中心改干净奶油纯色；其余锁住",
+    "货币改金币；补未选中Tab独立件；面板角区轻标九宫格切线；其余锁",
+    "角花更贴角；Disabled再灰；红点收小；其余锁",
+    "解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁止糊边融边；Home旁未选中槽仍偏挤半档；角花与切线还可再分离半档"
+  ],
+  "what_still_weak": "Home旁未选中槽仍偏挤半档；角花与切线还可再分离半档",
+  "strengths": "状态族完整同形；九宫格中心更干净；圆徽进度资源珠齐全同系",
+  "taste_deltas": {
+    "from_strengths": [
+      "状态族完整同形；九宫格中心更干净；圆徽进度资源珠齐全同系"
+    ],
+    "from_defects": [
+      "货币珠仍偏皇冠非金币；未选中Tab态不够独立成行；九宫格四角切线标记缺失",
+      "面板角花仍略侵入拉伸带半档；Disabled对比度可再灰半档；铃铛红点略大",
+      "Home旁未选中槽仍偏挤半档；角花与切线还可再分离半档"
+    ]
+  },
+  "warm_start_confidence": 1.0,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 8.42,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 8.81,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 8.91,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 9.01,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "ui_9slice",
+      "lesson": "本轮短板偏「ui_9slice」：Garden/Room的Pressed被错画成加号与箭头而非同形按下态；缺Disabled灰态；九宫格面板中心偏纸纹不够干净纯色拉伸带",
+      "drill": "主面板只画九宫格线框 → 再填中心色，确认中心可双向拉伸",
+      "from_score": "8.42"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：品红底干净可抠；奶油金材质与概念同系；面板/进度/圆徽/铃齐全",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.42"
+    },
+    {
+      "category": "ui_9slice",
+      "lesson": "本轮短板偏「ui_9slice」：货币珠仍偏皇冠非金币；未选中Tab态不够独立成行；九宫格四角切线标记缺失",
+      "drill": "主面板只画九宫格线框 → 再填中心色，确认中心可双向拉伸",
+      "from_score": "8.81"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：Garden/Room同形Normal/Pressed/Disabled齐全；面板中心更干净；进度空满与圆徽铃齐全",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.81"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：面板角花仍略侵入拉伸带半档；Disabled对比度可再灰半档；铃铛红点略大",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.91"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：状态族同形齐全；九宫格角线可读；未选中Tab独立；货币更像金币",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.91"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：Home旁未选中槽仍偏挤半档；角花与切线还可再分离半档",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "9.01"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：Home旁未选中槽仍偏挤半档；角花与切线还可再分离半档",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.01"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：Home旁未选中槽仍偏挤半档；角花与切线还可再分离半档",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "9.01"
+    }
+  ]
+}

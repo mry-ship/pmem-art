@@ -1,6 +1,6 @@
 # Agent Absolute-5D（检查表） vs 旧生图模型自评分 · 3 板对比
 
-- 无独立评分 Key：生图模型按 Absolute-5D 检查表看图打分；门槛 **9.6**；满轮 best-of-N
+- 无独立评分 Key：生图模型按 Absolute-5D 检查表看图打分；门槛 **9.5**；满轮 best-of-N
 - 像素离线尺仅旁证；`judge_source=agent_absolute_5d`
 
 | id | 旧 agent | 新 A5D | Δ | offline旁证 | 决策 |
@@ -32,5 +32,5 @@
 ## 结论
 
 1. 旧 `agent_self_judge` 三板虚高（9.14 / 9.6 / 9.75），含「无明显缺陷」橡胶章。
-2. 同一类模型按 Absolute-5D 检查表重评 → 均 `<9.6`，走 CONTINUE，不会假达标。
+2. 同一类模型按 Absolute-5D 检查表重评 → 均 `< 9.5`，走 CONTINUE，不会假达标。
 3. `astra_standing_v3`：反思写「7.5头身立绘 9.6」，磁盘却是扁平几何图——检查表规格维直接打穿；证明无 Key 兜底必须是「机制+看图」，不是印象分或像素硬顶。

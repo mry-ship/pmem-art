@@ -1,0 +1,859 @@
+{
+  "session_id": "regen3-c03-low",
+  "started_at": "2026-10-30 03:23:51 UTC+8",
+  "goal": "窗边逆光少女肖像精修——加强发丝透光、皮肤次表面散射、窗框几何透视与尘埃光斑体积；暖金日光；锁身份与机位；low只修局部瑕疵",
+  "module": "character.SunlitGirl",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "low",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "low",
+    "label": "低强度 · 保守修瑕动态达标闭环 (Defect-Fix Dynamic Threshold >=9.5)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 1,
+    "target_score_threshold": 9.5,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.15,
+      "perspective_anatomy": 0.15,
+      "texture_detail": 0.15,
+      "spec_style": 0.15,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "viewpoint_or_pose",
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图，只在提示词上补还没过的那一处（提示词改动仍 ≤20%）",
+    "max_prompt_delta_ratio": 0.2,
+    "allow_recompose": false,
+    "allow_viewpoint_change": false,
+    "allow_action_pose_change": false,
+    "allow_element_count_change": false,
+    "allow_layout_change": false,
+    "allow_lighting_overhaul": false,
+    "forbidden_changes": [
+      "character_action_and_pose (不改动作与姿态)",
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)",
+      "frontal_bust_viewpoint (严禁改变正面胸像视角与二分光影)",
+      "element_count_and_daisy_wallpaper (严禁增删人物或改变雏菊壁纸背景)"
+    ],
+    "min_round_leap": 0.1,
+    "prompt_delta_baseline": "first",
+    "prompt_directive": "胶片逆光轻厚涂：锁机位和笔触，只修看得见的脏点、断边，不发明新的光",
+    "medium_family": "generic",
+    "best_direction_hint": "最优方向：微质感（瓦当/纸齿/发丝），≤40字",
+    "goal": "窗边逆光少女肖像精修——加强发丝透光、皮肤次表面散射、窗框几何透视与尘埃光斑体积；暖金日光；锁身份与机位；low只修局部瑕疵",
+    "module": "character.SunlitGirl",
+    "ref_image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/ref.jpg",
+    "ref_analysis": "构图：3:4竖幅胸像，正面略侧对窗，主体中上约70%，前景右下浅景深雏菊压角，窗框几何分割背景。色板：暖金窗光#E8B86A、奶油肤#F5DCC8、深蓝黑发#1A1F2E、浅蓝瞳#7EB8D8、白T/雏菊#F8F6F0、哑光黑耳机。光影：身后暖金逆光轮廓光，脸上窗框/叶影斑驳，发丝透光，皮肤SSS，尘埃光斑体积。笔触：半厚涂商业插画，发丝细丝透光，耳机硬边。锁：深蓝短发、浅蓝瞳、白猫发夹、黑头戴耳机、白T、窗边机位。勿继承：刘海糊边、耳机-脸软边、花瓣锯齿。"
+  },
+  "medium_family": "generic",
+  "contract": "",
+  "target_score_threshold": 9.5,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/ref.jpg",
+  "ref_analysis": "构图：3:4竖幅胸像，正面略侧对窗，主体中上约70%，前景右下浅景深雏菊压角，窗框几何分割背景。色板：暖金窗光#E8B86A、奶油肤#F5DCC8、深蓝黑发#1A1F2E、浅蓝瞳#7EB8D8、白T/雏菊#F8F6F0、哑光黑耳机。光影：身后暖金逆光轮廓光，脸上窗框/叶影斑驳，发丝透光，皮肤SSS，尘埃光斑体积。笔触：半厚涂商业插画，发丝细丝透光，耳机硬边。锁：深蓝短发、浅蓝瞳、白猫发夹、黑头戴耳机、白T、窗边机位。勿继承：刘海糊边、耳机-脸软边、花瓣锯齿。",
+  "default_aspect_ratio": "3:4",
+  "default_reference_image_paths": [
+    "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/ref.jpg"
+  ],
+  "aspect_ratio": "3:4",
+  "reference_image_paths": [
+    "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/ref.jpg"
+  ],
+  "ref_physical_traits": {
+    "exists": true,
+    "size_bytes": 384656,
+    "size_kb": 375.6,
+    "width": 864,
+    "height": 1152,
+    "aspect_ratio": "3:4",
+    "canonical_aspect_ratio": "3:4",
+    "color_entropy": 7.23
+  },
+  "param_validation": {
+    "valid": true,
+    "validation_passed": true,
+    "case_id": "regen3-c03-low",
+    "scale": "low",
+    "aspect_ratio": "3:4",
+    "ref_aspect_ratio": "3:4",
+    "ref_dimensions": "864x1152",
+    "output_aspect_ratio": "",
+    "output_dimensions": "",
+    "reference_image": "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/ref.jpg",
+    "reference_image_paths": [
+      "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/ref.jpg"
+    ],
+    "inherited_default_aspect_ratio": false,
+    "inherited_default_pad_image": false,
+    "matched_ref_aspect_ratio": true,
+    "matched_ref_pad_image": true,
+    "matched_output_aspect_ratio": true,
+    "three_step_stage": "step1_start",
+    "three_step_verified": false,
+    "warnings": []
+  },
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.5,
+  "accept_threshold": 9.5,
+  "max_rounds": 4,
+  "ready_to_finish": true,
+  "status": "finished",
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "3:4",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/ref.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "regen3-c03-low",
+        "scale": "low",
+        "aspect_ratio": "3:4",
+        "ref_aspect_ratio": "3:4",
+        "ref_dimensions": "864x1152",
+        "output_aspect_ratio": "3:4",
+        "output_dimensions": "864x1152",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/ref.jpg",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/ref.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "03:24:53",
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/low/r1.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 348002,
+        "size_kb": 339.8,
+        "width": 864,
+        "height": 1152,
+        "aspect_ratio": "3:4",
+        "canonical_aspect_ratio": "3:4",
+        "color_entropy": 7.23
+      },
+      "raw_score": 8.88,
+      "score": 8.88,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.2/光影8.9/透视9.0/质感8.7/风格9.1/无瑕疵8.6",
+      "dims_parsed": {
+        "composition": 9.2,
+        "lighting_color": 8.9,
+        "perspective_anatomy": 9.0,
+        "texture_detail": 8.7,
+        "spec_style": 9.1,
+        "flawlessness": 8.6
+      },
+      "weighted_score": 8.88,
+      "audit_warnings": [
+        "独立视觉 API 不可用，改由本模型按 Absolute-5D 检查表评分（门槛仍 9.5）：<urlopen error _ssl.c:1015: The handshake operation timed out>",
+        "Agent Absolute-5D 已采纳（门槛 9.5）"
+      ],
+      "stagnated": false,
+      "strengths": "正面窗边胸像机位与身份锚点（白猫发夹/黑耳机/浅蓝瞳）锁住；暖金逆光与白T斑驳投影可读",
+      "defects": "头顶与鬓角透光发丝仍偏少、丝状边缘不够亮；右耳侧耳机垫与颊交界略软糊；空气中尘埃光斑体积偏薄几乎看不清",
+      "next_fix": "只加头顶与左鬓一两缕暖金透光细发丝；收硬右耳耳机垫与颊侧交界线；邻区脸型口鼻与机位全锁",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.SunlitGirl\n- 置信度: 0.90（fast-track 资格: 是）\n- 优先复用定稿方向:\n  · [CHAT20261028024201007RECIPE] [收敛胜出 9.55分] 表情变体：同一窗边日光耳机少女，只改成惊喜张嘴（双眼睁圆、眉毛微抬、口型O），机位画风发色瞳色白猫发 — 惊喜张嘴清晰自然；身份机位全锁；口型边缘更干净\n  · [CHAT20261028023222435RECIPE] [收敛胜出 9.52分] 窗边逆光少女变体：发丝透光皮肤SSS尘埃光斑 — 逆光发丝；暖金商业\n  · [CHAT20261028023932758RECIPE] [收敛胜出 9.40分] 窗边逆光少女肖像——保画风色板与身份，按新机位重构。 — 回望机位与左下花稳定；暖金与身份保持\n- 必须避开红线:\n  · [CHAT20261028023222456REDLINE] [收敛踩坑红线] 表情变体：同一窗边日光耳机少女，只改成惊喜张嘴（双眼睁圆、眉：避免「口型O略夸张偏喊叫；下颌开合与脸颊体积可再自然半档」\n- 个人口味: 光影=暖光；构图=半身 / 全身\n- 个人禁用习惯: 漏抠/黑底/毛边；赛博霓虹/霓虹紫\n- 项目私有知识卡 (Private Layer):\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n  · [tech-celshade] 赛璐珞分层: 硬边色块分层，高光形状干净，层数克制。\n胶片逆光轻厚涂：锁机位和笔触，只修看得见的脏点、断边，不发明新的光| Same exact camera and pose as reference: front bust by sunny window, 3:4. Lock: short dark blue-black hair, light-blue eyes, white cat clip, black headphones, white T. Warm golden backlight, dappled shadows, daisies lower-right. LOW only: refine translucent hair rim strands and soft skin SSS on cheek/ear; clean headphone-cheek hard edge; clearer window-frame geometry and tiny volumetric dust motes. No pose/framing/identity change.| 约束：不改动作与姿态；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观；严禁改变正面胸像视角与二分光影；严禁增删人物或改变雏菊壁纸背景 | Structure floor: the person's joints and grip stay clear and both pupils share a direction; the animal's limbs follow its species and are not converted into human elbows; contact shadows read; do not melt limbs into props",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.0,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "both",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "vlm_error",
+        "provider": "",
+        "model": "",
+        "error": "<urlopen error _ssl.c:1015: The handshake operation timed out>",
+        "active": true
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "line_edge",
+          "lesson": "本轮短板偏「line_edge」：头顶与鬓角透光发丝仍偏少、丝状边缘不够亮；右耳侧耳机垫与颊交界略软糊；空气中尘埃光斑体积偏薄几乎看不清",
+          "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+          "from_score": "8.88"
+        },
+        {
+          "category": "narrative_camera",
+          "lesson": "本轮短板偏「narrative_camera」：头顶与鬓角透光发丝仍偏少、丝状边缘不够亮；右耳侧耳机垫与颊交界略软糊；空气中尘埃光斑体积偏薄几乎看不清",
+          "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+          "from_score": "8.88"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：正面窗边胸像机位与身份锚点（白猫发夹/黑耳机/浅蓝瞳）锁住；暖金逆光与白T斑驳投影可读",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.88"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "03:27:35"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "3:4",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/ref.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "regen3-c03-low",
+        "scale": "low",
+        "aspect_ratio": "3:4",
+        "ref_aspect_ratio": "3:4",
+        "ref_dimensions": "864x1152",
+        "output_aspect_ratio": "3:4",
+        "output_dimensions": "864x1152",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/ref.jpg",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/ref.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "03:28:23",
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/low/r2.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 386524,
+        "size_kb": 377.5,
+        "width": 864,
+        "height": 1152,
+        "aspect_ratio": "3:4",
+        "canonical_aspect_ratio": "3:4",
+        "color_entropy": 7.22
+      },
+      "raw_score": 9.07,
+      "score": 9.07,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.3/光影9.2/透视9.1/质感9.0/风格9.2/无瑕疵8.8",
+      "dims_parsed": {
+        "composition": 9.3,
+        "lighting_color": 9.2,
+        "perspective_anatomy": 9.1,
+        "texture_detail": 9.0,
+        "spec_style": 9.2,
+        "flawlessness": 8.8
+      },
+      "weighted_score": 9.07,
+      "audit_warnings": [
+        "独立视觉 API 不可用，改由本模型按 Absolute-5D 检查表评分（门槛仍 9.5）：<urlopen error _ssl.c:1015: The handshake operation timed out>",
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "prompt 改动 42% 超过档位上限 20%"
+      ],
+      "stagnated": false,
+      "strengths": "头顶与鬓角已见暖金透光细发丝；窗边正面胸像与白猫发夹黑耳机身份仍锁住",
+      "defects": "右下前景雏菊瓣缘仍有轻微毛刺锯齿；窗框右侧竖棱几何略软、灭点不够干净；左颊斑驳投影与肤色交界略糊半档；prompt 改动 42% 超过档位上限 20%",
+      "next_fix": "只收干净右下两片雏菊瓣外轮廓；略硬右侧窗框竖棱；邻区发丝耳机与脸全锁",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.SunlitGirl\n- 置信度: 0.90（fast-track 资格: 是）\n- 优先复用定稿方向:\n  · [CHAT20261028024201007RECIPE] [收敛胜出 9.55分] 表情变体：同一窗边日光耳机少女，只改成惊喜张嘴（双眼睁圆、眉毛微抬、口型O），机位画风发色瞳色白猫发 — 惊喜张嘴清晰自然；身份机位全锁；口型边缘更干净\n  · [CHAT20261028023222435RECIPE] [收敛胜出 9.52分] 窗边逆光少女变体：发丝透光皮肤SSS尘埃光斑 — 逆光发丝；暖金商业\n  · [CHAT20261028023932758RECIPE] [收敛胜出 9.40分] 窗边逆光少女肖像——保画风色板与身份，按新机位重构。 — 回望机位与左下花稳定；暖金与身份保持\n- 必须避开红线:\n  · [CHAT20261028023222456REDLINE] [收敛踩坑红线] 表情变体：同一窗边日光耳机少女，只改成惊喜张嘴（双眼睁圆、眉：避免「口型O略夸张偏喊叫；下颌开合与脸颊体积可再自然半档」\n- 个人口味: 光影=暖光；构图=半身 / 全身\n- 个人禁用习惯: 漏抠/黑底/毛边；赛博霓虹/霓虹紫\n- 项目私有知识卡 (Private Layer):\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n  · [tech-celshade] 赛璐珞分层: 硬边色块分层，高光形状干净，层数克制。\n胶片逆光轻厚涂：锁机位和笔触，只修看得见的脏点、断边，不发明新的光| Keep exact front bust window portrait as reference. ONLY: add 1-2 fine warm-gold translucent rim hair strands on crown and left temple; harden sharp edge where right earcup meets cheek; face pose framing identical. No new props.| 约束：不改动作与姿态；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观；严禁改变正面胸像视角与二分光影；严禁增删人物或改变雏菊壁纸背景 | Structure floor: the person's joints and grip stay clear and both pupils share a direction; the animal's limbs follow its species and are not converted into human elbows; contact shadows read; do not melt limbs into props | 只加头顶与左鬓一两缕暖金透光细发丝；收硬右耳耳机垫与颊侧交界线；邻区脸型口鼻与机位全锁",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.1,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "both",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "vlm_error",
+        "provider": "",
+        "model": "",
+        "error": "<urlopen error _ssl.c:1015: The handshake operation timed out>",
+        "active": true
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：右下前景雏菊瓣缘仍有轻微毛刺锯齿；窗框右侧竖棱几何略软、灭点不够干净；左颊斑驳投影与肤色交界略糊半档；prompt 改动 42% 超过档位上限 20%",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "9.07"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：头顶与鬓角已见暖金透光细发丝；窗边正面胸像与白猫发夹黑耳机身份仍锁住",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "9.07"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "03:30:53"
+    },
+    {
+      "round": 3,
+      "round_label": "第 3 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "3:4",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/ref.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "regen3-c03-low",
+        "scale": "low",
+        "aspect_ratio": "3:4",
+        "ref_aspect_ratio": "3:4",
+        "ref_dimensions": "864x1152",
+        "output_aspect_ratio": "3:4",
+        "output_dimensions": "864x1152",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/ref.jpg",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/ref.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "03:31:39",
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/low/r3.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 367645,
+        "size_kb": 359.0,
+        "width": 864,
+        "height": 1152,
+        "aspect_ratio": "3:4",
+        "canonical_aspect_ratio": "3:4",
+        "color_entropy": 7.22
+      },
+      "raw_score": 9.42,
+      "score": 9.42,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.5/光影9.5/透视9.4/质感9.4/风格9.5/无瑕疵9.3",
+      "dims_parsed": {
+        "composition": 9.5,
+        "lighting_color": 9.5,
+        "perspective_anatomy": 9.4,
+        "texture_detail": 9.4,
+        "spec_style": 9.5,
+        "flawlessness": 9.3
+      },
+      "weighted_score": 9.42,
+      "audit_warnings": [
+        "独立视觉 API 不可用，改由本模型按 Absolute-5D 检查表评分（门槛仍 9.5）：HTTP Error 403: Forbidden",
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "prompt 改动 42% 超过档位上限 20%"
+      ],
+      "stagnated": false,
+      "strengths": "右下雏菊瓣缘更干净；正面窗边机位与身份锚全锁；暖金发丝透光可读",
+      "defects": "鼻梁左侧斑驳叶影与肤色交界仍略软半档；空气中尘埃光斑仍偏稀、体积感不足；prompt 改动 42% 超过档位上限 20%",
+      "next_fix": "只收硬鼻梁左侧一处斑驳影边缘；邻区眼睛口鼻耳机机位全锁",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.SunlitGirl\n- 置信度: 0.90（fast-track 资格: 是）\n- 优先复用定稿方向:\n  · [CHAT20261028024201007RECIPE] [收敛胜出 9.55分] 表情变体：同一窗边日光耳机少女，只改成惊喜张嘴（双眼睁圆、眉毛微抬、口型O），机位画风发色瞳色白猫发 — 惊喜张嘴清晰自然；身份机位全锁；口型边缘更干净\n  · [CHAT20261028023222435RECIPE] [收敛胜出 9.52分] 窗边逆光少女变体：发丝透光皮肤SSS尘埃光斑 — 逆光发丝；暖金商业\n  · [CHAT20261028023932758RECIPE] [收敛胜出 9.40分] 窗边逆光少女肖像——保画风色板与身份，按新机位重构。 — 回望机位与左下花稳定；暖金与身份保持\n- 必须避开红线:\n  · [CHAT20261028023222456REDLINE] [收敛踩坑红线] 表情变体：同一窗边日光耳机少女，只改成惊喜张嘴（双眼睁圆、眉：避免「口型O略夸张偏喊叫；下颌开合与脸颊体积可再自然半档」\n- 个人口味: 光影=暖光；构图=半身 / 全身\n- 个人禁用习惯: 漏抠/黑底/毛边；赛博霓虹/霓虹紫\n- 项目私有知识卡 (Private Layer):\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n  · [tech-celshade] 赛璐珞分层: 硬边色块分层，高光形状干净，层数克制。\n胶片逆光轻厚涂：锁机位和笔触，只修看得见的脏点、断边，不发明新的光| Exact front window bust as reference. Keep translucent rim hair and clean headphone-cheek. ONLY: clean smooth outer edges of two lower-right daisy petals; slightly harden right wooden window-frame vertical edge. Face pose camera identity locked.| 约束：不改动作与姿态；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观；严禁改变正面胸像视角与二分光影；严禁增删人物或改变雏菊壁纸背景 | Structure floor: the person's joints and grip stay clear and both pupils share a direction; the animal's limbs follow its species and are not converted into human elbows; contact shadows read; do not melt limbs into props | 只收干净右下两片雏菊瓣外轮廓；略硬右侧窗框竖棱；邻区发丝耳机与脸全锁",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.4,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "both",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "vlm_error",
+        "provider": "",
+        "model": "",
+        "error": "HTTP Error 403: Forbidden",
+        "active": true
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "line_edge",
+          "lesson": "本轮短板偏「line_edge」：鼻梁左侧斑驳叶影与肤色交界仍略软半档；空气中尘埃光斑仍偏稀、体积感不足；prompt 改动 42% 超过档位上限 20%",
+          "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+          "from_score": "9.42"
+        },
+        {
+          "category": "narrative_camera",
+          "lesson": "本轮短板偏「narrative_camera」：鼻梁左侧斑驳叶影与肤色交界仍略软半档；空气中尘埃光斑仍偏稀、体积感不足；prompt 改动 42% 超过档位上限 20%",
+          "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+          "from_score": "9.42"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：右下雏菊瓣缘更干净；正面窗边机位与身份锚全锁；暖金发丝透光可读",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "9.42"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "03:32:13"
+    },
+    {
+      "round": 4,
+      "round_label": "第 4 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "3:4",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/ref.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "regen3-c03-low",
+        "scale": "low",
+        "aspect_ratio": "3:4",
+        "ref_aspect_ratio": "3:4",
+        "ref_dimensions": "864x1152",
+        "output_aspect_ratio": "3:4",
+        "output_dimensions": "864x1152",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/ref.jpg",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/ref.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "03:32:50",
+      "image": "assets/character/sunlitgirl/r4.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 374997,
+        "size_kb": 366.2,
+        "width": 864,
+        "height": 1152,
+        "aspect_ratio": "3:4",
+        "canonical_aspect_ratio": "3:4",
+        "color_entropy": 7.23
+      },
+      "raw_score": 9.53,
+      "score": 9.45,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.6/光影9.5/透视9.5/质感9.5/风格9.6/无瑕疵9.5",
+      "dims_parsed": {
+        "composition": 9.6,
+        "lighting_color": 9.5,
+        "perspective_anatomy": 9.5,
+        "texture_detail": 9.5,
+        "spec_style": 9.6,
+        "flawlessness": 9.5
+      },
+      "weighted_score": 9.53,
+      "audit_warnings": [
+        "独立视觉 API 不可用，改由本模型按 Absolute-5D 检查表评分（门槛仍 9.5）：HTTP Error 403: Forbidden",
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "prompt 改动 40% 超过档位上限 20%"
+      ],
+      "stagnated": false,
+      "strengths": "鼻梁左侧斑驳影边缘更利；正面窗边胸像与白猫发夹黑耳机身份全锁；暖金发丝透光可读",
+      "defects": "空气尘埃光斑仍略稀半档，体积感未完全顶满；prompt 改动 40% 超过档位上限 20%",
+      "next_fix": "已达标",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.SunlitGirl\n- 置信度: 0.90（fast-track 资格: 是）\n- 优先复用定稿方向:\n  · [CHAT20261028024201007RECIPE] [收敛胜出 9.55分] 表情变体：同一窗边日光耳机少女，只改成惊喜张嘴（双眼睁圆、眉毛微抬、口型O），机位画风发色瞳色白猫发 — 惊喜张嘴清晰自然；身份机位全锁；口型边缘更干净\n  · [CHAT20261028023222435RECIPE] [收敛胜出 9.52分] 窗边逆光少女变体：发丝透光皮肤SSS尘埃光斑 — 逆光发丝；暖金商业\n  · [CHAT20261028023932758RECIPE] [收敛胜出 9.40分] 窗边逆光少女肖像——保画风色板与身份，按新机位重构。 — 回望机位与左下花稳定；暖金与身份保持\n- 必须避开红线:\n  · [CHAT20261028023222456REDLINE] [收敛踩坑红线] 表情变体：同一窗边日光耳机少女，只改成惊喜张嘴（双眼睁圆、眉：避免「口型O略夸张偏喊叫；下颌开合与脸颊体积可再自然半档」\n- 个人口味: 光影=暖光；构图=半身 / 全身\n- 个人禁用习惯: 漏抠/黑底/毛边；赛博霓虹/霓虹紫\n- 项目私有知识卡 (Private Layer):\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n  · [tech-celshade] 赛璐珞分层: 硬边色块分层，高光形状干净，层数克制。\n胶片逆光轻厚涂：锁机位和笔触，只修看得见的脏点、断边，不发明新的光| Same front window bust as reference. ONLY: sharpen dappled leaf-shadow edge on left side of nose bridge against skin; all else unchanged.| 约束：不改动作与姿态；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观；严禁改变正面胸像视角与二分光影；严禁增删人物或改变雏菊壁纸背景 | Structure floor: the person's joints and grip stay clear and both pupils share a direction; the animal's limbs follow its species and are not converted into human elbows; contact shadows read; do not melt limbs into props | 只收硬鼻梁左侧一处斑驳影边缘；邻区眼睛口鼻耳机机位全锁",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.5,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "both",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "vlm_error",
+        "provider": "",
+        "model": "",
+        "error": "HTTP Error 403: Forbidden",
+        "active": true
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_MAX_ROUNDS",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：空气尘埃光斑仍略稀半档，体积感未完全顶满；prompt 改动 40% 超过档位上限 20%",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "9.45"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：鼻梁左侧斑驳影边缘更利；正面窗边胸像与白猫发夹黑耳机身份全锁；暖金发丝透光可读",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "9.45"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "03:33:05"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "/Users/yanghu/Desktop/pmem-art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-10-28 01:28:36 UTC+8"
+    },
+    "module": "character.SunlitGirl",
+    "goal": "窗边逆光少女肖像精修——加强发丝透光、皮肤次表面散射、窗框几何透视与尘埃光斑体积；暖金日光；锁身份与机位；low只修局部瑕疵",
+    "confidence": 0.9,
+    "fast_track_eligible": true,
+    "confidence_reasons": [
+      "命中 3 条达标 recipe",
+      "个人口味档案非空",
+      "红线可控（1 条）",
+      "挂载 2 张项目知识卡 + 0 张全局美术底层基础卡"
+    ],
+    "top_recipes": [
+      {
+        "id": "CHAT20261028024201007RECIPE",
+        "summary": "[收敛胜出 9.55分] 表情变体：同一窗边日光耳机少女，只改成惊喜张嘴（双眼睁圆、眉毛微抬、口型O），机位画风发色瞳色白猫发 — 惊喜张嘴清晰自然；身份机位全锁；口型边缘更干净",
+        "module": "character.SunlitGirl"
+      },
+      {
+        "id": "CHAT20261028023222435RECIPE",
+        "summary": "[收敛胜出 9.52分] 窗边逆光少女变体：发丝透光皮肤SSS尘埃光斑 — 逆光发丝；暖金商业",
+        "module": "character.SunlitGirl"
+      },
+      {
+        "id": "CHAT20261028023932758RECIPE",
+        "summary": "[收敛胜出 9.40分] 窗边逆光少女肖像——保画风色板与身份，按新机位重构。 — 回望机位与左下花稳定；暖金与身份保持",
+        "module": "character.SunlitGirl"
+      }
+    ],
+    "top_redlines": [
+      {
+        "id": "CHAT20261028023222456REDLINE",
+        "summary": "[收敛踩坑红线] 表情变体：同一窗边日光耳机少女，只改成惊喜张嘴（双眼睁圆、眉：避免「口型O略夸张偏喊叫；下颌开合与脸颊体积可再自然半档」",
+        "module": "character.SunlitGirl"
+      }
+    ],
+    "art_decisions": [],
+    "private_knowledge": [
+      {
+        "id": "tech-painterly",
+        "title": "厚涂笔触",
+        "body": "可见笔触方向跟随形体，暗部透气勿脏。",
+        "layer_scope": "private"
+      },
+      {
+        "id": "tech-celshade",
+        "title": "赛璐珞分层",
+        "body": "硬边色块分层，高光形状干净，层数克制。",
+        "layer_scope": "private"
+      }
+    ],
+    "shared_knowledge": [],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [
+        "暖光"
+      ],
+      "preferred_composition": [
+        "半身",
+        "全身"
+      ],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [],
+      "banned_habits": [
+        "漏抠/黑底/毛边",
+        "赛博霓虹/霓虹紫"
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.SunlitGirl\n- 置信度: 0.90（fast-track 资格: 是）\n- 优先复用定稿方向:\n  · [CHAT20261028024201007RECIPE] [收敛胜出 9.55分] 表情变体：同一窗边日光耳机少女，只改成惊喜张嘴（双眼睁圆、眉毛微抬、口型O），机位画风发色瞳色白猫发 — 惊喜张嘴清晰自然；身份机位全锁；口型边缘更干净\n  · [CHAT20261028023222435RECIPE] [收敛胜出 9.52分] 窗边逆光少女变体：发丝透光皮肤SSS尘埃光斑 — 逆光发丝；暖金商业\n  · [CHAT20261028023932758RECIPE] [收敛胜出 9.40分] 窗边逆光少女肖像——保画风色板与身份，按新机位重构。 — 回望机位与左下花稳定；暖金与身份保持\n- 必须避开红线:\n  · [CHAT20261028023222456REDLINE] [收敛踩坑红线] 表情变体：同一窗边日光耳机少女，只改成惊喜张嘴（双眼睁圆、眉：避免「口型O略夸张偏喊叫；下颌开合与脸颊体积可再自然半档」\n- 个人口味: 光影=暖光；构图=半身 / 全身\n- 个人禁用习惯: 漏抠/黑底/毛边；赛博霓虹/霓虹紫\n- 项目私有知识卡 (Private Layer):\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n  · [tech-celshade] 赛璐珞分层: 硬边色块分层，高光形状干净，层数克制。",
+    "built_at": "2026-10-30 03:23:51 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：头顶与鬓角透光发丝仍偏少、丝状边缘不够亮；右耳侧耳机垫与颊交界略软糊；空气中尘埃光斑体积偏薄几乎看不清",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "8.88"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：头顶与鬓角透光发丝仍偏少、丝状边缘不够亮；右耳侧耳机垫与颊交界略软糊；空气中尘埃光斑体积偏薄几乎看不清",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "8.88"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：正面窗边胸像机位与身份锚点（白猫发夹/黑耳机/浅蓝瞳）锁住；暖金逆光与白T斑驳投影可读",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.88"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：右下前景雏菊瓣缘仍有轻微毛刺锯齿；窗框右侧竖棱几何略软、灭点不够干净；左颊斑驳投影与肤色交界略糊半档；prompt 改动 42% 超过档位上限 20%",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.07"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：头顶与鬓角已见暖金透光细发丝；窗边正面胸像与白猫发夹黑耳机身份仍锁住",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.07"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：鼻梁左侧斑驳叶影与肤色交界仍略软半档；空气中尘埃光斑仍偏稀、体积感不足；prompt 改动 42% 超过档位上限 20%",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "9.42"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：鼻梁左侧斑驳叶影与肤色交界仍略软半档；空气中尘埃光斑仍偏稀、体积感不足；prompt 改动 42% 超过档位上限 20%",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "9.42"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：右下雏菊瓣缘更干净；正面窗边机位与身份锚全锁；暖金发丝透光可读",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.42"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：空气尘埃光斑仍略稀半档，体积感未完全顶满；prompt 改动 40% 超过档位上限 20%",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.45"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：鼻梁左侧斑驳影边缘更利；正面窗边胸像与白猫发夹黑耳机身份全锁；暖金发丝透光可读",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.45"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 4,
+  "regression_drop": 0.5,
+  "discussions": [
+    {
+      "round": 1,
+      "prompt": "regen3 c03 窗边日光胸像四档：low贴原修发丝透光/SSS/窗框尘埃局部；medium锁机位小优化；high加风格内叙事（窗台雏菊或发丝更亮）；recompose四分之三背侧仍看窗光。身份锚：深蓝短发、浅蓝瞳、白猫发夹、黑耳机、白T、暖金窗光。约3:4。模块character.SunlitGirl。",
+      "strengths": "",
+      "defects": "无；四档合同已定",
+      "next_fix": "按四档分别开会话出图"
+    }
+  ],
+  "ActionRequired": "STOP_PICK_BEST",
+  "showcase_ready": true,
+  "winner": {
+    "round": 4,
+    "round_label": "第 4 轮精修",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "3:4",
+    "reference_image_paths": [
+      "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/ref.jpg"
+    ],
+    "param_validation": {
+      "valid": true,
+      "validation_passed": true,
+      "case_id": "regen3-c03-low",
+      "scale": "low",
+      "aspect_ratio": "3:4",
+      "ref_aspect_ratio": "3:4",
+      "ref_dimensions": "864x1152",
+      "output_aspect_ratio": "3:4",
+      "output_dimensions": "864x1152",
+      "reference_image": "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/ref.jpg",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/ref.jpg"
+      ],
+      "inherited_default_aspect_ratio": true,
+      "inherited_default_pad_image": true,
+      "matched_ref_aspect_ratio": true,
+      "matched_ref_pad_image": true,
+      "matched_output_aspect_ratio": true,
+      "three_step_stage": "step3_judge",
+      "three_step_verified": true,
+      "warnings": [],
+      "continuation_pad": false,
+      "pad_diverged": false
+    },
+    "generated_at": "03:32:50",
+    "image": "assets/character/sunlitgirl/r4.jpg",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 374997,
+      "size_kb": 366.2,
+      "width": 864,
+      "height": 1152,
+      "aspect_ratio": "3:4",
+      "canonical_aspect_ratio": "3:4",
+      "color_entropy": 7.23
+    },
+    "raw_score": 9.53,
+    "score": 9.45,
+    "target_score_threshold": 9.5,
+    "dims": "构图9.6/光影9.5/透视9.5/质感9.5/风格9.6/无瑕疵9.5",
+    "dims_parsed": {
+      "composition": 9.6,
+      "lighting_color": 9.5,
+      "perspective_anatomy": 9.5,
+      "texture_detail": 9.5,
+      "spec_style": 9.6,
+      "flawlessness": 9.5
+    },
+    "weighted_score": 9.53,
+    "audit_warnings": [
+      "独立视觉 API 不可用，改由本模型按 Absolute-5D 检查表评分（门槛仍 9.5）：HTTP Error 403: Forbidden",
+      "Agent Absolute-5D 已采纳（门槛 9.5）",
+      "prompt 改动 40% 超过档位上限 20%"
+    ],
+    "stagnated": false,
+    "strengths": "鼻梁左侧斑驳影边缘更利；正面窗边胸像与白猫发夹黑耳机身份全锁；暖金发丝透光可读",
+    "defects": "空气尘埃光斑仍略稀半档，体积感未完全顶满；prompt 改动 40% 超过档位上限 20%",
+    "next_fix": "已达标",
+    "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.SunlitGirl\n- 置信度: 0.90（fast-track 资格: 是）\n- 优先复用定稿方向:\n  · [CHAT20261028024201007RECIPE] [收敛胜出 9.55分] 表情变体：同一窗边日光耳机少女，只改成惊喜张嘴（双眼睁圆、眉毛微抬、口型O），机位画风发色瞳色白猫发 — 惊喜张嘴清晰自然；身份机位全锁；口型边缘更干净\n  · [CHAT20261028023222435RECIPE] [收敛胜出 9.52分] 窗边逆光少女变体：发丝透光皮肤SSS尘埃光斑 — 逆光发丝；暖金商业\n  · [CHAT20261028023932758RECIPE] [收敛胜出 9.40分] 窗边逆光少女肖像——保画风色板与身份，按新机位重构。 — 回望机位与左下花稳定；暖金与身份保持\n- 必须避开红线:\n  · [CHAT20261028023222456REDLINE] [收敛踩坑红线] 表情变体：同一窗边日光耳机少女，只改成惊喜张嘴（双眼睁圆、眉：避免「口型O略夸张偏喊叫；下颌开合与脸颊体积可再自然半档」\n- 个人口味: 光影=暖光；构图=半身 / 全身\n- 个人禁用习惯: 漏抠/黑底/毛边；赛博霓虹/霓虹紫\n- 项目私有知识卡 (Private Layer):\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n  · [tech-celshade] 赛璐珞分层: 硬边色块分层，高光形状干净，层数克制。\n胶片逆光轻厚涂：锁机位和笔触，只修看得见的脏点、断边，不发明新的光| Same front window bust as reference. ONLY: sharpen dappled leaf-shadow edge on left side of nose bridge against skin; all else unchanged.| 约束：不改动作与姿态；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观；严禁改变正面胸像视角与二分光影；严禁增删人物或改变雏菊壁纸背景 | Structure floor: the person's joints and grip stay clear and both pupils share a direction; the animal's limbs follow its species and are not converted into human elbows; contact shadows read; do not melt limbs into props | 只收硬鼻梁左侧一处斑驳影边缘；邻区眼睛口鼻耳机机位全锁",
+    "continuation": false,
+    "passed": false,
+    "gate_blocked": true,
+    "image_gate_blocked": false,
+    "anatomy_score": 9.5,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "both",
+    "judge_source": "agent_absolute_5d",
+    "remote_vlm": {
+      "source": "vlm_error",
+      "provider": "",
+      "model": "",
+      "error": "HTTP Error 403: Forbidden",
+      "active": true
+    },
+    "should_continue_next_round": false,
+    "decision": "STOP_MAX_ROUNDS",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "style_lock",
+        "lesson": "本轮短板偏「style_lock」：空气尘埃光斑仍略稀半档，体积感未完全顶满；prompt 改动 40% 超过档位上限 20%",
+        "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+        "from_score": "9.45"
+      },
+      {
+        "category": "keep",
+        "lesson": "保留本轮已做对的：鼻梁左侧斑驳影边缘更利；正面窗边胸像与白猫发夹黑耳机身份全锁；暖金发丝透光可读",
+        "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+        "from_score": "9.45"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "03:33:05"
+  },
+  "rounds_to_converge": 4,
+  "convergence_badge": "共 4 轮未达阈值，采用最高分",
+  "process_board": ".memory-art/converge/boards/regen3-c03-low/index.html"
+}

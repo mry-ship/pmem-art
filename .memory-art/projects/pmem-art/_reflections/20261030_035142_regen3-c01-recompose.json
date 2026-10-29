@@ -1,0 +1,118 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-10-30 03:51:42 UTC+8",
+  "session_id": "regen3-c01-recompose",
+  "goal": "recompose保画风色板与身份锚点，机位换成中央长街仰看屋脊",
+  "module": "scene.CelestialCity",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 3,
+  "winner_score": 8.49,
+  "winner_image": "assets/scene/celestialcity/r3.jpg",
+  "winner_passed": false,
+  "outcome": "⚠️ **共执行 4 轮审图（目标阈值 `9.50` 分），未达标，已挑选全阶段最高分**（胜出：第 3 轮 `8.49 / 10.0` 分）",
+  "what_fixed": [
+    "镜头降到中央长街石板仰角看两侧屋脊；同一灰袍侠客缩小成远处屋脊小背影；雾带隔开街道与灯海",
+    "必须仰角：相机在长街石板向上拍飞檐；侠客缩成远脊上小剪影；雾带横隔街道与灯海",
+    "侠客再缩小成远脊指甲大小背影；前景路人减淡或减少，保留仰角雾带与暖金灯海",
+    "已满4轮取最高分"
+  ],
+  "what_still_weak": "仰看成立；侠客仍约占画面中部约10%偏大，应再缩成更远屋脊小背影；主光是窗火与檐下灯笼。前景路人略抢主体；recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机",
+  "strengths": "已是长街仰看屋脊；雾带隔开街道与灯海；冷灰暖金锁住",
+  "taste_deltas": {
+    "from_strengths": [
+      "已是长街仰看屋脊；雾带隔开街道与灯海；冷灰暖金锁住"
+    ],
+    "from_defects": [
+      "仍是俯瞰屋脊大背影不是仰看；人约占画面下半约18%偏大不是屋脊小背影；主光是窗火。旧机位仍未换；袍色偏浅灰白；解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁止糊边融边",
+      "仰看成立；侠客仍约占画面中部约10%偏大，应再缩成更远屋脊小背影；主光是窗火与檐下灯笼。前景路人略抢主体；recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原",
+      "仰看成立；灰袍侠客小背影几乎找不到，身份锚点丢失；主光是窗火灯笼。路人仍偏多"
+    ]
+  },
+  "warm_start_confidence": 0.8,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 7.29,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 7.02,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 8.49,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 8.35,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：仍是俯瞰屋脊不是站在中央长街仰看屋脊；侠客仍占前景大背影约15%不是屋脊上的小背影；主光是窗火灯海。旧俯瞰机位未作废",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "7.29"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：冷灰暖金色板与城身份大致保留",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "7.29"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：仍是俯瞰屋脊大背影不是仰看；人约占画面下半约18%偏大不是屋脊小背影；主光是窗火。旧机位仍未换；袍色偏浅灰白；解剖/透视：修正关节连接、持械/手足结构与接触阴影",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "7.02"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：仍是俯瞰屋脊大背影不是仰看；人约占画面下半约18%偏大不是屋脊小背影；主光是窗火。旧机位仍未换；袍色偏浅灰白；解剖/透视：修正关节连接、持械/手足结构与接触阴影",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "7.02"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：仍是俯瞰屋脊大背影不是仰看；人约占画面下半约18%偏大不是屋脊小背影；主光是窗火。旧机位仍未换；袍色偏浅灰白；解剖/透视：修正关节连接、持械/手足结构与接触阴影",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "7.02"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：仰看成立；侠客仍约占画面中部约10%偏大，应再缩成更远屋脊小背影；主光是窗火与檐下灯笼。前景路人略抢主体；recompose 未检出机位/布局变化证据（相对 -",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "8.49"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：已是长街仰看屋脊；雾带隔开街道与灯海；冷灰暖金锁住",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.49"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：仰看成立；灰袍侠客小背影几乎找不到，身份锚点丢失；主光是窗火灯笼。路人仍偏多",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.35"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：仰看长街机位更稳；雾带与暖金灯海层次清楚",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.35"
+    }
+  ]
+}

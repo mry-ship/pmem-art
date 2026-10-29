@@ -1,60 +1,19 @@
 """美术口语 → 标准路由句（本地启发式 + 供 Agent 填写的模板词）。
 
 检索仍是字面/ n-gram 相似；口语靠「先标准化」抬召回，不做向量语义。
-规则分流仍以 plan_route 为准；标准句用于检索增强与双路交叉校验。
+规则分流以 plan_route 为准；认路前可做短口语表面折叠（rewrite_colloquial）。
+标准句用于检索增强与双路交叉校验。
+深度表见 skills_kit/data/colloquial_expand.jsonl（≥8000）。
 """
 from __future__ import annotations
 
 import re
 from typing import Any
 
-# 口语碎片 → 标准路由词（检索扩展 + 本地 canonical 用）
-COLLOQUIAL_EXPAND: dict[str, list[str]] = {
-    "味道": ["画风"],
-    "手感": ["画风"],
-    "感觉": ["画风"],
-    "气质": ["画风"],
-    "照着": ["参考"],
-    "照这张": ["参考这张"],
-    "按这张的": ["参考这张"],
-    "垫这张": ["参考"],
-    "主体改成": ["换成", "换题材"],
-    "换成": ["换题材", "别画原来"],
-    "别画原来": ["换题材"],
-    "换个东西": ["换题材"],
-    "还是画这个": ["不要换题材"],
-    "别换人": ["不要换题材"],
-    "同一张脸": ["同一身份", "表情"],
-    "表情包": ["表情", "差分", "变体"],
-    "差分": ["变体", "表情"],
-    "几套镜头": ["几套机位", "镜头包"],
-    "机位包": ["镜头包", "几套机位"],
-    "我来选": ["给自己挑", "镜头包"],
-    "一整屏": ["整套界面", "HUD"],
-    "主界面": ["整套界面", "主菜单"],
-    "弹窗套": ["九宫格", "整套界面"],
-    "应用图标": ["1024", "桌面图标"],
-    "启动图标": ["1024", "桌面图标"],
-    "线性图标": ["线性 svg"],
-    "道具格": ["背包", "透明底"],
-    "合成升级": ["合成梯", "一档比一档大"],
-    "越升越大": ["合成梯", "一档比一档大"],
-    "先别画": ["先不出图"],
-    "先看看哪不行": ["只审", "别画"],
-    "收进图谱": ["散图归位"],
-    "喵": ["猫"],
-    "小狗狗": ["狗"],
-    "弄下": ["做", "画"],
-    "搞个": ["画一张", "做"],
-    "整一个": ["画一张", "做"],
-    "来一张": ["画一张"],
-    "继续那条": ["合成梯", "继续"],
-    "升级那条": ["合成梯", "一档比一档大"],
-    "昨天那张": ["参考", "那张"],
-    "上次那张": ["参考", "那张"],
-    "好看点": ["画一张"],
-    "立绘": ["画一张", "半身"],
-}
+from .colloquial_lexicon import expand_terms, load_lexicon, rewrite_colloquial
+
+# 兼容旧引用：懒加载深度表
+COLLOQUIAL_EXPAND: dict[str, list[str]] = load_lexicon()
 
 # Agent 写标准句时应用的固定模板（短、可机读）
 CANON_TEMPLATES: dict[str, str] = {
@@ -81,23 +40,12 @@ CANON_TEMPLATES: dict[str, str] = {
 
 def expand_colloquial(text: str) -> str:
     """把口语碎片展开成带标准词的增广句（只用于检索，不改原话）。"""
-    raw = text or ""
-    extras: list[str] = []
-    for src, dests in COLLOQUIAL_EXPAND.items():
-        if src in raw:
-            extras.extend(dests)
-    if not extras:
-        return raw
-    # 去重保序
-    seen: set[str] = set()
-    tail: list[str] = []
-    for w in extras:
-        if w not in seen and w not in raw:
-            seen.add(w)
-            tail.append(w)
-    if not tail:
-        return raw
-    return raw + "｜" + " ".join(tail)
+    return expand_terms(text, COLLOQUIAL_EXPAND)
+
+
+def normalize_for_route(text: str) -> str:
+    """认路用表面折叠：只做短口语替换，不追加检索 extras（防污染规则）。"""
+    return rewrite_colloquial(text, COLLOQUIAL_EXPAND, append_extras=False)
 
 
 def _has(text: str, *pats: str) -> bool:

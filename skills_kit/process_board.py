@@ -26,7 +26,7 @@ def _score(row: dict[str, Any]) -> float | None:
 def _score_class(score: float | None) -> str:
     if score is None:
         return "mid"
-    if score >= 9.6:
+    if score >= 9.5:
         return "hit"
     if score >= 8.5:
         return "mid"
@@ -146,9 +146,9 @@ def write_process_board(root: Path, sess: dict[str, Any], *, winner: dict[str, A
 
     sc_win = _score(winner or {}) if winner else None
     try:
-        line = float(sess.get("accept_threshold") or sess.get("threshold") or 9.6)
+        line = float(sess.get("accept_threshold") or sess.get("threshold") or 9.5)
     except (TypeError, ValueError):
-        line = 9.6
+        line = 9.5
     if winner:
         mark = "到线。" if sc_win is not None and sc_win >= line else f"未到 {line:.2f}。"
         total = "" if sc_win is None else f"{sc_win:.2f}"

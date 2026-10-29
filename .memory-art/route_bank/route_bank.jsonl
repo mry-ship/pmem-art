@@ -1,0 +1,945 @@
+{"text": "两张附图都留着，画一张窗边女孩，没说哪张管什么", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ordinary_two_refs", "reason": "", "images": 2, "hard": true, "source": "packaged"}
+{"text": "两张附图都留着，画一张青瓷杯，没说哪张管什么", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ordinary_two_refs", "reason": "", "images": 2, "hard": true, "source": "packaged"}
+{"text": "两张附图都留着，画一张驿站猫，没说哪张管什么", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ordinary_two_refs", "reason": "", "images": 2, "hard": true, "source": "packaged"}
+{"text": "两张附图都留着，画一张雨夜街道，没说哪张管什么", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ordinary_two_refs", "reason": "", "images": 2, "hard": true, "source": "packaged"}
+{"text": "两张附图都留着，画一张半身骑士，没说哪张管什么", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ordinary_two_refs", "reason": "", "images": 2, "hard": true, "source": "packaged"}
+{"text": "两张附图都留着，画一张旧船，没说哪张管什么", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ordinary_two_refs", "reason": "", "images": 2, "hard": true, "source": "packaged"}
+{"text": "两张附图都留着，画一张花瓶，没说哪张管什么", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ordinary_two_refs", "reason": "", "images": 2, "hard": true, "source": "packaged"}
+{"text": "两张附图都留着，画一张书店伙计，没说哪张管什么", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ordinary_two_refs", "reason": "", "images": 2, "hard": true, "source": "packaged"}
+{"text": "两张附图都留着，画一张雪地旅人，没说哪张管什么", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ordinary_two_refs", "reason": "", "images": 2, "hard": true, "source": "packaged"}
+{"text": "两张附图都留着，画一张灯塔，没说哪张管什么", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ordinary_two_refs", "reason": "", "images": 2, "hard": true, "source": "packaged"}
+{"text": "两张附图都留着，画一张厨师，没说哪张管什么", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ordinary_two_refs", "reason": "", "images": 2, "hard": true, "source": "packaged"}
+{"text": "两张附图都留着，画一张信使，没说哪张管什么", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ordinary_two_refs", "reason": "", "images": 2, "hard": true, "source": "packaged"}
+{"text": "两张附图都留着，画一张石桥，没说哪张管什么", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ordinary_two_refs", "reason": "", "images": 2, "hard": true, "source": "packaged"}
+{"text": "两张附图都留着，画一张麦田，没说哪张管什么", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ordinary_two_refs", "reason": "", "images": 2, "hard": true, "source": "packaged"}
+{"text": "两张附图都留着，画一张教室，没说哪张管什么", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ordinary_two_refs", "reason": "", "images": 2, "hard": true, "source": "packaged"}
+{"text": "两张附图都留着，画一张白猫，没说哪张管什么", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ordinary_two_refs", "reason": "", "images": 2, "hard": true, "source": "packaged"}
+{"text": "参考这张水彩，还是画这个女孩，不要换题材", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ref_same_person", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "参考这张水彩，还是画这个男孩，不要换题材", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ref_same_person", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "参考这张水彩，还是画这个老人，不要换题材", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ref_same_person", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "参考这张水彩，还是画这个店员，不要换题材", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ref_same_person", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第0版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第1版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第2版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第3版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第4版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第5版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第6版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第7版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第8版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第9版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第10版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第11版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第12版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第13版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第14版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第15版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第16版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第17版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第18版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第19版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第20版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第21版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第22版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第23版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第24版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第25版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第26版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第27版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第28版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第29版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第30版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第31版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第32版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第33版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第34版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第35版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第36版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第37版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第38版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第39版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第40版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第41版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第42版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第43版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第44版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第45版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第46版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第47版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第48版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第49版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第50版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第51版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第52版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第53版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第54版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第55版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第56版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第57版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第58版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第59版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第60版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第61版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第62版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第63版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第64版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第65版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第66版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第67版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第68版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第69版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第70版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第71版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第72版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第73版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第74版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第75版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第76版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第77版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第78版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画这个角色的立绘，第79版，不要表情差分", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_variant", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "身份在第一张，结构在第二张，先画关上，再画打开", "mode": "skill", "route_ids": ["draw.multi", "draw.multi"], "bucket": "multi_states", "reason": "", "images": 2, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第0张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第1张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第2张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第3张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第4张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第5张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第6张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第7张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第8张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第9张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第10张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第11张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第12张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第13张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第14张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第15张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第16张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第17张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第18张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第19张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第20张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第21张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第22张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第23张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第24张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第25张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第26张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第27张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第28张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第29张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第30张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第31张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第32张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第33张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第34张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第35张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第36张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第37张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第38张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第39张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第40张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第41张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第42张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第43张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第44张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第45张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第46张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第47张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第48张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第49张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第50张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第51张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第52张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第53张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第54张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第55张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第56张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第57张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第58张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "镜头感强一点的半身，第59张，只要一张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "not_lens", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第0张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第1张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第2张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第3张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第4张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第5张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第6张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第7张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第8张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第9张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第10张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第11张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第12张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第13张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第14张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第15张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第16张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第17张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第18张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第19张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第20张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第21张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第22张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第23张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第24张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第25张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第26张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第27张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第28张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第29张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第30张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第31张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第32张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第33张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第34张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第35张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第36张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第37张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第38张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第39张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第40张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第41张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第42张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第43张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第44张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第45张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第46张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第47张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第48张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "就一张空弹框，不要整套，第49张", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "single_popup", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "既要 1024 桌面图标，也要一套线性 svg，第0问", "mode": "stop", "route_ids": [], "bucket": "icon_conflict", "reason": "icon_conflict", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一个图标，别的没说，第0问", "mode": "stop", "route_ids": [], "bucket": "icon_unspecified", "reason": "icon_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "既要 1024 桌面图标，也要一套线性 svg，第1问", "mode": "stop", "route_ids": [], "bucket": "icon_conflict", "reason": "icon_conflict", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一个图标，别的没说，第1问", "mode": "stop", "route_ids": [], "bucket": "icon_unspecified", "reason": "icon_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "既要 1024 桌面图标，也要一套线性 svg，第2问", "mode": "stop", "route_ids": [], "bucket": "icon_conflict", "reason": "icon_conflict", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一个图标，别的没说，第2问", "mode": "stop", "route_ids": [], "bucket": "icon_unspecified", "reason": "icon_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "既要 1024 桌面图标，也要一套线性 svg，第3问", "mode": "stop", "route_ids": [], "bucket": "icon_conflict", "reason": "icon_conflict", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一个图标，别的没说，第3问", "mode": "stop", "route_ids": [], "bucket": "icon_unspecified", "reason": "icon_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "既要 1024 桌面图标，也要一套线性 svg，第4问", "mode": "stop", "route_ids": [], "bucket": "icon_conflict", "reason": "icon_conflict", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一个图标，别的没说，第4问", "mode": "stop", "route_ids": [], "bucket": "icon_unspecified", "reason": "icon_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "既要 1024 桌面图标，也要一套线性 svg，第5问", "mode": "stop", "route_ids": [], "bucket": "icon_conflict", "reason": "icon_conflict", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一个图标，别的没说，第5问", "mode": "stop", "route_ids": [], "bucket": "icon_unspecified", "reason": "icon_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "既要 1024 桌面图标，也要一套线性 svg，第6问", "mode": "stop", "route_ids": [], "bucket": "icon_conflict", "reason": "icon_conflict", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一个图标，别的没说，第6问", "mode": "stop", "route_ids": [], "bucket": "icon_unspecified", "reason": "icon_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "既要 1024 桌面图标，也要一套线性 svg，第7问", "mode": "stop", "route_ids": [], "bucket": "icon_conflict", "reason": "icon_conflict", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一个图标，别的没说，第7问", "mode": "stop", "route_ids": [], "bucket": "icon_unspecified", "reason": "icon_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "既要 1024 桌面图标，也要一套线性 svg，第8问", "mode": "stop", "route_ids": [], "bucket": "icon_conflict", "reason": "icon_conflict", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一个图标，别的没说，第8问", "mode": "stop", "route_ids": [], "bucket": "icon_unspecified", "reason": "icon_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "既要 1024 桌面图标，也要一套线性 svg，第9问", "mode": "stop", "route_ids": [], "bucket": "icon_conflict", "reason": "icon_conflict", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一个图标，别的没说，第9问", "mode": "stop", "route_ids": [], "bucket": "icon_unspecified", "reason": "icon_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "既要 1024 桌面图标，也要一套线性 svg，第10问", "mode": "stop", "route_ids": [], "bucket": "icon_conflict", "reason": "icon_conflict", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一个图标，别的没说，第10问", "mode": "stop", "route_ids": [], "bucket": "icon_unspecified", "reason": "icon_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "既要 1024 桌面图标，也要一套线性 svg，第11问", "mode": "stop", "route_ids": [], "bucket": "icon_conflict", "reason": "icon_conflict", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一个图标，别的没说，第11问", "mode": "stop", "route_ids": [], "bucket": "icon_unspecified", "reason": "icon_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "既要 1024 桌面图标，也要一套线性 svg，第12问", "mode": "stop", "route_ids": [], "bucket": "icon_conflict", "reason": "icon_conflict", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一个图标，别的没说，第12问", "mode": "stop", "route_ids": [], "bucket": "icon_unspecified", "reason": "icon_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "既要 1024 桌面图标，也要一套线性 svg，第13问", "mode": "stop", "route_ids": [], "bucket": "icon_conflict", "reason": "icon_conflict", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一个图标，别的没说，第13问", "mode": "stop", "route_ids": [], "bucket": "icon_unspecified", "reason": "icon_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "既要 1024 桌面图标，也要一套线性 svg，第14问", "mode": "stop", "route_ids": [], "bucket": "icon_conflict", "reason": "icon_conflict", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一个图标，别的没说，第14问", "mode": "stop", "route_ids": [], "bucket": "icon_unspecified", "reason": "icon_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "既要 1024 桌面图标，也要一套线性 svg，第15问", "mode": "stop", "route_ids": [], "bucket": "icon_conflict", "reason": "icon_conflict", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一个图标，别的没说，第15问", "mode": "stop", "route_ids": [], "bucket": "icon_unspecified", "reason": "icon_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "既要 1024 桌面图标，也要一套线性 svg，第16问", "mode": "stop", "route_ids": [], "bucket": "icon_conflict", "reason": "icon_conflict", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一个图标，别的没说，第16问", "mode": "stop", "route_ids": [], "bucket": "icon_unspecified", "reason": "icon_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "既要 1024 桌面图标，也要一套线性 svg，第17问", "mode": "stop", "route_ids": [], "bucket": "icon_conflict", "reason": "icon_conflict", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一个图标，别的没说，第17问", "mode": "stop", "route_ids": [], "bucket": "icon_unspecified", "reason": "icon_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "既要 1024 桌面图标，也要一套线性 svg，第18问", "mode": "stop", "route_ids": [], "bucket": "icon_conflict", "reason": "icon_conflict", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一个图标，别的没说，第18问", "mode": "stop", "route_ids": [], "bucket": "icon_unspecified", "reason": "icon_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "既要 1024 桌面图标，也要一套线性 svg，第19问", "mode": "stop", "route_ids": [], "bucket": "icon_conflict", "reason": "icon_conflict", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一个图标，别的没说，第19问", "mode": "stop", "route_ids": [], "bucket": "icon_unspecified", "reason": "icon_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "既要 1024 桌面图标，也要一套线性 svg，第20问", "mode": "stop", "route_ids": [], "bucket": "icon_conflict", "reason": "icon_conflict", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一个图标，别的没说，第20问", "mode": "stop", "route_ids": [], "bucket": "icon_unspecified", "reason": "icon_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "既要 1024 桌面图标，也要一套线性 svg，第21问", "mode": "stop", "route_ids": [], "bucket": "icon_conflict", "reason": "icon_conflict", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一个图标，别的没说，第21问", "mode": "stop", "route_ids": [], "bucket": "icon_unspecified", "reason": "icon_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "既要 1024 桌面图标，也要一套线性 svg，第22问", "mode": "stop", "route_ids": [], "bucket": "icon_conflict", "reason": "icon_conflict", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一个图标，别的没说，第22问", "mode": "stop", "route_ids": [], "bucket": "icon_unspecified", "reason": "icon_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "既要 1024 桌面图标，也要一套线性 svg，第23问", "mode": "stop", "route_ids": [], "bucket": "icon_conflict", "reason": "icon_conflict", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一个图标，别的没说，第23问", "mode": "stop", "route_ids": [], "bucket": "icon_unspecified", "reason": "icon_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "既要 1024 桌面图标，也要一套线性 svg，第24问", "mode": "stop", "route_ids": [], "bucket": "icon_conflict", "reason": "icon_conflict", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一个图标，别的没说，第24问", "mode": "stop", "route_ids": [], "bucket": "icon_unspecified", "reason": "icon_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "既要 1024 桌面图标，也要一套线性 svg，第25问", "mode": "stop", "route_ids": [], "bucket": "icon_conflict", "reason": "icon_conflict", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一个图标，别的没说，第25问", "mode": "stop", "route_ids": [], "bucket": "icon_unspecified", "reason": "icon_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "既要 1024 桌面图标，也要一套线性 svg，第26问", "mode": "stop", "route_ids": [], "bucket": "icon_conflict", "reason": "icon_conflict", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一个图标，别的没说，第26问", "mode": "stop", "route_ids": [], "bucket": "icon_unspecified", "reason": "icon_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "既要 1024 桌面图标，也要一套线性 svg，第27问", "mode": "stop", "route_ids": [], "bucket": "icon_conflict", "reason": "icon_conflict", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一个图标，别的没说，第27问", "mode": "stop", "route_ids": [], "bucket": "icon_unspecified", "reason": "icon_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "既要 1024 桌面图标，也要一套线性 svg，第28问", "mode": "stop", "route_ids": [], "bucket": "icon_conflict", "reason": "icon_conflict", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一个图标，别的没说，第28问", "mode": "stop", "route_ids": [], "bucket": "icon_unspecified", "reason": "icon_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "既要 1024 桌面图标，也要一套线性 svg，第29问", "mode": "stop", "route_ids": [], "bucket": "icon_conflict", "reason": "icon_conflict", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一个图标，别的没说，第29问", "mode": "stop", "route_ids": [], "bucket": "icon_unspecified", "reason": "icon_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "既要 1024 桌面图标，也要一套线性 svg，第30问", "mode": "stop", "route_ids": [], "bucket": "icon_conflict", "reason": "icon_conflict", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一个图标，别的没说，第30问", "mode": "stop", "route_ids": [], "bucket": "icon_unspecified", "reason": "icon_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "既要 1024 桌面图标，也要一套线性 svg，第31问", "mode": "stop", "route_ids": [], "bucket": "icon_conflict", "reason": "icon_conflict", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一个图标，别的没说，第31问", "mode": "stop", "route_ids": [], "bucket": "icon_unspecified", "reason": "icon_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "既要 1024 桌面图标，也要一套线性 svg，第32问", "mode": "stop", "route_ids": [], "bucket": "icon_conflict", "reason": "icon_conflict", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一个图标，别的没说，第32问", "mode": "stop", "route_ids": [], "bucket": "icon_unspecified", "reason": "icon_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "既要 1024 桌面图标，也要一套线性 svg，第33问", "mode": "stop", "route_ids": [], "bucket": "icon_conflict", "reason": "icon_conflict", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一个图标，别的没说，第33问", "mode": "stop", "route_ids": [], "bucket": "icon_unspecified", "reason": "icon_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "既要 1024 桌面图标，也要一套线性 svg，第34问", "mode": "stop", "route_ids": [], "bucket": "icon_conflict", "reason": "icon_conflict", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一个图标，别的没说，第34问", "mode": "stop", "route_ids": [], "bucket": "icon_unspecified", "reason": "icon_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "既要 1024 桌面图标，也要一套线性 svg，第35问", "mode": "stop", "route_ids": [], "bucket": "icon_conflict", "reason": "icon_conflict", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一个图标，别的没说，第35问", "mode": "stop", "route_ids": [], "bucket": "icon_unspecified", "reason": "icon_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "既要 1024 桌面图标，也要一套线性 svg，第36问", "mode": "stop", "route_ids": [], "bucket": "icon_conflict", "reason": "icon_conflict", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一个图标，别的没说，第36问", "mode": "stop", "route_ids": [], "bucket": "icon_unspecified", "reason": "icon_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "既要 1024 桌面图标，也要一套线性 svg，第37问", "mode": "stop", "route_ids": [], "bucket": "icon_conflict", "reason": "icon_conflict", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一个图标，别的没说，第37问", "mode": "stop", "route_ids": [], "bucket": "icon_unspecified", "reason": "icon_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "既要 1024 桌面图标，也要一套线性 svg，第38问", "mode": "stop", "route_ids": [], "bucket": "icon_conflict", "reason": "icon_conflict", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一个图标，别的没说，第38问", "mode": "stop", "route_ids": [], "bucket": "icon_unspecified", "reason": "icon_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "既要 1024 桌面图标，也要一套线性 svg，第39问", "mode": "stop", "route_ids": [], "bucket": "icon_conflict", "reason": "icon_conflict", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一个图标，别的没说，第39问", "mode": "stop", "route_ids": [], "bucket": "icon_unspecified", "reason": "icon_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "先写提示词，然后再画一张立绘，第0套", "mode": "skill", "route_ids": ["prompt.write", "draw.ordinary"], "bucket": "prompt_then_draw", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "审完再改这张立绘，第0张", "mode": "skill", "route_ids": ["critique.review", "draw.ordinary"], "bucket": "critique_then_draw", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "先写提示词，然后再画一张立绘，第1套", "mode": "skill", "route_ids": ["prompt.write", "draw.ordinary"], "bucket": "prompt_then_draw", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "审完再改这张立绘，第1张", "mode": "skill", "route_ids": ["critique.review", "draw.ordinary"], "bucket": "critique_then_draw", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "先写提示词，然后再画一张立绘，第2套", "mode": "skill", "route_ids": ["prompt.write", "draw.ordinary"], "bucket": "prompt_then_draw", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "审完再改这张立绘，第2张", "mode": "skill", "route_ids": ["critique.review", "draw.ordinary"], "bucket": "critique_then_draw", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "先写提示词，然后再画一张立绘，第3套", "mode": "skill", "route_ids": ["prompt.write", "draw.ordinary"], "bucket": "prompt_then_draw", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "审完再改这张立绘，第3张", "mode": "skill", "route_ids": ["critique.review", "draw.ordinary"], "bucket": "critique_then_draw", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "先写提示词，然后再画一张立绘，第4套", "mode": "skill", "route_ids": ["prompt.write", "draw.ordinary"], "bucket": "prompt_then_draw", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "审完再改这张立绘，第4张", "mode": "skill", "route_ids": ["critique.review", "draw.ordinary"], "bucket": "critique_then_draw", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "先写提示词，然后再画一张立绘，第5套", "mode": "skill", "route_ids": ["prompt.write", "draw.ordinary"], "bucket": "prompt_then_draw", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "审完再改这张立绘，第5张", "mode": "skill", "route_ids": ["critique.review", "draw.ordinary"], "bucket": "critique_then_draw", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "先写提示词，然后再画一张立绘，第6套", "mode": "skill", "route_ids": ["prompt.write", "draw.ordinary"], "bucket": "prompt_then_draw", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "审完再改这张立绘，第6张", "mode": "skill", "route_ids": ["critique.review", "draw.ordinary"], "bucket": "critique_then_draw", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "先写提示词，然后再画一张立绘，第7套", "mode": "skill", "route_ids": ["prompt.write", "draw.ordinary"], "bucket": "prompt_then_draw", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "审完再改这张立绘，第7张", "mode": "skill", "route_ids": ["critique.review", "draw.ordinary"], "bucket": "critique_then_draw", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "先写提示词，然后再画一张立绘，第8套", "mode": "skill", "route_ids": ["prompt.write", "draw.ordinary"], "bucket": "prompt_then_draw", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "审完再改这张立绘，第8张", "mode": "skill", "route_ids": ["critique.review", "draw.ordinary"], "bucket": "critique_then_draw", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "先写提示词，然后再画一张立绘，第9套", "mode": "skill", "route_ids": ["prompt.write", "draw.ordinary"], "bucket": "prompt_then_draw", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "审完再改这张立绘，第9张", "mode": "skill", "route_ids": ["critique.review", "draw.ordinary"], "bucket": "critique_then_draw", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "先写提示词，然后再画一张立绘，第10套", "mode": "skill", "route_ids": ["prompt.write", "draw.ordinary"], "bucket": "prompt_then_draw", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "审完再改这张立绘，第10张", "mode": "skill", "route_ids": ["critique.review", "draw.ordinary"], "bucket": "critique_then_draw", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "先写提示词，然后再画一张立绘，第11套", "mode": "skill", "route_ids": ["prompt.write", "draw.ordinary"], "bucket": "prompt_then_draw", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "审完再改这张立绘，第11张", "mode": "skill", "route_ids": ["critique.review", "draw.ordinary"], "bucket": "critique_then_draw", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "先写提示词，然后再画一张立绘，第12套", "mode": "skill", "route_ids": ["prompt.write", "draw.ordinary"], "bucket": "prompt_then_draw", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "审完再改这张立绘，第12张", "mode": "skill", "route_ids": ["critique.review", "draw.ordinary"], "bucket": "critique_then_draw", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "先写提示词，然后再画一张立绘，第13套", "mode": "skill", "route_ids": ["prompt.write", "draw.ordinary"], "bucket": "prompt_then_draw", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "审完再改这张立绘，第13张", "mode": "skill", "route_ids": ["critique.review", "draw.ordinary"], "bucket": "critique_then_draw", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "先写提示词，然后再画一张立绘，第14套", "mode": "skill", "route_ids": ["prompt.write", "draw.ordinary"], "bucket": "prompt_then_draw", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "审完再改这张立绘，第14张", "mode": "skill", "route_ids": ["critique.review", "draw.ordinary"], "bucket": "critique_then_draw", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "先写提示词，然后再画一张立绘，第15套", "mode": "skill", "route_ids": ["prompt.write", "draw.ordinary"], "bucket": "prompt_then_draw", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "审完再改这张立绘，第15张", "mode": "skill", "route_ids": ["critique.review", "draw.ordinary"], "bucket": "critique_then_draw", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "先写提示词，然后再画一张立绘，第16套", "mode": "skill", "route_ids": ["prompt.write", "draw.ordinary"], "bucket": "prompt_then_draw", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "审完再改这张立绘，第16张", "mode": "skill", "route_ids": ["critique.review", "draw.ordinary"], "bucket": "critique_then_draw", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "先写提示词，然后再画一张立绘，第17套", "mode": "skill", "route_ids": ["prompt.write", "draw.ordinary"], "bucket": "prompt_then_draw", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "审完再改这张立绘，第17张", "mode": "skill", "route_ids": ["critique.review", "draw.ordinary"], "bucket": "critique_then_draw", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "先写提示词，然后再画一张立绘，第18套", "mode": "skill", "route_ids": ["prompt.write", "draw.ordinary"], "bucket": "prompt_then_draw", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "审完再改这张立绘，第18张", "mode": "skill", "route_ids": ["critique.review", "draw.ordinary"], "bucket": "critique_then_draw", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "先写提示词，然后再画一张立绘，第19套", "mode": "skill", "route_ids": ["prompt.write", "draw.ordinary"], "bucket": "prompt_then_draw", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "审完再改这张立绘，第19张", "mode": "skill", "route_ids": ["critique.review", "draw.ordinary"], "bucket": "critique_then_draw", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "先写提示词，然后再画一张立绘，第20套", "mode": "skill", "route_ids": ["prompt.write", "draw.ordinary"], "bucket": "prompt_then_draw", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "审完再改这张立绘，第20张", "mode": "skill", "route_ids": ["critique.review", "draw.ordinary"], "bucket": "critique_then_draw", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "先写提示词，然后再画一张立绘，第21套", "mode": "skill", "route_ids": ["prompt.write", "draw.ordinary"], "bucket": "prompt_then_draw", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "审完再改这张立绘，第21张", "mode": "skill", "route_ids": ["critique.review", "draw.ordinary"], "bucket": "critique_then_draw", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "先写提示词，然后再画一张立绘，第22套", "mode": "skill", "route_ids": ["prompt.write", "draw.ordinary"], "bucket": "prompt_then_draw", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "审完再改这张立绘，第22张", "mode": "skill", "route_ids": ["critique.review", "draw.ordinary"], "bucket": "critique_then_draw", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "先写提示词，然后再画一张立绘，第23套", "mode": "skill", "route_ids": ["prompt.write", "draw.ordinary"], "bucket": "prompt_then_draw", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "审完再改这张立绘，第23张", "mode": "skill", "route_ids": ["critique.review", "draw.ordinary"], "bucket": "critique_then_draw", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "先写提示词，然后再画一张立绘，第24套", "mode": "skill", "route_ids": ["prompt.write", "draw.ordinary"], "bucket": "prompt_then_draw", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "审完再改这张立绘，第24张", "mode": "skill", "route_ids": ["critique.review", "draw.ordinary"], "bucket": "critique_then_draw", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "先写提示词，然后再画一张立绘，第25套", "mode": "skill", "route_ids": ["prompt.write", "draw.ordinary"], "bucket": "prompt_then_draw", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "审完再改这张立绘，第25张", "mode": "skill", "route_ids": ["critique.review", "draw.ordinary"], "bucket": "critique_then_draw", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "先写提示词，然后再画一张立绘，第26套", "mode": "skill", "route_ids": ["prompt.write", "draw.ordinary"], "bucket": "prompt_then_draw", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "审完再改这张立绘，第26张", "mode": "skill", "route_ids": ["critique.review", "draw.ordinary"], "bucket": "critique_then_draw", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "先写提示词，然后再画一张立绘，第27套", "mode": "skill", "route_ids": ["prompt.write", "draw.ordinary"], "bucket": "prompt_then_draw", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "审完再改这张立绘，第27张", "mode": "skill", "route_ids": ["critique.review", "draw.ordinary"], "bucket": "critique_then_draw", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "先写提示词，然后再画一张立绘，第28套", "mode": "skill", "route_ids": ["prompt.write", "draw.ordinary"], "bucket": "prompt_then_draw", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "审完再改这张立绘，第28张", "mode": "skill", "route_ids": ["critique.review", "draw.ordinary"], "bucket": "critique_then_draw", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "先写提示词，然后再画一张立绘，第29套", "mode": "skill", "route_ids": ["prompt.write", "draw.ordinary"], "bucket": "prompt_then_draw", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "审完再改这张立绘，第29张", "mode": "skill", "route_ids": ["critique.review", "draw.ordinary"], "bucket": "critique_then_draw", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "帮我做局部修，第0件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做局部修，第1件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做局部修，第2件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做局部修，第3件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做局部修，第4件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做局部修，第5件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做局部修，第6件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做局部修，第7件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做设定表，第0件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做设定表，第1件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做设定表，第2件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做设定表，第3件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做设定表，第4件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做设定表，第5件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做设定表，第6件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做设定表，第7件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做分镜，第0件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做分镜，第1件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做分镜，第2件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做分镜，第3件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做分镜，第4件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做分镜，第5件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做分镜，第6件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做分镜，第7件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做姿势锁，第0件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做姿势锁，第1件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做姿势锁，第2件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做姿势锁，第3件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做姿势锁，第4件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做姿势锁，第5件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做姿势锁，第6件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做姿势锁，第7件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做同一场景换光，第0件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做同一场景换光，第1件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做同一场景换光，第2件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做同一场景换光，第3件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做同一场景换光，第4件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做同一场景换光，第5件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做同一场景换光，第6件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做同一场景换光，第7件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做画幅延展，第0件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做画幅延展，第1件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做画幅延展，第2件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做画幅延展，第3件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做画幅延展，第4件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做画幅延展，第5件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做画幅延展，第6件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做画幅延展，第7件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做放大清稿，第0件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做放大清稿，第1件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做放大清稿，第2件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做放大清稿，第3件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做放大清稿，第4件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做放大清稿，第5件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做放大清稿，第6件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做放大清稿，第7件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做序列帧，第0件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做序列帧，第1件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做序列帧，第2件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做序列帧，第3件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做序列帧，第4件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做序列帧，第5件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做序列帧，第6件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做序列帧，第7件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做平铺贴图，第0件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做平铺贴图，第1件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做平铺贴图，第2件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做平铺贴图，第3件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做平铺贴图，第4件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做平铺贴图，第5件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做平铺贴图，第6件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做平铺贴图，第7件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做带字主视觉，第0件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做带字主视觉，第1件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做带字主视觉，第2件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做带字主视觉，第3件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做带字主视觉，第4件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做带字主视觉，第5件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做带字主视觉，第6件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做带字主视觉，第7件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做字标，第0件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做字标，第1件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做字标，第2件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做字标，第3件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做字标，第4件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做字标，第5件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做字标，第6件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做字标，第7件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做色板点选，第0件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做色板点选，第1件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做色板点选，第2件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做色板点选，第3件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做色板点选，第4件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做色板点选，第5件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做色板点选，第6件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做色板点选，第7件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做情绪板，第0件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做情绪板，第1件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做情绪板，第2件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做情绪板，第3件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做情绪板，第4件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做情绪板，第5件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做情绪板，第6件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我做情绪板，第7件", "mode": "stop", "route_ids": [], "bucket": "unrecognized", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "这两张参考的像素必须同时出现在同一张成图里，第0次", "mode": "stop", "route_ids": [], "bucket": "pixels", "reason": "simultaneous_pixels", "images": 2, "hard": true, "source": "packaged"}
+{"text": "到底是整套界面还是一张插画，第0问", "mode": "stop", "route_ids": [], "bucket": "hard", "reason": "hard_ambiguity", "images": 0, "hard": true, "source": "packaged"}
+{"text": "这两张参考的像素必须同时出现在同一张成图里，第1次", "mode": "stop", "route_ids": [], "bucket": "pixels", "reason": "simultaneous_pixels", "images": 2, "hard": true, "source": "packaged"}
+{"text": "到底是整套界面还是一张插画，第1问", "mode": "stop", "route_ids": [], "bucket": "hard", "reason": "hard_ambiguity", "images": 0, "hard": true, "source": "packaged"}
+{"text": "这两张参考的像素必须同时出现在同一张成图里，第2次", "mode": "stop", "route_ids": [], "bucket": "pixels", "reason": "simultaneous_pixels", "images": 2, "hard": true, "source": "packaged"}
+{"text": "到底是整套界面还是一张插画，第2问", "mode": "stop", "route_ids": [], "bucket": "hard", "reason": "hard_ambiguity", "images": 0, "hard": true, "source": "packaged"}
+{"text": "这两张参考的像素必须同时出现在同一张成图里，第3次", "mode": "stop", "route_ids": [], "bucket": "pixels", "reason": "simultaneous_pixels", "images": 2, "hard": true, "source": "packaged"}
+{"text": "到底是整套界面还是一张插画，第3问", "mode": "stop", "route_ids": [], "bucket": "hard", "reason": "hard_ambiguity", "images": 0, "hard": true, "source": "packaged"}
+{"text": "这两张参考的像素必须同时出现在同一张成图里，第4次", "mode": "stop", "route_ids": [], "bucket": "pixels", "reason": "simultaneous_pixels", "images": 2, "hard": true, "source": "packaged"}
+{"text": "到底是整套界面还是一张插画，第4问", "mode": "stop", "route_ids": [], "bucket": "hard", "reason": "hard_ambiguity", "images": 0, "hard": true, "source": "packaged"}
+{"text": "这两张参考的像素必须同时出现在同一张成图里，第5次", "mode": "stop", "route_ids": [], "bucket": "pixels", "reason": "simultaneous_pixels", "images": 2, "hard": true, "source": "packaged"}
+{"text": "到底是整套界面还是一张插画，第5问", "mode": "stop", "route_ids": [], "bucket": "hard", "reason": "hard_ambiguity", "images": 0, "hard": true, "source": "packaged"}
+{"text": "这两张参考的像素必须同时出现在同一张成图里，第6次", "mode": "stop", "route_ids": [], "bucket": "pixels", "reason": "simultaneous_pixels", "images": 2, "hard": true, "source": "packaged"}
+{"text": "到底是整套界面还是一张插画，第6问", "mode": "stop", "route_ids": [], "bucket": "hard", "reason": "hard_ambiguity", "images": 0, "hard": true, "source": "packaged"}
+{"text": "这两张参考的像素必须同时出现在同一张成图里，第7次", "mode": "stop", "route_ids": [], "bucket": "pixels", "reason": "simultaneous_pixels", "images": 2, "hard": true, "source": "packaged"}
+{"text": "到底是整套界面还是一张插画，第7问", "mode": "stop", "route_ids": [], "bucket": "hard", "reason": "hard_ambiguity", "images": 0, "hard": true, "source": "packaged"}
+{"text": "这两张参考的像素必须同时出现在同一张成图里，第8次", "mode": "stop", "route_ids": [], "bucket": "pixels", "reason": "simultaneous_pixels", "images": 2, "hard": true, "source": "packaged"}
+{"text": "到底是整套界面还是一张插画，第8问", "mode": "stop", "route_ids": [], "bucket": "hard", "reason": "hard_ambiguity", "images": 0, "hard": true, "source": "packaged"}
+{"text": "这两张参考的像素必须同时出现在同一张成图里，第9次", "mode": "stop", "route_ids": [], "bucket": "pixels", "reason": "simultaneous_pixels", "images": 2, "hard": true, "source": "packaged"}
+{"text": "到底是整套界面还是一张插画，第9问", "mode": "stop", "route_ids": [], "bucket": "hard", "reason": "hard_ambiguity", "images": 0, "hard": true, "source": "packaged"}
+{"text": "这两张参考的像素必须同时出现在同一张成图里，第10次", "mode": "stop", "route_ids": [], "bucket": "pixels", "reason": "simultaneous_pixels", "images": 2, "hard": true, "source": "packaged"}
+{"text": "到底是整套界面还是一张插画，第10问", "mode": "stop", "route_ids": [], "bucket": "hard", "reason": "hard_ambiguity", "images": 0, "hard": true, "source": "packaged"}
+{"text": "这两张参考的像素必须同时出现在同一张成图里，第11次", "mode": "stop", "route_ids": [], "bucket": "pixels", "reason": "simultaneous_pixels", "images": 2, "hard": true, "source": "packaged"}
+{"text": "到底是整套界面还是一张插画，第11问", "mode": "stop", "route_ids": [], "bucket": "hard", "reason": "hard_ambiguity", "images": 0, "hard": true, "source": "packaged"}
+{"text": "这两张参考的像素必须同时出现在同一张成图里，第12次", "mode": "stop", "route_ids": [], "bucket": "pixels", "reason": "simultaneous_pixels", "images": 2, "hard": true, "source": "packaged"}
+{"text": "到底是整套界面还是一张插画，第12问", "mode": "stop", "route_ids": [], "bucket": "hard", "reason": "hard_ambiguity", "images": 0, "hard": true, "source": "packaged"}
+{"text": "这两张参考的像素必须同时出现在同一张成图里，第13次", "mode": "stop", "route_ids": [], "bucket": "pixels", "reason": "simultaneous_pixels", "images": 2, "hard": true, "source": "packaged"}
+{"text": "到底是整套界面还是一张插画，第13问", "mode": "stop", "route_ids": [], "bucket": "hard", "reason": "hard_ambiguity", "images": 0, "hard": true, "source": "packaged"}
+{"text": "这两张参考的像素必须同时出现在同一张成图里，第14次", "mode": "stop", "route_ids": [], "bucket": "pixels", "reason": "simultaneous_pixels", "images": 2, "hard": true, "source": "packaged"}
+{"text": "到底是整套界面还是一张插画，第14问", "mode": "stop", "route_ids": [], "bucket": "hard", "reason": "hard_ambiguity", "images": 0, "hard": true, "source": "packaged"}
+{"text": "这两张参考的像素必须同时出现在同一张成图里，第15次", "mode": "stop", "route_ids": [], "bucket": "pixels", "reason": "simultaneous_pixels", "images": 2, "hard": true, "source": "packaged"}
+{"text": "到底是整套界面还是一张插画，第15问", "mode": "stop", "route_ids": [], "bucket": "hard", "reason": "hard_ambiguity", "images": 0, "hard": true, "source": "packaged"}
+{"text": "这两张参考的像素必须同时出现在同一张成图里，第16次", "mode": "stop", "route_ids": [], "bucket": "pixels", "reason": "simultaneous_pixels", "images": 2, "hard": true, "source": "packaged"}
+{"text": "到底是整套界面还是一张插画，第16问", "mode": "stop", "route_ids": [], "bucket": "hard", "reason": "hard_ambiguity", "images": 0, "hard": true, "source": "packaged"}
+{"text": "这两张参考的像素必须同时出现在同一张成图里，第17次", "mode": "stop", "route_ids": [], "bucket": "pixels", "reason": "simultaneous_pixels", "images": 2, "hard": true, "source": "packaged"}
+{"text": "到底是整套界面还是一张插画，第17问", "mode": "stop", "route_ids": [], "bucket": "hard", "reason": "hard_ambiguity", "images": 0, "hard": true, "source": "packaged"}
+{"text": "这两张参考的像素必须同时出现在同一张成图里，第18次", "mode": "stop", "route_ids": [], "bucket": "pixels", "reason": "simultaneous_pixels", "images": 2, "hard": true, "source": "packaged"}
+{"text": "到底是整套界面还是一张插画，第18问", "mode": "stop", "route_ids": [], "bucket": "hard", "reason": "hard_ambiguity", "images": 0, "hard": true, "source": "packaged"}
+{"text": "这两张参考的像素必须同时出现在同一张成图里，第19次", "mode": "stop", "route_ids": [], "bucket": "pixels", "reason": "simultaneous_pixels", "images": 2, "hard": true, "source": "packaged"}
+{"text": "到底是整套界面还是一张插画，第19问", "mode": "stop", "route_ids": [], "bucket": "hard", "reason": "hard_ambiguity", "images": 0, "hard": true, "source": "packaged"}
+{"text": "这两张参考的像素必须同时出现在同一张成图里，第20次", "mode": "stop", "route_ids": [], "bucket": "pixels", "reason": "simultaneous_pixels", "images": 2, "hard": true, "source": "packaged"}
+{"text": "到底是整套界面还是一张插画，第20问", "mode": "stop", "route_ids": [], "bucket": "hard", "reason": "hard_ambiguity", "images": 0, "hard": true, "source": "packaged"}
+{"text": "这两张参考的像素必须同时出现在同一张成图里，第21次", "mode": "stop", "route_ids": [], "bucket": "pixels", "reason": "simultaneous_pixels", "images": 2, "hard": true, "source": "packaged"}
+{"text": "到底是整套界面还是一张插画，第21问", "mode": "stop", "route_ids": [], "bucket": "hard", "reason": "hard_ambiguity", "images": 0, "hard": true, "source": "packaged"}
+{"text": "这两张参考的像素必须同时出现在同一张成图里，第22次", "mode": "stop", "route_ids": [], "bucket": "pixels", "reason": "simultaneous_pixels", "images": 2, "hard": true, "source": "packaged"}
+{"text": "到底是整套界面还是一张插画，第22问", "mode": "stop", "route_ids": [], "bucket": "hard", "reason": "hard_ambiguity", "images": 0, "hard": true, "source": "packaged"}
+{"text": "这两张参考的像素必须同时出现在同一张成图里，第23次", "mode": "stop", "route_ids": [], "bucket": "pixels", "reason": "simultaneous_pixels", "images": 2, "hard": true, "source": "packaged"}
+{"text": "到底是整套界面还是一张插画，第23问", "mode": "stop", "route_ids": [], "bucket": "hard", "reason": "hard_ambiguity", "images": 0, "hard": true, "source": "packaged"}
+{"text": "这两张参考的像素必须同时出现在同一张成图里，第24次", "mode": "stop", "route_ids": [], "bucket": "pixels", "reason": "simultaneous_pixels", "images": 2, "hard": true, "source": "packaged"}
+{"text": "到底是整套界面还是一张插画，第24问", "mode": "stop", "route_ids": [], "bucket": "hard", "reason": "hard_ambiguity", "images": 0, "hard": true, "source": "packaged"}
+{"text": "这两张参考的像素必须同时出现在同一张成图里，第25次", "mode": "stop", "route_ids": [], "bucket": "pixels", "reason": "simultaneous_pixels", "images": 2, "hard": true, "source": "packaged"}
+{"text": "到底是整套界面还是一张插画，第25问", "mode": "stop", "route_ids": [], "bucket": "hard", "reason": "hard_ambiguity", "images": 0, "hard": true, "source": "packaged"}
+{"text": "这两张参考的像素必须同时出现在同一张成图里，第26次", "mode": "stop", "route_ids": [], "bucket": "pixels", "reason": "simultaneous_pixels", "images": 2, "hard": true, "source": "packaged"}
+{"text": "到底是整套界面还是一张插画，第26问", "mode": "stop", "route_ids": [], "bucket": "hard", "reason": "hard_ambiguity", "images": 0, "hard": true, "source": "packaged"}
+{"text": "这两张参考的像素必须同时出现在同一张成图里，第27次", "mode": "stop", "route_ids": [], "bucket": "pixels", "reason": "simultaneous_pixels", "images": 2, "hard": true, "source": "packaged"}
+{"text": "到底是整套界面还是一张插画，第27问", "mode": "stop", "route_ids": [], "bucket": "hard", "reason": "hard_ambiguity", "images": 0, "hard": true, "source": "packaged"}
+{"text": "这两张参考的像素必须同时出现在同一张成图里，第28次", "mode": "stop", "route_ids": [], "bucket": "pixels", "reason": "simultaneous_pixels", "images": 2, "hard": true, "source": "packaged"}
+{"text": "到底是整套界面还是一张插画，第28问", "mode": "stop", "route_ids": [], "bucket": "hard", "reason": "hard_ambiguity", "images": 0, "hard": true, "source": "packaged"}
+{"text": "这两张参考的像素必须同时出现在同一张成图里，第29次", "mode": "stop", "route_ids": [], "bucket": "pixels", "reason": "simultaneous_pixels", "images": 2, "hard": true, "source": "packaged"}
+{"text": "到底是整套界面还是一张插画，第29问", "mode": "stop", "route_ids": [], "bucket": "hard", "reason": "hard_ambiguity", "images": 0, "hard": true, "source": "packaged"}
+{"text": "做一页对比页，没写重跑哪几支，第0页", "mode": "stop", "route_ids": [], "bucket": "showcase_empty", "reason": "showcase_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "/pmem-storyboard 画一张，第0次", "mode": "stop", "route_ids": [], "bucket": "named_unknown", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "做一页对比页，没写重跑哪几支，第1页", "mode": "stop", "route_ids": [], "bucket": "showcase_empty", "reason": "showcase_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "/pmem-storyboard 画一张，第1次", "mode": "stop", "route_ids": [], "bucket": "named_unknown", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "做一页对比页，没写重跑哪几支，第2页", "mode": "stop", "route_ids": [], "bucket": "showcase_empty", "reason": "showcase_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "/pmem-storyboard 画一张，第2次", "mode": "stop", "route_ids": [], "bucket": "named_unknown", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "做一页对比页，没写重跑哪几支，第3页", "mode": "stop", "route_ids": [], "bucket": "showcase_empty", "reason": "showcase_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "/pmem-storyboard 画一张，第3次", "mode": "stop", "route_ids": [], "bucket": "named_unknown", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "做一页对比页，没写重跑哪几支，第4页", "mode": "stop", "route_ids": [], "bucket": "showcase_empty", "reason": "showcase_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "/pmem-storyboard 画一张，第4次", "mode": "stop", "route_ids": [], "bucket": "named_unknown", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "做一页对比页，没写重跑哪几支，第5页", "mode": "stop", "route_ids": [], "bucket": "showcase_empty", "reason": "showcase_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "/pmem-storyboard 画一张，第5次", "mode": "stop", "route_ids": [], "bucket": "named_unknown", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "做一页对比页，没写重跑哪几支，第6页", "mode": "stop", "route_ids": [], "bucket": "showcase_empty", "reason": "showcase_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "/pmem-storyboard 画一张，第6次", "mode": "stop", "route_ids": [], "bucket": "named_unknown", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "做一页对比页，没写重跑哪几支，第7页", "mode": "stop", "route_ids": [], "bucket": "showcase_empty", "reason": "showcase_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "/pmem-storyboard 画一张，第7次", "mode": "stop", "route_ids": [], "bucket": "named_unknown", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "做一页对比页，没写重跑哪几支，第8页", "mode": "stop", "route_ids": [], "bucket": "showcase_empty", "reason": "showcase_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "/pmem-storyboard 画一张，第8次", "mode": "stop", "route_ids": [], "bucket": "named_unknown", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "做一页对比页，没写重跑哪几支，第9页", "mode": "stop", "route_ids": [], "bucket": "showcase_empty", "reason": "showcase_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "/pmem-storyboard 画一张，第9次", "mode": "stop", "route_ids": [], "bucket": "named_unknown", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "做一页对比页，没写重跑哪几支，第10页", "mode": "stop", "route_ids": [], "bucket": "showcase_empty", "reason": "showcase_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "/pmem-storyboard 画一张，第10次", "mode": "stop", "route_ids": [], "bucket": "named_unknown", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "做一页对比页，没写重跑哪几支，第11页", "mode": "stop", "route_ids": [], "bucket": "showcase_empty", "reason": "showcase_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "/pmem-storyboard 画一张，第11次", "mode": "stop", "route_ids": [], "bucket": "named_unknown", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "做一页对比页，没写重跑哪几支，第12页", "mode": "stop", "route_ids": [], "bucket": "showcase_empty", "reason": "showcase_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "/pmem-storyboard 画一张，第12次", "mode": "stop", "route_ids": [], "bucket": "named_unknown", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "做一页对比页，没写重跑哪几支，第13页", "mode": "stop", "route_ids": [], "bucket": "showcase_empty", "reason": "showcase_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "/pmem-storyboard 画一张，第13次", "mode": "stop", "route_ids": [], "bucket": "named_unknown", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "做一页对比页，没写重跑哪几支，第14页", "mode": "stop", "route_ids": [], "bucket": "showcase_empty", "reason": "showcase_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "/pmem-storyboard 画一张，第14次", "mode": "stop", "route_ids": [], "bucket": "named_unknown", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "做一页对比页，没写重跑哪几支，第15页", "mode": "stop", "route_ids": [], "bucket": "showcase_empty", "reason": "showcase_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "/pmem-storyboard 画一张，第15次", "mode": "stop", "route_ids": [], "bucket": "named_unknown", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "做一页对比页，没写重跑哪几支，第16页", "mode": "stop", "route_ids": [], "bucket": "showcase_empty", "reason": "showcase_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "/pmem-storyboard 画一张，第16次", "mode": "stop", "route_ids": [], "bucket": "named_unknown", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "做一页对比页，没写重跑哪几支，第17页", "mode": "stop", "route_ids": [], "bucket": "showcase_empty", "reason": "showcase_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "/pmem-storyboard 画一张，第17次", "mode": "stop", "route_ids": [], "bucket": "named_unknown", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "做一页对比页，没写重跑哪几支，第18页", "mode": "stop", "route_ids": [], "bucket": "showcase_empty", "reason": "showcase_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "/pmem-storyboard 画一张，第18次", "mode": "stop", "route_ids": [], "bucket": "named_unknown", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "做一页对比页，没写重跑哪几支，第19页", "mode": "stop", "route_ids": [], "bucket": "showcase_empty", "reason": "showcase_unspecified", "images": 0, "hard": true, "source": "packaged"}
+{"text": "/pmem-storyboard 画一张，第19次", "mode": "stop", "route_ids": [], "bucket": "named_unknown", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "不要做分镜，就画一张窗边女孩", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "negated_ban", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "不要做分镜，就画一张青瓷杯", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "negated_ban", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "不要做分镜，就画一张驿站猫", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "negated_ban", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "不要做分镜，就画一张雨夜街道", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "negated_ban", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "不要做分镜，就画一张半身骑士", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "negated_ban", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "不要做分镜，就画一张旧船", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "negated_ban", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "不要做分镜，就画一张花瓶", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "negated_ban", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "不要做分镜，就画一张书店伙计", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "negated_ban", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "不要做分镜，就画一张雪地旅人", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "negated_ban", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "不要做分镜，就画一张灯塔", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "negated_ban", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "不要做分镜，就画一张厨师", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "negated_ban", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "不要做分镜，就画一张信使", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "negated_ban", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "不要做分镜，就画一张石桥", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "negated_ban", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "不要做分镜，就画一张麦田", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "negated_ban", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "不要做分镜，就画一张教室", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "negated_ban", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "不要做分镜，就画一张白猫", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "negated_ban", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "帮我出个站在窗边的人", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "heldout", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "水彩头像，看着舒服就行", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "heldout", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "笔触照这张，主体改成雪狐", "mode": "skill", "route_ids": ["draw.clone"], "bucket": "heldout", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "用附图的颜色，别画原来的人，画一艘船", "mode": "skill", "route_ids": ["draw.clone"], "bucket": "heldout", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "同一张脸，换个画风", "mode": "skill", "route_ids": ["draw.variant"], "bucket": "heldout", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "做一张四格表情表", "mode": "skill", "route_ids": ["draw.variant"], "bucket": "heldout", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "附图一张管长相，一张管姿势", "mode": "skill", "route_ids": ["draw.multi"], "bucket": "heldout", "reason": "", "images": 2, "hard": true, "source": "packaged"}
+{"text": "机位给三个方案我来选", "mode": "skill", "route_ids": ["draw.lens"], "bucket": "heldout", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "主界面要一整屏，按钮分常态和按下", "mode": "skill", "route_ids": ["ui.kit"], "bucket": "heldout", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "应用商店那种 1024 的启动图标", "mode": "skill", "route_ids": ["icon.a"], "bucket": "heldout", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "从木剑长到圣剑，八个等级越来越大", "mode": "skill", "route_ids": ["merge.ladder"], "bucket": "heldout", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "往后出图都用这张的色板", "mode": "skill", "route_ids": ["style.lock"], "bucket": "heldout", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "先别动笔，帮我看看哪里不行", "mode": "skill", "route_ids": ["critique.review"], "bucket": "heldout", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "仓库里那些没归类的图收进图谱", "mode": "skill", "route_ids": ["atlas.file"], "bucket": "heldout", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "我最近画得怎么样，短板在哪", "mode": "skill", "route_ids": ["coach.report"], "bucket": "heldout", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "把这句话扩成可以拿去画的说法，先别出图", "mode": "skill", "route_ids": ["prompt.write"], "bucket": "heldout", "reason": "", "images": 0, "hard": true, "source": "packaged"}
+{"text": "只改手，别的地方别动", "mode": "stop", "route_ids": [], "bucket": "heldout", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "把这张往外延展画面", "mode": "stop", "route_ids": [], "bucket": "heldout", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "拉一条故事板", "mode": "stop", "route_ids": [], "bucket": "heldout", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "锁姿势，人别换动作", "mode": "stop", "route_ids": [], "bucket": "heldout", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "做一串逐帧", "mode": "stop", "route_ids": [], "bucket": "heldout", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "要一张无缝贴图", "mode": "stop", "route_ids": [], "bucket": "heldout", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "同一场景里只换光", "mode": "stop", "route_ids": [], "bucket": "heldout", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "放大后清一下线", "mode": "stop", "route_ids": [], "bucket": "heldout", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "出一张三视图设定", "mode": "stop", "route_ids": [], "bucket": "heldout", "reason": "unrecognized", "images": 0, "hard": true, "source": "packaged"}
+{"text": "画一张水彩半身的窗边女孩", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ordinary", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "画一张平涂街景的窗边女孩", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ordinary", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "画一张冷调半身的窗边女孩", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ordinary", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "画一张雨天街景的窗边女孩", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ordinary", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "画一张平涂半身的青瓷杯", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ordinary", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "画一张暖调街景的青瓷杯", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ordinary", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "画一张雨天半身的青瓷杯", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ordinary", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "画一张厚涂街景的驿站猫", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ordinary", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "画一张暖调半身的驿站猫", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ordinary", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "画一张清晨街景的驿站猫", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ordinary", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "画一张厚涂半身的雨夜街道", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ordinary", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "画一张铅笔街景的雨夜街道", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ordinary", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "画一张清晨半身的雨夜街道", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ordinary", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "画一张水彩街景的半身骑士", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ordinary", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "画一张铅笔半身的半身骑士", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ordinary", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "画一张冷调街景的半身骑士", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ordinary", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "画一张水彩半身的旧船", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ordinary", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "画一张平涂街景的旧船", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ordinary", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "画一张冷调半身的旧船", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ordinary", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "画一张雨天街景的旧船", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ordinary", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "画一张平涂半身的花瓶", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ordinary", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "画一张暖调街景的花瓶", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ordinary", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "画一张雨天半身的花瓶", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ordinary", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "画一张厚涂街景的书店伙计", "mode": "default", "route_ids": ["draw.ordinary"], "bucket": "ordinary", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "参考这张的画风，别画原来的人，换成修车的男孩", "mode": "skill", "route_ids": ["draw.clone"], "bucket": "clone", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "参考这张的画风，别画原来的人，换成一只猫", "mode": "skill", "route_ids": ["draw.clone"], "bucket": "clone", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "参考这张的画风，别画原来的人，换成一盏灯", "mode": "skill", "route_ids": ["draw.clone"], "bucket": "clone", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "参考这张的画风，别画原来的人，换成邮局", "mode": "skill", "route_ids": ["draw.clone"], "bucket": "clone", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "参考这张的画风，别画原来的人，换成渡船", "mode": "skill", "route_ids": ["draw.clone"], "bucket": "clone", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "参考这张的画风，别画原来的人，换成陶罐", "mode": "skill", "route_ids": ["draw.clone"], "bucket": "clone", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "参考这张的画风，别画原来的人，换成雪狐", "mode": "skill", "route_ids": ["draw.clone"], "bucket": "clone", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "参考这张的画风，别画原来的人，换成钟楼", "mode": "skill", "route_ids": ["draw.clone"], "bucket": "clone", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "同一个女孩，身份和机位不动，再来一张生气的表情", "mode": "skill", "route_ids": ["draw.variant"], "bucket": "variant", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "同一个女孩，身份和机位不动，再来一张微笑的表情", "mode": "skill", "route_ids": ["draw.variant"], "bucket": "variant", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "同一个女孩，身份和机位不动，再来一张闭眼的表情", "mode": "skill", "route_ids": ["draw.variant"], "bucket": "variant", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "同一个女孩，身份和机位不动，再来一张侧目的表情", "mode": "skill", "route_ids": ["draw.variant"], "bucket": "variant", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "第一张是脸，第二张是坐姿，两张各管一件事", "mode": "skill", "route_ids": ["draw.multi"], "bucket": "multi", "reason": "", "images": 2, "hard": false, "source": "packaged"}
+{"text": "给我三套机位我自己挑，角色是第0个旅人", "mode": "skill", "route_ids": ["draw.lens"], "bucket": "lens", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "给我三套机位我自己挑，角色是第3个旅人", "mode": "skill", "route_ids": ["draw.lens"], "bucket": "lens", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "给我三套机位我自己挑，角色是第6个旅人", "mode": "skill", "route_ids": ["draw.lens"], "bucket": "lens", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "给我三套机位我自己挑，角色是第9个旅人", "mode": "skill", "route_ids": ["draw.lens"], "bucket": "lens", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "给我三套机位我自己挑，角色是第12个旅人", "mode": "skill", "route_ids": ["draw.lens"], "bucket": "lens", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "给我三套机位我自己挑，角色是第15个旅人", "mode": "skill", "route_ids": ["draw.lens"], "bucket": "lens", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "给我三套机位我自己挑，角色是第18个旅人", "mode": "skill", "route_ids": ["draw.lens"], "bucket": "lens", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "来个镜头包，先别画，角色是第1个旅人", "mode": "skill", "route_ids": ["draw.lens"], "bucket": "lens", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "来个镜头包，先别画，角色是第4个旅人", "mode": "skill", "route_ids": ["draw.lens"], "bucket": "lens", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "来个镜头包，先别画，角色是第7个旅人", "mode": "skill", "route_ids": ["draw.lens"], "bucket": "lens", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "来个镜头包，先别画，角色是第10个旅人", "mode": "skill", "route_ids": ["draw.lens"], "bucket": "lens", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "来个镜头包，先别画，角色是第13个旅人", "mode": "skill", "route_ids": ["draw.lens"], "bucket": "lens", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "来个镜头包，先别画，角色是第16个旅人", "mode": "skill", "route_ids": ["draw.lens"], "bucket": "lens", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "来个镜头包，先别画，角色是第19个旅人", "mode": "skill", "route_ids": ["draw.lens"], "bucket": "lens", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "远中近给我看看，角色是第2个旅人", "mode": "skill", "route_ids": ["draw.lens"], "bucket": "lens", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "远中近给我看看，角色是第5个旅人", "mode": "skill", "route_ids": ["draw.lens"], "bucket": "lens", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "远中近给我看看，角色是第8个旅人", "mode": "skill", "route_ids": ["draw.lens"], "bucket": "lens", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "远中近给我看看，角色是第11个旅人", "mode": "skill", "route_ids": ["draw.lens"], "bucket": "lens", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "远中近给我看看，角色是第14个旅人", "mode": "skill", "route_ids": ["draw.lens"], "bucket": "lens", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "远中近给我看看，角色是第17个旅人", "mode": "skill", "route_ids": ["draw.lens"], "bucket": "lens", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "四套镜头给自己挑，角色是第0个旅人", "mode": "skill", "route_ids": ["draw.lens"], "bucket": "lens", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "四套镜头给自己挑，角色是第3个旅人", "mode": "skill", "route_ids": ["draw.lens"], "bucket": "lens", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "四套镜头给自己挑，角色是第6个旅人", "mode": "skill", "route_ids": ["draw.lens"], "bucket": "lens", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "四套镜头给自己挑，角色是第9个旅人", "mode": "skill", "route_ids": ["draw.lens"], "bucket": "lens", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "一整套主菜单，按钮要有按下和禁用，方案0", "mode": "skill", "route_ids": ["ui.kit"], "bucket": "ui", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "一整套主菜单，按钮要有按下和禁用，方案4", "mode": "skill", "route_ids": ["ui.kit"], "bucket": "ui", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "一整套主菜单，按钮要有按下和禁用，方案8", "mode": "skill", "route_ids": ["ui.kit"], "bucket": "ui", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "一整套主菜单，按钮要有按下和禁用，方案12", "mode": "skill", "route_ids": ["ui.kit"], "bucket": "ui", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "一整套主菜单，按钮要有按下和禁用，方案16", "mode": "skill", "route_ids": ["ui.kit"], "bucket": "ui", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "一整套主菜单，按钮要有按下和禁用，方案20", "mode": "skill", "route_ids": ["ui.kit"], "bucket": "ui", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "一整套主菜单，按钮要有按下和禁用，方案24", "mode": "skill", "route_ids": ["ui.kit"], "bucket": "ui", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "HUD 整屏，方案3", "mode": "skill", "route_ids": ["ui.kit"], "bucket": "ui", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "HUD 整屏，方案7", "mode": "skill", "route_ids": ["ui.kit"], "bucket": "ui", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "HUD 整屏，方案11", "mode": "skill", "route_ids": ["ui.kit"], "bucket": "ui", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "HUD 整屏，方案15", "mode": "skill", "route_ids": ["ui.kit"], "bucket": "ui", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "HUD 整屏，方案19", "mode": "skill", "route_ids": ["ui.kit"], "bucket": "ui", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "HUD 整屏，方案23", "mode": "skill", "route_ids": ["ui.kit"], "bucket": "ui", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "九宫格弹窗套件，带状态族，方案2", "mode": "skill", "route_ids": ["ui.kit"], "bucket": "ui", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "九宫格弹窗套件，带状态族，方案6", "mode": "skill", "route_ids": ["ui.kit"], "bucket": "ui", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "九宫格弹窗套件，带状态族，方案10", "mode": "skill", "route_ids": ["ui.kit"], "bucket": "ui", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "九宫格弹窗套件，带状态族，方案14", "mode": "skill", "route_ids": ["ui.kit"], "bucket": "ui", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "九宫格弹窗套件，带状态族，方案18", "mode": "skill", "route_ids": ["ui.kit"], "bucket": "ui", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "九宫格弹窗套件，带状态族，方案22", "mode": "skill", "route_ids": ["ui.kit"], "bucket": "ui", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一整套界面，方案1", "mode": "skill", "route_ids": ["ui.kit"], "bucket": "ui", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一整套界面，方案5", "mode": "skill", "route_ids": ["ui.kit"], "bucket": "ui", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一整套界面，方案9", "mode": "skill", "route_ids": ["ui.kit"], "bucket": "ui", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一整套界面，方案13", "mode": "skill", "route_ids": ["ui.kit"], "bucket": "ui", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一整套界面，方案17", "mode": "skill", "route_ids": ["ui.kit"], "bucket": "ui", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一枚 1024 桌面图标，第0版", "mode": "skill", "route_ids": ["icon.a"], "bucket": "icon_a", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一枚 1024 桌面图标，第3版", "mode": "skill", "route_ids": ["icon.a"], "bucket": "icon_a", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一枚 1024 桌面图标，第6版", "mode": "skill", "route_ids": ["icon.a"], "bucket": "icon_a", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一枚 1024 桌面图标，第9版", "mode": "skill", "route_ids": ["icon.a"], "bucket": "icon_a", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一枚 1024 桌面图标，第12版", "mode": "skill", "route_ids": ["icon.a"], "bucket": "icon_a", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一枚 1024 桌面图标，第15版", "mode": "skill", "route_ids": ["icon.a"], "bucket": "icon_a", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一枚 1024 桌面图标，第18版", "mode": "skill", "route_ids": ["icon.a"], "bucket": "icon_a", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一枚 1024 桌面图标，第21版", "mode": "skill", "route_ids": ["icon.a"], "bucket": "icon_a", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一枚 1024 桌面图标，第24版", "mode": "skill", "route_ids": ["icon.a"], "bucket": "icon_a", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一枚 1024 桌面图标，第27版", "mode": "skill", "route_ids": ["icon.a"], "bucket": "icon_a", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一枚 1024 桌面图标，第30版", "mode": "skill", "route_ids": ["icon.a"], "bucket": "icon_a", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一枚 1024 桌面图标，第33版", "mode": "skill", "route_ids": ["icon.a"], "bucket": "icon_a", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一枚 1024 桌面图标，第36版", "mode": "skill", "route_ids": ["icon.a"], "bucket": "icon_a", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一枚 1024 桌面图标，第39版", "mode": "skill", "route_ids": ["icon.a"], "bucket": "icon_a", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一枚 1024 桌面图标，第42版", "mode": "skill", "route_ids": ["icon.a"], "bucket": "icon_a", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一枚 1024 桌面图标，第45版", "mode": "skill", "route_ids": ["icon.a"], "bucket": "icon_a", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一枚 1024 桌面图标，第48版", "mode": "skill", "route_ids": ["icon.a"], "bucket": "icon_a", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一枚 1024 桌面图标，第51版", "mode": "skill", "route_ids": ["icon.a"], "bucket": "icon_a", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一枚 1024 桌面图标，第54版", "mode": "skill", "route_ids": ["icon.a"], "bucket": "icon_a", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一枚 1024 桌面图标，第57版", "mode": "skill", "route_ids": ["icon.a"], "bucket": "icon_a", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一枚 1024 桌面图标，第60版", "mode": "skill", "route_ids": ["icon.a"], "bucket": "icon_a", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一枚 1024 桌面图标，第63版", "mode": "skill", "route_ids": ["icon.a"], "bucket": "icon_a", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一枚 1024 桌面图标，第66版", "mode": "skill", "route_ids": ["icon.a"], "bucket": "icon_a", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一枚 1024 桌面图标，第69版", "mode": "skill", "route_ids": ["icon.a"], "bucket": "icon_a", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一套线性 svg 图标，第0套", "mode": "skill", "route_ids": ["icon.b"], "bucket": "icon_b", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一套线性 svg 图标，第2套", "mode": "skill", "route_ids": ["icon.b"], "bucket": "icon_b", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一套线性 svg 图标，第4套", "mode": "skill", "route_ids": ["icon.b"], "bucket": "icon_b", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一套线性 svg 图标，第6套", "mode": "skill", "route_ids": ["icon.b"], "bucket": "icon_b", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一套线性 svg 图标，第8套", "mode": "skill", "route_ids": ["icon.b"], "bucket": "icon_b", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一套线性 svg 图标，第10套", "mode": "skill", "route_ids": ["icon.b"], "bucket": "icon_b", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一套线性 svg 图标，第12套", "mode": "skill", "route_ids": ["icon.b"], "bucket": "icon_b", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一套线性 svg 图标，第14套", "mode": "skill", "route_ids": ["icon.b"], "bucket": "icon_b", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一套线性 svg 图标，第16套", "mode": "skill", "route_ids": ["icon.b"], "bucket": "icon_b", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一套线性 svg 图标，第18套", "mode": "skill", "route_ids": ["icon.b"], "bucket": "icon_b", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一套线性 svg 图标，第20套", "mode": "skill", "route_ids": ["icon.b"], "bucket": "icon_b", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一套线性 svg 图标，第22套", "mode": "skill", "route_ids": ["icon.b"], "bucket": "icon_b", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一套线性 svg 图标，第24套", "mode": "skill", "route_ids": ["icon.b"], "bucket": "icon_b", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一套线性 svg 图标，第26套", "mode": "skill", "route_ids": ["icon.b"], "bucket": "icon_b", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一套线性 svg 图标，第28套", "mode": "skill", "route_ids": ["icon.b"], "bucket": "icon_b", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一套线性 svg 图标，第30套", "mode": "skill", "route_ids": ["icon.b"], "bucket": "icon_b", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一套线性 svg 图标，第32套", "mode": "skill", "route_ids": ["icon.b"], "bucket": "icon_b", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一套线性 svg 图标，第34套", "mode": "skill", "route_ids": ["icon.b"], "bucket": "icon_b", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一套线性 svg 图标，第36套", "mode": "skill", "route_ids": ["icon.b"], "bucket": "icon_b", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一套线性 svg 图标，第38套", "mode": "skill", "route_ids": ["icon.b"], "bucket": "icon_b", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一套线性 svg 图标，第40套", "mode": "skill", "route_ids": ["icon.b"], "bucket": "icon_b", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一套线性 svg 图标，第42套", "mode": "skill", "route_ids": ["icon.b"], "bucket": "icon_b", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一套线性 svg 图标，第44套", "mode": "skill", "route_ids": ["icon.b"], "bucket": "icon_b", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "做一套线性 svg 图标，第46套", "mode": "skill", "route_ids": ["icon.b"], "bucket": "icon_b", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "背包道具图标，256 透明底，第0个", "mode": "skill", "route_ids": ["icon.c"], "bucket": "icon_c", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "背包道具图标，256 透明底，第2个", "mode": "skill", "route_ids": ["icon.c"], "bucket": "icon_c", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "背包道具图标，256 透明底，第4个", "mode": "skill", "route_ids": ["icon.c"], "bucket": "icon_c", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "背包道具图标，256 透明底，第6个", "mode": "skill", "route_ids": ["icon.c"], "bucket": "icon_c", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "背包道具图标，256 透明底，第8个", "mode": "skill", "route_ids": ["icon.c"], "bucket": "icon_c", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "背包道具图标，256 透明底，第10个", "mode": "skill", "route_ids": ["icon.c"], "bucket": "icon_c", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "背包道具图标，256 透明底，第12个", "mode": "skill", "route_ids": ["icon.c"], "bucket": "icon_c", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "背包道具图标，256 透明底，第14个", "mode": "skill", "route_ids": ["icon.c"], "bucket": "icon_c", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "背包道具图标，256 透明底，第16个", "mode": "skill", "route_ids": ["icon.c"], "bucket": "icon_c", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "背包道具图标，256 透明底，第18个", "mode": "skill", "route_ids": ["icon.c"], "bucket": "icon_c", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "背包道具图标，256 透明底，第20个", "mode": "skill", "route_ids": ["icon.c"], "bucket": "icon_c", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "背包道具图标，256 透明底，第22个", "mode": "skill", "route_ids": ["icon.c"], "bucket": "icon_c", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "背包道具图标，256 透明底，第24个", "mode": "skill", "route_ids": ["icon.c"], "bucket": "icon_c", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "背包道具图标，256 透明底，第26个", "mode": "skill", "route_ids": ["icon.c"], "bucket": "icon_c", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "背包道具图标，256 透明底，第28个", "mode": "skill", "route_ids": ["icon.c"], "bucket": "icon_c", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "背包道具图标，256 透明底，第30个", "mode": "skill", "route_ids": ["icon.c"], "bucket": "icon_c", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "背包道具图标，256 透明底，第32个", "mode": "skill", "route_ids": ["icon.c"], "bucket": "icon_c", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "背包道具图标，256 透明底，第34个", "mode": "skill", "route_ids": ["icon.c"], "bucket": "icon_c", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "背包道具图标，256 透明底，第36个", "mode": "skill", "route_ids": ["icon.c"], "bucket": "icon_c", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "背包道具图标，256 透明底，第38个", "mode": "skill", "route_ids": ["icon.c"], "bucket": "icon_c", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "背包道具图标，256 透明底，第40个", "mode": "skill", "route_ids": ["icon.c"], "bucket": "icon_c", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "背包道具图标，256 透明底，第42个", "mode": "skill", "route_ids": ["icon.c"], "bucket": "icon_c", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "背包道具图标，256 透明底，第44个", "mode": "skill", "route_ids": ["icon.c"], "bucket": "icon_c", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "背包道具图标，256 透明底，第46个", "mode": "skill", "route_ids": ["icon.c"], "bucket": "icon_c", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "这把剑一档比一档大，做成合成梯，第0条", "mode": "skill", "route_ids": ["merge.ladder"], "bucket": "merge", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "这把剑一档比一档大，做成合成梯，第3条", "mode": "skill", "route_ids": ["merge.ladder"], "bucket": "merge", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "这把剑一档比一档大，做成合成梯，第6条", "mode": "skill", "route_ids": ["merge.ladder"], "bucket": "merge", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "这把剑一档比一档大，做成合成梯，第9条", "mode": "skill", "route_ids": ["merge.ladder"], "bucket": "merge", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "这把剑一档比一档大，做成合成梯，第12条", "mode": "skill", "route_ids": ["merge.ladder"], "bucket": "merge", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "这把剑一档比一档大，做成合成梯，第15条", "mode": "skill", "route_ids": ["merge.ladder"], "bucket": "merge", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "这把剑一档比一档大，做成合成梯，第18条", "mode": "skill", "route_ids": ["merge.ladder"], "bucket": "merge", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "这把剑一档比一档大，做成合成梯，第21条", "mode": "skill", "route_ids": ["merge.ladder"], "bucket": "merge", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "这把剑一档比一档大，做成合成梯，第24条", "mode": "skill", "route_ids": ["merge.ladder"], "bucket": "merge", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "这把剑一档比一档大，做成合成梯，第27条", "mode": "skill", "route_ids": ["merge.ladder"], "bucket": "merge", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "这把剑一档比一档大，做成合成梯，第30条", "mode": "skill", "route_ids": ["merge.ladder"], "bucket": "merge", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "这把剑一档比一档大，做成合成梯，第33条", "mode": "skill", "route_ids": ["merge.ladder"], "bucket": "merge", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "这把剑一档比一档大，做成合成梯，第36条", "mode": "skill", "route_ids": ["merge.ladder"], "bucket": "merge", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "这把剑一档比一档大，做成合成梯，第39条", "mode": "skill", "route_ids": ["merge.ladder"], "bucket": "merge", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "这把剑一档比一档大，做成合成梯，第42条", "mode": "skill", "route_ids": ["merge.ladder"], "bucket": "merge", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "这把剑一档比一档大，做成合成梯，第45条", "mode": "skill", "route_ids": ["merge.ladder"], "bucket": "merge", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "这把剑一档比一档大，做成合成梯，第48条", "mode": "skill", "route_ids": ["merge.ladder"], "bucket": "merge", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "这把剑一档比一档大，做成合成梯，第51条", "mode": "skill", "route_ids": ["merge.ladder"], "bucket": "merge", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "这把剑一档比一档大，做成合成梯，第54条", "mode": "skill", "route_ids": ["merge.ladder"], "bucket": "merge", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "这把剑一档比一档大，做成合成梯，第57条", "mode": "skill", "route_ids": ["merge.ladder"], "bucket": "merge", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "这把剑一档比一档大，做成合成梯，第60条", "mode": "skill", "route_ids": ["merge.ladder"], "bucket": "merge", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "这把剑一档比一档大，做成合成梯，第63条", "mode": "skill", "route_ids": ["merge.ladder"], "bucket": "merge", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "这把剑一档比一档大，做成合成梯，第66条", "mode": "skill", "route_ids": ["merge.ladder"], "bucket": "merge", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "这把剑一档比一档大，做成合成梯，第69条", "mode": "skill", "route_ids": ["merge.ladder"], "bucket": "merge", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "一张概念海报，当主视觉，第0张", "mode": "skill", "route_ids": ["draw.key"], "bucket": "key", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "一张概念海报，当主视觉，第3张", "mode": "skill", "route_ids": ["draw.key"], "bucket": "key", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "一张概念海报，当主视觉，第6张", "mode": "skill", "route_ids": ["draw.key"], "bucket": "key", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "一张概念海报，当主视觉，第9张", "mode": "skill", "route_ids": ["draw.key"], "bucket": "key", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "一张概念海报，当主视觉，第12张", "mode": "skill", "route_ids": ["draw.key"], "bucket": "key", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "一张概念海报，当主视觉，第15张", "mode": "skill", "route_ids": ["draw.key"], "bucket": "key", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "一张概念海报，当主视觉，第18张", "mode": "skill", "route_ids": ["draw.key"], "bucket": "key", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "一张概念海报，当主视觉，第21张", "mode": "skill", "route_ids": ["draw.key"], "bucket": "key", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "一张概念海报，当主视觉，第24张", "mode": "skill", "route_ids": ["draw.key"], "bucket": "key", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "一张概念海报，当主视觉，第27张", "mode": "skill", "route_ids": ["draw.key"], "bucket": "key", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "一张概念海报，当主视觉，第30张", "mode": "skill", "route_ids": ["draw.key"], "bucket": "key", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "一张概念海报，当主视觉，第33张", "mode": "skill", "route_ids": ["draw.key"], "bucket": "key", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "一张概念海报，当主视觉，第36张", "mode": "skill", "route_ids": ["draw.key"], "bucket": "key", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "一张概念海报，当主视觉，第39张", "mode": "skill", "route_ids": ["draw.key"], "bucket": "key", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "一张概念海报，当主视觉，第42张", "mode": "skill", "route_ids": ["draw.key"], "bucket": "key", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "一张概念海报，当主视觉，第45张", "mode": "skill", "route_ids": ["draw.key"], "bucket": "key", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "一张概念海报，当主视觉，第48张", "mode": "skill", "route_ids": ["draw.key"], "bucket": "key", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "一张概念海报，当主视觉，第51张", "mode": "skill", "route_ids": ["draw.key"], "bucket": "key", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "一张概念海报，当主视觉，第54张", "mode": "skill", "route_ids": ["draw.key"], "bucket": "key", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "一张概念海报，当主视觉，第57张", "mode": "skill", "route_ids": ["draw.key"], "bucket": "key", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "一张概念海报，当主视觉，第60张", "mode": "skill", "route_ids": ["draw.key"], "bucket": "key", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "一张概念海报，当主视觉，第63张", "mode": "skill", "route_ids": ["draw.key"], "bucket": "key", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "一张概念海报，当主视觉，第66张", "mode": "skill", "route_ids": ["draw.key"], "bucket": "key", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "一张概念海报，当主视觉，第69张", "mode": "skill", "route_ids": ["draw.key"], "bucket": "key", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "以后都按这张的颜色画，先锁风格，第0张", "mode": "skill", "route_ids": ["style.lock"], "bucket": "style", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "以后都按这张的颜色画，先锁风格，第2张", "mode": "skill", "route_ids": ["style.lock"], "bucket": "style", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "以后都按这张的颜色画，先锁风格，第4张", "mode": "skill", "route_ids": ["style.lock"], "bucket": "style", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "以后都按这张的颜色画，先锁风格，第6张", "mode": "skill", "route_ids": ["style.lock"], "bucket": "style", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "以后都按这张的颜色画，先锁风格，第8张", "mode": "skill", "route_ids": ["style.lock"], "bucket": "style", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "以后都按这张的颜色画，先锁风格，第10张", "mode": "skill", "route_ids": ["style.lock"], "bucket": "style", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "以后都按这张的颜色画，先锁风格，第12张", "mode": "skill", "route_ids": ["style.lock"], "bucket": "style", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "以后都按这张的颜色画，先锁风格，第14张", "mode": "skill", "route_ids": ["style.lock"], "bucket": "style", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "以后都按这张的颜色画，先锁风格，第16张", "mode": "skill", "route_ids": ["style.lock"], "bucket": "style", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "以后都按这张的颜色画，先锁风格，第18张", "mode": "skill", "route_ids": ["style.lock"], "bucket": "style", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "以后都按这张的颜色画，先锁风格，第20张", "mode": "skill", "route_ids": ["style.lock"], "bucket": "style", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "以后都按这张的颜色画，先锁风格，第22张", "mode": "skill", "route_ids": ["style.lock"], "bucket": "style", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "以后都按这张的颜色画，先锁风格，第24张", "mode": "skill", "route_ids": ["style.lock"], "bucket": "style", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "以后都按这张的颜色画，先锁风格，第26张", "mode": "skill", "route_ids": ["style.lock"], "bucket": "style", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "以后都按这张的颜色画，先锁风格，第28张", "mode": "skill", "route_ids": ["style.lock"], "bucket": "style", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "以后都按这张的颜色画，先锁风格，第30张", "mode": "skill", "route_ids": ["style.lock"], "bucket": "style", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "以后都按这张的颜色画，先锁风格，第32张", "mode": "skill", "route_ids": ["style.lock"], "bucket": "style", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "以后都按这张的颜色画，先锁风格，第34张", "mode": "skill", "route_ids": ["style.lock"], "bucket": "style", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "以后都按这张的颜色画，先锁风格，第36张", "mode": "skill", "route_ids": ["style.lock"], "bucket": "style", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "以后都按这张的颜色画，先锁风格，第38张", "mode": "skill", "route_ids": ["style.lock"], "bucket": "style", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "以后都按这张的颜色画，先锁风格，第40张", "mode": "skill", "route_ids": ["style.lock"], "bucket": "style", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "以后都按这张的颜色画，先锁风格，第42张", "mode": "skill", "route_ids": ["style.lock"], "bucket": "style", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "以后都按这张的颜色画，先锁风格，第44张", "mode": "skill", "route_ids": ["style.lock"], "bucket": "style", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "以后都按这张的颜色画，先锁风格，第46张", "mode": "skill", "route_ids": ["style.lock"], "bucket": "style", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "只审这张，别画，第0张", "mode": "skill", "route_ids": ["critique.review"], "bucket": "critique", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "只审这张，别画，第2张", "mode": "skill", "route_ids": ["critique.review"], "bucket": "critique", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "只审这张，别画，第4张", "mode": "skill", "route_ids": ["critique.review"], "bucket": "critique", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "只审这张，别画，第6张", "mode": "skill", "route_ids": ["critique.review"], "bucket": "critique", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "只审这张，别画，第8张", "mode": "skill", "route_ids": ["critique.review"], "bucket": "critique", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "只审这张，别画，第10张", "mode": "skill", "route_ids": ["critique.review"], "bucket": "critique", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "只审这张，别画，第12张", "mode": "skill", "route_ids": ["critique.review"], "bucket": "critique", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "只审这张，别画，第14张", "mode": "skill", "route_ids": ["critique.review"], "bucket": "critique", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "只审这张，别画，第16张", "mode": "skill", "route_ids": ["critique.review"], "bucket": "critique", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "只审这张，别画，第18张", "mode": "skill", "route_ids": ["critique.review"], "bucket": "critique", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "只审这张，别画，第20张", "mode": "skill", "route_ids": ["critique.review"], "bucket": "critique", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "只审这张，别画，第22张", "mode": "skill", "route_ids": ["critique.review"], "bucket": "critique", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "只审这张，别画，第24张", "mode": "skill", "route_ids": ["critique.review"], "bucket": "critique", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "只审这张，别画，第26张", "mode": "skill", "route_ids": ["critique.review"], "bucket": "critique", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "只审这张，别画，第28张", "mode": "skill", "route_ids": ["critique.review"], "bucket": "critique", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "只审这张，别画，第30张", "mode": "skill", "route_ids": ["critique.review"], "bucket": "critique", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "只审这张，别画，第32张", "mode": "skill", "route_ids": ["critique.review"], "bucket": "critique", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "只审这张，别画，第34张", "mode": "skill", "route_ids": ["critique.review"], "bucket": "critique", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "只审这张，别画，第36张", "mode": "skill", "route_ids": ["critique.review"], "bucket": "critique", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "只审这张，别画，第38张", "mode": "skill", "route_ids": ["critique.review"], "bucket": "critique", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "只审这张，别画，第40张", "mode": "skill", "route_ids": ["critique.review"], "bucket": "critique", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "只审这张，别画，第42张", "mode": "skill", "route_ids": ["critique.review"], "bucket": "critique", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "只审这张，别画，第44张", "mode": "skill", "route_ids": ["critique.review"], "bucket": "critique", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "只审这张，别画，第46张", "mode": "skill", "route_ids": ["critique.review"], "bucket": "critique", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "把散图归位，刷新图谱，第0批", "mode": "skill", "route_ids": ["atlas.file"], "bucket": "atlas", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "把散图归位，刷新图谱，第2批", "mode": "skill", "route_ids": ["atlas.file"], "bucket": "atlas", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "把散图归位，刷新图谱，第4批", "mode": "skill", "route_ids": ["atlas.file"], "bucket": "atlas", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "把散图归位，刷新图谱，第6批", "mode": "skill", "route_ids": ["atlas.file"], "bucket": "atlas", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "把散图归位，刷新图谱，第8批", "mode": "skill", "route_ids": ["atlas.file"], "bucket": "atlas", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "把散图归位，刷新图谱，第10批", "mode": "skill", "route_ids": ["atlas.file"], "bucket": "atlas", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "把散图归位，刷新图谱，第12批", "mode": "skill", "route_ids": ["atlas.file"], "bucket": "atlas", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "把散图归位，刷新图谱，第14批", "mode": "skill", "route_ids": ["atlas.file"], "bucket": "atlas", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "把散图归位，刷新图谱，第16批", "mode": "skill", "route_ids": ["atlas.file"], "bucket": "atlas", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "把散图归位，刷新图谱，第18批", "mode": "skill", "route_ids": ["atlas.file"], "bucket": "atlas", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "把散图归位，刷新图谱，第20批", "mode": "skill", "route_ids": ["atlas.file"], "bucket": "atlas", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "把散图归位，刷新图谱，第22批", "mode": "skill", "route_ids": ["atlas.file"], "bucket": "atlas", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "把散图归位，刷新图谱，第24批", "mode": "skill", "route_ids": ["atlas.file"], "bucket": "atlas", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "把散图归位，刷新图谱，第26批", "mode": "skill", "route_ids": ["atlas.file"], "bucket": "atlas", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "把散图归位，刷新图谱，第28批", "mode": "skill", "route_ids": ["atlas.file"], "bucket": "atlas", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "把散图归位，刷新图谱，第30批", "mode": "skill", "route_ids": ["atlas.file"], "bucket": "atlas", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "把散图归位，刷新图谱，第32批", "mode": "skill", "route_ids": ["atlas.file"], "bucket": "atlas", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "把散图归位，刷新图谱，第34批", "mode": "skill", "route_ids": ["atlas.file"], "bucket": "atlas", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "把散图归位，刷新图谱，第36批", "mode": "skill", "route_ids": ["atlas.file"], "bucket": "atlas", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "把散图归位，刷新图谱，第38批", "mode": "skill", "route_ids": ["atlas.file"], "bucket": "atlas", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "/pmem-atlas 散图归位，第0次", "mode": "skill", "route_ids": ["atlas.file"], "bucket": "named", "reason": "named", "images": 0, "hard": false, "source": "packaged"}
+{"text": "/pmem-atlas 散图归位，第2次", "mode": "skill", "route_ids": ["atlas.file"], "bucket": "named", "reason": "named", "images": 0, "hard": false, "source": "packaged"}
+{"text": "/pmem-atlas 散图归位，第4次", "mode": "skill", "route_ids": ["atlas.file"], "bucket": "named", "reason": "named", "images": 0, "hard": false, "source": "packaged"}
+{"text": "/pmem-atlas 散图归位，第6次", "mode": "skill", "route_ids": ["atlas.file"], "bucket": "named", "reason": "named", "images": 0, "hard": false, "source": "packaged"}
+{"text": "我想看看进步和短板，第0次", "mode": "skill", "route_ids": ["coach.report"], "bucket": "coach", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "我想看看进步和短板，第2次", "mode": "skill", "route_ids": ["coach.report"], "bucket": "coach", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "我想看看进步和短板，第4次", "mode": "skill", "route_ids": ["coach.report"], "bucket": "coach", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "我想看看进步和短板，第6次", "mode": "skill", "route_ids": ["coach.report"], "bucket": "coach", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "我想看看进步和短板，第8次", "mode": "skill", "route_ids": ["coach.report"], "bucket": "coach", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "我想看看进步和短板，第10次", "mode": "skill", "route_ids": ["coach.report"], "bucket": "coach", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "我想看看进步和短板，第12次", "mode": "skill", "route_ids": ["coach.report"], "bucket": "coach", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "我想看看进步和短板，第14次", "mode": "skill", "route_ids": ["coach.report"], "bucket": "coach", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "我想看看进步和短板，第16次", "mode": "skill", "route_ids": ["coach.report"], "bucket": "coach", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "我想看看进步和短板，第18次", "mode": "skill", "route_ids": ["coach.report"], "bucket": "coach", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "我想看看进步和短板，第20次", "mode": "skill", "route_ids": ["coach.report"], "bucket": "coach", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "我想看看进步和短板，第22次", "mode": "skill", "route_ids": ["coach.report"], "bucket": "coach", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "我想看看进步和短板，第24次", "mode": "skill", "route_ids": ["coach.report"], "bucket": "coach", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "我想看看进步和短板，第26次", "mode": "skill", "route_ids": ["coach.report"], "bucket": "coach", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "我想看看进步和短板，第28次", "mode": "skill", "route_ids": ["coach.report"], "bucket": "coach", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "我想看看进步和短板，第30次", "mode": "skill", "route_ids": ["coach.report"], "bucket": "coach", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "我想看看进步和短板，第32次", "mode": "skill", "route_ids": ["coach.report"], "bucket": "coach", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "我想看看进步和短板，第34次", "mode": "skill", "route_ids": ["coach.report"], "bucket": "coach", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "我想看看进步和短板，第36次", "mode": "skill", "route_ids": ["coach.report"], "bucket": "coach", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "我想看看进步和短板，第38次", "mode": "skill", "route_ids": ["coach.report"], "bucket": "coach", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "/pmem-coach 看看进步，第0次", "mode": "skill", "route_ids": ["coach.report"], "bucket": "named", "reason": "named", "images": 0, "hard": false, "source": "packaged"}
+{"text": "/pmem-coach 看看进步，第2次", "mode": "skill", "route_ids": ["coach.report"], "bucket": "named", "reason": "named", "images": 0, "hard": false, "source": "packaged"}
+{"text": "/pmem-coach 看看进步，第4次", "mode": "skill", "route_ids": ["coach.report"], "bucket": "named", "reason": "named", "images": 0, "hard": false, "source": "packaged"}
+{"text": "/pmem-coach 看看进步，第6次", "mode": "skill", "route_ids": ["coach.report"], "bucket": "named", "reason": "named", "images": 0, "hard": false, "source": "packaged"}
+{"text": "先写提示词，先不出图，第0套", "mode": "skill", "route_ids": ["prompt.write"], "bucket": "prompt", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "先写提示词，先不出图，第2套", "mode": "skill", "route_ids": ["prompt.write"], "bucket": "prompt", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "先写提示词，先不出图，第4套", "mode": "skill", "route_ids": ["prompt.write"], "bucket": "prompt", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "先写提示词，先不出图，第6套", "mode": "skill", "route_ids": ["prompt.write"], "bucket": "prompt", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "先写提示词，先不出图，第8套", "mode": "skill", "route_ids": ["prompt.write"], "bucket": "prompt", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "先写提示词，先不出图，第10套", "mode": "skill", "route_ids": ["prompt.write"], "bucket": "prompt", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "先写提示词，先不出图，第12套", "mode": "skill", "route_ids": ["prompt.write"], "bucket": "prompt", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "先写提示词，先不出图，第14套", "mode": "skill", "route_ids": ["prompt.write"], "bucket": "prompt", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "先写提示词，先不出图，第16套", "mode": "skill", "route_ids": ["prompt.write"], "bucket": "prompt", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "先写提示词，先不出图，第18套", "mode": "skill", "route_ids": ["prompt.write"], "bucket": "prompt", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "先写提示词，先不出图，第20套", "mode": "skill", "route_ids": ["prompt.write"], "bucket": "prompt", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "先写提示词，先不出图，第22套", "mode": "skill", "route_ids": ["prompt.write"], "bucket": "prompt", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "先写提示词，先不出图，第24套", "mode": "skill", "route_ids": ["prompt.write"], "bucket": "prompt", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "先写提示词，先不出图，第26套", "mode": "skill", "route_ids": ["prompt.write"], "bucket": "prompt", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "先写提示词，先不出图，第28套", "mode": "skill", "route_ids": ["prompt.write"], "bucket": "prompt", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "先写提示词，先不出图，第30套", "mode": "skill", "route_ids": ["prompt.write"], "bucket": "prompt", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "先写提示词，先不出图，第32套", "mode": "skill", "route_ids": ["prompt.write"], "bucket": "prompt", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "先写提示词，先不出图，第34套", "mode": "skill", "route_ids": ["prompt.write"], "bucket": "prompt", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "先写提示词，先不出图，第36套", "mode": "skill", "route_ids": ["prompt.write"], "bucket": "prompt", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "先写提示词，先不出图，第38套", "mode": "skill", "route_ids": ["prompt.write"], "bucket": "prompt", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "先写提示词，先不出图，第40套", "mode": "skill", "route_ids": ["prompt.write"], "bucket": "prompt", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "先写提示词，先不出图，第42套", "mode": "skill", "route_ids": ["prompt.write"], "bucket": "prompt", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "先写提示词，先不出图，第44套", "mode": "skill", "route_ids": ["prompt.write"], "bucket": "prompt", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "先写提示词，先不出图，第46套", "mode": "skill", "route_ids": ["prompt.write"], "bucket": "prompt", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "对比页把界面和桌面图标都重跑，第0页", "mode": "skill", "route_ids": ["ui.kit", "icon.a"], "bucket": "showcase", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "对比页把界面和桌面图标都重跑，第1页", "mode": "skill", "route_ids": ["ui.kit", "icon.a"], "bucket": "showcase", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "对比页把界面和桌面图标都重跑，第2页", "mode": "skill", "route_ids": ["ui.kit", "icon.a"], "bucket": "showcase", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "对比页把界面和桌面图标都重跑，第3页", "mode": "skill", "route_ids": ["ui.kit", "icon.a"], "bucket": "showcase", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "对比页把界面和桌面图标都重跑，第4页", "mode": "skill", "route_ids": ["ui.kit", "icon.a"], "bucket": "showcase", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "对比页把界面和桌面图标都重跑，第5页", "mode": "skill", "route_ids": ["ui.kit", "icon.a"], "bucket": "showcase", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "对比页把界面和桌面图标都重跑，第6页", "mode": "skill", "route_ids": ["ui.kit", "icon.a"], "bucket": "showcase", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "对比页把界面和桌面图标都重跑，第7页", "mode": "skill", "route_ids": ["ui.kit", "icon.a"], "bucket": "showcase", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "对比页把界面和桌面图标都重跑，第8页", "mode": "skill", "route_ids": ["ui.kit", "icon.a"], "bucket": "showcase", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "对比页把界面和桌面图标都重跑，第9页", "mode": "skill", "route_ids": ["ui.kit", "icon.a"], "bucket": "showcase", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "对比页把界面和桌面图标都重跑，第10页", "mode": "skill", "route_ids": ["ui.kit", "icon.a"], "bucket": "showcase", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "对比页把界面和桌面图标都重跑，第11页", "mode": "skill", "route_ids": ["ui.kit", "icon.a"], "bucket": "showcase", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "对比页把界面和桌面图标都重跑，第12页", "mode": "skill", "route_ids": ["ui.kit", "icon.a"], "bucket": "showcase", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "对比页把界面和桌面图标都重跑，第13页", "mode": "skill", "route_ids": ["ui.kit", "icon.a"], "bucket": "showcase", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "对比页把界面和桌面图标都重跑，第14页", "mode": "skill", "route_ids": ["ui.kit", "icon.a"], "bucket": "showcase", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "对比页把界面和桌面图标都重跑，第15页", "mode": "skill", "route_ids": ["ui.kit", "icon.a"], "bucket": "showcase", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "对比页把界面和桌面图标都重跑，第16页", "mode": "skill", "route_ids": ["ui.kit", "icon.a"], "bucket": "showcase", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "对比页把界面和桌面图标都重跑，第17页", "mode": "skill", "route_ids": ["ui.kit", "icon.a"], "bucket": "showcase", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "对比页把界面和桌面图标都重跑，第18页", "mode": "skill", "route_ids": ["ui.kit", "icon.a"], "bucket": "showcase", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "对比页把界面和桌面图标都重跑，第19页", "mode": "skill", "route_ids": ["ui.kit", "icon.a"], "bucket": "showcase", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "对比页把界面和桌面图标都重跑，第20页", "mode": "skill", "route_ids": ["ui.kit", "icon.a"], "bucket": "showcase", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "对比页把界面和桌面图标都重跑，第21页", "mode": "skill", "route_ids": ["ui.kit", "icon.a"], "bucket": "showcase", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "对比页把界面和桌面图标都重跑，第22页", "mode": "skill", "route_ids": ["ui.kit", "icon.a"], "bucket": "showcase", "reason": "", "images": 0, "hard": false, "source": "packaged"}
+{"text": "对比页把界面和桌面图标都重跑，第23页", "mode": "skill", "route_ids": ["ui.kit", "icon.a"], "bucket": "showcase", "reason": "", "images": 0, "hard": false, "source": "packaged"}

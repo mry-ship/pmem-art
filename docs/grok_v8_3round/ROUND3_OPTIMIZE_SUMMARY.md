@@ -7,7 +7,7 @@
 
 ## Scores vs prior
 
-| run | mean | min | max | n≥9.60 | Δ vs prior |
+| run | mean | min | max | n≥9.50 | Δ vs prior |
 |---|---|---|---|---|---|
 | Grok v1 | 8.286 | — | — | 0 | — |
 | Round 1 / Grok v2 | **8.394** | 7.94 | 8.80 | 0 | +0.108 |

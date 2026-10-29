@@ -391,7 +391,7 @@ def scene_perspective_credit(
     """No longer raises a scene score.
 
     A mild vanishing-point nit stays in the harmonic mean. Rewriting it to 8.5
-    manufactured stops above 9.6. Collapse under 6.0 is handled by the hurdle.
+    manufactured stops above 9.5. Collapse under 6.0 is handled by the hurdle.
     """
     del dims, defects, weights
     return None, ""

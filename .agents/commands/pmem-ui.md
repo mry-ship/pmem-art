@@ -1,5 +1,5 @@
 ---
-description: 【强制4轮≥9.6收敛】SpriteCook式 UI Kit/HUD/九宫格整套（pmem-art）
+description: 【强制4轮≥9.5收敛】SpriteCook式 UI Kit/HUD/九宫格整套（pmem-art）
 ---
 
 # `/pmem-ui` — SpriteCook 式 UI Kit / HUD / 九宫格整套生成
@@ -14,7 +14,7 @@ description: 【强制4轮≥9.6收敛】SpriteCook式 UI Kit/HUD/九宫格整�
 ```
 
 ## 原理（截图摘要）
-1. `search` 召回 `ui.*` 红线与定稿 → 2. **概念先行** → 3. 透明组件表 → 4. 九宫格 + 状态族 → 5. **强制 4轮 ≥9.6**（每轮展示评分履历） → `finish` 打印履历 + **记忆静默写入**（勿旁白记忆）
+1. `search` 召回 `ui.*` 红线与定稿 → 2. **概念先行** → 3. 透明组件表 → 4. 九宫格 + 状态族 → 5. **强制 4轮 ≥9.5**（每轮展示评分履历） → `finish` 打印履历 + **记忆静默写入**（勿旁白记忆）
 
 你现在运行在 **pmem-art UI Kit 模式**（对标 SpriteCook UI Kit Builder：概念先行 → 组件表 → 九宫格切线 → 状态族）。**禁止**把整屏各控件零散各生一张再硬拼；必须先锁一个统一视觉语言的概念稿，再从同一概念抽出可复用零件。
 
@@ -34,10 +34,10 @@ python3 pmem_art.py search --module <ui.模块>
 
 ### Step 1：概念先行（Concept First）—— 不可跳过
 1. 若用户丢入概念图：先做参考图视觉解构（构图分区、主辅色 HEX、金属/木纹/霓虹材质、控件密度），再进入组件抽取。
-2. 若无概念图：先生成 **1 张完整屏幕概念稿**（整屏布局，统一材质与色板），用 `/pmem-draw` 同款 **4轮 >=9.6 收敛** 打磨概念稿：
+2. 若无概念图：先生成 **1 张完整屏幕概念稿**（整屏布局，统一材质与色板），用 `/pmem-draw` 同款 **4轮 >= 9.5 收敛** 打磨概念稿：
    ```bash
    python3 pmem_art.py converge start --goal "UI概念稿：<屏幕类型+风格>" --module <ui.模块> [--scale medium|high]
-   # 每轮：converge generate 生图，再 converge judge 审图，直到 >=9.6 或满 4 轮
+   # 每轮：converge generate 生图，再 converge judge 审图，直到 >= 9.5 或满 4 轮
    python3 pmem_art.py converge finish
    ```
 3. **概念稿通过后才进入组件表**——不要在概念未锁定时散生按钮。
@@ -98,7 +98,7 @@ ui_kit_<name>/
 `manifest.json` 示例字段：`name`, `group`, `state`, `file`, `nine_slice: {left,right,top,bottom}`, `scalable: true|false`。
 
 ### Step 4：关键件二次收敛（可选但推荐）
-对主面板、主按钮等核心件，若六维评分 `< 9.6`（重点查：中心拉伸区是否干净、转角是否形变、透明底毛边、状态族是否同系），再跑一轮 `converge generate` 局部重绘，然后 `converge judge` 审图。
+对主面板、主按钮等核心件，若六维评分 `< 9.5`（重点查：中心拉伸区是否干净、转角是否形变、透明底毛边、状态族是否同系），再跑一轮 `converge generate` 局部重绘，然后 `converge judge` 审图。
 
 ### Step 5：沉淀记忆
 ```bash

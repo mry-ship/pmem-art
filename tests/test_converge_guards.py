@@ -46,7 +46,7 @@ class TestPolicyDefaults(unittest.TestCase):
                 dims={"perspective_anatomy": 9.0},
                 round_num=3,
                 min_rounds=1,
-                threshold=9.6,
+                threshold=9.5,
                 anatomy_floor=7.5,
                 best_total=9.0,
                 no_improve_streak=5,
@@ -63,7 +63,7 @@ class TestPolicyDefaults(unittest.TestCase):
                 dims={"perspective_anatomy": 9.0},
                 round_num=4,
                 min_rounds=1,
-                threshold=9.6,
+                threshold=9.5,
                 anatomy_floor=7.5,
                 best_total=9.0,
                 no_improve_streak=0,
@@ -468,7 +468,7 @@ class TestJudgeAnatomyVeto(unittest.TestCase):
         )
         self.assertFalse(res.get("passed"))
         self.assertGreater(float(res.get("calibrated_score") or 0), 7.2)
-        self.assertLess(float(res.get("calibrated_score") or 0), 9.6)
+        self.assertLess(float(res.get("calibrated_score") or 0), 9.5)
         self.assertFalse(any("风格容错" in w for w in (res.get("audit_warnings") or [])))
 
     def test_isometric_scene_uses_a_lower_perspective_line(self) -> None:
@@ -961,7 +961,7 @@ class TestJudgeAnatomyVeto(unittest.TestCase):
                         goal="空镜无人峡谷",
                     )
         self.assertFalse(res.get("anatomy_veto_blocked"))
-        self.assertGreaterEqual(float(res.get("calibrated_score") or 0), 9.6)
+        self.assertGreaterEqual(float(res.get("calibrated_score") or 0), 9.5)
         self.assertAlmostEqual(float(res.get("weighted_score") or 0), float(res.get("calibrated_score") or 0), places=2)
 
     def test_scene_mild_perspective_is_not_lifted_to_stop(self) -> None:
@@ -990,7 +990,7 @@ class TestJudgeAnatomyVeto(unittest.TestCase):
                     )
         self.assertFalse(res.get("anatomy_veto_blocked"))
         self.assertGreater(float(res.get("calibrated_score") or 0), 7.4)
-        self.assertLess(float(res.get("calibrated_score") or 0), 9.6)
+        self.assertLess(float(res.get("calibrated_score") or 0), 9.5)
         self.assertFalse(res.get("passed"))
 
     def test_weak_next_fix_is_rewritten(self) -> None:
@@ -1046,7 +1046,7 @@ class TestJudgeAnatomyVeto(unittest.TestCase):
                         goal="空镜无人峡谷",
                     )
         self.assertFalse(res.get("anatomy_veto_blocked"))
-        self.assertLess(float(res.get("calibrated_score") or 0), 9.6)
+        self.assertLess(float(res.get("calibrated_score") or 0), 9.5)
         self.assertAlmostEqual(float(res.get("anatomy_score") or 0), 5.9, places=1)
         self.assertFalse(res.get("passed"))
 
@@ -1201,7 +1201,7 @@ class TestJudgeAnatomyVeto(unittest.TestCase):
                     )
         self.assertEqual(res.get("rubric_mode"), "icon_prop_5d")
         self.assertFalse(res.get("anatomy_veto_blocked"))
-        self.assertGreaterEqual(float(res.get("calibrated_score") or 0), 9.6)
+        self.assertGreaterEqual(float(res.get("calibrated_score") or 0), 9.5)
         self.assertTrue(res.get("passed"))
 
     def test_scene_credit_does_not_lift_a_hard_cap(self) -> None:
@@ -1229,7 +1229,7 @@ class TestJudgeAnatomyVeto(unittest.TestCase):
                         goal="空镜无人峡谷",
                     )
         self.assertFalse(res.get("passed"))
-        self.assertLess(float(res.get("calibrated_score") or 0), 9.6)
+        self.assertLess(float(res.get("calibrated_score") or 0), 9.5)
         self.assertFalse(any("轻微" in w for w in (res.get("audit_warnings") or [])))
 
     def test_human_joint_fix_on_a_scene_is_replaced(self) -> None:

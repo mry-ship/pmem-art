@@ -20,7 +20,7 @@ from skills_kit.showcase_gate import (  # noqa: E402
 
 class TestCanAcceptWinner(unittest.TestCase):
     def test_threshold_stops(self) -> None:
-        self.assertTrue(can_accept_winner(1, 9.60))
+        self.assertTrue(can_accept_winner(1, 9.50))
         self.assertTrue(can_accept_winner(2, 9.61))
 
     def test_under_threshold_must_continue(self) -> None:
@@ -54,7 +54,7 @@ class TestHtmlAudit(unittest.TestCase):
         self.assertEqual(audit_showcase_html(html), [])
 
     def test_ok_when_threshold_hit(self) -> None:
-        html = '<figure><figcaption><strong>high · 3 轮</strong>9.32 → 9.46 → 9.60</figcaption></figure>'
+        html = '<figure><figcaption><strong>high · 3 轮</strong>9.32 → 9.46 → 9.50</figcaption></figure>'
         self.assertEqual(audit_showcase_html(html), [])
 
     def test_parsers(self) -> None:

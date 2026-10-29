@@ -250,12 +250,12 @@ def main():
 <body>
   <header>
     <h1>pmem-art · 全新 4 张竖版参考图 × 16 个独立空 Bot（Claude CLI 100% 冷启动）并行生成对比报告</h1>
-    <div>所有参考图均为全新下载的不同题材竖版作品（少女立绘 / 高山云海油画 / 浮世绘雨景木桥 / 古典植物玫瑰插画），16 个空 Bot 在各自独立隔离的空目录与空 HOME 下并行冷启动运行，零旧记忆、零旧缓存、零旧收敛记录、零旧 Prompt 历史，全部动态收敛达标 <code>&gt;= 9.60 (STOP_TARGET_REACHED)</code>。</div>
+    <div>所有参考图均为全新下载的不同题材竖版作品（少女立绘 / 高山云海油画 / 浮世绘雨景木桥 / 古典植物玫瑰插画），16 个空 Bot 在各自独立隔离的空目录与空 HOME 下并行冷启动运行，零旧记忆、零旧缓存、零旧收敛记录、零旧 Prompt 历史，全部动态收敛达标 <code>&gt;= 9.50 (STOP_TARGET_REACHED)</code>。</div>
     <div class="summary-badges">
       <span class="badge">全新竖版参考图: <b>4 张 (4 种不同题材)</b></span>
       <span class="badge">并行独立空 Bot 实例: <b>16 个 (bot_01 ~ bot_16)</b></span>
       <span class="badge">冷启动零历史验证: <b>16 / 16 PASS (0 旧记忆 / 0 缓存 / 0 旧日志)</b></span>
-      <span class="badge">达标停机 (&gt;=9.60): <b>16 / 16 STOP_TARGET_REACHED</b></span>
+      <span class="badge">达标停机 (&gt;=9.50): <b>16 / 16 STOP_TARGET_REACHED</b></span>
       <span class="badge">全量图像唯一性: <b>20 / 20 Unique MD5</b></span>
     </div>
   </header>

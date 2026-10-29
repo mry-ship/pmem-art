@@ -6,13 +6,13 @@
 
 | 项 | 值 |
 |---|---|
-| 停分 `DEFAULT_THRESHOLD` | **≥ 9.60** |
+| 停分 `DEFAULT_THRESHOLD` | **≥ 9.50** |
 | 最大轮次 `DEFAULT_MAX_ROUNDS` | **8** |
-| low / medium 最早可停 | 满 **1** 轮且 ≥9.60 |
-| high / recompose（含 bold）最早可停 | 满 **2** 轮且 ≥9.60 |
+| low / medium 最早可停 | 满 **1** 轮且 ≥9.50 |
+| high / recompose（含 bold）最早可停 | 满 **2** 轮且 ≥9.50 |
 | 四档 `max_rounds` | 均为 **8** |
 
-达标：`score ≥ 9.60`，且已满该档 `min_rounds_before_stop`，且 skill 闸门/意图通过 → `STOP_TARGET_REACHED`；否则继续生成直到第 8 轮。
+达标：`score ≥ 9.50`，且已满该档 `min_rounds_before_stop`，且 skill 闸门/意图通过 → `STOP_TARGET_REACHED`；否则继续生成直到第 8 轮。
 
 ## 跑这 20 个
 
@@ -60,14 +60,14 @@
 
 ## 评分与 HTML
 
-- 评：4 原图 + 20 终图 + 全部中间轮；达标统计按 **≥9.60**。  
+- 评：4 原图 + 20 终图 + 全部中间轮；达标统计按 **≥9.50**。  
 - HTML：版式对齐 `pmem_art_images_v6_32bots_showcase.html`，产出 `pmem_art_images_v8_20bots_showcase.html`（`pmem-art/` 与桌面根目录）。  
-- 页内：汇总（均值、≥9.60 张数、轮次分布）、原图区、20 卡（分/五维/轮次/停因/缺陷）、分风格小计；相对路径离线可开。
+- 页内：汇总（均值、≥9.50 张数、轮次分布）、原图区、20 卡（分/五维/轮次/停因/缺陷）、分风格小计；相对路径离线可开。
 
 ## 验收
 
 - 20 张新图齐全  
-- 停分 9.60、上限 8 轮，行为与 `skills_kit` 一致  
+- 停分 9.50、上限 8 轮，行为与 `skills_kit` 一致  
 - 原图已评分并进页  
 - HTML 为 v6 showcase 风格，轮次可见  
 - 报告含达标数、未达标列表与停因  

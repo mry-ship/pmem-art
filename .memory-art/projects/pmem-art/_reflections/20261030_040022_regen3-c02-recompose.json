@@ -1,0 +1,112 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-10-30 04:00:22 UTC+8",
+  "session_id": "regen3-c02-recompose",
+  "goal": "recompose保粉彩身份与媒介，换成侧面半身机位",
+  "module": "character.PastelGirl",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 4,
+  "winner_score": 9.33,
+  "winner_image": "assets/character/pastelgirl/r4.jpg",
+  "winner_passed": false,
+  "outcome": "⚠️ **共执行 4 轮审图（目标阈值 `9.50` 分），未达标，已挑选全阶段最高分**（胜出：第 4 轮 `9.33 / 10.0` 分）",
+  "what_fixed": [
+    "半身往下拉必须看见袖口与弯曲的膝；脸仍朝右；背景斜线更疏",
+    "袖口清晰可见；弯曲膝盖轮廓清楚进画；背景斜线更疏",
+    "弯曲膝盖明确进画下沿；背景斜线再疏；保留袖口",
+    "已满4轮取最高分"
+  ],
+  "what_still_weak": "平视略仰、人约占画面65%、主光是柔和环境纸面光；屈膝圆度还可更清楚；手部叠在腿上略糊",
+  "strengths": "侧面半身拉到膝；红帽衫袖口可读；蜡笔斜线背景疏一些",
+  "taste_deltas": {
+    "from_strengths": [
+      "侧面半身拉到膝；红帽衫袖口可读；蜡笔斜线背景疏一些"
+    ],
+    "from_defects": [
+      "平视略仰、人约占画面60%、主光是柔和环境纸面光；袖口仍偏糊；屈膝轮廓不够圆；背景斜线仍可更疏",
+      "平视略仰、人约占画面62%、主光是柔和环境纸面光；屈膝仍偏弱只露下摆；背景斜线可再疏",
+      "平视略仰、人约占画面65%、主光是柔和环境纸面光；屈膝圆度还可更清楚；手部叠在腿上略糊"
+    ]
+  },
+  "warm_start_confidence": 0.9,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 8.93,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 9.14,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 9.28,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 9.33,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：平视略仰、人约占画面55%、主光是柔和环境纸面光；袖口裁切不清；屈膝只露大腿上沿不够；背景斜线可更疏",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "8.93"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：已是侧面半身机位；红帽衫与蜡笔纸感保留；斜向色粉背景在",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.93"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：平视略仰、人约占画面60%、主光是柔和环境纸面光；袖口仍偏糊；屈膝轮廓不够圆；背景斜线仍可更疏",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.14"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：侧面半身机位稳住；红帽衫蜡笔纸感好；斜线背景在",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.14"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：平视略仰、人约占画面62%、主光是柔和环境纸面光；屈膝仍偏弱只露下摆；背景斜线可再疏",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.28"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：侧面半身；红帽衫厚袖口可读；蜡笔纸感稳",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.28"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：平视略仰、人约占画面65%、主光是柔和环境纸面光；屈膝圆度还可更清楚；手部叠在腿上略糊",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "9.33"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：侧面半身拉到膝；红帽衫袖口可读；蜡笔斜线背景疏一些",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.33"
+    }
+  ]
+}

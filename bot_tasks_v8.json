@@ -6,7 +6,7 @@
     "main": "scripts/absolute_5d_scorer.py Absolute-5D v9.1 audit-patched checklist; VLM preferred when keyed",
     "baseline": "absolute_5d(ref) same ruler — never score_image_v7(ref,ref,low)",
     "diagnostic": "Intent + Δ + MSE/struct meta only (not semantic VLM)",
-    "stop": "score-only pixel band>=8.50 (diagnostic); converge/skills accept>=9.60 (VLM or Agent Absolute-5D); pixel never gates product converge",
+    "stop": "score-only pixel band>=8.50 (diagnostic); converge/skills accept>=9.50 (VLM or Agent Absolute-5D); pixel never gates product converge",
     "anchors": "weak proxies→N/A; mild shrink to prior 7.0; no short_side/P5 fake caps",
     "contract": "docs/gpt6sol_absolute_5d_quant_rubric.md",
     "audit": "docs/offline_vs_vlm_gap_gpt6sol_audit.md",

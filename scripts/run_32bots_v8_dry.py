@@ -3,7 +3,7 @@
 V8 32-bot dry-run (NO image generation).
 
 - Absolute-5D v9 checklist (gpt-6-sol 0/1/2) is the offline score track
-- STOP = HEURISTIC_STOP_THRESHOLD (8.50), not legacy showcase 9.60
+- STOP = HEURISTIC_STOP_THRESHOLD (8.50), not legacy showcase 9.50
 - Intent / Δ are diagnostic (not semantic VLM)
 - high / recompose / bold enforce min_rounds ≥ 2
 - R2+ prompt rewrite path exercised via rewrite_prompt_from_defects

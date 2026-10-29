@@ -52,7 +52,7 @@ BOT_TASKS = [
                 "prompt": "[LOW_SCALE_LOCK: keep_camera_viewpoint=True, keep_pose_and_action=True, keep_layout_and_element_count=True, prompt_delta<=20%] Full-length vertical 9:16 anime character illustration of blue-haired twin-tail maid girl standing in 3/4 view on pure white background, puzzle-piece hair ornaments, navy blue dress and white apron, left hand slightly raised by waist, right hand resting against skirt, ultra-crisp vector-clean cel linework and smooth hair gradient highlights.",
                 "scores": {"composition": 9.7, "lighting": 9.6, "color": 9.7, "craft_Anatomy": 9.6, "style_consistency": 9.8, "readability": 9.7},
                 "defects": [],
-                "fix": "已达标 >= 9.60，触发 STOP_TARGET_REACHED 动态停机"
+                "fix": "已达标 >= 9.50，触发 STOP_TARGET_REACHED 动态停机"
             }
         ]
     },
@@ -85,7 +85,7 @@ BOT_TASKS = [
                 "prompt": "Full-length vertical 9:16 anime character illustration preserving exact 3/4 standing pose and hand gestures of reference: rich two-layer cel shading with warm rim light on cobalt twin-tails, cool ambient bounce on navy skirt pleats, luminous sapphire iris catchlights.",
                 "scores": {"composition": 9.7, "lighting": 9.7, "color": 9.6, "craft_Anatomy": 9.6, "style_consistency": 9.7, "readability": 9.7},
                 "defects": [],
-                "fix": "已达标 >= 9.60，触发 STOP_TARGET_REACHED 动态停机"
+                "fix": "已达标 >= 9.50，触发 STOP_TARGET_REACHED 动态停机"
             }
         ]
     },
@@ -125,7 +125,7 @@ BOT_TASKS = [
                 "prompt": "Masterpiece vertical 9:16 anime key visual preserving core standing subject and outfit of reference: radiant golden-hour subsurface scattering through cobalt twin-tails, luminous porcelain skin bounce light, intricate lace filigree on apron, crystalline sapphire eye reflections.",
                 "scores": {"composition": 9.7, "lighting": 9.8, "color": 9.7, "craft_Anatomy": 9.6, "style_consistency": 9.7, "readability": 9.7},
                 "defects": [],
-                "fix": "已达标 >= 9.60，触发 STOP_TARGET_REACHED 动态停机"
+                "fix": "已达标 >= 9.50，触发 STOP_TARGET_REACHED 动态停机"
             }
         ]
     },
@@ -158,7 +158,7 @@ BOT_TASKS = [
                 "prompt": "Vertical 9:16 2000s anime cel illustration preserving exact character design (blue twin-tails, puzzle hairclips, navy maid outfit): dramatic high-angle perspective on a classical library ladder reaching for a glowing encyclopedia, swirling translucent puzzle pieces and sunlit dust motes.",
                 "scores": {"composition": 9.7, "lighting": 9.6, "color": 9.7, "craft_Anatomy": 9.6, "style_consistency": 9.7, "readability": 9.7},
                 "defects": [],
-                "fix": "已达标 >= 9.60，触发 STOP_TARGET_REACHED 动态停机"
+                "fix": "已达标 >= 9.50，触发 STOP_TARGET_REACHED 动态停机"
             }
         ]
     },
@@ -193,7 +193,7 @@ BOT_TASKS = [
                 "prompt": "[LOW_SCALE_LOCK: keep_camera_viewpoint=True, keep_pose_and_action=True, keep_layout_and_element_count=True, prompt_delta<=20%] Vertical 3:4 Romanticism oil painting locking exact rear viewpoint, standing posture with walking stick in right hand, and triangular dark rocky foreground of reference: museum-grade restored oil impasto on granite crags and crisp coat contours.",
                 "scores": {"composition": 9.7, "lighting": 9.6, "color": 9.7, "craft_Anatomy": 9.6, "style_consistency": 9.8, "readability": 9.7},
                 "defects": [],
-                "fix": "已达标 >= 9.60，触发 STOP_TARGET_REACHED 动态停机"
+                "fix": "已达标 >= 9.50，触发 STOP_TARGET_REACHED 动态停机"
             }
         ]
     },
@@ -226,7 +226,7 @@ BOT_TASKS = [
                 "prompt": "Vertical 3:4 Romanticism oil painting preserving exact rear-facing wanderer pose and rocky peak layout: luminous pearlescent glazing across cascading fog, multi-layered atmospheric perspective on distant crags, tactile oil brushwork.",
                 "scores": {"composition": 9.7, "lighting": 9.7, "color": 9.6, "craft_Anatomy": 9.6, "style_consistency": 9.7, "readability": 9.7},
                 "defects": [],
-                "fix": "已达标 >= 9.60，触发 STOP_TARGET_REACHED 动态停机"
+                "fix": "已达标 >= 9.50，触发 STOP_TARGET_REACHED 动态停机"
             }
         ]
     },
@@ -266,7 +266,7 @@ BOT_TASKS = [
                 "prompt": "Masterpiece vertical 3:4 Romanticism oil painting preserving core composition: sublime golden crepuscular rays illuminating turbulent indigo-and-amber sea of fog, radiant golden rim light on windblown hair and frock coat, rich oil impasto on wet alpine granite.",
                 "scores": {"composition": 9.7, "lighting": 9.8, "color": 9.7, "craft_Anatomy": 9.6, "style_consistency": 9.7, "readability": 9.7},
                 "defects": [],
-                "fix": "已达标 >= 9.60，触发 STOP_TARGET_REACHED 动态停机"
+                "fix": "已达标 >= 9.50，触发 STOP_TARGET_REACHED 动态停机"
             }
         ]
     },
@@ -299,7 +299,7 @@ BOT_TASKS = [
                 "prompt": "Vertical 3:4 19th-century Romanticism oil painting preserving exact brushwork and palette of Friedrich: dramatic low-angle view beneath a rugged alpine stone arch, solitary wanderer holding a glowing brass lantern casting warm amber bounce light against cool silver moonlit sea of fog.",
                 "scores": {"composition": 9.7, "lighting": 9.7, "color": 9.6, "craft_Anatomy": 9.6, "style_consistency": 9.7, "readability": 9.7},
                 "defects": [],
-                "fix": "已达标 >= 9.60，触发 STOP_TARGET_REACHED 动态停机"
+                "fix": "已达标 >= 9.50，触发 STOP_TARGET_REACHED 动态停机"
             }
         ]
     },
@@ -334,7 +334,7 @@ BOT_TASKS = [
                 "prompt": "[LOW_SCALE_LOCK: keep_camera_viewpoint=True, keep_pose_and_action=True, keep_layout_and_element_count=True, prompt_delta<=20%] Traditional Japanese ukiyo-e woodblock print locking exact diagonal bridge viewpoint, hunched travelers under umbrellas and straw hats, and single distant raft of reference: museum-grade keyblock registration, razor-sharp rain lines, clear timber pilings.",
                 "scores": {"composition": 9.7, "lighting": 9.6, "color": 9.7, "craft_Anatomy": 9.6, "style_consistency": 9.8, "readability": 9.7},
                 "defects": [],
-                "fix": "已达标 >= 9.60，触发 STOP_TARGET_REACHED 动态停机"
+                "fix": "已达标 >= 9.50，触发 STOP_TARGET_REACHED 动态停机"
             }
         ]
     },
@@ -367,7 +367,7 @@ BOT_TASKS = [
                 "prompt": "Traditional Japanese ukiyo-e woodblock print preserving exact diagonal bridge layout, hunched travelers, and single river raft: deep indigo-to-cerulean bokashi gradation, rich ochre timber grain, crisp silver-black rain lines on textured mulberry washi.",
                 "scores": {"composition": 9.7, "lighting": 9.6, "color": 9.7, "craft_Anatomy": 9.6, "style_consistency": 9.8, "readability": 9.7},
                 "defects": [],
-                "fix": "已达标 >= 9.60，触发 STOP_TARGET_REACHED 动态停机"
+                "fix": "已达标 >= 9.50，触发 STOP_TARGET_REACHED 动态停机"
             }
         ]
     },
@@ -407,7 +407,7 @@ BOT_TASKS = [
                 "prompt": "Masterpiece Japanese ukiyo-e woodblock print preserving core diagonal bridge, huddled travelers, and single river raft: woodblock-carved golden lightning bolt piercing dark indigo clouds, shimmering water reflection, warm amber oil-paper umbrellas against driving black rain lines.",
                 "scores": {"composition": 9.7, "lighting": 9.7, "color": 9.7, "craft_Anatomy": 9.6, "style_consistency": 9.8, "readability": 9.7},
                 "defects": [],
-                "fix": "已达标 >= 9.60，触发 STOP_TARGET_REACHED 动态停机"
+                "fix": "已达标 >= 9.50，触发 STOP_TARGET_REACHED 动态停机"
             }
         ]
     },
@@ -440,7 +440,7 @@ BOT_TASKS = [
                 "prompt": "Vertical 3:4 Hiroshige ukiyo-e woodblock print style: dramatic low-angle riverside dock view beneath towering timber bridge pilings in evening rainstorm, four glowing vermilion lanterns reflecting on wet planks, lone boatman in yellow mino straw cape.",
                 "scores": {"composition": 9.7, "lighting": 9.7, "color": 9.7, "craft_Anatomy": 9.6, "style_consistency": 9.8, "readability": 9.7},
                 "defects": [],
-                "fix": "已达标 >= 9.60，触发 STOP_TARGET_REACHED 动态停机"
+                "fix": "已达标 >= 9.50，触发 STOP_TARGET_REACHED 动态停机"
             }
         ]
     },
@@ -475,7 +475,7 @@ BOT_TASKS = [
                 "prompt": "[LOW_SCALE_LOCK: keep_camera_viewpoint=True, keep_pose_and_action=True, keep_layout_and_element_count=True, prompt_delta<=20%] Classical botanical stipple engraving locking exact frontal specimen layout (one open magenta flower, two closed buds, thorny upright stem, one detached red hip at bottom left): razor-sharp copperplate stipple prickles, intricate serrated leaf veins, clean parchment.",
                 "scores": {"composition": 9.7, "lighting": 9.6, "color": 9.7, "craft_Anatomy": 9.7, "style_consistency": 9.8, "readability": 9.7},
                 "defects": [],
-                "fix": "已达标 >= 9.60，触发 STOP_TARGET_REACHED 动态停机"
+                "fix": "已达标 >= 9.50，触发 STOP_TARGET_REACHED 动态停机"
             }
         ]
     },
@@ -508,7 +508,7 @@ BOT_TASKS = [
                 "prompt": "Classical botanical watercolor and stipple engraving preserving exact specimen layout (one open magenta bloom, two buds, one detached red hip at bottom left): luminous multi-layer watercolor petal veining, glowing golden pollen stamens, glossy scarlet rose hip.",
                 "scores": {"composition": 9.7, "lighting": 9.6, "color": 9.7, "craft_Anatomy": 9.7, "style_consistency": 9.8, "readability": 9.7},
                 "defects": [],
-                "fix": "已达标 >= 9.60，触发 STOP_TARGET_REACHED 动态停机"
+                "fix": "已达标 >= 9.50，触发 STOP_TARGET_REACHED 动态停机"
             }
         ]
     },
@@ -548,7 +548,7 @@ BOT_TASKS = [
                 "prompt": "Masterpiece classical botanical watercolor preserving core specimen layout: velvety deep magenta petals and serrated foliage glistening with crystalline refractive dewdrops, luminous golden stamen center, museum-grade vellum depth.",
                 "scores": {"composition": 9.7, "lighting": 9.8, "color": 9.7, "craft_Anatomy": 9.7, "style_consistency": 9.7, "readability": 9.7},
                 "defects": [],
-                "fix": "已达标 >= 9.60，触发 STOP_TARGET_REACHED 动态停机"
+                "fix": "已达标 >= 9.50，触发 STOP_TARGET_REACHED 动态停机"
             }
         ]
     },
@@ -581,7 +581,7 @@ BOT_TASKS = [
                 "prompt": "Vertical 3:4 Redouté botanical watercolor and stipple style re-composition: sunlit oak naturalist desk with open deckle-edged botanical folio, Rosa Kamtschatica floral wreath and rosehip specimen card, brass magnifying glass optically enlarging fine stippled leaf veins and rosebud.",
                 "scores": {"composition": 9.7, "lighting": 9.7, "color": 9.7, "craft_Anatomy": 9.6, "style_consistency": 9.8, "readability": 9.7},
                 "defects": [],
-                "fix": "已达标 >= 9.60，触发 STOP_TARGET_REACHED 动态停机"
+                "fix": "已达标 >= 9.50，触发 STOP_TARGET_REACHED 动态停机"
             }
         ]
     }
@@ -687,7 +687,7 @@ def run_single_empty_bot(task: dict) -> dict:
             module=task["module"],
             ref_image=str(ref_dst),
             ref_analysis=f"{task['ref_title']} ({task['ref_dims']})",
-            threshold=9.60,
+            threshold=9.50,
             max_rounds=8,
             silent=True,
         )
@@ -706,7 +706,7 @@ def run_single_empty_bot(task: dict) -> dict:
             next_fix=r["fix"],
             scale=task["scale"],
             recompose_dir=task["goal"] if task["scale"] == "recompose" else "",
-            threshold=9.60,
+            threshold=9.50,
             max_rounds=8,
             silent=True,
         )

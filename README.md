@@ -157,55 +157,57 @@ python3 pmem_art.py skills --install
 4. **按题材触发 R1 结构底线**：仅人物/生物自动注入关节/握持/双瞳高光底线；纯空镜仅注入透视灭点与接触阴影；UI/图标跳过人体解剖词。
 5. **精简回流与评分容错**：单轮 `【回流修正】` 硬限 `≤ 2` 条；评分 API 偶发失败自动重试，绝不灌入泛化套话污染下一轮 Prompt。
 
-嫌某档太死或太放：同档直接加一句话，例如「medium：允许更大冷暖对比，仍禁止换机位」。细则 → [手册附录 A](USER_MANUAL.md#附录-a四档-## 效果长什么样
-
-### 自我进化总览
-
-![pmem-art 自我进化报告预览](benchmark-evolution-preview.png)
-
-### regen2 · 2026-10-29（最多 4 轮 · ≥9.50）
-
-同范围再跑主页候选展陈。全页按分类排：[docs/showcase/skills-homepage/index.html](docs/showcase/skills-homepage/index.html)
-
-#### 案例 01 · 仙侠不夜城
-
-| 原图 | low · **8.79** | medium · **9.04** | high · **8.67** | recompose · **8.00** |
-| :---: | :---: | :---: | :---: | :---: |
-| ![c01_ref](docs/showcase/skills-homepage/assets/regen2/draw_matrix/c01/ref.jpg) | ![c01_low](docs/showcase/skills-homepage/assets/regen2/draw_matrix/c01/low.jpg) | ![c01_med](docs/showcase/skills-homepage/assets/regen2/draw_matrix/c01/medium.jpg) | ![c01_high](docs/showcase/skills-homepage/assets/regen2/draw_matrix/c01/high.jpg) | ![c01_rec](docs/showcase/skills-homepage/assets/regen2/draw_matrix/c01/recompose.jpg) |
-
-#### 案例 02 · 粉彩速写少女
-
-| 原图 | low · **8.64** | medium · **9.02** | high · **8.86** | recompose · **8.79** |
-| :---: | :---: | :---: | :---: | :---: |
-| ![c02_ref](docs/showcase/skills-homepage/assets/regen2/draw_matrix/c02/ref.jpg) | ![c02_low](docs/showcase/skills-homepage/assets/regen2/draw_matrix/c02/low.jpg) | ![c02_med](docs/showcase/skills-homepage/assets/regen2/draw_matrix/c02/medium.jpg) | ![c02_high](docs/showcase/skills-homepage/assets/regen2/draw_matrix/c02/high.jpg) | ![c02_rec](docs/showcase/skills-homepage/assets/regen2/draw_matrix/c02/recompose.jpg) |
-
-#### 案例 03 · 窗边日光胸像
-
-| 原图 | low · **9.32** | medium · **8.96** | high · **8.70** | recompose · **8.49** |
-| :---: | :---: | :---: | :---: | :---: |
-| ![c03_ref](docs/showcase/skills-homepage/assets/regen2/draw_matrix/c03/ref.jpg) | ![c03_low](docs/showcase/skills-homepage/assets/regen2/draw_matrix/c03/low.jpg) | ![c03_med](docs/showcase/skills-homepage/assets/regen2/draw_matrix/c03/medium.jpg) | ![c03_high](docs/showcase/skills-homepage/assets/regen2/draw_matrix/c03/high.jpg) | ![c03_rec](docs/showcase/skills-homepage/assets/regen2/draw_matrix/c03/recompose.jpg) |
-
-#### 案例 04 · 天井石院
-
-| 原图 | low · **9.31** | medium · **8.71** | high · **8.49** | recompose · **8.63** |
-| :---: | :---: | :---: | :---: | :---: |
-| ![c04_ref](docs/showcase/skills-homepage/assets/regen2/draw_matrix/c04/ref.jpg) | ![c04_low](docs/showcase/skills-homepage/assets/regen2/draw_matrix/c04/low.jpg) | ![c04_med](docs/showcase/skills-homepage/assets/regen2/draw_matrix/c04/medium.jpg) | ![c04_high](docs/showcase/skills-homepage/assets/regen2/draw_matrix/c04/high.jpg) | ![c04_rec](docs/showcase/skills-homepage/assets/regen2/draw_matrix/c04/recompose.jpg) |
-
-#### 界面 / 图标 / 克隆变体
-
-| 花房 UI · **8.93** | 浮城 A · **8.51** | 青瓷金 A · **8.79** | 锻炉 A · **8.99** | 治疗药 C · **9.27** |
-| :---: | :---: | :---: | :---: | :---: |
-| ![ui](docs/showcase/skills-homepage/assets/regen2/v2/ui_royal.jpg) | ![ia](docs/showcase/skills-homepage/assets/regen2/v2/icon_a.jpg) | ![ia2](docs/showcase/skills-homepage/assets/regen2/v2/icon_a2.jpg) | ![ia3](docs/showcase/skills-homepage/assets/regen2/v2/icon_a3.jpg) | ![heal](docs/showcase/skills-homepage/assets/regen2/v2/icon_c_heal.jpg) |
-
-| 少年纸风筝 · **8.55** | 白兔 · **8.40** | 光影变体 · **9.10** | 惊喜 · **9.53** | 晶冠瓶 · **9.44** |
-| :---: | :---: | :---: | :---: | :---: |
-| ![kite](docs/showcase/skills-homepage/assets/regen2/v2/clone_kite.jpg) | ![rabbit](docs/showcase/skills-homepage/assets/regen2/v2/clone_rabbit.jpg) | ![light](docs/showcase/skills-homepage/assets/regen2/v2/var_light.jpg) | ![surprise](docs/showcase/skills-homepage/assets/regen2/v2/var_surprise.jpg) | ![crown](docs/showcase/skills-homepage/assets/regen2/v2/merge_crown.jpg) |
-
-合成梯、锁风格卡、提示词全文见全页展陈。
+嫌某档太死或太放：同档直接加一句话，例如「medium：允许更大冷暖对比，仍禁止换机位」。细则 → [手册附录 A](USER_MANUAL.md#附录-a四档---scale-细则与示例)。
 
 ---
 
-d` 跑分，不是展示用编造分。
+<a id="效果长什么样"></a>
+
+## 效果长什么样
+
+> **怎么认路、怎么用技能** → [认路白话流程图](docs/route_pipeline.html)（推荐先打开）  
+> **全页展陈（话术 + 逐轮分 + 结果图）** → [docs/showcase/skills-homepage/index.html](docs/showcase/skills-homepage/index.html)  
+> 图源：`docs/showcase/homepage_rerun_1028/` · 闭环最多 4 轮 · ≥9.50 · 下面是正式跑分胜出图
+
+### draw · 四案例 × 四档
+
+从左到右：原图 → low → medium → high → recompose。表头分是胜出轮总分。
+
+#### 案例 01 · 仙侠不夜城
+
+| 原图 | low · **9.54** | medium · **9.54** | high · **9.54** | recompose · **9.40** |
+| :---: | :---: | :---: | :---: | :---: |
+| ![c01_ref](docs/showcase/homepage_rerun_1028/draw_matrix/c01/ref.jpg) | ![c01_low](docs/showcase/homepage_rerun_1028/draw_matrix/c01/low/r4.jpg) | ![c01_med](docs/showcase/homepage_rerun_1028/draw_matrix/c01/medium/r4.jpg) | ![c01_high](docs/showcase/homepage_rerun_1028/draw_matrix/c01/high/r4.jpg) | ![c01_rec](docs/showcase/homepage_rerun_1028/draw_matrix/c01/recompose/r4.jpg) |
+
+#### 案例 02 · 粉彩速写少女
+
+| 原图 | low · **9.50** | medium · **9.52** | high · **9.52** | recompose · **9.53** |
+| :---: | :---: | :---: | :---: | :---: |
+| ![c02_ref](docs/showcase/homepage_rerun_1028/draw_matrix/c02/ref.jpg) | ![c02_low](docs/showcase/homepage_rerun_1028/draw_matrix/c02/low/r3.jpg) | ![c02_med](docs/showcase/homepage_rerun_1028/draw_matrix/c02/medium/r4.jpg) | ![c02_high](docs/showcase/homepage_rerun_1028/draw_matrix/c02/high/r4.jpg) | ![c02_rec](docs/showcase/homepage_rerun_1028/draw_matrix/c02/recompose/r4.jpg) |
+
+#### 案例 03 · 窗边日光胸像
+
+| 原图 | low · **9.55** | medium · **9.55** | high · **9.50** | recompose · **9.40** |
+| :---: | :---: | :---: | :---: | :---: |
+| ![c03_ref](docs/showcase/homepage_rerun_1028/draw_matrix/c03/ref.jpg) | ![c03_low](docs/showcase/homepage_rerun_1028/draw_matrix/c03/low/r4.jpg) | ![c03_med](docs/showcase/homepage_rerun_1028/draw_matrix/c03/medium/r4.jpg) | ![c03_high](docs/showcase/homepage_rerun_1028/draw_matrix/c03/high/r3.jpg) | ![c03_rec](docs/showcase/homepage_rerun_1028/draw_matrix/c03/recompose/r3.jpg) |
+
+#### 案例 04 · 天井石院
+
+| 原图 | low · **9.51** | medium · **9.53** | high · **9.55** | recompose · **9.42** |
+| :---: | :---: | :---: | :---: | :---: |
+| ![c04_ref](docs/showcase/homepage_rerun_1028/draw_matrix/c04/ref.jpg) | ![c04_low](docs/showcase/homepage_rerun_1028/draw_matrix/c04/low/r4.jpg) | ![c04_med](docs/showcase/homepage_rerun_1028/draw_matrix/c04/medium/r4.jpg) | ![c04_high](docs/showcase/homepage_rerun_1028/draw_matrix/c04/high/r4.jpg) | ![c04_rec](docs/showcase/homepage_rerun_1028/draw_matrix/c04/recompose/r4.jpg) |
+
+### 界面 · 图标 · 克隆 / 变体 · 合成梯
+
+| 花房 UI | 浮城 A · **9.55** | 青瓷金 A | 锻炉 A | 治疗药 C · **9.55** |
+| :---: | :---: | :---: | :---: | :---: |
+| ![ui](docs/showcase/homepage_rerun_1028/v2/ui_royal/portrait/final.jpg) | ![ia](docs/showcase/homepage_rerun_1028/v2/icon_a/final.jpg) | ![ia2](docs/showcase/homepage_rerun_1028/v2/icon_a2/final.jpg) | ![ia3](docs/showcase/homepage_rerun_1028/v2/icon_a3/final.jpg) | ![heal](docs/showcase/homepage_rerun_1028/v2/icon_c_set/heal.jpg) |
+
+| 少年纸风筝 · **9.48** | 白兔 · **9.54** | 光影变体 · **9.53** | 惊喜 · **9.54** | 晶冠瓶 · **9.51** |
+| :---: | :---: | :---: | :---: | :---: |
+| ![kite](docs/showcase/homepage_rerun_1028/v2/clone/final.jpg) | ![rabbit](docs/showcase/homepage_rerun_1028/v2/clone_rabbit/final.jpg) | ![light](docs/showcase/homepage_rerun_1028/v2/variant/final.jpg) | ![surprise](docs/showcase/homepage_rerun_1028/v2/variant_expr/final.jpg) | ![crown](docs/showcase/homepage_rerun_1028/v2/merge/final.jpg) |
+
+合成梯 L1–L6（药 / 糖）、锁风格卡、`/pmem-prompt` 样例与完整玩家话术 → [全页展陈](docs/showcase/skills-homepage/index.html)。认路思路 → [route_pipeline.html](docs/route_pipeline.html)。
 
 ---
 

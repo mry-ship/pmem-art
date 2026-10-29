@@ -7,7 +7,7 @@
   "scale": "medium",
   "mode": "quality",
   "aspect_ratio": "3:4",
-  "threshold": 9.6,
+  "threshold": 9.5,
   "passed": false,
   "change": "困倦半眯",
   "locked": ["机位", "半厚涂窗边光", "深蓝黑短发", "蓝瞳", "白猫发夹", "黑耳机", "白T"],

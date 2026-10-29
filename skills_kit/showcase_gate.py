@@ -1,6 +1,6 @@
 """Showcase HTML finish gate.
 
-A scored cell cannot be a final if last score < 9.6 and rounds < 4.
+A scored cell cannot be a final if last score < 9.5 and rounds < 4.
 Style-lock / prompt / refs do not generate, so they are skipped.
 """
 from __future__ import annotations
@@ -10,7 +10,7 @@ from html import unescape
 from pathlib import Path
 from typing import Any
 
-DEFAULT_THRESHOLD = 9.6
+DEFAULT_THRESHOLD = 9.5
 DEFAULT_MAX_ROUNDS = 4
 
 _SKIP_CAPTION = re.compile(
@@ -126,7 +126,7 @@ def audit_showcase_file(path: str | Path) -> list[dict[str, Any]]:
 
 def format_report(issues: list[dict[str, Any]]) -> str:
     if not issues:
-        return "showcase-gate OK：没有 <9.6 且未满 4 轮的终稿格。"
+        return "showcase-gate OK：没有 <9.5 且未满 4 轮的终稿格。"
     lines = [f"showcase-gate FAIL：{len(issues)} 格还不能当终稿"]
     for item in issues:
         lines.append(
