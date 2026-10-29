@@ -1099,7 +1099,7 @@ def cmd_init(root: Path, project_name: str = "Untitled Art Project", force: bool
         "# pmem-art 冷启动指南（Mode A · Young）\n\n"
         "## 美术先看（零门槛）\n\n"
         "在 Cursor / Claude / Codex **对话框直接说人话**，例如：`画一张窗边女孩水彩半身`。\n"
-        "不必背 `/技能`、不必碰命令行。认路总图：[docs/route_pipeline.html](../docs/route_pipeline.html)。\n\n"
+        "不必背 `/技能`、不必碰命令行。认路总图：仓库里的 `docs/route_pipeline.html`。\n\n"
         "## 工程脚手架（可后做）\n\n"
         "1. `init` 已放入 **scaffold（脚手架）** 模块与 `assets/{brand,character,scene,ui,vfx,anim}/` 空目录。\n"
         "2. 把第一批图拖进对应目录（或任意子文件夹）。\n"

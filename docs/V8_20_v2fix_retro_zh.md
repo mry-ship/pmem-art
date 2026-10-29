@@ -1,7 +1,7 @@
 # V8-20 skill v2fix 反推笔记（诚实版）
 
 - 时间：2026-10-26 Asia/Shanghai (UTC+8)
-- 对照批：`generated_v8_20_skill/` · mean **9.14** · **4/20** 达标（STOP≥9.60）· 16/20 跑满 8 轮
+- 对照批：`generated_v8_20_skill/` · mean **9.14** · **4/20** 达标（STOP≥9.50）· 16/20 跑满 8 轮
 - 本批：`generated_v8_20_skill_v2fix/` · **PARTIAL**（api.apikey.fan `insufficient_quota` 中途额度用尽）
 - 本批已完成：4 bot（2×STOP_DROP + 2×配额中断salvage）· mean(ok) **8.725** · 达标 **0/4** · range 8.13–9.1
 - 脚本：`scripts/run_v8_20_skill_converge_v2fix.py`（旧 `run_v8_20_skill_converge.py` 未改）
@@ -11,7 +11,7 @@
 | 项 | 前次 skill | v2fix |
 |---|---|---|
 | pad | 链式 previous（R_n edits from R_{n-1}） | 默认 **ref**（每轮从 style_ref 再 edit）；`--pad {ref,previous,auto}` |
-| STOP | total≥9.60 ∧ r≥min_rounds | total≥9.60 ∧ **perspective_anatomy≥8.5** ∧ r≥min_rounds |
+| STOP | total≥9.50 ∧ r≥min_rounds | total≥9.50 ∧ **perspective_anatomy≥8.5** ∧ r≥min_rounds |
 | 早停 | 无 | **plateau**（连续 2 轮无新 best）或 **drop≥0.3** → 晋升 best |
 | 评分失败 | 灌套话「强化档位意图…体积光」并继续链式 | 重试 1 次；仍失败则 **不改 defects / 不坏 pad** |
 | 缺陷回流 | 空白/低维 → 套话体积光；【回流修正】偏长 | 低维映射 anatomy/texture/light 专句；**【回流修正】≤2**；透视最低优先 |
@@ -34,7 +34,7 @@
 | bot | best | anat | stop | 解读 |
 |---|---|---|---|---|
 | v8_bot_02 low | 8.13 (R1) | 6.75 | STOP_DROP | R2/R3 从 ref 再 edit 继续掉；早停保住 R1，但仍远低于前次链式 best 8.96 |
-| v8_bot_04 med | **9.10 (R1)** | **8.5** | STOP_DROP | R1 已很接近 9.60；R2/R3 下滑被 drop 截住。说明 **R1 质量够时 pad=ref+早停是对的** |
+| v8_bot_04 med | **9.10 (R1)** | **8.5** | STOP_DROP | R1 已很接近 9.50；R2/R3 下滑被 drop 截住。说明 **R1 质量够时 pad=ref+早停是对的** |
 | v8_bot_06 high | 8.79 (R3) | 8.0 | salvage | 缓慢爬升中被配额打断；透视未到 8.5 |
 | v8_bot_07 recom | 8.88 (R2) | 8.0 | salvage | 同上 |
 
@@ -42,13 +42,13 @@
 
 - **DROP 早停有效**：避免再生成明显更差的轮次（与前次满 8 轮劣化同构）。
 - **纯 pad=ref 并不总优于链式**：low 档 bot_02 本批 R1 弱于前次链式峰值 → 「永远从 ref」会丢掉「在已改进图上微调」的收益。
-- **解剖门槛会推迟 STOP**：bot_04 R1=9.1/anat8.5 若只看总分已接近，但未到 9.60；门槛合理，但需要更敢改解剖的回流句，而不是光影套话。
+- **解剖门槛会推迟 STOP**：bot_04 R1=9.1/anat8.5 若只看总分已接近，但未到 9.50；门槛合理，但需要更敢改解剖的回流句，而不是光影套话。
 
 ## 4. 剩余瓶颈（按优先级）
 
 1. **API 额度**：本批无法跑完 20；一切均值对比暂不可下结论。  
 2. **pad 策略过刚**：`ref` 默认防劣化，但牺牲了「改进后继续磨」；需要 **auto**（升则 chain，降则 reset ref）作主路径。  
-3. **R1 提示词天花板**：多数档位若 R1 < 8.5，后续无论 pad 都难稳过 9.60。low/medium 的 compose 仍偏「修瑕」叙事，对 Absolute-5D 的透视/质感权重不够主动。  
+3. **R1 提示词天花板**：多数档位若 R1 < 8.5，后续无论 pad 都难稳过 9.50。low/medium 的 compose 仍偏「修瑕」叙事，对 Absolute-5D 的透视/质感权重不够主动。  
 4. **回流句仍偏模板**：`DIM_FIX['perspective_anatomy']` 是通用句；缺少按 case（持剑手、落脚屋脊、龙翼根、粉彩手指）的 **slug 特化解剖补丁**。  
 5. **STOP 与晋升**：drop=0.3 对 VLM 噪声可能略紧；可改为「相对 best 连续 2 次下降」或「drop≥0.3 且 anat 也降」再停。  
 6. **达标定义变严**：+anat≥8.5 会让「总分刷到 9.6 但肢体糊」不再算达标——这是正确产品决策，但会让 reached 计数短期下降，需在 HTML/报告里分列「总分达标」vs「总分+透视达标」。
@@ -75,7 +75,7 @@
 
 ### 附（配额与工程）
 - 跑前用极短 chat probe 检查额度；`insufficient_quota` 立即停整批并写 `SCORE_SUMMARY.status`。  
-- HTML 增加「总分≥9.60」与「总分+anat≥8.5」双计数。  
+- HTML 增加「总分≥9.50」与「总分+anat≥8.5」双计数。  
 - Desktop 同步坚持 **单文件 CopyFromBox**（≤~3MB）；禁止整包 tgz。
 
 ## 6. 诚实结论

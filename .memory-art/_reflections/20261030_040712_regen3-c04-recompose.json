@@ -1,0 +1,106 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-10-30 04:07:12 UTC+8",
+  "session_id": "regen3-c04-recompose",
+  "goal": "recompose保画风色板与石院身份，机位改井口平视向下",
+  "module": "scene.IshtarCanyon",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 4,
+  "winner_score": 8.62,
+  "winner_image": "assets/scene/ishtarcanyon/r4.jpg",
+  "winner_passed": false,
+  "outcome": "⚠️ **共执行 4 轮审图（目标阈值 `9.50` 分），未达标，已挑选全阶段最高分**（胜出：第 4 轮 `8.62 / 10.0` 分）",
+  "what_fixed": [
+    "镜头抬到井口真正平视斜下；缘石前景更大；对面墙竖向压缩减弱",
+    "镜头再抬一点更平视；缘石前景更大；对面墙透视放宽；拱门雕花再清",
+    "镜头抬到井口真正平视斜下：缘石前景更大、对面墙竖向压缩放宽；右下木架与石墙交界分清；暗部雕花拱门轮廓再清；破梯阶序露出",
+    "镜头抬到井口真正平视斜下：缘石占前景更大、对面墙竖向压缩放宽；贴墙木板加承托；破梯阶序从木梁堆里露出"
+  ],
+  "what_still_weak": "俯（仍偏陡的井口俯下，不是平视），人几乎不占画面，主光是井口天光；对面墙竖向压缩仍强；井口缘石前景不足、平视感未立住；部分贴墙木板悬空无承托；地面破梯阶序仍被木梁堆盖住",
+  "strengths": "构图与基础色调符合要求",
+  "taste_deltas": {
+    "from_strengths": [
+      "构图与基础色调符合要求"
+    ],
+    "from_defects": [
+      "俯视仍偏陡（井口缘略俯向下），人几乎不占画面，主光是井口天光；平视感还可再抬；对面墙竖向压缩仍强；雕花拱门偏糊",
+      "俯（仍偏陡的井口俯下，不是平视），人几乎不占画面，主光是井口天光；对面墙竖向压缩仍强；右下木架与石墙交界发糊融边；暗部雕花拱门轮廓偏糊；破梯阶序被木板堆挡住可读性弱",
+      "俯（仍偏陡的井口俯下，不是平视），人几乎不占画面，主光是井口天光；对面墙竖向压缩仍强；井口缘石前景不足、平视感未立住；部分贴墙木板悬空无承托；地面破梯阶序仍被木梁堆盖住"
+    ]
+  },
+  "warm_start_confidence": 0.9,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 8.46,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 8.62,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 8.45,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 8.62,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：俯视仍偏陡（井口缘可见但仍近垂直俯），人几乎不占画面，主光是井口天光；平视感不足；旧俯视机位未充分作废",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "8.46"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：上下缘石提示井口；墨线淡彩暖墙冷井身份在；破梯与雕花拱门仍在",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.46"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：俯视仍偏陡（井口缘略俯向下），人几乎不占画面，主光是井口天光；平视感还可再抬；对面墙竖向压缩仍强；雕花拱门偏糊",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "8.62"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：俯视仍偏陡（井口缘略俯向下），人几乎不占画面，主光是井口天光；平视感还可再抬；对面墙竖向压缩仍强；雕花拱门偏糊",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "8.62"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：下缘井口缘石前景成立；墨线淡彩暖墙冷井身份在；破木板梯可读",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.62"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：俯（仍偏陡的井口俯下，不是平视），人几乎不占画面，主光是井口天光；对面墙竖向压缩仍强；右下木架与石墙交界发糊融边；暗部雕花拱门轮廓偏糊；破梯阶序被木板堆挡住可读",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "8.45"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：俯（仍偏陡的井口俯下，不是平视），人几乎不占画面，主光是井口天光；对面墙竖向压缩仍强；井口缘石前景不足、平视感未立住；部分贴墙木板悬空无承托；地面破梯阶序仍被木",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "8.62"
+    }
+  ]
+}

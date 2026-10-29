@@ -1,5 +1,5 @@
 ---
-description: 【强制4轮≥9.6收敛】iOS/Android App Icon 应用图标母版 + jezweb式一致化 SVG 图标集 + 游戏道具栅格图标（pmem-art）
+description: 【强制4轮≥9.5收敛】iOS/Android App Icon 应用图标母版 + jezweb式一致化 SVG 图标集 + 游戏道具栅格图标（pmem-art）
 ---
 
 # `/pmem-icon` — jezweb 式一致化图标集 / SVG 取向生成
@@ -15,7 +15,7 @@ description: 【强制4轮≥9.6收敛】iOS/Android App Icon 应用图标母版
 ```
 
 ## 原理（截图摘要）
-1. 先锁 **style-spec** → 2. SVG 硬规则 → 3. 分批生成 → 4. 交付 preview → 5. 关键枚 **Warm-Start + 最多 4 轮 ≥9.6** → 6. 反思写进记忆，要看报告再用 /pmem-coach
+1. 先锁 **style-spec** → 2. SVG 硬规则 → 3. 分批生成 → 4. 交付 preview → 5. 关键枚 **Warm-Start + 最多 4 轮 ≥9.5** → 6. 反思写进记忆，要看报告再用 /pmem-coach
 
 你现在运行在 **pmem-art 图标集模式**（对标 jezweb `icon-set-generator`）：先锁 **一份 style-spec**，再批量生成，保证 stroke、圆角、视口、视觉重量一致——**禁止**从 Lucide/Heroicons 随便拼一套「看起来差不多」的通用库图标冒充项目定制集。
 
@@ -70,7 +70,7 @@ description: 【强制4轮≥9.6收敛】iOS/Android App Icon 应用图标母版
 一套里线宽或拐角混用，或目标尺寸认不出，不能停，正式分改取该维（低于 8.0）。示例：`笔画一致8.6/视觉重量8.4/留白8.5/功能识别8.8`
 
 ### 二之三、Mode C：游戏道具透明底栅格图标（64/128/256px PNG，非 SVG）
-若用户要的是 **游戏道具栅格图标**：先锁「线宽/圆角/色板/投影」style-spec，再批量生成透明底 PNG。关键单枚用 `converge` 跑最多 4 轮，合格线 ≥9.6。
+若用户要的是 **游戏道具栅格图标**：先锁「线宽/圆角/色板/投影」style-spec，再批量生成透明底 PNG。关键单枚用 `converge` 跑最多 4 轮，合格线 ≥9.5。
 
 正式分是加权调和平均。原来三项占 75%，无瑕疵占 25%，盲评。透明底和无字仍是门槛。交付文件要有 alpha，白底和品红底不算透明底。
 
@@ -92,7 +92,7 @@ icons/
 └── …
 ```
 
-### Step 5：关键图标 4轮9.6 收敛（可选）
+### Step 5：关键图标 4轮9.5 收敛（可选）
 用户点名某枚「不对」或一致性审查不通过时，每一轮垫最初的风格参考或 style-spec 样张，不垫上一轮成图：
 ```bash
 python3 pmem_art.py converge start --goal "图标 <name> 对齐 style-spec" --module brand.WorldStyle

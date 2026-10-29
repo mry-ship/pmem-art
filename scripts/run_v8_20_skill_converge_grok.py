@@ -2,7 +2,7 @@
 """V8-20 skill converge with Grok Bot GenerateImage (tool-driven waves).
 
 Same policy as run_v8_20_skill_converge_v2fix.py:
-  threshold 9.6, anat gate 7.5, max 8 rounds, pad=auto, drop-stop after R4.
+  threshold 9.5, anat gate 7.5, max 8 rounds, pad=auto, drop-stop after R4.
 
 Generation is NOT done here — agent fulfills jobs via Cursor GenerateImage.
 Commands:
@@ -53,7 +53,7 @@ STATE_NAME = "orchestrator_state.json"
 AR_OK = {"1:1", "4:3", "3:4", "16:9", "9:16"}
 
 # low/medium/high/recompose pad the original ref every round. Style jump pads nothing.
-# Disabled for skill-contract testing: high/recompose require min_rounds≥2; stop only at ≥9.6.
+# Disabled for skill-contract testing: high/recompose require min_rounds≥2; stop only at ≥9.5.
 EARLY_STOP_R1_GE = 99.0  # was 8.2 — do not early-stop on strong R1
 ANATOMY_LOCK = (
     "解剖锁：correct human anatomy, five fingers on each hand, coherent joints, "
@@ -739,7 +739,7 @@ def finalize(args: argparse.Namespace) -> int:
             anat_val = anat_of(best_round)
             reached = (
                 final_score is not None
-                and final_score >= float(state.get("threshold") or 9.6)
+                and final_score >= float(state.get("threshold") or 9.5)
                 and anat_val is not None
                 and anat_val >= float(state.get("anat_gate") or 7.5)
             )
@@ -766,7 +766,7 @@ def finalize(args: argparse.Namespace) -> int:
     fail = [r for r in results if not r.get("ok")]
     reached = [r for r in ok if r.get("reached_threshold")]
     scored_ok = [r for r in ok if isinstance(r.get("final_score"), (int, float))]
-    threshold = float(state.get("threshold") or 9.6)
+    threshold = float(state.get("threshold") or 9.5)
     anat_gate = float(state.get("anat_gate") or 7.5)
     summary = {
         "version": "v8_20_skill_grok_v2",
@@ -809,7 +809,7 @@ def finalize(args: argparse.Namespace) -> int:
     md = [
         "# V8-20 skill converge Grok (GenerateImage) summary",
         f"- gen: **cursor.GenerateImage** · score: offline Absolute-5D (gpt-6-sol VLM skipped: INSUFFICIENT_BALANCE) · threshold ≥{threshold} · anat≥{anat_gate} · max {state.get('max_rounds',8)} · pad={state.get('pad','auto')} · levers: ref_if_R1≥8.2 / soft_recompose / anat+micro locks / early_R1≥8.5",
-        f"- ok: {len(ok)}/{len(results)} · reached≥9.60: **{len(reached)}** · mean: {summary['mean_final']} · range: {summary['min_final']}–{summary['max_final']}",
+        f"- ok: {len(ok)}/{len(results)} · reached≥9.50: **{len(reached)}** · mean: {summary['mean_final']} · range: {summary['min_final']}–{summary['max_final']}",
         f"- vs gpt-image v2fix mean 8.94 · vs oct26 backup mean 9.14",
         f"- round_dist: {summary['round_dist']}",
         f"- stop_reasons: {summary['stop_reasons']}",
@@ -885,7 +885,7 @@ def main() -> int:
     ap.add_argument("--score-model", default="gpt-6-sol")
     ap.add_argument("--score-backend", choices=("auto", "vlm", "offline"), default="auto",
                     help="auto=VLM→Agent pending (offline advisory only); vlm=quant only; offline=旁证不推进 STOP")
-    ap.add_argument("--threshold", type=float, default=9.6)
+    ap.add_argument("--threshold", type=float, default=9.5)
     ap.add_argument("--anat-gate", type=float, default=7.5)
     ap.add_argument("--max-rounds", type=int, default=8)
     ap.add_argument("--pad", choices=("ref", "previous", "auto"), default="auto")

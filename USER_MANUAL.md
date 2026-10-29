@@ -3,9 +3,9 @@
 > **版本**：`v0.13+`  
 > **核心理念（零门槛）**：**直接说人话就行**。例如「画一张窗边女孩」「参考这张，换成一只猫」。**不用背技能名、不用敲斜杠、不用碰命令行、不用写 YAML。** 附图可有可无。  
 > 电脑会自己认路；认不清会**先问你一句**，不会默默画错。你只会看到类似 `【按 克隆 走了】` / `【走默认路径】` 这种标签。  
-> **认路白话流程图** → [docs/route_pipeline.html](docs/route_pipeline.html)（推荐先看）  
+> **认路白话流程图** → [docs/route_pipeline.html](docs/route_pipeline.html)（推荐先看：大白话从提需到出图）  
 > **先看总览？** → [README.md](README.md) · **进阶斜杠技能**见下文（可选用） · 旧点选流程 [docs/skills/flows.html](docs/skills/flows.html)  
-> **看图墙？** → [README · 效果长什么样](README.md#效果长什么样) · [V8 全页](docs/showcase/pmem_art_images_v8_20bots_showcase.html)
+> **看图墙 / 技能用法与结果？** → [README · 效果长什么样](README.md#效果长什么样) · [全页展陈](docs/showcase/skills-homepage/index.html)（图源 `homepage_rerun_1028`）
 
 ---
 
@@ -547,5 +547,6 @@ python3 pmem_art.py converge finish   --id <sid>   # 默认写记忆、打印评
 - **规模**：4 案例 × 5 档（含 `recompose_bold` 大改）= **20** Bot  
 - **条件**：每 Bot 独立空目录、项目私有记忆 = 0、三步分离、画幅/垫图继承校验  
 - **结果**：**20 / 20** 达到 `≥ 9.50` 停机  
-- **首页图墙 + 分数进度**：见 [README.md §效果长什么样](README.md)（原图与五档终稿、R1→终分轨迹直接嵌在 README）
-- 逐张 MD5 / 长文视觉核验仍以该 HTML 为准。
+- **当前首页图墙**：见 [README.md §效果长什么样](README.md#效果长什么样) 与 [全页展陈](docs/showcase/skills-homepage/index.html)（`homepage_rerun_1028`）
+- **认路思路**：[docs/route_pipeline.html](docs/route_pipeline.html)
+- 附录 B 的 V4 冷启动 HTML 仍可作为历史验收对照。

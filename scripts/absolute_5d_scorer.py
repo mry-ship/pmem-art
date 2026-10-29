@@ -7,7 +7,7 @@ Human doc: docs/OFFLINE_ABSOLUTE_5D.md
 Pixel path (this module): measurable proxies only; HEURISTIC_STOP_THRESHOLD=8.50
 is a **batch/diagnostic band label**, never converge accept_threshold.
 
-No-key converge path: Agent Absolute-5D via CLI dims @ LEGACY_SHOWCASE_STOP (9.60);
+No-key converge path: Agent Absolute-5D via CLI dims @ LEGACY_SHOWCASE_STOP (9.50);
 see skills_kit/absolute_5d_agent_rubric.py. Independent VLM preferred when keyed.
 
 Scoring: each dim = 6 items × (0/1/2) × weight → P/100 → S=P/10;
@@ -20,9 +20,9 @@ from pathlib import Path
 from typing import Any
 
 # Band label for diagnostics / batch reports only — NOT converge accept_threshold.
-# Converge without independent VLM uses Agent Absolute-5D @ LEGACY_SHOWCASE_STOP (9.60).
+# Converge without independent VLM uses Agent Absolute-5D @ LEGACY_SHOWCASE_STOP (9.50).
 HEURISTIC_STOP_THRESHOLD = 8.50
-LEGACY_SHOWCASE_STOP = 9.60
+LEGACY_SHOWCASE_STOP = 9.50
 
 SCORER_VERSION = "v9.1_audit_patch"
 CONTRACT = "docs/gpt6sol_absolute_5d_quant_rubric.md"

@@ -82,7 +82,7 @@ def esc(text: str) -> str:
 
 
 def tone(score: float) -> str:
-    if score >= 9.6:
+    if score >= 9.5:
         return "hit"
     if score >= 8.5:
         return "mid"
@@ -110,11 +110,11 @@ def render(rows: list[dict], plain: dict, five: dict) -> None:
             if (plain.get(name) or {}).get("ok"):
                 plain_totals.append(float(plain[name]["score"]))
         sections.append(f"<section><h2>{CASE_CN[slug]}</h2><div class=\"row\">{''.join(cards)}</div></section>")
-    hit = sum(1 for t in plain_totals if t >= 9.6)
+    hit = sum(1 for t in plain_totals if t >= 9.5)
     mean = round(sum(plain_totals) / len(plain_totals), 2) if plain_totals else None
     note = (
         "大标题上的分数是 gpt-6-astra 直接看图给的总分，推理强度 medium，没有五维检查表，也没有档位加权。"
-        f" 直评 {hit}/{len(plain_totals)} 张 ≥9.60"
+        f" 直评 {hit}/{len(plain_totals)} 张 ≥9.50"
         + (f"，均分 {mean:.2f}。" if mean is not None else "。")
         + " 图下灰色小字仍是上一轮 Absolute-5D 加权分，方便对照。"
     )

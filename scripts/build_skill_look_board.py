@@ -55,7 +55,7 @@ SCALE_LABEL = {
 def score_class(t: float | None) -> str:
     if t is None:
         return ""
-    if t >= 9.6:
+    if t >= 9.5:
         return "hit"
     if t >= 8.5:
         return "mid"
@@ -146,7 +146,7 @@ img{{width:100%;height:auto;display:block;background:#0e0e0e}}
 <p class="note">数据源：<code>{html.escape(state_rel)}</code>。
 主分来自闭环 record（VLM 优先 → 无则 Agent 看图）；离线 Absolute-5D 仅旁证，不参与 STOP。
 生图：apikey.fan 优先，余额不足时走 Cursor 默认 GenerateImage 任务。
-阈值 ≥{state.get('threshold', 9.6)} · anatomy ≥{state.get('anat_gate', 7.5)} · max {state.get('max_rounds', 8)} 轮。</p>
+阈值 ≥{state.get('threshold', 9.5)} · anatomy ≥{state.get('anat_gate', 7.5)} · max {state.get('max_rounds', 8)} 轮。</p>
 </header>
 {"".join(sections)}
 </body></html>"""

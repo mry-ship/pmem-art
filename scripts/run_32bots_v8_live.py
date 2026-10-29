@@ -10,7 +10,7 @@ Modes (must pass one explicitly):
                  (still no GenerateImage API — images must already exist).
 
 Batch/diagnostic STOP band = HEURISTIC_STOP_THRESHOLD (8.50) on pixel Absolute-5D only.
-Product converge (pmem_art converge judge) stays ≥9.60 via VLM or Agent Absolute-5D;
+Product converge (pmem_art converge judge) stays ≥9.50 via VLM or Agent Absolute-5D;
 this script's 8.50 is NOT the skill/converge accept gate.
 
 Usage:

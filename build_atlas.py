@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
 """
-build_atlas.py: 将 .memory-art/ 记忆库、模块色板、管线规格、ComfyUI 配方与 assets/ 图片资产编译为
-单文件自包含、零外部依赖、双击即用的美术记忆图谱与看图工作台 (art-atlas.html)。
+build_atlas.py: 将 .memory-art/ 记忆库、模块色板、管线规格与项目图片索引编译为
+零外部依赖、双击即用的美术记忆图谱与看图工作台 (art-atlas.html)。
+
+默认用相对路径懒加载图片（不嵌 data_uri）；可选 embed 离线导出。
+「所有图归总」可见索引含 assets / .cursor/generated / generated / converge；散图归「其他」，不正式 ingest。
 """
 from __future__ import annotations
 
 import html
 import json
+import os
 from pathlib import Path
 from typing import Any
 
@@ -37,7 +41,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     --purple-bg: rgba(168, 85, 247, 0.14);
     --success: #10b981;
     --success-bg: rgba(16, 185, 129, 0.14);
-    --thumb-size: 260px;
+    --thumb-size: 180px;
+    --thumb-gap: 12px;
   }
   * { box-sizing: border-box; }
   html, body {
@@ -82,15 +87,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
   .brand-title h1 { margin: 0; font-size: 15.5px; font-weight: 700; letter-spacing: 0.2px; }
   .brand-title p { margin: 0; font-size: 11.5px; color: var(--text-muted); }
 
-  .kpi-strip { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-  .kpi-pill {
-    background: var(--bg-card); border: 1px solid var(--border);
-    padding: 4px 11px; border-radius: 999px; font-size: 12px; color: var(--text-muted);
-    display: flex; align-items: center; gap: 6px;
-  }
-  .kpi-pill b { color: var(--text-main); font-size: 13px; }
-  .kpi-pill.warn { border-color: rgba(244, 63, 94, 0.45); background: var(--danger-bg); color: #fda4af; }
-  .kpi-pill.warn b { color: #fff; }
+  /* KPI 顶栏已去掉：与下方 Tab 重复，改为「⋯ 更多」里的概况行 */
 
   .toolbar {
     display: flex; align-items: center; justify-content: space-between;
@@ -185,33 +182,55 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
   .swatch-hex { font-family: ui-monospace, monospace; font-size: 11.5px; font-weight: 700; color: var(--text-main); }
   .swatch-name { font-size: 11px; color: var(--text-muted); }
 
-  /* Gallery Grid */
+  /* Gallery Grid — virtual window keeps DOM light */
+  .gallery-virt { position: relative; }
+  .gallery-spacer { width: 100%; pointer-events: none; }
   .gallery-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(var(--thumb-size), 1fr));
-    gap: 16px;
+    gap: var(--thumb-gap);
   }
   .asset-card {
     background: var(--bg-card); border: 1px solid var(--border);
     border-radius: 11px; overflow: hidden; display: flex; flex-direction: column;
-    transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+    content-visibility: auto;
+    contain-intrinsic-size: auto calc(var(--thumb-size) * 0.78 + 72px);
   }
   .asset-card:hover {
-    transform: translateY(-2px); border-color: var(--border-strong);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    border-color: var(--border-strong);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
   }
   .asset-card.role-rejected { border-color: rgba(244, 63, 94, 0.45); }
   .asset-card.qa-fail { border-color: var(--gold); }
+  body.compact-thumbs .asset-body { display: none; }
+  body.compact-thumbs .asset-card {
+    contain-intrinsic-size: auto calc(var(--thumb-size) * 0.78 + 4px);
+  }
+  body.compact-thumbs .role-tag,
+  body.compact-thumbs .spec-tag { font-size: 9px; padding: 1px 5px; }
+  body.compact-thumbs .gallery-grid { gap: 8px; }
+  .thumb-zoom-group {
+    display: flex; align-items: center; gap: 6px;
+    background: #090d16; border: 1px solid var(--border); border-radius: 8px;
+    padding: 3px 8px;
+  }
+  .thumb-zoom-group input[type=range] { width: 110px; accent-color: var(--teal); }
+  .thumb-zoom-group .zoom-btn {
+    background: transparent; border: 1px solid var(--border); color: var(--text-muted);
+    width: 24px; height: 24px; border-radius: 6px; cursor: pointer; font-size: 14px; line-height: 1;
+  }
+  .thumb-zoom-group .zoom-btn:hover { color: var(--teal); border-color: var(--border-strong); }
+  .thumb-zoom-label { font-size: 11px; color: var(--text-muted); min-width: 42px; text-align: center; font-variant-numeric: tabular-nums; }
   .thumb-wrap {
     position: relative; height: calc(var(--thumb-size) * 0.78);
     display: flex; align-items: center; justify-content: center;
-    overflow: hidden; cursor: zoom-in; padding: 10px;
+    overflow: hidden; cursor: zoom-in; padding: 8px;
+    background: #0b101d;
   }
   .thumb-wrap img {
     max-width: 100%; max-height: 100%; object-fit: contain;
-    transition: transform 0.2s;
+    content-visibility: auto;
   }
-  .asset-card:hover .thumb-wrap img { transform: scale(1.03); }
 
   /* 9-Slice & Safe Margin SVG Overlay on Thumbnails & Lightbox */
   .overlay-9slice {
@@ -335,10 +354,39 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
   .badge.success { background: var(--success-bg); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.35); }
   .badge.info { background: rgba(56, 189, 248, 0.15); color: #7dd3fc; border: 1px solid rgba(56,189,248,0.35); }
 
-  /* Lightbox Modal */
+  /* 半透明叠层预览：点图放大，点空白关闭（不跳二级页） */
+  .img-viewer {
+    display: none; position: fixed; inset: 0; z-index: 400;
+    background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(8px);
+    align-items: center; justify-content: center; cursor: zoom-out;
+    padding: 24px;
+  }
+  .img-viewer.open { display: flex; }
+  .img-viewer-card {
+    position: relative; max-width: min(94vw, 1400px); max-height: 92vh;
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    cursor: default;
+  }
+  .img-viewer-card img {
+    max-width: 92vw; max-height: calc(92vh - 52px);
+    object-fit: contain; border-radius: 10px;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.55);
+    background: #0b101d;
+  }
+  .img-viewer-bar {
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    background: rgba(17, 24, 39, 0.92); border: 1px solid var(--border);
+    border-radius: 999px; padding: 6px 10px; max-width: 94vw;
+  }
+  .img-viewer-bar .iv-path {
+    font-family: ui-monospace, monospace; font-size: 11.5px; color: var(--teal);
+    max-width: 42vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+
+  /* Lightbox 详情（可选，从预览条进） */
   .lightbox {
     position: fixed; inset: 0; background: rgba(5, 8, 15, 0.88);
-    backdrop-filter: blur(8px); z-index: 100; display: none;
+    backdrop-filter: blur(8px); z-index: 450; display: none;
     align-items: stretch; justify-content: space-between;
   }
   .lightbox.open { display: flex; }
@@ -404,6 +452,64 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
   .kcard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 12px; margin-top: 10px; }
   .kcard { background: #090d16; border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
   .kcard-title { font-size: 13px; font-weight: 700; color: var(--teal); margin-bottom: 4px; display: flex; justify-content: space-between; gap: 6px; }
+  .more-wrap { position: relative; }
+  .more-menu {
+    display: none; position: absolute; top: calc(100% + 6px); left: 0; z-index: 40;
+    min-width: 220px; background: #0d1322; border: 1px solid var(--border);
+    border-radius: 10px; padding: 6px; box-shadow: 0 12px 32px rgba(0,0,0,0.45);
+  }
+  .more-wrap.open .more-menu { display: block; }
+  .more-menu button {
+    width: 100%; text-align: left; background: transparent; border: 0; color: var(--text-muted);
+    padding: 8px 10px; border-radius: 7px; cursor: pointer; font-size: 12.5px; font-weight: 600;
+  }
+  .more-menu button:hover, .more-menu button.active { background: var(--teal-bg); color: var(--teal); }
+  .more-menu .more-meta {
+    margin: 6px 4px 2px; padding: 8px 10px; border-radius: 8px;
+    background: rgba(9,13,22,0.85); border: 1px solid var(--border);
+    font-size: 11px; color: var(--text-muted); line-height: 1.55;
+  }
+  .more-menu .more-meta b { color: var(--text-main); }
+  .side-nav-item {
+    padding: 8px 12px; border-radius: 8px; cursor: pointer; margin: 2px 8px;
+    color: var(--text-muted); font-size: 12.5px; font-weight: 600;
+  }
+  .side-nav-item:hover { background: rgba(255,255,255,0.04); color: var(--text-main); }
+  .side-nav-item.active { background: var(--teal-bg); color: var(--teal); border: 1px solid var(--border-strong); }
+  .side-nav-item .count { float: right; opacity: 0.75; font-size: 11px; }
+  .side-sub {
+    margin: 0 8px 4px 18px; padding: 6px 10px; border-radius: 7px; cursor: pointer;
+    font-size: 12px; color: var(--text-dim);
+  }
+  .side-sub:hover { color: var(--text-main); background: rgba(255,255,255,0.03); }
+  .side-sub.active { color: var(--teal); background: rgba(45,212,191,0.08); }
+  .empty-today {
+    padding: 28px 18px; text-align: center; color: var(--text-muted);
+    border: 1px dashed var(--border); border-radius: 12px; background: #0b101d;
+  }
+  .asset-card .thumb-wrap img {
+    background: #0b101d;
+    width: 100%; height: 100%;
+  }
+  .lb-path-actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .src-badge {
+    position: absolute; left: 8px; bottom: 8px; z-index: 2;
+    font-size: 10px; padding: 2px 6px; border-radius: 99px;
+    background: rgba(0,0,0,0.55); color: #e2e8f0; border: 1px solid rgba(255,255,255,0.12);
+  }
+  .img-ctx-menu {
+    display: none; position: fixed; z-index: 9999; min-width: 200px;
+    background: #0d1322; border: 1px solid var(--border); border-radius: 10px;
+    padding: 6px; box-shadow: 0 16px 40px rgba(0,0,0,0.55);
+  }
+  .img-ctx-menu.open { display: block; }
+  .img-ctx-menu button {
+    width: 100%; text-align: left; background: transparent; border: 0;
+    color: var(--text-main); padding: 8px 12px; border-radius: 7px;
+    cursor: pointer; font-size: 12.5px; font-weight: 600;
+  }
+  .img-ctx-menu button:hover { background: var(--teal-bg); color: var(--teal); }
+  .img-ctx-menu .ctx-sep { height: 1px; background: var(--border); margin: 4px 6px; }
 </style>
 <meta name="pmem-build-id" content="__BUILD_ID__">
 </head>
@@ -417,41 +523,46 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
         <p id="projStyle">面向人类美术师与 AI 美术 Agent 的模块视觉锚点、防翻车红线、九宫格/Alpha 质检与生图配方库</p>
       </div>
     </div>
-    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-      <div class="kpi-strip" id="kpiStrip"></div>
-      <div class="live-refresh-bar" id="liveRefreshBar">
-        <span class="live-dot" id="liveDot"></span>
-        <button class="live-btn" id="btnToggleAutoRefresh" onclick="toggleAutoRefresh()" title="开启后每 3 秒自动检测新入库/新生成的图片并无感刷新">🔄 自动刷新: 开启 (3s)</button>
-        <button class="btn-copy" style="padding:3px 9px;font-size:11px;" onclick="manualRefreshNow()" title="立即重新加载最新数据">⚡ 立即刷新</button>
-        <span class="live-sync-time" id="liveSyncTime"></span>
-      </div>
+    <div class="live-refresh-bar" id="liveRefreshBar">
+      <span class="live-dot" id="liveDot"></span>
+      <button class="live-btn" id="btnToggleAutoRefresh" onclick="toggleAutoRefresh()" title="默认开启；每 10 秒检测新图并无感刷新">🔄 自动刷新: 开启 (10s)</button>
+      <button class="btn-copy" style="padding:3px 9px;font-size:11px;" onclick="manualRefreshNow()" title="立即重新加载最新数据">⚡ 立即刷新</button>
+      <span class="live-sync-time" id="liveSyncTime"></span>
     </div>
   </header>
 
   <div class="toolbar">
     <div class="nav-tabs" id="navTabs">
-      <button class="tab-btn active" data-tab="gallery">🖼️ 各类型资产画廊 <span class="count-badge" id="cntGallery">0</span></button>
-      <button class="tab-btn" data-tab="improve">🧠 自我迭代与知识图鉴 <span class="count-badge" id="cntImprove">0</span></button>
-      <button class="tab-btn" data-tab="redlines">🚫 正反例红线对比 (Do vs Don't) <span class="count-badge" id="cntRedlines">0</span></button>
-      <button class="tab-btn" data-tab="recipes">🧪 AI 生图配方工作台 <span class="count-badge" id="cntRecipes">0</span></button>
-      <button class="tab-btn" data-tab="memories">🧭 视觉记忆与演化图谱 <span class="count-badge" id="cntMemories">0</span></button>
-      <button class="tab-btn" data-tab="qa">🛡️ 管线规格与自动质检 <span class="count-badge" id="cntQa">0</span></button>
+      <button class="tab-btn active" data-tab="gallery" title="看项目里今天出的图">🖼️ 所有图归总 <span class="count-badge" id="cntGallery">0</span></button>
+      <div class="more-wrap" id="moreWrap">
+        <button class="tab-btn" type="button" id="btnMoreTabs" onclick="toggleMoreMenu(event)">⋯ 更多</button>
+        <div class="more-menu" id="moreMenu">
+          <div class="more-meta" id="moreMeta">概况加载中…</div>
+          <button type="button" data-tab="improve">🧠 自我迭代与知识图鉴 <span id="cntImprove">0</span></button>
+          <button type="button" data-tab="redlines">🚫 正反例红线 <span id="cntRedlines">0</span></button>
+          <button type="button" data-tab="recipes">🧪 生图配方 <span id="cntRecipes">0</span></button>
+          <button type="button" data-tab="memories">🧭 视觉记忆 <span id="cntMemories">0</span></button>
+          <button type="button" data-tab="qa">🛡️ 管线质检 <span id="cntQa">0</span></button>
+        </div>
+      </div>
     </div>
 
     <div class="stage-controls">
-      <input type="search" id="searchInput" class="search-box" placeholder="🔍 搜模块、红线、Prompt、文件名…" />
-      <div class="ctrl-group" title="切换画布底色（方便检查透明通道、黑边与白边）">
-        <button class="ctrl-btn active" data-bg="stage-checker">🏁 棋盘透明</button>
-        <button class="ctrl-btn" data-bg="stage-dark">🌑 深灰底</button>
-        <button class="ctrl-btn" data-bg="stage-light">🌕 浅白底</button>
-        <button class="ctrl-btn" data-bg="stage-game">🌌 实机夜色</button>
+      <input type="search" id="searchInput" class="search-box" placeholder="🔍 搜文件名、路径、模块、Prompt…" />
+      <div class="more-wrap" id="bgWrap">
+        <button class="ctrl-btn" type="button" id="btnBgMenu" onclick="toggleBgMenu(event)" title="画布底色">🏁 底色</button>
+        <div class="more-menu" id="bgMenu">
+          <button type="button" data-bg="stage-checker" class="active">🏁 棋盘</button>
+          <button type="button" data-bg="stage-dark">🌑 深底</button>
+          <button type="button" data-bg="stage-light">🌕 浅底</button>
+        </div>
       </div>
-      <div class="ctrl-group">
-        <button class="ctrl-btn" id="toggleGuidesBtn" title="显示/隐藏 UI 九宫格切线与安全边距辅助线">📐 九宫格/安全线</button>
-      </div>
-      <div class="ctrl-group" title="缩放缩略图尺寸">
-        <span style="font-size:11px;color:var(--text-muted);padding:0 6px;">缩略图</span>
-        <input type="range" id="thumbSlider" min="180" max="420" value="260" style="width:80px;accent-color:var(--teal);" />
+      <button class="ctrl-btn" id="toggleGuidesBtn" title="九宫格/安全线">📐 辅助线</button>
+      <div class="thumb-zoom-group" title="缩略图大小：越小一屏越多（96–360）">
+        <button type="button" class="zoom-btn" id="thumbZoomOut" aria-label="缩小">−</button>
+        <input type="range" id="thumbSlider" min="96" max="360" value="180" step="4" />
+        <button type="button" class="zoom-btn" id="thumbZoomIn" aria-label="放大">＋</button>
+        <span class="thumb-zoom-label" id="thumbZoomLabel">180</span>
       </div>
     </div>
   </div>
@@ -462,7 +573,22 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
   </div>
 </div>
 
-<!-- Lightbox Inspector -->
+<!-- 半透明叠层预览（点图默认进这里；点空白关闭） -->
+<div class="img-viewer" id="imgViewer" title="点击空白处关闭">
+  <div class="img-viewer-card" id="imgViewerCard">
+    <img id="ivImg" src="" alt="" />
+    <div class="img-viewer-bar">
+      <span class="iv-path" id="ivPath"></span>
+      <button type="button" class="btn-copy" id="ivReveal" title="在访达中显示并选中">📁 文件夹</button>
+      <button type="button" class="btn-copy" id="ivCopy" title="复制绝对路径">📋 路径</button>
+      <button type="button" class="btn-copy" id="ivSave" title="另存为">💾</button>
+      <button type="button" class="btn-copy" id="ivDetail" title="打开详情面板">详情</button>
+      <button type="button" class="btn-copy" id="ivClose" style="background:var(--danger-bg);color:#fda4af;border-color:rgba(244,63,94,0.4);">✕</button>
+    </div>
+  </div>
+</div>
+
+<!-- Lightbox 详情（可选） -->
 <div class="lightbox" id="lightbox">
   <div class="lb-stage">
     <div class="lb-toolbar">
@@ -470,11 +596,14 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
         <strong id="lbTitle" style="font-family:monospace;color:var(--teal);"></strong>
         <span id="lbSpecBadge" class="badge teal"></span>
       </div>
-      <div style="display:flex;align-items:center;gap:8px;">
-        <button class="btn-copy" id="lbZoomIn">＋ 放大</button>
-        <button class="btn-copy" id="lbZoomOut">－ 缩小</button>
-        <button class="btn-copy" id="lbZoomReset">1:1 复位</button>
-        <button class="btn-copy" style="background:var(--danger-bg);color:#fda4af;border-color:rgba(244,63,94,0.4);" id="lbClose">✕ 关闭 (ESC)</button>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+        <button class="btn-copy" id="lbCopyPath" title="复制绝对路径">📋 路径</button>
+        <button class="btn-copy" id="lbRevealFolder" title="在访达/资源管理器中显示并选中该图">📁 文件夹</button>
+        <button class="btn-copy" id="lbOpenEditor" title="在 Cursor/编辑器打开">📂 编辑器</button>
+        <button class="btn-copy" id="lbZoomIn">＋</button>
+        <button class="btn-copy" id="lbZoomOut">－</button>
+        <button class="btn-copy" id="lbZoomReset">1:1</button>
+        <button class="btn-copy" style="background:var(--danger-bg);color:#fda4af;border-color:rgba(244,63,94,0.4);" id="lbClose">✕</button>
       </div>
     </div>
     <div class="lb-canvas stage-checker" id="lbCanvas">
@@ -492,20 +621,88 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 
 <div class="toast" id="toast">已复制到剪贴板</div>
 
+<!-- 图片右键菜单：复制 / 另存为 / 跳文件夹 / 编辑器 -->
+<div class="img-ctx-menu" id="imgCtxMenu" role="menu">
+  <button type="button" data-act="copy-abs">📋 复制绝对路径</button>
+  <button type="button" data-act="copy-rel">📋 复制相对路径</button>
+  <button type="button" data-act="copy-name">📋 复制文件名</button>
+  <div class="ctx-sep"></div>
+  <button type="button" data-act="save-as">💾 另存为…</button>
+  <button type="button" data-act="reveal">📁 在文件夹中显示</button>
+  <button type="button" data-act="copy-folder">📋 复制文件夹路径</button>
+  <button type="button" data-act="editor">📂 在编辑器打开</button>
+  <div class="ctx-sep"></div>
+  <button type="button" data-act="viewer">🔍 放大查看</button>
+  <button type="button" data-act="lightbox">🧾 打开详情</button>
+</div>
+
 <script>
-const DATA = __ATLAS_JSON__;
+let DATA = __ATLAS_JSON__;
+
+const THUMB_MIN = 96;
+const THUMB_MAX = 360;
+const THUMB_DEFAULT = 180;
+const MAX_DECODE = 32;          // 视口内并发解码上限（过小会滑动后空白半晌）
+const VIRT_ROW_BUFFER = 6;      // 上下多挂几行，滑动少重建
+const AUTO_REFRESH_MS = 10000;
+const ATLAS_STATE_KEY = "pmem_atlas_state_v18";
 
 let state = {
   module: "ALL",
   tab: "gallery",
   categoryFilter: "ALL",
+  dayFilter: "today",
+  plateFilter: "final",
+  sideMode: "all",
   selectedLibrary: "CURRENT",
   search: "",
   bgClass: "stage-checker",
   showGuides: false,
   autoRefresh: true,
-  lbScale: 1.0
+  modulesOpen: false,
+  lbScale: 1.0,
+  lbPath: "",
+  thumbSize: THUMB_DEFAULT
 };
+
+let _galleryAssets = [];
+let _virtScrollBound = false;
+let _virtRaf = 0;
+let _virtRangeKey = "";
+let _imgIo = null;
+let _decodeBusy = 0;
+let _decodeQueue = [];
+let _searchTimer = 0;
+
+function assetSrc(a) {
+  if (!a) return "";
+  if (a.data_uri) return a.data_uri;
+  return String(a.path || "").replace(/\\/g, "/");
+}
+
+/** 画廊用小图（有 thumb 缓存就用）；点开放大仍走 assetSrc 原图 */
+function thumbSrc(a) {
+  if (!a) return "";
+  if (a.thumb) return String(a.thumb).replace(/\\/g, "/");
+  return assetSrc(a);
+}
+
+function absAssetPath(rel) {
+  const root = String(DATA.root || "").replace(/\\/g, "/").replace(/\/$/, "");
+  const p = String(rel || "").replace(/\\/g, "/").replace(/^\/+/, "");
+  if (!root) return p;
+  return root + "/" + p;
+}
+
+function sourceLabel(src) {
+  return ({
+    module: "定稿/模块",
+    cursor_generated: "Cursor",
+    generated: "generated",
+    converge: "收敛",
+    other: "散图"
+  })[src] || "图";
+}
 
 function getActiveProjectMeta() {
   const ap = DATA.active_project || {};
@@ -556,14 +753,19 @@ window.selectProjectLibrary = function(projectId) {
 function saveAtlasState() {
   try {
     const stage = document.getElementById("mainStage");
-    sessionStorage.setItem("pmem_atlas_state_v13", JSON.stringify({
+    sessionStorage.setItem(ATLAS_STATE_KEY, JSON.stringify({
       module: state.module,
       tab: state.tab,
       categoryFilter: state.categoryFilter,
+      dayFilter: state.dayFilter,
+      plateFilter: state.plateFilter,
+      sideMode: state.sideMode,
       search: state.search,
       bgClass: state.bgClass,
       showGuides: state.showGuides,
-      autoRefresh: state.autoRefresh,
+      autoRefresh: !!state.autoRefresh,
+      modulesOpen: !!state.modulesOpen,
+      thumbSize: state.thumbSize,
       scrollTop: stage ? stage.scrollTop : 0
     }));
   } catch (e) {}
@@ -571,24 +773,66 @@ function saveAtlasState() {
 
 function restoreAtlasState() {
   try {
-    const raw = sessionStorage.getItem("pmem_atlas_state_v13");
-    if (!raw) return;
+    // v16：丢掉旧版「顶栏 KPI + 全量 Tab」状态。
+    // 自动刷新：无存档时默认开启；有存档则尊重用户暂停/开启（首次打开必为开）。
+    const raw = sessionStorage.getItem(ATLAS_STATE_KEY);
+    if (!raw) {
+      state.autoRefresh = true;
+      return;
+    }
     const saved = JSON.parse(raw);
     if (saved && typeof saved === "object") {
       if (saved.module) state.module = saved.module;
       if (saved.tab) state.tab = saved.tab;
       if (saved.categoryFilter) state.categoryFilter = saved.categoryFilter;
+      if (saved.dayFilter) state.dayFilter = saved.dayFilter;
+      if (saved.plateFilter) state.plateFilter = saved.plateFilter;
+      else state.plateFilter = "final";
+      if (saved.sideMode) state.sideMode = saved.sideMode;
       if (typeof saved.search === "string") state.search = saved.search;
       if (saved.bgClass) state.bgClass = saved.bgClass;
       if (typeof saved.showGuides === "boolean") state.showGuides = saved.showGuides;
-      if (typeof saved.autoRefresh === "boolean") state.autoRefresh = saved.autoRefresh;
+      if (typeof saved.modulesOpen === "boolean") state.modulesOpen = saved.modulesOpen;
+      state.autoRefresh = (typeof saved.autoRefresh === "boolean") ? saved.autoRefresh : true;
+      if (typeof saved.thumbSize === "number") {
+        state.thumbSize = Math.max(THUMB_MIN, Math.min(THUMB_MAX, saved.thumbSize));
+      }
       setTimeout(() => {
         const stage = document.getElementById("mainStage");
         if (stage && saved.scrollTop) stage.scrollTop = saved.scrollTop;
       }, 30);
     }
-  } catch (e) {}
+  } catch (e) {
+    state.autoRefresh = true;
+  }
 }
+
+function applyThumbSize(px, { persist = true, refreshVirt = true } = {}) {
+  const n = Math.max(THUMB_MIN, Math.min(THUMB_MAX, Math.round(Number(px) || THUMB_DEFAULT)));
+  state.thumbSize = n;
+  document.documentElement.style.setProperty("--thumb-size", n + "px");
+  document.documentElement.style.setProperty("--thumb-gap", n < 140 ? "8px" : "12px");
+  document.body.classList.toggle("compact-thumbs", n < 140);
+  const slider = document.getElementById("thumbSlider");
+  const label = document.getElementById("thumbZoomLabel");
+  if (slider && Number(slider.value) !== n) slider.value = String(n);
+  if (label) label.textContent = String(n);
+  if (persist) saveAtlasState();
+  if (refreshVirt && state.tab === "gallery") scheduleVirtualPaint(true);
+}
+
+window.toggleMoreMenu = function(ev) {
+  if (ev) ev.stopPropagation();
+  const bg = document.getElementById("bgWrap");
+  if (bg) bg.classList.remove("open");
+  document.getElementById("moreWrap").classList.toggle("open");
+};
+document.addEventListener("click", () => {
+  const w = document.getElementById("moreWrap");
+  if (w) w.classList.remove("open");
+  const bg = document.getElementById("bgWrap");
+  if (bg) bg.classList.remove("open");
+});
 
 function showToast(msg) {
   const t = document.getElementById("toast");
@@ -628,18 +872,66 @@ function getFilteredEntries() {
   });
 }
 
+function dayCounts() {
+  const c = { today: 0, yesterday: 0, earlier: 0, ALL: 0 };
+  for (const a of Object.values(DATA.assets || {})) {
+    if (state.plateFilter && state.plateFilter !== "ALL" && assetPlate(a) !== state.plateFilter) continue;
+    const b = a.day_bucket || "earlier";
+    if (c[b] != null) c[b] += 1;
+    c.ALL += 1;
+  }
+  return c;
+}
+
+function assetPlate(a) {
+  if (a && a.plate) return a.plate;
+  const p = String((a && a.path) || "").replace(/\\/g, "/");
+  const name = p.split("/").pop() || "";
+  const src = (a && a.source) || "";
+  const role = String((a && a.role) || (a && a.png_meta && a.png_meta.pmem_role) || "").toLowerCase();
+  if (role === "rejected" || /reject/i.test(name)) return "rejected";
+  if (role === "reference") return "reference";
+  if (src === "converge" || src === "cursor_generated" || src === "generated" || src === "other") return "process";
+  if (p.includes("/boards/") || p.includes("/.memory-art/converge/")) return "process";
+  if (/(^|[_-])r\d{1,2}\./i.test(name) || /^r\d{1,2}\./i.test(name)) return "process";
+  if (role === "draft" || role === "draft_violation" || /draft/i.test(name)) return "process";
+  return "final";
+}
+
+function plateCounts() {
+  const c = { final: 0, process: 0, rejected: 0, reference: 0, ALL: 0 };
+  Object.values(DATA.assets || {}).forEach(a => {
+    const k = assetPlate(a);
+    c.ALL += 1;
+    if (c[k] != null) c[k] += 1;
+  });
+  return c;
+}
+
 function getFilteredAssets() {
   const mods = new Set(getFilteredModules());
   const q = state.search.trim().toLowerCase();
-  return Object.values(DATA.assets).filter(a => {
-    const modMatch = state.module === "ALL" || mods.has(a.module);
-    if (!modMatch) return false;
-    if (state.module === "ALL" && state.categoryFilter && state.categoryFilter !== "ALL") {
-      if ((a.category || "other") !== state.categoryFilter) return false;
+  let list = Object.values(DATA.assets || {}).filter(a => {
+    if (state.sideMode === "all" || state.module === "ALL") {
+      if (state.plateFilter && state.plateFilter !== "ALL") {
+        if (assetPlate(a) !== state.plateFilter) return false;
+      }
+      if (state.dayFilter && state.dayFilter !== "ALL") {
+        if ((a.day_bucket || "earlier") !== state.dayFilter) return false;
+      }
+      if (state.categoryFilter && state.categoryFilter !== "ALL") {
+        if ((a.category || "misc") !== state.categoryFilter) return false;
+      }
+    } else {
+      const modMatch = mods.has(a.module);
+      if (!modMatch) return false;
     }
     if (!q) return true;
-    return JSON.stringify(a).toLowerCase().includes(q);
+    const blob = [a.path, a.module, a.description, a.prompt, a.source, a.category, assetPlate(a)].join(" ").toLowerCase();
+    return blob.includes(q);
   });
+  list.sort((x, y) => (Number(y.mtime) || 0) - (Number(x.mtime) || 0));
+  return list;
 }
 
 function renderHeaderAndSidebar() {
@@ -657,17 +949,10 @@ function renderHeaderAndSidebar() {
   const rCount = (prof.reflections || []).length;
   const activeProj = getActiveProjectMeta();
   const projLibs = getProjectLibraries();
-  document.getElementById("kpiStrip").innerHTML = `
-    <div class="kpi-pill" style="cursor:pointer;border-color:rgba(168,85,247,0.5);" onclick="switchTab('improve')" title="当前项目专项记忆库: ${esc(activeProj.project_name)} (${esc(activeProj.library_dir)}/) · 共 ${projLibs.length} 个项目专项库">🏷️ 当前专项记忆库: <b style="color:#d8b4fe">${esc(activeProj.project_id)}</b> <span style="opacity:0.75">(${projLibs.length}库)</span></div>
-    <div class="kpi-pill" style="cursor:pointer;" onclick="state.module='ALL';state.categoryFilter='ALL';switchTab('gallery')">📦 视觉模块 <b>${Object.keys(DATA.modules).length}</b></div>
-    <div class="kpi-pill" style="cursor:pointer;" onclick="switchTab('gallery')">🖼️ 各类型图片资产 <b>${totalAssets}</b></div>
-    <div class="kpi-pill" style="cursor:pointer;" onclick="switchTab('memories')">🧭 美术记忆条目 <b>${totalMemories}</b></div>
-    <div class="kpi-pill" style="cursor:pointer;border-color:rgba(45,212,191,0.5);" onclick="switchTab('improve')" title="点击查看自我迭代口味档案、收敛记录与知识图鉴">🧠 自我迭代与知识卡 <b style="color:var(--teal)">${kCount}卡 / ${rCount}轮</b></div>
-    <div class="kpi-pill" style="cursor:pointer;" onclick="switchTab('redlines')">🚫 主美红线 <b>${redlineCount}</b></div>
-    <div class="kpi-pill ${qaWarnCount ? 'warn' : ''}" style="cursor:pointer;" onclick="switchTab('qa')">
-      🛡️ 管线质检/过期告警 <b>${qaWarnCount}</b>
-    </div>
-  `;
+  const moreMeta = document.getElementById("moreMeta");
+  if (moreMeta) {
+    moreMeta.innerHTML = `项目 <b>${esc(activeProj.project_id)}</b>（${projLibs.length} 库）· 图 <b>${totalAssets}</b> · 模块 <b>${Object.keys(DATA.modules).length}</b> · 记忆 <b>${totalMemories}</b> · 红线 <b>${redlineCount}</b> · 质检 <b>${qaWarnCount}</b> · 知识 <b>${kCount}</b>`;
+  }
   const syncEl = document.getElementById("liveSyncTime");
   if (syncEl) {
     const bt = (DATA.built_at || "").replace(" UTC+8", "");
@@ -687,47 +972,120 @@ function renderHeaderAndSidebar() {
   document.getElementById("cntMemories").textContent = fEntries.length;
   document.getElementById("cntQa").textContent = DATA.qa_issues.length + DATA.stale_entries.length;
 
-  // Render Sidebar
+  // Render Sidebar — 所有图归总置顶（默认：定稿 + 今天）
   const sb = document.getElementById("moduleSidebar");
+  const dc = dayCounts();
+  const pc = plateCounts();
+  const catSum = DATA.category_summary || {};
   let htmlStr = `
-    <div class="mod-item ${state.module === 'ALL' ? 'active' : ''}" onclick="selectModule('ALL')">
-      <div class="mod-row1">
-        <span class="mod-id">🌟 ALL MODULES</span>
-        <span class="mini-pill">${totalAssets} 图 · ${totalMemories} 记</span>
-      </div>
-      <div class="mod-title">全项目视觉资产与红线总览</div>
+    <div class="side-section-title">看图</div>
+    <div class="side-nav-item ${state.sideMode === 'all' ? 'active' : ''}" onclick="selectAllImagesNav()">
+      🖼️ 所有图归总 <span class="count">${pc.final}</span>
+    </div>
+    <div class="side-section-title">状态</div>
+    <div class="side-sub ${state.sideMode === 'all' && state.plateFilter === 'final' ? 'active' : ''}" onclick="selectPlateFilter('final')">✅ 定稿 <span class="count">${pc.final}</span></div>
+    <div class="side-sub ${state.sideMode === 'all' && state.plateFilter === 'process' ? 'active' : ''}" onclick="selectPlateFilter('process')">🧪 过程稿 <span class="count">${pc.process}</span></div>
+    <div class="side-sub ${state.sideMode === 'all' && state.plateFilter === 'reference' ? 'active' : ''}" onclick="selectPlateFilter('reference')">📎 参考 <span class="count">${pc.reference}</span></div>
+    <div class="side-sub ${state.sideMode === 'all' && state.plateFilter === 'rejected' ? 'active' : ''}" onclick="selectPlateFilter('rejected')">❌ 废案 <span class="count">${pc.rejected}</span></div>
+    <div class="side-sub ${state.sideMode === 'all' && state.plateFilter === 'ALL' ? 'active' : ''}" onclick="selectPlateFilter('ALL')">全部状态 <span class="count">${pc.ALL}</span></div>
+    <div class="side-section-title">时间</div>
+    <div class="side-sub ${state.sideMode === 'all' && state.dayFilter === 'today' ? 'active' : ''}" onclick="selectDayFilter('today')">今天 <span class="count">${dc.today}</span></div>
+    <div class="side-sub ${state.sideMode === 'all' && state.dayFilter === 'yesterday' ? 'active' : ''}" onclick="selectDayFilter('yesterday')">昨天 <span class="count">${dc.yesterday}</span></div>
+    <div class="side-sub ${state.sideMode === 'all' && state.dayFilter === 'earlier' ? 'active' : ''}" onclick="selectDayFilter('earlier')">更早 <span class="count">${dc.earlier}</span></div>
+    <div class="side-sub ${state.sideMode === 'all' && state.dayFilter === 'ALL' ? 'active' : ''}" onclick="selectDayFilter('ALL')">全部时间 <span class="count">${dc.ALL}</span></div>
+    <div class="side-section-title">类型</div>
+    <div class="side-sub ${state.sideMode === 'all' && state.categoryFilter === 'ALL' ? 'active' : ''}" onclick="selectCategoryFilter('ALL')">全部类型</div>
+  `;
+  const catKeys = Object.keys(catSum).length ? Object.keys(catSum) : Object.keys(DATA.categories || {});
+  for (const catKey of catKeys) {
+    const catCfg = (DATA.categories || {})[catKey] || catSum[catKey] || {};
+    const n = (catSum[catKey] && catSum[catKey].total_assets != null)
+      ? catSum[catKey].total_assets
+      : Object.values(DATA.assets || {}).filter(a => (a.category || "misc") === catKey).length;
+    if (!n && !["brand","character","scene","ui","misc"].includes(catKey)) continue;
+    const icon = catCfg.icon || (catSum[catKey] && catSum[catKey].icon) || "📦";
+    const short = catCfg.short || (catSum[catKey] && catSum[catKey].short) || catKey;
+    htmlStr += `<div class="side-sub ${state.sideMode === 'all' && state.categoryFilter === catKey ? 'active' : ''}" onclick="selectCategoryFilter('${esc(catKey)}')">${icon} ${esc(short)} <span class="count">${n}</span></div>`;
+  }
+
+  const modCount = Object.keys(DATA.modules || {}).length;
+  htmlStr += `
+    <div class="side-section-title" style="cursor:pointer;" onclick="toggleModulesPanel()" title="模块列表不常用，默认收起">
+      模块 <span class="count">${modCount}</span> ${state.modulesOpen ? "▾" : "▸"}
     </div>
   `;
-
-  for (const [catKey, catCfg] of Object.entries(DATA.categories)) {
-    const catMods = Object.entries(DATA.modules).filter(([k, v]) => v.category === catKey);
-    if (!catMods.length) continue;
-    htmlStr += `<div class="side-section-title">${esc(catCfg.icon || '')} ${esc(catCfg.label || catKey)}</div>`;
-    for (const [modId, modCfg] of catMods) {
-      const isChild = modId.split(".").length > 2;
-      const mAssets = Object.values(DATA.assets).filter(a => a.module === modId);
-      const mEntries = DATA.entries.filter(e => e.module === modId);
-      const mRedlines = mEntries.filter(e => e.kind === "style_redline").length;
-      const hasWarn = mAssets.some(a => !a.qa_passed) || mEntries.some(e => e.stale);
-      htmlStr += `
-        <div class="mod-item ${isChild ? 'child' : ''} ${state.module === modId ? 'active' : ''}" onclick="selectModule('${esc(modId)}')">
-          <div class="mod-row1">
-            <span class="mod-id">${esc(modId)}</span>
-            <div class="mod-badges">
-              ${mRedlines ? `<span class="mini-pill redline" title="风格红线">${mRedlines} 红线</span>` : ''}
-              ${hasWarn ? `<span class="mini-pill warn" title="存在质检违规或过期记忆">⚠</span>` : ''}
-              <span class="mini-pill">${mAssets.length}图</span>
+  if (state.modulesOpen) {
+    for (const [catKey, catCfg] of Object.entries(DATA.categories || {})) {
+      const catMods = Object.entries(DATA.modules || {}).filter(([k, v]) => v.category === catKey);
+      if (!catMods.length) continue;
+      htmlStr += `<div class="side-section-title" style="opacity:0.7;margin-top:4px;">${esc(catCfg.icon || '')} ${esc(catCfg.short || catCfg.label || catKey)}</div>`;
+      for (const [modId, modCfg] of catMods) {
+        const isChild = modId.split(".").length > 2;
+        const mAssets = Object.values(DATA.assets || {}).filter(a => a.module === modId);
+        htmlStr += `
+          <div class="mod-item ${isChild ? 'child' : ''} ${state.sideMode === 'module' && state.module === modId ? 'active' : ''}" onclick="selectModule('${esc(modId)}')">
+            <div class="mod-row1">
+              <span class="mod-id">${esc(modId)}</span>
+              <span class="mini-pill">${mAssets.length}</span>
             </div>
+            <div class="mod-title">${esc(modCfg.title || '')}</div>
           </div>
-          <div class="mod-title">${esc(modCfg.title || '')}</div>
-        </div>
-      `;
+        `;
+      }
     }
   }
   sb.innerHTML = htmlStr;
 }
 
+window.toggleModulesPanel = function() {
+  state.modulesOpen = !state.modulesOpen;
+  saveAtlasState();
+  renderHeaderAndSidebar();
+};
+
+window.toggleBgMenu = function(ev) {
+  if (ev) ev.stopPropagation();
+  const wrap = document.getElementById("bgWrap");
+  const more = document.getElementById("moreWrap");
+  if (more) more.classList.remove("open");
+  if (wrap) wrap.classList.toggle("open");
+};
+
+window.selectAllImagesNav = function() {
+  state.sideMode = "all";
+  state.module = "ALL";
+  state.dayFilter = "today";
+  state.plateFilter = "final";
+  state.categoryFilter = "ALL";
+  state.tab = "gallery";
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.tab === "gallery"));
+  saveAtlasState();
+  renderStage();
+};
+
+window.selectPlateFilter = function(plateKey) {
+  state.sideMode = "all";
+  state.module = "ALL";
+  state.plateFilter = plateKey;
+  state.tab = "gallery";
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.tab === "gallery"));
+  saveAtlasState();
+  renderStage();
+};
+
+window.selectDayFilter = function(dayKey) {
+  state.sideMode = "all";
+  state.module = "ALL";
+  state.dayFilter = dayKey;
+  state.tab = "gallery";
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.tab === "gallery"));
+  saveAtlasState();
+  renderStage();
+};
+
 window.selectCategoryFilter = function(catKey) {
+  state.sideMode = "all";
+  state.module = "ALL";
   state.categoryFilter = catKey;
   if (state.tab !== "gallery") {
     state.tab = "gallery";
@@ -738,79 +1096,21 @@ window.selectCategoryFilter = function(catKey) {
 };
 
 function renderModuleBanner() {
-  if (state.module === "ALL") {
-    const brandPalette = DATA.modules["brand.WorldStyle"]?.palette || [];
-    const catSum = DATA.category_summary || [];
-    const prof = DATA.profile || {};
-    const taste = prof.taste || {};
-    const kCards = prof.knowledge_cards || [];
-    const refls = prof.reflections || [];
-    const totalAssets = Object.keys(DATA.assets).length;
-    const catCardsHtml = [
-      `<div class="cat-pill-card ${state.categoryFilter === 'ALL' ? 'active' : ''}" onclick="selectCategoryFilter('ALL')">
-         <div class="cat-pill-top"><span>📂 全部图像类型</span><span style="color:var(--teal)">${totalAssets} 张</span></div>
-         <div class="cat-pill-sub"><span>5 大美术域自动归档带描述</span></div>
-       </div>`
-    ].concat(catSum.filter(c => c.total > 0 || ["brand","character","scene","ui","vfx"].includes(c.category)).map(c => `
-      <div class="cat-pill-card ${state.categoryFilter === c.category ? 'active' : ''}" onclick="selectCategoryFilter('${esc(c.category)}')">
-        <div class="cat-pill-top"><span>${c.icon} ${esc(c.short)}</span><span>${c.total} 张</span></div>
-        <div class="cat-pill-sub">
-          <span style="color:#6ee7b7">✅ 正例 ${c.approved}</span>
-          ${c.rejected > 0 ? `<span style="color:#fda4af">❌ 反例 ${c.rejected}</span>` : `<span>模块 ${(c.modules||[]).length}</span>`}
-        </div>
-      </div>
-    `)).join("");
-
+  if (state.sideMode === "all" || state.module === "ALL") {
+    const dc = dayCounts();
+    const dayLabel = ({ today: "今天", yesterday: "昨天", earlier: "更早", ALL: "全部时间" })[state.dayFilter] || state.dayFilter;
+    const plateLabel = ({ final: "定稿", process: "过程稿", reference: "参考", rejected: "废案", ALL: "全部状态" })[state.plateFilter] || state.plateFilter;
+    const catLabel = state.categoryFilter === "ALL" ? "全部类型" : (DATA.categories?.[state.categoryFilter]?.short || state.categoryFilter);
+    const pc = plateCounts();
     return `
       <div class="mod-banner">
         <div class="mod-banner-top">
           <div>
-            <h2>🎨 全项目各类型图片与自我进化总览 · ${esc(DATA.config?.project?.name || '')} <span class="badge teal" style="font-size:11px;">自动分类带描述 + 3s自动刷新</span></h2>
-            <p>${esc(DATA.config?.project?.art_style || '')} —— 任何通过 <code>ingest -p "描述" --apply</code>、<code>feedback</code> 或 <code>/pmem-draw · /pmem-ui · /pmem-concept · /pmem-icon</code> 产出的新图片，均自动按类型入库并附带描述与 Prompt 实时显示在下方。</p>
+            <h2>🖼️ 所有图归总 · ${esc(plateLabel)} · ${esc(dayLabel)} · ${esc(catLabel)}
+              <span class="badge teal" style="font-size:11px;">默认定稿 · 按时间倒序</span>
+            </h2>
+            <p>默认只看定稿，过程稿（converge / r1–rN）请进左侧「过程稿」。散图归「其他」，只工作台可见，不写 recipe。定稿 ${pc.final} · 过程 ${pc.process} · 今天 ${dc.today}</p>
           </div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap;">
-            <button class="btn-copy" onclick="switchTab('improve')">🧠 打开自我迭代与知识图鉴</button>
-            <button class="btn-copy" onclick="copyAgentContext('brand.WorldStyle')">🤖 复制全局 AI 美术记忆 Prompt</button>
-          </div>
-        </div>
-        <div class="cat-filter-strip">${catCardsHtml}</div>
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.32);border-radius:9px;padding:9px 12px;margin-bottom:8px;">
-          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:12px;">
-            <span class="badge purple">🏷️ 当前专项记忆库: ${esc(getActiveProjectMeta().project_name)} (${esc(getActiveProjectMeta().library_dir)}/)</span>
-            <span class="badge info">🌐 全局共享通用库 (~/.pmem-art/shared/)</span>
-            ${getProjectLibraries().map(lib => {
-              const isSelected = (state.selectedLibrary === "CURRENT" && lib.is_current) || (state.selectedLibrary === lib.project_id);
-              const statusTag = lib.is_current ? "🟢 当前项目专项库" : "🕓 历史项目专项库（拷贝保留·严禁串味）";
-              return `<button class="btn-copy" style="border-color:${isSelected ? 'var(--teal)' : 'var(--border)'};background:${isSelected ? 'rgba(45,212,191,0.16)' : '#0b101d'};" onclick="selectProjectLibrary('${esc(lib.project_id)}')">${statusTag}: ${esc(lib.project_name)} [${esc(lib.project_id)}] (${lib.entries_count || 0}记/${(lib.knowledge_cards||[]).length}卡)</button>`;
-            }).join("")}
-          </div>
-          ${(!getSelectedLibraryObj().is_current) ? `<button class="btn-copy" style="border-color:var(--gold);color:var(--gold);" onclick="selectProjectLibrary('CURRENT')">↩ 切回当前项目专项库</button>` : ''}
-        </div>
-        ${(!getSelectedLibraryObj().is_current) ? `
-          <div style="background:rgba(245,158,11,0.14);border:1px solid rgba(245,158,11,0.45);color:#fcd34d;padding:8px 12px;border-radius:8px;font-size:12px;margin-bottom:8px;">
-            🕓 <b>正在回看历史项目专项库：${esc(getSelectedLibraryObj().project_name)} (<code>.memory-art/projects/${esc(getSelectedLibraryObj().project_id)}/</code>)</b> —— 该专项库由拷贝 <code>.memory-art</code> 文件夹自动封存保留，已与当前激活项目 <b>${esc(getActiveProjectMeta().project_name)}</b> 严格物理隔离，绝不参与当前项目生图召回！
-          </div>
-        ` : ''}
-        <div class="autopilot-strip">
-          <div class="autopilot-tags">
-            <strong style="color:var(--gold)">🧠 Whisper Autopilot 静默自我迭代：</strong>
-            <span class="autopilot-chip">☀️ 光影偏好：${esc((taste.preferred_lighting||["侧逆光"])[0])}</span>
-            <span class="autopilot-chip">🎨 色温定律：${esc((taste.preferred_color_temperature||["青瓷+墨蓝+鎏金"])[0])}</span>
-            <span class="autopilot-chip">🚫 已免疫红线：${(taste.banned_habits||[]).length} 项</span>
-            <span class="autopilot-chip">📚 知识广度卡：${kCards.length} 张</span>
-            <span class="autopilot-chip">🏆 4轮≥9.6分收敛记录：${refls.length} 场</span>
-          </div>
-          <button class="btn-copy" onclick="switchTab('improve')">查看口味档案与收敛评分曲线 →</button>
-        </div>
-        <div class="palette-bar">
-          <span style="font-size:11.5px;color:var(--text-muted);margin-right:4px;">全局基准色板 (点击复制 HEX):</span>
-          ${brandPalette.map(p => `
-            <div class="swatch-chip" onclick="copyText('${esc(p.hex)}', '${esc(p.name)} ${esc(p.hex)}')">
-              <span class="swatch-box" style="background:${esc(p.hex)}"></span>
-              <span class="swatch-hex">${esc(p.hex)}</span>
-              <span class="swatch-name">${esc(p.name)}</span>
-            </div>
-          `).join("")}
         </div>
       </div>
     `;
@@ -857,53 +1157,180 @@ function renderModuleBanner() {
 
 function renderGalleryTab() {
   const assets = getFilteredAssets();
+  const dc = dayCounts();
+  _galleryAssets = assets;
   if (!assets.length) {
-    return `<div class="entry-card">当前筛选条件下没有匹配的图片资产。</div>`;
+    if (state.sideMode === "all" && state.plateFilter === "final" && state.dayFilter === "today") {
+      const pc = plateCounts();
+      return `<div class="empty-today">
+        <div style="font-size:16px;font-weight:700;color:var(--text-main);margin-bottom:6px;">今天还没有定稿</div>
+        <div style="margin-bottom:14px;">过程稿不会出现在这里。可看过程稿，或放宽时间。</div>
+        <button class="btn-copy" onclick="selectPlateFilter('process')">看过程稿（${pc.process}）</button>
+        <button class="btn-copy" onclick="selectDayFilter('ALL')">定稿·全部时间</button>
+        <button class="btn-copy" onclick="selectPlateFilter('ALL')">看全部状态</button>
+      </div>`;
+    }
+    return `<div class="entry-card">当前筛选下没有图。试试「定稿 / 过程稿 / 全部时间」或清掉搜索。</div>`;
   }
-  const cards = assets.map(a => {
-    const role = a.role || a.png_meta?.pmem_role || (a.qa_passed ? "approved" : "draft_violation");
-    const roleLabels = {
-      anchor: "⚓ 视觉锚点基准",
-      approved: "✅ 已验收定稿",
-      rejected: "❌ 废案警示 (Don't)",
-      draft_violation: "⚠️ 质检待修复草稿"
-    };
-    const linkedEntries = DATA.entries.filter(e => (e.assets || []).some(x => x.path === a.path));
-    const desc = a.description || a.png_meta?.reject_reason || a.png_meta?.note || "已自动归档纳管";
-    const catIcon = a.category_icon || "🖼️";
-    const catShort = a.category_short || a.module;
-    const promptLine = a.prompt
-      ? `<div class="asset-prompt-line" onclick="event.stopPropagation();copyText(${JSON.stringify(a.prompt)}, '图片 Prompt')" title="点击复制 Prompt: ${esc(a.prompt)}">🪄 Prompt: ${esc(a.prompt)}</div>`
-      : "";
-    return `
-      <div class="asset-card role-${esc(role)} ${a.qa_passed ? '' : 'qa-fail'}">
-        <div class="thumb-wrap ${state.bgClass} ${state.showGuides ? 'show-guides' : ''}" onclick="openLightbox('${esc(a.path)}')">
-          <img src="${a.data_uri}" alt="${esc(a.path)}" loading="lazy" />
-          <div class="overlay-9slice">
-            <div class="slice-line v1"></div><div class="slice-line v2"></div>
-            <div class="slice-line h1"></div><div class="slice-line h2"></div>
-          </div>
-          <span class="role-tag ${esc(role)}">${roleLabels[role] || esc(role)}</span>
-          <span class="cat-top-badge">${catIcon} ${esc(catShort)}</span>
-          <span class="spec-tag">${esc(a.resolution)} · ${esc(a.mode)} · ${a.size_kb}KB</span>
-        </div>
-        <div class="asset-body">
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;">
-            <div class="asset-path">${esc(a.path)}</div>
-            <span class="badge teal" style="font-size:10px;flex-shrink:0;">${esc(a.module_title || a.module)}</span>
-          </div>
-          <div class="asset-desc-box ${role === 'rejected' ? 'rejected' : ''}">${esc(desc)}</div>
-          ${promptLine}
-          ${!a.qa_passed ? `<div style="color:#fcd34d;font-size:11.5px;background:var(--gold-bg);padding:4px 8px;border-radius:5px;">⚠️ ${esc(a.qa_issues.join('；'))}</div>` : ''}
-          <div class="asset-meta-row">
-            <span>分类模块: <b>${esc(a.module)}</b></span>
-            <span>关联记忆: <b>${linkedEntries.length} 条</b></span>
-          </div>
-        </div>
+  return `<div class="gallery-virt" id="galleryVirt" data-count="${assets.length}">
+    <div style="font-size:11.5px;color:var(--text-dim);margin:0 0 8px;">共 ${assets.length} 张 · 视口按需渲染 · 缩略图 ${state.thumbSize}px</div>
+    <div class="gallery-spacer" id="gallerySpacerTop"></div>
+    <div class="gallery-grid" id="galleryGrid"></div>
+    <div class="gallery-spacer" id="gallerySpacerBot"></div>
+  </div>`;
+}
+
+function PathName(p) {
+  const s = String(p || "").replace(/\\/g, "/");
+  const i = s.lastIndexOf("/");
+  return i >= 0 ? s.slice(i + 1) : s;
+}
+
+function cardHtml(a) {
+  const role = a.role || a.png_meta?.pmem_role || (a.formal ? "approved" : "draft");
+  const roleLabels = {
+    anchor: "⚓ 锚点",
+    approved: "✅ 定稿",
+    rejected: "❌ 废案",
+    draft_violation: "⚠️ 待修",
+    draft: "草稿"
+  };
+  const desc = a.description || a.png_meta?.reject_reason || a.png_meta?.note || PathName(a.path);
+  const catIcon = a.category_icon || "🖼️";
+  const catShort = a.category_short || a.module || "散图";
+  const src = thumbSrc(a);
+  const srcTag = sourceLabel(a.source || (a.formal ? "module" : "other"));
+  return `
+    <div class="asset-card role-${esc(role)} ${a.qa_passed === false ? 'qa-fail' : ''}" data-path="${esc(a.path)}" oncontextmenu="return showImgCtxMenu(event, ${JSON.stringify(a.path)})">
+      <div class="thumb-wrap ${state.bgClass} ${state.showGuides ? 'show-guides' : ''}" onclick="openViewer(${JSON.stringify(a.path)})" oncontextmenu="return showImgCtxMenu(event, ${JSON.stringify(a.path)})">
+        <img src="${esc(src)}" alt="" loading="eager" decoding="async" />
+        ${state.showGuides ? `<div class="overlay-9slice">
+          <div class="slice-line v1"></div><div class="slice-line v2"></div>
+          <div class="slice-line h1"></div><div class="slice-line h2"></div>
+        </div>` : ""}
+        <span class="role-tag ${esc(role)}">${roleLabels[role] || esc(role)}</span>
+        <span class="cat-top-badge">${catIcon} ${esc(catShort)}</span>
+        <span class="src-badge">${esc(srcTag)} · ${esc(a.updated_at || a.day || '')}</span>
+        <span class="spec-tag">${esc(a.resolution || '')} · ${a.size_kb || '?'}KB</span>
       </div>
-    `;
-  }).join("");
-  return `<div class="gallery-grid">${cards}</div>`;
+      <div class="asset-body">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;">
+          <div class="asset-path">${esc(a.path)}</div>
+          <button class="btn-copy" style="padding:2px 6px;font-size:10px;" title="在文件夹中显示" onclick="event.stopPropagation();revealInFolder(${JSON.stringify(a.path)})">📁</button>
+        </div>
+        <div class="asset-desc-box ${role === 'rejected' ? 'rejected' : ''}">${esc(desc)}</div>
+      </div>
+    </div>
+  `;
+}
+
+function galleryMetrics() {
+  const stage = document.getElementById("mainStage");
+  const grid = document.getElementById("galleryGrid");
+  const width = (grid && grid.clientWidth) || (stage ? stage.clientWidth - 24 : 800);
+  const gap = state.thumbSize < 140 ? 8 : 12;
+  const cols = Math.max(1, Math.floor((width + gap) / (state.thumbSize + gap)));
+  const bodyH = state.thumbSize < 140 ? 0 : 70;
+  const rowH = Math.round(state.thumbSize * 0.78 + bodyH + gap);
+  const rows = Math.max(1, Math.ceil((_galleryAssets.length || 0) / cols));
+  return { cols, rowH, rows, gap, totalH: rows * rowH };
+}
+
+function pumpDecodeQueue() {
+  while (_decodeBusy < MAX_DECODE && _decodeQueue.length) {
+    const img = _decodeQueue.shift();
+    if (!img || !img.isConnected) continue;
+    const s = img.getAttribute("data-src");
+    if (!s || img.getAttribute("data-loaded") === "1") continue;
+    _decodeBusy += 1;
+    img.setAttribute("data-loaded", "1");
+    const done = () => {
+      _decodeBusy = Math.max(0, _decodeBusy - 1);
+      pumpDecodeQueue();
+    };
+    img.onload = done;
+    img.onerror = done;
+    img.src = s;
+  }
+}
+
+function enqueueDecode(img) {
+  if (!img || img.getAttribute("data-loaded") === "1") return;
+  if (_decodeQueue.indexOf(img) >= 0) return;
+  _decodeQueue.push(img);
+  pumpDecodeQueue();
+}
+
+function paintVirtualGallery(force) {
+  const stage = document.getElementById("mainStage");
+  const grid = document.getElementById("galleryGrid");
+  const topSp = document.getElementById("gallerySpacerTop");
+  const botSp = document.getElementById("gallerySpacerBot");
+  if (!stage || !grid || !topSp || !botSp) return;
+  const assets = _galleryAssets;
+  if (!assets.length) {
+    grid.innerHTML = "";
+    topSp.style.height = "0px";
+    botSp.style.height = "0px";
+    _virtRangeKey = "";
+    return;
+  }
+  const { cols, rowH, rows, totalH } = galleryMetrics();
+  const scrollTop = stage.scrollTop;
+  const virt = document.getElementById("galleryVirt");
+  const virtTop = virt ? Math.max(0, virt.offsetTop) : 0;
+  const localScroll = Math.max(0, scrollTop - virtTop);
+  const viewH = stage.clientHeight;
+  let startRow = Math.max(0, Math.floor(localScroll / rowH) - VIRT_ROW_BUFFER);
+  let endRow = Math.min(rows, Math.ceil((localScroll + viewH) / rowH) + VIRT_ROW_BUFFER);
+  if (endRow <= startRow) endRow = Math.min(rows, startRow + 1);
+  const startIdx = startRow * cols;
+  const endIdx = Math.min(assets.length, endRow * cols);
+  const rangeKey = [startIdx, endIdx, cols, state.thumbSize, assets.length, state.showGuides ? 1 : 0].join(":");
+  topSp.style.height = (startRow * rowH) + "px";
+  botSp.style.height = Math.max(0, totalH - endRow * rowH) + "px";
+  // 同一窗口不重建 DOM，避免滑动时反复卸载/重载图片造成空白延迟
+  if (!force && rangeKey === _virtRangeKey && grid.children.length) return;
+  _virtRangeKey = rangeKey;
+  const slice = assets.slice(startIdx, endIdx);
+  grid.style.gridTemplateColumns = `repeat(${cols}, minmax(0, 1fr))`;
+  // 直接写 src：虚拟窗口已限制张数，再排队懒解码反而滑动后空白
+  grid.innerHTML = slice.map(cardHtml).join("");
+  if (_imgIo) { try { _imgIo.disconnect(); } catch (e) {} _imgIo = null; }
+  _decodeQueue = [];
+  _decodeBusy = 0;
+}
+
+let _scrollPaintTimer = 0;
+function scheduleVirtualPaint(force) {
+  if (force) {
+    if (_virtRaf) cancelAnimationFrame(_virtRaf);
+    _virtRaf = 0;
+    clearTimeout(_scrollPaintTimer);
+    _scrollPaintTimer = 0;
+    paintVirtualGallery(true);
+    return;
+  }
+  // 滑动：rAF 合并一帧内多次 scroll；略延后合并突发滚动，减少重建次数
+  if (_virtRaf) return;
+  _virtRaf = requestAnimationFrame(() => {
+    _virtRaf = 0;
+    paintVirtualGallery(false);
+  });
+}
+
+function bindVirtualScroll() {
+  const stage = document.getElementById("mainStage");
+  if (!stage || _virtScrollBound) return;
+  _virtScrollBound = true;
+  stage.addEventListener("scroll", () => {
+    if (state.tab !== "gallery") return;
+    scheduleVirtualPaint(false);
+  }, { passive: true });
+  window.addEventListener("resize", () => {
+    if (state.tab !== "gallery") return;
+    scheduleVirtualPaint(false);
+  }, { passive: true });
 }
 
 function renderImproveTab() {
@@ -1024,15 +1451,15 @@ function renderImproveTab() {
       </div>
 
       <div class="improve-card" style="margin-bottom:0;">
-        <h3><span>⚡ 4轮 ≥9.6分 自评收敛与静默进化工作流</span><span style="font-size:11px;color:var(--teal);font-family:ui-monospace,monospace;">Whisper Autopilot</span></h3>
+        <h3><span>⚡ 4轮 ≥9.5分 自评收敛与静默进化工作流</span><span style="font-size:11px;color:var(--teal);font-family:ui-monospace,monospace;">Whisper Autopilot</span></h3>
         <div style="font-size:12px;color:var(--text-main);line-height:1.6;">
           <div style="padding:8px 10px;background:#090d16;border-radius:8px;border:1px solid var(--border);margin-bottom:8px;">
             <strong style="color:var(--gold);">1️⃣ 各类型图片自动入库带描述：</strong><br>
             无论是 <code>python3 pmem_art.py ingest &lt;图片&gt; -p "中文描述/Prompt" --apply</code>，还是 <code>/pmem-draw</code>、<code>/pmem-ui</code>、<code>/pmem-concept</code>、<code>/pmem-icon</code> 收敛胜出，都会<b>自动识别分类（角色/场景/UI/特效/风格圣经）</b>、生成中文描述并立即重建本看板。
           </div>
           <div style="padding:8px 10px;background:#090d16;border-radius:8px;border:1px solid var(--border);margin-bottom:8px;">
-            <strong style="color:var(--teal);">2️⃣ 4轮 ≥9.6分 闭环自评收敛 (Converge Engine)：</strong><br>
-            每次生图最多迭代 <b>4 轮</b>，六维加权调和平均，满 <b>9.6 / 10 分</b>才交付，满 4 轮取最高分；胜出图与踩坑红线自动写回记忆。
+            <strong style="color:var(--teal);">2️⃣ 4轮 ≥9.5分 闭环自评收敛 (Converge Engine)：</strong><br>
+            每次生图最多迭代 <b>4 轮</b>，六维加权调和平均，满 <b>9.5 / 10 分</b>才交付，满 4 轮取最高分；胜出图与踩坑红线自动写回记忆。
           </div>
           <div style="padding:8px 10px;background:#090d16;border-radius:8px;border:1px solid var(--border);">
             <strong style="color:#d8b4fe;">3️⃣ 浏览器 3 秒无感自动刷新：</strong><br>
@@ -1091,8 +1518,8 @@ function renderRedlinesTab() {
                 <span>✅ 正确基准 (DO · Approved Anchor)</span>
                 <span style="font-family:monospace;">${esc(good.path)}</span>
               </div>
-              <div class="compare-img-wrap ${state.bgClass} ${state.showGuides ? 'show-guides' : ''}" onclick="openLightbox('${esc(good.path)}')">
-                <img src="${goodInfo.data_uri}" alt="Approved" />
+              <div class="compare-img-wrap ${state.bgClass} ${state.showGuides ? 'show-guides' : ''}" onclick="openViewer('${esc(good.path)}')">
+                <img src="${assetSrc(goodInfo)}" alt="Approved" loading="lazy" />
                 <div class="overlay-9slice">
                   <div class="slice-line v1"></div><div class="slice-line v2"></div>
                   <div class="slice-line h1"></div><div class="slice-line h2"></div>
@@ -1106,8 +1533,8 @@ function renderRedlinesTab() {
                 <span>❌ 打回废案 / 待修违规 (DON'T · Rejected)</span>
                 <span style="font-family:monospace;">${esc(bad.path)}</span>
               </div>
-              <div class="compare-img-wrap ${state.bgClass} ${state.showGuides ? 'show-guides' : ''}" onclick="openLightbox('${esc(bad.path)}')">
-                <img src="${badInfo.data_uri}" alt="Rejected" />
+              <div class="compare-img-wrap ${state.bgClass} ${state.showGuides ? 'show-guides' : ''}" onclick="openViewer('${esc(bad.path)}')">
+                <img src="${assetSrc(badInfo)}" alt="Rejected" loading="lazy" />
                 <div class="overlay-9slice">
                   <div class="slice-line v1"></div><div class="slice-line v2"></div>
                   <div class="slice-line h1"></div><div class="slice-line h2"></div>
@@ -1118,8 +1545,8 @@ function renderRedlinesTab() {
           </div>
 
           <div class="ab-slider-container ${state.bgClass}" id="abSlider_${idx}" onmousemove="moveAbSlider(event, ${idx})" ontouchmove="moveAbSlider(event, ${idx})">
-            <div class="ab-layer"><img src="${badInfo.data_uri}" /></div>
-            <div class="ab-layer ab-before" id="abBefore_${idx}" style="background:inherit;"><img src="${goodInfo.data_uri}" /></div>
+            <div class="ab-layer"><img src="${assetSrc(badInfo)}" /></div>
+            <div class="ab-layer ab-before" id="abBefore_${idx}" style="background:inherit;"><img src="${assetSrc(goodInfo)}" /></div>
             <div class="ab-handle" id="abHandle_${idx}"></div>
             <span style="position:absolute;top:10px;left:12px;background:rgba(16,185,129,0.9);color:#fff;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700;z-index:6;">👈 左侧: ✅ 正例定稿</span>
             <span style="position:absolute;top:10px;right:12px;background:rgba(244,63,94,0.9);color:#fff;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700;z-index:6;">右侧: ❌ 废案对比 👉</span>
@@ -1167,8 +1594,8 @@ function renderRecipesTab() {
 
         <div style="display:grid;grid-template-columns:${sampleInfo ? '240px 1fr' : '1fr'};gap:18px;align-items:start;">
           ${sampleInfo ? `
-            <div class="thumb-wrap ${state.bgClass}" style="height:240px;border-radius:9px;border:1px solid var(--border);" onclick="openLightbox('${esc(sampleAsset.path)}')">
-              <img src="${sampleInfo.data_uri}" />
+            <div class="thumb-wrap ${state.bgClass}" style="height:240px;border-radius:9px;border:1px solid var(--border);" onclick="openViewer('${esc(sampleAsset.path)}')">
+              <img src="${assetSrc(sampleInfo)}" loading="lazy" />
               <span class="spec-tag">Seed: ${esc(ai.seed)}</span>
             </div>
           ` : ''}
@@ -1222,8 +1649,8 @@ function renderMemoriesTab() {
             const info = DATA.assets[a.path];
             if (!info) return '';
             return `
-              <div style="display:flex;align-items:center;gap:8px;background:#090d16;border:1px solid var(--border);padding:5px 10px;border-radius:7px;cursor:pointer;" onclick="openLightbox('${esc(a.path)}')">
-                <img src="${info.data_uri}" style="width:38px;height:38px;object-fit:contain;border-radius:4px;" class="${state.bgClass}" />
+              <div style="display:flex;align-items:center;gap:8px;background:#090d16;border:1px solid var(--border);padding:5px 10px;border-radius:7px;cursor:pointer;" onclick="openViewer('${esc(a.path)}')">
+                <img src="${assetSrc(info)}" style="width:38px;height:38px;object-fit:contain;border-radius:4px;" class="${state.bgClass}" loading="lazy" />
                 <div>
                   <div style="font-size:11.5px;font-family:monospace;color:var(--teal);">${esc(a.path)}</div>
                   <div style="font-size:11px;color:var(--text-muted);">${esc(a.caption || info.resolution)}</div>
@@ -1258,7 +1685,7 @@ function renderQaTab() {
         </thead>
         <tbody>
           ${assets.map(a => `
-            <tr style="border-bottom:1px solid rgba(255,255,255,0.05);cursor:pointer;" onclick="openLightbox('${esc(a.path)}')">
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.05);cursor:pointer;" onclick="openViewer('${esc(a.path)}')">
               <td style="padding:8px;">${a.qa_passed ? '<span class="badge success">PASS</span>' : '<span class="badge danger">FAIL</span>'}</td>
               <td style="padding:8px;font-family:monospace;color:var(--teal);">${esc(a.path)}</td>
               <td style="padding:8px;">${esc(a.module)}</td>
@@ -1286,17 +1713,195 @@ function renderStage() {
   else if (state.tab === "memories") content += renderMemoriesTab();
   else if (state.tab === "qa") content += renderQaTab();
   stage.innerHTML = content;
+  bindVirtualScroll();
+  if (state.tab === "gallery") scheduleVirtualPaint(true);
 }
 
 window.selectModule = function(modId) {
   state.module = modId;
+  state.sideMode = (modId === "ALL") ? "all" : "module";
+  if (modId === "ALL") state.dayFilter = state.dayFilter || "today";
+  state.tab = "gallery";
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.tab === "gallery"));
+  saveAtlasState();
   renderStage();
 };
 
 window.switchTab = function(tabName) {
   state.tab = tabName;
   document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.tab === tabName));
+  document.querySelectorAll("#moreMenu [data-tab]").forEach(b => b.classList.toggle("active", b.dataset.tab === tabName));
+  const more = document.getElementById("moreWrap");
+  if (more) more.classList.remove("open");
+  saveAtlasState();
   renderStage();
+};
+
+function parentDirOf(absPath) {
+  const n = String(absPath || "").replace(/\\/g, "/");
+  const i = n.lastIndexOf("/");
+  return i > 0 ? n.slice(0, i) : n;
+}
+
+function pathToFileUrl(absPath) {
+  let n = String(absPath || "").replace(/\\/g, "/");
+  if (/^[A-Za-z]:\//.test(n)) {
+    return "file:///" + n.split("/").map((seg, i) => (i === 0 ? seg : encodeURIComponent(seg))).join("/");
+  }
+  if (!n.startsWith("/")) n = "/" + n;
+  return "file://" + n.split("/").map((seg, i) => (i === 0 ? "" : encodeURIComponent(seg))).join("/");
+}
+
+function isWindowsAbs(absPath) {
+  return /\\/.test(String(absPath || "")) || /^[A-Za-z]:[\\/]/.test(String(absPath || ""));
+}
+
+function downloadRevealHelper(absFile) {
+  const win = isWindowsAbs(absFile);
+  let name, body;
+  if (win) {
+    const winPath = String(absFile).replace(/\//g, "\\");
+    name = "打开图片位置.bat";
+    body = "@echo off\r\nexplorer /select,\"" + winPath + "\"\r\n";
+  } else {
+    name = "打开图片位置.command";
+    body = "#!/bin/bash\nopen -R " + JSON.stringify(absFile) + "\n";
+  }
+  const blob = new Blob([body], { type: "application/octet-stream" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = name;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1500);
+}
+
+window.openInEditor = function(relPath) {
+  const abs = absAssetPath(relPath);
+  copyText(abs, "绝对路径");
+  const uriCursor = "cursor://file" + abs;
+  const uriVs = "vscode://file" + abs;
+  try {
+    const a = document.createElement("a");
+    a.href = uriCursor;
+    a.style.display = "none";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  } catch (e) {
+    try { window.open(uriVs, "_blank"); } catch (e2) {}
+  }
+  showToast("已复制路径，并尝试在编辑器打开");
+};
+
+function revealPorts() {
+  const ports = [];
+  const fromData = Number(DATA.reveal_port || 0);
+  if (fromData) ports.push(fromData);
+  const fromPing = Number((window.__PMEM_ATLAS_PING__ || {}).reveal_port || 0);
+  if (fromPing && !ports.includes(fromPing)) ports.push(fromPing);
+  for (const p of [8765, 8766, 8767, 8768]) {
+    if (!ports.includes(p)) ports.push(p);
+  }
+  return ports;
+}
+
+async function revealViaBridge(relPath) {
+  const q = encodeURIComponent(relPath);
+  for (const port of revealPorts()) {
+    try {
+      const res = await fetch("http://127.0.0.1:" + port + "/api/reveal?path=" + q, {
+        method: "GET",
+        cache: "no-store",
+        mode: "cors"
+      });
+      if (res.ok) {
+        const j = await res.json().catch(() => ({ ok: true }));
+        if (j && j.ok !== false) return true;
+      }
+    } catch (e) {}
+  }
+  return false;
+}
+
+/** 在系统访达 / 资源管理器中打开所在文件夹（并选中该图） */
+window.revealInFolder = async function(relPath) {
+  const abs = absAssetPath(relPath);
+  const dir = parentDirOf(abs);
+  copyText(abs, "文件绝对路径");
+  showToast("正在打开文件夹…");
+  const ok = await revealViaBridge(relPath);
+  if (ok) {
+    showToast("📁 已在访达/资源管理器中定位");
+    return;
+  }
+  // 兜底：下载一键脚本（浏览器拦 file:// 时）
+  try { downloadRevealHelper(abs); } catch (e2) {}
+  showToast("未连上定位服务。请先在项目目录跑 python3 pmem_art.py atlas，再点 📁；或双击下载的脚本。文件夹：" + dir);
+};
+
+window.closeViewer = function() {
+  const v = document.getElementById("imgViewer");
+  if (v) v.classList.remove("open");
+};
+
+/** 半透明叠层放大原图（点空白 / Esc 关闭） */
+window.openViewer = function(assetPath) {
+  const info = DATA.assets[assetPath];
+  if (!info) {
+    showToast("找不到这张图的索引");
+    return;
+  }
+  hideImgCtxMenu();
+  state.lbPath = assetPath;
+  const img = document.getElementById("ivImg");
+  const pathEl = document.getElementById("ivPath");
+  img.src = assetSrc(info);
+  pathEl.textContent = assetPath;
+  pathEl.title = absAssetPath(assetPath);
+  document.getElementById("imgViewer").classList.add("open");
+};
+
+window.saveAssetAs = function(relPath) {
+  const info = DATA.assets[relPath] || { path: relPath };
+  const src = assetSrc(info) || String(relPath || "");
+  const name = PathName(relPath) || "image.png";
+  const a = document.createElement("a");
+  a.href = src;
+  a.download = name;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  showToast("已触发另存为：" + name);
+};
+
+let _ctxPath = "";
+window.showImgCtxMenu = function(ev, relPath) {
+  ev.preventDefault();
+  ev.stopPropagation();
+  _ctxPath = relPath;
+  const menu = document.getElementById("imgCtxMenu");
+  if (!menu) return false;
+  menu.classList.add("open");
+  const pad = 8;
+  let x = ev.clientX;
+  let y = ev.clientY;
+  menu.style.left = x + "px";
+  menu.style.top = y + "px";
+  const rect = menu.getBoundingClientRect();
+  if (rect.right > window.innerWidth - pad) {
+    menu.style.left = Math.max(pad, window.innerWidth - rect.width - pad) + "px";
+  }
+  if (rect.bottom > window.innerHeight - pad) {
+    menu.style.top = Math.max(pad, window.innerHeight - rect.height - pad) + "px";
+  }
+  return false;
+};
+
+window.hideImgCtxMenu = function() {
+  const menu = document.getElementById("imgCtxMenu");
+  if (menu) menu.classList.remove("open");
 };
 
 window.copyAgentContext = function(modId) {
@@ -1318,33 +1923,45 @@ window.copyAgentContext = function(modId) {
 
 window.openLightbox = function(assetPath) {
   const info = DATA.assets[assetPath];
-  if (!info) return;
+  if (!info) {
+    showToast("找不到这张图的索引");
+    return;
+  }
+  closeViewer();
   state.lbScale = 1.0;
+  state.lbPath = assetPath;
   const lb = document.getElementById("lightbox");
   const img = document.getElementById("lbImg");
   const box = document.getElementById("lbImgBox");
   box.style.transform = "scale(1)";
-  img.src = info.data_uri;
+  img.src = assetSrc(info);
   document.getElementById("lbTitle").textContent = assetPath;
-  document.getElementById("lbSpecBadge").textContent = `${info.resolution} · ${info.mode} · ${info.size_kb} KB`;
+  document.getElementById("lbSpecBadge").textContent = `${info.resolution || ""} · ${info.mode || ""} · ${info.size_kb || "?"} KB`;
 
-  const linked = DATA.entries.filter(e => (e.assets || []).some(x => x.path === assetPath));
-  const modCfg = DATA.modules[info.module] || {};
+  const linked = (DATA.entries || []).filter(e => (e.assets || []).some(x => x.path === assetPath));
+  const modCfg = (DATA.modules || {})[info.module] || {};
   document.getElementById("lbAside").innerHTML = `
     <div>
-      <div style="font-size:11px;color:var(--text-dim);text-transform:uppercase;">所属视觉模块</div>
-      <div style="font-size:15px;font-weight:700;color:var(--teal);margin-top:2px;">${esc(info.module)} (${esc(modCfg.title || '')})</div>
+      <div style="font-size:11px;color:var(--text-dim);text-transform:uppercase;">来源 / 模块</div>
+      <div style="font-size:15px;font-weight:700;color:var(--teal);margin-top:2px;">${esc(sourceLabel(info.source))} · ${esc(info.module || "unassigned")}</div>
+      <div class="lb-path-actions">
+        <button class="btn-copy" onclick="copyText(absAssetPath(state.lbPath), '绝对路径')">📋 复制绝对路径</button>
+        <button class="btn-copy" onclick="revealInFolder(state.lbPath)">📁 在文件夹中显示</button>
+        <button class="btn-copy" onclick="saveAssetAs(state.lbPath)">💾 另存为</button>
+        <button class="btn-copy" onclick="openInEditor(state.lbPath)">📂 在编辑器打开</button>
+      </div>
     </div>
     <div style="background:#090d16;padding:10px 12px;border-radius:8px;border:1px solid var(--border);font-size:12px;">
-      <div>分辨率: <b>${esc(info.resolution)}</b> | 通道: <b>${esc(info.mode)}</b></div>
-      <div>体积: <b>${info.size_kb} KB</b> | SHA-256: <code>${esc(info.sha256_16)}</code></div>
-      <div style="margin-top:4px;color:${info.qa_passed ? '#6ee7b7' : '#fda4af'};">
-        ${info.qa_passed ? '✅ 通过模块管线规格校验' : '⚠️ ' + esc(info.qa_issues.join('；'))}
+      <div>时间: <b>${esc(info.updated_at || info.day || "")}</b></div>
+      <div>分辨率: <b>${esc(info.resolution || "")}</b> | 通道: <b>${esc(info.mode || "")}</b></div>
+      <div>体积: <b>${info.size_kb || "?"} KB</b></div>
+      <div style="margin-top:4px;color:${info.formal ? '#6ee7b7' : '#94a3b8'};">
+        ${info.formal ? "✅ 正式模块资产" : "👁️ 可见索引（未正式 ingest）"}
       </div>
     </div>
     ${(modCfg.palette && modCfg.palette.length) ? `
       <div>
-        <div style="font-size:12px;color:var(--text-muted);margin-bottom:6px;">模块标准色卡 (点击复制):</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-bottom:6px;">模块色卡:</div>
         <div style="display:flex;gap:6px;flex-wrap:wrap;">
           ${modCfg.palette.map(p => `
             <div class="swatch-chip" onclick="copyText('${esc(p.hex)}', '${esc(p.hex)}')">
@@ -1356,35 +1973,50 @@ window.openLightbox = function(assetPath) {
       </div>
     ` : ''}
     <div>
-      <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px;">绑定的美术记忆条目 (${linked.length}):</div>
-      ${linked.map(e => `
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px;">关联记忆 (${linked.length}):</div>
+      ${linked.length ? linked.map(e => `
         <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:10px;margin-bottom:8px;">
-          <span class="badge ${esc(e.badge)}">${esc(e.kind_label)}</span>
-          <div style="font-weight:700;margin:6px 0 4px;font-size:13px;">${esc(e.summary)}</div>
-          <div style="font-size:12px;color:var(--text-muted);white-space:pre-line;">${esc(e.body)}</div>
+          <span class="badge ${esc(e.badge || "info")}">${esc(e.kind_label || e.kind || "")}</span>
+          <div style="font-weight:700;margin:6px 0 4px;font-size:13px;">${esc(e.summary || "")}</div>
         </div>
-      `).join("")}
+      `).join("") : `<div style="color:var(--text-dim);font-size:12px;">无关联正式记忆</div>`}
     </div>
   `;
   lb.classList.add("open");
 };
 
 // Event Listeners
-document.querySelectorAll(".tab-btn").forEach(btn => {
+document.querySelectorAll(".tab-btn[data-tab]").forEach(btn => {
   btn.addEventListener("click", () => switchTab(btn.dataset.tab));
+});
+document.querySelectorAll("#moreMenu [data-tab]").forEach(btn => {
+  btn.addEventListener("click", (ev) => {
+    ev.stopPropagation();
+    switchTab(btn.dataset.tab);
+  });
 });
 document.getElementById("searchInput").addEventListener("input", e => {
   state.search = e.target.value;
-  renderStage();
+  clearTimeout(_searchTimer);
+  _searchTimer = setTimeout(() => {
+    saveAtlasState();
+    renderStage();
+  }, 140);
 });
-document.querySelectorAll("[data-bg]").forEach(btn => {
-  btn.addEventListener("click", () => {
-    document.querySelectorAll("[data-bg]").forEach(b => b.classList.remove("active"));
+document.querySelectorAll("#bgMenu [data-bg]").forEach(btn => {
+  btn.addEventListener("click", (ev) => {
+    ev.stopPropagation();
+    document.querySelectorAll("#bgMenu [data-bg]").forEach(b => b.classList.remove("active"));
     btn.classList.add("active");
     const lbCanvas = document.getElementById("lbCanvas");
     lbCanvas.classList.remove(state.bgClass);
     state.bgClass = btn.dataset.bg;
     lbCanvas.classList.add(state.bgClass);
+    const label = document.getElementById("btnBgMenu");
+    if (label) label.textContent = btn.textContent.trim().split(/\s+/)[0] + " 底色";
+    const bg = document.getElementById("bgWrap");
+    if (bg) bg.classList.remove("open");
+    saveAtlasState();
     renderStage();
   });
 });
@@ -1395,10 +2027,28 @@ document.getElementById("toggleGuidesBtn").addEventListener("click", e => {
   renderStage();
 });
 document.getElementById("thumbSlider").addEventListener("input", e => {
-  document.documentElement.style.setProperty("--thumb-size", e.target.value + "px");
+  applyThumbSize(e.target.value, { persist: false, refreshVirt: true });
+});
+document.getElementById("thumbSlider").addEventListener("change", e => {
+  applyThumbSize(e.target.value, { persist: true, refreshVirt: true });
+});
+document.getElementById("thumbZoomOut").addEventListener("click", () => {
+  applyThumbSize(state.thumbSize - 16);
+});
+document.getElementById("thumbZoomIn").addEventListener("click", () => {
+  applyThumbSize(state.thumbSize + 16);
 });
 document.getElementById("lbClose").addEventListener("click", () => {
   document.getElementById("lightbox").classList.remove("open");
+});
+document.getElementById("lbCopyPath").addEventListener("click", () => {
+  if (state.lbPath) copyText(absAssetPath(state.lbPath), "绝对路径");
+});
+document.getElementById("lbRevealFolder").addEventListener("click", () => {
+  if (state.lbPath) revealInFolder(state.lbPath);
+});
+document.getElementById("lbOpenEditor").addEventListener("click", () => {
+  if (state.lbPath) openInEditor(state.lbPath);
 });
 document.getElementById("lbZoomIn").addEventListener("click", () => {
   state.lbScale = Math.min(4.0, state.lbScale + 0.25);
@@ -1412,8 +2062,62 @@ document.getElementById("lbZoomReset").addEventListener("click", () => {
   state.lbScale = 1.0;
   document.getElementById("lbImgBox").style.transform = "scale(1)";
 });
+document.getElementById("lbImg").addEventListener("contextmenu", (ev) => {
+  if (state.lbPath) return showImgCtxMenu(ev, state.lbPath);
+});
+
+const imgViewer = document.getElementById("imgViewer");
+const imgViewerCard = document.getElementById("imgViewerCard");
+imgViewer.addEventListener("click", () => closeViewer());
+imgViewerCard.addEventListener("click", (ev) => ev.stopPropagation());
+document.getElementById("ivClose").addEventListener("click", (ev) => {
+  ev.stopPropagation();
+  closeViewer();
+});
+document.getElementById("ivReveal").addEventListener("click", (ev) => {
+  ev.stopPropagation();
+  if (state.lbPath) revealInFolder(state.lbPath);
+});
+document.getElementById("ivCopy").addEventListener("click", (ev) => {
+  ev.stopPropagation();
+  if (state.lbPath) copyText(absAssetPath(state.lbPath), "绝对路径");
+});
+document.getElementById("ivSave").addEventListener("click", (ev) => {
+  ev.stopPropagation();
+  if (state.lbPath) saveAssetAs(state.lbPath);
+});
+document.getElementById("ivDetail").addEventListener("click", (ev) => {
+  ev.stopPropagation();
+  if (state.lbPath) openLightbox(state.lbPath);
+});
+document.getElementById("ivImg").addEventListener("contextmenu", (ev) => {
+  if (state.lbPath) return showImgCtxMenu(ev, state.lbPath);
+});
+
+document.getElementById("imgCtxMenu").addEventListener("click", (ev) => {
+  const btn = ev.target.closest("button[data-act]");
+  if (!btn || !_ctxPath) return;
+  const act = btn.getAttribute("data-act");
+  const p = _ctxPath;
+  hideImgCtxMenu();
+  if (act === "copy-abs") copyText(absAssetPath(p), "绝对路径");
+  else if (act === "copy-rel") copyText(p, "相对路径");
+  else if (act === "copy-name") copyText(PathName(p), "文件名");
+  else if (act === "copy-folder") copyText(parentDirOf(absAssetPath(p)), "文件夹路径");
+  else if (act === "save-as") saveAssetAs(p);
+  else if (act === "reveal") revealInFolder(p);
+  else if (act === "editor") openInEditor(p);
+  else if (act === "viewer") openViewer(p);
+  else if (act === "lightbox") openLightbox(p);
+});
+document.addEventListener("click", () => hideImgCtxMenu());
+document.addEventListener("scroll", () => hideImgCtxMenu(), true);
 window.addEventListener("keydown", e => {
-  if (e.key === "Escape") document.getElementById("lightbox").classList.remove("open");
+  if (e.key === "Escape") {
+    hideImgCtxMenu();
+    closeViewer();
+    document.getElementById("lightbox").classList.remove("open");
+  }
 });
 
 let _autoRefreshTimer = null;
@@ -1423,7 +2127,7 @@ window.updateAutoRefreshUI = function() {
   const dot = document.getElementById("liveDot");
   if (!btn || !dot) return;
   if (state.autoRefresh) {
-    btn.textContent = "🔄 自动刷新: 开启 (3s)";
+    btn.textContent = "🔄 自动刷新: 开启 (10s)";
     btn.classList.remove("paused");
     dot.classList.remove("paused");
   } else {
@@ -1437,14 +2141,35 @@ window.toggleAutoRefresh = function() {
   state.autoRefresh = !state.autoRefresh;
   saveAtlasState();
   updateAutoRefreshUI();
-  showToast(state.autoRefresh ? "🔄 已开启每 3 秒自动检测新资产并无感刷新" : "⏸️ 已暂停自动刷新（可点击 ⚡ 立即刷新）");
+  showToast(state.autoRefresh ? "🔄 已开启每 10 秒自动检测新资产并无感刷新" : "⏸️ 已暂停自动刷新（可点击 ⚡ 立即刷新）");
 };
 
 window.manualRefreshNow = function() {
   saveAtlasState();
-  sessionStorage.setItem("pmem_atlas_just_reloaded", "manual");
-  location.reload();
+  hotReloadAtlasData().then((ok) => {
+    if (!ok) {
+      sessionStorage.setItem("pmem_atlas_just_reloaded", "manual");
+      location.reload();
+    } else {
+      showToast("⚡ 已热更新所有图索引");
+    }
+  });
 };
+
+async function hotReloadAtlasData() {
+  try {
+    const res = await fetch(".memory-art/atlas_data.json?_t=" + Date.now(), { cache: "no-store" });
+    if (!res.ok) return false;
+    const next = await res.json();
+    if (!next || !next.assets) return false;
+    DATA = next;
+    renderHeaderAndSidebar();
+    renderStage();
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
 
 function checkAtlasUpdateOnce() {
   if (!state.autoRefresh) return;
@@ -1458,8 +2183,14 @@ function checkAtlasUpdateOnce() {
       const ping = window.__PMEM_ATLAS_PING__;
       if (ping && ping.build_id && DATA.build_id && ping.build_id !== DATA.build_id) {
         saveAtlasState();
-        sessionStorage.setItem("pmem_atlas_just_reloaded", ping.built_at || "auto");
-        location.reload();
+        hotReloadAtlasData().then((ok) => {
+          if (!ok) {
+            sessionStorage.setItem("pmem_atlas_just_reloaded", ping.built_at || "auto");
+            location.reload();
+          } else {
+            showToast("✨ 检测到新图，已同步");
+          }
+        });
       }
     };
     document.head.appendChild(s);
@@ -1467,15 +2198,20 @@ function checkAtlasUpdateOnce() {
 }
 
 restoreAtlasState();
-document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.tab === state.tab));
+if (!state.dayFilter) state.dayFilter = "today";
+if (!state.plateFilter) state.plateFilter = "final";
+if (!state.sideMode) state.sideMode = "all";
+applyThumbSize(state.thumbSize || THUMB_DEFAULT, { persist: false, refreshVirt: false });
+document.querySelectorAll(".tab-btn[data-tab]").forEach(b => b.classList.toggle("active", b.dataset.tab === state.tab));
+document.querySelectorAll("#moreMenu [data-tab]").forEach(b => b.classList.toggle("active", b.dataset.tab === state.tab));
 if (state.search) document.getElementById("searchInput").value = state.search;
 renderStage();
-_autoRefreshTimer = setInterval(checkAtlasUpdateOnce, 3000);
+_autoRefreshTimer = setInterval(checkAtlasUpdateOnce, AUTO_REFRESH_MS);
 try {
   const rr = sessionStorage.getItem("pmem_atlas_just_reloaded");
   if (rr) {
     sessionStorage.removeItem("pmem_atlas_just_reloaded");
-    showToast(rr === "manual" ? "⚡ 已刷新至最新美术资产与记忆状态" : "✨ 检测到新入库/生成图片，已自动同步 (" + rr + ")");
+    showToast(rr === "manual" ? "⚡ 已刷新至最新" : "✨ 已自动同步 (" + rr + ")");
   }
 } catch (e) {}
 </script>
@@ -1483,10 +2219,45 @@ try {
 </html>
 """
 
+def _slim_atlas_payload(data: dict[str, Any]) -> dict[str, Any]:
+    """Drop data_uri blobs from payload unless embed_images was requested."""
+    embed = bool(data.get("embed_images"))
+    out = dict(data)
+    assets = {}
+    for path, info in (data.get("assets") or {}).items():
+        if not isinstance(info, dict):
+            continue
+        if embed:
+            assets[path] = dict(info)
+        else:
+            assets[path] = {k: v for k, v in info.items() if k != "data_uri"}
+    out["assets"] = assets
+    return out
+
+
 def generate_atlas_html(data: dict[str, Any], out_path: Path) -> Path:
     proj_name = data.get("config", {}).get("project", {}).get("name", "pmem-art")
     build_id = str(data.get("build_id") or "")
-    json_str = json.dumps(data, ensure_ascii=False).replace("</", "<\\/")
+    root = out_path.parent.resolve()
+    # 画廊用 JPEG 缩略图缓存，避免浏览器解码整张大图导致滑动空白
+    try:
+        from atlas_index import ensure_gallery_thumbs
+
+        assets = data.get("assets") if isinstance(data.get("assets"), dict) else {}
+        data["_thumb_stats"] = ensure_gallery_thumbs(root, assets)
+    except Exception:
+        pass
+    reveal_port = 0
+    if not os.environ.get("PMEM_ATLAS_NO_REVEAL"):
+        try:
+            from atlas_reveal import ensure_reveal_daemon
+
+            reveal_port = int(ensure_reveal_daemon(root) or 0)
+        except Exception:
+            reveal_port = 0
+    slim = _slim_atlas_payload(data)
+    slim["reveal_port"] = reveal_port
+    json_str = json.dumps(slim, ensure_ascii=False).replace("</", "<\\/")
     html_out = (
         HTML_TEMPLATE.replace("__PROJECT_NAME__", html.escape(proj_name))
         .replace("__BUILD_ID__", html.escape(build_id))
@@ -1494,13 +2265,22 @@ def generate_atlas_html(data: dict[str, Any], out_path: Path) -> Path:
     )
     out_path.write_text(html_out, encoding="utf-8", newline="\n")
     try:
+        from atlas_index import write_atlas_data_sidecar
+
+        write_atlas_data_sidecar(out_path.parent, slim)
+    except Exception:
+        pass
+    try:
         ping_dir = out_path.parent / ".memory-art"
         if ping_dir.is_dir():
             ping_payload = {
                 "build_id": build_id,
                 "built_at": data.get("built_at", ""),
                 "assets_count": len(data.get("assets", {})),
+                "images_count": len(data.get("index_images") or data.get("assets") or {}),
                 "entries_count": len(data.get("entries", [])),
+                "index_id": (data.get("index_images") and len(data.get("index_images") or [])),
+                "reveal_port": reveal_port,
             }
             (ping_dir / "atlas_ping.js").write_text(
                 "window.__PMEM_ATLAS_PING__ = " + json.dumps(ping_payload, ensure_ascii=False) + ";\n",
@@ -1513,6 +2293,6 @@ def generate_atlas_html(data: dict[str, Any], out_path: Path) -> Path:
 if __name__ == "__main__":
     from pmem_art import load_project
     root = Path(__file__).resolve().parent
-    data = load_project(root)
+    data = load_project(root, embed_images=False)
     out = generate_atlas_html(data, root / "art-atlas.html")
     print(f"Built {out} ({round(out.stat().st_size / 1024, 1)} KB)")

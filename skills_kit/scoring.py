@@ -632,7 +632,7 @@ _SOFT_FILLER = re.compile(r"(基本|整体|大体|仍然|几乎|已经|非常|�
 
 
 def defects_are_substantive(defects_str: str) -> bool:
-    """False when defects are empty or only rubber-stamp / praise phrases (cannot justify a 9.6 stop)."""
+    """False when defects are empty or only rubber-stamp / praise phrases (cannot justify a 9.5 stop)."""
     raw = (defects_str or "").strip()
     if len(raw) < 4:
         return False
@@ -748,12 +748,30 @@ def audit_score_inflation(
         calibrated = min(calibrated, 8.90)
 
     if scale_prof.get("allow_action_pose_change") is False:
+        # Fail-closed on low: judge often writes soft phrasing ("姿态锁不稳" /
+        # "偏离参考…腿/手") instead of the older exact "姿态改变" tokens.
         pose_drift_keywords = (
             "动作改变", "姿态改变", "动作不符", "姿态不符", "姿态偏移", "动作偏移",
+            "姿态锁不稳", "机位姿态锁不稳", "动作锁不稳",
             "改为托腮", "变成托腮", "改成抱膝",
-            "pose changed", "action changed", "pose drift",
+            "改成撑地", "改为撑地", "变成撑地", "改成搭膝", "改为搭膝",
+            "手撑到身后", "手撑在身后", "单手撑地偏离", "双手撑地偏离",
+            "pose changed", "action changed", "pose drift", "pose unlocked",
         )
         hit_pose = _keyword_hits(defects_str or "", pose_drift_keywords)
+        if not hit_pose:
+            # Soft patterns: limb/pose drift vs reference without the exact tokens above.
+            soft_pose = re.search(
+                r"(?:偏离参考|相对参考|相对原图).{0,16}(?:腿|膝|手|臂|肘|姿|动作|撑地|搭膝|后仰|前移)",
+                defects_str or "",
+            ) or re.search(
+                r"(?:腿|膝|手|臂|姿|动作).{0,12}(?:偏离参考|相对参考|不符参考|不像参考)",
+                defects_str or "",
+            )
+            if soft_pose and not _locally_negated(
+                (defects_str or "").lower(), soft_pose.start()
+            ):
+                hit_pose = [soft_pose.group(0)]
         if hit_pose:
             warnings.append(
                 f"动作红线拦截：检测到角色动作/姿态偏移 {hit_pose}，强制压分 (<=8.50) 并拒绝达标"
@@ -797,7 +815,7 @@ def audit_score_inflation(
             stagnated = True
             scale_name = str(scale_prof.get("scale") or "").strip().lower()
             if scale_name == "low":
-                advice = "下一轮只改缺陷部位；若原图离 9.6 远，换 medium 或 high"
+                advice = "下一轮只改缺陷部位；若原图离 9.5 远，换 medium 或 high"
             elif scale_name == "high":
                 advice = "下一轮加强机位或戏剧光影，不要只改局部笔触"
             elif scale_name == "recompose":

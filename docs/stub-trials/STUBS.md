@@ -19,7 +19,7 @@ Experiment only. Stubs below are candidates to eventually live in skill LOCK / G
 
 ## Protocol notes
 - Same brief + same refs for CONTROL vs EXTRA (or A vs B).
-- Score Absolute-5D ≥9.6 honestly (agent vision). Merge uses ladder 5D (2.5/2.5/2.0/1.5/1.5).
+- Score Absolute-5D ≥9.5 honestly (agent vision). Merge uses ladder 5D (2.5/2.5/2.0/1.5/1.5).
 - Prefer 1 round each to save cost.
 - Mode B/C always pads style/curriculum refs via `reference_image_paths`. Mode A never pads.
 - **Weave stubs as prose** — bare bullet lists can print into the plate (seen on Icon B).

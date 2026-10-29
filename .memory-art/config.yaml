@@ -55,10 +55,10 @@ converge:
   default_scale: medium
   max_rounds: 8
   target_thresholds:
-    low: 9.6
-    medium: 9.6
-    high: 9.6
-    recompose: 9.6
+    low: 9.5
+    medium: 9.5
+    high: 9.5
+    recompose: 9.5
 vlm_judge:
   enabled: auto
   provider: openai

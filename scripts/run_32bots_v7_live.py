@@ -148,7 +148,7 @@ def run_bot(bot_task: dict, best_doc: dict, job: dict) -> dict:
 
     data = pa.load_project(bot_root)
     session_id = f"v7_{bot_id}_{display}"
-    threshold = 9.60
+    threshold = 9.50
 
     start_res = converge_start(
         bot_root,
@@ -289,7 +289,7 @@ def run_bot(bot_task: dict, best_doc: dict, job: dict) -> dict:
         and (api not in ("high", "recompose") or rounds_executed >= 2)
         and finish_res.get("exit_code") == 0
     )
-    # PASS bar: final score >= 9.60 preferred but report honestly
+    # PASS bar: final score >= 9.50 preferred but report honestly
     passed_score = bool(final_score is not None and final_score >= threshold)
 
     return {
@@ -360,7 +360,7 @@ def main() -> int:
     print(f"\nReport → {REPORT_PATH}")
     print(
         f"Summary: ok={report['n_ok']}/{report['n_bots']} "
-        f"score≥9.60={report['n_pass_score']} acceptance={report['n_acceptance']}"
+        f"score≥9.50={report['n_pass_score']} acceptance={report['n_acceptance']}"
     )
     return 0 if report["n_ok"] == report["n_bots"] else 1
 

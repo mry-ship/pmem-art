@@ -1,0 +1,848 @@
+{
+  "session_id": "regen3-clone-rabbit",
+  "started_at": "2026-10-30 03:24:19 UTC+8",
+  "goal": "锁参考粉彩线稿纸感与腮红空气；题材换成白兔抱胡萝卜；新构图；勿赛博霓虹。",
+  "module": "character.PastelRabbit",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "recompose",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "recompose",
+    "label": "定向改构图模式 · 按用户指定新构图动态达标闭环 (Directed Re-Composition Dynamic Threshold >=9.5)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 2,
+    "target_score_threshold": 9.5,
+    "dim_weights": {
+      "composition": 0.1125,
+      "lighting_color": 0.1125,
+      "perspective_anatomy": 0.15,
+      "texture_detail": 0.225,
+      "spec_style": 0.15,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "style_medium",
+      "identity",
+      "recompose_dir_target"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图；第 1 轮落到指定机位，之后只在提示词上补还没过的那一处（提示词改动仍 ≤85%）",
+    "max_prompt_delta_ratio": 0.85,
+    "allow_recompose": true,
+    "allow_viewpoint_change": true,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)",
+      "recompose_direction (不偏离指定构图方向)"
+    ],
+    "prompt_delta_baseline": "previous",
+    "min_round_leap": 0.2,
+    "prompt_directive": "粉彩速写轻盈风：按「废弃参考少女坐地侧姿：改为一只圆润白兔坐姿抱一根橙色胡萝卜，兔头略仰四分之三，胡萝卜斜抱胸前，背景疏开粉彩斜线空气，主体居中偏下。」换机位，纸纹和软光不动",
+    "medium_family": "dry",
+    "best_direction_hint": "最优方向：只写目标机位与布局",
+    "recompose_dir": "废弃参考少女坐地侧姿：改为一只圆润白兔坐姿抱一根橙色胡萝卜，兔头略仰四分之三，胡萝卜斜抱胸前，背景疏开粉彩斜线空气，主体居中偏下。",
+    "goal": "锁参考粉彩线稿纸感与腮红空气；题材换成白兔抱胡萝卜；新构图；勿赛博霓虹。",
+    "module": "character.PastelRabbit",
+    "ref_image": "docs/showcase/homepage_rerun_1028_regen3/v2/clone_rabbit/ref.jpg",
+    "ref_analysis": "媒介：粗齿纸粉彩/蜡笔排线纸牙，炭笔软描边。锁纸感排线、软描边、腮红空气。不锁构图题材身份；禁止回声红帽衫少女。"
+  },
+  "medium_family": "dry",
+  "contract": "",
+  "target_score_threshold": 9.5,
+  "recompose_dir": "废弃参考少女坐地侧姿：改为一只圆润白兔坐姿抱一根橙色胡萝卜，兔头略仰四分之三，胡萝卜斜抱胸前，背景疏开粉彩斜线空气，主体居中偏下。",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "docs/showcase/homepage_rerun_1028_regen3/v2/clone_rabbit/ref.jpg",
+  "ref_analysis": "媒介：粗齿纸粉彩/蜡笔排线纸牙，炭笔软描边。锁纸感排线、软描边、腮红空气。不锁构图题材身份；禁止回声红帽衫少女。",
+  "default_aspect_ratio": "4:3",
+  "default_reference_image_paths": [
+    "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/v2/clone_rabbit/ref.jpg"
+  ],
+  "aspect_ratio": "4:3",
+  "reference_image_paths": [
+    "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/v2/clone_rabbit/ref.jpg"
+  ],
+  "ref_physical_traits": {
+    "exists": true,
+    "size_bytes": 187182,
+    "size_kb": 182.8,
+    "width": 720,
+    "height": 580,
+    "aspect_ratio": "36:29",
+    "canonical_aspect_ratio": "4:3",
+    "color_entropy": 7.97
+  },
+  "param_validation": {
+    "valid": true,
+    "validation_passed": true,
+    "case_id": "regen3-clone-rabbit",
+    "scale": "recompose",
+    "aspect_ratio": "4:3",
+    "ref_aspect_ratio": "4:3",
+    "ref_dimensions": "720x580",
+    "output_aspect_ratio": "",
+    "output_dimensions": "",
+    "reference_image": "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/v2/clone_rabbit/ref.jpg",
+    "reference_image_paths": [
+      "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/v2/clone_rabbit/ref.jpg"
+    ],
+    "inherited_default_aspect_ratio": false,
+    "inherited_default_pad_image": true,
+    "matched_ref_aspect_ratio": true,
+    "matched_ref_pad_image": true,
+    "matched_output_aspect_ratio": true,
+    "three_step_stage": "step1_start",
+    "three_step_verified": false,
+    "warnings": []
+  },
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.5,
+  "accept_threshold": 9.5,
+  "max_rounds": 4,
+  "ready_to_finish": true,
+  "status": "finished",
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "4:3",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/v2/clone_rabbit/ref.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "regen3-clone-rabbit",
+        "scale": "recompose",
+        "aspect_ratio": "4:3",
+        "ref_aspect_ratio": "4:3",
+        "ref_dimensions": "720x580",
+        "output_aspect_ratio": "4:3",
+        "output_dimensions": "1152x864",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/v2/clone_rabbit/ref.jpg",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/v2/clone_rabbit/ref.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "03:30:05",
+      "image": "docs/showcase/homepage_rerun_1028_regen3/v2/clone_rabbit/r1.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 403115,
+        "size_kb": 393.7,
+        "width": 1152,
+        "height": 864,
+        "aspect_ratio": "4:3",
+        "canonical_aspect_ratio": "4:3",
+        "color_entropy": 7.25
+      },
+      "raw_score": 8.78,
+      "score": 8.78,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.9/光影8.7/透视8.5/质感9.0/风格9.0/无瑕疵8.6",
+      "dims_parsed": {
+        "composition": 8.9,
+        "lighting_color": 8.7,
+        "perspective_anatomy": 8.5,
+        "texture_detail": 9.0,
+        "spec_style": 9.0,
+        "flawlessness": 8.6
+      },
+      "weighted_score": 8.78,
+      "audit_warnings": [
+        "独立视觉 API 不可用，改由本模型按 Absolute-5D 检查表评分（门槛仍 9.5）：HTTP Error 403: Forbidden",
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机"
+      ],
+      "stagnated": false,
+      "strengths": "白兔抱胡萝卜新题材成立；粉彩纸感腮红空气锁住；无少女回声",
+      "defects": "俯角坐姿兔居中偏下；主光平光空气。胡萝卜偏竖直未斜抱；前爪握持与胡萝卜体积咬合可再紧；recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机",
+      "next_fix": "胡萝卜改斜抱胸前；前爪与胡萝卜接触阴影更咬合；兔耳与躯干粉彩排线保持",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.PastelRabbit\n- 置信度: 0.45（fast-track 资格: 否）\n- 个人口味: 光影=暖光；构图=半身 / 全身\n- 个人禁用习惯: 漏抠/黑底/毛边；赛博霓虹/霓虹紫\n- 项目私有知识卡 (Private Layer):\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n  · [tech-celshade] 赛璐珞分层: 硬边色块分层，高光形状干净，层数克制。\n粉彩速写轻盈风：按「废弃参考少女坐地侧姿：改为一只圆润白兔坐姿抱一根橙色胡萝卜，兔头略仰四分之三，胡萝卜斜抱胸前，背景疏开粉彩斜线空气，主体居中偏下。」换机位，纸纹和软光不动| Soft pastel on tooth paper; plump white rabbit hugging orange carrot; discard red-hoodie girl; lock pastel blush air; no neon.| 约束：保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观；不偏离指定构图方向 | Structure floor: the person's joints and grip stay clear and both pupils share a direction; the animal's limbs follow its species and are not converted into human elbows; contact shadows read; do not melt limbs into props",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.5,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "both",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "vlm_error",
+        "provider": "",
+        "model": "",
+        "error": "HTTP Error 403: Forbidden",
+        "active": true
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：俯角坐姿兔居中偏下；主光平光空气。胡萝卜偏竖直未斜抱；前爪握持与胡萝卜体积咬合可再紧；recompose 未检出机位/布局变化证据（相对 --recompose",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.78"
+        },
+        {
+          "category": "narrative_camera",
+          "lesson": "本轮短板偏「narrative_camera」：俯角坐姿兔居中偏下；主光平光空气。胡萝卜偏竖直未斜抱；前爪握持与胡萝卜体积咬合可再紧；recompose 未检出机位/布局变化证据（相对 --recompose",
+          "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+          "from_score": "8.78"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：白兔抱胡萝卜新题材成立；粉彩纸感腮红空气锁住；无少女回声",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.78"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "03:30:08"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "4:3",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/v2/clone_rabbit/r1.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "regen3-clone-rabbit",
+        "scale": "recompose",
+        "aspect_ratio": "4:3",
+        "ref_aspect_ratio": "4:3",
+        "ref_dimensions": "1152x864",
+        "output_aspect_ratio": "4:3",
+        "output_dimensions": "1152x864",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/v2/clone_rabbit/r1.jpg",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/v2/clone_rabbit/r1.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": true,
+        "pad_diverged": false
+      },
+      "generated_at": "03:44:40",
+      "image": "docs/showcase/homepage_rerun_1028_regen3/v2/clone_rabbit/r2.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 338989,
+        "size_kb": 331.0,
+        "width": 1152,
+        "height": 864,
+        "aspect_ratio": "4:3",
+        "canonical_aspect_ratio": "4:3",
+        "color_entropy": 7.25
+      },
+      "raw_score": 8.94,
+      "score": 8.94,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.1/光影8.9/透视8.8/质感9.1/风格9.0/无瑕疵8.8",
+      "dims_parsed": {
+        "composition": 9.1,
+        "lighting_color": 8.9,
+        "perspective_anatomy": 8.8,
+        "texture_detail": 9.1,
+        "spec_style": 9.0,
+        "flawlessness": 8.8
+      },
+      "weighted_score": 8.94,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.16 低于当前档位 (recompose) 的最小跃升 +0.20。下一轮更贴近指定构图方向",
+        "独立视觉 API 不可用，改由本模型按 Absolute-5D 检查表评分（门槛仍 9.5）：<urlopen error _ssl.c:1015: The handshake operation timed out>",
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机"
+      ],
+      "stagnated": true,
+      "strengths": "白兔抱胡萝卜成立；粉彩纸感腮红在；前爪抱持更紧",
+      "defects": "俯角兔居中偏下；主光平光空气。胡萝卜斜度仍不够明显；背景斜线排线比参考略弱偏洗；recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机",
+      "next_fix": "胡萝卜斜抱角度更明显；背景疏开粉彩斜线排线加回；纸感锁住",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.PastelRabbit\n- 置信度: 0.45（fast-track 资格: 否）\n- 个人口味: 光影=暖光；构图=半身 / 全身\n- 个人禁用习惯: 漏抠/黑底/毛边；赛博霓虹/霓虹紫\n- 项目私有知识卡 (Private Layer):\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n  · [tech-celshade] 赛璐珞分层: 硬边色块分层，高光形状干净，层数克制。\n粉彩速写轻盈风：按「废弃参考少女坐地侧姿：改为一只圆润白兔坐姿抱一根橙色胡萝卜，兔头略仰四分之三，胡萝卜斜抱胸前，背景疏开粉彩斜线空气，主体居中偏下。」换机位，纸纹和软光不动| 机位保持指定方向：废弃参考少女坐地侧姿：改为一只圆润白兔坐姿抱一根橙色胡萝卜，兔头略仰四分之三，胡萝卜斜抱胸前，背景疏开粉彩斜线空气，主体居中偏下。。垫图是目前分数最高的那张成图。只改这一处：胡萝卜改斜抱胸前；前爪与胡萝卜接触阴影更咬合；兔耳与躯干粉彩排线保持。没点名的地方保持垫图。",
+      "continuation": true,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.8,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "both",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "vlm_error",
+        "provider": "",
+        "model": "",
+        "error": "<urlopen error _ssl.c:1015: The handshake operation timed out>",
+        "active": true
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "narrative_camera",
+          "lesson": "本轮短板偏「narrative_camera」：俯角兔居中偏下；主光平光空气。胡萝卜斜度仍不够明显；背景斜线排线比参考略弱偏洗；recompose 未检出机位/布局变化证据（相对 --recompose-di",
+          "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+          "from_score": "8.94"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：白兔抱胡萝卜成立；粉彩纸感腮红在；前爪抱持更紧",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.94"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "03:48:00"
+    },
+    {
+      "round": 3,
+      "round_label": "第 3 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "4:3",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/v2/clone_rabbit/r2.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "regen3-clone-rabbit",
+        "scale": "recompose",
+        "aspect_ratio": "4:3",
+        "ref_aspect_ratio": "4:3",
+        "ref_dimensions": "1152x864",
+        "output_aspect_ratio": "4:3",
+        "output_dimensions": "1152x864",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/v2/clone_rabbit/r2.jpg",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/v2/clone_rabbit/r2.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": true,
+        "pad_diverged": false
+      },
+      "generated_at": "04:03:52",
+      "image": "docs/showcase/homepage_rerun_1028_regen3/v2/clone_rabbit/r3.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 429660,
+        "size_kb": 419.6,
+        "width": 1152,
+        "height": 864,
+        "aspect_ratio": "4:3",
+        "canonical_aspect_ratio": "4:3",
+        "color_entropy": 7.25
+      },
+      "raw_score": 9.18,
+      "score": 9.18,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.3/光影9.1/透视9.0/质感9.3/风格9.3/无瑕疵9.1",
+      "dims_parsed": {
+        "composition": 9.3,
+        "lighting_color": 9.1,
+        "perspective_anatomy": 9.0,
+        "texture_detail": 9.3,
+        "spec_style": 9.3,
+        "flawlessness": 9.1
+      },
+      "weighted_score": 9.18,
+      "audit_warnings": [
+        "独立视觉 API 不可用，改由本模型按 Absolute-5D 检查表评分（门槛仍 9.5）：HTTP Error 403: Forbidden",
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机"
+      ],
+      "stagnated": false,
+      "strengths": "胡萝卜斜抱与背景斜线排线回来；粉彩腮红锁住",
+      "defects": "俯角兔居中偏下；主光平光。兔眼闭合成弧可再睁成虹膜高光更贴参考媒介人物眼法；前爪咬合可再紧；recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机",
+      "next_fix": "兔眼改回带虹膜高光的温柔睁眼；前爪与胡萝卜接触阴影更咬合；斜抱与斜线背景保持",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.PastelRabbit\n- 置信度: 0.45（fast-track 资格: 否）\n- 个人口味: 光影=暖光；构图=半身 / 全身\n- 个人禁用习惯: 漏抠/黑底/毛边；赛博霓虹/霓虹紫\n- 项目私有知识卡 (Private Layer):\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n  · [tech-celshade] 赛璐珞分层: 硬边色块分层，高光形状干净，层数克制。\n粉彩速写轻盈风：按「废弃参考少女坐地侧姿：改为一只圆润白兔坐姿抱一根橙色胡萝卜，兔头略仰四分之三，胡萝卜斜抱胸前，背景疏开粉彩斜线空气，主体居中偏下。」换机位，纸纹和软光不动| 机位保持指定方向：废弃参考少女坐地侧姿：改为一只圆润白兔坐姿抱一根橙色胡萝卜，兔头略仰四分之三，胡萝卜斜抱胸前，背景疏开粉彩斜线空气，主体居中偏下。。垫图是目前分数最高的那张成图。只改这一处：胡萝卜斜抱角度更明显；背景疏开粉彩斜线排线加回；纸感锁住。没点名的地方保持垫图。",
+      "continuation": true,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.0,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "both",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "vlm_error",
+        "provider": "",
+        "model": "",
+        "error": "HTTP Error 403: Forbidden",
+        "active": true
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：俯角兔居中偏下；主光平光。兔眼闭合成弧可再睁成虹膜高光更贴参考媒介人物眼法；前爪咬合可再紧；recompose 未检出机位/布局变化证据（相对 --recomp",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "9.18"
+        },
+        {
+          "category": "narrative_camera",
+          "lesson": "本轮短板偏「narrative_camera」：俯角兔居中偏下；主光平光。兔眼闭合成弧可再睁成虹膜高光更贴参考媒介人物眼法；前爪咬合可再紧；recompose 未检出机位/布局变化证据（相对 --recomp",
+          "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+          "from_score": "9.18"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：胡萝卜斜抱与背景斜线排线回来；粉彩腮红锁住",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "9.18"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "04:03:58"
+    },
+    {
+      "round": 4,
+      "round_label": "第 4 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "4:3",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/v2/clone_rabbit/r3.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "regen3-clone-rabbit",
+        "scale": "recompose",
+        "aspect_ratio": "4:3",
+        "ref_aspect_ratio": "4:3",
+        "ref_dimensions": "1152x864",
+        "output_aspect_ratio": "4:3",
+        "output_dimensions": "1152x864",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/v2/clone_rabbit/r3.jpg",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/v2/clone_rabbit/r3.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": true,
+        "pad_diverged": false
+      },
+      "generated_at": "04:08:27",
+      "image": "assets/character/pastelrabbit/r4.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 404045,
+        "size_kb": 394.6,
+        "width": 1152,
+        "height": 864,
+        "aspect_ratio": "4:3",
+        "canonical_aspect_ratio": "4:3",
+        "color_entropy": 7.24
+      },
+      "raw_score": 9.35,
+      "score": 9.35,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.4/光影9.3/透视9.2/质感9.4/风格9.5/无瑕疵9.3",
+      "dims_parsed": {
+        "composition": 9.4,
+        "lighting_color": 9.3,
+        "perspective_anatomy": 9.2,
+        "texture_detail": 9.4,
+        "spec_style": 9.5,
+        "flawlessness": 9.3
+      },
+      "weighted_score": 9.35,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.17 低于当前档位 (recompose) 的最小跃升 +0.20。下一轮更贴近指定构图方向",
+        "独立视觉 API 不可用，改由本模型按 Absolute-5D 检查表评分（门槛仍 9.5）：HTTP Error 403: Forbidden",
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机"
+      ],
+      "stagnated": true,
+      "strengths": "睁眼虹膜高光回来；胡萝卜斜抱；粉彩斜线背景与腮红锁住",
+      "defects": "俯角兔居中偏下；主光平光。胡萝卜绿叶簇可再简半档免抢主体；recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机",
+      "next_fix": "解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁止糊边融边；俯角兔居中偏下；主光平光。胡萝卜绿叶簇可再简半档免抢主体",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.PastelRabbit\n- 置信度: 0.45（fast-track 资格: 否）\n- 个人口味: 光影=暖光；构图=半身 / 全身\n- 个人禁用习惯: 漏抠/黑底/毛边；赛博霓虹/霓虹紫\n- 项目私有知识卡 (Private Layer):\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n  · [tech-celshade] 赛璐珞分层: 硬边色块分层，高光形状干净，层数克制。\n粉彩速写轻盈风：按「废弃参考少女坐地侧姿：改为一只圆润白兔坐姿抱一根橙色胡萝卜，兔头略仰四分之三，胡萝卜斜抱胸前，背景疏开粉彩斜线空气，主体居中偏下。」换机位，纸纹和软光不动| 机位保持指定方向：废弃参考少女坐地侧姿：改为一只圆润白兔坐姿抱一根橙色胡萝卜，兔头略仰四分之三，胡萝卜斜抱胸前，背景疏开粉彩斜线空气，主体居中偏下。。垫图是目前分数最高的那张成图。只改这一处：兔眼改回带虹膜高光的温柔睁眼；前爪与胡萝卜接触阴影更咬合；斜抱与斜线背景保持。没点名的地方保持垫图。",
+      "continuation": true,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.2,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "both",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "vlm_error",
+        "provider": "",
+        "model": "",
+        "error": "HTTP Error 403: Forbidden",
+        "active": true
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_MAX_ROUNDS",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "composition",
+          "lesson": "本轮短板偏「composition」：俯角兔居中偏下；主光平光。胡萝卜绿叶簇可再简半档免抢主体；recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机",
+          "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+          "from_score": "9.35"
+        },
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：俯角兔居中偏下；主光平光。胡萝卜绿叶簇可再简半档免抢主体；recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "9.35"
+        },
+        {
+          "category": "anatomy",
+          "lesson": "本轮短板偏「anatomy」：俯角兔居中偏下；主光平光。胡萝卜绿叶簇可再简半档免抢主体；recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机",
+          "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+          "from_score": "9.35"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "04:08:31"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "/Users/yanghu/Desktop/pmem-art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-10-28 01:28:36 UTC+8"
+    },
+    "module": "character.PastelRabbit",
+    "goal": "锁参考粉彩线稿纸感与腮红空气；题材换成白兔抱胡萝卜；新构图；勿赛博霓虹。",
+    "confidence": 0.45,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "个人口味档案非空",
+      "红线可控（0 条）",
+      "挂载 2 张项目知识卡 + 0 张全局美术底层基础卡"
+    ],
+    "top_recipes": [],
+    "top_redlines": [],
+    "art_decisions": [],
+    "private_knowledge": [
+      {
+        "id": "tech-painterly",
+        "title": "厚涂笔触",
+        "body": "可见笔触方向跟随形体，暗部透气勿脏。",
+        "layer_scope": "private"
+      },
+      {
+        "id": "tech-celshade",
+        "title": "赛璐珞分层",
+        "body": "硬边色块分层，高光形状干净，层数克制。",
+        "layer_scope": "private"
+      }
+    ],
+    "shared_knowledge": [],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [
+        "暖光"
+      ],
+      "preferred_composition": [
+        "半身",
+        "全身"
+      ],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [],
+      "banned_habits": [
+        "漏抠/黑底/毛边",
+        "赛博霓虹/霓虹紫"
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.PastelRabbit\n- 置信度: 0.45（fast-track 资格: 否）\n- 个人口味: 光影=暖光；构图=半身 / 全身\n- 个人禁用习惯: 漏抠/黑底/毛边；赛博霓虹/霓虹紫\n- 项目私有知识卡 (Private Layer):\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n  · [tech-celshade] 赛璐珞分层: 硬边色块分层，高光形状干净，层数克制。",
+    "built_at": "2026-10-30 03:24:19 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：俯角坐姿兔居中偏下；主光平光空气。胡萝卜偏竖直未斜抱；前爪握持与胡萝卜体积咬合可再紧；recompose 未检出机位/布局变化证据（相对 --recompose",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.78"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：俯角坐姿兔居中偏下；主光平光空气。胡萝卜偏竖直未斜抱；前爪握持与胡萝卜体积咬合可再紧；recompose 未检出机位/布局变化证据（相对 --recompose",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "8.78"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：白兔抱胡萝卜新题材成立；粉彩纸感腮红空气锁住；无少女回声",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.78"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：俯角兔居中偏下；主光平光空气。胡萝卜斜度仍不够明显；背景斜线排线比参考略弱偏洗；recompose 未检出机位/布局变化证据（相对 --recompose-di",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "8.94"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：白兔抱胡萝卜成立；粉彩纸感腮红在；前爪抱持更紧",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.94"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：俯角兔居中偏下；主光平光。兔眼闭合成弧可再睁成虹膜高光更贴参考媒介人物眼法；前爪咬合可再紧；recompose 未检出机位/布局变化证据（相对 --recomp",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.18"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：俯角兔居中偏下；主光平光。兔眼闭合成弧可再睁成虹膜高光更贴参考媒介人物眼法；前爪咬合可再紧；recompose 未检出机位/布局变化证据（相对 --recomp",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "9.18"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：胡萝卜斜抱与背景斜线排线回来；粉彩腮红锁住",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.18"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：俯角兔居中偏下；主光平光。胡萝卜绿叶簇可再简半档免抢主体；recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "9.35"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：俯角兔居中偏下；主光平光。胡萝卜绿叶簇可再简半档免抢主体；recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.35"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：俯角兔居中偏下；主光平光。胡萝卜绿叶簇可再简半档免抢主体；recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "9.35"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 4,
+  "regression_drop": 0.5,
+  "ActionRequired": "STOP_PICK_BEST",
+  "showcase_ready": true,
+  "winner": {
+    "round": 4,
+    "round_label": "第 4 轮精修",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "4:3",
+    "reference_image_paths": [
+      "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/v2/clone_rabbit/r3.jpg"
+    ],
+    "param_validation": {
+      "valid": true,
+      "validation_passed": true,
+      "case_id": "regen3-clone-rabbit",
+      "scale": "recompose",
+      "aspect_ratio": "4:3",
+      "ref_aspect_ratio": "4:3",
+      "ref_dimensions": "1152x864",
+      "output_aspect_ratio": "4:3",
+      "output_dimensions": "1152x864",
+      "reference_image": "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/v2/clone_rabbit/r3.jpg",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/v2/clone_rabbit/r3.jpg"
+      ],
+      "inherited_default_aspect_ratio": true,
+      "inherited_default_pad_image": true,
+      "matched_ref_aspect_ratio": true,
+      "matched_ref_pad_image": true,
+      "matched_output_aspect_ratio": true,
+      "three_step_stage": "step3_judge",
+      "three_step_verified": true,
+      "warnings": [],
+      "continuation_pad": true,
+      "pad_diverged": false
+    },
+    "generated_at": "04:08:27",
+    "image": "assets/character/pastelrabbit/r4.jpg",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 404045,
+      "size_kb": 394.6,
+      "width": 1152,
+      "height": 864,
+      "aspect_ratio": "4:3",
+      "canonical_aspect_ratio": "4:3",
+      "color_entropy": 7.24
+    },
+    "raw_score": 9.35,
+    "score": 9.35,
+    "target_score_threshold": 9.5,
+    "dims": "构图9.4/光影9.3/透视9.2/质感9.4/风格9.5/无瑕疵9.3",
+    "dims_parsed": {
+      "composition": 9.4,
+      "lighting_color": 9.3,
+      "perspective_anatomy": 9.2,
+      "texture_detail": 9.4,
+      "spec_style": 9.5,
+      "flawlessness": 9.3
+    },
+    "weighted_score": 9.35,
+    "audit_warnings": [
+      "收敛停滞预警：本轮净增 +0.17 低于当前档位 (recompose) 的最小跃升 +0.20。下一轮更贴近指定构图方向",
+      "独立视觉 API 不可用，改由本模型按 Absolute-5D 检查表评分（门槛仍 9.5）：HTTP Error 403: Forbidden",
+      "Agent Absolute-5D 已采纳（门槛 9.5）",
+      "recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机"
+    ],
+    "stagnated": true,
+    "strengths": "睁眼虹膜高光回来；胡萝卜斜抱；粉彩斜线背景与腮红锁住",
+    "defects": "俯角兔居中偏下；主光平光。胡萝卜绿叶簇可再简半档免抢主体；recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机",
+    "next_fix": "解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁止糊边融边；俯角兔居中偏下；主光平光。胡萝卜绿叶簇可再简半档免抢主体",
+    "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.PastelRabbit\n- 置信度: 0.45（fast-track 资格: 否）\n- 个人口味: 光影=暖光；构图=半身 / 全身\n- 个人禁用习惯: 漏抠/黑底/毛边；赛博霓虹/霓虹紫\n- 项目私有知识卡 (Private Layer):\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n  · [tech-celshade] 赛璐珞分层: 硬边色块分层，高光形状干净，层数克制。\n粉彩速写轻盈风：按「废弃参考少女坐地侧姿：改为一只圆润白兔坐姿抱一根橙色胡萝卜，兔头略仰四分之三，胡萝卜斜抱胸前，背景疏开粉彩斜线空气，主体居中偏下。」换机位，纸纹和软光不动| 机位保持指定方向：废弃参考少女坐地侧姿：改为一只圆润白兔坐姿抱一根橙色胡萝卜，兔头略仰四分之三，胡萝卜斜抱胸前，背景疏开粉彩斜线空气，主体居中偏下。。垫图是目前分数最高的那张成图。只改这一处：兔眼改回带虹膜高光的温柔睁眼；前爪与胡萝卜接触阴影更咬合；斜抱与斜线背景保持。没点名的地方保持垫图。",
+    "continuation": true,
+    "passed": false,
+    "gate_blocked": true,
+    "image_gate_blocked": false,
+    "anatomy_score": 9.2,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "both",
+    "judge_source": "agent_absolute_5d",
+    "remote_vlm": {
+      "source": "vlm_error",
+      "provider": "",
+      "model": "",
+      "error": "HTTP Error 403: Forbidden",
+      "active": true
+    },
+    "should_continue_next_round": false,
+    "decision": "STOP_MAX_ROUNDS",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "composition",
+        "lesson": "本轮短板偏「composition」：俯角兔居中偏下；主光平光。胡萝卜绿叶簇可再简半档免抢主体；recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机",
+        "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+        "from_score": "9.35"
+      },
+      {
+        "category": "lighting",
+        "lesson": "本轮短板偏「lighting」：俯角兔居中偏下；主光平光。胡萝卜绿叶簇可再简半档免抢主体；recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机",
+        "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+        "from_score": "9.35"
+      },
+      {
+        "category": "anatomy",
+        "lesson": "本轮短板偏「anatomy」：俯角兔居中偏下；主光平光。胡萝卜绿叶簇可再简半档免抢主体；recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机",
+        "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+        "from_score": "9.35"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "04:08:31"
+  },
+  "rounds_to_converge": 4,
+  "convergence_badge": "共 4 轮未达阈值，采用最高分",
+  "process_board": ".memory-art/converge/boards/regen3-clone-rabbit/index.html"
+}

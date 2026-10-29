@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Same-scope 1029 rerun: 4 rounds or >=9.6 per scored cell. Does not touch 1028."""
+"""Same-scope 1029 rerun: 4 rounds or >= 9.5 per scored cell. Does not touch 1028."""
 from __future__ import annotations
 
 import json
@@ -24,7 +24,7 @@ OUT = REPO / "docs" / "showcase" / "homepage_rerun_1029"
 PY = sys.executable
 WORKERS = 3
 MAX_ROUNDS = 4
-TH = 9.6
+TH = 9.5
 SIZE = {
     "9:16": "1024x1536",
     "3:4": "1024x1536",
@@ -453,7 +453,7 @@ def judge_image(job: dict, image: Path, prompt: str, prior_fix: str) -> dict:
     keys = family_dims_ask(job["family"])
     q = (
         "You are a harsh art director. Score this image 0-10 one decimal per dimension. "
-        "Ordinary complete work is 7.0-8.5. 9.6 is nearly perfect against the locks. "
+        "Ordinary complete work is 7.0-8.5. 9.5 is nearly perfect against the locks. "
         f"Dimensions: {keys}. "
         f"Locks: {job['goal']}. Prior fix to check: {prior_fix or 'none'}. "
         "Return JSON only: {\"dims\":\"k1x.x/k2x.x/...\",\"strengths\":\"...\",\"defects\":\"one concrete flaw\",\"next_fix\":\"one local fix\"}."

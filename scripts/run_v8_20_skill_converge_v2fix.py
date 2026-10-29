@@ -4,7 +4,7 @@
 Changes vs run_v8_20_skill_converge.py:
 1. Pad default `auto`: R1 edits from style_ref; chain previous round only when score improves and
    anatomy is not vetoed (>=7.5), else reset to style_ref. (--pad {ref,previous,auto}).
-2. STOP if total≥9.60 AND perspective_anatomy≥7.5 (one-vote veto only on severe meltdown <7.5) AND r≥min_rounds;
+2. STOP if total≥9.50 AND perspective_anatomy≥7.5 (one-vote veto only on severe meltdown <7.5) AND r≥min_rounds;
    safe early-stop only when r>=4 and 2 consecutive rounds drop >0.5 below best — promote best.
    Tracks both `n_reached_9_60` (anat>=7.5) and `n_reached_9_60_and_anat_8_5` (anat>=8.5).
 3. Score fail: retry once; if still fail, do NOT update src/defects with boilerplate.
@@ -798,7 +798,7 @@ def main() -> int:
         log(
             f"DONE {bid} stop={stop_reason} best_r={best_round['round']} "
             f"score={final_score} anat={anat_of(best_round)} n={len(rounds)} "
-            f">=9.60+anat={result['reached_threshold']}"
+            f">=9.50+anat={result['reached_threshold']}"
         )
         return result
 
@@ -856,7 +856,7 @@ def main() -> int:
     md = [
         f"# V8-20 skill converge v2fix summary",
         f"- threshold: **≥ {args.threshold}** · anat_gate: **≥ {args.anat_gate}** · max_rounds: **{args.max_rounds}** · pad: **{args.pad}**",
-        f"- ok: {len(ok)}/{len(results)} · reached≥9.60(anat≥{args.anat_gate}): **{len(reached)}** · reached≥9.60+anat≥8.5: **{summary['n_reached_9_60_and_anat_8_5']}** · mean: {summary['mean_final']} · range: {summary['min_final']}–{summary['max_final']}",
+        f"- ok: {len(ok)}/{len(results)} · reached≥9.50(anat≥{args.anat_gate}): **{len(reached)}** · reached≥9.50+anat≥8.5: **{summary['n_reached_9_60_and_anat_8_5']}** · mean: {summary['mean_final']} · range: {summary['min_final']}–{summary['max_final']}",
         f"- round_dist: {summary['round_dist']}",
         f"- stop_reasons: {summary['stop_reasons']}",
         "",

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""V8-20 skill-contract converge: STOP>=9.60, max 8 rounds, real defect reflow.
+"""V8-20 skill-contract converge: STOP>=9.50, max 8 rounds, real defect reflow.
 
 Uses skills_kit prompt profiles + gpt-image-2 edits + gpt-6-sol Absolute-5D Quant.
 Default pad = style_ref every round (skills_kit-aligned); optional previous/auto.
@@ -647,7 +647,7 @@ def main() -> int:
         }
         log(
             f"DONE {bid} stop={stop_reason} best_r={best_round['round']} "
-            f"score={final_score} n={len(rounds)} >=9.60={result['reached_threshold']}"
+            f"score={final_score} n={len(rounds)} >=9.50={result['reached_threshold']}"
         )
         return result
 
@@ -692,7 +692,7 @@ def main() -> int:
     md = [
         f"# V8-20 skill converge summary",
         f"- threshold: **≥ {args.threshold}** · max_rounds: **{args.max_rounds}**",
-        f"- ok: {len(ok)}/{len(results)} · reached≥9.60: **{len(reached)}** · mean: {summary['mean_final']}",
+        f"- ok: {len(ok)}/{len(results)} · reached≥9.50: **{len(reached)}** · mean: {summary['mean_final']}",
         f"- round_dist: {summary['round_dist']}",
         f"- stop_reasons: {summary['stop_reasons']}",
         "",

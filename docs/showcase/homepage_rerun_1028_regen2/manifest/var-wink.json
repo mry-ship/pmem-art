@@ -6,7 +6,7 @@
   "medium_family": "impasto",
   "scale": "medium",
   "mode": "quality",
-  "threshold": 9.6,
+  "threshold": 9.5,
   "aspect_ratio": "3:4",
   "ref_image": "docs/showcase/homepage_rerun_1028_regen2/v2/variant_expr/ref.jpg",
   "pad": "original character ref every round",

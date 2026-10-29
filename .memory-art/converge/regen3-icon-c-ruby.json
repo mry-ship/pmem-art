@@ -1,0 +1,285 @@
+{
+  "session_id": "regen3-icon-c-ruby",
+  "started_at": "2026-10-30 03:55:39 UTC+8",
+  "goal": "Mode C 透明底道具格 ruby：厚剪影棚拍暗角无字，同套画风",
+  "module": "icon.PotionSet",
+  "mode": "text_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "medium",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "medium",
+    "label": "中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.5)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 1,
+    "target_score_threshold": 9.5,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.15,
+      "perspective_anatomy": 0.15,
+      "texture_detail": 0.15,
+      "spec_style": 0.15,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "viewpoint_frame",
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图，只在提示词上补还没过的那一处（提示词改动仍 ≤40%）",
+    "max_prompt_delta_ratio": 0.4,
+    "allow_recompose": false,
+    "allow_viewpoint_change": false,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "viewpoint_angle (不改机位与镜头视角)",
+      "element_count (不增删主体元素清单)",
+      "no_full_recompose (不做整体 recompose / 换景别故事)",
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)"
+    ],
+    "min_round_leap": 0.15,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光",
+    "medium_family": "generic",
+    "best_direction_hint": "最优方向：光影·空气·介质；可小幅姿态/局部布局",
+    "goal": "Mode C 透明底道具格 ruby：厚剪影棚拍暗角无字，同套画风",
+    "module": "icon.PotionSet",
+    "ref_image": "",
+    "ref_analysis": ""
+  },
+  "medium_family": "generic",
+  "contract": "",
+  "target_score_threshold": 9.5,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "",
+  "ref_analysis": "",
+  "default_aspect_ratio": "1:1",
+  "default_reference_image_paths": [],
+  "aspect_ratio": "1:1",
+  "reference_image_paths": [],
+  "ref_physical_traits": {},
+  "param_validation": {},
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.5,
+  "accept_threshold": 9.5,
+  "max_rounds": 4,
+  "ready_to_finish": false,
+  "status": "continue",
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "1:1",
+      "reference_image_paths": [],
+      "param_validation": {
+        "three_step_verified": true,
+        "three_step_stage": "step3_judge",
+        "validation_passed": true
+      },
+      "generated_at": "03:55:40",
+      "image": "docs/showcase/homepage_rerun_1028_regen3/v2/icon_c_set/ruby.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 649625,
+        "size_kb": 634.4,
+        "width": 1024,
+        "height": 1024,
+        "aspect_ratio": "1:1",
+        "canonical_aspect_ratio": "1:1",
+        "color_entropy": 7.98
+      },
+      "raw_score": 9.11,
+      "score": 9.11,
+      "target_score_threshold": 9.5,
+      "dims": "剪影识别9.30/描边色板9.00/棚拍光9.05/透明底9.10/无字9.55/无瑕疵9.00",
+      "dims_parsed": {
+        "silhouette": 9.3,
+        "stroke_palette": 9.0,
+        "studio_light": 9.05,
+        "alpha": 9.1,
+        "no_text": 9.55,
+        "flawlessness": 9.0
+      },
+      "weighted_score": 9.11,
+      "audit_warnings": [
+        "独立视觉 API 不可用，改由本模型按 Absolute-5D 检查表评分（门槛仍 9.5）：<urlopen error _ssl.c:1015: The handshake operation timed out>",
+        "Agent Absolute-5D 已采纳（门槛 9.5）"
+      ],
+      "stagnated": false,
+      "strengths": "切面宝石剪影成立",
+      "defects": "棚拍光略平",
+      "next_fix": "棚拍光略平",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: icon.PotionSet\n- 置信度: 0.60（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261030010730751RECIPE] [收敛胜出 9.27分] 游戏道具格治疗药：厚剪影、棚拍、物件暗角、无字、真透明底，对齐 style-spec，正方形 1:1 — 64px 仍是药瓶，瓶腹下缘更暗，投影收成深棕，三色底上没有\n- 必须避开红线:\n  · [CHAT20261030010730807REDLINE] [收敛踩坑红线] 游戏道具格治疗药：厚剪影、棚拍、物件暗角、无字、真透明底，对：避免「瓶缘暗角弱，玻璃受光偏平；轮廓外还有少量品红残边；接触投影偏淡。」\n- 审美拍板:\n  · 图标集 style-spec：Mode C 厚剪影，256 画布线宽 10px、圆角 16px、暖黑描边 #1C140E、接触投影、真透明底、无字\n- 个人口味: 光影=暖光 / 侧逆光 / rim light；构图=全身 / 半身 / 居中/对称构图；线宽=粗线/重描边\n- 个人禁用习惯: 漏抠/黑底/毛边；廉价塑料感/油腻高光；脏暗阴影/脏色；赛博霓虹/霓虹紫\n- 项目私有知识卡 (Private Layer):\n  · [tech-9slice] 九宫格切图: 四角固定、中心可拉伸；中心禁止复杂装饰。\n  · [icon-svg-spec] SVG 图标规格: 统一 viewBox / stroke / currentColor，视觉重量一致。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光| Mode C item ruby thick silhouette studio light transparent alpha no text same set style| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": null,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "ui",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "vlm_error",
+        "provider": "",
+        "model": "",
+        "error": "<urlopen error _ssl.c:1015: The handshake operation timed out>",
+        "active": true
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：棚拍光略平",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "9.11"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：切面宝石剪影成立",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "9.11"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "03:58:49"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "/Users/yanghu/Desktop/pmem-art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-10-28 01:28:36 UTC+8"
+    },
+    "module": "icon.PotionSet",
+    "goal": "Mode C 透明底道具格 ruby：厚剪影棚拍暗角无字，同套画风",
+    "confidence": 0.6,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "只有未达标 provisional recipe，不计入定稿置信",
+      "命中 1 条审美拍板",
+      "个人口味档案非空",
+      "红线可控（1 条）",
+      "挂载 2 张项目知识卡 + 0 张全局美术底层基础卡"
+    ],
+    "top_recipes": [
+      {
+        "id": "CHAT20261030010730751RECIPE",
+        "summary": "[收敛胜出 9.27分] 游戏道具格治疗药：厚剪影、棚拍、物件暗角、无字、真透明底，对齐 style-spec，正方形 1:1 — 64px 仍是药瓶，瓶腹下缘更暗，投影收成深棕，三色底上没有",
+        "module": "icon.PotionSet"
+      }
+    ],
+    "top_redlines": [
+      {
+        "id": "CHAT20261030010730807REDLINE",
+        "summary": "[收敛踩坑红线] 游戏道具格治疗药：厚剪影、棚拍、物件暗角、无字、真透明底，对：避免「瓶缘暗角弱，玻璃受光偏平；轮廓外还有少量品红残边；接触投影偏淡。」",
+        "module": "icon.PotionSet"
+      }
+    ],
+    "art_decisions": [
+      {
+        "id": "CHAT20261030010738748DECISION",
+        "summary": "图标集 style-spec：Mode C 厚剪影，256 画布线宽 10px、圆角 16px、暖黑描边 #1C140E、接触投影、真透明底、无字",
+        "layer_scope": "private"
+      }
+    ],
+    "private_knowledge": [
+      {
+        "id": "tech-9slice",
+        "title": "九宫格切图",
+        "body": "四角固定、中心可拉伸；中心禁止复杂装饰。",
+        "layer_scope": "private"
+      },
+      {
+        "id": "icon-svg-spec",
+        "title": "SVG 图标规格",
+        "body": "统一 viewBox / stroke / currentColor，视觉重量一致。",
+        "layer_scope": "private"
+      }
+    ],
+    "shared_knowledge": [],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [
+        "暖光",
+        "侧逆光 / rim light"
+      ],
+      "preferred_composition": [
+        "全身",
+        "半身",
+        "居中/对称构图"
+      ],
+      "preferred_line_weight": [
+        "粗线/重描边"
+      ],
+      "preferred_color_temperature": [],
+      "banned_habits": [
+        "漏抠/黑底/毛边",
+        "廉价塑料感/油腻高光",
+        "脏暗阴影/脏色",
+        "赛博霓虹/霓虹紫"
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: icon.PotionSet\n- 置信度: 0.60（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261030010730751RECIPE] [收敛胜出 9.27分] 游戏道具格治疗药：厚剪影、棚拍、物件暗角、无字、真透明底，对齐 style-spec，正方形 1:1 — 64px 仍是药瓶，瓶腹下缘更暗，投影收成深棕，三色底上没有\n- 必须避开红线:\n  · [CHAT20261030010730807REDLINE] [收敛踩坑红线] 游戏道具格治疗药：厚剪影、棚拍、物件暗角、无字、真透明底，对：避免「瓶缘暗角弱，玻璃受光偏平；轮廓外还有少量品红残边；接触投影偏淡。」\n- 审美拍板:\n  · 图标集 style-spec：Mode C 厚剪影，256 画布线宽 10px、圆角 16px、暖黑描边 #1C140E、接触投影、真透明底、无字\n- 个人口味: 光影=暖光 / 侧逆光 / rim light；构图=全身 / 半身 / 居中/对称构图；线宽=粗线/重描边\n- 个人禁用习惯: 漏抠/黑底/毛边；廉价塑料感/油腻高光；脏暗阴影/脏色；赛博霓虹/霓虹紫\n- 项目私有知识卡 (Private Layer):\n  · [tech-9slice] 九宫格切图: 四角固定、中心可拉伸；中心禁止复杂装饰。\n  · [icon-svg-spec] SVG 图标规格: 统一 viewBox / stroke / currentColor，视觉重量一致。",
+    "built_at": "2026-10-30 03:55:39 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：棚拍光略平",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.11"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：切面宝石剪影成立",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.11"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 4,
+  "regression_drop": 0.5,
+  "ActionRequired": "GENERATE_ROUND_2",
+  "showcase_ready": false
+}

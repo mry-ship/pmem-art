@@ -27,14 +27,17 @@ categories:
     icon: 🦴
     short: 骨骼与动画
   misc:
-    label: 未归类 / 待提升 (Misc)
+    label: 其他 / 散图（仅工作台可见，不写正式 recipe）
     icon: 📦
-    short: 待归类资产
+    short: 其他
   icon:
     label: icon
     icon: 📦
   item:
     label: item
+    icon: 📦
+  prop:
+    label: prop
     icon: 📦
 synonyms:
   -
@@ -698,3 +701,176 @@ modules:
       max_size_kb: 1024
     parent: brand.WorldStyle
     inherits: brand.WorldStyle
+  ui.MainMenu:
+    title: 界面与九宫格·MainMenu (Cyber)
+    category: ui
+    status: active
+    description: "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/p · 自动归类至 界面与九宫格 (ui.MainMenu) · 置信度 0.897"
+    paths:
+      - "assets/ui/mainmenu/**"
+    aliases:
+      - MainMenu
+    entities: []
+    palette: []
+    specs:
+      resolution: 720x1280
+      allowed_resolutions:
+        - 720x1280
+      alpha_required: true
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512
+    parent: ui.HUD
+    inherits: ui.HUD
+  prop.HealPotionMerge:
+    title: prop·HealPotionMerge (Cyber)
+    category: prop
+    status: active
+    description: "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/p · 自动归类至 prop (prop.HealPotionMerge) · 置信度 0.92"
+    paths:
+      - "assets/prop/healpotionmerge/**"
+    aliases:
+      - HealPotionMerge
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      alpha_required: false
+      max_size_kb: 2048
+    parent: brand.WorldStyle
+    inherits: brand.WorldStyle
+  prop.PeachCandyMerge:
+    title: prop·PeachCandyMerge (Cyber)
+    category: prop
+    status: active
+    description: "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/p · 自动归类至 prop (prop.PeachCandyMerge) · 置信度 0.92"
+    paths:
+      - "assets/prop/peachcandymerge/**"
+    aliases:
+      - PeachCandyMerge
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      alpha_required: false
+      max_size_kb: 2048
+    parent: brand.WorldStyle
+    inherits: brand.WorldStyle
+  character.PastelBoy:
+    title: 角色与立绘·PastelBoy (Cyber)
+    category: character
+    status: active
+    description: "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/p · 自动归类至 角色与立绘 (character.PastelBoy) · 置信度 0.92"
+    paths:
+      - "assets/character/pastelboy/**"
+    aliases:
+      - PastelBoy
+    entities: []
+    palette: []
+    specs:
+      resolution: 1152x864
+      allowed_resolutions:
+        - 1152x864
+      alpha_required: false
+      safe_margin_px: 16
+      max_size_kb: 1024
+    parent: brand.WorldStyle
+    inherits: brand.WorldStyle
+  character.PastelRabbit:
+    title: 角色与立绘·PastelRabbit (Cyber)
+    category: character
+    status: active
+    description: "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/p · 自动归类至 角色与立绘 (character.PastelRabbit) · 置信度 0.92"
+    paths:
+      - "assets/character/pastelrabbit/**"
+    aliases:
+      - PastelRabbit
+    entities: []
+    palette: []
+    specs:
+      resolution: 1152x864
+      allowed_resolutions:
+        - 1152x864
+      alpha_required: false
+      safe_margin_px: 16
+      max_size_kb: 1024
+    parent: brand.WorldStyle
+    inherits: brand.WorldStyle
+  character.Astra:
+    title: 角色与立绘·Astra
+    category: character
+    status: active
+    description: 自动归类至 角色与立绘 (character.Astra) · 置信度 0.9
+    paths:
+      - "assets/character/astra/**"
+    aliases:
+      - Astra
+    entities: []
+    palette: []
+    specs:
+      resolution: 768x768
+      allowed_resolutions:
+        - 768x768
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  character.Astra.Chibi:
+    title: 角色与立绘·Astra (Chibi)
+    category: character
+    status: active
+    description: 自动归类至 角色与立绘 (character.Astra.Chibi) · 置信度 0.92
+    paths:
+      - "assets/character/astra/chibi/**"
+    aliases:
+      - Astra
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      allowed_resolutions:
+        - 1024x1024
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+    parent: character.Astra
+    inherits: character.Astra
+  character.Clone:
+    title: 角色与立绘·Clone
+    category: character
+    status: active
+    description: 自动归类至 角色与立绘 (character.Clone) · 置信度 0.9
+    paths:
+      - "assets/character/clone/**"
+    aliases:
+      - Clone
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      allowed_resolutions:
+        - 1024x1024
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  character.Skill:
+    title: 角色与立绘·Skill
+    category: character
+    status: active
+    description: 自动归类至 角色与立绘 (character.Skill) · 置信度 0.9
+    paths:
+      - "assets/character/skill/**"
+    aliases:
+      - Skill
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      allowed_resolutions:
+        - 1024x1024
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024

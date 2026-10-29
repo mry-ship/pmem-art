@@ -23,7 +23,7 @@ class TestConvergeLoop(unittest.TestCase):
         td = Path(tempfile.mkdtemp())
         self._write(td, "cell", {
             "status": "generated_pending_judge",
-            "accept_threshold": 9.6,
+            "accept_threshold": 9.5,
             "max_rounds": 4,
             "rounds": [{"round": 1, "image": "r1.jpg", "judged": False}],
         })
@@ -35,7 +35,7 @@ class TestConvergeLoop(unittest.TestCase):
         td = Path(tempfile.mkdtemp())
         self._write(td, "cell", {
             "status": "continue",
-            "accept_threshold": 9.6,
+            "accept_threshold": 9.5,
             "max_rounds": 4,
             "rounds": [{"round": 1, "image": "r1.jpg", "judged": True, "score": 8.3}],
         })
@@ -47,7 +47,7 @@ class TestConvergeLoop(unittest.TestCase):
         td = Path(tempfile.mkdtemp())
         self._write(td, "cell", {
             "status": "max_rounds_reached",
-            "accept_threshold": 9.6,
+            "accept_threshold": 9.5,
             "max_rounds": 4,
             "rounds": [
                 {"round": i, "image": f"r{i}.jpg", "judged": True, "score": 8.5}

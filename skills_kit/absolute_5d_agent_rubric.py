@@ -2,7 +2,7 @@
 
 The official score is this look-at-the-image pass. Pixel offline scores are not used.
 Without an API key, the Agent that can see the image scores against this rubric.
-Converge threshold stays DEFAULT_THRESHOLD (9.6): hit STOP or run max_rounds → best-of-N.
+Converge threshold stays DEFAULT_THRESHOLD (9.5): hit STOP or run max_rounds → best-of-N.
 """
 from __future__ import annotations
 
@@ -20,6 +20,8 @@ def agent_absolute_5d_judge_prompt(
     target_threshold: float = DEFAULT_THRESHOLD,
     round_num: int = 1,
     max_rounds: int = 4,
+    scale: str = "",
+    ref_analysis: str = "",
 ) -> str:
     """Prompt the current vision-capable model to score one plate Absolute-5D."""
     contract = (
@@ -27,6 +29,20 @@ def agent_absolute_5d_judge_prompt(
         if goal and goal.strip()
         else ""
     )
+    scale_l = (scale or "").strip().lower()
+    pose_gate = ""
+    if scale_l == "low":
+        pose_gate = (
+            "low 档：对照参考图像素核对手脚落点（膝上/小腿/身侧纸面/托腮等）。"
+            "落点相对参考变了，必须在 defects 写清「姿态锁不稳」或「偏离参考+手/腿/膝」，"
+            "构图与透视不得虚高到 9.0+；禁止拿错误解构叙事（如把搭膝写成撑地）当锁姿真值。\n"
+        )
+    elif scale_l in ("medium", "high", "recompose"):
+        pose_gate = f"{scale_l} 档：姿态可动时仍须写清相对参考多出来的姿态/机位变化，禁空话。\n"
+    ref_hint = ""
+    ra = (ref_analysis or "").strip()
+    if ra:
+        ref_hint = f"参考解构摘要（只作对照，像素优先）：{ra[:280]}\n"
     return (
         f"你是独立主美裁判。先只看附图，不要看生成提示词给自己加分。\n"
         f"{_BANDS}\n"
@@ -38,7 +54,9 @@ def agent_absolute_5d_judge_prompt(
         "透视解剖 perspective_anatomy / 质感 texture_detail / 风格规格 spec_style / "
         "无瑕疵 flawlessness。无瑕疵与另外五维一样盲评，不另写扣分清单。看不清就保守给分并写进缺陷。\n"
         f"{contract}"
-        f"停机门槛 ≥{float(target_threshold):.2f} 是停机线，不是「合格=9.6」。"
+        f"{ref_hint}"
+        f"{pose_gate}"
+        f"停机门槛 ≥{float(target_threshold):.2f} 是停机线，不是「合格=9.5」。"
         f"本轮 {int(round_num)}/{int(max_rounds)}；满轮取最高分（best-of-N）。\n"
         "必须输出：\n"
         "1) dims 一行：`构图x.x/光影x.x/透视x.x/质感x.x/风格x.x/无瑕疵x.x`\n"

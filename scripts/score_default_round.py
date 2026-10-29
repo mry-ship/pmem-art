@@ -97,7 +97,7 @@ def esc(text: str) -> str:
 
 
 def tone(score: float) -> str:
-    if score >= 9.6:
+    if score >= 9.5:
         return "hit"
     if score >= 8.5:
         return "mid"
@@ -138,7 +138,7 @@ def render(scores: dict) -> None:
                 f'<p class="reason">{reason}</p></figure>'
             )
         sections.append(f"<section><h2>{CASE_CN[slug]}</h2><div class=\"row\">{''.join(cards)}</div></section>")
-    hit = sum(1 for t in totals if t >= 9.6)
+    hit = sum(1 for t in totals if t >= 9.5)
     mean = round(sum(totals) / len(totals), 2) if totals else 0
     model = next((v.get("model") for v in scores.values() if v.get("model")), "gpt")
     html = f"""<!DOCTYPE html>
@@ -174,7 +174,7 @@ def render(scores: dict) -> None:
 <body>
 <header>
   <h1>案例 01–04 · 默认出图 · GPT 盲评</h1>
-  <p class="note">图上左上角括号里的数字是 {esc(model)} 盲评。图下第一行是我看图给的总分，以及按档位权重算出的 Absolute-5D（构图/光影/透视/质感/风格）。新图都是第 1 轮，没有第二轮。盲评 {hit}/{len(totals)} 张 ≥9.60，均分 {mean:.2f}。</p>
+  <p class="note">图上左上角括号里的数字是 {esc(model)} 盲评。图下第一行是我看图给的总分，以及按档位权重算出的 Absolute-5D（构图/光影/透视/质感/风格）。新图都是第 1 轮，没有第二轮。盲评 {hit}/{len(totals)} 张 ≥9.50，均分 {mean:.2f}。</p>
 </header>
 {''.join(sections)}
 </body>

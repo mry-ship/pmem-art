@@ -1,0 +1,124 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-10-30 03:33:06 UTC+8",
+  "session_id": "regen3-c03-low",
+  "goal": "窗边逆光少女肖像精修——加强发丝透光、皮肤次表面散射、窗框几何透视与尘埃光斑体积；暖金日光；锁身份与机位；low只修局部瑕疵",
+  "module": "character.SunlitGirl",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 4,
+  "winner_score": 9.45,
+  "winner_image": "assets/character/sunlitgirl/r4.jpg",
+  "winner_passed": false,
+  "outcome": "⚠️ **共执行 4 轮审图（目标阈值 `9.50` 分），未达标，已挑选全阶段最高分**（胜出：第 4 轮 `9.45 / 10.0` 分）",
+  "what_fixed": [
+    "只加头顶与左鬓一两缕暖金透光细发丝；收硬右耳耳机垫与颊侧交界线；邻区脸型口鼻与机位全锁",
+    "只收干净右下两片雏菊瓣外轮廓；略硬右侧窗框竖棱；邻区发丝耳机与脸全锁",
+    "只收硬鼻梁左侧一处斑驳影边缘；邻区眼睛口鼻耳机机位全锁",
+    "已达标"
+  ],
+  "what_still_weak": "空气尘埃光斑仍略稀半档，体积感未完全顶满；prompt 改动 40% 超过档位上限 20%",
+  "strengths": "鼻梁左侧斑驳影边缘更利；正面窗边胸像与白猫发夹黑耳机身份全锁；暖金发丝透光可读",
+  "taste_deltas": {
+    "from_strengths": [
+      "鼻梁左侧斑驳影边缘更利；正面窗边胸像与白猫发夹黑耳机身份全锁；暖金发丝透光可读"
+    ],
+    "from_defects": [
+      "右下前景雏菊瓣缘仍有轻微毛刺锯齿；窗框右侧竖棱几何略软、灭点不够干净；左颊斑驳投影与肤色交界略糊半档；prompt 改动 42% 超过档位上限 20%",
+      "鼻梁左侧斑驳叶影与肤色交界仍略软半档；空气中尘埃光斑仍偏稀、体积感不足；prompt 改动 42% 超过档位上限 20%",
+      "空气尘埃光斑仍略稀半档，体积感未完全顶满；prompt 改动 40% 超过档位上限 20%"
+    ]
+  },
+  "warm_start_confidence": 0.9,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 8.88,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 9.07,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 9.42,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 9.45,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：头顶与鬓角透光发丝仍偏少、丝状边缘不够亮；右耳侧耳机垫与颊交界略软糊；空气中尘埃光斑体积偏薄几乎看不清",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "8.88"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：头顶与鬓角透光发丝仍偏少、丝状边缘不够亮；右耳侧耳机垫与颊交界略软糊；空气中尘埃光斑体积偏薄几乎看不清",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "8.88"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：正面窗边胸像机位与身份锚点（白猫发夹/黑耳机/浅蓝瞳）锁住；暖金逆光与白T斑驳投影可读",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.88"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：右下前景雏菊瓣缘仍有轻微毛刺锯齿；窗框右侧竖棱几何略软、灭点不够干净；左颊斑驳投影与肤色交界略糊半档；prompt 改动 42% 超过档位上限 20%",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.07"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：头顶与鬓角已见暖金透光细发丝；窗边正面胸像与白猫发夹黑耳机身份仍锁住",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.07"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：鼻梁左侧斑驳叶影与肤色交界仍略软半档；空气中尘埃光斑仍偏稀、体积感不足；prompt 改动 42% 超过档位上限 20%",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "9.42"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：鼻梁左侧斑驳叶影与肤色交界仍略软半档；空气中尘埃光斑仍偏稀、体积感不足；prompt 改动 42% 超过档位上限 20%",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "9.42"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：右下雏菊瓣缘更干净；正面窗边机位与身份锚全锁；暖金发丝透光可读",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.42"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：空气尘埃光斑仍略稀半档，体积感未完全顶满；prompt 改动 40% 超过档位上限 20%",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.45"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：鼻梁左侧斑驳影边缘更利；正面窗边胸像与白猫发夹黑耳机身份全锁；暖金发丝透光可读",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.45"
+    }
+  ]
+}

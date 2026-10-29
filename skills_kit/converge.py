@@ -1090,7 +1090,7 @@ def cmd_converge(
             f"{stub_line}"
             f"   · 置顶风格指令 Prompt: {composed_prompt}\n"
             f"   · 当前未执行任何自评或 VLM 裁判；请先看图再打六维，不要从 9.3 起跳：\n"
-            f"{agent_absolute_5d_judge_prompt(round_num=r_no, max_rounds=mr)}\n"
+            f"{agent_absolute_5d_judge_prompt(round_num=r_no, max_rounds=mr, scale=str(sess.get('scale') or ''), ref_analysis=str(sess.get('ref_analysis') or ''))}\n"
             f"   · 然后：`python3 pmem_art.py converge judge --id {session_id} --round {r_no} --image {image} --dims ...`"
         )
         return 0
@@ -1556,11 +1556,21 @@ def cmd_converge(
             badge_text = f"经过 {len([r for r in rounds if _score_of(r) >= 0])} 轮达标定稿"
         else:
             winner = max(pool, key=lambda x: (_score_of(x), x.get("round") or 0))
-            outcome_str = (
-                f"⚠️ **共执行 {len(judged_for_finish)} 轮审图（目标阈值 `{accept_th:.2f}` 分），未达标，已挑选全阶段最高分**"
-                f"（胜出：第 {winner['round']} 轮 `{_score_of(winner):.2f} / 10.0` 分）"
-            )
-            badge_text = f"共 {len(judged_for_finish)} 轮未达阈值，采用最高分"
+            preview_only = action != "finish"
+            under_max = n_judged < mr
+            if preview_only and under_max:
+                outcome_str = (
+                    f"⚠️ **预览：已审 {n_judged}/{mr} 轮，最高 "
+                    f"`{_score_of(winner):.2f}` < `{accept_th:.2f}`，还不能当终稿**"
+                    f"（暂领先：第 {winner['round']} 轮）。未满 {mr} 轮禁止 finish，继续 generate / judge。"
+                )
+                badge_text = f"预览 {n_judged}/{mr} 轮未达阈值，须继续"
+            else:
+                outcome_str = (
+                    f"⚠️ **共执行 {len(judged_for_finish)} 轮审图（目标阈值 `{accept_th:.2f}` 分），未达标，已挑选全阶段最高分**"
+                    f"（胜出：第 {winner['round']} 轮 `{_score_of(winner):.2f} / 10.0` 分）"
+                )
+                badge_text = f"共 {len(judged_for_finish)} 轮未达阈值，采用最高分"
 
         win_score = _score_of(winner)
         sess["showcase_ready"] = can_accept_winner(
@@ -1735,13 +1745,18 @@ def cmd_converge(
                     pass
                 return dest_rel
 
+            win_img_orig = str(winner.get("image") or "")
             win_img = _ensure_conv_asset(
-                winner.get("image", ""),
+                win_img_orig,
                 mod,
                 str(winner.get("prompt") or sess.get("goal") or ""),
             )
             if win_img:
-                winner["image"] = win_img
+                # 展陈目录里的成图路径必须保留；assets 副本只进 library，不覆盖 winner.image
+                winner["asset_image"] = win_img
+                keep_showcase = win_img_orig.replace("\\", "/").startswith("docs/showcase/")
+                if not keep_showcase:
+                    winner["image"] = win_img
 
             settle_word = "达标" if passing_rounds else "未达阈值，采用最高分"
             win_summary = f"[收敛胜出 {winner['score']:.2f}分] {sess.get('goal', '')[:50]} — {winner.get('strengths', '')[:30]}"

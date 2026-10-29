@@ -1,0 +1,893 @@
+{
+  "session_id": "regen3-c02-high-fix",
+  "started_at": "2026-10-30 04:41:00 UTC+8",
+  "goal": "粉彩蜡笔纸感少女侧坐望右上，黑波波头红帽衫蓝短裤黑袜三杠白鞋；身份与媒介锁粉彩少女；姿态基准双手搭膝侧坐；high 可戏剧化光影叙事但勿漂成撑地后仰默认姿；勿赛博硬边",
+  "module": "character.PastelGirl",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "high",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "high",
+    "label": "高强度 · 大胆跃升+可叙事动态达标闭环 (Showcase Overhaul Dynamic Threshold >=9.5)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 2,
+    "target_score_threshold": 9.5,
+    "dim_weights": {
+      "composition": 0.1125,
+      "lighting_color": 0.1125,
+      "perspective_anatomy": 0.15,
+      "texture_detail": 0.225,
+      "spec_style": 0.15,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图；第 1 轮可以拉开光影，之后只在提示词上补还没过的那一处（提示词改动仍 ≤80%）",
+    "max_prompt_delta_ratio": 0.8,
+    "allow_recompose": true,
+    "allow_viewpoint_change": true,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": true,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "style_medium (保持原图核心艺术媒介与画风基因)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)",
+      "no_identity_swap (可加风格内叙事点缀，不换主体身份)"
+    ],
+    "min_round_leap": 0.2,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "粉彩速写轻盈风：抬纸纹、飞白、留白和构图张力，光仍是软光、短接触影",
+    "medium_family": "dry",
+    "best_direction_hint": "最优方向：只抬这一媒介已经有的长处",
+    "goal": "粉彩蜡笔纸感少女侧坐望右上，黑波波头红帽衫蓝短裤黑袜三杠白鞋；身份与媒介锁粉彩少女；姿态基准双手搭膝侧坐；high 可戏剧化光影叙事但勿漂成撑地后仰默认姿；勿赛博硬边",
+    "module": "character.PastelGirl",
+    "ref_image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/ref.jpg",
+    "ref_analysis": "粉彩蜡笔纸感少女侧坐望右上，黑波波头红帽衫蓝短裤黑袜三杠白鞋；参考姿态双手搭膝；high 可加强光影叙事但身份媒介锁；勿赛博硬边。"
+  },
+  "medium_family": "dry",
+  "contract": "",
+  "target_score_threshold": 9.5,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/ref.jpg",
+  "ref_analysis": "粉彩蜡笔纸感少女侧坐望右上，黑波波头红帽衫蓝短裤黑袜三杠白鞋；参考姿态双手搭膝；high 可加强光影叙事但身份媒介锁；勿赛博硬边。",
+  "default_aspect_ratio": "4:3",
+  "default_reference_image_paths": [
+    "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/ref.jpg"
+  ],
+  "aspect_ratio": "4:3",
+  "reference_image_paths": [
+    "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/ref.jpg"
+  ],
+  "ref_physical_traits": {
+    "exists": true,
+    "size_bytes": 187182,
+    "size_kb": 182.8,
+    "width": 720,
+    "height": 580,
+    "aspect_ratio": "36:29",
+    "canonical_aspect_ratio": "4:3",
+    "color_entropy": 7.97
+  },
+  "param_validation": {
+    "valid": true,
+    "validation_passed": true,
+    "case_id": "regen3-c02-high-fix",
+    "scale": "high",
+    "aspect_ratio": "4:3",
+    "ref_aspect_ratio": "4:3",
+    "ref_dimensions": "720x580",
+    "output_aspect_ratio": "",
+    "output_dimensions": "",
+    "reference_image": "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/ref.jpg",
+    "reference_image_paths": [
+      "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/ref.jpg"
+    ],
+    "inherited_default_aspect_ratio": false,
+    "inherited_default_pad_image": true,
+    "matched_ref_aspect_ratio": true,
+    "matched_ref_pad_image": true,
+    "matched_output_aspect_ratio": true,
+    "three_step_stage": "step1_start",
+    "three_step_verified": false,
+    "warnings": []
+  },
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.5,
+  "accept_threshold": 9.5,
+  "max_rounds": 4,
+  "ready_to_finish": true,
+  "status": "finished",
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "4:3",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/ref.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "regen3-c02-high-fix",
+        "scale": "high",
+        "aspect_ratio": "4:3",
+        "ref_aspect_ratio": "4:3",
+        "ref_dimensions": "720x580",
+        "output_aspect_ratio": "4:3",
+        "output_dimensions": "1152x864",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/ref.jpg",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/ref.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "04:42:36",
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/high/r1.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 478180,
+        "size_kb": 467.0,
+        "width": 1152,
+        "height": 864,
+        "aspect_ratio": "4:3",
+        "canonical_aspect_ratio": "4:3",
+        "color_entropy": 7.24
+      },
+      "raw_score": 8.94,
+      "score": 8.94,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.0/光影9.1/透视8.7/质感9.0/风格9.2/无瑕疵8.8",
+      "dims_parsed": {
+        "composition": 9.0,
+        "lighting_color": 9.1,
+        "perspective_anatomy": 8.7,
+        "texture_detail": 9.0,
+        "spec_style": 9.2,
+        "flawlessness": 8.8
+      },
+      "weighted_score": 8.94,
+      "audit_warnings": [
+        "独立视觉 API 不可用，改由本模型按 Absolute-5D 检查表评分（门槛仍 9.5）：HTTP Error 403: Forbidden",
+        "Agent Absolute-5D 已采纳（门槛 9.5）"
+      ],
+      "stagnated": false,
+      "strengths": "双手搭膝侧坐姿态DNA锁住未漂成撑地后仰；暖右上侧逆光勾脸与帽衫肩线相对原图多出一处光影叙事；纸面糖纸点缀叙事；粉彩纸纹飞白未赛博硬边",
+      "defects": "相对原图多出的光影叙事：右上暖侧逆勾脸与肩、左冷纸面补光；膝上手指分指偏糊五指不清；黑袜高度偏中小腿未到膝下；右膝弯折轮廓略软",
+      "next_fix": "双手搭膝处五指分指清楚可见；黑袜拉高到膝下高度；右膝弯折轮廓更圆更清楚",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.PastelGirl\n- 置信度: 0.90（fast-track 资格: 是）\n- 优先复用定稿方向:\n  · [CHAT20261028025708487RECIPE] [收敛胜出 9.53分] 允许构图重组保留粉彩少女身份：可换机位景别，仍锁黑波波头红帽衫蓝短裤三杠白鞋与粉彩纸感。 — 左近景右留白稳；粉彩纸感身份锁；发丝与褶有改善\n  · [CHAT20261028023334400RECIPE] [收敛胜出 9.50分] 粉彩少女recompose四分之三近景侧瞥 — 新机位身份锁\n  · [CHAT20261028025303583RECIPE] [收敛胜出 9.50分] 极保守小修粉彩线稿少女：强化发丝分层、腮红空气感、衣褶布料微高光；低对比粉彩商业插画；勿赛博硬边。 — 纸感软线锁；姿态身份稳；腮红更柔\n- 必须避开红线:\n  · [CHAT20261028023334424REDLINE] [收敛踩坑红线] recompose保粉彩身份与媒介，换成侧面半身机位：避免「平视略仰、人约占画面55%、主光是柔和环境纸面光；袖口裁切不清；屈膝只露大腿上沿不够；背景」\n  · [CHAT20261028122429059REDLINE] [收敛踩坑红线] recompose保画风色板与身份，机位改成侧面半身：避免「仍然是头肩特写，袖口和弯曲的膝都没进画」\n- 个人口味: 光影=暖光 / 侧逆光 / rim light；构图=全身 / 半身 / 居中/对称构图；线宽=粗线/重描边\n- 个人禁用习惯: 漏抠/黑底/毛边；[收敛踩坑红线] 蜜桃糖 L4 ：避免「纸托/丝带/托盘偏平面拼贴，材质统一性不足」；[收敛踩坑红线] 蜜桃糖 L5 纸托：避免「纸托/丝带/托盘偏平面拼贴，材质统一性不足」；[收敛踩坑红线] 蜜桃糖 L6 丝带：避免「纸托/丝带/托盘偏平面拼贴，材质统一性不足」；廉价塑料感/油腻高光；脏暗阴影/脏色；赛博霓虹/霓虹紫\n- 项目私有知识卡 (Private Layer):\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n  · [tech-watercolor] 水彩渲染: 边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。\n粉彩速写轻盈风：抬纸纹、飞白、留白和构图张力，光仍是软光、短接触影| Pastel crayon drawing on toothy cream paper of a young girl side-sitting on the ground facing right, looking upward to the upper-right with a gentle smile. Black chin-length bob with soft bangs, bright red hoodie with front pocket, blue denim shorts, tall black socks, white sneakers with three black diagonal stripes. Pose DNA locked: knees bent, BOTH hands resting forward lightly on knees/upper shins — seated weight on hips, NOT leaning back braced on hands behind her. Soft charcoal-pastel outlines, visible wax crayon strokes, paper tooth showing through color, scumbled light-blue and grey diagonal strokes in background. HIGH scale lighting narrative: warm late-afternoon rim light from upper-right catching her cheek, bang tips and hoodie shoulder edge, soft cool paper ambient fill on the left, short soft contact shadow under sneakers and seat on the paper ground; keep soft pastel light, never hard cyber edges or clean vector lines. Clear continuous joints at shoulders, elbows, wrists; five fingers lightly on knees; both eyes looking same direction upward-right. 4:3 composition, full seated figure with breathing room on the right.| 约束：保持原图核心艺术媒介与画风基因；保持原图性别、物种、年龄段与核心外观；可加风格内叙事点缀，不换主体身份 | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.7,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "vlm_error",
+        "provider": "",
+        "model": "",
+        "error": "HTTP Error 403: Forbidden",
+        "active": true
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：相对原图多出的光影叙事：右上暖侧逆勾脸与肩、左冷纸面补光；膝上手指分指偏糊五指不清；黑袜高度偏中小腿未到膝下；右膝弯折轮廓略软",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.94"
+        },
+        {
+          "category": "anatomy",
+          "lesson": "本轮短板偏「anatomy」：相对原图多出的光影叙事：右上暖侧逆勾脸与肩、左冷纸面补光；膝上手指分指偏糊五指不清；黑袜高度偏中小腿未到膝下；右膝弯折轮廓略软",
+          "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+          "from_score": "8.94"
+        },
+        {
+          "category": "narrative_camera",
+          "lesson": "本轮短板偏「narrative_camera」：相对原图多出的光影叙事：右上暖侧逆勾脸与肩、左冷纸面补光；膝上手指分指偏糊五指不清；黑袜高度偏中小腿未到膝下；右膝弯折轮廓略软",
+          "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+          "from_score": "8.94"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "04:42:41"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "4:3",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/high/r1.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "regen3-c02-high-fix",
+        "scale": "high",
+        "aspect_ratio": "4:3",
+        "ref_aspect_ratio": "4:3",
+        "ref_dimensions": "1152x864",
+        "output_aspect_ratio": "4:3",
+        "output_dimensions": "1152x864",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/high/r1.jpg",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/high/r1.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": true,
+        "pad_diverged": false
+      },
+      "generated_at": "04:44:39",
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/high/r2.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 484599,
+        "size_kb": 473.2,
+        "width": 1152,
+        "height": 864,
+        "aspect_ratio": "4:3",
+        "canonical_aspect_ratio": "4:3",
+        "color_entropy": 7.24
+      },
+      "raw_score": 9.02,
+      "score": 9.02,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.1/光影8.7/透视9.0/质感9.1/风格9.3/无瑕疵8.9",
+      "dims_parsed": {
+        "composition": 9.1,
+        "lighting_color": 8.7,
+        "perspective_anatomy": 9.0,
+        "texture_detail": 9.1,
+        "spec_style": 9.3,
+        "flawlessness": 8.9
+      },
+      "weighted_score": 9.02,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.08 低于当前档位 (high) 的最小跃升 +0.20。下一轮加强机位或戏剧光影，不要只改局部笔触",
+        "独立视觉 API 不可用，改由本模型按 Absolute-5D 检查表评分（门槛仍 9.5）：HTTP Error 403: Forbidden",
+        "Agent Absolute-5D 已采纳（门槛 9.5）"
+      ],
+      "stagnated": true,
+      "strengths": "双手仍搭在膝区未漂撑地后仰；膝弯轮廓比上轮更圆；粉彩纸纹与身份色板锁住",
+      "defects": "相对原图多出的叙事：脚前糖纸点缀；但右上暖侧逆光比上轮变平偏软；黑袜仍偏中小腿未到膝下；搭膝手部分指仍可再清",
+      "next_fix": "恢复右上暖侧逆勾脸与帽衫肩线；黑袜拉高到膝下；搭膝五指分指再清楚一点",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.PastelGirl\n- 置信度: 0.90（fast-track 资格: 是）\n- 优先复用定稿方向:\n  · [CHAT20261028025708487RECIPE] [收敛胜出 9.53分] 允许构图重组保留粉彩少女身份：可换机位景别，仍锁黑波波头红帽衫蓝短裤三杠白鞋与粉彩纸感。 — 左近景右留白稳；粉彩纸感身份锁；发丝与褶有改善\n  · [CHAT20261028023334400RECIPE] [收敛胜出 9.50分] 粉彩少女recompose四分之三近景侧瞥 — 新机位身份锁\n  · [CHAT20261028025303583RECIPE] [收敛胜出 9.50分] 极保守小修粉彩线稿少女：强化发丝分层、腮红空气感、衣褶布料微高光；低对比粉彩商业插画；勿赛博硬边。 — 纸感软线锁；姿态身份稳；腮红更柔\n- 必须避开红线:\n  · [CHAT20261028023334424REDLINE] [收敛踩坑红线] recompose保粉彩身份与媒介，换成侧面半身机位：避免「平视略仰、人约占画面55%、主光是柔和环境纸面光；袖口裁切不清；屈膝只露大腿上沿不够；背景」\n  · [CHAT20261028122429059REDLINE] [收敛踩坑红线] recompose保画风色板与身份，机位改成侧面半身：避免「仍然是头肩特写，袖口和弯曲的膝都没进画」\n- 个人口味: 光影=暖光 / 侧逆光 / rim light；构图=全身 / 半身 / 居中/对称构图；线宽=粗线/重描边\n- 个人禁用习惯: 漏抠/黑底/毛边；[收敛踩坑红线] 蜜桃糖 L4 ：避免「纸托/丝带/托盘偏平面拼贴，材质统一性不足」；[收敛踩坑红线] 蜜桃糖 L5 纸托：避免「纸托/丝带/托盘偏平面拼贴，材质统一性不足」；[收敛踩坑红线] 蜜桃糖 L6 丝带：避免「纸托/丝带/托盘偏平面拼贴，材质统一性不足」；廉价塑料感/油腻高光；脏暗阴影/脏色；赛博霓虹/霓虹紫\n- 项目私有知识卡 (Private Layer):\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n  · [tech-watercolor] 水彩渲染: 边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。\n粉彩速写轻盈风：抬纸纹、飞白、留白和构图张力，光仍是软光、短接触影| 垫图是目前分数最高的那张成图。只改这一处：双手搭膝处五指分指清楚可见；黑袜拉高到膝下高度；右膝弯折轮廓更圆更清楚。没点名的地方保持垫图。",
+      "continuation": true,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.0,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "vlm_error",
+        "provider": "",
+        "model": "",
+        "error": "HTTP Error 403: Forbidden",
+        "active": true
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：相对原图多出的叙事：脚前糖纸点缀；但右上暖侧逆光比上轮变平偏软；黑袜仍偏中小腿未到膝下；搭膝手部分指仍可再清",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "9.02"
+        },
+        {
+          "category": "anatomy",
+          "lesson": "本轮短板偏「anatomy」：相对原图多出的叙事：脚前糖纸点缀；但右上暖侧逆光比上轮变平偏软；黑袜仍偏中小腿未到膝下；搭膝手部分指仍可再清",
+          "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+          "from_score": "9.02"
+        },
+        {
+          "category": "narrative_camera",
+          "lesson": "本轮短板偏「narrative_camera」：相对原图多出的叙事：脚前糖纸点缀；但右上暖侧逆光比上轮变平偏软；黑袜仍偏中小腿未到膝下；搭膝手部分指仍可再清",
+          "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+          "from_score": "9.02"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "04:44:45"
+    },
+    {
+      "round": 3,
+      "round_label": "第 3 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "4:3",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/high/r2.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "regen3-c02-high-fix",
+        "scale": "high",
+        "aspect_ratio": "4:3",
+        "ref_aspect_ratio": "4:3",
+        "ref_dimensions": "1152x864",
+        "output_aspect_ratio": "4:3",
+        "output_dimensions": "1152x864",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/high/r2.jpg",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/high/r2.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": true,
+        "pad_diverged": false
+      },
+      "generated_at": "04:47:15",
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/high/r3.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 432174,
+        "size_kb": 422.0,
+        "width": 1152,
+        "height": 864,
+        "aspect_ratio": "4:3",
+        "canonical_aspect_ratio": "4:3",
+        "color_entropy": 7.24
+      },
+      "raw_score": 9.2,
+      "score": 9.2,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.2/光影9.3/透视9.1/质感9.2/风格9.4/无瑕疵9.1",
+      "dims_parsed": {
+        "composition": 9.2,
+        "lighting_color": 9.3,
+        "perspective_anatomy": 9.1,
+        "texture_detail": 9.2,
+        "spec_style": 9.4,
+        "flawlessness": 9.1
+      },
+      "weighted_score": 9.2,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.18 低于当前档位 (high) 的最小跃升 +0.20。下一轮加强机位或戏剧光影，不要只改局部笔触",
+        "独立视觉 API 不可用，改由本模型按 Absolute-5D 检查表评分（门槛仍 9.5）：HTTP Error 403: Forbidden",
+        "Agent Absolute-5D 已采纳（门槛 9.5）"
+      ],
+      "stagnated": true,
+      "strengths": "双手搭膝姿态锁住；右上暖侧逆勾脸与肩相对原图多出一处光影；脚前糖纸叙事；粉彩纸纹未硬边",
+      "defects": "相对原图多出的光影叙事：右上暖金侧逆勾脸与帽衫肩脊；搭膝手部分指仍略糊；鞋底接触影偏浅；黑袜口边缘可更齐",
+      "next_fix": "搭膝处五指分指再清楚；鞋与臀下接触影略加深一点；袜口边缘更齐",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.PastelGirl\n- 置信度: 0.90（fast-track 资格: 是）\n- 优先复用定稿方向:\n  · [CHAT20261028025708487RECIPE] [收敛胜出 9.53分] 允许构图重组保留粉彩少女身份：可换机位景别，仍锁黑波波头红帽衫蓝短裤三杠白鞋与粉彩纸感。 — 左近景右留白稳；粉彩纸感身份锁；发丝与褶有改善\n  · [CHAT20261028023334400RECIPE] [收敛胜出 9.50分] 粉彩少女recompose四分之三近景侧瞥 — 新机位身份锁\n  · [CHAT20261028025303583RECIPE] [收敛胜出 9.50分] 极保守小修粉彩线稿少女：强化发丝分层、腮红空气感、衣褶布料微高光；低对比粉彩商业插画；勿赛博硬边。 — 纸感软线锁；姿态身份稳；腮红更柔\n- 必须避开红线:\n  · [CHAT20261028023334424REDLINE] [收敛踩坑红线] recompose保粉彩身份与媒介，换成侧面半身机位：避免「平视略仰、人约占画面55%、主光是柔和环境纸面光；袖口裁切不清；屈膝只露大腿上沿不够；背景」\n  · [CHAT20261028122429059REDLINE] [收敛踩坑红线] recompose保画风色板与身份，机位改成侧面半身：避免「仍然是头肩特写，袖口和弯曲的膝都没进画」\n- 个人口味: 光影=暖光 / 侧逆光 / rim light；构图=全身 / 半身 / 居中/对称构图；线宽=粗线/重描边\n- 个人禁用习惯: 漏抠/黑底/毛边；[收敛踩坑红线] 蜜桃糖 L4 ：避免「纸托/丝带/托盘偏平面拼贴，材质统一性不足」；[收敛踩坑红线] 蜜桃糖 L5 纸托：避免「纸托/丝带/托盘偏平面拼贴，材质统一性不足」；[收敛踩坑红线] 蜜桃糖 L6 丝带：避免「纸托/丝带/托盘偏平面拼贴，材质统一性不足」；廉价塑料感/油腻高光；脏暗阴影/脏色；赛博霓虹/霓虹紫\n- 项目私有知识卡 (Private Layer):\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n  · [tech-watercolor] 水彩渲染: 边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。\n粉彩速写轻盈风：抬纸纹、飞白、留白和构图张力，光仍是软光、短接触影| 垫图是目前分数最高的那张成图。只改这一处：恢复右上暖侧逆勾脸与帽衫肩线；黑袜拉高到膝下；搭膝五指分指再清楚一点。没点名的地方保持垫图。",
+      "continuation": true,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.1,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "vlm_error",
+        "provider": "",
+        "model": "",
+        "error": "HTTP Error 403: Forbidden",
+        "active": true
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：相对原图多出的光影叙事：右上暖金侧逆勾脸与帽衫肩脊；搭膝手部分指仍略糊；鞋底接触影偏浅；黑袜口边缘可更齐",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "9.2"
+        },
+        {
+          "category": "anatomy",
+          "lesson": "本轮短板偏「anatomy」：相对原图多出的光影叙事：右上暖金侧逆勾脸与帽衫肩脊；搭膝手部分指仍略糊；鞋底接触影偏浅；黑袜口边缘可更齐",
+          "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+          "from_score": "9.2"
+        },
+        {
+          "category": "line_edge",
+          "lesson": "本轮短板偏「line_edge」：相对原图多出的光影叙事：右上暖金侧逆勾脸与帽衫肩脊；搭膝手部分指仍略糊；鞋底接触影偏浅；黑袜口边缘可更齐",
+          "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+          "from_score": "9.2"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "04:47:20"
+    },
+    {
+      "round": 4,
+      "round_label": "第 4 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "4:3",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/high/r3.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "regen3-c02-high-fix",
+        "scale": "high",
+        "aspect_ratio": "4:3",
+        "ref_aspect_ratio": "4:3",
+        "ref_dimensions": "1152x864",
+        "output_aspect_ratio": "4:3",
+        "output_dimensions": "1152x864",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/high/r3.jpg",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/high/r3.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": true,
+        "pad_diverged": false
+      },
+      "generated_at": "04:51:07",
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/high/r4.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 405886,
+        "size_kb": 396.4,
+        "width": 1152,
+        "height": 864,
+        "aspect_ratio": "4:3",
+        "canonical_aspect_ratio": "4:3",
+        "color_entropy": 7.24
+      },
+      "raw_score": 9.26,
+      "score": 9.26,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.3/光影9.4/透视9.2/质感9.3/风格9.4/无瑕疵9.1",
+      "dims_parsed": {
+        "composition": 9.3,
+        "lighting_color": 9.4,
+        "perspective_anatomy": 9.2,
+        "texture_detail": 9.3,
+        "spec_style": 9.4,
+        "flawlessness": 9.1
+      },
+      "weighted_score": 9.26,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.06 低于当前档位 (high) 的最小跃升 +0.20。下一轮加强机位或戏剧光影，不要只改局部笔触",
+        "独立视觉 API 不可用，改由本模型按 Absolute-5D 检查表评分（门槛仍 9.5）：HTTP Error 403: Forbidden",
+        "Agent Absolute-5D 已采纳（门槛 9.5）"
+      ],
+      "stagnated": true,
+      "strengths": "双手搭膝侧坐锁稳；右上暖侧逆与脚前糖纸叙事可读；粉彩纸齿软边未漂赛博",
+      "defects": "相对原图多出的光影叙事：右上暖金侧逆勾脸与肩脊、脚前糖纸点缀；双手搭膝落点正确非撑地；搭膝右手分指仍略糊未到五指清晰；鞋底与臀下接触影加深有限；右袜筒皱褶略糊",
+      "next_fix": "已满4轮取最高分",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.PastelGirl\n- 置信度: 0.90（fast-track 资格: 是）\n- 优先复用定稿方向:\n  · [CHAT20261028025708487RECIPE] [收敛胜出 9.53分] 允许构图重组保留粉彩少女身份：可换机位景别，仍锁黑波波头红帽衫蓝短裤三杠白鞋与粉彩纸感。 — 左近景右留白稳；粉彩纸感身份锁；发丝与褶有改善\n  · [CHAT20261028023334400RECIPE] [收敛胜出 9.50分] 粉彩少女recompose四分之三近景侧瞥 — 新机位身份锁\n  · [CHAT20261028025303583RECIPE] [收敛胜出 9.50分] 极保守小修粉彩线稿少女：强化发丝分层、腮红空气感、衣褶布料微高光；低对比粉彩商业插画；勿赛博硬边。 — 纸感软线锁；姿态身份稳；腮红更柔\n- 必须避开红线:\n  · [CHAT20261028023334424REDLINE] [收敛踩坑红线] recompose保粉彩身份与媒介，换成侧面半身机位：避免「平视略仰、人约占画面55%、主光是柔和环境纸面光；袖口裁切不清；屈膝只露大腿上沿不够；背景」\n  · [CHAT20261028122429059REDLINE] [收敛踩坑红线] recompose保画风色板与身份，机位改成侧面半身：避免「仍然是头肩特写，袖口和弯曲的膝都没进画」\n- 个人口味: 光影=暖光 / 侧逆光 / rim light；构图=全身 / 半身 / 居中/对称构图；线宽=粗线/重描边\n- 个人禁用习惯: 漏抠/黑底/毛边；[收敛踩坑红线] 蜜桃糖 L4 ：避免「纸托/丝带/托盘偏平面拼贴，材质统一性不足」；[收敛踩坑红线] 蜜桃糖 L5 纸托：避免「纸托/丝带/托盘偏平面拼贴，材质统一性不足」；[收敛踩坑红线] 蜜桃糖 L6 丝带：避免「纸托/丝带/托盘偏平面拼贴，材质统一性不足」；廉价塑料感/油腻高光；脏暗阴影/脏色；赛博霓虹/霓虹紫\n- 项目私有知识卡 (Private Layer):\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n  · [tech-watercolor] 水彩渲染: 边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。\n粉彩速写轻盈风：抬纸纹、飞白、留白和构图张力，光仍是软光、短接触影| 垫图是目前分数最高的那张成图。只改这一处：搭膝处五指分指再清楚；鞋与臀下接触影略加深一点；袜口边缘更齐。没点名的地方保持垫图。",
+      "continuation": true,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.2,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "vlm_error",
+        "provider": "",
+        "model": "",
+        "error": "HTTP Error 403: Forbidden",
+        "active": true
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_MAX_ROUNDS",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：相对原图多出的光影叙事：右上暖金侧逆勾脸与肩脊、脚前糖纸点缀；双手搭膝落点正确非撑地；搭膝右手分指仍略糊未到五指清晰；鞋底与臀下接触影加深有限；右袜筒皱褶略糊",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "9.26"
+        },
+        {
+          "category": "narrative_camera",
+          "lesson": "本轮短板偏「narrative_camera」：相对原图多出的光影叙事：右上暖金侧逆勾脸与肩脊、脚前糖纸点缀；双手搭膝落点正确非撑地；搭膝右手分指仍略糊未到五指清晰；鞋底与臀下接触影加深有限；右袜筒皱褶略糊",
+          "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+          "from_score": "9.26"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：双手搭膝侧坐锁稳；右上暖侧逆与脚前糖纸叙事可读；粉彩纸齿软边未漂赛博",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "9.26"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "04:51:16",
+      "asset_image": "assets/character/pastelgirl/r4.jpg"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "/Users/yanghu/Desktop/pmem-art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-10-28 01:28:36 UTC+8"
+    },
+    "module": "character.PastelGirl",
+    "goal": "粉彩蜡笔纸感少女侧坐望右上，黑波波头红帽衫蓝短裤黑袜三杠白鞋；身份与媒介锁粉彩少女；姿态基准双手搭膝侧坐；high 可戏剧化光影叙事但勿漂成撑地后仰默认姿；勿赛博硬边",
+    "confidence": 0.9,
+    "fast_track_eligible": true,
+    "confidence_reasons": [
+      "命中 3 条达标 recipe",
+      "个人口味档案非空",
+      "红线可控（2 条）",
+      "挂载 2 张项目知识卡 + 0 张全局美术底层基础卡"
+    ],
+    "top_recipes": [
+      {
+        "id": "CHAT20261028025708487RECIPE",
+        "summary": "[收敛胜出 9.53分] 允许构图重组保留粉彩少女身份：可换机位景别，仍锁黑波波头红帽衫蓝短裤三杠白鞋与粉彩纸感。 — 左近景右留白稳；粉彩纸感身份锁；发丝与褶有改善",
+        "module": "character.PastelGirl"
+      },
+      {
+        "id": "CHAT20261028023334400RECIPE",
+        "summary": "[收敛胜出 9.50分] 粉彩少女recompose四分之三近景侧瞥 — 新机位身份锁",
+        "module": "character.PastelGirl"
+      },
+      {
+        "id": "CHAT20261028025303583RECIPE",
+        "summary": "[收敛胜出 9.50分] 极保守小修粉彩线稿少女：强化发丝分层、腮红空气感、衣褶布料微高光；低对比粉彩商业插画；勿赛博硬边。 — 纸感软线锁；姿态身份稳；腮红更柔",
+        "module": "character.PastelGirl"
+      }
+    ],
+    "top_redlines": [
+      {
+        "id": "CHAT20261028023334424REDLINE",
+        "summary": "[收敛踩坑红线] recompose保粉彩身份与媒介，换成侧面半身机位：避免「平视略仰、人约占画面55%、主光是柔和环境纸面光；袖口裁切不清；屈膝只露大腿上沿不够；背景」",
+        "module": "character.PastelGirl"
+      },
+      {
+        "id": "CHAT20261028122429059REDLINE",
+        "summary": "[收敛踩坑红线] recompose保画风色板与身份，机位改成侧面半身：避免「仍然是头肩特写，袖口和弯曲的膝都没进画」",
+        "module": "character.PastelGirl"
+      }
+    ],
+    "art_decisions": [],
+    "private_knowledge": [
+      {
+        "id": "tech-painterly",
+        "title": "厚涂笔触",
+        "body": "可见笔触方向跟随形体，暗部透气勿脏。",
+        "layer_scope": "private"
+      },
+      {
+        "id": "tech-watercolor",
+        "title": "水彩渲染",
+        "body": "边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。",
+        "layer_scope": "private"
+      }
+    ],
+    "shared_knowledge": [],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [
+        "暖光",
+        "侧逆光 / rim light"
+      ],
+      "preferred_composition": [
+        "全身",
+        "半身",
+        "居中/对称构图"
+      ],
+      "preferred_line_weight": [
+        "粗线/重描边"
+      ],
+      "preferred_color_temperature": [],
+      "banned_habits": [
+        "漏抠/黑底/毛边",
+        "[收敛踩坑红线] 蜜桃糖 L4 ：避免「纸托/丝带/托盘偏平面拼贴，材质统一性不足」",
+        "[收敛踩坑红线] 蜜桃糖 L5 纸托：避免「纸托/丝带/托盘偏平面拼贴，材质统一性不足」",
+        "[收敛踩坑红线] 蜜桃糖 L6 丝带：避免「纸托/丝带/托盘偏平面拼贴，材质统一性不足」",
+        "廉价塑料感/油腻高光",
+        "脏暗阴影/脏色",
+        "赛博霓虹/霓虹紫"
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.PastelGirl\n- 置信度: 0.90（fast-track 资格: 是）\n- 优先复用定稿方向:\n  · [CHAT20261028025708487RECIPE] [收敛胜出 9.53分] 允许构图重组保留粉彩少女身份：可换机位景别，仍锁黑波波头红帽衫蓝短裤三杠白鞋与粉彩纸感。 — 左近景右留白稳；粉彩纸感身份锁；发丝与褶有改善\n  · [CHAT20261028023334400RECIPE] [收敛胜出 9.50分] 粉彩少女recompose四分之三近景侧瞥 — 新机位身份锁\n  · [CHAT20261028025303583RECIPE] [收敛胜出 9.50分] 极保守小修粉彩线稿少女：强化发丝分层、腮红空气感、衣褶布料微高光；低对比粉彩商业插画；勿赛博硬边。 — 纸感软线锁；姿态身份稳；腮红更柔\n- 必须避开红线:\n  · [CHAT20261028023334424REDLINE] [收敛踩坑红线] recompose保粉彩身份与媒介，换成侧面半身机位：避免「平视略仰、人约占画面55%、主光是柔和环境纸面光；袖口裁切不清；屈膝只露大腿上沿不够；背景」\n  · [CHAT20261028122429059REDLINE] [收敛踩坑红线] recompose保画风色板与身份，机位改成侧面半身：避免「仍然是头肩特写，袖口和弯曲的膝都没进画」\n- 个人口味: 光影=暖光 / 侧逆光 / rim light；构图=全身 / 半身 / 居中/对称构图；线宽=粗线/重描边\n- 个人禁用习惯: 漏抠/黑底/毛边；[收敛踩坑红线] 蜜桃糖 L4 ：避免「纸托/丝带/托盘偏平面拼贴，材质统一性不足」；[收敛踩坑红线] 蜜桃糖 L5 纸托：避免「纸托/丝带/托盘偏平面拼贴，材质统一性不足」；[收敛踩坑红线] 蜜桃糖 L6 丝带：避免「纸托/丝带/托盘偏平面拼贴，材质统一性不足」；廉价塑料感/油腻高光；脏暗阴影/脏色；赛博霓虹/霓虹紫\n- 项目私有知识卡 (Private Layer):\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n  · [tech-watercolor] 水彩渲染: 边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。",
+    "built_at": "2026-10-30 04:41:00 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：相对原图多出的光影叙事：右上暖侧逆勾脸与肩、左冷纸面补光；膝上手指分指偏糊五指不清；黑袜高度偏中小腿未到膝下；右膝弯折轮廓略软",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.94"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：相对原图多出的光影叙事：右上暖侧逆勾脸与肩、左冷纸面补光；膝上手指分指偏糊五指不清；黑袜高度偏中小腿未到膝下；右膝弯折轮廓略软",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "8.94"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：相对原图多出的光影叙事：右上暖侧逆勾脸与肩、左冷纸面补光；膝上手指分指偏糊五指不清；黑袜高度偏中小腿未到膝下；右膝弯折轮廓略软",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "8.94"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：相对原图多出的叙事：脚前糖纸点缀；但右上暖侧逆光比上轮变平偏软；黑袜仍偏中小腿未到膝下；搭膝手部分指仍可再清",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.02"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：相对原图多出的叙事：脚前糖纸点缀；但右上暖侧逆光比上轮变平偏软；黑袜仍偏中小腿未到膝下；搭膝手部分指仍可再清",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "9.02"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：相对原图多出的叙事：脚前糖纸点缀；但右上暖侧逆光比上轮变平偏软；黑袜仍偏中小腿未到膝下；搭膝手部分指仍可再清",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "9.02"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：相对原图多出的光影叙事：右上暖金侧逆勾脸与帽衫肩脊；搭膝手部分指仍略糊；鞋底接触影偏浅；黑袜口边缘可更齐",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.2"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：相对原图多出的光影叙事：右上暖金侧逆勾脸与帽衫肩脊；搭膝手部分指仍略糊；鞋底接触影偏浅；黑袜口边缘可更齐",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "9.2"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：相对原图多出的光影叙事：右上暖金侧逆勾脸与帽衫肩脊；搭膝手部分指仍略糊；鞋底接触影偏浅；黑袜口边缘可更齐",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "9.2"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：相对原图多出的光影叙事：右上暖金侧逆勾脸与肩脊、脚前糖纸点缀；双手搭膝落点正确非撑地；搭膝右手分指仍略糊未到五指清晰；鞋底与臀下接触影加深有限；右袜筒皱褶略糊",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.26"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：相对原图多出的光影叙事：右上暖金侧逆勾脸与肩脊、脚前糖纸点缀；双手搭膝落点正确非撑地；搭膝右手分指仍略糊未到五指清晰；鞋底与臀下接触影加深有限；右袜筒皱褶略糊",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "9.26"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：双手搭膝侧坐锁稳；右上暖侧逆与脚前糖纸叙事可读；粉彩纸齿软边未漂赛博",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.26"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 4,
+  "regression_drop": 0.5,
+  "ActionRequired": "STOP_PICK_BEST",
+  "showcase_ready": true,
+  "process_board": ".memory-art/converge/boards/regen3-c02-high-fix/index.html",
+  "winner": {
+    "round": 4,
+    "round_label": "第 4 轮精修",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "4:3",
+    "reference_image_paths": [
+      "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/high/r3.jpg"
+    ],
+    "param_validation": {
+      "valid": true,
+      "validation_passed": true,
+      "case_id": "regen3-c02-high-fix",
+      "scale": "high",
+      "aspect_ratio": "4:3",
+      "ref_aspect_ratio": "4:3",
+      "ref_dimensions": "1152x864",
+      "output_aspect_ratio": "4:3",
+      "output_dimensions": "1152x864",
+      "reference_image": "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/high/r3.jpg",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/high/r3.jpg"
+      ],
+      "inherited_default_aspect_ratio": true,
+      "inherited_default_pad_image": true,
+      "matched_ref_aspect_ratio": true,
+      "matched_ref_pad_image": true,
+      "matched_output_aspect_ratio": true,
+      "three_step_stage": "step3_judge",
+      "three_step_verified": true,
+      "warnings": [],
+      "continuation_pad": true,
+      "pad_diverged": false
+    },
+    "generated_at": "04:51:07",
+    "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/high/r4.jpg",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 405886,
+      "size_kb": 396.4,
+      "width": 1152,
+      "height": 864,
+      "aspect_ratio": "4:3",
+      "canonical_aspect_ratio": "4:3",
+      "color_entropy": 7.24
+    },
+    "raw_score": 9.26,
+    "score": 9.26,
+    "target_score_threshold": 9.5,
+    "dims": "构图9.3/光影9.4/透视9.2/质感9.3/风格9.4/无瑕疵9.1",
+    "dims_parsed": {
+      "composition": 9.3,
+      "lighting_color": 9.4,
+      "perspective_anatomy": 9.2,
+      "texture_detail": 9.3,
+      "spec_style": 9.4,
+      "flawlessness": 9.1
+    },
+    "weighted_score": 9.26,
+    "audit_warnings": [
+      "收敛停滞预警：本轮净增 +0.06 低于当前档位 (high) 的最小跃升 +0.20。下一轮加强机位或戏剧光影，不要只改局部笔触",
+      "独立视觉 API 不可用，改由本模型按 Absolute-5D 检查表评分（门槛仍 9.5）：HTTP Error 403: Forbidden",
+      "Agent Absolute-5D 已采纳（门槛 9.5）"
+    ],
+    "stagnated": true,
+    "strengths": "双手搭膝侧坐锁稳；右上暖侧逆与脚前糖纸叙事可读；粉彩纸齿软边未漂赛博",
+    "defects": "相对原图多出的光影叙事：右上暖金侧逆勾脸与肩脊、脚前糖纸点缀；双手搭膝落点正确非撑地；搭膝右手分指仍略糊未到五指清晰；鞋底与臀下接触影加深有限；右袜筒皱褶略糊",
+    "next_fix": "已满4轮取最高分",
+    "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.PastelGirl\n- 置信度: 0.90（fast-track 资格: 是）\n- 优先复用定稿方向:\n  · [CHAT20261028025708487RECIPE] [收敛胜出 9.53分] 允许构图重组保留粉彩少女身份：可换机位景别，仍锁黑波波头红帽衫蓝短裤三杠白鞋与粉彩纸感。 — 左近景右留白稳；粉彩纸感身份锁；发丝与褶有改善\n  · [CHAT20261028023334400RECIPE] [收敛胜出 9.50分] 粉彩少女recompose四分之三近景侧瞥 — 新机位身份锁\n  · [CHAT20261028025303583RECIPE] [收敛胜出 9.50分] 极保守小修粉彩线稿少女：强化发丝分层、腮红空气感、衣褶布料微高光；低对比粉彩商业插画；勿赛博硬边。 — 纸感软线锁；姿态身份稳；腮红更柔\n- 必须避开红线:\n  · [CHAT20261028023334424REDLINE] [收敛踩坑红线] recompose保粉彩身份与媒介，换成侧面半身机位：避免「平视略仰、人约占画面55%、主光是柔和环境纸面光；袖口裁切不清；屈膝只露大腿上沿不够；背景」\n  · [CHAT20261028122429059REDLINE] [收敛踩坑红线] recompose保画风色板与身份，机位改成侧面半身：避免「仍然是头肩特写，袖口和弯曲的膝都没进画」\n- 个人口味: 光影=暖光 / 侧逆光 / rim light；构图=全身 / 半身 / 居中/对称构图；线宽=粗线/重描边\n- 个人禁用习惯: 漏抠/黑底/毛边；[收敛踩坑红线] 蜜桃糖 L4 ：避免「纸托/丝带/托盘偏平面拼贴，材质统一性不足」；[收敛踩坑红线] 蜜桃糖 L5 纸托：避免「纸托/丝带/托盘偏平面拼贴，材质统一性不足」；[收敛踩坑红线] 蜜桃糖 L6 丝带：避免「纸托/丝带/托盘偏平面拼贴，材质统一性不足」；廉价塑料感/油腻高光；脏暗阴影/脏色；赛博霓虹/霓虹紫\n- 项目私有知识卡 (Private Layer):\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n  · [tech-watercolor] 水彩渲染: 边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。\n粉彩速写轻盈风：抬纸纹、飞白、留白和构图张力，光仍是软光、短接触影| 垫图是目前分数最高的那张成图。只改这一处：搭膝处五指分指再清楚；鞋与臀下接触影略加深一点；袜口边缘更齐。没点名的地方保持垫图。",
+    "continuation": true,
+    "passed": false,
+    "gate_blocked": false,
+    "image_gate_blocked": false,
+    "anatomy_score": 9.2,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "humanoid",
+    "judge_source": "agent_absolute_5d",
+    "remote_vlm": {
+      "source": "vlm_error",
+      "provider": "",
+      "model": "",
+      "error": "HTTP Error 403: Forbidden",
+      "active": true
+    },
+    "should_continue_next_round": false,
+    "decision": "STOP_MAX_ROUNDS",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "lighting",
+        "lesson": "本轮短板偏「lighting」：相对原图多出的光影叙事：右上暖金侧逆勾脸与肩脊、脚前糖纸点缀；双手搭膝落点正确非撑地；搭膝右手分指仍略糊未到五指清晰；鞋底与臀下接触影加深有限；右袜筒皱褶略糊",
+        "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+        "from_score": "9.26"
+      },
+      {
+        "category": "narrative_camera",
+        "lesson": "本轮短板偏「narrative_camera」：相对原图多出的光影叙事：右上暖金侧逆勾脸与肩脊、脚前糖纸点缀；双手搭膝落点正确非撑地；搭膝右手分指仍略糊未到五指清晰；鞋底与臀下接触影加深有限；右袜筒皱褶略糊",
+        "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+        "from_score": "9.26"
+      },
+      {
+        "category": "keep",
+        "lesson": "保留本轮已做对的：双手搭膝侧坐锁稳；右上暖侧逆与脚前糖纸叙事可读；粉彩纸齿软边未漂赛博",
+        "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+        "from_score": "9.26"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "04:51:16",
+    "asset_image": "assets/character/pastelgirl/r4.jpg"
+  },
+  "rounds_to_converge": 4,
+  "convergence_badge": "共 4 轮未达阈值，采用最高分"
+}

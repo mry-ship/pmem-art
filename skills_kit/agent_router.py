@@ -44,7 +44,21 @@ _LENS = re.compile(
 )
 _PIXEL_SIZE = re.compile(r"(?<![0-9第])(64|128|256)(?![0-9])")
 _PIXELS = re.compile(r"像素必须同时|两张参考的像素|像素级对齐同时")
-_SHOWCASE = re.compile(r"整页展陈|对比页|同范围重跑|多技能")
+_SHOWCASE = re.compile(
+    r"整页展陈|对比页|同范围重跑|多技能|全部重跑|再跑一遍|重跑一遍|同范围"
+)
+# 指向旧展陈「全部/同范围重跑」且未点名单支时的默认同范围清单（与主页候选展陈对齐）
+_SHOWCASE_DEFAULT_FULL = (
+    "draw.ordinary",
+    "ui.kit",
+    "icon.a",
+    "icon.c",
+    "merge.ladder",
+    "draw.clone",
+    "draw.variant",
+    "style.lock",
+    "prompt.write",
+)
 _NEG = ("不要", "别做", "不是", "不做", "别写")
 
 
@@ -178,9 +192,13 @@ def _icon_modes(text: str) -> set[str]:
     desktop = _any(text, ("桌面图标", "启动图标", "应用图标", "app icon", "App Icon"))
     if desktop or (_hit(text, "1024") and _any(text, ("图标", "icon", "桌面", "启动"))):
         modes.add("icon.a")
-    if _any(text, ("线性", "svg", "SVG", "图标集")) and _any(text, ("图标", "icon", "一套")):
+    # B 必须带线性/svg；单说「图标集」不算 B，走未分档问句
+    if _any(text, ("线性", "svg", "SVG")) and _any(text, ("图标", "icon", "一套", "图标集")):
         modes.add("icon.b")
-    prop = _any(text, ("道具格", "背包", "道具图标", "药水", "装备图标"))
+    # 「药水」单独出现常是合成梯题材，须连带图标/背包/道具格才认 C
+    prop = _any(text, ("道具格", "背包", "道具图标", "装备图标")) or (
+        _hit(text, "药水") and _any(text, ("图标", "背包", "道具格", "透明"))
+    )
     sized = bool(_PIXEL_SIZE.search(text)) and _any(text, ("图标", "道具", "背包", "透明"))
     if prop or sized:
         modes.add("icon.c")
@@ -198,19 +216,38 @@ def _wants_ui(text: str) -> bool:
             "HUD",
             "九宫格",
             "弹窗套件",
+            "弹窗套",
             "界面套件",
             "主菜单",
             "主界面",
             "按钮状态",
             "状态族",
             "一整套界面",
+            "整套界面",
             "常态和按下",
+            "UI套",
+            "hud整屏",
         ),
     )
 
 
 def _wants_merge(text: str) -> bool:
-    return _any(text, ("合成梯", "一档比一档", "升级链", "八档", "八个等级", "越来越大", "L1", "l1"))
+    return _any(
+        text,
+        (
+            "合成梯",
+            "一档比一档",
+            "升级链",
+            "八档",
+            "八个等级",
+            "越来越大",
+            "越升越大",
+            "合成升级",
+            "升档",
+            "L1",
+            "l1",
+        ),
+    )
 
 
 def _wants_lens(text: str) -> bool:
@@ -218,25 +255,115 @@ def _wants_lens(text: str) -> bool:
         return False
     if _LENS.search(text):
         return True
-    return _hit(text, "远中近")
+    return _any(text, ("远中近", "机位包", "几套镜头", "镜头包", "几套机位"))
+
+
+# 句末「变成微笑/改成姿势」= 变体；允许「再画/的她」；「变成微笑的猫」仍算换题材
+_EXPR_AFTER_SWAP = re.compile(
+    r"(变成|改成|换成)(一个|一下|个|张)?(微笑|生气|闭眼|侧目|眨眼|惊讶|叹气|表情|差分|姿势|动作)"
+    r"(一下|差分)?(再画(一张)?|的她|的他)?$"
+)
 
 
 def _new_subject(text: str) -> bool:
     if _any(text, ("不要换", "还是她", "还是他", "还是这个", "不要换题材", "别换人", "人不要换")):
         return False
-    return _any(text, ("换成", "改成", "新题材", "新角色", "新物件", "别画原来", "不要这个人", "换一个"))
+    # 「变成微笑 / 改成闭眼」紧贴表情 → 变体；后面还有新主体名词则仍算换题材
+    if _EXPR_AFTER_SWAP.search(text) and not _any(
+        text,
+        (
+            "新题材",
+            "新角色",
+            "新物件",
+            "别画原来",
+            "换个东西",
+            "换个主题",
+            "主体改成",
+            "主体换成",
+            "换成一只",
+            "改成一只",
+            "变成一只",
+        ),
+    ):
+        return False
+    return _any(
+        text,
+        (
+            "换成",
+            "改成",
+            "变成",
+            "新题材",
+            "新角色",
+            "新物件",
+            "别画原来",
+            "不要这个人",
+            "换一个",
+            "换题材",
+            "换个东西",
+            "换个主题",
+            "主体改成",
+            "主体换成",
+        ),
+    )
 
 
 def _has_ref(text: str, images: list[str]) -> bool:
-    return bool(images) or _any(text, ("参考", "照着", "照这张", "附图", "垫", "这张的画风", "按这张"))
+    return bool(images) or _any(
+        text,
+        (
+            "参考",
+            "照着",
+            "照这张",
+            "附图",
+            "垫这张",
+            "垫图",
+            "垫参考",
+            "这张的画风",
+            "按这张",
+            "抄这张",
+            "跟这张",
+            "仿这张",
+            "这张味道",
+            "这张手感",
+            "这张气质",
+        ),
+    )
 
 
 def _wants_variant(text: str) -> bool:
     if _any(text, ("画这个角色", "来一张她的立绘", "来一张他的立绘")) and not _any(
-        text, ("表情", "差分", "换画风", "动作", "生气", "微笑")
+        text, ("表情", "差分", "换画风", "动作", "生气", "微笑", "变体", "表情包")
     ):
         return False
-    return _any(text, ("换画风", "换个画风", "换个风格", "表情", "差分", "动作差分", "表情表", "生气", "微笑", "闭眼"))
+    return _any(
+        text,
+        (
+            "换画风",
+            "换个画风",
+            "换个风格",
+            "换个姿势",
+            "换个动作",
+            "换姿势",
+            "换动作",
+            "表情",
+            "差分",
+            "动作差分",
+            "表情表",
+            "表情包",
+            "变体",
+            "生气",
+            "微笑",
+            "闭眼",
+            "侧目",
+            "眨眼",
+            "惊讶",
+            "叹气",
+            "姿势",
+            "动作",
+            "同一张脸",
+            "同一身份",
+        ),
+    )
 
 
 def _wants_multi(text: str, images: list[str], roles: list[str]) -> bool:
@@ -245,7 +372,9 @@ def _wants_multi(text: str, images: list[str], roles: list[str]) -> bool:
         return True
     if _any(text, ("各管一件事", "身份图", "结构图", "这张是脸", "第一张是脸", "一张管")):
         return True
-    if _any(text, ("关上", "打开")) and _any(text, ("另一张", "不在同一张", "身份在")):
+    if _any(text, ("关上", "打开", "关开")) and _any(
+        text, ("另一张", "不在同一张", "身份在", "两态", "同一机位", "锁同一机位")
+    ):
         return True
     return False
 
@@ -253,15 +382,47 @@ def _wants_multi(text: str, images: list[str], roles: list[str]) -> bool:
 def _wants_key(text: str) -> bool:
     if _hit(text, "带字主视觉"):
         return False
-    return _any(text, ("主视觉", "Key Art", "key art", "气氛图", "概念海报", "概念图"))
+    return _any(text, ("主视觉", "Key Art", "key art", "气氛图", "概念海报", "概念图", "宣传图", "KeyArt"))
 
 
 def _wants_style(text: str) -> bool:
-    return _any(text, ("以后按这张", "以后都按", "以后都用", "往后出图", "都用这张", "锁定画风", "锁定风格", "锁成风格", "锁风格"))
+    return _any(
+        text,
+        (
+            "以后按这张",
+            "以后都按",
+            "以后都用",
+            "往后出图",
+            "都用这张",
+            "锁定画风",
+            "锁定风格",
+            "锁成风格",
+            "锁风格",
+            "风格锁定",
+            "色板锁上",
+            "以后照这个画",
+        ),
+    )
 
 
 def _wants_critique(text: str) -> bool:
-    return _any(text, ("只审", "别画", "不画", "别动笔", "哪里不行", "挑刺", "审图", "审一下", "审完再改", "审完再画"))
+    return _any(
+        text,
+        (
+            "只审",
+            "别画",
+            "不画",
+            "别动笔",
+            "哪里不行",
+            "挑刺",
+            "审图",
+            "审一下",
+            "审完再改",
+            "审完再画",
+            "先看看哪不行",
+            "只评不画",
+        ),
+    )
 
 
 def _critique_then_draw(text: str) -> bool:
@@ -269,7 +430,7 @@ def _critique_then_draw(text: str) -> bool:
 
 
 def _wants_atlas(text: str) -> bool:
-    return _any(text, ("散图归位", "归档", "归位", "刷新图谱", "没归类"))
+    return _any(text, ("散图归位", "归档", "归位", "刷新图谱", "没归类", "收进图谱", "整理散图"))
 
 
 def _wants_coach(text: str) -> bool:
@@ -279,11 +440,22 @@ def _wants_coach(text: str) -> bool:
 
 
 def _wants_prompt(text: str) -> bool:
-    if _any(text, ("提示词", "brief", "Brief")) and _any(
-        text, ("先不出图", "先别出图", "只写提示词", "写提示词", "扩写", "扩成")
+    if _any(text, ("提示词", "brief", "Brief", "prompt", "Prompt")) and _any(
+        text,
+        (
+            "先不出图",
+            "先别出图",
+            "先别画",
+            "只写提示词",
+            "写提示词",
+            "扩写",
+            "扩成",
+            "先出",
+            "先写",
+        ),
     ):
         return True
-    return _any(text, ("扩成", "扩写")) and _any(text, ("先不出图", "先别出图"))
+    return _any(text, ("扩成", "扩写")) and _any(text, ("先不出图", "先别出图", "先别画"))
 
 
 def _prompt_then_draw(text: str) -> bool:
@@ -322,6 +494,10 @@ def _showcase_ids(text: str) -> list[str]:
         ("合成梯", "merge.ladder"),
         ("原画", "draw.key"),
         ("普通图", "draw.ordinary"),
+        ("克隆", "draw.clone"),
+        ("变体", "draw.variant"),
+        ("锁风格", "style.lock"),
+        ("提示词", "prompt.write"),
     )
     for word, rid in probes:
         idx = text.find(word)
@@ -332,6 +508,9 @@ def _showcase_ids(text: str) -> list[str]:
     for _idx, rid in found:
         if rid not in out:
             out.append(rid)
+    # 「全部重跑 / 同范围」未点名单支 → 默认同范围全清单，避免 showcase_unspecified
+    if not out and re.search(r"全部重跑|再跑一遍|重跑一遍|同范围", text or ""):
+        return list(_SHOWCASE_DEFAULT_FULL)
     return out
 
 
@@ -374,8 +553,8 @@ def _draw_done(route_id: str) -> str:
     if route_id == "draw.lens":
         return "点选前不生图，机位句子写完即停"
     if route_id == "draw.multi":
-        return "这一态六维调和平均 ≥ 9.60，且身份和结构各在该在的地方"
-    return "六维调和平均 ≥ 9.60，最多 4 轮"
+        return "这一态六维调和平均 ≥ 9.50，且身份和结构各在该在的地方"
+    return "六维调和平均 ≥ 9.50，最多 4 轮"
 
 
 def plan_route(
@@ -386,7 +565,11 @@ def plan_route(
     registry: dict[str, Any] | None = None,
 ) -> Plan:
     """对一句话做分配。execute 恒为 False。"""
-    raw = (text or "").strip()
+    from .route_normalize import normalize_for_route
+
+    spoken = (text or "").strip()
+    # 表面折叠：搞个/味道/合成升级 → 规则词；交付物文案仍用玩家原话
+    raw = normalize_for_route(spoken) if spoken else spoken
     pics = [p for p in (images or []) if p]
     roles = list(image_roles or [])
     reg = registry or _registry()
@@ -454,6 +637,10 @@ def plan_route(
         elif _wants_multi(raw, pics, roles):
             chosen = ["draw.multi"]
             reason = "multi"
+        elif _wants_variant(raw) and _any(raw, ("同一张脸", "同一身份", "还是她", "还是他", "别换人")):
+            # 已锁同一身份时，表情/姿势优先变体，避免被「改成」误抢成克隆
+            chosen = ["draw.variant"]
+            reason = "variant"
         elif _has_ref(raw, pics) and _new_subject(raw):
             chosen = ["draw.clone"]
             reason = "clone"
@@ -472,6 +659,14 @@ def plan_route(
         elif not draw_only and _wants_style(raw):
             chosen = ["style.lock"]
             reason = "style"
+        elif not draw_only and _wants_prompt(raw) and _wants_critique(raw) and _any(
+            raw, ("只审", "挑刺", "审图", "只评")
+        ):
+            return _stop("hard_ambiguity", "提示词和只审同时出现，先问这一处")
+        elif not draw_only and _wants_prompt(raw):
+            # 提示词意图优先于「别画」审图，避免「先写提示词别画」误进 critique
+            chosen = ["prompt.write"]
+            reason = "prompt"
         elif not draw_only and _wants_critique(raw):
             chosen = ["critique.review"]
             reason = "critique"
@@ -481,9 +676,6 @@ def plan_route(
         elif not draw_only and _wants_coach(raw):
             chosen = ["coach.report"]
             reason = "coach"
-        elif not draw_only and _wants_prompt(raw):
-            chosen = ["prompt.write"]
-            reason = "prompt"
         else:
             chosen = ["draw.ordinary"]
             reason = "default"
@@ -530,16 +722,16 @@ def plan_route(
             locks = "身份、画风和机位按这一节；普通图锁机位"
             done = _draw_done(rid)
             if rid == "draw.ordinary":
-                note = "单张、medium、最多 4 轮、合格线 9.60。不说成多图分工"
+                note = "单张、medium、最多 4 轮、合格线 9.50。不说成多图分工"
                 locks = "锁机位和身份。多张参考留在列表里，生成只垫宽高比对齐的那张"
         elif rid == "ui.kit":
-            done = "概念、组件、九宫格、状态族都过 9.60"
+            done = "概念、组件、九宫格、状态族都过 9.50"
             locks = "整套界面，不用单张插画交差"
         elif rid.startswith("icon."):
-            done = "该档母版或图标过 9.60，A/B/C 不混"
+            done = "该档母版或图标过 9.50，A/B/C 不混"
             locks = route["when"]
         elif rid == "merge.ladder":
-            done = "八件关系说得通之后，每档正方形 ≥ 9.60"
+            done = "八件关系说得通之后，每档正方形 ≥ 9.50"
             locks = "同一条升级链，不改成另一套东西"
         elif rid == "prompt.write":
             done = "交出提示词方案，不生图"
@@ -560,7 +752,7 @@ def plan_route(
         steps.append(
             _handoff(
                 route,
-                deliverable=raw[:80] or route["when"],
+                deliverable=spoken[:80] or route["when"],
                 images=pics,
                 locks=locks,
                 done=done,

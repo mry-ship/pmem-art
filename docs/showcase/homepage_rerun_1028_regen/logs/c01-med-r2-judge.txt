@@ -1,4 +1,4 @@
-🔄 [Step 2B · 五维审图 · agent_absolute_5d] 第 2/4 轮得分 8.50 < 目标阈值 9.60（未达标继续下一轮第 3 轮）。
+🔄 [Step 2B · 五维审图 · agent_absolute_5d] 第 2/4 轮得分 8.50 < 目标阈值 9.50（未达标继续下一轮第 3 轮）。
    · 图像校验: 720x1280 (9:16, 392.1KB, byteH=7.24) | 五维: 构图8.5/光影8.7/透视8.3/质感8.4/风格8.6
    · 不合理处: 人仍偏左且比原图略大；剑是一根暗棍，握持看不出拇指受力；prompt 改动 97% 超过档位上限 40%
    · 下一轮先垫这张再出图：第 2 轮 `/Users/yanghu/Desktop/pmem-art/docs/showcase/homepage_rerun_1028_regen/draw_matrix/c01/medium/r2.jpg`

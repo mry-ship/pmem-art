@@ -1,0 +1,111 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-10-30 04:09:07 UTC+8",
+  "session_id": "regen3-var-angry",
+  "goal": "同一窗边日光少女表情差分：微怒鼓嘴。锁机位画风发色瞳色白猫发夹耳机白T；只改表情。",
+  "module": "character.SunlitGirl",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 4,
+  "winner_score": 9.51,
+  "winner_image": "assets/character/sunlitgirl/r4.jpg",
+  "winner_passed": true,
+  "outcome": "✅ **经过 4 轮迭代达标定稿**（generate 与 judge 分步收敛，第 4 轮达到 `9.51 / 10.0` 分 ≥ `9.50` 分档位目标线即刻停机）",
+  "what_fixed": [
+    "双颊微鼓更明显半档；嘴角下压更清楚；眉轻蹙保持；其余全锁",
+    "白猫发夹锁回右发侧；双颊微鼓更圆；嘴角下压保持；其余全锁",
+    "双颊微鼓再圆半档；其余全锁"
+  ],
+  "what_still_weak": "残余可接受点：眉心轻蹙可再明确半档",
+  "strengths": "微怒鼓嘴圆颊清楚；猫夹发侧；身份机位全锁",
+  "taste_deltas": {
+    "from_strengths": [
+      "微怒鼓嘴圆颊清楚；猫夹发侧；身份机位全锁"
+    ],
+    "from_defects": [
+      "双颊鼓起体积还可再明显半档；嘴角下压可更清楚一点",
+      "白猫发夹位置需贴发侧勿漂到耳机壳；双颊鼓起还可再圆半档",
+      "双颊鼓起还可再圆半档"
+    ]
+  },
+  "warm_start_confidence": 0.9,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 9.1,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 9.2,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 9.44,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 9.51,
+      "passed": true
+    }
+  ],
+  "lessons": [
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：双颊鼓起体积还可再明显半档；嘴角下压可更清楚一点",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.1"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：微怒鼓嘴与蹙眉成立；身份机位全锁；未变狂怒",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.1"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：白猫发夹位置需贴发侧勿漂到耳机壳；双颊鼓起还可再圆半档",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.2"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：微怒鼓嘴更清楚；身份机位全锁",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.2"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：双颊鼓起还可再圆半档",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.44"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：微怒鼓嘴成立；猫夹在发侧；身份机位全锁",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.44"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：眉心轻蹙可再明确半档",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.51"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：微怒鼓嘴圆颊清楚；猫夹发侧；身份机位全锁",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.51"
+    }
+  ]
+}

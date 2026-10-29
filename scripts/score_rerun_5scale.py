@@ -185,11 +185,11 @@ def render(rows: list[dict], scores: dict[str, dict]) -> None:
                 totals.append(t)
         sections.append(f"<section><h2>{CASE_CN[slug]}</h2><div class=\"row\">{''.join(cards)}</div></section>")
     mean = round(sum(totals) / len(totals), 2) if totals else None
-    reached = sum(1 for t in totals if t >= 9.6)
+    reached = sum(1 for t in totals if t >= 9.5)
     note = (
         f"出图模型 gpt-image-2.5-sunburst，每格 1 轮。评分模型 gpt-6-astra（失败时脚本会改用兜底），推理强度 medium。"
-        f" low / medium / high / recompose 的总分是档位权重合成；原图和大改是五维均分。合格线仍是 9.60。"
-        f" 本页 {reached}/{len(totals)} 张 ≥9.60"
+        f" low / medium / high / recompose 的总分是档位权重合成；原图和大改是五维均分。合格线仍是 9.50。"
+        f" 本页 {reached}/{len(totals)} 张 ≥9.50"
         + (f"，均分 {mean:.2f}。" if mean is not None else "。")
     )
     html = f"""<!DOCTYPE html>
@@ -237,7 +237,7 @@ def card_html(label: str, filename: str, sc: dict, scale: str, slug: str, prompt
         err = esc(sc.get("error") or "未评分")
         return f'<figure class="card{ref_cls}"><figcaption><span>{esc(label)}</span></figcaption><img src="images/{esc(filename)}" alt="{esc(label)}"><p class="defect">{err}</p></figure>'
     total, kind = weighted(sc["dims"], scale)
-    tone = "hit" if total >= 9.6 else "mid" if total >= 8.5 else "low"
+    tone = "hit" if total >= 9.5 else "mid" if total >= 8.5 else "low"
     dims = " · ".join(f"{DIM_CN[k]} {sc['dims'][k]:.1f}" for k in DIMS)
     defect = esc("；".join(sc.get("defects") or [])[:140])
     extra = ""

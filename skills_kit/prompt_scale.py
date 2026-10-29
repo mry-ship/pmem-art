@@ -10,9 +10,9 @@ from typing import Any
 
 from ._time import _now_cst
 
-DEFAULT_THRESHOLD = 9.6
+DEFAULT_THRESHOLD = 9.5
 DEFAULT_MAX_ROUNDS = 4
-FAST_SOFT_THRESHOLD = 9.0  # fast-track: prefer fewer regens when score>=9.0 & delta small; final accept still >=9.6 unless draft
+FAST_SOFT_THRESHOLD = 9.0  # fast-track: prefer fewer regens when score>=9.0 & delta small; final accept still >=9.5 unless draft
 # Physical image gate: solid-gray probes sit ~2.5–2.9; real art JPEGs are typically ≥6.
 MIN_IMAGE_BYTE_ENTROPY = 3.2
 MIN_IMAGE_EDGE_PX = 64
@@ -20,11 +20,11 @@ MIN_IMAGE_EDGE_PX = 64
 CONVERGE_SCALE_PROFILES: dict[str, dict[str, Any]] = {
     "low": {
         "scale": "low",
-        "label": "低强度 · 保守修瑕动态达标闭环 (Defect-Fix Dynamic Threshold >=9.6)",
+        "label": "低强度 · 保守修瑕动态达标闭环 (Defect-Fix Dynamic Threshold >=9.5)",
         "stop_policy": "dynamic_threshold",
         "max_rounds": 4,
         "min_rounds_before_stop": 1,
-        "target_score_threshold": 9.6,
+        "target_score_threshold": 9.5,
         "dim_weights": {
             "composition": 0.15,
             "lighting_color": 0.20,
@@ -53,15 +53,18 @@ CONVERGE_SCALE_PROFILES: dict[str, dict[str, Any]] = {
         # Soft leap: strong ref-image runs often move +0.10~0.20; 0.12 was noisy.
         "min_round_leap": 0.10,
         "prompt_delta_baseline": "first",
-        "prompt_directive": "原图画风优先：锁视角与姿态，仅微修局部质感",
+        "prompt_directive": (
+            "原图画风优先：锁视角与姿态落点（手/脚具体触点以参考像素为准，"
+            "禁止把搭膝改成撑地或后仰），仅微修局部质感"
+        ),
     },
     "medium": {
         "scale": "medium",
-        "label": "中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.6)",
+        "label": "中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.5)",
         "stop_policy": "dynamic_threshold",
         "max_rounds": 4,
         "min_rounds_before_stop": 1,
-        "target_score_threshold": 9.6,
+        "target_score_threshold": 9.5,
         "dim_weights": {
             # Align v2 mid feel: lighting ≈25%; still camera-locked polish.
             "composition": 0.20,
@@ -95,12 +98,12 @@ CONVERGE_SCALE_PROFILES: dict[str, dict[str, Any]] = {
     },
     "high": {
         "scale": "high",
-        "label": "高强度 · 大胆跃升+可叙事动态达标闭环 (Showcase Overhaul Dynamic Threshold >=9.6)",
+        "label": "高强度 · 大胆跃升+可叙事动态达标闭环 (Showcase Overhaul Dynamic Threshold >=9.5)",
         "stop_policy": "dynamic_threshold",
         "max_rounds": 4,
         # Prevent 1-round "locked DNA photocopy" stop — drama needs at least one refine pass.
         "min_rounds_before_stop": 2,
-        "target_score_threshold": 9.6,
+        "target_score_threshold": 9.5,
         "dim_weights": {
             # Favor lighting/drama over structural photocopy rewards.
             "composition": 0.15,
@@ -132,11 +135,11 @@ CONVERGE_SCALE_PROFILES: dict[str, dict[str, Any]] = {
     },
     "recompose": {
         "scale": "recompose",
-        "label": "定向改构图模式 · 按用户指定新构图动态达标闭环 (Directed Re-Composition Dynamic Threshold >=9.6)",
+        "label": "定向改构图模式 · 按用户指定新构图动态达标闭环 (Directed Re-Composition Dynamic Threshold >=9.5)",
         "stop_policy": "dynamic_threshold",
         "max_rounds": 4,
         "min_rounds_before_stop": 2,
-        "target_score_threshold": 9.6,
+        "target_score_threshold": 9.5,
         "dim_weights": {
             "composition": 0.30,
             "lighting_color": 0.20,

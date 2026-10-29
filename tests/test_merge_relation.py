@@ -152,6 +152,40 @@ class MergeRelationTests(unittest.TestCase):
         ok, issues = judge_relation_rows(rows, track=track)
         self.assertTrue(ok, issues)
 
+    def test_base_body_locks_mother_mesh(self) -> None:
+        """Same-object ladders may declare base_body; reinventing the mother fails."""
+        good = {
+            "base_body": "透明切面短药瓶",
+            "rows": [
+                {
+                    "level": i,
+                    "name": f"药{i}",
+                    "silhouette": f"透明切面短药瓶档{i}",
+                    "scale_pct": 0.55 + i * 0.03,
+                    "parts_add": "塞" if i > 1 else "—",
+                }
+                for i in range(1, 9)
+            ],
+        }
+        ok, issues = judge_relation_rows(parse_rows(good), track=good)
+        self.assertTrue(ok, issues)
+        bad = {
+            "base_body": "透明切面短药瓶",
+            "rows": [
+                {
+                    "level": i,
+                    "name": f"宝石{i}",
+                    "silhouette": f"实心宝石锥塔{i}",
+                    "scale_pct": 0.55 + i * 0.03,
+                    "parts_add": "尖" if i > 1 else "—",
+                }
+                for i in range(1, 9)
+            ],
+        }
+        ok2, issues2 = judge_relation_rows(parse_rows(bad), track=bad)
+        self.assertFalse(ok2)
+        self.assertTrue(any("未锁母体" in it for it in issues2), issues2)
+
     def test_l8_too_large_fails(self) -> None:
         rows = parse_rows(
             {

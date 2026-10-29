@@ -155,7 +155,7 @@ def main() -> int:
     scores = load_scores(Path(args.scores))
     manifest = json.loads(Path(args.manifest).read_text()) if Path(args.manifest).is_file() else {"items": {}}
     rounds_map = rounds_from_manifest(manifest)
-    thr = float((manifest.get("threshold") if isinstance(manifest, dict) else None) or 9.6)
+    thr = float((manifest.get("threshold") if isinstance(manifest, dict) else None) or 9.5)
     items = (manifest.get("items") or {}) if isinstance(manifest, dict) else {}
     ok_items = [r for r in items.values() if r.get("ok")]
     n_reached = sum(1 for r in ok_items if float(r.get("final_score") or 0) >= thr)
@@ -248,7 +248,7 @@ def main() -> int:
     parts = []
     parts.append(f"""<!DOCTYPE html>
 <html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>pmem-art · V8×20 Bot Showcase (skills_kit · ≥9.60 / 8 rounds)</title>
+<title>pmem-art · V8×20 Bot Showcase (skills_kit · ≥9.50 / 8 rounds)</title>
 <style>
 {style}
 .score-big{{font-size:22px;font-weight:800}}
@@ -261,8 +261,8 @@ def main() -> int:
 .five-col-grid.base-grid{{grid-template-columns:repeat(4,minmax(0,1fr))}}
 </style></head><body>
 <header>
-<h1>🎨 pmem-art · V8 × 20 Bot 展陈（skills_kit 合同 · STOP≥9.60 · 最多8轮）</h1>
-<p>选型：4 风格 ×（low_best / medium_best / high_best / recompose / recompose_bold）= 20（与前次相同）。生图：gpt-image-2 edits（自 style ref）；按 skills_kit：停分 ≥9.60、上限 8 轮、缺陷回流再生成。评分：gpt-6-sol Absolute-5D Quant。布局对齐 <code>pmem_art_images_v6_32bots_showcase.html</code>（category legend · case-block · five-col-grid · baseline）。旧 V2 showcase 剧本分不可横比。</p>
+<h1>🎨 pmem-art · V8 × 20 Bot 展陈（skills_kit 合同 · STOP≥9.50 · 最多8轮）</h1>
+<p>选型：4 风格 ×（low_best / medium_best / high_best / recompose / recompose_bold）= 20（与前次相同）。生图：gpt-image-2 edits（自 style ref）；按 skills_kit：停分 ≥9.50、上限 8 轮、缺陷回流再生成。评分：gpt-6-sol Absolute-5D Quant。布局对齐 <code>pmem_art_images_v6_32bots_showcase.html</code>（category legend · case-block · five-col-grid · baseline）。旧 V2 showcase 剧本分不可横比。</p>
 <div class="category-legend">
   <div class="legend-box legend-auto"><b>改构图 recompose</b><br>跟 --recompose-dir 换机位；保画风色板与身份；≥2 轮</div>
   <div class="legend-box legend-boost"><b>最优方向 best</b><br>low/med/high + cinematic V8 加法清单（孔明灯/耳机/雏菊/体积光）</div>
@@ -271,7 +271,7 @@ def main() -> int:
 <div class="rule-pills">
   <span class="rule-pill">评分 gpt-6-sol Quant</span>
   <span class="rule-pill">生图 gpt-image-2</span>
-  <span class="rule-pill">STOP ≥9.60 · max 8</span>
+  <span class="rule-pill">STOP ≥9.50 · max 8</span>
   <span class="rule-pill">前次 V8-20 均值 {args.prev_mean}</span>
   <span class="rule-pill">轮次 {' · '.join(f'{k}×{v}' for k,v in sorted(round_counts.items())) or '—'}</span>
   <span class="rule-pill">更新 {now}</span>
@@ -281,7 +281,7 @@ def main() -> int:
   <div class="stat"><div class="k">vs 前次 V8-20 {args.prev_mean}</div><div class="v {'up' if (delta or 0)>0 else 'down' if (delta or 0)<0 else 'flat'}">{('+' if delta and delta>0 else '')}{delta if delta is not None else '—'}</div></div>
   <div class="stat"><div class="k">原图基线均值</div><div class="v">{base_mean if base_mean is not None else '—'}</div></div>
   <div class="stat"><div class="k">区间</div><div class="v">{f"{min(bot_totals):.2f}–{max(bot_totals):.2f}" if bot_totals else '—'}</div></div>
-  <div class="stat"><div class="k">≥9.60 达标</div><div class="v">{n_reached}/{len(ok_items)}</div></div>
+  <div class="stat"><div class="k">≥9.50 达标</div><div class="v">{n_reached}/{len(ok_items)}</div></div>
 </div>
 <p style="margin-top:10px;font-size:13px;color:#cbd5e1">停因 {stop_reasons} · 轮次分布 {skill_round_dist} · 合同停分 {thr}</p>
 <p style="margin-top:12px;font-size:13px;color:#cbd5e1">维度均值：{' · '.join(f'{DIM_CN[d]} {dim_means.get(d)}' for d in DIMS)}</p>

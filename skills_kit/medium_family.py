@@ -134,7 +134,7 @@ _FAMILY_DIRECTIVE: dict[str, dict[str, str]] = {
         "recompose": "按指定方向换机位，发光方式不动",
     },
     "generic": {
-        "low": "锁机位和笔触，只修看得见的脏点、断边，不发明新的光",
+        "low": "锁机位、姿态落点（手/脚触点跟参考像素，禁止搭膝改撑地）和笔触，只修看得见的脏点、断边，不发明新的光",
         "medium": "保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光",
         "high": "保媒介与身份，只抬已经看得见的层次",
         "recompose": "保画风色板，按指定方向重构机位，笔触和光的类型跟参考图",
@@ -260,6 +260,10 @@ def apply_family_to_profile(
     prof["dim_weights"] = family_weights(fam)
     scale = str(prof.get("scale") or "medium")
     sentence = family_prompt_sentence(fam, scale, recompose_dir)
+    # low forbids pose change: keep limb-contact lock even after family sentence overwrite.
+    if scale == "low" and prof.get("allow_action_pose_change") is False:
+        if "姿态落点" not in sentence and "搭膝" not in sentence:
+            sentence = f"{sentence.rstrip('。')}；锁姿态落点（手/脚触点跟参考像素，禁止搭膝改撑地）"
     head = (style_head or "").strip()
     prof["prompt_directive"] = f"{head}：{sentence}" if head else sentence
     prof["best_direction_hint"] = family_best_hint(fam, scale)

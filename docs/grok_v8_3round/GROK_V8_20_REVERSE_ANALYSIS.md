@@ -1,7 +1,7 @@
 # V8-20 Grok GenerateImage 反推分析
 
 - **生成后端**: Cursor `GenerateImage` (Grok)
-- **收敛**: v2fix (threshold 9.6, anat gate 7.0, pad=auto, max_rounds 实践=2)
+- **收敛**: v2fix (threshold 9.5, anat gate 7.0, pad=auto, max_rounds 实践=2)
 - **打分**: offline Absolute-5D（VLM gpt-6-sol `INSUFFICIENT_BALANCE`）
 - **产物目录**: `/workspace/pmem-art-v8/generated_v8_20_skill_grok/`
 - **本分析路径**: `/workspace/pmem-art-v8/generated_v8_20_skill_grok/GROK_V8_20_REVERSE_ANALYSIS.md`
@@ -12,7 +12,7 @@
 
 | 跑次 | mean_final | n | 备注 |
 |---|---:|---:|---|
-| **Grok (本跑)** | **8.286** | 20 | min=7.65 max=8.8; 0×≥9.6; stop=practical_stop_offline_ceiling_r2×20 |
+| **Grok (本跑)** | **8.286** | 20 | min=7.65 max=8.8; 0×≥9.5; stop=practical_stop_offline_ceiling_r2×20 |
 | gpt-image (generated_v8_20_skill) | **8.938** | 20 | 对照 mean 用户口径 8.94 |
 | oct26 backup | **9.139** | 20 | 用户口径 9.14 |
 
@@ -95,7 +95,7 @@
 
 | 秩 | 杠杆 | 期望增益 | 建议动作 |
 |---:|---|---|---|
-| 1 | **恢复真 VLM 打分**（gpt-6-sol / 等价） | +0.4～0.8 mean 观感对齐 + 可冲 9.6 | 充值/换 key；否则 offline 天花板使 converge 信号失真 |
+| 1 | **恢复真 VLM 打分**（gpt-6-sol / 等价） | +0.4～0.8 mean 观感对齐 + 可冲 9.5 | 充值/换 key；否则 offline 天花板使 converge 信号失真 |
 | 2 | **pad policy: 优先 pad=ref（非 previous）** 当 R1≥8.2 | +0.2～0.4 on hurt 组 | R2 hurt 7 例多为 pad-from-previous 漂移；高开局锁 ref |
 | 3 | **recompose / bold 提示词降激进** | +0.5～1.0 on 15/16/23/24/31/32 | 去掉“bold recompose / extreme FOV”类；改为 mild crop + 同镜头 |
 | 4 | **解剖/手/脸硬约束写入 prompt** | +anat 真分（VLM 后可见） | 每轮强制：`correct human anatomy, five fingers, coherent joints, no warped limbs`；portrait 加 iris/双层眼 |
@@ -141,7 +141,7 @@
 | | Grok | gpt-image | backup |
 |---|---:|---:|---:|
 | mean | **8.286** | **8.94** | **9.14** |
-| ≥9.6 | 0/20 | (gpt 跑有) | (backup 有) |
+| ≥9.5 | 0/20 | (gpt 跑有) | (backup 有) |
 | 主瓶颈 | offline anat 先验 + texture + bold/recompose | — | — |
 
 **一句话**: Grok 本跑比 gpt-image 低约 **0.65**、比 backup 低约 **0.85**；一半落差来自 **offline anatomy=7.0 天花板** 与 **recompose/bold 策略不适配**，另一半来自 **texture 偏弱** 与 **R2 pad-previous 伤害高开局**。下一刀：恢复 VLM + pad=ref for high R1 + 软化 bold/recompose，优先重跑 24/15/31/16/32/30/23/02。

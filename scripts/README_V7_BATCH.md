@@ -21,7 +21,7 @@ python3 -c "import skills_kit, inspect; print(skills_kit.__file__)"
 | :--- | :--- |
 | `bot_tasks_v7.json` | 32 bots；无「严格保留DNA / 垫图一致性高 / 构图：锁死」；high goal 写 50–80% |
 | `best_prompts_by_scale.json` | 按档最优方向（加法，非第二份锁） |
-| `scripts/v7_image_scorer.py` | high/recompose/bold 的 struct 权重=0；**无** `struct>0.35→≥9.60` |
+| `scripts/v7_image_scorer.py` | high/recompose/bold 的 struct 权重=0；**无** `struct>0.35→≥9.50` |
 | `scripts/run_32bots_v7_dry.py` | **不出图** dry-run：preflight + 剥锁 + `min_rounds≥2` |
 
 ## 自检
@@ -39,4 +39,4 @@ rg -n 'min_rounds' scripts/run_*v7*.py
 
 ## 真正出图时
 
-接 Desktop `converge start/generate/judge`；`high`/`recompose`/`recompose_bold` 必须走引擎 `min_rounds_before_stop`（≥2），禁止仅凭外挂 scorer ≥9.60 在 R1 STOP。
+接 Desktop `converge start/generate/judge`；`high`/`recompose`/`recompose_bold` 必须走引擎 `min_rounds_before_stop`（≥2），禁止仅凭外挂 scorer ≥9.50 在 R1 STOP。

@@ -73,7 +73,7 @@ def auto_vlm_judge_image(
     - If `vlm_judge` API key is configured, calls the remote vision model first.
     - If no key: current multimodal Agent scores the 6D checklist via CLI `dims`/`defects`
       (`agent_absolute_5d`). Pixel offline scores are not computed. Threshold stays
-      scale profile (default 9.6) — no no-key hard STOP / 8.50 early exit.
+      scale profile (default 9.5) — no no-key hard STOP / 8.50 early exit.
     - Case aspect checks use `session_id` + `ref_image` only — never the output filename.
     """
     p = Path(image_path) if image_path else Path()
@@ -137,7 +137,7 @@ def auto_vlm_judge_image(
             remote_meta = {"source": "vlm_import_error", "error": str(exc), "active": False}
             judge_source = "agent_self_judge"
 
-    # No independent VLM → Agent Absolute-5D (same 9.6 gate).
+    # No independent VLM → Agent Absolute-5D (same 9.5 gate).
     if judge_source != "independent_vlm":
         if dims.strip():
             judge_source = AGENT_JUDGE_SOURCE

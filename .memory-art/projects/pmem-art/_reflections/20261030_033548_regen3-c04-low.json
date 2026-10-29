@@ -1,0 +1,112 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-10-30 03:35:48 UTC+8",
+  "session_id": "regen3-c04-low",
+  "goal": "依参考俯视/石院地理与光色精修——强化砖石褶皱可读、空气透视、暖冷对比与体积雾；墨线淡彩；low只修局部瑕疵不改机位",
+  "module": "scene.IshtarCanyon",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 3,
+  "winner_score": 9.06,
+  "winner_image": "assets/scene/ishtarcanyon/r3.jpg",
+  "winner_passed": false,
+  "outcome": "⚠️ **共执行 4 轮审图（目标阈值 `9.50` 分），未达标，已挑选全阶段最高分**（胜出：第 3 轮 `9.06 / 10.0` 分）",
+  "what_fixed": [
+    "中景砖缝排线再锐；光柱尘埃略加；木梯接触阴影可读",
+    "井底拱门区砖缝再锐；光柱尘埃略密；中景左侧墙排线跟近景对齐",
+    "井底拱门纹样再锐；中景左墙排线跟井口近缘对齐；光柱中段尘埃略加",
+    "已满4轮。取最高分停。"
+  ],
+  "what_still_weak": "井底雕花拱门在阴影里纹样仍偏软；中景左墙排线相对井口近缘仍略松；光柱中段尘埃还可再密一点；prompt 改动 43% 超过档位上限 20%",
+  "strengths": "光柱体积光可读；俯视砖井与墨线淡彩锁稳",
+  "taste_deltas": {
+    "from_strengths": [
+      "光柱体积光可读；俯视砖井与墨线淡彩锁稳"
+    ],
+    "from_defects": [
+      "井底雕花拱门区砖缝仍略糊；光柱尘埃密度仍偏稀；中景左侧墙砖排线不如近景锐；prompt 改动 39% 超过档位上限 20%",
+      "井底雕花拱门在阴影里纹样仍偏软；中景左墙排线相对井口近缘仍略松；光柱中段尘埃还可再密一点；prompt 改动 43% 超过档位上限 20%",
+      "红帽小人仍几乎不可辨，拱门旁只剩盔甲状小点；光柱尘埃仍偏稀；破木梯台阶与墙面接缝接触影偏弱；prompt 改动 30% 超过档位上限 20%"
+    ]
+  },
+  "warm_start_confidence": 0.9,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 8.51,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 8.81,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 9.06,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 8.78,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：中景砖缝褶皱仍局部偏糊；光柱体积尘埃偏薄；木梯与墙面接缝接触阴影偏弱",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.51"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：俯视砖井机位与墨线淡彩身份锁稳；暖赭墙与冷青紫阴影对比成立",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.51"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：井底雕花拱门区砖缝仍略糊；光柱尘埃密度仍偏稀；中景左侧墙砖排线不如近景锐；prompt 改动 39% 超过档位上限 20%",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.81"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：墨线淡彩与俯视井口机位保持；暖墙冷影对比更清晰",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.81"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：井底雕花拱门在阴影里纹样仍偏软；中景左墙排线相对井口近缘仍略松；光柱中段尘埃还可再密一点；prompt 改动 43% 超过档位上限 20%",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.06"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：光柱体积光可读；俯视砖井与墨线淡彩锁稳",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.06"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：红帽小人仍几乎不可辨，拱门旁只剩盔甲状小点；光柱尘埃仍偏稀；破木梯台阶与墙面接缝接触影偏弱；prompt 改动 30% 超过档位上限 20%",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.78"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：井口俯视与暖赭冷紫对比仍稳；砖墙排线整体比前几轮更干净",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.78"
+    }
+  ]
+}
