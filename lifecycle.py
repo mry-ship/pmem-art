@@ -493,10 +493,10 @@ def default_config(project_name: str = "Untitled Art Project", mode: str = "youn
             "default_scale": "medium",
             "max_rounds": 8,
             "target_thresholds": {
-                "low": 9.6,
-                "medium": 9.6,
-                "high": 9.6,
-                "recompose": 9.6,
+                "low": 9.5,
+                "medium": 9.5,
+                "high": 9.5,
+                "recompose": 9.5,
             },
         },
         "vlm_judge": {
@@ -1097,6 +1097,10 @@ def cmd_init(root: Path, project_name: str = "Untitled Art Project", force: bool
     guide = mem / "ONBOARDING.md"
     guide.write_text(
         "# pmem-art 冷启动指南（Mode A · Young）\n\n"
+        "## 美术先看（零门槛）\n\n"
+        "在 Cursor / Claude / Codex **对话框直接说人话**，例如：`画一张窗边女孩水彩半身`。\n"
+        "不必背 `/技能`、不必碰命令行。认路总图：[docs/route_pipeline.html](../docs/route_pipeline.html)。\n\n"
+        "## 工程脚手架（可后做）\n\n"
         "1. `init` 已放入 **scaffold（脚手架）** 模块与 `assets/{brand,character,scene,ui,vfx,anim}/` 空目录。\n"
         "2. 把第一批图拖进对应目录（或任意子文件夹）。\n"
         "3. 运行 `python3 pmem_art.py sync` → 系统提出 **candidate** 模块（带置信度）。\n"
@@ -1115,6 +1119,10 @@ def cmd_init(root: Path, project_name: str = "Untitled Art Project", force: bool
     print("   · .cursor/rules/pmem-art.mdc + hooks.json")
     print("   · 已安装全部斜杠技能到 .cursor / .claude / .agents")
     print(f"   · {MEMORY_DIR}/ONBOARDING.md")
+    print("\n🎨 美术零门槛（不用背 /技能）：")
+    print("   在 Cursor 对话框直接说：画一张窗边女孩水彩半身")
+    print("   看到【走默认路径】或【按 XX 走了】就对了；说不清会先问你一句。")
+    print("   认路白话图：docs/route_pipeline.html")
     print("\n保证工作流（非盲目魔法）：")
     print("   落盘 → sync 提议 candidate → accept 一次确认 → search 闸门生效 → record/validate → atlas")
     print("\n下一步: python3 pmem_art.py bootstrap --mode young")
