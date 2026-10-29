@@ -1,0 +1,51 @@
+{
+  "id": "var-sleepy",
+  "session": "regen2-var-sleepy",
+  "skill": "/pmem-draw",
+  "contract": "变体",
+  "module": "character.WindowBust",
+  "scale": "medium",
+  "mode": "quality",
+  "aspect_ratio": "3:4",
+  "threshold": 9.6,
+  "passed": false,
+  "change": "困倦半眯",
+  "locked": ["机位", "半厚涂窗边光", "深蓝黑短发", "蓝瞳", "白猫发夹", "黑耳机", "白T"],
+  "ref": "docs/showcase/homepage_rerun_1028_regen2/v2/variant_expr/ref.jpg",
+  "output_dir": "docs/showcase/homepage_rerun_1028_regen2/v2/variant_sleepy/",
+  "final": "docs/showcase/homepage_rerun_1028_regen2/v2/variant_sleepy/final.jpg",
+  "winner_round": 1,
+  "winner_score": 8.06,
+  "board": ".memory-art/converge/boards/regen2-var-sleepy/index.html",
+  "note": "四轮上眼睑都停在虹膜上沿，困倦半眯没有出现，未达 9.6。交付第 1 轮最高分。",
+  "rounds": [
+    {
+      "round": 1,
+      "image": "docs/showcase/homepage_rerun_1028_regen2/v2/variant_sleepy/r1.jpg",
+      "score": 8.06,
+      "dims": "构图8.9/光影9.0/透视8.7/质感8.6/风格6.0/无瑕疵7.6",
+      "defect": "左右上眼睑仍抬起，蓝色虹膜几乎整只露在外面，眼裂和原图一样睁开，没有困倦半眯。"
+    },
+    {
+      "round": 2,
+      "image": "docs/showcase/homepage_rerun_1028_regen2/v2/variant_sleepy/r2.jpg",
+      "score": 8.01,
+      "dims": "构图8.8/光影8.9/透视8.6/质感8.6/风格6.1/无瑕疵7.5",
+      "defect": "上眼睑仍停在虹膜上沿，瞳孔完整露出，眼裂高度接近原图睁眼，没有收到虹膜中线的困倦半眯。"
+    },
+    {
+      "round": 3,
+      "image": "docs/showcase/homepage_rerun_1028_regen2/v2/variant_sleepy/r3.jpg",
+      "score": 7.97,
+      "dims": "构图8.8/光影8.9/透视8.6/质感8.6/风格6.0/无瑕疵7.4",
+      "defect": "上眼睑仍贴在虹膜上沿，瞳孔整只露出，眼裂没有收到一半，不是困倦半眯。"
+    },
+    {
+      "round": 4,
+      "image": "docs/showcase/homepage_rerun_1028_regen2/v2/variant_sleepy/r4.jpg",
+      "score": 7.95,
+      "dims": "构图8.8/光影8.9/透视8.6/质感8.6/风格5.9/无瑕疵7.4",
+      "defect": "左右眼仍大睁，上眼睑停在虹膜上沿，瞳孔没有被压到中线，困倦半眯没有出现。"
+    }
+  ]
+}

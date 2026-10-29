@@ -20,6 +20,8 @@ applies: 本仓库同时挂 pmem 与 pmem-art 期间
 aliases:
 - 仓库带pmem
 - zip不带pmem
+verified: '2026-10-30'
+verified_at: '2026-10-30T01:52:48.704+08:00'
 ---
 用户澄清：GitHub 开发仓必须带 pmem 脚手架（.memory、pmem hook、pmem MCP、pmem.mdc、AGENTS/CLAUDE 的 pmem 段）。
 只有给美术用户的 zip 包去掉这些。

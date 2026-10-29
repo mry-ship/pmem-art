@@ -1,0 +1,47 @@
+{
+  "mode": "C",
+  "set": "potion-grid",
+  "module": "icon.PotionSet",
+  "canvas": {
+    "aspect": "1:1",
+    "master_px": 256,
+    "exports_px": [64, 128, 256],
+    "format": "PNG",
+    "background": "transparent-alpha"
+  },
+  "stroke": {
+    "width_px_at_256": 10,
+    "color": "#1C140E",
+    "linecap": "round",
+    "linejoin": "round",
+    "silhouette": "thick"
+  },
+  "corner_radius": { "px_at_256": 16 },
+  "padding": { "safe_inset_ratio": 0.10, "optical_center": true },
+  "palette": {
+    "outline": "#1C140E",
+    "glass": "#F3E4C4",
+    "cork": "#C4893A",
+    "gold": "#E2B25C",
+    "heal_liquid": "#C4333A",
+    "mana_liquid": "#3C6ED4",
+    "key_metal": "#C8883C",
+    "key_highlight": "#F3D7A2",
+    "ruby": "#B11E36",
+    "ruby_highlight": "#FFE4C4",
+    "parchment": "#E6D2A2",
+    "wax": "#A31E28",
+    "shadow": "#1C140E"
+  },
+  "shadow": {
+    "type": "contact",
+    "offset_px_at_256": [0, 8],
+    "blur_px_at_256": 12,
+    "opacity": 0.42,
+    "color": "#1C140E",
+    "vignette": "只压在物件边缘，不在底上铺矩形暗角。"
+  },
+  "lighting": "棚拍：左上主光，弱补光。钥匙用暖金属高光，宝石用切面高光。",
+  "forbidden": ["text", "white backdrop as transparent", "magenta backdrop as transparent"],
+  "icons": ["heal", "mana", "key", "ruby", "scroll"]
+}

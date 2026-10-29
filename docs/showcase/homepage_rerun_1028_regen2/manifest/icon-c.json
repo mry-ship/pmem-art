@@ -1,0 +1,62 @@
+{
+  "mode": "C",
+  "session": "regen2-icon-c-heal",
+  "module": "icon.PotionSet",
+  "scale": "medium",
+  "aspect": "1:1",
+  "style_spec": "docs/showcase/homepage_rerun_1028_regen2/v2/icon_c_set/style-spec.json",
+  "preview": "docs/showcase/homepage_rerun_1028_regen2/v2/icon_c_set/preview.html",
+  "heal_rounds": [
+    {"round": 1, "score": 8.81, "dims": "剪影识别9.3/描边色板8.9/棚拍光8.4/透明底8.8/无字9.5/无瑕疵8.5"},
+    {"round": 2, "score": 9.02, "dims": "剪影识别9.4/描边色板9.0/棚拍光8.9/透明底8.7/无字9.5/无瑕疵8.7"},
+    {"round": 3, "score": 9.20, "dims": "剪影识别9.5/描边色板9.2/棚拍光9.0/透明底9.2/无字9.6/无瑕疵9.0"},
+    {"round": 4, "score": 9.27, "dims": "剪影识别9.5/描边色板9.2/棚拍光9.2/透明底9.3/无字9.6/无瑕疵9.1", "winner": true}
+  ],
+  "exports": {
+    "heal_64": "docs/showcase/homepage_rerun_1028_regen2/v2/icon_c_set/heal_64.png",
+    "heal_128": "docs/showcase/homepage_rerun_1028_regen2/v2/icon_c_set/heal_128.png",
+    "heal_256": "docs/showcase/homepage_rerun_1028_regen2/v2/icon_c_set/heal_256.png"
+  },
+  "icons": [
+    {
+      "id": "heal",
+      "path": "docs/showcase/homepage_rerun_1028_regen2/v2/icon_c_set/heal.jpg",
+      "alpha": true,
+      "attempts": 4,
+      "score": 9.27
+    },
+    {
+      "id": "mana",
+      "path": "docs/showcase/homepage_rerun_1028_regen2/v2/icon_c_set/mana.jpg",
+      "alpha": true,
+      "attempts": 2,
+      "dims": "剪影识别9.3/描边色板8.9/棚拍光8.6/透明底8.8/无字9.5",
+      "hurdle_passed": true
+    },
+    {
+      "id": "key",
+      "path": "docs/showcase/homepage_rerun_1028_regen2/v2/icon_c_set/key.jpg",
+      "alpha": true,
+      "attempts": 2,
+      "dims": "剪影识别9.2/描边色板8.6/棚拍光8.7/透明底8.3/无字9.5",
+      "hurdle_passed": true
+    },
+    {
+      "id": "ruby",
+      "path": "docs/showcase/homepage_rerun_1028_regen2/v2/icon_c_set/ruby.jpg",
+      "alpha": true,
+      "attempts": 2,
+      "dims": "剪影识别9.0/描边色板8.7/棚拍光7.6/透明底8.7/无字9.5",
+      "hurdle_passed": true,
+      "note": "投影与宝石分开，棚拍光未到 8，门槛维过线"
+    },
+    {
+      "id": "scroll",
+      "path": "docs/showcase/homepage_rerun_1028_regen2/v2/icon_c_set/scroll.jpg",
+      "alpha": true,
+      "attempts": 1,
+      "dims": "剪影识别9.0/描边色板8.6/棚拍光8.5/透明底8.5/无字9.0",
+      "hurdle_passed": true
+    }
+  ]
+}

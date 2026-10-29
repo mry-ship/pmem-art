@@ -7,13 +7,15 @@ status: active
 supersedes:
 - 01M642X9DXH0NFC3GC0GDS3ZJ4
 anchors:
-- skills_kit/converge.py#_resolve_pad_image
+- skills_kit/converge.py#_resolve_pad_auto
 revision: git:a6d5ae4
 author: yanghu
 note_date: '2026-10-30'
 summary: high/recompose 换机位后可垫换机位最高分
 verify: high/recompose 有换机位证据时 pad=changed_camera；否则垫最初参考
 applies: high/recompose 有参考图的闭环
+verified: '2026-10-30'
+verified_at: '2026-10-30T01:52:17.052+08:00'
 ---
 用户2026-10-30明确取舍：合并GitHub最新时保留本地垫图——未换机位前仍垫最初参考；
 轮次文本证明已换机位后可垫换机位最高分。

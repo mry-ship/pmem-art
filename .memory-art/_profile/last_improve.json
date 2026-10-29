@@ -1,39 +1,39 @@
 {
-  "ran_at": "2026-10-28 12:24:33 UTC+8",
+  "ran_at": "2026-10-30 01:11:21 UTC+8",
   "reflections_scanned": 20,
-  "avg_winner_score": 9.08,
-  "avg_rounds": 3.6,
+  "avg_winner_score": 9.0,
+  "avg_rounds": 3.8,
   "top_recurring_defects": [
     {
       "text": "几乎无",
       "count": 2
     },
     {
-      "text": "灯火近中远层次与雾带还可更分明",
-      "count": 2
+      "text": "上眼睑仍停在虹膜上沿，瞳孔完整露出，眼裂高度接近原图睁眼，没有收到虹膜中线的困倦半眯。",
+      "count": 1
+    },
+    {
+      "text": "上眼睑仍贴在虹膜上沿，瞳孔整只露出，眼裂没有收到一半，不是困倦半眯。",
+      "count": 1
+    },
+    {
+      "text": "左右眼仍大睁，上眼睑停在虹膜上沿，瞳孔没有被压到中线，困倦半眯没有出现。",
+      "count": 1
+    },
+    {
+      "text": "投影右缘还剩一小点品红；瓶身右下暗角还没压够，玻璃高光偏亮。",
+      "count": 1
+    },
+    {
+      "text": "右下瓶缘暗角仍偏浅，玻璃高光一块偏亮，投影边缘略硬。",
+      "count": 1
+    },
+    {
+      "text": "瓶底投影偏薄，右下暗角仍比左上高光弱一档。",
+      "count": 1
     },
     {
       "text": "仍然是头肩特写，袖口和弯曲的膝都没进画",
-      "count": 1
-    },
-    {
-      "text": "背景粉笔掺进桃粉和紫，不再是蓝灰斜线",
-      "count": 1
-    },
-    {
-      "text": "裁切又停在肩线，胸口没有露出来；prompt 改动 92% 超过档位上限 85%",
-      "count": 1
-    },
-    {
-      "text": "糖纸是光滑塑料高光，和周围粉笔斜线不是同一种笔触",
-      "count": 1
-    },
-    {
-      "text": "四枚指尖仍粘成一块肤色；prompt 改动 81% 超过档位上限 80%",
-      "count": 1
-    },
-    {
-      "text": "四枚指尖仍粘成一块",
       "count": 1
     }
   ],
@@ -87,8 +87,6 @@
       "hint": "下次 warm-start 优先注入本条 recipe"
     }
   ],
-  "taste_changes": [
-    "preferred_composition: +半身"
-  ],
+  "taste_changes": [],
   "taste_path": ".memory-art/_profile/taste.json"
 }

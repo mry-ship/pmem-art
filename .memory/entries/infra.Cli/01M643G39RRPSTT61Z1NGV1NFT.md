@@ -23,6 +23,8 @@ aliases:
 - 不带pmem
 - 用户包
 - standalone
+verified: '2026-10-30'
+verified_at: '2026-10-30T01:53:09.655+08:00'
 ---
 用户确认：pmem（mry-ship/pmem，目录 .memory/）只为本仓库开发 pmem-art 的稳定性服务；以后给用户的包只打 pmem-art，不带 pmem 研发记忆系统。
 两套运行时已经分开：pmem_art.py / .memory-art / 10 条美术技能不 import pmem 包；

@@ -6,7 +6,7 @@ kind: exclusion
 status: seed
 supersedes: []
 anchors:
-- scripts
+- scripts/pack_pmem_art.py
 revision: git:30ea756
 author: 1002378395@qq.com
 note_date: '2026-10-29'
@@ -16,6 +16,8 @@ applies: 改闭环、展陈闸门、合成梯规则时
 aliases:
 - 批处理
 - 重跑脚本
+verified: '2026-10-30'
+verified_at: '2026-10-30T01:52:48.704+08:00'
 ---
 依据模块划分和 scripts 目录用途。
 scripts/ 与 benchmark_evolution.py 是展陈重跑、批处理，不是 skill 合同真值。

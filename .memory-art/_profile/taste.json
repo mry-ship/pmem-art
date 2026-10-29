@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-28 12:24:33 UTC+8",
+  "updated_at": "2026-10-30 01:11:21 UTC+8",
   "preferred_lighting": [
     "暖光"
   ],
@@ -21,12 +21,13 @@
   "style_notes": [
     "窗边人像：发型刘海分区偶发糊边；耳机垫与脸交界线略软；前景花瓣边缘偶发锯齿感——后续同题材需锁发丝分层与硬边耳机轮廓",
     "以后统一按此样张画风：粉蜡笔/油画棒颗粒笔触；主色鲜红卫衣#E23B2E(70%)；辅色牛仔蓝#4A6FA5+深灰袜#2B2B2B(20%)；",
-    "图标集 style-spec：Clean 24px stroke1.5 round/round currentColor viewBox24"
+    "图标集 style-spec：Clean 24px stroke1.5 round/round currentColor viewBox24",
+    "图标集 style-spec：Mode C 厚剪影，256 画布线宽 10px、圆角 16px、暖黑描边 #1C140E、接触投影、真透明底、无字"
   ],
   "signal_counts": {
     "keeps": 0,
     "rejects": 1,
-    "style_fixes": 3,
+    "style_fixes": 4,
     "sessions": 20
   },
   "project_id": "pmem-art",

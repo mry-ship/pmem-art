@@ -1,0 +1,51 @@
+{
+  "session": "regen2-var-wink",
+  "contract": "variant",
+  "expression": "俏皮眨眼",
+  "module": "character.WindowBust",
+  "medium_family": "impasto",
+  "scale": "medium",
+  "mode": "quality",
+  "threshold": 9.6,
+  "aspect_ratio": "3:4",
+  "ref_image": "docs/showcase/homepage_rerun_1028_regen2/v2/variant_expr/ref.jpg",
+  "pad": "original character ref every round",
+  "locked": ["机位", "半厚涂窗边光", "深蓝黑短发", "蓝瞳", "白猫发夹", "黑耳机", "白T"],
+  "only_change": "一只眼完全闭上的俏皮眨眼，另一只眼睁开",
+  "rounds": [
+    {
+      "round": 1,
+      "score": 8.7,
+      "dims": "构图9.2/光影8.6/透视8.9/质感8.4/风格9.0/无瑕疵8.5",
+      "image": "docs/showcase/homepage_rerun_1028_regen2/v2/variant_wink/r1.jpg",
+      "defect": "闭上的眼皮是光滑月牙，叶影没落到眼皮上"
+    },
+    {
+      "round": 2,
+      "score": 8.91,
+      "dims": "构图9.2/光影9.0/透视9.1/质感8.8/风格9.1/无瑕疵8.6",
+      "image": "docs/showcase/homepage_rerun_1028_regen2/v2/variant_wink/r2.jpg",
+      "defect": "眼皮仍是干净月牙，脸颊有圆形软腮红"
+    },
+    {
+      "round": 3,
+      "score": 9.25,
+      "dims": "构图9.4/光影9.4/透视9.3/质感9.2/风格9.4/无瑕疵9.0",
+      "image": "docs/showcase/homepage_rerun_1028_regen2/v2/variant_wink/r3.jpg",
+      "defect": "粉腮红仍偏圆，眼皮上的叶影比白T上的影子更糊"
+    },
+    {
+      "round": 4,
+      "score": 8.76,
+      "dims": "构图9.3/光影8.6/透视9.2/质感8.8/风格8.7/无瑕疵8.4",
+      "image": "docs/showcase/homepage_rerun_1028_regen2/v2/variant_wink/r4.jpg",
+      "defect": "叶影收成脸颊和脖子上的蕨叶印"
+    }
+  ],
+  "winner_round": 3,
+  "winner_score": 9.25,
+  "passed": false,
+  "wink_present": true,
+  "final": "docs/showcase/homepage_rerun_1028_regen2/v2/variant_wink/final.jpg",
+  "board": ".memory-art/converge/boards/regen2-var-wink/index.html"
+}
