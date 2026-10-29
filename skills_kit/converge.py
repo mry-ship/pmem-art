@@ -208,7 +208,7 @@ def converge_finish(
 ) -> dict[str, Any]:
     """
     Finish & Settle Step:
-    Settles the winning round after `STOP_TARGET_REACHED` (`score >= 9.60`), writes recipe/redline/reflection
+    Settles the winning round after `STOP_TARGET_REACHED` (`score >= 9.50`), writes recipe/redline/reflection
     into `.memory-art`, and runs silent autopilot maintenance.
     By default prints the per-round score trail; pass silent=True (CLI --quiet) for one-line whisper.
     """
@@ -471,12 +471,14 @@ def cmd_converge(
     lock_text: str = "",
     medium_family: str = "",
     contract: str = "",
+    skip_route_gate: bool = False,
 ) -> int:
     """
-    converge_mode: quality (default, dynamic threshold per scale, max 4 rounds, stop ≥9.6 or best-of-4) | fast (warm-start fast-track hints).
+    converge_mode: quality (default, dynamic threshold per scale, max 4 rounds, stop ≥9.5 or best-of-4) | fast (warm-start fast-track hints).
     draft_ok: if True (user said 草稿/fast), final accept may use soft threshold in fast mode.
     silent: default False — 默认打印评分履历；True/--quiet 仅一行结论；记忆写入始终后台静默。verbose=True 等同强制打印全量报告。
     lock_text: artist one-liner to loosen/tighten per-dim locks (e.g. 「构图松一点」→ show 95%→75%).
+    skip_route_gate: 跳过「开画前必须先 route」闸门（仅点名调试；默认 False）。
     """
     if verbose:
         silent = False
@@ -503,6 +505,24 @@ def cmd_converge(
     eff_scale = scale_prof["scale"]
 
     if action == "start":
+        import os as _os
+
+        env_skip = _os.environ.get("PMEM_ART_SKIP_ROUTE_GATE", "").strip().lower() in (
+            "1",
+            "true",
+            "yes",
+        )
+        if not skip_route_gate and not env_skip:
+            from .route_gate import check_route_gate
+
+            ok_gate, gate_msg = check_route_gate(root, goal=goal or "")
+            if not ok_gate:
+                print(f"❌ [路由闸门] {gate_msg}")
+                return 1
+            if gate_msg and "提醒" in gate_msg:
+                print(f"⚠️ [路由闸门] {gate_msg}")
+            else:
+                print(f"✅ [路由闸门] {gate_msg}")
         if eff_scale == "recompose" and not str(recompose_dir or "").strip():
             print("❌ [档位合同] recompose 必须提供 --recompose-dir，写明新机位或景别。")
             return 1
@@ -802,7 +822,7 @@ def cmd_converge(
             if r_no > pno:
                 print(
                     f"❌ 第 {pno} 轮还没 `converge judge`，不能开第 {r_no} 轮。"
-                    f"先审第 {pno} 轮，不到 9.6 再出下一张。"
+                    f"先审第 {pno} 轮，不到 9.5 再出下一张。"
                 )
                 return 1
         already_passed = [r for r in rounds if _round_counts_as_passed(r, th, root=root)]
@@ -1150,7 +1170,7 @@ def cmd_converge(
         s_prof["max_rounds"] = mr
 
         cli_score = float(score or 0)
-        # Independent VLM if keyed; else Agent Absolute-5D (threshold stays session 9.6).
+        # Independent VLM if keyed; else Agent Absolute-5D (threshold stays session 9.5).
         # Official score is the judge's five dimensions. Pixel offline scores are not used.
         judge_res = auto_vlm_judge_image(
             image_path=eff_image,
@@ -1567,7 +1587,7 @@ def cmd_converge(
             _write_session_json(sf, sess)
             if not sess["showcase_ready"]:
                 print(
-                    "ℹ️ 这是预览，会话还没结算。未满 4 轮且不到 9.6 时不能当终稿，"
+                    "ℹ️ 这是预览，会话还没结算。未满 4 轮且不到 9.5 时不能当终稿，"
                     "继续 converge generate / judge。"
                 )
             else:

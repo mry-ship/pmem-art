@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>pmem-art · 美术提需到出图：路由全流程（白话版）</title>
+<style>
+  :root {
+    --bg: #0f1419;
+    --card: #1a222c;
+    --ink: #e8eef4;
+    --muted: #8b9aab;
+    --line: #2c3a4a;
+    --ok: #3d9a6a;
+    --warn: #d4a017;
+    --risk: #d64545;
+    --focus: #4a9eff;
+    --default: #7b6bb5;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 32px 20px 72px;
+    font-family: "IBM Plex Sans", "PingFang SC", "Noto Sans SC", sans-serif;
+    background: radial-gradient(1200px 600px at 10% -10%, #1a2a3a 0%, var(--bg) 55%);
+    color: var(--ink); line-height: 1.55;
+  }
+  h1 { font-size: 1.55rem; margin: 0 0 8px; letter-spacing: 0.02em; }
+  h2 { font-size: 1.15rem; margin: 40px 0 12px; }
+  .sub { color: var(--muted); margin-bottom: 22px; max-width: 820px; }
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 12px 20px; margin-bottom: 24px;
+    font-size: 0.85rem;
+  }
+  .legend span { display: inline-flex; align-items: center; gap: 8px; }
+  .dot { width: 12px; height: 12px; border-radius: 3px; }
+  .dot.risk { background: var(--risk); }
+  .dot.warn { background: var(--warn); }
+  .dot.ok { background: var(--ok); }
+  .dot.focus { background: var(--focus); }
+  .flow { display: flex; flex-direction: column; max-width: 920px; }
+  .step {
+    position: relative;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 16px 18px 14px;
+    margin-left: 28px;
+  }
+  .step::before {
+    content: "";
+    position: absolute; left: -22px; top: 22px;
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--focus); box-shadow: 0 0 0 4px #1a2a3a;
+  }
+  .step.risk-border { border-color: var(--risk); box-shadow: 0 0 0 1px rgba(214,69,69,.25); }
+  .step.warn-border { border-color: var(--warn); }
+  .step.default-border { border-color: var(--default); }
+  .rail { width: 2px; height: 16px; background: var(--line); margin: 0 0 0 33px; }
+  .tag {
+    display: inline-block; font-size: 0.72rem; font-weight: 600;
+    padding: 2px 8px; border-radius: 999px; margin-right: 6px; vertical-align: middle;
+  }
+  .tag.risk { background: rgba(214,69,69,.2); color: #ff8e8e; }
+  .tag.warn { background: rgba(212,160,23,.2); color: #f0c94d; }
+  .tag.ok { background: rgba(61,154,106,.2); color: #7ddeb0; }
+  .tag.focus { background: rgba(74,158,255,.2); color: #9bc7ff; }
+  .tag.default { background: rgba(123,107,181,.25); color: #c5b8f0; }
+  .title { font-size: 1.05rem; font-weight: 650; margin: 6px 0 8px; }
+  .body { color: var(--muted); font-size: 0.92rem; }
+  .body code, td code, .mini code {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.84em; background: #0d1218; padding: 1px 6px; border-radius: 4px;
+    color: #c5d4e4;
+  }
+  ul.checks { margin: 10px 0 0; padding-left: 1.1em; color: var(--ink); font-size: 0.88rem; }
+  ul.checks li { margin: 4px 0; }
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
+  .split3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 10px; }
+  @media (max-width: 800px) {
+    .split, .split3 { grid-template-columns: 1fr; }
+  }
+  .mini {
+    background: #121820; border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px;
+    font-size: 0.85rem; color: var(--muted);
+  }
+  .mini strong { display: block; margin-bottom: 4px; color: var(--ink); }
+  .mini .ex { display: block; margin-top: 6px; color: #a8b8c8; font-size: 0.82rem; }
+  table.risks, table.variants {
+    width: 100%; max-width: 920px; border-collapse: collapse; margin-top: 12px;
+    font-size: 0.86rem;
+  }
+  table.risks th, table.risks td,
+  table.variants th, table.variants td {
+    border: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top;
+  }
+  table.risks th, table.variants th { background: #15202b; }
+  table.variants td:first-child { white-space: nowrap; font-weight: 600; color: #cfe0f2; }
+  .callout {
+    max-width: 920px; margin: 0 0 22px;
+    padding: 12px 14px; border-radius: 10px;
+    border: 1px solid rgba(74,158,255,.35); background: rgba(74,158,255,.08);
+    font-size: 0.9rem;
+  }
+  .mermaid-note { margin-top: 28px; color: var(--muted); font-size: 0.85rem; max-width: 920px; }
+  pre.mmd {
+    background: #121820; border: 1px solid var(--line); border-radius: 10px;
+    padding: 16px; overflow: auto; color: #b8c9da; font-size: 0.76rem;
+    max-width: 920px; line-height: 1.45;
+  }
+</style>
+</head>
+<body>
+  <h1>美术提需 → 认路 → 出图：全流程（白话版）</h1>
+  <p class="sub">
+    给画师看的一张总图：你怎么说需求、系统怎么认成哪一类活、什么时候要问你、什么时候直接画。
+    电脑匹配用的是<strong>字面相近 + 口语对照表 + 一行标准说法</strong>，不是「懂意思的 AI 向量」。
+    红框 / 黄框 = 容易走错、要盯着。
+  </p>
+
+  <div class="callout">
+    <strong>附图不是必须的。</strong>
+    可以只打字（「画一张窗边女孩」）；也可以贴 1 张或多张参考图。
+    <br/>无图 → 多半走「普通图 / 原画 / 界面 / 图标…」里按话术认的那条；
+    有图 → 还要分清：是锁画风换题材（克隆）、同人换表情（变体）、还是两张图各管一件事（多图分工）。
+    <br/><strong>话说太糊会先问你</strong>（例如「那个图标弄下」「昨天那张再来」），不会默默画成普通图。你回一句人话即可。
+  </div>
+
+  <div class="legend">
+    <span><i class="dot risk"></i> 高风险 · 盯死</span>
+    <span><i class="dot warn"></i> 中风险 · 易混</span>
+    <span><i class="dot focus"></i> 主路径</span>
+    <span><i class="dot ok"></i> 合格线</span>
+  </div>
+
+  <div class="flow">
+
+    <div class="step">
+      <span class="tag focus">① 你提需求</span>
+      <div class="title">大白话说明要什么 · 附图可选</div>
+      <div class="split3">
+        <div class="mini">
+          <strong>A. 只文字，不附图</strong>
+          完全合法。例：「画一张水彩半身窗边女孩」「做一套主菜单 HUD」。
+          <span class="ex">系统主要靠你的用词认路。</span>
+        </div>
+        <div class="mini">
+          <strong>B. 文字 + 1 张参考</strong>
+          要说清参考干什么：锁画风？还是同一角色？还是「照样子换个东西」？
+          <span class="ex">没说清楚时，默认「有参考也不换题材」→ 普通图，不进克隆。</span>
+        </div>
+        <div class="mini">
+          <strong>C. 文字 + 多张图</strong>
+          最好说明每张管什么（脸 / 姿势 / 关开态…）。
+          <span class="ex">两张各管一件事 → 多图分工；没说清楚也会先按普通图兜底或来问你。</span>
+        </div>
+      </div>
+      <ul class="checks">
+        <li>你也可以直接点名：<code>/pmem-draw</code> <code>/pmem-ui</code> <code>/pmem-icon</code>… —— 点了名就按点名走，总控不改判。</li>
+        <li>没点名 → 走总控 <code>/pmem-agent</code>，下面从 ② 开始。</li>
+      </ul>
+    </div>
+    <div class="rail"></div>
+
+    <div class="step risk-border">
+      <span class="tag risk">⚠ 高风险</span>
+      <span class="tag focus">② 收成「标准说法」一行</span>
+      <div class="title">Agent 把口语翻译成固定句式（给你看见）</div>
+      <div class="body">
+        因为匹配看字面，口语要先收成模板句，例如：
+        <code>有参考图；换新题材；锁画风；走克隆</code>。
+        <strong>这句写错，后面容易认错路</strong>——所以会写进分析给你核对。
+      </div>
+      <ul class="checks">
+        <li>有参考但你没说换题材 → 不能写成克隆</li>
+        <li>「镜头感强一点 / 只要一张」→ 不是「镜头包」</li>
+        <li>「画个图标」没说桌面 / SVG / 背包 → 要问清 A/B/C，不能替你猜</li>
+        <li>没附图时，标准句里不要硬写「有参考图」</li>
+      </ul>
+    </div>
+    <div class="rail"></div>
+
+    <div class="step">
+      <span class="tag focus">③ 本地认路 route</span>
+      <div class="title">命令对照：原话 + 标准句（有图再加 <code>--image</code>）</div>
+      <div class="body">
+        <code>python3 pmem_art.py route --text "你的原话" --canonical "标准说法"</code>
+        · 有参考时再加 <code>--image 路径</code>（可多张）。
+      </div>
+      <div class="split">
+        <div class="mini"><strong>规则认路（准绳）</strong>主要看你的原话；有图才看图角色。决定走哪条合同。</div>
+        <div class="mini"><strong>近邻对照（校准）</strong>在话术库里找相近说法，只取前几条，不把整库塞给模型。</div>
+      </div>
+    </div>
+    <div class="rail"></div>
+
+    <div class="step warn-border">
+      <span class="tag warn">⚠ 易混</span>
+      <span class="tag focus">④ 看结果标签</span>
+      <div class="title">结论最前一行你会看到其中一种</div>
+      <div class="split3">
+        <div class="mini"><strong>【走默认路径】</strong>专技没对上，按普通单张画画（medium，最多 4 轮，≥9.5）。</div>
+        <div class="mini"><strong>【按 XX 走了】</strong>认成某一类：克隆 / 变体 / 界面 / 图标A…</div>
+        <div class="mini"><strong>【路由停】</strong>说不清或互相打架，先问你，不直接开画。</div>
+      </div>
+      <div class="body" style="margin-top:10px">
+        若标准句和原话规则打架 → <code>plan_conflict</code>，一律当「先问你」。
+      </div>
+    </div>
+    <div class="rail"></div>
+
+    <div class="step risk-border">
+      <span class="tag risk">⚠ 高风险</span>
+      <span class="tag focus">⑤ 一轮审核（只审一次）</span>
+      <div class="title">合不合理、漏没漏、有没有理解错</div>
+      <div class="split">
+        <div class="mini"><strong>可默认（不用问）</strong>文件路径、对比页版式、「再跑一遍」同范围… 会写成「默认：…」。</div>
+        <div class="mini"><strong>硬不确定（必须问）</strong>到底 UI 还是插画、题材会画成另一个东西、图标 A/B/C 打架、置信度低…</div>
+      </div>
+    </div>
+    <div class="rail"></div>
+
+    <div class="step">
+      <span class="tag focus">⑥ 怎么往下走</span>
+      <div class="title">三种情况</div>
+      <div class="split3">
+        <div class="mini"><strong>只有一种确定</strong>列出分析后直接执行，不再等你点头。</div>
+        <div class="mini"><strong>多种可能</strong>只列出选项，停住；你选一种后再执行。</div>
+        <div class="mini"><strong>你改口另说</strong>按新话整轮重审；这一轮先列出来等你确认，不顺手开画。</div>
+      </div>
+    </div>
+    <div class="rail"></div>
+
+    <div class="step warn-border">
+      <span class="tag warn">⚠ 易混</span>
+      <span class="tag focus">⑦ 步骤表 → 交给对应技能</span>
+      <div class="title">一次只走一支；六样写齐再动手</div>
+      <div class="body">用哪支技能 / 交什么 / 垫哪张图（没有就不垫）/ 锁什么 / 怎样算完成 / 交给下一步什么。</div>
+      <ul class="checks">
+        <li>有多张参考：全部带上，不能先合成一张再交出去</li>
+        <li>无参考：步骤里写清「不垫图」，照样可跑普通图 / 原画 / UI 等</li>
+        <li>界面、图标集、合成梯：禁止用「随便一张插画」交差</li>
+      </ul>
+    </div>
+    <div class="rail"></div>
+
+    <div class="step">
+      <span class="tag ok">⑧ 画画闭环</span>
+      <div class="title">最多 4 轮 · 总分要到 9.5 才停</div>
+      <div class="body">每轮给你看图 + 六维分 + 还差什么。不到线继续改；满 4 轮取最高分那张。展陈页还要过闸门。</div>
+    </div>
+    <div class="rail"></div>
+
+    <div class="step default-border">
+      <span class="tag default">结算给你看</span>
+      <div class="title">标签 → 分析 → 步骤 → 该技能自己的出图报告</div>
+      <div class="body">总控不另写一套花哨总结。口味会静默记；知识卡要你说「收下」才写入。</div>
+    </div>
+  </div>
+
+  <h2>认路变体一览（美术对照表）</h2>
+  <p class="sub" style="margin-top:0">你大概想要什么 → 系统应走哪条。有图 / 无图都写明。</p>
+  <table class="variants">
+    <thead>
+      <tr>
+        <th>你想要的</th>
+        <th>典型说法（有图 / 无图）</th>
+        <th>走哪条</th>
+        <th>别和谁搞混</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>就画一张</td>
+        <td><strong>无图</strong>：「画一张水彩半身」<br/><strong>有图</strong>：「参考这张，还是画这个人，别换题材」</td>
+        <td>【走默认路径】普通图</td>
+        <td>有参考≠克隆；没说换题材就别进克隆</td>
+      </tr>
+      <tr>
+        <td>锁画风，换个新东西</td>
+        <td><strong>通常要有参考图</strong>：「照这张味道，主体换成一只猫」</td>
+        <td>克隆</td>
+        <td>无参考却说「换成」→ 多半还是普通图，或先问清</td>
+      </tr>
+      <tr>
+        <td>同一角色换表情/动作/画风</td>
+        <td><strong>常有图</strong>：「同一张脸，再来一张生气的」</td>
+        <td>变体</td>
+        <td>不是多图分工；机位身份已在同一张上</td>
+      </tr>
+      <tr>
+        <td>两张图各管一件事</td>
+        <td><strong>要有 ≥2 张图</strong>：「第一张管脸，第二张管坐姿」</td>
+        <td>多图分工</td>
+        <td>一张图改表情仍是变体</td>
+      </tr>
+      <tr>
+        <td>关 / 开 两态</td>
+        <td><strong>有身份图+结构图</strong>：先画关上，再画打开</td>
+        <td>多图分工（前后两行）</td>
+        <td>不是变体表情差分</td>
+      </tr>
+      <tr>
+        <td>几套机位自己挑</td>
+        <td><strong>可无成图</strong>：「给我三套机位我来选」（点选前不生图）</td>
+        <td>镜头包</td>
+        <td>「镜头感强一点只要一张」仍是普通图</td>
+      </tr>
+      <tr>
+        <td>主视觉 / 海报气氛</td>
+        <td><strong>常无图或有气氛参考</strong>：「一张概念海报当主视觉」</td>
+        <td>原画</td>
+        <td>不是整套 UI</td>
+      </tr>
+      <tr>
+        <td>整套界面 / HUD / 九宫格</td>
+        <td><strong>可无图</strong>：「一整套主菜单，按钮要有按下态」</td>
+        <td>界面 UI</td>
+        <td>「就一张空弹框」→ 普通图，不升成整套</td>
+      </tr>
+      <tr>
+        <td>桌面 App 图标</td>
+        <td><strong>可无图</strong>：「做一枚 1024 启动图标」</td>
+        <td>图标 A</td>
+        <td>和线性 SVG、背包格不要混</td>
+      </tr>
+      <tr>
+        <td>一套线性 SVG</td>
+        <td><strong>可无图</strong>：「做一套线性 svg 图标」</td>
+        <td>图标 B</td>
+        <td>不是 1024 桌面母版</td>
+      </tr>
+      <tr>
+        <td>背包道具格</td>
+        <td><strong>可无图</strong>：「256 透明底道具图标」</td>
+        <td>图标 C</td>
+        <td>只说「画个图标」→ 先问 A/B/C</td>
+      </tr>
+      <tr>
+        <td>合成升级梯 L1–L8</td>
+        <td><strong>可无图</strong>：「这把剑一档比一档大，做合成梯」</td>
+        <td>合成梯</td>
+        <td>同框整梯只是预览，不是成品；成品一档一张方图</td>
+      </tr>
+      <tr>
+        <td>以后都按这张画</td>
+        <td><strong>要有样张</strong>：「以后按这张色板」</td>
+        <td>锁风格（不生图）</td>
+        <td>不是当场出一张插画</td>
+      </tr>
+      <tr>
+        <td>只审不画</td>
+        <td><strong>要有待审图</strong>：「只审这张，别画」</td>
+        <td>审图</td>
+        <td>「审完再改」会串到审图→再画</td>
+      </tr>
+      <tr>
+        <td>先写提示词</td>
+        <td><strong>通常无图</strong>：「先写提示词，先不出图」</td>
+        <td>提示词</td>
+        <td>写完若还要画，会串第二步普通图等</td>
+      </tr>
+      <tr>
+        <td>散图归位 / 看进步</td>
+        <td>归档、教练类</td>
+        <td>归档 / 教练</td>
+        <td>不进自动生图</td>
+      </tr>
+      <tr>
+        <td>系统还不支持的活</td>
+        <td>局部修手、分镜、设定表、扩画布、逐帧…</td>
+        <td>【路由停】不改走普通图</td>
+        <td>不会假装用普通图交差</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>重点盯梢</h2>
+  <table class="risks">
+    <thead>
+      <tr><th>位置</th><th>风险</th><th>怎么防</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>① 附图</td>
+        <td class="tag warn">以为「必须附图」或「有图就一定克隆」</td>
+        <td>附图可选；有图要说清用途</td>
+      </tr>
+      <tr>
+        <td>② 标准说法</td>
+        <td class="tag risk">口语误译成克隆 / 镜头包 / 整套 UI</td>
+        <td>给你看标准句；冲突就停</td>
+      </tr>
+      <tr>
+        <td>④ 冲突 / 低置信</td>
+        <td class="tag risk">标准句和原话打架仍硬画</td>
+        <td>先问你；确认前不生图</td>
+      </tr>
+      <tr>
+        <td>变体 vs 多图 vs 克隆</td>
+        <td class="tag warn">三种最容易互相冒充</td>
+        <td>看上表「别和谁搞混」三列</td>
+      </tr>
+      <tr>
+        <td>⑧ 停机</td>
+        <td class="tag ok">&lt;9.5 却当终稿</td>
+        <td>闭环硬闸；展陈再过 showcase-gate</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="mermaid-note">流程简图（附图可选已标出）：</p>
+  <pre class="mmd">flowchart TD
+  A[① 你提需求] --> A1{有没有附图?}
+  A1 -->|没有 · 很常见| A2[只靠文字认路]
+  A1 -->|有 1 张| A3[说明参考用途]
+  A1 -->|有多张| A4[说明每张管什么]
+  A2 --> B{点名 /技能?}
+  A3 --> B
+  A4 --> B
+  B -->|是| N[按点名走 · 不改判]
+  B -->|否| C[⚠② 收成一行标准说法]
+  C --> D[③ route 原话+标准句 · 有图再带 image]
+  D --> G{④ 标签结果}
+  G -->|默认路径/按XX| J[⑤ 一轮审核]
+  G -->|停/冲突/低置信| H[⚠ 先问你]
+  H --> J
+  J --> K{确定?}
+  K -->|多种或你改口| H
+  K -->|确定| L[⚠⑦ 步骤表 · 无图则不垫图]
+  N --> L
+  L --> M[⑧ 最多4轮 · ≥9.5]
+  M --> O[给你看标签+成图结算]
+  style C fill:#5a2020,stroke:#d64545,color:#fff
+  style H fill:#5a2020,stroke:#d64545,color:#fff
+  style L fill:#5a4020,stroke:#d4a017,color:#fff
+  style G fill:#5a4020,stroke:#d4a017,color:#fff</pre>
+</body>
+</html>

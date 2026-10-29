@@ -27,6 +27,8 @@ class TestPackPmemArt(unittest.TestCase):
                 names = zf.namelist()
             self.assertTrue(any(n.endswith("pmem_art.py") for n in names))
             self.assertTrue(any(n.endswith("skills_kit/skill_specs.py") for n in names))
+            self.assertTrue(any(n.endswith("skills_kit/route_bank.py") for n in names))
+            self.assertTrue(any(n.endswith("skills_kit/data/route_bank.jsonl") for n in names))
             self.assertFalse(any("/.memory/" in n.replace("\\", "/") for n in names))
             self.assertFalse(any(n.endswith("pmem.mdc") for n in names))
             mcp_name = next(n for n in names if n.endswith(".cursor/mcp.json"))
