@@ -394,8 +394,7 @@ def _resolve_pad_auto(
     """Pad policy: auto/ref always use the original style_ref. Fixes stay in the prompt.
 
     pad=previous is an explicit chain of the best plate. Style jump pads nothing.
-    high/recompose do not chain generated plates: 「重构机位」 in a prompt is an
-    instruction, not proof the camera already changed.
+    high/recompose may pad best plate only after round text proves camera changed.
     Returns (pad_image, fix, pad_round, continuation, reason).
     """
     del anatomy_floor, subject_kind, module, ref_analysis
@@ -404,6 +403,33 @@ def _resolve_pad_auto(
     style = (style_ref or "").strip()
     if _style_jump_requested(scale, goal, style_jump):
         return "", carry_fix, 0, False, "style_jump：不垫风格参考，也不链成图"
+    if (scale or "").strip().lower() in {"high", "recompose"}:
+        best_img, best_fix, best_round, best_score = "", carry_fix, 0, -1.0
+        for row in rounds:
+            if not isinstance(row, dict):
+                continue
+            if int(row.get("round") or 0) >= int(round_num):
+                continue
+            blob = " ".join(str(row.get(k) or "") for k in ("defects", "next_fix", "prompt"))
+            if any(n in blob for n in ("不改机位", "没改机位", "不要改机位", "别改机位")):
+                continue
+            if not any(k in blob for k in ("换机位", "改了机位", "重构机位", "机位已换")):
+                continue
+            image = str(row.get("image") or "").strip()
+            if not image or not Path(image).is_file():
+                continue
+            try:
+                score = float(row.get("score") or 0)
+            except (TypeError, ValueError):
+                score = 0.0
+            if score >= best_score:
+                best_img = image
+                best_fix = str(row.get("next_fix") or "") or carry_fix
+                best_round = int(row.get("round") or 0)
+                best_score = score
+        if best_img:
+            return best_img, best_fix, best_round, True, "pad=changed_camera（机位已换，垫换过机位的最高分）"
+
     if mode == "previous" and carry_image:
         return carry_image, carry_fix, carry_round, True, "pad=previous"
     why = "pad=ref" if mode == "ref" else "pad=auto→style_ref（每轮垫最初参考，修正只写进提示词）"

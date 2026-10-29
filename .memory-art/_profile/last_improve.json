@@ -1,86 +1,94 @@
 {
-  "ran_at": "2026-10-29 18:19:04 UTC+8",
-  "reflections_scanned": 8,
-  "avg_winner_score": 9.62,
-  "avg_rounds": 3.12,
+  "ran_at": "2026-10-28 12:24:33 UTC+8",
+  "reflections_scanned": 20,
+  "avg_winner_score": 9.08,
+  "avg_rounds": 3.6,
   "top_recurring_defects": [
     {
-      "text": "暗角撑满占格",
-      "count": 4
+      "text": "几乎无",
+      "count": 2
     },
     {
-      "text": "米白底占格撑满",
-      "count": 3
+      "text": "灯火近中远层次与雾带还可更分明",
+      "count": 2
     },
     {
-      "text": "嵌宝偏青绿，和前档红宝家族不完全同色；r4 切边作废",
+      "text": "仍然是头肩特写，袖口和弯曲的膝都没进画",
       "count": 1
     },
     {
-      "text": "占格修补切掉糖体下沿，作废",
+      "text": "背景粉笔掺进桃粉和紫，不再是蓝灰斜线",
       "count": 1
     },
     {
-      "text": "仍有暗角，bbox=1",
+      "text": "裁切又停在肩线，胸口没有露出来；prompt 改动 92% 超过档位上限 85%",
       "count": 1
     },
     {
-      "text": "叶片改到侧面；满4轮最高 9.57",
+      "text": "糖纸是光滑塑料高光，和周围粉笔斜线不是同一种笔触",
       "count": 1
     },
     {
-      "text": "宝石漂成青紫，不像前档红宝",
+      "text": "四枚指尖仍粘成一块肤色；prompt 改动 81% 超过档位上限 80%",
       "count": 1
     },
     {
-      "text": "两颗宝石，且偏真桃",
+      "text": "四枚指尖仍粘成一块",
       "count": 1
     }
   ],
   "recipe_strengthen": [
     {
-      "module": "prop.PeachCandyMerge",
-      "id": "CHAT20261029181838124RECIPE",
-      "summary": "[收敛胜出 9.68分] L05 a gem embedded IN the candy, same-family peach — 灰棚卡通软糖家族，无糖纸无托盘无字",
+      "module": "ui.HUD",
+      "id": "CHAT20261028030611394RECIPE",
+      "summary": "[收敛胜出 9.57分] 【Royal Match 式手游主菜单概念 · 16:9 商店截图级】 整体气质：轻松、甜美、宫廷糖 — 角花更贴角；糖果清漆与接触影；中心空；三消上架气质",
       "hint": "下次 warm-start 优先注入本条 recipe"
     },
     {
-      "module": "prop.PeachCandyMerge",
-      "id": "CHAT20261029181819179RECIPE",
-      "summary": "[收敛胜出 9.65分] L02 fatter peach gummy, still one candy, same-fami — 灰棚卡通软糖家族，无糖纸无托盘无字",
+      "module": "character.SunlitGirl",
+      "id": "CHAT20261028024201007RECIPE",
+      "summary": "[收敛胜出 9.55分] 表情变体：同一窗边日光耳机少女，只改成惊喜张嘴（双眼睁圆、眉毛微抬、口型O），机位画风发色瞳色白猫发 — 惊喜张嘴清晰自然；身份机位全锁；口型边缘更干净",
       "hint": "下次 warm-start 优先注入本条 recipe"
     },
     {
-      "module": "prop.PeachCandyMerge",
-      "id": "CHAT20261029181812886RECIPE",
-      "summary": "[收敛胜出 9.63分] L01 small peach gummy, no wrapper, large in frame, — 灰棚卡通软糖家族，无糖纸无托盘无字",
+      "module": "icon.AppIcon",
+      "id": "CHAT20261028023149318RECIPE",
+      "summary": "[收敛胜出 9.55分] 商业级 iOS 桌面母版：天穹浮城夜景 App Icon，满幅直角，可读小尺寸剪影，无字 — 顶缘高光与底板环境改善；剪影可读；满幅直角",
       "hint": "下次 warm-start 优先注入本条 recipe"
     },
     {
-      "module": "prop.PeachCandyMerge",
-      "id": "CHAT20261029181825579RECIPE",
-      "summary": "[收敛胜出 9.63分] L03 frosting grown on the candy surface, no wrappe — 灰棚卡通软糖家族，无糖纸无托盘无字",
+      "module": "icon.Item",
+      "id": "CHAT20261028023150276RECIPE",
+      "summary": "[收敛胜出 9.55分] 商业级 RPG 道具格：祖母绿治疗药水瓶，透明友好，厚剪影 — 暗底干净；接触影软；切面玻璃与叶饰完成",
       "hint": "下次 warm-start 优先注入本条 recipe"
     },
     {
-      "module": "prop.PeachCandyMerge",
-      "id": "CHAT20261029181832995RECIPE",
-      "summary": "[收敛胜出 9.61分] L04 a leaf growing OUT OF the candy, same-family p — 灰棚卡通软糖家族，无糖纸无托盘无字",
+      "module": "scene.CelestialCity",
+      "id": "CHAT20261028023410674RECIPE",
+      "summary": "[收敛胜出 9.54分] 正版冷灰不夜城recompose：过肩侧望更大侠客 — 过肩侧望侠客占比更大；冷灰灯海对角线延伸；云带与雾层可读",
       "hint": "下次 warm-start 优先注入本条 recipe"
     },
     {
-      "module": "prop.PeachCandyMerge",
-      "id": "CHAT20261029181846512RECIPE",
-      "summary": "[收敛胜出 9.61分] L06 a small crown growing ON the candy, no tray, s — 灰棚卡通软糖家族，无糖纸无托盘无字",
+      "module": "character.PastelGirl",
+      "id": "CHAT20261028025708487RECIPE",
+      "summary": "[收敛胜出 9.53分] 允许构图重组保留粉彩少女身份：可换机位景别，仍锁黑波波头红帽衫蓝短裤三杠白鞋与粉彩纸感。 — 左近景右留白稳；粉彩纸感身份锁；发丝与褶有改善",
       "hint": "下次 warm-start 优先注入本条 recipe"
     },
     {
-      "module": "prop.PeachCandyMerge",
-      "id": "CHAT20261029181855536RECIPE",
-      "summary": "[收敛胜出 9.57分] L07 star points on the crown, same-family peach gu — 灰棚卡通软糖家族，无糖纸无托盘无字",
+      "module": "character.SunlitGirl",
+      "id": "CHAT20261028023222435RECIPE",
+      "summary": "[收敛胜出 9.52分] 窗边逆光少女变体：发丝透光皮肤SSS尘埃光斑 — 逆光发丝；暖金商业",
+      "hint": "下次 warm-start 优先注入本条 recipe"
+    },
+    {
+      "module": "scene.CelestialCity",
+      "id": "CHAT20261028025600519RECIPE",
+      "summary": "[收敛胜出 9.52分] 仙侠不夜城正版原图精修：冷灰炭黑夜色、屋脊侠客背影、暖金灯火海与中央长街轴、雾气地平曲率；禁止蓝电剑 — 灯火纵深与雾带更清晰；冷灰正版气质锁住",
       "hint": "下次 warm-start 优先注入本条 recipe"
     }
   ],
-  "taste_changes": [],
-  "taste_path": ".memory-art\\_profile\\taste.json"
+  "taste_changes": [
+    "preferred_composition: +半身"
+  ],
+  "taste_path": ".memory-art/_profile/taste.json"
 }

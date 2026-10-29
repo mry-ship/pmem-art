@@ -1,5 +1,5 @@
 # art-merge 第一段 · canonical（机读 · relation-judge 门禁）
-version: canonical-20261029-typefamily
+version: canonical-20261027
 pipeline: art-merge-two-phase  # 文字定稿 → 关系核对出图 → converge 第二段
 
 tracks:
@@ -7,43 +7,40 @@ tracks:
     module: prop.KitchenMerge
     mode: A
     surface: pastel candy brand glue，圆润胶塑块面，饱和友好粉彩，左上软光短接触影，光洁不油亮，非产品棚拍；props 无脸无黑眼
-    family: { hue: 粉彩, form: 手持厨具, type: 厨房工具, style: 胶塑卡通 }
     rows:
-      - { level: 1, name: 量勺, silhouette: 单柄浅勺, scale_delta: 基档, scale_pct: 0.56, parts_add: "—", role: 入门件, merge_why: "" }
-      - { level: 2, name: 打蛋器, silhouette: 线框球+直柄, scale_delta: "+小", scale_pct: 0.59, parts_add: 金属丝球, role: 换件, merge_why: 两件量勺合成打蛋器，同属搅拌厨具，粉彩胶塑不变 }
-      - { level: 3, name: 手动开罐器, silhouette: 钳口+转柄, scale_delta: "+小", scale_pct: 0.62, parts_add: 侧向钳口, role: 换件, merge_why: 两件打蛋器合成开罐器，换成钳口工具，仍是手持厨具 }
-      - { level: 4, name: 盒式刨丝器, silhouette: 盒体+顶面, scale_delta: "+中", scale_pct: 0.65, parts_add: 刨孔区, role: 职能件, merge_why: 两件开罐器合成刨丝器，工作件换成带孔盒体，厨房加工套件 }
-      - { level: 5, name: 手摇沙拉甩干器, silhouette: 圆碗+曲柄, scale_delta: "+中", scale_pct: 0.68, parts_add: 碗盖与曲柄, role: 职能件, merge_why: 两件刨丝器合成甩干器，换成圆碗曲柄，仍是厨房加工件 }
-      - { level: 6, name: 立式搅拌机, silhouette: 塔形+搅拌杯, scale_delta: "+大", scale_pct: 0.71, parts_add: 电机塔与杯, role: 稀有件, merge_why: 两件甩干器合成立式机，换成电动搅拌塔，厨具套件升级 }
-      - { level: 7, name: 杯式料理机, silhouette: 矮罐+短杯, scale_delta: "+中", scale_pct: 0.74, parts_add: 短宽杯体, role: 稀有件, merge_why: 两件立式机合成料理机，换成矮罐短杯，仍是电动厨具 }
-      - { level: 8, name: 面包机, silhouette: 方盒+顶槽, scale_delta: "+大", scale_pct: 0.77, parts_add: 顶盖槽, role: 展陈件, merge_why: 两件料理机合成面包机，换成带顶槽方盒，厨具展陈件 }
+      - { level: 1, name: 量勺, silhouette: 单柄浅勺, scale_delta: 基档, scale_pct: 0.60, parts_add: "—" }
+      - { level: 2, name: 打蛋器, silhouette: 线框球+直柄, scale_delta: "+小", scale_pct: 0.63, parts_add: 金属丝球 }
+      - { level: 3, name: 手动开罐器, silhouette: 钳口+转柄, scale_delta: "+小", scale_pct: 0.66, parts_add: 侧向钳口 }
+      - { level: 4, name: 盒式刨丝器, silhouette: 盒体+顶面, scale_delta: "+中", scale_pct: 0.69, parts_add: 刨孔区 }
+      - { level: 5, name: 手摇沙拉甩干器, silhouette: 圆碗+曲柄, scale_delta: "+中", scale_pct: 0.72, parts_add: 碗盖与曲柄 }
+      - { level: 6, name: 立式搅拌机, silhouette: 塔形+搅拌杯, scale_delta: "+大", scale_pct: 0.75, parts_add: 电机塔与杯 }
+      - { level: 7, name: 杯式料理机, silhouette: 矮罐+短杯, scale_delta: "+中", scale_pct: 0.77, parts_add: 短宽杯体 }
+      - { level: 8, name: 面包机, silhouette: 方盒+顶槽, scale_delta: "+大", scale_pct: 0.79, parts_add: 顶盖槽；全梯最大 }
 
   valentine:
     module: prop.ValentineMerge
     mode: B
     surface: 亮粉 E02060 与桃黄 F0B080 光洁胶塑，圆润倒角，左上暖桃软光，浅空底 F6EFE4 托物，非油亮；不垫礼盒外形
-    family: { hue: 亮粉桃黄, form: 礼赠剪影, type: 情人节礼物, style: 胶塑卡通 }
     rows:
-      - { level: 1, name: 心形扭结糖, silhouette: 糖体+双扭结尾, scale_delta: 基档, scale_pct: 0.56, parts_add: "—", role: 入门件, merge_why: "" }
-      - { level: 2, name: 玫瑰花, silhouette: 花头+茎叶, scale_delta: "+小", scale_pct: 0.59, parts_add: 多层花瓣, role: 换件, merge_why: 两件扭结糖合成玫瑰，甜点换成花束礼，亮粉桃黄不变 }
-      - { level: 3, name: 情书, silhouette: 信封+心形封蜡, scale_delta: "+小", scale_pct: 0.62, parts_add: 亮粉封蜡, role: 换件, merge_why: 两件玫瑰合成情书，花换成信封封蜡，仍是情人节礼赠 }
-      - { level: 4, name: 丘比特之箭, silhouette: 箭杆+羽尾, scale_delta: "+中", scale_pct: 0.65, parts_add: 箭羽, role: 职能件, merge_why: 两件情书合成丘比特之箭，礼赠换成箭羽，粉桃胶塑不变 }
-      - { level: 5, name: 爱心气球, silhouette: 心形球+线, scale_delta: "+中", scale_pct: 0.68, parts_add: 加粗气球线, role: 职能件, merge_why: 两件箭合成爱心气球，箭杆换成心形球，仍是粉桃礼赠 }
-      - { level: 6, name: 方礼盒, silhouette: 方盒+十字丝带, scale_delta: "+大", scale_pct: 0.71, parts_add: 亮粉盒体, role: 稀有件, merge_why: 两件气球合成方礼盒，球体换成十字丝带盒，礼赠套件 }
-      - { level: 7, name: 心形音乐盒, silhouette: 心形盒+铰链盖, scale_delta: "+大", scale_pct: 0.74, parts_add: 盖铰链, role: 稀有件, merge_why: 两件方盒合成心形音乐盒，盒形换成铰链心盒 }
-      - { level: 8, name: 婚礼蛋糕, silhouette: 双层蛋糕+顶饰, scale_delta: "+大", scale_pct: 0.77, parts_add: 第二层顶饰, role: 展陈件, merge_why: 两件音乐盒合成婚礼蛋糕，礼赠链收到甜点英雄件 }
+      - { level: 1, name: 心形扭结糖, silhouette: 糖体+双扭结尾, scale_delta: 基档, scale_pct: 0.60, parts_add: "—" }
+      - { level: 2, name: 玫瑰花, silhouette: 花头+茎叶, scale_delta: "+小", scale_pct: 0.63, parts_add: 多层花瓣 }
+      - { level: 3, name: 情书, silhouette: 信封+心形封蜡, scale_delta: "+小", scale_pct: 0.66, parts_add: 亮粉封蜡 }
+      - { level: 4, name: 丘比特之箭, silhouette: 箭杆+羽尾, scale_delta: "+中", scale_pct: 0.69, parts_add: 箭羽；箭尖非心形 }
+      - { level: 5, name: 爱心气球, silhouette: 心形球+线, scale_delta: "+中", scale_pct: 0.72, parts_add: 加粗气球线 }
+      - { level: 6, name: 方礼盒, silhouette: 方盒+十字丝带, scale_delta: "+大", scale_pct: 0.75, parts_add: 亮粉盒体 }
+      - { level: 7, name: 心形音乐盒, silhouette: 心形盒+铰链盖, scale_delta: "+大", scale_pct: 0.77, parts_add: 盖铰链；内为金齿轮无小人 }
+      - { level: 8, name: 婚礼蛋糕, silhouette: 双层蛋糕+顶饰, scale_delta: "+大", scale_pct: 0.79, parts_add: 第二层；全梯最大 }
 
   stationery:
     module: prop.StationeryMerge
     mode: C
     surface: 绿色棱纹圆柱握把、圆头端帽、闷灰 satin 金属，左上棚拍软光短影，浅空底 F6EFE4；小高光不油亮
-    family: { hue: 绿握把灰金属, form: 文具件, type: 办公文具, style: 棚拍卡通 }
     rows:
-      - { level: 1, name: 回形针, silhouette: 单环金属线, scale_delta: 基档, scale_pct: 0.56, parts_add: "—", role: 入门件, merge_why: "" }
-      - { level: 2, name: 图钉, silhouette: 钉帽+针, scale_delta: "+小", scale_pct: 0.59, parts_add: 钉帽, role: 换件, merge_why: 两件回形针合成图钉，线环换成钉帽针，仍是金属文具 }
-      - { level: 3, name: 橡皮, silhouette: 砖块, scale_delta: "+小", scale_pct: 0.62, parts_add: 体积块, role: 换件, merge_why: 两件图钉合成橡皮，金属换成橡皮砖，桌面文具套件 }
-      - { level: 4, name: 铅笔, silhouette: 六角杆+尖, scale_delta: "+中", scale_pct: 0.65, parts_add: 笔尖, role: 职能件, merge_why: 两件橡皮合成铅笔，砖块换成六角杆笔尖，书写文具 }
-      - { level: 5, name: 便利贴本, silhouette: 方形本, scale_delta: "+中", scale_pct: 0.68, parts_add: 本册厚度, role: 职能件, merge_why: 两件铅笔合成本册，杆身换成便利贴厚度，仍是办公文具 }
-      - { level: 6, name: 订书机, silhouette: 钳形+棱纹握把, scale_delta: "+大", scale_pct: 0.71, parts_add: 绿色棱纹握把, role: 稀有件, merge_why: 两件便利贴本合成订书机，本册换成钳形绿握把 }
-      - { level: 7, name: 桌面收纳篮, silhouette: 篮+笔, scale_delta: "+大", scale_pct: 0.74, parts_add: 篮筐与笔, role: 稀有件, merge_why: 两件订书机合成收纳篮，钳口换成篮筐，办公收纳 }
-      - { level: 8, name: 桌面打印机, silhouette: 方盒机身, scale_delta: "+大", scale_pct: 0.77, parts_add: 整件机身, role: 展陈件, merge_why: 两件收纳篮合成打印机，篮体换成方盒机身，文具展陈件 }
+      - { level: 1, name: 回形针, silhouette: 单环金属线, scale_delta: 基档, scale_pct: 0.60, parts_add: "—" }
+      - { level: 2, name: 图钉, silhouette: 钉帽+针, scale_delta: "+小", scale_pct: 0.63, parts_add: 钉帽 }
+      - { level: 3, name: 橡皮, silhouette: 砖块, scale_delta: "+小", scale_pct: 0.66, parts_add: 体积块 }
+      - { level: 4, name: 铅笔, silhouette: 六角杆+尖, scale_delta: "+中", scale_pct: 0.69, parts_add: 笔尖；杆身可选棱纹握持区 }
+      - { level: 5, name: 便利贴本, silhouette: 方形本, scale_delta: "+中", scale_pct: 0.72, parts_add: 本册厚度 }
+      - { level: 6, name: 订书机, silhouette: 钳形+棱纹握把, scale_delta: "+大", scale_pct: 0.75, parts_add: 绿色棱纹握把 }
+      - { level: 7, name: 桌面收纳篮, silhouette: 篮+笔, scale_delta: "+大", scale_pct: 0.77, parts_add: 篮筐与笔 }
+      - { level: 8, name: 桌面打印机, silhouette: 方盒机身, scale_delta: "+大", scale_pct: 0.79, parts_add: 整件机身；全梯最大 }

@@ -15,7 +15,7 @@
 ![Skills](https://img.shields.io/badge/美术技能-10-8B5CF6)
 ![Threshold](https://img.shields.io/badge/合格线-≥9.60-blue)
 
-[📖 使用手册](USER_MANUAL.md) · [技能流程图](docs/skills/flows.html) · [效果图墙](#效果长什么样) · [合成梯 / 克隆实测](#合成梯与风格克隆旧跑分) · [架构](ARCHITECTURE.md)
+[📖 使用手册](USER_MANUAL.md) · [技能流程图](docs/skills/flows.html) · [效果图墙](#效果长什么样) · [全页展陈](docs/showcase/skills-homepage/index.html) · [架构](ARCHITECTURE.md)
 
 </div>
 
@@ -157,105 +157,55 @@ python3 pmem_art.py skills --install
 4. **按题材触发 R1 结构底线**：仅人物/生物自动注入关节/握持/双瞳高光底线；纯空镜仅注入透视灭点与接触阴影；UI/图标跳过人体解剖词。
 5. **精简回流与评分容错**：单轮 `【回流修正】` 硬限 `≤ 2` 条；评分 API 偶发失败自动重试，绝不灌入泛化套话污染下一轮 Prompt。
 
-嫌某档太死或太放：同档直接加一句话，例如「medium：允许更大冷暖对比，仍禁止换机位」。细则 → [手册附录 A](USER_MANUAL.md#附录-a四档---scale-细则与示例)。
-
----
-
-## 效果长什么样
+嫌某档太死或太放：同档直接加一句话，例如「medium：允许更大冷暖对比，仍禁止换机位」。细则 → [手册附录 A](USER_MANUAL.md#附录-a四档-## 效果长什么样
 
 ### 自我进化总览
 
 ![pmem-art 自我进化报告预览](benchmark-evolution-preview.png)
 
-### V8 · 20 Bot（skills_kit · Absolute-5D）
+### regen2 · 2026-10-29（最多 4 轮 · ≥9.60）
 
-4 案例 ×（原画 / low / medium / high / recompose / 大改）= **20 终图**。这批是旧上限跑的（当时最多 8 轮、停分 ≥9.60）。现在生图上限是 **最多 4 轮**；表里的「8 轮」只说明那一格实际跑了几轮。  
-本批均值 **9.14**（≥9.60 达标 **4/20**）。全页：[docs/showcase/pmem_art_images_v8_20bots_showcase.html](docs/showcase/pmem_art_images_v8_20bots_showcase.html)
-
-Grok 三轮优化 best-of（离线 Absolute-5D 均值 **8.504**）：[docs/showcase/grok_best/pmem_art_images_v8_20bots_grok_best_showcase.html](docs/showcase/grok_best/pmem_art_images_v8_20bots_grok_best_showcase.html) · 永久策略与三轮结论：[docs/grok_v8_3round/FINAL_3ROUND_SYNTHESIS_AND_POLICY.md](docs/grok_v8_3round/FINAL_3ROUND_SYNTHESIS_AND_POLICY.md)
+同范围再跑主页候选展陈。全页按分类排：[docs/showcase/skills-homepage/index.html](docs/showcase/skills-homepage/index.html)
 
 #### 案例 01 · 仙侠不夜城
 
-| 📥 原图 | 🤖 low | 🤖 medium | 🤖 high | 🎮 recompose | 🔥 大改 |
-| :---: | :---: | :---: | :---: | :---: | :---: |
-| ![c01_ref](docs/showcase/v8_frames/c01_ref.jpg) | ![c01_low](docs/showcase/v8_frames/c01_low.jpg) | ![c01_med](docs/showcase/v8_frames/c01_medium.jpg) | ![c01_high](docs/showcase/v8_frames/c01_high.jpg) | ![c01_rec](docs/showcase/v8_frames/c01_recompose.jpg) | ![c01_bold](docs/showcase/v8_frames/c01_bold.jpg) |
-| Baseline | **8.96** · 8 轮<br>`7.96 → 8.96` | **9.38** · 8 轮<br>`8.15 → 9.38` | **8.97** · 8 轮<br>`8.38 → 8.97` | **9.60** · 3 轮<br>`9.06 → 9.60` | **9.18** · 8 轮<br>`6.90 → 9.18` |
+| 原图 | low · **8.79** | medium · **9.04** | high · **8.67** | recompose · **8.00** |
+| :---: | :---: | :---: | :---: | :---: |
+| ![c01_ref](docs/showcase/skills-homepage/assets/regen2/draw_matrix/c01/ref.jpg) | ![c01_low](docs/showcase/skills-homepage/assets/regen2/draw_matrix/c01/low.jpg) | ![c01_med](docs/showcase/skills-homepage/assets/regen2/draw_matrix/c01/medium.jpg) | ![c01_high](docs/showcase/skills-homepage/assets/regen2/draw_matrix/c01/high.jpg) | ![c01_rec](docs/showcase/skills-homepage/assets/regen2/draw_matrix/c01/recompose.jpg) |
 
 #### 案例 02 · 粉彩速写少女
 
-| 📥 原图 | 🤖 low | 🤖 medium | 🤖 high | 🎮 recompose | 🔥 大改 |
-| :---: | :---: | :---: | :---: | :---: | :---: |
-| ![c02_ref](docs/showcase/v8_frames/c02_ref.jpg) | ![c02_low](docs/showcase/v8_frames/c02_low.jpg) | ![c02_med](docs/showcase/v8_frames/c02_medium.jpg) | ![c02_high](docs/showcase/v8_frames/c02_high.jpg) | ![c02_rec](docs/showcase/v8_frames/c02_recompose.jpg) | ![c02_bold](docs/showcase/v8_frames/c02_bold.jpg) |
-| Baseline | **8.72** · 8 轮<br>`7.88 → 8.72` | **8.86** · 8 轮<br>`7.99 → 8.86` | **9.35** · 8 轮<br>`9.22 → 9.35` | **9.68** · 6 轮<br>`8.60 → 9.68` | **9.09** · 8 轮<br>`8.10 → 9.09` |
+| 原图 | low · **8.64** | medium · **9.02** | high · **8.86** | recompose · **8.79** |
+| :---: | :---: | :---: | :---: | :---: |
+| ![c02_ref](docs/showcase/skills-homepage/assets/regen2/draw_matrix/c02/ref.jpg) | ![c02_low](docs/showcase/skills-homepage/assets/regen2/draw_matrix/c02/low.jpg) | ![c02_med](docs/showcase/skills-homepage/assets/regen2/draw_matrix/c02/medium.jpg) | ![c02_high](docs/showcase/skills-homepage/assets/regen2/draw_matrix/c02/high.jpg) | ![c02_rec](docs/showcase/skills-homepage/assets/regen2/draw_matrix/c02/recompose.jpg) |
 
 #### 案例 03 · 窗边日光胸像
 
-| 📥 原图 | 🤖 low | 🤖 medium | 🤖 high | 🎮 recompose | 🔥 大改 |
-| :---: | :---: | :---: | :---: | :---: | :---: |
-| ![c03_ref](docs/showcase/v8_frames/c03_ref.jpg) | ![c03_low](docs/showcase/v8_frames/c03_low.jpg) | ![c03_med](docs/showcase/v8_frames/c03_medium.jpg) | ![c03_high](docs/showcase/v8_frames/c03_high.jpg) | ![c03_rec](docs/showcase/v8_frames/c03_recompose.jpg) | ![c03_bold](docs/showcase/v8_frames/c03_bold.jpg) |
-| Baseline · **8.30** | **8.91** · 8 轮<br>`8.91 → 8.91` | **8.81** · 8 轮<br>`8.61 → 8.81` | **9.35** · 8 轮<br>`8.79 → 9.35` | **9.18** · 8 轮<br>`8.21 → 9.18` | **9.66** · 2 轮<br>`8.88 → 9.66` |
+| 原图 | low · **9.32** | medium · **8.96** | high · **8.70** | recompose · **8.49** |
+| :---: | :---: | :---: | :---: | :---: |
+| ![c03_ref](docs/showcase/skills-homepage/assets/regen2/draw_matrix/c03/ref.jpg) | ![c03_low](docs/showcase/skills-homepage/assets/regen2/draw_matrix/c03/low.jpg) | ![c03_med](docs/showcase/skills-homepage/assets/regen2/draw_matrix/c03/medium.jpg) | ![c03_high](docs/showcase/skills-homepage/assets/regen2/draw_matrix/c03/high.jpg) | ![c03_rec](docs/showcase/skills-homepage/assets/regen2/draw_matrix/c03/recompose.jpg) |
 
-#### 案例 04 · 天井峡谷概念
+#### 案例 04 · 天井石院
 
-| 📥 原图 | 🤖 low | 🤖 medium | 🤖 high | 🎮 recompose | 🔥 大改 |
-| :---: | :---: | :---: | :---: | :---: | :---: |
-| ![c04_ref](docs/showcase/v8_frames/c04_ref.jpg) | ![c04_low](docs/showcase/v8_frames/c04_low.jpg) | ![c04_med](docs/showcase/v8_frames/c04_medium.jpg) | ![c04_high](docs/showcase/v8_frames/c04_high.jpg) | ![c04_rec](docs/showcase/v8_frames/c04_recompose.jpg) | ![c04_bold](docs/showcase/v8_frames/c04_bold.jpg) |
-| Baseline · **7.06** | **7.97** · 8 轮<br>`7.40 → 7.97` | **8.45** · 8 轮<br>`7.27 → 8.45` | **9.55** · 8 轮<br>`7.96 → 9.55` | **9.70** · 5 轮<br>`→ 9.70` | **9.40** · 8 轮<br>`→ 9.40` |
+| 原图 | low · **9.31** | medium · **8.71** | high · **8.49** | recompose · **8.63** |
+| :---: | :---: | :---: | :---: | :---: |
+| ![c04_ref](docs/showcase/skills-homepage/assets/regen2/draw_matrix/c04/ref.jpg) | ![c04_low](docs/showcase/skills-homepage/assets/regen2/draw_matrix/c04/low.jpg) | ![c04_med](docs/showcase/skills-homepage/assets/regen2/draw_matrix/c04/medium.jpg) | ![c04_high](docs/showcase/skills-homepage/assets/regen2/draw_matrix/c04/high.jpg) | ![c04_rec](docs/showcase/skills-homepage/assets/regen2/draw_matrix/c04/recompose.jpg) |
 
-> 横看：同一原图在 low → medium → high → recompose → 大改 的差异。竖看：R1 到终稿怎么抬分（Absolute-5D Quant）。
+#### 界面 / 图标 / 克隆变体
 
-### 合成梯与风格克隆（旧跑分）
+| 花房 UI · **8.93** | 浮城 A · **8.51** | 青瓷金 A · **8.79** | 锻炉 A · **8.99** | 治疗药 C · **9.27** |
+| :---: | :---: | :---: | :---: | :---: |
+| ![ui](docs/showcase/skills-homepage/assets/regen2/v2/ui_royal.jpg) | ![ia](docs/showcase/skills-homepage/assets/regen2/v2/icon_a.jpg) | ![ia2](docs/showcase/skills-homepage/assets/regen2/v2/icon_a2.jpg) | ![ia3](docs/showcase/skills-homepage/assets/regen2/v2/icon_a3.jpg) | ![heal](docs/showcase/skills-homepage/assets/regen2/v2/icon_c_heal.jpg) |
 
-全页展陈（V8×20 + Merge/Clone，含分数出处）：[docs/showcase/skills-homepage/index.html](docs/showcase/skills-homepage/index.html)
+| 少年纸风筝 · **8.55** | 白兔 · **8.40** | 光影变体 · **9.10** | 惊喜 · **9.53** | 晶冠瓶 · **9.44** |
+| :---: | :---: | :---: | :---: | :---: |
+| ![kite](docs/showcase/skills-homepage/assets/regen2/v2/clone_kite.jpg) | ![rabbit](docs/showcase/skills-homepage/assets/regen2/v2/clone_rabbit.jpg) | ![light](docs/showcase/skills-homepage/assets/regen2/v2/var_light.jpg) | ![surprise](docs/showcase/skills-homepage/assets/regen2/v2/var_surprise.jpg) | ![crown](docs/showcase/skills-homepage/assets/regen2/v2/merge_crown.jpg) |
 
-| 技能 | 在测什么 | 稳定性门槛 | 本批结果 |
-| :--- | :--- | :--- | :--- |
-| **`pmem-merge-ladder`** | Mode A/B/C 同域 beach-candy 整梯；另有早期 Mode C 三新域连胜 | 八格每一格 Absolute-5D ≥9.6 | **A PASS** min 9.8 · **B/C FAIL**（L6 脸红线）· 早期 G1–G3 MET |
-| 风格克隆 | Mode B：锁风格 ~95% + **新主体** · REF\|RESULT。现在在 `/pmem-draw` 里说「按这个风格画新题材」 | 连续 3 组 OK（每组 icon+char+UI） | **MET** · G1→G2→G3 |
+合成梯、锁风格卡、提示词全文见全页展陈。
 
-#### Merge ladder · Mode A / B / C（beach-candy）
+---
 
-同源 beach-candy 八格梯 · EXTRA 片（相对 CONTROL 更优或同级）。分数见 [`modes-abc/SCORES.md`](docs/showcase/skills-homepage/assets/merge/modes-abc/SCORES.md)。
-
-| Mode A · 零参考 | Mode B · 单参考垫 | Mode C · 参考整梯+新域 |
-| :---: | :---: | :---: |
-| ![Mode A sheet](docs/showcase/skills-homepage/assets/merge/modes-abc/modeA-sheet.jpg) | ![Mode B sheet](docs/showcase/skills-homepage/assets/merge/modes-abc/modeB-sheet.jpg) | ![Mode C sheet](docs/showcase/skills-homepage/assets/merge/modes-abc/modeC-sheet.jpg) |
-| **min 9.8 PASS** · beach-candy · 零参考 | **min 8.8 FAIL** · beach-candy · 单参考垫<br>（L6 鸭子黑点脸） | **min 8.5 FAIL** · beach-candy · 参考整梯+新域<br>（同 L6 脸红线） |
-| ![Mode A compare](docs/showcase/skills-homepage/assets/merge/modes-abc/modeA-compare.jpg) | ![Mode B compare](docs/showcase/skills-homepage/assets/merge/modes-abc/modeB-compare.jpg) | ![Mode C compare](docs/showcase/skills-homepage/assets/merge/modes-abc/modeC-compare.jpg) |
-
-#### Merge ladder · 早期 Mode C 稳定性连胜（G1 / G2 / G3）
-
-较早一轮：连续 3 个**新域** category-swap 均 8/8 ≥9.6（整梯棋盘）。
-
-| G1 · 烘焙厨具 | G2 · 清洁工具 | G3 · 运动装备 |
-| :---: | :---: | :---: |
-| ![G1 sheet](docs/showcase/skills-homepage/assets/merge/G1/sheet.jpg) | ![G2 sheet](docs/showcase/skills-homepage/assets/merge/G2/sheet.jpg) | ![G3 sheet](docs/showcase/skills-homepage/assets/merge/G3/sheet.jpg) |
-| **8/8 ≥9.6** · min cell **9.6** · r02 | **8/8 ≥9.6** · min cell **9.8** · r02 | **8/8 ≥9.6** · min cell **9.7** · r01 |
-| ![G1 vs market](docs/showcase/skills-homepage/assets/merge/G1/compare_to_market.jpg) | ![G2 vs market](docs/showcase/skills-homepage/assets/merge/G2/compare_to_market.jpg) | ![G3 vs market](docs/showcase/skills-homepage/assets/merge/G3/compare_to_market.jpg) |
-
-#### Clone Mode B · 风格克隆新主体
-
-G3 连胜终局（icon / char / UI 均 Absolute-5D ≥9.6）：
-
-| ICON · Scroll 9.6 | CHAR · Blacksmith 9.6 | UI · Jackpot 9.6 |
-| :---: | :---: | :---: |
-| ![scroll](docs/showcase/skills-homepage/assets/clone/G3-icon-scroll/compare_r01.jpg) | ![blacksmith](docs/showcase/skills-homepage/assets/clone/G3-char-blacksmith/compare_r02.jpg) | ![jackpot](docs/showcase/skills-homepage/assets/clone/G3-ui-jackpot/compare_r02.jpg) |
-| cannon booster → 卷轴+蜡封 | king T-pose → 铁匠（空手） | unlock chrome → Jackpot 弹窗 |
-
-同批更早过关（仍计入稳定性循环）：
-
-| ICON · Potion 9.6（G2） | UI · Bonus 9.6（G1） |
-| :---: | :---: |
-| ![potion](docs/showcase/skills-homepage/assets/clone/G2-icon-potion/compare_r01.jpg) | ![bonus](docs/showcase/skills-homepage/assets/clone/G1-ui-bonus/compare_r02.jpg) |
-
-清晰重出 · same subject（Mode B 垫糊图清出，Absolute-5D ≥9.6）：
-
-| ICON · 球械 9.64 | ICON · 玩具炮 9.62 |
-| :---: | :---: |
-| ![sphere clear](docs/showcase/skills-homepage/assets/clone/clear-icon-sphere-cannon/sidebyside-sphere.jpg) | ![cannon clear](docs/showcase/skills-homepage/assets/clone/clear-icon-sphere-cannon/sidebyside-cannon.jpg) |
-| 糊图垫 → 清晰球械 | 糊图垫 → 清晰玩具炮 |
-
-> 分数均来自真实 `SCORES.md` / `REPORT.md` 跑分，不是展示用编造分。
+d` 跑分，不是展示用编造分。
 
 ---
 

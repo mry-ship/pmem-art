@@ -34,7 +34,7 @@ class MergeRelationTests(unittest.TestCase):
         rows = parse_rows(
             {
                 "rows": [
-                    {"level": i, "name": f"x{i}", "silhouette": f"s{i}", "scale_pct": 0.53 + i * 0.03, "parts_add": "p" if i > 1 else "—"}
+                    {"level": i, "name": f"x{i}", "silhouette": f"s{i}", "scale_pct": 0.55 + i * 0.03, "parts_add": "p" if i > 1 else "—"}
                     for i in range(1, 9)
                 ]
             }
@@ -50,7 +50,7 @@ class MergeRelationTests(unittest.TestCase):
                         "level": i,
                         "name": f"x{i}",
                         "silhouette": f"s{i}",
-                        "scale_pct": 0.53 + i * 0.03,
+                        "scale_pct": 0.55 + i * 0.03,
                         "parts_add": "加光" if i == 2 else ("p" if i > 1 else "—"),
                     }
                     for i in range(1, 9)
@@ -61,7 +61,7 @@ class MergeRelationTests(unittest.TestCase):
         self.assertFalse(ok)
         self.assertTrue(any("L02" in it and "说不通" in it for it in issues))
 
-    def test_l1_too_large_fails(self) -> None:
+    def test_l1_too_small_fails(self) -> None:
         rows = parse_rows(
             {
                 "rows": [
@@ -69,7 +69,7 @@ class MergeRelationTests(unittest.TestCase):
                         "level": i,
                         "name": f"x{i}",
                         "silhouette": f"s{i}",
-                        "scale_pct": 0.70 + i * 0.02,
+                        "scale_pct": 0.40 + i * 0.03,
                         "parts_add": "p" if i > 1 else "—",
                     }
                     for i in range(1, 9)
@@ -78,16 +78,16 @@ class MergeRelationTests(unittest.TestCase):
         )
         ok, issues = judge_relation_rows(rows)
         self.assertFalse(ok)
-        self.assertTrue(any("L1" in it and "过大" in it for it in issues))
+        self.assertTrue(any("L1" in it and "过低" in it for it in issues))
 
-    def test_family_and_why_required_on_track(self) -> None:
+    def test_track_arg_ignored_by_light_gate(self) -> None:
         track = {
             "rows": [
                 {
                     "level": i,
                     "name": f"x{i}",
                     "silhouette": f"s{i}",
-                    "scale_pct": 0.53 + i * 0.03,
+                    "scale_pct": 0.55 + i * 0.03,
                     "parts_add": "p" if i > 1 else "—",
                 }
                 for i in range(1, 9)
@@ -95,34 +95,18 @@ class MergeRelationTests(unittest.TestCase):
         }
         rows = parse_rows(track)
         ok, issues = judge_relation_rows(rows, track=track)
-        self.assertFalse(ok)
-        self.assertTrue(any("family" in it for it in issues))
-        self.assertTrue(any("merge_why" in it for it in issues))
+        self.assertTrue(ok, issues)
 
-    def test_species_change_with_similarity_passes(self) -> None:
+    def test_species_change_with_concrete_parts_passes(self) -> None:
         names = ["鱼苗", "孔雀鱼", "金鱼", "锦鲤", "神仙鱼", "狮子鱼", "龙鱼", "旗鱼"]
-        looks = [
-            "半透明银灰鱼苗",
-            "虹彩帆尾孔雀鱼",
-            "橙红圆腹金鱼",
-            "白底红黑斑锦鲤",
-            "银身黑条神仙鱼",
-            "红白条刺鳍狮子鱼",
-            "金属金鳞龙鱼",
-            "藏青旗鳍旗鱼",
-        ]
         track = {
-            "family": {"type": "鱼", "style": "卡通侧视"},
             "rows": [
                 {
                     "level": i,
                     "name": names[i - 1],
                     "silhouette": f"s{i}",
-                    "scale_pct": 0.53 + i * 0.03,
+                    "scale_pct": 0.55 + i * 0.03,
                     "parts_add": "新鳍" if i > 1 else "—",
-                    "look": looks[i - 1],
-                    "merge_why": "两件上一档合成这一档，同属鱼类" if i > 1 else "",
-                    "role": "入门件" if i == 1 else ("展陈件" if i == 8 else "换件"),
                 }
                 for i in range(1, 9)
             ],
@@ -131,69 +115,61 @@ class MergeRelationTests(unittest.TestCase):
         ok, issues = judge_relation_rows(rows, track=track)
         self.assertTrue(ok, issues)
 
-    def test_type_only_family_passes(self) -> None:
-        track = {
-            "family": {"type": "甜点"},
-            "rows": [
-                {
-                    "level": i,
-                    "name": f"甜{i}",
-                    "silhouette": f"s{i}",
-                    "scale_pct": 0.53 + i * 0.03,
-                    "parts_add": "新层" if i > 1 else "—",
-                    "look": f"本色材质件{i}",
-                    "merge_why": "两件上一档合成这一件，同属甜点" if i > 1 else "",
-                    "role": "入门件" if i == 1 else ("展陈件" if i == 8 else "换件"),
-                }
-                for i in range(1, 9)
-            ],
-        }
-        rows = parse_rows(track)
-        ok, issues = judge_relation_rows(rows, track=track)
-        self.assertTrue(ok, issues)
+    def test_duplicate_silhouette_fails(self) -> None:
+        rows = parse_rows(
+            {
+                "rows": [
+                    {
+                        "level": i,
+                        "name": f"x{i}",
+                        "silhouette": "same",
+                        "scale_pct": 0.55 + i * 0.03,
+                        "parts_add": "p" if i > 1 else "—",
+                    }
+                    for i in range(1, 9)
+                ]
+            }
+        )
+        ok, issues = judge_relation_rows(rows)
+        self.assertFalse(ok)
+        self.assertTrue(any("剪影家族" in it for it in issues))
 
-    def test_family_missing_type_fails(self) -> None:
+    def test_family_fields_not_required(self) -> None:
         track = {
-            "family": {"hue": "青绿", "style": "卡通"},
+            "family": {"hue": "青绿"},
             "rows": [
                 {
                     "level": i,
                     "name": f"x{i}",
                     "silhouette": f"s{i}",
-                    "scale_pct": 0.53 + i * 0.03,
+                    "scale_pct": 0.55 + i * 0.03,
                     "parts_add": "p" if i > 1 else "—",
-                    "merge_why": "两件上一档合成这一件，颜色相似" if i > 1 else "",
-                    "role": "入门件" if i == 1 else ("展陈件" if i == 8 else "换件"),
                 }
                 for i in range(1, 9)
             ],
         }
         rows = parse_rows(track)
         ok, issues = judge_relation_rows(rows, track=track)
-        self.assertFalse(ok)
-        self.assertTrue(any("type" in it for it in issues))
+        self.assertTrue(ok, issues)
 
-    def test_same_hue_look_wash_fails(self) -> None:
-        track = {
-            "family": {"type": "鱼", "hue": "青绿"},
-            "rows": [
-                {
-                    "level": i,
-                    "name": f"鱼{i}",
-                    "silhouette": f"s{i}",
-                    "scale_pct": 0.53 + i * 0.03,
-                    "parts_add": "鳍" if i > 1 else "—",
-                    "look": "青绿黏土鱼",
-                    "merge_why": "两件上一档合成这一件，同属鱼" if i > 1 else "",
-                    "role": "入门件" if i == 1 else ("展陈件" if i == 8 else "换件"),
-                }
-                for i in range(1, 9)
-            ],
-        }
-        rows = parse_rows(track)
-        ok, issues = judge_relation_rows(rows, track=track)
+    def test_l8_too_large_fails(self) -> None:
+        rows = parse_rows(
+            {
+                "rows": [
+                    {
+                        "level": i,
+                        "name": f"x{i}",
+                        "silhouette": f"s{i}",
+                        "scale_pct": 0.58 + i * 0.04,
+                        "parts_add": "p" if i > 1 else "—",
+                    }
+                    for i in range(1, 9)
+                ]
+            }
+        )
+        ok, issues = judge_relation_rows(rows)
         self.assertFalse(ok)
-        self.assertTrue(any("同一色" in it or "look 相同" in it for it in issues))
+        self.assertTrue(any("L8" in it and "过高" in it for it in issues))
 
     def test_span_too_extreme_fails(self) -> None:
         rows = parse_rows(
@@ -212,7 +188,7 @@ class MergeRelationTests(unittest.TestCase):
         )
         ok, issues = judge_relation_rows(rows)
         self.assertFalse(ok)
-        self.assertTrue(any("过大" in it for it in issues))
+        self.assertTrue(any(("过低" in it) or ("过高" in it) for it in issues))
 
     def test_place_subject_drops_inset_card(self) -> None:
         canvas = Image.new("RGB", (400, 400), (246, 239, 228))

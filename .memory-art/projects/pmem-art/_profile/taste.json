@@ -1,20 +1,35 @@
 {
   "version": 1,
-  "updated_at": "2026-10-29 18:03:41 UTC+8",
-  "preferred_lighting": [],
-  "preferred_composition": [],
+  "updated_at": "2026-10-28 12:24:33 UTC+8",
+  "preferred_lighting": [
+    "暖光"
+  ],
+  "preferred_composition": [
+    "半身",
+    "全身"
+  ],
   "preferred_line_weight": [],
   "preferred_color_temperature": [],
-  "banned_habits": [],
+  "banned_habits": [
+    "漏抠/黑底/毛边",
+    "赛博霓虹/霓虹紫"
+  ],
   "keep_phrases": [],
-  "reject_phrases": [],
-  "style_notes": [],
+  "reject_phrases": [
+    "禁止偏离样张画风：禁止赛璐珞平涂油光、禁止霓虹赛博高饱和、禁止厚涂柔边融合、禁止写实皮肤毛孔、禁止干净矢量线稿替代蜡笔颗粒"
+  ],
+  "style_notes": [
+    "窗边人像：发型刘海分区偶发糊边；耳机垫与脸交界线略软；前景花瓣边缘偶发锯齿感——后续同题材需锁发丝分层与硬边耳机轮廓",
+    "以后统一按此样张画风：粉蜡笔/油画棒颗粒笔触；主色鲜红卫衣#E23B2E(70%)；辅色牛仔蓝#4A6FA5+深灰袜#2B2B2B(20%)；",
+    "图标集 style-spec：Clean 24px stroke1.5 round/round currentColor viewBox24"
+  ],
   "signal_counts": {
     "keeps": 0,
-    "rejects": 0,
-    "style_fixes": 0,
-    "sessions": 0
+    "rejects": 1,
+    "style_fixes": 3,
+    "sessions": 20
   },
-  "project_id": "cursor-pmem-art",
-  "project_name": "pmem-art"
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private"
 }

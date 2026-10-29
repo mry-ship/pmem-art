@@ -1,8 +1,87 @@
 {
   "version": 1,
   "layer_scope": "private",
-  "project_id": "cursor-pmem-art",
-  "project_name": "Cursor-Pmem-Art",
-  "cards": {},
-  "updated_at": "2026-10-29 18:03:42 UTC+8"
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "cards": {
+    "tech-celshade": {
+      "id": "tech-celshade",
+      "title": "赛璐珞分层",
+      "body": "硬边色块分层，高光形状干净，层数克制。",
+      "tags": [
+        "style",
+        "material"
+      ],
+      "source": "converge_finish",
+      "layer_scope": "private",
+      "project_id": "pmem-art",
+      "project_name": "pmem-art",
+      "universal": false,
+      "promoted_to_shared": false,
+      "updated_at": "2026-10-28 03:06:11 UTC+8"
+    },
+    "tech-painterly": {
+      "id": "tech-painterly",
+      "title": "厚涂笔触",
+      "body": "可见笔触方向跟随形体，暗部透气勿脏。",
+      "tags": [
+        "style",
+        "material"
+      ],
+      "source": "converge_finish",
+      "layer_scope": "private",
+      "project_id": "pmem-art",
+      "project_name": "pmem-art",
+      "universal": false,
+      "promoted_to_shared": false,
+      "updated_at": "2026-10-28 11:27:44 UTC+8"
+    },
+    "icon-svg-spec": {
+      "id": "icon-svg-spec",
+      "title": "SVG 图标规格",
+      "body": "统一 viewBox / stroke / currentColor，视觉重量一致。",
+      "tags": [
+        "icon_consistency",
+        "ui"
+      ],
+      "source": "feedback",
+      "layer_scope": "private",
+      "project_id": "pmem-art",
+      "project_name": "pmem-art",
+      "universal": true,
+      "promoted_to_shared": false,
+      "updated_at": "2026-10-28 01:43:03 UTC+8"
+    },
+    "tech-9slice": {
+      "id": "tech-9slice",
+      "title": "九宫格切图",
+      "body": "四角固定、中心可拉伸；中心禁止复杂装饰。",
+      "tags": [
+        "ui"
+      ],
+      "source": "converge_finish",
+      "layer_scope": "private",
+      "project_id": "pmem-art",
+      "project_name": "pmem-art",
+      "universal": true,
+      "promoted_to_shared": false,
+      "updated_at": "2026-10-28 03:06:11 UTC+8"
+    },
+    "light-rim": {
+      "id": "light-rim",
+      "title": "侧逆光",
+      "body": "轮廓分离主体与背景，高光条沿边缘走。",
+      "tags": [
+        "lighting"
+      ],
+      "source": "converge_finish",
+      "layer_scope": "private",
+      "project_id": "pmem-art",
+      "project_name": "pmem-art",
+      "universal": true,
+      "promoted_to_shared": false,
+      "updated_at": "2026-10-28 02:42:03 UTC+8"
+    }
+  },
+  "updated_at": "2026-10-28 11:27:44 UTC+8"
 }

@@ -1,7 +1,7 @@
 # pmem-art config.yaml — 挂载式美术记忆生命周期配置
 schema_version: 1
 project:
-  name: pmem-art
+  name: Cursor-Pmem-Art
   art_style: ""
   color_space: sRGB
   engine: ""
@@ -30,8 +30,8 @@ bootstrap:
   candidate_min_files: 1
   never_auto_move: true
   scaffold_dirs: true
-  confirmed: true
-  last_sync_at: "2026-10-28T12:18:51+0800"
+  confirmed: false
+  last_sync_at: null
   auto_place: true
 classify:
   auto_add_modules: true

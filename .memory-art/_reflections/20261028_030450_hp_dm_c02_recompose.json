@@ -1,0 +1,118 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-10-28 03:04:50 UTC+8",
+  "session_id": "hp_dm_c02_recompose",
+  "goal": "允许构图重组保留粉彩少女身份：可换机位景别，仍锁黑波波头红帽衫蓝短裤三杠白鞋与粉彩纸感。",
+  "module": "character.PastelGirl",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.6,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 4,
+  "winner_score": 9.53,
+  "winner_image": "assets/character/pastelgirl/r4.jpg",
+  "winner_passed": false,
+  "outcome": "⚠️ **共执行 4 轮审图（目标阈值 `9.60` 分），未达标，已挑选全阶段最高分**（胜出：第 4 轮 `9.53 / 10.0` 分）",
+  "what_fixed": [
+    "上半身再放大；背景斜线更疏；发丝分层与腮红更空气",
+    "主体更稳靠左；背景斜线再疏；发丝再分几缕",
+    "发丝再分几缕；腮红更虚；帽衫褶软高光",
+    "解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁止糊边融边；发丝分层仍可更清；腮红空气仍可再虚"
+  ],
+  "what_still_weak": "发丝分层仍可更清；腮红空气仍可再虚；prompt 改动 89% 超过档位上限 85%",
+  "strengths": "左近景右留白稳；粉彩纸感身份锁；发丝与褶有改善",
+  "taste_deltas": {
+    "from_strengths": [
+      "左近景右留白稳；粉彩纸感身份锁；发丝与褶有改善"
+    ],
+    "from_defects": [
+      "偏左占位可再稳；背景斜线仍可更疏；发丝分层可再清；prompt 改动 87% 超过档位上限 85%",
+      "发丝分层仍可再清；衣褶微高光仍弱；腮红可再空气；prompt 改动 87% 超过档位上限 85%",
+      "发丝分层仍可更清；腮红空气仍可再虚；prompt 改动 89% 超过档位上限 85%"
+    ]
+  },
+  "warm_start_confidence": 0.9,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 9.38,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 9.46,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 9.51,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 9.53,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：上半身占比还可更大；背景斜线可更疏；发丝分层与腮红空气仍不足",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.38"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：已换成四分之三近景偏左；目光右上留白；粉彩身份锁",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.38"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：偏左占位可再稳；背景斜线仍可更疏；发丝分层可再清；prompt 改动 87% 超过档位上限 85%",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.46"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：近景更大；目光右上留白更好；粉彩身份锁",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.46"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：发丝分层仍可再清；衣褶微高光仍弱；腮红可再空气；prompt 改动 87% 超过档位上限 85%",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.51"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：左三分近景与右留白到位；粉彩纸感身份锁；蓝斜线更疏",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.51"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：发丝分层仍可更清；腮红空气仍可再虚；prompt 改动 89% 超过档位上限 85%",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "9.53"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：发丝分层仍可更清；腮红空气仍可再虚；prompt 改动 89% 超过档位上限 85%",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.53"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：发丝分层仍可更清；腮红空气仍可再虚；prompt 改动 89% 超过档位上限 85%",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "9.53"
+    }
+  ]
+}
