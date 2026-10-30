@@ -1,0 +1,56 @@
+{
+  "id": "clone-rabbit",
+  "session": "regen3-clone-rabbit",
+  "skill": "/pmem-draw",
+  "contract": "克隆",
+  "module": "character.PastelRabbit",
+  "scale": "recompose",
+  "mode": "quality",
+  "aspect_ratio": "4:3",
+  "threshold": 9.5,
+  "passed": false,
+  "change": "白兔抱胡萝卜",
+  "locked": [
+    "粉彩纸感",
+    "软描边",
+    "腮红空气",
+    "勿赛博霓虹"
+  ],
+  "ref": "docs/showcase/homepage_rerun_1028_regen3/v2/clone_rabbit/ref.jpg",
+  "output_dir": "docs/showcase/homepage_rerun_1028_regen3/v2/clone_rabbit/",
+  "final": "docs/showcase/homepage_rerun_1028_regen3/v2/clone_rabbit/final.jpg",
+  "winner_round": 4,
+  "winner_score": 9.35,
+  "board": ".memory-art/converge/boards/regen3-clone-rabbit/index.html",
+  "rounds": [
+    {
+      "round": 1,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/v2/clone_rabbit/r1.jpg",
+      "score": 8.78,
+      "dims": "构图8.9/光影8.7/透视8.5/质感9.0/风格9.0/无瑕疵8.6",
+      "defect": "俯角坐姿兔居中偏下；主光平光空气。胡萝卜偏竖直未斜抱；前爪握持与胡萝卜体积咬合可再紧；recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机"
+    },
+    {
+      "round": 2,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/v2/clone_rabbit/r2.jpg",
+      "score": 8.94,
+      "dims": "构图9.1/光影8.9/透视8.8/质感9.1/风格9.0/无瑕疵8.8",
+      "defect": "俯角兔居中偏下；主光平光空气。胡萝卜斜度仍不够明显；背景斜线排线比参考略弱偏洗；recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机"
+    },
+    {
+      "round": 3,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/v2/clone_rabbit/r3.jpg",
+      "score": 9.18,
+      "dims": "构图9.3/光影9.1/透视9.0/质感9.3/风格9.3/无瑕疵9.1",
+      "defect": "俯角兔居中偏下；主光平光。兔眼闭合成弧可再睁成虹膜高光更贴参考媒介人物眼法；前爪咬合可再紧；recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机"
+    },
+    {
+      "round": 4,
+      "image": "assets/character/pastelrabbit/r4.jpg",
+      "score": 9.35,
+      "dims": "构图9.4/光影9.3/透视9.2/质感9.4/风格9.5/无瑕疵9.3",
+      "defect": "俯角兔居中偏下；主光平光。胡萝卜绿叶簇可再简半档免抢主体；recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机"
+    }
+  ],
+  "note": "满4轮未达9.50；交付最高分第4轮 9.35。"
+}

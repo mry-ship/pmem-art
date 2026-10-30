@@ -1,0 +1,48 @@
+{
+  "id": "c03-high",
+  "session": "regen3-c03-high",
+  "skill": "/pmem-draw",
+  "contract": "普通图",
+  "module": "character.SunlitGirl",
+  "scale": "high",
+  "mode": "quality",
+  "aspect_ratio": "3:4",
+  "threshold": 9.5,
+  "passed": true,
+  "goal": "high保身份媒介，加强暖金逆光张力与尘埃体积光，加一处风格内叙事（窗台多一朵雏菊或发丝边缘更亮），不把换机位当目标",
+  "ref": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/ref.jpg",
+  "output_dir": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/high/",
+  "final": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/high/final.jpg",
+  "winner_round": 3,
+  "winner_score": 9.51,
+  "board": ".memory-art/converge/boards/regen3-c03-high/index.html",
+  "score_chain": [
+    9.09,
+    9.43,
+    9.51
+  ],
+  "note": "第3轮达标9.51；叙事：窗台雏菊更密+发丝更亮+尘埃更厚。",
+  "rounds": [
+    {
+      "round": 1,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/high/r1.jpg",
+      "score": 9.09,
+      "dims": "构图9.2/光影9.3/透视9.1/质感9.0/风格9.2/无瑕疵8.9",
+      "defect": "额外雏菊不明显；耳机交界软；尘埃偏散点"
+    },
+    {
+      "round": 2,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/high/r2.jpg",
+      "score": 9.43,
+      "dims": "构图9.5/光影9.6/透视9.4/质感9.4/风格9.5/无瑕疵9.3",
+      "defect": "最近花瓣边缘略糊；耳机垫交界仍软"
+    },
+    {
+      "round": 3,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/high/r3.jpg",
+      "score": 9.51,
+      "dims": "构图9.5/光影9.6/透视9.5/质感9.5/风格9.5/无瑕疵9.5",
+      "defect": "左颊斑驳影边缘仍略软半档"
+    }
+  ]
+}

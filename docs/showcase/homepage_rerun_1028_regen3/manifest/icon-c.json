@@ -1,0 +1,79 @@
+{
+  "mode": "C",
+  "session": "regen3-icon-c-heal",
+  "module": "icon.PotionSet",
+  "scale": "medium",
+  "aspect": "1:1",
+  "style_spec": "docs/showcase/homepage_rerun_1028_regen3/v2/icon_c_set/style-spec.json",
+  "note": "Transparent-alpha prop grid; thick silhouette; studio light; object vignette; no text. No original pad. Heal converged; others same-set one-shot.",
+  "heal_rounds": [
+    {"round": 1, "score": 9.10, "dims": "剪影识别9.40/描边色板8.95/棚拍光9.05/透明底8.85/无字9.60/无瑕疵8.90"},
+    {"round": 2, "score": 9.26, "dims": "剪影识别9.50/描边色板9.15/棚拍光9.25/透明底9.10/无字9.60/无瑕疵9.05"},
+    {"round": 3, "score": 9.34, "dims": "剪影识别9.55/描边色板9.25/棚拍光9.35/透明底9.20/无字9.65/无瑕疵9.15"},
+    {"round": 4, "score": 9.40, "dims": "剪影识别9.55/描边色板9.30/棚拍光9.40/透明底9.40/无字9.65/无瑕疵9.30", "winner": true}
+  ],
+  "exports": {
+    "heal_64": "docs/showcase/homepage_rerun_1028_regen3/v2/icon_c_set/heal_64.png",
+    "heal_128": "docs/showcase/homepage_rerun_1028_regen3/v2/icon_c_set/heal_128.png",
+    "heal_256": "docs/showcase/homepage_rerun_1028_regen3/v2/icon_c_set/heal_256.png"
+  },
+  "icons": [
+    {
+      "id": "heal",
+      "path": "docs/showcase/homepage_rerun_1028_regen3/v2/icon_c_set/heal.jpg",
+      "png": "docs/showcase/homepage_rerun_1028_regen3/v2/icon_c_set/heal.png",
+      "alpha": true,
+      "session": "regen3-icon-c-heal",
+      "attempts": 4,
+      "score": 9.40
+    },
+    {
+      "id": "mana",
+      "path": "docs/showcase/homepage_rerun_1028_regen3/v2/icon_c_set/mana.jpg",
+      "png": "docs/showcase/homepage_rerun_1028_regen3/v2/icon_c_set/mana.png",
+      "alpha": true,
+      "session": "regen3-icon-c-mana",
+      "attempts": 1,
+      "score": 9.21,
+      "dims": "剪影识别9.40/描边色板9.10/棚拍光9.15/透明底9.20/无字9.60/无瑕疵9.10",
+      "hurdle_passed": true,
+      "note": "同套一次出，未强制满4轮"
+    },
+    {
+      "id": "key",
+      "path": "docs/showcase/homepage_rerun_1028_regen3/v2/icon_c_set/key.jpg",
+      "png": "docs/showcase/homepage_rerun_1028_regen3/v2/icon_c_set/key.png",
+      "alpha": true,
+      "session": "regen3-icon-c-key",
+      "attempts": 1,
+      "score": 9.16,
+      "dims": "剪影识别9.35/描边色板9.05/棚拍光9.10/透明底9.15/无字9.55/无瑕疵9.05",
+      "hurdle_passed": true,
+      "note": "同套一次出，未强制满4轮"
+    },
+    {
+      "id": "ruby",
+      "path": "docs/showcase/homepage_rerun_1028_regen3/v2/icon_c_set/ruby.jpg",
+      "png": "docs/showcase/homepage_rerun_1028_regen3/v2/icon_c_set/ruby.png",
+      "alpha": true,
+      "session": "regen3-icon-c-ruby",
+      "attempts": 1,
+      "score": 9.11,
+      "dims": "剪影识别9.30/描边色板9.00/棚拍光9.05/透明底9.10/无字9.55/无瑕疵9.00",
+      "hurdle_passed": true,
+      "note": "同套一次出，未强制满4轮"
+    },
+    {
+      "id": "scroll",
+      "path": "docs/showcase/homepage_rerun_1028_regen3/v2/icon_c_set/scroll.jpg",
+      "png": "docs/showcase/homepage_rerun_1028_regen3/v2/icon_c_set/scroll.png",
+      "alpha": true,
+      "session": "regen3-icon-c-scroll",
+      "attempts": 1,
+      "score": 9.16,
+      "dims": "剪影识别9.35/描边色板9.05/棚拍光9.10/透明底9.15/无字9.50/无瑕疵9.05",
+      "hurdle_passed": true,
+      "note": "同套一次出，未强制满4轮"
+    }
+  ]
+}

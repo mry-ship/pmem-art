@@ -1,0 +1,57 @@
+{
+  "id": "c02-recompose",
+  "session": "regen3-c02-recompose",
+  "skill": "/pmem-draw",
+  "contract": "普通图",
+  "module": "character.PastelGirl",
+  "scale": "recompose",
+  "mode": "quality",
+  "aspect_ratio": "4:3",
+  "threshold": 9.5,
+  "passed": false,
+  "medium_family": "dry",
+  "recompose_dir": "同一粉彩少女改成侧面半身，红帽衫与蜡笔纸感保留，背景仍是斜向色粉笔",
+  "ref": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/ref.jpg",
+  "output_dir": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/recompose/",
+  "final": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/recompose/final.jpg",
+  "winner_round": 4,
+  "winner_score": 9.33,
+  "board": ".memory-art/converge/boards/regen3-c02-recompose/index.html",
+  "score_chain": [
+    8.93,
+    9.14,
+    9.28,
+    9.33
+  ],
+  "note": "满4轮未达9.5；交付第4轮9.33。已换侧面半身机位。",
+  "rounds": [
+    {
+      "round": 1,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/recompose/r1.jpg",
+      "score": 8.93,
+      "dims": "构图8.5/光影9.0/透视8.8/质感9.3/风格9.2/无瑕疵8.7",
+      "defect": "袖口裁切不清；屈膝不够"
+    },
+    {
+      "round": 2,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/recompose/r2.jpg",
+      "score": 9.14,
+      "dims": "构图9.0/光影9.1/透视9.0/质感9.4/风格9.3/无瑕疵9.0",
+      "defect": "袖口偏糊；屈膝轮廓不够"
+    },
+    {
+      "round": 3,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/recompose/r3.jpg",
+      "score": 9.28,
+      "dims": "构图9.2/光影9.2/透视9.1/质感9.5/风格9.4/无瑕疵9.2",
+      "defect": "屈膝仍偏弱"
+    },
+    {
+      "round": 4,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/recompose/r4.jpg",
+      "score": 9.33,
+      "dims": "构图9.3/光影9.2/透视9.2/质感9.5/风格9.4/无瑕疵9.3",
+      "defect": "屈膝圆度可更清楚"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "skill": "/pmem-merge-ladder",
+  "track": "potion",
+  "session_prefix": "regen3-merge-potion",
+  "module": "prop.HealPotionMerge",
+  "relation_gate": {
+    "passed": true,
+    "discuss_rounds": 3,
+    "discuss_session": "regen3-merge-potion",
+    "phase1_yaml": "docs/showcase/homepage_rerun_1028_regen3/merge_work/merge_phase1.yaml",
+    "relation_judge": "exit 0",
+    "audit": "exit 0",
+    "chain": "空瓶→塞→半药→满药→签环叶饰→金托→晶冠→罩瓶",
+    "surface": "切面玻璃+暖金饰卡通道具，浅灰棚拍短接触影，单件居中无脸无等级字",
+    "note": "展陈交付 L1–L6；L7 晶冠 / L8 罩瓶为八件门禁补档，未强求进 HTML"
+  },
+  "dir": "docs/showcase/homepage_rerun_1028_regen3/v2/merge_potion_l16/",
+  "tiers": [
+    {"level": 1, "name": "空瓶", "path": "docs/showcase/homepage_rerun_1028_regen3/v2/merge_potion_l16/L01.jpg", "session": "regen3-merge-potion-L01", "rounds": 1, "score": 9.52, "deliver": true},
+    {"level": 2, "name": "塞瓶", "path": "docs/showcase/homepage_rerun_1028_regen3/v2/merge_potion_l16/L02.jpg", "session": "regen3-merge-potion-L02", "rounds": 1, "score": 9.52, "deliver": true},
+    {"level": 3, "name": "半药", "path": "docs/showcase/homepage_rerun_1028_regen3/v2/merge_potion_l16/L03.jpg", "session": "regen3-merge-potion-L03", "rounds": 1, "score": 9.52, "deliver": true},
+    {"level": 4, "name": "满药", "path": "docs/showcase/homepage_rerun_1028_regen3/v2/merge_potion_l16/L04.jpg", "session": "regen3-merge-potion-L04", "rounds": 1, "score": 9.52, "deliver": true},
+    {"level": 5, "name": "签环叶", "path": "docs/showcase/homepage_rerun_1028_regen3/v2/merge_potion_l16/L05.jpg", "session": "regen3-merge-potion-L05", "rounds": 1, "score": 9.52, "deliver": true},
+    {"level": 6, "name": "金托", "path": "docs/showcase/homepage_rerun_1028_regen3/v2/merge_potion_l16/L06.jpg", "session": "regen3-merge-potion-L06", "rounds": 1, "score": 9.52, "deliver": true},
+    {"level": 7, "name": "晶冠", "path": "docs/showcase/homepage_rerun_1028_regen3/v2/merge_potion_l16/L07.jpg", "deliver": false, "note": "八件补档"},
+    {"level": 8, "name": "罩瓶", "path": "docs/showcase/homepage_rerun_1028_regen3/v2/merge_potion_l16/L08.jpg", "deliver": false, "note": "八件补档"}
+  ],
+  "no_ref": true,
+  "square_per_tier": true
+}

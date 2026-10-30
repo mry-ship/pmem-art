@@ -1,0 +1,31 @@
+{
+  "name": "ui_royal_flower_house",
+  "style": "Royal Match candy palace soft-plastic",
+  "palette": {
+    "cream_apricot": "#F3D9B8",
+    "peach": "#F0C4A8",
+    "champagne_gold": "#D4AF6A",
+    "butter_yellow": "#F2D98A",
+    "garden_green": "#3F8F4A"
+  },
+  "nine_slice_defaults": {"left": 48, "right": 48, "top": 48, "bottom": 48},
+  "elements": [
+    {"name": "panel_main", "group": "panel", "state": "normal", "file": "elements/panel_9slice.png", "scalable": true, "nine_slice": {"left": 56, "right": 56, "top": 56, "bottom": 56}},
+    {"name": "btn_garden", "group": "button", "state": "normal", "file": "elements/btn_garden_normal.png", "scalable": true, "nine_slice": {"left": 40, "right": 40, "top": 28, "bottom": 28}},
+    {"name": "btn_garden", "group": "button", "state": "pressed", "file": "elements/btn_garden_pressed.png", "scalable": true, "nine_slice": {"left": 40, "right": 40, "top": 28, "bottom": 28}},
+    {"name": "btn_garden", "group": "button", "state": "disabled", "file": "elements/btn_garden_disabled.png", "scalable": true, "nine_slice": {"left": 40, "right": 40, "top": 28, "bottom": 28}},
+    {"name": "btn_room", "group": "button", "state": "normal", "file": "elements/btn_room_normal.png", "scalable": true, "nine_slice": {"left": 40, "right": 40, "top": 28, "bottom": 28}},
+    {"name": "btn_room", "group": "button", "state": "pressed", "file": "elements/btn_room_pressed.png", "scalable": true, "nine_slice": {"left": 40, "right": 40, "top": 28, "bottom": 28}},
+    {"name": "btn_room", "group": "button", "state": "disabled", "file": "elements/btn_room_disabled.png", "scalable": true, "nine_slice": {"left": 40, "right": 40, "top": 28, "bottom": 28}},
+    {"name": "progress", "group": "progress", "state": "empty", "file": "elements/progress_empty.png", "scalable": true, "nine_slice": {"left": 36, "right": 36, "top": 20, "bottom": 20}},
+    {"name": "progress", "group": "progress", "state": "full", "file": "elements/progress_full.png", "scalable": true, "nine_slice": {"left": 36, "right": 36, "top": 20, "bottom": 20}},
+    {"name": "chip_coin", "group": "resource", "state": "normal", "file": "elements/chip_coin.png", "scalable": false},
+    {"name": "chip_heart", "group": "resource", "state": "normal", "file": "elements/chip_heart.png", "scalable": false},
+    {"name": "chip_star", "group": "resource", "state": "normal", "file": "elements/chip_star.png", "scalable": false},
+    {"name": "tab_home", "group": "tab", "state": "selected", "file": "elements/tab_home.png", "scalable": false},
+    {"name": "badge_water", "group": "badge", "state": "normal", "file": "elements/badge_water.png", "scalable": false},
+    {"name": "badge_teacup", "group": "badge", "state": "normal", "file": "elements/badge_teacup.png", "scalable": false},
+    {"name": "badge_sun", "group": "badge", "state": "normal", "file": "elements/badge_sun.png", "scalable": false},
+    {"name": "badge_bell", "group": "badge", "state": "normal", "file": "elements/badge_bell.png", "scalable": false}
+  ]
+}

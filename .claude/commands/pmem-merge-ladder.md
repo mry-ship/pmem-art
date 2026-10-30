@@ -41,9 +41,11 @@ python3 pmem_art.py converge discuss --round <稿次> --prompt "<这一稿八行
 3. 两件相同的这一档合成下一档。下一档仍是一件，而且说得出：这两件合成之后多了哪一块、为什么是这个物件。换成一个同色但无关的物件，没过。
 4. 体量只大一圈。最低档占格子大半，最高档留边，不顶出格子，也不缩成中间一个小点。末档最大、零件最多。
 5. 沿档位零件变多或剪影更复杂。`parts_add` 必须是具体零件。只写「更华丽 / 加光 / 特效」没过。同模只加特效没过。
-6. 相邻两档的剪影家族不能相同，也不能只改一两个字冒充不同。
+6. 相邻两档的 `silhouette` **整句不能相同**（防复制粘贴），但**同一物件升级链必须锁母体**：yaml 写 `base_body`（如「透明切面短药瓶」「蜜桃软糖」），每一档 `silhouette`/`name` 都要留住母体词。禁止 L2 起换瓶身、换糖种、把糖纸画成布质耳翼。换物种升档链（厨房工具→另一件工具）不写 `base_body`。
 
-机读数字过了、合成说不通，仍然不算定稿。讨论定稿之后，才把这八行写成机读文件。文件要有 `tracks:`，每一行用这些英文键：`level`、`name`、`silhouette`、`scale_delta`、`scale_pct`、`parts_add`。`scale_pct` 单调递增（L1 ≥ 0.58，L8 ≤ 0.80，后一档必须大于前一档）。L1 的 `parts_add` 写 `—`，L2–L8 必须是具体零件。键名写错或少了 `scale_pct`，`relation-judge` 审不了。
+机读数字过了、合成说不通，仍然不算定稿。讨论定稿之后，才把这八行写成机读文件。文件要有 `tracks:`；同物件链还要有 `base_body:` 与一句 `surface:`。每一行用这些英文键：`level`、`name`、`silhouette`、`scale_delta`、`scale_pct`、`parts_add`。`scale_pct` 单调递增（L1 ≥ 0.58，L8 ≤ 0.80，后一档必须大于前一档）。L1 的 `parts_add` 写 `—`，L2–L8 必须是具体零件。键名写错或少了 `scale_pct`，`relation-judge` 审不了。
+
+**同范围重跑**：`surface`、`base_body`、八档零件链从旧展陈/旧 yaml **抄死**，禁止重发明瓶身、糖纸语汇或材质（药=同一透明切面短瓶；糖=光洁软塑胶+粉白条纹扭结糖纸，不是哑光粘土卵石）。出图句每一档重复 `base_body` + 本档只加 `parts_add`，不要靠 Warm-Start 口味改成半身/rim light。
 
 新任务另写一份副本，照 `docs/showcase/skill_full_modes_1027/merge_phase1_canonical.yaml` 的结构。不要改掉这份 canonical 里已有的 track。然后必须跑：
 

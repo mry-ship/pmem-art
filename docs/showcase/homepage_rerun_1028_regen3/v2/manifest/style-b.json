@@ -1,0 +1,47 @@
+{
+  "skill": "pmem-style-lock",
+  "group": "B",
+  "title": "水墨苔绿 Ink Wash Sage",
+  "module": "style.InkWashSage",
+  "session": "regen3-style-b",
+  "output_root": "docs/showcase/homepage_rerun_1028_regen3/v2/style_lock_b",
+  "refs": [
+    {
+      "path": "docs/showcase/homepage_rerun_1028_regen3/v2/style_lock_b/ref1.jpg",
+      "caption": "松雾"
+    },
+    {
+      "path": "docs/showcase/homepage_rerun_1028_regen3/v2/style_lock_b/ref2.jpg",
+      "caption": "茶盏"
+    }
+  ],
+  "final": "docs/showcase/homepage_rerun_1028_regen3/v2/style_lock_b/final.jpg",
+  "card_kind": "infographic_palette",
+  "converge": false,
+  "palette": {
+    "primary_70": [
+      {"name": "苔绿", "hex": "#505848"},
+      {"name": "深苔", "hex": "#404838"},
+      {"name": "青瓷苔", "hex": "#989888"}
+    ],
+    "secondary_20": [
+      {"name": "墨黑", "hex": "#101418"},
+      {"name": "枝墨", "hex": "#24241E"}
+    ],
+    "accent_10": [
+      {"name": "米宣纸", "hex": "#E8E0D0"},
+      {"name": "雾灰绿", "hex": "#B7B7A8"},
+      {"name": "漫射纸白", "hex": "#F1EEE1"}
+    ]
+  },
+  "rendering": "湿接淡彩；边缘渗进纸纹；断墨细枝；明暗连续过渡",
+  "lighting": "漫射纸感光；无硬主光；无轮廓光；暖纸色温天光 / 茶盏顶侧柔漫射",
+  "positive": ["水墨淡彩", "湿接", "渗化", "纸纹颗粒", "低彩度苔绿", "断墨细枝", "留白", "大气透视", "漫射纸感光"],
+  "anti_style": ["霓虹", "硬边赛璐珞", "分阶明暗", "均匀粗勾线", "油亮高光", "塑料青瓷", "纯黑死黑", "高饱和翠绿", "赛博光", "硬投影", "矢量平涂", "厚涂油彩"],
+  "ready_sentence": "一张水墨淡彩，主色苔绿 #505848，深苔 #404838，青瓷浅苔 #989888，辅色墨黑 #101418，枝墨 #24241E，底是米宣纸 #E8E0D0，高光只到漫射纸白 #F1EEE1，远雾 #B7B7A8。湿接软边，纸纹颗粒，大气透视，光是漫射纸感。禁止霓虹、硬边赛璐珞、分阶明暗、均匀粗勾线、油亮高光、塑料青瓷、纯黑死黑、高饱和翠绿、赛博光、硬投影、矢量平涂、厚涂油彩。",
+  "memories": {
+    "art_decision": ".memory-art/entries/style.InkWashSage/CHAT20261030032645257DECISION.md",
+    "style_redline": ".memory-art/entries/style.InkWashSage/CHAT20261030032701418REDLINE.md",
+    "recipe": ".memory-art/entries/style.InkWashSage/CHAT20261030032703691RECIPE.md"
+  }
+}

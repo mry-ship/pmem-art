@@ -1,0 +1,56 @@
+{
+  "id": "c02-medium",
+  "session": "regen3-c02-medium",
+  "skill": "/pmem-draw",
+  "contract": "普通图",
+  "module": "character.PastelGirl",
+  "scale": "medium",
+  "mode": "quality",
+  "aspect_ratio": "4:3",
+  "threshold": 9.5,
+  "passed": false,
+  "medium_family": "dry",
+  "ref": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/ref.jpg",
+  "output_dir": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/medium/",
+  "final": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/medium/final.jpg",
+  "winner_round": 3,
+  "winner_score": 9.17,
+  "board": ".memory-art/converge/boards/regen3-c02-medium/index.html",
+  "score_chain": [
+    8.86,
+    9.07,
+    9.17,
+    9.07
+  ],
+  "note": "满4轮未达9.5；交付第3轮9.17。姿态仍偏单手与抬膝。",
+  "rounds": [
+    {
+      "round": 1,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/medium/r1.jpg",
+      "score": 8.86,
+      "dims": "构图8.5/光影9.0/透视8.6/质感9.2/风格9.1/无瑕疵8.7",
+      "defect": "一腿伸直；单手撑地"
+    },
+    {
+      "round": 2,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/medium/r2.jpg",
+      "score": 9.07,
+      "dims": "构图8.8/光影9.1/透视8.8/质感9.4/风格9.2/无瑕疵9.0",
+      "defect": "单手撑地；膝抬胸"
+    },
+    {
+      "round": 3,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/medium/r3.jpg",
+      "score": 9.17,
+      "dims": "构图8.9/光影9.2/透视8.9/质感9.5/风格9.3/无瑕疵9.1",
+      "defect": "仍偏单手；膝抬胸"
+    },
+    {
+      "round": 4,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/medium/r4.jpg",
+      "score": 9.07,
+      "dims": "构图8.8/光影9.1/透视8.8/质感9.4/风格9.2/无瑕疵9.0",
+      "defect": "仍单手；腿前伸"
+    }
+  ]
+}

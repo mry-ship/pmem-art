@@ -1,0 +1,56 @@
+{
+  "id": "clone",
+  "session": "regen3-clone-kite",
+  "skill": "/pmem-draw",
+  "contract": "克隆",
+  "module": "character.PastelBoy",
+  "scale": "recompose",
+  "mode": "quality",
+  "aspect_ratio": "4:3",
+  "threshold": 9.5,
+  "passed": false,
+  "change": "短发少年坐台阶持纸风筝",
+  "locked": [
+    "粉彩纸感",
+    "软描边",
+    "腮红空气",
+    "勿赛博霓虹"
+  ],
+  "ref": "docs/showcase/homepage_rerun_1028_regen3/v2/clone/ref.jpg",
+  "output_dir": "docs/showcase/homepage_rerun_1028_regen3/v2/clone/",
+  "final": "docs/showcase/homepage_rerun_1028_regen3/v2/clone/final.jpg",
+  "winner_round": 4,
+  "winner_score": 9.45,
+  "board": ".memory-art/converge/boards/regen3-clone-kite/index.html",
+  "rounds": [
+    {
+      "round": 1,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/v2/clone/r1.jpg",
+      "score": 8.85,
+      "dims": "构图9.0/光影8.8/透视8.6/质感9.0/风格9.1/无瑕疵8.7",
+      "defect": "俯角侧姿：少年约占中下三分之二；主光为粉彩平光空气。双手握卷与台阶接触阴影还可更咬合半档；纸风筝图案略花可再简；recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机"
+    },
+    {
+      "round": 2,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/v2/clone/r2.jpg",
+      "score": 9.11,
+      "dims": "构图9.2/光影9.0/透视9.0/质感9.2/风格9.3/无瑕疵9.0",
+      "defect": "俯角侧姿少年约占中下三分之二；主光粉彩平光。台阶棱线仍可再利半档；膝前纸卷圆柱体积可再清楚；recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机"
+    },
+    {
+      "round": 3,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/v2/clone/r3.jpg",
+      "score": 9.35,
+      "dims": "构图9.4/光影9.2/透视9.3/质感9.4/风格9.5/无瑕疵9.3",
+      "defect": "俯角侧姿少年约占中下三分之二；主光粉彩平光。鞋与台阶接触阴影可再咬合半档；recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机"
+    },
+    {
+      "round": 4,
+      "image": "assets/character/pastelboy/r4.jpg",
+      "score": 9.45,
+      "dims": "构图9.5/光影9.4/透视9.4/质感9.5/风格9.6/无瑕疵9.4",
+      "defect": "俯角侧姿少年中下三分之二；主光粉彩平光。发丝分层可再空气半档；recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机"
+    }
+  ],
+  "note": "满4轮未达9.50；交付最高分第4轮 9.45。"
+}

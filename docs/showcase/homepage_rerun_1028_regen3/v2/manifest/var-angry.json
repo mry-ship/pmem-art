@@ -1,0 +1,57 @@
+{
+  "id": "var-angry",
+  "session": "regen3-var-angry",
+  "skill": "/pmem-draw",
+  "contract": "变体",
+  "module": "character.SunlitGirl",
+  "scale": "medium",
+  "mode": "quality",
+  "aspect_ratio": "3:4",
+  "threshold": 9.5,
+  "passed": true,
+  "change": "微怒鼓嘴",
+  "locked": [
+    "机位",
+    "画风",
+    "发色瞳色",
+    "白猫发夹",
+    "耳机",
+    "白T"
+  ],
+  "ref": "docs/showcase/homepage_rerun_1028_regen3/v2/variant_angry/ref.jpg",
+  "output_dir": "docs/showcase/homepage_rerun_1028_regen3/v2/variant_angry/",
+  "final": "docs/showcase/homepage_rerun_1028_regen3/v2/variant_angry/final.jpg",
+  "winner_round": 4,
+  "winner_score": 9.51,
+  "board": ".memory-art/converge/boards/regen3-var-angry/index.html",
+  "rounds": [
+    {
+      "round": 1,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/v2/variant_angry/r1.jpg",
+      "score": 9.1,
+      "dims": "构图9.2/光影9.1/透视9.0/质感9.0/风格9.4/无瑕疵9.0",
+      "defect": "双颊鼓起体积还可再明显半档；嘴角下压可更清楚一点"
+    },
+    {
+      "round": 2,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/v2/variant_angry/r2.jpg",
+      "score": 9.2,
+      "dims": "构图9.3/光影9.2/透视9.1/质感9.1/风格9.5/无瑕疵9.1",
+      "defect": "白猫发夹位置需贴发侧勿漂到耳机壳；双颊鼓起还可再圆半档"
+    },
+    {
+      "round": 3,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/v2/variant_angry/r3.jpg",
+      "score": 9.44,
+      "dims": "构图9.5/光影9.4/透视9.4/质感9.4/风格9.6/无瑕疵9.4",
+      "defect": "双颊鼓起还可再圆半档"
+    },
+    {
+      "round": 4,
+      "image": "assets/character/sunlitgirl/r4.jpg",
+      "score": 9.51,
+      "dims": "构图9.5/光影9.5/透视9.5/质感9.5/风格9.6/无瑕疵9.5",
+      "defect": "眉心轻蹙可再明确半档"
+    }
+  ]
+}

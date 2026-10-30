@@ -1,0 +1,32 @@
+{
+  "skill": "/pmem-merge-ladder",
+  "track": "candy",
+  "session_prefix": "regen3-candy-v2",
+  "module": "prop.PeachCandyMerge",
+  "relation_gate": {
+    "passed": true,
+    "discuss_rounds": 1,
+    "discuss_session": "regen3-merge-candy-v2",
+    "phase1_yaml": "docs/showcase/homepage_rerun_1028_regen3/merge_work/merge_phase1.yaml",
+    "relation_judge": "exit 0",
+    "audit": "exit 0",
+    "chain": "裸糖→糖纸→贴纸→纸托→丝带→托盘→罩盒→礼盒",
+    "surface": "软塑胶糖果宫廷，蜜桃粉彩圆润清漆，浅棚短接触影；严禁蛋糕/马卡龙/纸杯蛋糕",
+    "note": "regen3 candy rerun 清噪；展陈交付 L1–L6；L7 罩盒 / L8 礼盒为八件门禁补档；坏图在 _bad_regen3/"
+  },
+  "dir": "docs/showcase/homepage_rerun_1028_regen3/v2/merge_candy_l16/",
+  "tiers": [
+    {"level": 1, "name": "裸糖", "path": "docs/showcase/homepage_rerun_1028_regen3/v2/merge_candy_l16/L01.jpg", "session": "regen3-candy-v2-L01", "rounds": 1, "score": 9.59, "deliver": true},
+    {"level": 2, "name": "糖纸", "path": "docs/showcase/homepage_rerun_1028_regen3/v2/merge_candy_l16/L02.jpg", "session": "regen3-candy-v2-L02r", "rounds": 1, "score": 9.54, "deliver": true},
+    {"level": 3, "name": "贴纸", "path": "docs/showcase/homepage_rerun_1028_regen3/v2/merge_candy_l16/L03.jpg", "session": "regen3-candy-v2-L03r", "rounds": 1, "score": 9.54, "deliver": true},
+    {"level": 4, "name": "纸托", "path": "docs/showcase/homepage_rerun_1028_regen3/v2/merge_candy_l16/L04.jpg", "session": "regen3-candy-v2-L04", "rounds": 1, "score": 9.51, "deliver": true},
+    {"level": 5, "name": "丝带", "path": "docs/showcase/homepage_rerun_1028_regen3/v2/merge_candy_l16/L05.jpg", "session": "regen3-candy-v2-L05r", "rounds": 1, "score": 9.52, "deliver": true},
+    {"level": 6, "name": "托盘", "path": "docs/showcase/homepage_rerun_1028_regen3/v2/merge_candy_l16/L06.jpg", "session": "regen3-candy-v2-L06", "rounds": 1, "score": 9.52, "deliver": true},
+    {"level": 7, "name": "罩盒", "path": "docs/showcase/homepage_rerun_1028_regen3/v2/merge_candy_l16/L07.jpg", "session": "regen3-candy-v2-L07", "rounds": 1, "score": 9.52, "deliver": false, "note": "八件补档"},
+    {"level": 8, "name": "礼盒", "path": "docs/showcase/homepage_rerun_1028_regen3/v2/merge_candy_l16/L08.jpg", "session": "regen3-candy-v2-L08", "rounds": 1, "score": 9.52, "deliver": false, "note": "八件补档"}
+  ],
+  "score_chain_L1_L6": [9.59, 9.54, 9.54, 9.51, 9.52, 9.52],
+  "no_ref": true,
+  "square_per_tier": true,
+  "anti": ["蛋糕", "马卡龙", "纸杯蛋糕", "深灰脏底", "方框噪边", "漂浮残片"]
+}

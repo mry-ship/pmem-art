@@ -1,0 +1,28 @@
+{
+  "session": "regen3-icon-c-heal",
+  "rounds": [
+    {
+      "n": 1,
+      "score": 9.1,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/v2/icon_c_set/heal_r1.png"
+    },
+    {
+      "n": 2,
+      "score": 9.21,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/v2/icon_c_set/heal_r2.png"
+    },
+    {
+      "n": 3,
+      "score": 9.31,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/v2/icon_c_set/heal_r3.png"
+    },
+    {
+      "n": 4,
+      "score": 9.38,
+      "image": "assets/icon/potionset/heal_r4.png"
+    }
+  ],
+  "best_score": 9.38,
+  "best_round": 4,
+  "final": "docs/showcase/homepage_rerun_1028_regen3/v2/icon_c_set/heal.png"
+}

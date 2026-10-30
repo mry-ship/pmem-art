@@ -1,0 +1,36 @@
+# regen3 homepage merge · 副本（不改 canonical）
+version: regen3-20261030
+pipeline: art-merge-two-phase
+
+tracks:
+  potion:
+    module: prop.HealPotionMerge
+    mode: A
+    # 母体锁死：L1–L8 同一透明切面短瓶，只加零件；禁止每档换瓶身/改成实心宝石瓶
+    base_body: 透明切面短药瓶
+    surface: 无色透明切面玻璃+暖金点缀卡通道具，浅灰棚拍短接触影，光洁不油亮；L1 空瓶可无液无塞；单件居中无脸无等级字
+    rows:
+      - { level: 1, name: 空瓶, silhouette: 透明切面短药瓶敞口空瓶, scale_delta: 基档, scale_pct: 0.60, parts_add: "—" }
+      - { level: 2, name: 塞瓶, silhouette: 透明切面短药瓶加圆柱软木塞, scale_delta: "+小", scale_pct: 0.63, parts_add: 软木塞 }
+      - { level: 3, name: 半药, silhouette: 透明切面短药瓶塞顶腰际半液, scale_delta: "+小", scale_pct: 0.66, parts_add: 青绿半液柱 }
+      - { level: 4, name: 满药, silhouette: 透明切面短药瓶塞顶满液加金丝, scale_delta: "+中", scale_pct: 0.69, parts_add: 满至瓶颈液柱与颈金丝 }
+      - { level: 5, name: 签环叶, silhouette: 透明切面短药瓶满液颈侧金叶饰, scale_delta: "+中", scale_pct: 0.72, parts_add: 金叶签环饰 }
+      - { level: 6, name: 金托, silhouette: 透明切面短药瓶液球坐暖金圈足, scale_delta: "+大", scale_pct: 0.75, parts_add: 暖金圈足托 }
+      - { level: 7, name: 晶冠, silhouette: 透明切面短药瓶金托上切面晶冠, scale_delta: "+大", scale_pct: 0.77, parts_add: 切面晶冠 }
+      - { level: 8, name: 罩瓶, silhouette: 透明切面短药瓶晶冠外包透明钟罩, scale_delta: "+大", scale_pct: 0.79, parts_add: 透明钟罩壳 }
+
+  candy:
+    module: prop.PeachCandyMerge
+    mode: B
+    # 母体锁死：同一颗蜜桃软糖；糖纸=粉白条纹双尖扭结（禁止布质耳翼/哑光粘土卵石）
+    base_body: 蜜桃软糖
+    surface: 光洁软塑胶清漆高光蜜桃粉（非哑光粘土），浅棚短接触影；糖纸粉白条纹双尖扭结；纸托=浅褶糖果纸托托住同一颗糖；严禁蛋糕/马卡龙/纸杯蛋糕整件；单件居中无脸无等级字
+    rows:
+      - { level: 1, name: 裸糖, silhouette: 蜜桃软糖光洁圆角扁方, scale_delta: 基档, scale_pct: 0.60, parts_add: "—" }
+      - { level: 2, name: 糖纸, silhouette: 蜜桃软糖加粉白条纹双尖扭结糖纸, scale_delta: "+小", scale_pct: 0.63, parts_add: 粉白条纹双尖扭结糖纸 }
+      - { level: 3, name: 贴纸, silhouette: 蜜桃软糖扭结糖纸加正面星形贴纸, scale_delta: "+小", scale_pct: 0.66, parts_add: 星形封口贴纸 }
+      - { level: 4, name: 纸托, silhouette: 蜜桃软糖扭结贴纸糖坐浅褶纸托, scale_delta: "+中", scale_pct: 0.69, parts_add: 浅褶糖果纸托 }
+      - { level: 5, name: 丝带, silhouette: 蜜桃软糖纸托升为糖果杯加侧丝带结, scale_delta: "+中", scale_pct: 0.72, parts_add: 丝带结与杯身 }
+      - { level: 6, name: 托盘, silhouette: 蜜桃软糖丝带杯叠圆形浅托盘, scale_delta: "+大", scale_pct: 0.75, parts_add: 圆形浅托盘 }
+      - { level: 7, name: 罩盒, silhouette: 蜜桃软糖托盘加透明圆罩, scale_delta: "+大", scale_pct: 0.77, parts_add: 透明罩盖 }
+      - { level: 8, name: 礼盒, silhouette: 蜜桃软糖罩盒入方礼盒顶结, scale_delta: "+大", scale_pct: 0.79, parts_add: 方礼盒壳体 }

@@ -1,0 +1,56 @@
+{
+  "id": "c02-high",
+  "session": "regen3-c02-high",
+  "skill": "/pmem-draw",
+  "contract": "普通图",
+  "module": "character.PastelGirl",
+  "scale": "high",
+  "mode": "quality",
+  "aspect_ratio": "4:3",
+  "threshold": 9.5,
+  "passed": false,
+  "medium_family": "dry",
+  "ref": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/ref.jpg",
+  "output_dir": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/high/",
+  "final": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/high/final.jpg",
+  "winner_round": 4,
+  "winner_score": 9.34,
+  "board": ".memory-art/converge/boards/regen3-c02-high/index.html",
+  "score_chain": [
+    9.02,
+    9.19,
+    9.29,
+    9.34
+  ],
+  "note": "满4轮未达9.5；交付第4轮9.34。脚边纸包糖叙事已出现。",
+  "rounds": [
+    {
+      "round": 1,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/high/r1.jpg",
+      "score": 9.02,
+      "dims": "构图8.8/光影9.2/透视8.7/质感9.3/风格9.2/无瑕疵8.9",
+      "defect": "双手搭膝；糖扭结一般"
+    },
+    {
+      "round": 2,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/high/r2.jpg",
+      "score": 9.19,
+      "dims": "构图9.0/光影9.3/透视8.9/质感9.4/风格9.4/无瑕疵9.1",
+      "defect": "仍偏单手；糖扭结可更尖"
+    },
+    {
+      "round": 3,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/high/r3.jpg",
+      "score": 9.29,
+      "dims": "构图9.1/光影9.4/透视9.0/质感9.5/风格9.5/无瑕疵9.2",
+      "defect": "左侧手不够清楚"
+    },
+    {
+      "round": 4,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/high/r4.jpg",
+      "score": 9.34,
+      "dims": "构图9.2/光影9.4/透视9.1/质感9.5/风格9.5/无瑕疵9.3",
+      "defect": "膝部略抬高；糖可更小"
+    }
+  ]
+}

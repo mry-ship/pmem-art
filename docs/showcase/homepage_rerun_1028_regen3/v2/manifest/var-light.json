@@ -1,0 +1,57 @@
+{
+  "id": "var-light",
+  "session": "regen3-var-light",
+  "skill": "/pmem-draw",
+  "contract": "变体",
+  "module": "character.SunlitGirl",
+  "scale": "medium",
+  "mode": "quality",
+  "aspect_ratio": "3:4",
+  "threshold": 9.5,
+  "passed": true,
+  "change": "加强发丝透光/皮肤SSS/尘埃光斑/暖金逆光",
+  "locked": [
+    "机位",
+    "深蓝黑短发",
+    "蓝瞳",
+    "白猫发夹",
+    "黑耳机",
+    "白T"
+  ],
+  "ref": "docs/showcase/homepage_rerun_1028_regen3/v2/variant/ref.jpg",
+  "output_dir": "docs/showcase/homepage_rerun_1028_regen3/v2/variant/",
+  "final": "docs/showcase/homepage_rerun_1028_regen3/v2/variant/final.jpg",
+  "winner_round": 4,
+  "winner_score": 9.54,
+  "board": ".memory-art/converge/boards/regen3-var-light/index.html",
+  "rounds": [
+    {
+      "round": 1,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/v2/variant/r1.jpg",
+      "score": 8.98,
+      "dims": "构图9.2/光影9.1/透视9.0/质感8.9/风格9.0/无瑕疵8.8",
+      "defect": "发丝透光与皮肤SSS相对原图加强幅度还不够半档；尘埃光斑偏稀；耳缘颊侧透光可再暖"
+    },
+    {
+      "round": 2,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/v2/variant/r2.jpg",
+      "score": 9.16,
+      "dims": "构图9.3/光影9.4/透视9.1/质感9.1/风格9.2/无瑕疵9.0",
+      "defect": "颊与耳缘SSS还可再暖透半档；发丝透光高光形状可更干净"
+    },
+    {
+      "round": 3,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/v2/variant/r3.jpg",
+      "score": 9.46,
+      "dims": "构图9.5/光影9.6/透视9.4/质感9.4/风格9.5/无瑕疵9.4",
+      "defect": "耳缘透光高光边缘可再干净半档"
+    },
+    {
+      "round": 4,
+      "image": "assets/character/sunlitgirl/r4.jpg",
+      "score": 9.54,
+      "dims": "构图9.5/光影9.7/透视9.5/质感9.5/风格9.6/无瑕疵9.5",
+      "defect": "叶影对比可再利半档"
+    }
+  ]
+}

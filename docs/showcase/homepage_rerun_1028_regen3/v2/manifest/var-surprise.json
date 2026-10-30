@@ -1,0 +1,58 @@
+{
+  "id": "var-surprise",
+  "session": "regen3-var-surprise",
+  "skill": "/pmem-draw",
+  "contract": "变体",
+  "module": "character.SunlitGirl",
+  "scale": "medium",
+  "mode": "quality",
+  "aspect_ratio": "3:4",
+  "threshold": 9.5,
+  "passed": false,
+  "change": "惊喜张嘴露上齿",
+  "locked": [
+    "机位",
+    "画风",
+    "发色瞳色",
+    "白猫发夹",
+    "耳机",
+    "白T"
+  ],
+  "ref": "docs/showcase/homepage_rerun_1028_regen3/v2/variant_expr/ref.jpg",
+  "output_dir": "docs/showcase/homepage_rerun_1028_regen3/v2/variant_expr/",
+  "final": "docs/showcase/homepage_rerun_1028_regen3/v2/variant_expr/final.jpg",
+  "winner_round": 2,
+  "winner_score": 9.27,
+  "board": ".memory-art/converge/boards/regen3-var-surprise/index.html",
+  "rounds": [
+    {
+      "round": 1,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/v2/variant_expr/r1.jpg",
+      "score": 9.15,
+      "dims": "构图9.3/光影9.2/透视9.1/质感9.0/风格9.4/无瑕疵9.0",
+      "defect": "下颌开合与颊侧体积可再自然半档；上齿露齿量可略收半档更惊喜而非惊讶大张"
+    },
+    {
+      "round": 2,
+      "image": "assets/character/sunlitgirl/r2.jpg",
+      "score": 9.27,
+      "dims": "构图9.4/光影9.3/透视9.2/质感9.1/风格9.5/无瑕疵9.2",
+      "defect": "上齿露齿边缘可再干净半档；颊侧体积随开合可再顺一点"
+    },
+    {
+      "round": 3,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/v2/variant_expr/r3.jpg",
+      "score": 9.21,
+      "dims": "构图9.4/光影9.3/透视9.3/质感9.2/风格9.2/无瑕疵9.0",
+      "defect": "上齿露齿不够清楚，口型偏轻抿开缝，惊喜露上齿目标未满"
+    },
+    {
+      "round": 4,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/v2/variant_expr/r4.jpg",
+      "score": 8.92,
+      "dims": "构图9.3/光影9.3/透视9.2/质感9.2/风格8.6/无瑕疵8.4",
+      "defect": "上齿仍几乎看不见，口型偏微笑张开未达惊喜露上齿；风格维因目标表情未兑现下降但仍远高于6"
+    }
+  ],
+  "note": "第4轮露上齿回退；交付最高分第2轮（惊喜口型更清楚）。"
+}
