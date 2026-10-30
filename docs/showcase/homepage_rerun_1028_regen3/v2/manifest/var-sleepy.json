@@ -1,0 +1,58 @@
+{
+  "id": "var-sleepy",
+  "session": "regen3-var-sleepy",
+  "skill": "/pmem-draw",
+  "contract": "变体",
+  "module": "character.SunlitGirl",
+  "scale": "medium",
+  "mode": "quality",
+  "aspect_ratio": "3:4",
+  "threshold": 9.5,
+  "passed": false,
+  "change": "困倦半眯（上眼睑压到虹膜中线）",
+  "locked": [
+    "机位",
+    "画风",
+    "发色瞳色",
+    "白猫发夹",
+    "耳机",
+    "白T"
+  ],
+  "ref": "docs/showcase/homepage_rerun_1028_regen3/v2/variant_sleepy/ref.jpg",
+  "output_dir": "docs/showcase/homepage_rerun_1028_regen3/v2/variant_sleepy/",
+  "final": "docs/showcase/homepage_rerun_1028_regen3/v2/variant_sleepy/final.jpg",
+  "winner_round": 2,
+  "winner_score": 8.94,
+  "board": ".memory-art/converge/boards/regen3-var-sleepy/index.html",
+  "rounds": [
+    {
+      "round": 1,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/v2/variant_sleepy/r1.jpg",
+      "score": 8.4,
+      "dims": "构图9.0/光影9.0/透视8.8/质感8.9/风格8.8/无瑕疵7.2",
+      "defect": "左右上眼睑仍停在虹膜上沿附近，蓝色虹膜大部分露出，眼裂接近原图睁眼，困倦半眯（压到虹膜中线）未出现"
+    },
+    {
+      "round": 2,
+      "image": "assets/character/sunlitgirl/r2.jpg",
+      "score": 8.94,
+      "dims": "构图9.2/光影9.1/透视9.0/质感9.0/风格9.0/无瑕疵8.6",
+      "defect": "半眯：上眼睑是否稳定压在虹膜垂直中线仍需核验，若仍偏上沿则虹膜上半遮盖不足"
+    },
+    {
+      "round": 3,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/v2/variant_sleepy/r3.jpg",
+      "score": 8.87,
+      "dims": "构图9.3/光影9.2/透视9.1/质感9.1/风格8.9/无瑕疵8.2",
+      "defect": "半眯仍不足：上眼睑多半仍偏虹膜上半区，未稳定压到虹膜垂直中线，蓝色虹膜露出仍过多"
+    },
+    {
+      "round": 4,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/v2/variant_sleepy/r4.jpg",
+      "score": 8.69,
+      "dims": "构图9.2/光影9.2/透视9.0/质感9.0/风格8.8/无瑕疵7.8",
+      "defect": "半眯：左右上眼睑仍未稳定压到虹膜中线，眼裂偏睁，蓝色虹膜大部分仍露"
+    }
+  ],
+  "note": "四轮半眯（上眼睑压到虹膜中线）仍未稳定兑现；风格维保持≥8.8未崩到6。每轮next_fix均写半眯中线。交付最高分第2轮。"
+}

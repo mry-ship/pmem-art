@@ -1,0 +1,50 @@
+{
+  "id": "var-wink",
+  "session": "regen3-var-wink",
+  "skill": "/pmem-draw",
+  "contract": "变体",
+  "module": "character.SunlitGirl",
+  "scale": "medium",
+  "mode": "quality",
+  "aspect_ratio": "3:4",
+  "threshold": 9.5,
+  "passed": true,
+  "change": "俏皮单眼眨眼",
+  "locked": [
+    "机位",
+    "画风",
+    "发色瞳色",
+    "白猫发夹",
+    "耳机",
+    "白T"
+  ],
+  "ref": "docs/showcase/homepage_rerun_1028_regen3/v2/variant_wink/ref.jpg",
+  "output_dir": "docs/showcase/homepage_rerun_1028_regen3/v2/variant_wink/",
+  "final": "docs/showcase/homepage_rerun_1028_regen3/v2/variant_wink/final.jpg",
+  "winner_round": 3,
+  "winner_score": 9.5,
+  "board": ".memory-art/converge/boards/regen3-var-wink/index.html",
+  "rounds": [
+    {
+      "round": 1,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/v2/variant_wink/r1.jpg",
+      "score": 9.17,
+      "dims": "构图9.3/光影9.2/透视9.0/质感9.0/风格9.5/无瑕疵9.1",
+      "defect": "闭眼一侧睑褶与睫毛压线可再清楚半档；开眼一侧与原图瞳孔高光对齐可更稳"
+    },
+    {
+      "round": 2,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/v2/variant_wink/r2.jpg",
+      "score": 9.31,
+      "dims": "构图9.4/光影9.3/透视9.2/质感9.1/风格9.6/无瑕疵9.3",
+      "defect": "闭眼睫毛压线还可再利半档"
+    },
+    {
+      "round": 3,
+      "image": "assets/character/sunlitgirl/r3.jpg",
+      "score": 9.5,
+      "dims": "构图9.5/光影9.5/透视9.4/质感9.4/风格9.7/无瑕疵9.5",
+      "defect": "开眼一侧高光形状可再贴原半档"
+    }
+  ]
+}

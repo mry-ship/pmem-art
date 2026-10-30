@@ -1,0 +1,48 @@
+{
+  "id": "c03-medium",
+  "session": "regen3-c03-medium",
+  "skill": "/pmem-draw",
+  "contract": "普通图",
+  "module": "character.SunlitGirl",
+  "scale": "medium",
+  "mode": "quality",
+  "aspect_ratio": "3:4",
+  "threshold": 9.5,
+  "passed": true,
+  "goal": "medium保窗边机位与耳机少女身份，小幅优化发丝透光与皮肤SSS；不换机位",
+  "ref": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/ref.jpg",
+  "output_dir": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/medium/",
+  "final": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/medium/final.jpg",
+  "winner_round": 3,
+  "winner_score": 9.51,
+  "board": ".memory-art/converge/boards/regen3-c03-medium/index.html",
+  "score_chain": [
+    9.11,
+    9.29,
+    9.51
+  ],
+  "note": "第3轮达标9.51。",
+  "rounds": [
+    {
+      "round": 1,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/medium/r1.jpg",
+      "score": 9.11,
+      "dims": "构图9.3/光影9.2/透视9.1/质感9.0/风格9.3/无瑕疵8.9",
+      "defect": "耳机垫颊交界略软；SSS偏弱；发顶透光细丝不够"
+    },
+    {
+      "round": 2,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/medium/r2.jpg",
+      "score": 9.29,
+      "dims": "构图9.4/光影9.4/透视9.3/质感9.3/风格9.4/无瑕疵9.1",
+      "defect": "双眼高光略不对称；雏菊瓣缘毛刺；尘埃偏薄"
+    },
+    {
+      "round": 3,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/medium/r3.jpg",
+      "score": 9.51,
+      "dims": "构图9.5/光影9.6/透视9.5/质感9.5/风格9.5/无瑕疵9.5",
+      "defect": "尘埃光斑仍略薄；耳机铰链高光略散"
+    }
+  ]
+}

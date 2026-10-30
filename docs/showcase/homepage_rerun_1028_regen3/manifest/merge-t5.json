@@ -1,0 +1,27 @@
+{
+  "skill": "/pmem-merge-ladder",
+  "track": "t5_crystal_crown",
+  "session": "regen3-merge-t5",
+  "module": "item.MergeLadder",
+  "relation_gate": {
+    "passed": true,
+    "note": "T5=青金治疗药八档链中的晶冠瓶单档（对应 potion L7 同域）",
+    "parent_phase1": "docs/showcase/homepage_rerun_1028_regen3/merge_work/merge_phase1.yaml",
+    "parent_track": "potion"
+  },
+  "dir": "docs/showcase/homepage_rerun_1028_regen3/v2/merge/",
+  "final": "docs/showcase/homepage_rerun_1028_regen3/v2/merge/final.jpg",
+  "rounds": [
+    {
+      "round": 1,
+      "path": "docs/showcase/homepage_rerun_1028_regen3/v2/merge/t5_r1.jpg",
+      "score": 9.54,
+      "dims": "composition=9.5,lighting_color=9.55,perspective_anatomy=9.5,texture_detail=9.6,spec_style=9.55,flawlessness=9.55",
+      "winner": true
+    }
+  ],
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "no_ref": true,
+  "square": true
+}

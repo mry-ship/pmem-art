@@ -1,0 +1,56 @@
+{
+  "id": "c02-low",
+  "session": "regen3-c02-low",
+  "skill": "/pmem-draw",
+  "contract": "普通图",
+  "module": "character.PastelGirl",
+  "scale": "low",
+  "mode": "quality",
+  "aspect_ratio": "4:3",
+  "threshold": 9.5,
+  "passed": false,
+  "medium_family": "dry",
+  "ref": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/ref.jpg",
+  "output_dir": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/low/",
+  "final": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/low/final.jpg",
+  "winner_round": 3,
+  "winner_score": 9.12,
+  "board": ".memory-art/converge/boards/regen3-c02-low/index.html",
+  "score_chain": [
+    8.65,
+    9.09,
+    9.12,
+    9.07
+  ],
+  "note": "满4轮未达9.5；交付第3轮最高分9.12。仍偏单手撑地与膝部抬高。",
+  "rounds": [
+    {
+      "round": 1,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/low/r1.jpg",
+      "score": 8.65,
+      "dims": "构图8.4/光影8.9/透视8.6/质感9.1/风格8.5/无瑕疵8.4",
+      "defect": "撑地双手相对参考略前移；刘海发丝分层糊；鞋侧紫调"
+    },
+    {
+      "round": 2,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/low/r2.jpg",
+      "score": 9.09,
+      "dims": "构图9.0/光影9.1/透视8.9/质感9.3/风格9.2/无瑕疵9.0",
+      "defect": "右侧撑地手仍弱；刘海未成两三缕；腮红贴面"
+    },
+    {
+      "round": 3,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/low/r3.jpg",
+      "score": 9.12,
+      "dims": "构图8.8/光影9.2/透视8.8/质感9.4/风格9.3/无瑕疵9.1",
+      "defect": "仍偏单手撑地；膝部抬高偏离侧收腿"
+    },
+    {
+      "round": 4,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c02/low/r4.jpg",
+      "score": 9.07,
+      "dims": "构图8.7/光影9.2/透视8.7/质感9.4/风格9.3/无瑕疵9.0",
+      "defect": "仍偏单手撑地；双膝抬高贴近胸口"
+    }
+  ]
+}

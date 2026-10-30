@@ -1,0 +1,57 @@
+{
+  "id": "c03-recompose",
+  "session": "regen3-c03-recompose",
+  "skill": "/pmem-draw",
+  "contract": "普通图",
+  "module": "character.SunlitGirl",
+  "scale": "recompose",
+  "mode": "quality",
+  "aspect_ratio": "3:4",
+  "threshold": 9.5,
+  "passed": true,
+  "goal": "recompose保身份锚点与暖金窗光，换成四分之三背侧机位",
+  "recompose_dir": "同一耳机少女转到四分之三背侧，脸仍看向窗光；白猫发夹、黑耳机、白T与窗边雏菊都在",
+  "ref": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/ref.jpg",
+  "output_dir": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/recompose/",
+  "final": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/recompose/final.jpg",
+  "winner_round": 4,
+  "winner_score": 9.53,
+  "board": ".memory-art/converge/boards/regen3-c03-recompose/index.html",
+  "score_chain": [
+    8.77,
+    9.08,
+    9.44,
+    9.53
+  ],
+  "note": "第4轮达标9.53；四分之三背侧+脸朝窗光。",
+  "rounds": [
+    {
+      "round": 1,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/recompose/r1.jpg",
+      "score": 8.77,
+      "dims": "构图8.8/光影9.0/透视8.8/质感8.7/风格9.0/无瑕疵8.5",
+      "defect": "脸偏回望镜头；发夹略漂；背侧白T糊"
+    },
+    {
+      "round": 2,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/recompose/r2.jpg",
+      "score": 9.08,
+      "dims": "构图9.2/光影9.3/透视9.0/质感9.0/风格9.2/无瑕疵8.9",
+      "defect": "发色偏棕；背侧白T褶皱糊；窗框灭点软"
+    },
+    {
+      "round": 3,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/recompose/r3.jpg",
+      "score": 9.44,
+      "dims": "构图9.5/光影9.5/透视9.4/质感9.4/风格9.5/无瑕疵9.4",
+      "defect": "耳机头梁与发顶交界略糊；雏菊瓣缘略软"
+    },
+    {
+      "round": 4,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/recompose/r4.jpg",
+      "score": 9.53,
+      "dims": "构图9.6/光影9.5/透视9.5/质感9.5/风格9.6/无瑕疵9.5",
+      "defect": "左颊受光面高光略散半档"
+    }
+  ]
+}

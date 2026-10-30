@@ -1,0 +1,41 @@
+{
+  "scale": "recompose",
+  "session": "regen3-c01-recompose",
+  "module": "scene.CelestialCity",
+  "passed": false,
+  "threshold": 9.5,
+  "best_round": 3,
+  "final": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c01/recompose/final.jpg",
+  "rounds": [
+    {
+      "n": 1,
+      "score": 7.29,
+      "dims": "构图5.5/光影8.0/透视7.5/质感8.2/风格8.5/无瑕疵7.0",
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c01/recompose/r1.jpg"
+    },
+    {
+      "n": 2,
+      "score": 7.02,
+      "dims": "构图5.2/光影7.8/透视7.2/质感8.0/风格8.0/无瑕疵6.8",
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c01/recompose/r2.jpg"
+    },
+    {
+      "n": 3,
+      "score": 8.49,
+      "dims": "构图8.6/光影8.7/透视8.4/质感8.5/风格8.8/无瑕疵8.2",
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c01/recompose/r3.jpg"
+    },
+    {
+      "n": 4,
+      "score": 8.35,
+      "dims": "构图8.8/光影8.6/透视8.5/质感8.4/风格8.0/无瑕疵8.1",
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c01/recompose/r4.jpg"
+    }
+  ],
+  "score_chain": [
+    7.29,
+    7.02,
+    8.49,
+    8.35
+  ]
+}

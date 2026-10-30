@@ -1,0 +1,52 @@
+{
+  "case": "c04",
+  "title": "天井石院",
+  "session": "regen3-c04-medium",
+  "module": "scene.IshtarCanyon",
+  "scale": "medium",
+  "aspect": "4:3",
+  "medium": "墨线淡彩",
+  "ref": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c04/ref.jpg",
+  "goal": "medium保天井石院机位与墨线淡彩，小幅优化空气透视与暖墙；不换机位",
+  "rounds": [
+    {
+      "round": 1,
+      "score": 8.66,
+      "dims": "构图8.9/光影8.6/透视8.8/质感8.5/风格9.0/无瑕疵8.4",
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c04/medium/r1.jpg",
+      "winner": false
+    },
+    {
+      "round": 2,
+      "score": 8.98,
+      "dims": "构图9.1/光影9.0/透视9.0/质感8.9/风格9.2/无瑕疵8.8",
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c04/medium/r2.jpg",
+      "winner": false
+    },
+    {
+      "round": 3,
+      "score": 9.16,
+      "dims": "构图9.3/光影9.2/透视9.2/质感9.1/风格9.3/无瑕疵9.0",
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c04/medium/r3.jpg",
+      "winner": false
+    },
+    {
+      "round": 4,
+      "score": 9.46,
+      "dims": "构图9.5/光影9.5/透视9.4/质感9.5/风格9.5/无瑕疵9.4",
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c04/medium/r4.jpg",
+      "winner": true
+    }
+  ],
+  "score_chain": [
+    8.66,
+    8.98,
+    9.16,
+    9.46
+  ],
+  "best": 9.46,
+  "winner_round": 4,
+  "passed": false,
+  "final": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c04/medium/final.jpg",
+  "board": ".memory-art/converge/boards/regen3-c04-medium/index.html"
+}

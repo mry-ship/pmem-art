@@ -1,0 +1,24 @@
+{
+  "case": "c04",
+  "title": "天井石院",
+  "session": "regen3-c04-recompose",
+  "module": "scene.IshtarCanyon",
+  "scale": "recompose",
+  "aspect": "4:3",
+  "medium": "墨线淡彩",
+  "ref": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c04/ref.jpg",
+  "goal": "recompose保画风色板与石院身份，机位改井口平视向下",
+  "recompose_dir": "从天井井口平视向下，仍是同一座石院、破楼梯和暖色墙，墨线淡彩不变",
+  "rounds": [
+    {"round": 1, "score": 8.26, "dims": "构图7.8/光影8.5/透视8.0/质感8.4/风格8.8/无瑕疵8.2", "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c04/recompose/r1.jpg"},
+    {"round": 2, "score": 8.62, "dims": "构图8.6/光影8.8/透视8.5/质感8.6/风格9.0/无瑕疵8.4", "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c04/recompose/r2.jpg"},
+    {"round": 3, "score": 8.98, "dims": "构图9.0/光影9.1/透视8.9/质感9.0/风格9.2/无瑕疵8.8", "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c04/recompose/r3.jpg"},
+    {"round": 4, "score": 9.43, "dims": "构图9.5/光影9.5/透视9.4/质感9.5/风格9.5/无瑕疵9.3", "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c04/recompose/r4.jpg", "winner": true}
+  ],
+  "score_chain": [8.26, 8.62, 8.98, 9.43],
+  "best": 9.43,
+  "winner_round": 4,
+  "passed": false,
+  "final": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c04/recompose/final.jpg",
+  "board": ".memory-art/converge/boards/regen3-c04-recompose/index.html"
+}

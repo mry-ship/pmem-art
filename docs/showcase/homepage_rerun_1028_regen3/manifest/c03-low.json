@@ -1,0 +1,56 @@
+{
+  "id": "c03-low",
+  "session": "regen3-c03-low",
+  "skill": "/pmem-draw",
+  "contract": "普通图",
+  "module": "character.SunlitGirl",
+  "scale": "low",
+  "mode": "quality",
+  "aspect_ratio": "3:4",
+  "threshold": 9.5,
+  "passed": false,
+  "goal": "窗边逆光少女肖像精修——加强发丝透光、皮肤次表面散射、窗框几何透视与尘埃光斑体积；暖金日光；锁身份与机位；low只修局部瑕疵",
+  "ref": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/ref.jpg",
+  "output_dir": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/low/",
+  "final": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/low/final.jpg",
+  "winner_round": 4,
+  "winner_score": 9.45,
+  "board": ".memory-art/converge/boards/regen3-c03-low/index.html",
+  "score_chain": [
+    8.88,
+    9.07,
+    9.42,
+    9.45
+  ],
+  "note": "满4轮最高9.45未达9.50；交付第4轮。",
+  "rounds": [
+    {
+      "round": 1,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/low/r1.jpg",
+      "score": 8.88,
+      "dims": "构图9.2/光影8.9/透视9.0/质感8.7/风格9.1/无瑕疵8.6",
+      "defect": "头顶与鬓角透光发丝仍偏少；右耳耳机垫与颊交界略软；尘埃光斑偏薄"
+    },
+    {
+      "round": 2,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/low/r2.jpg",
+      "score": 9.07,
+      "dims": "构图9.3/光影9.2/透视9.1/质感9.0/风格9.2/无瑕疵8.8",
+      "defect": "雏菊瓣缘毛刺；窗框竖棱略软；左颊斑驳投影略糊"
+    },
+    {
+      "round": 3,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/low/r3.jpg",
+      "score": 9.42,
+      "dims": "构图9.5/光影9.5/透视9.4/质感9.4/风格9.5/无瑕疵9.3",
+      "defect": "鼻梁左侧斑驳影交界略软；尘埃光斑偏稀"
+    },
+    {
+      "round": 4,
+      "image": "docs/showcase/homepage_rerun_1028_regen3/draw_matrix/c03/low/r4.jpg",
+      "score": 9.45,
+      "dims": "构图9.6/光影9.5/透视9.5/质感9.5/风格9.6/无瑕疵9.5",
+      "defect": "尘埃光斑仍略稀半档"
+    }
+  ]
+}

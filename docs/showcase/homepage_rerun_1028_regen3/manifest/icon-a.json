@@ -1,0 +1,46 @@
+{
+  "mode": "A",
+  "module": "icon.AppIcon",
+  "scale": "medium",
+  "aspect": "1:1",
+  "note": "1024 full-bleed square, 72%-80% safe zone, no text, no pre-rounded corners. No original pad.",
+  "icons": [
+    {
+      "id": "sky_city",
+      "dir": "docs/showcase/homepage_rerun_1028_regen3/v2/icon_a/",
+      "final": "docs/showcase/homepage_rerun_1028_regen3/v2/icon_a/final.jpg",
+      "session": "regen3-icon-a-city",
+      "rounds": [
+        {"round": 1, "score": 9.37, "dims": "识别度9.40/安全区9.50/光影质感9.25/多尺寸合规9.20/色板纯粹9.60/无瑕疵9.30", "path": "docs/showcase/homepage_rerun_1028_regen3/v2/icon_a/r1.jpg"},
+        {"round": 2, "score": 9.46, "dims": "识别度9.55/安全区9.50/光影质感9.40/多尺寸合规9.45/色板纯粹9.50/无瑕疵9.40", "path": "docs/showcase/homepage_rerun_1028_regen3/v2/icon_a/r2.jpg"},
+        {"round": 3, "score": 9.53, "dims": "识别度9.55/安全区9.55/光影质感9.55/多尺寸合规9.45/色板纯粹9.60/无瑕疵9.50", "path": "docs/showcase/homepage_rerun_1028_regen3/v2/icon_a/r3.jpg", "winner": true}
+      ],
+      "best": 9.53,
+      "attempts": 3
+    },
+    {
+      "id": "celadon_coin",
+      "dir": "docs/showcase/homepage_rerun_1028_regen3/v2/icon_a2/",
+      "final": "docs/showcase/homepage_rerun_1028_regen3/v2/icon_a2/final.jpg",
+      "session": "regen3-icon-a-coin",
+      "rounds": [
+        {"round": 1, "score": 9.56, "dims": "识别度9.60/安全区9.55/光影质感9.50/多尺寸合规9.50/色板纯粹9.70/无瑕疵9.55", "path": "docs/showcase/homepage_rerun_1028_regen3/v2/icon_a2/r1.jpg", "winner": true}
+      ],
+      "best": 9.56,
+      "attempts": 1
+    },
+    {
+      "id": "forge",
+      "dir": "docs/showcase/homepage_rerun_1028_regen3/v2/icon_a3/",
+      "final": "docs/showcase/homepage_rerun_1028_regen3/v2/icon_a3/final.jpg",
+      "session": "regen3-icon-a-forge",
+      "rounds": [
+        {"round": 1, "score": 9.36, "dims": "识别度9.35/安全区9.45/光影质感9.40/多尺寸合规9.20/色板纯粹9.45/无瑕疵9.30", "path": "docs/showcase/homepage_rerun_1028_regen3/v2/icon_a3/r1.jpg"},
+        {"round": 2, "score": 9.46, "dims": "识别度9.45/安全区9.50/光影质感9.55/多尺寸合规9.35/色板纯粹9.50/无瑕疵9.40", "path": "docs/showcase/homepage_rerun_1028_regen3/v2/icon_a3/r2.jpg"},
+        {"round": 3, "score": 9.50, "dims": "识别度9.50/安全区9.55/光影质感9.55/多尺寸合规9.40/色板纯粹9.55/无瑕疵9.45", "path": "docs/showcase/homepage_rerun_1028_regen3/v2/icon_a3/r3.jpg", "winner": true}
+      ],
+      "best": 9.50,
+      "attempts": 3
+    }
+  ]
+}

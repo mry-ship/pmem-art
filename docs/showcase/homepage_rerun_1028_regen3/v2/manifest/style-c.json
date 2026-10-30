@@ -1,0 +1,55 @@
+{
+  "skill": "pmem-style-lock",
+  "group": "C",
+  "title": "粗线赛璐珞 Bold Cel Comic",
+  "module": "style.BoldCel",
+  "session": "regen3-style-c",
+  "output_root": "docs/showcase/homepage_rerun_1028_regen3/v2/style_lock_c",
+  "refs": [
+    {
+      "path": "docs/showcase/homepage_rerun_1028_regen3/v2/style_lock_c/ref1.jpg",
+      "caption": "橙暖描边高光角色"
+    },
+    {
+      "path": "docs/showcase/homepage_rerun_1028_regen3/v2/style_lock_c/ref2.jpg",
+      "caption": "色块分层道具"
+    }
+  ],
+  "final": "docs/showcase/homepage_rerun_1028_regen3/v2/style_lock_c/final.jpg",
+  "card_kind": "infographic_palette",
+  "converge": false,
+  "palette": {
+    "primary_70": [
+      {"name": "墨线黑", "hex": "#0F0C0B"},
+      {"name": "暖麦肤", "hex": "#BF794A"},
+      {"name": "金橙亮面", "hex": "#FFC204"}
+    ],
+    "secondary_20": [
+      {"name": "刃橙", "hex": "#FC9700"},
+      {"name": "夹克炭黑", "hex": "#1C1A1A"}
+    ],
+    "accent_10": [
+      {"name": "橙暖描边", "hex": "#F57C21"},
+      {"name": "深橙影", "hex": "#DE3D00"},
+      {"name": "肤亮块", "hex": "#D38D5B"},
+      {"name": "肤暗块", "hex": "#683B21"},
+      {"name": "海军蓝缠柄", "hex": "#173159"},
+      {"name": "硬白高光", "hex": "#F8F8F7"},
+      {"name": "徽记橙", "hex": "#BE4D0D"}
+    ]
+  },
+  "layers": {
+    "skin_hard": ["#D38D5B", "#BF794A", "#683B21"],
+    "blade_hard": ["#FFC204", "#FC9700", "#DE3D00"]
+  },
+  "rendering": "粗黑闭合轮廓；赛璐珞平涂两到三层；色块边界折线；高光是平涂形状",
+  "lighting": "暖橙侧逆光；发缘与领口橙暖描边高光 #F57C21；刃面硬白高光条",
+  "positive": ["粗黑线", "平涂", "赛璐珞", "色块分层", "硬边", "橙暖描边", "硬边高光", "闭合轮廓"],
+  "anti_style": ["水彩软边", "写实皮肤毛孔", "软渐变", "空气喷枪", "厚涂笔触", "油腻高光", "脏暗阴影", "过度霓虹"],
+  "ready_sentence": "粗黑闭合轮廓 #0F0C0B，平涂色块分层：皮肤三层 #D38D5B / #BF794A / #683B21，刃面与金属三层 #FFC204 / #FC9700 / #DE3D00，发缘与领口橙暖描边高光 #F57C21，可加一条硬白高光 #F8F8F7 与海军蓝点缀 #173159，衣物炭黑 #1C1A1A。暖橙侧逆光，高光是平涂色块。禁止水彩软边、写实皮肤毛孔、软渐变、空气喷枪、厚涂笔触、油腻高光、脏暗阴影、过度霓虹。",
+  "memories": {
+    "art_decision": ".memory-art/entries/style.BoldCel/CHAT20261030032705452DECISION.md",
+    "style_redline": ".memory-art/entries/style.BoldCel/CHAT20261030032707741REDLINE.md",
+    "recipe": ".memory-art/entries/style.BoldCel/CHAT20261030032710282RECIPE.md"
+  }
+}

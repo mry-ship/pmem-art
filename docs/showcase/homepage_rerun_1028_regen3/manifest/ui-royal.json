@@ -1,0 +1,93 @@
+{
+  "id": "ui-royal",
+  "skill": "/pmem-ui",
+  "session": "regen3-ui-royal",
+  "sheets_session": "regen3-ui-royal-sheets",
+  "module": "ui.MainMenu",
+  "discuss": "regen3 同范围 UI",
+  "aspect": "9:16",
+  "threshold": 9.5,
+  "scale": "medium",
+  "brief": "Royal Match 花房主界面竖屏概念：黄油黄花房+奶油杏蜜桃香槟金软塑胶清漆UI",
+  "rounds": {
+    "concept": [
+      {
+        "round": 1,
+        "score": 8.48,
+        "dims": "构图8.6/光影8.4/透视8.5/质感8.3/风格8.7/无瑕疵8.4",
+        "image": "v2/ui_royal/concept/r1.jpg"
+      },
+      {
+        "round": 2,
+        "score": 8.64,
+        "dims": "构图8.7/光影8.6/透视8.5/质感8.6/风格8.9/无瑕疵8.5",
+        "image": "v2/ui_royal/concept/r2.jpg"
+      },
+      {
+        "round": 3,
+        "score": 8.86,
+        "dims": "构图9.0/光影8.8/透视8.7/质感8.8/风格9.1/无瑕疵8.7",
+        "image": "v2/ui_royal/concept/r3.jpg"
+      },
+      {
+        "round": 4,
+        "score": 8.96,
+        "dims": "构图9.1/光影8.9/透视8.8/质感8.9/风格9.2/无瑕疵8.8",
+        "image": "v2/ui_royal/concept/r4.jpg",
+        "winner": true
+      }
+    ],
+    "sheets": [
+      {
+        "round": 1,
+        "score": 8.42,
+        "dims": "构图8.4/光影8.5/透视8.3/质感8.4/风格8.8/无瑕疵8.2",
+        "image": "v2/ui_royal/sheets/components_r1.jpg"
+      },
+      {
+        "round": 2,
+        "score": 8.81,
+        "dims": "构图8.9/光影8.8/透视8.6/质感8.8/风格9.0/无瑕疵8.7",
+        "image": "v2/ui_royal/sheets/components_r2.jpg"
+      },
+      {
+        "round": 3,
+        "score": 8.91,
+        "dims": "构图9.0/光影8.9/透视8.7/质感8.9/风格9.1/无瑕疵8.8",
+        "image": "v2/ui_royal/sheets/components_r3.jpg"
+      },
+      {
+        "round": 4,
+        "score": 9.01,
+        "dims": "构图9.1/光影9.0/透视8.8/质感9.0/风格9.2/无瑕疵8.9",
+        "image": "v2/ui_royal/sheets/components_r4.jpg",
+        "winner": true
+      }
+    ]
+  },
+  "scores": {
+    "concept_best": 8.96,
+    "concept_passed": false,
+    "sheets_best": 9.01,
+    "sheets_passed": false
+  },
+  "final": "docs/showcase/homepage_rerun_1028_regen3/v2/ui_royal/portrait/final.jpg",
+  "outputs": {
+    "portrait_final": "docs/showcase/homepage_rerun_1028_regen3/v2/ui_royal/portrait/final.jpg",
+    "portrait_bg": "docs/showcase/homepage_rerun_1028_regen3/v2/ui_royal/portrait/bg.jpg",
+    "portrait_ui": "docs/showcase/homepage_rerun_1028_regen3/v2/ui_royal/portrait/ui.jpg",
+    "concept_final": "docs/showcase/homepage_rerun_1028_regen3/v2/ui_royal/concept/final.jpg",
+    "sheets_final": "docs/showcase/homepage_rerun_1028_regen3/v2/ui_royal/sheets/final.jpg",
+    "kit_manifest": "docs/showcase/homepage_rerun_1028_regen3/v2/ui_royal/manifest/kit.json",
+    "elements_dir": "docs/showcase/homepage_rerun_1028_regen3/v2/ui_royal/elements/"
+  },
+  "components_complete": {
+    "panel_9slice": true,
+    "buttons_normal_pressed_disabled": true,
+    "progress_empty_full": true,
+    "tab_home": true,
+    "resource_chips": true,
+    "badges_water_teacup_sun_bell": true,
+    "nine_slice_in_manifest": true
+  }
+}
