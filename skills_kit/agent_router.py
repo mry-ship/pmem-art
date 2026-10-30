@@ -265,8 +265,45 @@ _EXPR_AFTER_SWAP = re.compile(
 )
 
 
+# 「不换题材 / 也不换题材」里也有「换题材」子串，禁止当成换题材
+_KEEP_SUBJECT = (
+    "不要换",
+    "还是她",
+    "还是他",
+    "还是这个",
+    "还是画这个",
+    "不要换题材",
+    "不换题材",
+    "也不换题材",
+    "别换题材",
+    "题材不变",
+    "别换人",
+    "人不要换",
+)
+_SWAP_SUBJECT = (
+    "换成",
+    "改成",
+    "变成",
+    "新题材",
+    "新角色",
+    "新物件",
+    "别画原来",
+    "不要这个人",
+    "换一个",
+    "换个东西",
+    "换个主题",
+    "主体改成",
+    "主体换成",
+    "换成一只",
+    "改成一只",
+    "变成一只",
+)
+# 裸「换题材」须左边界不是「不」（覆盖 不换 / 也不换）
+_SWAP_TOPIC = re.compile(r"(?<![不])换题材")
+
+
 def _new_subject(text: str) -> bool:
-    if _any(text, ("不要换", "还是她", "还是他", "还是这个", "不要换题材", "别换人", "人不要换")):
+    if _any(text, _KEEP_SUBJECT):
         return False
     # 「变成微笑 / 改成闭眼」紧贴表情 → 变体；后面还有新主体名词则仍算换题材
     if _EXPR_AFTER_SWAP.search(text) and not _any(
@@ -286,25 +323,9 @@ def _new_subject(text: str) -> bool:
         ),
     ):
         return False
-    return _any(
-        text,
-        (
-            "换成",
-            "改成",
-            "变成",
-            "新题材",
-            "新角色",
-            "新物件",
-            "别画原来",
-            "不要这个人",
-            "换一个",
-            "换题材",
-            "换个东西",
-            "换个主题",
-            "主体改成",
-            "主体换成",
-        ),
-    )
+    if _SWAP_TOPIC.search(text):
+        return True
+    return _any(text, _SWAP_SUBJECT)
 
 
 def _has_ref(text: str, images: list[str]) -> bool:
@@ -641,6 +662,10 @@ def plan_route(
             # 已锁同一身份时，表情/姿势优先变体，避免被「改成」误抢成克隆
             chosen = ["draw.variant"]
             reason = "variant"
+        elif "走普通图" in raw and not _new_subject(raw):
+            # 点名普通图优先于近邻/子串误伤；真换题材仍走克隆
+            chosen = ["draw.ordinary"]
+            reason = "named_ordinary"
         elif _has_ref(raw, pics) and _new_subject(raw):
             chosen = ["draw.clone"]
             reason = "clone"

@@ -194,7 +194,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     background: var(--bg-card); border: 1px solid var(--border);
     border-radius: 11px; overflow: hidden; display: flex; flex-direction: column;
     content-visibility: auto;
-    contain-intrinsic-size: auto calc(var(--thumb-size) * 0.78 + 72px);
+    contain-intrinsic-size: auto calc(var(--thumb-size) * 0.78 + 40px);
   }
   .asset-card:hover {
     border-color: var(--border-strong);
@@ -202,12 +202,10 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
   }
   .asset-card.role-rejected { border-color: rgba(244, 63, 94, 0.45); }
   .asset-card.qa-fail { border-color: var(--gold); }
-  body.compact-thumbs .asset-body { display: none; }
+  body.compact-thumbs .asset-name { display: none; }
   body.compact-thumbs .asset-card {
-    contain-intrinsic-size: auto calc(var(--thumb-size) * 0.78 + 4px);
+    contain-intrinsic-size: auto calc(var(--thumb-size) * 0.78 + 32px);
   }
-  body.compact-thumbs .role-tag,
-  body.compact-thumbs .spec-tag { font-size: 9px; padding: 1px 5px; }
   body.compact-thumbs .gallery-grid { gap: 8px; }
   .thumb-zoom-group {
     display: flex; align-items: center; gap: 6px;
@@ -248,11 +246,10 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
   .role-tag {
     position: absolute; top: 8px; left: 8px;
     padding: 2px 8px; border-radius: 5px; font-size: 11px; font-weight: 700;
-    backdrop-filter: blur(6px);
   }
-  .role-tag.anchor, .role-tag.approved { background: rgba(16, 185, 129, 0.88); color: #fff; }
-  .role-tag.rejected { background: rgba(244, 63, 94, 0.92); color: #fff; }
-  .role-tag.draft_violation { background: rgba(245, 158, 11, 0.92); color: #090d16; }
+  .role-tag.anchor, .role-tag.approved { background: #10b981; color: #fff; }
+  .role-tag.rejected { background: #f43f5e; color: #fff; }
+  .role-tag.draft_violation { background: #f59e0b; color: #090d16; }
 
   .spec-tag {
     position: absolute; bottom: 8px; right: 8px;
@@ -260,7 +257,33 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     padding: 2px 7px; border-radius: 4px; font-size: 10.5px; font-family: ui-monospace, monospace;
     color: var(--text-muted);
   }
-  .asset-body { padding: 11px 13px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+  .asset-body { padding: 6px 8px 8px; display: flex; flex-direction: column; gap: 0; }
+  .asset-chips {
+    display: flex; align-items: center; gap: 6px; min-width: 0;
+  }
+  .role-chip {
+    flex-shrink: 0; padding: 1px 7px; border-radius: 4px;
+    font-size: 10px; font-weight: 700; line-height: 1.5; color: #fff;
+    background: #10b981;
+  }
+  .role-chip.rejected { background: #f43f5e; }
+  .role-chip.draft_violation { background: #f59e0b; color: #090d16; }
+  .role-chip.draft { background: #475569; color: #e2e8f0; }
+  .cat-chip {
+    flex-shrink: 0; padding: 1px 6px; border-radius: 4px;
+    font-size: 10px; font-weight: 600;
+    background: rgba(255,255,255,0.08); color: var(--text-muted);
+  }
+  .asset-name {
+    flex: 1; min-width: 0; font-size: 11px; color: var(--text-dim);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .btn-folder {
+    flex-shrink: 0; width: 26px; height: 22px; padding: 0;
+    background: transparent; border: 1px solid var(--border); color: var(--text-muted);
+    border-radius: 6px; cursor: pointer; font-size: 12px; line-height: 1;
+  }
+  .btn-folder:hover { color: var(--teal); border-color: var(--border-strong); }
   .asset-path { font-family: ui-monospace, monospace; font-size: 11.5px; color: var(--teal); word-break: break-all; }
   .asset-caption { font-size: 12.5px; color: var(--text-main); line-height: 1.45; }
   .asset-meta-row {
@@ -1189,36 +1212,32 @@ function PathName(p) {
 function cardHtml(a) {
   const role = a.role || a.png_meta?.pmem_role || (a.formal ? "approved" : "draft");
   const roleLabels = {
-    anchor: "⚓ 锚点",
-    approved: "✅ 定稿",
-    rejected: "❌ 废案",
-    draft_violation: "⚠️ 待修",
+    anchor: "定稿",
+    approved: "定稿",
+    rejected: "废案",
+    draft_violation: "待修",
     draft: "草稿"
   };
-  const desc = a.description || a.png_meta?.reject_reason || a.png_meta?.note || PathName(a.path);
-  const catIcon = a.category_icon || "🖼️";
   const catShort = a.category_short || a.module || "散图";
   const src = thumbSrc(a);
-  const srcTag = sourceLabel(a.source || (a.formal ? "module" : "other"));
+  const name = PathName(a.path);
+  const pathAttr = esc(a.path);
   return `
-    <div class="asset-card role-${esc(role)} ${a.qa_passed === false ? 'qa-fail' : ''}" data-path="${esc(a.path)}" oncontextmenu="return showImgCtxMenu(event, ${JSON.stringify(a.path)})">
-      <div class="thumb-wrap ${state.bgClass} ${state.showGuides ? 'show-guides' : ''}" onclick="openViewer(${JSON.stringify(a.path)})" oncontextmenu="return showImgCtxMenu(event, ${JSON.stringify(a.path)})">
+    <div class="asset-card role-${esc(role)} ${a.qa_passed === false ? 'qa-fail' : ''}" data-path="${pathAttr}">
+      <div class="thumb-wrap ${state.bgClass} ${state.showGuides ? 'show-guides' : ''}">
         <img src="${esc(src)}" alt="" loading="eager" decoding="async" />
         ${state.showGuides ? `<div class="overlay-9slice">
           <div class="slice-line v1"></div><div class="slice-line v2"></div>
           <div class="slice-line h1"></div><div class="slice-line h2"></div>
         </div>` : ""}
-        <span class="role-tag ${esc(role)}">${roleLabels[role] || esc(role)}</span>
-        <span class="cat-top-badge">${catIcon} ${esc(catShort)}</span>
-        <span class="src-badge">${esc(srcTag)} · ${esc(a.updated_at || a.day || '')}</span>
-        <span class="spec-tag">${esc(a.resolution || '')} · ${a.size_kb || '?'}KB</span>
       </div>
       <div class="asset-body">
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;">
-          <div class="asset-path">${esc(a.path)}</div>
-          <button class="btn-copy" style="padding:2px 6px;font-size:10px;" title="在文件夹中显示" onclick="event.stopPropagation();revealInFolder(${JSON.stringify(a.path)})">📁</button>
+        <div class="asset-chips">
+          <span class="role-chip ${esc(role)}">${roleLabels[role] || esc(role)}</span>
+          <span class="cat-chip">${esc(catShort)}</span>
+          <span class="asset-name" title="${pathAttr}">${esc(name)}</span>
+          <button type="button" class="btn-folder" data-act="reveal" title="在文件夹中显示并选中">📁</button>
         </div>
-        <div class="asset-desc-box ${role === 'rejected' ? 'rejected' : ''}">${esc(desc)}</div>
       </div>
     </div>
   `;
@@ -1230,7 +1249,7 @@ function galleryMetrics() {
   const width = (grid && grid.clientWidth) || (stage ? stage.clientWidth - 24 : 800);
   const gap = state.thumbSize < 140 ? 8 : 12;
   const cols = Math.max(1, Math.floor((width + gap) / (state.thumbSize + gap)));
-  const bodyH = state.thumbSize < 140 ? 0 : 70;
+  const bodyH = state.thumbSize < 140 ? 30 : 36;
   const rowH = Math.round(state.thumbSize * 0.78 + bodyH + gap);
   const rows = Math.max(1, Math.ceil((_galleryAssets.length || 0) / cols));
   return { cols, rowH, rows, gap, totalH: rows * rowH };
@@ -1319,10 +1338,42 @@ function scheduleVirtualPaint(force) {
   });
 }
 
+function cardPathFromEvent(el) {
+  const card = el && el.closest ? el.closest("[data-path]") : null;
+  return card ? card.getAttribute("data-path") : "";
+}
+
+function bindGalleryActions() {
+  const stage = document.getElementById("mainStage");
+  if (!stage || stage.dataset.galleryBound === "1") return;
+  stage.dataset.galleryBound = "1";
+  stage.addEventListener("click", (ev) => {
+    const folderBtn = ev.target.closest(".btn-folder, [data-act='reveal']");
+    if (folderBtn) {
+      ev.preventDefault();
+      ev.stopPropagation();
+      const p = cardPathFromEvent(folderBtn);
+      if (p) revealInFolder(p);
+      return;
+    }
+    const thumb = ev.target.closest(".asset-card .thumb-wrap");
+    if (thumb) {
+      const p = cardPathFromEvent(thumb);
+      if (p) openViewer(p);
+    }
+  });
+  stage.addEventListener("contextmenu", (ev) => {
+    const card = ev.target.closest(".asset-card[data-path]");
+    if (!card) return;
+    showImgCtxMenu(ev, card.getAttribute("data-path"));
+  });
+}
+
 function bindVirtualScroll() {
   const stage = document.getElementById("mainStage");
   if (!stage || _virtScrollBound) return;
   _virtScrollBound = true;
+  bindGalleryActions();
   stage.addEventListener("scroll", () => {
     if (state.tab !== "gallery") return;
     scheduleVirtualPaint(false);
@@ -1825,20 +1876,34 @@ async function revealViaBridge(relPath) {
   return false;
 }
 
+function lookupAsset(assetPath) {
+  const raw = String(assetPath || "");
+  const norm = raw.replace(/\\/g, "/");
+  const assets = DATA.assets || {};
+  if (assets[raw]) return assets[raw];
+  if (assets[norm]) return assets[norm];
+  for (const [k, v] of Object.entries(assets)) {
+    if (String(k).replace(/\\/g, "/") === norm) return v;
+    if (v && String(v.path || "").replace(/\\/g, "/") === norm) return v;
+  }
+  return null;
+}
+
 /** 在系统访达 / 资源管理器中打开所在文件夹（并选中该图） */
 window.revealInFolder = async function(relPath) {
   const abs = absAssetPath(relPath);
   const dir = parentDirOf(abs);
-  copyText(abs, "文件绝对路径");
   showToast("正在打开文件夹…");
   const ok = await revealViaBridge(relPath);
   if (ok) {
-    showToast("📁 已在访达/资源管理器中定位");
+    showToast("📁 已在资源管理器中定位");
     return;
   }
-  // 兜底：下载一键脚本（浏览器拦 file:// 时）
+  try {
+    window.open(pathToFileUrl(dir), "_blank");
+  } catch (e) {}
   try { downloadRevealHelper(abs); } catch (e2) {}
-  showToast("未连上定位服务。请先在项目目录跑 python3 pmem_art.py atlas，再点 📁；或双击下载的脚本。文件夹：" + dir);
+  showToast("未连上定位服务。请先在项目目录跑 python pmem_art.py atlas，再点 📁。文件夹：" + dir);
 };
 
 window.closeViewer = function() {
@@ -1848,18 +1913,19 @@ window.closeViewer = function() {
 
 /** 半透明叠层放大原图（点空白 / Esc 关闭） */
 window.openViewer = function(assetPath) {
-  const info = DATA.assets[assetPath];
+  const info = lookupAsset(assetPath);
   if (!info) {
     showToast("找不到这张图的索引");
     return;
   }
   hideImgCtxMenu();
-  state.lbPath = assetPath;
+  const key = info.path || assetPath;
+  state.lbPath = key;
   const img = document.getElementById("ivImg");
   const pathEl = document.getElementById("ivPath");
   img.src = assetSrc(info);
-  pathEl.textContent = assetPath;
-  pathEl.title = absAssetPath(assetPath);
+  pathEl.textContent = key;
+  pathEl.title = absAssetPath(key);
   document.getElementById("imgViewer").classList.add("open");
 };
 
@@ -1922,7 +1988,7 @@ window.copyAgentContext = function(modId) {
 };
 
 window.openLightbox = function(assetPath) {
-  const info = DATA.assets[assetPath];
+  const info = lookupAsset(assetPath);
   if (!info) {
     showToast("找不到这张图的索引");
     return;

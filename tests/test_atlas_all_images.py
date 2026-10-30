@@ -118,6 +118,12 @@ class AtlasAllImagesTests(unittest.TestCase):
         self.assertIn("id=\"imgViewer\"", html)
         self.assertIn("showImgCtxMenu", html)
         self.assertIn("在文件夹中显示", html)
+        self.assertIn("function bindGalleryActions", html)
+        self.assertIn("function lookupAsset", html)
+        self.assertIn('class="btn-folder"', html)
+        self.assertIn("role-chip", html)
+        self.assertNotIn("onclick=\"openViewer(${JSON.stringify(a.path)})\"", html)
+        self.assertNotIn("revealInFolder(${JSON.stringify(a.path)})", html)
         self.assertIn("另存为", html)
         self.assertIn("AUTO_REFRESH_MS = 10000", html)
         self.assertIn("⋯ 更多", html)
@@ -159,6 +165,20 @@ class AtlasAllImagesTests(unittest.TestCase):
         thumb = self.td / assets["assets/scene/demo/big.png"]["thumb"]
         self.assertTrue(thumb.is_file())
         self.assertLess(thumb.stat().st_size, big.stat().st_size)
+
+    def test_windows_reveal_uses_select_comma_arg(self) -> None:
+        from unittest.mock import patch
+
+        from atlas_reveal import reveal_path
+
+        target = self.td / "assets" / "scene" / "demo" / "formal.png"
+        _tiny_png(target)
+        with patch("atlas_reveal.sys.platform", "win32"), patch("atlas_reveal.subprocess.Popen") as popen:
+            self.assertTrue(reveal_path(target))
+            popen.assert_called_once()
+            args = popen.call_args[0][0]
+            self.assertEqual(args[0], "explorer")
+            self.assertEqual(args[1], "/select,")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,31 @@
+{
+  "name": "ui_royal_match_home",
+  "style": "Royal Match candy palace soft-plastic",
+  "aspect": "9:16",
+  "palette": {
+    "cream_apricot": "#F3D9B8",
+    "champagne_gold": "#D4AF6A",
+    "royal_green": "#3FA24A",
+    "warm_wood": "#C9853A",
+    "teal_carpet": "#3A8FBF"
+  },
+  "nine_slice_defaults": {"left": 48, "right": 48, "top": 48, "bottom": 48},
+  "concept": "docs/showcase/rm_home_1030/concept/final.png",
+  "sheet": "docs/showcase/rm_home_1030/sheets/final.png",
+  "elements": [
+    {"name": "panel_main", "group": "panel", "state": "normal", "file": "sheets/final.png", "scalable": true, "nine_slice": {"left": 56, "right": 56, "top": 56, "bottom": 56}},
+    {"name": "btn_level", "group": "button", "state": "normal", "file": "sheets/final.png", "scalable": true, "nine_slice": {"left": 40, "right": 40, "top": 28, "bottom": 28}},
+    {"name": "btn_level", "group": "button", "state": "pressed", "file": "sheets/final.png", "scalable": true, "nine_slice": {"left": 40, "right": 40, "top": 28, "bottom": 28}},
+    {"name": "btn_level", "group": "button", "state": "disabled", "file": "sheets/final.png", "scalable": true, "nine_slice": {"left": 40, "right": 40, "top": 28, "bottom": 28}},
+    {"name": "btn_area", "group": "button", "state": "normal", "file": "sheets/final.png", "scalable": true, "nine_slice": {"left": 40, "right": 40, "top": 28, "bottom": 28}},
+    {"name": "btn_area", "group": "button", "state": "pressed", "file": "sheets/final.png", "scalable": true, "nine_slice": {"left": 40, "right": 40, "top": 28, "bottom": 28}},
+    {"name": "btn_area", "group": "button", "state": "disabled", "file": "sheets/final.png", "scalable": true, "nine_slice": {"left": 40, "right": 40, "top": 28, "bottom": 28}},
+    {"name": "progress", "group": "progress", "state": "empty", "file": "sheets/final.png", "scalable": true, "nine_slice": {"left": 36, "right": 36, "top": 20, "bottom": 20}},
+    {"name": "progress", "group": "progress", "state": "full", "file": "sheets/final.png", "scalable": true, "nine_slice": {"left": 36, "right": 36, "top": 20, "bottom": 20}},
+    {"name": "chip_coin", "group": "resource", "state": "normal", "file": "sheets/final.png", "scalable": false},
+    {"name": "chip_heart", "group": "resource", "state": "normal", "file": "sheets/final.png", "scalable": false},
+    {"name": "chip_star", "group": "resource", "state": "normal", "file": "sheets/final.png", "scalable": false},
+    {"name": "tab_home", "group": "tab", "state": "selected", "file": "sheets/final.png", "scalable": false},
+    {"name": "tab_home", "group": "tab", "state": "unselected", "file": "sheets/final.png", "scalable": false}
+  ]
+}

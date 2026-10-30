@@ -1,0 +1,43 @@
+Mobile game home screen, 9:16 full-bleed portrait, no phone bezel, no device frame, no letterbox.
+
+Render category: commercial toy-plastic candy 3D (soft glossy PVC, candy varnish, gentle subsurface scatter). Not photoreal, not flat vector, not hard cel-shaded, not neon cyber.
+
+Camera: slightly elevated interior medium-wide, standing at the doorway looking into a royal library study. Top of frame clips the ceiling molding. Bottom of frame clips the near wood floor. Left and right walls in frame. Lower third is visible floor for buttons to sit on. Floor, rug, and wall bases continue behind the bottom UI; UI overlays the room, never a disconnected empty tray.
+
+Scene fills the whole screen (this is the home/room, NOT a match-3 board, NOT an empty 9-slice panel, NOT a splash key-art with logo):
+- Butter-cream palace library. Recessed wall shelves packed dense with colorful book spines (red, teal, gold, violet), no empty shelves.
+- Rear-left: purple toy knight armor with lance standing in an alcove.
+- Rear-right: tall yellow library ladder leaning on shelves; blue-green globe on a stand; gold gramophone on a white-and-gold desk.
+- Center: white-and-gold desk with books, inkwell, and a chess set on a small table; burgundy tufted throne chair with gold frame.
+- Foreground: oval toy train track on a lemon-yellow rectangular rug, tiny colorful train, wooden floorboards with warm polish stripes.
+- Mid floor: teal-blue patterned carpet covering most of the room, gold floral motif.
+- Contact shadows under furniture, soft upper-left studio key light, no dirty black, no neon.
+
+Color areas: warm wood floor ~25% #C9853A; teal carpet ~15% #3A8FBF; lemon rug ~8% #F2D24A; cream walls/shelves ~30% #F3D9A8; rainbow book spines ~10%; cream-apricot + champagne-gold UI ~12%. Anchor colors: cream apricot #F3D9B8, champagne gold #D4AF6A, royal green #3FA24A.
+
+Materials: wood floor with polish highlights; short-pile fabric rugs; painted cream wood shelves; white lacquer furniture with soft-gold trim; UI as thick candy blocks with top rim highlight and bottom contact shadow; resource chips as glazed round pies; gold is soft-chamfer champagne, never brushed steel. Do not make the whole image one plastic.
+
+UI overlay, candy-soft, stacked ON the room:
+
+TOP resource bar hugging the top edge, three cream capsules with champagne-gold outline:
+- Left: gold coin + crown, number 14119, small green plus badge
+- Center: red heart, infinity, timer 02:41:37
+- Right: gold star, number 2
+
+DIRECTLY under the resource bar, a wide rounded progress capsule: left red-book icon, blue fill 0/400, right circular x2 badge with 30m. Progress sits under the top bar, does NOT overlap furniture.
+
+LEFT column of three round candy badges on the wall, each with a tiny timer strip, not overlapping the progress bar: trophy, ship-wheel, lightning bolt.
+
+RIGHT upper: circular gold key badge with pink gem and timer, stays in the upper third, not next to the bottom buttons.
+
+BOTTOM of the room, sitting on visible floor with gaps between them:
+- Left big green candy button: white text "Level 79" and smaller "Super Hard"
+- Right orange candy button: "Area 5" and "8/9" plus a small purple lock icon
+Buttons do not overlap each other, do not cover the tab bar, do not float on an empty tray.
+
+BOTTOM tab bar clipped by the screen edge: five gold-cream icons — treasure chest, trophy, CENTER selected Home castle (larger, green label "Home" only), team shield with a "1" badge, gear. No other tab labels.
+
+Typography that MUST appear exactly: Level 79, Super Hard, Area 5, 8/9, Home, 14119, 02:41:37, 0/400, x2.
+Forbidden: Garden, Room, ROYAL MATCH logo, match-3 tiles, readable gibberish, extra tab words, phone frame.
+
+Shelf density must look like a packed product screenshot. Controls are thick candy with top highlight and contact shadow. Center of the image is the decorated room, not a blank panel.

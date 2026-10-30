@@ -1,0 +1,3 @@
+Keep this exact 9:16 widget sheet, same layout, same Level 79 and Area 5 three states, same empty 9-slice panel, same Home tabs and round badges.
+
+Only: remove the yellow halo around every widget; change the coin chip number to 14119; change the full progress bar to solid blue fill like the home HUD. Transparent background, no dirty fringe.

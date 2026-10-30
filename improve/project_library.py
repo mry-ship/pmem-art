@@ -244,11 +244,15 @@ def ensure_project_library_bound(
     prev_root = str(active_meta.get("bound_root") or "")
     prev_id = str(active_meta.get("project_id") or "")
     prev_name = str(active_meta.get("project_name") or prev_id or "Previous Project")
+    cfg_pname = _read_project_name_from_config(mem, prev_name)
+    cfg_id = slugify_project_id(cfg_pname) if cfg_pname else ""
+    # config.yaml 仍是同一个 project_id：只是换机/换盘符/文件夹显示名不同，不要当拷贝隔离清空工作面。
+    same_named_project = bool(prev_id and cfg_id and cfg_id == prev_id)
 
     is_copied_to_new_project = False
-    if prev_id and prev_id != curr_id:
+    if prev_id and prev_id != curr_id and not same_named_project:
         is_copied_to_new_project = True
-    elif prev_root and prev_root != curr_root_str:
+    elif prev_root and prev_root != curr_root_str and not same_named_project:
         # Isolate even when the old absolute path is gone (folder moved/copied then deleted).
         # Only skip when old path still exists and resolves to the same directory (symlink/rename noop).
         try:
@@ -370,13 +374,20 @@ def ensure_project_library_bound(
         )
         return new_meta
 
-    # Same root: update project_name if explicitly passed or changed in config.yaml
-    cfg_pname = _read_project_name_from_config(mem, "")
+    # Same project: update project_name if explicitly passed or changed in config.yaml;
+    # rewrite bound_root when the folder moved machines / drive letters.
+    cfg_pname = cfg_pname or _read_project_name_from_config(mem, "")
     updated_name = explicit_project_name or (
         cfg_pname if cfg_pname and active_meta.get("project_name") in ("", root.name, "Untitled Art Project") else ""
     )
+    bind_changed = False
     if updated_name and updated_name != active_meta.get("project_name"):
         active_meta["project_name"] = updated_name
+        bind_changed = True
+    if prev_root != curr_root_str:
+        active_meta["bound_root"] = curr_root_str
+        bind_changed = True
+    if bind_changed:
         active_meta["updated_at"] = now_str
         active_file.write_text(json.dumps(active_meta, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 

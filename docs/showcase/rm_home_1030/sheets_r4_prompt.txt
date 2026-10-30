@@ -1,0 +1,1 @@
+Keep this widget sheet. Only: delete the tiny red speck to the right of the blue progress bar, and remove remaining yellow fringe on widget edges. Do not change labels or layout.

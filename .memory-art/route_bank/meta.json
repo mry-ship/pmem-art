@@ -1,6 +1,6 @@
 {
   "packaged_entries": 945,
   "confusion_cards": 8,
-  "synced_from_packaged": false,
+  "synced_from_packaged": true,
   "note": "Agent 只取 top-k 近邻，禁止整库进上下文"
 }

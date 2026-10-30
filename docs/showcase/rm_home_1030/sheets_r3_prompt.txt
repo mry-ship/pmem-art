@@ -1,0 +1,1 @@
+Keep this widget sheet. Only: erase the yellow fringe around every control, and restore the missing top-right corner of the gray disabled Level 79 button. Same layout, same 14119, same blue full bar.
