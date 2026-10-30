@@ -17,7 +17,8 @@ COLLOQUIAL_EXPAND: dict[str, list[str]] = load_lexicon()
 
 # Agent 写标准句时应用的固定模板（短、可机读）
 CANON_TEMPLATES: dict[str, str] = {
-    "draw.ordinary": "要画一张图；有参考也不换题材；走普通图",
+    # 禁止写「不换题材」：子串「换题材」曾把标准句二次规则误判成克隆
+    "draw.ordinary": "要画一张图；有参考；题材不变；走普通图",
     "draw.clone": "有参考图；换新题材；锁画风；走克隆",
     "draw.variant": "同一身份；换表情或动作或画风；机位已在图上；走变体",
     "draw.multi": "多张附图各管一件事；或关开态要锁同一机位；走多图分工",
@@ -53,11 +54,14 @@ def _has(text: str, *pats: str) -> bool:
 
 
 def _negated(text: str, word: str) -> bool:
-    # 「别画原来」不是在否定「换成」；只认紧贴的「别换/不要换…」
+    # 「别画原来」不是在否定「换成」；认「不换/也不换/别换/不要换…」
     if word == "换":
-        return bool(re.search(r"(不要|别|不是|不做)\s*换(题材|人|东西|主体)?", text)) and not re.search(
-            r"换成|换题材|主体改成", text
-        )
+        if re.search(r"(不|也不|不要|别|不是|不做)\s*换(题材|人|东西|主体)?|题材不变", text):
+            # 句里若另有真正的「换成/主体改成」，仍不算整句否定
+            if re.search(r"(?<![不])换成|(?<![不])换题材|主体改成|主体换成", text):
+                return False
+            return True
+        return False
     return bool(re.search(rf"(不要|别|不是|不做).{{0,4}}{re.escape(word)}", text))
 
 
@@ -72,9 +76,14 @@ def infer_signals(
     roles = [r for r in (image_roles or []) if r]
     return {
         "has_ref": bool(pics) or _has(raw, r"参考|照这张|照着|垫这张|按这张"),
-        "new_subject": _has(raw, r"换成|换题材|别画原来|主体改成|换个东西|改成一只|改成一")
-        and not _negated(raw, "换"),
-        "keep_subject": _has(raw, r"不要换题材|还是画这个|别换人|别换题材"),
+        # 「换题材」须左不是「不」，避免「不换题材/也不换题材」误判
+        "new_subject": (
+            _has(raw, r"换成|(?<![不])换题材|别画原来|主体改成|换个东西|改成一只|改成一")
+            and not _negated(raw, "换")
+        ),
+        "keep_subject": _has(
+            raw, r"不要换题材|不换题材|也不换题材|题材不变|还是画这个|别换人|别换题材"
+        ),
         "variant": _has(raw, r"表情|差分|换个画风|同一张脸|同一身份"),
         "multi": _has(raw, r"各管一件事|第一张是脸|身份在第一张")
         or ({"identity", "structure"} <= set(roles)),

@@ -1,0 +1,12 @@
+Vertical 9:16 UI kit sprite sheet on flat MAGENTA chroma-key #FF00FF. No room, no bookshelves, no knight, no train, no furniture, no match-3, no phone frame.
+
+Candy-plastic cream-apricot + champagne-gold widgets, thick toy buttons with top highlight and contact shadow, same look as a Royal Match home HUD.
+
+From top to bottom, even gaps, nothing overlapping:
+1) One 9-slice cream panel with champagne-gold double rim, EMPTY clean center, filigree only in the four corners.
+2) Green Level 79 Super Hard candy button: normal, pressed (darker inset), disabled (gray). Same outline.
+3) Orange Area 5 8/9 candy button with lock: normal, pressed, disabled. Same outline.
+4) Progress bar empty, progress bar full, plus coin / heart / star resource chips. Green plus fused to the coin chip, not a fourth orphan button.
+5) Home tab selected (castle + green Home) and unselected castle; round badges trophy, wheel, lightning, gold key.
+
+Readable labels only: Level 79, Super Hard, Area 5, 8/9, Home. No Garden, no Room, no logo, no gibberish.

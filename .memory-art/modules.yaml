@@ -874,3 +874,44 @@ modules:
       alpha_required: true
       safe_margin_px: 16
       max_size_kb: 1024
+  scene.PirateCabin:
+    title: 场景与原画·PirateCabin (Cyber)
+    category: scene
+    status: active
+    description: "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/p · 自动归类至 场景与原画 (scene.PirateCabin) · 置信度 0.808"
+    paths:
+      - "assets/scene/piratecabin/**"
+    aliases:
+      - PirateCabin
+    entities: []
+    palette: []
+    specs:
+      resolution: 941x1672
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+    parent: scene.MainArea
+    inherits: scene.MainArea
+  ui.Offer.BlackFriday:
+    title: 界面与九宫格·Offer
+    category: ui
+    status: active
+    description: "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/p · 自动归类至 界面与九宫格 (ui.Offer.BlackFriday) · 置信度 0.92"
+    paths:
+      - "assets/ui/offer/**"
+    aliases:
+      - Offer
+    entities: []
+    palette: []
+    specs:
+      resolution: 720x1280
+      allowed_resolutions:
+        - 720x1280
+      alpha_required: true
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512

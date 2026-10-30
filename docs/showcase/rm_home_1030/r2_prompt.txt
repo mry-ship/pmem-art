@@ -1,0 +1,7 @@
+KEEP the same 9:16 Royal Match mobile home camera, library room, furniture layout, train oval, HUD inventory, and all readable text (14119, 02:41:37, 0/400, Level 79, Super Hard, Area 5, 8/9, Home). Do not change viewpoint. Do not add or remove major props. Do not turn this into a match-3 board or empty panel.
+
+FIX ONLY two things:
+1) Top resource bar must be exactly three cream-gold capsules hugging the top edge, with nothing floating in the gaps. Move the green plus badge onto the right end of the LEFT coin capsule (next to 14119). The center capsule is only the red heart + infinity + 02:41:37. The right capsule is only the star + 2. Delete the orphaned green plus sitting between coin and heart.
+2) Shift materials toward toy-plastic candy varnish: purple knight becomes glossy painted PVC, not brushed metal; cream bookshelves are soft painted candy wood with gentle SSS, not photoreal oak. Keep UI as thick candy with top highlight and contact shadow.
+
+Same left badges, right gold key, green Level 79 button, orange Area 5 button, Home tab selected. No Garden, no Room, no ROYAL MATCH logo, no phone frame, no gibberish.

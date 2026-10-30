@@ -1,0 +1,19 @@
+# Royal Match 糖果合成梯 · 副本（不改 canonical）
+version: rm-candy-20261030
+pipeline: art-merge-two-phase
+
+tracks:
+  royal_candy:
+    module: prop.RoyalCandyMerge
+    mode: B
+    base_body: 皇家软糖
+    surface: Royal Match玩具软塑胶清漆，圆润倒角，奶油杏#F3D9B8糖体加香槟金#D4AF6A饰件，饱和糖果色，左上棚拍软光短接触影，光洁不油亮，浅空底#F6EFE4；非产品实拍、非霓虹、非硬边赛璐珞；严禁蛋糕/马卡龙/纸杯蛋糕；单件居中无脸无等级字
+    rows:
+      - { level: 1, name: 皇家软糖裸糖, silhouette: 皇家软糖圆润扁球无饰, scale_delta: 基档, scale_pct: 0.60, parts_add: "—" }
+      - { level: 2, name: 皇家软糖金圈, silhouette: 皇家软糖赤道香槟金细圈, scale_delta: "+小", scale_pct: 0.63, parts_add: 香槟金细圈 }
+      - { level: 3, name: 皇家软糖冠座, silhouette: 皇家软糖金圈顶小冠座, scale_delta: "+小", scale_pct: 0.66, parts_add: 顶面小冠座 }
+      - { level: 4, name: 皇家软糖宝石, silhouette: 皇家软糖冠座嵌切面糖宝石, scale_delta: "+中", scale_pct: 0.69, parts_add: 切面糖宝石 }
+      - { level: 5, name: 皇家软糖金叶, silhouette: 皇家软糖宝石两侧金叶, scale_delta: "+中", scale_pct: 0.72, parts_add: 两侧金叶 }
+      - { level: 6, name: 皇家软糖冕箍, silhouette: 皇家软糖金叶上加冕箍, scale_delta: "+大", scale_pct: 0.75, parts_add: 香槟金冕箍 }
+      - { level: 7, name: 皇家软糖星尖, silhouette: 皇家软糖冕箍上星形尖角, scale_delta: "+大", scale_pct: 0.77, parts_add: 冕上星形尖角 }
+      - { level: 8, name: 皇家软糖圈足, silhouette: 皇家软糖星冕下暖金圈足, scale_delta: "+大", scale_pct: 0.79, parts_add: 暖金圈足 }

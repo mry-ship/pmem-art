@@ -1,0 +1,3 @@
+Keep this exact 9:16 library home, camera, knight, train, Level 79, Area 5, Home, packed shelves.
+
+One change: the green plus sits only on the far left rim of the coin capsule, before 14119. Empty space between 14119 and the heart. No fourth top-bar button.

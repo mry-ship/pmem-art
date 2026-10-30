@@ -1,0 +1,118 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-10-30 16:17:24 UTC+8",
+  "session_id": "rm-home-1030",
+  "goal": "Royal Match 主界面 9:16 竖屏概念：宫廷书房家园+奶油香槟金软塑胶糖果UI",
+  "module": "ui.MainMenu",
+  "converge_mode": "quality",
+  "guided_mode": "text_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 4,
+  "winner_score": 8.75,
+  "winner_image": "docs/showcase/rm_home_1030/concept/r4.png",
+  "winner_passed": false,
+  "outcome": "⚠️ **共执行 4 轮审图（目标阈值 `9.50` 分），未达标，已挑选全阶段最高分**（胜出：第 4 轮 `8.75 / 10.0` 分）",
+  "what_fixed": [
+    "绿加号收回金币胶囊右下角，顶栏只留三枚贴顶胶囊；骑士和书架改成奶油软塑胶清漆，减少金属反射",
+    "删掉夹在金币和红心之间的独立绿加号，把加号焊在金币胶囊右缘；骑士改成光滑紫色玩具PVC，不要钢质高光",
+    "绿加号只出现在金币胶囊最左侧外缘，金币数字和红心之间留空，不要第四颗顶栏按钮",
+    "满4轮结算最高分"
+  ],
+  "what_still_weak": "右侧绿绒沙发挤进黄地毯右缘，和 Area 按钮抢位置；骑士胸甲中央仍有一条硬白高光",
+  "strengths": "绿加号焊在金币胶囊左缘，顶栏收成三枚；Level 79 与 Home 文案仍清楚",
+  "taste_deltas": {
+    "from_strengths": [
+      "绿加号焊在金币胶囊左缘，顶栏收成三枚；Level 79 与 Home 文案仍清楚"
+    ],
+    "from_defects": [
+      "金币数和红心胶囊之间仍夹着一颗独立绿色加号圆钮，顶栏是四件不是三枚；骑士胸甲高光仍是硬金属条；prompt 改动 78% 超过档位上限 40%",
+      "14119 和红心之间仍有一颗单独的绿色加号，没有焊在金币胶囊上；顶栏看起来是四件；prompt 改动 52% 超过档位上限 40%",
+      "右侧绿绒沙发挤进黄地毯右缘，和 Area 按钮抢位置；骑士胸甲中央仍有一条硬白高光"
+    ]
+  },
+  "warm_start_confidence": 0.3,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 8.58,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 8.48,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 8.6,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 8.75,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "material",
+      "lesson": "本轮短板偏「material」：顶栏绿加号游离在金币和生命中间，没有贴在金币胶囊上；骑士甲过金属写实，房间偏摄影室内而不是玩具软塑胶清漆",
+      "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+      "from_score": "8.58"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：家园书房铺满整屏，不是三消盘也不是空框；Level 79、Area 5、Home 文案和底栏结构齐全",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.58"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：金币数和红心胶囊之间仍夹着一颗独立绿色加号圆钮，顶栏是四件不是三枚；骑士胸甲高光仍是硬金属条；prompt 改动 78% 超过档位上限 40%",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.48"
+    },
+    {
+      "category": "material",
+      "lesson": "本轮短板偏「material」：金币数和红心胶囊之间仍夹着一颗独立绿色加号圆钮，顶栏是四件不是三枚；骑士胸甲高光仍是硬金属条；prompt 改动 78% 超过档位上限 40%",
+      "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+      "from_score": "8.48"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：书房货架仍铺满，Level 79 与 Area 5 两枚主钮位置稳定，底栏 Home 选中可读",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.48"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：14119 和红心之间仍有一颗单独的绿色加号，没有焊在金币胶囊上；顶栏看起来是四件；prompt 改动 52% 超过档位上限 40%",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.6"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：紫色骑士更偏玩具涂层，书房货架和 Level 79 / Area 5 / Home 仍稳住",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.6"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：右侧绿绒沙发挤进黄地毯右缘，和 Area 按钮抢位置；骑士胸甲中央仍有一条硬白高光",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.75"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：绿加号焊在金币胶囊左缘，顶栏收成三枚；Level 79 与 Home 文案仍清楚",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.75"
+    }
+  ]
+}

@@ -1,92 +1,62 @@
 {
-  "ran_at": "2026-10-30 05:18:26 UTC+8",
-  "reflections_scanned": 20,
-  "avg_winner_score": 9.4,
-  "avg_rounds": 2.35,
+  "ran_at": "2026-10-30 21:03:15 UTC+8",
+  "reflections_scanned": 4,
+  "avg_winner_score": 9.03,
+  "avg_rounds": 4.0,
   "top_recurring_defects": [
     {
-      "text": "上齿一排仍偏浅不够清楚；眉梢与「刚收到好消息」的亮眼还可再抬半档，但绝不可回到正圆惊吓嘴",
-      "count": 2
+      "text": "左右袋更像实色圆角柱而非参考的半透明玻璃购物袋窗面，袋口/提手塑形偏弱；道具数量白字外圈偏紫晕软边，绿 CTA 上现价字",
+      "count": 1
     },
     {
-      "text": "相对原图多出的叙事：脚前糖纸点缀；但右上暖侧逆光比上轮变平偏软；黑袜仍偏中小腿未到膝下；搭膝手部分指仍可再清",
-      "count": 2
+      "text": "绿 CTA 下方划线原价红线偏细偏暗，冲击力不够；左袋 85% OFF 吊牌偏橙、不如参考鲜红吊牌抓眼，小字 x2 描边",
+      "count": 1
     },
     {
-      "text": "相对原图多出的光影叙事：右上暖金侧逆勾脸与帽衫肩脊；搭膝手部分指仍略糊；鞋底接触影偏浅；黑袜口边缘可更齐",
-      "count": 2
+      "text": "右粉袋对角 Best Value 金丝带相对第3轮丢失，高价值层级信号回退；划线原价红线仍偏暗细，未达到更亮朱红粗删除线",
+      "count": 1
     },
     {
-      "text": "脸颊腮红柔边仍偏实、空气晕染未完全散开；双手叠小腿处指节分指仍偏糊；袜口与鞋帮交接线略软",
-      "count": 2
+      "text": "相对原图多出的一处：高台地板与宝箱金属有吊灯暖金光斑，左舶窗冷青同时打在蓝椅左侧和拱门左内沿。天花板蜥鱼改戴过大三角帽并",
+      "count": 1
     },
     {
-      "text": "叠在小腿上的近手五指间距仍偏挤、指尖轮廓略糊；右鞋三杠边缘粉彩略散；膝前短裤下摆与大腿交界略糊",
-      "count": 2
+      "text": "相对原图多出的一处：吊灯暖金在高台地板和开盖宝箱金属上摊成一圈光斑，左舶窗冷青同时打在爱心椅左侧和拱门左内沿。蜥鱼头中央",
+      "count": 1
     },
     {
-      "text": "远侧手与小腿叠压处轮廓仍略糊；左上背景斜线密度略不均",
-      "count": 2
+      "text": "相对原图多出的一处：吊灯暖金在高台地板、开盖宝箱盖沿和散落金币上摊成一圈，左舶窗冷青同时打在爱心椅左缘和拱门左内壁。右下",
+      "count": 1
     },
     {
-      "text": "姿态锁不稳：右臂身后撑地后仰，偏离参考+手/膝；双手未搭在屈膝上；解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁",
-      "count": 2
+      "text": "每个控件外沿仍有一圈黄边；灰色 Level 禁用钮右上缺了一小块白角；prompt 改动 44% 超过档位上限 40%",
+      "count": 1
     },
     {
-      "text": "姿态锁不稳：右掌撑地后仰，偏离参考+手/膝；搭膝落点丢失；解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁止糊边融",
-      "count": 2
+      "text": "控件外沿黄边还在；蓝满轨右侧旁有一颗红噪点",
+      "count": 1
     }
   ],
   "recipe_strengthen": [
     {
-      "module": "prop.PeachCandyMerge",
-      "id": "CHAT20261030035247909RECIPE",
-      "summary": "[收敛胜出 9.59分] 未命名生图任务 — 浅米白浅棚满幅干净；蜜桃软塑胶清漆高光与短接触影落地",
+      "module": "scene.PirateCabin",
+      "id": "CHAT20261030180039740RECIPE",
+      "summary": "[收敛胜出 9.37分] Casual 3D cartoon pirate captain cabin, same scene — 蜥鱼吊灯回到帽下触手团，没有卡通五官；右壁架是小灯笼加画框，",
       "hint": "下次 warm-start 优先注入本条 recipe"
     },
     {
-      "module": "ui.HUD",
-      "id": "CHAT20261028030611394RECIPE",
-      "summary": "[收敛胜出 9.57分] 【Royal Match 式手游主菜单概念 · 16:9 商店截图级】 整体气质：轻松、甜美、宫廷糖 — 角花更贴角；糖果清漆与接触影；中心空；三消上架气质",
+      "module": "ui.MainMenu",
+      "id": "CHAT20261030161724120RECIPE",
+      "summary": "[收敛胜出 8.75分] Royal Match 主界面 9:16 竖屏概念：宫廷书房家园+奶油香槟金软塑胶糖果UI — 绿加号焊在金币胶囊左缘，顶栏收成三枚；Level 79 与 ",
       "hint": "下次 warm-start 优先注入本条 recipe"
     },
     {
-      "module": "icon.AppIcon",
-      "id": "CHAT20261030034151077RECIPE",
-      "summary": "[收敛胜出 9.56分] iOS 1024x1024 App Icon Mode A: 青釉金币/青瓷金单符号，满幅直角，75 — 单枚青釉金币符号清晰；湿釉高光与金边可读",
-      "hint": "下次 warm-start 优先注入本条 recipe"
-    },
-    {
-      "module": "icon.Item",
-      "id": "CHAT20261028023150276RECIPE",
-      "summary": "[收敛胜出 9.55分] 商业级 RPG 道具格：祖母绿治疗药水瓶，透明友好，厚剪影 — 暗底干净；接触影软；切面玻璃与叶饰完成",
-      "hint": "下次 warm-start 优先注入本条 recipe"
-    },
-    {
-      "module": "item.MergeLadder",
-      "id": "CHAT20261028023228942RECIPE",
-      "summary": "[收敛胜出 9.54分] 合成梯T5晶冠瓶单档：切面玻璃暖金，短瓶+金足+塞顶晶冠，单件居中无脸无等级字，正方形棚拍 — 体量升级可读；切面玻璃焦散；金足与晶冠零件清楚；厚剪影；无脸",
-      "hint": "下次 warm-start 优先注入本条 recipe"
-    },
-    {
-      "module": "prop.PeachCandyMerge",
-      "id": "CHAT20261030035255500RECIPE",
-      "summary": "[收敛胜出 9.54分] 未命名生图任务 — 短翼扭结不顶边；浅棚干净不透明软塑胶",
-      "hint": "下次 warm-start 优先注入本条 recipe"
-    },
-    {
-      "module": "prop.PeachCandyMerge",
-      "id": "CHAT20261030035609048RECIPE",
-      "summary": "[收敛胜出 9.54分] 未命名生图任务 — 圆贴纸清楚；不透明软塑胶浅棚干净",
-      "hint": "下次 warm-start 优先注入本条 recipe"
-    },
-    {
-      "module": "scene.CelestialCity",
-      "id": "CHAT20261028023410674RECIPE",
-      "summary": "[收敛胜出 9.54分] 正版冷灰不夜城recompose：过肩侧望更大侠客 — 过肩侧望侠客占比更大；冷灰灯海对角线延伸；云带与雾层可读",
+      "module": "ui.MainMenu",
+      "id": "CHAT20261030162449681RECIPE",
+      "summary": "[收敛胜出 8.60分] 从概念抽出 Royal Match 主界面 UI 组件表：面板/按钮态/进度空满/Tab/圆徽，奶油 — 蓝满轨旁红噪点已消失；14119、Level/Area 三态",
       "hint": "下次 warm-start 优先注入本条 recipe"
     }
   ],
   "taste_changes": [],
-  "taste_path": ".memory-art/_profile/taste.json"
+  "taste_path": ".memory-art\\_profile\\taste.json"
 }

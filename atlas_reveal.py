@@ -51,7 +51,8 @@ def reveal_path(path: Path) -> bool:
         if sys.platform == "darwin":
             subprocess.run(["open", "-R", str(target)], check=False)
         elif sys.platform == "win32":
-            subprocess.run(["explorer", f"/select,{target}"], check=False)
+            # 两段参数：explorer 会拼成 /select,<path>，路径带空格也能选中
+            subprocess.Popen(["explorer", "/select,", str(target)])
         else:
             subprocess.run(["xdg-open", str(target.parent)], check=False)
         return True

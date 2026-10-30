@@ -1,0 +1,118 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-10-30 18:00:39 UTC+8",
+  "session_id": "pirate-cabin-opt-1030",
+  "goal": "Casual 3D cartoon pirate captain cabin, same scene and camera as the reference. Lift material readability and form: wood grain, metal cannon, velvet chair, gold coins, octopus chandelier. Warm candle light from the octopus chandelier pooling on the raised cabin floor and treasure metal; cool ocean window light on the blue chair and arch. Keep every listed prop. Vanishing points of floorboards; contact shadows under barrels, cannon, chests, crates. Not oil impasto, not flat icon.",
+  "module": "scene.PirateCabin",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 4,
+  "winner_score": 9.37,
+  "winner_image": "docs/showcase/pirate_cabin_opt_1030/r4.png",
+  "winner_passed": false,
+  "outcome": "⚠️ **共执行 4 轮审图（目标阈值 `9.50` 分），未达标，已挑选全阶段最高分**（胜出：第 4 轮 `9.37 / 10.0` 分）",
+  "what_fixed": [
+    "把舶窗冷光打到木质拱门内侧与蓝椅靠背；恢复蜥鱼头上的皮革宽檐骷髅海盗帽，海图灯笼改回蓝玻璃。",
+    "把蜥鱼帽收成贴头的皮革宽檐小帽并去掉眼罩；蓝椅靠背改回清晰爱心外轮廓。",
+    "去掉蜥鱼中央卡通五官，保持帽下触手团；壁架改回小灯笼加绿画框，不要书脊。",
+    "蓝炮改回无大轮木架；海图灯笼改回青蓝玻璃腔。"
+  ],
+  "what_still_weak": "相对原图多出的一处：吊灯暖金在高台地板、开盖宝箱盖沿和散落金币上摊成一圈，左舶窗冷青同时打在爱心椅左缘和拱门左内壁。右下蓝炮仍装着一对圆木轮，原图炮座是没有大轮的木架。海图灯笼是深褐金属罩暖芯，青蓝玻璃腔偏弱。",
+  "strengths": "蜥鱼吊灯回到帽下触手团，没有卡通五官；右壁架是小灯笼加画框，没有书脊。爱心椅外轮廓清楚。吊灯暖金摊在高台地板、宝箱盖沿和金币上，左舶窗冷青打在椅左缘和拱门左内壁。",
+  "taste_deltas": {
+    "from_strengths": [
+      "蜥鱼吊灯回到帽下触手团，没有卡通五官；右壁架是小灯笼加画框，没有书脊。爱心椅外轮廓清楚。吊灯暖金摊在高台地板、宝箱盖沿和金币上，左舶窗冷青打在椅左缘和拱门左内壁。"
+    ],
+    "from_defects": [
+      "相对原图多出的一处：高台地板与宝箱金属有吊灯暖金光斑，左舶窗冷青同时打在蓝椅左侧和拱门左内沿。天花板蜥鱼改戴过大三角帽并加了黑色眼罩，帽檐盖住大半头，和原图贴头的皮革宽檐小帽不同。蓝椅靠背仍是椭圆扣布",
+      "相对原图多出的一处：吊灯暖金在高台地板和开盖宝箱金属上摊成一圈光斑，左舶窗冷青同时打在爱心椅左侧和拱门左内沿。蜥鱼头中央长出一对卡通笑眼和嘴，原图是皮革帽下的触手团，没有人脸五官。右侧壁架改成一排书脊",
+      "相对原图多出的一处：吊灯暖金在高台地板、开盖宝箱盖沿和散落金币上摊成一圈，左舶窗冷青同时打在爱心椅左缘和拱门左内壁。右下蓝炮仍装着一对圆木轮，原图炮座是没有大轮的木架。海图灯笼是深褐金属罩暖芯，青蓝玻"
+    ]
+  },
+  "warm_start_confidence": 0.3,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 8.68,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 8.87,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 9.16,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 9.37,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "material",
+      "lesson": "本轮短板偏「material」：相对原图多出的一处：吊灯暖光已摊在高台地板和宝箱金属上，但左舶窗海面冷光只擦到蓝椅左侧绒面，木质拱门框仍被吊灯暖橙盖住，冷暖对读不够。天花板蜥鱼头上的皮革宽檐骷",
+      "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+      "from_score": "8.68"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：蜥鱼吊灯蜡烛暖光已经流在高台地板与开盖宝箱金属上，形成比原图更可读的金暖光斑；木桶箍纹、炮身金属和金币高光比原图更清晰，两层甲板机位仍锁住。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.68"
+    },
+    {
+      "category": "material",
+      "lesson": "本轮短板偏「material」：相对原图多出的一处：高台地板与宝箱金属有吊灯暖金光斑，左舶窗冷青同时打在蓝椅左侧和拱门左内沿。天花板蜥鱼改戴过大三角帽并加了黑色眼罩，帽檐盖住大半头，和原图贴头",
+      "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+      "from_score": "8.87"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：吊灯暖金摊在高台地板和宝箱金币上，左舶窗冷青打在蓝椅靠背左侧和拱门左内沿，双光源对读比原图清楚。木桶箍、炮身漆面和金币高光可读，皮革宽檐帽已回到蜥鱼头上。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.87"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：相对原图多出的一处：吊灯暖金在高台地板和开盖宝箱金属上摊成一圈光斑，左舶窗冷青同时打在爱心椅左侧和拱门左内沿。蜥鱼头中央长出一对卡通笑眼和嘴，原图是皮革帽下的触",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "9.16"
+    },
+    {
+      "category": "material",
+      "lesson": "本轮短板偏「material」：相对原图多出的一处：吊灯暖金在高台地板和开盖宝箱金属上摊成一圈光斑，左舶窗冷青同时打在爱心椅左侧和拱门左内沿。蜥鱼头中央长出一对卡通笑眼和嘴，原图是皮革帽下的触",
+      "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+      "from_score": "9.16"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：爱心椅靠背外轮廓已经清楚；蜥鱼改回贴头皮革宽檐小帽加青绿圆箍，没有眼罩。吊灯暖金摊在高台地板和宝箱金属上，左舶窗冷青打在椅左侧与拱门左内沿。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.16"
+    },
+    {
+      "category": "material",
+      "lesson": "本轮短板偏「material」：相对原图多出的一处：吊灯暖金在高台地板、开盖宝箱盖沿和散落金币上摊成一圈，左舶窗冷青同时打在爱心椅左缘和拱门左内壁。右下蓝炮仍装着一对圆木轮，原图炮座是没有大轮",
+      "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+      "from_score": "9.37"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：蜥鱼吊灯回到帽下触手团，没有卡通五官；右壁架是小灯笼加画框，没有书脊。爱心椅外轮廓清楚。吊灯暖金摊在高台地板、宝箱盖沿和金币上，左舶窗冷青打在椅左缘和拱门左内壁",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.37"
+    }
+  ]
+}

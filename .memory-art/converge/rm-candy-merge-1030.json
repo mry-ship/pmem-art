@@ -1,0 +1,162 @@
+{
+  "session_id": "rm-candy-merge-1030",
+  "started_at": "2026-10-30 16:53:35 UTC+8",
+  "goal": "Royal Match 皇家软糖合成梯 L1-L8 一档一张正方形",
+  "module": "prop.RoyalCandyMerge",
+  "mode": "text_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "medium",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "medium",
+    "label": "中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.5)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 1,
+    "target_score_threshold": 9.5,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.15,
+      "perspective_anatomy": 0.15,
+      "texture_detail": 0.15,
+      "spec_style": 0.15,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "viewpoint_frame",
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图，只在提示词上补还没过的那一处（提示词改动仍 ≤40%）",
+    "max_prompt_delta_ratio": 0.4,
+    "allow_recompose": false,
+    "allow_viewpoint_change": false,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "viewpoint_angle (不改机位与镜头视角)",
+      "element_count (不增删主体元素清单)",
+      "no_full_recompose (不做整体 recompose / 换景别故事)",
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)"
+    ],
+    "min_round_leap": 0.15,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光，表面那一句不动，只修没过的那一格",
+    "medium_family": "generic",
+    "best_direction_hint": "最优方向：光影·空气·介质；可小幅姿态/局部布局",
+    "goal": "Royal Match 皇家软糖合成梯 L1-L8 一档一张正方形",
+    "module": "prop.RoyalCandyMerge",
+    "ref_image": "",
+    "ref_analysis": ""
+  },
+  "medium_family": "generic",
+  "contract": "",
+  "target_score_threshold": 9.5,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "",
+  "ref_analysis": "",
+  "default_aspect_ratio": "1:1",
+  "default_reference_image_paths": [],
+  "aspect_ratio": "1:1",
+  "reference_image_paths": [],
+  "ref_physical_traits": {},
+  "param_validation": {},
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.5,
+  "accept_threshold": 9.5,
+  "max_rounds": 4,
+  "ready_to_finish": false,
+  "status": "running",
+  "rounds": [],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-10-30 16:11:08 UTC+8"
+    },
+    "module": "prop.RoyalCandyMerge",
+    "goal": "Royal Match 皇家软糖合成梯 L1-L8 一档一张正方形",
+    "confidence": 0.3,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "红线可控（0 条）",
+      "挂载 0 张项目知识卡 + 1 张全局美术底层基础卡"
+    ],
+    "top_recipes": [],
+    "top_redlines": [],
+    "art_decisions": [],
+    "private_knowledge": [],
+    "shared_knowledge": [
+      {
+        "id": "palette-70-20-10",
+        "title": "色彩构成：70-20-10 色板比例黄金法则",
+        "body": "画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+        "layer_scope": "shared"
+      }
+    ],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [],
+      "preferred_composition": [],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [],
+      "banned_habits": []
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.RoyalCandyMerge\n- 置信度: 0.30（fast-track 资格: 否）\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+    "built_at": "2026-10-30 16:53:35 UTC+8"
+  },
+  "lessons_all": [],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 4,
+  "regression_drop": 0.5,
+  "discussions": [
+    {
+      "round": 1,
+      "prompt": "L1 皇家软糖裸糖：圆润扁球，无饰件。两颗合成时接缝收成赤道金圈。\nL2 皇家软糖金圈：同一颗糖加香槟金细圈。两圈叠高变成顶面小冠座。\nL3 皇家软糖冠座：金圈顶出现可嵌宝石的小冠座。两座加厚后坐下切面糖宝石。\nL4 皇家软糖宝石：冠座嵌一颗切面糖宝石。多余的金摊成两侧金叶。\nL5 皇家软糖金叶：宝石两侧各一片金叶。金叶收拢成一圈冕箍。\nL6 皇家软糖冕箍：糖顶加香槟金冕箍。箍缘长出星形尖角。\nL7 皇家软糖星尖：冕箍上有星形尖角。余料落到糖底变成暖金圈足。\nL8 皇家软糖圈足：星冕下加暖金圈足，全梯最大，仍是一件。\n画风：Royal Match玩具软塑胶清漆，圆润倒角，奶油杏#F3D9B8糖体+香槟金#D4AF6A饰件，左上棚拍软光短接触影，光洁不油亮，浅空底#F6EFE4；非实拍非霓虹非蛋糕。\n每档一件居中，无脸无等级字。母体锁死皇家软糖。",
+      "strengths": "",
+      "defects": "L3冠座的合成理由偏薄：两圈如何变成座",
+      "next_fix": "第2稿只补L3合成理由，画风不动"
+    },
+    {
+      "round": 2,
+      "prompt": "锁住：L1裸糖、L2金圈、L4宝石、L5金叶、L6冕箍、L7星尖、L8圈足、画风原句。\n只改L3：两件L2合成时，上下两条金圈叠成一圈加高的环台，环台中空，所以叫顶面小冠座，仍是同一颗皇家软糖，不是另换一顶独立王冠。",
+      "strengths": "",
+      "defects": "画风句已定；L8圈足需写明是糖底零件不是特效光环",
+      "next_fix": "第3稿只锁L8圈足是实体暖金环，画风一字不改"
+    },
+    {
+      "round": 3,
+      "prompt": "锁住前七档与画风原句。\nL8：两件L7合成后，星尖下多出来的金料收成贴在糖底的实体暖金圈足（有厚度的环，不是发光光环、不是托盘）。仍是一件皇家软糖，体量最大且留边。\n六条已通：八件同域、一档一件无脸无字、合成增零件、体量只大一圈、parts_add具体、剪影不复制且母体皇家软糖锁死。",
+      "strengths": "",
+      "defects": "无",
+      "next_fix": "文字定稿，进入一档一张正方形"
+    }
+  ]
+}

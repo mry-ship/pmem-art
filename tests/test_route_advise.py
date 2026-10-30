@@ -168,6 +168,41 @@ class RouteAdviseTests(unittest.TestCase):
         self.assertFalse(payload["execute_ok"])
         self.assertEqual(payload["route_ids"], ["draw.ordinary"])
 
+    def test_ordinary_canonical_does_not_self_poison_to_clone(self) -> None:
+        # 旧模板「也不换题材」含「换题材」子串；新模板「题材不变」；两者都不能把标准句判成克隆
+        for canon in (
+            "要画一张图；有参考；题材不变；走普通图",
+            "要画一张图；有参考也不换题材；走普通图",
+        ):
+            plan = plan_route(canon, images=["ref.png"])
+            self.assertEqual(plan.route_ids, ["draw.ordinary"], canon)
+            self.assertNotEqual(plan.reason, "clone", canon)
+            brief = build_canonical_brief(canon, images=["ref.png"])
+            self.assertEqual(brief["guess_route_id"], "draw.ordinary", canon)
+
+    def test_optimize_ref_with_ordinary_canonical_execute_ok(self) -> None:
+        # 本趟翻车：深度优化附图 + 普通图标准句 → 曾 plan_conflict
+        payload = advise_route(
+            "帮我深度优化一下这张图",
+            images=["docs/showcase/pirate_cabin_opt_1030/ref.jpg"],
+            canonical="要画一张图；有参考；题材不变；走普通图",
+        )
+        self.assertEqual(payload["route_ids"], ["draw.ordinary"])
+        self.assertFalse(payload["plan_conflict"])
+        self.assertTrue(payload["execute_ok"])
+
+    def test_bu_huan_topic_is_keep_not_clone(self) -> None:
+        for text in (
+            "深度优化这张海盗船长舱，不换题材不换机位，走普通图",
+            "有参考也不换题材，走普通图",
+            "题材不变，垫这张优化",
+        ):
+            plan = plan_route(text, images=["ref.png"])
+            self.assertEqual(plan.route_ids, ["draw.ordinary"], text)
+            brief = build_canonical_brief(text, images=["ref.png"])
+            self.assertFalse(brief["signals"]["new_subject"], text)
+            self.assertEqual(brief["guess_route_id"], "draw.ordinary", text)
+
     def test_matching_colloquial_via_canonical_keeps_clone(self) -> None:
         payload = advise_route(
             "照着这张的味道，主体改成一只喵",
