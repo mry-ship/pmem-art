@@ -1,0 +1,8 @@
+# pmem-art runtime dependencies (Python 3.10+). Install: pip install -r requirements.txt
+# Everything else is standard library; remote VLM judging uses urllib (no SDK needed).
+pillow>=10.0      # image inspection / QA / atlas thumbnails (PIL)
+numpy>=1.24       # merge_relation, icon export, offline scorers in scripts/
+pyyaml>=6.0       # modules.yaml / config.yaml (pmem_art.load_yaml has a fallback parser if missing)
+
+# Dev / tests (optional):
+pytest>=7.0

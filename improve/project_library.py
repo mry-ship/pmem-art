@@ -244,7 +244,8 @@ def ensure_project_library_bound(
     prev_root = str(active_meta.get("bound_root") or "")
     prev_id = str(active_meta.get("project_id") or "")
     prev_name = str(active_meta.get("project_name") or prev_id or "Previous Project")
-    cfg_pname = _read_project_name_from_config(mem, prev_name)
+    # Empty fallback: missing `name:` must NOT invent same_named_project and disable isolation.
+    cfg_pname = _read_project_name_from_config(mem, "")
     cfg_id = slugify_project_id(cfg_pname) if cfg_pname else ""
     # config.yaml 仍是同一个 project_id：只是换机/换盘符/文件夹显示名不同，不要当拷贝隔离清空工作面。
     same_named_project = bool(prev_id and cfg_id and cfg_id == prev_id)

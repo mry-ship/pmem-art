@@ -164,7 +164,19 @@ def main() -> int:
     skill_round_dist = dict(Counter(int(r.get("n_rounds") or 0) for r in ok_items))
     selection = json.loads((img_dir / "selection.json").read_text()) if (img_dir / "selection.json").is_file() else {}
 
-    style = Path("/workspace/pmem-art-v8/_latest_desktop/v6_showcase_style.css").read_text()
+    _style_env = __import__("os").environ.get("PMEM_ART_V6_STYLE_CSS", "").strip()
+    _style_candidates = [
+        Path(_style_env) if _style_env else None,
+        Path(__file__).resolve().parent.parent / "docs" / "showcase" / "v6_showcase_style.css",
+        Path("/workspace/pmem-art-v8/_latest_desktop/v6_showcase_style.css"),
+    ]
+    style = ""
+    for _c in _style_candidates:
+        if _c and _c.is_file():
+            style = _c.read_text(encoding="utf-8")
+            break
+    if not style:
+        raise FileNotFoundError("v6_showcase_style.css not found; set PMEM_ART_V6_STYLE_CSS")
 
     # Collect bots by slug
     by_slug: dict[str, dict[str, dict]] = defaultdict(dict)
@@ -215,6 +227,8 @@ def main() -> int:
         path = img_dir / fn
         if not path.is_file():
             for alt in (
+                Path(__file__).resolve().parent.parent / "comparison" / "style_refs" / fn,
+                Path(__file__).resolve().parent.parent / "comparison" / "web_refs" / fn,
                 Path("/workspace/pmem-art-v8/comparison/style_refs") / fn,
                 Path("/workspace/pmem-art-v8/comparison/web_refs") / fn,
             ):

@@ -115,9 +115,13 @@ class TestCaseParameterValidation(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             tmp_p = Path(tmp)
             # 3:4 pixels + Case 02 ref (expects 4:3) + sidecar three-hands; output filename must NOT alone select case.
-            src_3x4 = ROOT / "comparison" / "scale_03_portrait_low_r3.jpg"
+            # Generate fixture locally — comparison jpg may be absent after slim/filter-repo.
+            from PIL import Image
+
             bad_case02_img = tmp_p / "scale_02_sketch_recompose_r3.jpg"
-            bad_case02_img.write_bytes(src_3x4.read_bytes())
+            Image.new("RGB", (768, 1024), color=(40, 80, 120)).save(
+                bad_case02_img, format="JPEG", quality=90
+            )
             sidecar = bad_case02_img.with_suffix(bad_case02_img.suffix + ".vlm.json")
             sidecar.write_text(json.dumps({"defects": "The girl has three hands near her knee"}), encoding="utf-8")
 

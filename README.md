@@ -2,6 +2,15 @@
 
 # pmem-art
 
+
+## Install
+
+```bash
+pip install -r requirements.txt
+```
+
+Runtime: `pillow`, `numpy`, `pyyaml`. Tests: `pytest` (see `pytest.ini`, `testpaths=tests`).
+
 **画师的美术记忆系统**（Cursor / Claude Code / Codex）
 
 把「别赛博 / 这版留着」、过稿配方和翻车红线记在这个项目里。下次画同一角色、同一场景，先翻这些记录再出图，画面更稳，少重复犯错。不够分就改，最多 **4 轮**，直到 **≥ 9.50**。

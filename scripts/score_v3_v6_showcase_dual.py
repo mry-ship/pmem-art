@@ -5,8 +5,8 @@ Extracts unique <img alt=… src=data:…> plates from the showcase HTML, scores
 with offline checklist Absolute-5D and independent VLM, then writes JSON/MD.
 
 Usage:
-  cd /Users/yanghu/Desktop/pmem-art
-  export PYTHONPATH="/Users/yanghu/Desktop/pmem-art${PYTHONPATH:+:$PYTHONPATH}"
+  cd /path/to/pmem-art  # or: export PMEM_ART_IMAGES_ROOT=...
+  export PYTHONPATH=".:${PYTHONPATH}"
   # offline only (fast):
   python3 scripts/score_v3_v6_showcase_dual.py --offline-only
   # full dual track (override model if desired):
@@ -28,8 +28,8 @@ SCRIPTS = Path(__file__).resolve().parent
 sys.path.insert(0, str(REPO_ROOT))
 sys.path.insert(0, str(SCRIPTS))
 
-IMAGES_ROOT = Path(os.environ.get("PMEM_ART_IMAGES_ROOT", "/Users/yanghu/Desktop/pmem-art-images"))
-V3_HTML = Path("/Users/yanghu/Desktop/pmem_art_images_v3_16bots_showcase.html")
+IMAGES_ROOT = Path(os.environ.get("PMEM_ART_IMAGES_ROOT", str(REPO_ROOT.parent / "pmem-art-images")))
+V3_HTML = Path(os.environ.get("PMEM_ART_V3_HTML", str(REPO_ROOT.parent / "pmem_art_images_v3_16bots_showcase.html")))
 V6_HTML = IMAGES_ROOT / "pmem_art_images_v6_32bots_showcase.html"
 
 from absolute_5d_scorer import HEURISTIC_STOP_THRESHOLD, absolute_5d  # noqa: E402

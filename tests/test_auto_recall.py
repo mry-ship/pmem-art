@@ -207,6 +207,19 @@ class TestGenerateMergesMemory(unittest.TestCase):
         try:
             data = _project(td)
             sid = "auto_recall_candy"
+            # Route gate requires a recent local advise in the temp project.
+            from skills_kit.route_gate import save_route_advise
+
+            save_route_advise(
+                td,
+                {
+                    "banner": "route ok (test)",
+                    "execute_ok": True,
+                    "mode": "go",
+                    "plan": {"steps": [{"deliverable": "合成梯糖果药瓶"}]},
+                },
+                text="合成梯糖果药瓶",
+            )
             buf = io.StringIO()
             with redirect_stdout(buf):
                 rc_start = cmd_converge(

@@ -70,6 +70,12 @@ comparison/pmem_vs_market_showcase.html
 !docs/showcase/skills-homepage/
 !docs/showcase/skills-homepage/**
 
+# Re-ignore junk even under re-included showcase trees
+docs/showcase/**/.DS_Store
+docs/showcase/**/._*
+docs/showcase/**/__pycache__/
+docs/showcase/**/*.py[cod]
+
 # Local Grok converge artifacts (publish curated docs/showcase/grok_best only)
 generated_v8_20_skill_grok/
 generated_v8_20_skill_grok_*/

@@ -6,7 +6,7 @@ For high/recompose, also accepts optional *_r1.jpg intermediates; if missing, R1
 but engine still enforces min_rounds≥2 (no R1 scorer-only STOP).
 
 Usage:
-  cd /Users/yanghu/Desktop/pmem-art
+  cd /path/to/pmem-art  # or: export PMEM_ART_IMAGES_ROOT=...
   PYTHONPATH=. python3 scripts/run_32bots_v7_live.py
 """
 from __future__ import annotations
@@ -23,7 +23,7 @@ SCRIPTS = Path(__file__).resolve().parent
 sys.path.insert(0, str(REPO_ROOT))
 sys.path.insert(0, str(SCRIPTS))
 
-IMAGES_ROOT = Path(os.environ.get("PMEM_ART_IMAGES_ROOT", "/Users/yanghu/Desktop/pmem-art-images"))
+IMAGES_ROOT = Path(os.environ.get("PMEM_ART_IMAGES_ROOT", str(REPO_ROOT.parent / "pmem-art-images")))
 GEN_DIR = IMAGES_ROOT / "generated_v7"
 BOTS_ROOT = IMAGES_ROOT / "empty_bots_v7"
 REPORT_PATH = IMAGES_ROOT / "empty_bots_v7_32_report.json"

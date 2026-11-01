@@ -23,6 +23,8 @@ class MergeRelationTests(unittest.TestCase):
             Path(__file__).resolve().parents[1]
             / "docs/showcase/skill_full_modes_1027/merge_phase1_canonical.yaml"
         )
+        if not yaml_path.is_file():
+            self.skipTest(f"showcase yaml missing: {yaml_path}")
         data = load_phase1(yaml_path)
         for tid in ("kitchen", "valentine", "stationery"):
             track = data["tracks"][tid]

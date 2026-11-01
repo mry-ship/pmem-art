@@ -62,6 +62,8 @@
 | **`/pmem-atlas`** | 整理散图，刷新 `art-atlas.html` |
 | **`/pmem-coach`** | 进步、短板、知识合成一条。说「进步」或「知识」就看那一份。知识卡要你说收下才写入 |
 
+> **已退役**：`/pmem-lens-propose` 不再作为独立入口；机位/镜头包请写在 `/pmem-draw` 句子里（「先给几套机位」）。UI 九宫格交付仍以 `manifest.json` 为验收清单。
+
 镜头包点选前不生图。有参考但没说新题材时，不会走进克隆。
 
 进步曲线 CLI：`python3 pmem_art.py progress`（也可用 `/pmem-coach`，说「进步」）。

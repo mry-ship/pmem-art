@@ -4,8 +4,8 @@
 Uses .memory-art/vlm_judge.local.yaml (gitignored). Does NOT call GenerateImage.
 
 Usage:
-  cd /Users/yanghu/Desktop/pmem-art
-  export PYTHONPATH="/Users/yanghu/Desktop/pmem-art${PYTHONPATH:+:$PYTHONPATH}"
+  cd /path/to/pmem-art  # or: export PMEM_ART_IMAGES_ROOT=...
+  export PYTHONPATH=".:${PYTHONPATH}"
   python3 scripts/score_v7_showcase_vlm.py
 """
 from __future__ import annotations
@@ -21,7 +21,7 @@ SCRIPTS = Path(__file__).resolve().parent
 sys.path.insert(0, str(REPO_ROOT))
 sys.path.insert(0, str(SCRIPTS))
 
-IMAGES_ROOT = Path(__import__("os").environ.get("PMEM_ART_IMAGES_ROOT", "/Users/yanghu/Desktop/pmem-art-images"))
+IMAGES_ROOT = Path(__import__("os").environ.get("PMEM_ART_IMAGES_ROOT", str(REPO_ROOT.parent / "pmem-art-images")))
 HTML_PATH = IMAGES_ROOT / "pmem_art_images_v7_32bots_showcase.html"
 OUT_JSON = IMAGES_ROOT / "v7_showcase_vlm_scores.json"
 OUT_MD = IMAGES_ROOT / "v7_showcase_vlm_scores.md"

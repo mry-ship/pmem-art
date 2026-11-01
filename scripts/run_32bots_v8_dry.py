@@ -10,8 +10,8 @@ V8 32-bot dry-run (NO image generation).
 - Lock-phrase preflight on bot_tasks_v8 + best overlays
 
 Usage:
-  cd /Users/yanghu/Desktop/pmem-art
-  export PYTHONPATH="/Users/yanghu/Desktop/pmem-art${PYTHONPATH:+:$PYTHONPATH}"
+  cd /path/to/pmem-art  # or: export PMEM_ART_IMAGES_ROOT=...
+  export PYTHONPATH=".:${PYTHONPATH}"
   python3 scripts/run_32bots_v8_dry.py
 """
 from __future__ import annotations

@@ -1,0 +1,132 @@
+# Fixture modules for tests/test_p2_session_and_aspect.py (aspect / multi-res / glob contracts).
+schema_version: 1
+categories:
+  character:
+    label: character
+    icon: 📦
+  scene:
+    label: scene
+    icon: 📦
+  vfx:
+    label: vfx
+    icon: 📦
+modules:
+  character.PastelGirl:
+    title: 角色与立绘·PastelGirl
+    category: character
+    status: active
+    paths:
+      - "assets/character/pastelgirl/**"
+    specs:
+      resolution: 1152x864
+      allowed_resolutions:
+        - 1152x864
+        - 720x580
+      aspect_ratio: "4:3"
+      alpha_required: false
+      safe_margin_px: 16
+      max_size_kb: 1024
+  character.SunlitGirl:
+    title: 角色与立绘·SunlitGirl
+    category: character
+    status: active
+    paths:
+      - "assets/character/sunlitgirl/**"
+    specs:
+      resolution: 864x1152
+      allowed_resolutions:
+        - 864x1152
+        - 547x720
+        - 1024x1024
+      aspect_ratio: "3:4"
+      alpha_required: false
+      safe_margin_px: 16
+      max_size_kb: 1024
+  scene.CelestialCity:
+    title: 场景与原画·CelestialCity
+    category: scene
+    status: active
+    paths:
+      - "assets/scene/celestialcity/**"
+    specs:
+      resolution: 720x1280
+      allowed_resolutions:
+        - 720x1280
+        - 405x720
+      aspect_ratio: "9:16"
+      alpha_required: false
+      max_size_kb: 2048
+  scene.FloatingRuins:
+    title: 第一幕场景·浮空星盘遗迹
+    category: scene
+    status: active
+    paths:
+      - "assets/scene/floating_ruins*"
+      - "assets/scene/floating_*"
+    specs:
+      resolution: 1024x576
+      allowed_resolutions:
+        - 1024x576
+        - 1920x1080
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  vfx.ArcaneSlash:
+    title: 特效·星盘斩
+    category: vfx
+    status: active
+    paths:
+      - "assets/vfx/arcane_*"
+      - "assets/vfx/astrolabe_*"
+    specs:
+      resolution: 1024x512
+      allowed_resolutions:
+        - 1024x512
+      aspect_ratio: "2:1"
+      alpha_required: true
+      max_size_kb: 1024
+  vfx.Nova:
+    title: 特效·Nova
+    category: vfx
+    status: active
+    paths:
+      - "assets/vfx/nova/**"
+    specs:
+      resolution: 1024x256
+      allowed_resolutions:
+        - 1024x256
+      aspect_ratio: "4:1"
+      alpha_required: true
+      max_size_kb: 1024
+  character.Astra:
+    title: 角色与立绘·Astra
+    category: character
+    status: active
+    paths:
+      - "assets/character/astra_standing*.png"
+      - "assets/character/astra_rejected*.png"
+      - "assets/character/astra_turnaround*.png"
+    specs:
+      resolution: 1024x1024
+      allowed_resolutions:
+        - 1024x1024
+        - 2048x1024
+      aspect_ratio: "1:1"
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  character.Astra.Expressions:
+    title: 阿斯特拉·剧情表情差分组
+    category: character
+    status: active
+    parent: character.Astra
+    inherits: character.Astra
+    paths:
+      - "assets/character/astra_expr*.png"
+    specs:
+      resolution: 1024x1024
+      allowed_resolutions:
+        - 1024x1024
+      aspect_ratio: "1:1"
+      alpha_required: true
+      max_size_kb: 1024

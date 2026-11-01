@@ -14,8 +14,8 @@ Product converge (pmem_art converge judge) stays ≥9.50 via VLM or Agent Absolu
 this script's 8.50 is NOT the skill/converge accept gate.
 
 Usage:
-  cd /Users/yanghu/Desktop/pmem-art
-  export PYTHONPATH="/Users/yanghu/Desktop/pmem-art${PYTHONPATH:+:$PYTHONPATH}"
+  cd /path/to/pmem-art  # or: export PMEM_ART_IMAGES_ROOT=...
+  export PYTHONPATH=".:${PYTHONPATH}"
   python3 scripts/run_32bots_v8_live.py --score-only --write-html
   python3 scripts/run_32bots_v8_live.py --converge --limit 2
 """
@@ -34,7 +34,7 @@ SCRIPTS = Path(__file__).resolve().parent
 sys.path.insert(0, str(REPO_ROOT))
 sys.path.insert(0, str(SCRIPTS))
 
-IMAGES_ROOT = Path(os.environ.get("PMEM_ART_IMAGES_ROOT", "/Users/yanghu/Desktop/pmem-art-images"))
+IMAGES_ROOT = Path(os.environ.get("PMEM_ART_IMAGES_ROOT", str(REPO_ROOT.parent / "pmem-art-images")))
 GEN_V8 = IMAGES_ROOT / "generated_v8"
 GEN_V7 = IMAGES_ROOT / "generated_v7"
 BOTS_ROOT = IMAGES_ROOT / "empty_bots_v8"

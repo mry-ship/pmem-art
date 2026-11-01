@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""P2 regressions: no silent generate auto-start; Pastel/Celestial aspect contracts."""
+"""P2 regressions: no silent generate auto-start; Pastel/Celestial aspect contracts.
+
+Uses tests/fixtures/p2_aspect/memory/ so contracts do not depend on the live
+.memory-art demo library (which drifts as the user works).
+"""
 from __future__ import annotations
 
 import io
@@ -12,10 +16,27 @@ from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-DEMO_MODULES = ROOT / ".memory-art" / "projects" / "pmem-art" / "modules.yaml"
+FIXTURE_MEM = ROOT / "tests" / "fixtures" / "p2_aspect" / "memory"
+DEMO_MODULES = FIXTURE_MEM / "modules.yaml"
 sys.path.insert(0, str(ROOT))
 
 from skills_kit.converge import _session_file, cmd_converge
+
+
+def _rgba(path: Path, size: tuple[int, int], color=(10, 20, 30, 255)) -> Path:
+    from PIL import Image
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    Image.new("RGBA", size, color=color).save(path)
+    return path
+
+
+def _rgb(path: Path, size: tuple[int, int], color=(200, 100, 50)) -> Path:
+    from PIL import Image
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    Image.new("RGB", size, color=color).save(path)
+    return path
 
 
 class TestNoSilentAutoStart(unittest.TestCase):
@@ -76,23 +97,12 @@ class TestRejectedDraftNotStale(unittest.TestCase):
     def test_astra_expr_correction_not_stale(self) -> None:
         import pmem_art as pa
 
-        demo = ROOT / ".memory-art" / "projects" / "pmem-art"
         td = Path(tempfile.mkdtemp(prefix="pmem_astra_"))
         try:
             mem = td / ".memory-art"
-            mem.mkdir()
-            shutil.copy2(demo / "modules.yaml", mem / "modules.yaml")
-            src_entry = demo / "entries" / "character.Astra.Expressions" / "01ART006EXPRCORRECTION.md"
-            dst_entry = mem / "entries" / "character.Astra.Expressions" / src_entry.name
-            dst_entry.parent.mkdir(parents=True)
-            shutil.copy2(src_entry, dst_entry)
-            for rel in (
-                "assets/character/astra_expressions_2x2.png",
-                "assets/character/astra_expr_shock_draft.png",
-            ):
-                dst = td / rel
-                dst.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copy2(ROOT / rel, dst)
+            shutil.copytree(FIXTURE_MEM, mem)
+            _rgba(td / "assets/character/astra_expressions_2x2.png", (1024, 1024))
+            _rgb(td / "assets/character/astra_expr_shock_draft.png", (768, 768))
             data = pa.load_project(td)
         finally:
             shutil.rmtree(td, ignore_errors=True)
@@ -107,16 +117,28 @@ class TestRejectedDraftNotStale(unittest.TestCase):
         """Whitelist 2048x1024 must bypass single aspect_ratio=1:1 contract."""
         import pmem_art as pa
 
-        data = pa.load_project(ROOT)
-        sheet = data["assets"].get("assets/character/astra_turnaround_sheet.png") or {}
-        self.assertEqual(sheet.get("resolution"), "2048x1024")
-        self.assertTrue(sheet.get("qa_passed"), sheet.get("qa_issues"))
-        self.assertEqual(sheet.get("qa_issues") or [], [])
+        td = Path(tempfile.mkdtemp(prefix="pmem_astra_turn_"))
+        try:
+            mem = td / ".memory-art"
+            mem.mkdir()
+            shutil.copy2(DEMO_MODULES, mem / "modules.yaml")
+            shutil.copy2(FIXTURE_MEM / "config.yaml", mem / "config.yaml")
+            _rgba(td / "assets/character/astra_turnaround_sheet.png", (2048, 1024))
+            data = pa.load_project(td)
+            sheet = data["assets"].get("assets/character/astra_turnaround_sheet.png") or {}
+            self.assertEqual(sheet.get("resolution"), "2048x1024")
+            self.assertTrue(sheet.get("qa_passed"), sheet.get("qa_issues"))
+            self.assertEqual(sheet.get("qa_issues") or [], [])
+        finally:
+            shutil.rmtree(td, ignore_errors=True)
 
 
 class TestSpecsScaffoldPresent(unittest.TestCase):
     def test_case_modules_have_specs_dirs(self) -> None:
-        specs = ROOT / ".memory-art" / "specs"
+        # Prefer fixture specs (stable); fall back to live project specs if present.
+        specs = FIXTURE_MEM / "specs"
+        if not specs.is_dir():
+            specs = ROOT / ".memory-art" / "specs"
         for mid in (
             "character.PastelGirl",
             "character.SunlitGirl",
@@ -128,20 +150,24 @@ class TestSpecsScaffoldPresent(unittest.TestCase):
             self.assertTrue((d / "管线规格.md").is_file(), mid)
 
     def test_doctor_reports_zero_missing_specs_for_case_modules(self) -> None:
-        import io
-        from contextlib import redirect_stdout
         import pmem_art as pa
         from lifecycle import cmd_doctor_lifecycle
 
-        data = pa.load_project(ROOT)
-        buf = io.StringIO()
-        with redirect_stdout(buf):
-            rc = cmd_doctor_lifecycle(ROOT, data)
-        self.assertEqual(rc, 0)
-        out = buf.getvalue()
-        self.assertIn("entries_missing_specs=0", out)
-        for mid in ("character.PastelGirl", "character.SunlitGirl", "scene.CelestialCity", "vfx.Nova"):
-            self.assertNotIn(f"⚠️ {mid}", out)
+        # Self-contained temp project from fixture so doctor does not depend on live drift.
+        td = Path(tempfile.mkdtemp(prefix="pmem_specs_doc_"))
+        try:
+            shutil.copytree(FIXTURE_MEM, td / ".memory-art")
+            data = pa.load_project(td)
+            buf = io.StringIO()
+            with redirect_stdout(buf):
+                rc = cmd_doctor_lifecycle(td, data)
+            self.assertEqual(rc, 0)
+            out = buf.getvalue()
+            self.assertIn("entries_missing_specs=0", out)
+            for mid in ("character.PastelGirl", "character.SunlitGirl", "scene.CelestialCity", "vfx.Nova"):
+                self.assertNotIn(f"⚠️ {mid}", out)
+        finally:
+            shutil.rmtree(td, ignore_errors=True)
 
 
 class TestCopyIsolationMissingOldRoot(unittest.TestCase):

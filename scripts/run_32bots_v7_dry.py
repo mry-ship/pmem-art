@@ -9,7 +9,7 @@ V7 32-bot dry-run runner (NO image generation).
 - Uses v7_image_scorer (no struct→9.50 floor)
 
 Usage:
-  cd /Users/yanghu/Desktop/pmem-art
+  cd /path/to/pmem-art  # or: export PMEM_ART_IMAGES_ROOT=...
   PYTHONPATH=. python3 scripts/run_32bots_v7_dry.py
 """
 from __future__ import annotations

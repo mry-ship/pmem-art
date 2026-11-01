@@ -404,16 +404,18 @@ def _resolve_pad_auto(
     if _style_jump_requested(scale, goal, style_jump):
         return "", carry_fix, 0, False, "style_jump：不垫风格参考，也不链成图"
     if (scale or "").strip().lower() in {"high", "recompose"}:
+        # Camera-changed evidence: strengths/defects only (same gate as judge).
+        # Prompt / next_fix 「重构机位」 is an instruction, not proof.
         best_img, best_fix, best_round, best_score = "", carry_fix, 0, -1.0
         for row in rounds:
             if not isinstance(row, dict):
                 continue
             if int(row.get("round") or 0) >= int(round_num):
                 continue
-            blob = " ".join(str(row.get(k) or "") for k in ("defects", "next_fix", "prompt"))
-            if any(n in blob for n in ("不改机位", "没改机位", "不要改机位", "别改机位")):
-                continue
-            if not any(k in blob for k in ("换机位", "改了机位", "重构机位", "机位已换")):
+            evidence_blob = " ".join(
+                str(row.get(k) or "") for k in ("strengths", "defects")
+            )
+            if not _recompose_change_evidence(evidence_blob):
                 continue
             image = str(row.get("image") or "").strip()
             if not image or not Path(image).is_file():

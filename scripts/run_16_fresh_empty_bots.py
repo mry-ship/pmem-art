@@ -7,6 +7,10 @@ Ensures 100% cold start per bot:
 - 0 old converge logs
 - 0 old prompt history
 Runs all 16 bots in parallel (4 fresh vertical references x 4 scales: low, medium, high, recompose).
+
+
+历史 `run_16_pmem_art_images_v2_bots.py` 已收敛到本脚本 / v8 runners。
+V2 提示原文可作参考；默认路径请用 PMEM_ART_IMAGES_ROOT（repo 旁 pmem-art-images）。
 """
 import concurrent.futures
 import hashlib
