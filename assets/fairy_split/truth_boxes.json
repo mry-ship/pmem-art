@@ -1,0 +1,131 @@
+{
+  "canvas": {
+    "w": 409,
+    "h": 1024,
+    "aspect": 0.399414
+  },
+  "layers": [
+    {
+      "id": "bg",
+      "name": "10 背景",
+      "z": 1,
+      "file": "10-背景.png",
+      "left": 0.0,
+      "top": 0.0,
+      "width": 1.0,
+      "height": 1.0,
+      "grounded": false,
+      "mode": "full"
+    },
+    {
+      "id": "flower_house",
+      "name": "1 铃兰花屋",
+      "z": 2,
+      "file": "1-铃兰花屋.png",
+      "left": 0.0978,
+      "top": 0.1982,
+      "width": 0.4988,
+      "height": 0.3799
+    },
+    {
+      "id": "treehouse",
+      "name": "2 树屋",
+      "z": 3,
+      "file": "2-树屋.png",
+      "left": 0.4988,
+      "top": 0.1387,
+      "width": 0.4792,
+      "height": 0.3994
+    },
+    {
+      "id": "mushrooms",
+      "name": "3 左蘑菇簇",
+      "z": 4,
+      "file": "3-左蘑菇簇.png",
+      "left": 0.0,
+      "top": 0.4297,
+      "width": 0.2372,
+      "height": 0.1602,
+      "grounded": true
+    },
+    {
+      "id": "pond_boat",
+      "name": "4 池与香蕉船",
+      "z": 5,
+      "file": "4-池与香蕉船.png",
+      "left": 0.0367,
+      "top": 0.5293,
+      "width": 0.3985,
+      "height": 0.1504,
+      "grounded": true
+    },
+    {
+      "id": "mole",
+      "name": "6 鼹鼠送礼",
+      "z": 6,
+      "file": "6-鼹鼠送礼.png",
+      "left": 0.6186,
+      "top": 0.5,
+      "width": 0.3594,
+      "height": 0.1689,
+      "grounded": true
+    },
+    {
+      "id": "flying_fairy",
+      "name": "7 飞天仙女",
+      "z": 7,
+      "file": "7-飞天仙女.png",
+      "left": 0.357,
+      "top": 0.4395,
+      "width": 0.2983,
+      "height": 0.1602,
+      "grounded": false
+    },
+    {
+      "id": "food_mushroom",
+      "name": "5 芝士蘑菇桌",
+      "z": 8,
+      "file": "5-芝士蘑菇桌.png",
+      "left": 0.5575,
+      "top": 0.6387,
+      "width": 0.4205,
+      "height": 0.2197,
+      "grounded": true
+    },
+    {
+      "id": "violinist",
+      "name": "8 琴仙树桩",
+      "z": 9,
+      "file": "8-琴仙树桩.png",
+      "left": 0.2372,
+      "top": 0.5781,
+      "width": 0.3985,
+      "height": 0.3018,
+      "grounded": true
+    },
+    {
+      "id": "flower_lamp",
+      "name": "9 前景花灯",
+      "z": 10,
+      "file": "9-前景花灯.png",
+      "left": 0.0,
+      "top": 0.6592,
+      "width": 0.2983,
+      "height": 0.2803,
+      "grounded": true
+    },
+    {
+      "id": "fg_leaves",
+      "name": "11 底前景叶丛",
+      "z": 11,
+      "file": "11-底前景叶丛.png",
+      "left": 0.0,
+      "top": 0.7793,
+      "width": 1.0,
+      "height": 0.2207,
+      "grounded": false,
+      "fill": "width"
+    }
+  ],
+  "ref": "ref_full.jpg"
+}

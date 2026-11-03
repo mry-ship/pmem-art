@@ -1,0 +1,118 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-11-03 17:00:36 UTC+8",
+  "session_id": "latest",
+  "goal": "多图分工单交付：机位/场景锁图3花园竖构图（花屋香蕉船鼹鼠池塘蘑菇桌）；身份锁图2粉裙金发尖耳绿瞳珍珠项链果篮蓝翼仙子；把图2仙子放进图3场景同一机位，勿用图2半身特写机位；粘土三渲二",
+  "module": "character.FairyPink",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 4,
+  "winner_score": 9.33,
+  "winner_image": "assets/skill_battery_20261103/draw_multi/r4.png",
+  "winner_passed": false,
+  "outcome": "⚠️ **共执行 4 轮审图（目标阈值 `9.50` 分），未达标，已挑选全阶段最高分**（胜出：第 4 轮 `9.33 / 10.0` 分）",
+  "what_fixed": [
+    "严格按图3恢复紫花屋顶花屋+黄梯树屋远中景；粉裙仙子缩小站石径；保持图2身份锚点",
+    "香蕉船改回简洁黄帆；粉仙子五官更贴近图2绿瞳尖耳比例；小提琴男仙略缩小",
+    "粉仙子五官再贴图2；男仙再缩小半档",
+    "解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁止糊边融边；五官贴图2仍可更准；男仙体量仍略大"
+  ],
+  "what_still_weak": "五官贴图2仍可更准；男仙体量仍略大",
+  "strengths": "画幅对齐图3横构图；紫花屋顶黄梯香蕉黄帆鼹鼠菇桌齐；粉仙子持篮在径；分工可读",
+  "taste_deltas": {
+    "from_strengths": [
+      "画幅对齐图3横构图；紫花屋顶黄梯香蕉黄帆鼹鼠菇桌齐；粉仙子持篮在径；分工可读"
+    ],
+    "from_defects": [
+      "香蕉船帆旗被改成粉旗花纹不像图3黄帆；粉仙子脸部略偏圆幼于图2；小提琴男仙占比略大抢一点中心",
+      "并排对照图2：五官仍可能略幼圆；男仙体量仍略抢",
+      "五官贴图2仍可更准；男仙体量仍略大"
+    ]
+  },
+  "warm_start_confidence": 0.45,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 8.75,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 9.16,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 9.3,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 9.33,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：结构锁失败：花屋紫花屋顶与黄梯树屋被改成粉顶小屋；小提琴男仙虽可保留但花屋英雄建筑走样；机位仍偏近景人物堆叠不像图3全景层次",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "8.75"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：粉裙仙子身份与果篮翅膀基本对上图2；香蕉船池塘鼹鼠菇桌仍在；非黑底半身特写",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.75"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：香蕉船帆旗被改成粉旗花纹不像图3黄帆；粉仙子脸部略偏圆幼于图2；小提琴男仙占比略大抢一点中心",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "9.16"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：紫花屋顶花屋+黄梯树屋已回；粉裙仙子在石径持篮对上图2身份；图3场景件基本齐",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.16"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：并排对照图2：五官仍可能略幼圆；男仙体量仍略抢",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "9.3"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：紫花屋顶与黄梯仍在；粉仙子身份可读；场景件齐；黄帆若已回则结构更好",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.3"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：五官贴图2仍可更准；男仙体量仍略大",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "9.33"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：五官贴图2仍可更准；男仙体量仍略大",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.33"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：五官贴图2仍可更准；男仙体量仍略大",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "9.33"
+    }
+  ]
+}

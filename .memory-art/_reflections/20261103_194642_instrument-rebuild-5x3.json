@@ -1,0 +1,94 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-11-03 19:46:42 UTC+8",
+  "session_id": "instrument-rebuild-5x3",
+  "goal": "乐器 species_change 5x3 overview_sheet；垫船格参考锁白卡深底；格内换乐器不抄船；L1三角铁→L15三角钢琴；禁止任一格出现船",
+  "module": "prop.InstrumentMerge",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.5,
+  "max_rounds": 3,
+  "rounds_used": 3,
+  "winner_round": 2,
+  "winner_score": 9.42,
+  "winner_image": "assets/prop/instrumentmerge/overview_5x3_rebuild_r2.png",
+  "winner_passed": false,
+  "outcome": "⚠️ **共执行 3 轮审图（目标阈值 `9.50` 分），未达标，已挑选全阶段最高分**（胜出：第 2 轮 `9.42 / 10.0` 分）",
+  "what_fixed": [
+    "重出整表：加粗L8长笛管径与键钮，L9-L15主体再占格略大一圈，保持白卡深底与禁船",
+    "若未过线：再加粗L8管径与键钮一档，其余格保持本张",
+    "满3轮；终稿取第2轮；若再开会话须把L8锁回粗管横长笛"
+  ],
+  "what_still_weak": "L8银长笛仍偏细长、键钮偏小，相对同排军鼓与小号的玩具厚实体量略弱；prompt 改动 46% 超过档位上限 40%",
+  "strengths": "全表无船且L14金竖琴L15蓝钢琴正确；5x3白卡深底玩具塑胶质感统一",
+  "taste_deltas": {
+    "from_strengths": [
+      "全表无船且L14金竖琴L15蓝钢琴正确；5x3白卡深底玩具塑胶质感统一"
+    ],
+    "from_defects": [
+      "L8银长笛过细过扁，缩略图体量弱于邻格军鼓/小号，玩具厚实感不够；中后档体量递增不够一眼",
+      "L8银长笛仍偏细长、键钮偏小，相对同排军鼓与小号的玩具厚实体量略弱；prompt 改动 46% 超过档位上限 40%",
+      "L8格子变成五管银排箫竖筒，不是横吹长笛，本档物种错位"
+    ]
+  },
+  "warm_start_confidence": 1.0,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 9.32,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 9.42,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 8.87,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：L8银长笛过细过扁，缩略图体量弱于邻格军鼓/小号，玩具厚实感不够；中后档体量递增不够一眼",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.32"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：5x3白卡深底与参考版式对齐；L14金竖琴L15蓝钢琴正确且全表无船",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.32"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：L8银长笛仍偏细长、键钮偏小，相对同排军鼓与小号的玩具厚实体量略弱；prompt 改动 46% 超过档位上限 40%",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.42"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：全表无船且L14金竖琴L15蓝钢琴正确；5x3白卡深底玩具塑胶质感统一",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.42"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：L8格子变成五管银排箫竖筒，不是横吹长笛，本档物种错位",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.87"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：其余14格乐器身份仍可读；白卡深底版式未散",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.87"
+    }
+  ]
+}

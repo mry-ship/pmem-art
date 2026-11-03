@@ -1,0 +1,118 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-11-03 18:04:20 UTC+8",
+  "session_id": "instrument-5x3-cursor",
+  "goal": "一组乐器5x3整表 Cursor版：垫船图参考锁白卡深底不抄船；overview最多重出；美术收敛≤4轮≥9.5",
+  "module": "prop.InstrumentMerge",
+  "converge_mode": "quality",
+  "guided_mode": "text_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 4,
+  "winner_score": 9.48,
+  "winner_image": "assets/prop/instrumentmerge/overview_5x3_cursor_r4.jpg",
+  "winner_passed": false,
+  "outcome": "⚠️ **共执行 4 轮审图（目标阈值 `9.50` 分），未达标，已挑选全阶段最高分**（胜出：第 4 轮 `9.48 / 10.0` 分）",
+  "what_fixed": [
+    "垫船图重出:加强每格软塑胶圆润体积与统一棚光;L1到L15占卡略递增末档最大;格内居中留边一致;仍只换乐器不抄船",
+    "垫船图再出:末三格体量明显最大;全格居中留边对齐;高光收成短软接触光勿油亮",
+    "垫船图重出:L14必须金三角竖琴;全表禁止任何船/游艇;其余14件乐器保持链序",
+    "质感：锐化轮廓与材质分界，抑制融化边缘，勿用噪点冒充细节；竖笛占卡仍略瘦于邻格;体量阶差比image2.5版略弱"
+  ],
+  "what_still_weak": "竖笛占卡仍略瘦于邻格;体量阶差比image2.5版略弱",
+  "strengths": "L14竖琴归位全表无船;5x3白卡深底与乐器链完整",
+  "taste_deltas": {
+    "from_strengths": [
+      "L14竖琴归位全表无船;5x3白卡深底与乐器链完整"
+    ],
+    "from_defects": [
+      "L15钢琴相对L11低音提琴占卡提升仍偏弱;竖笛/口琴格留边仍略跳;部分高光偏亮接近油光",
+      "第3行第4格(L14)是米色游艇不是竖琴;题材串船硬伤",
+      "竖笛占卡仍略瘦于邻格;体量阶差比image2.5版略弱"
+    ]
+  },
+  "warm_start_confidence": 0.9,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 8.8,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 9.13,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 7.52,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 9.48,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：软塑胶厚实感弱于参考偏2D描边;末档钢琴与前档体量阶差不够一眼;部分格(口琴/竖笛)占卡偏小挤边不齐",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "8.8"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：5x3白卡深底在;15格乐器无船;物种链可读",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.8"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：L15钢琴相对L11低音提琴占卡提升仍偏弱;竖笛/口琴格留边仍略跳;部分高光偏亮接近油光",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.13"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：塑胶质感比R1厚;5x3乐器链仍完整无船",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.13"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：第3行第4格(L14)是米色游艇不是竖琴;题材串船硬伤",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "7.52"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：白卡深底与多数乐器格仍在",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "7.52"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：竖笛占卡仍略瘦于邻格;体量阶差比image2.5版略弱",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "9.48"
+    },
+    {
+      "category": "material",
+      "lesson": "本轮短板偏「material」：竖笛占卡仍略瘦于邻格;体量阶差比image2.5版略弱",
+      "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+      "from_score": "9.48"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：L14竖琴归位全表无船;5x3白卡深底与乐器链完整",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.48"
+    }
+  ]
+}

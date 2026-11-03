@@ -245,6 +245,35 @@ class RouteAdviseTests(unittest.TestCase):
             self.assertTrue(ok2)
             self.assertIn("默认路径", msg)
 
+    def test_style_lock_only_when_future_palette(self) -> None:
+        plan = plan_route("往后出图都用这张的色板", images=["ref/style.png"])
+        self.assertEqual(plan.route_ids, ["style.lock"])
+        self.assertEqual(plan.reason, "style")
+
+    def test_style_then_clone_verify_image(self) -> None:
+        for text in (
+            "锁风格再出一张验证图证明色板",
+            "先锁风格为了出图验证",
+            "/pmem-style-lock 锁完出图验证",
+        ):
+            plan = plan_route(text, images=["ref/style.png"])
+            self.assertEqual(plan.route_ids, ["style.lock", "draw.clone"], text)
+            self.assertEqual(plan.reason, "style_then_clone", text)
+            self.assertTrue(plan.serial, text)
+            self.assertIn("锁风格→克隆验证", plan.announce)
+        brief = build_canonical_brief(
+            "锁风格再出一张验证图", images=["ref/style.png"]
+        )
+        self.assertEqual(brief["guess_route_id"], "style.then_clone")
+        payload = advise_route(
+            "锁风格再出一张验证图证明色板",
+            images=["ref/style.png"],
+            canonical="先锁风格再出一张验证图；走锁风格后克隆验证",
+        )
+        self.assertEqual(payload["route_ids"], ["style.lock", "draw.clone"])
+        self.assertFalse(payload["plan_conflict"])
+        self.assertTrue(payload["execute_ok"])
+
 
 if __name__ == "__main__":
     unittest.main()

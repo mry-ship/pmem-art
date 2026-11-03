@@ -1,0 +1,118 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-11-02 19:57:33 UTC+8",
+  "session_id": "xmas-appicon-v3",
+  "goal": "1024x1024 Christmas-themed App Icon: same mother+baby cold distress silhouette as ref, Christmas red-green festive worn clothes, Santa-trim baby blanket, broken blizzard window left, warm interior bounce right, full-bleed square, center 72-80% safe zone, no text, no pre-rounded corners, mobile game icon punch",
+  "module": "icon.AppIcon",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 4,
+  "winner_score": 8.99,
+  "winner_image": "assets/icon/christmas/xmas_v3_r4.png",
+  "winner_passed": false,
+  "outcome": "⚠️ **共执行 4 轮审图（目标阈值 `9.50` 分），未达标，已挑选全阶段最高分**（胜出：第 4 轮 `8.99 / 10.0` 分）",
+  "what_fixed": [
+    "毛衣改为破旧纯红+绿袖口无细纹；强化右侧壁炉暖漫射对左暴雪冷蓝的硬切；碎玻璃边缘加锐利冰晶高光条；暴雪体积感加厚；导出严格1024满幅直角",
+    "严格1024满幅；右侧暖光写成画外壁炉漫射扫到肩臂与脸右半；玻璃碎刃加更锐的冰晶高光；鼻口附近加薄呵气雾；泪珠高光略加强",
+    "略收主体占比把主符号压进中心75%安全区；玻璃碎刃加更细更亮的冰晶高光线；右肩暖高光压半档；保持呵气与冷暖切",
+    "满4轮结束，取最高分定稿"
+  ],
+  "what_still_weak": "窗框垂挂冰柱略抢碎玻璃主叙事；人物仍偏满四角呼吸偏紧；毛衣针织微纹在29px可能仍噪声",
+  "strengths": "相对冷屋原图保留母婴同框并完成圣诞换装；左右冷暖硬切仍在；窗框冰霜与碎玻璃可读",
+  "taste_deltas": {
+    "from_strengths": [
+      "相对冷屋原图保留母婴同框并完成圣诞换装；左右冷暖硬切仍在；窗框冰霜与碎玻璃可读"
+    ],
+    "from_defects": [
+      "成图仍是1254未落到1024；右侧暖光来源偏抽象，壁炉感不够明确；碎玻璃冰晶高光条仍偏软；脸周呵气白雾几乎看不见",
+      "碎玻璃刃口冰晶高光仍偏散不够锐；人物占幅偏满，四角呼吸负空间略紧；右侧暖高光在肩臂上略冲",
+      "窗框垂挂冰柱略抢碎玻璃主叙事；人物仍偏满四角呼吸偏紧；毛衣针织微纹在29px可能仍噪声"
+    ]
+  },
+  "warm_start_confidence": 0.85,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 8.23,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 8.63,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 8.98,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 8.99,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：毛衣细密雪花费尔岛纹在小尺寸会糊成噪声；右侧暖漫射偏弱，整体仍偏冷平光，左右冷暖硬切不够；碎玻璃冰晶高光与暴雪体积感一般；成图像素1254未落到1024母版",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.23"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：毛衣细密雪花费尔岛纹在小尺寸会糊成噪声；右侧暖漫射偏弱，整体仍偏冷平光，左右冷暖硬切不够；碎玻璃冰晶高光与暴雪体积感一般；成图像素1254未落到1024母版",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "8.23"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：同机位母婴身份锁定清楚；圣诞红绿破衣与婴儿圣诞帽一眼可读；左破窗暴雪与蓝帘成立",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.23"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：成图仍是1254未落到1024；右侧暖光来源偏抽象，壁炉感不够明确；碎玻璃冰晶高光条仍偏软；脸周呵气白雾几乎看不见",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.63"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：相对冷屋原图多出右侧暖金漫射，与左窗暴雪冷蓝形成硬切；毛衣已是纯红破衣+绿袖口，细纹噪声去掉；圣诞帽与拼补红毯身份更干净",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.63"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：碎玻璃刃口冰晶高光仍偏散不够锐；人物占幅偏满，四角呼吸负空间略紧；右侧暖高光在肩臂上略冲",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.98"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：相对冷屋原图已有清晰左右冷暖硬切：左暴雪冷蓝、右砖墙壁炉暖漫射扫到肩臂发丝；呵气白雾与发抖线可见；已是严格1024满幅直角",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.98"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：窗框垂挂冰柱略抢碎玻璃主叙事；人物仍偏满四角呼吸偏紧；毛衣针织微纹在29px可能仍噪声",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "8.99"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：相对冷屋原图保留母婴同框并完成圣诞换装；左右冷暖硬切仍在；窗框冰霜与碎玻璃可读",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.99"
+    }
+  ]
+}

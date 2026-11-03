@@ -23,6 +23,12 @@ class LadderRow:
     scale_delta: str
     scale_pct: float
     parts_add: str
+    evolve_to: str = ""
+    merge_why: str = ""
+
+
+# 6/8：经典合成梯；9/12/15：整表参考常见 3×3 / 4×3 / 5×3
+_ALLOWED_LEVELS = {6, 8, 9, 12, 15}
 
 
 def load_phase1(path: Path) -> dict[str, Any]:
@@ -32,10 +38,18 @@ def load_phase1(path: Path) -> dict[str, Any]:
     return data
 
 
+def _track_levels(track: dict[str, Any], rows_raw: list[Any]) -> int:
+    n = int(track.get("levels") or len(rows_raw) or 8)
+    if n not in _ALLOWED_LEVELS:
+        raise ValueError(f"levels 仅支持 {sorted(_ALLOWED_LEVELS)}，当前 {n}")
+    return n
+
+
 def parse_rows(track: dict[str, Any]) -> list[LadderRow]:
     rows_raw = track.get("rows") or []
-    if len(rows_raw) != 8:
-        raise ValueError(f"必须正好 8 行，当前 {len(rows_raw)}")
+    n = _track_levels(track, rows_raw)
+    if len(rows_raw) != n:
+        raise ValueError(f"必须正好 {n} 行（levels={n}），当前 {len(rows_raw)}")
     out: list[LadderRow] = []
     for r in rows_raw:
         out.append(
@@ -46,11 +60,13 @@ def parse_rows(track: dict[str, Any]) -> list[LadderRow]:
                 scale_delta=str(r.get("scale_delta", "")).strip(),
                 scale_pct=float(r["scale_pct"]),
                 parts_add=str(r.get("parts_add", "")).strip(),
+                evolve_to=str(r.get("evolve_to", "")).strip(),
+                merge_why=str(r.get("merge_why", "")).strip(),
             )
         )
     out.sort(key=lambda x: x.level)
-    if [x.level for x in out] != list(range(1, 9)):
-        raise ValueError("level 必须为 1..8 连续")
+    if [x.level for x in out] != list(range(1, n + 1)):
+        raise ValueError(f"level 必须为 1..{n} 连续")
     return out
 
 
@@ -114,13 +130,18 @@ def judge_relation_rows(
     """按 art-merge 六条做可机读检查（文字定稿门禁）。"""
     track = track or {}
     issues: list[str] = []
-    # 件数 / 八行已在 parse 保证。合成是否说得通仍由讨论稿判定，这里只拦住空零件和只加光效。
+    n = len(rows)
+    chain_mode = str(track.get("chain_mode") or "").strip()
+    if chain_mode and chain_mode not in {"same_object", "shop_ladder", "species_change"}:
+        issues.append(f"chain_mode 非法：{chain_mode!r}（same_object|shop_ladder|species_change）")
+
+    # 件数已在 parse 保证。合成是否说得通仍由讨论稿判定；这里拦空零件/弱光效/体量/剪影复读。
     pcts = [r.scale_pct for r in rows]
     if pcts[0] < 0.55:
         issues.append(f"L1 scale_pct={pcts[0]:.2f} 过低（低档应占格大半，建议 ≥0.58）")
     if pcts[-1] > 0.82:
-        issues.append(f"L8 scale_pct={pcts[-1]:.2f} 过高（应留边不顶格，建议 ≤0.80）")
-    for i in range(1, 8):
+        issues.append(f"L{n} scale_pct={pcts[-1]:.2f} 过高（应留边不顶格，建议 ≤0.80）")
+    for i in range(1, n):
         if pcts[i] <= pcts[i - 1]:
             issues.append(
                 f"L{rows[i].level:02d} scale_pct {pcts[i]:.2f} 未大于 L{rows[i-1].level:02d} {pcts[i-1]:.2f}"
@@ -129,19 +150,25 @@ def judge_relation_rows(
             issues.append(
                 f"L{rows[i].level:02d} 剪影家族与 L{rows[i-1].level:02d} 相同：{rows[i].silhouette!r}"
             )
-        if _parts_not_concrete(rows[i].parts_add):
+        # same_object（默认轻门）：继续要求具体 parts_add
+        # shop/species：允许 parts_add 为空，改看 evolve_to + merge_why
+        if chain_mode in {"", "same_object"} and _parts_not_concrete(rows[i].parts_add):
             issues.append(
                 f"L{rows[i].level:02d} 新增零件说不通：{rows[i].parts_add!r}（要具体零件，不能是空、破折号或只加光效）"
             )
     if pcts[-1] < max(pcts[:-1]) + 0.01:
-        issues.append("L8 未严格为最大 scale_pct")
+        issues.append(f"L{n} 未严格为最大 scale_pct")
     for r in rows:
         if not r.name or not r.silhouette:
             issues.append(f"L{r.level:02d} 物件名或剪影家族为空")
 
-    # Optional but sticky: same-object ladders declare base_body so L2–L8 cannot reinvent the mother mesh.
-    # Species-change ladders (kitchen tools, fish) omit base_body and stay on the light six-rule gate.
+    # Optional but sticky: same-object ladders declare base_body so later tiers cannot reinvent the mother mesh.
+    # Species-change / shop_ladder omit base_body.
     base_body = str(track.get("base_body") or "").strip()
+    if chain_mode == "same_object" and not base_body:
+        issues.append("chain_mode=same_object 时必须填写 base_body")
+    if chain_mode in {"shop_ladder", "species_change"} and base_body:
+        issues.append(f"chain_mode={chain_mode} 不应填写 base_body（当前 {base_body!r}）")
     if base_body:
         tokens = _base_body_tokens(base_body)
         if not tokens:
@@ -156,6 +183,26 @@ def judge_relation_rows(
                         f"L{r.level:02d} 未锁母体 base_body={base_body!r}："
                         f"silhouette/name 需保留母体词 {tokens[:4]}（命中 {hits or '无'}）"
                     )
+
+    # shop_ladder / species_change：叙事闸（MergePerCell 轻门不强制 merge_why；仅这两种链型启用）
+    if chain_mode in {"shop_ladder", "species_change"}:
+        weak_why = {"", "—", "-", "－", "更华丽", "更高级", "升级", "更好", "none"}
+        seen_evolve: list[str] = []
+        for r in rows:
+            if not r.evolve_to:
+                issues.append(f"L{r.level:02d} chain_mode={chain_mode} 缺少 evolve_to")
+            else:
+                key = r.evolve_to.strip().lower()
+                if key in seen_evolve:
+                    issues.append(f"L{r.level:02d} evolve_to 回退/重复：{r.evolve_to!r}")
+                seen_evolve.append(key)
+            if r.level == 1:
+                continue
+            why = (r.merge_why or "").strip().lower()
+            if why in weak_why or why in _WEAK_PARTS:
+                issues.append(
+                    f"L{r.level:02d} merge_why 说不通：{r.merge_why!r}（要具体合成理由）"
+                )
     return (len(issues) == 0, issues)
 
 
@@ -238,10 +285,13 @@ def audit_ladder_dir(
     expected_pcts: list[float] | None = None,
     tol: float = 0.04,
 ) -> tuple[bool, list[str]]:
-    """像素级阶梯审计：框高单调、L8 最大。"""
+    """像素级阶梯审计：框高单调、末档最大。档数跟 expected_pcts，缺省仍按 8。"""
     issues: list[str] = []
     heights: list[tuple[int, float]] = []
-    for i in range(1, 9):
+    n = len(expected_pcts) if expected_pcts else 8
+    if n < 2:
+        return False, ["expected_pcts 至少 2 档"]
+    for i in range(1, n + 1):
         p = folder / f"L{i:02d}.jpg"
         if not p.is_file():
             p = folder / f"L{i:02d}.png"
@@ -261,16 +311,16 @@ def audit_ladder_dir(
                 issues.append(
                     f"L{i:02d} bbox_h={bh:.2f} 偏离关系稿 scale_pct={exp:.2f} 过多（>|{tol+0.08:.2f}|）"
                 )
-    if len(heights) < 8:
+    if len(heights) < n:
         return False, issues
     hs = [h for _, h in heights]
-    for i in range(1, 8):
+    for i in range(1, n):
         if hs[i] <= hs[i - 1] - 0.01:
             issues.append(
                 f"体量非单调：L{heights[i][0]:02d} h={hs[i]:.2f} ≤ L{heights[i-1][0]:02d} h={hs[i-1]:.2f}"
             )
     if hs[-1] < max(hs[:-1]) - 0.01:
-        issues.append(f"L08 框高 {hs[-1]:.2f} 不是全梯最大（max={max(hs):.2f}）")
+        issues.append(f"L{n:02d} 框高 {hs[-1]:.2f} 不是全梯最大（max={max(hs):.2f}）")
     return (len(issues) == 0, issues)
 
 
@@ -430,12 +480,14 @@ def cmd_relation_judge(file_path: Path, track_id: str | None, all_tracks: bool) 
             print(f"❌ {e}")
             any_fail = True
             continue
-        ok, issues = judge_relation_rows(rows)
+        ok, issues = judge_relation_rows(rows, track=tracks[tid])
         if ok:
-            print("✅ 六条机读检查通过 → 可标记「文字定稿」并进入关系核对出图")
+            mode = str(tracks[tid].get("chain_mode") or "same_object(default)")
+            print(f"✅ 机读检查通过（chain_mode={mode}）→ 可标记「文字定稿」并进入出图")
             for r in rows:
+                extra = r.evolve_to or r.parts_add or "—"
                 print(
-                    f"  L{r.level:02d} {r.name} | {r.silhouette} | pct={r.scale_pct:.2f} | +{r.parts_add or '—'}"
+                    f"  L{r.level:02d} {r.name} | {r.silhouette} | pct={r.scale_pct:.2f} | {extra}"
                 )
         else:
             any_fail = True

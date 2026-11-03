@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>仙灵村景 · 图层拆解(平板挖洞)</title>
+<style>
+  :root {
+    --bg:#121820; --panel:#1c2633; --line:#314255;
+    --text:#e8eef6; --muted:#93a4b8; --accent:#5bbcff;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;min-height:100vh;color:var(--text);
+    background:radial-gradient(1200px 600px at 20% -10%,#243247 0%,var(--bg) 55%);
+    font-family:"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  }
+  .wrap{
+    max-width:1240px;margin:0 auto;padding:20px 18px 40px;
+    display:grid;grid-template-columns:minmax(300px,460px) 1fr;gap:22px;
+  }
+  @media (max-width:900px){.wrap{grid-template-columns:1fr}}
+  h1{font-size:20px;margin:0 0 6px;font-weight:650}
+  .sub{color:var(--muted);font-size:13px;line-height:1.5;margin:0 0 16px}
+  .stage-card,.side{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px}
+  .stage-wrap{position:relative;width:100%;max-width:420px;margin:0 auto}
+  .stage{
+    position:relative;width:100%;aspect-ratio:0.399414;overflow:hidden;
+    border-radius:10px;background:#0b1016;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.04);
+  }
+  .ghost{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;pointer-events:none;z-index:50}
+  .layer{position:absolute;opacity:0;pointer-events:none;transition:opacity .16s ease;z-index:1}
+  .layer.on{opacity:1}
+  .layer img{
+    display:block;width:100%;height:100%;object-fit:contain;
+    user-select:none;-webkit-user-drag:none;
+    filter:drop-shadow(0 6px 10px rgba(0,0,0,.25));
+  }
+  .layer.bg img{object-fit:cover;filter:none}
+  .controls{margin-top:14px}
+  .row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .row label{font-size:13px;color:var(--muted);min-width:64px}
+  input[type=range]{flex:1;accent-color:var(--accent);height:28px}
+  .count{font-variant-numeric:tabular-nums;font-size:13px;min-width:64px;text-align:right}
+  .btns{display:flex;flex-wrap:wrap;gap:8px}
+  button{
+    appearance:none;border:1px solid var(--line);background:#243447;color:var(--text);
+    border-radius:8px;padding:8px 12px;font-size:13px;cursor:pointer;
+  }
+  button:hover{border-color:var(--accent)}
+  button.primary{background:#1f4f73;border-color:#3d89bd}
+  button.active{background:#2f5a3f;border-color:#5fad7a}
+  .now{margin-top:8px;padding:10px 12px;border-radius:8px;background:#16202c;border:1px solid var(--line);font-size:13px;line-height:1.45}
+  .now b{color:var(--accent)}
+  .list{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+  .list li{
+    display:grid;grid-template-columns:28px 1fr auto;gap:8px;align-items:center;
+    padding:8px 10px;border-radius:8px;border:1px solid transparent;background:#16202c;
+    font-size:13px;cursor:pointer;
+  }
+  .list li.on{border-color:#3a6b4f;background:#173026}
+  .list li.current{border-color:var(--accent);box-shadow:0 0 0 1px rgba(91,188,255,.25) inset}
+  .idx{width:28px;height:28px;border-radius:999px;display:grid;place-items:center;background:#243447;color:var(--muted);font-size:12px}
+  .list li.on .idx{background:#2f6b4a;color:#dff7ea}
+  .tag{color:var(--muted);font-size:12px}
+  .ref{margin-top:14px;border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+  .ref img{width:100%;display:block}
+  .ref caption{display:block;padding:8px 10px;font-size:12px;color:var(--muted);background:#16202c}
+  .links a{color:var(--accent);font-size:12px;margin-right:12px}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="stage-card">
+      <h1>仙灵村景 · 图层拆解(平板挖洞)</h1>
+      <p class="sub">/pmem-layer-split：脚印校准 → 并行隔离 → contain 叠回 → 闸门/幽灵验收。</p>
+      <p class="links">
+        <a href="_compose_preview.png" target="_blank">对照板</a>
+        <a href="_crops_guide.png" target="_blank">裁切框</a>
+        <a href="_ghost_heatmap.png" target="_blank">幽灵热力</a>
+        <a href="_ghost_qa.json" target="_blank">QA JSON</a>
+        <a href="layer_status.json" target="_blank">层状态</a>
+      </p>
+      <div class="stage-wrap">
+        <div class="stage" id="stage">
+          <img class="ghost" id="ghost" src="ref_full.jpg" alt="原图对照">
+        </div>
+      </div>
+      <div class="controls">
+        <div class="row">
+          <label for="prog">进度</label>
+          <input id="prog" type="range" min="0" max="11" step="1" value="0">
+          <span class="count" id="count">0 / 11</span>
+        </div>
+        <div class="row">
+          <label for="ghostAmt">原图对照</label>
+          <input id="ghostAmt" type="range" min="0" max="70" step="1" value="40">
+          <span class="count" id="ghostVal">40%</span>
+        </div>
+        <div class="btns">
+          <button type="button" id="prev">上一层</button>
+          <button type="button" id="next" class="primary">下一层</button>
+          <button type="button" id="play">自动播放</button>
+          <button type="button" id="reset">清空</button>
+          <button type="button" id="all">全部叠上</button>
+          <button type="button" id="ghostBtn" class="active">原图对照 40%</button>
+        </div>
+        <div class="now" id="now">当前：<b>空画布</b></div>
+      </div>
+    </section>
+    <aside class="side">
+      <h1 style="font-size:16px;margin-bottom:10px">层级（底→顶）</h1>
+      <ul class="list" id="list"></ul>
+      <figure class="ref">
+        <img src="ref_full.jpg" alt="原图">
+        <caption>对照：原图整图</caption>
+      </figure>
+    </aside>
+  </div>
+<script>
+const LAYERS = [
+  {id:'bg', name:'10 背景', file:'new_trim/10-背景.png', left:0.0000, top:0.0000, width:1.0000, height:1.0000, note:'', bg:true},
+  {id:'flower_house', name:'1 铃兰花屋', file:'new_trim/1-铃兰花屋.png', left:0.0978, top:0.2788, width:0.4988, height:0.2988, note:''},
+  {id:'treehouse', name:'2 树屋', file:'new_trim/2-树屋.png', left:0.4988, top:0.2422, width:0.4780, height:0.2954, note:''},
+  {id:'mushrooms', name:'3 左蘑菇簇', file:'new_trim/3-左蘑菇簇.png', left:0.0000, top:0.5044, width:0.2372, height:0.0854, note:''},
+  {id:'pond_boat', name:'4 池与香蕉船', file:'new_trim/4-池与香蕉船.png', left:0.0367, top:0.5728, width:0.3973, height:0.1069, note:''},
+  {id:'mole', name:'6 鼹鼠送礼', file:'new_trim/6-鼹鼠送礼.png', left:0.6186, top:0.5762, width:0.3582, height:0.0923, note:''},
+  {id:'flying_fairy', name:'7 飞天仙女', file:'new_trim/7-飞天仙女.png', left:0.3582, top:0.4395, width:0.2958, height:0.1602, note:''},
+  {id:'food_mushroom', name:'5 芝士蘑菇桌', file:'new_trim/5-芝士蘑菇桌.png', left:0.5575, top:0.7104, width:0.4193, height:0.1475, note:''},
+  {id:'violinist', name:'8 琴仙树桩', file:'new_trim/8-琴仙树桩.png', left:0.2372, top:0.6626, width:0.3973, height:0.2168, note:''},
+  {id:'flower_lamp', name:'9 前景花灯', file:'new_trim/9-前景花灯.png', left:0.0000, top:0.7603, width:0.2983, height:0.1792, note:''},
+  {id:'fg_leaves', name:'11 底前景叶丛', file:'new_trim/11-底前景叶丛.png', left:0.0000, top:0.8037, width:1.0000, height:0.1958, note:''}
+];
+
+const stage=document.getElementById("stage");
+const list=document.getElementById("list");
+const prog=document.getElementById("prog");
+const countEl=document.getElementById("count");
+const nowEl=document.getElementById("now");
+const ghost=document.getElementById("ghost");
+const ghostAmt=document.getElementById("ghostAmt");
+const ghostVal=document.getElementById("ghostVal");
+prog.max=String(LAYERS.length);
+
+LAYERS.forEach((L,i)=>{
+  const div=document.createElement("div");
+  div.className="layer"+(L.bg?" bg":"");
+  div.dataset.i=String(i);
+  div.style.left=(L.left*100)+"%";
+  div.style.top=(L.top*100)+"%";
+  div.style.width=(L.width*100)+"%";
+  div.style.height=(L.height*100)+"%";
+  div.style.zIndex=String(i+1);
+  const img=document.createElement("img");
+  img.src=L.file; img.alt=L.name;
+  div.appendChild(img);
+  stage.insertBefore(div,ghost);
+  const li=document.createElement("li");
+  li.dataset.i=String(i);
+  li.innerHTML=`<span class="idx">${i+1}</span><span>${L.name}<div class="tag">${L.note||""}</div></span><span class="tag">z${i+1}</span>`;
+  list.appendChild(li);
+});
+
+let level=0,timer=null;
+function setLevel(n){
+  level=Math.max(0,Math.min(LAYERS.length,n|0));
+  prog.value=String(level);
+  countEl.textContent=`${level} / ${LAYERS.length}`;
+  stage.querySelectorAll(".layer").forEach(el=>el.classList.toggle("on",Number(el.dataset.i)<level));
+  list.querySelectorAll("li").forEach(el=>{
+    const i=Number(el.dataset.i);
+    el.classList.toggle("on",i<level);
+    el.classList.toggle("current",level>0&&i===level-1);
+  });
+  nowEl.innerHTML=level===0?`当前：<b>空画布</b>`:`刚叠上：<b>${LAYERS[level-1].name}</b> — ${LAYERS[level-1].note||""}`;
+}
+function setGhost(v){
+  const n=Math.max(0,Math.min(70,Number(v)||0));
+  ghostAmt.value=String(n);
+  ghost.style.opacity=String(n/100);
+  ghostVal.textContent=n?`${n}%`:"关";
+  const btn=document.getElementById("ghostBtn");
+  btn.classList.toggle("active",n>0);
+  btn.textContent=n?`原图对照 ${n}%`:"开原图对照 40%";
+}
+function stopPlay(){if(timer){clearInterval(timer);timer=null;}document.getElementById("play").textContent="自动播放";}
+prog.addEventListener("input",()=>{stopPlay();setLevel(Number(prog.value));});
+ghostAmt.addEventListener("input",()=>setGhost(ghostAmt.value));
+document.getElementById("prev").onclick=()=>{stopPlay();setLevel(level-1);};
+document.getElementById("next").onclick=()=>{stopPlay();setLevel(level+1);};
+document.getElementById("reset").onclick=()=>{stopPlay();setLevel(0);};
+document.getElementById("all").onclick=()=>{stopPlay();setLevel(LAYERS.length);};
+document.getElementById("ghostBtn").onclick=()=>setGhost(Number(ghostAmt.value)>0?0:40);
+document.getElementById("play").onclick=()=>{
+  if(timer){stopPlay();return;}
+  if(level>=LAYERS.length)setLevel(0);
+  document.getElementById("play").textContent="停止";
+  timer=setInterval(()=>{if(level>=LAYERS.length){stopPlay();return;}setLevel(level+1);},700);
+};
+list.addEventListener("click",e=>{
+  const li=e.target.closest("li"); if(!li)return;
+  stopPlay(); setLevel(Number(li.dataset.i)+1);
+});
+setLevel(0); setGhost(40);
+</script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-11-02 18:44:25 UTC+8",
+  "session_id": "latest",
+  "goal": "同一座冬日农场羊圈场景的圣诞节版本：锁死原机位与构图，角色身份与物件布局不变，仅加圣诞装饰与节日氛围；工作画幅 9:16，最终再裁成原图 409x1024",
+  "module": "scene.Farm77",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 4,
+  "winner_score": 9.06,
+  "winner_image": "assets/farm77/christmas/r4.jpg",
+  "winner_passed": false,
+  "outcome": "⚠️ **共执行 4 轮审图（目标阈值 `9.50` 分），未达标，已挑选全阶段最高分**（胜出：第 4 轮 `9.06 / 10.0` 分）",
+  "what_fixed": [
+    "把右侧羊棚恢复成更明确的红木墙+蓝瓦雪顶；礼盒色块与谷仓花环边缘再锐一点；羊群落点贴回参考",
+    "补回食槽旁蓝铃；把圣诞树略缩小并靠羊棚一侧；草垛旁干草叉轮廓再清楚一点",
+    "圣诞树挪到红羊棚外侧单独站立并略缩小；蓝铃放大到一眼可认；栅栏串灯珠点更清楚",
+    "已满4轮，取最高分交付"
+  ],
+  "what_still_weak": "圣诞树被放进皮卡货斗而不是羊棚外侧单独站立；食槽蓝铃仍不够醒目",
+  "strengths": "红羊棚蓝瓦与谷仓花环彩灯清晰；皮卡礼盒色块干净；机位与农夫圣诞帽身份稳住",
+  "taste_deltas": {
+    "from_strengths": [
+      "红羊棚蓝瓦与谷仓花环彩灯清晰；皮卡礼盒色块干净；机位与农夫圣诞帽身份稳住"
+    ],
+    "from_defects": [
+      "食槽立柱上的蓝铃几乎看不见；中景圣诞树体量略抢农夫；干草叉在草垛旁存在感偏弱",
+      "圣诞树挤到皮卡货斗旁和礼盒粘连；食槽立柱蓝铃仍然太小难认；栅栏彩灯局部偏糊",
+      "圣诞树被放进皮卡货斗而不是羊棚外侧单独站立；食槽蓝铃仍不够醒目"
+    ]
+  },
+  "warm_start_confidence": 0.3,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 8.84,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 9.06,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 8.98,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 9.06,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：右侧羊棚木色偏棕、红漆识别弱于参考；礼盒与花环细节略糊；绵羊落点相对参考有轻微漂移",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "8.84"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：机位与主体布局基本锁住；圣诞帽花环彩灯礼物树清晰可读；节日暖光与冷雪对比舒服",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.84"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：食槽立柱上的蓝铃几乎看不见；中景圣诞树体量略抢农夫；干草叉在草垛旁存在感偏弱",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.06"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：右侧羊棚已回到红墙蓝瓦；礼盒与花环更清楚；羊群落点更贴参考；圣诞装饰与机位仍锁住",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.06"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：圣诞树挤到皮卡货斗旁和礼盒粘连；食槽立柱蓝铃仍然太小难认；栅栏彩灯局部偏糊",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.98"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：干草叉已可读；红羊棚蓝瓦与圣诞主装饰仍在；机位与农夫身份保住",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.98"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：圣诞树被放进皮卡货斗而不是羊棚外侧单独站立；食槽蓝铃仍不够醒目",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.06"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：红羊棚蓝瓦与谷仓花环彩灯清晰；皮卡礼盒色块干净；机位与农夫圣诞帽身份稳住",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.06"
+    }
+  ]
+}

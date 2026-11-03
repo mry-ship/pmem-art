@@ -4,7 +4,7 @@ title: "厚涂笔触"
 layer_scope: private
 universal: false
 tags: ["style", "material"]
-source: converge_finish
+source: feedback
 ---
 
 # 厚涂笔触

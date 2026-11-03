@@ -137,7 +137,7 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 
 定稿写明两张参考的像素必须同时出现在同一张成图里：注册表里没有 `simultaneous_pixels` 为 true 的行，就停在这一步，写明原因，不改派到多图分工，不开始出图。
 
-选中的技能会 `converge start` 时，启动后先把这一轮分析用 `converge discuss` 记进同一会话，再开始那一支自己的步骤。过程板上会留下需求是怎么定下来的。多技能依次跑时，每一支用自己的会话；对比 HTML 在全部完成后写。
+选中的技能会 `converge start` 时，启动后先把这一轮分析用 `converge discuss` 记进同一会话；**首轮 generate 前必须再跑** `reasonableness review`（`--draft` + 更合理的 `--revised` + 该技能 checklist），过闸后才出图。过程板上会留下需求与合理性修订。多技能依次跑时，每一支用自己的会话；对比 HTML 在全部完成后写。
 
 ## 交给玩家的结论
 
@@ -174,7 +174,7 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 | :--- | :--- | :--- |
 | **界面** | 玩家要整屏、HUD、弹窗套件、九宫格、按钮状态 | **不要在本文件生图**。先读 `.cursor/skills/pmem-ui/SKILL.md`，只执行那一份 |
 | **图标** | 桌面图标、一套线性 SVG、背包道具格 | **不要在本文件生图**。先读 `.cursor/skills/pmem-icon/SKILL.md`。A/B/C 不混用 |
-| **合成梯** | 同一套东西一档比一档更大，L1–L8 | **不要在本文件生图**。先读 `.cursor/skills/pmem-merge-ladder/SKILL.md` |
+| **合成梯** | 同域升级梯（默认 L1–L8，可 6 档）；默认同物件或轻门，点名可 shop_ladder / 整表 | **不要在本文件生图**。先读 `.cursor/skills/pmem-merge-ladder/SKILL.md` |
 | **镜头包** | 玩家明确要几套机位 / 镜头 / 光给自己挑 | 只做文末「合同 · 镜头包」，然后停。点选前禁止生图 |
 | **克隆** | 有参考，并且要换一个新题材，锁的是画风 | 只做文末「合同 · 克隆」 |
 | **变体** | 已有角色要换画风，或做表情 / 动作差分。身份和机位已经在同一张图上 | 只做文末「合同 · 变体」 |
@@ -245,7 +245,14 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
    - 同模块已经锁过风格时，第 1 轮提示词带上已锁的 HEX 和禁用词。
    - **最优方向按档分流**（加法，不是第二份锁）。出图前可跑：`python3 pmem_art.py check-scale-gates --self-check`。
    - **不要中途改去镜头包**。玩家没要几套机位，就按当前这一支继续。`high` / `recompose` 缺一句机位时，用玩家已经写的目标或档位骨架，不要停下来提议 4 套镜头。
-3. **可选 Best-of-N 首帧**：第 1 轮先构思 2~3 个方向（或并行想法），挑最佳进入后续 converge（在回复里写明选了哪条）。
+3. **合理性闸（首轮 generate 前必过，至少一次）**：先写草稿提示词，按清单自审，**同时交出更合理的修订提示词**，再写入会话。不过闸 `converge generate` 会被拦截。克隆/变体/多图分工/原画同样走这一步（`--skill` 用 `clone`/`variant`/`split`/`keyart`）。
+   ```bash
+   python3 pmem_art.py reasonableness review --id <session> --skill ordinary \
+     --draft "<草稿提示词>" --revised "<更合理的提示词>" \
+     --checklist "subject_action=ok;contact_scale=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok"
+   ```
+   清单模板：`python3 pmem_art.py reasonableness template --skill ordinary`。修订句必须写清：主体动作、接触/尺度、元素预算、硬锁、一眼失败条件。首轮 `generate` **强制使用 revised**（未再审的其他 `--prompt` 会被忽略）；可省略 `--prompt`。非首轮空 `--prompt` 回退 revised。后续审美迭代不得推翻硬锁与预算。调试才允许 `--skip-reasonableness-gate`。
+4. **可选 Best-of-N 首帧**：第 1 轮先构思 2~3 个方向（或并行想法），挑最佳进入后续 converge（在回复里写明选了哪条）。须在合理性闸之后。
 
 ---
 
@@ -254,7 +261,7 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 令轮次 $i = 1, 2, \dots, 4$：
 
 #### 2.1 生成第 $i$ 轮单张候选图
-- 综合「用户原始需求 + 参考图解构特征（若有）+ `.memory-art` 历史红线 + **针对上一轮最低分维度的具体修正指令（≤2 条）**」，构造第 $i$ 轮生图 Prompt。
+- 综合「用户原始需求 + 参考图解构特征（若有）+ `.memory-art` 历史红线 + **合理性修订提示词** + **针对上一轮最低分维度的具体修正指令（≤2 条）**」，构造第 $i$ 轮生图 Prompt。首轮必须以 `reasonableness` 的 revised 为底，禁止用未审草稿直接出图。
 - **首轮（R1）按主体分类注入结构底线（认不出就不注入，禁止默认塞山体/建筑）**。词表中英两套都用来认主体；写入生图提示词的是英文，中文只在回显里给你看：
   - **人物**：关节、握持、双眼；
   - **动物**：按物种连接肢体，禁止改成人类双肘；
@@ -377,6 +384,8 @@ improve/coach/learn 推销仅在用户主动要时再给。
 
 提示词用完整句子，不要纯 tag。顺序：主体与动作，场景，光影与时段，材质与画风，色板，景别画幅。排斥项写成正向句（「干净的青瓷白与墨蓝，无霓虹」）。每轮用上一轮的具体缺陷重写整句，仍禁止只堆负向 tag。要几套构图自己挑，改走镜头包，点选前不生图。
 
+**硬闸 · 有风格样张时（layout_not_style_echo）**：只借色板 / 光影 / 媒介 / 笔触，**禁止**继承样张的机位、主体占比、前景道具摆位、左右分区。成图构图一眼能对上样张分区或同一机位 → 构图维压到 ≤8.5 且本轮不可停；禁止用「大体像风格」软过。合理性闸 checklist 必须标 `layout_not_style_echo=ok`。
+
 ## 合同 · 克隆
 
 只在类型是克隆时执行。轮次用第二节的 `converge generate` / `judge` / `finish`，最多 4 轮，合格线 ≥9.5。不要按第一节继承参考构图。禁止无六维数字宣称通过。默认锁大约 95% 的画风，换的是题材。
@@ -452,6 +461,7 @@ improve/coach/learn 推销仅在用户主动要时再给。
    - 调用 `python3 pmem_art.py feedback "以后统一按此样张画风：<核心色板+光影+笔触摘要>" --module <目标模块> --asset <样张路径> --kind art_decision`
    - 调用 `python3 pmem_art.py feedback "禁止偏离样张画风：<反例禁用词汇总>" --module <目标模块> --kind style_redline`
 3. **输出《风格锁定卡片》**：用清晰的表格展示色板 HEX、正向风格词、负向禁用词与已写入的记忆路径。卡片外再附一段可以直接拿去画的完整句子。同模块下一张开场必须带上已锁的 HEX 和禁用词。记忆仍只在这一支里写入。
+4. **锁完要验证成图时**：路由若是 `style.lock` → `draw.clone` 串行（口语含「验证图 / 锁完出图 / 为了出图」等），本技能只交卡片；第二步按克隆合同换新题材出验证图，禁止用卡片或样张本身交差。纯「以后都按这张」仍只锁不画。
 """,
     },
     {
@@ -549,10 +559,14 @@ python3 pmem_art.py search --module <ui.模块>
 2. 若无概念图：先生成 **1 张完整屏幕概念稿**（整屏布局，统一材质与色板），用 `/pmem-draw` 同款 **4轮 >= 9.5 收敛** 打磨概念稿：
    ```bash
    python3 pmem_art.py converge start --goal "UI概念稿：<屏幕类型+风格>" --module <ui.模块> [--scale medium|high]
+   # 首轮前必过合理性闸（同时交出更合理提示词）：
+   python3 pmem_art.py reasonableness review --id <session> --skill ui \
+     --draft "<草稿>" --revised "<分区/控件/禁忌写清的修订句>" \
+     --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;layout_zones=ok;no_content_clutter=ok"
    # 每轮：converge generate 生图，再 converge judge 审图，直到 >= 9.5 或满 4 轮
    python3 pmem_art.py converge finish
    ```
-3. **概念稿通过后才进入组件表**——不要在概念未锁定时散生按钮。
+3. **概念稿通过后才进入组件表**——不要在概念未锁定时散生按钮。合理性闸不过不许 generate。
 
 ### 点名了某款产品的主界面
 主界面概念不是空心九宫格，也不是关卡棋盘。玩家点名某款游戏的主界面时，可以先看一张该产品主界面的真实截图，只为了把下面八项写进提示词。生图只交这段文字，不把截图垫进生成，也不要照着像素克隆。
@@ -719,7 +733,12 @@ python3 pmem_art.py feedback "UI套件色板与九宫格规范：<摘要>" --mod
 一套里线宽或拐角混用，或目标尺寸认不出，不能停，正式分改取该维（低于 8.0）。示例：`笔画一致8.6/视觉重量8.4/留白8.5/功能识别8.8`
 
 ### 二之三、Mode C：游戏道具透明底栅格图标（64/128/256px PNG，非 SVG）
-若用户要的是 **游戏道具栅格图标**：先锁「线宽/圆角/色板/投影」style-spec，再批量生成透明底 PNG。关键单枚用 `converge` 跑最多 4 轮，合格线 ≥9.5。
+若用户要的是 **游戏道具栅格图标**：先锁「线宽/圆角/色板/投影」style-spec，再批量生成透明底 PNG。关键单枚用 `converge` 跑最多 4 轮，合格线 ≥9.5。关键枚首轮 generate 前：
+```bash
+python3 pmem_art.py reasonableness review --id <session> --skill icon.c \
+  --draft "<草稿>" --revised "<厚剪影+透明底+棚拍光+无字的修订句>" \
+  --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;silhouette_read=ok;transparent_friendly=ok"
+```
 
 正式分是加权调和平均。原来三项占 75%，无瑕疵占 25%，盲评。透明底和无字仍是门槛。交付文件要有 alpha，白底和品红底不算透明底。
 
@@ -745,6 +764,9 @@ icons/
 用户点名某枚「不对」或一致性审查不通过时，每一轮垫最初的风格参考或 style-spec 样张，不垫上一轮成图：
 ```bash
 python3 pmem_art.py converge start --goal "图标 <name> 对齐 style-spec" --module brand.WorldStyle
+python3 pmem_art.py reasonableness review --id <session> --skill icon.b \
+  --draft "<草稿>" --revised "<线宽/端点/清单写清的修订句>" \
+  --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;stroke_consistency=ok"
 # 生成 → 自评 → converge generate / converge judge → finish
 ```
 
@@ -783,10 +805,14 @@ python3 pmem_art.py ingest icons/preview.html -p "icon set preview" --apply   # 
 
 ```bash
 python3 pmem_art.py converge start --session appicon --module brand.WorldStyle --scale high --goal "iOS 1024x1024 App Icon: 青瓷质感记账应用，中心单枚立体青釉金币流光符号"
-python3 pmem_art.py converge generate --session appicon --round 1 --image app_icon_r1.png --prompt "..."
+python3 pmem_art.py reasonableness review --id appicon --skill icon.a \
+  --draft "<草稿>" --revised "<单符号+72%-80%安全区+满幅直角无字的修订句>" \
+  --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;safe_zone=ok;single_symbol=ok"
+python3 pmem_art.py converge generate --session appicon --round 1 --image app_icon_r1.png
 python3 pmem_art.py converge judge --session appicon --round 1 --image app_icon_r1.png \
   --dims "识别度9.6/安全区9.7/光影质感9.5/多尺寸合规9.6/色板纯粹9.7"
 ```
+Mode C 关键枚同理：`--skill icon.c`，修订句须含透明底与厚剪影。
 
 ## 三、交付检查清单
 - [ ] 全部 SVG 同 viewBox / stroke-width / linecap / linejoin
@@ -844,90 +870,177 @@ python3 pmem_art.py learn list
     },
     {
         "name": "pmem-merge-ladder",
-        "title": "同域合成梯：先过八件关系，再逐张抬到 ≥9.5",
+        "title": "同域合成梯：先定链型与关系，再按交付出图",
         "description": (
             "玩家要一条同域合成升级梯，或生图分流判成合成梯时使用。"
-            "只有 /pmem-merge-ladder：先文字定稿八件关系，再每一档单独一张正方形。"
-            "同框整梯只作体量预览，不是交付物。关系讨论固定 3 稿，把升级链和画风定清楚，说不通就不能出图；第二段跑图最多 4 轮。"
+            "只有 /pmem-merge-ladder：先文字定链型与升级关系，再说通再出图。"
+            "同物件链锁母体加零件；同店/同域换货链允许换相关物件。"
+            "无整表信号时默认一档一张；附格子参考或说整表一起出时强制 overview_sheet，先数行列并垫参考锁版式。"
         ),
         "body": r"""
 # `/pmem-merge-ladder` — 同域合成梯
 
 ## 怎么用（复制即用）
 ```text
-/pmem-merge-ladder 青瓷药瓶合成升级梯：空瓶→塞→半药→满药→签环→金托→晶冠→罩瓶；切面玻璃+暖金饰统一画风；先 3 稿文字定关系，再说通再一档一张正方形
-/pmem-merge-ladder [附风格参考] 同域沙滩糖果八档，锁参考表面质感，不抄参考物件；L1 占格大半，L8 留边最复杂
+/pmem-merge-ladder 青瓷药瓶同物件八档：空瓶→塞→半药→满药→签环→金托→晶冠→罩瓶；chain_mode=same_object；一档一张正方形
+/pmem-merge-ladder 节日五条 L1 参考，各 1–6 级同店升级；chain_mode=shop_ladder；delivery=overview_sheet；先文字定链再单次整表
+/pmem-merge-ladder [附船图格子参考] 一组乐器；参考咋排就咋出；垫参考锁白卡深底；不抄船
 ```
 
-一条合同。同框不是交货，交货是一档一张正方形。
+一条合同。有附图时**先认参考是不是整表格子**，再定链型、档数、交付。
 
-交付物是八张同样大的正方形，每张只有一件、居中。16:9 八格同框只允许当体量预览；预览切格切进了邻件，整张预览作废，不能拿去当成品。
+## 开场 0 · 整表参考闸（有附图先做；写进第 1 稿）
+
+附图若是多格白圆角卡 / 深灰底图集（常见 3×3=9、4×3=12、5×3=15），视为**整表版式参考**：
+
+1. **先数行列**（目视或脚本），写入 `grid_rows` × `grid_cols` 与 `levels = 格数`。
+2. **强制** `delivery=overview_sheet`。禁止默默走 `per_cell` 逐格狂刷。
+3. **出图必须垫这张参考**：锁白卡、深灰底、间距、软塑胶质感与棚光；只把格内物件换成玩家题材（乐器/糖果等）。**不抄**参考里的船/无关物件。
+4. 玩家说「参考咋出就咋出 / 按我这张 / 一起出 / 不要单张」→ 同上，不问交付。
+5. 格数不在机读允许集 `{6,8,9,12,15}` 时先问一句，或取最接近允许值并在讨论稿写明。
+
+无整表信号时，才回落到下方默认 `per_cell`（MergePerCell）。
+
+## 开场必选（第 1 稿写死；拿不准就先问一句，不准闷头出图）
+
+### A. `chain_mode`（三选一；也可省略＝轻门，见下）
+
+| 链型 | 何时用 | 硬约束 |
+| :--- | :--- | :--- |
+| `same_object` | 同一物件加零件（药瓶、软糖） | 必须 `base_body`；每档 `silhouette`/`name` 留母体词；`parts_add` 为具体零件 |
+| `shop_ladder` | 同店同品类换货升级（章→杯、袋→箱）；玩家明确说「不必每档带 L1 原件 / 合理换物件升级」 | **不写** `base_body`；每档 `evolve_to` + `merge_why`；禁止回退；禁止跨店乱跳 |
+| `species_change` | 换物种但仍同任务域（厨具→厨具、一组乐器） | 不写 `base_body`；每档 `evolve_to` + `merge_why`；同任务域 |
+| （省略） | 旧稿 / 未点名链型 | **轻门**（MergePerCell）：只审件数、体量、剪影不复读、`parts_add` 具体；**不**强制 `family`/`merge_why`/`base_body` |
+
+**默认怎么选（通用，勿被单次节日任务带偏）：**
+
+1. 玩家明确同模加零件 → `same_object`
+2. 玩家明确换货/同店升级/不必保留 L1 体 → `shop_ladder`
+3. 玩家明确换物种同域，或说「一组 X / 多种 X」（乐器、船、厨具）且未说同模加零件 → `species_change`（或 `shop_ladder`）。**禁止**默默锁成一把吉他/一个母体焊零件
+4. 只给了**单件** L1 参考、没说换不换物件 → **先按 `same_object` 草案**（或省略走轻门）；只有叙事明显要换类才改。禁止「有 L1 就默认 shop_ladder」
+5. 口味/红线里的「禁止换物种；零件必须累计」**只约束** `same_object` / 玩家锁母体时；**不覆盖**「一组不同 X」或整表换货叙事
+
+### B. `levels`
+
+- 无整表参考：默认 **8**（L1–L8）；玩家只要六档 → `levels: 6`。
+- 有整表格子参考：`levels` **跟格数**（允许 `6|8|9|12|15`）。禁止无视参考硬做成 8 再逐格刷。
+- 门禁按 N 审，禁止为凑档硬编无意义补档。
+
+### C. `delivery`
+
+| 交付 | 含义 |
+| :--- | :--- |
+| `per_cell`（无整表信号时的**默认**） | 一档一张等大正方形；同框整梯只作体量预览，不是成品（MergePerCell） |
+| `overview_sheet` | 关系门过后 **单次整表**；**最多重出 3 次**；满 3 次列缺陷停手。禁止从整表抠格冒充逐格成品 |
+
+**何时强制 `overview_sheet`（可默认，不必再问）：** 整表格子参考；「整表 / 一起出 / 一次出齐 / 不要逐格 / 参考咋出就咋出」；多轨总览。
+
+多轨（多张 L1）时：一个 yaml 多个 `tracks`；`overview_sheet` 可一行一轨。
 
 ## 风格（第一段写死一句，第二段照用。只取一条）
 
 1. 玩家写下了风格，就用写下的。
-2. 没写风格但有参考图：先跑 `python3 pmem_art.py ref-read <参考图路径>`，把看见的表面写成一句。底是透明的，不要写成黑底。小高光不要写成油亮。表面光洁，不要改成毛毡或纸纹。不要把参考图文件垫进生图。不抄参考里的物件。
-3. 风格和参考都没有：质感好的卡通可爱。圆润倒角、软阴影、饱和友好色，道具本身无脸，除非玩家要求有脸。没写明玩具、Q版或卡通时，生成前剥掉 vinyl、chibi、搪胶、桶身、金琥珀双描边。圆润和软阴影可以留着，不必靠这些词。
+2. **整表格子参考**（开场 0）：表面句写「软塑胶圆润厚实体 + 白圆角卡 + 深灰/炭黑底」等眼睛看见的；**出图垫参考文件**锁版式。不抄参考物件。
+3. 单件风格参考、非整表：先跑 `python3 pmem_art.py ref-read <参考图路径>`，把看见的表面写成一句。`per_cell` 底写成「透明或纯黑隔离」；小高光不要写成油亮。不垫参考文件（除非锁 L1 外观）。不抄参考无关物件。
+4. 风格和参考都没有：质感好的卡通可爱。圆润倒角、软阴影、饱和友好色，道具本身无脸，除非玩家要求有脸。
 
-默认卡通或风格化参考下，产品实拍、油光不锈钢、真实木纹微细节要重扣。只有参考或 brief 明确写实才允许写实。
+**底色闸**：
+- `per_cell`：允许透明或纯黑隔离；禁止整格变成白/浅灰方卡底、相框 letterbox。
+- `overview_sheet` 且参考是白卡深底图集：白圆角卡在深底上是版式，**允许**；禁止改成满幅白底或拆成单张白卡狂刷。
+
+默认卡通下，产品实拍、油光不锈钢、真实木纹微细节要重扣。只有参考或 brief 明确写实才允许写实。
+
+**域内红线（仍通用）**：糖果/甜品轨禁止默认焊进蛋糕、马卡龙、纸杯蛋糕（除非玩家点名蛋糕店链）。
 
 ## 第一段 · 升级链与画风（3 稿，先不出图）
 
-这一段不是跑图。固定 **3 稿**，不再拉到 8 稿。3 稿里定清两件事：八件升级链说不说得通，画风用哪一条。3 稿里没有一稿把下面六条都说通，并且画风已经写成一句，就停在这一段，一张图都不出。
+固定 **3 稿**。定清：链型、档数、交付、（若有）行列、升级链、画风一句。3 稿仍说不通就停，一张图都不出。
 
-每一稿写成八行，再加一句画风。交给独立文本判断。判断要指出没过的是哪一行、哪一条，画风有没有定死。没过只改那几行或那句画风，已经说通的锁住。不写「不要画某件」。第 1 稿先把升级链和画风都写上。第 2、第 3 稿只补还说不通的升级理由和还没定死的画风。画风按上面「风格」三条里的一条写死。
-
-每一稿立刻记入会话。finish 的过程板按稿次列出这些论述，不能只留在对话里。第一段开始前先 `converge start`，这一段还不出图。
+每一稿先写 `chain_mode`（或注明轻门）/ `levels` / `delivery` / 可选 `grid_rows×grid_cols`，再写 N 行升级 + 一句画风。交给独立文本判断。没过只改未过行；已说通的锁住。
 
 ```bash
-python3 pmem_art.py converge discuss --round <稿次> --prompt "<这一稿八行>" --defects "<没过的是哪一行>" --next-fix "<下一稿只改哪几行>"
+python3 pmem_art.py converge discuss --round <稿次> --prompt "<链型+N行>" --defects "<没过的是哪一行>" --next-fix "<下一稿只改哪几行>"
 ```
 
-六条都要过，而且要说得通：
+### 六条（全链型都要过）
 
-1. 正好八件，`level` 为 1 到 8。同一任务域，不许串成同色杂物。
-2. 每一档画面里将只有一件、居中。不是一对，也不是一组场景。无脸，无等级字。
-3. 两件相同的这一档合成下一档。下一档仍是一件，而且说得出：这两件合成之后多了哪一块、为什么是这个物件。换成一个同色但无关的物件，没过。
-4. 体量只大一圈。最低档占格子大半，最高档留边，不顶出格子，也不缩成中间一个小点。末档最大、零件最多。
-5. 沿档位零件变多或剪影更复杂。`parts_add` 必须是具体零件。只写「更华丽 / 加光 / 特效」没过。同模只加特效没过。
-6. 相邻两档的 `silhouette` **整句不能相同**（防复制粘贴），但**同一物件升级链必须锁母体**：yaml 写 `base_body`（如「透明切面短药瓶」「蜜桃软糖」），每一档 `silhouette`/`name` 都要留住母体词。禁止 L2 起换瓶身、换糖种、把糖纸画成布质耳翼。换物种升档链（厨房工具→另一件工具）不写 `base_body`。
+1. 正好 `levels` 件，`level` 为 1..N 连续。同一任务域，不许串成同色杂物。
+2. 每一档画面里将只有一件、居中（或整表中每格一件）。无脸，无等级字。
+3. 两件相同的这一档合成下一档。下一档仍是一件，且说得出合成理由。换成同色无关物件，没过。
+4. 体量只大一圈。低档占格大半，高档留边。末档最大。
+5. 沿档位更复杂或物件类升级。轻门/`same_object` 看 `parts_add`；`shop_ladder`/`species_change` 看 `evolve_to`。只写「更华丽/加光/特效」没过。缩略图看不出的小饰片也算没过。
+6. 相邻 `silhouette` 整句不能相同。  
+   - `same_object`：必须 `base_body`，每档留母体词。  
+   - `shop_ladder` / `species_change`：不写 `base_body`；禁止物件类回退；禁止无过渡的跨品类硬跳。  
+   - 省略链型：`base_body` 可选；写了就粘住。
 
-机读数字过了、合成说不通，仍然不算定稿。讨论定稿之后，才把这八行写成机读文件。文件要有 `tracks:`；同物件链还要有 `base_body:` 与一句 `surface:`。每一行用这些英文键：`level`、`name`、`silhouette`、`scale_delta`、`scale_pct`、`parts_add`。`scale_pct` 单调递增（L1 ≥ 0.58，L8 ≤ 0.80，后一档必须大于前一档）。L1 的 `parts_add` 写 `—`，L2–L8 必须是具体零件。键名写错或少了 `scale_pct`，`relation-judge` 审不了。
+### 独立文本判断 · 五问（任一项「否」→ 改稿，不准出图）
 
-**同范围重跑**：`surface`、`base_body`、八档零件链从旧展陈/旧 yaml **抄死**，禁止重发明瓶身、糖纸语汇或材质（药=同一透明切面短瓶；糖=光洁软塑胶+粉白条纹扭结糖纸，不是哑光粘土卵石）。出图句每一档重复 `base_body` + 本档只加 `parts_add`，不要靠 Warm-Start 口味改成半身/rim light。
+1. 同店/同域吗？  
+2. 有没有回退到更低档物件类？  
+3. 有没有缺过渡的大跳档？  
+4. 缩略图（约 64px）相邻档能分清吗？  
+5. 升级理由具体吗？轻门/`same_object` 看 `parts_add`；`shop_ladder`/`species_change` 看 `merge_why`（不是「更高级/更华丽」）。
 
-新任务另写一份副本，照 `docs/showcase/skill_full_modes_1027/merge_phase1_canonical.yaml` 的结构。不要改掉这份 canonical 里已有的 track。然后必须跑：
+### 机读 yaml
+
+讨论定稿后写成副本（勿改 canonical）。`tracks.<id>`：
+
+- 推荐写：`chain_mode`、`levels`、`surface`；整表参考可写 `grid_rows` / `grid_cols`
+- `same_object` 另加 `base_body`
+- `rows[]`：`level` `name` `silhouette` `scale_delta` `scale_pct`  
+  - 轻门 / `same_object`：`parts_add`（L1=`—`）  
+  - `shop_ladder` / `species_change`：`evolve_to`、`merge_why`（L1 的 `merge_why` 可为 `—`）；`parts_add` 可 `—`
+
+`scale_pct` 单调递增（建议 L1 ≥ 0.58，末档 ≤ 0.80；机读下限约 0.55 / 上限约 0.82）。
 
 ```bash
 python pmem_art.py merge relation-judge --file <yaml> --all
 ```
 
-**exit 0 才能出图。** 3 稿仍不过，停在这一段，不进入第二段。
+**exit 0 才能出图。** 旧 canonical（无 `chain_mode`、八行、`parts_add`）仍应能过轻门。
 
-关系过了，每一档单独出一张正方形核对。对不上就只改那一档，不重选八件。然后跑 `merge audit`。没过可以 `merge normalize` 一次再 audit。仍不过就逐格重出，不要靠归一化交差。audit 没过，不能进第二段。
+**同范围重跑**（`same_object`）：`surface`、`base_body`、零件链从旧稿抄死；出图句每档重复母体 + 只加本档 `parts_add`。
 
-## 第二段 · 美术
+## 出图
 
-只从第一段过关的正方形接着画，不重选八件。每一档仍是单独一张正方形。最多再 4 轮，合格线 ≥9.5，`converge start --scale medium`。表面那一句每轮原样保留。生图句不写光影张力、体积光、次表面散射。件数、顺序、档位大小继续锁着。
+### `delivery=per_cell`（无整表信号时的默认）
 
-关系是单独一道门：同一物件、每档只加一块、一句画风、无脸、无等级字。关系没过就不能出图，也不能靠美术分停。每一档的美术分用图标 C 的加权调和平均（剪影、描边色板、棚拍光和无瑕疵进平均；透明底和无字只做门槛）。只变大、零件没增加，不能停。换材质写进该档的具体零件。关系散了，美术分再高也不算过。
+关系过了 → 一档一张正方形 → `merge audit` → 可选 `normalize` 一次再 audit → 第二段 converge（最多 4 轮，≥9.5）。  
+每档首轮仍过 reasonableness review。不垫风格参考文件；不垫对方模型成图做「公平对比」。
 
-同一档继续修时，每一轮垫的是这一档第一张关系过关的正方形，只在提示词里改点名的那一处。不垫风格参考文件，不垫上一轮更高分的成图，也不把前几轮修正叠进同一段。
+### `delivery=overview_sheet`
 
-每轮先出图再看像素。向玩家写出六维分、不足、下一轮改点，并再查第一段的关系。第二段每一轮 judge 之后再跑一次 audit。关系还在、audit 过了、美术分 ≥9.5，才停。关系散了或 audit 没过，这一轮美术分再高也不算过。满 4 轮还没有两段都过的，留下美术最高且关系仍在、audit 也过的那些正方形；关系都不在了，就交付第一段那些过关的正方形。
+关系过了 → **单次**生成整表：
+- 有整表格子参考：垫该参考，行列与白卡深底跟参考一致；格内换题材。
+- 有多张 L1：可垫 L1 锁第 1 列 / 各行首格。
+- 按五问+链表验收。失败只改提示词重出，**累计 ≤ 3 次**；满 3 次停止并列出缺陷。  
+禁止整表抠格当逐格成品。多模型对比时禁止把 A 模型整表垫进 B 模型参考。
+
+## 第二段 · 美术（仅 per_cell）
+
+最多 4 轮，≥9.5。表面句原样保留。关系散了或 audit 不过，美术分再高也不算过。
 
 ```bash
 python pmem_art.py merge audit --dir <目录> --phase1 <yaml> --track <域名>
 ```
 
-用 `converge generate` 记生图，`converge judge` 记审图，结束时 `converge finish`。
+`converge generate` / `judge` / `finish` 记账。
 
 ## 禁止
 
-- 没过 `relation-judge` 就出图或上展示。
-- 把八件画进同一张当成品。
-- 从同框预览里抠图代替逐格重出。
-- 垫风格参考文件，或让 L2–L8 全部垫 L1 来锁占格。
+- 没过 `relation-judge` / 五问就出图。
+- 有整表格子参考或「一起出」却走 `per_cell` 逐格狂刷。
+- 有整表参考却不数行列、不垫参考、硬做成默认 8 档。
+- 「一组 X」未说同模加零件却默认 `same_object` 焊单母体。
+- 用口味「禁止换物种」压过「一组不同 X」/ `species_change`。
+- 未点名换货却默认锁 `shop_ladder`，或未选链型却强行锁 `base_body`。
+- 玩家只要六档却硬凑八档无意义补档。
+- `overview_sheet` 超过 3 次整表重出仍不停手。
+- 从同框/整表抠图代替逐格交货（当 `delivery=per_cell` 时）。
+- 公平对比时垫对方成图。
+- `per_cell` 用白/灰卡底交差；或把整表参考拆成单张白卡狂刷。
+- 糖果轨默认焊蛋糕/马卡龙/纸杯蛋糕。
 """,
     },
     {
@@ -968,7 +1081,7 @@ python pmem_art.py merge audit --dir <目录> --phase1 <yaml> --track <域名>
 | **图标 A** | iOS/Android 桌面启动图标、App Icon 1024 母版 | `/pmem-icon` A |
 | **图标 B** | 线性 SVG 导航/功能图标集 | `/pmem-icon` B |
 | **图标 C** | 游戏背包道具格、透明底栅格图标 | `/pmem-icon` C |
-| **合成梯** | 同域 L1–L8 升级链、一档比一档大 | `/pmem-merge-ladder` |
+| **合成梯** | 同域升级链（默认 8 档可 6 档）、一档比一档大 | `/pmem-merge-ladder` |
 | **锁风格 brief** | 只要色板/光影/禁用词文字规格，不求出图 | `/pmem-style-lock`（或先出文字再锁） |
 
 认成 UI / 图标 / 合成梯时：**禁止**用普通插画句式交差。类型在「原画 vs 普通图」「图标 A vs C」之间晃，先问玩家，不要猜完就出 4 套混类方案。
@@ -1057,6 +1170,7 @@ python pmem_art.py merge audit --dir <目录> --phase1 <yaml> --track <域名>
    - 每套：**方案名**（≤四字）· **中文目标句** · **英文执行句** · **本套侧重** · **相对原话改了什么** · **建议交给：`/pmem-…`**
    - 变体/锁死 brief 等极确定时只出 **1 套**，并写：「只有一套：因为……再拆会和原话冲突。」
 4. 问玩家：选字母，或补充/改口（含「其实我要的是 UI 不是原画」这类改类型）。**点选前禁止开生图。**
+5. 玩家选定某套后交给出图技能时：该套中文/英文目标句可作为 `reasonableness review` 的 `--draft`；出图支路仍须再跑一次闸门并产出 `--revised`（可在选定句上补硬锁与元素预算）。
 
 ## 怎么用（复制即用）
 ```text

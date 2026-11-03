@@ -1,0 +1,124 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-11-02 19:14:44 UTC+8",
+  "session_id": "xmas-appicon-wow",
+  "goal": "STUNNING 1024 Christmas App Icon remake: same ginger-braid mother clutching crying baby; cinematic wow; broken blizzard window LEFT; empty snowy sill NO candle/NO open flame on draft; distant soft Christmas lights outside through snow OK; warm bounce only from deep interior RIGHT off-frame; stronger emotion, glass shards catch light, denser snow atmosphere, worn festive red-green clothes; full-bleed square; center 72-80% safe zone; no text; mobile game icon punch",
+  "module": "icon.AppIcon",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 3,
+  "winner_score": 9.64,
+  "winner_image": "assets/icon/christmas/xmas_appicon_wow_1024.png",
+  "winner_passed": false,
+  "outcome": "⚠️ **共执行 4 轮审图（目标阈值 `9.50` 分），未达标，已挑选全阶段最高分**（胜出：第 3 轮 `9.64 / 10.0` 分）",
+  "what_fixed": [
+    "同机位同人；把碎玻璃打出冰晶高光条；暴雪体积感加厚；左右冷暖切割更狠；泪珠高光与眼神加大；脸周轻微呼吸雾；窗外远灯更少更柔；仍禁窗台任何明火",
+    "轻微压碎玻璃过曝、远灯更少；导出1024母版与尺寸矩阵；叙事道具不再改",
+    "无关键阻断",
+    "无"
+  ],
+  "what_still_weak": "无关键阻断",
+  "strengths": "惊艳点到位：冰晶碎玻璃+体积暴雪+冷暖硬切+呵气泪光；窗台无明火；1024与尺寸包齐",
+  "taste_deltas": {
+    "from_strengths": [
+      "惊艳点到位：冰晶碎玻璃+体积暴雪+冷暖硬切+呵气泪光；窗台无明火；1024与尺寸包齐"
+    ],
+    "from_defects": [
+      "多尺寸包未齐；碎玻璃边缘偶有过亮可能糊小尺寸；远景灯可再克制一点",
+      "无关键阻断",
+      "无"
+    ]
+  },
+  "warm_start_confidence": 0.85,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 9.31,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 9.48,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 9.64,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 9.45,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：整体仍偏上一版同框感，惊艳不够：碎玻璃高光弱、暴雪体积感一般、暖冷切割不够电影、泪光与眼神冲击未顶满、缩到60px戏剧性不足",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.31"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：整体仍偏上一版同框感，惊艳不够：碎玻璃高光弱、暴雪体积感一般、暖冷切割不够电影、泪光与眼神冲击未顶满、缩到60px戏剧性不足",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "9.31"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：窗台无明火；远景圣诞灯晕合理；左右冷暖成立；双人圣诞剪影可读",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.31"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：多尺寸包未齐；碎玻璃边缘偶有过亮可能糊小尺寸；远景灯可再克制一点",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "9.48"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：多尺寸包未齐；碎玻璃边缘偶有过亮可能糊小尺寸；远景灯可再克制一点",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "9.48"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：碎玻璃冰晶高光与暴雪体积感上来了；冷暖硬切更电影；呵出白雾与泪光加强情绪冲击；窗台仍无明火",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.48"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：无关键阻断",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.64"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：惊艳点到位：冰晶碎玻璃+体积暴雪+冷暖硬切+呵气泪光；窗台无明火；1024与尺寸包齐",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.64"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：无",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.45"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：惊艳定稿锁定：冰晶碎玻璃、体积暴雪、冷暖硬切、呵气泪光、窗台无明火、尺寸包齐",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.45"
+    }
+  ]
+}

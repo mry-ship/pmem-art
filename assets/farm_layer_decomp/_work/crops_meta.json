@@ -1,0 +1,156 @@
+{
+  "background": {
+    "L": 0,
+    "T": 0,
+    "R": 409,
+    "B": 1024,
+    "cw": 409,
+    "ch": 1024,
+    "scale": 2,
+    "crop_file": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\farm_layer_decomp\\_work\\crops\\background.png",
+    "up_size": [
+      818,
+      2048
+    ]
+  },
+  "barn": {
+    "L": 0,
+    "T": 8,
+    "R": 237,
+    "B": 318,
+    "cw": 237,
+    "ch": 310,
+    "scale": 3,
+    "crop_file": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\farm_layer_decomp\\_work\\crops\\barn.png",
+    "up_size": [
+      711,
+      930
+    ]
+  },
+  "truck": {
+    "L": 29,
+    "T": 183,
+    "R": 249,
+    "B": 402,
+    "cw": 220,
+    "ch": 219,
+    "scale": 3,
+    "crop_file": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\farm_layer_decomp\\_work\\crops\\truck.png",
+    "up_size": [
+      660,
+      657
+    ]
+  },
+  "shed": {
+    "L": 192,
+    "T": 142,
+    "R": 409,
+    "B": 494,
+    "cw": 217,
+    "ch": 352,
+    "scale": 3,
+    "crop_file": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\farm_layer_decomp\\_work\\crops\\shed.png",
+    "up_size": [
+      651,
+      1056
+    ]
+  },
+  "hay": {
+    "L": 0,
+    "T": 326,
+    "R": 151,
+    "B": 555,
+    "cw": 151,
+    "ch": 229,
+    "scale": 3,
+    "crop_file": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\farm_layer_decomp\\_work\\crops\\hay.png",
+    "up_size": [
+      453,
+      687
+    ]
+  },
+  "trough": {
+    "L": 213,
+    "T": 377,
+    "R": 409,
+    "B": 626,
+    "cw": 196,
+    "ch": 249,
+    "scale": 3,
+    "crop_file": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\farm_layer_decomp\\_work\\crops\\trough.png",
+    "up_size": [
+      588,
+      747
+    ]
+  },
+  "water_tire": {
+    "L": 201,
+    "T": 439,
+    "R": 307,
+    "B": 555,
+    "cw": 106,
+    "ch": 116,
+    "scale": 3,
+    "crop_file": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\farm_layer_decomp\\_work\\crops\\water_tire.png",
+    "up_size": [
+      318,
+      348
+    ]
+  },
+  "farmer": {
+    "L": 102,
+    "T": 336,
+    "R": 257,
+    "B": 647,
+    "cw": 155,
+    "ch": 311,
+    "scale": 3,
+    "crop_file": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\farm_layer_decomp\\_work\\crops\\farmer.png",
+    "up_size": [
+      465,
+      933
+    ]
+  },
+  "tire_sheep": {
+    "L": 0,
+    "T": 479,
+    "R": 143,
+    "B": 708,
+    "cw": 143,
+    "ch": 229,
+    "scale": 3,
+    "crop_file": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\farm_layer_decomp\\_work\\crops\\tire_sheep.png",
+    "up_size": [
+      429,
+      687
+    ]
+  },
+  "path_sheep": {
+    "L": 213,
+    "T": 561,
+    "R": 352,
+    "B": 728,
+    "cw": 139,
+    "ch": 167,
+    "scale": 3,
+    "crop_file": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\farm_layer_decomp\\_work\\crops\\path_sheep.png",
+    "up_size": [
+      417,
+      501
+    ]
+  },
+  "fence": {
+    "L": 0,
+    "T": 602,
+    "R": 409,
+    "B": 851,
+    "cw": 409,
+    "ch": 249,
+    "scale": 2,
+    "crop_file": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\farm_layer_decomp\\_work\\crops\\fence.png",
+    "up_size": [
+      818,
+      498
+    ]
+  }
+}

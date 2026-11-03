@@ -57,9 +57,9 @@
     },
     {
       "id": "merge.ladder",
-      "when": "同一套东西一档比一档更大，L1–L8",
+      "when": "同域升级梯（默认 L1–L8，可 6 档）；默认同物件或轻门，点名可 shop_ladder / 整表",
       "skill": "pmem-merge-ladder",
-      "section": "同域合成梯：先过八件关系，再逐张抬到 ≥9.5",
+      "section": "同域合成梯：先定链型与关系，再按交付出图",
       "file": ".cursor/skills/pmem-merge-ladder/SKILL.md",
       "heading": "# `/pmem-merge-ladder` — 同域合成梯",
       "routable": true,

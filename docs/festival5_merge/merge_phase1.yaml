@@ -1,0 +1,72 @@
+# 节日五链 · shop_ladder L1–L6（overview_sheet）
+# 链型：同店升级，不锁 L1 母体；禁止跨店乱跳；糖果链不焊蛋糕/马卡龙/纸杯蛋糕
+version: festival5-20261102-shop-v1
+pipeline: art-merge-two-phase
+delivery: overview_sheet
+
+tracks:
+  prize:
+    module: prop.FestivalMerge.Prize
+    chain_mode: shop_ladder
+    levels: 6
+    surface: 休闲merge软塑胶卡通，圆润倒角，饱和友好色，左上软光短接触影，光洁不油亮，纯黑隔离底；单件居中无脸无等级字
+    rows:
+      - { level: 1, name: 铜章蓝环, silhouette: 小铜圆章顶短蓝环, scale_delta: 基档, scale_pct: 0.58, evolve_to: 铜质圆章奖牌, merge_why: "—", parts_add: "—" }
+      - { level: 2, name: 银星章, silhouette: 银圆章中心浮雕星, scale_delta: "+小", scale_pct: 0.62, evolve_to: 银色星心奖牌, merge_why: 两枚铜章熔成银边圆章并浮出中心星, parts_add: "—" }
+      - { level: 3, name: 金星章, silhouette: 金圆章加宽外环, scale_delta: "+小", scale_pct: 0.66, evolve_to: 金色星心奖牌, merge_why: 两枚银章熔成全金圆章加宽外环, parts_add: "—" }
+      - { level: 4, name: 桂冠金章, silhouette: 金章两侧月桂叶环, scale_delta: "+中", scale_pct: 0.70, evolve_to: 月桂环金章, merge_why: 两枚金章合成并长出两侧整圈月桂叶, parts_add: "—" }
+      - { level: 5, name: 金奖杯, silhouette: 双耳金杯矮座, scale_delta: "+中", scale_pct: 0.74, evolve_to: 双耳金奖杯, merge_why: 桂冠金章立成杯身并长出双耳与矮座, parts_add: "—" }
+      - { level: 6, name: 冠奖杯, silhouette: 金杯顶红冠双飘带, scale_delta: "+大", scale_pct: 0.78, evolve_to: 红冠金奖杯, merge_why: 两只金杯叠成更高杯身并加顶红冠与侧飘带, parts_add: "—" }
+
+  balloon:
+    module: prop.FestivalMerge.Balloon
+    chain_mode: shop_ladder
+    levels: 6
+    surface: 休闲merge软塑胶卡通，圆润倒角，饱和友好色，左上软光短接触影，光洁不油亮，纯黑隔离底；单件居中无脸无等级字
+    rows:
+      - { level: 1, name: 星绿气球, silhouette: 单绿圆气球黄星无绳, scale_delta: 基档, scale_pct: 0.58, evolve_to: 单星绿气球, merge_why: "—", parts_add: "—" }
+      - { level: 2, name: 结绳气球, silhouette: 绿气球底粉结短绳, scale_delta: "+小", scale_pct: 0.62, evolve_to: 结绳星气球, merge_why: 两只绿气球合成并长出底端粉结短绳, parts_add: "—" }
+      - { level: 3, name: 三色球束, silhouette: 三色气球共结一束, scale_delta: "+小", scale_pct: 0.66, evolve_to: 三色气球束, merge_why: 两只结绳气球合成三色气球共扎一结, parts_add: "—" }
+      - { level: 4, name: 五色球束, silhouette: 五色气球大粉结束, scale_delta: "+中", scale_pct: 0.70, evolve_to: 五色气球束, merge_why: 两束三色气球合成更大的五色束与大粉结, parts_add: "—" }
+      - { level: 5, name: 气球拱门, silhouette: 半圆五彩气球拱, scale_delta: "+中", scale_pct: 0.74, evolve_to: 五彩气球拱门, merge_why: 两束五色气球排成半圆拱门造型, parts_add: "—" }
+      - { level: 6, name: 热气球, silhouette: 条纹热气球藤篮, scale_delta: "+大", scale_pct: 0.78, evolve_to: 条纹热气球, merge_why: 拱门气球聚成条纹球囊并垂下藤篮, parts_add: "—" }
+
+  candy:
+    module: prop.FestivalMerge.Candy
+    chain_mode: shop_ladder
+    levels: 6
+    # 糖果店同域；禁止焊蛋糕/马卡龙/纸杯蛋糕（MergeLadder 排除项）
+    surface: 休闲merge软塑胶卡通，圆润倒角，饱和友好色，左上软光短接触影，光洁不油亮，纯黑隔离底；单件居中无脸无等级字
+    rows:
+      - { level: 1, name: 漩涡糖球, silhouette: 粉黄漩涡圆糖裸球, scale_delta: 基档, scale_pct: 0.58, evolve_to: 粉黄漩涡糖球, merge_why: "—", parts_add: "—" }
+      - { level: 2, name: 扭结包装糖, silhouette: 粉黄扭结糖纸两端, scale_delta: "+小", scale_pct: 0.62, evolve_to: 扭结包装糖, merge_why: 两颗糖球包进两端扭结糖纸, parts_add: "—" }
+      - { level: 3, name: 棒棒糖, silhouette: 粉黄漩涡糖圆棍, scale_delta: "+小", scale_pct: 0.66, evolve_to: 漩涡棒棒糖, merge_why: 两颗包装糖合成圆糖头并长出短棍, parts_add: "—" }
+      - { level: 4, name: 拐杖糖, silhouette: 红白粗拐杖糖, scale_delta: "+中", scale_pct: 0.70, evolve_to: 红白拐杖糖, merge_why: 两根棒棒糖弯成粗拐杖条纹糖, parts_add: "—" }
+      - { level: 5, name: 玻璃糖罐, silhouette: 圆罐满装彩糖, scale_delta: "+中", scale_pct: 0.74, evolve_to: 满装玻璃糖罐, merge_why: 多根拐杖糖与糖粒装进带盖玻璃圆罐, parts_add: "—" }
+      - { level: 6, name: 糖花束, silhouette: 多色棒糖蝶结花束, scale_delta: "+大", scale_pct: 0.78, evolve_to: 棒糖花束, merge_why: 糖罐拆出多色棒糖扎成蝶结花束, parts_add: "—" }
+
+  magic:
+    module: prop.FestivalMerge.Magic
+    chain_mode: shop_ladder
+    levels: 6
+    surface: 休闲merge软塑胶卡通，圆润倒角，饱和友好色，左上软光短接触影，光洁不油亮，纯黑隔离底；单件居中无脸无等级字
+    rows:
+      - { level: 1, name: 马戏彩球, silhouette: 红黄条纹顶白星球, scale_delta: 基档, scale_pct: 0.58, evolve_to: 马戏彩球, merge_why: "—", parts_add: "—" }
+      - { level: 2, name: 球座彩球, silhouette: 彩球立红黄矮座, scale_delta: "+小", scale_pct: 0.62, evolve_to: 座上马戏彩球, merge_why: 两枚彩球合成并立上红黄矮座, parts_add: "—" }
+      - { level: 3, name: 杂耍三球, silhouette: 蓝红黄三球三角, scale_delta: "+小", scale_pct: 0.66, evolve_to: 杂耍三球组, merge_why: 座上彩球裂成蓝红黄三球呈三角阵, parts_add: "—" }
+      - { level: 4, name: 马戏鼓, silhouette: 黄鼓红三角金边, scale_delta: "+中", scale_pct: 0.70, evolve_to: 马戏小鼓, merge_why: 三球压扁合成黄面红三角金边小鼓, parts_add: "—" }
+      - { level: 5, name: 马戏台, silhouette: 粉黄圆台灯珠边, scale_delta: "+中", scale_pct: 0.74, evolve_to: 马戏表演圆台, merge_why: 两面鼓叠成粉黄圆台并绕灯珠边, parts_add: "—" }
+      - { level: 6, name: 马戏大篷, silhouette: 红白条纹尖顶篷, scale_delta: "+大", scale_pct: 0.78, evolve_to: 马戏大篷帐篷, merge_why: 圆台升起红白条纹尖顶大篷与小旗, parts_add: "—" }
+
+  box:
+    module: prop.FestivalMerge.Box
+    chain_mode: shop_ladder
+    levels: 6
+    surface: 休闲merge软塑胶卡通，圆润倒角，饱和友好色，左上软光短接触影，光洁不油亮，纯黑隔离底；单件居中无脸无等级字
+    rows:
+      - { level: 1, name: 紫粉束口袋, silhouette: 紫布袋粉结绳, scale_delta: 基档, scale_pct: 0.58, evolve_to: 紫粉束口礼袋, merge_why: "—", parts_add: "—" }
+      - { level: 2, name: 金绣礼袋, silhouette: 紫袋金绣粉流苏, scale_delta: "+小", scale_pct: 0.62, evolve_to: 金绣紫礼袋, merge_why: 两只布袋合成并绣金纹加粉流苏, parts_add: "—" }
+      - { level: 3, name: 礼品纸袋, silhouette: 紫纸袋粉绉纸口, scale_delta: "+小", scale_pct: 0.66, evolve_to: 紫金礼品纸袋, merge_why: 礼袋挺成硬质纸袋口出粉绉纸, parts_add: "—" }
+      - { level: 4, name: 粉结礼盒, silhouette: 方紫盒大粉蝴蝶结, scale_delta: "+中", scale_pct: 0.70, evolve_to: 粉结方礼盒, merge_why: 纸袋压成方盒并系大粉蝴蝶结, parts_add: "—" }
+      - { level: 5, name: 开盖宝盒, silhouette: 开盖紫绒盒金链, scale_delta: "+中", scale_pct: 0.74, evolve_to: 开盖紫绒宝盒, merge_why: 方盒开盖成绒面宝盒露出金链, parts_add: "—" }
+      - { level: 6, name: 宝箱, silhouette: 紫金加固宝箱粉宝石锁, scale_delta: "+大", scale_pct: 0.78, evolve_to: 紫金宝箱, merge_why: 宝盒放大成带金箍与粉宝石锁的宝箱, parts_add: "—" }

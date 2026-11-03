@@ -1,0 +1,275 @@
+{
+  "session_id": "festival5-merge",
+  "started_at": "2026-11-02 19:54:31 UTC+8",
+  "goal": "五条同域合成梯 Prize/Balloon/Candy/Magic/Box：锁玩家L1母体，八档关系过门，展陈交付L1-L6并同页总览",
+  "module": "prop.FestivalMerge",
+  "mode": "text_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "medium",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "medium",
+    "label": "中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.5)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 1,
+    "target_score_threshold": 9.5,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.15,
+      "perspective_anatomy": 0.15,
+      "texture_detail": 0.15,
+      "spec_style": 0.15,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "viewpoint_frame",
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图，只在提示词上补还没过的那一处（提示词改动仍 ≤40%）",
+    "max_prompt_delta_ratio": 0.4,
+    "allow_recompose": false,
+    "allow_viewpoint_change": false,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "viewpoint_angle (不改机位与镜头视角)",
+      "element_count (不增删主体元素清单)",
+      "no_full_recompose (不做整体 recompose / 换景别故事)",
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)"
+    ],
+    "min_round_leap": 0.15,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光，表面那一句不动，只修没过的那一格",
+    "medium_family": "generic",
+    "best_direction_hint": "最优方向：光影·空气·介质；可小幅姿态/局部布局",
+    "goal": "五条同域合成梯 Prize/Balloon/Candy/Magic/Box：锁玩家L1母体，八档关系过门，展陈交付L1-L6并同页总览",
+    "module": "prop.FestivalMerge",
+    "ref_image": "",
+    "ref_analysis": ""
+  },
+  "medium_family": "generic",
+  "contract": "",
+  "target_score_threshold": 9.5,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "",
+  "ref_analysis": "",
+  "default_aspect_ratio": "",
+  "default_reference_image_paths": [],
+  "aspect_ratio": "",
+  "reference_image_paths": [],
+  "ref_physical_traits": {},
+  "param_validation": {},
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.5,
+  "accept_threshold": 9.5,
+  "max_rounds": 4,
+  "ready_to_finish": false,
+  "status": "continue",
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "4:3",
+      "reference_image_paths": [],
+      "param_validation": {
+        "three_step_verified": true,
+        "three_step_stage": "step3_judge",
+        "validation_passed": true
+      },
+      "generated_at": "20:04:36",
+      "image": "assets/festival5_merge/overview_L1_L6.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 832582,
+        "size_kb": 813.1,
+        "width": 1572,
+        "height": 1264,
+        "aspect_ratio": "393:316",
+        "canonical_aspect_ratio": "4:3",
+        "color_entropy": 7.99
+      },
+      "raw_score": 0.0,
+      "score": 0.0,
+      "target_score_threshold": 9.5,
+      "dims": "剪影8.8/描边色板9.3/棚拍光9.2/无瑕疵9.0/透明底门槛过/无字门槛过",
+      "dims_parsed": {
+        "flawlessness": 9.0
+      },
+      "weighted_score": null,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "解剖硬伤一票否决：缺少 perspective_anatomy 维（fail-closed），总分达线仍禁止停机（门槛 ≥7.5）",
+        "已忽略命令行 --score 9.20，六维未解析成功"
+      ],
+      "stagnated": false,
+      "strengths": "五链母体可认；零件递增可读；同页总览齐",
+      "defects": "L1原图分辨率低于新生档；个别档零件未严格叠加上一档全部零件；未出L7-L8故未跑满八档audit；补全透视与解剖评分并修正结构硬伤，禁止糊边融边；已忽略命令行 --score 9.20，六维未解析成功",
+      "next_fix": "需要时可补L7-L8并逐格audit；必要时把L1升到1024对齐",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.FestivalMerge\n- 置信度: 0.30（fast-track 资格: 否）\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光，表面那一句不动，只修没过的那一格| 五链L1-L6同页总览：Prize/Balloon/Candy/Magic/Box，锁玩家L1母体，单件分格后拼总览| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": null,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": true,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "composition",
+          "lesson": "本轮短板偏「composition」：L1原图分辨率低于新生档；个别档零件未严格叠加上一档全部零件；未出L7-L8故未跑满八档audit；补全透视与解剖评分并修正结构硬伤，禁止糊边融边；已忽略命令行",
+          "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+          "from_score": "0.0"
+        },
+        {
+          "category": "anatomy",
+          "lesson": "本轮短板偏「anatomy」：L1原图分辨率低于新生档；个别档零件未严格叠加上一档全部零件；未出L7-L8故未跑满八档audit；补全透视与解剖评分并修正结构硬伤，禁止糊边融边；已忽略命令行",
+          "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+          "from_score": "0.0"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：五链母体可认；零件递增可读；同页总览齐",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "0.0"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "20:04:50"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-10-30 16:11:08 UTC+8"
+    },
+    "module": "prop.FestivalMerge",
+    "goal": "五条同域合成梯 Prize/Balloon/Candy/Magic/Box：锁玩家L1母体，八档关系过门，展陈交付L1-L6并同页总览",
+    "confidence": 0.3,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "红线可控（0 条）",
+      "挂载 0 张项目知识卡 + 1 张全局美术底层基础卡"
+    ],
+    "top_recipes": [],
+    "top_redlines": [],
+    "art_decisions": [],
+    "private_knowledge": [],
+    "shared_knowledge": [
+      {
+        "id": "palette-70-20-10",
+        "title": "色彩构成：70-20-10 色板比例黄金法则",
+        "body": "画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+        "layer_scope": "shared"
+      }
+    ],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [],
+      "preferred_composition": [],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [],
+      "banned_habits": []
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.FestivalMerge\n- 置信度: 0.30（fast-track 资格: 否）\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+    "built_at": "2026-11-02 19:54:31 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：L1原图分辨率低于新生档；个别档零件未严格叠加上一档全部零件；未出L7-L8故未跑满八档audit；补全透视与解剖评分并修正结构硬伤，禁止糊边融边；已忽略命令行",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "0.0"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：L1原图分辨率低于新生档；个别档零件未严格叠加上一档全部零件；未出L7-L8故未跑满八档audit；补全透视与解剖评分并修正结构硬伤，禁止糊边融边；已忽略命令行",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "0.0"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：五链母体可认；零件递增可读；同页总览齐",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "0.0"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 4,
+  "regression_drop": 0.5,
+  "discussions": [
+    {
+      "round": 1,
+      "prompt": "画风：休闲merge软塑胶卡通，圆润倒角，饱和友好色，左上软光短接触影，光洁不油亮，浅空底；单件居中无脸无等级字。五条同物件链，展陈L1-L6，L7-L8门禁补档。\n\n【Prize·铜质圆章奖牌】\nL1 铜章蓝环 | 同心圆铜章+蓝布环 | —\nL2 银边铜章 | 铜章加银质外环 | 银质外环\nL3 星心铜章 | 银边铜章中心浮雕星 | 中心浮雕星\nL4 桂叶铜章 | 星心铜章两侧月桂叶 | 两侧月桂叶\nL5 彩带铜章 | 桂叶铜章加红绸交叉带 | 红绸交叉带\nL6 宝石铜章 | 彩带铜章中心嵌宝石 | 中心宝石\nL7 冠尖铜章 | 宝石铜章顶小冠尖 | 顶小冠尖\nL8 托底铜章 | 冠尖铜章下加矮托盘 | 矮托盘\n\n【Balloon·绿气球】\nL1 星绿气球 | 绿气球中央黄星 | —\nL2 结绳气球 | 星绿气球底扎结绳 | 底部扎结绳\nL3 双星气球 | 结绳气球加第二黄星 | 第二颗黄星\nL4 蝶结气球 | 双星气球加粉小蝶结 | 粉色小蝶结\nL5 金箍气球 | 蝶结气球加金色环箍 | 金色环箍\nL6 冠尖气球 | 金箍气球顶冠尖 | 顶冠尖\nL7 飘带气球 | 冠尖气球两侧小飘带 | 两侧小飘带\nL8 底座气球 | 飘带气球下加矮环托 | 矮环托\n\n【Candy·粉黄漩涡糖球】\nL1 漩涡糖球 | 粉黄漩涡圆糖 | —\nL2 扭结糖球 | 漩涡糖球双端扭结糖纸 | 双端扭结糖纸\nL3 棍糖球 | 扭结糖球下接短糖棍 | 短糖棍\nL4 环箍糖球 | 棍糖球赤道彩环 | 赤道彩环\nL5 蝶结糖球 | 环箍糖球顶小蝶结 | 顶小蝶结\nL6 宝石糖球 | 蝶结糖球中心糖宝石 | 中心糖宝石\nL7 金箔糖球 | 宝石糖球周缘金箔碎边 | 金箔碎边\nL8 圈足糖球 | 金箔糖球下浅金圈足 | 浅金圈足\n\n【Magic·马戏条纹星球】\nL1 马戏星球 | 红黄条纹顶白星圆球 | —\nL2 环带星球 | 马戏星球加赤道白环带 | 赤道白环带\nL3 侧星星球 | 环带星球侧面小星贴 | 侧面小星贴\nL4 托环星球 | 侧星星球底矮托环 | 矮托环\nL5 旗尖星球 | 托环星球顶小三角旗 | 顶小三角旗\nL6 鼓饰星球 | 旗尖星球两侧小圆鼓饰 | 两侧小圆鼓饰\nL7 冠箍星球 | 鼓饰星球加金冠箍 | 金冠箍\nL8 多层托星球 | 冠箍星球下多层底座 | 多层底座\n\n【Box·紫布福袋】\nL1 紫福袋 | 紫布袋粉绳结 | —\nL2 金边福袋 | 紫福袋口沿金边 | 口沿金边\nL3 圆徽福袋 | 金边福袋正面圆徽 | 正面圆徽\nL4 流苏福袋 | 圆徽福袋两侧加长流苏 | 加长流苏\nL5 绣带福袋 | 流苏福袋腰部绣带 | 腰部绣带\nL6 冠扣福袋 | 绣带福袋顶冠扣 | 顶冠扣\nL7 穗饰福袋 | 冠扣福袋肩部小穗 | 肩部小穗\nL8 托底福袋 | 穗饰福袋下金托底盘 | 金托底盘",
+      "strengths": "",
+      "defects": "第1稿自检：待独立判断六条",
+      "next_fix": "按未过行补合成理由与剪影差异"
+    },
+    {
+      "round": 2,
+      "prompt": "画风锁定：休闲merge软塑胶卡通，圆润倒角，饱和友好色，左上软光短接触影，光洁不油亮，浅空底；单件居中无脸无等级字。母体词锁死：铜质圆章奖牌 / 绿气球 / 粉黄漩涡糖球 / 马戏条纹星球 / 紫布福袋。\n\n补强合成理由（两件同档→下一档只多一块）：\nPrize L2=两枚铜章叠出银质外环；L3=两枚银边叠出中心浮雕星；余同理只加一块。\nBalloon L2=两只星绿气球扎成底部结绳；L8改为连体矮底盘托环，不另立座。\nCandy L7金箔碎边=糖皮周缘金属箔片，非布翼。\nMagic L5顶小三角旗插在球顶环孔，仍是一件星球。\nBox L4加长流苏=原粉绳穗加长加粗，不换袋种。\n\n八行剪影相邻句已互不相同，base_body词保留。",
+      "strengths": "",
+      "defects": "R1弱项：Balloon L8易看成独立底座；Candy金箔需防画成布翼；Magic旗需强调仍属单球零件",
+      "next_fix": "只改Balloon L8命名与Magic/Candy零件措辞；画风已锁"
+    },
+    {
+      "round": 3,
+      "prompt": "定稿：六条全过。画风一句已锁。五条同物件链，L1对齐玩家附图母体，展陈交付L1-L6，L7-L8仅门禁补档。\n\nPrize base_body=铜质圆章奖牌：L1铜章蓝环 → +银质外环 → +中心浮雕星 → +两侧月桂叶 → +红绸交叉带 → +中心宝石 → +顶小冠尖 → +连体矮托盘\nBalloon base_body=绿气球：L1星绿气球 → +底部扎结绳 → +第二颗黄星 → +粉色小蝶结 → +金色环箍 → +顶冠尖 → +两侧小飘带 → +连体矮底盘托环\nCandy base_body=粉黄漩涡糖球：L1漩涡糖球 → +双端扭结糖纸 → +短糖棍 → +赤道彩环 → +顶小蝶结 → +中心糖宝石 → +周缘金箔碎边 → +浅金圈足\nMagic base_body=马戏条纹星球：L1马戏星球 → +赤道白环带 → +侧面小星贴 → +矮托环 → +顶小三角旗 → +两侧小圆鼓饰 → +金冠箍 → +多层连体底座\nBox base_body=紫布福袋：L1紫福袋 → +口沿金边 → +正面圆徽 → +加长流苏 → +腰部绣带 → +顶冠扣 → +肩部小穗 → +金托底盘\n\n零件均为具体块，相邻剪影句不同，体量逐档+一圈。",
+      "strengths": "",
+      "defects": "无：六条与画风均已说通",
+      "next_fix": "写入yaml并跑relation-judge"
+    }
+  ],
+  "ActionRequired": "GENERATE_ROUND_2",
+  "showcase_ready": false
+}

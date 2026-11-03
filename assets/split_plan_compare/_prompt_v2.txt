@@ -1,0 +1,37 @@
+TASK: Annotate THIS exact reference fairy-garden image for layer-split footprints. Keep the original artwork almost unchanged — only add overlay boxes + text. Do NOT redesign characters/props/background.
+
+CRITICAL BOX RULE (most important):
+- Every bounding box MUST fully enclose the COMPLETE visible silhouette of that subject.
+- Include ALL protruding parts: wings, hats, violin bow, stems, leaves, branches, ladders, pink platforms, chimney/leaf top, boat tip, mushroom stem, dirt mound, gift boxes, lamp bloom AND its stem base, shadow contact if attached.
+- NEVER crop/cut through any part of the subject. Prefer slightly larger pad (about 2-4 percent) over cutting.
+- If unsure, expand the box outward until nothing of the subject is outside.
+
+Known failure modes to AVOID (from prior bad pass):
+- 3 treehouse: left branches/platforms must be INSIDE the box
+- 10 flower_lamp: lower stem/base must be INSIDE
+- 9 violinist: left/right/bottom (wings, bow, stump base) must be INSIDE
+- 4 mushrooms: left/right/top/bottom caps must be INSIDE
+- 2 flower_house: roof top AND base footing must be INSIDE
+- 5 pond_boat: full pond edge + full banana boat must be INSIDE
+
+DRAW:
+- Tight-but-complete neon cyan boxes (lime for overlaps), line width readable.
+- 1 bg = full-frame dashed yellow only.
+- Labels for each box in yellow, two lines:
+  Line1: number and id, like "2 flower_house"
+  Line2: normalized coords "L,T,W,H = 0.12,0.34,0.40,0.28" where L=left, T=top, W=width, H=height as fractions of the full image (origin top-left; each value 0 to 1 with 2 decimals).
+- Coordinates MUST match the drawn rectangle on this image (true overlay coords; do not invent numbers that disagree with the box).
+
+IDs (exact):
+1 bg
+2 flower_house
+3 treehouse
+4 mushrooms
+5 pond_boat
+6 food_mushroom
+7 mole
+8 flying_fairy
+9 violinist
+10 flower_lamp
+
+Allow overlapping boxes where subjects occlude. No extra subjects. No UI chrome except boxes and labels. Portrait.

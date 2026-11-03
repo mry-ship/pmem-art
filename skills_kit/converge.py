@@ -474,6 +474,7 @@ def cmd_converge(
     medium_family: str = "",
     contract: str = "",
     skip_route_gate: bool = False,
+    skip_reasonableness_gate: bool = False,
 ) -> int:
     """
     converge_mode: quality (default, dynamic threshold per scale, max 4 rounds, stop ≥9.5 or best-of-4) | fast (warm-start fast-track hints).
@@ -481,6 +482,7 @@ def cmd_converge(
     silent: default False — 默认打印评分履历；True/--quiet 仅一行结论；记忆写入始终后台静默。verbose=True 等同强制打印全量报告。
     lock_text: artist one-liner to loosen/tighten per-dim locks (e.g. 「构图松一点」→ show 95%→75%).
     skip_route_gate: 跳过「开画前必须先 route」闸门（仅点名调试；默认 False）。
+    skip_reasonableness_gate: 跳过「出图前必须 reasonableness review」闸门（仅调试；默认 False）。
     """
     if verbose:
         silent = False
@@ -655,7 +657,12 @@ def cmd_converge(
             print(f"🖼️  垫图/参考图模式: {ref_image}")
             if ref_analysis:
                 print(f"🔍 参考图解构基准: {ref_analysis}")
-        print("\n👉 Agent：请先执行第 1 步 `converge generate`（仅生图，不打分），生成完成后再独立执行第 2 步 `converge judge`（独立 VLM 审图打分）。")
+        print(
+            "\n👉 Agent：首轮出图前先过合理性闸 "
+            "`python3 pmem_art.py reasonableness review --id <session> --skill <…> "
+            "--draft \"…\" --revised \"…\" --checklist \"…\"`（必须同时交出更合理的提示词）；"
+            "再 `converge generate`（仅生图，不打分），然后 `converge judge`。"
+        )
         return 0
 
     if not sf.exists():
@@ -808,6 +815,7 @@ def cmd_converge(
         return 0
 
     if action == "generate":
+        import os as _os
         import subprocess
 
         if any([dims, defects, strengths]) or (score and float(score) > 0):
@@ -815,6 +823,27 @@ def cmd_converge(
             return 1
 
         r_no = round_num if round_num > 0 else (len(rounds) + 1)
+        env_skip_reas = _os.environ.get("PMEM_ART_SKIP_REASONABLENESS_GATE", "").strip().lower() in (
+            "1",
+            "true",
+            "yes",
+        )
+        if not skip_reasonableness_gate and not env_skip_reas:
+            from .reasonableness_gate import check_reasonableness_gate
+
+            ok_reas, reas_msg, prompt_use = check_reasonableness_gate(
+                sess, round_num=r_no, prompt=prompt or ""
+            )
+            if not ok_reas:
+                print(f"❌ [合理性闸门] {reas_msg}")
+                return 1
+            if prompt_use and prompt_use != (prompt or "").strip():
+                print(f"🧠 [合理性闸门] {reas_msg}")
+                prompt = prompt_use
+            elif reas_msg:
+                print(f"🧠 [合理性闸门] {reas_msg}")
+        elif skip_reasonableness_gate or env_skip_reas:
+            print("⚠️ [合理性闸门] 已跳过（仅调试）；日常出图技能请先 reasonableness review。")
         pending_unjudged = [
             r for r in rounds
             if not r.get("judged") and str(r.get("image") or "").strip()

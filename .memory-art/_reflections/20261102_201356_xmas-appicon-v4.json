@@ -1,0 +1,112 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-11-02 20:13:56 UTC+8",
+  "session_id": "xmas-appicon-v4",
+  "goal": "1024 App Icon revise from v3: SAME mother+baby identity; REDUCE exaggerated cold (fewer shiver wiggle lines, softer blue outline, less blizzard overwhelm); ADD Christmas atmosphere (holly/wreath on window, soft distant festive lights, warmer holiday mood); SHOW more of mother's lower body/waist/hips so figure not cropped mid-torso; full-bleed square; center 72-80% safe zone; no text; no open flame on sill",
+  "module": "icon.AppIcon",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 2,
+  "winner_score": 8.77,
+  "winner_image": "assets/icon/christmas/xmas_v4_r2.png",
+  "winner_passed": false,
+  "outcome": "⚠️ **共执行 4 轮审图（目标阈值 `9.50` 分），未达标，已挑选全阶段最高分**（胜出：第 2 轮 `8.77 / 10.0` 分）",
+  "what_fixed": [
+    "主体与室内再暖半档，窗外圣诞灯晕柔化稀疏进氛围；裤腿改成完整但旧的裙子或裤子少破洞；脸部脏污减轻；仍禁发抖线堆叠与窗台明火",
+    "减少灌入室内的雪量；裙摆完整旧但不撕烂；人物表情改成担忧偏求助而非极端凄惨；主体再吃一点金色圣诞暖光；冬青与远树灯保留但不过密",
+    "必须恢复到大腿上段构图：腰臀裙完整可见；保持少雪少发抖线；表情担忧偏求助；暖金圣诞光与冬青远树灯保留",
+    "满4轮结束，取最高分定稿"
+  ],
+  "what_still_weak": "室内仍偏凄冷，雪花灌进屋内感过强；裙摆仍破；节日暖意仍偏窗外而人物表情过惨",
+  "strengths": "下半身蓝裙收到大腿；窗框冬青在；窗外圣诞树暖灯在；发抖线基本消失",
+  "taste_deltas": {
+    "from_strengths": [
+      "下半身蓝裙收到大腿；窗框冬青在；窗外圣诞树暖灯在；发抖线基本消失"
+    ],
+    "from_defects": [
+      "室内仍偏凄冷，雪花灌进屋内感过强；裙摆仍破；节日暖意仍偏窗外而人物表情过惨",
+      "下半身又被裁回腰际，丢掉画师明确要求的大腿上段；表情仍偏惨；画幅似乎又回到半身特写",
+      "下半身又缩回腰际附近，大腿景别不如第2轮；表情仍偏凄；裙摆仍见破损"
+    ]
+  },
+  "warm_start_confidence": 0.9,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 8.59,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 8.77,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 8.3,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 8.57,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：整体仍偏破败冷调，圣诞暖意主要靠窗外远景不够进主体；裤腿破洞过大抢戏；脸上脏污仍偏重让节日感被压住",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "8.59"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：下半身已收到大腿上段；窗框冬青浆果与窗外圣诞树灯晕成立；发抖线密度下降",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.59"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：室内仍偏凄冷，雪花灌进屋内感过强；裙摆仍破；节日暖意仍偏窗外而人物表情过惨",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.77"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：下半身蓝裙收到大腿；窗框冬青在；窗外圣诞树暖灯在；发抖线基本消失",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.77"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：下半身又被裁回腰际，丢掉画师明确要求的大腿上段；表情仍偏惨；画幅似乎又回到半身特写",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "8.3"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：室内灌雪减轻；主体暖金光更足；冬青与远树灯仍在",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.3"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：下半身又缩回腰际附近，大腿景别不如第2轮；表情仍偏凄；裙摆仍见破损",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "8.57"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：暖金光更足；冬青与窗外圣诞树灯在；发抖线几乎没有",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.57"
+    }
+  ]
+}

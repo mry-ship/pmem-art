@@ -1,0 +1,112 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-11-02 20:49:26 UTC+8",
+  "session_id": "xmas-appicon-v5-warm",
+  "goal": "1024 App Icon Mode A: WARM Christmas mother+baby. SAME ginger-braid mother holding baby identity. Knee-up framing so lower body readable (skirt/pants to knees). Cozy warm indoor Christmas: Christmas tree and soft gifts nearby, golden holiday light. Soft worried help-seeking expression NOT tragic freeze scream. Gentle snow outside window OK but NO blizzard pouring in, NO dense shiver lines, NO harsh blue cold outline. Festive red-green clothes, baby Santa hat OK. Full-bleed square, no text, no pre-rounded corners, 72-80% safe zone.",
+  "module": "icon.AppIcon",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 4,
+  "winner_score": 8.79,
+  "winner_image": "assets/icon/christmas/xmas_v5_r4.png",
+  "winner_passed": false,
+  "outcome": "⚠️ **共执行 4 轮审图（目标阈值 `9.50` 分），未达标，已挑选全阶段最高分**（胜出：第 4 轮 `8.79 / 10.0` 分）",
+  "what_fixed": [
+    "拉远到明确膝上：裙子或牛仔裤到膝盖；表情改成轻求助担忧；毛衣改纯红+绿袖口无细纹；背景圣诞树礼物保留但减沙发花环密度",
+    "明确膝上：裤脚或裙摆到膝盖出现在画面下三分之一；表情改轻担忧带一点求助眼神；窗外冷蓝压暗减弱，室内树光再暖一点",
+    "硬锁膝上全身下三分之一见膝盖；头略缩小；表情轻求助；树礼物保留简一点",
+    "满4轮结束，取最高分定稿"
+  ],
+  "what_still_weak": "表情仍偏忧郁；窗外夜雪仍偏冷；跪姿让图标剪影略挤",
+  "strengths": "改跪姿后下半身牛仔裤与膝部可读性明显好于前几轮；圣诞树礼物暖光仍在；无暴雪灌屋",
+  "taste_deltas": {
+    "from_strengths": [
+      "改跪姿后下半身牛仔裤与膝部可读性明显好于前几轮；圣诞树礼物暖光仍在；无暴雪灌屋"
+    ],
+    "from_defects": [
+      "仍裁在大腿中段未到膝盖；母婴表情仍偏惨求助感不够软；窗外大块冷蓝仍压节日暖",
+      "膝上仍未兑现，又裁在大腿；表情仍偏忧郁；作为图标场景仍偏满",
+      "表情仍偏忧郁；窗外夜雪仍偏冷；跪姿让图标剪影略挤"
+    ]
+  },
+  "warm_start_confidence": 0.9,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 8.55,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 8.75,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 8.7,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 8.79,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：景别仍偏腰际到大腿上，未稳到膝上；表情仍偏惨；毛衣细密北欧纹小尺寸易糊；沙发花环相框略挤",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "8.55"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：相对冷屋原图已换成暖室内圣诞树+礼物+完整窗；无暴雪灌入无发抖线；节日气氛成立",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.55"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：仍裁在大腿中段未到膝盖；母婴表情仍偏惨求助感不够软；窗外大块冷蓝仍压节日暖",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.75"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：毛衣已是纯红绿边无细纹；圣诞树礼物暖光成立；背景比上轮干净",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.75"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：膝上仍未兑现，又裁在大腿；表情仍偏忧郁；作为图标场景仍偏满",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.7"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：暖圣诞树礼物仍在；纯红毛衣成立；室内暖",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.7"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：表情仍偏忧郁；窗外夜雪仍偏冷；跪姿让图标剪影略挤",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.79"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：改跪姿后下半身牛仔裤与膝部可读性明显好于前几轮；圣诞树礼物暖光仍在；无暴雪灌屋",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.79"
+    }
+  ]
+}

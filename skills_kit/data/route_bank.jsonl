@@ -581,6 +581,8 @@
 {"text": "应用商店那种 1024 的启动图标", "mode": "skill", "route_ids": ["icon.a"], "bucket": "heldout", "reason": "", "images": 0, "hard": true, "source": "packaged"}
 {"text": "从木剑长到圣剑，八个等级越来越大", "mode": "skill", "route_ids": ["merge.ladder"], "bucket": "heldout", "reason": "", "images": 0, "hard": true, "source": "packaged"}
 {"text": "往后出图都用这张的色板", "mode": "skill", "route_ids": ["style.lock"], "bucket": "heldout", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "锁风格再出一张验证图证明色板", "mode": "skill", "route_ids": ["style.lock", "draw.clone"], "bucket": "heldout", "reason": "", "images": 1, "hard": true, "source": "packaged"}
+{"text": "/pmem-style-lock 锁完出图验证", "mode": "skill", "route_ids": ["style.lock", "draw.clone"], "bucket": "heldout", "reason": "", "images": 1, "hard": true, "source": "packaged"}
 {"text": "先别动笔，帮我看看哪里不行", "mode": "skill", "route_ids": ["critique.review"], "bucket": "heldout", "reason": "", "images": 1, "hard": true, "source": "packaged"}
 {"text": "仓库里那些没归类的图收进图谱", "mode": "skill", "route_ids": ["atlas.file"], "bucket": "heldout", "reason": "", "images": 0, "hard": true, "source": "packaged"}
 {"text": "我最近画得怎么样，短板在哪", "mode": "skill", "route_ids": ["coach.report"], "bucket": "heldout", "reason": "", "images": 0, "hard": true, "source": "packaged"}
@@ -823,6 +825,30 @@
 {"text": "以后都按这张的颜色画，先锁风格，第42张", "mode": "skill", "route_ids": ["style.lock"], "bucket": "style", "reason": "", "images": 1, "hard": false, "source": "packaged"}
 {"text": "以后都按这张的颜色画，先锁风格，第44张", "mode": "skill", "route_ids": ["style.lock"], "bucket": "style", "reason": "", "images": 1, "hard": false, "source": "packaged"}
 {"text": "以后都按这张的颜色画，先锁风格，第46张", "mode": "skill", "route_ids": ["style.lock"], "bucket": "style", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "锁风格再出一张验证图，第0张", "mode": "skill", "route_ids": ["style.lock", "draw.clone"], "bucket": "style_then_clone", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "锁风格再出一张验证图，第2张", "mode": "skill", "route_ids": ["style.lock", "draw.clone"], "bucket": "style_then_clone", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "锁风格再出一张验证图，第4张", "mode": "skill", "route_ids": ["style.lock", "draw.clone"], "bucket": "style_then_clone", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "锁风格再出一张验证图，第6张", "mode": "skill", "route_ids": ["style.lock", "draw.clone"], "bucket": "style_then_clone", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "锁风格再出一张验证图，第8张", "mode": "skill", "route_ids": ["style.lock", "draw.clone"], "bucket": "style_then_clone", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "锁风格再出一张验证图，第10张", "mode": "skill", "route_ids": ["style.lock", "draw.clone"], "bucket": "style_then_clone", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "锁风格再出一张验证图，第12张", "mode": "skill", "route_ids": ["style.lock", "draw.clone"], "bucket": "style_then_clone", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "锁风格再出一张验证图，第14张", "mode": "skill", "route_ids": ["style.lock", "draw.clone"], "bucket": "style_then_clone", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "锁风格再出一张验证图，第16张", "mode": "skill", "route_ids": ["style.lock", "draw.clone"], "bucket": "style_then_clone", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "锁风格再出一张验证图，第18张", "mode": "skill", "route_ids": ["style.lock", "draw.clone"], "bucket": "style_then_clone", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "锁风格再出一张验证图，第20张", "mode": "skill", "route_ids": ["style.lock", "draw.clone"], "bucket": "style_then_clone", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "锁风格再出一张验证图，第22张", "mode": "skill", "route_ids": ["style.lock", "draw.clone"], "bucket": "style_then_clone", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "锁风格再出一张验证图，第24张", "mode": "skill", "route_ids": ["style.lock", "draw.clone"], "bucket": "style_then_clone", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "锁风格再出一张验证图，第26张", "mode": "skill", "route_ids": ["style.lock", "draw.clone"], "bucket": "style_then_clone", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "锁风格再出一张验证图，第28张", "mode": "skill", "route_ids": ["style.lock", "draw.clone"], "bucket": "style_then_clone", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "锁风格再出一张验证图，第30张", "mode": "skill", "route_ids": ["style.lock", "draw.clone"], "bucket": "style_then_clone", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "锁风格再出一张验证图，第32张", "mode": "skill", "route_ids": ["style.lock", "draw.clone"], "bucket": "style_then_clone", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "锁风格再出一张验证图，第34张", "mode": "skill", "route_ids": ["style.lock", "draw.clone"], "bucket": "style_then_clone", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "锁风格再出一张验证图，第36张", "mode": "skill", "route_ids": ["style.lock", "draw.clone"], "bucket": "style_then_clone", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "锁风格再出一张验证图，第38张", "mode": "skill", "route_ids": ["style.lock", "draw.clone"], "bucket": "style_then_clone", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "锁风格再出一张验证图，第40张", "mode": "skill", "route_ids": ["style.lock", "draw.clone"], "bucket": "style_then_clone", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "锁风格再出一张验证图，第42张", "mode": "skill", "route_ids": ["style.lock", "draw.clone"], "bucket": "style_then_clone", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "锁风格再出一张验证图，第44张", "mode": "skill", "route_ids": ["style.lock", "draw.clone"], "bucket": "style_then_clone", "reason": "", "images": 1, "hard": false, "source": "packaged"}
+{"text": "锁风格再出一张验证图，第46张", "mode": "skill", "route_ids": ["style.lock", "draw.clone"], "bucket": "style_then_clone", "reason": "", "images": 1, "hard": false, "source": "packaged"}
 {"text": "只审这张，别画，第0张", "mode": "skill", "route_ids": ["critique.review"], "bucket": "critique", "reason": "", "images": 1, "hard": false, "source": "packaged"}
 {"text": "只审这张，别画，第2张", "mode": "skill", "route_ids": ["critique.review"], "bucket": "critique", "reason": "", "images": 1, "hard": false, "source": "packaged"}
 {"text": "只审这张，别画，第4张", "mode": "skill", "route_ids": ["critique.review"], "bucket": "critique", "reason": "", "images": 1, "hard": false, "source": "packaged"}

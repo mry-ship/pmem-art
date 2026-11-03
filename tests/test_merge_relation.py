@@ -117,6 +117,56 @@ class MergeRelationTests(unittest.TestCase):
         ok, issues = judge_relation_rows(rows, track=track)
         self.assertTrue(ok, issues)
 
+    def test_shop_ladder_levels_six_needs_evolve_and_why(self) -> None:
+        track = {
+            "chain_mode": "shop_ladder",
+            "levels": 6,
+            "rows": [
+                {
+                    "level": i,
+                    "name": f"n{i}",
+                    "silhouette": f"s{i}",
+                    "scale_pct": 0.58 + (i - 1) * 0.04,
+                    "evolve_to": f"e{i}",
+                    "merge_why": "两件合成具体下一档" if i > 1 else "—",
+                    "parts_add": "—",
+                }
+                for i in range(1, 7)
+            ],
+        }
+        rows = parse_rows(track)
+        ok, issues = judge_relation_rows(rows, track=track)
+        self.assertTrue(ok, issues)
+        bad = dict(track)
+        bad["rows"] = [dict(r) for r in track["rows"]]
+        bad["rows"][2]["merge_why"] = "更华丽"
+        ok2, issues2 = judge_relation_rows(parse_rows(bad), track=bad)
+        self.assertFalse(ok2)
+        self.assertTrue(any("merge_why" in it for it in issues2), issues2)
+
+    def test_overview_grid_levels_fifteen_allowed(self) -> None:
+        """5×3 atlas reference: levels=15 must parse and pass species_change gate."""
+        track = {
+            "chain_mode": "species_change",
+            "levels": 15,
+            "rows": [
+                {
+                    "level": i,
+                    "name": f"n{i}",
+                    "silhouette": f"s{i}",
+                    "scale_pct": 0.55 + (i - 1) * 0.015,
+                    "evolve_to": f"e{i}",
+                    "merge_why": "两件合成具体下一档" if i > 1 else "—",
+                    "parts_add": "—",
+                }
+                for i in range(1, 16)
+            ],
+        }
+        rows = parse_rows(track)
+        self.assertEqual(len(rows), 15)
+        ok, issues = judge_relation_rows(rows, track=track)
+        self.assertTrue(ok, issues)
+
     def test_duplicate_silhouette_fails(self) -> None:
         rows = parse_rows(
             {

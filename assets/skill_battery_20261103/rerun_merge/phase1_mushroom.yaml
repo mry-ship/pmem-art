@@ -1,0 +1,19 @@
+# 电池测合成梯：同物件蘑菇台零食链 · 6档
+version: battery-mushroom-20261103-v1
+pipeline: art-merge-two-phase
+delivery: per_cell
+
+tracks:
+  snack_mushroom:
+    module: prop.BatteryMerge
+    chain_mode: same_object
+    levels: 6
+    base_body: 红伞白斑蘑菇台
+    surface: 软塑胶圆润厚实体玩具感，纯黑隔离底，棚顶软光短接触影，色块饱和，表面光洁不油亮；每档单件居中无脸无等级字
+    rows:
+      - { level: 1, name: 空蘑菇台, silhouette: 红伞白斑矮蘑菇台空顶, scale_delta: 基档, scale_pct: 0.58, parts_add: "—" }
+      - { level: 2, name: 单奶酪蘑菇, silhouette: 红伞蘑菇台上放一块瑞士奶酪, scale_delta: "+小", scale_pct: 0.61, parts_add: 一块开孔奶酪 }
+      - { level: 3, name: 双奶酪蘑菇, silhouette: 红伞蘑菇台叠两块奶酪, scale_delta: "+小", scale_pct: 0.64, parts_add: 第二块更小奶酪叠上 }
+      - { level: 4, name: 奶酪蓝莓蘑菇, silhouette: 红伞蘑菇台奶酪旁加两颗蓝果, scale_delta: "+中", scale_pct: 0.68, parts_add: 两颗带叶蓝莓 }
+      - { level: 5, name: 果盘蘑菇, silhouette: 红伞蘑菇台奶酪蓝果再加橙果, scale_delta: "+中", scale_pct: 0.72, parts_add: 三颗带梗橙果 }
+      - { level: 6, name: 盛宴蘑菇, silhouette: 红伞蘑菇台满载奶酪双色果绿叶, scale_delta: "+大", scale_pct: 0.78, parts_add: 几片绿叶垫底围边 }

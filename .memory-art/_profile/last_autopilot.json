@@ -1,13 +1,12 @@
 {
-  "ran_at": "2026-10-30 21:03:15 UTC+8",
-  "source": "converge_finish",
-  "session_id": "black-friday-opt-1030",
-  "tip": "「小提示」下次注意：光影",
-  "tip_candidate": "「小提示」下次注意：光影",
+  "ran_at": "2026-11-03 20:54:15 UTC+8",
+  "source": "feedback",
+  "session_id": "fb-style_redline",
+  "tip": null,
+  "tip_candidate": "「小提示」已记住：不要过曝高光",
   "taste_changes": [],
   "learn_queued": [
-    "palette-70-20-10",
-    "material-surface-physics"
+    "key-extreme-breakdown"
   ],
-  "avg_winner_score": 9.03
+  "avg_winner_score": 9.41
 }

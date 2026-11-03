@@ -38,10 +38,14 @@ python3 pmem_art.py search --module <ui.模块>
 2. 若无概念图：先生成 **1 张完整屏幕概念稿**（整屏布局，统一材质与色板），用 `/pmem-draw` 同款 **4轮 >= 9.5 收敛** 打磨概念稿：
    ```bash
    python3 pmem_art.py converge start --goal "UI概念稿：<屏幕类型+风格>" --module <ui.模块> [--scale medium|high]
+   # 首轮前必过合理性闸（同时交出更合理提示词）：
+   python3 pmem_art.py reasonableness review --id <session> --skill ui \
+     --draft "<草稿>" --revised "<分区/控件/禁忌写清的修订句>" \
+     --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;layout_zones=ok;no_content_clutter=ok"
    # 每轮：converge generate 生图，再 converge judge 审图，直到 >= 9.5 或满 4 轮
    python3 pmem_art.py converge finish
    ```
-3. **概念稿通过后才进入组件表**——不要在概念未锁定时散生按钮。
+3. **概念稿通过后才进入组件表**——不要在概念未锁定时散生按钮。合理性闸不过不许 generate。
 
 ### 点名了某款产品的主界面
 主界面概念不是空心九宫格，也不是关卡棋盘。玩家点名某款游戏的主界面时，可以先看一张该产品主界面的真实截图，只为了把下面八项写进提示词。生图只交这段文字，不把截图垫进生成，也不要照着像素克隆。

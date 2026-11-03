@@ -30,6 +30,8 @@ CANON_TEMPLATES: dict[str, str] = {
     "icon.c": "背包道具透明底栅格图标；走图标C",
     "merge.ladder": "同一套东西一档比一档大；走合成梯",
     "style.lock": "以后按这张色板画风；走锁风格；不生图",
+    # 锁风后还要成图验证：标准句必须带「验证图」，否则二次 plan 会卡在只入库
+    "style.then_clone": "先锁风格再出一张验证图；走锁风格后克隆验证",
     "critique.review": "只审不画；走审图",
     "atlas.file": "散图归位；走归档",
     "coach.report": "看进步或短板或知识卡；走教练",
@@ -96,7 +98,20 @@ def infer_signals(
         "icon_c": _has(raw, r"背包|道具格|透明底") and _has(raw, r"64|128|256|图标"),
         "merge": _has(raw, r"合成梯|一档比一档|越升越大|合成升级"),
         "key": _has(raw, r"主视觉|概念海报|Key\s*Art|气氛图"),
-        "style": _has(raw, r"以后按这张|锁风格|都用这张的色"),
+        "style": _has(raw, r"以后按这张|锁风格|都用这张的色|锁定画风|锁定风格|风格锁定"),
+        # 锁完还要验证成图（排除「以后/往后出图都按」只锁不画）
+        "style_then_verify": (
+            _has(
+                raw,
+                r"验证图|验证出图|锁完出图|锁完再画|先锁再画|为了出图|证明锁风|"
+                r"试跑验证|锁风验证|锁风格后克隆|走锁风格后克隆",
+            )
+            or (
+                _has(raw, r"出图|生图|画一张|先出一张")
+                and _has(raw, r"锁风格|锁定风格|锁定画风|风格锁定|以后按这张|都用这张的色")
+                and not _has(raw, r"以后出图|往后出图|出图都按|出图都用|以后都按|以后都用")
+            )
+        ),
         # 「别画原来的人」是克隆信号，不要误判成只审
         "critique": (
             _has(raw, r"只审|先看看哪不行")
@@ -145,6 +160,8 @@ def build_canonical_brief(
         rid = "draw.variant"
     elif sig["key"]:
         rid = "draw.key"
+    elif sig["style"] and sig.get("style_then_verify"):
+        rid = "style.then_clone"
     elif sig["style"]:
         rid = "style.lock"
     elif sig["critique"]:

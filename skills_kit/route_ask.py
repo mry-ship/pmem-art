@@ -62,9 +62,10 @@ def detect_vague_ask(
     if soft_merge and not clear_merge:
         return merge_ask
 
-    # 已经认成明确专技：不再用糊话门改判（锁风格无样张仍要问）
+    # 已经认成明确专技：不再用糊话门改判（锁风格无样张仍要问；含串行 style→clone）
     if pl is not None and pl.mode == "skill" and pl.route_ids and pl.route_ids != ["draw.ordinary"]:
-        if not (list(pl.route_ids) == ["style.lock"] and not pics):
+        style_needs_ref = bool(pl.route_ids) and pl.route_ids[0] == "style.lock" and not pics
+        if not style_needs_ref:
             # 无图「继续那条」被折成合成梯、但原话没有清楚合成词 → 仍要问清
             if not (
                 list(pl.route_ids) == ["merge.ladder"]

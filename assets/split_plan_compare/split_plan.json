@@ -1,0 +1,207 @@
+{
+  "ref": "ref_full.jpg",
+  "notes": "恢复用户认可的加宽版（微调 v4 之前）；宁松勿切",
+  "modules": [
+    {
+      "id": "bg",
+      "name": "1 bg",
+      "z": 1,
+      "crop": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+      ],
+      "mode": "full",
+      "keep": "empty stage background",
+      "remove": "characters props",
+      "file": "bg.png",
+      "_pixel_aspect": 0.399,
+      "_size": "1024x1536",
+      "_quality": "high",
+      "_area": 1.0,
+      "_match_score": 1.0,
+      "_calibrate_fail": false
+    },
+    {
+      "id": "flower_house",
+      "name": "2 flower_house",
+      "z": 2,
+      "crop": [
+        0.0196,
+        0.1191,
+        0.7188,
+        0.5508
+      ],
+      "keep": "FULL cottage: purple petal roof tip, brown eaves, white walls, windows, door, snail/base footing, right-side leaves/eaves fully inside",
+      "remove": "treehouse trunk/platforms, flying fairy, pond, violinist",
+      "file": "flower_house.png",
+      "_pixel_aspect": 0.521,
+      "_size": "1024x1536",
+      "_quality": "high",
+      "_area": 0.3959,
+      "_match_score": 1.0,
+      "_calibrate_fail": false
+    },
+    {
+      "id": "treehouse",
+      "name": "3 treehouse",
+      "z": 3,
+      "crop": [
+        0.2176,
+        0.0596,
+        0.7604,
+        0.5195
+      ],
+      "keep": "FULL treehouse including LEFT protruding branch with purple buds, all pink platforms, ladder, roof, trunk",
+      "remove": "flower house body, mole, food mushroom",
+      "file": "treehouse.png",
+      "_pixel_aspect": 0.585,
+      "_size": "1024x1536",
+      "_quality": "high",
+      "_area": 0.395,
+      "_match_score": 1.0,
+      "_calibrate_fail": false
+    },
+    {
+      "id": "mushrooms",
+      "name": "4 mushrooms",
+      "z": 4,
+      "crop": [
+        0.0,
+        0.3799,
+        0.3178,
+        0.2197
+      ],
+      "keep": "ALL small blue/pink mushrooms full caps and stems",
+      "remove": "boat, house",
+      "file": "mushrooms.png",
+      "_pixel_aspect": 0.578,
+      "_size": "1024x1536",
+      "_quality": "high",
+      "_area": 0.0698,
+      "_match_score": 1.0,
+      "_calibrate_fail": false
+    },
+    {
+      "id": "pond_boat",
+      "name": "5 pond_boat",
+      "z": 5,
+      "crop": [
+        0.0,
+        0.4492,
+        0.5477,
+        0.2803
+      ],
+      "keep": "FULL blue pond shoreline + FULL yellow banana boat hull and mast, water ripples",
+      "remove": "violinist, flower lamp, path far side",
+      "file": "pond_boat.png",
+      "_pixel_aspect": 0.78,
+      "_size": "1024x1536",
+      "_quality": "high",
+      "_area": 0.1535,
+      "_match_score": 1.0,
+      "_calibrate_fail": false
+    },
+    {
+      "id": "food_mushroom",
+      "name": "6 food_mushroom",
+      "z": 6,
+      "crop": [
+        0.5477,
+        0.6396,
+        0.4401,
+        0.2803
+      ],
+      "keep": "red mushroom table full stem base + cheese + all fruit on top",
+      "remove": "mole body if separable, violinist",
+      "file": "food_mushroom.png",
+      "_pixel_aspect": 0.627,
+      "_size": "1024x1536",
+      "_quality": "high",
+      "_area": 0.1233,
+      "_match_score": 1.0,
+      "_calibrate_fail": false
+    },
+    {
+      "id": "mole",
+      "name": "7 mole",
+      "z": 7,
+      "crop": [
+        0.6186,
+        0.4795,
+        0.3814,
+        0.2402
+      ],
+      "keep": "mole glasses gifts BOTH boxes + full dirt mound",
+      "remove": "food mushroom top if possible",
+      "file": "mole.png",
+      "_pixel_aspect": 0.634,
+      "_size": "1024x1536",
+      "_quality": "high",
+      "_area": 0.0916,
+      "_match_score": 1.0,
+      "_calibrate_fail": false
+    },
+    {
+      "id": "flying_fairy",
+      "name": "8 flying_fairy",
+      "z": 8,
+      "crop": [
+        0.4181,
+        0.46,
+        0.401,
+        0.2598
+      ],
+      "keep": "fairy full wings hat dress basket fruit feet",
+      "remove": "path stones beyond feet, houses",
+      "file": "flying_fairy.png",
+      "_pixel_aspect": 0.617,
+      "_size": "1024x1536",
+      "_quality": "high",
+      "_area": 0.1042,
+      "_match_score": 1.0,
+      "_calibrate_fail": false
+    },
+    {
+      "id": "violinist",
+      "name": "9 violinist",
+      "z": 9,
+      "crop": [
+        0.1198,
+        0.5791,
+        0.5501,
+        0.3809
+      ],
+      "keep": "FULL wings left+right, hat, violin+bow, tuxedo, ENTIRE stump base",
+      "remove": "pond, flower lamp bloom if separable, food mushroom",
+      "file": "violinist.png",
+      "_pixel_aspect": 0.577,
+      "_size": "1024x1536",
+      "_quality": "high",
+      "_area": 0.2095,
+      "_match_score": 1.0,
+      "_calibrate_fail": false
+    },
+    {
+      "id": "flower_lamp",
+      "name": "10 flower_lamp",
+      "z": 10,
+      "crop": [
+        0.0,
+        0.5791,
+        0.4181,
+        0.4209
+      ],
+      "keep": "FULL curved stem + glowing purple lamp + ALL basal leaves at bottom foreground",
+      "remove": "violinist, stump, pond water",
+      "file": "flower_lamp.png",
+      "_pixel_aspect": 0.397,
+      "_size": "1024x1536",
+      "_quality": "high",
+      "_area": 0.176,
+      "_match_score": 1.0,
+      "_calibrate_fail": false
+    }
+  ]
+}

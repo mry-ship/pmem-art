@@ -1,0 +1,74 @@
+{
+  "schema": "pmem-art.coach.v1",
+  "built_at": "2026-11-03 20:53:14 UTC+8",
+  "reflections_scanned": 20,
+  "weak_spots": [
+    {
+      "category": "lighting",
+      "hits": 38,
+      "drills": [
+        "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+        "只改光源方向重绘一轮，强制统一高光材质"
+      ]
+    },
+    {
+      "category": "composition",
+      "hits": 31,
+      "drills": [
+        "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+        "用简单色块缩略图先定重心，再进细节"
+      ]
+    },
+    {
+      "category": "style_lock",
+      "hits": 26,
+      "drills": [
+        "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+        "打开上次混风反例，列出 3 条禁止混入的风格词"
+      ]
+    },
+    {
+      "category": "anatomy",
+      "hits": 23,
+      "drills": [
+        "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+        "头身比尺规：在草图上标 7.5 头身刻度再细化"
+      ]
+    },
+    {
+      "category": "line_edge",
+      "hits": 18,
+      "drills": [
+        "透明底边缘检查：放大 200% 查毛边与漏抠",
+        "统一描边宽度预设（如 1.5px round）整套重描"
+      ]
+    }
+  ],
+  "next_draw_goals": [
+    {
+      "draw_goal": "下一张专门练「lighting」：同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "category": "lighting"
+    },
+    {
+      "draw_goal": "下一张专门练「composition」：练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "category": "composition"
+    },
+    {
+      "draw_goal": "下一张专门练「style_lock」：对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "category": "style_lock"
+    }
+  ],
+  "capability_trend": {
+    "declining_weaknesses": [
+      "color_palette",
+      "composition",
+      "anatomy"
+    ],
+    "rising_weaknesses": [
+      "line_edge",
+      "lighting"
+    ],
+    "note": "newer vs older half of reflections"
+  },
+  "encouragement": "短板在下降，保持 warm-start + 每轮「本轮可学」闭环。"
+}

@@ -18,6 +18,8 @@ aliases:
 - base_body
 - 母体锁
 - merge漂了
+verified: '2026-11-02'
+verified_at: '2026-11-02T22:51:51.896+08:00'
 source:
   conversation: ad2110dc-14c1-4866-a441-1909136ea8d1
 ---

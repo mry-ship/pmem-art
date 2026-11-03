@@ -643,6 +643,226 @@ def _load_all_project_libraries(
     return libs
 
 
+def _norm_project_rel(root: Path, raw: str) -> str:
+    """Normalize absolute/relative image paths to repo-relative POSIX keys."""
+    s = str(raw or "").strip().replace("\\", "/")
+    if not s:
+        return ""
+    root_r = root.resolve()
+    root_s = str(root_r).replace("\\", "/")
+    low = s.lower()
+    root_low = root_s.lower()
+    if low.startswith(root_low + "/"):
+        return s[len(root_s) + 1 :].lstrip("/")
+    if low.startswith(root_low + "\\"):
+        return s[len(root_s) + 1 :].lstrip("/\\").replace("\\", "/")
+    p = Path(s)
+    try:
+        if p.is_absolute():
+            return str(p.resolve().relative_to(root_r)).replace("\\", "/")
+    except Exception:
+        pass
+    return s.lstrip("./")
+
+
+def _collect_ref_paths(root: Path, doc: dict[str, Any], rounds_raw: list) -> list[str]:
+    refs: list[str] = []
+    for raw in (
+        list(doc.get("reference_image_paths") or [])
+        + list(doc.get("default_reference_image_paths") or [])
+        + ([doc.get("ref_image")] if doc.get("ref_image") else [])
+    ):
+        n = _norm_project_rel(root, str(raw or ""))
+        if n and n not in refs:
+            refs.append(n)
+    for rr in rounds_raw:
+        if not isinstance(rr, dict):
+            continue
+        for raw in list(rr.get("reference_image_paths") or []):
+            n = _norm_project_rel(root, str(raw or ""))
+            if n and n not in refs:
+                refs.append(n)
+    return refs
+
+
+def _guess_final_image(root: Path, slim_rounds: list[dict[str, Any]], winner: str) -> str:
+    if winner:
+        return winner
+    scored = [
+        r for r in slim_rounds
+        if r.get("image") and r.get("score") is not None
+    ]
+    if scored:
+        best = max(scored, key=lambda r: float(r.get("score") or 0))
+        # 若最高分图本身是 rN 过程名，仍记为候选终稿源；真正终稿槽位由同目录 *final* 推断
+        img = str(best.get("image") or "")
+        parent = str(Path(img).parent).replace("\\", "/")
+        stem = Path(img).stem
+        # overview_5x3_cursor_r4 -> overview_5x3_cursor
+        base_stem = re.sub(r"[_-]r\d{1,2}$", "", stem, flags=re.I)
+        for key in (f"{parent}/{base_stem}_final.jpg", f"{parent}/{base_stem}_final.png",
+                    f"{parent}/{base_stem}.jpg", f"{parent}/{base_stem}.png",
+                    f"{parent}/final.jpg", f"{parent}/final.png"):
+            if (root / key).is_file():
+                return key
+        return img
+    return str((slim_rounds[-1] or {}).get("image") or "") if slim_rounds else ""
+
+
+def attach_converge_prompt_traces(
+    root: Path, assets_info: dict[str, Any]
+) -> dict[str, Any]:
+    """Load converge sessions and stamp assets with prompt-round lineage."""
+    sessions: dict[str, Any] = {}
+    conv_dir = root / MEMORY_DIR / "converge"
+    if not conv_dir.is_dir():
+        return sessions
+
+    # path(norm) -> asset key in assets_info
+    key_by_norm: dict[str, str] = {}
+    for key in assets_info.keys():
+        key_by_norm[_norm_project_rel(root, key)] = key
+        key_by_norm[str(key).replace("\\", "/")] = key
+
+    def _resolve_asset_key(img: str) -> str:
+        asset_key = key_by_norm.get(img) or key_by_norm.get(str(img).replace("\\", "/"))
+        if asset_key:
+            return asset_key
+        if not img:
+            return ""
+        norm = str(img).replace("\\", "/")
+        parts = [x for x in norm.split("/") if x]
+        # 优先：父目录+文件名（避免不同会话都叫 r1.png 时串挂）
+        if len(parts) >= 2:
+            tail2 = "/".join(parts[-2:])
+            hits2 = [k for n, k in key_by_norm.items() if n.endswith("/" + tail2) or n == tail2]
+            uniq2 = list(dict.fromkeys(hits2))
+            if len(uniq2) == 1:
+                return uniq2[0]
+        base = Path(img).name
+        hits = [k for n, k in key_by_norm.items() if n.endswith("/" + base) or n == base]
+        uniq = list(dict.fromkeys(hits))
+        return uniq[0] if len(uniq) == 1 else ""
+
+    for cf in sorted(conv_dir.glob("*.json")):
+        if cf.name.startswith("_"):
+            continue
+        try:
+            doc = json.loads(cf.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        if not isinstance(doc, dict):
+            continue
+        rounds_raw = doc.get("rounds")
+        if not isinstance(rounds_raw, list) or not rounds_raw:
+            continue
+        sid = str(doc.get("session_id") or cf.stem)
+        slim_rounds: list[dict[str, Any]] = []
+        for rr in rounds_raw:
+            if not isinstance(rr, dict):
+                continue
+            img = _norm_project_rel(root, str(rr.get("image") or ""))
+            round_refs = [
+                _norm_project_rel(root, str(x or ""))
+                for x in (rr.get("reference_image_paths") or [])
+                if str(x or "").strip()
+            ]
+            round_refs = [x for x in round_refs if x]
+            slim_rounds.append(
+                {
+                    "round": rr.get("round"),
+                    "round_label": rr.get("round_label") or f"第 {rr.get('round')} 轮",
+                    "score": rr.get("score"),
+                    "passed": bool(rr.get("passed")),
+                    "prompt": str(rr.get("prompt") or ""),
+                    "next_fix": str(rr.get("next_fix") or ""),
+                    "defects": str(rr.get("defects") or ""),
+                    "strengths": str(rr.get("strengths") or ""),
+                    "dims_parsed": rr.get("dims_parsed") if isinstance(rr.get("dims_parsed"), dict) else {},
+                    "image": img,
+                    "generated_at": str(rr.get("generated_at") or ""),
+                    "stage": str(rr.get("stage") or ""),
+                    "reference_image_paths": round_refs,
+                }
+            )
+        if not slim_rounds:
+            continue
+        winner = _norm_project_rel(
+            root, str(doc.get("winner_image") or doc.get("best_image") or "")
+        )
+        refs = _collect_ref_paths(root, doc, rounds_raw)
+        final_image = _guess_final_image(root, slim_rounds, winner)
+        sessions[sid] = {
+            "session_id": sid,
+            "goal": str(doc.get("goal") or ""),
+            "module": str(doc.get("module") or ""),
+            "threshold": doc.get("threshold") or doc.get("target_score_threshold") or 9.5,
+            "status": str(doc.get("status") or ""),
+            "max_rounds": doc.get("max_rounds") or len(slim_rounds),
+            "winner_image": winner or final_image,
+            "final_image": final_image,
+            "reference_image_paths": refs,
+            "ref_image": refs[0] if refs else "",
+            # 原图卡要用：参考图解构 / 为何从这张开跑
+            "ref_analysis": str(doc.get("ref_analysis") or "").strip(),
+            "rounds": slim_rounds,
+            "source_file": (
+                str(cf.relative_to(root)).replace("\\", "/")
+                if str(cf.resolve()).startswith(str(root.resolve()))
+                else cf.name
+            ),
+        }
+        for rr in slim_rounds:
+            img = rr.get("image") or ""
+            asset_key = _resolve_asset_key(img)
+            if not asset_key:
+                continue
+            info = assets_info.get(asset_key)
+            if not isinstance(info, dict):
+                continue
+            # 同一资产被多轮引用时，后轮覆盖轮次/prompt/score
+            info["converge_session_id"] = sid
+            info["converge_round"] = rr.get("round")
+            info["workbench_hide"] = True  # 过程图不进主画廊，进化面板再看
+            if rr.get("prompt"):
+                info["prompt"] = rr.get("prompt")
+            if rr.get("defects"):
+                info["defects"] = rr.get("defects")
+            if rr.get("next_fix"):
+                info["next_fix"] = rr.get("next_fix")
+            if isinstance(rr.get("dims_parsed"), dict) and rr.get("dims_parsed"):
+                info["dims"] = rr.get("dims_parsed")
+            if rr.get("score") is not None:
+                info["score"] = rr.get("score")
+            info["passed"] = bool(rr.get("passed"))
+            if not info.get("plate") or info.get("plate") == "final":
+                # rN / converge 产出保持过程档，避免刷屏
+                name = Path(str(info.get("path") or asset_key)).name
+                if re.search(r"(^|[_-])r\d{1,2}\.", name, re.I) or "/converge/" in str(asset_key).replace("\\", "/"):
+                    info["plate"] = "process"
+        for ref in refs:
+            rk = _resolve_asset_key(ref)
+            if not rk or not isinstance(assets_info.get(rk), dict):
+                continue
+            assets_info[rk]["converge_session_id"] = sid
+            assets_info[rk]["role"] = assets_info[rk].get("role") or "reference"
+            assets_info[rk]["plate"] = "reference"
+            assets_info[rk]["workbench_hide"] = True
+        for cand in (winner, final_image):
+            if not cand:
+                continue
+            wk = _resolve_asset_key(cand)
+            if wk and isinstance(assets_info.get(wk), dict):
+                assets_info[wk]["converge_session_id"] = sid
+                assets_info[wk]["workbench_hide"] = False
+                if assets_info[wk].get("converge_round") is None and slim_rounds:
+                    assets_info[wk]["converge_round"] = slim_rounds[-1].get("round")
+                # 终稿槽位保持可见
+                if assets_info[wk].get("plate") == "process" and "final" in Path(wk).name.lower():
+                    assets_info[wk]["plate"] = "final"
+    return sessions
+
+
 def load_project(root: Path, *, embed_images: bool = False) -> dict[str, Any]:
     """Load project memory + assets for CLI / atlas.
 
@@ -1050,18 +1270,20 @@ def load_project(root: Path, *, embed_images: bool = False) -> dict[str, Any]:
             pass
 
     project_libraries = _load_all_project_libraries(root, active_meta, assets_info)
+    converge_sessions = attach_converge_prompt_traces(root, assets_info)
 
     built_at = datetime.now(cst).strftime("%Y-%m-%d %H:%M:%S UTC+8")
     sig_src = json.dumps({
         "p": active_pid,
         "pl": [(pl.get("project_id"), pl.get("entries_count"), len(pl.get("knowledge_cards") or [])) for pl in project_libraries],
-        "a": [(k, v.get("sha256_16"), v.get("description"), v.get("role"), v.get("module"), v.get("mtime"), v.get("source")) for k, v in sorted(assets_info.items())],
+        "a": [(k, v.get("sha256_16"), v.get("description"), v.get("role"), v.get("module"), v.get("mtime"), v.get("source"), v.get("converge_session_id"), v.get("converge_round")) for k, v in sorted(assets_info.items())],
         "e": [(e.get("id"), e.get("summary"), e.get("status"), e.get("stale")) for e in entries],
         "m": list(modules.keys()),
         "t": profile_data["taste"].get("updated_at", ""),
         "k": len(profile_data["knowledge_cards"]),
         "r": len(profile_data["reflections"]),
         "ix": len(index_images),
+        "cs": len(converge_sessions),
     }, ensure_ascii=False, sort_keys=True)
     build_id = hashlib.sha256(sig_src.encode("utf-8")).hexdigest()[:16]
 
@@ -1085,6 +1307,7 @@ def load_project(root: Path, *, embed_images: bool = False) -> dict[str, Any]:
         "qa_issues": qa_issues,
         "stale_entries": stale_entries,
         "profile": profile_data,
+        "converge_sessions": converge_sessions,
     }
 
 
@@ -1625,6 +1848,37 @@ def main() -> int:
     )
     p_sgate.add_argument("--html", required=True, help="展陈 index.html 路径")
 
+    p_reas = sub.add_parser(
+        "reasonableness",
+        help="出图前合理性闸：审核草稿提示词并写出更合理的 revised（任意 generate 前必过；首轮强制用 revised）",
+    )
+    p_reas.add_argument(
+        "action",
+        nargs="?",
+        default="review",
+        choices=("review", "show", "template"),
+        help="review=审核写入会话 | show=查看 | template=打印该技能清单模板",
+    )
+    p_reas.add_argument("--id", "--session", dest="session", default="latest", help="收敛会话 id")
+    p_reas.add_argument(
+        "--skill",
+        default="ordinary",
+        help="ordinary|keyart|clone|variant|split|shotpack|ui|icon.a|icon.b|icon.c|merge",
+    )
+    p_reas.add_argument("--draft", default="", help="草稿提示词（必填）")
+    p_reas.add_argument("--revised", default="", help="更合理的修订提示词（必填；审核产物）")
+    p_reas.add_argument(
+        "--checklist",
+        default="",
+        help="清单 key=ok 或 key=fail:原因，分号分隔；缺键则不过闸",
+    )
+    p_reas.add_argument("--notes", default="", help="补充说明")
+    p_reas.add_argument(
+        "--force",
+        action="store_true",
+        help="跳过启发式词法硬拦（仍要求清单齐全且 revised 非空；慎用）",
+    )
+
     p_gate = sub.add_parser(
         "check-scale-gates",
         help="出图前验收：肯定锁 grep、recompose 新机位词、high/recompose min_rounds≥2（不调生图）",
@@ -1713,6 +1967,11 @@ def main() -> int:
         "--skip-route-gate",
         action="store_true",
         help="跳过开画前 route 闸门（仅点名/调试；默认必须先 route）",
+    )
+    p_conv.add_argument(
+        "--skip-reasonableness-gate",
+        action="store_true",
+        help="跳过出图前合理性闸（仅调试；默认必须先 reasonableness review）",
     )
 
     p_improve = sub.add_parser("improve", help="自我迭代：扫描反思+反馈 → 更新口味档案（/pmem-coach）")
@@ -1951,6 +2210,14 @@ def main() -> int:
             f"✨ 已生成可视化美术记忆图谱工作台: {out_file} "
             f"({round(out_file.stat().st_size / 1024, 1)} KB · {mode} · 索引 {n_idx} 张)"
         )
+        # 删除/文件夹定位依赖 localhost；请用 http 打开，勿只依赖双击 file://
+        try:
+            port_f = root / ".memory-art" / "atlas_reveal.port"
+            port = int((port_f.read_text(encoding="utf-8") or "0").strip() or "0") if port_f.is_file() else 0
+        except ValueError:
+            port = 0
+        if port:
+            print(f"👉 请用浏览器打开: http://127.0.0.1:{port}/art-atlas.html  （删除/垃圾桶才稳定）")
         return 0
     if args.command in ("feedback", "note"):
         from feedback import cmd_feedback
@@ -2057,6 +2324,21 @@ def main() -> int:
             medium_family=getattr(args, "medium_family", "") or "",
             contract=getattr(args, "converge_contract", "") or "",
             skip_route_gate=bool(getattr(args, "skip_route_gate", False)),
+            skip_reasonableness_gate=bool(getattr(args, "skip_reasonableness_gate", False)),
+        )
+    if args.command == "reasonableness":
+        from skills_kit.reasonableness_gate import cmd_reasonableness_at_root
+
+        return cmd_reasonableness_at_root(
+            root,
+            action=getattr(args, "action", "review") or "review",
+            session_id=getattr(args, "session", "latest") or "latest",
+            skill=getattr(args, "skill", "ordinary") or "ordinary",
+            draft=getattr(args, "draft", "") or "",
+            revised=getattr(args, "revised", "") or "",
+            checklist=getattr(args, "checklist", "") or "",
+            notes=getattr(args, "notes", "") or "",
+            force=bool(getattr(args, "force", False)),
         )
     if args.command == "improve":
         from improve import cmd_improve

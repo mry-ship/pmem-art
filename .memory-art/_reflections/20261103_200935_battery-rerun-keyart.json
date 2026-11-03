@@ -1,0 +1,98 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-11-03 20:09:35 UTC+8",
+  "session_id": "battery-rerun-keyart",
+  "goal": "原画：只借01_style画风，全新机位的童话微缩花园主视觉，禁止贴样张构图",
+  "module": "art.BatteryRerun",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 3,
+  "winner_round": 3,
+  "winner_score": 9.5,
+  "winner_image": "assets/skill_battery_20261103/rerun_keyart/r3_916.png",
+  "winner_passed": true,
+  "outcome": "✅ **经过 3 轮迭代达标定稿**（generate 与 judge 分步收敛，第 3 轮达到 `9.50 / 10.0` 分 ≥ `9.50` 分档位目标线即刻停机）",
+  "what_fixed": [
+    "削弱吊舱或推远；水珠改黏土高光小珠；主花灯更大更居中发光；保持仰视",
+    "吊舱再缩小；前景高光珠更圆润玩具感；可停若≥9.5"
+  ],
+  "what_still_weak": "残余可接受点：远景吊舱已够小；前景高光珠基本黏土化，仅余轻微水感",
+  "strengths": "仰视新机位记忆点强；layout_not_style_echo成立",
+  "taste_deltas": {
+    "from_strengths": [
+      "仰视新机位记忆点强；layout_not_style_echo成立"
+    ],
+    "from_defects": [
+      "松鼠吊舱略抢主花灯；前景草叶水珠偏写实黏土感弱；伞盖边缘可更圆润玩具感",
+      "远景吊舱仍偏抢一点；前景水珠还可更黏土化"
+    ]
+  },
+  "warm_start_confidence": 0.45,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 9.19,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 9.4,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 9.5,
+      "passed": true
+    }
+  ],
+  "lessons": [
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：松鼠吊舱略抢主花灯；前景草叶水珠偏写实黏土感弱；伞盖边缘可更圆润玩具感",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.19"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：松鼠吊舱略抢主花灯；前景草叶水珠偏写实黏土感弱；伞盖边缘可更圆润玩具感",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "9.19"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：仰视新机位成立；未贴屋船鼹鼠奶酪样张构图",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.19"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：远景吊舱仍偏抢一点；前景水珠还可更黏土化",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.4"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：主花灯居中发光成立；仰视新机位稳；未回声样张屋船构图",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.4"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：远景吊舱已够小；前景高光珠基本黏土化，仅余轻微水感",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.5"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：仰视新机位记忆点强；layout_not_style_echo成立",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.5"
+    }
+  ]
+}

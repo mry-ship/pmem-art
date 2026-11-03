@@ -483,6 +483,39 @@ def _prompt_then_draw(text: str) -> bool:
     return _wants_prompt(text) and _any(text, ("再画", "然后生图", "然后再画"))
 
 
+def _style_verify_intent(text: str) -> bool:
+    """锁完还要成图验证（不含「以后/往后出图都按」只锁不画）。"""
+    if _any(
+        text,
+        (
+            "验证图",
+            "验证出图",
+            "出一张验证",
+            "锁完出图",
+            "锁完再画",
+            "先锁再画",
+            "为了出图",
+            "证明锁风",
+            "试跑验证",
+            "锁风验证",
+            "锁风格后克隆",
+            "走锁风格后克隆",
+        ),
+    ):
+        return True
+    if _any(text, ("出图", "生图", "画一张", "先出一张")) and not _any(
+        text,
+        ("以后出图", "往后出图", "出图都按", "出图都用", "以后都按", "以后都用"),
+    ):
+        return True
+    return False
+
+
+def _style_then_clone(text: str) -> bool:
+    """锁风格之后还要验证成图：串 style.lock → draw.clone（不是只入库）。"""
+    return _wants_style(text) and _style_verify_intent(text)
+
+
 def _unrecognized(text: str) -> str:
     for word in UNRECOGNIZED_JOBS:
         if _hit(text, word):
@@ -627,6 +660,11 @@ def plan_route(
             "pmem-prompt": ["prompt.write"],
         }[named]
         reason = "named"
+        # 点名锁风格但仍要验证成图 → 升级成串行，禁止卡在只入库
+        # （「锁完出图」不一定含「锁风格」子串，故用 verify_intent）
+        if named == "pmem-style-lock" and _style_verify_intent(raw):
+            chosen = ["style.lock", "draw.clone"]
+            reason = "style_then_clone"
     elif not draw_only and len(showcase_ids) >= 2:
         chosen = showcase_ids
         reason = "showcase"
@@ -681,6 +719,10 @@ def plan_route(
         elif not draw_only and _critique_then_draw(raw):
             chosen = ["critique.review", "draw.ordinary"]
             reason = "critique_then_draw"
+        elif not draw_only and _style_then_clone(raw):
+            # 先锁色板/禁用词，再克隆验证成图；禁止卡在只入库
+            chosen = ["style.lock", "draw.clone"]
+            reason = "style_then_clone"
         elif not draw_only and _wants_style(raw):
             chosen = ["style.lock"]
             reason = "style"
@@ -765,14 +807,23 @@ def plan_route(
             done = "六维审完，不生图"
             locks = "只审"
         elif rid == "style.lock":
-            done = "色板和禁用词锁上，不生图"
-            locks = "以后按这张"
+            if reason == "style_then_clone":
+                done = "色板 HEX / 光影 / 禁用词卡片写完并入库；紧接着克隆验证，本步仍不垫成图交差"
+                locks = "只锁画风基因；下一步才换新题材出验证图"
+                note = "串行第二步必须是 draw.clone；banner 写【按 锁风格→克隆验证 走了】"
+            else:
+                done = "色板和禁用词锁上，不生图"
+                locks = "以后按这张"
         elif rid == "atlas.file":
             done = "散图归位，不生图"
             locks = "只归档"
         elif rid == "coach.report":
             done = "进步、短板或知识卡交卷，知识卡不自动写入"
             locks = "只读报告"
+        if rid == "draw.clone" and reason == "style_then_clone":
+            done = "用刚锁的色板出一张换题材验证图，≥9.50"
+            locks = "只锁上一步色板/光影/禁用词；题材必须新，禁止贴样张构图"
+            note = "垫风格样张；新题材写进提示词；构图维对样张分区回声则不可停"
         route_ids.append(rid)
         steps.append(
             _handoff(
@@ -788,12 +839,16 @@ def plan_route(
 
     mode = "default" if chosen == ["draw.ordinary"] else "skill"
     labels = "、".join(_section_label(routes[rid]) for rid in chosen)
+    if reason == "style_then_clone":
+        announce = "按 锁风格→克隆验证 走了"
+    else:
+        announce = f"按 {labels} 走了"
     return Plan(
         mode=mode,
         would_execute=True,
         execute=False,
         reason=reason,
-        announce=f"按 {labels} 走了",
+        announce=announce,
         steps=steps,
         serial=len(steps) > 1,
         parallel=False,

@@ -1,0 +1,118 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-11-02 18:46:39 UTC+8",
+  "session_id": "xmas-appicon",
+  "goal": "1024 App Icon Christmas version: same ginger-braid woman holding crying baby at broken snowy window; add Christmas attire/lights/holly/warm candle vs cold snow; full-bleed square; center 72-80% safe zone; no text",
+  "module": "icon.AppIcon",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 4,
+  "winner_score": 9.6,
+  "winner_image": "assets/icon/christmas/xmas_appicon_1024.png",
+  "winner_passed": false,
+  "outcome": "⚠️ **共执行 4 轮审图（目标阈值 `9.50` 分），未达标，已挑选全阶段最高分**（胜出：第 4 轮 `9.60 / 10.0` 分）",
+  "what_fixed": [
+    "垫原参考再编：弱化窗外远景灯串只留极淡光点；窗台冬青缩小或减一件；毛衣改为大块红绿破旧色块少碎纹；强化脸与婴儿剪影高对比；仍锁双人同机位同冷叙事",
+    "垫原参考：毛衣改为大块破旧红衣+绿袖口领口几乎无碎印花；拉开婴儿圣诞帽白毛边与红发对比；脸与泪滴再提一点高光；窗台只留一支小烛；构图剪影不变",
+    "母版已达线：导出 1024 定稿并补尺寸矩阵与 preview",
+    "已完成，可 finish"
+  ],
+  "what_still_weak": "无关键阻断项",
+  "strengths": "母版双人圣诞身份锁定；Light/Dark/Tinted 齐套；iOS/Android 尺寸矩阵与 preview 已导出；满幅直角无字",
+  "taste_deltas": {
+    "from_strengths": [
+      "母版双人圣诞身份锁定；Light/Dark/Tinted 齐套；iOS/Android 尺寸矩阵与 preview 已导出；满幅直角无字"
+    ],
+    "from_defects": [
+      "毛衣仍有细树纹雪花在29px成噪点；婴儿帽与红发边缘偶发黏连；多尺寸合规未到母版够停线",
+      "多尺寸 Light/Dark/Tinted 与导出矩阵尚未齐套",
+      "无关键阻断项"
+    ]
+  },
+  "warm_start_confidence": 0.3,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 9.11,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 9.4,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 9.55,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 9.6,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：窗外圣诞村灯与窗台冬青蜡烛叠加过密，29px易糊；毛衣细雪花树纹在小尺寸噪声；多尺寸态未齐导致多尺寸合规偏低",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "9.11"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：双人身份与构图剪影保住；圣诞毛衣/格子毯/婴儿圣诞帽一眼可读；暖烛与冷雪对比成立；满幅直角无字",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.11"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：毛衣仍有细树纹雪花在29px成噪点；婴儿帽与红发边缘偶发黏连；多尺寸合规未到母版够停线",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "9.4"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：毛衣仍有细树纹雪花在29px成噪点；婴儿帽与红发边缘偶发黏连；多尺寸合规未到母版够停线",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.4"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：毛衣仍有细树纹雪花在29px成噪点；婴儿帽与红发边缘偶发黏连；多尺寸合规未到母版够停线",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "9.4"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：多尺寸 Light/Dark/Tinted 与导出矩阵尚未齐套",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.55"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：毛衣大色块少碎纹；圣诞帽白毛边与红发分离；暖烛冷雪对比清楚；双人剪影与破窗机位锁定；满幅直角无字",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.55"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：无关键阻断项",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.6"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：母版双人圣诞身份锁定；Light/Dark/Tinted 齐套；iOS/Android 尺寸矩阵与 preview 已导出；满幅直角无字",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.6"
+    }
+  ]
+}

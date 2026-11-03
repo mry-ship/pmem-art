@@ -116,7 +116,7 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 
 定稿写明两张参考的像素必须同时出现在同一张成图里：注册表里没有 `simultaneous_pixels` 为 true 的行，就停在这一步，写明原因，不改派到多图分工，不开始出图。
 
-选中的技能会 `converge start` 时，启动后先把这一轮分析用 `converge discuss` 记进同一会话，再开始那一支自己的步骤。过程板上会留下需求是怎么定下来的。多技能依次跑时，每一支用自己的会话；对比 HTML 在全部完成后写。
+选中的技能会 `converge start` 时，启动后先把这一轮分析用 `converge discuss` 记进同一会话；**首轮 generate 前必须再跑** `reasonableness review`（`--draft` + 更合理的 `--revised` + 该技能 checklist），过闸后才出图。过程板上会留下需求与合理性修订。多技能依次跑时，每一支用自己的会话；对比 HTML 在全部完成后写。
 
 ## 交给玩家的结论
 

@@ -29,6 +29,10 @@ SKIP_DIR_NAMES = {
     "__pycache__",
     ".DS_Store",
     "Thumbs.db",
+    "_trash",          # 工作台垃圾桶，不进索引
+    "_final_backups",  # 终稿备份，不进索引
+    "_thumbs",
+    "workbench_guide", # 教学示例图，不进画廊
 }
 INDEX_REL = ".memory-art/atlas_index.json"
 DATA_REL = ".memory-art/atlas_data.json"
@@ -534,7 +538,8 @@ def reveal_in_os(path: Path) -> int:
         if sys.platform == "darwin":
             subprocess.run(["open", "-R", str(target)], check=False)
         elif sys.platform == "win32":
-            subprocess.run(["explorer", f"/select,{target}"], check=False)
+            # 两段参数，路径含空格时也能选中
+            subprocess.run(["explorer", "/select,", str(target)], check=False)
         else:
             subprocess.run(["xdg-open", str(target.parent)], check=False)
     except OSError as exc:

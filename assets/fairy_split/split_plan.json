@@ -1,0 +1,237 @@
+{
+  "ref": "ref_full.jpg",
+  "notes": "优化定块：紧脚印+遮挡闭合(底叶最高)+鼹鼠z<芝士桌+grounded分流",
+  "modules": [
+    {
+      "id": "bg",
+      "name": "10 背景",
+      "z": 1,
+      "crop": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+      ],
+      "mode": "full",
+      "keep": "sky, giant pink/purple flowers, tall grass stems, green lawn, stone path base, distant foliage — empty stage",
+      "remove": "fairies, mole, prop mushrooms, boat, pond, cheese stand, flower lamps, stump, snail, houses, treehouse, foreground dark leaves",
+      "file": "10-背景.png",
+      "grounded": false,
+      "_pixel_aspect": 0.399,
+      "_size": "1024x1536",
+      "_quality": "high",
+      "_area": 1.0,
+      "_match_score": 1.0,
+      "_calibrate_fail": false
+    },
+    {
+      "id": "flower_house",
+      "name": "1 铃兰花屋",
+      "z": 2,
+      "crop": [
+        0.0978,
+        0.1982,
+        0.4988,
+        0.3799
+      ],
+      "keep": "white fairy cottage with purple bellflower roof, brown petal eaves, windows, wooden door, snail and daisies at base",
+      "remove": "flying fairy, violinist, pond, boat, left mushrooms, treehouse",
+      "file": "1-铃兰花屋.png",
+      "_pixel_aspect": 0.524,
+      "_size": "1024x1536",
+      "_quality": "high",
+      "_area": 0.1895,
+      "_match_score": 1.0,
+      "_calibrate_fail": false
+    },
+    {
+      "id": "treehouse",
+      "name": "2 树屋",
+      "z": 3,
+      "crop": [
+        0.4988,
+        0.1387,
+        0.4792,
+        0.3994
+      ],
+      "keep": "brown tree trunk, acorn house, pink platforms, yellow rope ladder, purple buds, small hanging flower lamp on tree",
+      "remove": "main flower house, mole, food mushroom, fairies",
+      "file": "2-树屋.png",
+      "_pixel_aspect": 0.479,
+      "_size": "1024x1536",
+      "_quality": "high",
+      "_area": 0.1914,
+      "_match_score": 1.0,
+      "_calibrate_fail": false
+    },
+    {
+      "id": "mushrooms",
+      "name": "3 左蘑菇簇",
+      "z": 4,
+      "crop": [
+        0.0,
+        0.4297,
+        0.2372,
+        0.1602
+      ],
+      "keep": "cluster of blue and pink white-spotted mushrooms",
+      "remove": "house, pond, boat, grass fill",
+      "file": "3-左蘑菇簇.png",
+      "grounded": true,
+      "_pixel_aspect": 0.591,
+      "_size": "1024x1536",
+      "_quality": "medium",
+      "_area": 0.038,
+      "_match_score": 1.0,
+      "_calibrate_fail": false
+    },
+    {
+      "id": "pond_boat",
+      "name": "4 池与香蕉船",
+      "z": 5,
+      "crop": [
+        0.0367,
+        0.5293,
+        0.3985,
+        0.1504
+      ],
+      "keep": "stone-rimmed blue pond, yellow banana boat with sail, small wooden pier",
+      "remove": "house, mushrooms, violinist, flying fairy, grass fill",
+      "file": "4-池与香蕉船.png",
+      "grounded": true,
+      "_pixel_aspect": 1.058,
+      "_size": "1024x1024",
+      "_quality": "high",
+      "_area": 0.0599,
+      "_match_score": 1.0,
+      "_calibrate_fail": false
+    },
+    {
+      "id": "mole",
+      "name": "6 鼹鼠送礼",
+      "z": 6,
+      "crop": [
+        0.6186,
+        0.5,
+        0.3594,
+        0.1689
+      ],
+      "keep": "mole with glasses emerging from dirt mound holding red and blue gift boxes",
+      "remove": "food mushroom, cheese, treehouse, path fill",
+      "file": "6-鼹鼠送礼.png",
+      "grounded": true,
+      "_pixel_aspect": 0.85,
+      "_size": "1024x1536",
+      "_quality": "high",
+      "_area": 0.0607,
+      "_match_score": 1.0,
+      "_calibrate_fail": false
+    },
+    {
+      "id": "flying_fairy",
+      "name": "7 飞天仙女",
+      "z": 7,
+      "crop": [
+        0.357,
+        0.4395,
+        0.2983,
+        0.1602
+      ],
+      "keep": "blonde fairy in pink dress with iridescent wings flying while carrying fruit basket",
+      "remove": "house, tree, ground, other characters",
+      "file": "7-飞天仙女.png",
+      "grounded": false,
+      "_pixel_aspect": 0.744,
+      "_size": "1024x1536",
+      "_quality": "high",
+      "_area": 0.0478,
+      "_match_score": 1.0,
+      "_calibrate_fail": false
+    },
+    {
+      "id": "food_mushroom",
+      "name": "5 芝士蘑菇桌",
+      "z": 8,
+      "crop": [
+        0.5575,
+        0.6387,
+        0.4205,
+        0.2197
+      ],
+      "keep": "red spotted mushroom table with swiss cheese wedge and berries on top",
+      "remove": "mole, gifts, treehouse, violinist, path fill",
+      "file": "5-芝士蘑菇桌.png",
+      "grounded": true,
+      "_pixel_aspect": 0.764,
+      "_size": "1024x1536",
+      "_quality": "high",
+      "_area": 0.0924,
+      "_match_score": 1.0,
+      "_calibrate_fail": false
+    },
+    {
+      "id": "violinist",
+      "name": "8 琴仙树桩",
+      "z": 9,
+      "crop": [
+        0.2372,
+        0.5781,
+        0.3985,
+        0.3018
+      ],
+      "keep": "blue-suited fairy with top hat playing violin on tree stump, translucent wings",
+      "remove": "pond, boat, food mushroom, flower lamp, path fill, dark foreground leaf silhouettes",
+      "file": "8-琴仙树桩.png",
+      "grounded": true,
+      "_pixel_aspect": 0.528,
+      "_size": "1024x1536",
+      "_quality": "high",
+      "_area": 0.1203,
+      "_match_score": 1.0,
+      "_calibrate_fail": false
+    },
+    {
+      "id": "flower_lamp",
+      "name": "9 前景花灯",
+      "z": 10,
+      "crop": [
+        0.0,
+        0.6592,
+        0.2983,
+        0.2803
+      ],
+      "keep": "curved green stem with glowing purple bellflower lamp",
+      "remove": "violinist, stump, pond, dark leaf silhouettes, grass fill",
+      "file": "9-前景花灯.png",
+      "grounded": true,
+      "_pixel_aspect": 0.425,
+      "_size": "1024x1536",
+      "_quality": "high",
+      "_area": 0.0836,
+      "_match_score": 1.0,
+      "_calibrate_fail": false
+    },
+    {
+      "id": "fg_leaves",
+      "name": "11 底前景叶丛",
+      "z": 11,
+      "crop": [
+        0.0,
+        0.7793,
+        1.0,
+        0.2207
+      ],
+      "keep": "dark green silhouette foliage and branches framing the bottom edge only",
+      "remove": "violinist, stump, mushroom table, path stones beyond leaves, characters",
+      "file": "11-底前景叶丛.png",
+      "grounded": false,
+      "fill": "width",
+      "_pixel_aspect": 1.81,
+      "_size": "1536x1024",
+      "_quality": "high",
+      "_area": 0.2207,
+      "_match_score": 1.0,
+      "_calibrate_fail": false
+    }
+  ]
+}

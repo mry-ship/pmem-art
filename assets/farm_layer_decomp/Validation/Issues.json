@@ -1,0 +1,33 @@
+{
+  "repair_rounds": 3,
+  "pass_reconstruct": false,
+  "thresholds_note": "未达 SSIM 0.98；已达可演示叠层。单层干净度需目视（CleanSliceGate）。",
+  "metrics": {"mae": 7.173, "psnr": 20.313, "ssim_luma": 0.9197},
+  "issues": [
+    {
+      "id": "truck",
+      "severity": "NCC 分数偏低，车轮/车尾可能不完整或比例偏小",
+      "severity": "medium"
+    },
+    {
+      "id": "shed",
+      "severity": "棚体相对原图略矮，遮挡补全不完全",
+      "severity": "medium"
+    },
+    {
+      "id": "water_tire",
+      "severity": "体量偏小，蒙版保守",
+      "severity": "low"
+    },
+    {
+      "id": "fence",
+      "severity": "AI 重绘感仍在；已强制拉满 bbox 宽度，贴原不如人物/路上羊",
+      "severity": "medium"
+    },
+    {
+      "id": "background",
+      "severity": "前景挖洞后由 AI 补全，局部纹理与原图不完全一致",
+      "severity": "medium"
+    }
+  ]
+}

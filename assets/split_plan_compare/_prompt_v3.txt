@@ -1,0 +1,42 @@
+Annotate THIS exact reference image. Keep original art almost unchanged; only add overlay boxes + labels. Do NOT redesign.
+
+MOST IMPORTANT RULE: boxes must be GENEROUS. Fully enclose complete silhouettes. Prefer too large over cutting. About 4-6% padding outside every extremity.
+
+USER REJECTED previous boxes for these IDs — fix them aggressively:
+
+2 flower_house — PREVIOUSLY CUT top and bottom.
+  MUST include: tip of purple petal roof, brown scalloped eaves, white walls, windows, blue door, snail/flowers at footing, a little grass under the house.
+  Expand UP and DOWN more than you think. Do not kiss the roof tip.
+
+5 pond_boat — PREVIOUSLY CUT.
+  MUST include: entire blue pond shoreline, entire yellow banana/leaf boat including both tips and mast/sail, surrounding ripples.
+  Expand LEFT/RIGHT/BOTTOM. Water edge must not touch the box line.
+
+10 flower_lamp — PREVIOUSLY CUT bottom content.
+  MUST include: glowing purple flower lamp, full curved green stem, AND all dark green basal leaves at the very bottom-left foreground.
+  Expand DOWN and RIGHT so stem base leaves are clearly inside with padding.
+
+Also keep complete (do not cut):
+3 treehouse — include LEFT protruding branch with purple buds + all pink platforms + ladder
+4 mushrooms — full caps/stems, pad all sides
+9 violinist — full translucent wings L/R, hat, bow, entire stump base
+
+DRAW:
+- Neon cyan boxes (thicker lines), bg = dashed yellow full frame
+- Yellow labels, two lines per box:
+  Line1: "N id"
+  Line2: "L,T,W,H = a.aa,b.bb,c.cc,d.dd" normalized 0-1 top-left origin, 2 decimals, MUST match drawn rectangle
+
+IDs exact:
+1 bg
+2 flower_house
+3 treehouse
+4 mushrooms
+5 pond_boat
+6 food_mushroom
+7 mole
+8 flying_fairy
+9 violinist
+10 flower_lamp
+
+Overlaps OK. No extra subjects. Portrait.

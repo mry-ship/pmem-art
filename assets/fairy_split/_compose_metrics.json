@@ -1,0 +1,68 @@
+{
+  "bg": {
+    "box_px_asp": 0.3994,
+    "spr_asp": 0.3994,
+    "fill": 1.0,
+    "mode": "cover"
+  },
+  "flower_house": {
+    "box_px_asp": 0.5244,
+    "spr_asp": 0.6658,
+    "fill": 0.7866,
+    "mode": "contain"
+  },
+  "treehouse": {
+    "box_px_asp": 0.4786,
+    "spr_asp": 0.6458,
+    "fill": 0.7405,
+    "mode": "contain"
+  },
+  "mushrooms": {
+    "box_px_asp": 0.5915,
+    "spr_asp": 1.1071,
+    "fill": 0.5335,
+    "mode": "contain"
+  },
+  "pond_boat": {
+    "box_px_asp": 1.0552,
+    "spr_asp": 1.4832,
+    "fill": 0.711,
+    "mode": "contain"
+  },
+  "mole": {
+    "box_px_asp": 0.8493,
+    "spr_asp": 1.5454,
+    "fill": 0.5478,
+    "mode": "contain"
+  },
+  "flying_fairy": {
+    "box_px_asp": 0.7439,
+    "spr_asp": 0.7407,
+    "fill": 0.9918,
+    "mode": "contain"
+  },
+  "food_mushroom": {
+    "box_px_asp": 0.7639,
+    "spr_asp": 1.1342,
+    "fill": 0.6726,
+    "mode": "contain"
+  },
+  "violinist": {
+    "box_px_asp": 0.5259,
+    "spr_asp": 0.7311,
+    "fill": 0.7184,
+    "mode": "contain"
+  },
+  "flower_lamp": {
+    "box_px_asp": 0.4251,
+    "spr_asp": 0.6645,
+    "fill": 0.6394,
+    "mode": "contain"
+  },
+  "fg_leaves": {
+    "box_px_asp": 1.8137,
+    "spr_asp": 2.0394,
+    "fill": 0.8891,
+    "mode": "width"
+  }
+}

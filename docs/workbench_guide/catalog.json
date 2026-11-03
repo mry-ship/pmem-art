@@ -1,0 +1,1313 @@
+{
+  "version": 2,
+  "title": "pmem-art 技能教学",
+  "note": "示例图写死在 docs/workbench_guide/，不进工作台画廊索引，也不能被工作台删除。第一张一律叫「原图」。",
+  "base_dir": "docs/workbench_guide",
+  "lessons": [
+    {
+      "id": "agent",
+      "skill": "/pmem-agent",
+      "title": "总控",
+      "when": "没点名具体技能时先走这里",
+      "how": [
+        "用大白话说要什么；总控只审一轮：合理/缺漏/理解错。",
+        "只有一种确定情况就直接执行；多种情况先列出来等你确认。",
+        "点名了界面/图标/合成梯/原画/克隆等，就按点名走，不再绕总控。",
+        "总控自己不生图，定稳后交给对应技能。"
+      ],
+      "examples": [
+        {
+          "role": "original",
+          "label": "原图（海船版式题材口述锚点）",
+          "path": "agent/original.jpg",
+          "prompt": "玩家口述：帮我做乐器合成升级表，参考这张海船 5×3 版式。",
+          "defects": "只点了版式锚点，还没点名技能；交付物类型未落锤",
+          "next_fix": "总控一轮审核后交给 /pmem-merge-ladder，不要自己生图"
+        }
+      ],
+      "samples": [
+        {
+          "kind": "route",
+          "title": "① 玩家原话",
+          "body": "帮我做一套乐器合成升级表，5 列 3 行，参考这张海船版式。"
+        },
+        {
+          "kind": "route",
+          "title": "② 总控一轮审核",
+          "body": "交付物=合成梯整表（不是单张插画）。\n缺漏：链型未说清 → 默认同物件/轻门。\n版式：5×3，可垫原图锁格。\n只有一种确定情况 → 直接执行。"
+        },
+        {
+          "kind": "route",
+          "title": "③ 选定技能",
+          "body": "【按 /pmem-merge-ladder 走了】\n总控自己不生图，把定稿 brief 交给合成梯技能。"
+        }
+      ]
+    },
+    {
+      "id": "draw-ordinary",
+      "skill": "/pmem-draw · 普通图",
+      "title": "普通图",
+      "when": "单张插画/道具/气氛，没说整套 UI、升级梯、换题材克隆",
+      "how": [
+        "对话框输入 /pmem-draw 或直接说「画一张…」。",
+        "闭环最多 4 轮，合格线 ≥9.5；每轮会改提示词再出。",
+        "有原图但没说新题材 → 仍是普通图，不进克隆。"
+      ],
+      "examples": [
+        {
+          "role": "original",
+          "label": "原图（蘑菇芝士果盘意向）",
+          "path": "draw-ordinary/original.jpg",
+          "prompt": "休闲3D道具：红伞白点蘑菇托盘，上置瑞士芝士块+蓝果+橙果与绿叶，纯黑底棚拍。",
+          "defects": "伞缘与白斑偏软；芝士孔洞高光散；蓝果与伞面光感不统一",
+          "next_fix": "收伞缘/白斑边缘；收紧芝士高光；统一棚拍主光",
+          "score": 8.86,
+          "passed": false,
+          "dims": {
+            "composition": 8.9,
+            "lighting_color": 8.7,
+            "perspective_anatomy": 8.9,
+            "texture_detail": 8.8,
+            "spec_style": 9.0,
+            "flawlessness": 8.7
+          }
+        },
+        {
+          "role": "process",
+          "label": "过程 R1",
+          "path": "draw-ordinary/process_r1.jpg",
+          "round": 1,
+          "score": 9.44,
+          "passed": false,
+          "prompt": "同上题材：蘑菇托盘+芝士+蓝果+橙果；sharpen 伞缘与白斑，收紧芝士孔洞高光，黑底棚拍。",
+          "defects": "伞斑边缘仍略糊；芝士孔洞高光偏爆；绿叶层次偏平",
+          "next_fix": "再收伞斑边缘；压芝士高光；给绿叶一点体积层次",
+          "dims": {
+            "composition": 9.5,
+            "lighting_color": 9.4,
+            "perspective_anatomy": 9.4,
+            "texture_detail": 9.5,
+            "spec_style": 9.5,
+            "flawlessness": 9.4
+          }
+        },
+        {
+          "role": "final",
+          "label": "终稿 R2",
+          "path": "draw-ordinary/final.jpg",
+          "round": 2,
+          "score": 9.54,
+          "passed": true,
+          "prompt": "蘑菇芝士果盘道具终稿：伞缘清晰、芝士高光收束、蓝果/橙果与伞面光感统一，黑底可读。合格线 ≥9.5。",
+          "defects": "",
+          "next_fix": "已达标，可交稿",
+          "dims": {
+            "composition": 9.6,
+            "lighting_color": 9.5,
+            "perspective_anatomy": 9.5,
+            "texture_detail": 9.6,
+            "spec_style": 9.6,
+            "flawlessness": 9.5
+          }
+        }
+      ],
+      "rounds": [
+        {
+          "round": 1,
+          "label": "过程 R1",
+          "score": 9.44,
+          "passed": false,
+          "path": "draw-ordinary/process_r1.jpg",
+          "prompt": "同上题材：蘑菇托盘+芝士+蓝果+橙果；sharpen 伞缘与白斑，收紧芝士孔洞高光，黑底棚拍。",
+          "defects": "伞斑边缘仍略糊；芝士孔洞高光偏爆；绿叶层次偏平",
+          "next_fix": "再收伞斑边缘；压芝士高光；给绿叶一点体积层次",
+          "dims": {
+            "composition": 9.5,
+            "lighting_color": 9.4,
+            "perspective_anatomy": 9.4,
+            "texture_detail": 9.5,
+            "spec_style": 9.5,
+            "flawlessness": 9.4
+          }
+        },
+        {
+          "round": 2,
+          "label": "终稿 R2",
+          "score": 9.54,
+          "passed": true,
+          "path": "draw-ordinary/final.jpg",
+          "prompt": "蘑菇芝士果盘道具终稿：伞缘清晰、芝士高光收束、蓝果/橙果与伞面光感统一，黑底可读。合格线 ≥9.5。",
+          "defects": "",
+          "next_fix": "已达标，可交稿",
+          "dims": {
+            "composition": 9.6,
+            "lighting_color": 9.5,
+            "perspective_anatomy": 9.5,
+            "texture_detail": 9.6,
+            "spec_style": 9.6,
+            "flawlessness": 9.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "draw-keyart",
+      "skill": "/pmem-draw · 原画",
+      "title": "原画 / Key Art",
+      "when": "主视觉、气氛图、概念海报、宣传大场面",
+      "how": [
+        "点名「原画 / Key Art / 主视觉」或让总控判成原画。",
+        "有风格样张时禁止贴样张构图（layout_not_style_echo）。",
+        "同样走 ≤4 轮 ≥9.5 收敛。"
+      ],
+      "examples": [
+        {
+          "role": "original",
+          "label": "原图（风格样张·童话微缩庭院）",
+          "path": "draw-keyart/original.jpg",
+          "prompt": "风格样张：微缩童话庭院、暖亮色板、圆润 3D 笔触（只借风格，不借构图）。",
+          "defects": "样张构图太完整，直接贴会 layout_not_style_echo；景深信息不足当主视觉",
+          "next_fix": "换全新机位出 Key Art；只锁色板与笔触",
+          "score": 8.4,
+          "passed": false,
+          "dims": {
+            "composition": 8.2,
+            "lighting_color": 8.6,
+            "perspective_anatomy": 8.3,
+            "texture_detail": 8.5,
+            "spec_style": 8.8,
+            "flawlessness": 8.4
+          }
+        },
+        {
+          "role": "process",
+          "label": "过程 R1",
+          "path": "draw-keyart/process_r1.jpg",
+          "round": 1,
+          "score": 9.19,
+          "passed": false,
+          "prompt": "童趣微缩庭院主视觉：花钟屋顶小屋、香蕉船水塘、眼镜鼹鼠送礼、蘑菇芝士台；暖亮光，纵深层次；禁止复刻样张机位。",
+          "defects": "机位仍偏贴样张；前景/中景纵深不够；鼹鼠礼物可读性一般",
+          "next_fix": "再换俯侧机位；拉开水塘—小屋—鼹鼠层次；礼物色块对比加强",
+          "dims": {
+            "composition": 9.2,
+            "lighting_color": 9.1,
+            "perspective_anatomy": 9.2,
+            "texture_detail": 9.2,
+            "spec_style": 9.2,
+            "flawlessness": 9.2
+          }
+        },
+        {
+          "role": "final",
+          "label": "终稿",
+          "path": "draw-keyart/final.jpg",
+          "round": 3,
+          "score": 9.5,
+          "passed": true,
+          "prompt": "微缩庭院 Key Art 终稿：机位已换，花钟小屋+香蕉船+鼹鼠礼物层次清晰，色板锁暖亮，无样张构图回声。",
+          "next_fix": "已达标",
+          "dims": {
+            "composition": 9.6,
+            "lighting_color": 9.4,
+            "perspective_anatomy": 9.5,
+            "texture_detail": 9.5,
+            "spec_style": 9.5,
+            "flawlessness": 9.5
+          },
+          "defects": ""
+        }
+      ],
+      "rounds": [
+        {
+          "round": 1,
+          "label": "过程 R1",
+          "score": 9.19,
+          "passed": false,
+          "path": "draw-keyart/process_r1.jpg",
+          "prompt": "童趣微缩庭院主视觉：花钟屋顶小屋、香蕉船水塘、眼镜鼹鼠送礼、蘑菇芝士台；暖亮光，纵深层次；禁止复刻样张机位。",
+          "defects": "机位仍偏贴样张；前景/中景纵深不够；鼹鼠礼物可读性一般",
+          "next_fix": "再换俯侧机位；拉开水塘—小屋—鼹鼠层次；礼物色块对比加强",
+          "dims": {
+            "composition": 9.2,
+            "lighting_color": 9.1,
+            "perspective_anatomy": 9.2,
+            "texture_detail": 9.2,
+            "spec_style": 9.2,
+            "flawlessness": 9.2
+          }
+        },
+        {
+          "round": 3,
+          "label": "终稿",
+          "score": 9.5,
+          "passed": true,
+          "path": "draw-keyart/final.jpg",
+          "prompt": "微缩庭院 Key Art 终稿：机位已换，花钟小屋+香蕉船+鼹鼠礼物层次清晰，色板锁暖亮，无样张构图回声。",
+          "defects": "",
+          "next_fix": "已达标",
+          "dims": {
+            "composition": 9.6,
+            "lighting_color": 9.4,
+            "perspective_anatomy": 9.5,
+            "texture_detail": 9.5,
+            "spec_style": 9.5,
+            "flawlessness": 9.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "draw-clone",
+      "skill": "/pmem-draw · 克隆",
+      "title": "风格克隆",
+      "when": "有原图，并且要换新题材；锁的是画风不是构图抄袭",
+      "how": [
+        "附原图 + 说「按这个风格画新的… / 换题材」。",
+        "只锁画风、色板、光感；不要把原图主体贴进新图。",
+        "没说新题材时不要误进克隆。"
+      ],
+      "examples": [
+        {
+          "role": "original",
+          "label": "原图（风格来源·庭院）",
+          "path": "draw-clone/original.jpg",
+          "prompt": "风格来源：童话微缩庭院，锁圆润笔触与高饱和色板，禁止复用原图主体。",
+          "defects": "题材仍是庭院小屋；不能当「新题材克隆」终稿直接交",
+          "next_fix": "换全新溪谷木桥题材；只克隆画风",
+          "score": 8.5,
+          "passed": false,
+          "dims": {
+            "composition": 8.6,
+            "lighting_color": 8.7,
+            "perspective_anatomy": 8.5,
+            "texture_detail": 8.6,
+            "spec_style": 9.0,
+            "flawlessness": 8.4
+          }
+        },
+        {
+          "role": "process",
+          "label": "过程 R1 · 新题材",
+          "path": "draw-clone/process_r1.jpg",
+          "round": 1,
+          "score": 9.12,
+          "passed": false,
+          "prompt": "按原图风格克隆：木质拱桥跨过碧蓝溪流，紫藤花灯，粉蘑菇与石径；锁色板笔触；禁止复用原图小屋/鼹鼠主体。",
+          "defects": "水岸高光偏爆；远景巨草虚化不够；桥面木纹略糊",
+          "next_fix": "收水岸高光；远景再虚一点； sharpen 桥板木纹",
+          "dims": {
+            "composition": 9.1,
+            "lighting_color": 9.0,
+            "perspective_anatomy": 9.1,
+            "texture_detail": 9.1,
+            "spec_style": 9.2,
+            "flawlessness": 9.0
+          }
+        },
+        {
+          "role": "final",
+          "label": "终稿",
+          "path": "draw-clone/final.jpg",
+          "round": 4,
+          "score": 9.52,
+          "passed": true,
+          "prompt": "风格克隆终稿：溪谷木桥+花灯新题材，色板笔触对齐样张，主体与构图已脱离原图庭院。",
+          "next_fix": "已达标",
+          "dims": {
+            "composition": 9.5,
+            "lighting_color": 9.5,
+            "perspective_anatomy": 9.5,
+            "texture_detail": 9.5,
+            "spec_style": 9.6,
+            "flawlessness": 9.5
+          },
+          "defects": ""
+        }
+      ],
+      "rounds": [
+        {
+          "round": 1,
+          "label": "过程 R1 · 新题材",
+          "score": 9.12,
+          "passed": false,
+          "path": "draw-clone/process_r1.jpg",
+          "prompt": "按原图风格克隆：木质拱桥跨过碧蓝溪流，紫藤花灯，粉蘑菇与石径；锁色板笔触；禁止复用原图小屋/鼹鼠主体。",
+          "defects": "水岸高光偏爆；远景巨草虚化不够；桥面木纹略糊",
+          "next_fix": "收水岸高光；远景再虚一点； sharpen 桥板木纹",
+          "dims": {
+            "composition": 9.1,
+            "lighting_color": 9.0,
+            "perspective_anatomy": 9.1,
+            "texture_detail": 9.1,
+            "spec_style": 9.2,
+            "flawlessness": 9.0
+          }
+        },
+        {
+          "round": 4,
+          "label": "终稿",
+          "score": 9.52,
+          "passed": true,
+          "path": "draw-clone/final.jpg",
+          "prompt": "风格克隆终稿：溪谷木桥+花灯新题材，色板笔触对齐样张，主体与构图已脱离原图庭院。",
+          "defects": "",
+          "next_fix": "已达标",
+          "dims": {
+            "composition": 9.5,
+            "lighting_color": 9.5,
+            "perspective_anatomy": 9.5,
+            "texture_detail": 9.5,
+            "spec_style": 9.6,
+            "flawlessness": 9.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "draw-variant",
+      "skill": "/pmem-draw · 变体",
+      "title": "变体",
+      "when": "同一身份，只改表情/动作/小道具；机位身份已在同一张逻辑上",
+      "how": [
+        "说「换个表情 / 举手 / 换外套」这类差分。",
+        "身份与机位锁定，只动变体维度。",
+        "多张各管一事（开关态）走多图分工，不走变体糊成一张。"
+      ],
+      "examples": [
+        {
+          "role": "original",
+          "label": "原图（粉衣仙女母版·果篮）",
+          "path": "draw-variant/original.jpg",
+          "prompt": "角色母版：金发辫粉衣仙女，蓝透翅，珍珠项链，手提果篮；身份锁，不要换题材。",
+          "defects": "只有半身母版；缺表情/手势差分；黑底裁切偏紧",
+          "next_fix": "同身份出变体：调整表情与左手手势，锁脸型服装机位",
+          "score": 8.7,
+          "passed": false,
+          "dims": {
+            "composition": 8.8,
+            "lighting_color": 8.7,
+            "perspective_anatomy": 8.6,
+            "texture_detail": 8.7,
+            "spec_style": 9.0,
+            "flawlessness": 8.6
+          }
+        },
+        {
+          "role": "process",
+          "label": "过程 R1 · 表情手势",
+          "path": "draw-variant/process_r1.jpg",
+          "round": 1,
+          "score": 9.37,
+          "passed": false,
+          "prompt": "同一粉衣果篮仙女：半身黑底；眯眼笑+左手轻握拳；锁辫型/粉裙/蓝翅/果篮，不要换角色。",
+          "defects": "眼皮偏沉显得困倦；握篮手指略糊；翅根衔接弱",
+          "next_fix": "抬一点眼神精神度；清手指；翅根贴背更稳",
+          "dims": {
+            "composition": 9.4,
+            "lighting_color": 9.3,
+            "perspective_anatomy": 9.3,
+            "texture_detail": 9.4,
+            "spec_style": 9.5,
+            "flawlessness": 9.3
+          }
+        },
+        {
+          "role": "final",
+          "label": "终稿",
+          "path": "draw-variant/final.jpg",
+          "round": 3,
+          "score": 9.55,
+          "passed": true,
+          "prompt": "粉衣果篮仙女变体终稿：表情更精神，手指清晰，翅根稳定，身份与母版一致。",
+          "next_fix": "已达标",
+          "dims": {
+            "composition": 9.6,
+            "lighting_color": 9.5,
+            "perspective_anatomy": 9.5,
+            "texture_detail": 9.6,
+            "spec_style": 9.6,
+            "flawlessness": 9.5
+          },
+          "defects": ""
+        }
+      ],
+      "rounds": [
+        {
+          "round": 1,
+          "label": "过程 R1 · 表情手势",
+          "score": 9.37,
+          "passed": false,
+          "path": "draw-variant/process_r1.jpg",
+          "prompt": "同一粉衣果篮仙女：半身黑底；眯眼笑+左手轻握拳；锁辫型/粉裙/蓝翅/果篮，不要换角色。",
+          "defects": "眼皮偏沉显得困倦；握篮手指略糊；翅根衔接弱",
+          "next_fix": "抬一点眼神精神度；清手指；翅根贴背更稳",
+          "dims": {
+            "composition": 9.4,
+            "lighting_color": 9.3,
+            "perspective_anatomy": 9.3,
+            "texture_detail": 9.4,
+            "spec_style": 9.5,
+            "flawlessness": 9.3
+          }
+        },
+        {
+          "round": 3,
+          "label": "终稿",
+          "score": 9.55,
+          "passed": true,
+          "path": "draw-variant/final.jpg",
+          "prompt": "粉衣果篮仙女变体终稿：表情更精神，手指清晰，翅根稳定，身份与母版一致。",
+          "defects": "",
+          "next_fix": "已达标",
+          "dims": {
+            "composition": 9.6,
+            "lighting_color": 9.5,
+            "perspective_anatomy": 9.5,
+            "texture_detail": 9.6,
+            "spec_style": 9.6,
+            "flawlessness": 9.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "draw-multi",
+      "skill": "/pmem-draw · 多图分工",
+      "title": "多图分工",
+      "when": "两张及以上各管一件事，或同一物件多状态要锁同一机位",
+      "how": [
+        "明确每张图的职责（如关/开、空/满）。",
+        "机位与身份不挤在同一张合同里糊弄。"
+      ],
+      "examples": [
+        {
+          "role": "original",
+          "label": "原图（结构锁·庭院群像）",
+          "path": "draw-multi/original.jpg",
+          "prompt": "多图合同结构锁：同机位童话庭院，角色与道具分区固定。",
+          "defects": "只有单张群像，缺分镜状态对照",
+          "next_fix": "拆成多图：同机位出小提琴仙/果篮仙等状态卡",
+          "score": 8.6,
+          "passed": false,
+          "dims": {
+            "composition": 8.7,
+            "lighting_color": 8.6,
+            "perspective_anatomy": 8.5,
+            "texture_detail": 8.6,
+            "spec_style": 8.9,
+            "flawlessness": 8.5
+          }
+        },
+        {
+          "role": "process",
+          "label": "图1 · 群像待机",
+          "path": "draw-multi/process_r1.jpg",
+          "prompt": "多图合同·图1：庭院群像——蓝燕尾服小提琴男仙、粉衣果篮女仙、眼镜鼹鼠送礼；锁同一俯侧机位。",
+          "defects": "小提琴仙与果篮仙比例略漂；右侧蘑菇台偏挤",
+          "next_fix": "对齐角色脚点与相机；蘑菇台让出呼吸空间",
+          "score": 9.39,
+          "passed": false,
+          "round": 1,
+          "dims": {
+            "composition": 9.4,
+            "lighting_color": 9.3,
+            "perspective_anatomy": 9.3,
+            "texture_detail": 9.4,
+            "spec_style": 9.5,
+            "flawlessness": 9.3
+          }
+        },
+        {
+          "role": "process",
+          "label": "图2 · 同机位微调",
+          "path": "draw-multi/process_r2.jpg",
+          "dims": {
+            "composition": 9.4,
+            "lighting_color": 9.4,
+            "perspective_anatomy": 9.4,
+            "texture_detail": 9.4,
+            "spec_style": 9.5,
+            "flawlessness": 9.4
+          },
+          "prompt": "多图合同·图2：同一相机，仅微调角色状态，不改身份与场景锚点。",
+          "defects": "与图1机位微漂",
+          "next_fix": "对齐图1相机；只改状态不改身份",
+          "score": 9.42,
+          "passed": false
+        },
+        {
+          "role": "final",
+          "label": "终稿",
+          "path": "draw-multi/final.jpg",
+          "score": 9.55,
+          "passed": true,
+          "prompt": "多图合同终稿：同机位状态族对齐，角色身份锁死，场景锚点一致。",
+          "next_fix": "已达标",
+          "round": 3,
+          "dims": {
+            "composition": 9.6,
+            "lighting_color": 9.5,
+            "perspective_anatomy": 9.5,
+            "texture_detail": 9.5,
+            "spec_style": 9.6,
+            "flawlessness": 9.5
+          },
+          "defects": ""
+        }
+      ],
+      "rounds": [
+        {
+          "round": 1,
+          "label": "图1 · 群像待机",
+          "score": 9.39,
+          "passed": false,
+          "path": "draw-multi/process_r1.jpg",
+          "prompt": "多图合同·图1：庭院群像——蓝燕尾服小提琴男仙、粉衣果篮女仙、眼镜鼹鼠送礼；锁同一俯侧机位。",
+          "defects": "小提琴仙与果篮仙比例略漂；右侧蘑菇台偏挤",
+          "next_fix": "对齐角色脚点与相机；蘑菇台让出呼吸空间",
+          "dims": {
+            "composition": 9.4,
+            "lighting_color": 9.3,
+            "perspective_anatomy": 9.3,
+            "texture_detail": 9.4,
+            "spec_style": 9.5,
+            "flawlessness": 9.3
+          }
+        },
+        {
+          "round": 2,
+          "label": "图2 · 同机位微调",
+          "score": 9.42,
+          "passed": false,
+          "path": "draw-multi/process_r2.jpg",
+          "prompt": "多图合同·图2：同一相机，仅微调角色状态，不改身份与场景锚点。",
+          "defects": "与图1机位微漂",
+          "next_fix": "对齐图1相机；只改状态不改身份",
+          "dims": {
+            "composition": 9.4,
+            "lighting_color": 9.4,
+            "perspective_anatomy": 9.4,
+            "texture_detail": 9.4,
+            "spec_style": 9.5,
+            "flawlessness": 9.4
+          }
+        },
+        {
+          "round": 3,
+          "label": "终稿",
+          "score": 9.55,
+          "passed": true,
+          "path": "draw-multi/final.jpg",
+          "prompt": "多图合同终稿：同机位状态族对齐，角色身份锁死，场景锚点一致。",
+          "defects": "",
+          "next_fix": "已达标",
+          "dims": {
+            "composition": 9.6,
+            "lighting_color": 9.5,
+            "perspective_anatomy": 9.5,
+            "texture_detail": 9.5,
+            "spec_style": 9.6,
+            "flawlessness": 9.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "ui",
+      "skill": "/pmem-ui",
+      "title": "整套界面",
+      "when": "主菜单、HUD、弹窗套件、九宫格、按钮状态",
+      "how": [
+        "点名 /pmem-ui 或判成界面；禁止用单张插画代替。",
+        "流程：概念先行 → 透明组件表 → 九宫格切线 → 状态族。"
+      ],
+      "examples": [
+        {
+          "role": "original",
+          "label": "原图（UI 方向）",
+          "path": "ui/original.jpg",
+          "prompt": "休闲三消 HUD 方向：毛绒白边牌面、顶部资源条、底部道具钮。",
+          "defects": "只有气氛草图；组件边界与九宫格切线未拆清",
+          "next_fix": "出概念过程：完整对局 HUD，可读可切组件",
+          "score": 8.5,
+          "passed": false,
+          "dims": {
+            "composition": 8.4,
+            "lighting_color": 8.5,
+            "perspective_anatomy": 8.6,
+            "texture_detail": 8.4,
+            "spec_style": 8.7,
+            "flawlessness": 8.3
+          }
+        },
+        {
+          "role": "process",
+          "label": "概念过程",
+          "path": "ui/process_r1.jpg",
+          "round": 1,
+          "score": 9.44,
+          "passed": false,
+          "prompt": "主菜单/对局 HUD 概念：顶部返回设置金币爱心、目标托盘、毛绒白边牌堆、底部三枚金币道具钮；雪山背景。",
+          "defects": "主次按钮层级略糊；目标托盘图标略挤",
+          "next_fix": "拉开底部主道具对比；目标图标间距加大",
+          "dims": {
+            "composition": 9.4,
+            "lighting_color": 9.4,
+            "perspective_anatomy": 9.5,
+            "texture_detail": 9.4,
+            "spec_style": 9.5,
+            "flawlessness": 9.4
+          }
+        },
+        {
+          "role": "final",
+          "label": "终稿",
+          "path": "ui/final.jpg",
+          "round": 2,
+          "score": 9.55,
+          "passed": true,
+          "prompt": "对局 HUD 终稿：层级清晰，目标托盘与底部道具可切九宫格，毛绒白边风格锁定。",
+          "next_fix": "已达标",
+          "dims": {
+            "composition": 9.6,
+            "lighting_color": 9.5,
+            "perspective_anatomy": 9.6,
+            "texture_detail": 9.5,
+            "spec_style": 9.6,
+            "flawlessness": 9.5
+          },
+          "defects": ""
+        }
+      ],
+      "rounds": [
+        {
+          "round": 1,
+          "label": "概念过程",
+          "score": 9.44,
+          "passed": false,
+          "path": "ui/process_r1.jpg",
+          "prompt": "主菜单/对局 HUD 概念：顶部返回设置金币爱心、目标托盘、毛绒白边牌堆、底部三枚金币道具钮；雪山背景。",
+          "defects": "主次按钮层级略糊；目标托盘图标略挤",
+          "next_fix": "拉开底部主道具对比；目标图标间距加大",
+          "dims": {
+            "composition": 9.4,
+            "lighting_color": 9.4,
+            "perspective_anatomy": 9.5,
+            "texture_detail": 9.4,
+            "spec_style": 9.5,
+            "flawlessness": 9.4
+          }
+        },
+        {
+          "round": 2,
+          "label": "终稿",
+          "score": 9.55,
+          "passed": true,
+          "path": "ui/final.jpg",
+          "prompt": "对局 HUD 终稿：层级清晰，目标托盘与底部道具可切九宫格，毛绒白边风格锁定。",
+          "defects": "",
+          "next_fix": "已达标",
+          "dims": {
+            "composition": 9.6,
+            "lighting_color": 9.5,
+            "perspective_anatomy": 9.6,
+            "texture_detail": 9.5,
+            "spec_style": 9.6,
+            "flawlessness": 9.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "icon-a",
+      "skill": "/pmem-icon · A",
+      "title": "图标 A · 桌面母版",
+      "when": "iOS/Android 1024 App Icon",
+      "how": [
+        "满幅直角出图 + 72%~80% 圆角安全区。",
+        "A/B/C 三档不混用。"
+      ],
+      "examples": [
+        {
+          "role": "original",
+          "label": "原图（角色符号意向）",
+          "path": "icon-a/original.jpg",
+          "prompt": "粉衣果篮仙女半身意向：要落成 1024 App Icon 满幅直角母版。",
+          "defects": "非满幅直角母版；安全圆未校验；裁切半身不适合桌面图标",
+          "next_fix": "出全身满幅 App Icon：蓝底，主体落 75% 安全圆",
+          "score": 8.3,
+          "passed": false,
+          "dims": {
+            "composition": 8.2,
+            "lighting_color": 8.4,
+            "perspective_anatomy": 8.5,
+            "texture_detail": 8.3,
+            "spec_style": 8.6,
+            "flawlessness": 8.2
+          }
+        },
+        {
+          "role": "process",
+          "label": "过程",
+          "path": "icon-a/process_r1.jpg",
+          "round": 1,
+          "score": 9.43,
+          "passed": false,
+          "prompt": "1024 App Icon：粉衣金发仙女提果篮，全身，纯蓝底，满幅直角，主体落 75% 安全圆内。",
+          "defects": "脚部略顶安全圆下缘；篮中水果略糊",
+          "next_fix": "主体再收 3%；水果边缘清一下",
+          "dims": {
+            "composition": 9.4,
+            "lighting_color": 9.4,
+            "perspective_anatomy": 9.5,
+            "texture_detail": 9.4,
+            "spec_style": 9.5,
+            "flawlessness": 9.3
+          }
+        },
+        {
+          "role": "final",
+          "label": "终稿",
+          "path": "icon-a/final.jpg",
+          "round": 2,
+          "score": 9.55,
+          "passed": true,
+          "prompt": "App Icon 终稿：仙女全身在安全圆内，蓝底直角满幅，果篮清晰可读。",
+          "next_fix": "已达标",
+          "dims": {
+            "composition": 9.6,
+            "lighting_color": 9.5,
+            "perspective_anatomy": 9.6,
+            "texture_detail": 9.5,
+            "spec_style": 9.6,
+            "flawlessness": 9.5
+          },
+          "defects": ""
+        }
+      ],
+      "rounds": [
+        {
+          "round": 1,
+          "label": "过程",
+          "score": 9.43,
+          "passed": false,
+          "path": "icon-a/process_r1.jpg",
+          "prompt": "1024 App Icon：粉衣金发仙女提果篮，全身，纯蓝底，满幅直角，主体落 75% 安全圆内。",
+          "defects": "脚部略顶安全圆下缘；篮中水果略糊",
+          "next_fix": "主体再收 3%；水果边缘清一下",
+          "dims": {
+            "composition": 9.4,
+            "lighting_color": 9.4,
+            "perspective_anatomy": 9.5,
+            "texture_detail": 9.4,
+            "spec_style": 9.5,
+            "flawlessness": 9.3
+          }
+        },
+        {
+          "round": 2,
+          "label": "终稿",
+          "score": 9.55,
+          "passed": true,
+          "path": "icon-a/final.jpg",
+          "prompt": "App Icon 终稿：仙女全身在安全圆内，蓝底直角满幅，果篮清晰可读。",
+          "defects": "",
+          "next_fix": "已达标",
+          "dims": {
+            "composition": 9.6,
+            "lighting_color": 9.5,
+            "perspective_anatomy": 9.6,
+            "texture_detail": 9.5,
+            "spec_style": 9.6,
+            "flawlessness": 9.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "icon-c",
+      "skill": "/pmem-icon · C",
+      "title": "图标 C · 道具格",
+      "when": "游戏背包道具 64/128/256 透明底",
+      "how": [
+        "厚剪影、棚拍光、透明友好。",
+        "不要做成桌面 App Icon 或 SVG 线标。"
+      ],
+      "examples": [
+        {
+          "role": "original",
+          "label": "原图（道具意向·蘑菇盘）",
+          "path": "icon-c/original.jpg",
+          "prompt": "道具意向参考：休闲 3D 食物道具（蘑菇盘）。目标是落成透明底道具格图标。",
+          "defects": "题材是蘑菇盘不是爆米花桶；且非透明底格",
+          "next_fix": "改画透明底爆米花桶道具格：厚剪影，棚拍光，64px 可读",
+          "score": 8.2,
+          "passed": false,
+          "dims": {
+            "composition": 8.3,
+            "lighting_color": 8.2,
+            "perspective_anatomy": 8.4,
+            "texture_detail": 8.1,
+            "spec_style": 8.5,
+            "flawlessness": 8.0
+          }
+        },
+        {
+          "role": "process",
+          "label": "过程 · 爆米花桶",
+          "path": "icon-c/process_r1.png",
+          "round": 1,
+          "score": 9.44,
+          "passed": false,
+          "prompt": "透明底道具格：红白条纹爆米花桶溢满黄油爆米花，厚剪影，棚拍光，缩到 64px 仍可读。",
+          "defects": "桶沿锯齿略重；爆米花颗粒边缘略糊",
+          "next_fix": "软化桶沿；清爆米花轮廓；保持透明底",
+          "dims": {
+            "composition": 9.4,
+            "lighting_color": 9.4,
+            "perspective_anatomy": 9.5,
+            "texture_detail": 9.4,
+            "spec_style": 9.5,
+            "flawlessness": 9.4
+          }
+        },
+        {
+          "role": "final",
+          "label": "终稿",
+          "path": "icon-c/final.png",
+          "round": 2,
+          "score": 9.55,
+          "passed": true,
+          "prompt": "爆米花桶道具格终稿：透明底，桶沿干净，颗粒清晰，64/128/256 可读。",
+          "next_fix": "已达标",
+          "dims": {
+            "composition": 9.6,
+            "lighting_color": 9.5,
+            "perspective_anatomy": 9.6,
+            "texture_detail": 9.5,
+            "spec_style": 9.6,
+            "flawlessness": 9.5
+          },
+          "defects": ""
+        }
+      ],
+      "rounds": [
+        {
+          "round": 1,
+          "label": "过程 · 爆米花桶",
+          "score": 9.44,
+          "passed": false,
+          "path": "icon-c/process_r1.png",
+          "prompt": "透明底道具格：红白条纹爆米花桶溢满黄油爆米花，厚剪影，棚拍光，缩到 64px 仍可读。",
+          "defects": "桶沿锯齿略重；爆米花颗粒边缘略糊",
+          "next_fix": "软化桶沿；清爆米花轮廓；保持透明底",
+          "dims": {
+            "composition": 9.4,
+            "lighting_color": 9.4,
+            "perspective_anatomy": 9.5,
+            "texture_detail": 9.4,
+            "spec_style": 9.5,
+            "flawlessness": 9.4
+          }
+        },
+        {
+          "round": 2,
+          "label": "终稿",
+          "score": 9.55,
+          "passed": true,
+          "path": "icon-c/final.png",
+          "prompt": "爆米花桶道具格终稿：透明底，桶沿干净，颗粒清晰，64/128/256 可读。",
+          "defects": "",
+          "next_fix": "已达标",
+          "dims": {
+            "composition": 9.6,
+            "lighting_color": 9.5,
+            "perspective_anatomy": 9.6,
+            "texture_detail": 9.5,
+            "spec_style": 9.6,
+            "flawlessness": 9.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "merge-ladder",
+      "skill": "/pmem-merge-ladder",
+      "title": "合成梯",
+      "when": "同域升级链（默认 8 档，可 6/更多）；整表或一档一张",
+      "how": [
+        "先文字定链型与关系，说通再出图。",
+        "默认同物件/轻门；点名可 shop_ladder。",
+        "附格子原图或说整表 → overview_sheet，垫原图锁版式。",
+        "下面：海船原图 → 过程整表 → 终稿整表。"
+      ],
+      "examples": [
+        {
+          "role": "original",
+          "label": "原图（海船 5×3 版式）",
+          "path": "merge-ladder/original.jpg",
+          "prompt": "版式原图：5 列×3 行海船/舰艇图标整表，白圆角格，深灰底。只锁行列格，不锁题材。",
+          "defects": "题材是海船不是乐器；不能直接当乐器合成梯终稿",
+          "next_fix": "垫此版式出 5×3 乐器合成整表",
+          "score": 8.2,
+          "passed": false,
+          "dims": {
+            "composition": 8.5,
+            "lighting_color": 8.1,
+            "perspective_anatomy": 8.3,
+            "texture_detail": 8.0,
+            "spec_style": 8.2,
+            "flawlessness": 8.1
+          }
+        },
+        {
+          "role": "process",
+          "label": "过程 R1 · 乐器表",
+          "path": "merge-ladder/process_r1.jpg",
+          "round": 1,
+          "score": 8.8,
+          "passed": false,
+          "prompt": "5×3 乐器合成整表：鼓/木琴/口琴/笛/提琴…钢琴；垫海船原图锁格；金属圆润剪影；L1→L15 占位均匀。",
+          "defects": "金属感偏 2D；末档钢琴识别不够；个别格主体偏小",
+          "next_fix": "加强每格金属体积；末档体量拉开；格内居中",
+          "dims": {
+            "composition": 8.9,
+            "lighting_color": 8.7,
+            "perspective_anatomy": 8.8,
+            "texture_detail": 8.7,
+            "spec_style": 8.9,
+            "flawlessness": 8.6
+          }
+        },
+        {
+          "role": "process",
+          "label": "过程 R4",
+          "path": "merge-ladder/process_r4.jpg",
+          "round": 4,
+          "score": 9.2,
+          "passed": false,
+          "prompt": "乐器整表迭代：加强金属体积与末档识别，格内居中，保持 5×3 锁格。",
+          "defects": "个别格仍略挤",
+          "next_fix": "微调占位；可交重建终稿",
+          "dims": {
+            "composition": 9.2,
+            "lighting_color": 9.1,
+            "perspective_anatomy": 9.2,
+            "texture_detail": 9.1,
+            "spec_style": 9.3,
+            "flawlessness": 9.1
+          }
+        },
+        {
+          "role": "final",
+          "label": "终稿",
+          "path": "merge-ladder/final.jpg",
+          "score": 9.55,
+          "passed": true,
+          "prompt": "乐器合成梯终稿：5×3 锁格，金属体积足够，末档可识别，占位均匀。",
+          "next_fix": "已达标",
+          "round": 5,
+          "dims": {
+            "composition": 9.6,
+            "lighting_color": 9.5,
+            "perspective_anatomy": 9.5,
+            "texture_detail": 9.5,
+            "spec_style": 9.6,
+            "flawlessness": 9.5
+          },
+          "defects": ""
+        }
+      ],
+      "rounds": [
+        {
+          "round": 1,
+          "label": "过程 R1 · 乐器表",
+          "score": 8.8,
+          "passed": false,
+          "path": "merge-ladder/process_r1.jpg",
+          "prompt": "5×3 乐器合成整表：鼓/木琴/口琴/笛/提琴…钢琴；垫海船原图锁格；金属圆润剪影；L1→L15 占位均匀。",
+          "defects": "金属感偏 2D；末档钢琴识别不够；个别格主体偏小",
+          "next_fix": "加强每格金属体积；末档体量拉开；格内居中",
+          "dims": {
+            "composition": 8.9,
+            "lighting_color": 8.7,
+            "perspective_anatomy": 8.8,
+            "texture_detail": 8.7,
+            "spec_style": 8.9,
+            "flawlessness": 8.6
+          }
+        },
+        {
+          "round": 4,
+          "label": "过程 R4",
+          "score": 9.2,
+          "passed": false,
+          "path": "merge-ladder/process_r4.jpg",
+          "prompt": "乐器整表迭代：加强金属体积与末档识别，格内居中，保持 5×3 锁格。",
+          "defects": "个别格仍略挤",
+          "next_fix": "微调占位；可交重建终稿",
+          "dims": {
+            "composition": 9.2,
+            "lighting_color": 9.1,
+            "perspective_anatomy": 9.2,
+            "texture_detail": 9.1,
+            "spec_style": 9.3,
+            "flawlessness": 9.1
+          }
+        },
+        {
+          "round": 5,
+          "label": "终稿",
+          "score": 9.55,
+          "passed": true,
+          "path": "merge-ladder/final.jpg",
+          "prompt": "乐器合成梯终稿：5×3 锁格，金属体积足够，末档可识别，占位均匀。",
+          "defects": "",
+          "next_fix": "已达标",
+          "dims": {
+            "composition": 9.6,
+            "lighting_color": 9.5,
+            "perspective_anatomy": 9.5,
+            "texture_detail": 9.5,
+            "spec_style": 9.6,
+            "flawlessness": 9.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "style-lock",
+      "skill": "/pmem-style-lock",
+      "title": "锁风格",
+      "when": "从样张抽色板、光影、禁用词；默认不自动生图",
+      "how": [
+        "附样张输入 /pmem-style-lock。",
+        "口语含「验证图 / 锁完出图」时再串克隆验证。"
+      ],
+      "examples": [
+        {
+          "role": "original",
+          "label": "原图（待锁样张）",
+          "path": "style-lock/original.jpg",
+          "prompt": "待锁风格样张：童话微缩庭院，高饱和圆润 3D。",
+          "defects": "尚未抽出色板/光影/禁用词；不能稳定复用到新题材",
+          "next_fix": "先锁风格圣经，再出新题材验证图",
+          "score": 8.0,
+          "passed": false,
+          "dims": {
+            "composition": 8.1,
+            "lighting_color": 8.2,
+            "perspective_anatomy": 8.0,
+            "texture_detail": 8.1,
+            "spec_style": 8.4,
+            "flawlessness": 7.9
+          }
+        },
+        {
+          "role": "process",
+          "label": "验证过程",
+          "path": "style-lock/process_r1.jpg",
+          "round": 1,
+          "score": 9.12,
+          "passed": false,
+          "prompt": "按刚锁风格出验证图：木桥溪流+紫花灯+粉蘑菇石径（新题材）；检查色板/光感是否跑偏。",
+          "defects": "局部水岸过曝；花灯辉光略糊边",
+          "next_fix": "压高光；花灯边缘收干净；对照禁用词再检",
+          "dims": {
+            "composition": 9.1,
+            "lighting_color": 9.0,
+            "perspective_anatomy": 9.1,
+            "texture_detail": 9.1,
+            "spec_style": 9.2,
+            "flawlessness": 9.0
+          }
+        },
+        {
+          "role": "final",
+          "label": "终稿",
+          "path": "style-lock/final.jpg",
+          "round": 4,
+          "score": 9.5,
+          "passed": true,
+          "prompt": "风格锁验证终稿：新题材对齐色板与光感，无跑偏。",
+          "next_fix": "已达标",
+          "dims": {
+            "composition": 9.5,
+            "lighting_color": 9.5,
+            "perspective_anatomy": 9.5,
+            "texture_detail": 9.5,
+            "spec_style": 9.6,
+            "flawlessness": 9.5
+          },
+          "defects": ""
+        }
+      ],
+      "rounds": [
+        {
+          "round": 1,
+          "label": "验证过程",
+          "score": 9.12,
+          "passed": false,
+          "path": "style-lock/process_r1.jpg",
+          "prompt": "按刚锁风格出验证图：木桥溪流+紫花灯+粉蘑菇石径（新题材）；检查色板/光感是否跑偏。",
+          "defects": "局部水岸过曝；花灯辉光略糊边",
+          "next_fix": "压高光；花灯边缘收干净；对照禁用词再检",
+          "dims": {
+            "composition": 9.1,
+            "lighting_color": 9.0,
+            "perspective_anatomy": 9.1,
+            "texture_detail": 9.1,
+            "spec_style": 9.2,
+            "flawlessness": 9.0
+          }
+        },
+        {
+          "round": 4,
+          "label": "终稿",
+          "score": 9.5,
+          "passed": true,
+          "path": "style-lock/final.jpg",
+          "prompt": "风格锁验证终稿：新题材对齐色板与光感，无跑偏。",
+          "defects": "",
+          "next_fix": "已达标",
+          "dims": {
+            "composition": 9.5,
+            "lighting_color": 9.5,
+            "perspective_anatomy": 9.5,
+            "texture_detail": 9.5,
+            "spec_style": 9.6,
+            "flawlessness": 9.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "prompt",
+      "skill": "/pmem-prompt",
+      "title": "提示词",
+      "when": "只要扩写 brief / 几套可选说法，不生图",
+      "how": [
+        "输入 /pmem-prompt + 原话。",
+        "先判交付类型，再按该类清单丰满成 2～4 套方案。",
+        "本技能不调生图。"
+      ],
+      "examples": [
+        {
+          "role": "original",
+          "label": "原图（可选垫图·蘑菇盘）",
+          "path": "prompt/original.jpg",
+          "prompt": "可选垫图：蘑菇芝士果盘。本技能只扩写提示词，不生图。",
+          "defects": "只有意向，缺少可执行的 2～4 套提示词方案",
+          "next_fix": "按合理性/美观/画风扩成多套可选说法"
+        }
+      ],
+      "samples": [
+        {
+          "kind": "prompt",
+          "title": "玩家原话",
+          "body": "画一把暖色吉他道具，棚拍一点。"
+        },
+        {
+          "kind": "prompt",
+          "title": "方案 A · 棚拍特写",
+          "body": "暖色棚拍吉他道具特写，浅景深，木质琴身纹理清晰，金属弦钮微反光，干净灰底，游戏道具可读。"
+        },
+        {
+          "kind": "prompt",
+          "title": "方案 B · 三点光道具立绘",
+          "body": "三点光道具立绘：暖主光 + 冷侧光，吉他全貌居中，厚剪影，透明友好，适合背包格。"
+        },
+        {
+          "kind": "prompt",
+          "title": "方案 C · 气氛插画（若你其实要插画）",
+          "body": "若交付是插画不是道具格：窗边斜光，吉他靠在旧木椅，灰尘丁达尔，更叙事。"
+        }
+      ]
+    },
+    {
+      "id": "critique",
+      "skill": "/pmem-critique",
+      "title": "只审图",
+      "when": "对现有图六维挑刺，不生图",
+      "how": [
+        "附上要审的图 + /pmem-critique。",
+        "对照红线与模块规格打分，可记入 style_redline。"
+      ],
+      "examples": [
+        {
+          "role": "original",
+          "label": "原图（待审·蘑菇盘）",
+          "path": "critique/original.jpg",
+          "prompt": "待审图：红伞蘑菇托盘+芝士+蓝果+橙果，黑底 3D 道具（只审不生）。",
+          "defects": "芝士高光偏散；蓝果与伞面光感不统一；完成度未到交稿线",
+          "next_fix": "压高光；统一棚拍主光；再跑六维对照红线",
+          "score": 8.9,
+          "passed": false,
+          "dims": {
+            "composition": 9.2,
+            "lighting_color": 8.6,
+            "perspective_anatomy": 9.0,
+            "texture_detail": 9.0,
+            "spec_style": 9.1,
+            "flawlessness": 8.8
+          }
+        }
+      ],
+      "samples": [
+        {
+          "kind": "score",
+          "title": "六维评分（样例）",
+          "body": "构图 9.2 · 光影 8.6 · 材质 9.0 · 可读 8.8 · 风格 9.1 · 禁忌 9.4",
+          "score": 8.9
+        },
+        {
+          "kind": "score",
+          "title": "挑刺",
+          "body": "主光方向不稳，右侧高光发灰；边缘有轻微锯齿。未踩赛博/过曝红线。"
+        },
+        {
+          "kind": "score",
+          "title": "建议改点",
+          "body": "统一主光；收边缘抗锯齿；再交一版即可记入红线对照。本技能不重生图。"
+        }
+      ]
+    },
+    {
+      "id": "atlas",
+      "skill": "/pmem-atlas",
+      "title": "归档",
+      "when": "散图归位并刷新本工作台",
+      "how": [
+        "输入 /pmem-atlas，或命令行 python pmem_art.py atlas。",
+        "刷新 art-atlas.html 与索引；不写正式 recipe 的散图只工作台可见。"
+      ],
+      "examples": [],
+      "samples": [
+        {
+          "kind": "note",
+          "title": "你会看到什么",
+          "body": "工作台「所有图归总」刷新；散图归到模块目录；教学包与垃圾桶仍不进主画廊。"
+        }
+      ]
+    },
+    {
+      "id": "coach",
+      "skill": "/pmem-coach",
+      "title": "进阶偷看",
+      "when": "要看进步、短板、知识卡",
+      "how": [
+        "日常 converge finish 已静默写过；要汇总时用 /pmem-coach。",
+        "知识卡需你明确说「收下」才写入。"
+      ],
+      "examples": [],
+      "samples": [
+        {
+          "kind": "note",
+          "title": "样例输出",
+          "body": "进步：合成梯整表占位更稳。\n短板：原画仍易贴样张构图。\n知识卡候选：layout_not_style_echo（需你说「收下」才写入）。"
+        }
+      ]
+    }
+  ]
+}

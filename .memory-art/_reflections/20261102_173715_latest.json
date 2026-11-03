@@ -1,0 +1,124 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-11-02 17:37:15 UTC+8",
+  "session_id": "latest",
+  "goal": "克隆：锁参考船盘玩具3D图标画风与白圆角格深灰底拼板版式，题材换成约15种不同鸟的整盘图标拼板；禁止船体/帆/船回声",
+  "module": "icon.BirdBatch",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 3,
+  "winner_score": 9.19,
+  "winner_image": "assets/icon/birdbatch/bird_batch_r3.jpg",
+  "winner_passed": false,
+  "outcome": "⚠️ **共执行 4 轮审图（目标阈值 `9.50` 分），未达标，已挑选全阶段最高分**（胜出：第 3 轮 `9.19 / 10.0` 分）",
+  "what_fixed": [
+    "每只鸟加强软塑胶体积高光与厚轮廓；统一四分之三略俯视；保持15鸟与版式，禁止船体",
+    "全部鸟统一成静置玩具物件、四分之三略俯、占格约60-70%；保持软塑高光与15种鸟，禁止船体",
+    "孔雀收扇更紧凑、鹰翅收拢；全盘俯视角度对齐参考船盘；保持软塑高光与15鸟",
+    "已满4轮，取历史最高分"
+  ],
+  "what_still_weak": "孔雀尾扇仍偏满格；鹰翅微张使占格不齐；少数格俯视角度仍略浅于参考船盘",
+  "strengths": "全员静置玩具物件语法对齐；软塑高光与白格深灰底稳定；无船回声",
+  "taste_deltas": {
+    "from_strengths": [
+      "全员静置玩具物件语法对齐；软塑高光与白格深灰底稳定；无船回声"
+    ],
+    "from_defects": [
+      "蜂鸟飞行姿与火烈鸟站立高度破坏船盘那种统一静置物件语法；部分鸟正视感仍偏多，四分之三略俯不够齐；个别格体量占格比例不匀",
+      "孔雀尾扇仍偏满格；鹰翅微张使占格不齐；少数格俯视角度仍略浅于参考船盘",
+      "鹈鹕喙囊内出现红黄蓝集装箱色块，明显回声参考货船；孔雀尾扇仍满格；鸟种集合相对前轮漂移"
+    ]
+  },
+  "warm_start_confidence": 0.3,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 8.05,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 8.85,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 9.19,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 8.31,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：材质偏扁平贴纸风，缺少参考软塑胶树脂体积高光；机位偏正视非四分之三略俯；玩具厚描边与塑胶质感不足",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.05"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：材质偏扁平贴纸风，缺少参考软塑胶树脂体积高光；机位偏正视非四分之三略俯；玩具厚描边与塑胶质感不足",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "8.05"
+    },
+    {
+      "category": "material",
+      "lesson": "本轮短板偏「material」：材质偏扁平贴纸风，缺少参考软塑胶树脂体积高光；机位偏正视非四分之三略俯；玩具厚描边与塑胶质感不足",
+      "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+      "from_score": "8.05"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：蜂鸟飞行姿与火烈鸟站立高度破坏船盘那种统一静置物件语法；部分鸟正视感仍偏多，四分之三略俯不够齐；个别格体量占格比例不匀",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.85"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：蜂鸟飞行姿与火烈鸟站立高度破坏船盘那种统一静置物件语法；部分鸟正视感仍偏多，四分之三略俯不够齐；个别格体量占格比例不匀",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "8.85"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：软塑胶体积高光明显提升；15鸟无船回声；白格深灰底整齐",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.85"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：孔雀尾扇仍偏满格；鹰翅微张使占格不齐；少数格俯视角度仍略浅于参考船盘",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.19"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：全员静置玩具物件语法对齐；软塑高光与白格深灰底稳定；无船回声",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.19"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：鹈鹕喙囊内出现红黄蓝集装箱色块，明显回声参考货船；孔雀尾扇仍满格；鸟种集合相对前轮漂移",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.31"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：软塑高光与白格深灰底仍在；网格整齐",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.31"
+    }
+  ]
+}

@@ -27,13 +27,13 @@
         "style",
         "material"
       ],
-      "source": "converge_finish",
+      "source": "feedback",
       "layer_scope": "private",
       "project_id": "pmem-art",
       "project_name": "pmem-art",
       "universal": false,
       "promoted_to_shared": false,
-      "updated_at": "2026-10-30 18:00:39 UTC+8"
+      "updated_at": "2026-11-03 16:12:01 UTC+8"
     },
     "tech-pixel": {
       "id": "tech-pixel",
@@ -42,14 +42,29 @@
       "tags": [
         "style"
       ],
-      "source": "converge_finish",
+      "source": "feedback",
       "layer_scope": "private",
       "project_id": "pmem-art",
       "project_name": "pmem-art",
       "universal": false,
       "promoted_to_shared": false,
-      "updated_at": "2026-10-30 21:03:14 UTC+8"
+      "updated_at": "2026-11-02 22:44:52 UTC+8"
+    },
+    "cam-cinematic": {
+      "id": "cam-cinematic",
+      "title": "电影感镜头",
+      "body": "景深、侧逆光、叙事构图优先于装饰细节。",
+      "tags": [
+        "narrative_camera"
+      ],
+      "source": "converge_finish",
+      "layer_scope": "private",
+      "project_id": "pmem-art",
+      "project_name": "pmem-art",
+      "universal": true,
+      "promoted_to_shared": false,
+      "updated_at": "2026-11-02 19:14:44 UTC+8"
     }
   },
-  "updated_at": "2026-10-30 21:03:14 UTC+8"
+  "updated_at": "2026-11-03 16:12:01 UTC+8"
 }

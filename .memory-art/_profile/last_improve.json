@@ -1,59 +1,89 @@
 {
-  "ran_at": "2026-10-30 21:03:15 UTC+8",
-  "reflections_scanned": 4,
-  "avg_winner_score": 9.03,
-  "avg_rounds": 4.0,
+  "ran_at": "2026-11-03 20:54:15 UTC+8",
+  "reflections_scanned": 20,
+  "avg_winner_score": 9.41,
+  "avg_rounds": 3.15,
   "top_recurring_defects": [
     {
-      "text": "左右袋更像实色圆角柱而非参考的半透明玻璃购物袋窗面，袋口/提手塑形偏弱；道具数量白字外圈偏紫晕软边，绿 CTA 上现价字",
+      "text": "菌盖斑点可更匀",
+      "count": 2
+    },
+    {
+      "text": "核透明边缘",
       "count": 1
     },
     {
-      "text": "绿 CTA 下方划线原价红线偏细偏暗，冲击力不够；左袋 85% OFF 吊牌偏橙、不如参考鲜红吊牌抓眼，小字 x2 描边",
+      "text": "核安全区是否贴边",
       "count": 1
     },
     {
-      "text": "右粉袋对角 Best Value 金丝带相对第3轮丢失，高价值层级信号回退；划线原价红线仍偏暗细，未达到更亮朱红粗删除线",
+      "text": "数字币标可再减可读字；托盘槽略满",
       "count": 1
     },
     {
-      "text": "相对原图多出的一处：高台地板与宝箱金属有吊灯暖金光斑，左舶窗冷青同时打在蓝椅左侧和拱门左内沿。天花板蜥鱼改戴过大三角帽并",
+      "text": "上眼睑压虹膜中线可再明确半档",
       "count": 1
     },
     {
-      "text": "相对原图多出的一处：吊灯暖金在高台地板和开盖宝箱金属上摊成一圈光斑，左舶窗冷青同时打在爱心椅左侧和拱门左内沿。蜥鱼头中央",
+      "text": "上眼睑压至虹膜中线更清楚",
       "count": 1
     },
     {
-      "text": "相对原图多出的一处：吊灯暖金在高台地板、开盖宝箱盖沿和散落金币上摊成一圈，左舶窗冷青同时打在爱心椅左缘和拱门左内壁。右下",
+      "text": "小提琴仙可再弱化；路径纵深略平",
       "count": 1
     },
     {
-      "text": "每个控件外沿仍有一圈黄边；灰色 Level 禁用钮右上缺了一小块白角；prompt 改动 44% 超过档位上限 40%",
-      "count": 1
-    },
-    {
-      "text": "控件外沿黄边还在；蓝满轨右侧旁有一颗红噪点",
+      "text": "配角已弱化；路径纵深改善",
       "count": 1
     }
   ],
   "recipe_strengthen": [
     {
-      "module": "scene.PirateCabin",
-      "id": "CHAT20261030180039740RECIPE",
-      "summary": "[收敛胜出 9.37分] Casual 3D cartoon pirate captain cabin, same scene — 蜥鱼吊灯回到帽下触手团，没有卡通五官；右壁架是小灯笼加画框，",
+      "module": "icon.AppIcon",
+      "id": "CHAT20261102191444751RECIPE",
+      "summary": "[收敛胜出 9.64分] STUNNING 1024 Christmas App Icon remake: same ging — 惊艳点到位：冰晶碎玻璃+体积暴雪+冷暖硬切+呵气泪光；窗台无",
       "hint": "下次 warm-start 优先注入本条 recipe"
     },
     {
-      "module": "ui.MainMenu",
-      "id": "CHAT20261030161724120RECIPE",
-      "summary": "[收敛胜出 8.75分] Royal Match 主界面 9:16 竖屏概念：宫廷书房家园+奶油香槟金软塑胶糖果UI — 绿加号焊在金币胶囊左缘，顶栏收成三枚；Level 79 与 ",
+      "module": "icon.AppIcon",
+      "id": "CHAT20261102184638833RECIPE",
+      "summary": "[收敛胜出 9.60分] 1024 App Icon Christmas version: same ginger-braid — 母版双人圣诞身份锁定；Light/Dark/Tinted 齐",
       "hint": "下次 warm-start 优先注入本条 recipe"
     },
     {
-      "module": "ui.MainMenu",
-      "id": "CHAT20261030162449681RECIPE",
-      "summary": "[收敛胜出 8.60分] 从概念抽出 Royal Match 主界面 UI 组件表：面板/按钮态/进度空满/Tab/圆徽，奶油 — 蓝满轨旁红噪点已消失；14119、Level/Area 三态",
+      "module": "icon.AppIcon",
+      "id": "CHAT20261102190002672RECIPE",
+      "summary": "[收敛胜出 9.60分] Fix Christmas 1024 App Icon: SAME mother+baby Chri — 1024满幅直角母版；窗台无烛；左右冷暖合理；Light/D",
+      "hint": "下次 warm-start 优先注入本条 recipe"
+    },
+    {
+      "module": "prop.InstrumentMerge",
+      "id": "CHAT20261103174943758RECIPE",
+      "summary": "[收敛胜出 9.57分] 一组乐器合成梯：5x3=15格整表，species_change，垫船图参考锁白卡深底，不抄船 — 5x3白卡深底锁住;15格全是乐器无船;物种链可读;软塑胶一",
+      "hint": "下次 warm-start 优先注入本条 recipe"
+    },
+    {
+      "module": "art.BatteryRerun",
+      "id": "CHAT20261103201554553RECIPE",
+      "summary": "[收敛胜出 9.54分] 锁风验证：01_style画风克隆成全新木桥溪流茶会小景，禁止贴样张构图 — 新题材锁风验证成立；未贴样张屋船构图",
+      "hint": "下次 warm-start 优先注入本条 recipe"
+    },
+    {
+      "module": "art.BatteryRerun",
+      "id": "CHAT20261103202204338RECIPE",
+      "summary": "[收敛胜出 9.54分] 普通图：04蘑菇奶酪道具黑底 — 黑底静物机位锁；黏土统一",
+      "hint": "下次 warm-start 优先注入本条 recipe"
+    },
+    {
+      "module": "ui.MatchHUD",
+      "id": "CHAT20261103203929376RECIPE",
+      "summary": "[收敛胜出 9.54分] UI概念稿：竖屏三消局内HUD，毛绒白边方块+顶栏底栏托盘，跟附图分区，不抄可读乱码 — 竖屏HUD概念可用",
+      "hint": "下次 warm-start 优先注入本条 recipe"
+    },
+    {
+      "module": "art.BatteryRerun",
+      "id": "CHAT20261103202400113RECIPE",
+      "summary": "[收敛胜出 9.53分] 多图分工：02身份+03结构16:9 — 16:9分工锁稳",
       "hint": "下次 warm-start 优先注入本条 recipe"
     }
   ],

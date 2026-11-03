@@ -71,7 +71,12 @@ description: 仅当玩家点名图标，或生图分流判成桌面图标、SVG 
 一套里线宽或拐角混用，或目标尺寸认不出，不能停，正式分改取该维（低于 8.0）。示例：`笔画一致8.6/视觉重量8.4/留白8.5/功能识别8.8`
 
 ### 二之三、Mode C：游戏道具透明底栅格图标（64/128/256px PNG，非 SVG）
-若用户要的是 **游戏道具栅格图标**：先锁「线宽/圆角/色板/投影」style-spec，再批量生成透明底 PNG。关键单枚用 `converge` 跑最多 4 轮，合格线 ≥9.5。
+若用户要的是 **游戏道具栅格图标**：先锁「线宽/圆角/色板/投影」style-spec，再批量生成透明底 PNG。关键单枚用 `converge` 跑最多 4 轮，合格线 ≥9.5。关键枚首轮 generate 前：
+```bash
+python3 pmem_art.py reasonableness review --id <session> --skill icon.c \
+  --draft "<草稿>" --revised "<厚剪影+透明底+棚拍光+无字的修订句>" \
+  --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;silhouette_read=ok;transparent_friendly=ok"
+```
 
 正式分是加权调和平均。原来三项占 75%，无瑕疵占 25%，盲评。透明底和无字仍是门槛。交付文件要有 alpha，白底和品红底不算透明底。
 
@@ -97,6 +102,9 @@ icons/
 用户点名某枚「不对」或一致性审查不通过时，每一轮垫最初的风格参考或 style-spec 样张，不垫上一轮成图：
 ```bash
 python3 pmem_art.py converge start --goal "图标 <name> 对齐 style-spec" --module brand.WorldStyle
+python3 pmem_art.py reasonableness review --id <session> --skill icon.b \
+  --draft "<草稿>" --revised "<线宽/端点/清单写清的修订句>" \
+  --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;stroke_consistency=ok"
 # 生成 → 自评 → converge generate / converge judge → finish
 ```
 
@@ -135,10 +143,14 @@ python3 pmem_art.py ingest icons/preview.html -p "icon set preview" --apply   # 
 
 ```bash
 python3 pmem_art.py converge start --session appicon --module brand.WorldStyle --scale high --goal "iOS 1024x1024 App Icon: 青瓷质感记账应用，中心单枚立体青釉金币流光符号"
-python3 pmem_art.py converge generate --session appicon --round 1 --image app_icon_r1.png --prompt "..."
+python3 pmem_art.py reasonableness review --id appicon --skill icon.a \
+  --draft "<草稿>" --revised "<单符号+72%-80%安全区+满幅直角无字的修订句>" \
+  --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;safe_zone=ok;single_symbol=ok"
+python3 pmem_art.py converge generate --session appicon --round 1 --image app_icon_r1.png
 python3 pmem_art.py converge judge --session appicon --round 1 --image app_icon_r1.png \
   --dims "识别度9.6/安全区9.7/光影质感9.5/多尺寸合规9.6/色板纯粹9.7"
 ```
+Mode C 关键枚同理：`--skill icon.c`，修订句须含透明底与厚剪影。
 
 ## 三、交付检查清单
 - [ ] 全部 SVG 同 viewBox / stroke-width / linecap / linejoin

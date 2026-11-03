@@ -139,8 +139,9 @@ def write_process_board(root: Path, sess: dict[str, Any], *, winner: dict[str, A
             bits.append(f"下一稿：{note.get('next_fix')}")
         lis = "".join(f"<li>{_esc(b)}</li>" for b in bits)
         body = _esc(note.get("prompt") or note.get("text") or "")
+        title = "合理性闸 · 修订提示词" if note.get("kind") == "reasonableness" else f"论述第 {n} 稿"
         talk_cards.append(
-            f'<article class="card talk"><h3>论述第 {n} 稿</h3>'
+            f'<article class="card talk"><h3>{_esc(title)}</h3>'
             f'<pre>{body}</pre><ul>{lis}</ul></article>'
         )
 

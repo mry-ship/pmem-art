@@ -14,5 +14,1669 @@
     "source": "classify_auto_add",
     "created_at": "2026-10-28T01:33:05+0800",
     "status": "candidate"
+  },
+  {
+    "module_id": "scene.Bird",
+    "category": "scene",
+    "folder": "assets\\scene\\bird",
+    "file_count": 1,
+    "confidence": 0.562,
+    "sample_files": [
+      "assets/bird_batch_final.jpg"
+    ],
+    "paths_glob": [
+      "assets/scene/bird/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:19+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Ref",
+    "category": "misc",
+    "folder": "assets\\misc\\ref",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/fairy_split/ref_full.jpg"
+    ],
+    "paths_glob": [
+      "assets/misc/ref/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:19+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Compose",
+    "category": "misc",
+    "folder": "assets\\misc\\compose",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/fairy_split/_compose_mid.png"
+    ],
+    "paths_glob": [
+      "assets/misc/compose/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:19+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "scene.Compose",
+    "category": "scene",
+    "folder": "assets\\scene\\compose",
+    "file_count": 1,
+    "confidence": 0.562,
+    "sample_files": [
+      "assets/fairy_split/_compose_preview.png"
+    ],
+    "paths_glob": [
+      "assets/scene/compose/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:20+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Ghost",
+    "category": "misc",
+    "folder": "assets\\misc\\ghost",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/fairy_split/_ghost_heatmap.png"
+    ],
+    "paths_glob": [
+      "assets/misc/ghost/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:20+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Crop",
+    "category": "misc",
+    "folder": "assets\\misc\\crop",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/farm77/_crop_shed_ref.png"
+    ],
+    "paths_glob": [
+      "assets/misc/crop/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:20+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Diff",
+    "category": "misc",
+    "folder": "assets\\misc\\diff",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/farm77/_diff_mask_v4.png"
+    ],
+    "paths_glob": [
+      "assets/misc/diff/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:20+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.Ref",
+    "category": "character",
+    "folder": "assets\\character\\ref",
+    "file_count": 1,
+    "confidence": 0.688,
+    "sample_files": [
+      "assets/farm77/_ref_grid.png"
+    ],
+    "paths_glob": [
+      "assets/character/ref/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:20+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "scene.Truck",
+    "category": "scene",
+    "folder": "assets\\scene\\truck",
+    "file_count": 1,
+    "confidence": 0.562,
+    "sample_files": [
+      "assets/farm77/_truck_orient_check.jpg"
+    ],
+    "paths_glob": [
+      "assets/scene/truck/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:20+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Five",
+    "category": "misc",
+    "folder": "assets\\misc\\five",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/festival5_merge/l1_five_ref.png"
+    ],
+    "paths_glob": [
+      "assets/misc/five/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:20+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Overview",
+    "category": "misc",
+    "folder": "assets\\misc\\overview",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/festival5_merge/overview_compare_cursor_fail_vs_image25_latest.png"
+    ],
+    "paths_glob": [
+      "assets/misc/overview/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:20+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "scene.Overview",
+    "category": "scene",
+    "folder": "assets\\scene\\overview",
+    "file_count": 1,
+    "confidence": 0.562,
+    "sample_files": [
+      "assets/festival5_merge/overview_cursor_clean_v1.jpg"
+    ],
+    "paths_glob": [
+      "assets/scene/overview/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:20+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "scene.Edit",
+    "category": "scene",
+    "folder": "assets\\scene\\edit",
+    "file_count": 1,
+    "confidence": 0.562,
+    "sample_files": [
+      "assets/festival5_merge/_edit_ping.png"
+    ],
+    "paths_glob": [
+      "assets/scene/edit/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:20+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "scene.Ping",
+    "category": "scene",
+    "folder": "assets\\scene\\ping",
+    "file_count": 1,
+    "confidence": 0.562,
+    "sample_files": [
+      "assets/festival5_merge/_ping.png"
+    ],
+    "paths_glob": [
+      "assets/scene/ping/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:20+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "scene.Ping2",
+    "category": "scene",
+    "folder": "assets\\scene\\ping2",
+    "file_count": 1,
+    "confidence": 0.562,
+    "sample_files": [
+      "assets/festival5_merge/_ping2.png"
+    ],
+    "paths_glob": [
+      "assets/scene/ping2/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:20+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "scene.Ping3",
+    "category": "scene",
+    "folder": "assets\\scene\\ping3",
+    "file_count": 1,
+    "confidence": 0.562,
+    "sample_files": [
+      "assets/festival5_merge/_ping3.png"
+    ],
+    "paths_glob": [
+      "assets/scene/ping3/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:20+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Structure",
+    "category": "misc",
+    "folder": "assets\\misc\\structure",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/skill_battery_20261103/03_structure.png"
+    ],
+    "paths_glob": [
+      "assets/misc/structure/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:20+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "scene.Compare",
+    "category": "scene",
+    "folder": "assets\\scene\\compare",
+    "file_count": 1,
+    "confidence": 0.562,
+    "sample_files": [
+      "assets/split_plan_compare/compare_ref_cursor_image25.png"
+    ],
+    "paths_glob": [
+      "assets/scene/compare/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:20+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Compare",
+    "category": "misc",
+    "folder": "assets\\misc\\compare",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/split_plan_compare/compare_v2_vs_fixed.png"
+    ],
+    "paths_glob": [
+      "assets/misc/compare/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:20+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.1",
+    "category": "character",
+    "folder": "assets\\character\\1",
+    "file_count": 1,
+    "confidence": 0.688,
+    "sample_files": [
+      "assets/fairy_split/new/1-铃兰花屋.png"
+    ],
+    "paths_glob": [
+      "assets/character/1/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:21+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "vfx.11",
+    "category": "vfx",
+    "folder": "assets\\vfx\\11",
+    "file_count": 1,
+    "confidence": 0.588,
+    "sample_files": [
+      "assets/fairy_split/new/11-底前景叶丛.png"
+    ],
+    "paths_glob": [
+      "assets/vfx/11/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:21+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.2",
+    "category": "character",
+    "folder": "assets\\character\\2",
+    "file_count": 1,
+    "confidence": 0.688,
+    "sample_files": [
+      "assets/fairy_split/new/2-树屋.png"
+    ],
+    "paths_glob": [
+      "assets/character/2/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:21+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.3",
+    "category": "character",
+    "folder": "assets\\character\\3",
+    "file_count": 1,
+    "confidence": 0.6,
+    "sample_files": [
+      "assets/fairy_split/new/3-左蘑菇簇.png"
+    ],
+    "paths_glob": [
+      "assets/character/3/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:21+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.4",
+    "category": "misc",
+    "folder": "assets\\misc\\4",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/fairy_split/new/4-池与香蕉船.png"
+    ],
+    "paths_glob": [
+      "assets/misc/4/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:21+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.5",
+    "category": "misc",
+    "folder": "assets\\misc\\5",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/fairy_split/new/5-芝士蘑菇桌.png"
+    ],
+    "paths_glob": [
+      "assets/misc/5/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:21+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.6",
+    "category": "misc",
+    "folder": "assets\\misc\\6",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/fairy_split/new/6-鼹鼠送礼.png"
+    ],
+    "paths_glob": [
+      "assets/misc/6/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:21+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.7",
+    "category": "character",
+    "folder": "assets\\character\\7",
+    "file_count": 1,
+    "confidence": 0.688,
+    "sample_files": [
+      "assets/fairy_split/new/7-飞天仙女.png"
+    ],
+    "paths_glob": [
+      "assets/character/7/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:21+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.8",
+    "category": "character",
+    "folder": "assets\\character\\8",
+    "file_count": 1,
+    "confidence": 0.688,
+    "sample_files": [
+      "assets/fairy_split/new/8-琴仙树桩.png"
+    ],
+    "paths_glob": [
+      "assets/character/8/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:21+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.9",
+    "category": "character",
+    "folder": "assets\\character\\9",
+    "file_count": 1,
+    "confidence": 0.688,
+    "sample_files": [
+      "assets/fairy_split/new/9-前景花灯.png"
+    ],
+    "paths_glob": [
+      "assets/character/9/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:21+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.5",
+    "category": "character",
+    "folder": "assets\\character\\5",
+    "file_count": 1,
+    "confidence": 0.6,
+    "sample_files": [
+      "assets/fairy_split/new_trim/5-芝士蘑菇桌.png"
+    ],
+    "paths_glob": [
+      "assets/character/5/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:21+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Leaves",
+    "category": "misc",
+    "folder": "assets\\misc\\leaves",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/fairy_split/_crops/fg_leaves.png"
+    ],
+    "paths_glob": [
+      "assets/misc/leaves/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:21+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Flower",
+    "category": "misc",
+    "folder": "assets\\misc\\flower",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/fairy_split/_crops/flower_house.png"
+    ],
+    "paths_glob": [
+      "assets/misc/flower/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:21+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Flying",
+    "category": "misc",
+    "folder": "assets\\misc\\flying",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/fairy_split/_crops/flying_fairy.png"
+    ],
+    "paths_glob": [
+      "assets/misc/flying/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:21+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Food",
+    "category": "misc",
+    "folder": "assets\\misc\\food",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/fairy_split/_crops/food_mushroom.png"
+    ],
+    "paths_glob": [
+      "assets/misc/food/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:21+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Mole",
+    "category": "misc",
+    "folder": "assets\\misc\\mole",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/fairy_split/_crops/mole.png"
+    ],
+    "paths_glob": [
+      "assets/misc/mole/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:21+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Mushrooms",
+    "category": "misc",
+    "folder": "assets\\misc\\mushrooms",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/fairy_split/_crops/mushrooms.png"
+    ],
+    "paths_glob": [
+      "assets/misc/mushrooms/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:21+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Pond",
+    "category": "misc",
+    "folder": "assets\\misc\\pond",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/fairy_split/_crops/pond_boat.png"
+    ],
+    "paths_glob": [
+      "assets/misc/pond/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:21+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Treehouse",
+    "category": "misc",
+    "folder": "assets\\misc\\treehouse",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/fairy_split/_crops/treehouse.png"
+    ],
+    "paths_glob": [
+      "assets/misc/treehouse/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:22+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Violinist",
+    "category": "misc",
+    "folder": "assets\\misc\\violinist",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/fairy_split/_crops/violinist.png"
+    ],
+    "paths_glob": [
+      "assets/misc/violinist/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:22+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Alt",
+    "category": "misc",
+    "folder": "assets\\misc\\alt",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/farm77/christmas/alt_r2_409x1024.jpg"
+    ],
+    "paths_glob": [
+      "assets/misc/alt/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:22+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Christmas",
+    "category": "misc",
+    "folder": "assets\\misc\\christmas",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/farm77/christmas/final.jpg"
+    ],
+    "paths_glob": [
+      "assets/misc/christmas/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:22+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.R1",
+    "category": "misc",
+    "folder": "assets\\misc\\r1",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/farm77/christmas/r1.jpg"
+    ],
+    "paths_glob": [
+      "assets/misc/r1/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:22+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.R2",
+    "category": "misc",
+    "folder": "assets\\misc\\r2",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/farm77/christmas/r2.jpg"
+    ],
+    "paths_glob": [
+      "assets/misc/r2/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:22+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.R3",
+    "category": "misc",
+    "folder": "assets\\misc\\r3",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/farm77/christmas/r3.jpg"
+    ],
+    "paths_glob": [
+      "assets/misc/r3/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:22+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.R4",
+    "category": "misc",
+    "folder": "assets\\misc\\r4",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/farm77/christmas/r4.jpg"
+    ],
+    "paths_glob": [
+      "assets/misc/r4/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:22+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.1",
+    "category": "misc",
+    "folder": "assets\\misc\\1",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/farm77/new/1-干草堆-新.png"
+    ],
+    "paths_glob": [
+      "assets/misc/1/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:22+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.2",
+    "category": "misc",
+    "folder": "assets\\misc\\2",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/farm77/new/2-红卡车-新.png"
+    ],
+    "paths_glob": [
+      "assets/misc/2/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:22+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.3",
+    "category": "misc",
+    "folder": "assets\\misc\\3",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/farm77/new/3-羊棚-新.png"
+    ],
+    "paths_glob": [
+      "assets/misc/3/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:22+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "vfx.6",
+    "category": "vfx",
+    "folder": "assets\\vfx\\6",
+    "file_count": 1,
+    "confidence": 0.588,
+    "sample_files": [
+      "assets/farm77/new/6-栅栏-新.png"
+    ],
+    "paths_glob": [
+      "assets/vfx/6/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:22+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.7",
+    "category": "misc",
+    "folder": "assets\\misc\\7",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/farm77/new/7-羊群-新.png"
+    ],
+    "paths_glob": [
+      "assets/misc/7/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:22+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.8",
+    "category": "misc",
+    "folder": "assets\\misc\\8",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/farm77/new/8-谷仓-新.png"
+    ],
+    "paths_glob": [
+      "assets/misc/8/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:22+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.9",
+    "category": "misc",
+    "folder": "assets\\misc\\9",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/farm77/new/9-轮胎水槽-新.png"
+    ],
+    "paths_glob": [
+      "assets/misc/9/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:22+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Flip",
+    "category": "misc",
+    "folder": "assets\\misc\\flip",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/farm77/new_trim/2-红卡车-新-flip.png"
+    ],
+    "paths_glob": [
+      "assets/misc/flip/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:22+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.7b",
+    "category": "character",
+    "folder": "assets\\character\\7b",
+    "file_count": 1,
+    "confidence": 0.6,
+    "sample_files": [
+      "assets/farm77/new_v3/7b-路上羊-新.png"
+    ],
+    "paths_glob": [
+      "assets/character/7b/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:23+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.7b",
+    "category": "misc",
+    "folder": "assets\\misc\\7b",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/farm77/new_v4/7b-路上羊-新.png"
+    ],
+    "paths_glob": [
+      "assets/misc/7b/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:23+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Ping",
+    "category": "misc",
+    "folder": "assets\\misc\\ping",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/farm77/new_v4/_ping.png"
+    ],
+    "paths_glob": [
+      "assets/misc/ping/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:23+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Barn",
+    "category": "misc",
+    "folder": "assets\\misc\\barn",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/farm77/_crops_v3/barn.png"
+    ],
+    "paths_glob": [
+      "assets/misc/barn/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:23+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Farmer",
+    "category": "misc",
+    "folder": "assets\\misc\\farmer",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/farm77/_crops_v3/farmer.png"
+    ],
+    "paths_glob": [
+      "assets/misc/farmer/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:24+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Fence",
+    "category": "misc",
+    "folder": "assets\\misc\\fence",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/farm77/_crops_v3/fence.png"
+    ],
+    "paths_glob": [
+      "assets/misc/fence/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:24+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Hay",
+    "category": "misc",
+    "folder": "assets\\misc\\hay",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/farm77/_crops_v3/hay.png"
+    ],
+    "paths_glob": [
+      "assets/misc/hay/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:24+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Path",
+    "category": "misc",
+    "folder": "assets\\misc\\path",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/farm77/_crops_v3/path_sheep.png"
+    ],
+    "paths_glob": [
+      "assets/misc/path/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:24+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Shed",
+    "category": "misc",
+    "folder": "assets\\misc\\shed",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/farm77/_crops_v3/shed.png"
+    ],
+    "paths_glob": [
+      "assets/misc/shed/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:24+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Tire",
+    "category": "misc",
+    "folder": "assets\\misc\\tire",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/farm77/_crops_v3/tire_sheep.png"
+    ],
+    "paths_glob": [
+      "assets/misc/tire/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:24+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Trough",
+    "category": "misc",
+    "folder": "assets\\misc\\trough",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/farm77/_crops_v3/trough.png"
+    ],
+    "paths_glob": [
+      "assets/misc/trough/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:24+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Truck",
+    "category": "misc",
+    "folder": "assets\\misc\\truck",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/farm77/_crops_v3/truck.png"
+    ],
+    "paths_glob": [
+      "assets/misc/truck/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:24+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Water",
+    "category": "misc",
+    "folder": "assets\\misc\\water",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/farm77/_crops_v3/water_tire.png"
+    ],
+    "paths_glob": [
+      "assets/misc/water/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:24+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Sheep",
+    "category": "misc",
+    "folder": "assets\\misc\\sheep",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/farm77/_precision_crops/sheep_left.png"
+    ],
+    "paths_glob": [
+      "assets/misc/sheep/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:24+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.Truck",
+    "category": "character",
+    "folder": "assets\\character\\truck",
+    "file_count": 1,
+    "confidence": 0.6,
+    "sample_files": [
+      "assets/farm77/_precision_crops/truck.png"
+    ],
+    "paths_glob": [
+      "assets/character/truck/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:24+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.CloneTown",
+    "category": "misc",
+    "folder": "assets\\misc\\clonetown",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/farm77/christmas/clone_town/final.jpg"
+    ],
+    "paths_glob": [
+      "assets/misc/clonetown/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:24+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.Barn",
+    "category": "character",
+    "folder": "assets\\character\\barn",
+    "file_count": 1,
+    "confidence": 0.688,
+    "sample_files": [
+      "assets/farm_layer_decomp/Layers/002_Barn.png"
+    ],
+    "paths_glob": [
+      "assets/character/barn/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:25+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.Shed",
+    "category": "character",
+    "folder": "assets\\character\\shed",
+    "file_count": 1,
+    "confidence": 0.688,
+    "sample_files": [
+      "assets/farm_layer_decomp/Layers/004_Shed.png"
+    ],
+    "paths_glob": [
+      "assets/character/shed/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:25+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.Hay",
+    "category": "character",
+    "folder": "assets\\character\\hay",
+    "file_count": 1,
+    "confidence": 0.688,
+    "sample_files": [
+      "assets/farm_layer_decomp/Layers/005_Hay.png"
+    ],
+    "paths_glob": [
+      "assets/character/hay/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:25+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.Trough",
+    "category": "character",
+    "folder": "assets\\character\\trough",
+    "file_count": 1,
+    "confidence": 0.688,
+    "sample_files": [
+      "assets/farm_layer_decomp/Layers/006_Trough.png"
+    ],
+    "paths_glob": [
+      "assets/character/trough/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:25+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.WaterTire",
+    "category": "character",
+    "folder": "assets\\character\\watertire",
+    "file_count": 1,
+    "confidence": 0.688,
+    "sample_files": [
+      "assets/farm_layer_decomp/Layers/007_WaterTire.png"
+    ],
+    "paths_glob": [
+      "assets/character/watertire/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:25+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.Farmer",
+    "category": "character",
+    "folder": "assets\\character\\farmer",
+    "file_count": 1,
+    "confidence": 0.688,
+    "sample_files": [
+      "assets/farm_layer_decomp/Layers/008_Farmer.png"
+    ],
+    "paths_glob": [
+      "assets/character/farmer/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:25+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.TireSheep",
+    "category": "character",
+    "folder": "assets\\character\\tiresheep",
+    "file_count": 1,
+    "confidence": 0.688,
+    "sample_files": [
+      "assets/farm_layer_decomp/Layers/009_TireSheep.png"
+    ],
+    "paths_glob": [
+      "assets/character/tiresheep/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:25+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.PathSheep",
+    "category": "character",
+    "folder": "assets\\character\\pathsheep",
+    "file_count": 1,
+    "confidence": 0.688,
+    "sample_files": [
+      "assets/farm_layer_decomp/Layers/010_PathSheep.png"
+    ],
+    "paths_glob": [
+      "assets/character/pathsheep/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:25+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.Fence",
+    "category": "character",
+    "folder": "assets\\character\\fence",
+    "file_count": 1,
+    "confidence": 0.688,
+    "sample_files": [
+      "assets/farm_layer_decomp/Layers/011_Fence.png"
+    ],
+    "paths_glob": [
+      "assets/character/fence/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:25+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.Reconstructed",
+    "category": "character",
+    "folder": "assets\\character\\reconstructed",
+    "file_count": 1,
+    "confidence": 0.688,
+    "sample_files": [
+      "assets/farm_layer_decomp/Reconstructed/Final.png"
+    ],
+    "paths_glob": [
+      "assets/character/reconstructed/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:25+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Difference",
+    "category": "misc",
+    "folder": "assets\\misc\\difference",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/farm_layer_decomp/Validation/Difference.png"
+    ],
+    "paths_glob": [
+      "assets/misc/difference/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:25+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "scene.Overlay",
+    "category": "scene",
+    "folder": "assets\\scene\\overlay",
+    "file_count": 1,
+    "confidence": 0.562,
+    "sample_files": [
+      "assets/farm_layer_decomp/Validation/Overlay.png"
+    ],
+    "paths_glob": [
+      "assets/scene/overlay/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:25+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.Path",
+    "category": "character",
+    "folder": "assets\\character\\path",
+    "file_count": 1,
+    "confidence": 0.6,
+    "sample_files": [
+      "assets/farm_layer_decomp/_work/ai/path_sheep.png"
+    ],
+    "paths_glob": [
+      "assets/character/path/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:25+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.Tire",
+    "category": "character",
+    "folder": "assets\\character\\tire",
+    "file_count": 1,
+    "confidence": 0.688,
+    "sample_files": [
+      "assets/farm_layer_decomp/_work/crops/tire_sheep.png"
+    ],
+    "paths_glob": [
+      "assets/character/tire/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:26+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.Water",
+    "category": "character",
+    "folder": "assets\\character\\water",
+    "file_count": 1,
+    "confidence": 0.6,
+    "sample_files": [
+      "assets/farm_layer_decomp/_work/crops/water_tire.png"
+    ],
+    "paths_glob": [
+      "assets/character/water/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:26+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Balloon",
+    "category": "misc",
+    "folder": "assets\\misc\\balloon",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/festival5_merge/balloon/L01.png"
+    ],
+    "paths_glob": [
+      "assets/misc/balloon/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:26+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Src",
+    "category": "misc",
+    "folder": "assets\\misc\\src",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/festival5_merge/balloon/L01_src.png"
+    ],
+    "paths_glob": [
+      "assets/misc/src/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:26+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.Balloon",
+    "category": "character",
+    "folder": "assets\\character\\balloon",
+    "file_count": 1,
+    "confidence": 0.6,
+    "sample_files": [
+      "assets/festival5_merge/balloon/L02.png"
+    ],
+    "paths_glob": [
+      "assets/character/balloon/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:26+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Box",
+    "category": "misc",
+    "folder": "assets\\misc\\box",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/festival5_merge/box/L01.png"
+    ],
+    "paths_glob": [
+      "assets/misc/box/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:26+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.Box",
+    "category": "character",
+    "folder": "assets\\character\\box",
+    "file_count": 1,
+    "confidence": 0.6,
+    "sample_files": [
+      "assets/festival5_merge/box/L02.png"
+    ],
+    "paths_glob": [
+      "assets/character/box/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:26+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Candy",
+    "category": "misc",
+    "folder": "assets\\misc\\candy",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/festival5_merge/candy/L01.png"
+    ],
+    "paths_glob": [
+      "assets/misc/candy/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:26+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.Candy",
+    "category": "character",
+    "folder": "assets\\character\\candy",
+    "file_count": 1,
+    "confidence": 0.6,
+    "sample_files": [
+      "assets/festival5_merge/candy/L02.png"
+    ],
+    "paths_glob": [
+      "assets/character/candy/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:26+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Magic",
+    "category": "misc",
+    "folder": "assets\\misc\\magic",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/festival5_merge/magic/L01.png"
+    ],
+    "paths_glob": [
+      "assets/misc/magic/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:26+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.Magic",
+    "category": "character",
+    "folder": "assets\\character\\magic",
+    "file_count": 1,
+    "confidence": 0.6,
+    "sample_files": [
+      "assets/festival5_merge/magic/L02.png"
+    ],
+    "paths_glob": [
+      "assets/character/magic/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:26+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Prize",
+    "category": "misc",
+    "folder": "assets\\misc\\prize",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/festival5_merge/prize/L01.png"
+    ],
+    "paths_glob": [
+      "assets/misc/prize/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:26+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.Prize",
+    "category": "character",
+    "folder": "assets\\character\\prize",
+    "file_count": 1,
+    "confidence": 0.6,
+    "sample_files": [
+      "assets/festival5_merge/prize/L02.png"
+    ],
+    "paths_glob": [
+      "assets/character/prize/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:26+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.BadV120261102200833",
+    "category": "character",
+    "folder": "assets\\character\\badv120261102200833",
+    "file_count": 1,
+    "confidence": 0.6,
+    "sample_files": [
+      "assets/festival5_merge/_bad_v1_20261102_200833/L02.png"
+    ],
+    "paths_glob": [
+      "assets/character/badv120261102200833/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:27+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.4",
+    "category": "character",
+    "folder": "assets\\character\\4",
+    "file_count": 1,
+    "confidence": 0.6,
+    "sample_files": [
+      "assets/renovation79/new/4-蘑菇桌-新.png"
+    ],
+    "paths_glob": [
+      "assets/character/4/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:31+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.6",
+    "category": "character",
+    "folder": "assets\\character\\6",
+    "file_count": 1,
+    "confidence": 0.688,
+    "sample_files": [
+      "assets/renovation79/old/6-房子-旧.png"
+    ],
+    "paths_glob": [
+      "assets/character/6/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:31+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.R1",
+    "category": "character",
+    "folder": "assets\\character\\r1",
+    "file_count": 1,
+    "confidence": 0.6,
+    "sample_files": [
+      "assets/skill_battery_20261103/draw_ordinary_A/r1.png"
+    ],
+    "paths_glob": [
+      "assets/character/r1/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:31+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.R2",
+    "category": "character",
+    "folder": "assets\\character\\r2",
+    "file_count": 1,
+    "confidence": 0.6,
+    "sample_files": [
+      "assets/skill_battery_20261103/draw_variant/r2.png"
+    ],
+    "paths_glob": [
+      "assets/character/r2/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:31+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.R4",
+    "category": "character",
+    "folder": "assets\\character\\r4",
+    "file_count": 1,
+    "confidence": 0.6,
+    "sample_files": [
+      "assets/skill_battery_20261103/draw_variant/r4.png"
+    ],
+    "paths_glob": [
+      "assets/character/r4/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:31+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "scene.RerunMerge",
+    "category": "scene",
+    "folder": "assets\\scene\\rerunmerge",
+    "file_count": 1,
+    "confidence": 0.562,
+    "sample_files": [
+      "assets/skill_battery_20261103/rerun_merge/L01.png"
+    ],
+    "paths_glob": [
+      "assets/scene/rerunmerge/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:32+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.Flower",
+    "category": "character",
+    "folder": "assets\\character\\flower",
+    "file_count": 1,
+    "confidence": 0.688,
+    "sample_files": [
+      "assets/split_plan_compare/_crops/flower_house.png"
+    ],
+    "paths_glob": [
+      "assets/character/flower/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:32+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.Treehouse",
+    "category": "character",
+    "folder": "assets\\character\\treehouse",
+    "file_count": 1,
+    "confidence": 0.688,
+    "sample_files": [
+      "assets/split_plan_compare/_crops/treehouse.png"
+    ],
+    "paths_glob": [
+      "assets/character/treehouse/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:32+0800",
+    "status": "candidate"
   }
 ]

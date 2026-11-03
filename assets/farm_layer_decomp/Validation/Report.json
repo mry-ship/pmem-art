@@ -1,0 +1,6 @@
+{
+  "mae": 37.288,
+  "psnr": 13.012,
+  "ssim_luma": 0.551,
+  "method": "farm77_v4_fullcanvas"
+}

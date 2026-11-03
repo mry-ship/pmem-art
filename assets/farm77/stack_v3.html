@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>农场77 · 切块锁位叠图 v3</title>
+<style>
+  :root { --bg:#121820; --panel:#1c2633; --line:#314255; --text:#e8eef6; --muted:#93a4b8; --accent:#5bbcff; }
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;color:var(--text);background:radial-gradient(1200px 600px at 20% -10%,#243247 0%,var(--bg) 55%);
+    font-family:"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+  .wrap{max-width:1240px;margin:0 auto;padding:20px 18px 40px;display:grid;grid-template-columns:minmax(300px,460px) 1fr;gap:22px}
+  @media (max-width:900px){.wrap{grid-template-columns:1fr}}
+  h1{font-size:20px;margin:0 0 6px;font-weight:650}
+  .sub{color:var(--muted);font-size:13px;line-height:1.5;margin:0 0 16px}
+  .stage-card,.side{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px}
+  .stage-wrap{position:relative;width:100%;max-width:420px;margin:0 auto}
+  .stage{position:relative;width:100%;aspect-ratio:409/1024;overflow:hidden;border-radius:10px;background:#0b1016;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.04)}
+  .stage img{position:absolute;pointer-events:none;user-select:none}
+  .row{display:flex;align-items:center;gap:10px;padding:8px 4px;border-bottom:1px solid rgba(255,255,255,.06)}
+  .row label{flex:1;font-size:13px}
+  .row small{color:var(--muted);font-size:11px}
+  input[type=range]{width:100%;margin:10px 0 4px}
+  .prog{font-size:12px;color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="stage-card">
+    <h1>农场77 · 切块锁位 v3</h1>
+    <p class="sub">方法：原图切块 → 提示词隔离补遮挡 → 贴回同一裁切框。允许遮挡重叠；食槽边羊并入食槽块；轮胎羊含旁侧木板细节。</p>
+    <div class="stage-wrap"><div class="stage" id="stage"></div></div>
+    <input id="slider" type="range" min="0" max="0" value="0">
+    <div class="prog" id="prog"></div>
+  </div>
+  <div class="side">
+    <div id="list"></div>
+  </div>
+</div>
+<script>
+const LAYERS = [
+  {id:'bg', name:"10 背景", file:'new_v3_trim/10-背景-新.png', left:0.0000, top:0.0000, width:1.0000, height:1.0000, note:"", bg:true},
+  {id:'barn', name:"8 谷仓", file:'new_v3_trim/8-谷仓-新.png', left:0.0000, top:0.0000, width:0.6198, height:0.3198, note:"large brown wooden barn with snow roof only", bg:false},
+  {id:'truck', name:"2 红卡车", file:'new_v3_trim/2-红卡车-新.png', left:0.0599, top:0.1597, width:0.5599, height:0.2798, note:"the red vintage pickup truck only, nose facing bottom-left, same proportions as crop — do NOT stretch or redesign body", bg:false},
+  {id:'shed', name:"3 羊棚", file:'new_v3_trim/3-羊棚-新.png', left:0.4597, top:0.1196, width:0.5391, height:0.3799, note:"right red wooden shed with blue snowy roof, open front with hay inside, wooden sawhorse/workbench with rope, grey metal bucket, bright blue ice puddles at base", bg:false},
+  {id:'hay', name:"1 干草堆", file:'new_v3_trim/1-干草堆-新.png', left:0.0000, top:0.2998, width:0.3998, height:0.2598, note:"left golden hay bale pyramid (two bottom one top) plus pitchfork leaning on it — LARGE as in crop", bg:false},
+  {id:'trough', name:"4 食槽羊", file:'new_v3_trim/4-食槽-新.png', left:0.5000, top:0.3398, width:0.5000, height:0.2998, note:"wooden feeding trough with hay, blue bell on post, scattered corn cobs, AND the two fluffy white sheep eating at the trough — keep their size and positions relative to the trough as in the crop", bg:false},
+  {id:'water_tire', name:"9 轮胎水槽", file:'new_v3_trim/9-轮胎水槽-新.png', left:0.3998, top:0.3799, width:0.3191, height:0.1797, note:"black tire filled with blue water/ice near the shed, plus nearby blue puddles if in crop", bg:false},
+  {id:'farmer', name:"5 农夫", file:'new_v3_trim/5-农夫-新.png', left:0.2396, top:0.3096, width:0.3998, height:0.3398, note:"elderly farmer in blue coat holding a small white lamb", bg:false},
+  {id:'tire_sheep', name:"7 轮胎羊", file:'new_v3_trim/7-轮胎羊-新.png', left:0.0000, top:0.4399, width:0.4193, height:0.2798, note:"left stack of black tires with fluffy sheep on top, PLUS wooden planks leaning beside the tires and straw spilling from tires — keep these side details", bg:false},
+  {id:'path_sheep', name:"7b 路上羊", file:'new_v3_trim/7b-路上羊-新.png', left:0.4597, top:0.5195, width:0.4389, height:0.2197, note:"the single fluffy white sheep on the dirt path (rear three-quarter), same size as in crop — fairly large relative to fence", bg:false},
+  {id:'fence', name:"6 栅栏", file:'new_v3_trim/6-栅栏-新.png', left:0.0000, top:0.6201, width:1.0000, height:0.1987, note:"foreground rustic wooden fence with three rails, barbed wire, right brace board — same curve as crop", bg:false}
+];
+const stage=document.getElementById("stage");
+const list=document.getElementById("list");
+const prog=document.getElementById("prog");
+const slider=document.getElementById("slider");
+const imgs=[];
+LAYERS.forEach((L,i)=>{
+  const img=document.createElement("img");
+  img.src=L.file;
+  img.alt=L.name;
+  img.style.left=(L.left*100)+"%";
+  img.style.top=(L.top*100)+"%";
+  img.style.width=(L.width*100)+"%";
+  img.style.height=(L.height*100)+"%";
+  img.style.objectFit=L.bg?"cover":"contain";
+  img.style.opacity="0";
+  stage.appendChild(img);
+  imgs.push(img);
+  const row=document.createElement("div");
+  row.className="row";
+  row.innerHTML=`<label><input type="checkbox" data-i="${i}" checked> ${L.name}</label><small>${L.note||""}</small>`;
+  list.appendChild(row);
+});
+slider.max=String(LAYERS.length);
+slider.value=String(LAYERS.length);
+function render(){
+  const n=+slider.value;
+  imgs.forEach((img,i)=>{
+    const on=list.querySelector(`input[data-i="${i}"]`).checked && i<n;
+    img.style.opacity=on?"1":"0";
+  });
+  prog.textContent=n===0?"（空）":`显示 1–${n} / ${LAYERS.length}：${LAYERS.slice(0,n).map(x=>x.name).join(" → ")}`;
+}
+slider.addEventListener("input",render);
+list.addEventListener("change",render);
+render();
+</script>
+</body>
+</html>

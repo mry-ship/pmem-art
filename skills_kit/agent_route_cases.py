@@ -150,6 +150,14 @@ def build_cases() -> list[Case]:
 
     for i in range(50):
         _add(out, bucket="style", text=f"以后都按这张的颜色画，先锁风格，第{i}张", mode="skill", routes=["style.lock"], images=["ref/style.png"])
+        _add(
+            out,
+            bucket="style_then_clone",
+            text=f"锁风格再出一张验证图，第{i}张",
+            mode="skill",
+            routes=["style.lock", "draw.clone"],
+            images=["ref/style.png"],
+        )
         _add(out, bucket="critique", text=f"只审这张，别画，第{i}张", mode="skill", routes=["critique.review"], images=["ref/in.png"])
 
     for i in range(40):
@@ -211,6 +219,8 @@ def build_cases() -> list[Case]:
         ("应用商店那种 1024 的启动图标", "skill", ["icon.a"], [], [], ""),
         ("从木剑长到圣剑，八个等级越来越大", "skill", ["merge.ladder"], [], [], ""),
         ("往后出图都用这张的色板", "skill", ["style.lock"], ["ref/style.png"], [], ""),
+        ("锁风格再出一张验证图证明色板", "skill", ["style.lock", "draw.clone"], ["ref/style.png"], [], ""),
+        ("/pmem-style-lock 锁完出图验证", "skill", ["style.lock", "draw.clone"], ["ref/style.png"], [], ""),
         ("先别动笔，帮我看看哪里不行", "skill", ["critique.review"], ["ref/in.png"], [], ""),
         ("仓库里那些没归类的图收进图谱", "skill", ["atlas.file"], [], [], ""),
         ("我最近画得怎么样，短板在哪", "skill", ["coach.report"], [], [], ""),

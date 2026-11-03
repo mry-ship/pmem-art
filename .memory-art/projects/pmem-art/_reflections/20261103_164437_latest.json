@@ -1,0 +1,118 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-11-03 16:44:37 UTC+8",
+  "session_id": "latest",
+  "goal": "变体：同一粉裙金发尖耳仙子，绿瞳珍珠项链果篮翅膀全锁；只改困倦半眯眼——双眼上眼睑压到虹膜中线、笑容变软；机位构图服色发色不变；黑底",
+  "module": "character.FairyPink",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 4,
+  "winner_score": 9.47,
+  "winner_image": "assets/skill_battery_20261103/draw_variant/r4.png",
+  "winner_passed": false,
+  "outcome": "⚠️ **共执行 4 轮审图（目标阈值 `9.50` 分），未达标，已挑选全阶段最高分**（胜出：第 4 轮 `9.47 / 10.0` 分）",
+  "what_fixed": [
+    "双眼上睑继续下压到盖住虹膜中线；去掉紫手链；嘴改软困倦浅笑",
+    "双眼上睑再下压一档直到盖过虹膜水平中线，下半虹膜仍留高光",
+    "做成明显眯眼：上睑缘压到虹膜下半，只留一条绿虹膜缝+高光",
+    "解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁止糊边融边；左臂抬手姿态与原图略有漂移但不改表情验收"
+  ],
+  "what_still_weak": "左臂抬手姿态与原图略有漂移但不改表情验收",
+  "strengths": "双眼明显眯成绿虹膜细缝+高光，上睑已压过中线；身份机位果篮锁住；软困笑",
+  "taste_deltas": {
+    "from_strengths": [
+      "双眼明显眯成绿虹膜细缝+高光，上睑已压过中线；身份机位果篮锁住；软困笑"
+    ],
+    "from_defects": [
+      "上睑仍未稳定压到虹膜中线，绿虹膜露出仍偏多，困倦硬验收差一点",
+      "上睑仍大约只到虹膜上1/3，未稳定盖过水平中线，困倦硬验收未完全兑现",
+      "左臂抬手姿态与原图略有漂移但不改表情验收"
+    ]
+  },
+  "warm_start_confidence": 0.45,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 9.05,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 9.24,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 9.28,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 9.47,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：上眼睑是否压到虹膜中线仍偏浅、右眼更开；右腕多出紫手链非点名改项；嘴角偏坏笑不够软困笑",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.05"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：身份发色粉裙果篮翅膀机位基本锁住；眼睛已明显半眯困倦",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.05"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：上睑仍未稳定压到虹膜中线，绿虹膜露出仍偏多，困倦硬验收差一点",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.24"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：无紫手链；软笑；身份机位锁住；半眯比r1更明显",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.24"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：上睑仍大约只到虹膜上1/3，未稳定盖过水平中线，困倦硬验收未完全兑现",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.28"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：身份机位果篮锁稳；半眯软笑成立；无多余手链",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.28"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：左臂抬手姿态与原图略有漂移但不改表情验收",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "9.47"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：左臂抬手姿态与原图略有漂移但不改表情验收",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.47"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：左臂抬手姿态与原图略有漂移但不改表情验收",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "9.47"
+    }
+  ]
+}

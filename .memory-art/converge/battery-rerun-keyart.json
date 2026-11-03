@@ -1,0 +1,745 @@
+{
+  "session_id": "battery-rerun-keyart",
+  "started_at": "2026-11-03 19:38:45 UTC+8",
+  "goal": "原画：只借01_style画风，全新机位的童话微缩花园主视觉，禁止贴样张构图",
+  "module": "art.BatteryRerun",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "medium",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "medium",
+    "label": "中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.5)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 1,
+    "target_score_threshold": 9.5,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.15,
+      "perspective_anatomy": 0.15,
+      "texture_detail": 0.15,
+      "spec_style": 0.15,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "viewpoint_frame",
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图，只在提示词上补还没过的那一处（提示词改动仍 ≤40%）",
+    "max_prompt_delta_ratio": 0.4,
+    "allow_recompose": false,
+    "allow_viewpoint_change": false,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "viewpoint_angle (不改机位与镜头视角)",
+      "element_count (不增删主体元素清单)",
+      "no_full_recompose (不做整体 recompose / 换景别故事)",
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)"
+    ],
+    "min_round_leap": 0.15,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光",
+    "medium_family": "generic",
+    "best_direction_hint": "最优方向：光影·空气·介质；可小幅姿态/局部布局",
+    "goal": "原画：只借01_style画风，全新机位的童话微缩花园主视觉，禁止贴样张构图",
+    "module": "art.BatteryRerun",
+    "ref_image": "assets/skill_battery_20261103/01_style.png",
+    "ref_analysis": ""
+  },
+  "medium_family": "generic",
+  "contract": "",
+  "target_score_threshold": 9.5,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "assets/skill_battery_20261103/01_style.png",
+  "ref_analysis": "",
+  "default_aspect_ratio": "9:16",
+  "default_reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_battery_20261103\\01_style.png"
+  ],
+  "aspect_ratio": "9:16",
+  "reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_battery_20261103\\01_style.png"
+  ],
+  "ref_physical_traits": {
+    "exists": true,
+    "size_bytes": 115490,
+    "size_kb": 112.8,
+    "width": 169,
+    "height": 276,
+    "aspect_ratio": "169:276",
+    "canonical_aspect_ratio": "9:16",
+    "color_entropy": 7.99
+  },
+  "param_validation": {
+    "valid": true,
+    "validation_passed": true,
+    "case_id": "battery-rerun-keyart",
+    "scale": "medium",
+    "aspect_ratio": "9:16",
+    "ref_aspect_ratio": "9:16",
+    "ref_dimensions": "169x276",
+    "output_aspect_ratio": "",
+    "output_dimensions": "",
+    "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_battery_20261103\\01_style.png",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_battery_20261103\\01_style.png"
+    ],
+    "inherited_default_aspect_ratio": true,
+    "inherited_default_pad_image": true,
+    "matched_ref_aspect_ratio": true,
+    "matched_ref_pad_image": true,
+    "matched_output_aspect_ratio": true,
+    "three_step_stage": "step1_start",
+    "three_step_verified": false,
+    "warnings": []
+  },
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.5,
+  "accept_threshold": 9.5,
+  "max_rounds": 4,
+  "ready_to_finish": true,
+  "status": "finished",
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_battery_20261103\\01_style.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "battery-rerun-keyart",
+        "scale": "medium",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "169x276",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "1080x1920",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_battery_20261103\\01_style.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_battery_20261103\\01_style.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "19:44:24",
+      "image": "assets/skill_battery_20261103/rerun_keyart/r1_916.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 2331504,
+        "size_kb": 2276.9,
+        "width": 1080,
+        "height": 1920,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.99
+      },
+      "raw_score": 9.19,
+      "score": 9.19,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.3/光影9.2/透视9.4/质感9.1/风格9.3/无瑕疵9.0",
+      "dims_parsed": {
+        "composition": 9.3,
+        "lighting_color": 9.2,
+        "perspective_anatomy": 9.4,
+        "texture_detail": 9.1,
+        "spec_style": 9.3,
+        "flawlessness": 9.0
+      },
+      "weighted_score": 9.19,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）"
+      ],
+      "stagnated": false,
+      "strengths": "仰视新机位成立；未贴屋船鼹鼠奶酪样张构图",
+      "defects": "松鼠吊舱略抢主花灯；前景草叶水珠偏写实黏土感弱；伞盖边缘可更圆润玩具感",
+      "next_fix": "削弱吊舱或推远；水珠改黏土高光小珠；主花灯更大更居中发光；保持仰视",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: art.BatteryRerun\n- 置信度: 0.45（fast-track 资格: 否）\n- 个人口味: 光影=冷光源 / 暖光；构图=半身；色温=避免过饱和\n- 个人禁用习惯: 白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差；漏抠/黑底/毛边；赛博霓虹/霓虹紫；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光| Casual mobile-game 3D clay key art, brand-new camera: extreme low worm's-eye under a giant red spotted mushroom canopy, looking upward along a curved purple bellflower lamp stem toward a tiny seed-pod gondola floating in bright sky; soft ambient occlusion, saturated greens purples warm browns, smooth plasticine materials; only borrow lighting and medium from style reference; new机位只借画风不贴样张构图 layout_not_style_echo; FORBIDDEN echo of reference cottage-on-path, banana boat pond on left, mole with gift boxes, cheese on mushroom table, same diagonal pebble path; portrait ~3:4, no text, no UI. 一眼失败：贴回样张左右分区或同机位。| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.4,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：松鼠吊舱略抢主花灯；前景草叶水珠偏写实黏土感弱；伞盖边缘可更圆润玩具感",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "9.19"
+        },
+        {
+          "category": "line_edge",
+          "lesson": "本轮短板偏「line_edge」：松鼠吊舱略抢主花灯；前景草叶水珠偏写实黏土感弱；伞盖边缘可更圆润玩具感",
+          "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+          "from_score": "9.19"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：仰视新机位成立；未贴屋船鼹鼠奶酪样张构图",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "9.19"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "19:45:03"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_battery_20261103\\01_style.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "battery-rerun-keyart",
+        "scale": "medium",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "169x276",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "1080x1920",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_battery_20261103\\01_style.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_battery_20261103\\01_style.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "19:55:14",
+      "image": "assets/skill_battery_20261103/rerun_keyart/r2_916.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 2501467,
+        "size_kb": 2442.8,
+        "width": 1080,
+        "height": 1920,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.99
+      },
+      "raw_score": 9.4,
+      "score": 9.4,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.5/光影9.4/透视9.5/质感9.3/风格9.5/无瑕疵9.3",
+      "dims_parsed": {
+        "composition": 9.5,
+        "lighting_color": 9.4,
+        "perspective_anatomy": 9.5,
+        "texture_detail": 9.3,
+        "spec_style": 9.5,
+        "flawlessness": 9.3
+      },
+      "weighted_score": 9.4,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）"
+      ],
+      "stagnated": false,
+      "strengths": "主花灯居中发光成立；仰视新机位稳；未回声样张屋船构图",
+      "defects": "远景吊舱仍偏抢一点；前景水珠还可更黏土化",
+      "next_fix": "吊舱再缩小；前景高光珠更圆润玩具感；可停若≥9.5",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: art.BatteryRerun\n- 置信度: 0.45（fast-track 资格: 否）\n- 个人口味: 光影=冷光源 / 暖光；构图=半身；色温=避免过饱和\n- 个人禁用习惯: 白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差；漏抠/黑底/毛边；赛博霓虹/霓虹紫；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光| Casual mobile-game 3D clay key art, brand-new camera: extreme low worm's-eye under a giant red spotted mushroom canopy, looking upward along a curved purple bellflower lamp stem toward a tiny seed-pod gondola floating in bright sky; soft ambient occlusion, saturated greens purples warm browns, smooth plasticine materials; only borrow lighting and medium from style reference; new机位只借画风不贴样张构图 layout_not_style_echo; FORBIDDEN echo of reference cottage-on-path, banana boat pond on left, mole with gift boxes, cheese on mushroom table, same diagonal pebble path; portrait ~3:4, no text, no UI. 一眼失败：贴回样张左右分区或同机位。| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | 削弱吊舱或推远；水珠改黏土高光小珠；主花灯更大更居中发光；保持仰视",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.5,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：远景吊舱仍偏抢一点；前景水珠还可更黏土化",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "9.4"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：主花灯居中发光成立；仰视新机位稳；未回声样张屋船构图",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "9.4"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "20:00:42"
+    },
+    {
+      "round": 3,
+      "round_label": "经过 3 轮达标定稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_battery_20261103\\01_style.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "battery-rerun-keyart",
+        "scale": "medium",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "169x276",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "1080x1920",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_battery_20261103\\01_style.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_battery_20261103\\01_style.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "20:07:56",
+      "image": "assets/skill_battery_20261103/rerun_keyart/r3_916.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 2614369,
+        "size_kb": 2553.1,
+        "width": 1080,
+        "height": 1920,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.97
+      },
+      "raw_score": 9.5,
+      "score": 9.5,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.6/光影9.5/透视9.6/质感9.4/风格9.6/无瑕疵9.4",
+      "dims_parsed": {
+        "composition": 9.6,
+        "lighting_color": 9.5,
+        "perspective_anatomy": 9.6,
+        "texture_detail": 9.4,
+        "spec_style": 9.6,
+        "flawlessness": 9.4
+      },
+      "weighted_score": 9.5,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）"
+      ],
+      "stagnated": false,
+      "strengths": "仰视新机位记忆点强；layout_not_style_echo成立",
+      "defects": "远景吊舱已够小；前景高光珠基本黏土化，仅余轻微水感",
+      "next_fix": "已达标，无需继续叠加",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: art.BatteryRerun\n- 置信度: 0.45（fast-track 资格: 否）\n- 个人口味: 光影=冷光源 / 暖光；构图=半身；色温=避免过饱和\n- 个人禁用习惯: 白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差；漏抠/黑底/毛边；赛博霓虹/霓虹紫；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光| Casual mobile-game 3D clay key art, brand-new camera: extreme low worm's-eye under a giant red spotted mushroom canopy, looking upward along a curved purple bellflower lamp stem toward a tiny seed-pod gondola floating in bright sky; soft ambient occlusion, saturated greens purples warm browns, smooth plasticine materials; only borrow lighting and medium from style reference; new机位只借画风不贴样张构图 layout_not_style_echo; FORBIDDEN echo of reference cottage-on-path, banana boat pond on left, mole with gift boxes, cheese on mushroom table, same diagonal pebble path; portrait ~3:4, no text, no UI. 一眼失败：贴回样张左右分区或同机位。| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | 吊舱再缩小；前景高光珠更圆润玩具感；可停若≥9.5",
+      "continuation": false,
+      "passed": true,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.6,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_TARGET_REACHED",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：远景吊舱已够小；前景高光珠基本黏土化，仅余轻微水感",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "9.5"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：仰视新机位记忆点强；layout_not_style_echo成立",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "9.5"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "20:08:12",
+      "asset_image": "assets/skill_battery_20261103/rerun_keyart/r3_916.png"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-10-30 16:11:08 UTC+8"
+    },
+    "module": "art.BatteryRerun",
+    "goal": "原画：只借01_style画风，全新机位的童话微缩花园主视觉，禁止贴样张构图",
+    "confidence": 0.45,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "个人口味档案非空",
+      "红线可控（0 条）",
+      "挂载 0 张项目知识卡 + 1 张全局美术底层基础卡"
+    ],
+    "top_recipes": [],
+    "top_redlines": [],
+    "art_decisions": [],
+    "private_knowledge": [],
+    "shared_knowledge": [
+      {
+        "id": "palette-70-20-10",
+        "title": "色彩构成：70-20-10 色板比例黄金法则",
+        "body": "画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+        "layer_scope": "shared"
+      }
+    ],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [
+        "冷光源",
+        "暖光"
+      ],
+      "preferred_composition": [
+        "半身"
+      ],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [
+        "避免过饱和"
+      ],
+      "banned_habits": [
+        "白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计",
+        "黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差",
+        "漏抠/黑底/毛边",
+        "赛博霓虹/霓虹紫",
+        "脏暗阴影/脏色"
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: art.BatteryRerun\n- 置信度: 0.45（fast-track 资格: 否）\n- 个人口味: 光影=冷光源 / 暖光；构图=半身；色温=避免过饱和\n- 个人禁用习惯: 白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差；漏抠/黑底/毛边；赛博霓虹/霓虹紫；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+    "built_at": "2026-11-03 19:38:45 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：松鼠吊舱略抢主花灯；前景草叶水珠偏写实黏土感弱；伞盖边缘可更圆润玩具感",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.19"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：松鼠吊舱略抢主花灯；前景草叶水珠偏写实黏土感弱；伞盖边缘可更圆润玩具感",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "9.19"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：仰视新机位成立；未贴屋船鼹鼠奶酪样张构图",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.19"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：远景吊舱仍偏抢一点；前景水珠还可更黏土化",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.4"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：主花灯居中发光成立；仰视新机位稳；未回声样张屋船构图",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.4"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：远景吊舱已够小；前景高光珠基本黏土化，仅余轻微水感",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.5"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：仰视新机位记忆点强；layout_not_style_echo成立",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.5"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 4,
+  "regression_drop": 0.5,
+  "reasonableness_history": [
+    {
+      "reviewed_at": 1793705964.4416845,
+      "passed": true,
+      "skill": "keyart",
+      "issues": []
+    }
+  ],
+  "reasonableness": {
+    "passed": true,
+    "skill": "keyart",
+    "draft_prompt": "花园主视觉，参考风格",
+    "revised_prompt": "Casual mobile-game 3D clay key art, brand-new camera: extreme low worm's-eye under a giant red spotted mushroom canopy, looking upward along a curved purple bellflower lamp stem toward a tiny seed-pod gondola floating in bright sky; soft ambient occlusion, saturated greens purples warm browns, smooth plasticine materials; only borrow lighting and medium from style reference; new机位只借画风不贴样张构图 layout_not_style_echo; FORBIDDEN echo of reference cottage-on-path, banana boat pond on left, mole with gift boxes, cheese on mushroom table, same diagonal pebble path; portrait ~3:4, no text, no UI. 一眼失败：贴回样张左右分区或同机位。",
+    "checklist": {
+      "subject_action": {
+        "status": "ok",
+        "note": "低机位仰望主视觉"
+      },
+      "contact_scale": {
+        "status": "ok",
+        "note": "灯茎与伞盖尺度清楚"
+      },
+      "element_budget": {
+        "status": "ok",
+        "note": "伞盖+灯茎+远景吊舱三件"
+      },
+      "hard_locks": {
+        "status": "ok",
+        "note": "竖构图约3:4无字"
+      },
+      "fail_at_glance": {
+        "status": "ok",
+        "note": "贴回样张屋船鼹鼠奶酪即失败"
+      },
+      "hero_read": {
+        "status": "ok",
+        "note": "仰视花灯茎一眼记住"
+      },
+      "layout_not_style_echo": {
+        "status": "ok",
+        "note": "只借画风新机位不贴样张构图"
+      }
+    },
+    "issues": [],
+    "notes": "",
+    "reviewed_at": 1793705964.4416845,
+    "reviewed_at_iso": "2026-11-03 19:39:24",
+    "force_pass": false
+  },
+  "discussions": [
+    {
+      "round": 0,
+      "kind": "reasonableness",
+      "prompt": "Casual mobile-game 3D clay key art, brand-new camera: extreme low worm's-eye under a giant red spotted mushroom canopy, looking upward along a curved purple bellflower lamp stem toward a tiny seed-pod gondola floating in bright sky; soft ambient occlusion, saturated greens purples warm browns, smooth plasticine materials; only borrow lighting and medium from style reference; new机位只借画风不贴样张构图 layout_not_style_echo; FORBIDDEN echo of reference cottage-on-path, banana boat pond on left, mole with gift boxes, cheese on mushroom table, same diagonal pebble path; portrait ~3:4, no text, no UI. 一眼失败：贴回样张左右分区或同机位。",
+      "strengths": "合理性闸已过：subject_action=ok:低机位仰望主视觉；contact_scale=ok:灯茎与伞盖尺度清楚；element_budget=ok:伞盖+灯茎+远景吊舱三件；hard_locks=ok:竖构图约3:4无字；fail_at_glance=ok:贴回样张屋船鼹鼠奶酪即失败；hero_read=ok:仰视花灯茎一眼记住；layout_not_style_echo=ok:只借画风新机位不贴样张构图",
+      "defects": "",
+      "next_fix": "首轮 generate 使用本修订提示词；审美迭代不得推翻硬锁与元素预算"
+    }
+  ],
+  "ActionRequired": "STOP_AND_FINISH",
+  "converged_at_round": 3,
+  "rounds_to_converge": 3,
+  "showcase_ready": true,
+  "winner": {
+    "round": 3,
+    "round_label": "经过 3 轮达标定稿",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "9:16",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_battery_20261103\\01_style.png"
+    ],
+    "param_validation": {
+      "valid": true,
+      "validation_passed": true,
+      "case_id": "battery-rerun-keyart",
+      "scale": "medium",
+      "aspect_ratio": "9:16",
+      "ref_aspect_ratio": "9:16",
+      "ref_dimensions": "169x276",
+      "output_aspect_ratio": "9:16",
+      "output_dimensions": "1080x1920",
+      "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_battery_20261103\\01_style.png",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_battery_20261103\\01_style.png"
+      ],
+      "inherited_default_aspect_ratio": true,
+      "inherited_default_pad_image": true,
+      "matched_ref_aspect_ratio": true,
+      "matched_ref_pad_image": true,
+      "matched_output_aspect_ratio": true,
+      "three_step_stage": "step3_judge",
+      "three_step_verified": true,
+      "warnings": [],
+      "continuation_pad": false,
+      "pad_diverged": false
+    },
+    "generated_at": "20:07:56",
+    "image": "assets/skill_battery_20261103/rerun_keyart/r3_916.png",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 2614369,
+      "size_kb": 2553.1,
+      "width": 1080,
+      "height": 1920,
+      "aspect_ratio": "9:16",
+      "canonical_aspect_ratio": "9:16",
+      "color_entropy": 7.97
+    },
+    "raw_score": 9.5,
+    "score": 9.5,
+    "target_score_threshold": 9.5,
+    "dims": "构图9.6/光影9.5/透视9.6/质感9.4/风格9.6/无瑕疵9.4",
+    "dims_parsed": {
+      "composition": 9.6,
+      "lighting_color": 9.5,
+      "perspective_anatomy": 9.6,
+      "texture_detail": 9.4,
+      "spec_style": 9.6,
+      "flawlessness": 9.4
+    },
+    "weighted_score": 9.5,
+    "audit_warnings": [
+      "Agent Absolute-5D 已采纳（门槛 9.5）"
+    ],
+    "stagnated": false,
+    "strengths": "仰视新机位记忆点强；layout_not_style_echo成立",
+    "defects": "远景吊舱已够小；前景高光珠基本黏土化，仅余轻微水感",
+    "next_fix": "已达标，无需继续叠加",
+    "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: art.BatteryRerun\n- 置信度: 0.45（fast-track 资格: 否）\n- 个人口味: 光影=冷光源 / 暖光；构图=半身；色温=避免过饱和\n- 个人禁用习惯: 白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差；漏抠/黑底/毛边；赛博霓虹/霓虹紫；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光| Casual mobile-game 3D clay key art, brand-new camera: extreme low worm's-eye under a giant red spotted mushroom canopy, looking upward along a curved purple bellflower lamp stem toward a tiny seed-pod gondola floating in bright sky; soft ambient occlusion, saturated greens purples warm browns, smooth plasticine materials; only borrow lighting and medium from style reference; new机位只借画风不贴样张构图 layout_not_style_echo; FORBIDDEN echo of reference cottage-on-path, banana boat pond on left, mole with gift boxes, cheese on mushroom table, same diagonal pebble path; portrait ~3:4, no text, no UI. 一眼失败：贴回样张左右分区或同机位。| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | 吊舱再缩小；前景高光珠更圆润玩具感；可停若≥9.5",
+    "continuation": false,
+    "passed": true,
+    "gate_blocked": false,
+    "image_gate_blocked": false,
+    "anatomy_score": 9.6,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "unknown",
+    "judge_source": "agent_absolute_5d",
+    "remote_vlm": {
+      "source": "agent_self_judge",
+      "provider": "",
+      "model": "",
+      "error": "",
+      "active": false
+    },
+    "should_continue_next_round": false,
+    "decision": "STOP_TARGET_REACHED",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "lighting",
+        "lesson": "本轮短板偏「lighting」：远景吊舱已够小；前景高光珠基本黏土化，仅余轻微水感",
+        "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+        "from_score": "9.5"
+      },
+      {
+        "category": "keep",
+        "lesson": "保留本轮已做对的：仰视新机位记忆点强；layout_not_style_echo成立",
+        "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+        "from_score": "9.5"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "20:08:12",
+    "asset_image": "assets/skill_battery_20261103/rerun_keyart/r3_916.png"
+  },
+  "convergence_badge": "经过 3 轮达标定稿",
+  "process_board": ".memory-art/converge/boards/battery-rerun-keyart/index.html"
+}

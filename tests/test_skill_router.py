@@ -180,6 +180,11 @@ class SkillRouterTests(unittest.TestCase):
             self.assertIn("按 XX 走了", rule)
             self.assertIn("/pmem-agent", rule)
             self.assertIn("不进克隆", rule)
+            self.assertIn("跑偏纠偏", rule)
+            self.assertIn("条件触发", rule)
+            self.assertIn("口语触发", rule)
+            self.assertIn("不要当成跑偏", rule)
+            self.assertIn("推倒重来", rule)
             self.assertNotIn("/art-", rule)
 
 

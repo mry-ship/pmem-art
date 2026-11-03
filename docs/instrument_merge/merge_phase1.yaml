@@ -1,0 +1,30 @@
+# 乐器合成梯 · species_change L1–L15（overview_sheet 5×3）
+# 整表参考：船图格子版式；垫参考出图；不抄船
+version: instrument-band-20261103-species-5x3-v2
+pipeline: art-merge-two-phase
+delivery: overview_sheet
+
+tracks:
+  band:
+    module: prop.InstrumentMerge
+    chain_mode: species_change
+    levels: 15
+    grid_rows: 3
+    grid_cols: 5
+    surface: 软塑胶圆润厚实体，白圆角卡，深灰炭黑底，左上暖软光短接触影，表面光洁不油亮；每格单件居中无脸无字
+    rows:
+      - { level: 1, name: 小鼓, silhouette: 红圆鼓双木槌, scale_delta: 基档, scale_pct: 0.58, evolve_to: 小鼓, merge_why: "—", parts_add: "—" }
+      - { level: 2, name: 木琴, silhouette: 黄橙木琴双槌, scale_delta: "+小", scale_pct: 0.595, evolve_to: 木琴, merge_why: 两面小鼓压扁排成琴键条并加双槌, parts_add: "—" }
+      - { level: 3, name: 口琴, silhouette: 蓝银扁口琴一排孔, scale_delta: "+小", scale_pct: 0.61, evolve_to: 口琴, merge_why: 两台木琴收成扁长簧盒并开一排吹孔, parts_add: "—" }
+      - { level: 4, name: 竖笛, silhouette: 绿直立竖笛六孔, scale_delta: "+小", scale_pct: 0.625, evolve_to: 竖笛, merge_why: 两只口琴拉成一根直管并开六个指孔, parts_add: "—" }
+      - { level: 5, name: 小提琴, silhouette: 紫小提琴加弓, scale_delta: "+小", scale_pct: 0.64, evolve_to: 小提琴, merge_why: 两根竖笛合成沙漏琴身并加弓, parts_add: "—" }
+      - { level: 6, name: 小号, silhouette: 金小号三阀侧喇叭, scale_delta: "+小", scale_pct: 0.655, evolve_to: 小号, merge_why: 两把小提琴的弦管弯成铜管并长出三阀与侧喇叭, parts_add: "—" }
+      - { level: 7, name: 萨克斯, silhouette: 青绿U形萨克斯, scale_delta: "+中", scale_pct: 0.67, evolve_to: 萨克斯, merge_why: 两把小号弯成粗U形管并铺成长排键, parts_add: "—" }
+      - { level: 8, name: 手风琴, silhouette: 粉白手风琴风箱, scale_delta: "+中", scale_pct: 0.685, evolve_to: 手风琴, merge_why: 两支萨克斯的键排折成风箱两端键盘, parts_add: "—" }
+      - { level: 9, name: 电吉他, silhouette: 青蓝电吉他白护板, scale_delta: "+中", scale_pct: 0.70, evolve_to: 电吉他, merge_why: 两架手风琴的琴身拉成长柄琴身并加白护板, parts_add: "—" }
+      - { level: 10, name: 麦克风, silhouette: 红金立麦带架, scale_delta: "+中", scale_pct: 0.715, evolve_to: 麦克风, merge_why: 两把电吉他的琴头收成话筒头并立上支架, parts_add: "—" }
+      - { level: 11, name: 低音提琴, silhouette: 深蓝立式低音提琴, scale_delta: "+中", scale_pct: 0.73, evolve_to: 低音提琴, merge_why: 两支麦克风的支架长成高琴颈并放大成立式琴身, parts_add: "—" }
+      - { level: 12, name: 铃鼓, silhouette: 青绿铃鼓黄镲片, scale_delta: "+中", scale_pct: 0.745, evolve_to: 铃鼓, merge_why: 两把低音提琴的共鸣箱压成圆框并绕黄镲片, parts_add: "—" }
+      - { level: 13, name: 电子琴, silhouette: 粉电子琴白黑键, scale_delta: "+大", scale_pct: 0.76, evolve_to: 电子琴, merge_why: 两面铃鼓摊成一排键盘并收成扁琴箱, parts_add: "—" }
+      - { level: 14, name: 竖琴, silhouette: 金竖琴三角框, scale_delta: "+大", scale_pct: 0.78, evolve_to: 竖琴, merge_why: 两台电子琴的键列立成竖弦并加三角金框, parts_add: "—" }
+      - { level: 15, name: 三角钢琴, silhouette: 亮蓝掀盖三角钢琴, scale_delta: "+大", scale_pct: 0.80, evolve_to: 三角钢琴, merge_why: 两架竖琴的弦排放倒成翼形琴箱并掀盖露弦, parts_add: "—" }

@@ -43,6 +43,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     --success-bg: rgba(16, 185, 129, 0.14);
     --thumb-size: 180px;
     --thumb-gap: 12px;
+    --card-body-h: 36px;
+    --gallery-cols: 4;
   }
   * { box-sizing: border-box; }
   html, body {
@@ -159,6 +161,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
   /* Center Main Stage */
   main.main-stage {
     flex: 1; overflow-y: auto; padding: 18px 22px; min-width: 0;
+    overflow-anchor: none; /* 禁止浏览器在虚拟列表换片时自动抢滚动 */
+    overscroll-behavior: contain;
   }
 
   /* Module Header Banner */
@@ -183,18 +187,22 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
   .swatch-name { font-size: 11px; color: var(--text-muted); }
 
   /* Gallery Grid — virtual window keeps DOM light */
-  .gallery-virt { position: relative; }
-  .gallery-spacer { width: 100%; pointer-events: none; }
+  .gallery-virt { position: relative; overflow-anchor: none; }
+  .gallery-spacer { width: 100%; pointer-events: none; flex-shrink: 0; overflow-anchor: none; }
   .gallery-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(var(--thumb-size), 1fr));
+    /* 列数由 JS 与虚拟滚动共用，禁止 auto-fill 另算一列导致滚轮乱跳 */
+    grid-template-columns: repeat(var(--gallery-cols), minmax(0, 1fr));
     gap: var(--thumb-gap);
+    overflow-anchor: none;
   }
   .asset-card {
     background: var(--bg-card); border: 1px solid var(--border);
     border-radius: 11px; overflow: hidden; display: flex; flex-direction: column;
-    content-visibility: auto;
-    contain-intrinsic-size: auto calc(var(--thumb-size) * 0.78 + 40px);
+    /* 锁死高度，与 galleryMetrics.rowH 对齐，避免滚动时垫片估算漂移 */
+    height: calc(var(--thumb-size) * 0.78 + var(--card-body-h));
+    max-height: calc(var(--thumb-size) * 0.78 + var(--card-body-h));
+    overflow-anchor: none;
   }
   .asset-card:hover {
     border-color: var(--border-strong);
@@ -203,9 +211,6 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
   .asset-card.role-rejected { border-color: rgba(244, 63, 94, 0.45); }
   .asset-card.qa-fail { border-color: var(--gold); }
   body.compact-thumbs .asset-name { display: none; }
-  body.compact-thumbs .asset-card {
-    contain-intrinsic-size: auto calc(var(--thumb-size) * 0.78 + 32px);
-  }
   body.compact-thumbs .gallery-grid { gap: 8px; }
   .thumb-zoom-group {
     display: flex; align-items: center; gap: 6px;
@@ -221,13 +226,13 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
   .thumb-zoom-label { font-size: 11px; color: var(--text-muted); min-width: 42px; text-align: center; font-variant-numeric: tabular-nums; }
   .thumb-wrap {
     position: relative; height: calc(var(--thumb-size) * 0.78);
+    flex: 0 0 calc(var(--thumb-size) * 0.78);
     display: flex; align-items: center; justify-content: center;
     overflow: hidden; cursor: zoom-in; padding: 8px;
     background: #0b101d;
   }
   .thumb-wrap img {
     max-width: 100%; max-height: 100%; object-fit: contain;
-    content-visibility: auto;
   }
 
   /* 9-Slice & Safe Margin SVG Overlay on Thumbnails & Lightbox */
@@ -257,7 +262,11 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     padding: 2px 7px; border-radius: 4px; font-size: 10.5px; font-family: ui-monospace, monospace;
     color: var(--text-muted);
   }
-  .asset-body { padding: 6px 8px 8px; display: flex; flex-direction: column; gap: 0; }
+  .asset-body {
+    height: var(--card-body-h); min-height: var(--card-body-h); max-height: var(--card-body-h);
+    padding: 6px 8px; box-sizing: border-box;
+    display: flex; flex-direction: column; gap: 0; overflow: hidden; flex-shrink: 0;
+  }
   .asset-chips {
     display: flex; align-items: center; gap: 6px; min-width: 0;
   }
@@ -379,23 +388,48 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 
   /* 半透明叠层预览：点图放大，点空白关闭（不跳二级页） */
   .img-viewer {
-    display: none; position: fixed; inset: 0; z-index: 400;
+    display: none; position: fixed; inset: 0; z-index: 580; /* 高于教学 520 / 详情 570，详情里点放大仍能盖住 */
     background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(8px);
     align-items: center; justify-content: center; cursor: zoom-out;
-    padding: 24px;
+    padding: 16px 56px;
   }
   .img-viewer.open { display: flex; }
   .img-viewer-card {
-    position: relative; max-width: min(94vw, 1400px); max-height: 92vh;
+    position: relative; max-width: min(94vw, 1480px); max-height: 94vh;
     display: flex; flex-direction: column; align-items: center; gap: 10px;
     cursor: default;
   }
-  .img-viewer-card img {
-    max-width: 92vw; max-height: calc(92vh - 52px);
+  .iv-stage {
+    display: flex; gap: 12px; align-items: stretch; justify-content: center;
+    max-width: 94vw; max-height: calc(94vh - 120px);
+  }
+  .iv-pane {
+    position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px;
+    min-width: 0;
+  }
+  .iv-pane img {
+    max-width: min(46vw, 720px); max-height: calc(94vh - 160px);
     object-fit: contain; border-radius: 10px;
     box-shadow: 0 24px 64px rgba(0,0,0,0.55);
     background: #0b101d;
   }
+  .img-viewer:not(.compare-on) .iv-pane.main img {
+    max-width: min(92vw, 1200px);
+  }
+  .img-viewer:not(.compare-on) .iv-pane.ref { display: none; }
+  .iv-pane-label {
+    font-size: 11px; color: var(--text-muted); letter-spacing: 0.04em;
+  }
+  .iv-nav {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 44px; height: 72px; border-radius: 12px; border: 1px solid var(--border);
+    background: rgba(17,24,39,0.88); color: var(--text-main); font-size: 28px;
+    cursor: pointer; z-index: 5; display: flex; align-items: center; justify-content: center;
+  }
+  .iv-nav:hover { border-color: var(--teal); color: var(--teal); }
+  .iv-nav.prev { left: 10px; }
+  .iv-nav.next { right: 10px; }
+  .iv-nav:disabled { opacity: 0.25; cursor: default; }
   .img-viewer-bar {
     display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
     background: rgba(17, 24, 39, 0.92); border: 1px solid var(--border);
@@ -403,8 +437,66 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
   }
   .img-viewer-bar .iv-path {
     font-family: ui-monospace, monospace; font-size: 11.5px; color: var(--teal);
-    max-width: 42vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    max-width: 28vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
   }
+  .img-viewer-bar .btn-copy:disabled,
+  .img-viewer-bar .btn-copy.disabled {
+    opacity: 0.35; cursor: not-allowed; filter: grayscale(0.4);
+  }
+  .iv-evolve {
+    display: none; width: min(94vw, 1480px); max-height: 42vh; overflow: auto;
+    background: rgba(9,13,22,0.94); border: 1px solid var(--border); border-radius: 12px;
+    padding: 12px; text-align: left;
+  }
+  .img-viewer.evolve-on .iv-evolve { display: block; }
+  .img-viewer.evolve-on .iv-stage { max-height: calc(52vh - 40px); }
+  .img-viewer.evolve-on .iv-pane img { max-height: calc(52vh - 80px); }
+  .img-viewer.meta-on .iv-stage { max-height: calc(94vh - 280px); }
+  .img-viewer.meta-on:not(.evolve-on) .iv-pane img { max-height: calc(94vh - 300px); }
+  .img-viewer.meta-on.evolve-on .iv-stage { max-height: calc(42vh - 20px); }
+  .img-viewer.meta-on.evolve-on .iv-pane img { max-height: calc(42vh - 60px); }
+  .iv-meta {
+    display: none; width: min(94vw, 720px); max-height: 18vh; overflow: auto;
+    text-align: left; background: rgba(9,13,22,0.94);
+    border: 1px solid var(--border); border-radius: 12px; padding: 8px 12px;
+  }
+  .img-viewer.meta-on .iv-meta { display: block; }
+  .iv-meta-head {
+    display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline;
+    margin-bottom: 4px; color: var(--text-muted); font-size: 12px;
+  }
+  .iv-meta-score {
+    font-size: 14px; color: var(--gold); font-family: ui-monospace, monospace; font-weight: 700;
+  }
+  .iv-meta-dims { display: flex; flex-wrap: wrap; gap: 4px; margin: 4px 0 2px; }
+  .iv-meta-dim {
+    font-size: 10.5px; padding: 1px 6px; border-radius: 4px;
+    background: rgba(255,255,255,0.06); color: #cbd5e1;
+    font-family: ui-monospace, monospace;
+  }
+  .iv-meta-navhint { margin-top: 6px; font-size: 11px; color: var(--text-dim); }
+  .evolve-head {
+    display: flex; justify-content: space-between; gap: 8px; align-items: center;
+    margin-bottom: 10px; color: var(--text-muted); font-size: 12px;
+  }
+  .evolve-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px;
+  }
+  .evolve-card {
+    background: #111827; border: 1px solid var(--border); border-radius: 10px; padding: 8px;
+  }
+  .evolve-card.current { border-color: var(--border-strong); }
+  .evolve-card img {
+    width: 100%; height: 140px; object-fit: contain; border-radius: 8px;
+    background: #0b101d; cursor: zoom-in;
+  }
+  .evolve-meta { font-size: 11.5px; color: var(--text-muted); margin-top: 6px; line-height: 1.45; }
+  .evolve-prompt {
+    margin-top: 6px; max-height: 72px; overflow: auto; white-space: pre-wrap; word-break: break-word;
+    font: 11px/1.4 ui-monospace, monospace; color: #cbd5e1;
+    background: rgba(0,0,0,0.35); border-radius: 6px; padding: 6px; border: 1px dashed var(--border);
+  }
+  .evolve-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
 
   /* Lightbox 详情（可选，从预览条进） */
   .lightbox {
@@ -533,6 +625,268 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
   }
   .img-ctx-menu button:hover { background: var(--teal-bg); color: var(--teal); }
   .img-ctx-menu .ctx-sep { height: 1px; background: var(--border); margin: 4px 6px; }
+  .img-ctx-menu button.danger { color: #fda4af; }
+  .img-ctx-menu button.danger:hover { background: var(--danger-bg); color: #fecdd3; }
+
+  .reveal-banner {
+    display: none; align-items: center; gap: 10px; flex-wrap: wrap;
+    margin: 0 16px 8px; padding: 8px 12px; border-radius: 10px;
+    background: var(--gold-bg); border: 1px solid rgba(245,158,11,0.35); color: #fde68a; font-size: 12px;
+  }
+  .reveal-banner.show { display: flex; }
+  .reveal-banner code { font-size: 11px; color: #fef3c7; }
+
+  .batch-bar {
+    display: none; position: sticky; top: 0; z-index: 40;
+    align-items: center; gap: 8px; flex-wrap: wrap;
+    margin: 0 0 10px; padding: 8px 10px; border-radius: 10px;
+    background: rgba(15, 23, 42, 0.96); border: 1px solid var(--border-strong);
+    backdrop-filter: blur(8px);
+  }
+  body.batch-mode .batch-bar { display: flex; }
+  .batch-bar .batch-count { color: var(--teal); font-weight: 700; min-width: 72px; }
+  .batch-bar .btn-danger {
+    background: var(--danger-bg); color: #fda4af; border: 1px solid rgba(244,63,94,0.45);
+  }
+  .batch-bar .btn-danger:hover { filter: brightness(1.12); }
+
+  .asset-card { position: relative; }
+  .asset-check {
+    display: none; position: absolute; top: 8px; left: 8px; z-index: 5;
+    width: 22px; height: 22px; border-radius: 6px; align-items: center; justify-content: center;
+    background: rgba(9,13,22,0.82); border: 1.5px solid rgba(148,163,184,0.55);
+    color: transparent; font-size: 13px; font-weight: 800; pointer-events: none;
+  }
+  body.batch-mode .asset-check { display: flex; }
+  .asset-card.selected .asset-check {
+    background: var(--teal); border-color: var(--teal); color: #042f2e;
+  }
+  body.batch-mode .asset-card.selected {
+    outline: 2px solid var(--teal); outline-offset: 1px;
+  }
+  body.batch-mode .asset-card:hover {
+    box-shadow: 0 0 0 1px rgba(45,212,191,0.35);
+  }
+  .ctrl-btn.batch-on { background: var(--danger-bg); color: #fda4af; border-color: rgba(244,63,94,0.45); }
+
+  .prompt-trace { display: flex; flex-direction: column; gap: 10px; }
+  .prompt-trace-head {
+    font-size: 12px; color: var(--text-muted); display: flex; flex-direction: column; gap: 4px;
+  }
+  .round-card {
+    background: #090d16; border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px;
+  }
+  .round-card.current { border-color: var(--border-strong); box-shadow: inset 0 0 0 1px rgba(45,212,191,0.2); }
+  .round-card .round-top {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+  .round-card .round-title { font-weight: 700; color: var(--teal); font-size: 13px; }
+  .round-card .round-score { font-family: ui-monospace, monospace; font-size: 12px; color: var(--gold); }
+  .round-card .round-meta { font-size: 11.5px; color: var(--text-muted); margin: 4px 0; }
+  .round-card .round-prompt {
+    margin-top: 6px; max-height: 140px; overflow: auto; white-space: pre-wrap; word-break: break-word;
+    font: 11.5px/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    background: rgba(15,23,42,0.85); border: 1px dashed var(--border); border-radius: 8px; padding: 8px;
+    color: #cbd5e1;
+  }
+  .round-card .round-actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+
+  .teach-modal {
+    display: none; position: fixed; inset: 0; z-index: 520;
+    background: rgba(5,8,15,0.88); backdrop-filter: blur(8px);
+    align-items: stretch; justify-content: center; padding: 18px;
+  }
+  .teach-modal.open { display: flex; }
+  .teach-shell {
+    width: min(1180px, 98vw); max-height: 94vh; display: flex; flex-direction: column;
+    background: #0f172a; border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.45);
+  }
+  .teach-top {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    padding: 12px 16px; border-bottom: 1px solid var(--border); background: #111827;
+  }
+  .teach-top-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .teach-tip {
+    margin: 0 16px; padding: 8px 12px; border-radius: 8px;
+    background: rgba(45,212,191,0.08); border: 1px solid rgba(45,212,191,0.28);
+    color: #99f6e4; font-size: 12px; line-height: 1.5;
+  }
+  .teach-body { display: flex; flex: 1; min-height: 0; }
+  .teach-nav {
+    width: 240px; overflow: auto; border-right: 1px solid var(--border); padding: 8px;
+    background: #0b1220; flex-shrink: 0;
+  }
+  .teach-nav-group {
+    font-size: 10.5px; letter-spacing: 0.04em; text-transform: uppercase;
+    color: var(--text-dim); padding: 10px 10px 4px; font-weight: 700;
+  }
+  .teach-nav button {
+    width: 100%; text-align: left; border: 0; background: transparent; color: var(--text-muted);
+    padding: 9px 10px; border-radius: 8px; cursor: pointer; font-size: 12.5px; font-weight: 600;
+  }
+  .teach-nav button:hover { background: rgba(255,255,255,0.04); color: var(--text-main); }
+  .teach-nav button.active { background: var(--teal-bg); color: var(--teal); }
+  .teach-nav button .teach-nav-skill {
+    font-size: 10.5px; opacity: .75; font-weight: 500; margin-top: 2px;
+    font-family: ui-monospace, monospace;
+  }
+  .teach-main { flex: 1; overflow: auto; padding: 16px 18px 22px; }
+  .teach-skill-row {
+    display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 4px;
+  }
+  .teach-skill { font-family: ui-monospace, monospace; color: var(--teal); font-size: 12.5px; }
+  .teach-when { color: var(--text-muted); font-size: 12.5px; margin: 6px 0 12px; }
+  .teach-how { margin: 0 0 14px 18px; color: #cbd5e1; }
+  .teach-how li { margin: 5px 0; line-height: 1.45; }
+  .teach-pipeline {
+    display: flex; flex-wrap: wrap; align-items: stretch; gap: 8px; margin-top: 4px;
+  }
+  .teach-ex {
+    background: #090d16; border: 1px solid var(--border); border-radius: 10px; padding: 8px;
+    width: min(300px, 100%); flex: 1 1 240px; max-width: 340px;
+  }
+  .teach-pipeline { align-items: flex-start; }
+  .teach-ex.role-ref { border-color: rgba(96,165,250,0.45); }
+  .teach-ex.role-process { border-color: rgba(251,191,36,0.4); }
+  .teach-ex.role-final { border-color: rgba(52,211,153,0.5); }
+  .teach-ex img {
+    width: 100%; height: 180px; object-fit: contain; border-radius: 8px; background:
+      linear-gradient(45deg,#1a2233 25%,transparent 25%),
+      linear-gradient(-45deg,#1a2233 25%,transparent 25%),
+      linear-gradient(45deg,transparent 75%,#1a2233 75%),
+      linear-gradient(-45deg,transparent 75%,#1a2233 75%);
+    background-size: 16px 16px; background-position: 0 0,0 8px,8px -8px,-8px 0;
+    background-color: #0b101d;
+    cursor: zoom-in;
+  }
+  .teach-ex .cap {
+    font-size: 11.5px; color: var(--text-muted); margin-top: 6px;
+    display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+  }
+  .teach-ex .teach-score-line {
+    margin-top: 6px; font-size: 12px; color: var(--gold);
+    font-family: ui-monospace, monospace; font-weight: 700;
+  }
+  .teach-dims {
+    display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px;
+  }
+  .teach-dim {
+    font-size: 10.5px; padding: 1px 6px; border-radius: 4px;
+    background: rgba(255,255,255,0.06); color: #cbd5e1;
+    font-family: ui-monospace, monospace;
+  }
+  .teach-ex .teach-prompt {
+    margin-top: 6px; max-height: 88px; overflow: auto; white-space: pre-wrap; word-break: break-word;
+    font: 11px/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    background: rgba(15,23,42,0.85); border: 1px dashed var(--border); border-radius: 6px; padding: 6px 8px;
+    color: #cbd5e1;
+  }
+  .teach-ex .teach-note { font-size: 11.5px; color: var(--text-muted); margin-top: 4px; line-height: 1.4; }
+  .teach-ex .teach-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+
+  /* 工作台「详情」：教学同款三级对照（原图→过程→终稿） */
+  .detail-modal {
+    display: none; position: fixed; inset: 0; z-index: 570;
+    background: rgba(5,8,15,0.9); backdrop-filter: blur(8px);
+    align-items: stretch; justify-content: center; padding: 18px;
+  }
+  .detail-modal.open { display: flex; }
+  .detail-shell {
+    width: min(1240px, 98vw); max-height: 94vh; display: flex; flex-direction: column;
+    background: #0f172a; border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+  }
+  .detail-top {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    padding: 12px 16px; border-bottom: 1px solid var(--border); background: #111827; flex-shrink: 0;
+  }
+  .detail-top-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .detail-tip {
+    margin: 0 16px; padding: 8px 12px; border-radius: 8px; flex-shrink: 0;
+    background: rgba(45,212,191,0.08); border: 1px solid rgba(45,212,191,0.28);
+    color: #99f6e4; font-size: 12px; line-height: 1.5;
+  }
+  .detail-main {
+    flex: 1; overflow: auto; padding: 16px 18px 22px; min-height: 0;
+  }
+  .detail-meta-bar {
+    display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: baseline;
+    margin-bottom: 12px; font-size: 12.5px; color: var(--text-muted);
+  }
+  .detail-meta-bar code { color: var(--teal); font-size: 12px; }
+  .detail-empty {
+    color: var(--text-dim); font-size: 13px; padding: 18px;
+    border: 1px dashed var(--border); border-radius: 10px;
+  }
+
+  .evolve-dims {
+    display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px;
+  }
+  .evolve-dim {
+    font-size: 10.5px; padding: 1px 6px; border-radius: 4px;
+    background: rgba(255,255,255,0.06); color: #cbd5e1;
+    font-family: ui-monospace, monospace;
+  }
+  .evolve-score-line {
+    margin-top: 4px; font-size: 12px; color: var(--gold);
+    font-family: ui-monospace, monospace; font-weight: 700;
+  }
+  .teach-role {
+    display: inline-flex; align-items: center; padding: 1px 7px; border-radius: 999px;
+    font-size: 10.5px; font-weight: 700; letter-spacing: 0.02em;
+  }
+  .teach-role.ref, .teach-role.original { background: rgba(59,130,246,0.18); color: #93c5fd; }
+  .teach-role.process { background: rgba(245,158,11,0.16); color: #fcd34d; }
+  .teach-role.final { background: rgba(16,185,129,0.16); color: #6ee7b7; }
+  .teach-ex.role-original { border-color: rgba(96,165,250,0.45); }
+  .teach-rounds { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+  .teach-round {
+    background: #090d16; border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px;
+  }
+  .teach-round.passed { border-color: rgba(52,211,153,0.45); }
+  .teach-round-top {
+    display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between;
+    margin-bottom: 6px;
+  }
+  .teach-round-title { font-weight: 700; color: var(--teal); font-size: 13px; }
+  .teach-round-score { font-family: ui-monospace, monospace; color: var(--gold); font-size: 12px; }
+  .teach-round-meta { font-size: 12px; color: var(--text-muted); margin: 3px 0; line-height: 1.45; }
+  .teach-round-prompt {
+    margin-top: 6px; max-height: 120px; overflow: auto; white-space: pre-wrap; word-break: break-word;
+    font: 11.5px/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    background: rgba(15,23,42,0.85); border: 1px dashed var(--border); border-radius: 8px; padding: 8px;
+    color: #cbd5e1;
+  }
+  .teach-samples { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; margin-top: 8px; }
+  .teach-sample {
+    background: #090d16; border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px;
+  }
+  .teach-sample h4 { margin: 0 0 6px; font-size: 12.5px; color: var(--teal); }
+  .teach-sample .body {
+    font-size: 12px; color: #cbd5e1; white-space: pre-wrap; word-break: break-word; line-height: 1.45;
+  }
+  .teach-arrow {
+    align-self: center; color: var(--text-dim); font-size: 18px; font-weight: 700;
+    padding: 0 2px; user-select: none;
+  }
+  .teach-foot {
+    display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+    margin-top: 16px; padding-top: 12px; border-top: 1px dashed var(--border);
+  }
+  .teach-locked {
+    flex: 1 1 280px; font-size: 11.5px; color: var(--gold);
+    background: var(--gold-bg); border: 1px solid rgba(245,158,11,0.35);
+    border-radius: 8px; padding: 8px 10px;
+  }
+  .teach-nav-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+  @media (max-width: 820px) {
+    .teach-body { flex-direction: column; }
+    .teach-nav { width: 100%; max-height: 140px; border-right: 0; border-bottom: 1px solid var(--border); }
+    .teach-ex { max-width: none; }
+    .teach-arrow { display: none; }
+  }
 </style>
 <meta name="pmem-build-id" content="__BUILD_ID__">
 </head>
@@ -587,7 +941,17 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
         <button type="button" class="zoom-btn" id="thumbZoomIn" aria-label="放大">＋</button>
         <span class="thumb-zoom-label" id="thumbZoomLabel">180</span>
       </div>
+      <button class="ctrl-btn" type="button" id="btnTeach" title="技能介绍与示例图（参考/过程/终稿）">📖 教学</button>
+      <button class="ctrl-btn" type="button" id="btnOpenTrash" title="打开工作台垃圾桶（删除的图可找回）">♻️ 垃圾桶</button>
+      <button class="ctrl-btn" type="button" id="btnBatchMode" title="进入批量删除：勾选 / Ctrl+A / Shift 片选">🗑️ 批量删除</button>
     </div>
+  </div>
+
+  <div class="reveal-banner" id="revealBanner">
+    <span>📁 本地服务未连通时，删除/文件夹定位会失败。请先跑下面命令，再用 http 地址打开工作台（不要只双击 file://）。</span>
+    <code>python pmem_art.py atlas</code>
+    <button type="button" class="btn-copy" id="btnRevealRetry" style="padding:3px 9px;font-size:11px;">重试连通</button>
+    <button type="button" class="btn-copy" id="btnOpenHttpWorkbench" style="padding:3px 9px;font-size:11px;">用 http 打开</button>
   </div>
 
   <div class="workspace">
@@ -598,17 +962,32 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 
 <!-- 半透明叠层预览（点图默认进这里；点空白关闭） -->
 <div class="img-viewer" id="imgViewer" title="点击空白处关闭">
+  <button type="button" class="iv-nav prev" id="ivPrev" title="上一张 (←)">‹</button>
   <div class="img-viewer-card" id="imgViewerCard">
-    <img id="ivImg" src="" alt="" />
+    <div class="iv-stage" id="ivStage">
+      <div class="iv-pane main">
+        <img id="ivImg" src="" alt="" />
+        <div class="iv-pane-label" id="ivMainLabel">当前图</div>
+      </div>
+      <div class="iv-pane ref" id="ivRefPane">
+        <img id="ivRefImg" src="" alt="" />
+        <div class="iv-pane-label">参考原图</div>
+      </div>
+    </div>
+    <div class="iv-meta" id="ivMetaPanel"></div>
     <div class="img-viewer-bar">
       <span class="iv-path" id="ivPath"></span>
+      <button type="button" class="btn-copy" id="ivPrevBtn" title="上一张">←</button>
+      <button type="button" class="btn-copy" id="ivNextBtn" title="下一张">→</button>
+      <button type="button" class="btn-copy" id="ivCompare" title="与参考原图并列对比">并列参考图</button>
       <button type="button" class="btn-copy" id="ivReveal" title="在访达中显示并选中">📁 文件夹</button>
       <button type="button" class="btn-copy" id="ivCopy" title="复制绝对路径">📋 路径</button>
       <button type="button" class="btn-copy" id="ivSave" title="另存为">💾</button>
-      <button type="button" class="btn-copy" id="ivDetail" title="打开详情面板">详情</button>
+      <button type="button" class="btn-copy" id="ivDetail" title="教学同款：原图→过程→终稿（含提示词/六维/设终稿）" style="background:var(--teal-bg);color:var(--teal);border-color:rgba(45,212,191,0.45);">详情 · 进化对照</button>
       <button type="button" class="btn-copy" id="ivClose" style="background:var(--danger-bg);color:#fda4af;border-color:rgba(244,63,94,0.4);">✕</button>
     </div>
   </div>
+  <button type="button" class="iv-nav next" id="ivNext" title="下一张 (→)">›</button>
 </div>
 
 <!-- Lightbox 详情（可选） -->
@@ -644,6 +1023,45 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 
 <div class="toast" id="toast">已复制到剪贴板</div>
 
+<!-- 工作台详情：教学同款三级对照（原图→过程→终稿） -->
+<div class="detail-modal" id="detailModal" title="点击空白关闭">
+  <div class="detail-shell" id="detailShell">
+    <div class="detail-top">
+      <div>
+        <strong style="font-size:15px;">🧾 详情 · 进化对照</strong>
+        <span style="margin-left:8px;color:var(--text-dim);font-size:12px;">原图 → 过程 → 终稿 · 每张图下挂 Prompt / 六维 / 不足</span>
+      </div>
+      <div class="detail-top-actions">
+        <button type="button" class="btn-copy" id="detailTech" title="打开旧版技术侧栏（路径/记忆/色卡）">技术信息</button>
+        <button type="button" class="btn-copy" id="detailClose">✕</button>
+      </div>
+    </div>
+    <div class="detail-tip">放大只负责看大图；完整进化过程在这里看（与教学同一套版式）。过程图可「设置为最终交稿」。</div>
+    <main class="detail-main" id="detailMain"></main>
+  </div>
+</div>
+
+<!-- 教学：技能介绍 + 写死示例图（不可工作台删除） -->
+<div class="teach-modal" id="teachModal" title="点击空白关闭">
+  <div class="teach-shell" id="teachShell">
+    <div class="teach-top">
+      <div>
+        <strong style="font-size:15px;">📖 技能教学</strong>
+        <span style="margin-left:8px;color:var(--text-dim);font-size:12px;">给美术看的：什么时候用哪条技能 · 参考→过程→终稿</span>
+      </div>
+      <div class="teach-top-actions">
+        <button type="button" class="btn-copy" id="teachOpenFolder" title="在资源管理器打开教学素材文件夹">📁 打开教学文件夹</button>
+        <button type="button" class="btn-copy" id="teachClose">✕</button>
+      </div>
+    </div>
+    <div class="teach-tip">对话框输入左侧技能名（如 <code>/pmem-draw</code>）就会走对应流程。主画廊默认只看定稿；点图放大后点「详情 · 进化对照」看完整过程。教学图不进画廊、也不能被工作台删掉。</div>
+    <div class="teach-body">
+      <aside class="teach-nav" id="teachNav"></aside>
+      <main class="teach-main" id="teachMain"></main>
+    </div>
+  </div>
+</div>
+
 <!-- 图片右键菜单：复制 / 另存为 / 跳文件夹 / 编辑器 -->
 <div class="img-ctx-menu" id="imgCtxMenu" role="menu">
   <button type="button" data-act="copy-abs">📋 复制绝对路径</button>
@@ -656,17 +1074,65 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
   <button type="button" data-act="editor">📂 在编辑器打开</button>
   <div class="ctx-sep"></div>
   <button type="button" data-act="viewer">🔍 放大查看</button>
-  <button type="button" data-act="lightbox">🧾 打开详情</button>
+  <button type="button" data-act="lightbox">🧾 详情 · 进化对照</button>
+  <div class="ctx-sep"></div>
+  <button type="button" class="danger" data-act="delete">🗑️ 删除此图</button>
+  <button type="button" data-act="batch">☑️ 进入批量删除</button>
 </div>
 
 <script>
 let DATA = __ATLAS_JSON__;
 
+/** 垃圾桶清单里的原路径：刷新时从画廊索引剔除，避免「删了又回来」 */
+function trashOriginalSet(manifest) {
+  const out = new Set();
+  const items = (manifest && Array.isArray(manifest.items)) ? manifest.items : [];
+  items.forEach(it => {
+    const p = String((it && it.original) || "").replace(/\\/g, "/").replace(/^\/+/, "");
+    if (p) out.add(p);
+  });
+  return out;
+}
+
+function stripTrashedAssetsFromData(data, banned) {
+  if (!data || !banned || !banned.size) return 0;
+  let n = 0;
+  const assets = data.assets || {};
+  Object.keys(assets).forEach(k => {
+    const kn = String(k).replace(/\\/g, "/");
+    const pk = String((assets[k] && assets[k].path) || "").replace(/\\/g, "/");
+    if (banned.has(kn) || banned.has(pk)) {
+      delete assets[k];
+      n += 1;
+    }
+  });
+  if (Array.isArray(data.index_images)) {
+    const before = data.index_images.length;
+    data.index_images = data.index_images.filter(x => {
+      const p = String((x && x.path) || "").replace(/\\/g, "/");
+      return !banned.has(p);
+    });
+    n += Math.max(0, before - data.index_images.length);
+  }
+  return n;
+}
+
+async function syncTrashFilterIntoData(data) {
+  try {
+    const res = await fetch(".memory-art/_trash/manifest.json?_t=" + Date.now(), { cache: "no-store" });
+    if (!res.ok) return 0;
+    const man = await res.json().catch(() => null);
+    return stripTrashedAssetsFromData(data, trashOriginalSet(man));
+  } catch (e) {
+    return 0;
+  }
+}
+
 const THUMB_MIN = 96;
 const THUMB_MAX = 360;
 const THUMB_DEFAULT = 180;
 const MAX_DECODE = 32;          // 视口内并发解码上限（过小会滑动后空白半晌）
-const VIRT_ROW_BUFFER = 6;      // 上下多挂几行，滑动少重建
+const VIRT_ROW_BUFFER = 8;      // 上下多挂几行，滑动少重建
 const AUTO_REFRESH_MS = 10000;
 const ATLAS_STATE_KEY = "pmem_atlas_state_v18";
 
@@ -685,7 +1151,8 @@ let state = {
   modulesOpen: false,
   lbScale: 1.0,
   lbPath: "",
-  thumbSize: THUMB_DEFAULT
+  thumbSize: THUMB_DEFAULT,
+  batchMode: false
 };
 
 let _galleryAssets = [];
@@ -696,6 +1163,10 @@ let _imgIo = null;
 let _decodeBusy = 0;
 let _decodeQueue = [];
 let _searchTimer = 0;
+let _selectedPaths = new Set();
+let _lastClickedIdx = -1;
+let _hoveredPath = "";
+let _revealOk = null;
 
 function assetSrc(a) {
   if (!a) return "";
@@ -833,8 +1304,11 @@ function restoreAtlasState() {
 function applyThumbSize(px, { persist = true, refreshVirt = true } = {}) {
   const n = Math.max(THUMB_MIN, Math.min(THUMB_MAX, Math.round(Number(px) || THUMB_DEFAULT)));
   state.thumbSize = n;
+  const bodyH = n < 140 ? 32 : 36;
+  const gap = n < 140 ? 8 : 12;
   document.documentElement.style.setProperty("--thumb-size", n + "px");
-  document.documentElement.style.setProperty("--thumb-gap", n < 140 ? "8px" : "12px");
+  document.documentElement.style.setProperty("--thumb-gap", gap + "px");
+  document.documentElement.style.setProperty("--card-body-h", bodyH + "px");
   document.body.classList.toggle("compact-thumbs", n < 140);
   const slider = document.getElementById("thumbSlider");
   const label = document.getElementById("thumbZoomLabel");
@@ -898,6 +1372,7 @@ function getFilteredEntries() {
 function dayCounts() {
   const c = { today: 0, yesterday: 0, earlier: 0, ALL: 0 };
   for (const a of Object.values(DATA.assets || {})) {
+    if (isWorkbenchHiddenAsset(a)) continue;
     if (state.plateFilter && state.plateFilter !== "ALL" && assetPlate(a) !== state.plateFilter) continue;
     const b = a.day_bucket || "earlier";
     if (c[b] != null) c[b] += 1;
@@ -931,10 +1406,27 @@ function plateCounts() {
   return c;
 }
 
+function isWorkbenchHiddenAsset(a) {
+  if (!a) return true;
+  if (a.workbench_hide) return true;
+  // 磁盘已删 / 仅记忆残留：不进主画廊（进化对照里会标缺图）
+  if (a.exists === false) return true;
+  const role = String((a.role) || (a.png_meta && a.png_meta.pmem_role) || "").toLowerCase();
+  if (role === "reference") return true;
+  const plate = assetPlate(a);
+  // 过程图 / 参考原图不单独进主画廊，避免刷屏；进化面板再看
+  return plate === "process" || plate === "reference";
+}
+
 function getFilteredAssets() {
   const mods = new Set(getFilteredModules());
   const q = state.search.trim().toLowerCase();
+  // 兼容旧状态：过程/参考筛选项已移除
+  if (state.plateFilter === "process" || state.plateFilter === "reference" || state.plateFilter === "ALL") {
+    state.plateFilter = "final";
+  }
   let list = Object.values(DATA.assets || {}).filter(a => {
+    if (isWorkbenchHiddenAsset(a)) return false;
     if (state.sideMode === "all" || state.module === "ALL") {
       if (state.plateFilter && state.plateFilter !== "ALL") {
         if (assetPlate(a) !== state.plateFilter) return false;
@@ -1007,10 +1499,8 @@ function renderHeaderAndSidebar() {
     </div>
     <div class="side-section-title">状态</div>
     <div class="side-sub ${state.sideMode === 'all' && state.plateFilter === 'final' ? 'active' : ''}" onclick="selectPlateFilter('final')">✅ 定稿 <span class="count">${pc.final}</span></div>
-    <div class="side-sub ${state.sideMode === 'all' && state.plateFilter === 'process' ? 'active' : ''}" onclick="selectPlateFilter('process')">🧪 过程稿 <span class="count">${pc.process}</span></div>
-    <div class="side-sub ${state.sideMode === 'all' && state.plateFilter === 'reference' ? 'active' : ''}" onclick="selectPlateFilter('reference')">📎 参考 <span class="count">${pc.reference}</span></div>
     <div class="side-sub ${state.sideMode === 'all' && state.plateFilter === 'rejected' ? 'active' : ''}" onclick="selectPlateFilter('rejected')">❌ 废案 <span class="count">${pc.rejected}</span></div>
-    <div class="side-sub ${state.sideMode === 'all' && state.plateFilter === 'ALL' ? 'active' : ''}" onclick="selectPlateFilter('ALL')">全部状态 <span class="count">${pc.ALL}</span></div>
+    <div class="side-hint" style="padding:4px 10px 8px;color:var(--text-dim);font-size:11px;line-height:1.4;">过程稿 ${pc.process} · 参考 ${pc.reference} 不单独占画廊；放大后点「详情 · 进化对照」看完整过程</div>
     <div class="side-section-title">时间</div>
     <div class="side-sub ${state.sideMode === 'all' && state.dayFilter === 'today' ? 'active' : ''}" onclick="selectDayFilter('today')">今天 <span class="count">${dc.today}</span></div>
     <div class="side-sub ${state.sideMode === 'all' && state.dayFilter === 'yesterday' ? 'active' : ''}" onclick="selectDayFilter('yesterday')">昨天 <span class="count">${dc.yesterday}</span></div>
@@ -1132,7 +1622,7 @@ function renderModuleBanner() {
             <h2>🖼️ 所有图归总 · ${esc(plateLabel)} · ${esc(dayLabel)} · ${esc(catLabel)}
               <span class="badge teal" style="font-size:11px;">默认定稿 · 按时间倒序</span>
             </h2>
-            <p>默认只看定稿，过程稿（converge / r1–rN）请进左侧「过程稿」。散图归「其他」，只工作台可见，不写 recipe。定稿 ${pc.final} · 过程 ${pc.process} · 今天 ${dc.today}</p>
+            <p>默认只看定稿；过程稿 / 参考图请进放大预览的「显示进化过程 / 并列参考图」。散图归「其他」，只工作台可见，不写 recipe。定稿 ${pc.final} · 过程 ${pc.process} · 今天 ${dc.today}</p>
           </div>
         </div>
       </div>
@@ -1184,18 +1674,25 @@ function renderGalleryTab() {
   _galleryAssets = assets;
   if (!assets.length) {
     if (state.sideMode === "all" && state.plateFilter === "final" && state.dayFilter === "today") {
-      const pc = plateCounts();
       return `<div class="empty-today">
         <div style="font-size:16px;font-weight:700;color:var(--text-main);margin-bottom:6px;">今天还没有定稿</div>
-        <div style="margin-bottom:14px;">过程稿不会出现在这里。可看过程稿，或放宽时间。</div>
-        <button class="btn-copy" onclick="selectPlateFilter('process')">看过程稿（${pc.process}）</button>
+        <div style="margin-bottom:14px;">过程稿与参考原图不单独占画廊；有定稿后放大可看进化过程。也可放宽时间。</div>
         <button class="btn-copy" onclick="selectDayFilter('ALL')">定稿·全部时间</button>
-        <button class="btn-copy" onclick="selectPlateFilter('ALL')">看全部状态</button>
+        <button class="btn-copy" onclick="selectPlateFilter('rejected')">看废案</button>
       </div>`;
     }
-    return `<div class="entry-card">当前筛选下没有图。试试「定稿 / 过程稿 / 全部时间」或清掉搜索。</div>`;
+    return `<div class="entry-card">当前筛选下没有定稿。试试「全部时间」或清掉搜索。过程/参考请在放大后打开进化过程。</div>`;
   }
   return `<div class="gallery-virt" id="galleryVirt" data-count="${assets.length}">
+    <div class="batch-bar" id="batchBar">
+      <span class="batch-count" id="batchCount">已选 0</span>
+      <button type="button" class="btn-copy" id="btnBatchSelectAll">全选当前筛选</button>
+      <button type="button" class="btn-copy" id="btnBatchClear">清空勾选</button>
+      <button type="button" class="btn-copy btn-danger" id="btnBatchDelete">批量移入垃圾桶</button>
+      <button type="button" class="btn-copy" id="btnBatchOpenTrash">打开垃圾桶</button>
+      <button type="button" class="btn-copy" id="btnBatchCancel">取消</button>
+      <span style="color:var(--text-dim);font-size:11px;">Ctrl+A 全选 · Shift+点击片选 · Delete 移入垃圾桶（可找回）</span>
+    </div>
     <div style="font-size:11.5px;color:var(--text-dim);margin:0 0 8px;">共 ${assets.length} 张 · 视口按需渲染 · 缩略图 ${state.thumbSize}px</div>
     <div class="gallery-spacer" id="gallerySpacerTop"></div>
     <div class="gallery-grid" id="galleryGrid"></div>
@@ -1222,8 +1719,11 @@ function cardHtml(a) {
   const src = thumbSrc(a);
   const name = PathName(a.path);
   const pathAttr = esc(a.path);
+  const selected = _selectedPaths.has(a.path) ? " selected" : "";
+  const roundHint = a.converge_round ? ` · R${a.converge_round}` : "";
   return `
-    <div class="asset-card role-${esc(role)} ${a.qa_passed === false ? 'qa-fail' : ''}" data-path="${pathAttr}">
+    <div class="asset-card role-${esc(role)} ${a.qa_passed === false ? 'qa-fail' : ''}${selected}" data-path="${pathAttr}" title="${pathAttr}${roundHint}">
+      <div class="asset-check" aria-hidden="true">✓</div>
       <div class="thumb-wrap ${state.bgClass} ${state.showGuides ? 'show-guides' : ''}">
         <img src="${esc(src)}" alt="" loading="eager" decoding="async" />
         ${state.showGuides ? `<div class="overlay-9slice">
@@ -1245,14 +1745,16 @@ function cardHtml(a) {
 
 function galleryMetrics() {
   const stage = document.getElementById("mainStage");
-  const grid = document.getElementById("galleryGrid");
-  const width = (grid && grid.clientWidth) || (stage ? stage.clientWidth - 24 : 800);
+  // 固定用舞台宽度算列（不要用空 grid 的 clientWidth，否则首帧 cols 漂移会扯滚动）
+  const width = Math.max(200, stage ? (stage.clientWidth - 44) : 800);
   const gap = state.thumbSize < 140 ? 8 : 12;
+  const bodyH = state.thumbSize < 140 ? 32 : 36;
   const cols = Math.max(1, Math.floor((width + gap) / (state.thumbSize + gap)));
-  const bodyH = state.thumbSize < 140 ? 30 : 36;
-  const rowH = Math.round(state.thumbSize * 0.78 + bodyH + gap);
+  // 必须与 CSS：height = thumb*0.78 + bodyH；行距 = card + gap
+  const cardH = Math.round(state.thumbSize * 0.78) + bodyH;
+  const rowH = cardH + gap;
   const rows = Math.max(1, Math.ceil((_galleryAssets.length || 0) / cols));
-  return { cols, rowH, rows, gap, totalH: rows * rowH };
+  return { cols, rowH, rows, gap, cardH, bodyH, totalH: rows * rowH };
 }
 
 function pumpDecodeQueue() {
@@ -1286,6 +1788,7 @@ function paintVirtualGallery(force) {
   const topSp = document.getElementById("gallerySpacerTop");
   const botSp = document.getElementById("gallerySpacerBot");
   if (!stage || !grid || !topSp || !botSp) return;
+  const pinnedScroll = stage.scrollTop;
   const assets = _galleryAssets;
   if (!assets.length) {
     grid.innerHTML = "";
@@ -1295,7 +1798,8 @@ function paintVirtualGallery(force) {
     return;
   }
   const { cols, rowH, rows, totalH } = galleryMetrics();
-  const scrollTop = stage.scrollTop;
+  document.documentElement.style.setProperty("--gallery-cols", String(cols));
+  const scrollTop = pinnedScroll;
   const virt = document.getElementById("galleryVirt");
   const virtTop = virt ? Math.max(0, virt.offsetTop) : 0;
   const localScroll = Math.max(0, scrollTop - virtTop);
@@ -1305,19 +1809,30 @@ function paintVirtualGallery(force) {
   if (endRow <= startRow) endRow = Math.min(rows, startRow + 1);
   const startIdx = startRow * cols;
   const endIdx = Math.min(assets.length, endRow * cols);
-  const rangeKey = [startIdx, endIdx, cols, state.thumbSize, assets.length, state.showGuides ? 1 : 0].join(":");
-  topSp.style.height = (startRow * rowH) + "px";
-  botSp.style.height = Math.max(0, totalH - endRow * rowH) + "px";
-  // 同一窗口不重建 DOM，避免滑动时反复卸载/重载图片造成空白延迟
-  if (!force && rangeKey === _virtRangeKey && grid.children.length) return;
+  const selSig = state.batchMode ? _selectedPaths.size + ":" + (_lastClickedIdx | 0) : "0";
+  const rangeKey = [startIdx, endIdx, cols, state.thumbSize, assets.length, state.showGuides ? 1 : 0, state.batchMode ? 1 : 0, selSig].join(":");
+  const topH = startRow * rowH;
+  const botH = Math.max(0, totalH - endRow * rowH);
+  // 同一窗口：只同步垫片，不重建 DOM（重建会让滚轮感觉「自己在上下晃」）
+  if (!force && rangeKey === _virtRangeKey && grid.children.length) {
+    if (topSp.style.height !== topH + "px") topSp.style.height = topH + "px";
+    if (botSp.style.height !== botH + "px") botSp.style.height = botH + "px";
+    return;
+  }
   _virtRangeKey = rangeKey;
+  topSp.style.height = topH + "px";
+  botSp.style.height = botH + "px";
   const slice = assets.slice(startIdx, endIdx);
   grid.style.gridTemplateColumns = `repeat(${cols}, minmax(0, 1fr))`;
-  // 直接写 src：虚拟窗口已限制张数，再排队懒解码反而滑动后空白
   grid.innerHTML = slice.map(cardHtml).join("");
   if (_imgIo) { try { _imgIo.disconnect(); } catch (e) {} _imgIo = null; }
   _decodeQueue = [];
   _decodeBusy = 0;
+  updateBatchCount();
+  // 换片后若浏览器锚定把滚动拽走，立刻钉回
+  if (Math.abs(stage.scrollTop - pinnedScroll) > 0.5) {
+    stage.scrollTop = pinnedScroll;
+  }
 }
 
 let _scrollPaintTimer = 0;
@@ -1356,11 +1871,52 @@ function bindGalleryActions() {
       if (p) revealInFolder(p);
       return;
     }
+    if (ev.target.closest("#btnBatchSelectAll")) {
+      selectAllFiltered();
+      return;
+    }
+    if (ev.target.closest("#btnBatchClear")) {
+      clearSelection();
+      return;
+    }
+    if (ev.target.closest("#btnBatchDelete")) {
+      deleteSelectedAssets();
+      return;
+    }
+    if (ev.target.closest("#btnBatchOpenTrash")) {
+      openTrashFolder();
+      return;
+    }
+    if (ev.target.closest("#btnBatchCancel")) {
+      setBatchMode(false);
+      return;
+    }
+    const card = ev.target.closest(".asset-card[data-path]");
+    if (card && state.batchMode) {
+      ev.preventDefault();
+      ev.stopPropagation();
+      const p = card.getAttribute("data-path");
+      const idx = _galleryAssets.findIndex(a => a.path === p);
+      toggleSelectPath(p, { shiftKey: ev.shiftKey, idx });
+      return;
+    }
     const thumb = ev.target.closest(".asset-card .thumb-wrap");
     if (thumb) {
+      ev.preventDefault();
+      ev.stopPropagation();
       const p = cardPathFromEvent(thumb);
       if (p) openViewer(p);
     }
+  });
+  stage.addEventListener("mouseover", (ev) => {
+    const card = ev.target.closest(".asset-card[data-path]");
+    if (card) _hoveredPath = card.getAttribute("data-path") || "";
+  });
+  stage.addEventListener("mouseout", (ev) => {
+    const card = ev.target.closest(".asset-card[data-path]");
+    if (!card) return;
+    const to = ev.relatedTarget && ev.relatedTarget.closest ? ev.relatedTarget.closest(".asset-card[data-path]") : null;
+    if (!to) _hoveredPath = "";
   });
   stage.addEventListener("contextmenu", (ev) => {
     const card = ev.target.closest(".asset-card[data-path]");
@@ -1753,9 +2309,12 @@ function renderQaTab() {
   `;
 }
 
-function renderStage() {
-  renderHeaderAndSidebar();
+function renderStage(opts) {
+  opts = opts || {};
   const stage = document.getElementById("mainStage");
+  const keepScroll = !!opts.keepScroll && state.tab === "gallery";
+  const pinnedScroll = keepScroll && stage ? stage.scrollTop : 0;
+  renderHeaderAndSidebar();
   let content = renderModuleBanner();
   if (state.tab === "gallery") content += renderGalleryTab();
   else if (state.tab === "improve") content += renderImproveTab();
@@ -1765,7 +2324,13 @@ function renderStage() {
   else if (state.tab === "qa") content += renderQaTab();
   stage.innerHTML = content;
   bindVirtualScroll();
-  if (state.tab === "gallery") scheduleVirtualPaint(true);
+  if (state.tab === "gallery") {
+    if (keepScroll) stage.scrollTop = pinnedScroll;
+    scheduleVirtualPaint(true);
+    if (keepScroll) {
+      requestAnimationFrame(() => { stage.scrollTop = pinnedScroll; });
+    }
+  }
 }
 
 window.selectModule = function(modId) {
@@ -1807,17 +2372,7 @@ function isWindowsAbs(absPath) {
   return /\\/.test(String(absPath || "")) || /^[A-Za-z]:[\\/]/.test(String(absPath || ""));
 }
 
-function downloadRevealHelper(absFile) {
-  const win = isWindowsAbs(absFile);
-  let name, body;
-  if (win) {
-    const winPath = String(absFile).replace(/\//g, "\\");
-    name = "打开图片位置.bat";
-    body = "@echo off\r\nexplorer /select,\"" + winPath + "\"\r\n";
-  } else {
-    name = "打开图片位置.command";
-    body = "#!/bin/bash\nopen -R " + JSON.stringify(absFile) + "\n";
-  }
+function downloadTextFile(name, body) {
   const blob = new Blob([body], { type: "application/octet-stream" });
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
@@ -1826,6 +2381,75 @@ function downloadRevealHelper(absFile) {
   a.click();
   a.remove();
   setTimeout(() => URL.revokeObjectURL(a.href), 1500);
+}
+
+function downloadRevealHelper(absFile) {
+  const win = isWindowsAbs(absFile) || /win/i.test(navigator.platform || "");
+  const root = String(DATA.root || "");
+  if (win) {
+    const winPath = String(absFile).replace(/\//g, "\\");
+    const rootWin = root.replace(/\//g, "\\");
+    const body = [
+      "@echo off",
+      "chcp 65001 >nul",
+      "cd /d \"" + rootWin + "\"",
+      "start \"\" /b python atlas_reveal.py \"" + rootWin + "\" 27865",
+      "explorer /select,\"" + winPath + "\"",
+      ""
+    ].join("\r\n");
+    downloadTextFile("打开图片位置.bat", body);
+  } else {
+    const body = "#!/bin/bash\ncd " + JSON.stringify(root) + "\n(python3 atlas_reveal.py " + JSON.stringify(root) + " 27865 >/dev/null 2>&1 &)\nopen -R " + JSON.stringify(absFile) + "\n";
+    downloadTextFile("打开图片位置.command", body);
+  }
+}
+
+function downloadDeleteHelper(absFiles) {
+  const root = String(DATA.root || "");
+  const win = isWindowsAbs(absFiles[0] || root) || /win/i.test(navigator.platform || "");
+  const trash = (root.replace(/[\\/]+$/, "") + "/.memory-art/_trash").replace(/\\/g, win ? "\\" : "/");
+  if (win) {
+    const rootWin = root.replace(/\//g, "\\");
+    const trashWin = trash.replace(/\//g, "\\");
+    const lines = [
+      "@echo off",
+      "chcp 65001 >nul",
+      "echo 将移入工作台垃圾桶（可找回）: " + trashWin,
+      "mkdir \"" + trashWin + "\" 2>nul"
+    ];
+    absFiles.forEach(p => {
+      const abs = String(p).replace(/\//g, "\\");
+      const rel = abs.toLowerCase().startsWith(rootWin.toLowerCase() + "\\")
+        ? abs.slice(rootWin.length + 1)
+        : abs.split("\\").slice(-2).join("\\");
+      const destDir = trashWin + "\\" + rel.replace(/\\[^\\]+$/, "");
+      lines.push("mkdir \"" + destDir + "\" 2>nul");
+      lines.push("move /Y \"" + abs + "\" \"" + trashWin + "\\" + rel + "\"");
+    });
+    lines.push("echo 完成。从垃圾桶挪回原相对路径即可恢复。");
+    lines.push("explorer \"" + trashWin + "\"");
+    lines.push("pause");
+    downloadTextFile("移入工作台垃圾桶.bat", lines.join("\r\n") + "\r\n");
+  } else {
+    const lines = [
+      "#!/bin/bash",
+      "set -e",
+      "TRASH=" + JSON.stringify(trash),
+      "ROOT=" + JSON.stringify(root),
+      "mkdir -p \"$TRASH\"",
+      "echo 将移入工作台垃圾桶: $TRASH",
+      "read -r -p '回车继续…' _"
+    ];
+    absFiles.forEach(p => {
+      lines.push("f=" + JSON.stringify(p));
+      lines.push('rel="${f#"$ROOT"/}"');
+      lines.push('mkdir -p "$TRASH/$(dirname "$rel")"');
+      lines.push('mv -f "$f" "$TRASH/$rel"');
+    });
+    lines.push("echo 完成。从垃圾桶挪回原相对路径即可恢复。");
+    lines.push('open "$TRASH" || true');
+    downloadTextFile("移入工作台垃圾桶.command", lines.join("\n") + "\n");
+  }
 }
 
 window.openInEditor = function(relPath) {
@@ -1852,10 +2476,36 @@ function revealPorts() {
   if (fromData) ports.push(fromData);
   const fromPing = Number((window.__PMEM_ATLAS_PING__ || {}).reveal_port || 0);
   if (fromPing && !ports.includes(fromPing)) ports.push(fromPing);
-  for (const p of [8765, 8766, 8767, 8768]) {
+  for (const p of [27865, 27866, 27867, 27868, 27869, 8765, 8766, 8767, 8768]) {
     if (!ports.includes(p)) ports.push(p);
   }
   return ports;
+}
+
+function setRevealBanner(ok) {
+  _revealOk = !!ok;
+  const el = document.getElementById("revealBanner");
+  if (el) el.classList.toggle("show", !ok);
+}
+
+async function pingRevealBridge() {
+  for (const port of revealPorts()) {
+    try {
+      const res = await fetch("http://127.0.0.1:" + port + "/api/ping", {
+        method: "GET", cache: "no-store", mode: "cors"
+      });
+      if (!res.ok) continue;
+      const j = await res.json().catch(() => ({}));
+      if (j && j.ok && j.service === "pmem-atlas-reveal" && Array.isArray(j.apis)
+          && j.apis.indexOf("promote") >= 0 && j.apis.indexOf("trash") >= 0) {
+        DATA.reveal_port = port;
+        setRevealBanner(true);
+        return port;
+      }
+    } catch (e) {}
+  }
+  setRevealBanner(false);
+  return 0;
 }
 
 async function revealViaBridge(relPath) {
@@ -1869,64 +2519,1226 @@ async function revealViaBridge(relPath) {
       });
       if (res.ok) {
         const j = await res.json().catch(() => ({ ok: true }));
-        if (j && j.ok !== false) return true;
+        if (j && j.ok !== false && (!j.service || j.service === "pmem-atlas-reveal")) {
+          DATA.reveal_port = port;
+          setRevealBanner(true);
+          return true;
+        }
       }
     } catch (e) {}
   }
   return false;
 }
 
-function lookupAsset(assetPath) {
-  const raw = String(assetPath || "");
-  const norm = raw.replace(/\\/g, "/");
-  const assets = DATA.assets || {};
-  if (assets[raw]) return assets[raw];
-  if (assets[norm]) return assets[norm];
-  for (const [k, v] of Object.entries(assets)) {
-    if (String(k).replace(/\\/g, "/") === norm) return v;
-    if (v && String(v.path || "").replace(/\\/g, "/") === norm) return v;
+async function deleteViaBridge(paths) {
+  const list = Array.isArray(paths) ? paths.filter(Boolean) : [];
+  if (!list.length) return { ok: false, deleted: [], errors: [{ error: "empty" }] };
+  for (const port of revealPorts()) {
+    try {
+      const res = await fetch("http://127.0.0.1:" + port + "/api/delete", {
+        method: "POST",
+        cache: "no-store",
+        mode: "cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ paths: list })
+      });
+      const j = await res.json().catch(() => null);
+      if (j && Array.isArray(j.deleted)) {
+        DATA.reveal_port = port;
+        setRevealBanner(true);
+        return j;
+      }
+    } catch (e) {}
   }
   return null;
 }
 
-/** 在系统访达 / 资源管理器中打开所在文件夹（并选中该图） */
+function lookupAsset(assetPath) {
+  const raw = String(assetPath || "");
+  let norm = raw.replace(/\\/g, "/");
+  const assets = DATA.assets || {};
+  if (assets[raw]) return assets[raw];
+  if (assets[norm]) return assets[norm];
+  // 修坏绝对路径：.../pmem-art/assets/x → assets/x
+  const markers = ["assets/", "docs/", ".memory-art/", ".cursor/"];
+  const low = norm.toLowerCase();
+  for (const m of markers) {
+    const idx = low.indexOf(m);
+    if (idx > 0) {
+      const trimmed = norm.slice(idx);
+      if (assets[trimmed]) return assets[trimmed];
+      norm = trimmed;
+      break;
+    }
+  }
+  let soft = null;
+  for (const [k, v] of Object.entries(assets)) {
+    const kn = String(k).replace(/\\/g, "/");
+    const vn = v ? String(v.path || "").replace(/\\/g, "/") : "";
+    if (kn === norm || vn === norm) return v;
+    // 同父目录+文件名唯一命中时接受（避免 Users/... 前缀差）
+    if (pathMetaKeyMatch(kn, norm) || (vn && pathMetaKeyMatch(vn, norm))) {
+      if (soft && soft !== v) { soft = null; break; } // 歧义则放弃软匹配
+      soft = v;
+    }
+  }
+  return soft;
+}
+
+function updateBatchCount() {
+  const el = document.getElementById("batchCount");
+  if (el) el.textContent = "已选 " + _selectedPaths.size;
+  const btn = document.getElementById("btnBatchMode");
+  if (btn) {
+    btn.classList.toggle("batch-on", !!state.batchMode);
+    btn.textContent = state.batchMode ? "🗑️ 退出批量" : "🗑️ 批量删除";
+  }
+  document.body.classList.toggle("batch-mode", !!state.batchMode);
+}
+
+function setBatchMode(on) {
+  state.batchMode = !!on;
+  if (!state.batchMode) {
+    _selectedPaths.clear();
+    _lastClickedIdx = -1;
+  }
+  updateBatchCount();
+  scheduleVirtualPaint(true);
+  showToast(state.batchMode ? "已进入批量删除：左上角勾选 · Ctrl+A · Shift 片选" : "已退出批量删除");
+}
+
+function clearSelection() {
+  _selectedPaths.clear();
+  _lastClickedIdx = -1;
+  updateBatchCount();
+  scheduleVirtualPaint(true);
+}
+
+function selectAllFiltered() {
+  _galleryAssets.forEach(a => { if (a && a.path) _selectedPaths.add(a.path); });
+  updateBatchCount();
+  scheduleVirtualPaint(true);
+  showToast("已全选当前筛选 " + _selectedPaths.size + " 张");
+}
+
+function toggleSelectPath(path, opts) {
+  opts = opts || {};
+  const idx = (opts.idx != null) ? opts.idx : _galleryAssets.findIndex(a => a.path === path);
+  if (opts.shiftKey && _lastClickedIdx >= 0 && idx >= 0) {
+    const a = Math.min(_lastClickedIdx, idx);
+    const b = Math.max(_lastClickedIdx, idx);
+    for (let i = a; i <= b; i++) {
+      const p = _galleryAssets[i] && _galleryAssets[i].path;
+      if (p) _selectedPaths.add(p);
+    }
+  } else if (_selectedPaths.has(path)) {
+    _selectedPaths.delete(path);
+  } else {
+    _selectedPaths.add(path);
+  }
+  if (idx >= 0) _lastClickedIdx = idx;
+  updateBatchCount();
+  scheduleVirtualPaint(true);
+}
+
+function removeAssetsFromIndex(paths) {
+  const set = new Set((paths || []).map(p => String(p).replace(/\\/g, "/")));
+  const assets = DATA.assets || {};
+  Object.keys(assets).forEach(k => {
+    const nk = String(k).replace(/\\/g, "/");
+    const pk = String((assets[k] && assets[k].path) || "").replace(/\\/g, "/");
+    if (set.has(nk) || set.has(pk) || set.has(k)) delete assets[k];
+  });
+  if (Array.isArray(DATA.index_images)) {
+    DATA.index_images = DATA.index_images.filter(x => {
+      const p = String((x && x.path) || "").replace(/\\/g, "/");
+      return !set.has(p);
+    });
+  }
+  paths.forEach(p => _selectedPaths.delete(p));
+  if (state.lbPath && set.has(String(state.lbPath).replace(/\\/g, "/"))) {
+    closeViewer();
+    const lb = document.getElementById("lightbox");
+    if (lb) lb.classList.remove("open");
+    state.lbPath = "";
+  }
+  renderHeaderAndSidebar();
+  renderStage();
+}
+
+async function deleteAssetPaths(paths, { confirmMsg } = {}) {
+  const list = Array.from(new Set((paths || []).filter(Boolean)));
+  if (!list.length) {
+    showToast("没有可删除的图");
+    return false;
+  }
+  if (location.protocol === "file:") {
+    const port = await pingRevealBridge();
+    if (port) {
+      const ok = window.confirm(
+        "当前是 file:// 打开，浏览器常会拦截删除请求。\n点「确定」改用本地 http 工作台后再删（推荐）。\n点「取消」留在本页。"
+      );
+      if (ok) {
+        location.replace("http://127.0.0.1:" + port + "/art-atlas.html");
+        return false;
+      }
+    }
+  }
+  const msg = confirmMsg || ("确认移入垃圾桶 " + list.length + " 张？\n工作台将不可见；文件在 .memory-art/_trash/，可手动找回。\n只有你在垃圾桶里再删掉才永久消失。");
+  if (!window.confirm(msg)) return false;
+  showToast("正在移入垃圾桶…");
+  const result = await deleteViaBridge(list);
+  if (result && Array.isArray(result.deleted) && result.deleted.length) {
+    removeAssetsFromIndex(result.deleted.concat(list));
+    const n = result.deleted.length;
+    const errN = (result.errors || []).length;
+    showToast(errN
+      ? ("已移入垃圾桶 " + n + " 张，失败 " + errN + " · 点「垃圾桶」可打开找回")
+      : ("🗑️ 已移入垃圾桶 " + n + " 张 · 点工具栏「垃圾桶」可打开找回"));
+    return true;
+  }
+  // 桥接有响应但未删成：展示真实错误（不是「未连通」）
+  if (result && Array.isArray(result.deleted)) {
+    const errs = (result.errors || [])
+      .map(e => String((e && (e.error || e.message)) || "").trim())
+      .filter(Boolean);
+    const detail = errs.length ? errs.slice(0, 3).join("；") : "文件未找到或无法移动";
+    showToast("移入垃圾桶失败：" + detail);
+    setRevealBanner(true);
+    return false;
+  }
+  // 桥接不可用：下载「移入垃圾桶」脚本
+  try {
+    downloadDeleteHelper(list.map(absAssetPath));
+  } catch (e) {}
+  setRevealBanner(false);
+  showToast("垃圾桶服务未连通。已下载脚本；或先 python pmem_art.py atlas，再用 http://127.0.0.1:端口/art-atlas.html 打开");
+  return false;
+}
+
+/** 打开工作台垃圾桶目录（删除的图在这里，可手动挪回原路径） */
+window.openTrashFolder = async function() {
+  showToast("正在打开垃圾桶…");
+  const ok = await revealViaBridge(".memory-art/_trash");
+  if (ok) {
+    showToast("♻️ 已打开垃圾桶：把文件挪回原相对路径即可恢复");
+    return;
+  }
+  showToast("定位服务未连通。请先 python pmem_art.py atlas，再手动打开 .memory-art/_trash/");
+};
+
+/** 打开教学素材目录（git 跟踪，不可工作台删除） */
+window.openTeachFolder = async function() {
+  const base = ((DATA.workbench_guide || {}).base_dir) || "docs/workbench_guide";
+  showToast("正在打开教学文件夹…");
+  const ok = await revealViaBridge(base);
+  if (ok) {
+    showToast("📁 已打开教学素材：" + base);
+    return;
+  }
+  showToast("定位服务未连通。请先 python pmem_art.py atlas，再打开 " + base);
+};
+
+window.deleteSelectedAssets = function() {
+  return deleteAssetPaths(Array.from(_selectedPaths), {
+    confirmMsg: "确认把选中的 " + _selectedPaths.size + " 张移入垃圾桶？\n工作台不可见；.memory-art/_trash/ 可找回。只有在垃圾桶里再删才永久消失。"
+  });
+};
+
+window.deleteOneAsset = function(relPath) {
+  return deleteAssetPaths([relPath], {
+    confirmMsg: "确认移入垃圾桶？\n" + relPath + "\n可在 .memory-art/_trash/ 找回。"
+  });
+};
+
+/** 在系统访达 / 资源管理器中打开所在文件夹（并选中该图）——绝不跳网页目录 */
 window.revealInFolder = async function(relPath) {
   const abs = absAssetPath(relPath);
-  const dir = parentDirOf(abs);
-  showToast("正在打开文件夹…");
+  showToast("正在打开本地文件夹…");
   const ok = await revealViaBridge(relPath);
   if (ok) {
-    showToast("📁 已在资源管理器中定位");
+    showToast("📁 已在资源管理器中定位并选中该图");
     return;
   }
-  try {
-    window.open(pathToFileUrl(dir), "_blank");
-  } catch (e) {}
   try { downloadRevealHelper(abs); } catch (e2) {}
-  showToast("未连上定位服务。请先在项目目录跑 python pmem_art.py atlas，再点 📁。文件夹：" + dir);
+  setRevealBanner(false);
+  showToast("定位服务未连通。已下载「打开图片位置」脚本，双击即可在资源管理器选中该图（不会再跳网页）");
 };
 
-window.closeViewer = function() {
-  const v = document.getElementById("imgViewer");
-  if (v) v.classList.remove("open");
-};
+function renderPromptTraceHtml(info) {
+  const sid = info && info.converge_session_id;
+  const sess = sid && (DATA.converge_sessions || {})[sid];
+  if (!sess || !Array.isArray(sess.rounds) || !sess.rounds.length) {
+    const single = (info && info.prompt) || "";
+    if (!single) {
+      return `<div style="color:var(--text-dim);font-size:12px;">暂无闭环提示词履历（非 converge 产出或会话未入库）</div>`;
+    }
+    return `<div class="prompt-trace">
+      <div class="prompt-trace-head">单条 Prompt（无多轮会话）</div>
+      <div class="round-card current">
+        <div class="round-prompt">${esc(single)}</div>
+        <div class="round-actions">
+          <button class="btn-copy" onclick='copyText(${JSON.stringify(single)}, "Prompt")'>📋 复制 Prompt</button>
+        </div>
+      </div>
+    </div>`;
+  }
+  const curRound = info.converge_round;
+  const head = `会话 ${esc(sess.session_id)} · ${esc(sess.module || "")} · 合格线 ≥${esc(String(sess.threshold || 9.5))} · ${sess.rounds.length} 轮`;
+  const goal = sess.goal ? `<div style="font-size:12px;color:var(--text-muted);">目标：${esc(sess.goal)}</div>` : "";
+  const cards = sess.rounds.map((r, ri) => {
+    const isCur = curRound != null && Number(r.round) === Number(curRound);
+    const score = (r.score != null && r.score !== "") ? Number(r.score).toFixed(2) : "—";
+    const pass = r.passed ? "达标" : "未达标";
+    const dims = r.dims_parsed && Object.keys(r.dims_parsed).length
+      ? Object.entries(r.dims_parsed).map(([k, v]) => `${k}:${v}`).join(" · ")
+      : "";
+    const prevR = ri > 0 ? sess.rounds[ri - 1] : null;
+    const pack = stripPrevCritiqueFromPrompt(r.prompt || "", prevR ? { defects: prevR.defects || "" } : null);
+    const own = formatOwnCritiqueHtml({
+      passed: r.passed, defects: r.defects || "", next_fix: r.next_fix || ""
+    }, { noteCls: "round-meta" });
+    return `<div class="round-card${isCur ? " current" : ""}">
+      <div class="round-top">
+        <span class="round-title">${esc(r.round_label || ("第 " + r.round + " 轮"))}${isCur ? " · 当前图" : ""}</span>
+        <span class="round-score">${score} · ${pass}</span>
+      </div>
+      ${r.generated_at ? `<div class="round-meta">时间 ${esc(r.generated_at)}</div>` : ""}
+      ${r.strengths ? `<div class="round-meta">优点：${esc(r.strengths)}</div>` : ""}
+      ${own}
+      ${dims ? `<div class="round-meta">${esc(dims)}</div>` : ""}
+      <div class="round-prompt">${esc(pack.main || "（本轮未记录 prompt）")}</div>
+      <div class="round-actions">
+        <button class="btn-copy" onclick='copyText(${JSON.stringify(pack.main || r.prompt || "")}, "第${r.round}轮 Prompt")'>📋 复制本轮 Prompt</button>
+        ${r.image ? `<button class="btn-copy" onclick='openViewer(${JSON.stringify(r.image)})'>🔍 看本轮图</button>` : ""}
+      </div>
+    </div>`;
+  }).join("");
+  return `<div class="prompt-trace">
+    <div class="prompt-trace-head"><b style="color:var(--text-main);">提示词优化履历</b><span>${head}</span>${goal}</div>
+    ${cards}
+  </div>`;
+}
 
-/** 半透明叠层放大原图（点空白 / Esc 关闭） */
-window.openViewer = function(assetPath) {
-  const info = lookupAsset(assetPath);
-  if (!info) {
-    showToast("找不到这张图的索引");
+let _viewerCompare = false;
+let _viewerAnchorPath = ""; // 当前终稿槽位（设为最终交稿的目标）
+let _viewerSessionId = "";
+let _viewerNavPaths = []; // 当前放大可左右切的图链（教学课内 / 会话轮次 / 主画廊）
+let _viewerMetaByPath = {}; // path -> {prompt,score,dims,defects,next_fix,...}
+let _viewerFromTeach = false;
+let _viewerIgnoreCloseUntil = 0; // 打开当下这一击会落到遮罩上，短时忽略关闭
+
+function normViewerPath(p) {
+  return String(p || "").replace(/\\/g, "/");
+}
+function setViewerNav(paths, metaMap) {
+  const seen = new Set();
+  const out = [];
+  (paths || []).forEach(p => {
+    if (!p) return;
+    const k = normViewerPath(p);
+    if (seen.has(k)) return;
+    seen.add(k);
+    out.push(p);
+  });
+  _viewerNavPaths = out;
+  _viewerMetaByPath = metaMap || {};
+}
+function galleryNavPaths() {
+  return (_galleryAssets || []).map(a => a.path).filter(Boolean);
+}
+/** 从第 1 轮 Prompt 里抽出「分析原图/参考图不足」段，挂回原图卡 */
+function extractRefCritiqueFromPrompt(prompt) {
+  const text = String(prompt || "").replace(/\r\n/g, "\n");
+  if (!text.trim()) return "";
+  const headRe = /^(分析图片不足|分析不足|原图不足|参考图不足|上一轮不足|上轮不足|前一张不足|图片不足|评审不足)[:：]\s*/i;
+  const lines = text.split("\n");
+  const chunks = [];
+  let capturing = false;
+  let buf = [];
+  const flush = () => {
+    const s = buf.join("\n").trim();
+    if (s) chunks.push(s);
+    buf = [];
+  };
+  lines.forEach(line => {
+    const t = line.trim();
+    const m = t.match(headRe);
+    if (m) {
+      flush();
+      const rest = t.slice(m[0].length).trim();
+      if (rest) buf.push(rest);
+      capturing = true;
+      return;
+    }
+    if (!capturing) return;
+    if (/^(【|约束[:：]|Round\b|第\s*\d|PROMPT\b|必须|禁止|Warm-Start)/i.test(t) && buf.length) {
+      flush();
+      capturing = false;
+      return;
+    }
+    if (t) buf.push(t);
+  });
+  flush();
+  return chunks.join("；");
+}
+
+/** 原图卡文案：ref_analysis > R1 里抽出的原图不足 > 开跑目标 */
+function enrichOriginalMeta(sess) {
+  const out = { role: "original", label: "原图", round_label: "原图", defects: "", next_fix: "", prompt: "" };
+  if (!sess) return out;
+  const analysis = String(sess.ref_analysis || "").trim();
+  const r1 = (sess.rounds || []).find(r => r && Number(r.round) === 1) || (sess.rounds || [])[0] || null;
+  const extracted = r1 ? extractRefCritiqueFromPrompt(r1.prompt || "") : "";
+  const goal = String(sess.goal || "").trim();
+  out.defects = analysis || extracted || "";
+  out.prompt = analysis || "";
+  if (goal) {
+    out.next_fix = "据此开跑：" + goal;
+  } else if (r1 && (r1.round_label || r1.round != null)) {
+    out.next_fix = "据此进入 " + (r1.round_label || ("第 " + r1.round + " 轮"));
+  }
+  return out;
+}
+
+function sessionNavAndMeta(sess) {
+  const paths = [];
+  const meta = {};
+  if (!sess) return { paths, meta };
+  const put = (path, payload) => {
+    if (!path) return;
+    paths.push(path);
+    meta[normViewerPath(path)] = Object.assign({}, meta[normViewerPath(path)] || {}, payload || {});
+  };
+  const origMeta = enrichOriginalMeta(sess);
+  if (sess.ref_image) put(sess.ref_image, origMeta);
+  (sess.reference_image_paths || []).forEach(rp => {
+    if (rp && rp !== sess.ref_image) put(rp, Object.assign({}, origMeta));
+  });
+  (sess.rounds || []).forEach(r => {
+    if (!r || !r.image) return;
+    put(r.image, {
+      role: "process",
+      round: r.round,
+      round_label: r.round_label || ("第 " + r.round + " 轮"),
+      prompt: r.prompt || "",
+      defects: r.defects || "",
+      next_fix: r.next_fix || "",
+      score: r.score,
+      passed: r.passed,
+      dims: r.dims_parsed || r.dims || {}
+    });
+  });
+  const fin = sess.final_image || sess.winner_image;
+  if (fin) {
+    const k = normViewerPath(fin);
+    if (!meta[k]) put(fin, { role: "final", label: "终稿", round_label: "终稿" });
+    else meta[k] = Object.assign({}, meta[k], { role: meta[k].role || "final", label: meta[k].label || "终稿" });
+  }
+  return { paths, meta };
+}
+function teachNavAndMeta() {
+  const lessons = guideLessons();
+  const lesson = lessons.find(l => l.id === _teachId) || lessons[0];
+  const paths = [];
+  const meta = {};
+  if (!lesson) return { paths, meta };
+  const rounds = Array.isArray(lesson.rounds) ? lesson.rounds : [];
+  (lesson.examples || []).forEach(ex => {
+    if (!ex || !ex.path) return;
+    const e = teachEnrichExample(ex, rounds);
+    paths.push(e.path);
+    meta[normViewerPath(e.path)] = {
+      role: e.role,
+      label: e.label || teachRoleLabel(e.role),
+      round: e.round,
+      round_label: e.label || teachRoleLabel(e.role) || (e.round != null ? ("第 " + e.round + " 轮") : ""),
+      prompt: e.prompt || "",
+      defects: e.defects || "",
+      next_fix: e.next_fix || "",
+      score: e.score,
+      passed: e.passed,
+      dims: e.dims || {}
+    };
+  });
+  return { paths, meta };
+}
+/** 路径对齐：优先全路径；其次同父目录+文件名。禁止只用文件名（r1.png 会串课/串会话） */
+function pathMetaKeyMatch(a, b) {
+  const na = normViewerPath(a);
+  const nb = normViewerPath(b);
+  if (!na || !nb) return false;
+  if (na === nb) return true;
+  const pa = na.split("/");
+  const pb = nb.split("/");
+  if (pa.length >= 2 && pb.length >= 2) {
+    return pa.slice(-2).join("/") === pb.slice(-2).join("/");
+  }
+  return false;
+}
+function lookupViewerMeta(path) {
+  const key = normViewerPath(path);
+  if (_viewerMetaByPath[key]) return _viewerMetaByPath[key];
+  for (const [k, v] of Object.entries(_viewerMetaByPath)) {
+    if (pathMetaKeyMatch(k, key)) return v;
+  }
+  const info = lookupAsset(path) || { path };
+  const sess = sessionOfAsset(info);
+  if (sess) {
+    const sn = sessionNavAndMeta(sess);
+    if (sn.meta[key]) return sn.meta[key];
+    for (const [k, v] of Object.entries(sn.meta)) {
+      if (pathMetaKeyMatch(k, key)) return v;
+    }
+    // 按会话轮次精确匹配 image 字段
+    for (const r of (sess.rounds || [])) {
+      if (r && r.image && pathMetaKeyMatch(r.image, key)) {
+        return {
+          role: r.passed ? "final" : "process",
+          round: r.round,
+          round_label: r.round_label || ("第 " + r.round + " 轮"),
+          prompt: r.prompt || "",
+          defects: r.defects || "",
+          next_fix: r.next_fix || "",
+          score: r.score,
+          passed: r.passed,
+          dims: r.dims_parsed || r.dims || {}
+        };
+      }
+    }
+  }
+  return null;
+}
+/** 上一张的「分析不足」只属于上一张；从本张 Prompt 里剥掉，避免挂错图下 */
+function stripPrevCritiqueFromPrompt(prompt, prevMeta) {
+  let text = String(prompt || "").replace(/\r\n/g, "\n").trim();
+  if (!text) return { main: "", hadPrev: false };
+  const prevDefects = String((prevMeta && prevMeta.defects) || "").trim();
+  const lines = text.split("\n");
+  const keep = [];
+  let hadPrev = false;
+  const headRe = /^(分析图片不足|分析不足|上一轮不足|上轮不足|前一张不足|图片不足|评审不足)[:：]/i;
+  lines.forEach(line => {
+    const t = line.trim();
+    if (!t) { keep.push(line); return; }
+    if (headRe.test(t)) { hadPrev = true; return; }
+    if (prevDefects && t.indexOf(prevDefects) >= 0 && /不足|改点|修正|未达标/.test(t) && t.length <= prevDefects.length + 48) {
+      hadPrev = true;
+      return;
+    }
+    keep.push(line);
+  });
+  let main = keep.join("\n").replace(/^\n+/, "").replace(/\n+$/, "").trim();
+  // 整段 Prompt 若以「分析…不足」开头且无换行，整段剥掉
+  if (headRe.test(main) && main.indexOf("\n") < 0) {
+    hadPrev = true;
+    main = "";
+  }
+  return { main, hadPrev };
+}
+function formatOwnCritiqueHtml(m, opts) {
+  opts = opts || {};
+  const noteCls = opts.noteCls || "iv-meta-note";
+  const role = teachRoleClass(opts.role || m.role || "");
+  const passed = !!m.passed;
+  const defects = String(m.defects || "").trim();
+  const nextFix = String(m.next_fix || "").trim();
+  // 原图：分析/不足挂在原图自己下面，说明为何要出下一张
+  if (role === "original") {
+    const parts = [];
+    if (defects) {
+      parts.push(`<div class="${noteCls}" style="color:#fda4af;"><b>原图不足：</b>${esc(defects)}</div>`);
+    }
+    if (nextFix) {
+      parts.push(`<div class="${noteCls}" style="color:var(--teal);"><b>为何要出下一张：</b>${esc(nextFix)}</div>`);
+    }
+    if (!parts.length && opts.allowEmptyHint) {
+      parts.push(`<div class="${noteCls}" style="color:var(--text-dim);">（原图未写分析样例）</div>`);
+    }
+    return parts.join("");
+  }
+  // 达标图：不把「已清/已达标」再写成「不足」挂在终稿下
+  if (passed) {
+    const soft = (!defects || /已清|已达标|可交稿|无明显/.test(defects))
+      ? ""
+      : `<div class="${noteCls}" style="color:var(--text-muted);">本图余注：${esc(defects)}</div>`;
+    return `${soft}<div class="${noteCls}" style="color:#6ee7b7;">本图结论：已达标</div>`;
+  }
+  const parts = [];
+  if (defects) {
+    parts.push(`<div class="${noteCls}" style="color:#fda4af;"><b>本图不足：</b>${esc(defects)}</div>`);
+  }
+  if (nextFix) {
+    parts.push(`<div class="${noteCls}" style="color:var(--teal);"><b>给下一张的改点：</b>${esc(nextFix)}</div>`);
+  }
+  return parts.join("");
+}
+function prevMetaInNav(path) {
+  const navPaths = _viewerNavPaths.length ? _viewerNavPaths : galleryNavPaths();
+  const cur = normViewerPath(path);
+  let idx = navPaths.findIndex(p => normViewerPath(p) === cur);
+  if (idx < 0) {
+    const base = cur.split("/").pop();
+    idx = navPaths.findIndex(p => normViewerPath(p).split("/").pop() === base);
+  }
+  if (idx <= 0) return null;
+  return lookupViewerMeta(navPaths[idx - 1]);
+}
+function renderViewerMeta(info) {
+  // 放大层只摘要：轮次 + 总分 + 六维；Prompt/不足留给「详情 · 进化对照」
+  const panel = document.getElementById("ivMetaPanel");
+  const viewer = document.getElementById("imgViewer");
+  if (!panel) return;
+  const path = (info && info.path) || state.lbPath || "";
+  const m = lookupViewerMeta(path) || {};
+  const scoreVal = (m.score != null && m.score !== "") ? m.score
+    : (info && info.score != null && info.score !== "" ? info.score : null);
+  const hasScore = scoreVal != null && scoreVal !== "";
+  const dims = (m.dims && typeof m.dims === "object" && Object.keys(m.dims).length)
+    ? m.dims
+    : ((info && info.dims) || {});
+  const hasDims = dims && typeof dims === "object" && Object.keys(dims).length;
+  const roundNum = (m.round != null) ? m.round
+    : (info && info.converge_round != null ? info.converge_round : null);
+  const head = m.round_label
+    || (roundNum != null ? ("第 " + roundNum + " 轮") : "")
+    || m.label
+    || "";
+  const passed = (m.passed != null) ? !!m.passed : !!(info && info.passed);
+  if (!hasScore && !hasDims && !head) {
+    panel.innerHTML = "";
+    if (viewer) viewer.classList.remove("meta-on");
     return;
   }
-  hideImgCtxMenu();
-  const key = info.path || assetPath;
-  state.lbPath = key;
-  const img = document.getElementById("ivImg");
-  const pathEl = document.getElementById("ivPath");
-  img.src = assetSrc(info);
-  pathEl.textContent = key;
-  pathEl.title = absAssetPath(key);
-  document.getElementById("imgViewer").classList.add("open");
+  if (viewer) viewer.classList.add("meta-on");
+  const scoreLine = hasScore
+    ? `<div class="iv-meta-score">总分 ${Number(scoreVal).toFixed(2)}${passed ? " · 达标" : " · 未达标"}</div>`
+    : "";
+  const navPaths = _viewerNavPaths.length ? _viewerNavPaths : galleryNavPaths();
+  const idx = navPaths.findIndex(p => normViewerPath(p) === normViewerPath(path));
+  const navHint = (idx >= 0 && navPaths.length > 1)
+    ? `<div class="iv-meta-navhint">← → ${idx + 1}/${navPaths.length} · Prompt/不足见「详情 · 进化对照」</div>`
+    : `<div class="iv-meta-navhint">Prompt / 不足 / 改点 → 点「详情 · 进化对照」</div>`;
+  panel.innerHTML = `
+    <div class="iv-meta-head">
+      <b style="color:var(--text-main);">${esc(head || "评分摘要")}</b>
+      ${scoreLine}
+    </div>
+    ${formatDimsHtml(dims, "iv-meta-dim")}
+    ${navHint}
+  `;
+}
+
+function sessionOfAsset(info) {
+  const sid = info && info.converge_session_id;
+  if (sid && (DATA.converge_sessions || {})[sid]) return DATA.converge_sessions[sid];
+  // 兜底：按路径反查会话（有些过程图没打上 session_id，或终稿槽被换过）
+  const key = normViewerPath((info && info.path) || "");
+  if (!key) return null;
+  const sessions = DATA.converge_sessions || {};
+  for (const sess of Object.values(sessions)) {
+    if (!sess) continue;
+    if (pathMetaKeyMatch(sess.final_image || "", key) || pathMetaKeyMatch(sess.winner_image || "", key)) return sess;
+    if (pathMetaKeyMatch(sess.ref_image || "", key)) return sess;
+    if ((sess.reference_image_paths || []).some(p => pathMetaKeyMatch(p, key))) return sess;
+    if ((sess.rounds || []).some(r => r && pathMetaKeyMatch(r.image || "", key))) return sess;
+  }
+  return null;
+}
+
+/** 详情/教学卡片用的可显示 src；修坏路径、尊重 exists、优先可显示图 */
+function resolveMediaSrc(path, opts) {
+  opts = opts || {};
+  const preferThumb = opts.preferThumb !== false;
+  const sessionId = opts.sessionId || "";
+  let raw = String(path || "").replace(/\\/g, "/").trim();
+  if (!raw) return { src: "", path: "", missing: true };
+  // 修：Users/xxx/.../pmem-art/assets/... → assets/...
+  const markers = ["assets/", "docs/", ".memory-art/", ".cursor/"];
+  let p = raw;
+  const low = p.toLowerCase();
+  for (const m of markers) {
+    const idx = low.indexOf(m);
+    if (idx > 0) { p = p.slice(idx); break; }
+  }
+  if (/^[A-Za-z]:\//.test(p)) {
+    const root = String(DATA.root || "").replace(/\\/g, "/").replace(/\/$/, "").toLowerCase();
+    const lowP = p.toLowerCase();
+    if (root && lowP.indexOf(root + "/") === 0) p = p.slice(root.length + 1);
+  }
+  const alive = (info) => !!(info && info.exists !== false);
+  let info = lookupAsset(p) || lookupAsset(raw) || null;
+  // 索引里有但磁盘已删：当作未命中，继续找同名活文件
+  if (info && !alive(info)) info = null;
+  if (!info) {
+    const base = p.split("/").pop();
+    const hits = Object.keys(DATA.assets || {}).filter(k => {
+      const a = DATA.assets[k];
+      return alive(a) && normViewerPath(k).split("/").pop() === base;
+    });
+    if (hits.length === 1) {
+      info = DATA.assets[hits[0]];
+    } else if (sessionId && hits.length > 1) {
+      const scoped = hits.filter(k => String((DATA.assets[k] || {}).converge_session_id || "") === String(sessionId));
+      if (scoped.length === 1) info = DATA.assets[scoped[0]];
+      else if (scoped.length > 1) {
+        // 同会话多条同名时：优先终稿可见槽
+        const finals = scoped.filter(k => !isWorkbenchHiddenAsset(DATA.assets[k]) && assetPlate(DATA.assets[k]) === "final");
+        if (finals.length === 1) info = DATA.assets[finals[0]];
+      }
+    }
+  }
+  if (info) {
+    if (!alive(info)) {
+      return { src: "", path: info.path || p, missing: true, info };
+    }
+    const full = bustSrc(info) || assetSrc(info) || "";
+    const thumb = preferThumb ? (thumbSrc(info) || "") : "";
+    // thumb 与原图不同时带上 full，供 onerror 回退
+    const src = (thumb && thumb !== full ? thumb : "") || full;
+    return { src, full: full || src, path: info.path || p, missing: !src, info };
+  }
+  // 不在索引里：仍尝试相对路径（磁盘上可能有；404 由 onerror 兜底）
+  return { src: p, full: p, path: p, missing: false, info: null };
+}
+
+function resolveRefPath(info) {
+  const sess = sessionOfAsset(info);
+  if (sess) {
+    if (sess.ref_image) return sess.ref_image;
+    const refs = sess.reference_image_paths || [];
+    if (refs.length) return refs[0];
+    const rounds = sess.rounds || [];
+    for (const r of rounds) {
+      const rr = (r && r.reference_image_paths) || [];
+      if (rr.length) return rr[0];
+    }
+  }
+  return "";
+}
+
+function bustSrc(info) {
+  const base = assetSrc(info) || "";
+  if (!base) return "";
+  const m = (info && (info.mtime || info._bust)) || Date.now();
+  return base + (base.includes("?") ? "&" : "?") + "t=" + encodeURIComponent(String(m));
+}
+
+function updateViewerChrome(info) {
+  const refPath = resolveRefPath(info);
+  const cmpBtn = document.getElementById("ivCompare");
+  if (cmpBtn) {
+    cmpBtn.disabled = !refPath;
+    cmpBtn.classList.toggle("disabled", !refPath);
+    cmpBtn.title = refPath ? ("并列对比参考图：" + refPath) : "无参考原图";
+    cmpBtn.textContent = _viewerCompare && refPath ? "关闭并列" : "并列参考图";
+  }
+  const detailBtn = document.getElementById("ivDetail");
+  const sess = sessionOfAsset(info);
+  const canDetail = !!(sess && Array.isArray(sess.rounds) && sess.rounds.length) || !!resolveRefPath(info);
+  if (detailBtn) {
+    detailBtn.title = canDetail
+      ? ("教学同款对照 · " + ((sess && sess.session_id) || "") + " · " + ((sess && sess.rounds && sess.rounds.length) || 0) + " 轮")
+      : "打开详情（无闭环会话时仍显示本图信息）";
+  }
+  const viewer = document.getElementById("imgViewer");
+  if (viewer) {
+    viewer.classList.toggle("compare-on", !!(_viewerCompare && refPath));
+    viewer.classList.remove("evolve-on");
+  }
+  const refImg = document.getElementById("ivRefImg");
+  if (refImg) {
+    if (refPath) {
+      const refInfo = lookupAsset(refPath) || { path: refPath };
+      refImg.src = bustSrc(refInfo) || String(refPath).replace(/\\/g, "/");
+    } else {
+      refImg.removeAttribute("src");
+    }
+  }
+  const paths = _viewerNavPaths.length ? _viewerNavPaths : galleryNavPaths();
+  const cur = normViewerPath(state.lbPath);
+  let idx = paths.findIndex(p => normViewerPath(p) === cur);
+  if (idx < 0 && state.lbPath) {
+    const base = cur.split("/").pop();
+    idx = paths.findIndex(p => normViewerPath(p).split("/").pop() === base);
+  }
+  const atStart = idx <= 0;
+  const atEnd = idx < 0 || idx >= paths.length - 1;
+  ["ivPrev", "ivPrevBtn"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.disabled = atStart;
+  });
+  ["ivNext", "ivNextBtn"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.disabled = atEnd;
+  });
+}
+
+let _detailPath = "";
+
+function buildLineageExamples(info) {
+  const examples = [];
+  const sess = sessionOfAsset(info);
+  const sn = sessionNavAndMeta(sess);
+  const sid = (sess && sess.session_id) || (info && info.converge_session_id) || "";
+  const seen = new Set();
+  const pushCard = (path, patch) => {
+    if (!path) return;
+    const media = resolveMediaSrc(path, { preferThumb: true, sessionId: sid });
+    const key = normViewerPath(media.path || path);
+    if (seen.has(key)) {
+      const hit = examples.find(e => normViewerPath(e.path) === key);
+      if (hit && patch) {
+        Object.assign(hit, patch);
+        // 合并时保留已有可用 src；若仍空则补
+        if (!hit.src && media.src) {
+          hit.src = media.src;
+          hit.full = media.full || media.src;
+          hit.missing = !!media.missing;
+        }
+      }
+      return;
+    }
+    seen.add(key);
+    const meta = sn.meta[key] || sn.meta[normViewerPath(path)] || lookupViewerMeta(media.path || path) || {};
+    const base = {
+      path: media.path || path,
+      role: (patch && patch.role) || meta.role || "process",
+      label: (patch && patch.label) || meta.round_label || meta.label || PathName(media.path || path),
+      prompt: meta.prompt || "",
+      defects: meta.defects || "",
+      next_fix: meta.next_fix || "",
+      score: meta.score,
+      passed: meta.passed,
+      dims: meta.dims || {},
+      round: meta.round,
+      src: media.src || "",
+      full: media.full || media.src || "",
+      missing: !!media.missing || !media.src
+    };
+    // patch 后写，但绝不能把 src 覆盖成 undefined
+    const merged = Object.assign({}, base, patch || {});
+    if (!merged.src) {
+      merged.src = base.src;
+      merged.full = base.full;
+      merged.missing = base.missing;
+    }
+    if (!merged.full) merged.full = merged.src || base.full;
+    if (!merged.path) merged.path = base.path;
+    examples.push(merged);
+  };
+  if (sess) {
+    const ref = resolveRefPath(info) || sess.ref_image
+      || ((sess.reference_image_paths || [])[0] || "");
+    if (ref) {
+      const om = enrichOriginalMeta(sess);
+      pushCard(ref, {
+        role: "original",
+        label: "原图",
+        prompt: om.prompt || "",
+        defects: om.defects || "",
+        next_fix: om.next_fix || ""
+      });
+    }
+    (sess.rounds || []).forEach((r, ri) => {
+      if (!r || !r.image) return;
+      const isLast = ri === sess.rounds.length - 1;
+      const fin = sess.final_image || sess.winner_image;
+      const isFin = fin && pathMetaKeyMatch(fin, r.image);
+      pushCard(r.image, {
+        role: (r.passed && (isLast || isFin)) ? "final" : "process",
+        label: r.round_label || ("过程 R" + r.round),
+        prompt: r.prompt || "",
+        defects: r.defects || "",
+        next_fix: r.next_fix || "",
+        score: r.score,
+        passed: r.passed,
+        dims: r.dims_parsed || r.dims || {},
+        round: r.round
+      });
+    });
+    const fin = sess.final_image || sess.winner_image;
+    if (fin) pushCard(fin, { role: "final", label: "终稿" });
+  } else {
+    pushCard(info.path || state.lbPath, {
+      role: assetPlate(info) === "final" ? "final" : "process",
+      label: assetPlate(info) === "final" ? "定稿" : "当前图",
+      prompt: info.prompt || "",
+      score: info.score,
+      defects: info.defects || "",
+      next_fix: info.next_fix || "",
+      dims: info.dims || {}
+    });
+    const ref = resolveRefPath(info);
+    if (ref) pushCard(ref, { role: "original", label: "原图" });
+  }
+  const orig = examples.filter(e => teachRoleClass(e.role) === "original");
+  const rest = examples.filter(e => teachRoleClass(e.role) !== "original");
+  return { examples: orig.concat(rest), sess };
+}
+
+function renderDetailPipelineHtml(examples, sess) {
+  if (!examples.length) {
+    return `<div class="detail-empty">这张图没有可展示的进化对照（无原图/过程轮次）。仍可点「技术信息」看路径与记忆。</div>`;
+  }
+  const anchor = _viewerAnchorPath
+    || (sess && (sess.final_image || sess.winner_image))
+    || state.lbPath
+    || _detailPath;
+  const sid = (sess && sess.session_id) || "";
+  const parts = [];
+  examples.forEach((e, i) => {
+    const role = teachRoleClass(e.role);
+    if (i > 0) parts.push(`<div class="teach-arrow" aria-hidden="true">→</div>`);
+    const hasScore = e.score != null && e.score !== "";
+    const scoreLine = hasScore
+      ? `<div class="teach-score-line">总分 ${esc(String(Number(e.score).toFixed(2)))}${e.passed ? " · 达标" : " · 未达标"}</div>`
+      : "";
+    const prevEx = i > 0 ? examples[i - 1] : null;
+    const pack = stripPrevCritiqueFromPrompt(e.prompt || "", prevEx);
+    const hasProcessAfter = examples.slice(i + 1).some(x => {
+      const rr = teachRoleClass(x.role);
+      return rr === "process" || rr === "final";
+    });
+    // 原图：不展示误导性的「无 Prompt」；分析文案走 noteLine（原图不足 / 为何要出下一张）
+    let promptLine = "";
+    if (role === "original") {
+      const rawP = String(pack.main || e.prompt || "").trim();
+      // 与「原图不足」同文时只留 note，避免重复
+      if (rawP && rawP !== String(e.defects || "").trim()) {
+        promptLine = `<div class="teach-prompt">${esc(rawP)}</div>`;
+      }
+    } else if (pack.main) {
+      promptLine = `<div class="teach-prompt">${esc(pack.main)}</div>`;
+    } else {
+      promptLine = `<div class="teach-note">（无 Prompt）</div>`;
+    }
+    const noteLine = formatOwnCritiqueHtml(e, {
+      noteCls: "teach-note",
+      role: e.role,
+      allowEmptyHint: role === "original" && hasProcessAfter
+    });
+    const actions = [];
+    if (role === "original" && (e.defects || e.next_fix || e.prompt)) {
+      const blob = [e.defects ? ("原图不足：" + e.defects) : "", e.next_fix || "", e.prompt || ""].filter(Boolean).join("\n");
+      actions.push(`<button type="button" class="btn-copy" onclick='event.stopPropagation(); copyText(${JSON.stringify(blob)}, "原图分析")'>📋 原图分析</button>`);
+    } else if (pack.main || e.prompt) {
+      actions.push(`<button type="button" class="btn-copy" onclick='event.stopPropagation(); copyText(${JSON.stringify(pack.main || e.prompt || "")}, "Prompt")'>📋 Prompt</button>`);
+    }
+    actions.push(`<button type="button" class="btn-copy" onclick='event.stopPropagation(); openViewer(${JSON.stringify(e.path)}, { keepAnchor: true })'>🔍 放大</button>`);
+    if (role === "process" && sid) {
+      actions.push(`<button type="button" class="btn-copy" style="background:var(--success-bg);color:#6ee7b7;border-color:rgba(16,185,129,0.45);" onclick='event.stopPropagation(); promoteAsFinal(${JSON.stringify(e.path)}, ${JSON.stringify(sid)}, ${JSON.stringify(e.round)}, ${JSON.stringify(anchor)})'>设置为最终交稿</button>`);
+    }
+    const isCur = _detailPath && pathMetaKeyMatch(e.path, _detailPath);
+    const imgHtml = (e.missing || !e.src)
+      ? `<div style="height:180px;display:flex;align-items:center;justify-content:center;color:var(--text-dim);font-size:12px;border:1px dashed var(--border);border-radius:8px;background:#0b101d;">图缺失<br/><span style="opacity:.7;font-size:10px;">${esc(PathName(e.path || ""))}</span></div>`
+      : `<img src="${esc(e.src)}" data-full="${esc(e.full || e.src)}" alt="" loading="eager" decoding="async" onclick='event.stopPropagation(); openViewer(${JSON.stringify(e.path)}, { keepAnchor: true })' onerror="if(!this.dataset.retried && this.dataset.full && this.dataset.full!==this.src){this.dataset.retried='1';this.src=this.dataset.full;}else{this.replaceWith(Object.assign(document.createElement('div'),{style:'height:180px;display:flex;align-items:center;justify-content:center;color:#94a3b8;font-size:12px;border:1px dashed rgba(148,163,184,.35);border-radius:8px',textContent:'图加载失败'}));}" />`;
+    parts.push(`<div class="teach-ex role-${role}${isCur ? " current" : ""}" style="${isCur ? "outline:2px solid var(--teal);" : ""}">
+      ${imgHtml}
+      <div class="cap">
+        <span class="teach-role ${role}">${teachRoleLabel(e.role)}</span>
+        <span>${esc(e.label || "")}</span>
+      </div>
+      ${scoreLine}
+      ${formatDimsHtml(e.dims, "teach-dim")}
+      ${promptLine}
+      ${noteLine}
+      <div class="teach-actions">${actions.join("")}</div>
+    </div>`);
+  });
+  return `<h3 style="font-size:13px;color:var(--text-muted);margin:0 0 8px;">视觉对照（原图 → 过程 → 终稿）· 提示词/六维分在每张图下方</h3>
+    <div class="teach-pipeline">${parts.join("")}</div>`;
+}
+
+function renderDetailMain() {
+  const main = document.getElementById("detailMain");
+  if (!main) return;
+  try {
+    const path = _detailPath || state.lbPath;
+    const info = lookupAsset(path) || { path };
+    const { examples, sess } = buildLineageExamples(info);
+    const navMeta = {};
+    examples.forEach(e => {
+      navMeta[normViewerPath(e.path)] = e;
+    });
+    setViewerNav(examples.map(e => e.path).filter(Boolean), navMeta);
+    const missN = examples.filter(e => e.missing || !e.src).length;
+    const head = `
+      <div class="detail-meta-bar">
+        <span>模块 <b style="color:var(--text-main);">${esc(info.module || "unassigned")}</b></span>
+        <span>来源 ${esc(sourceLabel(info.source))}</span>
+        ${sess ? `<span>会话 <code>${esc(sess.session_id)}</code> · ${sess.rounds.length} 轮 · 合格线 ≥${esc(String(sess.threshold || 9.5))}</span>` : `<span>无闭环会话</span>`}
+        <span>卡片 ${examples.length}${missN ? ` · <b style="color:#fda4af;">缺图 ${missN}</b>` : ""}</span>
+        <span>当前 <code title="${esc(absAssetPath(path))}">${esc(path)}</code></span>
+      </div>
+      ${sess && sess.goal ? `<div style="font-size:12.5px;color:var(--text-muted);margin:-4px 0 12px;">目标：${esc(sess.goal)}</div>` : ""}
+    `;
+    main.innerHTML = head + renderDetailPipelineHtml(examples, sess);
+    // 弹层刚从 display:none 打开时，强制触发图片请求（避免 lazy 不刷）
+    requestAnimationFrame(() => {
+      main.querySelectorAll("img").forEach(img => {
+        try {
+          img.loading = "eager";
+          const s = img.getAttribute("src");
+          if (s) img.src = s;
+        } catch (e) {}
+      });
+    });
+  } catch (err) {
+    console.error("renderDetailMain failed", err);
+    main.innerHTML = `<div class="detail-empty">详情渲染失败：${esc(err && err.message ? err.message : "未知错误")}</div>`;
+  }
+}
+
+window.closeAssetDetail = function() {
+  const m = document.getElementById("detailModal");
+  if (m) m.classList.remove("open");
+};
+
+window.openAssetDetail = function(assetPath) {
+  const path = assetPath || state.lbPath;
+  if (!path) {
+    showToast("没有可打开的图");
+    return;
+  }
+  let info = lookupAsset(path);
+  if (!info) info = { path };
+  closeViewer();
+  const lb = document.getElementById("lightbox");
+  if (lb) lb.classList.remove("open");
+  _detailPath = info.path || path;
+  state.lbPath = _detailPath;
+  if (!isWorkbenchHiddenAsset(info) && assetPlate(info) === "final") {
+    _viewerAnchorPath = _detailPath;
+  } else {
+    const sess = sessionOfAsset(info);
+    _viewerAnchorPath = (sess && (sess.final_image || sess.winner_image)) || _viewerAnchorPath || _detailPath;
+  }
+  _viewerSessionId = (sessionOfAsset(info) && sessionOfAsset(info).session_id) || info.converge_session_id || "";
+  // 先打开弹层再渲染，避免 display:none 里 lazy/布局导致小图空白
+  const modal = document.getElementById("detailModal");
+  if (modal) modal.classList.add("open");
+  renderDetailMain();
+};
+
+window.closeViewer = function(force) {
+  if (!force && Date.now() < _viewerIgnoreCloseUntil) return;
+  const v = document.getElementById("imgViewer");
+  if (v) {
+    v.classList.remove("open", "compare-on", "evolve-on", "meta-on");
+  }
+  _viewerCompare = false;
+  _viewerFromTeach = false;
+  _viewerIgnoreCloseUntil = 0;
+  const meta = document.getElementById("ivMetaPanel");
+  if (meta) meta.innerHTML = "";
+};
+
+window.viewerStep = function(delta) {
+  const paths = _viewerNavPaths.length ? _viewerNavPaths : galleryNavPaths();
+  if (!paths.length || !state.lbPath) return;
+  const cur = normViewerPath(state.lbPath);
+  let idx = paths.findIndex(p => normViewerPath(p) === cur);
+  if (idx < 0) {
+    const base = cur.split("/").pop();
+    idx = paths.findIndex(p => normViewerPath(p).split("/").pop() === base);
+  }
+  const next = idx + delta;
+  if (idx < 0 || next < 0 || next >= paths.length) return;
+  openViewer(paths[next], { keepAnchor: true, fromTeach: _viewerFromTeach });
+};
+
+window.toggleCompare = function(force) {
+  const info = lookupAsset(state.lbPath);
+  const refPath = resolveRefPath(info);
+  if (!refPath) {
+    showToast("没有参考原图可并列");
+    _viewerCompare = false;
+  } else if (typeof force === "boolean") {
+    _viewerCompare = force;
+  } else {
+    _viewerCompare = !_viewerCompare;
+  }
+  updateViewerChrome(info);
+};
+
+async function promoteViaBridge(payload) {
+  for (const port of revealPorts()) {
+    try {
+      const res = await fetch("http://127.0.0.1:" + port + "/api/promote", {
+        method: "POST",
+        cache: "no-store",
+        mode: "cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      const j = await res.json().catch(() => null);
+      if (j && j.service === "pmem-atlas-reveal") {
+        DATA.reveal_port = port;
+        return j;
+      }
+    } catch (e) {}
+  }
+  return null;
+}
+
+window.promoteAsFinal = async function(sourcePath, sessionId, roundNum, finalPath) {
+  const src = sourcePath || state.lbPath;
+  const finalSlot = finalPath || _viewerAnchorPath || "";
+  if (!src) return;
+  if (!window.confirm("将此过程图设为最终交稿？\n会覆盖终稿文件内容，进化履历（提示词/轮次）保留。\n源: " + src + "\n终稿: " + (finalSlot || "(自动推断)"))) {
+    return;
+  }
+  showToast("正在设为最终交稿…");
+  const result = await promoteViaBridge({
+    source_path: src,
+    final_path: finalSlot,
+    session_id: sessionId || _viewerSessionId || "",
+    round: roundNum
+  });
+  if (!result || !result.ok) {
+    showToast("设为终稿失败：" + ((result && result.error) || "定位服务未连通，请先 python pmem_art.py atlas"));
+    return;
+  }
+  const fp = result.final_path;
+  const info = lookupAsset(fp) || { path: fp };
+  info.path = fp;
+  info.plate = "final";
+  info.workbench_hide = false;
+  info.mtime = result.mtime || Date.now() / 1000;
+  info._bust = Date.now();
+  if (sessionId) info.converge_session_id = sessionId;
+  if (roundNum != null) info.converge_round = roundNum;
+  DATA.assets[fp] = Object.assign({}, DATA.assets[fp] || {}, info);
+  if (sessionId && DATA.converge_sessions && DATA.converge_sessions[sessionId]) {
+    DATA.converge_sessions[sessionId].winner_image = fp;
+    DATA.converge_sessions[sessionId].final_image = fp;
+  }
+  _viewerAnchorPath = fp;
+  renderHeaderAndSidebar();
+  renderStage();
+  const detailOpen = document.getElementById("detailModal") && document.getElementById("detailModal").classList.contains("open");
+  if (detailOpen) {
+    _detailPath = fp;
+    renderDetailMain();
+  } else {
+    openViewer(fp, { keepAnchor: true });
+  }
+  showToast("✅ 已设为最终交稿：" + fp);
+};
+
+/** 半透明叠层放大原图（点空白 / Esc 关闭）；摘要轮次/总分/六维；详细 Prompt 在详情 */
+window.openViewer = function(assetPath, opts) {
+  opts = opts || {};
+  try {
+    let info = lookupAsset(assetPath);
+    if (!info) {
+      if (!assetPath) {
+        showToast("找不到这张图的索引");
+        return;
+      }
+      // 进化面板 / 教学样例：索引里没有时仍允许按路径预览
+      info = { path: assetPath };
+    }
+    hideImgCtxMenu();
+    const key = info.path || assetPath;
+    state.lbPath = key;
+    if (opts.fromTeach) _viewerFromTeach = true;
+    else if (!opts.keepAnchor) _viewerFromTeach = false;
+
+    // 建立可左右切换的图链：教学课内样例 / 会话轮次 / 主画廊
+    if (opts.fromTeach || _viewerFromTeach) {
+      const tn = teachNavAndMeta();
+      setViewerNav(tn.paths, tn.meta);
+    } else if (Array.isArray(opts.navPaths) && opts.navPaths.length) {
+      setViewerNav(opts.navPaths, opts.navMeta || {});
+    } else if (!opts.keepAnchor) {
+      const sess0 = sessionOfAsset(info);
+      const sn = sessionNavAndMeta(sess0);
+      const inSess = sn.paths.some(p => normViewerPath(p) === normViewerPath(key));
+      if (inSess && sn.paths.length > 1) {
+        setViewerNav(sn.paths, sn.meta);
+      } else if (sess0) {
+        setViewerNav(galleryNavPaths(), sn.meta);
+      } else {
+        setViewerNav(galleryNavPaths(), {});
+      }
+    } else {
+      const cur = normViewerPath(key);
+      const inNav = _viewerNavPaths.some(p => normViewerPath(p) === cur);
+      if (!inNav) {
+        const sessKeep = sessionOfAsset(info)
+          || (_viewerSessionId && (DATA.converge_sessions || {})[_viewerSessionId])
+          || null;
+        if (sessKeep) {
+          const sn = sessionNavAndMeta(sessKeep);
+          setViewerNav(sn.paths, Object.assign({}, _viewerMetaByPath, sn.meta));
+        } else if (!_viewerNavPaths.length) {
+          setViewerNav(galleryNavPaths(), _viewerMetaByPath);
+        }
+      }
+    }
+
+    if (!opts.keepAnchor) {
+      // 从主画廊点开的定稿，记为终稿槽位
+      if (!isWorkbenchHiddenAsset(info) && assetPlate(info) === "final") {
+        _viewerAnchorPath = key;
+      } else {
+        const sessA = sessionOfAsset(info);
+        _viewerAnchorPath = (sessA && (sessA.final_image || sessA.winner_image)) || _viewerAnchorPath || key;
+      }
+    }
+    const sess = sessionOfAsset(info);
+    _viewerSessionId = (sess && sess.session_id) || info.converge_session_id || _viewerSessionId || "";
+    if (sess && !_viewerFromTeach) {
+      const sn = sessionNavAndMeta(sess);
+      _viewerMetaByPath = Object.assign({}, sn.meta, _viewerMetaByPath);
+    }
+    const img = document.getElementById("ivImg");
+    const pathEl = document.getElementById("ivPath");
+    const label = document.getElementById("ivMainLabel");
+    const viewer = document.getElementById("imgViewer");
+    if (!img || !viewer) {
+      showToast("放大层未就绪，请刷新页面");
+      return;
+    }
+    const media = resolveMediaSrc(key, {
+      preferThumb: false,
+      sessionId: (info && info.converge_session_id) || _viewerSessionId || ""
+    });
+    let src = media.src || bustSrc(info) || assetSrc(info) || String(key).replace(/\\/g, "/");
+    if (media.missing || (info && info.exists === false && !media.src)) {
+      showToast("该图文件已不在磁盘（索引残留）");
+    }
+    // 绝对盘符路径不能当 img src；尽量改成相对项目根
+    if (/^[A-Za-z]:\//.test(src)) {
+      const root = String(DATA.root || "").replace(/\\/g, "/").replace(/\/$/, "").toLowerCase();
+      const low = src.toLowerCase();
+      if (root && low.indexOf(root + "/") === 0) src = src.slice(root.length + 1);
+    }
+    img.src = src;
+    if (pathEl) {
+      pathEl.textContent = key;
+      pathEl.title = absAssetPath(key);
+    }
+    if (label) {
+      const meta = lookupViewerMeta(key) || {};
+      const round = (info.converge_round != null ? (" · R" + info.converge_round) : "")
+        || (meta.round != null ? (" · R" + meta.round) : "");
+      const role = meta.role || (assetPlate(info) === "final" ? "final" : "process");
+      const roleLab = role === "original" || role === "origin" || role === "ref" ? "原图"
+        : (role === "final" || role === "winner" ? "定稿" : "过程/候选");
+      label.textContent = roleLab + round;
+    }
+    // 同一击会落到刚出现的遮罩上 → 短时忽略关闭；下一帧再挂 open 更稳
+    _viewerIgnoreCloseUntil = Date.now() + 400;
+    viewer.classList.add("open");
+    try { updateViewerChrome(info); } catch (e1) {}
+    try { renderViewerMeta(info); } catch (e2) {}
+  } catch (err) {
+    console.error("openViewer failed", err);
+    showToast("放大失败：" + (err && err.message ? err.message : "未知错误"));
+  }
 };
 
 window.saveAssetAs = function(relPath) {
@@ -2006,6 +3818,9 @@ window.openLightbox = function(assetPath) {
 
   const linked = (DATA.entries || []).filter(e => (e.assets || []).some(x => x.path === assetPath));
   const modCfg = (DATA.modules || {})[info.module] || {};
+  const scoreLine = (info.score != null && info.score !== "")
+    ? `<div>评分: <b style="color:var(--gold);">${esc(String(info.score))}</b>${info.converge_round != null ? ` · 第 ${esc(String(info.converge_round))} 轮` : ""}</div>`
+    : (info.converge_round != null ? `<div>闭环轮次: <b>第 ${esc(String(info.converge_round))} 轮</b></div>` : "");
   document.getElementById("lbAside").innerHTML = `
     <div>
       <div style="font-size:11px;color:var(--text-dim);text-transform:uppercase;">来源 / 模块</div>
@@ -2015,15 +3830,21 @@ window.openLightbox = function(assetPath) {
         <button class="btn-copy" onclick="revealInFolder(state.lbPath)">📁 在文件夹中显示</button>
         <button class="btn-copy" onclick="saveAssetAs(state.lbPath)">💾 另存为</button>
         <button class="btn-copy" onclick="openInEditor(state.lbPath)">📂 在编辑器打开</button>
+        <button class="btn-copy" style="background:var(--danger-bg);color:#fda4af;border-color:rgba(244,63,94,0.4);" onclick="deleteOneAsset(state.lbPath)">🗑️ 删除</button>
       </div>
     </div>
     <div style="background:#090d16;padding:10px 12px;border-radius:8px;border:1px solid var(--border);font-size:12px;">
       <div>时间: <b>${esc(info.updated_at || info.day || "")}</b></div>
       <div>分辨率: <b>${esc(info.resolution || "")}</b> | 通道: <b>${esc(info.mode || "")}</b></div>
       <div>体积: <b>${info.size_kb || "?"} KB</b></div>
+      ${scoreLine}
       <div style="margin-top:4px;color:${info.formal ? '#6ee7b7' : '#94a3b8'};">
         ${info.formal ? "✅ 正式模块资产" : "👁️ 可见索引（未正式 ingest）"}
       </div>
+    </div>
+    <div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px;">提示词变化 / 优化过程</div>
+      ${renderPromptTraceHtml(info)}
     </div>
     ${(modCfg.palette && modCfg.palette.length) ? `
       <div>
@@ -2134,28 +3955,34 @@ document.getElementById("lbImg").addEventListener("contextmenu", (ev) => {
 
 const imgViewer = document.getElementById("imgViewer");
 const imgViewerCard = document.getElementById("imgViewerCard");
-imgViewer.addEventListener("click", () => closeViewer());
-imgViewerCard.addEventListener("click", (ev) => ev.stopPropagation());
-document.getElementById("ivClose").addEventListener("click", (ev) => {
-  ev.stopPropagation();
-  closeViewer();
-});
-document.getElementById("ivReveal").addEventListener("click", (ev) => {
-  ev.stopPropagation();
-  if (state.lbPath) revealInFolder(state.lbPath);
-});
-document.getElementById("ivCopy").addEventListener("click", (ev) => {
-  ev.stopPropagation();
-  if (state.lbPath) copyText(absAssetPath(state.lbPath), "绝对路径");
-});
-document.getElementById("ivSave").addEventListener("click", (ev) => {
-  ev.stopPropagation();
-  if (state.lbPath) saveAssetAs(state.lbPath);
-});
-document.getElementById("ivDetail").addEventListener("click", (ev) => {
-  ev.stopPropagation();
-  if (state.lbPath) openLightbox(state.lbPath);
-});
+if (imgViewer) {
+  imgViewer.addEventListener("click", (ev) => {
+    // 点卡片内不关；点遮罩才关。打开当下的穿透点击靠 ignore 窗口挡住
+    if (ev.target.closest && ev.target.closest("#imgViewerCard")) return;
+    closeViewer(false);
+  });
+}
+if (imgViewerCard) {
+  imgViewerCard.addEventListener("click", (ev) => ev.stopPropagation());
+}
+function bindIvBtn(id, fn) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.addEventListener("click", (ev) => {
+    ev.stopPropagation();
+    fn(ev);
+  });
+}
+bindIvBtn("ivClose", () => closeViewer(true));
+bindIvBtn("ivPrev", () => viewerStep(-1));
+bindIvBtn("ivNext", () => viewerStep(1));
+bindIvBtn("ivPrevBtn", () => viewerStep(-1));
+bindIvBtn("ivNextBtn", () => viewerStep(1));
+bindIvBtn("ivCompare", () => toggleCompare());
+bindIvBtn("ivReveal", () => { if (state.lbPath) revealInFolder(state.lbPath); });
+bindIvBtn("ivCopy", () => { if (state.lbPath) copyText(absAssetPath(state.lbPath), "绝对路径"); });
+bindIvBtn("ivSave", () => { if (state.lbPath) saveAssetAs(state.lbPath); });
+bindIvBtn("ivDetail", () => { if (state.lbPath) openAssetDetail(state.lbPath); });
 document.getElementById("ivImg").addEventListener("contextmenu", (ev) => {
   if (state.lbPath) return showImgCtxMenu(ev, state.lbPath);
 });
@@ -2174,17 +4001,393 @@ document.getElementById("imgCtxMenu").addEventListener("click", (ev) => {
   else if (act === "reveal") revealInFolder(p);
   else if (act === "editor") openInEditor(p);
   else if (act === "viewer") openViewer(p);
-  else if (act === "lightbox") openLightbox(p);
+  else if (act === "lightbox") openAssetDetail(p);
+  else if (act === "delete") deleteOneAsset(p);
+  else if (act === "batch") {
+    setBatchMode(true);
+    const idx = _galleryAssets.findIndex(a => a.path === p);
+    toggleSelectPath(p, { idx });
+  }
+});
+
+const detailModal = document.getElementById("detailModal");
+const detailShell = document.getElementById("detailShell");
+if (detailModal && detailShell) {
+  detailModal.addEventListener("click", () => closeAssetDetail());
+  detailShell.addEventListener("click", (ev) => ev.stopPropagation());
+}
+const detailClose = document.getElementById("detailClose");
+if (detailClose) detailClose.addEventListener("click", (ev) => { ev.stopPropagation(); closeAssetDetail(); });
+const detailTech = document.getElementById("detailTech");
+if (detailTech) detailTech.addEventListener("click", (ev) => {
+  ev.stopPropagation();
+  const p = _detailPath || state.lbPath;
+  if (!p) return;
+  closeAssetDetail();
+  openLightbox(p);
 });
 document.addEventListener("click", () => hideImgCtxMenu());
 document.addEventListener("scroll", () => hideImgCtxMenu(), true);
+document.getElementById("btnBatchMode").addEventListener("click", () => {
+  setBatchMode(!state.batchMode);
+});
+
+let _teachId = "";
+function guideLessons() {
+  const g = DATA.workbench_guide || {};
+  return Array.isArray(g.lessons) ? g.lessons : [];
+}
+function teachGroupOf(lesson) {
+  const id = String((lesson && lesson.id) || "");
+  const skill = String((lesson && lesson.skill) || "");
+  if (id === "agent" || skill.indexOf("pmem-agent") >= 0) return "总控";
+  if (id.indexOf("draw-") === 0 || skill.indexOf("pmem-draw") >= 0) return "生图";
+  if (id === "ui" || skill.indexOf("pmem-ui") >= 0) return "界面";
+  if (id.indexOf("icon") === 0 || skill.indexOf("pmem-icon") >= 0) return "图标";
+  if (id.indexOf("merge") === 0 || skill.indexOf("merge-ladder") >= 0) return "合成梯";
+  if (id === "style-lock" || skill.indexOf("style-lock") >= 0) return "风格";
+  return "辅助";
+}
+const TEACH_DIM_LABELS = {
+  composition: "构图",
+  lighting_color: "光影",
+  perspective_anatomy: "透视",
+  texture_detail: "材质",
+  spec_style: "风格",
+  flawlessness: "完成度"
+};
+function formatDimsHtml(dims, cls) {
+  if (!dims || typeof dims !== "object") return "";
+  const keys = Object.keys(dims);
+  if (!keys.length) return "";
+  const chips = keys.map(k => {
+    const lab = TEACH_DIM_LABELS[k] || k;
+    const v = dims[k];
+    const num = (typeof v === "number") ? v.toFixed(1) : String(v);
+    return `<span class="${cls}">${lab} ${num}</span>`;
+  }).join("");
+  const wrap = cls === "evolve-dim" ? "evolve-dims"
+    : (cls === "iv-meta-dim" ? "iv-meta-dims" : "teach-dims");
+  return `<div class="${wrap}">${chips}</div>`;
+}
+function teachEnrichExample(ex, rounds) {
+  const out = Object.assign({}, ex || {});
+  const list = Array.isArray(rounds) ? rounds : [];
+  let hit = null;
+  // 例子上已有完整字段时不要用 rounds 覆盖（避免串图文案）
+  const hasOwn = !!(out.prompt || out.defects || (out.dims && Object.keys(out.dims || {}).length));
+  if (!hasOwn) {
+    if (out.round != null) hit = list.find(r => Number(r.round) === Number(out.round));
+    if (!hit && out.path) {
+      hit = list.find(r => pathMetaKeyMatch(r.path || "", out.path));
+    }
+    if (hit) {
+      ["prompt", "defects", "next_fix", "score", "passed", "dims"].forEach(k => {
+        if ((out[k] == null || out[k] === "") && hit[k] != null && hit[k] !== "") out[k] = hit[k];
+      });
+    }
+  }
+  // 教学图多半不进 assets 索引；仍走统一 src 解析，缺图明确标 missing
+  if (out.exists === false) {
+    out.src = "";
+    out.missing = true;
+  } else {
+    const media = resolveMediaSrc(out.path, { preferThumb: false });
+    out.src = media.src || String(out.path || "").replace(/\\/g, "/");
+    out.missing = !out.src;
+    if (media.path) out.path = media.path;
+  }
+  return out;
+}
+window.teachSetAsFinal = function(processPath) {
+  // 教学包不可改终稿；引导去正式工作台进化过程
+  showToast("教学样例不能设终稿。正式图：放大 →「详情 · 进化对照」→ 点「设置为最终交稿」");
+};
+
+function teachRoleClass(role) {
+  const r = String(role || "").toLowerCase();
+  if (r === "original" || r === "origin" || r === "ref" || r === "reference") return "original";
+  if (r === "final" || r === "winner") return "final";
+  return "process";
+}
+function teachRoleLabel(role) {
+  const c = teachRoleClass(role);
+  return ({ original: "原图", process: "过程", final: "终稿" })[c] || "过程";
+}
+function selectTeachLesson(id) {
+  const lessons = guideLessons();
+  if (!lessons.length) return;
+  const hit = lessons.find(l => l.id === id);
+  _teachId = hit ? hit.id : lessons[0].id;
+  renderTeachNav();
+  renderTeachMain();
+}
+window.teachStep = function(delta) {
+  const lessons = guideLessons();
+  if (!lessons.length) return;
+  let idx = lessons.findIndex(l => l.id === _teachId);
+  if (idx < 0) idx = 0;
+  const next = Math.max(0, Math.min(lessons.length - 1, idx + delta));
+  selectTeachLesson(lessons[next].id);
+};
+function renderTeachNav() {
+  const nav = document.getElementById("teachNav");
+  if (!nav) return;
+  const lessons = guideLessons();
+  if (!lessons.length) {
+    nav.innerHTML = `<div style="padding:10px;color:var(--text-dim);font-size:12px;">暂无教学目录。请确认 docs/workbench_guide/catalog.json 存在。</div>`;
+    return;
+  }
+  if (!_teachId) _teachId = lessons[0].id;
+  const groups = [];
+  const seen = new Set();
+  lessons.forEach(l => {
+    const g = teachGroupOf(l);
+    if (!seen.has(g)) { seen.add(g); groups.push(g); }
+  });
+  nav.innerHTML = groups.map(g => {
+    const items = lessons.filter(l => teachGroupOf(l) === g).map(l => `
+      <button type="button" data-teach="${esc(l.id)}" class="${l.id === _teachId ? "active" : ""}">
+        ${esc(l.title || l.id)}
+        <div class="teach-nav-skill">${esc(l.skill || "")}</div>
+      </button>
+    `).join("");
+    return `<div class="teach-nav-group">${esc(g)}</div>${items}`;
+  }).join("");
+  nav.querySelectorAll("button[data-teach]").forEach(btn => {
+    btn.addEventListener("click", () => selectTeachLesson(btn.getAttribute("data-teach") || ""));
+  });
+}
+function renderTeachMain() {
+  const main = document.getElementById("teachMain");
+  if (!main) return;
+  const lessons = guideLessons();
+  const idx = Math.max(0, lessons.findIndex(l => l.id === _teachId));
+  const lesson = lessons[idx] || lessons[0];
+  if (!lesson) {
+    main.innerHTML = `<div style="color:var(--text-dim);">没有可显示的技能课。</div>`;
+    return;
+  }
+  const how = (lesson.how || []).map(x => `<li>${esc(x)}</li>`).join("");
+  const rounds = Array.isArray(lesson.rounds) ? lesson.rounds : [];
+  const examples = (lesson.examples || []).filter(e => e && e.path).map(e => teachEnrichExample(e, rounds));
+  const samples = Array.isArray(lesson.samples) ? lesson.samples : [];
+  const slash = String(lesson.skill || "").split("·")[0].trim() || String(lesson.skill || "").trim();
+  let pipeline = "";
+  if (examples.length) {
+    const parts = [];
+    examples.forEach((e, i) => {
+      const role = teachRoleClass(e.role);
+      const missing = e.exists === false;
+      if (i > 0) parts.push(`<div class="teach-arrow" aria-hidden="true">→</div>`);
+      const hasScore = e.score != null && e.score !== "";
+      const scoreLine = hasScore
+        ? `<div class="teach-score-line">总分 ${esc(String(Number(e.score).toFixed(2)))}${e.passed ? " · 达标" : " · 未达标"}</div>`
+        : "";
+      const dimsLine = formatDimsHtml(e.dims, "teach-dim");
+      const prevEx = i > 0 ? examples[i - 1] : null;
+      const promptPack = stripPrevCritiqueFromPrompt(e.prompt || "", prevEx);
+      const promptLine = promptPack.main
+        ? `<div class="teach-prompt">${esc(promptPack.main)}</div>`
+        : ((role === "original" && (e.defects || e.next_fix)) ? "" : (role === "original" ? "" : `<div class="teach-note">（无 Prompt 样例）</div>`));
+      const hasProcessAfter = examples.slice(i + 1).some(x => teachRoleClass(x.role) === "process" || teachRoleClass(x.role) === "final");
+      const noteLine = formatOwnCritiqueHtml(e, {
+        noteCls: "teach-note",
+        role: e.role,
+        allowEmptyHint: role === "original" && hasProcessAfter
+      });
+      const actions = [];
+      if (e.prompt) {
+        actions.push(`<button type="button" class="btn-copy" onclick='event.stopPropagation(); copyText(${JSON.stringify(e.prompt || "")}, "Prompt")'>📋 Prompt</button>`);
+      }
+      if (role === "process") {
+        actions.push(`<button type="button" class="btn-copy" style="background:var(--success-bg);color:#6ee7b7;border-color:rgba(16,185,129,0.45);" onclick='event.stopPropagation(); teachSetAsFinal(${JSON.stringify(e.path)})'>设置为最终交稿</button>`);
+      }
+      const actLine = actions.length ? `<div class="teach-actions">${actions.join("")}</div>` : "";
+      const imgBroken = missing || e.missing || !e.src;
+      parts.push(`<div class="teach-ex role-${role}">
+        ${imgBroken
+          ? `<div style="height:180px;display:flex;align-items:center;justify-content:center;color:var(--text-dim);font-size:12px;border:1px dashed var(--border);border-radius:8px;">图缺失<br/><span style="opacity:.7;font-size:10px;">${esc(PathName(e.path || ""))}</span></div>`
+          : `<img src="${esc(e.src)}" data-full="${esc(e.full || e.src)}" alt="" loading="eager" decoding="async" onclick='event.stopPropagation(); openViewer(${JSON.stringify(e.path)}, { keepAnchor: true, fromTeach: true })' onerror="if(!this.dataset.retried && this.dataset.full && this.dataset.full!==this.src){this.dataset.retried='1';this.src=this.dataset.full;}else{this.replaceWith(Object.assign(document.createElement('div'),{style:'height:180px;display:flex;align-items:center;justify-content:center;color:#94a3b8;font-size:12px;border:1px dashed rgba(148,163,184,.35);border-radius:8px',textContent:'图加载失败'}));}" />`}
+        <div class="cap">
+          <span class="teach-role ${role}">${teachRoleLabel(e.role)}</span>
+          <span>${esc(e.label || "")}</span>
+        </div>
+        ${scoreLine}
+        ${dimsLine}
+        ${promptLine}
+        ${noteLine}
+        ${actLine}
+      </div>`);
+    });
+    pipeline = `<h3 style="font-size:13px;color:var(--text-muted);margin:0 0 8px;">视觉对照（原图 → 过程 → 终稿）· 提示词/六维分在每张图下方</h3>
+      <div class="teach-pipeline">${parts.join("")}</div>`;
+  }
+  let samplesHtml = "";
+  if (samples.length) {
+    const cards = samples.map(s => `<div class="teach-sample">
+      <h4>${esc(s.title || s.kind || "样例")}</h4>
+      <div class="body">${esc(s.body || "")}</div>
+      ${s.score != null && s.score !== "" ? `<div style="margin-top:6px;color:var(--gold);font-family:ui-monospace,monospace;font-size:12px;">评分 ${esc(String(s.score))}</div>` : ""}
+    </div>`).join("");
+    samplesHtml = `<h3 style="font-size:13px;color:var(--text-muted);margin:16px 0 8px;">样例演示</h3>
+      <div class="teach-samples">${cards}</div>`;
+  }
+  if (!pipeline && !samplesHtml) {
+    pipeline = `<div style="color:var(--text-dim);font-size:12.5px;padding:10px 12px;border:1px dashed var(--border);border-radius:8px;">本课暂无视觉/文字样例——直接在对话框输入技能名即可。</div>`;
+  }
+  main.innerHTML = `
+    <div class="teach-skill-row">
+      <span class="teach-skill">${esc(lesson.skill || "")}</span>
+      ${slash ? `<button type="button" class="btn-copy" onclick='copyText(${JSON.stringify(slash)}, "技能指令")'>📋 复制指令</button>` : ""}
+    </div>
+    <h2 style="margin:4px 0 0;font-size:20px;">${esc(lesson.title || "")}</h2>
+    <div class="teach-when">适用：${esc(lesson.when || "")}</div>
+    <h3 style="font-size:13px;color:var(--text-muted);margin:0 0 6px;">怎么用</h3>
+    <ol class="teach-how">${how || "<li>见技能文档</li>"}</ol>
+    ${pipeline}
+    ${samplesHtml}
+    <div class="teach-foot">
+      <div class="teach-locked">🔒 示例图在 docs/workbench_guide/，会进 git、不进主画廊；工作台删除会被拒绝。只有改该文件夹才会变。</div>
+      <div class="teach-nav-btns">
+        <button type="button" class="btn-copy" ${idx <= 0 ? "disabled" : ""} onclick="teachStep(-1)">← 上一课</button>
+        <button type="button" class="btn-copy" ${idx >= lessons.length - 1 ? "disabled" : ""} onclick="teachStep(1)">下一课 →</button>
+        <span style="color:var(--text-dim);font-size:11px;">${idx + 1} / ${lessons.length} · ↑↓ 切课</span>
+      </div>
+    </div>
+  `;
+}
+window.openTeach = function() {
+  renderTeachNav();
+  renderTeachMain();
+  document.getElementById("teachModal").classList.add("open");
+};
+window.closeTeach = function() {
+  document.getElementById("teachModal").classList.remove("open");
+};
+const teachModal = document.getElementById("teachModal");
+const teachShell = document.getElementById("teachShell");
+if (teachModal && teachShell) {
+  teachModal.addEventListener("click", () => {
+    const viewerOpen = document.getElementById("imgViewer") && document.getElementById("imgViewer").classList.contains("open");
+    if (viewerOpen) return;
+    closeTeach();
+  });
+  teachShell.addEventListener("click", (ev) => ev.stopPropagation());
+}
+const btnTeach = document.getElementById("btnTeach");
+if (btnTeach) btnTeach.addEventListener("click", () => openTeach());
+const btnOpenTrash = document.getElementById("btnOpenTrash");
+if (btnOpenTrash) btnOpenTrash.addEventListener("click", () => openTrashFolder());
+const teachOpenFolder = document.getElementById("teachOpenFolder");
+if (teachOpenFolder) teachOpenFolder.addEventListener("click", (ev) => { ev.stopPropagation(); openTeachFolder(); });
+const teachClose = document.getElementById("teachClose");
+if (teachClose) teachClose.addEventListener("click", (ev) => { ev.stopPropagation(); closeTeach(); });
+const btnRevealRetry = document.getElementById("btnRevealRetry");
+if (btnRevealRetry) {
+  btnRevealRetry.addEventListener("click", async () => {
+    showToast("正在探测定位服务…");
+    const port = await pingRevealBridge();
+    showToast(port ? ("已连通 · 端口 " + port) : "仍未连通，请先运行 python pmem_art.py atlas");
+  });
+}
+const btnOpenHttpWorkbench = document.getElementById("btnOpenHttpWorkbench");
+if (btnOpenHttpWorkbench) {
+  btnOpenHttpWorkbench.addEventListener("click", async () => {
+    const port = await pingRevealBridge();
+    if (!port) {
+      showToast("服务未连通，请先 python pmem_art.py atlas");
+      return;
+    }
+    location.href = "http://127.0.0.1:" + port + "/art-atlas.html";
+  });
+}
+/** file:// 双击打开时：能连上守护就自动切到 http，否则删除/定位会被浏览器拦 */
+(async function upgradeFileOriginToHttp() {
+  if (location.protocol !== "file:") return;
+  try {
+    if (sessionStorage.getItem("pmem_atlas_skip_http_upgrade") === "1") return;
+  } catch (e) {}
+  const port = await pingRevealBridge();
+  if (!port) {
+    setRevealBanner(false);
+    showToast("当前是 file://：删除可能无效。请先 python pmem_art.py atlas，再点横幅「用 http 打开」");
+    return;
+  }
+  try { sessionStorage.setItem("pmem_atlas_just_reloaded", "http-upgrade"); } catch (e) {}
+  location.replace("http://127.0.0.1:" + port + "/art-atlas.html");
+})();
 window.addEventListener("keydown", e => {
+  const tag = (e.target && e.target.tagName) || "";
+  const typing = tag === "INPUT" || tag === "TEXTAREA" || (e.target && e.target.isContentEditable);
+  const viewerOpen = document.getElementById("imgViewer") && document.getElementById("imgViewer").classList.contains("open");
+  const teachOpen = document.getElementById("teachModal") && document.getElementById("teachModal").classList.contains("open");
+  const detailOpen = document.getElementById("detailModal") && document.getElementById("detailModal").classList.contains("open");
   if (e.key === "Escape") {
     hideImgCtxMenu();
-    closeViewer();
+    if (viewerOpen && _viewerCompare) {
+      toggleCompare(false);
+      return;
+    }
+    if (viewerOpen) {
+      closeViewer(true);
+      return;
+    }
+    if (detailOpen) {
+      closeAssetDetail();
+      return;
+    }
+    if (teachOpen) {
+      closeTeach();
+      return;
+    }
     document.getElementById("lightbox").classList.remove("open");
+    if (state.batchMode) setBatchMode(false);
+    return;
+  }
+  if (typing) return;
+  if (viewerOpen && (e.key === "ArrowLeft" || e.key === "Left")) {
+    e.preventDefault();
+    viewerStep(-1);
+    return;
+  }
+  if (viewerOpen && (e.key === "ArrowRight" || e.key === "Right")) {
+    e.preventDefault();
+    viewerStep(1);
+    return;
+  }
+  if (teachOpen && !viewerOpen && (e.key === "ArrowUp" || e.key === "Up" || e.key === "ArrowLeft" || e.key === "Left")) {
+    e.preventDefault();
+    teachStep(-1);
+    return;
+  }
+  if (teachOpen && !viewerOpen && (e.key === "ArrowDown" || e.key === "Down" || e.key === "ArrowRight" || e.key === "Right")) {
+    e.preventDefault();
+    teachStep(1);
+    return;
+  }
+  if ((e.ctrlKey || e.metaKey) && (e.key === "a" || e.key === "A")) {
+    if (state.tab === "gallery") {
+      e.preventDefault();
+      if (!state.batchMode) setBatchMode(true);
+      selectAllFiltered();
+    }
+    return;
+  }
+  if (e.key === "Delete" || e.key === "Backspace") {
+    if (viewerOpen || teachOpen) return;
+    if (state.batchMode && _selectedPaths.size) {
+      e.preventDefault();
+      deleteSelectedAssets();
+      return;
+    }
+    if (_hoveredPath) {
+      e.preventDefault();
+      deleteOneAsset(_hoveredPath);
+    }
   }
 });
+pingRevealBridge();
 
 let _autoRefreshTimer = null;
 
@@ -2228,9 +4431,10 @@ async function hotReloadAtlasData() {
     if (!res.ok) return false;
     const next = await res.json();
     if (!next || !next.assets) return false;
+    await syncTrashFilterIntoData(next);
     DATA = next;
-    renderHeaderAndSidebar();
-    renderStage();
+    // 热更新时保住画廊滚动，避免正看着中间就被拽回顶部/底部
+    renderStage({ keepScroll: true });
     return true;
   } catch (e) {
     return false;
@@ -2272,6 +4476,10 @@ document.querySelectorAll(".tab-btn[data-tab]").forEach(b => b.classList.toggle(
 document.querySelectorAll("#moreMenu [data-tab]").forEach(b => b.classList.toggle("active", b.dataset.tab === state.tab));
 if (state.search) document.getElementById("searchInput").value = state.search;
 renderStage();
+// 启动时按垃圾桶清单再滤一遍（覆盖 HTML 内嵌旧索引 / 刷新又回来）
+syncTrashFilterIntoData(DATA).then((n) => {
+  if (n > 0) renderStage({ keepScroll: true });
+});
 _autoRefreshTimer = setInterval(checkAtlasUpdateOnce, AUTO_REFRESH_MS);
 try {
   const rr = sessionStorage.getItem("pmem_atlas_just_reloaded");
@@ -2301,6 +4509,95 @@ def _slim_atlas_payload(data: dict[str, Any]) -> dict[str, Any]:
     return out
 
 
+def load_workbench_guide(root: Path) -> dict[str, Any]:
+    """Load teaching catalog; images live under docs/workbench_guide (not gallery-scanned)."""
+    cat_path = root / "docs" / "workbench_guide" / "catalog.json"
+    if not cat_path.is_file():
+        return {"version": 0, "lessons": [], "missing": True}
+    try:
+        doc = json.loads(cat_path.read_text(encoding="utf-8"))
+    except Exception:
+        return {"version": 0, "lessons": [], "error": "catalog parse failed"}
+    if not isinstance(doc, dict):
+        return {"version": 0, "lessons": []}
+    base = str(doc.get("base_dir") or "docs/workbench_guide").replace("\\", "/").rstrip("/")
+
+    def _guide_path(rel: str) -> tuple[str, bool]:
+        rel_n = str(rel or "").replace("\\", "/").lstrip("/")
+        if not rel_n:
+            return "", False
+        full = f"{base}/{rel_n}"
+        return full, (root / full).is_file()
+
+    lessons = []
+    for lesson in doc.get("lessons") or []:
+        if not isinstance(lesson, dict):
+            continue
+        ex_out = []
+        for ex in lesson.get("examples") or []:
+            if not isinstance(ex, dict):
+                continue
+            full, exists = _guide_path(ex.get("path") or "")
+            item = {
+                "role": ex.get("role") or "",
+                "label": ex.get("label") or "",
+                "path": full,
+                "exists": exists,
+            }
+            for k in ("round", "score", "passed", "prompt", "defects", "next_fix"):
+                if k in ex and ex.get(k) is not None:
+                    item[k] = ex.get(k)
+            dims = ex.get("dims") or ex.get("dims_parsed")
+            if isinstance(dims, dict) and dims:
+                item["dims"] = {str(k): v for k, v in dims.items()}
+            ex_out.append(item)
+        rounds_out = []
+        for r in lesson.get("rounds") or []:
+            if not isinstance(r, dict):
+                continue
+            full, exists = _guide_path(r.get("path") or "")
+            dims = r.get("dims") or r.get("dims_parsed")
+            rounds_out.append({
+                "round": r.get("round"),
+                "label": r.get("label") or "",
+                "score": r.get("score"),
+                "passed": bool(r.get("passed")),
+                "prompt": r.get("prompt") or "",
+                "defects": r.get("defects") or "",
+                "next_fix": r.get("next_fix") or "",
+                "path": full,
+                "exists": exists if full else None,
+                "dims": {str(k): v for k, v in dims.items()} if isinstance(dims, dict) else {},
+            })
+        samples_out = []
+        for s in lesson.get("samples") or []:
+            if not isinstance(s, dict):
+                continue
+            samples_out.append({
+                "kind": s.get("kind") or "",
+                "title": s.get("title") or "",
+                "body": s.get("body") or "",
+                "score": s.get("score"),
+            })
+        lessons.append({
+            "id": lesson.get("id") or "",
+            "skill": lesson.get("skill") or "",
+            "title": lesson.get("title") or "",
+            "when": lesson.get("when") or "",
+            "how": [str(x) for x in (lesson.get("how") or []) if str(x).strip()],
+            "examples": ex_out,
+            "rounds": rounds_out,
+            "samples": samples_out,
+        })
+    return {
+        "version": doc.get("version") or 1,
+        "title": doc.get("title") or "技能教学",
+        "note": doc.get("note") or "",
+        "base_dir": base,
+        "lessons": lessons,
+    }
+
+
 def generate_atlas_html(data: dict[str, Any], out_path: Path) -> Path:
     proj_name = data.get("config", {}).get("project", {}).get("name", "pmem-art")
     build_id = str(data.get("build_id") or "")
@@ -2323,6 +4620,10 @@ def generate_atlas_html(data: dict[str, Any], out_path: Path) -> Path:
             reveal_port = 0
     slim = _slim_atlas_payload(data)
     slim["reveal_port"] = reveal_port
+    try:
+        slim["workbench_guide"] = load_workbench_guide(root)
+    except Exception:
+        slim["workbench_guide"] = {"version": 0, "lessons": [], "error": "load failed"}
     json_str = json.dumps(slim, ensure_ascii=False).replace("</", "<\\/")
     html_out = (
         HTML_TEMPLATE.replace("__PROJECT_NAME__", html.escape(proj_name))

@@ -24,7 +24,7 @@ _ONE_SECTION = {
     "pmem-atlas": ("atlas.file", "散图归位"),
     "pmem-coach": ("coach.report", "要看进步、短板、知识卡"),
     "pmem-prompt": ("prompt.write", "要写提示词、扩写 brief"),
-    "pmem-merge-ladder": ("merge.ladder", "同一套东西一档比一档更大"),
+    "pmem-merge-ladder": ("merge.ladder", "同域升级梯默认八档可六档"),
     "pmem-ui": ("ui.kit", "整屏、HUD、弹窗套件、九宫格、按钮状态"),
 }
 

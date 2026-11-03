@@ -1,0 +1,124 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-11-02 19:03:41 UTC+8",
+  "session_id": "latest",
+  "goal": "克隆：锁参考休闲手游圆润厚涂画风与光感；新题材=雪夜小镇广场，孩子们围着巨大圣诞树拆礼物；可借竖幅高角度+前景围栏压底+中景聚集+背景两侧建筑的构图骨架；禁止出现农场/农夫/羊/谷仓/皮卡/干草垛/轮胎/食槽",
+  "module": "scene.XmasTownSquare",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 4,
+  "winner_score": 9.44,
+  "winner_image": "assets/farm77/christmas/clone_town/r4.jpg",
+  "winner_passed": false,
+  "outcome": "⚠️ **共执行 4 轮审图（目标阈值 `9.50` 分），未达标，已挑选全阶段最高分**（胜出：第 4 轮 `9.44 / 10.0` 分）",
+  "what_fixed": [
+    "孩子们开箱手部更清楚；右侧摊位加强红白棚与姜饼装饰；圣诞树略收一点给天空呼吸",
+    "个别孩子侧脸再清楚一点；星光收一点避免发白",
+    "围栏串灯改回偏暖黄珠光；可可摊蒸汽更明显一点",
+    "解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁止糊边融边；俯视；人约占中下1/3；主光树灯串灯。个别礼盒丝带略糊"
+  ],
+  "what_still_weak": "俯视；人约占中下1/3；主光树灯串灯。个别礼盒丝带略糊",
+  "strengths": "围栏暖黄串灯回正；可可摊蒸汽可见；开箱叙事与无农场回声保住；休闲手游厚涂锁住",
+  "taste_deltas": {
+    "from_strengths": [
+      "围栏暖黄串灯回正；可可摊蒸汽可见；开箱叙事与无农场回声保住；休闲手游厚涂锁住"
+    ],
+    "from_defects": [
+      "俯视构图已换到雪夜小镇广场；人约占中下1/3；主光来自圣诞树与串灯暖光。个别孩子侧脸略糊；树顶星光略冲",
+      "俯视；人约占中下1/3；主光来自圣诞树与串灯。前景围栏彩灯偏跳色；右摊热气略弱",
+      "俯视；人约占中下1/3；主光树灯串灯。个别礼盒丝带略糊"
+    ]
+  },
+  "warm_start_confidence": 0.3,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 9.12,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 9.32,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 9.4,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 9.44,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：部分孩子拆礼物的手部开箱动作略糊；右侧摊位姜饼感偏弱更像普通售货亭；树冠占屏偏满略压顶；recompose 未检出机位/布局变化证据（相对 --recompos",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "9.12"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：部分孩子拆礼物的手部开箱动作略糊；右侧摊位姜饼感偏弱更像普通售货亭；树冠占屏偏满略压顶；recompose 未检出机位/布局变化证据（相对 --recompos",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "9.12"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：题材已换成雪夜小镇圣诞树与拆礼物孩子；无农场回声；竖幅高角度前景围栏中景聚集背景建筑骨架清楚；休闲手游厚涂锁住",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.12"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：俯视构图已换到雪夜小镇广场；人约占中下1/3；主光来自圣诞树与串灯暖光。个别孩子侧脸略糊；树顶星光略冲",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "9.32"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：俯视雪夜广场机位成立；开箱手部与开盖礼盒更清楚；右侧可可摊红白棚热饮花环可读；无农场回声；画风仍锁休闲手游厚涂",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.32"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：俯视；人约占中下1/3；主光来自圣诞树与串灯。前景围栏彩灯偏跳色；右摊热气略弱",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.4"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：俯视雪夜广场与开箱叙事清楚；孩子侧脸更可读；星光更柔；无农场回声；画风锁住",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.4"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：俯视；人约占中下1/3；主光树灯串灯。个别礼盒丝带略糊",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "9.44"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：俯视；人约占中下1/3；主光树灯串灯。个别礼盒丝带略糊",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.44"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：俯视；人约占中下1/3；主光树灯串灯。个别礼盒丝带略糊",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "9.44"
+    }
+  ]
+}

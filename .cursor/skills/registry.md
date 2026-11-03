@@ -21,7 +21,7 @@
 | `icon.a` | 20 | 桌面图标、1024 母版 | `pmem-icon` | ## 二之二、Mode A：App Icon 1024×1024 母版专项（iOS App Store / Android Adaptive 桌面启动图标） | true |
 | `icon.b` | 21 | 一套线性 SVG | `pmem-icon` | ## 二、Mode B：一致化 SVG 矢量图标集流程（Brief → Spec → Batch → Review → Converge） | true |
 | `icon.c` | 22 | 背包道具格 | `pmem-icon` | ### 二之三、Mode C：游戏道具透明底栅格图标（64/128/256px PNG，非 SVG） | true |
-| `merge.ladder` | 30 | 同一套东西一档比一档更大，L1–L8 | `pmem-merge-ladder` | # `/pmem-merge-ladder` — 同域合成梯 | true |
+| `merge.ladder` | 30 | 同域升级梯（默认 L1–L8，可 6 档）；默认同物件或轻门，点名可 shop_ladder / 整表 | `pmem-merge-ladder` | # `/pmem-merge-ladder` — 同域合成梯 | true |
 | `draw.lens` | 40 | 玩家明确要几套机位 / 镜头 / 光给自己挑 | `pmem-draw` | ## 合同 · 镜头包 | true |
 | `draw.clone` | 50 | 有参考，并且要换一个新题材，锁的是画风 | `pmem-draw` | ## 合同 · 克隆 | true |
 | `draw.variant` | 60 | 已有角色要换画风，或做表情 / 动作差分。身份和机位已经在同一张图上 | `pmem-draw` | ## 合同 · 变体 | true |

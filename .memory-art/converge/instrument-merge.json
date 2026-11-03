@@ -1,0 +1,176 @@
+{
+  "session_id": "instrument-merge",
+  "started_at": "2026-11-03 16:52:27 UTC+8",
+  "goal": "乐器同域合成梯八档：拇指琴到三角钢琴，species_change，一档一张正方形，软塑胶卡通，透明底，单件居中无脸无字",
+  "module": "prop.InstrumentMerge",
+  "mode": "text_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "medium",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "medium",
+    "label": "中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.5)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 1,
+    "target_score_threshold": 9.5,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.15,
+      "perspective_anatomy": 0.15,
+      "texture_detail": 0.15,
+      "spec_style": 0.15,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "viewpoint_frame",
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图，只在提示词上补还没过的那一处（提示词改动仍 ≤40%）",
+    "max_prompt_delta_ratio": 0.4,
+    "allow_recompose": false,
+    "allow_viewpoint_change": false,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "viewpoint_angle (不改机位与镜头视角)",
+      "element_count (不增删主体元素清单)",
+      "no_full_recompose (不做整体 recompose / 换景别故事)",
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)"
+    ],
+    "min_round_leap": 0.15,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光，表面那一句不动，只修没过的那一格",
+    "medium_family": "generic",
+    "best_direction_hint": "最优方向：光影·空气·介质；可小幅姿态/局部布局",
+    "goal": "乐器同域合成梯八档：拇指琴到三角钢琴，species_change，一档一张正方形，软塑胶卡通，透明底，单件居中无脸无字",
+    "module": "prop.InstrumentMerge",
+    "ref_image": "",
+    "ref_analysis": ""
+  },
+  "medium_family": "generic",
+  "contract": "",
+  "target_score_threshold": 9.5,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "",
+  "ref_analysis": "",
+  "default_aspect_ratio": "1:1",
+  "default_reference_image_paths": [],
+  "aspect_ratio": "1:1",
+  "reference_image_paths": [],
+  "ref_physical_traits": {},
+  "param_validation": {},
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.5,
+  "accept_threshold": 9.5,
+  "max_rounds": 4,
+  "ready_to_finish": false,
+  "status": "running",
+  "rounds": [],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-10-30 16:11:08 UTC+8"
+    },
+    "module": "prop.InstrumentMerge",
+    "goal": "乐器同域合成梯八档：拇指琴到三角钢琴，species_change，一档一张正方形，软塑胶卡通，透明底，单件居中无脸无字",
+    "confidence": 0.45,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "个人口味档案非空",
+      "红线可控（0 条）",
+      "挂载 0 张项目知识卡 + 1 张全局美术底层基础卡"
+    ],
+    "top_recipes": [],
+    "top_redlines": [],
+    "art_decisions": [],
+    "private_knowledge": [],
+    "shared_knowledge": [
+      {
+        "id": "palette-70-20-10",
+        "title": "色彩构成：70-20-10 色板比例黄金法则",
+        "body": "画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+        "layer_scope": "shared"
+      }
+    ],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [
+        "冷光源",
+        "暖光"
+      ],
+      "preferred_composition": [
+        "半身"
+      ],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [
+        "避免过饱和"
+      ],
+      "banned_habits": [
+        "白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计",
+        "黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差",
+        "漏抠/黑底/毛边",
+        "赛博霓虹/霓虹紫",
+        "脏暗阴影/脏色"
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.InstrumentMerge\n- 置信度: 0.45（fast-track 资格: 否）\n- 个人口味: 光影=冷光源 / 暖光；构图=半身；色温=避免过饱和\n- 个人禁用习惯: 白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差；漏抠/黑底/毛边；赛博霓虹/霓虹紫；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+    "built_at": "2026-11-03 16:52:27 UTC+8"
+  },
+  "lessons_all": [],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 4,
+  "regression_drop": 0.5,
+  "discussions": [
+    {
+      "round": 1,
+      "prompt": "chain_mode=same_object；levels=8；delivery=per_cell；base_body=木吉他。不换物种：口味红线要求零件累计、禁止换物种，所以不是八种乐器。L1 素木吉他 | 短颈素木吉他圆孔无弦 | 基档 | 0.58 | parts=—L2 弦木吉他 | 素木吉他拉出六根粗弦 | +小 | 0.62 | parts=六根粗弦L3 品点木吉他 | 弦木吉他指板五颗大圆品点 | +小 | 0.65 | parts=五颗大圆品点L4 护板木吉他 | 品点木吉他面板大水滴护板 | +小 | 0.68 | parts=大水滴护板L5 弦钮木吉他 | 护板木吉他琴头六只球弦钮 | +中 | 0.71 | parts=琴头六只球形弦钮L6 肩带木吉他 | 弦钮木吉他斜挂宽肩带 | +中 | 0.74 | parts=宽肩带L7 镶边木吉他 | 肩带木吉他琴身细彩镶边 | +中 | 0.77 | parts=琴身彩镶边L8 金冠木吉他 | 镶边木吉他琴头大金冠 | +大 | 0.80 | parts=琴头大金冠画风：软塑胶圆润厚实体，蜜糖木色，左上暖软光，短接触影，表面光洁，透明底隔离。单件居中，无脸无字无白方卡。不抄参考里的船。",
+      "strengths": "",
+      "defects": "L7 彩镶边在约64px只是一圈细线，属于看不出的小饰片，五问第4条没过。",
+      "next_fix": "只改L7零件；L8剪影里的镶边改成L7新零件名。L1到L6与画风锁住。"
+    },
+    {
+      "round": 2,
+      "prompt": "chain_mode=same_object；levels=8；delivery=per_cell；base_body=木吉他。L1到L6锁住：素木吉他无弦0.58；粗弦0.62；五颗大圆品点0.65；大水滴护板0.68；六只球弦钮0.71；宽肩带0.74。L7 拨片木吉他 | 肩带木吉他弦上插大三角拨片 | +中 | 0.77 | parts=大三角拨片（一块，尺寸接近音孔）L8 金冠木吉他 | 拨片木吉他琴头大金冠 | +大 | 0.80 | parts=琴头大金冠画风锁住：软塑胶圆润厚实体，蜜糖木色，左上暖软光，短接触影，表面光洁，透明底隔离。单件居中无脸无字无白方卡。",
+      "strengths": "",
+      "defects": "无。L7已从细镶边改成接近音孔的大三角拨片，64px能和L6肩带、L8金冠分开。",
+      "next_fix": "第3稿只把八行按定稿抄清，不再改链。"
+    },
+    {
+      "round": 3,
+      "prompt": "定稿 chain_mode=same_object levels=8 delivery=per_cell base_body=木吉他。1 素木吉他 silhouette=短颈素木吉他圆孔无弦 scale=0.58 parts=—2 弦木吉他 silhouette=素木吉他拉出六根粗弦 scale=0.62 parts=六根粗弦3 品点木吉他 silhouette=弦木吉他指板五颗大圆品点 scale=0.65 parts=五颗大圆品点4 护板木吉他 silhouette=品点木吉他面板大水滴护板 scale=0.68 parts=大水滴护板5 弦钮木吉他 silhouette=护板木吉他琴头六只球弦钮 scale=0.71 parts=琴头六只球形弦钮6 肩带木吉他 silhouette=弦钮木吉他斜挂宽肩带 scale=0.74 parts=宽肩带7 拨片木吉他 silhouette=肩带木吉他弦上插大三角拨片 scale=0.77 parts=大三角拨片8 金冠木吉他 silhouette=拨片木吉他琴头大金冠 scale=0.80 parts=琴头大金冠五问：同域是同一把木吉他；零件只加不减无回退；无跨乐器大跳；相邻剪影靠无弦/粗弦/大品点/大护板/球钮/宽肩带/大拨片/金冠区分；parts_add都是具体零件。画风：软塑胶圆润厚实体，蜜糖木色，左上暖软光，短接触影，表面光洁，透明底隔离。单件居中无脸无字无白方卡。不抄船。",
+      "strengths": "",
+      "defects": "无；六条与五问都过。",
+      "next_fix": "写入 merge_phase1.yaml track guitar，跑 relation-judge。"
+    }
+  ]
+}

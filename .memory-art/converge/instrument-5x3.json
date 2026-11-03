@@ -1,0 +1,417 @@
+{
+  "session_id": "instrument-5x3",
+  "started_at": "2026-11-03 17:45:22 UTC+8",
+  "goal": "一组乐器合成梯：5x3=15格整表，species_change，垫船图参考锁白卡深底，不抄船",
+  "module": "prop.InstrumentMerge",
+  "mode": "text_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "medium",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "medium",
+    "label": "中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.5)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 1,
+    "target_score_threshold": 9.5,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.15,
+      "perspective_anatomy": 0.15,
+      "texture_detail": 0.15,
+      "spec_style": 0.15,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "viewpoint_frame",
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图，只在提示词上补还没过的那一处（提示词改动仍 ≤40%）",
+    "max_prompt_delta_ratio": 0.4,
+    "allow_recompose": false,
+    "allow_viewpoint_change": false,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "viewpoint_angle (不改机位与镜头视角)",
+      "element_count (不增删主体元素清单)",
+      "no_full_recompose (不做整体 recompose / 换景别故事)",
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)"
+    ],
+    "min_round_leap": 0.15,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光，表面那一句不动，只修没过的那一格",
+    "medium_family": "generic",
+    "best_direction_hint": "最优方向：光影·空气·介质；可小幅姿态/局部布局",
+    "goal": "一组乐器合成梯：5x3=15格整表，species_change，垫船图参考锁白卡深底，不抄船",
+    "module": "prop.InstrumentMerge",
+    "ref_image": "",
+    "ref_analysis": ""
+  },
+  "medium_family": "generic",
+  "contract": "",
+  "target_score_threshold": 9.5,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "",
+  "ref_analysis": "",
+  "default_aspect_ratio": "16:9",
+  "default_reference_image_paths": [],
+  "aspect_ratio": "16:9",
+  "reference_image_paths": [],
+  "ref_physical_traits": {},
+  "param_validation": {},
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.5,
+  "accept_threshold": 9.5,
+  "max_rounds": 4,
+  "ready_to_finish": true,
+  "status": "finished",
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "经过 1 轮达标定稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "16:9",
+      "reference_image_paths": [],
+      "param_validation": {
+        "three_step_verified": true,
+        "three_step_stage": "step3_judge",
+        "validation_passed": true
+      },
+      "generated_at": "17:49:08",
+      "image": "assets/prop/instrumentmerge/overview_5x3_image25_refpad.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 1700463,
+        "size_kb": 1660.6,
+        "width": 1606,
+        "height": 979,
+        "aspect_ratio": "146:89",
+        "canonical_aspect_ratio": "16:9",
+        "color_entropy": 6.45
+      },
+      "raw_score": 9.57,
+      "score": 9.57,
+      "target_score_threshold": 9.5,
+      "dims": "composition=9.6,lighting_color=9.5,perspective_anatomy=9.5,texture_detail=9.5,spec_style=9.7,flawlessness=9.6",
+      "dims_parsed": {
+        "composition": 9.6,
+        "lighting_color": 9.5,
+        "perspective_anatomy": 9.5,
+        "texture_detail": 9.5,
+        "spec_style": 9.7,
+        "flawlessness": 9.6
+      },
+      "weighted_score": 9.57,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）"
+      ],
+      "stagnated": false,
+      "strengths": "5x3白卡深底锁住;15格全是乐器无船;物种链可读;软塑胶一致",
+      "defects": "无硬伤;L2木琴键色偏彩虹可接受",
+      "next_fix": "已达标，无需继续叠加",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.InstrumentMerge\n- 置信度: 0.45（fast-track 资格: 否）\n- 个人口味: 光影=冷光源 / 暖光；构图=半身；色温=避免过饱和\n- 个人禁用习惯: 白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差；漏抠/黑底/毛边；赛博霓虹/霓虹紫；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光，表面那一句不动，只修没过的那一格| 5x3 white rounded cards on charcoal; pad boat-ref for layout only; REPLACE every boat with one musical instrument per cell; soft plastic toy; no faces no text no boats. Order L1-L15: red snare+sticks, yellow xylophone, blue harmonica, green recorder, purple violin+bow, gold trumpet, teal sax, pink accordion, cyan e-guitar, red-gold mic stand, deep-blue upright bass, teal tambourine, pink keyboard, gold harp, bright-blue grand piano open lid. Single centered item each cell; subtle size up L1->L15.| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观",
+      "continuation": false,
+      "passed": true,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.5,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_TARGET_REACHED",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：5x3白卡深底锁住;15格全是乐器无船;物种链可读;软塑胶一致",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "9.57"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "17:49:26",
+      "asset_image": "assets/prop/instrumentmerge/overview_5x3_image25_refpad.png"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-10-30 16:11:08 UTC+8"
+    },
+    "module": "prop.InstrumentMerge",
+    "goal": "一组乐器合成梯：5x3=15格整表，species_change，垫船图参考锁白卡深底，不抄船",
+    "confidence": 0.45,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "个人口味档案非空",
+      "红线可控（0 条）",
+      "挂载 0 张项目知识卡 + 1 张全局美术底层基础卡"
+    ],
+    "top_recipes": [],
+    "top_redlines": [],
+    "art_decisions": [],
+    "private_knowledge": [],
+    "shared_knowledge": [
+      {
+        "id": "palette-70-20-10",
+        "title": "色彩构成：70-20-10 色板比例黄金法则",
+        "body": "画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+        "layer_scope": "shared"
+      }
+    ],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [
+        "冷光源",
+        "暖光"
+      ],
+      "preferred_composition": [
+        "半身"
+      ],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [
+        "避免过饱和"
+      ],
+      "banned_habits": [
+        "白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计",
+        "黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差",
+        "漏抠/黑底/毛边",
+        "赛博霓虹/霓虹紫",
+        "脏暗阴影/脏色"
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.InstrumentMerge\n- 置信度: 0.45（fast-track 资格: 否）\n- 个人口味: 光影=冷光源 / 暖光；构图=半身；色温=避免过饱和\n- 个人禁用习惯: 白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差；漏抠/黑底/毛边；赛博霓虹/霓虹紫；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+    "built_at": "2026-11-03 17:45:22 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：5x3白卡深底锁住;15格全是乐器无船;物种链可读;软塑胶一致",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.57"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 4,
+  "regression_drop": 0.5,
+  "discussions": [
+    {
+      "round": 0,
+      "kind": "reasonableness",
+      "prompt": "5x3 white rounded cards on charcoal; pad boat-ref for layout only; REPLACE every boat with one musical instrument per cell; soft plastic toy; no faces no text no boats. Order L1-L15: red snare+sticks, yellow xylophone, blue harmonica, green recorder, purple violin+bow, gold trumpet, teal sax, pink accordion, cyan e-guitar, red-gold mic stand, deep-blue upright bass, teal tambourine, pink keyboard, gold harp, bright-blue grand piano open lid. Single centered item each cell; subtle size up L1->L15.",
+      "strengths": "合理性闸已过：subject_action=ok；element_budget=ok；hard_locks=ok；fail_at_glance=ok；single_centered_item=ok；parts_add_concrete=ok",
+      "defects": "",
+      "next_fix": "首轮 generate 使用本修订提示词；审美迭代不得推翻硬锁与元素预算"
+    },
+    {
+      "round": 1,
+      "prompt": "开场0：参考5列3行共15格。chain_mode=species_change levels=15 delivery=overview_sheet grid=3x5。一组乐器不锁吉他。L1小鼓→L15三角钢琴。画风：软塑胶白圆角卡深灰底。",
+      "strengths": "",
+      "defects": "需检查相邻剪影与merge_why是否够具体",
+      "next_fix": "锁15行evolve与why；L5小提琴与L11低音提琴剪影拉开"
+    },
+    {
+      "round": 2,
+      "prompt": "已锁3x5整表。L1-4鼓木琴口琴竖笛；L5小提琴加弓；L6小号；L7萨克斯U形；L8手风琴；L9电吉他；L10立麦；L11深蓝低音提琴；L12铃鼓；L13电子琴；L14竖琴；L15亮蓝掀盖钢琴。scale 0.58→0.80单调。",
+      "strengths": "",
+      "defects": "无。64px相邻可分。",
+      "next_fix": "第3稿抄清定稿"
+    },
+    {
+      "round": 3,
+      "prompt": "定稿：species_change 15档 overview 3x5。五问过。画风锁白卡深底软塑胶。垫参考出图不抄船。",
+      "strengths": "",
+      "defects": "无",
+      "next_fix": "写入yaml relation-judge"
+    }
+  ],
+  "reasonableness_history": [
+    {
+      "reviewed_at": 1793699218.3185687,
+      "passed": false,
+      "skill": "merge",
+      "issues": [
+        "清单未齐：subject_action（主体在做什么/交付物是什么）、element_budget（元素预算（不堆景不过载））、hard_locks（硬锁（画幅/透明底/无字/机位等））、fail_at_glance（一眼失败条件已写明）、single_centered_item（每档单件居中）、parts_add_concrete（零件增量具体可画）"
+      ]
+    },
+    {
+      "reviewed_at": 1793699242.874254,
+      "passed": true,
+      "skill": "merge",
+      "issues": []
+    }
+  ],
+  "reasonableness": {
+    "passed": true,
+    "skill": "merge",
+    "draft_prompt": "船图5x3格子整表，格内是船",
+    "revised_prompt": "5x3 white rounded cards on charcoal; pad boat-ref for layout only; REPLACE every boat with one musical instrument per cell; soft plastic toy; no faces no text no boats. Order L1-L15: red snare+sticks, yellow xylophone, blue harmonica, green recorder, purple violin+bow, gold trumpet, teal sax, pink accordion, cyan e-guitar, red-gold mic stand, deep-blue upright bass, teal tambourine, pink keyboard, gold harp, bright-blue grand piano open lid. Single centered item each cell; subtle size up L1->L15.",
+    "checklist": {
+      "subject_action": {
+        "status": "ok",
+        "note": ""
+      },
+      "element_budget": {
+        "status": "ok",
+        "note": ""
+      },
+      "hard_locks": {
+        "status": "ok",
+        "note": ""
+      },
+      "fail_at_glance": {
+        "status": "ok",
+        "note": ""
+      },
+      "single_centered_item": {
+        "status": "ok",
+        "note": ""
+      },
+      "parts_add_concrete": {
+        "status": "ok",
+        "note": ""
+      }
+    },
+    "issues": [],
+    "notes": "",
+    "reviewed_at": 1793699242.874254,
+    "reviewed_at_iso": "2026-11-03 17:47:22",
+    "force_pass": false
+  },
+  "ActionRequired": "STOP_AND_FINISH",
+  "converged_at_round": 1,
+  "rounds_to_converge": 1,
+  "showcase_ready": true,
+  "winner": {
+    "round": 1,
+    "round_label": "经过 1 轮达标定稿",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "16:9",
+    "reference_image_paths": [],
+    "param_validation": {
+      "three_step_verified": true,
+      "three_step_stage": "step3_judge",
+      "validation_passed": true
+    },
+    "generated_at": "17:49:08",
+    "image": "assets/prop/instrumentmerge/overview_5x3_image25_refpad.png",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 1700463,
+      "size_kb": 1660.6,
+      "width": 1606,
+      "height": 979,
+      "aspect_ratio": "146:89",
+      "canonical_aspect_ratio": "16:9",
+      "color_entropy": 6.45
+    },
+    "raw_score": 9.57,
+    "score": 9.57,
+    "target_score_threshold": 9.5,
+    "dims": "composition=9.6,lighting_color=9.5,perspective_anatomy=9.5,texture_detail=9.5,spec_style=9.7,flawlessness=9.6",
+    "dims_parsed": {
+      "composition": 9.6,
+      "lighting_color": 9.5,
+      "perspective_anatomy": 9.5,
+      "texture_detail": 9.5,
+      "spec_style": 9.7,
+      "flawlessness": 9.6
+    },
+    "weighted_score": 9.57,
+    "audit_warnings": [
+      "Agent Absolute-5D 已采纳（门槛 9.5）"
+    ],
+    "stagnated": false,
+    "strengths": "5x3白卡深底锁住;15格全是乐器无船;物种链可读;软塑胶一致",
+    "defects": "无硬伤;L2木琴键色偏彩虹可接受",
+    "next_fix": "已达标，无需继续叠加",
+    "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.InstrumentMerge\n- 置信度: 0.45（fast-track 资格: 否）\n- 个人口味: 光影=冷光源 / 暖光；构图=半身；色温=避免过饱和\n- 个人禁用习惯: 白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差；漏抠/黑底/毛边；赛博霓虹/霓虹紫；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光，表面那一句不动，只修没过的那一格| 5x3 white rounded cards on charcoal; pad boat-ref for layout only; REPLACE every boat with one musical instrument per cell; soft plastic toy; no faces no text no boats. Order L1-L15: red snare+sticks, yellow xylophone, blue harmonica, green recorder, purple violin+bow, gold trumpet, teal sax, pink accordion, cyan e-guitar, red-gold mic stand, deep-blue upright bass, teal tambourine, pink keyboard, gold harp, bright-blue grand piano open lid. Single centered item each cell; subtle size up L1->L15.| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观",
+    "continuation": false,
+    "passed": true,
+    "gate_blocked": false,
+    "image_gate_blocked": false,
+    "anatomy_score": 9.5,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "unknown",
+    "judge_source": "agent_absolute_5d",
+    "remote_vlm": {
+      "source": "agent_self_judge",
+      "provider": "",
+      "model": "",
+      "error": "",
+      "active": false
+    },
+    "should_continue_next_round": false,
+    "decision": "STOP_TARGET_REACHED",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "keep",
+        "lesson": "保留本轮已做对的：5x3白卡深底锁住;15格全是乐器无船;物种链可读;软塑胶一致",
+        "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+        "from_score": "9.57"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "17:49:26",
+    "asset_image": "assets/prop/instrumentmerge/overview_5x3_image25_refpad.png"
+  },
+  "convergence_badge": "经过 1 轮达标定稿",
+  "process_board": ".memory-art/converge/boards/instrument-5x3/index.html"
+}
