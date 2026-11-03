@@ -5,7 +5,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "pmem hook prompt --agent claude",
+            "command": "pmemw hook prompt --agent claude",
             "timeout": 30,
             "onFailure": "continue"
           }
@@ -18,7 +18,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "pmem hook pre-tool --agent claude",
+            "command": "pmemw hook pre-tool --agent claude",
             "timeout": 30,
             "onFailure": "continue"
           }
@@ -31,7 +31,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "pmem hook post-tool --agent claude",
+            "command": "pmemw hook post-tool --agent claude",
             "timeout": 30,
             "onFailure": "continue"
           }
@@ -43,7 +43,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "pmem hook compact --agent claude",
+            "command": "pmemw hook compact --agent claude",
             "timeout": 30,
             "onFailure": "continue"
           }
@@ -55,7 +55,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "pmem hook stop --agent claude",
+            "command": "pmemw hook stop --agent claude",
             "timeout": 30,
             "onFailure": "continue"
           }
