@@ -2218,6 +2218,9 @@ def main() -> int:
             port = 0
         if port:
             print(f"👉 请用浏览器打开: http://127.0.0.1:{port}/art-atlas.html  （删除/垃圾桶才稳定）")
+            print("   或双击「打开工作台.cmd」；若只打开了 HTML，可点横幅「重试连通」下载启动脚本。")
+        else:
+            print("⚠️ 本机 reveal 服务未拉起：请双击「打开工作台.cmd」，或 python atlas_reveal.py")
         return 0
     if args.command in ("feedback", "note"):
         from feedback import cmd_feedback

@@ -948,7 +948,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
   </div>
 
   <div class="reveal-banner" id="revealBanner">
-    <span>📁 本地服务未连通时，删除/文件夹定位会失败。请先跑下面命令，再用 http 地址打开工作台（不要只双击 file://）。</span>
+    <span>📁 本地服务未连通：删除/文件夹定位会失败。浏览器不能从 file:// 直接启动 Python——请点「重试连通」下载启动脚本并双击运行，或双击项目里的「打开工作台」脚本。</span>
     <code>python pmem_art.py atlas</code>
     <button type="button" class="btn-copy" id="btnRevealRetry" style="padding:3px 9px;font-size:11px;">重试连通</button>
     <button type="button" class="btn-copy" id="btnOpenHttpWorkbench" style="padding:3px 9px;font-size:11px;">用 http 打开</button>
@@ -2381,6 +2381,71 @@ function downloadTextFile(name, body) {
   a.click();
   a.remove();
   setTimeout(() => URL.revokeObjectURL(a.href), 1500);
+}
+
+function workbenchLauncherBody(win) {
+  const root = String(DATA.root || "");
+  const rootWin = root.replace(/\//g, "\\");
+  const rootPy = root.replace(/\\/g, "/");
+  // 先 cd 到项目根，再用 Path('.')，避免 bat/shell 路径引号嵌套翻车
+  const pyBoot = "from pathlib import Path; from atlas_reveal import ensure_reveal_daemon; print(ensure_reveal_daemon(Path('.').resolve()))";
+  if (win) {
+    return [
+      "@echo off",
+      "chcp 65001 >nul",
+      "cd /d \"" + rootWin + "\"",
+      "set \"PORTFILE=%TEMP%\\pmem_atlas_port.txt\"",
+      "py -3 -c \"" + pyBoot + "\" > \"%PORTFILE%\" 2>nul",
+      "if errorlevel 1 python -c \"" + pyBoot + "\" > \"%PORTFILE%\" 2>nul",
+      "if errorlevel 1 python3 -c \"" + pyBoot + "\" > \"%PORTFILE%\" 2>nul",
+      "set /p PORT=<\"%PORTFILE%\"",
+      "if \"%PORT%\"==\"\" set PORT=0",
+      "if \"%PORT%\"==\"0\" (",
+      "  echo 启动失败：请确认本机有 Python，且项目目录可 import atlas_reveal。",
+      "  pause",
+      "  exit /b 1",
+      ")",
+      "start \"\" \"http://127.0.0.1:%PORT%/art-atlas.html\"",
+      "echo 已打开 http://127.0.0.1:%PORT%/art-atlas.html",
+      ""
+    ].join("\r\n");
+  }
+  return [
+    "#!/bin/bash",
+    "set -e",
+    "cd " + JSON.stringify(rootPy),
+    "PORT=$(python3 -c " + JSON.stringify(pyBoot) + " 2>/dev/null || python -c " + JSON.stringify(pyBoot) + ")",
+    "if [ -z \"$PORT\" ] || [ \"$PORT\" = \"0\" ]; then",
+    "  echo \"启动失败：请确认本机有 Python，且项目目录可 import atlas_reveal。\"",
+    "  exit 1",
+    "fi",
+    "URL=\"http://127.0.0.1:${PORT}/art-atlas.html\"",
+    "if command -v open >/dev/null 2>&1; then open \"$URL\"; elif command -v xdg-open >/dev/null 2>&1; then xdg-open \"$URL\"; else echo \"$URL\"; fi",
+    ""
+  ].join("\n");
+}
+
+/** 浏览器无法从 file:// 直接起 Python：下载一次性启动脚本，双击后拉起 reveal 并打开 http 工作台 */
+function downloadStartWorkbenchHelper() {
+  const root = String(DATA.root || "");
+  const win = isWindowsAbs(root) || /win/i.test(navigator.platform || "");
+  if (win) {
+    downloadTextFile("启动工作台服务.bat", workbenchLauncherBody(true));
+  } else {
+    downloadTextFile("启动工作台服务.command", workbenchLauncherBody(false));
+  }
+}
+
+async function waitForRevealBridge(msTotal, stepMs) {
+  const total = Math.max(1000, Number(msTotal) || 30000);
+  const step = Math.max(200, Number(stepMs) || 1000);
+  const deadline = Date.now() + total;
+  while (Date.now() < deadline) {
+    const port = await pingRevealBridge();
+    if (port) return port;
+    await new Promise((r) => setTimeout(r, step));
+  }
+  return 0;
 }
 
 function downloadRevealHelper(absFile) {
@@ -4283,23 +4348,44 @@ const teachOpenFolder = document.getElementById("teachOpenFolder");
 if (teachOpenFolder) teachOpenFolder.addEventListener("click", (ev) => { ev.stopPropagation(); openTeachFolder(); });
 const teachClose = document.getElementById("teachClose");
 if (teachClose) teachClose.addEventListener("click", (ev) => { ev.stopPropagation(); closeTeach(); });
+async function connectOrOfferWorkbenchLauncher() {
+  showToast("正在探测定位服务…");
+  let port = await pingRevealBridge();
+  if (port) {
+    showToast("已连通 · 端口 " + port);
+    if (location.protocol === "file:") {
+      try { sessionStorage.setItem("pmem_atlas_just_reloaded", "http-upgrade"); } catch (e) {}
+      location.replace("http://127.0.0.1:" + port + "/art-atlas.html");
+    }
+    return port;
+  }
+  // 浏览器沙箱不能直接起本机 Python：下载启动脚本，用户双击一次即可
+  downloadStartWorkbenchHelper();
+  showToast("未连通。已下载「启动工作台服务」脚本——请双击运行；我会在后台继续探测…");
+  port = await waitForRevealBridge(45000, 1200);
+  if (!port) {
+    showToast("仍未连通。请双击刚下载的启动脚本，或运行 python pmem_art.py atlas");
+    return 0;
+  }
+  showToast("已连通 · 端口 " + port);
+  if (location.protocol === "file:") {
+    try { sessionStorage.setItem("pmem_atlas_just_reloaded", "http-upgrade"); } catch (e) {}
+    location.replace("http://127.0.0.1:" + port + "/art-atlas.html");
+  }
+  return port;
+}
 const btnRevealRetry = document.getElementById("btnRevealRetry");
 if (btnRevealRetry) {
-  btnRevealRetry.addEventListener("click", async () => {
-    showToast("正在探测定位服务…");
-    const port = await pingRevealBridge();
-    showToast(port ? ("已连通 · 端口 " + port) : "仍未连通，请先运行 python pmem_art.py atlas");
-  });
+  btnRevealRetry.addEventListener("click", () => { connectOrOfferWorkbenchLauncher(); });
 }
 const btnOpenHttpWorkbench = document.getElementById("btnOpenHttpWorkbench");
 if (btnOpenHttpWorkbench) {
   btnOpenHttpWorkbench.addEventListener("click", async () => {
-    const port = await pingRevealBridge();
-    if (!port) {
-      showToast("服务未连通，请先 python pmem_art.py atlas");
-      return;
+    const port = await connectOrOfferWorkbenchLauncher();
+    if (!port) return;
+    if (location.protocol !== "file:") {
+      location.href = "http://127.0.0.1:" + port + "/art-atlas.html";
     }
-    location.href = "http://127.0.0.1:" + port + "/art-atlas.html";
   });
 }
 /** file:// 双击打开时：能连上守护就自动切到 http，否则删除/定位会被浏览器拦 */
@@ -4311,7 +4397,7 @@ if (btnOpenHttpWorkbench) {
   const port = await pingRevealBridge();
   if (!port) {
     setRevealBanner(false);
-    showToast("当前是 file://：删除可能无效。请先 python pmem_art.py atlas，再点横幅「用 http 打开」");
+    showToast("当前是 file://：点横幅「重试连通」可下载启动脚本（浏览器不能自己起 Python）");
     return;
   }
   try { sessionStorage.setItem("pmem_atlas_just_reloaded", "http-upgrade"); } catch (e) {}
@@ -4598,6 +4684,68 @@ def load_workbench_guide(root: Path) -> dict[str, Any]:
     }
 
 
+def write_workbench_launchers(root: Path) -> None:
+    """写出可双击的「打开工作台」脚本：拉起 reveal 守护并用 http 打开工作台。
+
+    浏览器从 file:// 打开 HTML 时不能启动本机 Python；请双击这些脚本，或点横幅「重试连通」下载同款启动脚本。
+    """
+    root = root.resolve()
+    root_win = str(root)
+    root_posix = root.as_posix()
+    # 先 cd 再 Path('.')，避免 Windows bat 路径引号嵌套
+    py_boot = (
+        "from pathlib import Path; from atlas_reveal import ensure_reveal_daemon; "
+        "print(ensure_reveal_daemon(Path('.').resolve()))"
+    )
+    cmd = "\r\n".join(
+        [
+            "@echo off",
+            "chcp 65001 >nul",
+            f'cd /d "{root_win}"',
+            'set "PORTFILE=%TEMP%\\pmem_atlas_port.txt"',
+            f'py -3 -c "{py_boot}" > "%PORTFILE%" 2>nul',
+            f'if errorlevel 1 python -c "{py_boot}" > "%PORTFILE%" 2>nul',
+            f'if errorlevel 1 python3 -c "{py_boot}" > "%PORTFILE%" 2>nul',
+            'set /p PORT=<"%PORTFILE%"',
+            'if "%PORT%"=="" set PORT=0',
+            'if "%PORT%"=="0" (',
+            "  echo 启动失败：请确认本机有 Python，且项目目录可 import atlas_reveal。",
+            "  pause",
+            "  exit /b 1",
+            ")",
+            'start "" "http://127.0.0.1:%PORT%/art-atlas.html"',
+            "echo 已打开 http://127.0.0.1:%PORT%/art-atlas.html",
+            "",
+        ]
+    )
+    (root / "打开工作台.cmd").write_text(cmd, encoding="utf-8", newline="\r\n")
+    sh = "\n".join(
+        [
+            "#!/bin/bash",
+            "set -e",
+            f"cd {json.dumps(root_posix)}",
+            f"PORT=$(python3 -c {json.dumps(py_boot)} 2>/dev/null || python -c {json.dumps(py_boot)})",
+            'if [ -z "$PORT" ] || [ "$PORT" = "0" ]; then',
+            '  echo "启动失败：请确认本机有 Python，且项目目录可 import atlas_reveal。"',
+            "  exit 1",
+            "fi",
+            'URL="http://127.0.0.1:${PORT}/art-atlas.html"',
+            (
+                'if command -v open >/dev/null 2>&1; then open "$URL"; '
+                'elif command -v xdg-open >/dev/null 2>&1; then xdg-open "$URL"; '
+                'else echo "$URL"; fi'
+            ),
+            "",
+        ]
+    )
+    command_path = root / "打开工作台.command"
+    command_path.write_text(sh, encoding="utf-8", newline="\n")
+    try:
+        command_path.chmod(command_path.stat().st_mode | 0o111)
+    except OSError:
+        pass
+
+
 def generate_atlas_html(data: dict[str, Any], out_path: Path) -> Path:
     proj_name = data.get("config", {}).get("project", {}).get("name", "pmem-art")
     build_id = str(data.get("build_id") or "")
@@ -4631,6 +4779,10 @@ def generate_atlas_html(data: dict[str, Any], out_path: Path) -> Path:
         .replace("__ATLAS_JSON__", json_str)
     )
     out_path.write_text(html_out, encoding="utf-8", newline="\n")
+    try:
+        write_workbench_launchers(root)
+    except Exception:
+        pass
     try:
         from atlas_index import write_atlas_data_sidecar
 

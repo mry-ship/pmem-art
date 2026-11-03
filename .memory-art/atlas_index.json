@@ -1,23 +1,23 @@
 {
   "schema_version": 1,
   "root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
-  "built_at": "2026-11-03 23:06:41 UTC+8",
+  "built_at": "2026-11-03 23:40:21 UTC+8",
   "today": "2026-11-03",
-  "index_id": "d09a970ddf4682d3",
-  "images_count": 337,
+  "index_id": "2e636e8635817d4c",
+  "images_count": 336,
   "counts": {
-    "today": 116,
+    "today": 115,
     "yesterday": 78,
     "earlier": 143,
     "by_source": {
       "converge": 101,
-      "module": 235,
+      "module": 234,
       "cursor_generated": 1
     },
     "by_category": {
       "misc": 102,
       "skill_battery_20261103": 61,
-      "prop": 22,
+      "prop": 21,
       "festival5_merge": 2,
       "icon": 58,
       "farm77": 12,
@@ -29,7 +29,7 @@
     },
     "by_plate": {
       "process": 307,
-      "final": 27,
+      "final": 26,
       "rejected": 3
     }
   },
@@ -935,27 +935,6 @@
       "category": "skill_battery_20261103",
       "role": "draft",
       "plate": "process",
-      "formal": false
-    },
-    {
-      "path": "assets/prop/instrumentmerge/overview_5x3_cursor_nopad.jpg",
-      "mtime": 1793706979.6963387,
-      "mtime_iso": "2026-11-03 19:56",
-      "day": "2026-11-03",
-      "day_bucket": "today",
-      "bytes": 260193,
-      "size_kb": 254.1,
-      "width": 1280,
-      "height": 720,
-      "resolution": "1280x720",
-      "mode": "RGB",
-      "has_alpha": false,
-      "sha256_16": "dcee79dc59d54b0a",
-      "source": "module",
-      "module": "unassigned",
-      "category": "prop",
-      "role": "approved",
-      "plate": "final",
       "formal": false
     },
     {

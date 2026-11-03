@@ -53,6 +53,9 @@ _sync_parts/
 
 # Generated / bulky HTML (rebuild via atlas / benchmark scripts)
 art-atlas.html
+# Local workbench openers (absolute paths; rewritten by `pmem_art.py atlas`)
+打开工作台.cmd
+打开工作台.command
 benchmark-*.html
 *_showcase.html
 **/pmem_*_showcase.html
