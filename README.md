@@ -2,15 +2,6 @@
 
 # pmem-art
 
-
-## Install
-
-```bash
-pip install -r requirements.txt
-```
-
-Runtime: `pillow`, `numpy`, `pyyaml`. Tests: `pytest` (see `pytest.ini`, `testpaths=tests`).
-
 **画师的美术记忆系统**（Cursor / Claude Code / Codex）
 
 把「别赛博 / 这版留着」、过稿配方和翻车红线记在这个项目里。下次画同一角色、同一场景，先翻这些记录再出图，画面更稳，少重复犯错。不够分就改，最多 **4 轮**，直到 **≥ 9.50**。
@@ -19,12 +10,13 @@ Runtime: `pillow`, `numpy`, `pyyaml`. Tests: `pytest` (see `pytest.ini`, `testpa
 
 ![License](https://img.shields.io/badge/license-see%20LICENSE-green)
 ![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
+![Release](https://img.shields.io/github/v/release/mry-ship/pmem-art?label=release)
 ![Cursor](https://img.shields.io/badge/Cursor-支持-000000)
 ![Claude Code](https://img.shields.io/badge/Claude%20Code-支持-D97757)
 ![Skills](https://img.shields.io/badge/美术技能-10-8B5CF6)
 ![Threshold](https://img.shields.io/badge/合格线-≥9.50-blue)
 
-[📖 使用手册](USER_MANUAL.md) · [认路白话流程图](docs/route_pipeline.html) · [进阶技能点选](docs/skills/flows.html) · [效果图墙](#效果长什么样) · [全页展陈](docs/showcase/skills-homepage/index.html) · [架构](ARCHITECTURE.md)
+[📦 下载用户包 0.14.0-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.14.0-art) · [📖 使用手册](USER_MANUAL.md) · [认路白话流程图](docs/route_pipeline.html) · [进阶技能点选](docs/skills/flows.html) · [效果图墙](#效果长什么样) · [全页展陈](docs/showcase/skills-homepage/index.html) · [架构](ARCHITECTURE.md)
 
 </div>
 
@@ -42,18 +34,32 @@ Runtime: `pillow`, `numpy`, `pyyaml`. Tests: `pytest` (see `pytest.ini`, `testpa
 
 ## 一分钟接入
 
+**推荐画师：下用户包**（不含研发用 pmem）→ [Releases · v0.14.0-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.14.0-art)
+
 ```bash
-git clone https://github.com/mry-ship/pmem-art.git
-cd pmem-art
+# 解压 pmem-art-0.14.0-art.zip 后
+pip install -r requirements.txt
 python3 pmem_art.py init --name "MyArtProject"
 python3 pmem_art.py skills --install
 ```
+
+开发仓克隆：
+
+```bash
+git clone https://github.com/mry-ship/pmem-art.git
+cd pmem-art
+pip install -r requirements.txt
+python3 pmem_art.py init --name "MyArtProject"
+python3 pmem_art.py skills --install
+```
+
+Runtime: `pillow`, `numpy`, `pyyaml`. Tests: `pytest`（见 `pytest.ini`，`testpaths=tests`）。
 
 装好后，在对话框里**直接说**：`画一张窗边女孩水彩半身`（可附图可无图）。看到 `【走默认路径】` 或 `【按 XX 走了】` 就对了。认路总图：[docs/route_pipeline.html](docs/route_pipeline.html)。
 
 | 场景 | 命令 |
 | :--- | :--- |
-| 空项目 | `init` → `skills --install` |
+| 空项目 / 用户包 | `init` → `skills --install` |
 | 已有美术目录（不乱移文件） | `bootstrap --mode legacy --roots Art assets` → `accept --all` → `skills --install` |
 | 只刷新技能 | `python3 pmem_art.py skills --install` |
 
@@ -103,10 +109,22 @@ python3 pmem_art.py skills --install
 <tr><td>6</td><td>提示词</td><td><code>/pmem-prompt</code></td><td>按交付类型扩成 2～4 套可选 brief。不生图，点选后再交给对应技能。</td></tr>
 <tr><td>7</td><td>锁风格</td><td><code>/pmem-style-lock</code></td><td>从样张抽色板、光影、禁用词。不进自动生图。</td></tr>
 <tr><td>8</td><td>审图</td><td><code>/pmem-critique</code></td><td>只打分挑刺，不生图。</td></tr>
-<tr><td>9</td><td>归档</td><td><code>/pmem-atlas</code></td><td>散图归位，刷新 <code>art-atlas.html</code>。</td></tr>
+<tr><td>9</td><td>归档</td><td><code>/pmem-atlas</code></td><td>散图归位，刷新看图工作台（见下方「看图工作台」）。</td></tr>
 <tr><td>10</td><td>教练</td><td><code>/pmem-coach</code></td><td>进步、短板、知识合在这一条里看。说「进步」或「知识」就看那一份。知识卡要你说收下才写入。</td></tr>
 </tbody>
 </table>
+
+### 看图工作台（art-atlas）
+
+```bash
+python3 pmem_art.py atlas
+```
+
+终端会打印本机地址，例如 `http://127.0.0.1:27865/art-atlas.html`。**请用这个 http 链接打开**（不要只双击本地 `art-atlas.html`：`file://` 下删除/定位常被浏览器拦住）。
+
+- 默认只看定稿；过程图请进放大预览的「显示进化过程」
+- 删除 = 移入 `.memory-art/_trash/`（可找回）；刷新后不会再把已删图加载回来
+- 教学示例图受保护，工作台删不掉
 
 要原画、克隆、变体或镜头包时，仍把类型写在 `/pmem-agent` 的句子里，例如「原画」「按这张风格画一把新钥匙」「换个表情」「先给 4 套机位」。总控会交给对应的那一支。
 

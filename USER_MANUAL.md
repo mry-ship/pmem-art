@@ -1,8 +1,9 @@
 # 📘 pmem-art 画师使用手册 — 怎么在 Cursor / Codex 里越画越准
 
-> **版本**：`v0.13+`  
+> **版本**：`v0.14.0-art`  
 > **核心理念（零门槛）**：**直接说人话就行**。例如「画一张窗边女孩」「参考这张，换成一只猫」。**不用背技能名、不用敲斜杠、不用碰命令行、不用写 YAML。** 附图可有可无。  
 > 电脑会自己认路；认不清会**先问你一句**，不会默默画错。你只会看到类似 `【按 克隆 走了】` / `【走默认路径】` 这种标签。  
+> **用户包下载（不含研发用 pmem）** → [GitHub Release v0.14.0-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.14.0-art)  
 > **认路白话流程图** → [docs/route_pipeline.html](docs/route_pipeline.html)（推荐先看：大白话从提需到出图）  
 > **先看总览？** → [README.md](README.md) · **进阶斜杠技能**见下文（可选用） · 旧点选流程 [docs/skills/flows.html](docs/skills/flows.html)  
 > **看图墙 / 技能用法与结果？** → [README · 效果长什么样](README.md#效果长什么样) · [全页展陈](docs/showcase/skills-homepage/index.html)（图源 `homepage_rerun_1028`）
@@ -59,7 +60,7 @@
 | **`/pmem-prompt`** | 按交付类型扩成 2～4 套提示词。不生图，点选后再交给对应技能 |
 | **`/pmem-style-lock`** | 从样张锁色板、光影、禁用词。不进自动生图 |
 | **`/pmem-critique`** | 只审图，并可以把毛病记入红线 |
-| **`/pmem-atlas`** | 整理散图，刷新 `art-atlas.html` |
+| **`/pmem-atlas`** | 整理散图，刷新看图工作台（须用 http 打开，见第六章 `atlas`） |
 | **`/pmem-coach`** | 进步、短板、知识合成一条。说「进步」或「知识」就看那一份。知识卡要你说收下才写入 |
 
 > **已退役**：`/pmem-lens-propose` 不再作为独立入口；机位/镜头包请写在 `/pmem-draw` 句子里（「先给几套机位」）。UI 九宫格交付仍以 `manifest.json` 为验收清单。
@@ -281,13 +282,27 @@ flowchart LR
 
 ---
 
-### `/pmem-atlas`
+### `/pmem-atlas` · 看图工作台
 
 ```mermaid
 flowchart LR
   A[classify-watch 扫散图] --> B[list 模块总览]
-  B --> C[atlas → art-atlas.html]
+  B --> C["atlas → 本机 http 工作台"]
 ```
+
+```bash
+python3 pmem_art.py atlas
+# 终端会打印类似：http://127.0.0.1:27865/art-atlas.html
+```
+
+**请用终端给出的 http 地址打开**，不要只双击磁盘上的 `art-atlas.html`。`file://` 下浏览器常会拦住「删除 / 打开文件夹」请求。
+
+工作台要点：
+
+- 默认只看**定稿**；过程图 / 参考图请进放大预览的「显示进化过程 / 并列参考图」
+- **删除** = 移入 `.memory-art/_trash/`（可找回）；刷新后不会再把已删图加载回来
+- 点工具栏「垃圾桶」可打开找回目录；教学示例图受保护，删不掉
+- 批量删除：点「批量删除」→ 勾选 / Ctrl+A / Shift 片选 → Delete
 
 ---
 
@@ -454,7 +469,7 @@ python3 pmem_art.py ingest .cursor/generated/new.png -p "角色Astra 水彩 概�
 | `python3 pmem_art.py feedback "<原话>" -m <模块> [-a <图>]` | 把画师自然语言评价沉淀为记忆 |
 | `python3 pmem_art.py search -m <模块>` | 召回该模块（含父模块）的红线、定稿与色板 |
 | `python3 pmem_art.py ingest <图> -p "<说明>" --apply` | 四信号分类并归档图片 |
-| `python3 pmem_art.py atlas` | 可选：编译生成 `art-atlas.html` 可视化图谱 |
+| `python3 pmem_art.py atlas` | 生成看图工作台，并拉起本机 reveal 服务；**用打印出的 http 地址打开**（删除/定位才稳定） |
 
 ---
 
@@ -467,10 +482,16 @@ A：到了第 4 轮仍未达 9.5 分时，`converge finish` 会自动停止循�
 A：它会先做 **Step 0 参考图深度解构**（分析构图、提取主辅色 HEX、判断光影与笔触、识别头身结构），把解构结论记入收敛会话基准，然后带着这份基准进入 1~4 轮自评收敛循环。
 
 **Q3：以后升级了 `pmem-art`，怎么刷新已安装项目的技能文件？**  
-A：在项目根目录运行 `python3 pmem_art.py skills --install` 即可一键无损刷新 `.cursor`、`.claude`、`.agents` 下的全部技能定义。
+A：在项目根目录运行 `python3 pmem_art.py skills --install` 即可一键无损刷新 `.cursor`、`.claude`、`.agents` 下的全部技能定义。画师也可重新下载 [最新用户包](https://github.com/mry-ship/pmem-art/releases/latest)（不含研发用 pmem）。
 
 **Q4：没点名技能，直接说「画一张」会怎样？**  
 A：直接说人话即可（不必先敲 `/pmem-agent`）。系统会认路并回显 `【按 XX 走了】` 或 `【走默认路径】`；说不清会先问你一句。多种情况等你确认，确认前不生图。想锁死某类合同再点名 `/pmem-ui` 等。详见 [docs/route_pipeline.html](docs/route_pipeline.html)。
+
+**Q5：工作台里删了图，一刷新又回来了？ / 点删除没进垃圾桶？**  
+A：请确认用的是 `python3 pmem_art.py atlas` 打印的 **http://127.0.0.1:…/art-atlas.html**，不要只双击 `file://`。删除会移入 `.memory-art/_trash/`，索引会同步踢掉；刷新不应再出现。若仍异常，再跑一次 `atlas` 后硬刷新页面。
+
+**Q6：用户包和 GitHub 开发仓有什么区别？**  
+A：用户 zip（`pmem-art-*-art.zip`）只含美术记忆运行时，**不含** `.memory`、pmem hook/MCP。开发仓给维护者用，带研发记忆脚手架。画师日常下 Release 即可。
 
 
 ---
@@ -485,7 +506,7 @@ python3 pmem_art.py coach
 python3 pmem_art.py learn suggest && python3 pmem_art.py learn accept --all
 ```
 
-闭环（v0.13 履历可见）：`warm-start → 生图最多 4 轮、≥9.5（每轮展示评分/不足/改点）→ finish 打印履历 + 记忆静默自动驾驶 → 最多一行小提示 → 越用越好`。合成梯的关系讨论是 3 稿，用来定升级链和画风。只要终稿用 `--quiet`；`improve/coach/learn/progress` 为进阶 peek。
+闭环（v0.14 履历可见）：`warm-start → 生图最多 4 轮、≥9.5（每轮展示评分/不足/改点）→ finish 打印履历 + 记忆静默自动驾驶 → 最多一行小提示 → 越用越好`。合成梯的关系讨论是 3 稿，用来定升级链和画风。只要终稿用 `--quiet`；`improve/coach/learn/progress` 为进阶 peek。看图工作台用 http 打开，删除进垃圾桶后刷新不会回来。
 
 ---
 
