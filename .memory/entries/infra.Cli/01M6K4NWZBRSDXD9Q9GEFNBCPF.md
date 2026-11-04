@@ -20,6 +20,8 @@ applies: Windows Cursor 装 pmem-art 用户包后出图闭环
 aliases:
 - 图不进控制台
 - stop followup 丢失
+verified: '2026-11-05'
+verified_at: '2026-11-05T02:02:33.280+08:00'
 ---
 现象：用户包装到别的项目后，GenerateImage 出图了但对话不会自动续跑审图（「图不会自动进控制台」）。
 根因：为消 Windows 黑框，把 hooks.json 的 stop 整段删掉；技能依赖 stop 的 followup_message 把闭环拉回对话。

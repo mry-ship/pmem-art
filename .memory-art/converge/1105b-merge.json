@@ -1,0 +1,848 @@
+{
+  "session_id": "1105b-merge",
+  "started_at": "2026-11-05 02:30:40 UTC+8",
+  "goal": "merge overview_sheet same_object 草莓软糖 2x4 白卡深底；母体+零件；禁止礼盒奖杯换货；垫 merge_grid_layout_ref",
+  "module": "prop.CasualBattery",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "medium",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "medium",
+    "label": "中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.5)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 1,
+    "target_score_threshold": 9.5,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.15,
+      "perspective_anatomy": 0.15,
+      "texture_detail": 0.15,
+      "spec_style": 0.15,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "viewpoint_frame",
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图，只在提示词上补还没过的那一处（提示词改动仍 ≤40%）",
+    "max_prompt_delta_ratio": 0.4,
+    "allow_recompose": false,
+    "allow_viewpoint_change": false,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "viewpoint_angle (不改机位与镜头视角)",
+      "element_count (不增删主体元素清单)",
+      "no_full_recompose (不做整体 recompose / 换景别故事)",
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)"
+    ],
+    "min_round_leap": 0.15,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光，表面那一句不动，只修没过的那一格",
+    "medium_family": "generic",
+    "best_direction_hint": "最优方向：光影·空气·介质；可小幅姿态/局部布局",
+    "goal": "merge overview_sheet same_object 草莓软糖 2x4 白卡深底；母体+零件；禁止礼盒奖杯换货；垫 merge_grid_layout_ref",
+    "module": "prop.CasualBattery",
+    "ref_image": "assets/skill_full_run_1105b/refs/merge_grid_layout_ref.jpg",
+    "ref_analysis": ""
+  },
+  "medium_family": "generic",
+  "contract": "",
+  "target_score_threshold": 9.5,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "assets/skill_full_run_1105b/refs/merge_grid_layout_ref.jpg",
+  "ref_analysis": "",
+  "default_aspect_ratio": "16:9",
+  "default_reference_image_paths": [
+    "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/merge_grid_layout_ref.jpg"
+  ],
+  "aspect_ratio": "16:9",
+  "reference_image_paths": [
+    "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/merge_grid_layout_ref.jpg"
+  ],
+  "ref_physical_traits": {
+    "exists": true,
+    "size_bytes": 287430,
+    "size_kb": 280.7,
+    "width": 1280,
+    "height": 720,
+    "aspect_ratio": "16:9",
+    "canonical_aspect_ratio": "16:9",
+    "color_entropy": 7.14
+  },
+  "param_validation": {
+    "valid": true,
+    "validation_passed": true,
+    "case_id": "1105b-merge",
+    "scale": "medium",
+    "aspect_ratio": "16:9",
+    "ref_aspect_ratio": "16:9",
+    "ref_dimensions": "1280x720",
+    "output_aspect_ratio": "",
+    "output_dimensions": "",
+    "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/merge_grid_layout_ref.jpg",
+    "reference_image_paths": [
+      "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/merge_grid_layout_ref.jpg"
+    ],
+    "inherited_default_aspect_ratio": false,
+    "inherited_default_pad_image": true,
+    "matched_ref_aspect_ratio": true,
+    "matched_ref_pad_image": true,
+    "matched_output_aspect_ratio": true,
+    "three_step_stage": "step1_start",
+    "three_step_verified": false,
+    "warnings": []
+  },
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.5,
+  "accept_threshold": 9.5,
+  "max_rounds": 3,
+  "ready_to_finish": true,
+  "status": "finished",
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "16:9",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/merge_grid_layout_ref.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "1105b-merge",
+        "scale": "medium",
+        "aspect_ratio": "16:9",
+        "ref_aspect_ratio": "16:9",
+        "ref_dimensions": "1280x720",
+        "output_aspect_ratio": "16:9",
+        "output_dimensions": "1280x720",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/merge_grid_layout_ref.jpg",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/merge_grid_layout_ref.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "02:32:30",
+      "image": "assets/skill_full_run_1105b/merge/overview_r1.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 244933,
+        "size_kb": 239.2,
+        "width": 1280,
+        "height": 720,
+        "aspect_ratio": "16:9",
+        "canonical_aspect_ratio": "16:9",
+        "color_entropy": 7.16
+      },
+      "raw_score": 7.52,
+      "score": 7.52,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.4/光影8.1/透视7.7/质感8.0/风格6.2/无瑕度7.3",
+      "dims_parsed": {
+        "composition": 8.4,
+        "lighting_color": 8.1,
+        "perspective_anatomy": 7.7,
+        "texture_detail": 8.0,
+        "spec_style": 6.2,
+        "flawlessness": 7.3
+      },
+      "weighted_score": 7.52,
+      "audit_warnings": [
+        "独立视觉裁判已采纳：openai_compatible/gpt-5.6-sol"
+      ],
+      "stagnated": false,
+      "strengths": "白卡深底2x4版式到位；八格均无礼盒/奖杯换货主语，金冠/晶冠/圣冠仍焊在软糖上",
+      "defects": "同一物体的结构连续性不足：圆球、草莓、包糖形态在轮廓、叶片与表面籽孔上变化明显，更像多款草莓糖方案而非母体与零件拆解。皇冠、项链、蝴蝶结等装饰占据多格，削弱零件概览属性。包糖两端薄膜的褶皱与连接关系略含混；部分叶片相互粘连，皇冠边缘和链节偏糊；各格光源方向与投影强度存在轻微差异。",
+      "next_fix": "固定一个草莓软糖母体的轮廓、籽孔布局、叶片数量和视角，用其余七格展示可明确对应回母体的独立零件、拆装步骤或同角度组合结果；减少皇冠和礼物式装饰重复，统一高光与投影方向，并精修薄膜褶皱、叶片交叠、链节及小饰件边缘。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.CasualBattery\n- 置信度: 0.50（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261105014940924RECIPE] [收敛胜出 9.13分] 变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居中；商业休闲软塑胶 — x\n  · [CHAT20261105015043104RECIPE] [收敛胜出 8.78分] 多图分工·打开态：同一宝箱机位，仅盖打开露金币光，黑底1:1 — x\n  · [CHAT20261105014944924RECIPE] [收敛胜出 8.70分] Icon A：满幅直角1024感App Icon母版，草莓糖果休闲游戏符号，安全区72-80%，无字 — x\n- 必须避开红线:\n  · [CHAT20261105014941128REDLINE] [收敛踩坑红线] 变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居：避免「整体过于轴对称和图标化，动态感略弱；面部、金属与布料的表面处理较趋同，材质区分主要依赖颜色」\n  · [CHAT20261105015000846REDLINE] [收敛踩坑红线] 多图分工·关闭态：软塑胶宝箱盖关锁，黑底1:1，锁3/4机位：避免「锁梁与上方扣环的穿插关系略显拥挤，局部轮廓近似粘连；钥匙孔内部偏暗且边缘稍软。紫色板材的纹」\n  · [CHAT20261105014937678REDLINE] [收敛踩坑红线] Royal Match级商业休闲主视觉：阳光城堡花园，国王与：避免「主体实际接近全身群像，并非半身气氛，狗的加入也略分散双主角焦点；人物与背景受光较平均，局部」\n  · [CHAT20261105014949113REDLINE] [收敛踩坑红线] Icon C：背包道具格草莓软糖，黑底隔离可读剪影，安全边距：避免「顶部叶片与果柄交叠关系略显拥挤，部分叶片像互相黏合，空间层级不够清楚；外缘双层深色描边偏厚」\n  · [CHAT20261105015043379REDLINE] [收敛踩坑红线] 多图分工·打开态：同一宝箱机位，仅盖打开露金币光，黑底1:1：避免「金币堆局部存在粘连、重叠关系含混和边缘融化感，部分币面厚度与椭圆透视不统一。箱盖与箱体的铰」\n- 审美拍板:\n  · 以后统一按此样张画风：商业休闲Royal Match系；主色金黄#F5C542约70%、辅色城堡紫#7B5CDB约20%、点缀正红#E23B3B约10%；…\n- 个人口味: 光影=冷光源 / 暖光；构图=半身；色温=避免过饱和\n- 个人禁用习惯: 错误头身比/头过大；电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感；过曝高光；廉价塑料感/油腻高光；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差；漏抠/黑底/毛边；赛博霓虹/霓虹紫；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光，表面那一句不动，只修没过的那一格| Royal Match casual prop sheet. ONE image 16:9, exactly 2 rows × 4 columns equal rounded white glossy cards on charcoal dark-gray studio ground. Match spacing/card bevel/studio light of attached grid reference; do not copy instruments. Surface lock: 软塑胶圆润厚实体 + 白圆角卡 + 深灰底棚光. Medium: translucent strawberry soft candy gummy with SSS半透明软糖 soft jelly squish wide soft specular; 禁止硬塑胶 / 禁止抛光塑料玩具感. same_object: 每档仍是同一母体+零件. base_body 草莓软糖 retained every cell as single centered item. Crowns/ribbons/wrap/stars are 母体上的配件 only. 禁止礼盒当格内主体. 禁止奖杯当格内主体. No faces, no level numbers, no text. Row1 L→R: L1 裸草莓软糖: round translucent red strawberry soft candy alone, no leaves, ~58% card. L2 带蒂草莓软糖: same strawberry soft candy + green soft-plastic calyx leaves welded on top. L3 糖纸草莓软糖: same strawberry soft candy in translucent twisted candy paper both ends; gummy readable through wrap. L4 彩带草莓软糖: same strawberry soft candy with thin pink ribbon bow at waist. Row2 L→R: L5 星点草莓软糖: same strawberry soft candy with white sugar-frost star dots on surface. L6 金冠草莓软糖: same strawberry soft candy + mini gold crown 母体上的配件 welded on stem. L7 晶冠草莓软糖: same strawberry soft candy + pink crystal crown ornament 母体上的配件 in leaves. L8 圣冠草莓软糖: same strawberry soft candy + double-layer holy crown with thin chain pendant 母体上的配件; largest ~80%. Scale grows gently L1→L8. Soft contact shadows. Uniform 3/4 top-left studio light. 一眼失败: 礼盒/奖杯当格内主体; 硬塑胶软糖; missing strawberry soft candy mother body.| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 7.7,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "independent_vlm",
+      "remote_vlm": {
+        "source": "independent_vlm",
+        "provider": "openai_compatible",
+        "model": "gpt-5.6-sol",
+        "error": "",
+        "active": true
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：同一物体的结构连续性不足：圆球、草莓、包糖形态在轮廓、叶片与表面籽孔上变化明显，更像多款草莓糖方案而非母体与零件拆解。皇冠、项链、蝴蝶结等装饰占据多格，削弱零件",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "7.52"
+        },
+        {
+          "category": "line_edge",
+          "lesson": "本轮短板偏「line_edge」：同一物体的结构连续性不足：圆球、草莓、包糖形态在轮廓、叶片与表面籽孔上变化明显，更像多款草莓糖方案而非母体与零件拆解。皇冠、项链、蝴蝶结等装饰占据多格，削弱零件",
+          "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+          "from_score": "7.52"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：白卡深底2x4版式到位；八格均无礼盒/奖杯换货主语，金冠/晶冠/圣冠仍焊在软糖上",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "7.52"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "02:33:16"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "16:9",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/merge_grid_layout_ref.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "1105b-merge",
+        "scale": "medium",
+        "aspect_ratio": "16:9",
+        "ref_aspect_ratio": "16:9",
+        "ref_dimensions": "1280x720",
+        "output_aspect_ratio": "16:9",
+        "output_dimensions": "1280x720",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/merge_grid_layout_ref.jpg",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/merge_grid_layout_ref.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "02:34:08",
+      "image": "assets/skill_full_run_1105b/merge/overview_r2.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 242524,
+        "size_kb": 236.8,
+        "width": 1280,
+        "height": 720,
+        "aspect_ratio": "16:9",
+        "canonical_aspect_ratio": "16:9",
+        "color_entropy": 7.14
+      },
+      "raw_score": 8.08,
+      "score": 8.08,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.8/光影8.6/透视8.4/质感8.5/风格6.9/无瑕度7.8",
+      "dims_parsed": {
+        "composition": 8.8,
+        "lighting_color": 8.6,
+        "perspective_anatomy": 8.4,
+        "texture_detail": 8.5,
+        "spec_style": 6.9,
+        "flawlessness": 7.8
+      },
+      "weighted_score": 8.08,
+      "audit_warnings": [
+        "独立视觉裁判已采纳：openai_compatible/gpt-5.6-sol"
+      ],
+      "stagnated": false,
+      "strengths": "白卡深底棚光仍稳；L4/L6/L7/L8草莓形配件可读，整表仍无礼盒奖杯主语",
+      "defects": "同一物体的一致性不足：圆球、带叶草莓、独立包装糖、蝴蝶结装饰及多种皇冠款更像多个造型变体，而非清晰的母体与零件拆分。蝴蝶结带有礼物包装语义，皇冠与吊坠强化奖品感，偏离指定方向。部分卡片之间主体大小、叶片结构和观察角度略有漂移；高光与凹点偏模板化，白色托盘边缘局部略发粉发灰。",
+      "next_fix": "统一一个草莓软糖母体的轮廓、叶片数量、视角和尺度；将其余格明确改为可对应回母体的包装纸、叶片、糖体、装饰颗粒等零件或拆装状态。删除蝴蝶结、皇冠和奖章式吊坠，减少礼盒与奖杯联想；统一各格光源、高光形状、接触阴影和卡片白平衡。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.CasualBattery\n- 置信度: 0.50（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261105014940924RECIPE] [收敛胜出 9.13分] 变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居中；商业休闲软塑胶 — x\n  · [CHAT20261105015043104RECIPE] [收敛胜出 8.78分] 多图分工·打开态：同一宝箱机位，仅盖打开露金币光，黑底1:1 — x\n  · [CHAT20261105014944924RECIPE] [收敛胜出 8.70分] Icon A：满幅直角1024感App Icon母版，草莓糖果休闲游戏符号，安全区72-80%，无字 — x\n- 必须避开红线:\n  · [CHAT20261105014941128REDLINE] [收敛踩坑红线] 变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居：避免「整体过于轴对称和图标化，动态感略弱；面部、金属与布料的表面处理较趋同，材质区分主要依赖颜色」\n  · [CHAT20261105015000846REDLINE] [收敛踩坑红线] 多图分工·关闭态：软塑胶宝箱盖关锁，黑底1:1，锁3/4机位：避免「锁梁与上方扣环的穿插关系略显拥挤，局部轮廓近似粘连；钥匙孔内部偏暗且边缘稍软。紫色板材的纹」\n  · [CHAT20261105014937678REDLINE] [收敛踩坑红线] Royal Match级商业休闲主视觉：阳光城堡花园，国王与：避免「主体实际接近全身群像，并非半身气氛，狗的加入也略分散双主角焦点；人物与背景受光较平均，局部」\n  · [CHAT20261105014949113REDLINE] [收敛踩坑红线] Icon C：背包道具格草莓软糖，黑底隔离可读剪影，安全边距：避免「顶部叶片与果柄交叠关系略显拥挤，部分叶片像互相黏合，空间层级不够清楚；外缘双层深色描边偏厚」\n  · [CHAT20261105015043379REDLINE] [收敛踩坑红线] 多图分工·打开态：同一宝箱机位，仅盖打开露金币光，黑底1:1：避免「金币堆局部存在粘连、重叠关系含混和边缘融化感，部分币面厚度与椭圆透视不统一。箱盖与箱体的铰」\n- 审美拍板:\n  · 以后统一按此样张画风：商业休闲Royal Match系；主色金黄#F5C542约70%、辅色城堡紫#7B5CDB约20%、点缀正红#E23B3B约10%；…\n- 个人口味: 光影=冷光源 / 暖光；构图=半身；色温=避免过饱和\n- 个人禁用习惯: 错误头身比/头过大；电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感；过曝高光；廉价塑料感/油腻高光；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差；漏抠/黑底/毛边；赛博霓虹/霓虹紫；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光，表面那一句不动，只修没过的那一格| Lock ONE strawberry soft-candy mother silhouette all 8 cells; L1 bare no leaves; L3 wrap must show strawberry tip; cumulative parts L2 leaves L4 pink ribbon L5 star frost L6 mini gold crown L7 pink crystal crown L8 double holy crown+chain; ban giftbox trophy ball-candy; white cards dark bg SSS soft jelly| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | 固定一个草莓软糖母体的轮廓、籽孔布局、叶片数量和视角，用其余七格展示可明确对应回母体的独立零件、拆装步骤或同角度组合结果；减少皇冠和礼物式装饰重复，统一高光与投影方向，并精修薄膜褶皱、叶片交叠、链节及小饰件边缘。",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.4,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "independent_vlm",
+      "remote_vlm": {
+        "source": "independent_vlm",
+        "provider": "openai_compatible",
+        "model": "gpt-5.6-sol",
+        "error": "",
+        "active": true
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：同一物体的一致性不足：圆球、带叶草莓、独立包装糖、蝴蝶结装饰及多种皇冠款更像多个造型变体，而非清晰的母体与零件拆分。蝴蝶结带有礼物包装语义，皇冠与吊坠强化奖品感",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.08"
+        },
+        {
+          "category": "line_edge",
+          "lesson": "本轮短板偏「line_edge」：同一物体的一致性不足：圆球、带叶草莓、独立包装糖、蝴蝶结装饰及多种皇冠款更像多个造型变体，而非清晰的母体与零件拆分。蝴蝶结带有礼物包装语义，皇冠与吊坠强化奖品感",
+          "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+          "from_score": "8.08"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：白卡深底棚光仍稳；L4/L6/L7/L8草莓形配件可读，整表仍无礼盒奖杯主语",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.08"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "02:34:35",
+      "asset_image": "assets/skill_full_run_1105b/merge/overview_r2.jpg"
+    },
+    {
+      "round": 3,
+      "round_label": "第 3 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "16:9",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/merge_grid_layout_ref.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "1105b-merge",
+        "scale": "medium",
+        "aspect_ratio": "16:9",
+        "ref_aspect_ratio": "16:9",
+        "ref_dimensions": "1280x720",
+        "output_aspect_ratio": "16:9",
+        "output_dimensions": "1280x720",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/merge_grid_layout_ref.jpg",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/merge_grid_layout_ref.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "02:35:37",
+      "image": "assets/skill_full_run_1105b/merge/overview_r3.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 253846,
+        "size_kb": 247.9,
+        "width": 1280,
+        "height": 720,
+        "aspect_ratio": "16:9",
+        "canonical_aspect_ratio": "16:9",
+        "color_entropy": 7.15
+      },
+      "raw_score": 7.81,
+      "score": 7.81,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.7/光影8.4/透视8.1/质感8.5/风格6.3/无瑕度7.6",
+      "dims_parsed": {
+        "composition": 8.7,
+        "lighting_color": 8.4,
+        "perspective_anatomy": 8.1,
+        "texture_detail": 8.5,
+        "spec_style": 6.3,
+        "flawlessness": 7.6
+      },
+      "weighted_score": 7.81,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +-0.27 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "独立视觉裁判已采纳：openai_compatible/gpt-5.6-sol"
+      ],
+      "stagnated": true,
+      "strengths": "八格同尖端草莓母体基本锁住；L1无叶→L2加蒂→L3糖纸→L4彩带→L6金冠→L7晶冠→L8圣冠链坠可读；无礼盒/奖杯换货主语；白卡深底版式稳",
+      "defects": "八格更像不同草莓主题图标合集，而非同一母体与零件的拆装总览；草莓轮廓、叶冠结构、籽孔分布、表面颗粒感在各格间变化明显。皇冠、蝴蝶结、项链等装饰占比过高，削弱 CasualBattery 道具与零件关系，并出现明确的皇冠/礼赠化倾向。包装格的透明膜边缘和扭结略显灰脏、结构含混；部分叶片叠压与饰件接触关系偏贴图感。",
+      "next_fix": "锁定一个统一草莓母体的轮廓、叶冠、籽孔与光源后重复到各格，仅展示可验证的部件增减或拆分；删除皇冠、项链和礼赠蝴蝶结，改为母体、外壳、叶盖、内部件及组合态。统一表面材质与投影尺度，并重画透明包装的膜厚、折线和扭结连接。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.CasualBattery\n- 置信度: 0.50（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261105014940924RECIPE] [收敛胜出 9.13分] 变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居中；商业休闲软塑胶 — x\n  · [CHAT20261105015043104RECIPE] [收敛胜出 8.78分] 多图分工·打开态：同一宝箱机位，仅盖打开露金币光，黑底1:1 — x\n  · [CHAT20261105014944924RECIPE] [收敛胜出 8.70分] Icon A：满幅直角1024感App Icon母版，草莓糖果休闲游戏符号，安全区72-80%，无字 — x\n- 必须避开红线:\n  · [CHAT20261105014941128REDLINE] [收敛踩坑红线] 变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居：避免「整体过于轴对称和图标化，动态感略弱；面部、金属与布料的表面处理较趋同，材质区分主要依赖颜色」\n  · [CHAT20261105015000846REDLINE] [收敛踩坑红线] 多图分工·关闭态：软塑胶宝箱盖关锁，黑底1:1，锁3/4机位：避免「锁梁与上方扣环的穿插关系略显拥挤，局部轮廓近似粘连；钥匙孔内部偏暗且边缘稍软。紫色板材的纹」\n  · [CHAT20261105014937678REDLINE] [收敛踩坑红线] Royal Match级商业休闲主视觉：阳光城堡花园，国王与：避免「主体实际接近全身群像，并非半身气氛，狗的加入也略分散双主角焦点；人物与背景受光较平均，局部」\n  · [CHAT20261105014949113REDLINE] [收敛踩坑红线] Icon C：背包道具格草莓软糖，黑底隔离可读剪影，安全边距：避免「顶部叶片与果柄交叠关系略显拥挤，部分叶片像互相黏合，空间层级不够清楚；外缘双层深色描边偏厚」\n  · [CHAT20261105015043379REDLINE] [收敛踩坑红线] 多图分工·打开态：同一宝箱机位，仅盖打开露金币光，黑底1:1：避免「金币堆局部存在粘连、重叠关系含混和边缘融化感，部分币面厚度与椭圆透视不统一。箱盖与箱体的铰」\n- 审美拍板:\n  · 以后统一按此样张画风：商业休闲Royal Match系；主色金黄#F5C542约70%、辅色城堡紫#7B5CDB约20%、点缀正红#E23B3B约10%；…\n- 个人口味: 光影=冷光源 / 暖光；构图=半身；色温=避免过饱和\n- 个人禁用习惯: 错误头身比/头过大；电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感；过曝高光；廉价塑料感/油腻高光；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差；漏抠/黑底/毛边；赛博霓虹/霓虹紫；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光，表面那一句不动，只修没过的那一格| FORCE pointed strawberry soft-candy silhouette in ALL 8 cells including L1 L3 L5; never ball candy; L3 wrap shows tip+seeds; cumulative parts per phase1; ban giftbox trophy; white cards dark bg SSS| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | 统一一个草莓软糖母体的轮廓、叶片数量、视角和尺度；将其余格明确改为可对应回母体的包装纸、叶片、糖体、装饰颗粒等零件或拆装状态。删除蝴蝶结、皇冠和奖章式吊坠，减少礼盒与奖杯联想；统一各格光源、高光形状、接触阴影和卡片白平衡。",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.1,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "independent_vlm",
+      "remote_vlm": {
+        "source": "independent_vlm",
+        "provider": "openai_compatible",
+        "model": "gpt-5.6-sol",
+        "error": "",
+        "active": true
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_MAX_ROUNDS",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：八格更像不同草莓主题图标合集，而非同一母体与零件的拆装总览；草莓轮廓、叶冠结构、籽孔分布、表面颗粒感在各格间变化明显。皇冠、蝴蝶结、项链等装饰占比过高，削弱 C",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "7.81"
+        },
+        {
+          "category": "line_edge",
+          "lesson": "本轮短板偏「line_edge」：八格更像不同草莓主题图标合集，而非同一母体与零件的拆装总览；草莓轮廓、叶冠结构、籽孔分布、表面颗粒感在各格间变化明显。皇冠、蝴蝶结、项链等装饰占比过高，削弱 C",
+          "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+          "from_score": "7.81"
+        },
+        {
+          "category": "material",
+          "lesson": "本轮短板偏「material」：八格更像不同草莓主题图标合集，而非同一母体与零件的拆装总览；草莓轮廓、叶冠结构、籽孔分布、表面颗粒感在各格间变化明显。皇冠、蝴蝶结、项链等装饰占比过高，削弱 C",
+          "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+          "from_score": "7.81"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "02:35:52"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "/Users/yanghu/Desktop/pmem-art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-11-05 00:55:15 UTC+8"
+    },
+    "module": "prop.CasualBattery",
+    "goal": "merge overview_sheet same_object 草莓软糖 2x4 白卡深底；母体+零件；禁止礼盒奖杯换货；垫 merge_grid_layout_ref",
+    "confidence": 0.5,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "只有未达标 provisional recipe，不计入定稿置信",
+      "命中 1 条审美拍板",
+      "个人口味档案非空",
+      "红线中等（5 条）",
+      "挂载 0 张项目知识卡 + 1 张全局美术底层基础卡"
+    ],
+    "top_recipes": [
+      {
+        "id": "CHAT20261105014940924RECIPE",
+        "summary": "[收敛胜出 9.13分] 变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居中；商业休闲软塑胶 — x",
+        "module": "prop.CasualBattery"
+      },
+      {
+        "id": "CHAT20261105015043104RECIPE",
+        "summary": "[收敛胜出 8.78分] 多图分工·打开态：同一宝箱机位，仅盖打开露金币光，黑底1:1 — x",
+        "module": "prop.CasualBattery"
+      },
+      {
+        "id": "CHAT20261105014944924RECIPE",
+        "summary": "[收敛胜出 8.70分] Icon A：满幅直角1024感App Icon母版，草莓糖果休闲游戏符号，安全区72-80%，无字 — x",
+        "module": "prop.CasualBattery"
+      }
+    ],
+    "top_redlines": [
+      {
+        "id": "CHAT20261105014941128REDLINE",
+        "summary": "[收敛踩坑红线] 变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居：避免「整体过于轴对称和图标化，动态感略弱；面部、金属与布料的表面处理较趋同，材质区分主要依赖颜色」",
+        "module": "prop.CasualBattery"
+      },
+      {
+        "id": "CHAT20261105015000846REDLINE",
+        "summary": "[收敛踩坑红线] 多图分工·关闭态：软塑胶宝箱盖关锁，黑底1:1，锁3/4机位：避免「锁梁与上方扣环的穿插关系略显拥挤，局部轮廓近似粘连；钥匙孔内部偏暗且边缘稍软。紫色板材的纹」",
+        "module": "prop.CasualBattery"
+      },
+      {
+        "id": "CHAT20261105014937678REDLINE",
+        "summary": "[收敛踩坑红线] Royal Match级商业休闲主视觉：阳光城堡花园，国王与：避免「主体实际接近全身群像，并非半身气氛，狗的加入也略分散双主角焦点；人物与背景受光较平均，局部」",
+        "module": "prop.CasualBattery"
+      },
+      {
+        "id": "CHAT20261105014949113REDLINE",
+        "summary": "[收敛踩坑红线] Icon C：背包道具格草莓软糖，黑底隔离可读剪影，安全边距：避免「顶部叶片与果柄交叠关系略显拥挤，部分叶片像互相黏合，空间层级不够清楚；外缘双层深色描边偏厚」",
+        "module": "prop.CasualBattery"
+      },
+      {
+        "id": "CHAT20261105015043379REDLINE",
+        "summary": "[收敛踩坑红线] 多图分工·打开态：同一宝箱机位，仅盖打开露金币光，黑底1:1：避免「金币堆局部存在粘连、重叠关系含混和边缘融化感，部分币面厚度与椭圆透视不统一。箱盖与箱体的铰」",
+        "module": "prop.CasualBattery"
+      }
+    ],
+    "art_decisions": [
+      {
+        "id": "CHAT20261105012822490DECISION",
+        "summary": "以后统一按此样张画风：商业休闲Royal Match系；主色金黄#F5C542约70%、辅色城堡紫#7B5CDB约20%、点缀正红#E23B3B约10%；…",
+        "layer_scope": "private"
+      }
+    ],
+    "private_knowledge": [],
+    "shared_knowledge": [
+      {
+        "id": "palette-70-20-10",
+        "title": "色彩构成：70-20-10 色板比例黄金法则",
+        "body": "画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+        "layer_scope": "shared"
+      }
+    ],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [
+        "冷光源",
+        "暖光"
+      ],
+      "preferred_composition": [
+        "半身"
+      ],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [
+        "避免过饱和"
+      ],
+      "banned_habits": [
+        "禁止偏离样张画风：过度霓虹、脏暗阴影、油腻高光、写实皮肤毛孔、扁平UI描边",
+        "电池审稿：原画竖构图避免贴样张布局；边缘反光勿过曝",
+        "错误头身比/头过大",
+        "电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感",
+        "过曝高光",
+        "廉价塑料感/油腻高光",
+        "黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差",
+        "漏抠/黑底/毛边",
+        "赛博霓虹/霓虹紫",
+        "脏暗阴影/脏色"
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.CasualBattery\n- 置信度: 0.50（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261105014940924RECIPE] [收敛胜出 9.13分] 变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居中；商业休闲软塑胶 — x\n  · [CHAT20261105015043104RECIPE] [收敛胜出 8.78分] 多图分工·打开态：同一宝箱机位，仅盖打开露金币光，黑底1:1 — x\n  · [CHAT20261105014944924RECIPE] [收敛胜出 8.70分] Icon A：满幅直角1024感App Icon母版，草莓糖果休闲游戏符号，安全区72-80%，无字 — x\n- 必须避开红线:\n  · [CHAT20261105014941128REDLINE] [收敛踩坑红线] 变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居：避免「整体过于轴对称和图标化，动态感略弱；面部、金属与布料的表面处理较趋同，材质区分主要依赖颜色」\n  · [CHAT20261105015000846REDLINE] [收敛踩坑红线] 多图分工·关闭态：软塑胶宝箱盖关锁，黑底1:1，锁3/4机位：避免「锁梁与上方扣环的穿插关系略显拥挤，局部轮廓近似粘连；钥匙孔内部偏暗且边缘稍软。紫色板材的纹」\n  · [CHAT20261105014937678REDLINE] [收敛踩坑红线] Royal Match级商业休闲主视觉：阳光城堡花园，国王与：避免「主体实际接近全身群像，并非半身气氛，狗的加入也略分散双主角焦点；人物与背景受光较平均，局部」\n  · [CHAT20261105014949113REDLINE] [收敛踩坑红线] Icon C：背包道具格草莓软糖，黑底隔离可读剪影，安全边距：避免「顶部叶片与果柄交叠关系略显拥挤，部分叶片像互相黏合，空间层级不够清楚；外缘双层深色描边偏厚」\n  · [CHAT20261105015043379REDLINE] [收敛踩坑红线] 多图分工·打开态：同一宝箱机位，仅盖打开露金币光，黑底1:1：避免「金币堆局部存在粘连、重叠关系含混和边缘融化感，部分币面厚度与椭圆透视不统一。箱盖与箱体的铰」\n- 审美拍板:\n  · 以后统一按此样张画风：商业休闲Royal Match系；主色金黄#F5C542约70%、辅色城堡紫#7B5CDB约20%、点缀正红#E23B3B约10%；…\n- 个人口味: 光影=冷光源 / 暖光；构图=半身；色温=避免过饱和\n- 个人禁用习惯: 错误头身比/头过大；电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感；过曝高光；廉价塑料感/油腻高光；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差；漏抠/黑底/毛边；赛博霓虹/霓虹紫；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+    "built_at": "2026-11-05 02:30:40 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：同一物体的结构连续性不足：圆球、草莓、包糖形态在轮廓、叶片与表面籽孔上变化明显，更像多款草莓糖方案而非母体与零件拆解。皇冠、项链、蝴蝶结等装饰占据多格，削弱零件",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "7.52"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：同一物体的结构连续性不足：圆球、草莓、包糖形态在轮廓、叶片与表面籽孔上变化明显，更像多款草莓糖方案而非母体与零件拆解。皇冠、项链、蝴蝶结等装饰占据多格，削弱零件",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "7.52"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：白卡深底2x4版式到位；八格均无礼盒/奖杯换货主语，金冠/晶冠/圣冠仍焊在软糖上",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "7.52"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：同一物体的一致性不足：圆球、带叶草莓、独立包装糖、蝴蝶结装饰及多种皇冠款更像多个造型变体，而非清晰的母体与零件拆分。蝴蝶结带有礼物包装语义，皇冠与吊坠强化奖品感",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.08"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：同一物体的一致性不足：圆球、带叶草莓、独立包装糖、蝴蝶结装饰及多种皇冠款更像多个造型变体，而非清晰的母体与零件拆分。蝴蝶结带有礼物包装语义，皇冠与吊坠强化奖品感",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "8.08"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：白卡深底棚光仍稳；L4/L6/L7/L8草莓形配件可读，整表仍无礼盒奖杯主语",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.08"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：八格更像不同草莓主题图标合集，而非同一母体与零件的拆装总览；草莓轮廓、叶冠结构、籽孔分布、表面颗粒感在各格间变化明显。皇冠、蝴蝶结、项链等装饰占比过高，削弱 C",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "7.81"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：八格更像不同草莓主题图标合集，而非同一母体与零件的拆装总览；草莓轮廓、叶冠结构、籽孔分布、表面颗粒感在各格间变化明显。皇冠、蝴蝶结、项链等装饰占比过高，削弱 C",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "7.81"
+    },
+    {
+      "category": "material",
+      "lesson": "本轮短板偏「material」：八格更像不同草莓主题图标合集，而非同一母体与零件的拆装总览；草莓轮廓、叶冠结构、籽孔分布、表面颗粒感在各格间变化明显。皇冠、蝴蝶结、项链等装饰占比过高，削弱 C",
+      "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+      "from_score": "7.81"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 2,
+  "regression_drop": 0.15,
+  "reasonableness_history": [
+    {
+      "reviewed_at": 1793817066.8799639,
+      "passed": false,
+      "skill": "merge",
+      "issues": [
+        "软糖题材勿把硬塑胶当目标介质：请改成软糖半透明并显式禁止硬塑胶",
+        "merge same_object 缺母体保留：修订句须写死每档仍是同一母体+零件，禁止礼盒/奖杯换货成新主体"
+      ]
+    },
+    {
+      "reviewed_at": 1793817080.692068,
+      "passed": false,
+      "skill": "merge",
+      "issues": [
+        "软糖题材勿把硬塑胶当目标介质：请改成软糖半透明并显式禁止硬塑胶",
+        "merge same_object 疑似换货：礼盒/奖杯/宝石若成主视觉应改 shop_ladder，或改成「母体上的配件」"
+      ]
+    },
+    {
+      "reviewed_at": 1793817117.20881,
+      "passed": true,
+      "skill": "merge",
+      "issues": []
+    }
+  ],
+  "reasonableness": {
+    "passed": true,
+    "skill": "merge",
+    "draft_prompt": "2x4 overview strawberry soft candy same_object mother+parts white cards dark bg",
+    "revised_prompt": "Royal Match casual prop sheet. ONE image 16:9, exactly 2 rows × 4 columns equal rounded white glossy cards on charcoal dark-gray studio ground. Match spacing/card bevel/studio light of attached grid reference; do not copy instruments.\n\nSurface lock: 软塑胶圆润厚实体 + 白圆角卡 + 深灰底棚光. Medium: translucent strawberry soft candy gummy with SSS半透明软糖 soft jelly squish wide soft specular; 禁止硬塑胶 / 禁止抛光塑料玩具感.\n\nsame_object: 每档仍是同一母体+零件. base_body 草莓软糖 retained every cell as single centered item. Crowns/ribbons/wrap/stars are 母体上的配件 only. 禁止礼盒当格内主体. 禁止奖杯当格内主体. No faces, no level numbers, no text.\n\nRow1 L→R:\nL1 裸草莓软糖: round translucent red strawberry soft candy alone, no leaves, ~58% card.\nL2 带蒂草莓软糖: same strawberry soft candy + green soft-plastic calyx leaves welded on top.\nL3 糖纸草莓软糖: same strawberry soft candy in translucent twisted candy paper both ends; gummy readable through wrap.\nL4 彩带草莓软糖: same strawberry soft candy with thin pink ribbon bow at waist.\n\nRow2 L→R:\nL5 星点草莓软糖: same strawberry soft candy with white sugar-frost star dots on surface.\nL6 金冠草莓软糖: same strawberry soft candy + mini gold crown 母体上的配件 welded on stem.\nL7 晶冠草莓软糖: same strawberry soft candy + pink crystal crown ornament 母体上的配件 in leaves.\nL8 圣冠草莓软糖: same strawberry soft candy + double-layer holy crown with thin chain pendant 母体上的配件; largest ~80%.\n\nScale grows gently L1→L8. Soft contact shadows. Uniform 3/4 top-left studio light.\n一眼失败: 礼盒/奖杯当格内主体; 硬塑胶软糖; missing strawberry soft candy mother body.",
+    "checklist": {
+      "subject_action": {
+        "status": "ok",
+        "note": ""
+      },
+      "element_budget": {
+        "status": "ok",
+        "note": ""
+      },
+      "hard_locks": {
+        "status": "ok",
+        "note": ""
+      },
+      "fail_at_glance": {
+        "status": "ok",
+        "note": ""
+      },
+      "single_centered_item": {
+        "status": "ok",
+        "note": ""
+      },
+      "parts_add_concrete": {
+        "status": "ok",
+        "note": ""
+      },
+      "base_body_retained": {
+        "status": "ok",
+        "note": ""
+      }
+    },
+    "issues": [],
+    "notes": "phase1 relation-judge exit0; SSS soft candy; same mother every cell",
+    "reviewed_at": 1793817117.20881,
+    "reviewed_at_iso": "2026-11-05 02:31:57",
+    "force_pass": false
+  },
+  "discussions": [
+    {
+      "round": 0,
+      "kind": "reasonableness",
+      "prompt": "Royal Match casual prop sheet. ONE image 16:9, exactly 2 rows × 4 columns equal rounded white glossy cards on charcoal dark-gray studio ground. Match spacing/card bevel/studio light of attached grid reference; do not copy instruments.\n\nSurface lock: 软塑胶圆润厚实体 + 白圆角卡 + 深灰底棚光. Medium: translucent strawberry soft candy gummy with SSS半透明软糖 soft jelly squish wide soft specular; 禁止硬塑胶 / 禁止抛光塑料玩具感.\n\nsame_object: 每档仍是同一母体+零件. base_body 草莓软糖 retained every cell as single centered item. Crowns/ribbons/wrap/stars are 母体上的配件 only. 禁止礼盒当格内主体. 禁止奖杯当格内主体. No faces, no level numbers, no text.\n\nRow1 L→R:\nL1 裸草莓软糖: round translucent red strawberry soft candy alone, no leaves, ~58% card.\nL2 带蒂草莓软糖: same strawberry soft candy + green soft-plastic calyx leaves welded on top.\nL3 糖纸草莓软糖: same strawberry soft candy in translucent twisted candy paper both ends; gummy readable through wrap.\nL4 彩带草莓软糖: same strawberry soft candy with thin pink ribbon bow at waist.\n\nRow2 L→R:\nL5 星点草莓软糖: same strawberry soft candy with white sugar-frost star dots on surface.\nL6 金冠草莓软糖: same strawberry soft candy + mini gold crown 母体上的配件 welded on stem.\nL7 晶冠草莓软糖: same strawberry soft candy + pink crystal crown ornament 母体上的配件 in leaves.\nL8 圣冠草莓软糖: same strawberry soft candy + double-layer holy crown with thin chain pendant 母体上的配件; largest ~80%.\n\nScale grows gently L1→L8. Soft contact shadows. Uniform 3/4 top-left studio light.\n一眼失败: 礼盒/奖杯当格内主体; 硬塑胶软糖; missing strawberry soft candy mother body.",
+      "strengths": "合理性闸已过：subject_action=ok；element_budget=ok；hard_locks=ok；fail_at_glance=ok；single_centered_item=ok；parts_add_concrete=ok；base_body_retained=ok",
+      "defects": "",
+      "next_fix": "首轮 generate 使用本修订提示词；审美迭代不得推翻硬锁与元素预算"
+    }
+  ],
+  "ActionRequired": "STOP_PICK_BEST",
+  "showcase_ready": true,
+  "winner": {
+    "round": 2,
+    "round_label": "第 2 轮精修",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "16:9",
+    "reference_image_paths": [
+      "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/merge_grid_layout_ref.jpg"
+    ],
+    "param_validation": {
+      "valid": true,
+      "validation_passed": true,
+      "case_id": "1105b-merge",
+      "scale": "medium",
+      "aspect_ratio": "16:9",
+      "ref_aspect_ratio": "16:9",
+      "ref_dimensions": "1280x720",
+      "output_aspect_ratio": "16:9",
+      "output_dimensions": "1280x720",
+      "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/merge_grid_layout_ref.jpg",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/merge_grid_layout_ref.jpg"
+      ],
+      "inherited_default_aspect_ratio": true,
+      "inherited_default_pad_image": true,
+      "matched_ref_aspect_ratio": true,
+      "matched_ref_pad_image": true,
+      "matched_output_aspect_ratio": true,
+      "three_step_stage": "step3_judge",
+      "three_step_verified": true,
+      "warnings": [],
+      "continuation_pad": false,
+      "pad_diverged": false
+    },
+    "generated_at": "02:34:08",
+    "image": "assets/skill_full_run_1105b/merge/overview_r2.jpg",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 242524,
+      "size_kb": 236.8,
+      "width": 1280,
+      "height": 720,
+      "aspect_ratio": "16:9",
+      "canonical_aspect_ratio": "16:9",
+      "color_entropy": 7.14
+    },
+    "raw_score": 8.08,
+    "score": 8.08,
+    "target_score_threshold": 9.5,
+    "dims": "构图8.8/光影8.6/透视8.4/质感8.5/风格6.9/无瑕度7.8",
+    "dims_parsed": {
+      "composition": 8.8,
+      "lighting_color": 8.6,
+      "perspective_anatomy": 8.4,
+      "texture_detail": 8.5,
+      "spec_style": 6.9,
+      "flawlessness": 7.8
+    },
+    "weighted_score": 8.08,
+    "audit_warnings": [
+      "独立视觉裁判已采纳：openai_compatible/gpt-5.6-sol"
+    ],
+    "stagnated": false,
+    "strengths": "白卡深底棚光仍稳；L4/L6/L7/L8草莓形配件可读，整表仍无礼盒奖杯主语",
+    "defects": "同一物体的一致性不足：圆球、带叶草莓、独立包装糖、蝴蝶结装饰及多种皇冠款更像多个造型变体，而非清晰的母体与零件拆分。蝴蝶结带有礼物包装语义，皇冠与吊坠强化奖品感，偏离指定方向。部分卡片之间主体大小、叶片结构和观察角度略有漂移；高光与凹点偏模板化，白色托盘边缘局部略发粉发灰。",
+    "next_fix": "统一一个草莓软糖母体的轮廓、叶片数量、视角和尺度；将其余格明确改为可对应回母体的包装纸、叶片、糖体、装饰颗粒等零件或拆装状态。删除蝴蝶结、皇冠和奖章式吊坠，减少礼盒与奖杯联想；统一各格光源、高光形状、接触阴影和卡片白平衡。",
+    "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.CasualBattery\n- 置信度: 0.50（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261105014940924RECIPE] [收敛胜出 9.13分] 变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居中；商业休闲软塑胶 — x\n  · [CHAT20261105015043104RECIPE] [收敛胜出 8.78分] 多图分工·打开态：同一宝箱机位，仅盖打开露金币光，黑底1:1 — x\n  · [CHAT20261105014944924RECIPE] [收敛胜出 8.70分] Icon A：满幅直角1024感App Icon母版，草莓糖果休闲游戏符号，安全区72-80%，无字 — x\n- 必须避开红线:\n  · [CHAT20261105014941128REDLINE] [收敛踩坑红线] 变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居：避免「整体过于轴对称和图标化，动态感略弱；面部、金属与布料的表面处理较趋同，材质区分主要依赖颜色」\n  · [CHAT20261105015000846REDLINE] [收敛踩坑红线] 多图分工·关闭态：软塑胶宝箱盖关锁，黑底1:1，锁3/4机位：避免「锁梁与上方扣环的穿插关系略显拥挤，局部轮廓近似粘连；钥匙孔内部偏暗且边缘稍软。紫色板材的纹」\n  · [CHAT20261105014937678REDLINE] [收敛踩坑红线] Royal Match级商业休闲主视觉：阳光城堡花园，国王与：避免「主体实际接近全身群像，并非半身气氛，狗的加入也略分散双主角焦点；人物与背景受光较平均，局部」\n  · [CHAT20261105014949113REDLINE] [收敛踩坑红线] Icon C：背包道具格草莓软糖，黑底隔离可读剪影，安全边距：避免「顶部叶片与果柄交叠关系略显拥挤，部分叶片像互相黏合，空间层级不够清楚；外缘双层深色描边偏厚」\n  · [CHAT20261105015043379REDLINE] [收敛踩坑红线] 多图分工·打开态：同一宝箱机位，仅盖打开露金币光，黑底1:1：避免「金币堆局部存在粘连、重叠关系含混和边缘融化感，部分币面厚度与椭圆透视不统一。箱盖与箱体的铰」\n- 审美拍板:\n  · 以后统一按此样张画风：商业休闲Royal Match系；主色金黄#F5C542约70%、辅色城堡紫#7B5CDB约20%、点缀正红#E23B3B约10%；…\n- 个人口味: 光影=冷光源 / 暖光；构图=半身；色温=避免过饱和\n- 个人禁用习惯: 错误头身比/头过大；电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感；过曝高光；廉价塑料感/油腻高光；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差；漏抠/黑底/毛边；赛博霓虹/霓虹紫；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光，表面那一句不动，只修没过的那一格| Lock ONE strawberry soft-candy mother silhouette all 8 cells; L1 bare no leaves; L3 wrap must show strawberry tip; cumulative parts L2 leaves L4 pink ribbon L5 star frost L6 mini gold crown L7 pink crystal crown L8 double holy crown+chain; ban giftbox trophy ball-candy; white cards dark bg SSS soft jelly| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | 固定一个草莓软糖母体的轮廓、籽孔布局、叶片数量和视角，用其余七格展示可明确对应回母体的独立零件、拆装步骤或同角度组合结果；减少皇冠和礼物式装饰重复，统一高光与投影方向，并精修薄膜褶皱、叶片交叠、链节及小饰件边缘。",
+    "continuation": false,
+    "passed": false,
+    "gate_blocked": false,
+    "image_gate_blocked": false,
+    "anatomy_score": 8.4,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "unknown",
+    "judge_source": "independent_vlm",
+    "remote_vlm": {
+      "source": "independent_vlm",
+      "provider": "openai_compatible",
+      "model": "gpt-5.6-sol",
+      "error": "",
+      "active": true
+    },
+    "should_continue_next_round": true,
+    "decision": "CONTINUE_NEXT_ROUND",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "lighting",
+        "lesson": "本轮短板偏「lighting」：同一物体的一致性不足：圆球、带叶草莓、独立包装糖、蝴蝶结装饰及多种皇冠款更像多个造型变体，而非清晰的母体与零件拆分。蝴蝶结带有礼物包装语义，皇冠与吊坠强化奖品感",
+        "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+        "from_score": "8.08"
+      },
+      {
+        "category": "line_edge",
+        "lesson": "本轮短板偏「line_edge」：同一物体的一致性不足：圆球、带叶草莓、独立包装糖、蝴蝶结装饰及多种皇冠款更像多个造型变体，而非清晰的母体与零件拆分。蝴蝶结带有礼物包装语义，皇冠与吊坠强化奖品感",
+        "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+        "from_score": "8.08"
+      },
+      {
+        "category": "keep",
+        "lesson": "保留本轮已做对的：白卡深底棚光仍稳；L4/L6/L7/L8草莓形配件可读，整表仍无礼盒奖杯主语",
+        "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+        "from_score": "8.08"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "02:34:35",
+    "asset_image": "assets/skill_full_run_1105b/merge/overview_r2.jpg"
+  },
+  "rounds_to_converge": 3,
+  "convergence_badge": "共 3 轮未达阈值，采用最高分",
+  "process_board": ".memory-art/converge/boards/1105b-merge/index.html"
+}

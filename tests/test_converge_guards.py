@@ -35,40 +35,40 @@ from skills_kit.converge import _defect_text_copied, _resolve_pad_auto  # noqa: 
 class TestPolicyDefaults(unittest.TestCase):
     def test_defaults_match_docs(self) -> None:
         self.assertEqual(DEFAULT_ANATOMY_FLOOR, 7.5)
-        self.assertEqual(DEFAULT_REGRESSION_DROP, 0.5)
-        self.assertEqual(DEFAULT_EARLY_STOP_MIN_ROUND, 4)
+        self.assertEqual(DEFAULT_REGRESSION_DROP, 0.15)
+        self.assertEqual(DEFAULT_EARLY_STOP_MIN_ROUND, 2)
 
-    def test_early_stop_ignored_before_r4(self) -> None:
+    def test_early_stop_ignored_before_r2(self) -> None:
         self.assertIsNone(
             decide_round_stop(
                 score_ok=True,
                 total=8.0,
                 dims={"perspective_anatomy": 9.0},
-                round_num=3,
+                round_num=1,
                 min_rounds=1,
                 threshold=9.5,
                 anatomy_floor=7.5,
                 best_total=9.0,
                 no_improve_streak=5,
-                regression_drop=0.5,
-                early_stop_min_round=4,
+                regression_drop=0.15,
+                early_stop_min_round=2,
             )
         )
 
-    def test_regression_fires_at_r4(self) -> None:
+    def test_regression_fires_at_r2(self) -> None:
         self.assertEqual(
             decide_round_stop(
                 score_ok=True,
                 total=8.0,
                 dims={"perspective_anatomy": 9.0},
-                round_num=4,
+                round_num=2,
                 min_rounds=1,
                 threshold=9.5,
                 anatomy_floor=7.5,
                 best_total=9.0,
                 no_improve_streak=0,
-                regression_drop=0.5,
-                early_stop_min_round=4,
+                regression_drop=0.15,
+                early_stop_min_round=2,
             ),
             "STOP_REGRESSION",
         )

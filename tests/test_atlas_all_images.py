@@ -298,6 +298,60 @@ class AtlasAllImagesTests(unittest.TestCase):
         self.assertEqual(asset.get("converge_round"), 2)
         self.assertIn("round2 prompt beta", asset.get("prompt") or "")
 
+    def test_final_slot_links_evolution_not_orphan(self) -> None:
+        """同目录 final.jpg 必须挂上 converge 会话；纯 rN 不能抢先于 final 槽。"""
+        from pmem_art import _guess_final_image, load_project
+
+        demo = self.td / "assets" / "ui" / "mainmenu" / "tilematch"
+        for name in ("r1.jpg", "r2.jpg", "r3.jpg", "final.jpg"):
+            _tiny_png(demo / name)
+        slim = [
+            {"image": "assets/ui/mainmenu/tilematch/r1.jpg", "score": 8.1},
+            {"image": "assets/ui/mainmenu/tilematch/r3.jpg", "score": 8.9},
+        ]
+        self.assertEqual(
+            _guess_final_image(self.td, slim, "assets/ui/mainmenu/tilematch/r3.jpg"),
+            "assets/ui/mainmenu/tilematch/final.jpg",
+        )
+        sess = {
+            "session_id": "tm-evo",
+            "goal": "tilematch home",
+            "module": "ui.MainMenu",
+            "status": "finished",
+            "winner": {"image": "assets/ui/mainmenu/tilematch/r3.jpg", "score": 8.9, "round": 3},
+            "rounds": [
+                {
+                    "round": 1,
+                    "score": 8.1,
+                    "passed": False,
+                    "prompt": "r1",
+                    "image": "assets/ui/mainmenu/tilematch/r1.jpg",
+                },
+                {
+                    "round": 3,
+                    "score": 8.9,
+                    "passed": False,
+                    "prompt": "r3 win",
+                    "image": "assets/ui/mainmenu/tilematch/r3.jpg",
+                },
+            ],
+        }
+        (self.td / ".memory-art" / "converge" / "tm-evo.json").write_text(
+            json.dumps(sess, ensure_ascii=False), encoding="utf-8"
+        )
+        data = load_project(self.td, embed_images=False)
+        cs = data["converge_sessions"]["tm-evo"]
+        self.assertEqual(cs.get("final_image"), "assets/ui/mainmenu/tilematch/final.jpg")
+        self.assertEqual(cs.get("winner_image"), "assets/ui/mainmenu/tilematch/r3.jpg")
+        final = data["assets"]["assets/ui/mainmenu/tilematch/final.jpg"]
+        self.assertEqual(final.get("converge_session_id"), "tm-evo")
+        self.assertEqual(final.get("plate"), "final")
+        self.assertFalse(final.get("workbench_hide"))
+        r3 = data["assets"]["assets/ui/mainmenu/tilematch/r3.jpg"]
+        self.assertEqual(r3.get("converge_session_id"), "tm-evo")
+        self.assertEqual(r3.get("plate"), "process")
+        self.assertTrue(r3.get("workbench_hide"))
+
     def test_delete_paths_only_images_under_root(self) -> None:
         from atlas_reveal import TRASH_REL, delete_paths
 
@@ -364,12 +418,19 @@ class AtlasAllImagesTests(unittest.TestCase):
 
         guide = self.td / "docs" / "workbench_guide" / "merge-ladder"
         trash = self.td / ".memory-art" / "_trash" / "assets" / "scene" / "demo"
+        # 嵌在 assets/ 扫描前缀下，才能真正验到 SKIP_DIR_NAMES（根目录 downloads/ 本就不在扫描前缀里）
+        downloads = self.td / "assets" / "downloads" / "tilematch"
+        downloads_zh = self.td / "assets" / "下载" / "store"
         _tiny_png(guide / "final.jpg")
         _tiny_png(trash / "kill.png")
+        _tiny_png(downloads / "tm_store_1.jpg")
+        _tiny_png(downloads_zh / "ref.jpg")
         _tiny_png(self.td / "assets" / "scene" / "demo" / "keep.png")
         paths = {i["path"] for i in scan_project_images(self.td)}
         self.assertIn("assets/scene/demo/keep.png", paths)
         self.assertTrue(all("workbench_guide" not in p for p in paths))
+        self.assertTrue(all("/downloads/" not in f"/{p}/" for p in paths))
+        self.assertTrue(all("/下载/" not in f"/{p}/" for p in paths))
         self.assertTrue(
             all("/_trash/" not in p and not p.startswith(".memory-art/_trash/") for p in paths)
         )

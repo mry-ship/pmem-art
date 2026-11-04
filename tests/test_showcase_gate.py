@@ -30,6 +30,10 @@ class TestCanAcceptWinner(unittest.TestCase):
     def test_max_rounds_may_ship_best(self) -> None:
         self.assertTrue(can_accept_winner(4, 8.56))
 
+    def test_early_safe_stop_may_ship_best(self) -> None:
+        self.assertTrue(can_accept_winner(2, 7.66, early_safe_stop=True))
+        self.assertFalse(can_accept_winner(2, 7.66, early_safe_stop=False))
+
     def test_unscored_skipped(self) -> None:
         self.assertTrue(can_accept_winner(None, None))
 

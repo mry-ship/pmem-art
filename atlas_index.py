@@ -43,6 +43,8 @@ SKIP_DIR_NAMES = {
     "_final_backups",  # 终稿备份，不进索引
     "_thumbs",
     "workbench_guide", # 教学示例图，不进画廊
+    "downloads",       # 外网/店面下载对标图，不进画廊
+    "下载",            # downloads 的中文目录名同效
 }
 INDEX_REL = ".memory-art/atlas_index.json"
 DATA_REL = ".memory-art/atlas_data.json"

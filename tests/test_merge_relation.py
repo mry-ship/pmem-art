@@ -207,6 +207,7 @@ class MergeRelationTests(unittest.TestCase):
     def test_base_body_locks_mother_mesh(self) -> None:
         """Same-object ladders may declare base_body; reinventing the mother fails."""
         good = {
+            "chain_mode": "same_object",
             "base_body": "透明切面短药瓶",
             "rows": [
                 {
@@ -222,6 +223,7 @@ class MergeRelationTests(unittest.TestCase):
         ok, issues = judge_relation_rows(parse_rows(good), track=good)
         self.assertTrue(ok, issues)
         bad = {
+            "chain_mode": "same_object",
             "base_body": "透明切面短药瓶",
             "rows": [
                 {
@@ -237,6 +239,80 @@ class MergeRelationTests(unittest.TestCase):
         ok2, issues2 = judge_relation_rows(parse_rows(bad), track=bad)
         self.assertFalse(ok2)
         self.assertTrue(any("未锁母体" in it for it in issues2), issues2)
+
+    def test_same_object_rejects_gift_box_subject_swap(self) -> None:
+        # 剪影主语即换货（parts 不是「丝带礼盒」也应拦；不用依赖 parts_add）
+        track = {
+            "chain_mode": "same_object",
+            "base_body": "strawberry soft candy",
+            "rows": [
+                {
+                    "level": 1,
+                    "name": "裸草莓软糖",
+                    "silhouette": "圆润草莓软糖单颗",
+                    "scale_pct": 0.58,
+                    "parts_add": "—",
+                },
+                {
+                    "level": 2,
+                    "name": "礼盒草莓",
+                    "silhouette": "开盖礼盒盛草莓糖",
+                    "scale_pct": 0.62,
+                    "parts_add": "小金冠",
+                },
+            ]
+            + [
+                {
+                    "level": i,
+                    "name": f"草莓{i}",
+                    "silhouette": f"草莓软糖加饰{i}",
+                    "scale_pct": 0.58 + i * 0.03,
+                    "parts_add": "小金冠",
+                }
+                for i in range(3, 9)
+            ],
+        }
+        ok, issues = judge_relation_rows(parse_rows(track), track=track)
+        self.assertFalse(ok)
+        self.assertTrue(any("换货" in it or "礼盒" in it for it in issues), issues)
+        trophy = {
+            "chain_mode": "same_object",
+            "base_body": "草莓软糖",
+            "rows": [
+                {
+                    "level": i,
+                    "name": f"草莓软糖{i}",
+                    "silhouette": (
+                        "金色奖杯盛草莓软糖" if i == 5 else f"圆润草莓软糖档{i}"
+                    ),
+                    "scale_pct": 0.55 + i * 0.03,
+                    "parts_add": "小蒂叶" if i > 1 else "—",
+                }
+                for i in range(1, 9)
+            ],
+        }
+        ok2, issues2 = judge_relation_rows(parse_rows(trophy), track=trophy)
+        self.assertFalse(ok2)
+        self.assertTrue(any("奖杯" in it or "换货" in it for it in issues2), issues2)
+
+    def test_en_base_body_matches_zh_silhouette(self) -> None:
+        """英文 base_body 应对上中文剪影里的草莓/软糖，不因语言差误杀。"""
+        track = {
+            "chain_mode": "same_object",
+            "base_body": "strawberry soft candy",
+            "rows": [
+                {
+                    "level": i,
+                    "name": f"草莓软糖{i}",
+                    "silhouette": f"圆润草莓软糖档{i}",
+                    "scale_pct": 0.55 + i * 0.03,
+                    "parts_add": "小蒂叶" if i > 1 else "—",
+                }
+                for i in range(1, 9)
+            ],
+        }
+        ok, issues = judge_relation_rows(parse_rows(track), track=track)
+        self.assertTrue(ok, issues)
 
     def test_l8_too_large_fails(self) -> None:
         rows = parse_rows(

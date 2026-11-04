@@ -1,6 +1,6 @@
 ---
 name: pmem-merge-ladder
-description: 玩家要一条同域合成升级梯，或生图分流判成合成梯时使用。只有 /pmem-merge-ladder：先文字定链型与升级关系，再说通再出图。同物件链锁母体加零件；同店/同域换货链允许换相关物件。无整表信号时默认一档一张；附格子参考或说整表一起出时强制 overview_sheet，先数行列并垫参考锁版式。
+description: 玩家要一条同域合成升级梯，或生图分流判成合成梯时使用。只有 /pmem-merge-ladder：先文字定链型与升级关系，再说通再出图。同族形变（主流）走 shop_ladder；同模加装才 same_object；乐器整表走 species_change。无整表信号时默认一档一张；附格子参考或说整表一起出时强制 overview_sheet，先数行列并垫参考锁版式。
 ---
 
 # `/pmem-merge-ladder` — 同域合成梯
@@ -32,18 +32,21 @@ description: 玩家要一条同域合成升级梯，或生图分流判成合成�
 
 | 链型 | 何时用 | 硬约束 |
 | :--- | :--- | :--- |
-| `same_object` | 同一物件加零件（药瓶、软糖） | 必须 `base_body`；每档 `silhouette`/`name` 留母体词；`parts_add` 为具体零件 |
-| `shop_ladder` | 同店同品类换货升级（章→杯、袋→箱）；玩家明确说「不必每档带 L1 原件 / 合理换物件升级」 | **不写** `base_body`；每档 `evolve_to` + `merge_why`；禁止回退；禁止跨店乱跳 |
-| `species_change` | 换物种但仍同任务域（厨具→厨具、一组乐器） | 不写 `base_body`；每档 `evolve_to` + `merge_why`；同任务域 |
-| （省略） | 旧稿 / 未点名链型 | **轻门**（MergePerCell）：只审件数、体量、剪影不复读、`parts_add` 具体；**不**强制 `family`/`merge_why`/`base_body` |
+| `same_object` | **同模加装**（药瓶加塞/环/托）：底座不变只焊零件 | 必须 `base_body`；留母体词；`parts_add` 累计可读（或明示替换式升级）。禁礼盒/奖杯等换货主语（走 `shop_ladder`） |
+| `shop_ladder` | **同族形变 / 同店升级**（Travel Town·Merge Mansion 主流）：每档可为新形态，锁色相与题材家族；允许换包装/容器 | **不写** `base_body`；每档 `evolve_to` + `merge_why`；禁回退与跨店乱跳；64px 相邻档可分 |
+| `species_change` | 换物种但仍同任务域（厨具、一组乐器整表） | 不写 `base_body`；每档 `evolve_to` + `merge_why`；整表乐器/船柜优先这条 |
+| （省略） | 旧稿 / 未点名链型 | **轻门**：件数、体量、剪影不复读、`parts_add` 具体；不强制 `family`/`merge_why`/`base_body` |
 
-**默认怎么选（通用，勿被单次节日任务带偏）：**
+**商业 merge（禁止只懂叠零件）：** 验同链家族基因 + 相邻档可读进化 + 体量缓增 + 合成理由。有糖果/同店升级信号时先想 `shop_ladder`；同模加装才用 `same_object`；**非糖果未点名则轻门，勿默锁 shop_ladder**。禁止装饰换装（例：糖纸档后突然没纸只换彩带，故事断——例句非唯一题材）。多维透镜见 `docs/MERGE_MULTI_LENS.md`（合两下体验 / 64px 可读 / 稀有度曲线 / 链型 / 色材质 / 套件）。
 
-1. 玩家明确同模加零件 → `same_object`
-2. 玩家明确换货/同店升级/不必保留 L1 体 → `shop_ladder`
-3. 玩家明确换物种同域，或说「一组 X / 多种 X」（乐器、船、厨具）且未说同模加零件 → `species_change`（或 `shop_ladder`）。**禁止**默默锁成一把吉他/一个母体焊零件
-4. 只给了**单件** L1 参考、没说换不换物件 → **先按 `same_object` 草案**（或省略走轻门）；只有叙事明显要换类才改。禁止「有 L1 就默认 shop_ladder」
-5. 口味/红线里的「禁止换物种；零件必须累计」**只约束** `same_object` / 玩家锁母体时；**不覆盖**「一组不同 X」或整表换货叙事
+**默认怎么选：**
+
+1. 明确同模加零件 / 工具瓶罐加装 → `same_object`
+2. 糖果/甜品包装升级、同店货柜、一档比一档高级形态且未说焊零件 → **`shop_ladder`**；禁止默默把软糖锁成 `same_object`
+3. 「一组 X / 多种 X」或整表乐器/船参考 → `species_change`（或 `shop_ladder`）。禁止默默焊单母体
+4. 单件 L1：工具瓶罐像加装→可 `same_object` 草案；糖果食物包装进化→先 `shop_ladder` 草案。禁止「有 L1 就默认 same_object」
+5. 「零件必须累计」**只约束** `same_object`；不覆盖同族形变 / 一组不同 X
+6. **非糖果且未点名链型** → 轻门，**禁止**默锁 `shop_ladder` 或强行 `base_body`
 
 ### B. `levels`
 
@@ -93,19 +96,20 @@ python3 pmem_art.py converge discuss --round <稿次> --prompt "<链型+N行>" -
 2. 每一档画面里将只有一件、居中（或整表中每格一件）。无脸，无等级字。
 3. 两件相同的这一档合成下一档。下一档仍是一件，且说得出合成理由。换成同色无关物件，没过。
 4. 体量只大一圈。低档占格大半，高档留边。末档最大。
-5. 沿档位更复杂或物件类升级。轻门/`same_object` 看 `parts_add`；`shop_ladder`/`species_change` 看 `evolve_to`。只写「更华丽/加光/特效」没过。缩略图看不出的小饰片也算没过。
+5. 沿档位更复杂或物件类升级。轻门/`same_object` 看 `parts_add`（累计可读）；`shop_ladder`/`species_change` 看 `evolve_to`。只写「更华丽/加光/特效」没过。缩略图看不出的小饰片也算没过。
 6. 相邻 `silhouette` 整句不能相同。  
-   - `same_object`：必须 `base_body`，每档留母体词。  
-   - `shop_ladder` / `species_change`：不写 `base_body`；禁止物件类回退；禁止无过渡的跨品类硬跳。  
+   - `same_object`：必须 `base_body`，每档留母体词；零件累计或明示替换式升级。  
+   - `shop_ladder` / `species_change`：不写 `base_body`；禁止物件类回退；禁止无过渡的跨品类硬跳；写清家族色相/题材基因。  
    - 省略链型：`base_body` 可选；写了就粘住。
+7. **禁止装饰换装**：不能既不累计零件、又写不出形变 `merge_why`（例句：糖纸→只换彩带断故事）。
 
 ### 独立文本判断 · 五问（任一项「否」→ 改稿，不准出图）
 
-1. 同店/同域吗？  
+1. 同店/同域吗？家族基因（色相/题材）锁住了吗？  
 2. 有没有回退到更低档物件类？  
 3. 有没有缺过渡的大跳档？  
 4. 缩略图（约 64px）相邻档能分清吗？  
-5. 升级理由具体吗？轻门/`same_object` 看 `parts_add`；`shop_ladder`/`species_change` 看 `merge_why`（不是「更高级/更华丽」）。
+5. 升级理由具体吗？轻门/`same_object` 看 `parts_add`；`shop_ladder`/`species_change` 看 `merge_why`（不是「更高级/更华丽」）。形变链允许换包装/容器，但必须说得出「两件同级合成后为何变成这一件」。
 
 ### 机读 yaml
 
@@ -159,8 +163,9 @@ python pmem_art.py merge audit --dir <目录> --phase1 <yaml> --track <域名>
 - 有整表参考却不数行列、不垫参考、硬做成默认 8 档。
 - 「一组 X」未说同模加零件却默认 `same_object` 焊单母体。
 - 用口味「禁止换物种」压过「一组不同 X」/ `species_change`。
-- 未点名换货却默认锁 `shop_ladder`，或未选链型却强行锁 `base_body`。
+- **非糖果且未点名链型**却默认锁 `shop_ladder`；或未选链型却强行锁 `base_body`。（糖果/同店升级按上文默认可 `shop_ladder`，不算违规。）
 - 玩家只要六档却硬凑八档无意义补档。
+- 空有链型过关却无视 `docs/MERGE_MULTI_LENS.md`：邻档不可分、无犒赏曲线、合两下说不出理由。
 - `overview_sheet` 超过 3 次整表重出仍不停手。
 - 从同框/整表抠图代替逐格交货（当 `delivery=per_cell` 时）。
 - 公平对比时垫对方成图。

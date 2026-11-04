@@ -35,6 +35,7 @@ SKILL_CHECKLISTS: dict[str, tuple[str, ...]] = {
         "fail_at_glance",
         "hero_read",
         "layout_not_style_echo",
+        "framing_lock",
     ),
     "clone": (
         "subject_action",
@@ -59,6 +60,7 @@ SKILL_CHECKLISTS: dict[str, tuple[str, ...]] = {
         "hard_locks",
         "fail_at_glance",
         "role_separation",
+        "state_machine",
     ),
     "shotpack": (
         "subject_action",
@@ -74,6 +76,9 @@ SKILL_CHECKLISTS: dict[str, tuple[str, ...]] = {
         "fail_at_glance",
         "layout_zones",
         "no_content_clutter",
+        "chrome_not_illustration",
+        "cta_clear_of_faces",
+        "control_craft",
     ),
     "icon.a": (
         "subject_action",
@@ -82,6 +87,7 @@ SKILL_CHECKLISTS: dict[str, tuple[str, ...]] = {
         "fail_at_glance",
         "safe_zone",
         "single_symbol",
+        "full_bleed_no_round_mask",
     ),
     "icon.b": (
         "subject_action",
@@ -105,6 +111,7 @@ SKILL_CHECKLISTS: dict[str, tuple[str, ...]] = {
         "fail_at_glance",
         "single_centered_item",
         "parts_add_concrete",
+        "base_body_retained",
     ),
 }
 
@@ -118,14 +125,22 @@ SKILL_ALIASES: dict[str, str] = {
     "变体": "variant",
     "多图分工": "split",
     "镜头包": "shotpack",
+    "shot-pack": "shotpack",
+    "shot_pack": "shotpack",
     "界面": "ui",
+    "UI": "ui",
+    "ui": "ui",
+    "HUD": "ui",
     "hud": "ui",
     "icon": "icon.a",
+    "appicon": "icon.a",
+    "app-icon": "icon.a",
+    "app_icon": "icon.a",
     "icon_a": "icon.a",
     "icon-a": "icon.a",
     "图标a": "icon.a",
     "图标A": "icon.a",
-    "appicon": "icon.a",
+    "桌面图标": "icon.a",
     "icon_b": "icon.b",
     "icon-b": "icon.b",
     "图标b": "icon.b",
@@ -155,13 +170,21 @@ CHECK_LABELS_ZH: dict[str, str] = {
     "camera_sets_distinct": "镜头套差异够大",
     "layout_zones": "界面分区清楚",
     "no_content_clutter": "内容区不塞插画杂物",
+    "chrome_not_illustration": "控件壳来自 UI 规格，禁止叙事插画当垫图母版",
+    "cta_clear_of_faces": "主 CTA 不遮脸/不压主角五官",
+    "control_craft": "按钮/顶栏工艺（描边、体积、投影、字重）",
     "safe_zone": "72%–80% 安全区",
     "single_symbol": "单符号高识别",
+    "full_bleed_no_round_mask": "满幅直角母版，禁止烤进圆角底板",
     "stroke_consistency": "线宽/端点一致",
     "silhouette_read": "厚剪影可读",
     "transparent_friendly": "透明底友好",
     "single_centered_item": "每档单件居中",
     "parts_add_concrete": "零件增量具体可画",
+    "base_body_retained": "same_object 保留母体；shop_ladder 锁家族基因",
+    "chain_mode_declared": "写清 same_object / shop_ladder / species_change",
+    "framing_lock": "景别硬锁写进修订句",
+    "state_machine": "开关态逻辑自洽（铰链/解锁）",
 }
 
 _CROWD_RE = re.compile(
@@ -176,6 +199,72 @@ _UI_ZONE_RE = re.compile(r"(九宫格|顶栏|底栏|内容区|面板|弹窗|HUD|
 _TRANSPARENT_RE = re.compile(r"(透明|transparent|alpha)", re.I)
 _NO_TEXT_RE = re.compile(r"(无字|不要字|no\s*text|without\s*text|无可读)", re.I)
 _SINGLE_ITEM_RE = re.compile(r"(单件|一件|居中|centered|single\s+item)", re.I)
+_FULL_BLEED_RE = re.compile(
+    r"(满幅直角|full[- ]?bleed|四角顶边|corners?\s+touch|无圆角蒙版|no\s*rounded\s*(mask|tile|plate))",
+    re.I,
+)
+_ROUND_MASK_BAD_RE = re.compile(
+    r"(圆角底板|圆角面板|rounded\s*(tile|squircle|plate|mask)|iOS\s*圆角蒙版烤进)",
+    re.I,
+)
+_UI_CHROME_RE = re.compile(
+    r"(顶栏|底栏|侧栏|主按钮|CTA|资源栏|九宫格|面板|bevel|描边|投影|字重|控件工艺|HUD)",
+    re.I,
+)
+_UI_ILLUST_PAD_BAD_RE = re.compile(
+    r"(叙事插画垫|气氛图垫|角色立绘垫|把插画当UI|插画当界面参考|茶会图垫|场景插画垫图|"
+    r"叙事插画.{0,12}(垫|参考|母版)|气氛图.{0,12}(垫|参考|母版)|"
+    r"茶会.{0,12}(庆祝|场景|插画|裁切).{0,16}(垫|参考|母版|主菜单|界面)|"
+    r"插画裁切.{0,8}(UI|界面|主菜单)|插画当界面(参考|母版)|"
+    r"把.{0,8}(插画|立绘|海报|茶会).{0,16}当.{0,16}(UI|界面|母版|主菜单)|"
+    r"(立绘|插画海报).{0,8}(当|垫|做).{0,8}(界面|主菜单|UI|母版|图)|"
+    r"插画海报垫(图)?|"
+    r"(立绘|插画海报).{0,6}垫.{0,8}主菜单|"
+    r"参考立绘.{0,8}(主菜单|界面)|拿插画当.{0,8}(主菜单|界面)母版|"
+    r"场景插画垫图|"
+    r"把立绘当界面参考)",
+    re.I,
+)
+_CTA_FACE_RE = re.compile(
+    r"(不遮脸|勿遮脸|避开面部|cta.?clear|never\s+cover\s+(the\s+)?face|主按钮不压脸)",
+    re.I,
+)
+_CONTROL_CRAFT_RE = re.compile(r"(描边|投影|顶高光|体积|bevel|字重|inset|控件工艺)", re.I)
+_FRAMING_RE = re.compile(
+    r"(半身|胸像|上半身|全身|远景|中景|近景|特写|俯视|仰视|平视|腰以上|"
+    r"bust|upper[- ]body|full[- ]body|bird'?s[- ]eye|low[- ]angle)",
+    re.I,
+)
+_STATE_OPEN_RE = re.compile(r"(打开|开盖|开启|open(?:ed)?|unlocked)", re.I)
+_STATE_OK_RE = re.compile(
+    r"(铰链|hinge|解锁|打开态|移除挂锁|padlock\s+(open|removed|unlocked)|只改盖)",
+    re.I,
+)
+_STATE_BAD_RE = re.compile(r"(闭合挂锁|锁着打开|closed\s+padlock.*open)", re.I)
+_SOFT_CANDY_SUBJECT_RE = re.compile(
+    r"(软糖|草莓糖|gummy|soft\s*candy)",
+    re.I,
+)
+_SOFT_CANDY_MEDIA_RE = re.compile(
+    r"(半透明|SSS|次表面|宽柔高光|translucen|subsurface|soft\s*gummy)",
+    re.I,
+)
+_HARD_PLASTIC_ONLY_RE = re.compile(
+    r"(硬塑胶|抛光塑料|树脂上漆|hard\s*plastic|lacquered\s*resin)",
+    re.I,
+)
+# 不含裸「无/非」：避免「无字」把后面的肯定硬塑胶误判为已否定
+_NEG_PREFIX_RE = re.compile(
+    r"(禁止|不要|勿要|请勿|并非|不是|一眼失败|fail[- ]?at[- ]?glance|"
+    r"(?:勿|别)(?=[硬烤圆]|硬塑|礼盒|奖杯|闭锁|挂锁|圆角))",
+    re.I,
+)
+
+
+def _negated_before(text: str, at: int, span: int = 96) -> bool:
+    start = max(0, int(at) - int(span))
+    end = min(len(text), int(at) + 6)
+    return bool(_NEG_PREFIX_RE.search(text[start:end]))
 
 
 def normalize_skill(skill: str) -> str:
@@ -230,10 +319,12 @@ def parse_checklist(text: str) -> dict[str, dict[str, str]]:
     return out
 
 
-def _heuristic_issues(skill: str, draft: str, revised: str) -> list[str]:
+def _heuristic_issues(skill: str, draft: str, revised: str, notes: str = "") -> list[str]:
     issues: list[str] = []
     d = (draft or "").strip()
     r = (revised or "").strip()
+    n = (notes or "").strip()
+    blob = f"{d}\n{r}\n{n}"
     if len(r) < 24:
         issues.append("revised 太短：修订提示词须写清主体、动作/布局与硬锁（至少约一句完整出图句）")
     if d and r and d == r and len(r) < 80:
@@ -250,12 +341,94 @@ def _heuristic_issues(skill: str, draft: str, revised: str) -> list[str]:
             issues.append("icon.a 缺画幅：修订句须点明 1:1 / 1024 / 满幅直角")
         if not _NO_TEXT_RE.search(r):
             issues.append("icon.a 缺无字：修订句须写死无字 / no text（母版禁止口号与小字）")
+        if not _FULL_BLEED_RE.search(r):
+            issues.append(
+                "icon.a 缺满幅直角硬锁：修订句须写满幅直角/full-bleed/四角顶边，并禁止烤进圆角蒙版"
+            )
+        m_round = _ROUND_MASK_BAD_RE.search(r)
+        if m_round and not _negated_before(r, m_round.start()):
+            issues.append(
+                "icon.a 禁止圆角底板：母版必须直角满幅；圆角由系统蒙版后加，不可烤进成图"
+            )
     if skill == "icon.c" and not _TRANSPARENT_RE.search(r):
         issues.append("icon.c 缺透明底：修订句须写透明底/transparent")
-    if skill == "ui" and not _UI_ZONE_RE.search(r):
-        issues.append("ui 缺分区：修订句须点名九宫格/顶栏底栏/内容区/面板等")
-    if skill == "merge" and not _SINGLE_ITEM_RE.search(r):
-        issues.append("merge 缺单件居中：修订句须写单件居中、非场景")
+    if skill in {"ordinary", "keyart", "icon.c", "shotpack", "clone", "variant", "merge"} and _SOFT_CANDY_SUBJECT_RE.search(blob):
+        if not _SOFT_CANDY_MEDIA_RE.search(r):
+            issues.append(
+                "软糖题材缺介质句：修订句须写半透明/SSS/宽柔高光/次表面，禁止只写题材名「软糖」或硬塑胶玩具"
+            )
+        m_hard = _HARD_PLASTIC_ONLY_RE.search(r)
+        if m_hard and not _negated_before(r, m_hard.start()):
+            issues.append("软糖题材勿把硬塑胶当目标介质：请改成软糖半透明并显式禁止硬塑胶")
+    if skill == "ui":
+        if not _UI_ZONE_RE.search(r):
+            issues.append("ui 缺分区：修订句须点名九宫格/顶栏底栏/内容区/面板等")
+        if _UI_ILLUST_PAD_BAD_RE.search(blob):
+            issues.append(
+                "ui 禁止叙事插画当垫图母版：主菜单须先写八项控件规格；真实截图只提炼文字，不垫插画/气氛图出控件"
+            )
+        if not _UI_CHROME_RE.search(r) or not _CONTROL_CRAFT_RE.search(r):
+            issues.append(
+                "ui 缺控件工艺：修订句须写顶栏/主按钮等分区，并写清描边/体积/投影/字重（对标商业休闲 HUD，不是插画海报）"
+            )
+        if not _CTA_FACE_RE.search(r):
+            issues.append("ui 缺 CTA 避脸：修订句须写主按钮不遮脸/不压主角五官")
+        if re.search(r"(巨型PLAY|超大Play|PLAY占半屏)", r, re.I) and not re.search(
+            r"(禁止|不要|勿).{0,8}(巨型|超大)", r
+        ):
+            issues.append("ui CTA 体量过大：主按钮须克制，约占下三分之一宽，勿压死场景")
+    if skill == "merge":
+        if not _SINGLE_ITEM_RE.search(r):
+            issues.append("merge 缺单件居中：修订句须写单件居中、非场景")
+        has_named_mode = bool(re.search(
+            r"(same_object|shop_ladder|species_change|同模加装|同族形变|换物种)",
+            blob,
+            re.I,
+        ))
+        candyish = bool(re.search(r"(软糖|草莓糖|棒棒糖|糖纸|硬糖|gummy|soft\s*candy)", blob, re.I))
+        # MergePerCell 轻门：非糖果可省略链型；糖果必须显式 shop_ladder（「轻门」不能冒充）
+        if candyish and not re.search(r"(shop_ladder|同族形变)", blob, re.I):
+            issues.append(
+                "merge 糖果链须点名 shop_ladder（同族形变）；禁止用轻门/same_object/省略冒充商业糖果升级"
+            )
+        if re.search(r"(same_object|同模加装|同物件)", blob, re.I) and not re.search(
+            r"(保留母体|母体词|同一草莓|同一软糖|base_body|每档.?仍?是.?同一|母体\+?零件|累计)",
+            r,
+            re.I,
+        ):
+            issues.append(
+                "merge same_object 缺母体/累计：修订句须写死每档同一母体+零件累计（或明示替换式升级）"
+            )
+        if re.search(r"(shop_ladder|同族形变)", blob, re.I) and not re.search(
+            r"(evolve_to|家族|色相|形变|包装|merge_why|合成理由)", r, re.I
+        ):
+            issues.append(
+                "merge shop_ladder 缺形变理由：须写家族基因与 evolve/合成理由，禁止装饰换装断故事"
+            )
+        m_swap = re.search(r"(礼盒|奖杯|红宝石)", r)
+        if (
+            m_swap
+            and re.search(r"(same_object|同物件|同模加装)", blob, re.I)
+            and not _negated_before(r, m_swap.start())
+        ):
+            issues.append(
+                "merge same_object 疑似换货：礼盒/奖杯作主语应改 shop_ladder 同族形变，或改成母体上的配件"
+            )
+    if skill == "split":
+        if _STATE_OPEN_RE.search(blob):
+            m_bad = _STATE_BAD_RE.search(r)
+            if m_bad and not _negated_before(r, m_bad.start()):
+                issues.append("split 打开态逻辑矛盾：开盖时不可同时保留闭合挂锁")
+            if not _STATE_OK_RE.search(r):
+                issues.append(
+                    "split 打开态缺状态机：修订句须写铰链可见/挂锁解锁或移除/只改盖，禁止闭锁开盖"
+                )
+    if skill == "shotpack" and not re.search(
+        r"(换机位|不同景别|俯|仰|侧|特写|远景|中景|机位差)", r
+    ):
+        issues.append(
+            "镜头包缺机位差：点选后成图须相对普通棚拍正中改景别/高度/角度，禁止又一张同构图"
+        )
     if skill == "clone" and re.search(r"(同一[个位]?人|原角色再画|抄回参考主体)", r):
         issues.append("clone 疑似回声参考主体：换题材锁画风，不要把参考人画回来")
     if skill == "keyart" and re.search(
@@ -270,11 +443,19 @@ def _heuristic_issues(skill: str, draft: str, revised: str) -> list[str]:
         r,
         re.I,
     ):
-        # 有「参考/样张」字样却无反构图声明时硬拦
         if re.search(r"(参考|样张|风格图|垫图)", r):
             issues.append(
                 "keyart 缺 layout_not_style_echo：有样张时修订句须写明只借画风、新机位/不贴样张构图"
             )
+    if skill == "keyart":
+        if not _FRAMING_RE.search(r):
+            issues.append(
+                "keyart 缺景别硬锁：修订句须写半身/胸像/全身等可验收景别，并写一眼失败条件"
+            )
+        if re.search(r"半身|胸像|上半身|bust|upper[- ]body|腰以上", r, re.I):
+            m_full = re.search(r"(全身群像|带狗|加狗|full[- ]body\s+crowd)", r, re.I)
+            if m_full and not _negated_before(r, m_full.start()):
+                issues.append("keyart 景别自相矛盾：既要半身又写全身群像/加狗，请删掉冲突句")
     return issues
 
 
@@ -293,7 +474,7 @@ def review_reasonableness(
     parsed = parse_checklist(checklist_text)
     missing = [k for k in required if k not in parsed]
     failed_keys = [k for k, v in parsed.items() if k in required and v.get("status") != "ok"]
-    heuristic = _heuristic_issues(sk, draft, revised)
+    heuristic = _heuristic_issues(sk, draft, revised, notes=notes)
     issues: list[str] = []
     if missing:
         issues.append(
@@ -317,6 +498,7 @@ def review_reasonableness(
     return {
         "passed": passed,
         "skill": sk,
+        "skill_raw": (skill or "").strip(),
         "draft_prompt": (draft or "").strip(),
         "revised_prompt": (revised or "").strip(),
         "checklist": checklist_out,
@@ -352,6 +534,7 @@ def apply_review_to_session(sess: dict[str, Any], review: dict[str, Any]) -> dic
         "reviewed_at": review.get("reviewed_at"),
         "reviewed_at_iso": review.get("reviewed_at_iso"),
         "force_pass": bool(review.get("force_pass")),
+        "skill_raw": review.get("skill_raw") or review.get("skill"),
     }
     notes = [d for d in list(sess.get("discussions") or []) if not (
         isinstance(d, dict) and d.get("kind") == "reasonableness"
@@ -378,6 +561,45 @@ def apply_review_to_session(sess: dict[str, Any], review: dict[str, Any]) -> dic
     return sess
 
 
+ROUTE_TO_REVIEW_SKILL = {
+    "draw.ordinary": "ordinary",
+    "draw.key": "keyart",
+    "draw.clone": "clone",
+    "draw.variant": "variant",
+    "draw.multi": "split",
+    "draw.lens": "shotpack",
+    "ui.kit": "ui",
+    "icon.a": "icon.a",
+    "icon.b": "icon.b",
+    "icon.c": "icon.c",
+    "merge.ladder": "merge",
+}
+
+
+def _known_review_skill(skill: str) -> str:
+    raw = (skill or "").strip()
+    key = raw.lower().replace(" ", "")
+    if key in SKILL_CHECKLISTS:
+        return key
+    if raw in SKILL_ALIASES:
+        return str(SKILL_ALIASES[raw])
+    if key in SKILL_ALIASES:
+        return str(SKILL_ALIASES[key])
+    return ""
+
+
+def review_skill_matches_routes(skill: str, route_ids: list[Any] | None) -> bool:
+    """会话记下了 route_ids 时，review 的 skill 必须落在其中。未知技能不能收成 ordinary。"""
+    ids = [str(x) for x in (route_ids or []) if str(x)]
+    if not ids:
+        return True
+    allowed = [ROUTE_TO_REVIEW_SKILL[r] for r in ids if r in ROUTE_TO_REVIEW_SKILL]
+    if not allowed:
+        return False
+    known = _known_review_skill(skill)
+    return bool(known) and known in allowed
+
+
 def check_reasonableness_gate(
     sess: dict[str, Any],
     *,
@@ -393,6 +615,19 @@ def check_reasonableness_gate(
     """
     del round_num  # round number must not decide whether the gate applies
     blob = sess.get("reasonableness") if isinstance(sess.get("reasonableness"), dict) else None
+    if blob and blob.get("passed") and not review_skill_matches_routes(
+        str(blob.get("skill_raw") or blob.get("skill") or ""),
+        list(sess.get("route_ids") or []),
+    ):
+        return (
+            False,
+            "合理性 skill="
+            + str(blob.get("skill") or "")
+            + " 与本次路由 "
+            + "、".join(str(x) for x in (sess.get("route_ids") or []))
+            + " 不一致。请按这次 route 重跑 reasonableness review。",
+            "",
+        )
     if not blob or not blob.get("passed"):
         issues = ""
         if blob and blob.get("issues"):

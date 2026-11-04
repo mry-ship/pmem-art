@@ -28,6 +28,7 @@ def can_accept_winner(
     *,
     threshold: float = DEFAULT_THRESHOLD,
     max_rounds: int = DEFAULT_MAX_ROUNDS,
+    early_safe_stop: bool = False,
 ) -> bool:
     """True when a scored cell may be published as the page winner."""
     if score is None:
@@ -35,6 +36,9 @@ def can_accept_winner(
     if float(score) >= float(threshold):
         return True
     if rounds is not None and int(rounds) >= int(max_rounds):
+        return True
+    # finish 在 STOP_REGRESSION / STOP_PLATEAU 后收最高分，允许低于 9.5 入展陈
+    if early_safe_stop and rounds is not None and int(rounds) >= 2:
         return True
     return False
 
@@ -106,7 +110,8 @@ def audit_showcase_html(html: str) -> list[dict[str, Any]]:
         if score is None:
             continue
         rounds = round_count(caption)
-        if can_accept_winner(rounds, score):
+        early = bool(re.search(r"(安全早停|STOP_REGRESSION|STOP_PLATEAU)", caption, re.I))
+        if can_accept_winner(rounds, score, early_safe_stop=early):
             continue
         issues.append(
             {

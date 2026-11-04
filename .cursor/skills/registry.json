@@ -57,7 +57,7 @@
     },
     {
       "id": "merge.ladder",
-      "when": "同域升级梯（默认 L1–L8，可 6 档）；默认同物件或轻门，点名可 shop_ladder / 整表",
+      "when": "同域升级梯（默认 L1–L8，可 6 档）；糖果/甜品默认 shop_ladder；工具瓶罐可 same_object；未点名非糖果可轻门 / 整表",
       "skill": "pmem-merge-ladder",
       "section": "同域合成梯：先定链型与关系，再按交付出图",
       "file": ".cursor/skills/pmem-merge-ladder/SKILL.md",

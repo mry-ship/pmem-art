@@ -685,27 +685,57 @@ def _collect_ref_paths(root: Path, doc: dict[str, Any], rounds_raw: list) -> lis
     return refs
 
 
+def _sibling_final_slot(root: Path, image: str) -> str:
+    """同目录终稿槽：优先 final.* / *_final.*，绝不把 rN 过程板本身当成终稿文件。"""
+    img = str(image or "").replace("\\", "/").strip()
+    if not img:
+        return ""
+    parent = str(Path(img).parent).replace("\\", "/")
+    if parent in {"", "."}:
+        return ""
+    stem = Path(img).stem
+    # overview_5x3_cursor_r4 → overview_5x3_cursor；纯 r3 则 base 为空（勿回落成 r3.jpg）
+    base_stem = re.sub(r"(?:^|[_-])r\d{1,2}$", "", stem, flags=re.I).strip("_-")
+    if re.fullmatch(r"r\d{1,2}", stem, flags=re.I):
+        base_stem = ""
+    candidates: list[str] = [
+        f"{parent}/final.jpg",
+        f"{parent}/final.png",
+        f"{parent}/final.webp",
+    ]
+    if base_stem:
+        candidates.extend(
+            [
+                f"{parent}/{base_stem}_final.jpg",
+                f"{parent}/{base_stem}_final.png",
+                f"{parent}/{base_stem}_final.webp",
+            ]
+        )
+    for key in candidates:
+        if (root / key).is_file():
+            return key
+    return ""
+
+
 def _guess_final_image(root: Path, slim_rounds: list[dict[str, Any]], winner: str) -> str:
-    if winner:
-        return winner
+    # 有同目录 final.jpg 时永远优先它（即使 winner 仍是 r3 过程板）
+    anchors = [winner] + [str(r.get("image") or "") for r in (slim_rounds or [])]
+    for anchor in anchors:
+        sib = _sibling_final_slot(root, anchor)
+        if sib:
+            return sib
     scored = [
         r for r in slim_rounds
         if r.get("image") and r.get("score") is not None
     ]
     if scored:
         best = max(scored, key=lambda r: float(r.get("score") or 0))
-        # 若最高分图本身是 rN 过程名，仍记为候选终稿源；真正终稿槽位由同目录 *final* 推断
         img = str(best.get("image") or "")
-        parent = str(Path(img).parent).replace("\\", "/")
-        stem = Path(img).stem
-        # overview_5x3_cursor_r4 -> overview_5x3_cursor
-        base_stem = re.sub(r"[_-]r\d{1,2}$", "", stem, flags=re.I)
-        for key in (f"{parent}/{base_stem}_final.jpg", f"{parent}/{base_stem}_final.png",
-                    f"{parent}/{base_stem}.jpg", f"{parent}/{base_stem}.png",
-                    f"{parent}/final.jpg", f"{parent}/final.png"):
-            if (root / key).is_file():
-                return key
+        if winner:
+            return winner
         return img
+    if winner:
+        return winner
     return str((slim_rounds[-1] or {}).get("image") or "") if slim_rounds else ""
 
 
@@ -787,11 +817,25 @@ def attach_converge_prompt_traces(
             )
         if not slim_rounds:
             continue
+        # finish 常把胜出轮写在 winner.image，不一定有顶层 winner_image
+        win_obj = doc.get("winner") if isinstance(doc.get("winner"), dict) else {}
         winner = _norm_project_rel(
-            root, str(doc.get("winner_image") or doc.get("best_image") or "")
+            root,
+            str(
+                doc.get("winner_image")
+                or doc.get("best_image")
+                or win_obj.get("image")
+                or win_obj.get("asset_image")
+                or ""
+            ),
         )
         refs = _collect_ref_paths(root, doc, rounds_raw)
-        final_image = _guess_final_image(root, slim_rounds, winner)
+        # finish 已落盘的 final_image 优先（须真实存在），否则再猜同目录槽
+        stored_final = _norm_project_rel(root, str(doc.get("final_image") or ""))
+        if stored_final and (root / stored_final).is_file():
+            final_image = stored_final
+        else:
+            final_image = _guess_final_image(root, slim_rounds, winner)
         sessions[sid] = {
             "session_id": sid,
             "goal": str(doc.get("goal") or ""),
@@ -851,17 +895,53 @@ def attach_converge_prompt_traces(
             assets_info[rk]["role"] = assets_info[rk].get("role") or "reference"
             assets_info[rk]["plate"] = "reference"
             assets_info[rk]["workbench_hide"] = True
-        for cand in (winner, final_image):
-            if not cand:
-                continue
-            wk = _resolve_asset_key(cand)
+        def _stamp_visible_final(path: str) -> None:
+            wk = _resolve_asset_key(path)
+            if not wk or not isinstance(assets_info.get(wk), dict):
+                return
+            assets_info[wk]["converge_session_id"] = sid
+            assets_info[wk]["workbench_hide"] = False
+            if assets_info[wk].get("converge_round") is None and slim_rounds:
+                # 终稿槽继承胜出轮次，便于进化面板定位
+                win_round = None
+                if winner:
+                    for rr in slim_rounds:
+                        if str(rr.get("image") or "") == winner:
+                            win_round = rr.get("round")
+                            break
+                assets_info[wk]["converge_round"] = win_round if win_round is not None else slim_rounds[-1].get("round")
+            # 终稿槽位保持可见且算定稿（文件名常是 r3_916.png，不能因过程规则藏进进化里）
+            assets_info[wk]["plate"] = "final"
+
+        # 有独立 final.* 槽时：只它进主画廊；胜出轮 rN 留在进化对照里
+        if final_image:
+            _stamp_visible_final(final_image)
+        if winner and winner != final_image:
+            wk = _resolve_asset_key(winner)
             if wk and isinstance(assets_info.get(wk), dict):
                 assets_info[wk]["converge_session_id"] = sid
-                assets_info[wk]["workbench_hide"] = False
-                if assets_info[wk].get("converge_round") is None and slim_rounds:
-                    assets_info[wk]["converge_round"] = slim_rounds[-1].get("round")
-                # 终稿槽位保持可见且算定稿（文件名常是 r3_916.png，不能因过程规则藏进进化里）
-                assets_info[wk]["plate"] = "final"
+                # 保持过程档，避免与 final.jpg 双定稿刷屏
+                name = Path(str(assets_info[wk].get("path") or wk)).name
+                if re.search(r"(?:^|[_-])r\d{1,2}(?:[._-]|$)", name, re.I):
+                    assets_info[wk]["plate"] = "process"
+                    assets_info[wk]["workbench_hide"] = True
+                else:
+                    _stamp_visible_final(winner)
+        elif winner and not final_image:
+            _stamp_visible_final(winner)
+        # 同目录还有手工/历史 final.jpg 时也要挂上会话，否则点它进化对照是空的
+        dirs: set[str] = set()
+        for anchor in [winner, final_image] + [str(r.get("image") or "") for r in slim_rounds]:
+            if not anchor:
+                continue
+            parent = str(Path(anchor).parent).replace("\\", "/")
+            if parent and parent not in {".", ""}:
+                dirs.add(parent)
+        for parent in dirs:
+            for name in ("final.jpg", "final.png", "final.webp"):
+                key = f"{parent}/{name}"
+                if (root / key).is_file():
+                    _stamp_visible_final(key)
     return sessions
 
 
@@ -1547,6 +1627,7 @@ def cmd_hook(root: Path, data: dict[str, Any], event: str) -> int:
 
     advice: list[str] = []
     updated_input: dict[str, Any] | None = None
+    deny_gen = False
     # 生图前 / 写资产前：自动 search 相关记忆（有活跃 converge 会话时用会话模块，不靠猜）
     if event in ("pre-tool", "pre-gen"):
         q = prompt or user_msg or path
@@ -1576,16 +1657,25 @@ def cmd_hook(root: Path, data: dict[str, Any], event: str) -> int:
                 claim_active_conversation(root, conv_id)
         except Exception:
             sess = {}
-        # 软提醒：没 route 缓存时提示 Agent（不阻断已开的会话）
+        # 真生图且路由未放行：拦住 GenerateImage。stop followup 仍按对话归属，这里不改。
         if event == "pre-gen":
             try:
                 from skills_kit.route_gate import check_route_gate
 
-                ok_g, msg_g = check_route_gate(root, goal=q or "")
+                ok_g, msg_g = check_route_gate(
+                    root,
+                    goal=q or "",
+                    conversation_id=conv_id,
+                    match_goal=False,
+                )
                 if not ok_g:
                     advice.append("⚠️ [路由闸门] " + msg_g)
-            except Exception:
-                pass
+                    if is_generate_image_tool(tool, args_obj):
+                        deny_gen = True
+            except Exception as exc:
+                advice.append(f"⚠️ [路由闸门] 检查失败：{exc}")
+                if is_generate_image_tool(tool, args_obj):
+                    deny_gen = True
         if not module and q:
             from feedback import infer_module_from_text
             module = infer_module_from_text(q, data)
@@ -1640,7 +1730,7 @@ def cmd_hook(root: Path, data: dict[str, Any], event: str) -> int:
             for kc in layered_k:
                 advice.append(f"  · [{kc.get('layer_scope', 'shared')}:knowledge] {kc.get('title')}: {kc.get('body', '')[:80]}")
             kind, view = image_gen_arg_view(tool, args_obj)
-            if kind and block:
+            if kind and block and not deny_gen:
                 patched = merge_block_into_image_args(view, block)
                 if kind == "nested":
                     new_outer = dict(args_obj)
@@ -1686,18 +1776,20 @@ def cmd_hook(root: Path, data: dict[str, Any], event: str) -> int:
 
     # Cursor hook 协议：输出 JSON，附加 agentMessage 提示（兼容 continue）
     out = {
-        "continue": not bool(followup),
+        "continue": not bool(followup) and not deny_gen,
         "server": "pmem-art",
         "version": VERSION,
         "event": event,
         "agentMessage": "\n".join(advice) if advice else "",
     }
+    if deny_gen:
+        out["permission"] = "deny"
     if followup:
         out["followup_message"] = followup
     agent_text = str(out.get("agentMessage") or "")
     if agent_text:
         out["agent_message"] = agent_text
-    if updated_input is not None:
+    if updated_input is not None and not deny_gen:
         out["updated_input"] = updated_input
         out["permission"] = "allow"
     print(json.dumps(out, ensure_ascii=False))
@@ -1855,6 +1947,11 @@ def main() -> int:
         action="store_true",
         help="从 2500+ 用例蒸馏重建打包话术库，并同步到 .memory-art/route_bank/",
     )
+    p_route.add_argument(
+        "--conversation",
+        default="",
+        help="当前对话 id。写入后，别的对话不能拿这次路由开画",
+    )
 
     p_sgate = sub.add_parser(
         "showcase-gate",
@@ -1987,6 +2084,16 @@ def main() -> int:
         action="store_true",
         help="跳过出图前合理性闸（仅调试；默认必须先 reasonableness review）",
     )
+    p_conv.add_argument(
+        "--route-id",
+        default="",
+        help="本次要开的 route id，须在上次 route 的 route_ids 里",
+    )
+    p_conv.add_argument(
+        "--conversation",
+        default="",
+        help="当前对话 id。与另一对话未结束的同一 session 冲突时拒绝开画",
+    )
 
     p_improve = sub.add_parser("improve", help="自我迭代：扫描反思+反馈 → 更新口味档案（/pmem-coach）")
     p_improve.add_argument("action", nargs="?", default="run", choices=("run", "progress", "reflect"), help="run|progress|reflect")
@@ -2075,7 +2182,12 @@ def main() -> int:
         try:
             from skills_kit.route_gate import save_route_advise
 
-            save_route_advise(root, payload, text=text)
+            save_route_advise(
+                root,
+                payload,
+                text=text,
+                conversation_id=getattr(args, "conversation", "") or "",
+            )
         except Exception as exc:  # noqa: BLE001
             print(f"⚠️  route 结果未写入闸门缓存：{exc}", file=sys.stderr)
         if args.json:
@@ -2342,6 +2454,8 @@ def main() -> int:
             contract=getattr(args, "converge_contract", "") or "",
             skip_route_gate=bool(getattr(args, "skip_route_gate", False)),
             skip_reasonableness_gate=bool(getattr(args, "skip_reasonableness_gate", False)),
+            expect_route=getattr(args, "route_id", "") or "",
+            conversation_id=getattr(args, "conversation", "") or "",
         )
     if args.command == "reasonableness":
         from skills_kit.reasonableness_gate import cmd_reasonableness_at_root

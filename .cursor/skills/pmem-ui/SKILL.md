@@ -41,7 +41,7 @@ python3 pmem_art.py search --module <ui.模块>
    # 首轮前必过合理性闸（同时交出更合理提示词）：
    python3 pmem_art.py reasonableness review --id <session> --skill ui \
      --draft "<草稿>" --revised "<分区/控件/禁忌写清的修订句>" \
-     --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;layout_zones=ok;no_content_clutter=ok"
+     --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;layout_zones=ok;no_content_clutter=ok;chrome_not_illustration=ok;cta_clear_of_faces=ok;control_craft=ok"
    # 每轮：converge generate 生图，再 converge judge 审图，直到 >= 9.5 或满 4 轮
    python3 pmem_art.py converge finish
    ```
@@ -49,7 +49,13 @@ python3 pmem_art.py search --module <ui.模块>
 
 ### 点名了某款产品的主界面
 主界面概念不是空心九宫格，也不是关卡棋盘。玩家点名某款游戏的主界面时，可以先看一张该产品主界面的真实截图，只为了把下面八项写进提示词。生图只交这段文字，不把截图垫进生成，也不要照着像素克隆。
-- 场景铺满整屏。底栏后面的地面、地毯、墙脚都要写出来，控件叠在场景上，不要写成一条与场景断开的空托盘。
+- **禁止**把叙事插画、茶会/庆祝气氛裁切当 UI 垫图母版——会收成「插画海报+飘浮按钮」，立刻掉出可点 HUD。
+- 场景铺满整屏。若有底栏，底栏后的地面/墙脚要写出来；控件叠在场景上，不要写成与场景断开的空托盘。
+- 主任务区 **不遮脸**；体量按**对标品类真图**（单颗 PLAY / Level+Area 双钮 / 其它主 CTA 形态均可），禁止无对标依据的巨型单钮压死场景。
+- 顶栏/侧栏/主钮统一描边、体积、投影、字重（与对标品类 chrome 同族）。
+- **落位合理性（通用）**：出图前必须看**该品类**真实按钮截图，只抽分区写进修订句，**禁止**垫像素；禁止用 keyart/叙事图冒充 HUD。通用硬合同——①顶栏尽量单行，系统入口勿独占第二行浪费高度；②设置等系统钮角落可点、不抢主任务（常见右上，以真图为准）；③主任务一眼最大；次入口权重 << 主任务，勿用「右侧四 squircles」当万能骨架；④底栏有无跟对标：休闲可有 Home 居中底栏；禁的是对战/PVP 大厅语义，不是禁一切底栏；⑤角色/场景情绪锚，脸不压 chrome。分区错了结构维压分。
+- **范例（仅三消/装修休闲主页，非宇宙默认）**：Royal Match 类常见骨架＝头像|币|心|星|右上设置同排；中下 Level+Area；底栏五 Tab 且 Home 居中；商店常点金币进。RPG/超休/工具 App/无底栏产品**不要**硬套此范例，改抽该品类真图分区。
+- **主菜单多维透镜（通用·不只画风）**：明细见 `docs/UI_MULTI_LENS.md`——①体验：三秒知主任务、触达、短路径；②视觉扫视：顶→场景→主任务→底，主次分明；③按钮权重：P0 主任务 > P1 进度 > P2 资源 > P3 导航 > P4 次入口 > P5 系统；④上下方分区跟对标真图；⑤色：大面积场景 + chrome + 行动色只给主任务；⑥风格套件一致。空喊「高级」却过不了任一层 → 不出图或结构维 <7.5。
 - 不要把主界面改成另一块屏：家园不要画成三消盘面，也不要画成中间留白的装饰框。
 - 九宫格和组件表等这张主界面概念锁定后再拆。中心是场景时，不要求中心留白。
 

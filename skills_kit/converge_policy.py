@@ -42,9 +42,9 @@ _COLLAPSE_MARKERS = (
 _NEG_GAP = {"", "的", "地", "得", "使用", "用", "任何", "再", "去", "低", "高", "画"}
 DEFAULT_PLATEAU_ROUNDS = 2
 # Match skill docs / v2fix: R4+ consecutive drop >0.5 early-stop.
-DEFAULT_REGRESSION_DROP = 0.5
+DEFAULT_REGRESSION_DROP = 0.15
 DEFAULT_AUTO_PAD_DROP = 0.2
-DEFAULT_EARLY_STOP_MIN_ROUND = 4
+DEFAULT_EARLY_STOP_MIN_ROUND = 2
 PROMPT_CHAR_BUDGET = 3500
 
 

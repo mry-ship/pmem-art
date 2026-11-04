@@ -475,6 +475,8 @@ def cmd_converge(
     contract: str = "",
     skip_route_gate: bool = False,
     skip_reasonableness_gate: bool = False,
+    expect_route: str = "",
+    conversation_id: str = "",
 ) -> int:
     """
     converge_mode: quality (default, dynamic threshold per scale, max 4 rounds, stop ≥9.5 or best-of-4) | fast (warm-start fast-track hints).
@@ -519,7 +521,12 @@ def cmd_converge(
         if not skip_route_gate and not env_skip:
             from .route_gate import check_route_gate
 
-            ok_gate, gate_msg = check_route_gate(root, goal=goal or "")
+            ok_gate, gate_msg = check_route_gate(
+                root,
+                goal=goal or "",
+                expect_route=expect_route or "",
+                conversation_id=conversation_id or "",
+            )
             if not ok_gate:
                 print(f"❌ [路由闸门] {gate_msg}")
                 return 1
@@ -570,6 +577,30 @@ def cmd_converge(
                 print(f"❌ [Step 1 · 会话启动参数校验拦截] {exc}")
                 return 1
 
+        if (conversation_id or "").strip() and sf.exists():
+            try:
+                prev_sess = json.loads(sf.read_text(encoding="utf-8"))
+            except (OSError, json.JSONDecodeError):
+                prev_sess = {}
+            prev_owner = str((prev_sess or {}).get("owner_conversation_id") or "").strip()
+            prev_status = str((prev_sess or {}).get("status") or "")
+            if (
+                prev_owner
+                and prev_owner != conversation_id.strip()
+                and prev_status not in ("finished",)
+            ):
+                print(
+                    f"❌ [会话] {session_id} 还属于另一对话（{prev_owner}）。"
+                    "请换一个 --session，或等那边 finish。"
+                )
+                return 1
+
+        from .route_gate import load_route_advise
+
+        advise_now = load_route_advise(root, conversation_id or "") or {}
+        if advise_now.get("_foreign"):
+            advise_now = {}
+
         sess = {
             "session_id": session_id,
             "started_at": _now_cst().strftime("%Y-%m-%d %H:%M:%S UTC+8"),
@@ -605,6 +636,8 @@ def cmd_converge(
             "max_rounds": int(max_rounds),
             "ready_to_finish": False,
             "status": "running",
+            "owner_conversation_id": (conversation_id or "").strip(),
+            "route_ids": [str(x) for x in (advise_now.get("route_ids") or []) if str(x)],
             "rounds": [],
             "warm_start": warm,
             "lessons_all": [],
@@ -629,7 +662,7 @@ def cmd_converge(
                 )
                 print(f"🔓 画师锁定微调已生效：{format_dim_lock_summary_zh(eff_scale, ov)}")
         _write_session_json(sf, sess)
-        mark_active_session(root, session_id)
+        mark_active_session(root, session_id, conversation_id or "")
         print(
             f"🎯 [收敛会话已启动] 模块: {sess['module']} | 模式: {converge_mode} | 强度(scale): {eff_scale} ({scale_prof['label']})"
             f"{' · FAST-TRACK' if fast_track else ''} | 动态达标线: >= {sess['accept_threshold']} 分即停"
@@ -828,6 +861,30 @@ def cmd_converge(
             "true",
             "yes",
         )
+        env_skip_route = _os.environ.get("PMEM_ART_SKIP_ROUTE_GATE", "").strip().lower() in (
+            "1",
+            "true",
+            "yes",
+        )
+        if not skip_route_gate and not env_skip_route:
+            from .route_gate import check_route_gate
+
+            ok_gen_route, gen_route_msg = check_route_gate(
+                root,
+                expect_route=expect_route or "",
+                conversation_id=conversation_id or "",
+                match_goal=False,
+            )
+            if not ok_gen_route:
+                print(f"❌ [路由闸门] {gen_route_msg}")
+                return 1
+            from .route_gate import load_route_advise
+
+            advise_gen = load_route_advise(root, conversation_id or "") or {}
+            if not advise_gen.get("_foreign"):
+                fresh_ids = [str(x) for x in (advise_gen.get("route_ids") or []) if str(x)]
+                if fresh_ids:
+                    sess["route_ids"] = fresh_ids
         if not skip_reasonableness_gate and not env_skip_reas:
             from .reasonableness_gate import check_reasonableness_gate
 
@@ -1604,9 +1661,33 @@ def cmd_converge(
                 badge_text = f"共 {len(judged_for_finish)} 轮未达阈值，采用最高分"
 
         win_score = _score_of(winner)
-        sess["showcase_ready"] = can_accept_winner(
-            n_judged, win_score, threshold=float(accept_th), max_rounds=mr
+        # 与 showcase_gate / ConvergeGate 一致：STOP_REGRESSION|PLATEAU 后允许 <9.5 结算最高分
+        early_safe = (
+            str(sess.get("status") or "") == "early_safe_stop"
+            or any(
+                str((r or {}).get("early_safe_stop") or "")
+                in ("STOP_REGRESSION", "STOP_PLATEAU")
+                or str((r or {}).get("decision") or "")
+                in ("STOP_REGRESSION", "STOP_PLATEAU")
+                for r in judged_for_finish
+            )
         )
+        sess["showcase_ready"] = can_accept_winner(
+            n_judged,
+            win_score,
+            threshold=float(accept_th),
+            max_rounds=mr,
+            early_safe_stop=early_safe,
+        )
+        if early_safe and win_score < float(accept_th):
+            # 展陈 caption / HTML audit 依赖「安全早停」字样识别 early_safe_stop
+            badge_text = f"安全早停 · 共 {n_judged} 轮未达阈值，采用最高分"
+            if "安全早停" not in outcome_str:
+                outcome_str = (
+                    f"🛑 **安全早停后结算**：已审 {n_judged} 轮，最高 "
+                    f"`{win_score:.2f}` < `{float(accept_th):.2f}`，交付历史最高分"
+                    f"（第 {winner['round']} 轮）"
+                )
         if action == "finish" and not sess["showcase_ready"]:
             print(
                 f"❌ 还不能 finish：最高 {win_score:.2f} < {float(accept_th):.2f}，"
@@ -1788,8 +1869,41 @@ def cmd_converge(
                 keep_showcase = win_img_orig.replace("\\", "/").startswith("docs/showcase/")
                 if not keep_showcase:
                     winner["image"] = win_img
+            # 通用终稿槽：同目录写 final.*，并落盘 winner_image/final_image，工作台进化对照才能挂上
+            try:
+                import shutil as _shutil
+                win_rel = str(winner.get("image") or win_img or "").replace("\\", "/")
+                if win_rel and not win_rel.startswith("docs/showcase/"):
+                    win_path = Path(win_rel) if Path(win_rel).is_absolute() else (root / win_rel)
+                    if win_path.is_file():
+                        ext = win_path.suffix.lower() or ".jpg"
+                        if ext not in {".jpg", ".jpeg", ".png", ".webp"}:
+                            ext = ".jpg"
+                        try:
+                            parent_rel = win_path.resolve().parent.relative_to(root.resolve()).as_posix()
+                        except Exception:
+                            parent_rel = str(Path(win_rel).parent).replace("\\", "/")
+                        final_rel = f"{parent_rel}/final{ext}"
+                        final_path = root / final_rel
+                        if win_path.resolve() != final_path.resolve():
+                            final_path.parent.mkdir(parents=True, exist_ok=True)
+                            _shutil.copy2(str(win_path), str(final_path))
+                        sess["winner_image"] = win_rel
+                        sess["best_image"] = win_rel
+                        sess["final_image"] = final_rel
+                        _write_session_json(sf, sess)
+            except Exception as _final_slot_exc:
+                print(f"⚠️ 终稿槽 final.* 未写上：{_final_slot_exc}")
 
-            settle_word = "达标" if passing_rounds else "未达阈值，采用最高分"
+            settle_word = (
+                "达标"
+                if passing_rounds
+                else (
+                    "安全早停，采用最高分"
+                    if early_safe
+                    else "未达阈值，采用最高分"
+                )
+            )
             win_summary = f"[收敛胜出 {winner['score']:.2f}分] {sess.get('goal', '')[:50]} — {winner.get('strengths', '')[:30]}"
             win_caption = (
                 f"🏆 收敛胜出定稿 ({winner['score']:.2f}/10分 · 经过{len(rounds)}轮{settle_word})："

@@ -185,6 +185,13 @@ class SkillRouterTests(unittest.TestCase):
             self.assertIn("口语触发", rule)
             self.assertIn("不要当成跑偏", rule)
             self.assertIn("推倒重来", rule)
+            self.assertIn("终稿商业对标诊断", rule)
+            self.assertIn("同品类顶级商业范例", rule)
+            self.assertIn("把商业范例当垫图抄构图", rule)
+            draw_skill = (root / ".cursor" / "skills" / "pmem-draw" / "SKILL.md").read_text(encoding="utf-8")
+            self.assertIn("终稿拿不准时（商业对标诊断）", draw_skill)
+            critique = (root / ".cursor" / "skills" / "pmem-critique" / "SKILL.md").read_text(encoding="utf-8")
+            self.assertIn("拿不准时先商业对标", critique)
             self.assertNotIn("/art-", rule)
 
 

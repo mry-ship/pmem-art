@@ -1,0 +1,964 @@
+{
+  "session_id": "casual1105_variant",
+  "started_at": "2026-11-05 01:40:55 UTC+8",
+  "goal": "变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居中；商业休闲软塑胶",
+  "module": "prop.CasualBattery",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "medium",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "medium",
+    "label": "中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.5)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 1,
+    "target_score_threshold": 9.5,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.15,
+      "perspective_anatomy": 0.15,
+      "texture_detail": 0.15,
+      "spec_style": 0.15,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "viewpoint_frame",
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图，只在提示词上补还没过的那一处（提示词改动仍 ≤40%）",
+    "max_prompt_delta_ratio": 0.4,
+    "allow_recompose": false,
+    "allow_viewpoint_change": false,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "viewpoint_angle (不改机位与镜头视角)",
+      "element_count (不增删主体元素清单)",
+      "no_full_recompose (不做整体 recompose / 换景别故事)",
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)"
+    ],
+    "min_round_leap": 0.15,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光，表面那一句不动，只修没过的那一格",
+    "medium_family": "generic",
+    "best_direction_hint": "最优方向：光影·空气·介质；可小幅姿态/局部布局",
+    "goal": "变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居中；商业休闲软塑胶",
+    "module": "prop.CasualBattery",
+    "ref_image": "assets/skill_full_run_1105/refs/rm_king_identity_1x1.png",
+    "ref_analysis": "身份锁国王；只改眨眼表情；机位半身居中"
+  },
+  "medium_family": "generic",
+  "contract": "",
+  "target_score_threshold": 9.5,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "assets/skill_full_run_1105/refs/rm_king_identity_1x1.png",
+  "ref_analysis": "身份锁国王；只改眨眼表情；机位半身居中",
+  "default_aspect_ratio": "1:1",
+  "default_reference_image_paths": [
+    "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105/refs/rm_king_identity_1x1.png",
+    "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105/variant/r1.jpg"
+  ],
+  "aspect_ratio": "1:1",
+  "reference_image_paths": [
+    "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105/refs/rm_king_identity_1x1.png",
+    "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105/variant/r1.jpg"
+  ],
+  "ref_physical_traits": {
+    "exists": true,
+    "size_bytes": 1359982,
+    "size_kb": 1328.1,
+    "width": 1024,
+    "height": 1024,
+    "aspect_ratio": "1:1",
+    "canonical_aspect_ratio": "1:1",
+    "color_entropy": 7.99
+  },
+  "param_validation": {
+    "valid": true,
+    "validation_passed": true,
+    "case_id": "casual1105_variant",
+    "scale": "medium",
+    "aspect_ratio": "1:1",
+    "ref_aspect_ratio": "1:1",
+    "ref_dimensions": "1024x1024",
+    "output_aspect_ratio": "",
+    "output_dimensions": "",
+    "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105/refs/rm_king_identity_1x1.png",
+    "reference_image_paths": [
+      "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105/refs/rm_king_identity_1x1.png",
+      "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105/variant/r1.jpg"
+    ],
+    "inherited_default_aspect_ratio": false,
+    "inherited_default_pad_image": false,
+    "matched_ref_aspect_ratio": true,
+    "matched_ref_pad_image": true,
+    "matched_output_aspect_ratio": true,
+    "three_step_stage": "step1_start",
+    "three_step_verified": false,
+    "warnings": []
+  },
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.5,
+  "accept_threshold": 9.5,
+  "max_rounds": 4,
+  "ready_to_finish": true,
+  "status": "finished",
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "1:1",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105/refs/rm_king_identity_1x1.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "casual1105_variant",
+        "scale": "medium",
+        "aspect_ratio": "1:1",
+        "ref_aspect_ratio": "1:1",
+        "ref_dimensions": "1024x1024",
+        "output_aspect_ratio": "1:1",
+        "output_dimensions": "1024x1024",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105/refs/rm_king_identity_1x1.png",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105/refs/rm_king_identity_1x1.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "01:41:34",
+      "image": "assets/skill_full_run_1105/variant/r1.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 201823,
+        "size_kb": 197.1,
+        "width": 1024,
+        "height": 1024,
+        "aspect_ratio": "1:1",
+        "canonical_aspect_ratio": "1:1",
+        "color_entropy": 7.19
+      },
+      "raw_score": 8.71,
+      "score": 8.71,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.8/光影8.7/透视8.6/质感8.5/风格9.0/无瑕度8.7",
+      "dims_parsed": {
+        "composition": 8.8,
+        "lighting_color": 8.7,
+        "perspective_anatomy": 8.6,
+        "texture_detail": 8.5,
+        "spec_style": 9.0,
+        "flawlessness": 8.7
+      },
+      "weighted_score": 8.71,
+      "audit_warnings": [
+        "独立视觉裁判已采纳：openai_compatible/gpt-5.6-sol"
+      ],
+      "stagnated": false,
+      "strengths": "x",
+      "defects": "整体过于轴对称和图标化，动态感略弱；面部、金属与布料的表面处理较趋同，材质区分主要依赖颜色。胡须下缘与白色领口局部层次接近，胸前金边交会处略显生硬；两侧袖口条纹和肩甲的衔接关系稍含糊。",
+      "next_fix": "优先拉开胡须、领口和胸甲交界处的明度及接触阴影，并细化胸前金边转折；随后让布料更哑光、金冠更具金属反射、皮肤保持柔润，以增强材质差异，同时微调肩袖衔接和轮廓节奏。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.CasualBattery\n- 置信度: 0.50（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261105013323896RECIPE] [收敛胜出 8.63分] 商业休闲软塑胶草莓软糖道具，黑底隔离，居中，无脸无字 — x\n  · [CHAT20261105013752537RECIPE] [收敛胜出 8.42分] 草莓软糖 same_object L1-L8 overview_sheet 2x4 白卡深底；Cur — x\n  · [CHAT20261105013614213RECIPE] [收敛胜出 8.36分] 克隆：锁RM软塑胶商业休闲画风，新题材=圆润黄金茶壶道具，黑底1:1 — x\n- 必须避开红线:\n  · [CHAT20261105013324079REDLINE] [收敛踩坑红线] 商业休闲软塑胶草莓软糖道具，黑底隔离，居中，无脸无字：避免「顶部圆形凸起与草莓主体的结构衔接略显生硬，容易产生番茄或瓶盖般的识别偏差；部分籽粒的朝向、」\n  · [CHAT20261105013614447REDLINE] [收敛踩坑红线] 克隆：锁RM软塑胶商业休闲画风，新题材=圆润黄金茶壶道具，黑：避免「把手上下连接处的结构过渡略显黏连，底端卷钩造型突兀；壶嘴根部有明显竖向接缝感，像拼接而非连」\n  · [CHAT20261105013752727REDLINE] [收敛踩坑红线] 草莓软糖 same_object L1-L8 overvie：避免「整表并未形成同一草莓软糖对象的L1-L8连续演化：礼盒、皇冠草莓、红宝石和奖杯等已变成不同」\n  · [CHAT20261105012826279REDLINE] 禁止偏离样张画风：过度霓虹赛博、脏暗阴影、油腻镜面高光、写实皮肤毛孔、恐怖暗黑、扁平无体积贴纸风、赛博朋克紫雾\n  · [CHAT20261105013708541REDLINE] 电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感\n- 审美拍板:\n  · 以后统一按此样张画风：商业休闲Royal Match系；主色金黄#F5C542约70%、辅色城堡紫#7B5CDB约20%、点缀正红#E23B3B约10%；…\n- 个人口味: 光影=冷光源 / 暖光；构图=半身；色温=避免过饱和\n- 个人禁用习惯: 过曝高光；错误头身比/头过大；廉价塑料感/油腻高光；电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差；漏抠/黑底/毛边；赛博霓虹/霓虹紫；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光，表面那一句不动，只修没过的那一格 | Same chubby cartoon king soft plastic casual, ONLY wink playful smile delta, keep golden crown white beard blue-yellow robe, bust portrait cream backdrop, no UI no text | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.6,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "independent_vlm",
+      "remote_vlm": {
+        "source": "independent_vlm",
+        "provider": "openai_compatible",
+        "model": "gpt-5.6-sol",
+        "error": "",
+        "active": true
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "composition",
+          "lesson": "本轮短板偏「composition」：整体过于轴对称和图标化，动态感略弱；面部、金属与布料的表面处理较趋同，材质区分主要依赖颜色。胡须下缘与白色领口局部层次接近，胸前金边交会处略显生硬；两侧袖口条纹",
+          "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+          "from_score": "8.71"
+        },
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：整体过于轴对称和图标化，动态感略弱；面部、金属与布料的表面处理较趋同，材质区分主要依赖颜色。胡须下缘与白色领口局部层次接近，胸前金边交会处略显生硬；两侧袖口条纹",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.71"
+        },
+        {
+          "category": "material",
+          "lesson": "本轮短板偏「material」：整体过于轴对称和图标化，动态感略弱；面部、金属与布料的表面处理较趋同，材质区分主要依赖颜色。胡须下缘与白色领口局部层次接近，胸前金边交会处略显生硬；两侧袖口条纹",
+          "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+          "from_score": "8.71"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "01:41:44"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "1:1",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105/refs/rm_king_identity_1x1.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "casual1105_variant",
+        "scale": "medium",
+        "aspect_ratio": "1:1",
+        "ref_aspect_ratio": "1:1",
+        "ref_dimensions": "1024x1024",
+        "output_aspect_ratio": "1:1",
+        "output_dimensions": "1024x1024",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105/refs/rm_king_identity_1x1.png",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105/refs/rm_king_identity_1x1.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "01:43:26",
+      "image": "assets/skill_full_run_1105/variant/r2.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 201946,
+        "size_kb": 197.2,
+        "width": 1024,
+        "height": 1024,
+        "aspect_ratio": "1:1",
+        "canonical_aspect_ratio": "1:1",
+        "color_entropy": 7.2
+      },
+      "raw_score": 8.84,
+      "score": 8.84,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.0/光影8.9/透视8.7/质感8.8/风格9.2/无瑕度8.6",
+      "dims_parsed": {
+        "composition": 9.0,
+        "lighting_color": 8.9,
+        "perspective_anatomy": 8.7,
+        "texture_detail": 8.8,
+        "spec_style": 9.2,
+        "flawlessness": 8.6
+      },
+      "weighted_score": 8.84,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.13 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "独立视觉裁判已采纳：openai_compatible/gpt-5.6-sol"
+      ],
+      "stagnated": true,
+      "strengths": "x",
+      "defects": "面部与胡须区域细节密度明显高于躯干，蓝色衣料大面积偏平滑，材质区分略依赖颜色而非表面特性。皇冠两侧尖角和肩甲的左右轮廓存在轻微不均衡，胸口白色内衬与胡须尖端相接处形成较拥挤的切线；右侧耳朵被头发、胡须和脸颊夹得略局促。金色部件高光较强且相似，使皇冠、肩甲和衣领的材质层次稍显同质化。",
+      "next_fix": "优先整理胡须尖端与胸口内衬的交界，拉开轮廓间距并明确前后遮挡；随后微调皇冠侧翼和双肩外轮廓的平衡。降低部分金色高光的统一感，为皇冠、肩甲、衣领分别设置略有差异的粗糙度，同时给蓝袍补充克制的软塑胶表面起伏。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.CasualBattery\n- 置信度: 0.50（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261105013323896RECIPE] [收敛胜出 8.63分] 商业休闲软塑胶草莓软糖道具，黑底隔离，居中，无脸无字 — x\n  · [CHAT20261105013752537RECIPE] [收敛胜出 8.42分] 草莓软糖 same_object L1-L8 overview_sheet 2x4 白卡深底；Cur — x\n  · [CHAT20261105013614213RECIPE] [收敛胜出 8.36分] 克隆：锁RM软塑胶商业休闲画风，新题材=圆润黄金茶壶道具，黑底1:1 — x\n- 必须避开红线:\n  · [CHAT20261105013324079REDLINE] [收敛踩坑红线] 商业休闲软塑胶草莓软糖道具，黑底隔离，居中，无脸无字：避免「顶部圆形凸起与草莓主体的结构衔接略显生硬，容易产生番茄或瓶盖般的识别偏差；部分籽粒的朝向、」\n  · [CHAT20261105013614447REDLINE] [收敛踩坑红线] 克隆：锁RM软塑胶商业休闲画风，新题材=圆润黄金茶壶道具，黑：避免「把手上下连接处的结构过渡略显黏连，底端卷钩造型突兀；壶嘴根部有明显竖向接缝感，像拼接而非连」\n  · [CHAT20261105013752727REDLINE] [收敛踩坑红线] 草莓软糖 same_object L1-L8 overvie：避免「整表并未形成同一草莓软糖对象的L1-L8连续演化：礼盒、皇冠草莓、红宝石和奖杯等已变成不同」\n  · [CHAT20261105012826279REDLINE] 禁止偏离样张画风：过度霓虹赛博、脏暗阴影、油腻镜面高光、写实皮肤毛孔、恐怖暗黑、扁平无体积贴纸风、赛博朋克紫雾\n  · [CHAT20261105013708541REDLINE] 电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感\n- 审美拍板:\n  · 以后统一按此样张画风：商业休闲Royal Match系；主色金黄#F5C542约70%、辅色城堡紫#7B5CDB约20%、点缀正红#E23B3B约10%；…\n- 个人口味: 光影=冷光源 / 暖光；构图=半身；色温=避免过饱和\n- 个人禁用习惯: 过曝高光；错误头身比/头过大；廉价塑料感/油腻高光；电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差；漏抠/黑底/毛边；赛博霓虹/霓虹紫；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光，表面那一句不动，只修没过的那一格 | Same chubby cartoon king soft plastic casual, ONLY wink playful smile delta, keep golden crown white beard blue-yellow robe, bust portrait cream backdrop, no UI no text | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props | 优先拉开胡须、领口和胸甲交界处的明度及接触阴影，并细化胸前金边转折；随后让布料更哑光、金冠更具金属反射、皮肤保持柔润，以增强材质差异，同时微调肩袖衔接和轮廓节奏。",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.7,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "independent_vlm",
+      "remote_vlm": {
+        "source": "independent_vlm",
+        "provider": "openai_compatible",
+        "model": "gpt-5.6-sol",
+        "error": "",
+        "active": true
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：面部与胡须区域细节密度明显高于躯干，蓝色衣料大面积偏平滑，材质区分略依赖颜色而非表面特性。皇冠两侧尖角和肩甲的左右轮廓存在轻微不均衡，胸口白色内衬与胡须尖端相接",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.84"
+        },
+        {
+          "category": "material",
+          "lesson": "本轮短板偏「material」：面部与胡须区域细节密度明显高于躯干，蓝色衣料大面积偏平滑，材质区分略依赖颜色而非表面特性。皇冠两侧尖角和肩甲的左右轮廓存在轻微不均衡，胸口白色内衬与胡须尖端相接",
+          "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+          "from_score": "8.84"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：x",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.84"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "01:43:39"
+    },
+    {
+      "round": 3,
+      "round_label": "第 3 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "1:1",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105/refs/rm_king_identity_1x1.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "casual1105_variant",
+        "scale": "medium",
+        "aspect_ratio": "1:1",
+        "ref_aspect_ratio": "1:1",
+        "ref_dimensions": "1024x1024",
+        "output_aspect_ratio": "1:1",
+        "output_dimensions": "1024x1024",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105/refs/rm_king_identity_1x1.png",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105/refs/rm_king_identity_1x1.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "01:45:06",
+      "image": "assets/skill_full_run_1105/variant/r3.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 231608,
+        "size_kb": 226.2,
+        "width": 1024,
+        "height": 1024,
+        "aspect_ratio": "1:1",
+        "canonical_aspect_ratio": "1:1",
+        "color_entropy": 7.2
+      },
+      "raw_score": 9.13,
+      "score": 9.13,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.1/光影9.2/透视8.9/质感9.3/风格9.4/无瑕度9.0",
+      "dims_parsed": {
+        "composition": 9.1,
+        "lighting_color": 9.2,
+        "perspective_anatomy": 8.9,
+        "texture_detail": 9.3,
+        "spec_style": 9.4,
+        "flawlessness": 9.0
+      },
+      "weighted_score": 9.13,
+      "audit_warnings": [
+        "独立视觉裁判已采纳：openai_compatible/gpt-5.6-sol"
+      ],
+      "stagnated": false,
+      "strengths": "x",
+      "defects": "整体造型略偏高度对称与模板化，肩部被圆形边界切截后稍显拥挤。胡须尖端与衣领中央接缝距离过近，形成局部视觉碰撞；右侧耳朵及鬓发被胡须和冠侧结构压缩，轮廓辨识度略弱。部分毛发纹理过于均匀细密，金冠高光也稍显平滑理想化，使材质有轻微渲染感。",
+      "next_fix": "优先拉开胡须尖端与衣领接缝的间距，并整理右耳、鬓发和胡须交界的轮廓层级；随后略微增加肩部外围留白，在胡须纹理与金冠高光中加入更自然的疏密和粗糙度变化。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.CasualBattery\n- 置信度: 0.50（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261105013323896RECIPE] [收敛胜出 8.63分] 商业休闲软塑胶草莓软糖道具，黑底隔离，居中，无脸无字 — x\n  · [CHAT20261105013752537RECIPE] [收敛胜出 8.42分] 草莓软糖 same_object L1-L8 overview_sheet 2x4 白卡深底；Cur — x\n  · [CHAT20261105013614213RECIPE] [收敛胜出 8.36分] 克隆：锁RM软塑胶商业休闲画风，新题材=圆润黄金茶壶道具，黑底1:1 — x\n- 必须避开红线:\n  · [CHAT20261105013324079REDLINE] [收敛踩坑红线] 商业休闲软塑胶草莓软糖道具，黑底隔离，居中，无脸无字：避免「顶部圆形凸起与草莓主体的结构衔接略显生硬，容易产生番茄或瓶盖般的识别偏差；部分籽粒的朝向、」\n  · [CHAT20261105013614447REDLINE] [收敛踩坑红线] 克隆：锁RM软塑胶商业休闲画风，新题材=圆润黄金茶壶道具，黑：避免「把手上下连接处的结构过渡略显黏连，底端卷钩造型突兀；壶嘴根部有明显竖向接缝感，像拼接而非连」\n  · [CHAT20261105013752727REDLINE] [收敛踩坑红线] 草莓软糖 same_object L1-L8 overvie：避免「整表并未形成同一草莓软糖对象的L1-L8连续演化：礼盒、皇冠草莓、红宝石和奖杯等已变成不同」\n  · [CHAT20261105012826279REDLINE] 禁止偏离样张画风：过度霓虹赛博、脏暗阴影、油腻镜面高光、写实皮肤毛孔、恐怖暗黑、扁平无体积贴纸风、赛博朋克紫雾\n  · [CHAT20261105013708541REDLINE] 电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感\n- 审美拍板:\n  · 以后统一按此样张画风：商业休闲Royal Match系；主色金黄#F5C542约70%、辅色城堡紫#7B5CDB约20%、点缀正红#E23B3B约10%；…\n- 个人口味: 光影=冷光源 / 暖光；构图=半身；色温=避免过饱和\n- 个人禁用习惯: 过曝高光；错误头身比/头过大；廉价塑料感/油腻高光；电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差；漏抠/黑底/毛边；赛博霓虹/霓虹紫；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光，表面那一句不动，只修没过的那一格 | Same chubby cartoon king soft plastic casual, ONLY wink playful smile delta, keep golden crown white beard blue-yellow robe, bust portrait cream backdrop, no UI no text | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props | 优先整理胡须尖端与胸口内衬的交界，拉开轮廓间距并明确前后遮挡；随后微调皇冠侧翼和双肩外轮廓的平衡。降低部分金色高光的统一感，为皇冠、肩甲、衣领分别设置略有差异的粗糙度，同时给蓝袍补充克制的软塑胶表面起伏。",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.9,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "independent_vlm",
+      "remote_vlm": {
+        "source": "independent_vlm",
+        "provider": "openai_compatible",
+        "model": "gpt-5.6-sol",
+        "error": "",
+        "active": true
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "composition",
+          "lesson": "本轮短板偏「composition」：整体造型略偏高度对称与模板化，肩部被圆形边界切截后稍显拥挤。胡须尖端与衣领中央接缝距离过近，形成局部视觉碰撞；右侧耳朵及鬓发被胡须和冠侧结构压缩，轮廓辨识度略弱",
+          "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+          "from_score": "9.13"
+        },
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：整体造型略偏高度对称与模板化，肩部被圆形边界切截后稍显拥挤。胡须尖端与衣领中央接缝距离过近，形成局部视觉碰撞；右侧耳朵及鬓发被胡须和冠侧结构压缩，轮廓辨识度略弱",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "9.13"
+        },
+        {
+          "category": "material",
+          "lesson": "本轮短板偏「material」：整体造型略偏高度对称与模板化，肩部被圆形边界切截后稍显拥挤。胡须尖端与衣领中央接缝距离过近，形成局部视觉碰撞；右侧耳朵及鬓发被胡须和冠侧结构压缩，轮廓辨识度略弱",
+          "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+          "from_score": "9.13"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "01:45:19",
+      "asset_image": "assets/skill_full_run_1105/variant/r3.jpg"
+    },
+    {
+      "round": 4,
+      "round_label": "第 4 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "1:1",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105/refs/rm_king_identity_1x1.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "casual1105_variant",
+        "scale": "medium",
+        "aspect_ratio": "1:1",
+        "ref_aspect_ratio": "1:1",
+        "ref_dimensions": "1024x1024",
+        "output_aspect_ratio": "1:1",
+        "output_dimensions": "1024x1024",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105/refs/rm_king_identity_1x1.png",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105/refs/rm_king_identity_1x1.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "01:47:52",
+      "image": "assets/skill_full_run_1105/variant/r4.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 243561,
+        "size_kb": 237.9,
+        "width": 1024,
+        "height": 1024,
+        "aspect_ratio": "1:1",
+        "canonical_aspect_ratio": "1:1",
+        "color_entropy": 7.19
+      },
+      "raw_score": 8.99,
+      "score": 8.99,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.0/光影9.1/透视8.7/质感9.2/风格9.3/无瑕度8.8",
+      "dims_parsed": {
+        "composition": 9.0,
+        "lighting_color": 9.1,
+        "perspective_anatomy": 8.7,
+        "texture_detail": 9.2,
+        "spec_style": 9.3,
+        "flawlessness": 8.8
+      },
+      "weighted_score": 8.99,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +-0.14 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "独立视觉裁判已采纳：openai_compatible/gpt-5.6-sol"
+      ],
+      "stagnated": true,
+      "strengths": "x",
+      "defects": "构图较为标准化，左右肩部被圆形边界截断得略紧。王冠两侧结构与透视略有不对称，右侧尖角关系稍显别扭；睁眼一侧偏大，和眨眼侧组合后面部重心略偏。胡须局部丝纹过密且均匀，呈现偏合成的梳理感，金色部件高光也稍显一致。",
+      "next_fix": "优先校正王冠两侧尖角和帽檐的透视对应，并微调睁眼尺寸及眉眼位置以平衡表情；随后减少胡须纹理的均匀重复，在肩部外缘多留少量呼吸空间，同时拉开金冠与肩甲高光形态差异。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.CasualBattery\n- 置信度: 0.50（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261105013323896RECIPE] [收敛胜出 8.63分] 商业休闲软塑胶草莓软糖道具，黑底隔离，居中，无脸无字 — x\n  · [CHAT20261105013752537RECIPE] [收敛胜出 8.42分] 草莓软糖 same_object L1-L8 overview_sheet 2x4 白卡深底；Cur — x\n  · [CHAT20261105013614213RECIPE] [收敛胜出 8.36分] 克隆：锁RM软塑胶商业休闲画风，新题材=圆润黄金茶壶道具，黑底1:1 — x\n- 必须避开红线:\n  · [CHAT20261105013324079REDLINE] [收敛踩坑红线] 商业休闲软塑胶草莓软糖道具，黑底隔离，居中，无脸无字：避免「顶部圆形凸起与草莓主体的结构衔接略显生硬，容易产生番茄或瓶盖般的识别偏差；部分籽粒的朝向、」\n  · [CHAT20261105013614447REDLINE] [收敛踩坑红线] 克隆：锁RM软塑胶商业休闲画风，新题材=圆润黄金茶壶道具，黑：避免「把手上下连接处的结构过渡略显黏连，底端卷钩造型突兀；壶嘴根部有明显竖向接缝感，像拼接而非连」\n  · [CHAT20261105013752727REDLINE] [收敛踩坑红线] 草莓软糖 same_object L1-L8 overvie：避免「整表并未形成同一草莓软糖对象的L1-L8连续演化：礼盒、皇冠草莓、红宝石和奖杯等已变成不同」\n  · [CHAT20261105012826279REDLINE] 禁止偏离样张画风：过度霓虹赛博、脏暗阴影、油腻镜面高光、写实皮肤毛孔、恐怖暗黑、扁平无体积贴纸风、赛博朋克紫雾\n  · [CHAT20261105013708541REDLINE] 电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感\n- 审美拍板:\n  · 以后统一按此样张画风：商业休闲Royal Match系；主色金黄#F5C542约70%、辅色城堡紫#7B5CDB约20%、点缀正红#E23B3B约10%；…\n- 个人口味: 光影=冷光源 / 暖光；构图=半身；色温=避免过饱和\n- 个人禁用习惯: 过曝高光；错误头身比/头过大；廉价塑料感/油腻高光；电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差；漏抠/黑底/毛边；赛博霓虹/霓虹紫；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光，表面那一句不动，只修没过的那一格 | Same chubby cartoon king soft plastic casual, ONLY wink playful smile delta, keep golden crown white beard blue-yellow robe, bust portrait cream backdrop, no UI no text | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props | 优先拉开胡须尖端与衣领接缝的间距，并整理右耳、鬓发和胡须交界的轮廓层级；随后略微增加肩部外围留白，在胡须纹理与金冠高光中加入更自然的疏密和粗糙度变化。",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.7,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "independent_vlm",
+      "remote_vlm": {
+        "source": "independent_vlm",
+        "provider": "openai_compatible",
+        "model": "gpt-5.6-sol",
+        "error": "",
+        "active": true
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_MAX_ROUNDS",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "composition",
+          "lesson": "本轮短板偏「composition」：构图较为标准化，左右肩部被圆形边界截断得略紧。王冠两侧结构与透视略有不对称，右侧尖角关系稍显别扭；睁眼一侧偏大，和眨眼侧组合后面部重心略偏。胡须局部丝纹过密且均",
+          "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+          "from_score": "8.99"
+        },
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：构图较为标准化，左右肩部被圆形边界截断得略紧。王冠两侧结构与透视略有不对称，右侧尖角关系稍显别扭；睁眼一侧偏大，和眨眼侧组合后面部重心略偏。胡须局部丝纹过密且均",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.99"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：x",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.99"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "01:48:04"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "/Users/yanghu/Desktop/pmem-art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-11-05 00:55:15 UTC+8"
+    },
+    "module": "prop.CasualBattery",
+    "goal": "变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居中；商业休闲软塑胶",
+    "confidence": 0.5,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "只有未达标 provisional recipe，不计入定稿置信",
+      "命中 1 条审美拍板",
+      "个人口味档案非空",
+      "红线中等（5 条）",
+      "挂载 0 张项目知识卡 + 1 张全局美术底层基础卡"
+    ],
+    "top_recipes": [
+      {
+        "id": "CHAT20261105013323896RECIPE",
+        "summary": "[收敛胜出 8.63分] 商业休闲软塑胶草莓软糖道具，黑底隔离，居中，无脸无字 — x",
+        "module": "prop.CasualBattery"
+      },
+      {
+        "id": "CHAT20261105013752537RECIPE",
+        "summary": "[收敛胜出 8.42分] 草莓软糖 same_object L1-L8 overview_sheet 2x4 白卡深底；Cur — x",
+        "module": "prop.CasualBattery"
+      },
+      {
+        "id": "CHAT20261105013614213RECIPE",
+        "summary": "[收敛胜出 8.36分] 克隆：锁RM软塑胶商业休闲画风，新题材=圆润黄金茶壶道具，黑底1:1 — x",
+        "module": "prop.CasualBattery"
+      }
+    ],
+    "top_redlines": [
+      {
+        "id": "CHAT20261105013324079REDLINE",
+        "summary": "[收敛踩坑红线] 商业休闲软塑胶草莓软糖道具，黑底隔离，居中，无脸无字：避免「顶部圆形凸起与草莓主体的结构衔接略显生硬，容易产生番茄或瓶盖般的识别偏差；部分籽粒的朝向、」",
+        "module": "prop.CasualBattery"
+      },
+      {
+        "id": "CHAT20261105013614447REDLINE",
+        "summary": "[收敛踩坑红线] 克隆：锁RM软塑胶商业休闲画风，新题材=圆润黄金茶壶道具，黑：避免「把手上下连接处的结构过渡略显黏连，底端卷钩造型突兀；壶嘴根部有明显竖向接缝感，像拼接而非连」",
+        "module": "prop.CasualBattery"
+      },
+      {
+        "id": "CHAT20261105013752727REDLINE",
+        "summary": "[收敛踩坑红线] 草莓软糖 same_object L1-L8 overvie：避免「整表并未形成同一草莓软糖对象的L1-L8连续演化：礼盒、皇冠草莓、红宝石和奖杯等已变成不同」",
+        "module": "prop.CasualBattery"
+      },
+      {
+        "id": "CHAT20261105012826279REDLINE",
+        "summary": "禁止偏离样张画风：过度霓虹赛博、脏暗阴影、油腻镜面高光、写实皮肤毛孔、恐怖暗黑、扁平无体积贴纸风、赛博朋克紫雾",
+        "module": "prop.CasualBattery"
+      },
+      {
+        "id": "CHAT20261105013708541REDLINE",
+        "summary": "电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感",
+        "module": "prop.CasualBattery"
+      }
+    ],
+    "art_decisions": [
+      {
+        "id": "CHAT20261105012822490DECISION",
+        "summary": "以后统一按此样张画风：商业休闲Royal Match系；主色金黄#F5C542约70%、辅色城堡紫#7B5CDB约20%、点缀正红#E23B3B约10%；…",
+        "layer_scope": "private"
+      }
+    ],
+    "private_knowledge": [],
+    "shared_knowledge": [
+      {
+        "id": "palette-70-20-10",
+        "title": "色彩构成：70-20-10 色板比例黄金法则",
+        "body": "画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+        "layer_scope": "shared"
+      }
+    ],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [
+        "冷光源",
+        "暖光"
+      ],
+      "preferred_composition": [
+        "半身"
+      ],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [
+        "避免过饱和"
+      ],
+      "banned_habits": [
+        "禁止偏离样张画风：过度霓虹、脏暗阴影、油腻高光、写实皮肤毛孔、扁平UI描边",
+        "电池审稿：原画竖构图避免贴样张布局；边缘反光勿过曝",
+        "过曝高光",
+        "错误头身比/头过大",
+        "廉价塑料感/油腻高光",
+        "电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感",
+        "黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差",
+        "漏抠/黑底/毛边",
+        "赛博霓虹/霓虹紫",
+        "脏暗阴影/脏色"
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.CasualBattery\n- 置信度: 0.50（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261105013323896RECIPE] [收敛胜出 8.63分] 商业休闲软塑胶草莓软糖道具，黑底隔离，居中，无脸无字 — x\n  · [CHAT20261105013752537RECIPE] [收敛胜出 8.42分] 草莓软糖 same_object L1-L8 overview_sheet 2x4 白卡深底；Cur — x\n  · [CHAT20261105013614213RECIPE] [收敛胜出 8.36分] 克隆：锁RM软塑胶商业休闲画风，新题材=圆润黄金茶壶道具，黑底1:1 — x\n- 必须避开红线:\n  · [CHAT20261105013324079REDLINE] [收敛踩坑红线] 商业休闲软塑胶草莓软糖道具，黑底隔离，居中，无脸无字：避免「顶部圆形凸起与草莓主体的结构衔接略显生硬，容易产生番茄或瓶盖般的识别偏差；部分籽粒的朝向、」\n  · [CHAT20261105013614447REDLINE] [收敛踩坑红线] 克隆：锁RM软塑胶商业休闲画风，新题材=圆润黄金茶壶道具，黑：避免「把手上下连接处的结构过渡略显黏连，底端卷钩造型突兀；壶嘴根部有明显竖向接缝感，像拼接而非连」\n  · [CHAT20261105013752727REDLINE] [收敛踩坑红线] 草莓软糖 same_object L1-L8 overvie：避免「整表并未形成同一草莓软糖对象的L1-L8连续演化：礼盒、皇冠草莓、红宝石和奖杯等已变成不同」\n  · [CHAT20261105012826279REDLINE] 禁止偏离样张画风：过度霓虹赛博、脏暗阴影、油腻镜面高光、写实皮肤毛孔、恐怖暗黑、扁平无体积贴纸风、赛博朋克紫雾\n  · [CHAT20261105013708541REDLINE] 电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感\n- 审美拍板:\n  · 以后统一按此样张画风：商业休闲Royal Match系；主色金黄#F5C542约70%、辅色城堡紫#7B5CDB约20%、点缀正红#E23B3B约10%；…\n- 个人口味: 光影=冷光源 / 暖光；构图=半身；色温=避免过饱和\n- 个人禁用习惯: 过曝高光；错误头身比/头过大；廉价塑料感/油腻高光；电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差；漏抠/黑底/毛边；赛博霓虹/霓虹紫；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+    "built_at": "2026-11-05 01:40:55 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：整体过于轴对称和图标化，动态感略弱；面部、金属与布料的表面处理较趋同，材质区分主要依赖颜色。胡须下缘与白色领口局部层次接近，胸前金边交会处略显生硬；两侧袖口条纹",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "8.71"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：整体过于轴对称和图标化，动态感略弱；面部、金属与布料的表面处理较趋同，材质区分主要依赖颜色。胡须下缘与白色领口局部层次接近，胸前金边交会处略显生硬；两侧袖口条纹",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.71"
+    },
+    {
+      "category": "material",
+      "lesson": "本轮短板偏「material」：整体过于轴对称和图标化，动态感略弱；面部、金属与布料的表面处理较趋同，材质区分主要依赖颜色。胡须下缘与白色领口局部层次接近，胸前金边交会处略显生硬；两侧袖口条纹",
+      "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+      "from_score": "8.71"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：面部与胡须区域细节密度明显高于躯干，蓝色衣料大面积偏平滑，材质区分略依赖颜色而非表面特性。皇冠两侧尖角和肩甲的左右轮廓存在轻微不均衡，胸口白色内衬与胡须尖端相接",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.84"
+    },
+    {
+      "category": "material",
+      "lesson": "本轮短板偏「material」：面部与胡须区域细节密度明显高于躯干，蓝色衣料大面积偏平滑，材质区分略依赖颜色而非表面特性。皇冠两侧尖角和肩甲的左右轮廓存在轻微不均衡，胸口白色内衬与胡须尖端相接",
+      "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+      "from_score": "8.84"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：x",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.84"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：整体造型略偏高度对称与模板化，肩部被圆形边界切截后稍显拥挤。胡须尖端与衣领中央接缝距离过近，形成局部视觉碰撞；右侧耳朵及鬓发被胡须和冠侧结构压缩，轮廓辨识度略弱",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "9.13"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：整体造型略偏高度对称与模板化，肩部被圆形边界切截后稍显拥挤。胡须尖端与衣领中央接缝距离过近，形成局部视觉碰撞；右侧耳朵及鬓发被胡须和冠侧结构压缩，轮廓辨识度略弱",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.13"
+    },
+    {
+      "category": "material",
+      "lesson": "本轮短板偏「material」：整体造型略偏高度对称与模板化，肩部被圆形边界切截后稍显拥挤。胡须尖端与衣领中央接缝距离过近，形成局部视觉碰撞；右侧耳朵及鬓发被胡须和冠侧结构压缩，轮廓辨识度略弱",
+      "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+      "from_score": "9.13"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：构图较为标准化，左右肩部被圆形边界截断得略紧。王冠两侧结构与透视略有不对称，右侧尖角关系稍显别扭；睁眼一侧偏大，和眨眼侧组合后面部重心略偏。胡须局部丝纹过密且均",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "8.99"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：构图较为标准化，左右肩部被圆形边界截断得略紧。王冠两侧结构与透视略有不对称，右侧尖角关系稍显别扭；睁眼一侧偏大，和眨眼侧组合后面部重心略偏。胡须局部丝纹过密且均",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.99"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：x",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.99"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 4,
+  "regression_drop": 0.5,
+  "reasonableness_history": [
+    {
+      "reviewed_at": 1793814088.681754,
+      "passed": true,
+      "skill": "variant",
+      "issues": []
+    }
+  ],
+  "reasonableness": {
+    "passed": true,
+    "skill": "variant",
+    "draft_prompt": "king wink",
+    "revised_prompt": "Same chubby cartoon king soft plastic casual, ONLY wink playful smile delta, keep golden crown white beard blue-yellow robe, bust portrait cream backdrop, no UI no text",
+    "checklist": {
+      "subject_action": {
+        "status": "ok",
+        "note": ""
+      },
+      "contact_scale": {
+        "status": "ok",
+        "note": ""
+      },
+      "element_budget": {
+        "status": "ok",
+        "note": ""
+      },
+      "hard_locks": {
+        "status": "ok",
+        "note": ""
+      },
+      "fail_at_glance": {
+        "status": "ok",
+        "note": ""
+      },
+      "only_named_delta": {
+        "status": "ok",
+        "note": ""
+      }
+    },
+    "issues": [],
+    "notes": "",
+    "reviewed_at": 1793814088.681754,
+    "reviewed_at_iso": "2026-11-05 01:41:28",
+    "force_pass": false
+  },
+  "discussions": [
+    {
+      "round": 0,
+      "kind": "reasonableness",
+      "prompt": "Same chubby cartoon king soft plastic casual, ONLY wink playful smile delta, keep golden crown white beard blue-yellow robe, bust portrait cream backdrop, no UI no text",
+      "strengths": "合理性闸已过：subject_action=ok；contact_scale=ok；element_budget=ok；hard_locks=ok；fail_at_glance=ok；only_named_delta=ok",
+      "defects": "",
+      "next_fix": "首轮 generate 使用本修订提示词；审美迭代不得推翻硬锁与元素预算"
+    }
+  ],
+  "ActionRequired": "STOP_PICK_BEST",
+  "showcase_ready": true,
+  "winner": {
+    "round": 3,
+    "round_label": "第 3 轮精修",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "1:1",
+    "reference_image_paths": [
+      "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105/refs/rm_king_identity_1x1.png"
+    ],
+    "param_validation": {
+      "valid": true,
+      "validation_passed": true,
+      "case_id": "casual1105_variant",
+      "scale": "medium",
+      "aspect_ratio": "1:1",
+      "ref_aspect_ratio": "1:1",
+      "ref_dimensions": "1024x1024",
+      "output_aspect_ratio": "1:1",
+      "output_dimensions": "1024x1024",
+      "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105/refs/rm_king_identity_1x1.png",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105/refs/rm_king_identity_1x1.png"
+      ],
+      "inherited_default_aspect_ratio": true,
+      "inherited_default_pad_image": true,
+      "matched_ref_aspect_ratio": true,
+      "matched_ref_pad_image": true,
+      "matched_output_aspect_ratio": true,
+      "three_step_stage": "step3_judge",
+      "three_step_verified": true,
+      "warnings": [],
+      "continuation_pad": false,
+      "pad_diverged": false
+    },
+    "generated_at": "01:45:06",
+    "image": "assets/skill_full_run_1105/variant/r3.jpg",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 231608,
+      "size_kb": 226.2,
+      "width": 1024,
+      "height": 1024,
+      "aspect_ratio": "1:1",
+      "canonical_aspect_ratio": "1:1",
+      "color_entropy": 7.2
+    },
+    "raw_score": 9.13,
+    "score": 9.13,
+    "target_score_threshold": 9.5,
+    "dims": "构图9.1/光影9.2/透视8.9/质感9.3/风格9.4/无瑕度9.0",
+    "dims_parsed": {
+      "composition": 9.1,
+      "lighting_color": 9.2,
+      "perspective_anatomy": 8.9,
+      "texture_detail": 9.3,
+      "spec_style": 9.4,
+      "flawlessness": 9.0
+    },
+    "weighted_score": 9.13,
+    "audit_warnings": [
+      "独立视觉裁判已采纳：openai_compatible/gpt-5.6-sol"
+    ],
+    "stagnated": false,
+    "strengths": "x",
+    "defects": "整体造型略偏高度对称与模板化，肩部被圆形边界切截后稍显拥挤。胡须尖端与衣领中央接缝距离过近，形成局部视觉碰撞；右侧耳朵及鬓发被胡须和冠侧结构压缩，轮廓辨识度略弱。部分毛发纹理过于均匀细密，金冠高光也稍显平滑理想化，使材质有轻微渲染感。",
+    "next_fix": "优先拉开胡须尖端与衣领接缝的间距，并整理右耳、鬓发和胡须交界的轮廓层级；随后略微增加肩部外围留白，在胡须纹理与金冠高光中加入更自然的疏密和粗糙度变化。",
+    "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.CasualBattery\n- 置信度: 0.50（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261105013323896RECIPE] [收敛胜出 8.63分] 商业休闲软塑胶草莓软糖道具，黑底隔离，居中，无脸无字 — x\n  · [CHAT20261105013752537RECIPE] [收敛胜出 8.42分] 草莓软糖 same_object L1-L8 overview_sheet 2x4 白卡深底；Cur — x\n  · [CHAT20261105013614213RECIPE] [收敛胜出 8.36分] 克隆：锁RM软塑胶商业休闲画风，新题材=圆润黄金茶壶道具，黑底1:1 — x\n- 必须避开红线:\n  · [CHAT20261105013324079REDLINE] [收敛踩坑红线] 商业休闲软塑胶草莓软糖道具，黑底隔离，居中，无脸无字：避免「顶部圆形凸起与草莓主体的结构衔接略显生硬，容易产生番茄或瓶盖般的识别偏差；部分籽粒的朝向、」\n  · [CHAT20261105013614447REDLINE] [收敛踩坑红线] 克隆：锁RM软塑胶商业休闲画风，新题材=圆润黄金茶壶道具，黑：避免「把手上下连接处的结构过渡略显黏连，底端卷钩造型突兀；壶嘴根部有明显竖向接缝感，像拼接而非连」\n  · [CHAT20261105013752727REDLINE] [收敛踩坑红线] 草莓软糖 same_object L1-L8 overvie：避免「整表并未形成同一草莓软糖对象的L1-L8连续演化：礼盒、皇冠草莓、红宝石和奖杯等已变成不同」\n  · [CHAT20261105012826279REDLINE] 禁止偏离样张画风：过度霓虹赛博、脏暗阴影、油腻镜面高光、写实皮肤毛孔、恐怖暗黑、扁平无体积贴纸风、赛博朋克紫雾\n  · [CHAT20261105013708541REDLINE] 电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感\n- 审美拍板:\n  · 以后统一按此样张画风：商业休闲Royal Match系；主色金黄#F5C542约70%、辅色城堡紫#7B5CDB约20%、点缀正红#E23B3B约10%；…\n- 个人口味: 光影=冷光源 / 暖光；构图=半身；色温=避免过饱和\n- 个人禁用习惯: 过曝高光；错误头身比/头过大；廉价塑料感/油腻高光；电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差；漏抠/黑底/毛边；赛博霓虹/霓虹紫；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光，表面那一句不动，只修没过的那一格 | Same chubby cartoon king soft plastic casual, ONLY wink playful smile delta, keep golden crown white beard blue-yellow robe, bust portrait cream backdrop, no UI no text | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props | 优先整理胡须尖端与胸口内衬的交界，拉开轮廓间距并明确前后遮挡；随后微调皇冠侧翼和双肩外轮廓的平衡。降低部分金色高光的统一感，为皇冠、肩甲、衣领分别设置略有差异的粗糙度，同时给蓝袍补充克制的软塑胶表面起伏。",
+    "continuation": false,
+    "passed": false,
+    "gate_blocked": false,
+    "image_gate_blocked": false,
+    "anatomy_score": 8.9,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "humanoid",
+    "judge_source": "independent_vlm",
+    "remote_vlm": {
+      "source": "independent_vlm",
+      "provider": "openai_compatible",
+      "model": "gpt-5.6-sol",
+      "error": "",
+      "active": true
+    },
+    "should_continue_next_round": true,
+    "decision": "CONTINUE_NEXT_ROUND",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "composition",
+        "lesson": "本轮短板偏「composition」：整体造型略偏高度对称与模板化，肩部被圆形边界切截后稍显拥挤。胡须尖端与衣领中央接缝距离过近，形成局部视觉碰撞；右侧耳朵及鬓发被胡须和冠侧结构压缩，轮廓辨识度略弱",
+        "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+        "from_score": "9.13"
+      },
+      {
+        "category": "lighting",
+        "lesson": "本轮短板偏「lighting」：整体造型略偏高度对称与模板化，肩部被圆形边界切截后稍显拥挤。胡须尖端与衣领中央接缝距离过近，形成局部视觉碰撞；右侧耳朵及鬓发被胡须和冠侧结构压缩，轮廓辨识度略弱",
+        "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+        "from_score": "9.13"
+      },
+      {
+        "category": "material",
+        "lesson": "本轮短板偏「material」：整体造型略偏高度对称与模板化，肩部被圆形边界切截后稍显拥挤。胡须尖端与衣领中央接缝距离过近，形成局部视觉碰撞；右侧耳朵及鬓发被胡须和冠侧结构压缩，轮廓辨识度略弱",
+        "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+        "from_score": "9.13"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "01:45:19",
+    "asset_image": "assets/skill_full_run_1105/variant/r3.jpg"
+  },
+  "rounds_to_converge": 4,
+  "convergence_badge": "共 4 轮未达阈值，采用最高分",
+  "process_board": ".memory-art/converge/boards/casual1105_variant/index.html"
+}

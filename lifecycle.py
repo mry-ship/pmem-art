@@ -241,6 +241,7 @@ IMAGE_EXTS = {".png", ".jpg", ".jpeg", ".webp", ".tga", ".psd", ".gif", ".exr", 
 IGNORE_DIR_NAMES = {
     ".git", ".svn", ".perforce", ".memory-art", ".cursor", "__pycache__",
     "node_modules", "Library", "Temp", "obj", "bin", ".idea", ".vscode",
+    "downloads", "下载",  # 外网/店面下载对标图，不进资产扫描与工作台
 }
 
 # Starter taxonomy: inactive scaffolds after `init` / `bootstrap --mode young`

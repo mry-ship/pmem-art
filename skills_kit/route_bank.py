@@ -400,20 +400,19 @@ def banner_for(plan: Plan) -> str:
 def confidence_for(plan: Plan, neighbors: list[dict[str, Any]]) -> str:
     if plan.mode == "stop":
         return "ask"  # 停 / 硬不确定：问人或停（与 low 同属「先别执行」）
-    if not neighbors:
+    labeled = [n for n in neighbors if list(n.get("route_ids") or [])]
+    if not labeled:
         return "medium"
-    top = neighbors[0]
+    top = labeled[0]
     agree = False
     if plan.route_ids:
-        agree = list(top.get("route_ids") or []) == list(plan.route_ids) or (
-            plan.mode == "default" and top.get("mode") == "default"
-        )
+        agree = list(top.get("route_ids") or []) == list(plan.route_ids)
+    if not agree:
+        return "low"
     score = float(top.get("score") or 0)
-    if agree and score >= 0.35:
+    if score >= 0.35:
         return "high"
-    if agree or score >= 0.25:
-        return "medium"
-    return "low"
+    return "medium"
 
 
 def advise_route(

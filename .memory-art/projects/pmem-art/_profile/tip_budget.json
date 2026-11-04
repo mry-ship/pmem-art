@@ -28,8 +28,18 @@
     "converge_finish:battery-rerun-multi": "2026-11-03 20:24:01 UTC+8",
     "converge_finish:battery-rerun-variant": "2026-11-03 20:24:31 UTC+8",
     "converge_finish:battery-ui-concept": "2026-11-03 20:39:29 UTC+8",
-    "converge_finish:battery-icon-a": "2026-11-03 20:41:42 UTC+8",
-    "converge_finish:battery-icon-c": "2026-11-03 20:49:45 UTC+8"
+    "converge_finish:battery-icon-c": "2026-11-03 20:49:45 UTC+8",
+    "converge_finish:casual1105_ordinary": "2026-11-05 01:33:24 UTC+8",
+    "converge_finish:casual1105_clone": "2026-11-05 01:36:15 UTC+8",
+    "converge_finish:casual1105_merge": "2026-11-05 01:37:53 UTC+8",
+    "converge_finish:casual1105_keyart": "2026-11-05 01:49:38 UTC+8",
+    "converge_finish:casual1105_variant": "2026-11-05 01:49:41 UTC+8",
+    "converge_finish:casual1105_icon_a": "2026-11-05 01:49:45 UTC+8",
+    "converge_finish:casual1105_icon_c": "2026-11-05 01:49:49 UTC+8",
+    "converge_finish:casual1105_ui": "2026-11-05 01:49:53 UTC+8",
+    "converge_finish:casual1105_lens_a": "2026-11-05 01:49:57 UTC+8",
+    "converge_finish:casual1105_multi_closed": "2026-11-05 01:50:01 UTC+8",
+    "converge_finish:casual1105_multi_open": "2026-11-05 01:50:44 UTC+8"
   },
-  "updated_at": "2026-11-03 20:49:45 UTC+8"
+  "updated_at": "2026-11-05 01:50:44 UTC+8"
 }

@@ -11,9 +11,24 @@
       "body": "动作设计先锁定叙事关键帧（Key）与张力极端帧（Extreme），再插入非对称中分帧（Breakdown）与挤压拉伸（Squash & Stretch），严禁机械平均线性插值导致动作发飘发僵。",
       "reason": "你已有 anim 域模块，但知识库缺少「动画运动规律：关键帧-极端帧-中分帧与预备缓冲」",
       "optional_module_stub": ""
+    },
+    {
+      "kind": "knowledge_card",
+      "id": "palette-70-20-10",
+      "title": "色彩构成：70-20-10 色板比例黄金法则",
+      "tags": [
+        "brand",
+        "color_palette",
+        "character",
+        "scene",
+        "ui"
+      ],
+      "body": "画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+      "reason": "你已有 brand 域模块，但知识库缺少「色彩构成：70-20-10 色板比例黄金法则」",
+      "optional_module_stub": ""
     }
   ],
-  "at": "2026-11-03 20:54:15 UTC+8",
-  "source": "feedback",
+  "at": "2026-11-05 04:55:33 UTC+8",
+  "source": "converge_finish",
   "silent": true
 }

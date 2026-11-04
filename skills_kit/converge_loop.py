@@ -166,7 +166,14 @@ def loop_followup(root: Path, session_id: str = "") -> dict[str, str] | None:
     n_judged = len(judged)
     th = float(sess.get("accept_threshold") or sess.get("threshold") or DEFAULT_THRESHOLD)
     mr = int(sess.get("max_rounds") or DEFAULT_MAX_ROUNDS)
-    if can_accept_winner(n_judged, best, threshold=th, max_rounds=mr):
+    early_flag = str(sess.get("status") or "") == "early_safe_stop" or any(
+        str(r.get("decision") or "") in {"STOP_REGRESSION", "STOP_PLATEAU"}
+        or str(r.get("early_safe_stop") or "") in {"STOP_REGRESSION", "STOP_PLATEAU"}
+        for r in judged
+    )
+    if can_accept_winner(
+        n_judged, best, threshold=th, max_rounds=mr, early_safe_stop=early_flag
+    ):
         return {
             "reason": "need_finish",
             "session_id": sid,

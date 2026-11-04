@@ -69,6 +69,8 @@ description: 【强制4轮≥9.5收敛】iOS/Android App Icon 应用图标母版
 
 一套里线宽或拐角混用，或目标尺寸认不出，不能停，正式分改取该维（低于 8.0）。示例：`笔画一致8.6/视觉重量8.4/留白8.5/功能识别8.8`
 
+**图标 B 短透镜（通用）**：①整套同一 stroke/viewBox/端点拐角；②光学重量接近，简单符略加重；③padding 一致、不贴边；④目标尺寸（常 24px）功能可认；⑤只用 `currentColor`；⑥禁止拼公开图标库冒充定制集。
+
 ### 二之三、Mode C：游戏道具透明底栅格图标（64/128/256px PNG，非 SVG）
 若用户要的是 **游戏道具栅格图标**：先锁「线宽/圆角/色板/投影」style-spec，再批量生成透明底 PNG。关键单枚用 `converge` 跑最多 4 轮，合格线 ≥9.5。关键枚首轮 generate 前：
 ```bash
@@ -85,6 +87,8 @@ python3 pmem_art.py reasonableness review --id <session> --skill icon.c \
 - **透明底（15%，只做门槛）**、**无字（15%，只做门槛）**：脏底，或出现任何字（含等级字），不能停
 
 剪影认不出同样不能停。门槛低于 8.0 时正式分改取该维。示例：`剪影识别8.6/描边色板8.4/棚拍光8.5/透明底9.0/无字9.2`
+
+**图标 C 短透镜（通用）**：①厚剪影 64px 可认；②真 alpha 透明底；③棚拍一主光+接触影；④套件描边/色板/投影锁死；⑤无字无场景插画；⑥形先于质，禁微细节糊成噪。
 
 ### Step 4：分批生成（约每批 5 个）+ 一致性审查
 每批完成后检查：stroke 是否漂移、圆角是否混用、有无图标明显偏轻/偏重、是否贴边。
@@ -144,7 +148,9 @@ python3 pmem_art.py ingest icons/preview.html -p "icon set preview" --apply   # 
 python3 pmem_art.py converge start --session appicon --module brand.WorldStyle --scale high --goal "iOS 1024x1024 App Icon: 青瓷质感记账应用，中心单枚立体青釉金币流光符号"
 python3 pmem_art.py reasonableness review --id appicon --skill icon.a \
   --draft "<草稿>" --revised "<单符号+72%-80%安全区+满幅直角无字的修订句>" \
-  --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;safe_zone=ok;single_symbol=ok"
+  --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;safe_zone=ok;single_symbol=ok;full_bleed_no_round_mask=ok"
+
+**App Icon 多维透镜（通用·商店栅格，不只材质）**：明细见 `docs/APPICON_MULTI_LENS.md`——①**栅格体验**：并排可停、剪影答品类、单记忆点；②**小尺寸**：60/29px 去色仍认，夸张体块，禁密纹理认人；③**符号权重**：P0 英雄撑满 >> P1 附件 >> P2 底衬，禁字/第二英雄；④**画幅**：满幅直角 + 72%–80% 安全区，英雄尽量撑满，忌小物漂浮大留白；⑤**色**：底衬对比服务主体（冷暖对立），70/20/10，禁花底抢戏；⑥**光材质**：一主光，形先于质；⑦**风格**：与产品同品类渲染，但是特写符号不是缩略海报。对标真上架图标，禁止垫像素抄脸。空喊「高级」却剪影糊/棚拍留白 → 识别度或安全区 <8.0 不能停。
 python3 pmem_art.py converge generate --session appicon --round 1 --image app_icon_r1.png
 python3 pmem_art.py converge judge --session appicon --round 1 --image app_icon_r1.png \
   --dims "识别度9.6/安全区9.7/光影质感9.5/多尺寸合规9.6/色板纯粹9.7"

@@ -94,6 +94,33 @@ def _parts_not_concrete(text: str) -> bool:
     return s in _EMPTY_PARTS or s in _WEAK_PARTS
 
 
+
+# EN ↔ CJK mother-token aliases so base_body="strawberry soft candy" matches 草莓软糖
+TOKEN_ALIASES: dict[str, tuple[str, ...]] = {
+    "strawberry": ("strawberry", "草莓"),
+    "berry": ("berry", "莓", "草莓"),
+    "soft": ("soft", "软", "软糖"),
+    "candy": ("candy", "糖", "软糖", "糖果"),
+    "gummy": ("gummy", "软糖", "软"),
+    "peach": ("peach", "桃", "蜜桃"),
+    "apple": ("apple", "苹果"),
+    "bottle": ("bottle", "瓶", "药瓶"),
+    "potion": ("potion", "药", "药瓶"),
+}
+
+_SWAP_SUBJECT_RE = re.compile(
+    r"(?:^|[的之\s·])?(开盖|金色|银色|水晶)?(礼盒|奖杯|宝石盒|珠宝盒|首饰盒|糖罐|宝箱|trophy|gift\s*box)",
+    re.I,
+)
+
+
+def _token_match_variants(token: str) -> tuple[str, ...]:
+    t = (token or "").strip().lower()
+    if not t:
+        return ()
+    return TOKEN_ALIASES.get(t, (t,))
+
+
 def _base_body_tokens(base_body: str) -> list[str]:
     """Meaningful tokens from base_body for continuity checks (CJK bigrams + latin words)."""
     raw = (base_body or "").strip()
@@ -134,6 +161,23 @@ def judge_relation_rows(
     chain_mode = str(track.get("chain_mode") or "").strip()
     if chain_mode and chain_mode not in {"same_object", "shop_ladder", "species_change"}:
         issues.append(f"chain_mode 非法：{chain_mode!r}（same_object|shop_ladder|species_change）")
+
+    # 软糖/糖纸类省略 chain_mode 不允许走轻门（勿把 pastel candy brand 等画风词误判成糖果链）
+    candy_blob = " ".join(
+        [
+            str(track.get("base_body") or ""),
+            *[
+                f"{getattr(r, 'name', '')} {getattr(r, 'silhouette', '')} {getattr(r, 'evolve_to', '')}"
+                for r in rows
+            ],
+        ]
+    )
+    if (not chain_mode) and re.search(
+        r"(软糖|草莓糖|棒棒糖|糖纸|硬糖|gummy|soft\s*candy)", candy_blob, re.I
+    ):
+        issues.append(
+            "软糖/糖纸类省略 chain_mode 不允许：须显式 shop_ladder（同族形变）；轻门仅用于非糖果链"
+        )
 
     # 件数已在 parse 保证。合成是否说得通仍由讨论稿判定；这里拦空零件/弱光效/体量/剪影复读。
     pcts = [r.scale_pct for r in rows]
@@ -177,12 +221,52 @@ def judge_relation_rows(
             need = 1 if len(tokens) == 1 else min(2, len(tokens))
             for r in rows:
                 blob = f"{r.silhouette} {r.name}".lower()
-                hits = [t for t in tokens if t.lower() in blob]
+                hits = [
+                    t
+                    for t in tokens
+                    if any(v.lower() in blob for v in _token_match_variants(t))
+                ]
                 if len(hits) < need:
                     issues.append(
                         f"L{r.level:02d} 未锁母体 base_body={base_body!r}："
                         f"silhouette/name 需保留母体词 {tokens[:4]}（命中 {hits or '无'}）"
                     )
+
+    # same_object：禁止剪影/名称以礼盒奖杯等换货容器作主语（应走 shop_ladder）
+    if chain_mode == "same_object":
+        for r in rows:
+            for field_name, text in (("silhouette", r.silhouette), ("name", r.name), ("parts_add", r.parts_add)):
+                s = (text or "").strip()
+                if not s or s in {"—", "-", "－"}:
+                    continue
+                # 零件上挂小礼盒/小奖杯饰件 OK；主语换货不行
+                if field_name == "parts_add" and re.search(r"(小|迷你|微型).{0,4}(礼盒|奖杯)", s):
+                    continue
+                m = _SWAP_SUBJECT_RE.search(s)
+                if not m:
+                    continue
+                # 母体上的配件短语（草莓软糖上的小礼盒）放行：母体词在换货词之前
+                mother_before = False
+                if base_body:
+                    for t in _base_body_tokens(base_body):
+                        for v in _token_match_variants(t):
+                            pos = s.lower().find(v.lower())
+                            if pos >= 0 and pos < m.start():
+                                mother_before = True
+                                break
+                        if mother_before:
+                            break
+                if mother_before and field_name != "silhouette":
+                    continue
+                # 剪影以换货容器起头/盛装母体 → 换货
+                if field_name == "silhouette" or (
+                    field_name == "name" and re.search(r"^(开盖|金色|银色)?(礼盒|奖杯)", s)
+                ):
+                    issues.append(
+                        f"L{r.level:02d} same_object 换货主语：{field_name}={s!r} "
+                        f"以礼盒/奖杯等作主体；应改 shop_ladder 同族形变，或改成母体上的配件"
+                    )
+                    break
 
     # shop_ladder / species_change：叙事闸（MergePerCell 轻门不强制 merge_why；仅这两种链型启用）
     if chain_mode in {"shop_ladder", "species_change"}:

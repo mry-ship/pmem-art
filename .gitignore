@@ -26,6 +26,12 @@ dist/
 _tmp_*
 _probe_*
 
+# External / store screenshots for UI benchmarking (not gallery)
+downloads/**
+!downloads/README.md
+下载/**
+!下载/README.md
+
 # Local secrets (VLM judge API keys — never commit)
 .memory-art/vlm_judge.local.yaml
 **/.memory-art/**/vlm_judge.local.yaml

@@ -1,0 +1,961 @@
+{
+  "session_id": "1105b-variant",
+  "started_at": "2026-11-05 02:37:25 UTC+8",
+  "goal": "变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠白须蓝黄袍与半身居中机位；1:1商业休闲软塑胶；禁止改发型服装机位",
+  "module": "prop.CasualBattery",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "medium",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "medium",
+    "label": "中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.5)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 1,
+    "target_score_threshold": 9.5,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.15,
+      "perspective_anatomy": 0.15,
+      "texture_detail": 0.15,
+      "spec_style": 0.15,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "viewpoint_frame",
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图，只在提示词上补还没过的那一处（提示词改动仍 ≤40%）",
+    "max_prompt_delta_ratio": 0.4,
+    "allow_recompose": false,
+    "allow_viewpoint_change": false,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "viewpoint_angle (不改机位与镜头视角)",
+      "element_count (不增删主体元素清单)",
+      "no_full_recompose (不做整体 recompose / 换景别故事)",
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)"
+    ],
+    "min_round_leap": 0.15,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光，表面那一句不动，只修没过的那一格",
+    "medium_family": "generic",
+    "best_direction_hint": "最优方向：光影·空气·介质；可小幅姿态/局部布局",
+    "goal": "变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠白须蓝黄袍与半身居中机位；1:1商业休闲软塑胶；禁止改发型服装机位",
+    "module": "prop.CasualBattery",
+    "ref_image": "assets/skill_full_run_1105b/refs/rm_king_identity_1x1.png",
+    "ref_analysis": "身份锁：胖国王、金冠红宝石、灰白须、大鼻圆眼、蓝黄条纹王袍金边；机位锁：半身胸像居中1:1；画风锁：商业休闲软塑胶；本趟只改：单眼眨眼+俏皮微笑差分；禁改：机位、服装、冠形、发须造型、背景舞台。"
+  },
+  "medium_family": "generic",
+  "contract": "",
+  "target_score_threshold": 9.5,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "assets/skill_full_run_1105b/refs/rm_king_identity_1x1.png",
+  "ref_analysis": "身份锁：胖国王、金冠红宝石、灰白须、大鼻圆眼、蓝黄条纹王袍金边；机位锁：半身胸像居中1:1；画风锁：商业休闲软塑胶；本趟只改：单眼眨眼+俏皮微笑差分；禁改：机位、服装、冠形、发须造型、背景舞台。",
+  "default_aspect_ratio": "1:1",
+  "default_reference_image_paths": [
+    "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/rm_king_identity_1x1.png"
+  ],
+  "aspect_ratio": "1:1",
+  "reference_image_paths": [
+    "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/rm_king_identity_1x1.png"
+  ],
+  "ref_physical_traits": {
+    "exists": true,
+    "size_bytes": 1359982,
+    "size_kb": 1328.1,
+    "width": 1024,
+    "height": 1024,
+    "aspect_ratio": "1:1",
+    "canonical_aspect_ratio": "1:1",
+    "color_entropy": 7.99
+  },
+  "param_validation": {
+    "valid": true,
+    "validation_passed": true,
+    "case_id": "1105b-variant",
+    "scale": "medium",
+    "aspect_ratio": "1:1",
+    "ref_aspect_ratio": "1:1",
+    "ref_dimensions": "1024x1024",
+    "output_aspect_ratio": "",
+    "output_dimensions": "",
+    "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/rm_king_identity_1x1.png",
+    "reference_image_paths": [
+      "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/rm_king_identity_1x1.png"
+    ],
+    "inherited_default_aspect_ratio": false,
+    "inherited_default_pad_image": false,
+    "matched_ref_aspect_ratio": true,
+    "matched_ref_pad_image": true,
+    "matched_output_aspect_ratio": true,
+    "three_step_stage": "step1_start",
+    "three_step_verified": false,
+    "warnings": []
+  },
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.5,
+  "accept_threshold": 9.5,
+  "max_rounds": 4,
+  "ready_to_finish": true,
+  "status": "finished",
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "1:1",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/rm_king_identity_1x1.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "1105b-variant",
+        "scale": "medium",
+        "aspect_ratio": "1:1",
+        "ref_aspect_ratio": "1:1",
+        "ref_dimensions": "1024x1024",
+        "output_aspect_ratio": "1:1",
+        "output_dimensions": "1024x1024",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/rm_king_identity_1x1.png",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/rm_king_identity_1x1.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "02:38:22",
+      "image": "assets/skill_full_run_1105b/variant/r1.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 344501,
+        "size_kb": 336.4,
+        "width": 1024,
+        "height": 1024,
+        "aspect_ratio": "1:1",
+        "canonical_aspect_ratio": "1:1",
+        "color_entropy": 7.2
+      },
+      "raw_score": 6.68,
+      "score": 6.68,
+      "target_score_threshold": 9.5,
+      "dims": "构图4.8/光影8.0/透视7.1/质感7.6/风格7.8/无瑕度6.3",
+      "dims_parsed": {
+        "composition": 4.8,
+        "lighting_color": 8.0,
+        "perspective_anatomy": 7.1,
+        "texture_detail": 7.6,
+        "spec_style": 7.8,
+        "flawlessness": 6.3
+      },
+      "weighted_score": 6.68,
+      "audit_warnings": [
+        "独立视觉裁判已采纳：openai_compatible/gpt-5.6-sol",
+        "解剖硬伤一票否决：透视与解剖 7.1 < 7.5，总分达线仍禁止停机；下一轮优先修结构"
+      ],
+      "stagnated": false,
+      "strengths": "机位与双人舞台基本锁住；国王右眼闭合左眼睁开的眨眼差分可量测",
+      "defects": "主体国王被压在左下角并遭画面边缘大幅截断，既非半身居中，也无法完整辨识白须及蓝黄袍；右侧撑伞人物和巨大城堡占据主要视觉权重，使身份焦点明显错位。顶部还有一块被硬裁切的蓝色牌体，底部人物切边突兀；伞柄、手部、袖口与肩部交叠略显拥挤，国王面部体量过小，关键表情展示不足。；解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁止糊边融边",
+      "next_fix": "保持现有国王发型、金冠、白须和蓝黄服装不变，将国王放大并移至画面中央，使用稳定的胸腰以上半身构图，完整露出冠顶、胡须、双肩和主要袍服；删除或显著弱化右侧人物、城堡及顶部裁切牌体，以干净背景集中展示眨眼俏皮笑表情，并检查手部与服饰边缘的交叠。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.CasualBattery\n- 置信度: 0.50（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261105014940924RECIPE] [收敛胜出 9.13分] 变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居中；商业休闲软塑胶 — x\n  · [CHAT20261105015043104RECIPE] [收敛胜出 8.78分] 多图分工·打开态：同一宝箱机位，仅盖打开露金币光，黑底1:1 — x\n  · [CHAT20261105014944924RECIPE] [收敛胜出 8.70分] Icon A：满幅直角1024感App Icon母版，草莓糖果休闲游戏符号，安全区72-80%，无字 — x\n- 必须避开红线:\n  · [CHAT20261105014941128REDLINE] [收敛踩坑红线] 变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居：避免「整体过于轴对称和图标化，动态感略弱；面部、金属与布料的表面处理较趋同，材质区分主要依赖颜色」\n  · [CHAT20261105015000846REDLINE] [收敛踩坑红线] 多图分工·关闭态：软塑胶宝箱盖关锁，黑底1:1，锁3/4机位：避免「锁梁与上方扣环的穿插关系略显拥挤，局部轮廓近似粘连；钥匙孔内部偏暗且边缘稍软。紫色板材的纹」\n  · [CHAT20261105014937678REDLINE] [收敛踩坑红线] Royal Match级商业休闲主视觉：阳光城堡花园，国王与：避免「主体实际接近全身群像，并非半身气氛，狗的加入也略分散双主角焦点；人物与背景受光较平均，局部」\n  · [CHAT20261105014949113REDLINE] [收敛踩坑红线] Icon C：背包道具格草莓软糖，黑底隔离可读剪影，安全边距：避免「顶部叶片与果柄交叠关系略显拥挤，部分叶片像互相黏合，空间层级不够清楚；外缘双层深色描边偏厚」\n  · [CHAT20261105015043379REDLINE] [收敛踩坑红线] 多图分工·打开态：同一宝箱机位，仅盖打开露金币光，黑底1:1：避免「金币堆局部存在粘连、重叠关系含混和边缘融化感，部分币面厚度与椭圆透视不统一。箱盖与箱体的铰」\n- 审美拍板:\n  · 以后统一按此样张画风：商业休闲Royal Match系；主色金黄#F5C542约70%、辅色城堡紫#7B5CDB约20%、点缀正红#E23B3B约10%；…\n- 个人口味: 光影=冷光源 / 暖光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯: 错误头身比/头过大；电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差；过曝高光；廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光，表面那一句不动，只修没过的那一格 | 1:1 soft-plastic Royal Match variant. LOCK camera and staging exactly like the identity pad: low-angle view, chubby king peeking bottom-left behind blue pillar with gold sphere, slim butler right holding yellow-purple parasol and white cloth, purple-roof castle and green hedge behind, teal sky. LOCK identity: gold crown with red diamond gem, grey-white beard, large round nose, blue-yellow royal tunic. ONLY named delta only_named_delta: change the king expression to a playful wink — his RIGHT eye fully closed (upper eyelid pressed shut), LEFT eye open with iris highlight, raised right brow optional, small cheeky smile; butler expression and pose unchanged. Do not change costume, crown shape, camera height, character placement, or background. Fail-at-glance: if framing drifts to solo bust/cream vignette, or both king eyes stay open, or wink is not measurable on eyelid, FAIL. No UI no text. | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 7.1,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": true,
+      "subject_kind": "humanoid",
+      "judge_source": "independent_vlm",
+      "remote_vlm": {
+        "source": "independent_vlm",
+        "provider": "openai_compatible",
+        "model": "gpt-5.6-sol",
+        "error": "",
+        "active": true
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "composition",
+          "lesson": "本轮短板偏「composition」：主体国王被压在左下角并遭画面边缘大幅截断，既非半身居中，也无法完整辨识白须及蓝黄袍；右侧撑伞人物和巨大城堡占据主要视觉权重，使身份焦点明显错位。顶部还有一块被硬",
+          "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+          "from_score": "6.68"
+        },
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：主体国王被压在左下角并遭画面边缘大幅截断，既非半身居中，也无法完整辨识白须及蓝黄袍；右侧撑伞人物和巨大城堡占据主要视觉权重，使身份焦点明显错位。顶部还有一块被硬",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "6.68"
+        },
+        {
+          "category": "anatomy",
+          "lesson": "本轮短板偏「anatomy」：主体国王被压在左下角并遭画面边缘大幅截断，既非半身居中，也无法完整辨识白须及蓝黄袍；右侧撑伞人物和巨大城堡占据主要视觉权重，使身份焦点明显错位。顶部还有一块被硬",
+          "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+          "from_score": "6.68"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "02:38:48"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "1:1",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/rm_king_identity_1x1.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "1105b-variant",
+        "scale": "medium",
+        "aspect_ratio": "1:1",
+        "ref_aspect_ratio": "1:1",
+        "ref_dimensions": "1024x1024",
+        "output_aspect_ratio": "1:1",
+        "output_dimensions": "1024x1024",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/rm_king_identity_1x1.png",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/rm_king_identity_1x1.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "02:39:32",
+      "image": "assets/skill_full_run_1105b/variant/r2.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 224081,
+        "size_kb": 218.8,
+        "width": 1024,
+        "height": 1024,
+        "aspect_ratio": "1:1",
+        "canonical_aspect_ratio": "1:1",
+        "color_entropy": 7.2
+      },
+      "raw_score": 8.65,
+      "score": 8.65,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.8/光影8.7/透视8.5/质感8.8/风格8.9/无瑕度8.4",
+      "dims_parsed": {
+        "composition": 8.8,
+        "lighting_color": 8.7,
+        "perspective_anatomy": 8.5,
+        "texture_detail": 8.8,
+        "spec_style": 8.9,
+        "flawlessness": 8.4
+      },
+      "weighted_score": 8.65,
+      "audit_warnings": [
+        "独立视觉裁判已采纳：openai_compatible/gpt-5.6-sol"
+      ],
+      "stagnated": false,
+      "strengths": "半身居中胸像机位到位；眨眼闭合可验收；金冠白须蓝黄袍身份可读",
+      "defects": "冠冕左右轮廓与装饰略显不对称，右侧尖角形态稍突兀；睁眼一侧尺寸和突出程度偏强，与眨眼侧形成轻微面部失衡。胡须纤维细节偏写实，和服装、皮肤的软塑胶概括度不完全一致；领口中央的金色构件衔接略拥挤，局部边缘关系不够自然。",
+      "next_fix": "优先校正冠冕两侧轮廓和面部双侧体积平衡，适当缩小睁眼并弱化眼球突出感；统一材质语言，减少胡须过细的毛发纹理、增强块面塑胶感，同时整理领口中央金边的搭接与间隙。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.CasualBattery\n- 置信度: 0.50（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261105014940924RECIPE] [收敛胜出 9.13分] 变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居中；商业休闲软塑胶 — x\n  · [CHAT20261105015043104RECIPE] [收敛胜出 8.78分] 多图分工·打开态：同一宝箱机位，仅盖打开露金币光，黑底1:1 — x\n  · [CHAT20261105014944924RECIPE] [收敛胜出 8.70分] Icon A：满幅直角1024感App Icon母版，草莓糖果休闲游戏符号，安全区72-80%，无字 — x\n- 必须避开红线:\n  · [CHAT20261105014941128REDLINE] [收敛踩坑红线] 变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居：避免「整体过于轴对称和图标化，动态感略弱；面部、金属与布料的表面处理较趋同，材质区分主要依赖颜色」\n  · [CHAT20261105015000846REDLINE] [收敛踩坑红线] 多图分工·关闭态：软塑胶宝箱盖关锁，黑底1:1，锁3/4机位：避免「锁梁与上方扣环的穿插关系略显拥挤，局部轮廓近似粘连；钥匙孔内部偏暗且边缘稍软。紫色板材的纹」\n  · [CHAT20261105014937678REDLINE] [收敛踩坑红线] Royal Match级商业休闲主视觉：阳光城堡花园，国王与：避免「主体实际接近全身群像，并非半身气氛，狗的加入也略分散双主角焦点；人物与背景受光较平均，局部」\n  · [CHAT20261105014949113REDLINE] [收敛踩坑红线] Icon C：背包道具格草莓软糖，黑底隔离可读剪影，安全边距：避免「顶部叶片与果柄交叠关系略显拥挤，部分叶片像互相黏合，空间层级不够清楚；外缘双层深色描边偏厚」\n  · [CHAT20261105015043379REDLINE] [收敛踩坑红线] 多图分工·打开态：同一宝箱机位，仅盖打开露金币光，黑底1:1：避免「金币堆局部存在粘连、重叠关系含混和边缘融化感，部分币面厚度与椭圆透视不统一。箱盖与箱体的铰」\n- 审美拍板:\n  · 以后统一按此样张画风：商业休闲Royal Match系；主色金黄#F5C542约70%、辅色城堡紫#7B5CDB约20%、点缀正红#E23B3B约10%；…\n- 个人口味: 光影=冷光源 / 暖光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯: 错误头身比/头过大；电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差；过曝高光；廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光，表面那一句不动，只修没过的那一格 | 1:1 soft-plastic Royal Match character variant. Keep the SAME chubby king identity from the pad: gold crown with red diamond gem, grey-white thick beard and mustache, large round nose, blue-and-yellow striped royal tunic with gold trim. LOCK framing: centered bust/half-body portrait chest-up, crown fully visible, both shoulders in frame, soft cream or light beige studio backdrop with gentle circular vignette — NO butler, NO castle, NO umbrella, NO UI logo. ONLY change expression: playful wink — viewer-left eye (king's right) fully closed with upper eyelid pressed shut, other eye open with clear iris highlight, cheeky smile showing slight teeth. Soft plastic toy materials: matte cloth, metal crown highlights, soft skin. No text. | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props | 保持现有国王发型、金冠、白须和蓝黄服装不变，将国王放大并移至画面中央，使用稳定的胸腰以上半身构图，完整露出冠顶、胡须、双肩和主要袍服；删除或显著弱化右侧人物、城堡及顶部裁切牌体，以干净背景集中展示眨眼俏皮笑表情，并检查手部与服饰边缘的交叠。",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.5,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "independent_vlm",
+      "remote_vlm": {
+        "source": "independent_vlm",
+        "provider": "openai_compatible",
+        "model": "gpt-5.6-sol",
+        "error": "",
+        "active": true
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "composition",
+          "lesson": "本轮短板偏「composition」：冠冕左右轮廓与装饰略显不对称，右侧尖角形态稍突兀；睁眼一侧尺寸和突出程度偏强，与眨眼侧形成轻微面部失衡。胡须纤维细节偏写实，和服装、皮肤的软塑胶概括度不完全一致",
+          "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+          "from_score": "8.65"
+        },
+        {
+          "category": "line_edge",
+          "lesson": "本轮短板偏「line_edge」：冠冕左右轮廓与装饰略显不对称，右侧尖角形态稍突兀；睁眼一侧尺寸和突出程度偏强，与眨眼侧形成轻微面部失衡。胡须纤维细节偏写实，和服装、皮肤的软塑胶概括度不完全一致",
+          "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+          "from_score": "8.65"
+        },
+        {
+          "category": "material",
+          "lesson": "本轮短板偏「material」：冠冕左右轮廓与装饰略显不对称，右侧尖角形态稍突兀；睁眼一侧尺寸和突出程度偏强，与眨眼侧形成轻微面部失衡。胡须纤维细节偏写实，和服装、皮肤的软塑胶概括度不完全一致",
+          "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+          "from_score": "8.65"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "02:39:58"
+    },
+    {
+      "round": 3,
+      "round_label": "第 3 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "1:1",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/rm_king_identity_1x1.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "1105b-variant",
+        "scale": "medium",
+        "aspect_ratio": "1:1",
+        "ref_aspect_ratio": "1:1",
+        "ref_dimensions": "1024x1024",
+        "output_aspect_ratio": "1:1",
+        "output_dimensions": "1024x1024",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/rm_king_identity_1x1.png",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/rm_king_identity_1x1.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "02:40:39",
+      "image": "assets/skill_full_run_1105b/variant/r3.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 202308,
+        "size_kb": 197.6,
+        "width": 1024,
+        "height": 1024,
+        "aspect_ratio": "1:1",
+        "canonical_aspect_ratio": "1:1",
+        "color_entropy": 7.21
+      },
+      "raw_score": 8.85,
+      "score": 8.85,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.0/光影8.9/透视8.7/质感8.8/风格9.1/无瑕度8.7",
+      "dims_parsed": {
+        "composition": 9.0,
+        "lighting_color": 8.9,
+        "perspective_anatomy": 8.7,
+        "texture_detail": 8.8,
+        "spec_style": 9.1,
+        "flawlessness": 8.7
+      },
+      "weighted_score": 8.85,
+      "audit_warnings": [
+        "独立视觉裁判已采纳：openai_compatible/gpt-5.6-sol"
+      ],
+      "stagnated": false,
+      "strengths": "半身居中稳定；眨眼闭合可量测；软塑胶须块与金冠身份清晰",
+      "defects": "面部局部信息略拥挤，鼻子、胡须和嘴部相互遮压，使嘴角笑意不够直接；胡须下方两块橙色形体语义稍含混，容易被误读为牙齿或多余肉块。睁眼比例偏大，和眨眼侧的压缩程度形成轻微失衡；皇冠与服装的大面积材质较均一，边缘和凹槽处略有程序化塑料感。",
+      "next_fix": "优先重整胡须下方的嘴部结构，减少含混的橙色突起并明确微笑弧线；略收小睁眼、微调眨眼眼角以加强俏皮而非挤压感。随后弱化皇冠和衣料的均匀高光，在凹槽、接缝与边缘加入更克制的粗糙度变化。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.CasualBattery\n- 置信度: 0.50（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261105014940924RECIPE] [收敛胜出 9.13分] 变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居中；商业休闲软塑胶 — x\n  · [CHAT20261105015043104RECIPE] [收敛胜出 8.78分] 多图分工·打开态：同一宝箱机位，仅盖打开露金币光，黑底1:1 — x\n  · [CHAT20261105014944924RECIPE] [收敛胜出 8.70分] Icon A：满幅直角1024感App Icon母版，草莓糖果休闲游戏符号，安全区72-80%，无字 — x\n- 必须避开红线:\n  · [CHAT20261105014941128REDLINE] [收敛踩坑红线] 变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居：避免「整体过于轴对称和图标化，动态感略弱；面部、金属与布料的表面处理较趋同，材质区分主要依赖颜色」\n  · [CHAT20261105015000846REDLINE] [收敛踩坑红线] 多图分工·关闭态：软塑胶宝箱盖关锁，黑底1:1，锁3/4机位：避免「锁梁与上方扣环的穿插关系略显拥挤，局部轮廓近似粘连；钥匙孔内部偏暗且边缘稍软。紫色板材的纹」\n  · [CHAT20261105014937678REDLINE] [收敛踩坑红线] Royal Match级商业休闲主视觉：阳光城堡花园，国王与：避免「主体实际接近全身群像，并非半身气氛，狗的加入也略分散双主角焦点；人物与背景受光较平均，局部」\n  · [CHAT20261105014949113REDLINE] [收敛踩坑红线] Icon C：背包道具格草莓软糖，黑底隔离可读剪影，安全边距：避免「顶部叶片与果柄交叠关系略显拥挤，部分叶片像互相黏合，空间层级不够清楚；外缘双层深色描边偏厚」\n  · [CHAT20261105015043379REDLINE] [收敛踩坑红线] 多图分工·打开态：同一宝箱机位，仅盖打开露金币光，黑底1:1：避免「金币堆局部存在粘连、重叠关系含混和边缘融化感，部分币面厚度与椭圆透视不统一。箱盖与箱体的铰」\n- 审美拍板:\n  · 以后统一按此样张画风：商业休闲Royal Match系；主色金黄#F5C542约70%、辅色城堡紫#7B5CDB约20%、点缀正红#E23B3B约10%；…\n- 个人口味: 光影=冷光源 / 暖光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯: 错误头身比/头过大；电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差；过曝高光；廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光，表面那一句不动，只修没过的那一格 | 1:1 soft-plastic Royal Match king bust variant. Same centered chest-up framing as a polished character portrait: cream circular vignette, no castle no butler. Identity lock: chunky gold crown with red gem — BOTH side points balanced and symmetric; grey-white soft-plastic chunky beard (NOT fine realistic hair strands); large nose; blue-yellow striped tunic with gold collar. ONLY expression delta: playful wink — closed eye eyelid fully pressed shut, open eye slightly smaller and less bulging for facial balance, cheeky smile. Fix gold collar center overlap with beard tip — leave clear gap. Soft plastic materials throughout: matte cloth, metal crown, clay-like beard. No UI no text. | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props | 优先校正冠冕两侧轮廓和面部双侧体积平衡，适当缩小睁眼并弱化眼球突出感；统一材质语言，减少胡须过细的毛发纹理、增强块面塑胶感，同时整理领口中央金边的搭接与间隙。",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.7,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "independent_vlm",
+      "remote_vlm": {
+        "source": "independent_vlm",
+        "provider": "openai_compatible",
+        "model": "gpt-5.6-sol",
+        "error": "",
+        "active": true
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：面部局部信息略拥挤，鼻子、胡须和嘴部相互遮压，使嘴角笑意不够直接；胡须下方两块橙色形体语义稍含混，容易被误读为牙齿或多余肉块。睁眼比例偏大，和眨眼侧的压缩程度形",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.85"
+        },
+        {
+          "category": "anatomy",
+          "lesson": "本轮短板偏「anatomy」：面部局部信息略拥挤，鼻子、胡须和嘴部相互遮压，使嘴角笑意不够直接；胡须下方两块橙色形体语义稍含混，容易被误读为牙齿或多余肉块。睁眼比例偏大，和眨眼侧的压缩程度形",
+          "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+          "from_score": "8.85"
+        },
+        {
+          "category": "line_edge",
+          "lesson": "本轮短板偏「line_edge」：面部局部信息略拥挤，鼻子、胡须和嘴部相互遮压，使嘴角笑意不够直接；胡须下方两块橙色形体语义稍含混，容易被误读为牙齿或多余肉块。睁眼比例偏大，和眨眼侧的压缩程度形",
+          "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+          "from_score": "8.85"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "02:41:18"
+    },
+    {
+      "round": 4,
+      "round_label": "第 4 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "1:1",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/rm_king_identity_1x1.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "1105b-variant",
+        "scale": "medium",
+        "aspect_ratio": "1:1",
+        "ref_aspect_ratio": "1:1",
+        "ref_dimensions": "1024x1024",
+        "output_aspect_ratio": "1:1",
+        "output_dimensions": "1024x1024",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/rm_king_identity_1x1.png",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/rm_king_identity_1x1.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "02:41:51",
+      "image": "assets/skill_full_run_1105b/variant/r4.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 188865,
+        "size_kb": 184.4,
+        "width": 1024,
+        "height": 1024,
+        "aspect_ratio": "1:1",
+        "canonical_aspect_ratio": "1:1",
+        "color_entropy": 7.22
+      },
+      "raw_score": 9.22,
+      "score": 9.22,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.3/光影9.2/透视9.0/质感9.3/风格9.5/无瑕度9.1",
+      "dims_parsed": {
+        "composition": 9.3,
+        "lighting_color": 9.2,
+        "perspective_anatomy": 9.0,
+        "texture_detail": 9.3,
+        "spec_style": 9.5,
+        "flawlessness": 9.1
+      },
+      "weighted_score": 9.22,
+      "audit_warnings": [
+        "独立视觉裁判已采纳：openai_compatible/gpt-5.6-sol"
+      ],
+      "stagnated": false,
+      "strengths": "眨眼闭合清晰；半身居中胸像稳定；牙齿微笑语义比上轮更干净",
+      "defects": "左右肩部被椭圆虚化边缘截断得略生硬，尤其右肩轮廓与背景过渡稍显糊软；牙齿分格较规整，带少量贴片感。胡须、嘴角和面颊交界处局部层叠略拥挤，闭眼眼皮的厚度与另一侧大眼形成轻微结构失衡；王冠红宝石的高光线条稍锐，与其余柔润材质不完全一致。",
+      "next_fix": "优先优化肩部与背景虚化遮罩，让两侧轮廓衰减更对称自然；弱化牙齿分格并补充轻微口腔深度，同时整理嘴角、胡须与面颊的交界。最后柔化宝石高光，并微调闭眼眼皮厚度以维持俏皮感同时提升面部结构统一性。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.CasualBattery\n- 置信度: 0.50（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261105014940924RECIPE] [收敛胜出 9.13分] 变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居中；商业休闲软塑胶 — x\n  · [CHAT20261105015043104RECIPE] [收敛胜出 8.78分] 多图分工·打开态：同一宝箱机位，仅盖打开露金币光，黑底1:1 — x\n  · [CHAT20261105014944924RECIPE] [收敛胜出 8.70分] Icon A：满幅直角1024感App Icon母版，草莓糖果休闲游戏符号，安全区72-80%，无字 — x\n- 必须避开红线:\n  · [CHAT20261105014941128REDLINE] [收敛踩坑红线] 变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居：避免「整体过于轴对称和图标化，动态感略弱；面部、金属与布料的表面处理较趋同，材质区分主要依赖颜色」\n  · [CHAT20261105015000846REDLINE] [收敛踩坑红线] 多图分工·关闭态：软塑胶宝箱盖关锁，黑底1:1，锁3/4机位：避免「锁梁与上方扣环的穿插关系略显拥挤，局部轮廓近似粘连；钥匙孔内部偏暗且边缘稍软。紫色板材的纹」\n  · [CHAT20261105014937678REDLINE] [收敛踩坑红线] Royal Match级商业休闲主视觉：阳光城堡花园，国王与：避免「主体实际接近全身群像，并非半身气氛，狗的加入也略分散双主角焦点；人物与背景受光较平均，局部」\n  · [CHAT20261105014949113REDLINE] [收敛踩坑红线] Icon C：背包道具格草莓软糖，黑底隔离可读剪影，安全边距：避免「顶部叶片与果柄交叠关系略显拥挤，部分叶片像互相黏合，空间层级不够清楚；外缘双层深色描边偏厚」\n  · [CHAT20261105015043379REDLINE] [收敛踩坑红线] 多图分工·打开态：同一宝箱机位，仅盖打开露金币光，黑底1:1：避免「金币堆局部存在粘连、重叠关系含混和边缘融化感，部分币面厚度与椭圆透视不统一。箱盖与箱体的铰」\n- 审美拍板:\n  · 以后统一按此样张画风：商业休闲Royal Match系；主色金黄#F5C542约70%、辅色城堡紫#7B5CDB约20%、点缀正红#E23B3B约10%；…\n- 个人口味: 光影=冷光源 / 暖光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯: 错误头身比/头过大；电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差；过曝高光；廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光，表面那一句不动，只修没过的那一格 | 1:1 soft-plastic Royal Match centered king bust, cream vignette. Same identity: gold crown red gem, chunky soft-plastic white beard (blocky not fine hair), blue-yellow striped tunic. ONLY wink expression: one eye fully closed eyelid flush, other eye slightly smaller balanced, clear cheeky smile arc with clean upper teeth only — NO orange fleshy blobs under mustache. Clarify mouth under mustache: readable smile line, teeth as neat white row only. Soften uniform plastic sheen on crown and cloth; add subtle roughness in crown grooves and fabric folds. Keep camera locked chest-up centered. No butler castle UI text. | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props | 优先重整胡须下方的嘴部结构，减少含混的橙色突起并明确微笑弧线；略收小睁眼、微调眨眼眼角以加强俏皮而非挤压感。随后弱化皇冠和衣料的均匀高光，在凹槽、接缝与边缘加入更克制的粗糙度变化。",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.0,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "independent_vlm",
+      "remote_vlm": {
+        "source": "independent_vlm",
+        "provider": "openai_compatible",
+        "model": "gpt-5.6-sol",
+        "error": "",
+        "active": true
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_MAX_ROUNDS",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "composition",
+          "lesson": "本轮短板偏「composition」：左右肩部被椭圆虚化边缘截断得略生硬，尤其右肩轮廓与背景过渡稍显糊软；牙齿分格较规整，带少量贴片感。胡须、嘴角和面颊交界处局部层叠略拥挤，闭眼眼皮的厚度与另一侧大",
+          "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+          "from_score": "9.22"
+        },
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：左右肩部被椭圆虚化边缘截断得略生硬，尤其右肩轮廓与背景过渡稍显糊软；牙齿分格较规整，带少量贴片感。胡须、嘴角和面颊交界处局部层叠略拥挤，闭眼眼皮的厚度与另一侧大",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "9.22"
+        },
+        {
+          "category": "line_edge",
+          "lesson": "本轮短板偏「line_edge」：左右肩部被椭圆虚化边缘截断得略生硬，尤其右肩轮廓与背景过渡稍显糊软；牙齿分格较规整，带少量贴片感。胡须、嘴角和面颊交界处局部层叠略拥挤，闭眼眼皮的厚度与另一侧大",
+          "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+          "from_score": "9.22"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "02:42:13",
+      "asset_image": "assets/skill_full_run_1105b/variant/r4.jpg"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "/Users/yanghu/Desktop/pmem-art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-11-05 00:55:15 UTC+8"
+    },
+    "module": "prop.CasualBattery",
+    "goal": "变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠白须蓝黄袍与半身居中机位；1:1商业休闲软塑胶；禁止改发型服装机位",
+    "confidence": 0.5,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "只有未达标 provisional recipe，不计入定稿置信",
+      "命中 1 条审美拍板",
+      "个人口味档案非空",
+      "红线中等（5 条）",
+      "挂载 0 张项目知识卡 + 1 张全局美术底层基础卡"
+    ],
+    "top_recipes": [
+      {
+        "id": "CHAT20261105014940924RECIPE",
+        "summary": "[收敛胜出 9.13分] 变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居中；商业休闲软塑胶 — x",
+        "module": "prop.CasualBattery"
+      },
+      {
+        "id": "CHAT20261105015043104RECIPE",
+        "summary": "[收敛胜出 8.78分] 多图分工·打开态：同一宝箱机位，仅盖打开露金币光，黑底1:1 — x",
+        "module": "prop.CasualBattery"
+      },
+      {
+        "id": "CHAT20261105014944924RECIPE",
+        "summary": "[收敛胜出 8.70分] Icon A：满幅直角1024感App Icon母版，草莓糖果休闲游戏符号，安全区72-80%，无字 — x",
+        "module": "prop.CasualBattery"
+      }
+    ],
+    "top_redlines": [
+      {
+        "id": "CHAT20261105014941128REDLINE",
+        "summary": "[收敛踩坑红线] 变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居：避免「整体过于轴对称和图标化，动态感略弱；面部、金属与布料的表面处理较趋同，材质区分主要依赖颜色」",
+        "module": "prop.CasualBattery"
+      },
+      {
+        "id": "CHAT20261105015000846REDLINE",
+        "summary": "[收敛踩坑红线] 多图分工·关闭态：软塑胶宝箱盖关锁，黑底1:1，锁3/4机位：避免「锁梁与上方扣环的穿插关系略显拥挤，局部轮廓近似粘连；钥匙孔内部偏暗且边缘稍软。紫色板材的纹」",
+        "module": "prop.CasualBattery"
+      },
+      {
+        "id": "CHAT20261105014937678REDLINE",
+        "summary": "[收敛踩坑红线] Royal Match级商业休闲主视觉：阳光城堡花园，国王与：避免「主体实际接近全身群像，并非半身气氛，狗的加入也略分散双主角焦点；人物与背景受光较平均，局部」",
+        "module": "prop.CasualBattery"
+      },
+      {
+        "id": "CHAT20261105014949113REDLINE",
+        "summary": "[收敛踩坑红线] Icon C：背包道具格草莓软糖，黑底隔离可读剪影，安全边距：避免「顶部叶片与果柄交叠关系略显拥挤，部分叶片像互相黏合，空间层级不够清楚；外缘双层深色描边偏厚」",
+        "module": "prop.CasualBattery"
+      },
+      {
+        "id": "CHAT20261105015043379REDLINE",
+        "summary": "[收敛踩坑红线] 多图分工·打开态：同一宝箱机位，仅盖打开露金币光，黑底1:1：避免「金币堆局部存在粘连、重叠关系含混和边缘融化感，部分币面厚度与椭圆透视不统一。箱盖与箱体的铰」",
+        "module": "prop.CasualBattery"
+      }
+    ],
+    "art_decisions": [
+      {
+        "id": "CHAT20261105012822490DECISION",
+        "summary": "以后统一按此样张画风：商业休闲Royal Match系；主色金黄#F5C542约70%、辅色城堡紫#7B5CDB约20%、点缀正红#E23B3B约10%；…",
+        "layer_scope": "private"
+      }
+    ],
+    "private_knowledge": [],
+    "shared_knowledge": [
+      {
+        "id": "palette-70-20-10",
+        "title": "色彩构成：70-20-10 色板比例黄金法则",
+        "body": "画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+        "layer_scope": "shared"
+      }
+    ],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [
+        "冷光源",
+        "暖光"
+      ],
+      "preferred_composition": [
+        "半身",
+        "居中/对称构图"
+      ],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [
+        "避免过饱和"
+      ],
+      "banned_habits": [
+        "禁止偏离样张画风：过度霓虹、脏暗阴影、油腻高光、写实皮肤毛孔、扁平UI描边",
+        "电池审稿：原画竖构图避免贴样张布局；边缘反光勿过曝",
+        "错误头身比/头过大",
+        "电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感",
+        "黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差",
+        "过曝高光",
+        "廉价塑料感/油腻高光",
+        "漏抠/黑底/毛边",
+        "赛博霓虹/霓虹紫",
+        "脏暗阴影/脏色"
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.CasualBattery\n- 置信度: 0.50（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261105014940924RECIPE] [收敛胜出 9.13分] 变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居中；商业休闲软塑胶 — x\n  · [CHAT20261105015043104RECIPE] [收敛胜出 8.78分] 多图分工·打开态：同一宝箱机位，仅盖打开露金币光，黑底1:1 — x\n  · [CHAT20261105014944924RECIPE] [收敛胜出 8.70分] Icon A：满幅直角1024感App Icon母版，草莓糖果休闲游戏符号，安全区72-80%，无字 — x\n- 必须避开红线:\n  · [CHAT20261105014941128REDLINE] [收敛踩坑红线] 变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居：避免「整体过于轴对称和图标化，动态感略弱；面部、金属与布料的表面处理较趋同，材质区分主要依赖颜色」\n  · [CHAT20261105015000846REDLINE] [收敛踩坑红线] 多图分工·关闭态：软塑胶宝箱盖关锁，黑底1:1，锁3/4机位：避免「锁梁与上方扣环的穿插关系略显拥挤，局部轮廓近似粘连；钥匙孔内部偏暗且边缘稍软。紫色板材的纹」\n  · [CHAT20261105014937678REDLINE] [收敛踩坑红线] Royal Match级商业休闲主视觉：阳光城堡花园，国王与：避免「主体实际接近全身群像，并非半身气氛，狗的加入也略分散双主角焦点；人物与背景受光较平均，局部」\n  · [CHAT20261105014949113REDLINE] [收敛踩坑红线] Icon C：背包道具格草莓软糖，黑底隔离可读剪影，安全边距：避免「顶部叶片与果柄交叠关系略显拥挤，部分叶片像互相黏合，空间层级不够清楚；外缘双层深色描边偏厚」\n  · [CHAT20261105015043379REDLINE] [收敛踩坑红线] 多图分工·打开态：同一宝箱机位，仅盖打开露金币光，黑底1:1：避免「金币堆局部存在粘连、重叠关系含混和边缘融化感，部分币面厚度与椭圆透视不统一。箱盖与箱体的铰」\n- 审美拍板:\n  · 以后统一按此样张画风：商业休闲Royal Match系；主色金黄#F5C542约70%、辅色城堡紫#7B5CDB约20%、点缀正红#E23B3B约10%；…\n- 个人口味: 光影=冷光源 / 暖光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯: 错误头身比/头过大；电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差；过曝高光；廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+    "built_at": "2026-11-05 02:37:24 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：主体国王被压在左下角并遭画面边缘大幅截断，既非半身居中，也无法完整辨识白须及蓝黄袍；右侧撑伞人物和巨大城堡占据主要视觉权重，使身份焦点明显错位。顶部还有一块被硬",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "6.68"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：主体国王被压在左下角并遭画面边缘大幅截断，既非半身居中，也无法完整辨识白须及蓝黄袍；右侧撑伞人物和巨大城堡占据主要视觉权重，使身份焦点明显错位。顶部还有一块被硬",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "6.68"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：主体国王被压在左下角并遭画面边缘大幅截断，既非半身居中，也无法完整辨识白须及蓝黄袍；右侧撑伞人物和巨大城堡占据主要视觉权重，使身份焦点明显错位。顶部还有一块被硬",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "6.68"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：冠冕左右轮廓与装饰略显不对称，右侧尖角形态稍突兀；睁眼一侧尺寸和突出程度偏强，与眨眼侧形成轻微面部失衡。胡须纤维细节偏写实，和服装、皮肤的软塑胶概括度不完全一致",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "8.65"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：冠冕左右轮廓与装饰略显不对称，右侧尖角形态稍突兀；睁眼一侧尺寸和突出程度偏强，与眨眼侧形成轻微面部失衡。胡须纤维细节偏写实，和服装、皮肤的软塑胶概括度不完全一致",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "8.65"
+    },
+    {
+      "category": "material",
+      "lesson": "本轮短板偏「material」：冠冕左右轮廓与装饰略显不对称，右侧尖角形态稍突兀；睁眼一侧尺寸和突出程度偏强，与眨眼侧形成轻微面部失衡。胡须纤维细节偏写实，和服装、皮肤的软塑胶概括度不完全一致",
+      "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+      "from_score": "8.65"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：面部局部信息略拥挤，鼻子、胡须和嘴部相互遮压，使嘴角笑意不够直接；胡须下方两块橙色形体语义稍含混，容易被误读为牙齿或多余肉块。睁眼比例偏大，和眨眼侧的压缩程度形",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.85"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：面部局部信息略拥挤，鼻子、胡须和嘴部相互遮压，使嘴角笑意不够直接；胡须下方两块橙色形体语义稍含混，容易被误读为牙齿或多余肉块。睁眼比例偏大，和眨眼侧的压缩程度形",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "8.85"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：面部局部信息略拥挤，鼻子、胡须和嘴部相互遮压，使嘴角笑意不够直接；胡须下方两块橙色形体语义稍含混，容易被误读为牙齿或多余肉块。睁眼比例偏大，和眨眼侧的压缩程度形",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "8.85"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：左右肩部被椭圆虚化边缘截断得略生硬，尤其右肩轮廓与背景过渡稍显糊软；牙齿分格较规整，带少量贴片感。胡须、嘴角和面颊交界处局部层叠略拥挤，闭眼眼皮的厚度与另一侧大",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "9.22"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：左右肩部被椭圆虚化边缘截断得略生硬，尤其右肩轮廓与背景过渡稍显糊软；牙齿分格较规整，带少量贴片感。胡须、嘴角和面颊交界处局部层叠略拥挤，闭眼眼皮的厚度与另一侧大",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.22"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：左右肩部被椭圆虚化边缘截断得略生硬，尤其右肩轮廓与背景过渡稍显糊软；牙齿分格较规整，带少量贴片感。胡须、嘴角和面颊交界处局部层叠略拥挤，闭眼眼皮的厚度与另一侧大",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "9.22"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 2,
+  "regression_drop": 0.15,
+  "reasonableness_history": [
+    {
+      "reviewed_at": 1793817463.8124428,
+      "passed": true,
+      "skill": "variant",
+      "issues": []
+    }
+  ],
+  "reasonableness": {
+    "passed": true,
+    "skill": "variant",
+    "draft_prompt": "King wink variant same identity",
+    "revised_prompt": "1:1 soft-plastic Royal Match variant. LOCK camera and staging exactly like the identity pad: low-angle view, chubby king peeking bottom-left behind blue pillar with gold sphere, slim butler right holding yellow-purple parasol and white cloth, purple-roof castle and green hedge behind, teal sky. LOCK identity: gold crown with red diamond gem, grey-white beard, large round nose, blue-yellow royal tunic. ONLY named delta only_named_delta: change the king expression to a playful wink — his RIGHT eye fully closed (upper eyelid pressed shut), LEFT eye open with iris highlight, raised right brow optional, small cheeky smile; butler expression and pose unchanged. Do not change costume, crown shape, camera height, character placement, or background. Fail-at-glance: if framing drifts to solo bust/cream vignette, or both king eyes stay open, or wink is not measurable on eyelid, FAIL. No UI no text.",
+    "checklist": {
+      "subject_action": {
+        "status": "ok",
+        "note": ""
+      },
+      "contact_scale": {
+        "status": "ok",
+        "note": ""
+      },
+      "element_budget": {
+        "status": "ok",
+        "note": ""
+      },
+      "hard_locks": {
+        "status": "ok",
+        "note": ""
+      },
+      "fail_at_glance": {
+        "status": "ok",
+        "note": ""
+      },
+      "only_named_delta": {
+        "status": "ok",
+        "note": ""
+      }
+    },
+    "issues": [],
+    "notes": "",
+    "reviewed_at": 1793817463.8124428,
+    "reviewed_at_iso": "2026-11-05 02:37:43",
+    "force_pass": false
+  },
+  "discussions": [
+    {
+      "round": 0,
+      "kind": "reasonableness",
+      "prompt": "1:1 soft-plastic Royal Match variant. LOCK camera and staging exactly like the identity pad: low-angle view, chubby king peeking bottom-left behind blue pillar with gold sphere, slim butler right holding yellow-purple parasol and white cloth, purple-roof castle and green hedge behind, teal sky. LOCK identity: gold crown with red diamond gem, grey-white beard, large round nose, blue-yellow royal tunic. ONLY named delta only_named_delta: change the king expression to a playful wink — his RIGHT eye fully closed (upper eyelid pressed shut), LEFT eye open with iris highlight, raised right brow optional, small cheeky smile; butler expression and pose unchanged. Do not change costume, crown shape, camera height, character placement, or background. Fail-at-glance: if framing drifts to solo bust/cream vignette, or both king eyes stay open, or wink is not measurable on eyelid, FAIL. No UI no text.",
+      "strengths": "合理性闸已过：subject_action=ok；contact_scale=ok；element_budget=ok；hard_locks=ok；fail_at_glance=ok；only_named_delta=ok",
+      "defects": "",
+      "next_fix": "首轮 generate 使用本修订提示词；审美迭代不得推翻硬锁与元素预算"
+    }
+  ],
+  "ActionRequired": "STOP_PICK_BEST",
+  "showcase_ready": true,
+  "winner": {
+    "round": 4,
+    "round_label": "第 4 轮精修",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "1:1",
+    "reference_image_paths": [
+      "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/rm_king_identity_1x1.png"
+    ],
+    "param_validation": {
+      "valid": true,
+      "validation_passed": true,
+      "case_id": "1105b-variant",
+      "scale": "medium",
+      "aspect_ratio": "1:1",
+      "ref_aspect_ratio": "1:1",
+      "ref_dimensions": "1024x1024",
+      "output_aspect_ratio": "1:1",
+      "output_dimensions": "1024x1024",
+      "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/rm_king_identity_1x1.png",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/rm_king_identity_1x1.png"
+      ],
+      "inherited_default_aspect_ratio": true,
+      "inherited_default_pad_image": true,
+      "matched_ref_aspect_ratio": true,
+      "matched_ref_pad_image": true,
+      "matched_output_aspect_ratio": true,
+      "three_step_stage": "step3_judge",
+      "three_step_verified": true,
+      "warnings": [],
+      "continuation_pad": false,
+      "pad_diverged": false
+    },
+    "generated_at": "02:41:51",
+    "image": "assets/skill_full_run_1105b/variant/r4.jpg",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 188865,
+      "size_kb": 184.4,
+      "width": 1024,
+      "height": 1024,
+      "aspect_ratio": "1:1",
+      "canonical_aspect_ratio": "1:1",
+      "color_entropy": 7.22
+    },
+    "raw_score": 9.22,
+    "score": 9.22,
+    "target_score_threshold": 9.5,
+    "dims": "构图9.3/光影9.2/透视9.0/质感9.3/风格9.5/无瑕度9.1",
+    "dims_parsed": {
+      "composition": 9.3,
+      "lighting_color": 9.2,
+      "perspective_anatomy": 9.0,
+      "texture_detail": 9.3,
+      "spec_style": 9.5,
+      "flawlessness": 9.1
+    },
+    "weighted_score": 9.22,
+    "audit_warnings": [
+      "独立视觉裁判已采纳：openai_compatible/gpt-5.6-sol"
+    ],
+    "stagnated": false,
+    "strengths": "眨眼闭合清晰；半身居中胸像稳定；牙齿微笑语义比上轮更干净",
+    "defects": "左右肩部被椭圆虚化边缘截断得略生硬，尤其右肩轮廓与背景过渡稍显糊软；牙齿分格较规整，带少量贴片感。胡须、嘴角和面颊交界处局部层叠略拥挤，闭眼眼皮的厚度与另一侧大眼形成轻微结构失衡；王冠红宝石的高光线条稍锐，与其余柔润材质不完全一致。",
+    "next_fix": "优先优化肩部与背景虚化遮罩，让两侧轮廓衰减更对称自然；弱化牙齿分格并补充轻微口腔深度，同时整理嘴角、胡须与面颊的交界。最后柔化宝石高光，并微调闭眼眼皮厚度以维持俏皮感同时提升面部结构统一性。",
+    "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.CasualBattery\n- 置信度: 0.50（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261105014940924RECIPE] [收敛胜出 9.13分] 变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居中；商业休闲软塑胶 — x\n  · [CHAT20261105015043104RECIPE] [收敛胜出 8.78分] 多图分工·打开态：同一宝箱机位，仅盖打开露金币光，黑底1:1 — x\n  · [CHAT20261105014944924RECIPE] [收敛胜出 8.70分] Icon A：满幅直角1024感App Icon母版，草莓糖果休闲游戏符号，安全区72-80%，无字 — x\n- 必须避开红线:\n  · [CHAT20261105014941128REDLINE] [收敛踩坑红线] 变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居：避免「整体过于轴对称和图标化，动态感略弱；面部、金属与布料的表面处理较趋同，材质区分主要依赖颜色」\n  · [CHAT20261105015000846REDLINE] [收敛踩坑红线] 多图分工·关闭态：软塑胶宝箱盖关锁，黑底1:1，锁3/4机位：避免「锁梁与上方扣环的穿插关系略显拥挤，局部轮廓近似粘连；钥匙孔内部偏暗且边缘稍软。紫色板材的纹」\n  · [CHAT20261105014937678REDLINE] [收敛踩坑红线] Royal Match级商业休闲主视觉：阳光城堡花园，国王与：避免「主体实际接近全身群像，并非半身气氛，狗的加入也略分散双主角焦点；人物与背景受光较平均，局部」\n  · [CHAT20261105014949113REDLINE] [收敛踩坑红线] Icon C：背包道具格草莓软糖，黑底隔离可读剪影，安全边距：避免「顶部叶片与果柄交叠关系略显拥挤，部分叶片像互相黏合，空间层级不够清楚；外缘双层深色描边偏厚」\n  · [CHAT20261105015043379REDLINE] [收敛踩坑红线] 多图分工·打开态：同一宝箱机位，仅盖打开露金币光，黑底1:1：避免「金币堆局部存在粘连、重叠关系含混和边缘融化感，部分币面厚度与椭圆透视不统一。箱盖与箱体的铰」\n- 审美拍板:\n  · 以后统一按此样张画风：商业休闲Royal Match系；主色金黄#F5C542约70%、辅色城堡紫#7B5CDB约20%、点缀正红#E23B3B约10%；…\n- 个人口味: 光影=冷光源 / 暖光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯: 错误头身比/头过大；电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差；过曝高光；廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光，表面那一句不动，只修没过的那一格 | 1:1 soft-plastic Royal Match centered king bust, cream vignette. Same identity: gold crown red gem, chunky soft-plastic white beard (blocky not fine hair), blue-yellow striped tunic. ONLY wink expression: one eye fully closed eyelid flush, other eye slightly smaller balanced, clear cheeky smile arc with clean upper teeth only — NO orange fleshy blobs under mustache. Clarify mouth under mustache: readable smile line, teeth as neat white row only. Soften uniform plastic sheen on crown and cloth; add subtle roughness in crown grooves and fabric folds. Keep camera locked chest-up centered. No butler castle UI text. | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props | 优先重整胡须下方的嘴部结构，减少含混的橙色突起并明确微笑弧线；略收小睁眼、微调眨眼眼角以加强俏皮而非挤压感。随后弱化皇冠和衣料的均匀高光，在凹槽、接缝与边缘加入更克制的粗糙度变化。",
+    "continuation": false,
+    "passed": false,
+    "gate_blocked": false,
+    "image_gate_blocked": false,
+    "anatomy_score": 9.0,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "humanoid",
+    "judge_source": "independent_vlm",
+    "remote_vlm": {
+      "source": "independent_vlm",
+      "provider": "openai_compatible",
+      "model": "gpt-5.6-sol",
+      "error": "",
+      "active": true
+    },
+    "should_continue_next_round": false,
+    "decision": "STOP_MAX_ROUNDS",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "composition",
+        "lesson": "本轮短板偏「composition」：左右肩部被椭圆虚化边缘截断得略生硬，尤其右肩轮廓与背景过渡稍显糊软；牙齿分格较规整，带少量贴片感。胡须、嘴角和面颊交界处局部层叠略拥挤，闭眼眼皮的厚度与另一侧大",
+        "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+        "from_score": "9.22"
+      },
+      {
+        "category": "lighting",
+        "lesson": "本轮短板偏「lighting」：左右肩部被椭圆虚化边缘截断得略生硬，尤其右肩轮廓与背景过渡稍显糊软；牙齿分格较规整，带少量贴片感。胡须、嘴角和面颊交界处局部层叠略拥挤，闭眼眼皮的厚度与另一侧大",
+        "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+        "from_score": "9.22"
+      },
+      {
+        "category": "line_edge",
+        "lesson": "本轮短板偏「line_edge」：左右肩部被椭圆虚化边缘截断得略生硬，尤其右肩轮廓与背景过渡稍显糊软；牙齿分格较规整，带少量贴片感。胡须、嘴角和面颊交界处局部层叠略拥挤，闭眼眼皮的厚度与另一侧大",
+        "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+        "from_score": "9.22"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "02:42:13",
+    "asset_image": "assets/skill_full_run_1105b/variant/r4.jpg"
+  },
+  "rounds_to_converge": 4,
+  "convergence_badge": "共 4 轮未达阈值，采用最高分",
+  "process_board": ".memory-art/converge/boards/1105b-variant/index.html"
+}

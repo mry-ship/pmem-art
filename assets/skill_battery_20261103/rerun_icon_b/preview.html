@@ -1,9 +1,0 @@
-﻿<!DOCTYPE html><html lang="zh-CN"><meta charset="utf-8"><title>icon-b preview</title>
-<style>body{font:14px/1.4 system-ui;background:#111;color:#eee;padding:24px} .row{display:flex;gap:20px;flex-wrap:wrap}
-.card{width:96px;text-align:center} svg{width:48px;height:48px;color:#9cf;background:#222;border-radius:12px;padding:12px}</style>
-<h1>Battery Icon B Soft 24px</h1><div class="row" id="r"></div>
-<script>
-const names=["home","settings","inventory","hint","shuffle","undo"];
-const r=document.getElementById("r");
-Promise.all(names.map(n=>fetch("svg/"+n+".svg").then(x=>x.text()).then(t=>{const d=document.createElement("div");d.className="card";d.innerHTML=t+"<div>"+n+"</div>";r.appendChild(d)})));
-</script></html>

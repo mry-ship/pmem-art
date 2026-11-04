@@ -1,0 +1,980 @@
+{
+  "session_id": "1105b-keyart",
+  "started_at": "2026-11-05 02:31:05 UTC+8",
+  "goal": "节日主视觉原画；只借样张画风色板光影软塑胶媒介；禁止贴样张构图机位分区；无UI无字；画幅9:16",
+  "module": "prop.CasualBattery",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "recompose",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "recompose",
+    "label": "定向改构图模式 · 按用户指定新构图动态达标闭环 (Directed Re-Composition Dynamic Threshold >=9.5)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 2,
+    "target_score_threshold": 9.5,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.15,
+      "perspective_anatomy": 0.15,
+      "texture_detail": 0.15,
+      "spec_style": 0.15,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "style_medium",
+      "identity",
+      "recompose_dir_target"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图；第 1 轮落到指定机位，之后只在提示词上补还没过的那一处（提示词改动仍 ≤85%）",
+    "max_prompt_delta_ratio": 0.85,
+    "allow_recompose": true,
+    "allow_viewpoint_change": true,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)",
+      "recompose_direction (不偏离指定构图方向)"
+    ],
+    "prompt_delta_baseline": "previous",
+    "min_round_leap": 0.2,
+    "prompt_directive": "原图画风优先：保画风色板，按「旧样张全身餐桌俯视远景作废；新机位硬锁半身/中景：国王与管家胸部以上至腰际入画，面部占画面中上约35%-45%，城堡花园仅作虚化背景，人物并排举杯庆祝节日，竖构图9:16」重构机位，笔触和光的类型跟参考图",
+    "medium_family": "generic",
+    "best_direction_hint": "最优方向：只写目标机位与布局",
+    "recompose_dir": "旧样张全身餐桌俯视远景作废；新机位硬锁半身/中景：国王与管家胸部以上至腰际入画，面部占画面中上约35%-45%，城堡花园仅作虚化背景，人物并排举杯庆祝节日，竖构图9:16",
+    "goal": "节日主视觉原画；只借样张画风色板光影软塑胶媒介；禁止贴样张构图机位分区；无UI无字；画幅9:16",
+    "module": "prop.CasualBattery",
+    "ref_image": "assets/skill_full_run_1105b/refs/rm_keyart_916.png",
+    "ref_analysis": "构图与视角：样张为9:16竖构图，偏全身/远中景，国王管家犬围坐餐桌，城堡占上半；姿态：国王左座舀食、管家中持伞巾、犬右坐；色板：宝蓝#2E5BDB、金#F5C542、紫屋顶#7B5CDB、草绿、暖晴空；光影：高调日光+柔边轮廓光；笔触：商业休闲软塑胶3D圆润；须借：色板光影媒介笔触；禁继承：餐桌群像机位、上下分区、主体占比、前景摆位。layout_not_style_echo。"
+  },
+  "medium_family": "generic",
+  "contract": "",
+  "target_score_threshold": 9.5,
+  "recompose_dir": "旧样张全身餐桌俯视远景作废；新机位硬锁半身/中景：国王与管家胸部以上至腰际入画，面部占画面中上约35%-45%，城堡花园仅作虚化背景，人物并排举杯庆祝节日，竖构图9:16",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "assets/skill_full_run_1105b/refs/rm_keyart_916.png",
+  "ref_analysis": "构图与视角：样张为9:16竖构图，偏全身/远中景，国王管家犬围坐餐桌，城堡占上半；姿态：国王左座舀食、管家中持伞巾、犬右坐；色板：宝蓝#2E5BDB、金#F5C542、紫屋顶#7B5CDB、草绿、暖晴空；光影：高调日光+柔边轮廓光；笔触：商业休闲软塑胶3D圆润；须借：色板光影媒介笔触；禁继承：餐桌群像机位、上下分区、主体占比、前景摆位。layout_not_style_echo。",
+  "default_aspect_ratio": "9:16",
+  "default_reference_image_paths": [
+    "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/rm_keyart_916.png"
+  ],
+  "aspect_ratio": "9:16",
+  "reference_image_paths": [
+    "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/rm_keyart_916.png"
+  ],
+  "ref_physical_traits": {
+    "exists": true,
+    "size_bytes": 4012867,
+    "size_kb": 3918.8,
+    "width": 1284,
+    "height": 2282,
+    "aspect_ratio": "642:1141",
+    "canonical_aspect_ratio": "9:16",
+    "color_entropy": 7.99
+  },
+  "param_validation": {
+    "valid": true,
+    "validation_passed": true,
+    "case_id": "1105b-keyart",
+    "scale": "recompose",
+    "aspect_ratio": "9:16",
+    "ref_aspect_ratio": "9:16",
+    "ref_dimensions": "1284x2282",
+    "output_aspect_ratio": "",
+    "output_dimensions": "",
+    "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/rm_keyart_916.png",
+    "reference_image_paths": [
+      "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/rm_keyart_916.png"
+    ],
+    "inherited_default_aspect_ratio": false,
+    "inherited_default_pad_image": false,
+    "matched_ref_aspect_ratio": true,
+    "matched_ref_pad_image": true,
+    "matched_output_aspect_ratio": true,
+    "three_step_stage": "step1_start",
+    "three_step_verified": false,
+    "warnings": []
+  },
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.5,
+  "accept_threshold": 9.5,
+  "max_rounds": 4,
+  "ready_to_finish": true,
+  "status": "finished",
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/rm_keyart_916.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "1105b-keyart",
+        "scale": "recompose",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "1284x2282",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/rm_keyart_916.png",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/refs/rm_keyart_916.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "02:32:32",
+      "image": "assets/skill_full_run_1105b/keyart/r1.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 260546,
+        "size_kb": 254.4,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.23
+      },
+      "raw_score": 8.28,
+      "score": 8.28,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.5/光影8.8/透视8.1/质感8.4/风格8.3/无瑕度7.9",
+      "dims_parsed": {
+        "composition": 8.5,
+        "lighting_color": 8.8,
+        "perspective_anatomy": 8.1,
+        "texture_detail": 8.4,
+        "spec_style": 8.3,
+        "flawlessness": 7.9
+      },
+      "weighted_score": 8.28,
+      "audit_warnings": [
+        "独立视觉裁判已采纳：openai_compatible/gpt-5.6-sol",
+        "recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机"
+      ],
+      "stagnated": false,
+      "strengths": "已离开样张餐桌群像，换成半身并排举杯新机位；商业休闲软塑胶色板与高调日光可读",
+      "defects": "构图略显对称和拥挤，两个人物及手臂占据下半幅过多，城堡与人物头部存在局部轮廓竞争。双手握杯的指节结构偏团块化，拇指与杯梗的接触关系不够可信；两只玻璃杯的透明折射、液面和交叠处光学表现偏弱，刻纹也略机械。背景城堡细节较糊且局部塔楼尺度关系略松，人物高完成度与背景精度存在落差。；recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机",
+      "next_fix": "优先重组主体间距与举杯动作：稍微缩小人物并错开头肩高度，让杯口明确碰杯，同时给城堡轮廓留出更干净的负形；随后重画握杯手指与杯梗接触结构，统一两杯透视、液面、折射和高光，再适度补强城堡关键边缘与节庆环境细节。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.CasualBattery\n- 置信度: 0.50（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261105014940924RECIPE] [收敛胜出 9.13分] 变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居中；商业休闲软塑胶 — x\n  · [CHAT20261105015043104RECIPE] [收敛胜出 8.78分] 多图分工·打开态：同一宝箱机位，仅盖打开露金币光，黑底1:1 — x\n  · [CHAT20261105014944924RECIPE] [收敛胜出 8.70分] Icon A：满幅直角1024感App Icon母版，草莓糖果休闲游戏符号，安全区72-80%，无字 — x\n- 必须避开红线:\n  · [CHAT20261105014941128REDLINE] [收敛踩坑红线] 变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居：避免「整体过于轴对称和图标化，动态感略弱；面部、金属与布料的表面处理较趋同，材质区分主要依赖颜色」\n  · [CHAT20261105015000846REDLINE] [收敛踩坑红线] 多图分工·关闭态：软塑胶宝箱盖关锁，黑底1:1，锁3/4机位：避免「锁梁与上方扣环的穿插关系略显拥挤，局部轮廓近似粘连；钥匙孔内部偏暗且边缘稍软。紫色板材的纹」\n  · [CHAT20261105014937678REDLINE] [收敛踩坑红线] Royal Match级商业休闲主视觉：阳光城堡花园，国王与：避免「主体实际接近全身群像，并非半身气氛，狗的加入也略分散双主角焦点；人物与背景受光较平均，局部」\n  · [CHAT20261105014949113REDLINE] [收敛踩坑红线] Icon C：背包道具格草莓软糖，黑底隔离可读剪影，安全边距：避免「顶部叶片与果柄交叠关系略显拥挤，部分叶片像互相黏合，空间层级不够清楚；外缘双层深色描边偏厚」\n  · [CHAT20261105015043379REDLINE] [收敛踩坑红线] 多图分工·打开态：同一宝箱机位，仅盖打开露金币光，黑底1:1：避免「金币堆局部存在粘连、重叠关系含混和边缘融化感，部分币面厚度与椭圆透视不统一。箱盖与箱体的铰」\n- 审美拍板:\n  · 以后统一按此样张画风：商业休闲Royal Match系；主色金黄#F5C542约70%、辅色城堡紫#7B5CDB约20%、点缀正红#E23B3B约10%；…\n- 个人口味: 光影=冷光源 / 暖光；构图=半身；色温=避免过饱和\n- 个人禁用习惯: 错误头身比/头过大；电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感；过曝高光；廉价塑料感/油腻高光；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差；漏抠/黑底/毛边；赛博霓虹/霓虹紫；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [composition-thirds-grid] 构图法则：九宫格三分法与呼吸留白安全区: 将核心视觉焦点布置在九宫格三分线交点（黄金分割点 0.618）上，利用引导线与前景暗角汇聚视线；独立资产四周必须预留 16px~24px 纯透明呼吸安全边距，严禁发冠、武器或特效贴死画布边缘被裁切。\n  · [icon-stroke-grid-spec] 图标工程规范：线宽统一、安全网格与剪影可读性: 成套技能/功能图标必须锁定统一的描边线宽（如全局统一 2px 描边，严禁 1px 与 6px 混杂）、统一圆角半径与 16px~24px 安全内边距网格，确保在 64x64px 极小缩略尺寸下主体几何剪影依然一眼可辨、不与背景杂光粘连。\n原图画风优先：保画风色板，按「旧样张全身餐桌俯视远景作废；新机位硬锁半身/中景：国王与管家胸部以上至腰际入画，面部占画面中上约35%-45%，城堡花园仅作虚化背景，人物并排举杯庆祝节日，竖构图9:16」重构机位，笔触和光的类型跟参考图 | Vertical 9:16 festival key art for casual mobile game. HARD FRAMING LOCK framing_lock: medium/half-body shot only — crop from mid-chest to crown, both faces large in upper-middle third, faces occupy about 35-45% of frame height; waist and legs out of frame. NEW CAMERA vs style ref: layout_not_style_echo — borrow ONLY soft-plastic 3D medium, sunny high-key light, palette royal blue #2E5BDB / gold #F5C542 / castle purple #7B5CDB / bright grass; DO NOT copy ref table picnic layout, full-body group, dog, umbrella, upper-castle dominance, or left-right seating. Subject action: jolly chubby king (gold crown with red gem, grey-white beard, blue-purple striped royal tunic) and slim butler (red coat, mustache) stand side-by-side raising toast glasses in a sunny palace garden; soft-focus fairy castle with purple roofs stays small in deep background. Soft plastic toy-like materials: matte fabric, gentle metal crown highlights, warm rim light, clean commercial casual finish. No UI, no logo, no readable text. Fail-at-glance: if it looks like the ref seated picnic or full-body wide shot, or faces are tiny, FAIL. Structure floor: continuous shoulder-elbow-wrist, clear finger grips on cups, both pupils aligned. | 约束：保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观；不偏离指定构图方向 | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.1,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "independent_vlm",
+      "remote_vlm": {
+        "source": "independent_vlm",
+        "provider": "openai_compatible",
+        "model": "gpt-5.6-sol",
+        "error": "",
+        "active": true
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "composition",
+          "lesson": "本轮短板偏「composition」：构图略显对称和拥挤，两个人物及手臂占据下半幅过多，城堡与人物头部存在局部轮廓竞争。双手握杯的指节结构偏团块化，拇指与杯梗的接触关系不够可信；两只玻璃杯的透明折射",
+          "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+          "from_score": "8.28"
+        },
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：构图略显对称和拥挤，两个人物及手臂占据下半幅过多，城堡与人物头部存在局部轮廓竞争。双手握杯的指节结构偏团块化，拇指与杯梗的接触关系不够可信；两只玻璃杯的透明折射",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.28"
+        },
+        {
+          "category": "anatomy",
+          "lesson": "本轮短板偏「anatomy」：构图略显对称和拥挤，两个人物及手臂占据下半幅过多，城堡与人物头部存在局部轮廓竞争。双手握杯的指节结构偏团块化，拇指与杯梗的接触关系不够可信；两只玻璃杯的透明折射",
+          "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+          "from_score": "8.28"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "02:33:16"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/keyart/r1.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "1105b-keyart",
+        "scale": "recompose",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "720x1280",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/keyart/r1.jpg",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/keyart/r1.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": true,
+        "pad_diverged": false
+      },
+      "generated_at": "02:33:59",
+      "image": "assets/skill_full_run_1105b/keyart/r2.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 258891,
+        "size_kb": 252.8,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.23
+      },
+      "raw_score": 8.46,
+      "score": 8.46,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.3/光影8.7/透视8.4/质感8.6/风格8.8/无瑕度8.2",
+      "dims_parsed": {
+        "composition": 8.3,
+        "lighting_color": 8.7,
+        "perspective_anatomy": 8.4,
+        "texture_detail": 8.6,
+        "spec_style": 8.8,
+        "flawlessness": 8.2
+      },
+      "weighted_score": 8.46,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.18 低于当前档位 (recompose) 的最小跃升 +0.20。下一轮更贴近指定构图方向",
+        "独立视觉裁判已采纳：openai_compatible/gpt-5.6-sol",
+        "recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机"
+      ],
+      "stagnated": true,
+      "strengths": "仍保持半身举杯新机位；头肩高度略有错落，色板与软塑胶气质稳定",
+      "defects": "左侧王冠与城堡主体大面积重叠，尖塔、冠顶和头部轮廓相互争抢，背景城堡反而像从人物头顶长出；上方天空留白偏多，而两人身体在底边被硬截，画面重心略下坠。两只酒杯距离很近却未形成明确碰杯接触，动作高潮感不足；杯柄与手指的穿插略僵，左手指节体块偏粘连。人物和前景锐度、饱和度较一致，纵深层次还可加强。；recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机",
+      "next_fix": "优先重构人物与城堡的错位关系：将城堡横移或缩小，使王冠和头部获得干净天空轮廓；同步减少顶部空白并略扩展下方人物空间。调整双手与杯子的角度，让杯沿在视觉中心明确相碰，重新梳理握杯手指和杯柄遮挡；再适度降低城堡的对比与清晰度，加强前后景分离。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.CasualBattery\n- 置信度: 0.50（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261105014940924RECIPE] [收敛胜出 9.13分] 变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居中；商业休闲软塑胶 — x\n  · [CHAT20261105015043104RECIPE] [收敛胜出 8.78分] 多图分工·打开态：同一宝箱机位，仅盖打开露金币光，黑底1:1 — x\n  · [CHAT20261105014944924RECIPE] [收敛胜出 8.70分] Icon A：满幅直角1024感App Icon母版，草莓糖果休闲游戏符号，安全区72-80%，无字 — x\n- 必须避开红线:\n  · [CHAT20261105014941128REDLINE] [收敛踩坑红线] 变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居：避免「整体过于轴对称和图标化，动态感略弱；面部、金属与布料的表面处理较趋同，材质区分主要依赖颜色」\n  · [CHAT20261105015000846REDLINE] [收敛踩坑红线] 多图分工·关闭态：软塑胶宝箱盖关锁，黑底1:1，锁3/4机位：避免「锁梁与上方扣环的穿插关系略显拥挤，局部轮廓近似粘连；钥匙孔内部偏暗且边缘稍软。紫色板材的纹」\n  · [CHAT20261105014937678REDLINE] [收敛踩坑红线] Royal Match级商业休闲主视觉：阳光城堡花园，国王与：避免「主体实际接近全身群像，并非半身气氛，狗的加入也略分散双主角焦点；人物与背景受光较平均，局部」\n  · [CHAT20261105014949113REDLINE] [收敛踩坑红线] Icon C：背包道具格草莓软糖，黑底隔离可读剪影，安全边距：避免「顶部叶片与果柄交叠关系略显拥挤，部分叶片像互相黏合，空间层级不够清楚；外缘双层深色描边偏厚」\n  · [CHAT20261105015043379REDLINE] [收敛踩坑红线] 多图分工·打开态：同一宝箱机位，仅盖打开露金币光，黑底1:1：避免「金币堆局部存在粘连、重叠关系含混和边缘融化感，部分币面厚度与椭圆透视不统一。箱盖与箱体的铰」\n- 审美拍板:\n  · 以后统一按此样张画风：商业休闲Royal Match系；主色金黄#F5C542约70%、辅色城堡紫#7B5CDB约20%、点缀正红#E23B3B约10%；…\n- 个人口味: 光影=冷光源 / 暖光；构图=半身；色温=避免过饱和\n- 个人禁用习惯: 错误头身比/头过大；电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感；过曝高光；廉价塑料感/油腻高光；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差；漏抠/黑底/毛边；赛博霓虹/霓虹紫；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [composition-thirds-grid] 构图法则：九宫格三分法与呼吸留白安全区: 将核心视觉焦点布置在九宫格三分线交点（黄金分割点 0.618）上，利用引导线与前景暗角汇聚视线；独立资产四周必须预留 16px~24px 纯透明呼吸安全边距，严禁发冠、武器或特效贴死画布边缘被裁切。\n  · [icon-stroke-grid-spec] 图标工程规范：线宽统一、安全网格与剪影可读性: 成套技能/功能图标必须锁定统一的描边线宽（如全局统一 2px 描边，严禁 1px 与 6px 混杂）、统一圆角半径与 16px~24px 安全内边距网格，确保在 64x64px 极小缩略尺寸下主体几何剪影依然一眼可辨、不与背景杂光粘连。\n原图画风优先：保画风色板，按「旧样张全身餐桌俯视远景作废；新机位硬锁半身/中景：国王与管家胸部以上至腰际入画，面部占画面中上约35%-45%，城堡花园仅作虚化背景，人物并排举杯庆祝节日，竖构图9:16」重构机位，笔触和光的类型跟参考图 | 机位保持指定方向：旧样张全身餐桌俯视远景作废；新机位硬锁半身/中景：国王与管家胸部以上至腰际入画，面部占画面中上约35%-45%，城堡花园仅作虚化背景，人物并排举杯庆祝节日，竖构图9:16。垫图是目前分数最高的那张成图。只改这一处：优先重组主体间距与举杯动作：稍微缩小人物并错开头肩高度，让杯口明确碰杯，同时给城堡轮廓留出更干净的负形；随后重画握杯手指与杯梗接触结构，统一两杯透视、液面、折射和高光，再适度补强城堡关键边缘与节庆环境细节。。没点名的地方保持垫图。",
+      "continuation": true,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.4,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "independent_vlm",
+      "remote_vlm": {
+        "source": "independent_vlm",
+        "provider": "openai_compatible",
+        "model": "gpt-5.6-sol",
+        "error": "",
+        "active": true
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "composition",
+          "lesson": "本轮短板偏「composition」：左侧王冠与城堡主体大面积重叠，尖塔、冠顶和头部轮廓相互争抢，背景城堡反而像从人物头顶长出；上方天空留白偏多，而两人身体在底边被硬截，画面重心略下坠。两只酒杯距离",
+          "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+          "from_score": "8.46"
+        },
+        {
+          "category": "anatomy",
+          "lesson": "本轮短板偏「anatomy」：左侧王冠与城堡主体大面积重叠，尖塔、冠顶和头部轮廓相互争抢，背景城堡反而像从人物头顶长出；上方天空留白偏多，而两人身体在底边被硬截，画面重心略下坠。两只酒杯距离",
+          "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+          "from_score": "8.46"
+        },
+        {
+          "category": "color_palette",
+          "lesson": "本轮短板偏「color_palette」：左侧王冠与城堡主体大面积重叠，尖塔、冠顶和头部轮廓相互争抢，背景城堡反而像从人物头顶长出；上方天空留白偏多，而两人身体在底边被硬截，画面重心略下坠。两只酒杯距离",
+          "drill": "从模块 palette 抽 3 HEX 做限色练习，禁止引入霓虹辅色",
+          "from_score": "8.46"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "02:34:25",
+      "asset_image": "assets/skill_full_run_1105b/keyart/r2.jpg"
+    },
+    {
+      "round": 3,
+      "round_label": "第 3 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/keyart/r2.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "1105b-keyart",
+        "scale": "recompose",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "720x1280",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/keyart/r2.jpg",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/keyart/r2.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": true,
+        "pad_diverged": false
+      },
+      "generated_at": "02:35:04",
+      "image": "assets/skill_full_run_1105b/keyart/r3.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 253270,
+        "size_kb": 247.3,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.22
+      },
+      "raw_score": 7.13,
+      "score": 7.13,
+      "target_score_threshold": 9.5,
+      "dims": "构图7.7/光影8.4/透视7.6/质感8.1/风格4.8/无瑕度7.5",
+      "dims_parsed": {
+        "composition": 7.7,
+        "lighting_color": 8.4,
+        "perspective_anatomy": 7.6,
+        "texture_detail": 8.1,
+        "spec_style": 4.8,
+        "flawlessness": 7.5
+      },
+      "weighted_score": 7.13,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +-1.33 低于当前档位 (recompose) 的最小跃升 +0.20。下一轮更贴近指定构图方向",
+        "独立视觉裁判已采纳：openai_compatible/gpt-5.6-sol",
+        "recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机"
+      ],
+      "stagnated": true,
+      "strengths": "城堡略右移虚化，冠顶天空轮廓更干净；半身景别与碰杯叙事仍清晰",
+      "defects": "画面主体实际是国王与绅士庆祝举杯，未见可识别的电池道具，和 prop.CasualBattery 模块关联不足。上方天空留白偏多，城堡贴近人物头部且被遮挡，主次关系略拥挤；两只杯子的杯口、杯壁与交叠关系不够稳定，握杯处接触逻辑略含糊，手指造型偏团块；背景城堡局部结构粘连、虚化不均，人物下半身被画幅生硬截断。；recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机",
+      "next_fix": "按 recompose 重构主体：把可一眼识别的休闲电池道具设为核心视觉，并让人物动作、节庆装饰和光线围绕它组织；缩减空天空、调整城堡避开头部轮廓，重新校准杯体椭圆透视与手指接触关系，同时给底部裁切留出更自然的收束空间。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.CasualBattery\n- 置信度: 0.50（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261105014940924RECIPE] [收敛胜出 9.13分] 变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居中；商业休闲软塑胶 — x\n  · [CHAT20261105015043104RECIPE] [收敛胜出 8.78分] 多图分工·打开态：同一宝箱机位，仅盖打开露金币光，黑底1:1 — x\n  · [CHAT20261105014944924RECIPE] [收敛胜出 8.70分] Icon A：满幅直角1024感App Icon母版，草莓糖果休闲游戏符号，安全区72-80%，无字 — x\n- 必须避开红线:\n  · [CHAT20261105014941128REDLINE] [收敛踩坑红线] 变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居：避免「整体过于轴对称和图标化，动态感略弱；面部、金属与布料的表面处理较趋同，材质区分主要依赖颜色」\n  · [CHAT20261105015000846REDLINE] [收敛踩坑红线] 多图分工·关闭态：软塑胶宝箱盖关锁，黑底1:1，锁3/4机位：避免「锁梁与上方扣环的穿插关系略显拥挤，局部轮廓近似粘连；钥匙孔内部偏暗且边缘稍软。紫色板材的纹」\n  · [CHAT20261105014937678REDLINE] [收敛踩坑红线] Royal Match级商业休闲主视觉：阳光城堡花园，国王与：避免「主体实际接近全身群像，并非半身气氛，狗的加入也略分散双主角焦点；人物与背景受光较平均，局部」\n  · [CHAT20261105014949113REDLINE] [收敛踩坑红线] Icon C：背包道具格草莓软糖，黑底隔离可读剪影，安全边距：避免「顶部叶片与果柄交叠关系略显拥挤，部分叶片像互相黏合，空间层级不够清楚；外缘双层深色描边偏厚」\n  · [CHAT20261105015043379REDLINE] [收敛踩坑红线] 多图分工·打开态：同一宝箱机位，仅盖打开露金币光，黑底1:1：避免「金币堆局部存在粘连、重叠关系含混和边缘融化感，部分币面厚度与椭圆透视不统一。箱盖与箱体的铰」\n- 审美拍板:\n  · 以后统一按此样张画风：商业休闲Royal Match系；主色金黄#F5C542约70%、辅色城堡紫#7B5CDB约20%、点缀正红#E23B3B约10%；…\n- 个人口味: 光影=冷光源 / 暖光；构图=半身；色温=避免过饱和\n- 个人禁用习惯: 错误头身比/头过大；电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感；过曝高光；廉价塑料感/油腻高光；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差；漏抠/黑底/毛边；赛博霓虹/霓虹紫；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [composition-thirds-grid] 构图法则：九宫格三分法与呼吸留白安全区: 将核心视觉焦点布置在九宫格三分线交点（黄金分割点 0.618）上，利用引导线与前景暗角汇聚视线；独立资产四周必须预留 16px~24px 纯透明呼吸安全边距，严禁发冠、武器或特效贴死画布边缘被裁切。\n  · [icon-stroke-grid-spec] 图标工程规范：线宽统一、安全网格与剪影可读性: 成套技能/功能图标必须锁定统一的描边线宽（如全局统一 2px 描边，严禁 1px 与 6px 混杂）、统一圆角半径与 16px~24px 安全内边距网格，确保在 64x64px 极小缩略尺寸下主体几何剪影依然一眼可辨、不与背景杂光粘连。\n原图画风优先：保画风色板，按「旧样张全身餐桌俯视远景作废；新机位硬锁半身/中景：国王与管家胸部以上至腰际入画，面部占画面中上约35%-45%，城堡花园仅作虚化背景，人物并排举杯庆祝节日，竖构图9:16」重构机位，笔触和光的类型跟参考图 | 机位保持指定方向：旧样张全身餐桌俯视远景作废；新机位硬锁半身/中景：国王与管家胸部以上至腰际入画，面部占画面中上约35%-45%，城堡花园仅作虚化背景，人物并排举杯庆祝节日，竖构图9:16。垫图是目前分数最高的那张成图。只改这一处：优先重构人物与城堡的错位关系：将城堡横移或缩小，使王冠和头部获得干净天空轮廓；同步减少顶部空白并略扩展下方人物空间。调整双手与杯子的角度，让杯沿在视觉中心明确相碰，重新梳理握杯手指和杯柄遮挡；再适度降低城堡的对比与清晰度，加强前后景分离。。没点名的地方保持垫图。",
+      "continuation": true,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 7.6,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "independent_vlm",
+      "remote_vlm": {
+        "source": "independent_vlm",
+        "provider": "openai_compatible",
+        "model": "gpt-5.6-sol",
+        "error": "",
+        "active": true
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "composition",
+          "lesson": "本轮短板偏「composition」：画面主体实际是国王与绅士庆祝举杯，未见可识别的电池道具，和 prop.CasualBattery 模块关联不足。上方天空留白偏多，城堡贴近人物头部且被遮挡，主次",
+          "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+          "from_score": "7.13"
+        },
+        {
+          "category": "anatomy",
+          "lesson": "本轮短板偏「anatomy」：画面主体实际是国王与绅士庆祝举杯，未见可识别的电池道具，和 prop.CasualBattery 模块关联不足。上方天空留白偏多，城堡贴近人物头部且被遮挡，主次",
+          "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+          "from_score": "7.13"
+        },
+        {
+          "category": "narrative_camera",
+          "lesson": "本轮短板偏「narrative_camera」：画面主体实际是国王与绅士庆祝举杯，未见可识别的电池道具，和 prop.CasualBattery 模块关联不足。上方天空留白偏多，城堡贴近人物头部且被遮挡，主次",
+          "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+          "from_score": "7.13"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "02:35:30"
+    },
+    {
+      "round": 4,
+      "round_label": "第 4 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/keyart/r2.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "1105b-keyart",
+        "scale": "recompose",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "720x1280",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/keyart/r2.jpg",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/keyart/r2.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": true,
+        "pad_diverged": false
+      },
+      "generated_at": "02:36:15",
+      "image": "assets/skill_full_run_1105b/keyart/r4.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 257903,
+        "size_kb": 251.9,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.23
+      },
+      "raw_score": 8.11,
+      "score": 8.11,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.0/光影8.6/透视7.7/质感8.2/风格8.7/无瑕度7.8",
+      "dims_parsed": {
+        "composition": 8.0,
+        "lighting_color": 8.6,
+        "perspective_anatomy": 7.7,
+        "texture_detail": 8.2,
+        "spec_style": 8.7,
+        "flawlessness": 7.8
+      },
+      "weighted_score": 8.11,
+      "audit_warnings": [
+        "独立视觉裁判已采纳：openai_compatible/gpt-5.6-sol",
+        "recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机"
+      ],
+      "stagnated": false,
+      "strengths": "半身碰杯机位稳定；城堡右移虚化后冠顶天空轮廓更干净；软塑胶商业休闲气质明确",
+      "defects": "构图较正且人物并排对称，举杯动作缺少瞬间感，城堡与右侧人物头部重叠使空间层次略拥挤；双手造型偏肿胀，握杯处手指与杯脚关系不够可信；玻璃杯的透明、折射和液体表现偏简化，服装、皮肤、毛发的材质区分仍显同质，局部轮廓过于平滑。；recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机",
+      "next_fix": "重组为更有前后错位和动作弧线的碰杯构图，移动城堡以避开头部轮廓并留出清晰负形；重点校正握杯手势、杯脚接触与双杯透视，补强玻璃折射、液体高光及毛发和织物的材质差异。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.CasualBattery\n- 置信度: 0.50（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261105014940924RECIPE] [收敛胜出 9.13分] 变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居中；商业休闲软塑胶 — x\n  · [CHAT20261105015043104RECIPE] [收敛胜出 8.78分] 多图分工·打开态：同一宝箱机位，仅盖打开露金币光，黑底1:1 — x\n  · [CHAT20261105014944924RECIPE] [收敛胜出 8.70分] Icon A：满幅直角1024感App Icon母版，草莓糖果休闲游戏符号，安全区72-80%，无字 — x\n- 必须避开红线:\n  · [CHAT20261105014941128REDLINE] [收敛踩坑红线] 变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居：避免「整体过于轴对称和图标化，动态感略弱；面部、金属与布料的表面处理较趋同，材质区分主要依赖颜色」\n  · [CHAT20261105015000846REDLINE] [收敛踩坑红线] 多图分工·关闭态：软塑胶宝箱盖关锁，黑底1:1，锁3/4机位：避免「锁梁与上方扣环的穿插关系略显拥挤，局部轮廓近似粘连；钥匙孔内部偏暗且边缘稍软。紫色板材的纹」\n  · [CHAT20261105014937678REDLINE] [收敛踩坑红线] Royal Match级商业休闲主视觉：阳光城堡花园，国王与：避免「主体实际接近全身群像，并非半身气氛，狗的加入也略分散双主角焦点；人物与背景受光较平均，局部」\n  · [CHAT20261105014949113REDLINE] [收敛踩坑红线] Icon C：背包道具格草莓软糖，黑底隔离可读剪影，安全边距：避免「顶部叶片与果柄交叠关系略显拥挤，部分叶片像互相黏合，空间层级不够清楚；外缘双层深色描边偏厚」\n  · [CHAT20261105015043379REDLINE] [收敛踩坑红线] 多图分工·打开态：同一宝箱机位，仅盖打开露金币光，黑底1:1：避免「金币堆局部存在粘连、重叠关系含混和边缘融化感，部分币面厚度与椭圆透视不统一。箱盖与箱体的铰」\n- 审美拍板:\n  · 以后统一按此样张画风：商业休闲Royal Match系；主色金黄#F5C542约70%、辅色城堡紫#7B5CDB约20%、点缀正红#E23B3B约10%；…\n- 个人口味: 光影=冷光源 / 暖光；构图=半身；色温=避免过饱和\n- 个人禁用习惯: 错误头身比/头过大；电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感；过曝高光；廉价塑料感/油腻高光；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差；漏抠/黑底/毛边；赛博霓虹/霓虹紫；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [composition-thirds-grid] 构图法则：九宫格三分法与呼吸留白安全区: 将核心视觉焦点布置在九宫格三分线交点（黄金分割点 0.618）上，利用引导线与前景暗角汇聚视线；独立资产四周必须预留 16px~24px 纯透明呼吸安全边距，严禁发冠、武器或特效贴死画布边缘被裁切。\n  · [icon-stroke-grid-spec] 图标工程规范：线宽统一、安全网格与剪影可读性: 成套技能/功能图标必须锁定统一的描边线宽（如全局统一 2px 描边，严禁 1px 与 6px 混杂）、统一圆角半径与 16px~24px 安全内边距网格，确保在 64x64px 极小缩略尺寸下主体几何剪影依然一眼可辨、不与背景杂光粘连。\n原图画风优先：保画风色板，按「旧样张全身餐桌俯视远景作废；新机位硬锁半身/中景：国王与管家胸部以上至腰际入画，面部占画面中上约35%-45%，城堡花园仅作虚化背景，人物并排举杯庆祝节日，竖构图9:16」重构机位，笔触和光的类型跟参考图 | 机位保持指定方向：旧样张全身餐桌俯视远景作废；新机位硬锁半身/中景：国王与管家胸部以上至腰际入画，面部占画面中上约35%-45%，城堡花园仅作虚化背景，人物并排举杯庆祝节日，竖构图9:16。垫图是目前分数最高的那张成图。只改这一处：优先重构人物与城堡的错位关系：将城堡横移或缩小，使王冠和头部获得干净天空轮廓；同步减少顶部空白并略扩展下方人物空间。调整双手与杯子的角度，让杯沿在视觉中心明确相碰，重新梳理握杯手指和杯柄遮挡；再适度降低城堡的对比与清晰度，加强前后景分离。。没点名的地方保持垫图。",
+      "continuation": true,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 7.7,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "independent_vlm",
+      "remote_vlm": {
+        "source": "independent_vlm",
+        "provider": "openai_compatible",
+        "model": "gpt-5.6-sol",
+        "error": "",
+        "active": true
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_MAX_ROUNDS",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "composition",
+          "lesson": "本轮短板偏「composition」：构图较正且人物并排对称，举杯动作缺少瞬间感，城堡与右侧人物头部重叠使空间层次略拥挤；双手造型偏肿胀，握杯处手指与杯脚关系不够可信；玻璃杯的透明、折射和液体表现偏",
+          "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+          "from_score": "8.11"
+        },
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：构图较正且人物并排对称，举杯动作缺少瞬间感，城堡与右侧人物头部重叠使空间层次略拥挤；双手造型偏肿胀，握杯处手指与杯脚关系不够可信；玻璃杯的透明、折射和液体表现偏",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.11"
+        },
+        {
+          "category": "anatomy",
+          "lesson": "本轮短板偏「anatomy」：构图较正且人物并排对称，举杯动作缺少瞬间感，城堡与右侧人物头部重叠使空间层次略拥挤；双手造型偏肿胀，握杯处手指与杯脚关系不够可信；玻璃杯的透明、折射和液体表现偏",
+          "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+          "from_score": "8.11"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "02:36:48"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "/Users/yanghu/Desktop/pmem-art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-11-05 00:55:15 UTC+8"
+    },
+    "module": "prop.CasualBattery",
+    "goal": "节日主视觉原画；只借样张画风色板光影软塑胶媒介；禁止贴样张构图机位分区；无UI无字；画幅9:16",
+    "confidence": 0.5,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "只有未达标 provisional recipe，不计入定稿置信",
+      "命中 1 条审美拍板",
+      "个人口味档案非空",
+      "红线中等（5 条）",
+      "挂载 0 张项目知识卡 + 2 张全局美术底层基础卡"
+    ],
+    "top_recipes": [
+      {
+        "id": "CHAT20261105014940924RECIPE",
+        "summary": "[收敛胜出 9.13分] 变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居中；商业休闲软塑胶 — x",
+        "module": "prop.CasualBattery"
+      },
+      {
+        "id": "CHAT20261105015043104RECIPE",
+        "summary": "[收敛胜出 8.78分] 多图分工·打开态：同一宝箱机位，仅盖打开露金币光，黑底1:1 — x",
+        "module": "prop.CasualBattery"
+      },
+      {
+        "id": "CHAT20261105014944924RECIPE",
+        "summary": "[收敛胜出 8.70分] Icon A：满幅直角1024感App Icon母版，草莓糖果休闲游戏符号，安全区72-80%，无字 — x",
+        "module": "prop.CasualBattery"
+      }
+    ],
+    "top_redlines": [
+      {
+        "id": "CHAT20261105014941128REDLINE",
+        "summary": "[收敛踩坑红线] 变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居：避免「整体过于轴对称和图标化，动态感略弱；面部、金属与布料的表面处理较趋同，材质区分主要依赖颜色」",
+        "module": "prop.CasualBattery"
+      },
+      {
+        "id": "CHAT20261105015000846REDLINE",
+        "summary": "[收敛踩坑红线] 多图分工·关闭态：软塑胶宝箱盖关锁，黑底1:1，锁3/4机位：避免「锁梁与上方扣环的穿插关系略显拥挤，局部轮廓近似粘连；钥匙孔内部偏暗且边缘稍软。紫色板材的纹」",
+        "module": "prop.CasualBattery"
+      },
+      {
+        "id": "CHAT20261105014937678REDLINE",
+        "summary": "[收敛踩坑红线] Royal Match级商业休闲主视觉：阳光城堡花园，国王与：避免「主体实际接近全身群像，并非半身气氛，狗的加入也略分散双主角焦点；人物与背景受光较平均，局部」",
+        "module": "prop.CasualBattery"
+      },
+      {
+        "id": "CHAT20261105014949113REDLINE",
+        "summary": "[收敛踩坑红线] Icon C：背包道具格草莓软糖，黑底隔离可读剪影，安全边距：避免「顶部叶片与果柄交叠关系略显拥挤，部分叶片像互相黏合，空间层级不够清楚；外缘双层深色描边偏厚」",
+        "module": "prop.CasualBattery"
+      },
+      {
+        "id": "CHAT20261105015043379REDLINE",
+        "summary": "[收敛踩坑红线] 多图分工·打开态：同一宝箱机位，仅盖打开露金币光，黑底1:1：避免「金币堆局部存在粘连、重叠关系含混和边缘融化感，部分币面厚度与椭圆透视不统一。箱盖与箱体的铰」",
+        "module": "prop.CasualBattery"
+      }
+    ],
+    "art_decisions": [
+      {
+        "id": "CHAT20261105012822490DECISION",
+        "summary": "以后统一按此样张画风：商业休闲Royal Match系；主色金黄#F5C542约70%、辅色城堡紫#7B5CDB约20%、点缀正红#E23B3B约10%；…",
+        "layer_scope": "private"
+      }
+    ],
+    "private_knowledge": [],
+    "shared_knowledge": [
+      {
+        "id": "composition-thirds-grid",
+        "title": "构图法则：九宫格三分法与呼吸留白安全区",
+        "body": "将核心视觉焦点布置在九宫格三分线交点（黄金分割点 0.618）上，利用引导线与前景暗角汇聚视线；独立资产四周必须预留 16px~24px 纯透明呼吸安全边距，严禁发冠、武器或特效贴死画布边缘被裁切。",
+        "layer_scope": "shared"
+      },
+      {
+        "id": "icon-stroke-grid-spec",
+        "title": "图标工程规范：线宽统一、安全网格与剪影可读性",
+        "body": "成套技能/功能图标必须锁定统一的描边线宽（如全局统一 2px 描边，严禁 1px 与 6px 混杂）、统一圆角半径与 16px~24px 安全内边距网格，确保在 64x64px 极小缩略尺寸下主体几何剪影依然一眼可辨、不与背景杂光粘连。",
+        "layer_scope": "shared"
+      }
+    ],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [
+        "冷光源",
+        "暖光"
+      ],
+      "preferred_composition": [
+        "半身"
+      ],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [
+        "避免过饱和"
+      ],
+      "banned_habits": [
+        "禁止偏离样张画风：过度霓虹、脏暗阴影、油腻高光、写实皮肤毛孔、扁平UI描边",
+        "电池审稿：原画竖构图避免贴样张布局；边缘反光勿过曝",
+        "错误头身比/头过大",
+        "电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感",
+        "过曝高光",
+        "廉价塑料感/油腻高光",
+        "黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差",
+        "漏抠/黑底/毛边",
+        "赛博霓虹/霓虹紫",
+        "脏暗阴影/脏色"
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.CasualBattery\n- 置信度: 0.50（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261105014940924RECIPE] [收敛胜出 9.13分] 变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居中；商业休闲软塑胶 — x\n  · [CHAT20261105015043104RECIPE] [收敛胜出 8.78分] 多图分工·打开态：同一宝箱机位，仅盖打开露金币光，黑底1:1 — x\n  · [CHAT20261105014944924RECIPE] [收敛胜出 8.70分] Icon A：满幅直角1024感App Icon母版，草莓糖果休闲游戏符号，安全区72-80%，无字 — x\n- 必须避开红线:\n  · [CHAT20261105014941128REDLINE] [收敛踩坑红线] 变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居：避免「整体过于轴对称和图标化，动态感略弱；面部、金属与布料的表面处理较趋同，材质区分主要依赖颜色」\n  · [CHAT20261105015000846REDLINE] [收敛踩坑红线] 多图分工·关闭态：软塑胶宝箱盖关锁，黑底1:1，锁3/4机位：避免「锁梁与上方扣环的穿插关系略显拥挤，局部轮廓近似粘连；钥匙孔内部偏暗且边缘稍软。紫色板材的纹」\n  · [CHAT20261105014937678REDLINE] [收敛踩坑红线] Royal Match级商业休闲主视觉：阳光城堡花园，国王与：避免「主体实际接近全身群像，并非半身气氛，狗的加入也略分散双主角焦点；人物与背景受光较平均，局部」\n  · [CHAT20261105014949113REDLINE] [收敛踩坑红线] Icon C：背包道具格草莓软糖，黑底隔离可读剪影，安全边距：避免「顶部叶片与果柄交叠关系略显拥挤，部分叶片像互相黏合，空间层级不够清楚；外缘双层深色描边偏厚」\n  · [CHAT20261105015043379REDLINE] [收敛踩坑红线] 多图分工·打开态：同一宝箱机位，仅盖打开露金币光，黑底1:1：避免「金币堆局部存在粘连、重叠关系含混和边缘融化感，部分币面厚度与椭圆透视不统一。箱盖与箱体的铰」\n- 审美拍板:\n  · 以后统一按此样张画风：商业休闲Royal Match系；主色金黄#F5C542约70%、辅色城堡紫#7B5CDB约20%、点缀正红#E23B3B约10%；…\n- 个人口味: 光影=冷光源 / 暖光；构图=半身；色温=避免过饱和\n- 个人禁用习惯: 错误头身比/头过大；电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感；过曝高光；廉价塑料感/油腻高光；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差；漏抠/黑底/毛边；赛博霓虹/霓虹紫；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [composition-thirds-grid] 构图法则：九宫格三分法与呼吸留白安全区: 将核心视觉焦点布置在九宫格三分线交点（黄金分割点 0.618）上，利用引导线与前景暗角汇聚视线；独立资产四周必须预留 16px~24px 纯透明呼吸安全边距，严禁发冠、武器或特效贴死画布边缘被裁切。\n  · [icon-stroke-grid-spec] 图标工程规范：线宽统一、安全网格与剪影可读性: 成套技能/功能图标必须锁定统一的描边线宽（如全局统一 2px 描边，严禁 1px 与 6px 混杂）、统一圆角半径与 16px~24px 安全内边距网格，确保在 64x64px 极小缩略尺寸下主体几何剪影依然一眼可辨、不与背景杂光粘连。",
+    "built_at": "2026-11-05 02:31:05 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：构图略显对称和拥挤，两个人物及手臂占据下半幅过多，城堡与人物头部存在局部轮廓竞争。双手握杯的指节结构偏团块化，拇指与杯梗的接触关系不够可信；两只玻璃杯的透明折射",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "8.28"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：构图略显对称和拥挤，两个人物及手臂占据下半幅过多，城堡与人物头部存在局部轮廓竞争。双手握杯的指节结构偏团块化，拇指与杯梗的接触关系不够可信；两只玻璃杯的透明折射",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.28"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：构图略显对称和拥挤，两个人物及手臂占据下半幅过多，城堡与人物头部存在局部轮廓竞争。双手握杯的指节结构偏团块化，拇指与杯梗的接触关系不够可信；两只玻璃杯的透明折射",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "8.28"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：左侧王冠与城堡主体大面积重叠，尖塔、冠顶和头部轮廓相互争抢，背景城堡反而像从人物头顶长出；上方天空留白偏多，而两人身体在底边被硬截，画面重心略下坠。两只酒杯距离",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "8.46"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：左侧王冠与城堡主体大面积重叠，尖塔、冠顶和头部轮廓相互争抢，背景城堡反而像从人物头顶长出；上方天空留白偏多，而两人身体在底边被硬截，画面重心略下坠。两只酒杯距离",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "8.46"
+    },
+    {
+      "category": "color_palette",
+      "lesson": "本轮短板偏「color_palette」：左侧王冠与城堡主体大面积重叠，尖塔、冠顶和头部轮廓相互争抢，背景城堡反而像从人物头顶长出；上方天空留白偏多，而两人身体在底边被硬截，画面重心略下坠。两只酒杯距离",
+      "drill": "从模块 palette 抽 3 HEX 做限色练习，禁止引入霓虹辅色",
+      "from_score": "8.46"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：画面主体实际是国王与绅士庆祝举杯，未见可识别的电池道具，和 prop.CasualBattery 模块关联不足。上方天空留白偏多，城堡贴近人物头部且被遮挡，主次",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "7.13"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：画面主体实际是国王与绅士庆祝举杯，未见可识别的电池道具，和 prop.CasualBattery 模块关联不足。上方天空留白偏多，城堡贴近人物头部且被遮挡，主次",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "7.13"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：画面主体实际是国王与绅士庆祝举杯，未见可识别的电池道具，和 prop.CasualBattery 模块关联不足。上方天空留白偏多，城堡贴近人物头部且被遮挡，主次",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "7.13"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：构图较正且人物并排对称，举杯动作缺少瞬间感，城堡与右侧人物头部重叠使空间层次略拥挤；双手造型偏肿胀，握杯处手指与杯脚关系不够可信；玻璃杯的透明、折射和液体表现偏",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "8.11"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：构图较正且人物并排对称，举杯动作缺少瞬间感，城堡与右侧人物头部重叠使空间层次略拥挤；双手造型偏肿胀，握杯处手指与杯脚关系不够可信；玻璃杯的透明、折射和液体表现偏",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.11"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：构图较正且人物并排对称，举杯动作缺少瞬间感，城堡与右侧人物头部重叠使空间层次略拥挤；双手造型偏肿胀，握杯处手指与杯脚关系不够可信；玻璃杯的透明、折射和液体表现偏",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "8.11"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 2,
+  "regression_drop": 0.15,
+  "reasonableness_history": [
+    {
+      "reviewed_at": 1793817112.3880699,
+      "passed": true,
+      "skill": "keyart",
+      "issues": []
+    }
+  ],
+  "reasonableness": {
+    "passed": true,
+    "skill": "keyart",
+    "draft_prompt": "Festival key art 9:16, king and butler toasting in garden with castle, soft plastic Royal Match style from ref",
+    "revised_prompt": "Vertical 9:16 festival key art for casual mobile game. HARD FRAMING LOCK framing_lock: medium/half-body shot only — crop from mid-chest to crown, both faces large in upper-middle third, faces occupy about 35-45% of frame height; waist and legs out of frame. NEW CAMERA vs style ref: layout_not_style_echo — borrow ONLY soft-plastic 3D medium, sunny high-key light, palette royal blue #2E5BDB / gold #F5C542 / castle purple #7B5CDB / bright grass; DO NOT copy ref table picnic layout, full-body group, dog, umbrella, upper-castle dominance, or left-right seating. Subject action: jolly chubby king (gold crown with red gem, grey-white beard, blue-purple striped royal tunic) and slim butler (red coat, mustache) stand side-by-side raising toast glasses in a sunny palace garden; soft-focus fairy castle with purple roofs stays small in deep background. Soft plastic toy-like materials: matte fabric, gentle metal crown highlights, warm rim light, clean commercial casual finish. No UI, no logo, no readable text. Fail-at-glance: if it looks like the ref seated picnic or full-body wide shot, or faces are tiny, FAIL. Structure floor: continuous shoulder-elbow-wrist, clear finger grips on cups, both pupils aligned.",
+    "checklist": {
+      "subject_action": {
+        "status": "ok",
+        "note": ""
+      },
+      "contact_scale": {
+        "status": "ok",
+        "note": ""
+      },
+      "element_budget": {
+        "status": "ok",
+        "note": ""
+      },
+      "hard_locks": {
+        "status": "ok",
+        "note": ""
+      },
+      "fail_at_glance": {
+        "status": "ok",
+        "note": ""
+      },
+      "hero_read": {
+        "status": "ok",
+        "note": ""
+      },
+      "layout_not_style_echo": {
+        "status": "ok",
+        "note": ""
+      },
+      "framing_lock": {
+        "status": "ok",
+        "note": ""
+      }
+    },
+    "issues": [],
+    "notes": "",
+    "reviewed_at": 1793817112.3880699,
+    "reviewed_at_iso": "2026-11-05 02:31:52",
+    "force_pass": false
+  },
+  "discussions": [
+    {
+      "round": 0,
+      "kind": "reasonableness",
+      "prompt": "Vertical 9:16 festival key art for casual mobile game. HARD FRAMING LOCK framing_lock: medium/half-body shot only — crop from mid-chest to crown, both faces large in upper-middle third, faces occupy about 35-45% of frame height; waist and legs out of frame. NEW CAMERA vs style ref: layout_not_style_echo — borrow ONLY soft-plastic 3D medium, sunny high-key light, palette royal blue #2E5BDB / gold #F5C542 / castle purple #7B5CDB / bright grass; DO NOT copy ref table picnic layout, full-body group, dog, umbrella, upper-castle dominance, or left-right seating. Subject action: jolly chubby king (gold crown with red gem, grey-white beard, blue-purple striped royal tunic) and slim butler (red coat, mustache) stand side-by-side raising toast glasses in a sunny palace garden; soft-focus fairy castle with purple roofs stays small in deep background. Soft plastic toy-like materials: matte fabric, gentle metal crown highlights, warm rim light, clean commercial casual finish. No UI, no logo, no readable text. Fail-at-glance: if it looks like the ref seated picnic or full-body wide shot, or faces are tiny, FAIL. Structure floor: continuous shoulder-elbow-wrist, clear finger grips on cups, both pupils aligned.",
+      "strengths": "合理性闸已过：subject_action=ok；contact_scale=ok；element_budget=ok；hard_locks=ok；fail_at_glance=ok；hero_read=ok；layout_not_style_echo=ok；framing_lock=ok",
+      "defects": "",
+      "next_fix": "首轮 generate 使用本修订提示词；审美迭代不得推翻硬锁与元素预算"
+    }
+  ],
+  "ActionRequired": "STOP_PICK_BEST",
+  "showcase_ready": true,
+  "winner": {
+    "round": 2,
+    "round_label": "第 2 轮精修",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "9:16",
+    "reference_image_paths": [
+      "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/keyart/r1.jpg"
+    ],
+    "param_validation": {
+      "valid": true,
+      "validation_passed": true,
+      "case_id": "1105b-keyart",
+      "scale": "recompose",
+      "aspect_ratio": "9:16",
+      "ref_aspect_ratio": "9:16",
+      "ref_dimensions": "720x1280",
+      "output_aspect_ratio": "9:16",
+      "output_dimensions": "720x1280",
+      "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/keyart/r1.jpg",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105b/keyart/r1.jpg"
+      ],
+      "inherited_default_aspect_ratio": true,
+      "inherited_default_pad_image": true,
+      "matched_ref_aspect_ratio": true,
+      "matched_ref_pad_image": true,
+      "matched_output_aspect_ratio": true,
+      "three_step_stage": "step3_judge",
+      "three_step_verified": true,
+      "warnings": [],
+      "continuation_pad": true,
+      "pad_diverged": false
+    },
+    "generated_at": "02:33:59",
+    "image": "assets/skill_full_run_1105b/keyart/r2.jpg",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 258891,
+      "size_kb": 252.8,
+      "width": 720,
+      "height": 1280,
+      "aspect_ratio": "9:16",
+      "canonical_aspect_ratio": "9:16",
+      "color_entropy": 7.23
+    },
+    "raw_score": 8.46,
+    "score": 8.46,
+    "target_score_threshold": 9.5,
+    "dims": "构图8.3/光影8.7/透视8.4/质感8.6/风格8.8/无瑕度8.2",
+    "dims_parsed": {
+      "composition": 8.3,
+      "lighting_color": 8.7,
+      "perspective_anatomy": 8.4,
+      "texture_detail": 8.6,
+      "spec_style": 8.8,
+      "flawlessness": 8.2
+    },
+    "weighted_score": 8.46,
+    "audit_warnings": [
+      "收敛停滞预警：本轮净增 +0.18 低于当前档位 (recompose) 的最小跃升 +0.20。下一轮更贴近指定构图方向",
+      "独立视觉裁判已采纳：openai_compatible/gpt-5.6-sol",
+      "recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机"
+    ],
+    "stagnated": true,
+    "strengths": "仍保持半身举杯新机位；头肩高度略有错落，色板与软塑胶气质稳定",
+    "defects": "左侧王冠与城堡主体大面积重叠，尖塔、冠顶和头部轮廓相互争抢，背景城堡反而像从人物头顶长出；上方天空留白偏多，而两人身体在底边被硬截，画面重心略下坠。两只酒杯距离很近却未形成明确碰杯接触，动作高潮感不足；杯柄与手指的穿插略僵，左手指节体块偏粘连。人物和前景锐度、饱和度较一致，纵深层次还可加强。；recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机",
+    "next_fix": "优先重构人物与城堡的错位关系：将城堡横移或缩小，使王冠和头部获得干净天空轮廓；同步减少顶部空白并略扩展下方人物空间。调整双手与杯子的角度，让杯沿在视觉中心明确相碰，重新梳理握杯手指和杯柄遮挡；再适度降低城堡的对比与清晰度，加强前后景分离。",
+    "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.CasualBattery\n- 置信度: 0.50（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261105014940924RECIPE] [收敛胜出 9.13分] 变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居中；商业休闲软塑胶 — x\n  · [CHAT20261105015043104RECIPE] [收敛胜出 8.78分] 多图分工·打开态：同一宝箱机位，仅盖打开露金币光，黑底1:1 — x\n  · [CHAT20261105014944924RECIPE] [收敛胜出 8.70分] Icon A：满幅直角1024感App Icon母版，草莓糖果休闲游戏符号，安全区72-80%，无字 — x\n- 必须避开红线:\n  · [CHAT20261105014941128REDLINE] [收敛踩坑红线] 变体：同一国王身份，只改眨眼俏皮笑表情；锁金冠蓝黄袍；半身居：避免「整体过于轴对称和图标化，动态感略弱；面部、金属与布料的表面处理较趋同，材质区分主要依赖颜色」\n  · [CHAT20261105015000846REDLINE] [收敛踩坑红线] 多图分工·关闭态：软塑胶宝箱盖关锁，黑底1:1，锁3/4机位：避免「锁梁与上方扣环的穿插关系略显拥挤，局部轮廓近似粘连；钥匙孔内部偏暗且边缘稍软。紫色板材的纹」\n  · [CHAT20261105014937678REDLINE] [收敛踩坑红线] Royal Match级商业休闲主视觉：阳光城堡花园，国王与：避免「主体实际接近全身群像，并非半身气氛，狗的加入也略分散双主角焦点；人物与背景受光较平均，局部」\n  · [CHAT20261105014949113REDLINE] [收敛踩坑红线] Icon C：背包道具格草莓软糖，黑底隔离可读剪影，安全边距：避免「顶部叶片与果柄交叠关系略显拥挤，部分叶片像互相黏合，空间层级不够清楚；外缘双层深色描边偏厚」\n  · [CHAT20261105015043379REDLINE] [收敛踩坑红线] 多图分工·打开态：同一宝箱机位，仅盖打开露金币光，黑底1:1：避免「金币堆局部存在粘连、重叠关系含混和边缘融化感，部分币面厚度与椭圆透视不统一。箱盖与箱体的铰」\n- 审美拍板:\n  · 以后统一按此样张画风：商业休闲Royal Match系；主色金黄#F5C542约70%、辅色城堡紫#7B5CDB约20%、点缀正红#E23B3B约10%；…\n- 个人口味: 光影=冷光源 / 暖光；构图=半身；色温=避免过饱和\n- 个人禁用习惯: 错误头身比/头过大；电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感；过曝高光；廉价塑料感/油腻高光；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差；漏抠/黑底/毛边；赛博霓虹/霓虹紫；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [composition-thirds-grid] 构图法则：九宫格三分法与呼吸留白安全区: 将核心视觉焦点布置在九宫格三分线交点（黄金分割点 0.618）上，利用引导线与前景暗角汇聚视线；独立资产四周必须预留 16px~24px 纯透明呼吸安全边距，严禁发冠、武器或特效贴死画布边缘被裁切。\n  · [icon-stroke-grid-spec] 图标工程规范：线宽统一、安全网格与剪影可读性: 成套技能/功能图标必须锁定统一的描边线宽（如全局统一 2px 描边，严禁 1px 与 6px 混杂）、统一圆角半径与 16px~24px 安全内边距网格，确保在 64x64px 极小缩略尺寸下主体几何剪影依然一眼可辨、不与背景杂光粘连。\n原图画风优先：保画风色板，按「旧样张全身餐桌俯视远景作废；新机位硬锁半身/中景：国王与管家胸部以上至腰际入画，面部占画面中上约35%-45%，城堡花园仅作虚化背景，人物并排举杯庆祝节日，竖构图9:16」重构机位，笔触和光的类型跟参考图 | 机位保持指定方向：旧样张全身餐桌俯视远景作废；新机位硬锁半身/中景：国王与管家胸部以上至腰际入画，面部占画面中上约35%-45%，城堡花园仅作虚化背景，人物并排举杯庆祝节日，竖构图9:16。垫图是目前分数最高的那张成图。只改这一处：优先重组主体间距与举杯动作：稍微缩小人物并错开头肩高度，让杯口明确碰杯，同时给城堡轮廓留出更干净的负形；随后重画握杯手指与杯梗接触结构，统一两杯透视、液面、折射和高光，再适度补强城堡关键边缘与节庆环境细节。。没点名的地方保持垫图。",
+    "continuation": true,
+    "passed": false,
+    "gate_blocked": true,
+    "image_gate_blocked": false,
+    "anatomy_score": 8.4,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "humanoid",
+    "judge_source": "independent_vlm",
+    "remote_vlm": {
+      "source": "independent_vlm",
+      "provider": "openai_compatible",
+      "model": "gpt-5.6-sol",
+      "error": "",
+      "active": true
+    },
+    "should_continue_next_round": true,
+    "decision": "CONTINUE_NEXT_ROUND",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "composition",
+        "lesson": "本轮短板偏「composition」：左侧王冠与城堡主体大面积重叠，尖塔、冠顶和头部轮廓相互争抢，背景城堡反而像从人物头顶长出；上方天空留白偏多，而两人身体在底边被硬截，画面重心略下坠。两只酒杯距离",
+        "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+        "from_score": "8.46"
+      },
+      {
+        "category": "anatomy",
+        "lesson": "本轮短板偏「anatomy」：左侧王冠与城堡主体大面积重叠，尖塔、冠顶和头部轮廓相互争抢，背景城堡反而像从人物头顶长出；上方天空留白偏多，而两人身体在底边被硬截，画面重心略下坠。两只酒杯距离",
+        "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+        "from_score": "8.46"
+      },
+      {
+        "category": "color_palette",
+        "lesson": "本轮短板偏「color_palette」：左侧王冠与城堡主体大面积重叠，尖塔、冠顶和头部轮廓相互争抢，背景城堡反而像从人物头顶长出；上方天空留白偏多，而两人身体在底边被硬截，画面重心略下坠。两只酒杯距离",
+        "drill": "从模块 palette 抽 3 HEX 做限色练习，禁止引入霓虹辅色",
+        "from_score": "8.46"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "02:34:25",
+    "asset_image": "assets/skill_full_run_1105b/keyart/r2.jpg"
+  },
+  "rounds_to_converge": 4,
+  "convergence_badge": "共 4 轮未达阈值，采用最高分",
+  "process_board": ".memory-art/converge/boards/1105b-keyart/index.html"
+}

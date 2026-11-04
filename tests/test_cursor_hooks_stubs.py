@@ -32,6 +32,48 @@ class TestCursorHooksStubs(unittest.TestCase):
             for item in section:
                 self.assertNotIn("||", item.get("command", ""))
 
+
+    def test_preserves_pmem_rd_hooks_on_refresh(self) -> None:
+        from lifecycle import ensure_cursor_stubs
+
+        td = Path(tempfile.mkdtemp(prefix="pmem_hooks_keep_"))
+        cursor = td / ".cursor"
+        cursor.mkdir(parents=True)
+        (cursor / "hooks.json").write_text(
+            json.dumps(
+                {
+                    "version": 1,
+                    "hooks": {
+                        "preToolUse": [
+                            {
+                                "command": "pmemw hook pre-tool",
+                                "matcher": "Write|Shell",
+                                "failClosed": False,
+                            }
+                        ],
+                        "sessionStart": [{"command": ".memory/bin/pmem-hook session"}],
+                        "stop": [{"command": "pmemw hook stop", "loop_limit": 1}],
+                    },
+                },
+                ensure_ascii=False,
+                indent=2,
+            )
+            + "\n",
+            encoding="utf-8",
+        )
+        with mock.patch.dict(sys.modules, {"skills_kit": mock.MagicMock()}):
+            ensure_cursor_stubs(td)
+
+        hooks = json.loads((cursor / "hooks.json").read_text(encoding="utf-8"))["hooks"]
+        pre_cmds = [h["command"] for h in hooks["preToolUse"]]
+        self.assertTrue(any(c.endswith("pmem_art.py hook pre-gen") for c in pre_cmds))
+        self.assertIn("pmemw hook pre-tool", pre_cmds)
+        self.assertEqual(hooks["sessionStart"][0]["command"], ".memory/bin/pmem-hook session")
+        stop_cmds = [h["command"] for h in hooks["stop"]]
+        self.assertTrue(any(c.endswith("pmem_art.py hook stop") for c in stop_cmds))
+        self.assertIn("pmemw hook stop", stop_cmds)
+
+
     def test_windows_uses_pyw(self) -> None:
         from lifecycle import _hook_python_prefix
 

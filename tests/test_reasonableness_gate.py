@@ -74,17 +74,195 @@ class TestReview(unittest.TestCase):
     def test_icon_a_pass(self) -> None:
         chk = default_checklist_template("icon.a")
         rev = (
-            "1024 满幅直角 App Icon；红发女抱哭婴圣诞装单符号；"
+            "1024 满幅直角 App Icon，四角顶边无圆角蒙版；红发女抱哭婴圣诞装单符号；"
             "主体落在 72%-80% 安全区；无字；窗外只留极淡光点预算。"
-            "一眼失败：贴边或细碎灯串糊成噪点。"
+            "一眼失败：贴边、烤进圆角底板或细碎灯串糊成噪点。"
         )
         out = review_reasonableness(
             skill="icon.a", draft="icon draft", revised=rev, checklist_text=chk
         )
         self.assertTrue(out["passed"], out["issues"])
 
+    def test_icon_a_rejects_round_mask(self) -> None:
+        chk = default_checklist_template("icon.a")
+        out = review_reasonableness(
+            skill="icon.a",
+            draft="app icon",
+            revised="1024 圆角底板 App Icon，主体 75% 安全区，无字单符号。",
+            checklist_text=chk,
+        )
+        self.assertFalse(out["passed"])
+        self.assertTrue(any("圆角" in x or "满幅" in x for x in out["issues"]))
+
+    def test_ui_rejects_illustration_pad(self) -> None:
+        chk = default_checklist_template("ui")
+        out = review_reasonableness(
+            skill="ui",
+            draft="主菜单",
+            revised="顶栏资源+中央Play，场景插画垫图出主菜单。",
+            checklist_text=chk,
+            notes="场景插画垫图当UI参考",
+        )
+        self.assertFalse(out["passed"])
+        self.assertTrue(any("插画" in x or "控件" in x for x in out["issues"]))
+        # 电池翻车口语：叙事插画裁切当 UI 参考
+        out2 = review_reasonableness(
+            skill="ui",
+            draft="主菜单",
+            revised=(
+                "商业休闲主菜单：顶栏资源珠、中央主按钮；描边体积投影字重；"
+                "主按钮不遮脸；无乱码；一眼失败是插画海报。"
+            ),
+            checklist_text=chk,
+            notes="垫图：rm_prop_ui_crop 叙事插画裁切当UI参考",
+        )
+        self.assertFalse(out2["passed"])
+        self.assertTrue(any("插画" in x for x in out2["issues"]), out2["issues"])
+
+    def test_soft_candy_material_inherits_on_clone_variant(self) -> None:
+        for skill in ("clone", "variant", "merge"):
+            chk = default_checklist_template(skill)
+            bad = review_reasonableness(
+                skill=skill,
+                draft="草莓软糖道具",
+                revised="硬塑胶抛光塑料草莓玩具，黑底居中，无字。",
+                checklist_text=chk,
+            )
+            self.assertFalse(bad["passed"], skill)
+            self.assertTrue(
+                any("软糖" in x or "硬塑" in x for x in bad["issues"]),
+                (skill, bad["issues"]),
+            )
+
+    def test_merge_ban_gift_phrase_not_false_positive(self) -> None:
+        chk = default_checklist_template("merge")
+        rev = (
+            "shop_ladder 草莓软糖单件居中：锁家族色相与软糖介质；evolve_to 可读；"
+            "合成理由具体；禁止装饰换装断故事；软糖半透明 SSS；"
+            "一眼失败是礼盒奖杯乱跳换货或硬塑胶。"
+        )
+        out = review_reasonableness(
+            skill="merge", draft="草莓软糖合成梯", revised=rev, checklist_text=chk
+        )
+        self.assertTrue(out["passed"], out["issues"])
+
+    def test_icon_a_long_fail_at_glance_not_false_positive(self) -> None:
+        chk = default_checklist_template("icon.a")
+        rev = (
+            "1024 满幅直角 App Icon，主体 75% 安全区，无字单符号；"
+            "一眼失败包括：主体贴边、安全区不够、角区露白、以及烤进圆角底板。"
+        )
+        out = review_reasonableness(
+            skill="icon.a", draft="app icon", revised=rev, checklist_text=chk
+        )
+        self.assertTrue(out["passed"], out["issues"])
+
+    def test_ui_catches_colloquial_illustration_pads(self) -> None:
+        chk = default_checklist_template("ui")
+        chrome = (
+            "顶栏资源珠、中央主按钮；描边体积投影字重；主按钮不遮脸；无乱码。"
+        )
+        for note in (
+            "茶会庆祝场景裁切当界面母版",
+            "把立绘当界面参考",
+            "插画当界面母版",
+            "把插画海报当主菜单",
+        ):
+            out = review_reasonableness(
+                skill="ui",
+                draft="主菜单",
+                revised=chrome,
+                checklist_text=chk,
+                notes=note,
+            )
+            self.assertFalse(out["passed"], note)
+            self.assertTrue(any("插画" in x for x in out["issues"]), (note, out["issues"]))
+
+    def test_soft_candy_fail_at_glance_hard_plastic_ok(self) -> None:
+        chk = default_checklist_template("clone")
+        rev = (
+            "草莓软糖半透明 SSS 宽柔高光，黑底居中无字；"
+            "一眼失败是硬塑胶抛光塑料玩具。"
+        )
+        out = review_reasonableness(
+            skill="clone", draft="草莓软糖", revised=rev, checklist_text=chk
+        )
+        self.assertTrue(out["passed"], out["issues"])
+
+    def test_merge_same_object_requires_mother_retention_phrase(self) -> None:
+        chk = default_checklist_template("merge")
+        bad = review_reasonableness(
+            skill="merge",
+            draft="合成梯",
+            revised="same_object 草莓软糖单件居中，软糖半透明 SSS，黑底。",
+            checklist_text=chk,
+        )
+        self.assertFalse(bad["passed"])
+        self.assertTrue(any("母体" in x for x in bad["issues"]), bad["issues"])
+
+    def test_wu_zi_does_not_negate_hard_plastic(self) -> None:
+        """「无字」不得把后面的肯定硬塑当成已禁止。"""
+        chk = default_checklist_template("clone")
+        out = review_reasonableness(
+            skill="clone",
+            draft="草莓软糖",
+            revised="草莓软糖半透明 SSS，黑底居中无字；硬塑胶抛光塑料质感。",
+            checklist_text=chk,
+        )
+        self.assertFalse(out["passed"])
+        self.assertTrue(any("硬塑" in x for x in out["issues"]), out["issues"])
+
+    def test_split_ban_closed_lock_phrase_not_false_positive(self) -> None:
+        chk = default_checklist_template("split")
+        for rev in (
+            "软塑胶宝箱开盖态：铰链可见，挂锁解锁移除，只改盖；黑底居中；禁止闭锁开盖同框。",
+            "软塑胶宝箱开盖态；禁止闭锁开盖；铰链可见，挂锁解锁移除，只改盖；黑底居中。",
+        ):
+            out = review_reasonableness(
+                skill="split", draft="宝箱打开", revised=rev, checklist_text=chk
+            )
+            self.assertTrue(out["passed"], (rev, out["issues"]))
+
+    def test_ui_illustration_poster_pad_blocked(self) -> None:
+        chk = default_checklist_template("ui")
+        chrome = (
+            "顶栏资源珠、中央主按钮；描边体积投影字重；主按钮不遮脸；无乱码。"
+        )
+        out = review_reasonableness(
+            skill="ui",
+            draft="主菜单",
+            revised=chrome,
+            checklist_text=chk,
+            notes="插画海报垫",
+        )
+        self.assertFalse(out["passed"])
+        self.assertTrue(any("插画" in x for x in out["issues"]), out["issues"])
+
+    def test_bie_hard_plastic_negates(self) -> None:
+        chk = default_checklist_template("clone")
+        out = review_reasonableness(
+            skill="clone",
+            draft="草莓软糖",
+            revised="草莓软糖半透明 SSS，黑底居中；勿硬塑胶抛光塑料。",
+            checklist_text=chk,
+        )
+        self.assertTrue(out["passed"], out["issues"])
+
+    def test_ui_pass_chrome_spec(self) -> None:
+        chk = default_checklist_template("ui")
+        rev = (
+            "商业休闲主菜单 9:16：顶栏三资源珠、侧栏设置商店、中央主按钮；"
+            "控件工艺统一描边+体积投影+字重；主按钮不遮脸；"
+            "场景铺底控件叠层；无乱码；一眼失败是叙事插画海报或 CTA 压脸。"
+        )
+        out = review_reasonableness(
+            skill="ui", draft="主菜单", revised=rev, checklist_text=chk
+        )
+        self.assertTrue(out["passed"], out["issues"])
+
     def test_keyart_requires_layout_not_style_echo(self) -> None:
         self.assertIn("layout_not_style_echo", default_checklist_template("keyart"))
+        self.assertIn("framing_lock", default_checklist_template("keyart"))
         chk = default_checklist_template("keyart")
         bad = review_reasonableness(
             skill="keyart",
@@ -95,14 +273,35 @@ class TestReview(unittest.TestCase):
         self.assertFalse(bad["passed"])
         self.assertTrue(any("layout" in x or "构图" in x for x in bad["issues"]))
         good_rev = (
-            "节日主视觉：新机位俯视大圆桌，只借画风色板与暖光；"
+            "节日主视觉：新机位俯视中景大圆桌，只借画风色板与暖光；"
             "不贴样张构图；主体动作清楚；元素预算桌面三件道具；"
-            "硬锁 16:9 无字；一眼失败是贴回样张左右分区。"
+            "硬锁 16:9 无字；一眼失败是贴回样张左右分区或改成全身群像。"
         )
         good = review_reasonableness(
             skill="keyart",
             draft="主视觉",
             revised=good_rev,
+            checklist_text=chk,
+        )
+        self.assertTrue(good["passed"], good["issues"])
+
+    def test_split_open_needs_state_machine(self) -> None:
+        chk = default_checklist_template("split")
+        bad = review_reasonableness(
+            skill="split",
+            draft="宝箱打开",
+            revised="软塑胶宝箱开盖露金币，黑底居中，锁机位。",
+            checklist_text=chk,
+        )
+        self.assertFalse(bad["passed"])
+        self.assertTrue(any("状态机" in x or "铰链" in x for x in bad["issues"]))
+        good = review_reasonableness(
+            skill="split",
+            draft="宝箱打开",
+            revised=(
+                "软塑胶宝箱开盖态：铰链可见，挂锁解锁移除，只改盖；"
+                "同机关闭态机位；黑底居中；一眼失败是闭合挂锁仍挂着。"
+            ),
             checklist_text=chk,
         )
         self.assertTrue(good["passed"], good["issues"])

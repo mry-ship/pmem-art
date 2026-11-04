@@ -44,9 +44,30 @@ _LENS = re.compile(
 )
 _PIXEL_SIZE = re.compile(r"(?<![0-9第])(64|128|256)(?![0-9])")
 _PIXELS = re.compile(r"像素必须同时|两张参考的像素|像素级对齐同时")
-_SHOWCASE = re.compile(
-    r"整页展陈|对比页|同范围重跑|多技能|全部重跑|再跑一遍|重跑一遍|同范围"
-)
+# 裸「再跑一遍 / 同范围」不进整页清单，必须和展陈页绑在一起
+_PAGE_WORDS = ("整页展陈", "对比页", "同范围重跑", "多技能", "全部重跑")
+
+
+def _showcase_page(text: str) -> bool:
+    return _any(text, _PAGE_WORDS)
+
+
+def _bare_rerun(text: str) -> bool:
+    if _hit(text, "再跑一遍") or _hit(text, "重跑一遍"):
+        return True
+    start = 0
+    while True:
+        idx = text.find("同范围", start)
+        if idx < 0:
+            return False
+        end = idx + 3
+        if text.startswith("同范围重跑", idx) or (idx >= 1 and text[idx - 1] == "不"):
+            start = end
+            continue
+        if _left_negated(text, idx) or _right_negated(text, end):
+            start = end
+            continue
+        return True
 # 指向旧展陈「全部/同范围重跑」且未点名单支时的默认同范围清单（与主页候选展陈对齐）
 _SHOWCASE_DEFAULT_FULL = (
     "draw.ordinary",
@@ -137,17 +158,44 @@ def _heading_ok(heading: str, body: str) -> bool:
     return False
 
 
-def _hit(text: str, word: str) -> bool:
+_CLAUSE_BREAK = "。！？!?；;\n，,"
+
+
+def _left_negated(text: str, idx: int) -> bool:
+    """否定要落在同一小句里。句号逗号隔开之后的词不再算被否定。"""
+    prefix = text[max(0, idx - 12) : idx]
+    for flag in _NEG:
+        pos = prefix.rfind(flag)
+        if pos < 0:
+            continue
+        between = prefix[pos + len(flag) :]
+        if any(ch in _CLAUSE_BREAK for ch in between):
+            continue
+        return True
+    return False
+
+
+def _right_negated(text: str, end: int) -> bool:
+    """关键词右边紧跟的否定也算，例如「序列帧不要」。"""
+    suffix = text[end : end + 8]
+    return suffix.startswith(("不要", "别做", "不用", "不是", "不做"))
+
+
+def _hit_at(text: str, word: str) -> int:
     start = 0
     while True:
         idx = text.find(word, start)
         if idx < 0:
-            return False
-        prefix = text[max(0, idx - 12) : idx]
-        if any(prefix.endswith(flag) or flag in prefix for flag in _NEG):
-            start = idx + len(word)
+            return -1
+        end = idx + len(word)
+        if _left_negated(text, idx) or _right_negated(text, end):
+            start = end
             continue
-        return True
+        return idx
+
+
+def _hit(text: str, word: str) -> bool:
+    return _hit_at(text, word) >= 0
 
 
 def _any(text: str, words: tuple[str, ...]) -> bool:
@@ -244,8 +292,6 @@ def _wants_merge(text: str) -> bool:
             "越升越大",
             "合成升级",
             "升档",
-            "L1",
-            "l1",
         ),
     )
 
@@ -302,10 +348,12 @@ _SWAP_SUBJECT = (
 _SWAP_TOPIC = re.compile(r"(?<![不])换题材")
 
 
-def _new_subject(text: str) -> bool:
-    if _any(text, _KEEP_SUBJECT):
-        return False
-    # 「变成微笑 / 改成闭眼」紧贴表情 → 变体；后面还有新主体名词则仍算换题材
+def _swap_subject_signal(text: str) -> bool:
+    """换题材信号。先挖掉「不要换题材」这类保留句，再看还剩没有真的换成。"""
+    cleaned = text
+    for phrase in sorted(_KEEP_SUBJECT, key=len, reverse=True):
+        cleaned = cleaned.replace(phrase, "")
+    text = cleaned
     if _EXPR_AFTER_SWAP.search(text) and not _any(
         text,
         (
@@ -326,6 +374,17 @@ def _new_subject(text: str) -> bool:
     if _SWAP_TOPIC.search(text):
         return True
     return _any(text, _SWAP_SUBJECT)
+
+
+def _subject_conflict(text: str) -> bool:
+    """保留题材和换题材同时出现：停下来问，不让前半句定案。"""
+    return _any(text, _KEEP_SUBJECT) and _swap_subject_signal(text)
+
+
+def _new_subject(text: str) -> bool:
+    if _any(text, _KEEP_SUBJECT):
+        return False
+    return _swap_subject_signal(text)
 
 
 def _has_ref(text: str, images: list[str]) -> bool:
@@ -351,40 +410,35 @@ def _has_ref(text: str, images: list[str]) -> bool:
     )
 
 
+_VARIANT_STRONG = (
+    "换画风",
+    "换个画风",
+    "换个风格",
+    "换个姿势",
+    "换个动作",
+    "换姿势",
+    "换动作",
+    "表情",
+    "差分",
+    "动作差分",
+    "表情表",
+    "表情包",
+    "变体",
+    "同一张脸",
+    "同一身份",
+)
+_VARIANT_WEAK = ("生气", "微笑", "闭眼", "侧目", "眨眼", "惊讶", "叹气", "姿势", "动作")
+_VARIANT_IDENTITY = ("同一张脸", "同一身份", "还是她", "还是他", "别换人", "同一个")
+
+
 def _wants_variant(text: str) -> bool:
     if _any(text, ("画这个角色", "来一张她的立绘", "来一张他的立绘")) and not _any(
         text, ("表情", "差分", "换画风", "动作", "生气", "微笑", "变体", "表情包")
     ):
         return False
-    return _any(
-        text,
-        (
-            "换画风",
-            "换个画风",
-            "换个风格",
-            "换个姿势",
-            "换个动作",
-            "换姿势",
-            "换动作",
-            "表情",
-            "差分",
-            "动作差分",
-            "表情表",
-            "表情包",
-            "变体",
-            "生气",
-            "微笑",
-            "闭眼",
-            "侧目",
-            "眨眼",
-            "惊讶",
-            "叹气",
-            "姿势",
-            "动作",
-            "同一张脸",
-            "同一身份",
-        ),
-    )
+    if _any(text, _VARIANT_STRONG):
+        return True
+    return _any(text, _VARIANT_WEAK) and _any(text, _VARIANT_IDENTITY)
 
 
 def _wants_multi(text: str, images: list[str], roles: list[str]) -> bool:
@@ -426,13 +480,38 @@ def _wants_style(text: str) -> bool:
     )
 
 
+def _dont_draw_this_round(text: str) -> bool:
+    """「别画 / 不画」只表示这轮不出图。别画成风格、不画背景不算审图。"""
+    start = 0
+    while True:
+        idx = text.find("别画", start)
+        if idx < 0:
+            break
+        end = idx + 2
+        rest = text[end : end + 1]
+        if rest in {"成", "得", "原"} or _left_negated(text, idx) or _right_negated(text, end):
+            start = end
+            continue
+        return True
+    start = 0
+    while True:
+        idx = text.find("不画", start)
+        if idx < 0:
+            break
+        end = idx + 2
+        rest = text[end : end + 1]
+        if rest in {"背", "场", "环", "影"} or _left_negated(text, idx) or _right_negated(text, end):
+            start = end
+            continue
+        return True
+    return False
+
+
 def _wants_critique(text: str) -> bool:
-    return _any(
+    if _any(
         text,
         (
             "只审",
-            "别画",
-            "不画",
             "别动笔",
             "哪里不行",
             "挑刺",
@@ -443,7 +522,9 @@ def _wants_critique(text: str) -> bool:
             "先看看哪不行",
             "只评不画",
         ),
-    )
+    ):
+        return True
+    return _dont_draw_this_round(text)
 
 
 def _critique_then_draw(text: str) -> bool:
@@ -451,13 +532,15 @@ def _critique_then_draw(text: str) -> bool:
 
 
 def _wants_atlas(text: str) -> bool:
-    return _any(text, ("散图归位", "归档", "归位", "刷新图谱", "没归类", "收进图谱", "整理散图"))
+    return _any(text, ("散图归位", "归档", "刷新图谱", "没归类", "收进图谱", "整理散图"))
 
 
 def _wants_coach(text: str) -> bool:
     if not _any(text, ("进步", "短板", "知识卡")):
         return False
-    return _any(text, ("看", "瞧", "给我", "想看", "怎么样", "在哪"))
+    if _any(text, ("看", "瞧", "给我", "想看", "怎么样", "在哪")):
+        return True
+    return _hit(text, "知识卡") and _any(text, ("收下", "写入", "接受", "记下", "入库"))
 
 
 def _wants_prompt(text: str) -> bool:
@@ -503,10 +586,8 @@ def _style_verify_intent(text: str) -> bool:
         ),
     ):
         return True
-    if _any(text, ("出图", "生图", "画一张", "先出一张")) and not _any(
-        text,
-        ("以后出图", "往后出图", "出图都按", "出图都用", "以后都按", "以后都用"),
-    ):
+    # 「以后都用…出图」仍是只锁风格；另写「画一张 / 出一张」才串克隆
+    if _any(text, ("画一张", "生图", "先出一张", "出一张", "再画一张")):
         return True
     return False
 
@@ -516,9 +597,25 @@ def _style_then_clone(text: str) -> bool:
     return _wants_style(text) and _style_verify_intent(text)
 
 
+# 子串会误伤的未识别工种：后面多一个字就不是这个工种
+_JOB_FALSE_FRIEND = {"分镜": ("感",)}
+
+
 def _unrecognized(text: str) -> str:
     for word in UNRECOGNIZED_JOBS:
-        if _hit(text, word):
+        start = 0
+        while True:
+            idx = text.find(word, start)
+            if idx < 0:
+                break
+            end = idx + len(word)
+            nxt = text[end : end + 1]
+            if nxt and nxt in _JOB_FALSE_FRIEND.get(word, ()):
+                start = end
+                continue
+            if _left_negated(text, idx) or _right_negated(text, end):
+                start = end
+                continue
             return word
     return ""
 
@@ -554,7 +651,7 @@ def _showcase_ids(text: str) -> list[str]:
         ("提示词", "prompt.write"),
     )
     for word, rid in probes:
-        idx = text.find(word)
+        idx = _hit_at(text, word)
         if idx >= 0:
             found.append((idx, rid))
     found.sort()
@@ -562,8 +659,9 @@ def _showcase_ids(text: str) -> list[str]:
     for _idx, rid in found:
         if rid not in out:
             out.append(rid)
-    # 「全部重跑 / 同范围」未点名单支 → 默认同范围全清单，避免 showcase_unspecified
-    if not out and re.search(r"全部重跑|再跑一遍|重跑一遍|同范围", text or ""):
+    # 整页/对比页里说再跑或同范围、又没点名单支 → 默认全清单。否定过的再跑不算。
+    body = text or ""
+    if not out and _showcase_page(body) and (_hit(body, "全部重跑") or _bare_rerun(body)):
         return list(_SHOWCASE_DEFAULT_FULL)
     return out
 
@@ -644,10 +742,16 @@ def plan_route(
     if named and named not in bodies and named != "pmem-draw":
         return _stop("unrecognized", "没有识别到可用技能")
 
+    if not named and _subject_conflict(raw):
+        return _stop("hard_ambiguity", "题材不变和换成新题材同时出现，先问这一处")
+
     chosen: list[str] = []
     reason = ""
     draw_only = named == "pmem-draw"
-    showcase_ids = _showcase_ids(raw) if _SHOWCASE.search(raw) else []
+    # 点名 /pmem-draw 仍允许句内的界面、图标、合成梯
+    open_specialist = (not named) or draw_only
+    page = _showcase_page(raw)
+    showcase_ids = _showcase_ids(raw) if page else []
 
     if named in {"pmem-ui", "pmem-merge-ladder", "pmem-style-lock", "pmem-critique", "pmem-atlas", "pmem-coach", "pmem-prompt"}:
         chosen = {
@@ -665,10 +769,10 @@ def plan_route(
         if named == "pmem-style-lock" and _style_verify_intent(raw):
             chosen = ["style.lock", "draw.clone"]
             reason = "style_then_clone"
-    elif not draw_only and len(showcase_ids) >= 2:
+    elif open_specialist and len(showcase_ids) >= 2:
         chosen = showcase_ids
         reason = "showcase"
-    elif not draw_only and (named == "pmem-icon" or (not named and _icon_deliverable(raw)) or _icon_modes(raw)):
+    elif named == "pmem-icon" or (open_specialist and (_icon_deliverable(raw) or bool(_icon_modes(raw)))):
         modes = _icon_modes(raw)
         if len(modes) > 1:
             return _stop("icon_conflict", "图标 A/B/C 同时命中，只问这一处")
@@ -677,17 +781,27 @@ def plan_route(
             reason = "icon"
         elif named == "pmem-icon" or _icon_deliverable(raw):
             return _stop("icon_unspecified", "只说图标，A/B/C 没分开，先问这一处")
-    elif not draw_only and len(showcase_ids) == 1:
+    elif open_specialist and len(showcase_ids) == 1:
         chosen = showcase_ids
         reason = "showcase"
-    elif not draw_only and _SHOWCASE.search(raw):
+    elif open_specialist and page:
         return _stop("showcase_unspecified", "展陈没写要重跑哪几支")
+    elif open_specialist and _bare_rerun(raw):
+        probed = _showcase_ids(raw)
+        if probed:
+            chosen = probed
+            reason = "showcase"
+        else:
+            return _stop(
+                "showcase_unspecified",
+                "要重跑哪一支，或说明是整页展陈、对比页的同范围",
+            )
 
     if not chosen:
-        if not draw_only and _wants_ui(raw):
+        if open_specialist and _wants_ui(raw):
             chosen = ["ui.kit"]
             reason = "ui"
-        elif not draw_only and _wants_merge(raw):
+        elif open_specialist and _wants_merge(raw):
             chosen = ["merge.ladder"]
             reason = "merge"
         elif _wants_lens(raw):
@@ -696,7 +810,7 @@ def plan_route(
         elif _wants_multi(raw, pics, roles):
             chosen = ["draw.multi"]
             reason = "multi"
-        elif _wants_variant(raw) and _any(raw, ("同一张脸", "同一身份", "还是她", "还是他", "别换人")):
+        elif _wants_variant(raw) and _any(raw, _VARIANT_IDENTITY):
             # 已锁同一身份时，表情/姿势优先变体，避免被「改成」误抢成克隆
             chosen = ["draw.variant"]
             reason = "variant"
@@ -798,7 +912,7 @@ def plan_route(
             done = "该档母版或图标过 9.50，A/B/C 不混"
             locks = route["when"]
         elif rid == "merge.ladder":
-            done = "八件关系说得通之后，每档正方形 ≥ 9.50"
+            done = "本链各档关系说得通之后，每档正方形 ≥ 9.50"
             locks = "同一条升级链，不改成另一套东西"
         elif rid == "prompt.write":
             done = "交出提示词方案，不生图"

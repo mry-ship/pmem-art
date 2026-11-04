@@ -3,7 +3,7 @@
   "hooks": {
     "preToolUse": [
       {
-        "command": "pyw -3 -u pmem_art.py hook pre-gen",
+        "command": "python3 pmem_art.py hook pre-gen",
         "matcher": "GenerateImage",
         "failClosed": false
       },
@@ -15,19 +15,47 @@
     ],
     "postToolUse": [
       {
-        "command": "pyw -3 -u pmem_art.py hook post-asset",
+        "command": "python3 pmem_art.py hook post-asset",
         "matcher": "GenerateImage"
+      },
+      {
+        "command": "pmemw hook post-tool",
+        "matcher": "Read|Grep|Glob|SemanticSearch|codebase_search|Shell"
       }
     ],
     "stop": [
       {
-        "command": "pyw -3 -u pmem_art.py hook stop",
+        "command": "python3 pmem_art.py hook stop",
         "loop_limit": 8
+      },
+      {
+        "command": "pmemw hook stop",
+        "loop_limit": 1
+      }
+    ],
+    "sessionStart": [
+      {
+        "command": "pmemw hook session"
+      }
+    ],
+    "beforeSubmitPrompt": [
+      {
+        "command": "pmemw hook prompt"
       }
     ],
     "afterMCPExecution": [
       {
         "command": "pmemw hook after-mcp"
+      }
+    ],
+    "afterFileEdit": [
+      {
+        "command": "pmemw hook edited"
+      }
+    ],
+    "preCompact": [
+      {
+        "command": "pmemw hook compact"
       }
     ]
   }

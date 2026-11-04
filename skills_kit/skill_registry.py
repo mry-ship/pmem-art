@@ -214,7 +214,7 @@ def build_registry(specs: list[dict[str, Any]], *, installed_root: Path | None =
         )
         seen.add(rid)
 
-    # 普通图是兜底，必须排在最后。图标和锁风格若排在它前面，按「第一条命中」才不会被「以上都不是」截走。
+    # phase 只决定注册表阅读顺序。分流以 plan_route / route_ids 为准，不按第一条 phase 改判。
     phase = {
         "ui.kit": 10,
         "icon.a": 20,
@@ -285,7 +285,7 @@ def render_registry_md(reg: dict[str, Any]) -> str:
     lines.append("")
     lines.append("## 路由")
     lines.append("")
-    lines.append("按 phase 从小到大对，停在第一条对上的行。普通图 phase 最大，只作兜底，不要把它的「以上都不是」当成关键词命中。")
+    lines.append("执行以 `python3 pmem_art.py route` 的 `route_ids` 为准。这张表只核对 heading。phase 是查阅顺序，不要用它改判。普通图 phase 最大，只作兜底。")
     lines.append("")
     lines.append("| id | phase | when | skill | heading | routable |")
     lines.append("| :--- | :--- | :--- | :--- | :--- | :--- |")

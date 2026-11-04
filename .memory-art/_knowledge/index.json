@@ -42,13 +42,13 @@
       "tags": [
         "style"
       ],
-      "source": "feedback",
+      "source": "converge_finish",
       "layer_scope": "private",
       "project_id": "pmem-art",
       "project_name": "pmem-art",
       "universal": false,
       "promoted_to_shared": false,
-      "updated_at": "2026-11-02 22:44:52 UTC+8"
+      "updated_at": "2026-11-05 03:33:42 UTC+8"
     },
     "cam-cinematic": {
       "id": "cam-cinematic",
@@ -64,7 +64,23 @@
       "universal": true,
       "promoted_to_shared": false,
       "updated_at": "2026-11-02 19:14:44 UTC+8"
+    },
+    "tech-celshade": {
+      "id": "tech-celshade",
+      "title": "赛璐珞分层",
+      "body": "硬边色块分层，高光形状干净，层数克制。",
+      "tags": [
+        "style",
+        "material"
+      ],
+      "source": "converge_finish",
+      "layer_scope": "private",
+      "project_id": "pmem-art",
+      "project_name": "pmem-art",
+      "universal": false,
+      "promoted_to_shared": false,
+      "updated_at": "2026-11-05 01:33:23 UTC+8"
     }
   },
-  "updated_at": "2026-11-03 16:12:01 UTC+8"
+  "updated_at": "2026-11-05 03:33:42 UTC+8"
 }

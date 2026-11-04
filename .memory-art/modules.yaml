@@ -1377,7 +1377,7 @@ modules:
     paths:
       - "assets/character/02/**"
     aliases:
-      - 02
+      - 2
     entities: []
     palette: []
     specs:
@@ -1426,7 +1426,7 @@ modules:
     paths:
       - "assets/ui/05/**"
     aliases:
-      - 05
+      - 5
     entities: []
     palette: []
     specs:
@@ -1449,7 +1449,7 @@ modules:
     paths:
       - "assets/scene/06/**"
     aliases:
-      - 06
+      - 6
     entities: []
     palette: []
     specs:
@@ -3392,3 +3392,134 @@ modules:
       alpha_required: true
       safe_margin_px: 16
       max_size_kb: 1024
+  scene.Open:
+    title: 场景与原画·Open
+    category: scene
+    status: candidate
+    description: 自动归类至 场景与原画 (scene.Open) · 置信度 0.562
+    paths:
+      - "assets/scene/open/**"
+    aliases:
+      - Open
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  scene.Closed:
+    title: 场景与原画·Closed
+    category: scene
+    status: candidate
+    description: 自动归类至 场景与原画 (scene.Closed) · 置信度 0.562
+    paths:
+      - "assets/scene/closed/**"
+    aliases:
+      - Closed
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  scene.Shot:
+    title: 场景与原画·Shot
+    category: scene
+    status: candidate
+    description: 自动归类至 场景与原画 (scene.Shot) · 置信度 0.562
+    paths:
+      - "assets/scene/shot/**"
+    aliases:
+      - Shot
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  brand.Festival:
+    title: 风格圣经·Festival
+    category: brand
+    status: active
+    description: 自动归类至 风格圣经 (brand.Festival) · 置信度 0.843
+    paths:
+      - "assets/brand/festival/**"
+    aliases:
+      - Festival
+    entities: []
+    palette: []
+    specs:
+      resolution: 1280x720
+      alpha_required: false
+      max_size_kb: 2048
+  scene.Rm:
+    title: 场景与原画·Rm
+    category: scene
+    status: active
+    description: 自动归类至 场景与原画 (scene.Rm) · 置信度 0.78
+    paths:
+      - "assets/scene/rm/**"
+    aliases:
+      - Rm
+    entities: []
+    palette: []
+    specs:
+      resolution: 1284x2282
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  character.Royal:
+    title: 角色与立绘·Royal
+    category: character
+    status: candidate
+    description: 自动归类至 角色与立绘 (character.Royal) · 置信度 0.688
+    paths:
+      - "assets/character/royal/**"
+    aliases:
+      - Royal
+    entities: []
+    palette: []
+    specs:
+      resolution: 1284x2778
+      allowed_resolutions:
+        - 1284x2778
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  character.Crop:
+    title: 角色与立绘·Crop
+    category: character
+    status: active
+    description: 自动归类至 角色与立绘 (character.Crop) · 置信度 0.92
+    paths:
+      - "assets/character/crop/**"
+    aliases:
+      - Crop
+    entities: []
+    palette: []
+    specs:
+      resolution: 899x1222
+      allowed_resolutions:
+        - 899x1222
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  scene.Birdmerge:
+    title: 场景与原画·Birdmerge
+    category: scene
+    status: active
+    description: 自动归类至 场景与原画 (scene.Birdmerge) · 置信度 0.893
+    paths:
+      - "assets/scene/birdmerge/**"
+    aliases:
+      - Birdmerge
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048

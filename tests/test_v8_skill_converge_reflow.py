@@ -122,6 +122,7 @@ class TestPadAndStop(unittest.TestCase):
         )
 
     def test_plateau_and_regression(self) -> None:
+        # 平台停：掉分未达 regression_drop，才落到 STOP_PLATEAU（默认 0.15 时 9.0→8.8 会先回归停）
         self.assertEqual(
             decide_round_stop(
                 score_ok=True,
@@ -133,6 +134,7 @@ class TestPadAndStop(unittest.TestCase):
                 anatomy_floor=8.5,
                 best_total=9.0,
                 no_improve_streak=2,
+                regression_drop=0.5,
             ),
             "STOP_PLATEAU",
         )

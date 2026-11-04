@@ -47,6 +47,8 @@ SKIP_DIR_NAMES = {
     "generated_v8_20_skill_opt1027",
     "reference_fresh",
     "images",
+    "downloads",
+    "下载",
     "_box_sync",
     "_sync_parts",
 }

@@ -3268,7 +3268,31 @@ function sessionOfAsset(info) {
     if ((sess.reference_image_paths || []).some(p => pathMetaKeyMatch(p, key))) return sess;
     if ((sess.rounds || []).some(r => r && pathMetaKeyMatch(r.image || "", key))) return sess;
   }
-  return null;
+  // 再兜底：同目录 final.* / *_final.* 与会话轮次图同槽时挂上（避免 final.jpg 未打 session_id）
+  const slash = key.lastIndexOf("/");
+  if (slash <= 0) return null;
+  const dir = key.slice(0, slash);
+  const base = key.slice(slash + 1);
+  const looksFinalSlot = /^final\.(png|jpe?g|webp)$/i.test(base) || /_final\.(png|jpe?g|webp)$/i.test(base);
+  if (!looksFinalSlot && !/^r\d{1,2}(?:[._-]|$)/i.test(base)) return null;
+  let hit = null;
+  for (const sess of Object.values(sessions)) {
+    if (!sess) continue;
+    const imgs = []
+      .concat(sess.final_image || "", sess.winner_image || "")
+      .concat((sess.rounds || []).map(r => (r && r.image) || ""));
+    const sameDir = imgs.some(p => {
+      const n = normViewerPath(p || "");
+      const i = n.lastIndexOf("/");
+      return i > 0 && n.slice(0, i) === dir;
+    });
+    if (!sameDir) continue;
+    // 同目录多会话时优先 finished / 有 final_image 的
+    if (!hit) hit = sess;
+    else if (String(sess.status || "") === "finished" && String(hit.status || "") !== "finished") hit = sess;
+    else if ((sess.final_image || "") && !(hit.final_image || "")) hit = sess;
+  }
+  return hit;
 }
 
 /** 详情/教学卡片用的可显示 src；修坏路径、尊重 exists、优先可显示图 */

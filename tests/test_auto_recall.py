@@ -150,6 +150,19 @@ class TestHookInjectsGenerateImage(unittest.TestCase):
                 json.dumps(sess, ensure_ascii=False), encoding="utf-8"
             )
             mark_active_session(td, "auto_recall_hook")
+            from skills_kit.route_gate import save_route_advise
+
+            save_route_advise(
+                td,
+                {
+                    "banner": "route ok (test)",
+                    "execute_ok": True,
+                    "mode": "skill",
+                    "route_ids": ["icon.c"],
+                    "plan": {"steps": [{"deliverable": "peach candy"}]},
+                },
+                text="peach candy bottle",
+            )
             payload = {
                 "tool_name": "GenerateImage",
                 "tool_input": {

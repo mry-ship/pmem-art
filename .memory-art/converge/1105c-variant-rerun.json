@@ -1,0 +1,923 @@
+{
+  "session_id": "1105c-variant-rerun",
+  "started_at": "2026-11-05 03:46:26 UTC+8",
+  "goal": "1105c-variant-rerun P0: King wink/blink expression variant. Lock identity only: face, gold crown with red gem, white beard, blue-yellow robe. only_named_delta=blink. No butler as hero. 1:1 glossy 3D mobile cartoon.",
+  "module": "character.King",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "recompose",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "recompose",
+    "label": "定向改构图模式 · 按用户指定新构图动态达标闭环 (Directed Re-Composition Dynamic Threshold >=9.5)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 2,
+    "target_score_threshold": 9.5,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.15,
+      "perspective_anatomy": 0.15,
+      "texture_detail": 0.15,
+      "spec_style": 0.15,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "style_medium",
+      "identity",
+      "recompose_dir_target"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图；第 1 轮落到指定机位，之后只在提示词上补还没过的那一处（提示词改动仍 ≤85%）",
+    "max_prompt_delta_ratio": 0.85,
+    "allow_recompose": true,
+    "allow_viewpoint_change": true,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)",
+      "recompose_direction (不偏离指定构图方向)"
+    ],
+    "prompt_delta_baseline": "previous",
+    "min_round_leap": 0.2,
+    "prompt_directive": "原图画风优先：保画风色板，按「NEW framing (pad layout VOID): solo King half-body/chest-up portrait, face and torso centered as the sole hero. Soft shallow-depth castle hint far behind OK. Butler ABSENT or tiny blur in extreme far edge only. Forbidden: King peeking from bottom-left corner; butler with parasol as main subject; dual-character promo layout from identity pad.」重构机位，笔触和光的类型跟参考图",
+    "medium_family": "generic",
+    "best_direction_hint": "最优方向：只写目标机位与布局",
+    "recompose_dir": "NEW framing (pad layout VOID): solo King half-body/chest-up portrait, face and torso centered as the sole hero. Soft shallow-depth castle hint far behind OK. Butler ABSENT or tiny blur in extreme far edge only. Forbidden: King peeking from bottom-left corner; butler with parasol as main subject; dual-character promo layout from identity pad.",
+    "goal": "1105c-variant-rerun P0: King wink/blink expression variant. Lock identity only: face, gold crown with red gem, white beard, blue-yellow robe. only_named_delta=blink. No butler as hero. 1:1 glossy 3D mobile cartoon.",
+    "module": "character.King",
+    "ref_image": "assets/skill_full_run_1105c/refs/rm_king_identity_1x1.png",
+    "ref_analysis": "IDENTITY LOCK ONLY (not composition): King — thick rounded white beard+mustache, large oval eyes black pupils, tan skin, chunky gold crown single large red diamond gem, blue-and-yellow royal robe. Style: clean glossy 3D mobile cartoon. FORBIDDEN composition from pad: King bottom-left peek; butler center-right primary; purple-roof castle dominating upper left as co-hero. Deliver solo centered King bust/half-body with wink."
+  },
+  "medium_family": "generic",
+  "contract": "",
+  "target_score_threshold": 9.5,
+  "recompose_dir": "NEW framing (pad layout VOID): solo King half-body/chest-up portrait, face and torso centered as the sole hero. Soft shallow-depth castle hint far behind OK. Butler ABSENT or tiny blur in extreme far edge only. Forbidden: King peeking from bottom-left corner; butler with parasol as main subject; dual-character promo layout from identity pad.",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "assets/skill_full_run_1105c/refs/rm_king_identity_1x1.png",
+  "ref_analysis": "IDENTITY LOCK ONLY (not composition): King — thick rounded white beard+mustache, large oval eyes black pupils, tan skin, chunky gold crown single large red diamond gem, blue-and-yellow royal robe. Style: clean glossy 3D mobile cartoon. FORBIDDEN composition from pad: King bottom-left peek; butler center-right primary; purple-roof castle dominating upper left as co-hero. Deliver solo centered King bust/half-body with wink.",
+  "default_aspect_ratio": "1:1",
+  "default_reference_image_paths": [
+    "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105c/refs/rm_king_identity_1x1.png"
+  ],
+  "aspect_ratio": "1:1",
+  "reference_image_paths": [
+    "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105c/refs/rm_king_identity_1x1.png"
+  ],
+  "ref_physical_traits": {
+    "exists": true,
+    "size_bytes": 1359982,
+    "size_kb": 1328.1,
+    "width": 1024,
+    "height": 1024,
+    "aspect_ratio": "1:1",
+    "canonical_aspect_ratio": "1:1",
+    "color_entropy": 7.99
+  },
+  "param_validation": {
+    "valid": true,
+    "validation_passed": true,
+    "case_id": "1105c-variant-rerun",
+    "scale": "recompose",
+    "aspect_ratio": "1:1",
+    "ref_aspect_ratio": "1:1",
+    "ref_dimensions": "1024x1024",
+    "output_aspect_ratio": "",
+    "output_dimensions": "",
+    "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105c/refs/rm_king_identity_1x1.png",
+    "reference_image_paths": [
+      "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105c/refs/rm_king_identity_1x1.png"
+    ],
+    "inherited_default_aspect_ratio": false,
+    "inherited_default_pad_image": true,
+    "matched_ref_aspect_ratio": true,
+    "matched_ref_pad_image": true,
+    "matched_output_aspect_ratio": true,
+    "three_step_stage": "step1_start",
+    "three_step_verified": false,
+    "warnings": []
+  },
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.5,
+  "accept_threshold": 9.5,
+  "max_rounds": 4,
+  "ready_to_finish": true,
+  "status": "finished",
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "1:1",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105c/refs/rm_king_identity_1x1.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "1105c-variant-rerun",
+        "scale": "recompose",
+        "aspect_ratio": "1:1",
+        "ref_aspect_ratio": "1:1",
+        "ref_dimensions": "1024x1024",
+        "output_aspect_ratio": "1:1",
+        "output_dimensions": "1024x1024",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105c/refs/rm_king_identity_1x1.png",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105c/refs/rm_king_identity_1x1.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "03:47:16",
+      "image": "assets/skill_full_run_1105c/variant/r1.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 235396,
+        "size_kb": 229.9,
+        "width": 1024,
+        "height": 1024,
+        "aspect_ratio": "1:1",
+        "canonical_aspect_ratio": "1:1",
+        "color_entropy": 7.23
+      },
+      "raw_score": 9.19,
+      "score": 9.19,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.1/光影9.3/透视9.0/质感9.2/风格9.5/无瑕度9.1",
+      "dims_parsed": {
+        "composition": 9.1,
+        "lighting_color": 9.3,
+        "perspective_anatomy": 9.0,
+        "texture_detail": 9.2,
+        "spec_style": 9.5,
+        "flawlessness": 9.1
+      },
+      "weighted_score": 9.19,
+      "audit_warnings": [
+        "独立视觉裁判已采纳：openai_compatible/gpt-5.6-sol",
+        "recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机"
+      ],
+      "stagnated": false,
+      "strengths": "单人国王半身居中主视觉成立，已摆脱左下窥视+管家占位；右眼上睑压合形成可读眨眼差分",
+      "defects": "构图较为标准化且高度居中，皇冠顶部与画框距离略紧，肩部裁切也稍显拥挤；胡须内部的细丝纹理较均匀，局部呈现梳理式重复感。睁眼一侧眼白面积偏大，与眨眼侧组合后略有夸张的不对称张力。；recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机",
+      "next_fix": "重构时给皇冠顶部和双肩增加少量呼吸空间，并用轻微头部偏转或肩线错位减少证件照式正中感；收敛胡须重复纹理，略微缩小睁眼侧眼白并优化上下眼睑包裹关系。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.King\n- 置信度: 0.45（fast-track 资格: 否）\n- 个人口味: 光影=冷光源 / 暖光；构图=居中/对称构图 / 半身；色温=避免过饱和\n- 个人禁用习惯: 错误头身比/头过大；电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差；廉价塑料感/油腻高光；过曝高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [tech-celshade] 赛璐珞分层: 硬边色块分层，高光形状干净，层数克制。\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n原图画风优先：保画风色板，按「NEW framing (pad layout VOID): solo King half-body/chest-up portrait, face and torso centered as the sole hero. Soft shallow-depth castle hint far behind OK. Butler ABSENT or tiny blur in extreme far edge only. Forbidden: King peeking from bottom-left corner; butler with parasol as main subject; dual-character promo layout from identity pad.」重构机位，笔触和光的类型跟参考图| Square 1:1 glossy 3D mobile-game cartoon portrait. SUBJECT: a single elderly King as the ONLY hero, half-body / chest-up, face and torso centered in frame, slight three-quarter turn toward camera. ACTION / DELTA: one measurable wink — his left upper eyelid pressed down covering most of the iris (near closed), right eye open oval with clear black pupil and tiny specular; friendly smile under thick white mustache. IDENTITY LOCK from pad (face/costume only): chunky solid gold crown with one large red diamond gem centered; thick rounded white beard and mustache; tan skin; blue-and-yellow royal robe with soft fabric folds on shoulders and chest. Soft warm key light from upper left, gentle rim, clean cel-shade-like soft volumes. BACKGROUND: soft out-of-focus garden/sky wash only — no competing character, no UI, no text. ELEMENT BUDGET: King + soft BG only. HARD LOCKS: aspect 1:1; only_named_delta=wink/blink; identity face/crown/beard/robe; solo centered hero crop. FAIL AT A GLANCE if: King squeezed bottom-left peeking; butler or red-coat servant as main/equal subject; parasol as hero prop; dual-character promo layout copied from pad; no wink (both eyes equally open); UI chrome. Joints continuous; both eyes present and readable as wink asymmetry.| 约束：保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观；不偏离指定构图方向 | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.0,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "independent_vlm",
+      "remote_vlm": {
+        "source": "independent_vlm",
+        "provider": "openai_compatible",
+        "model": "gpt-5.6-sol",
+        "error": "",
+        "active": true
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "composition",
+          "lesson": "本轮短板偏「composition」：构图较为标准化且高度居中，皇冠顶部与画框距离略紧，肩部裁切也稍显拥挤；胡须内部的细丝纹理较均匀，局部呈现梳理式重复感。睁眼一侧眼白面积偏大，与眨眼侧组合后略有夸",
+          "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+          "from_score": "9.19"
+        },
+        {
+          "category": "narrative_camera",
+          "lesson": "本轮短板偏「narrative_camera」：构图较为标准化且高度居中，皇冠顶部与画框距离略紧，肩部裁切也稍显拥挤；胡须内部的细丝纹理较均匀，局部呈现梳理式重复感。睁眼一侧眼白面积偏大，与眨眼侧组合后略有夸",
+          "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+          "from_score": "9.19"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：单人国王半身居中主视觉成立，已摆脱左下窥视+管家占位；右眼上睑压合形成可读眨眼差分",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "9.19"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "03:47:56",
+      "asset_image": "assets/skill_full_run_1105c/variant/r1.jpg"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "1:1",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105c/variant/r1.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "1105c-variant-rerun",
+        "scale": "recompose",
+        "aspect_ratio": "1:1",
+        "ref_aspect_ratio": "1:1",
+        "ref_dimensions": "1024x1024",
+        "output_aspect_ratio": "1:1",
+        "output_dimensions": "1024x1024",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105c/variant/r1.jpg",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105c/variant/r1.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": true,
+        "pad_diverged": false
+      },
+      "generated_at": "03:48:42",
+      "image": "assets/skill_full_run_1105c/variant/r2.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 244729,
+        "size_kb": 239.0,
+        "width": 1024,
+        "height": 1024,
+        "aspect_ratio": "1:1",
+        "canonical_aspect_ratio": "1:1",
+        "color_entropy": 7.23
+      },
+      "raw_score": 9.0,
+      "score": 9.0,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.8/光影9.1/透视8.8/质感9.0/风格9.3/无瑕度9.0",
+      "dims_parsed": {
+        "composition": 8.8,
+        "lighting_color": 9.1,
+        "perspective_anatomy": 8.8,
+        "texture_detail": 9.0,
+        "spec_style": 9.3,
+        "flawlessness": 9.0
+      },
+      "weighted_score": 9.0,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +-0.19 低于当前档位 (recompose) 的最小跃升 +0.20。下一轮更贴近指定构图方向",
+        "独立视觉裁判已采纳：openai_compatible/gpt-5.6-sol",
+        "recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机"
+      ],
+      "stagnated": true,
+      "strengths": "眨眼闭合侧更紧、几乎成睫缝；冠顶与双肩呼吸略增；仍无管家、单人居中半身成立",
+      "defects": "构图较为正中且对称，姿态和镜头语言略显静态；皇冠顶部离画面边缘稍近。胡须、眉毛与服装表面的细纹较均匀，局部带有程序化梳理感；嘴部被胡须压缩成较弱的小区域，表情层次略受限制。背景花木虽虚化，但下半部色点稍多，轻微分散角色轮廓。；recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机",
+      "next_fix": "重构为轻微三分之二视角并给皇冠顶部增加呼吸空间，同时保持脸部身份与单侧闭眼不变；简化下方背景色点，强化睁眼、嘴角和胡须交界处的形体分离，并让毛发纹理出现更自然的粗细与流向变化。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.King\n- 置信度: 0.45（fast-track 资格: 否）\n- 个人口味: 光影=冷光源 / 暖光；构图=居中/对称构图 / 半身；色温=避免过饱和\n- 个人禁用习惯: 错误头身比/头过大；电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差；廉价塑料感/油腻高光；过曝高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [tech-celshade] 赛璐珞分层: 硬边色块分层，高光形状干净，层数克制。\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n原图画风优先：保画风色板，按「NEW framing (pad layout VOID): solo King half-body/chest-up portrait, face and torso centered as the sole hero. Soft shallow-depth castle hint far behind OK. Butler ABSENT or tiny blur in extreme far edge only. Forbidden: King peeking from bottom-left corner; butler with parasol as main subject; dual-character promo layout from identity pad.」重构机位，笔触和光的类型跟参考图| 机位保持指定方向：NEW framing (pad layout VOID): solo King half-body/chest-up portrait, face and torso centered as the sole hero. Soft shallow-depth castle hint far behind OK. Butler ABSENT or tiny blur in extreme far edge only. Forbidden: King peeking from bottom-left corner; butler with parasol as main subject; dual-character promo layout from identity pad.。垫图是目前分数最高的那张成图。只改这一处：重构时给皇冠顶部和双肩增加少量呼吸空间，并用轻微头部偏转或肩线错位减少证件照式正中感；收敛胡须重复纹理，略微缩小睁眼侧眼白并优化上下眼睑包裹关系。。没点名的地方保持垫图。",
+      "continuation": true,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.8,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "independent_vlm",
+      "remote_vlm": {
+        "source": "independent_vlm",
+        "provider": "openai_compatible",
+        "model": "gpt-5.6-sol",
+        "error": "",
+        "active": true
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "composition",
+          "lesson": "本轮短板偏「composition」：构图较为正中且对称，姿态和镜头语言略显静态；皇冠顶部离画面边缘稍近。胡须、眉毛与服装表面的细纹较均匀，局部带有程序化梳理感；嘴部被胡须压缩成较弱的小区域，表情层",
+          "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+          "from_score": "9.0"
+        },
+        {
+          "category": "line_edge",
+          "lesson": "本轮短板偏「line_edge」：构图较为正中且对称，姿态和镜头语言略显静态；皇冠顶部离画面边缘稍近。胡须、眉毛与服装表面的细纹较均匀，局部带有程序化梳理感；嘴部被胡须压缩成较弱的小区域，表情层",
+          "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+          "from_score": "9.0"
+        },
+        {
+          "category": "narrative_camera",
+          "lesson": "本轮短板偏「narrative_camera」：构图较为正中且对称，姿态和镜头语言略显静态；皇冠顶部离画面边缘稍近。胡须、眉毛与服装表面的细纹较均匀，局部带有程序化梳理感；嘴部被胡须压缩成较弱的小区域，表情层",
+          "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+          "from_score": "9.0"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "03:49:20"
+    },
+    {
+      "round": 3,
+      "round_label": "第 3 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "1:1",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105c/variant/r1.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "1105c-variant-rerun",
+        "scale": "recompose",
+        "aspect_ratio": "1:1",
+        "ref_aspect_ratio": "1:1",
+        "ref_dimensions": "1024x1024",
+        "output_aspect_ratio": "1:1",
+        "output_dimensions": "1024x1024",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105c/variant/r1.jpg",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105c/variant/r1.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": true,
+        "pad_diverged": false
+      },
+      "generated_at": "03:50:28",
+      "image": "assets/skill_full_run_1105c/variant/r3.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 244892,
+        "size_kb": 239.2,
+        "width": 1024,
+        "height": 1024,
+        "aspect_ratio": "1:1",
+        "canonical_aspect_ratio": "1:1",
+        "color_entropy": 7.22
+      },
+      "raw_score": 9.01,
+      "score": 9.01,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.8/光影9.2/透视8.9/质感8.8/风格9.4/无瑕度9.0",
+      "dims_parsed": {
+        "composition": 8.8,
+        "lighting_color": 9.2,
+        "perspective_anatomy": 8.9,
+        "texture_detail": 8.8,
+        "spec_style": 9.4,
+        "flawlessness": 9.0
+      },
+      "weighted_score": 9.01,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.01 低于当前档位 (recompose) 的最小跃升 +0.20。下一轮更贴近指定构图方向",
+        "独立视觉裁判已采纳：openai_compatible/gpt-5.6-sol",
+        "recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机"
+      ],
+      "stagnated": true,
+      "strengths": "仍单人居中半身、无管家；眨眼可读；冠顶留白略增",
+      "defects": "构图偏正中且下缘裁切较紧，姿态与轮廓变化略显保守。胡须内部细丝较均匀，局部呈梳理纹理重复感；服装大面积材质偏光滑，蓝布、黄边和金属王冠之间的粗糙度区分仍可加强。闭眼一侧的眼睑线稍厚，眼角与面颊挤压关系略显图形化；王冠侧翼和服装领口的左右形态存在轻微不均衡。；recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机",
+      "next_fix": "重组时适度缩小并略微偏置角色，给肩部和王冠增加呼吸空间，同时加入轻微头肩反向倾斜以提升动态。重点精修闭眼眼睑与面颊的衔接，减少胡须纹理的均匀重复，并拉开王冠金属、宝石、织物和毛发的粗糙度及高光差异；最后校正领口与王冠侧翼的结构对称和切线关系。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.King\n- 置信度: 0.45（fast-track 资格: 否）\n- 个人口味: 光影=冷光源 / 暖光；构图=居中/对称构图 / 半身；色温=避免过饱和\n- 个人禁用习惯: 错误头身比/头过大；电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差；廉价塑料感/油腻高光；过曝高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [tech-celshade] 赛璐珞分层: 硬边色块分层，高光形状干净，层数克制。\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n原图画风优先：保画风色板，按「NEW framing (pad layout VOID): solo King half-body/chest-up portrait, face and torso centered as the sole hero. Soft shallow-depth castle hint far behind OK. Butler ABSENT or tiny blur in extreme far edge only. Forbidden: King peeking from bottom-left corner; butler with parasol as main subject; dual-character promo layout from identity pad.」重构机位，笔触和光的类型跟参考图| 机位保持指定方向：NEW framing (pad layout VOID): solo King half-body/chest-up portrait, face and torso centered as the sole hero. Soft shallow-depth castle hint far behind OK. Butler ABSENT or tiny blur in extreme far edge only. Forbidden: King peeking from bottom-left corner; butler with parasol as main subject; dual-character promo layout from identity pad.。垫图是目前分数最高的那张成图。只改这一处：重构时给皇冠顶部和双肩增加少量呼吸空间，并用轻微头部偏转或肩线错位减少证件照式正中感；收敛胡须重复纹理，略微缩小睁眼侧眼白并优化上下眼睑包裹关系。。没点名的地方保持垫图。",
+      "continuation": true,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.9,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "independent_vlm",
+      "remote_vlm": {
+        "source": "independent_vlm",
+        "provider": "openai_compatible",
+        "model": "gpt-5.6-sol",
+        "error": "",
+        "active": true
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "composition",
+          "lesson": "本轮短板偏「composition」：构图偏正中且下缘裁切较紧，姿态与轮廓变化略显保守。胡须内部细丝较均匀，局部呈梳理纹理重复感；服装大面积材质偏光滑，蓝布、黄边和金属王冠之间的粗糙度区分仍可加强。",
+          "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+          "from_score": "9.01"
+        },
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：构图偏正中且下缘裁切较紧，姿态与轮廓变化略显保守。胡须内部细丝较均匀，局部呈梳理纹理重复感；服装大面积材质偏光滑，蓝布、黄边和金属王冠之间的粗糙度区分仍可加强。",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "9.01"
+        },
+        {
+          "category": "material",
+          "lesson": "本轮短板偏「material」：构图偏正中且下缘裁切较紧，姿态与轮廓变化略显保守。胡须内部细丝较均匀，局部呈梳理纹理重复感；服装大面积材质偏光滑，蓝布、黄边和金属王冠之间的粗糙度区分仍可加强。",
+          "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+          "from_score": "9.01"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "03:50:41"
+    },
+    {
+      "round": 4,
+      "round_label": "第 4 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "1:1",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105c/variant/r1.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "1105c-variant-rerun",
+        "scale": "recompose",
+        "aspect_ratio": "1:1",
+        "ref_aspect_ratio": "1:1",
+        "ref_dimensions": "1024x1024",
+        "output_aspect_ratio": "1:1",
+        "output_dimensions": "1024x1024",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105c/variant/r1.jpg",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105c/variant/r1.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": true,
+        "pad_diverged": false
+      },
+      "generated_at": "03:51:29",
+      "image": "assets/skill_full_run_1105c/variant/r4.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 250732,
+        "size_kb": 244.9,
+        "width": 1024,
+        "height": 1024,
+        "aspect_ratio": "1:1",
+        "canonical_aspect_ratio": "1:1",
+        "color_entropy": 7.22
+      },
+      "raw_score": 8.83,
+      "score": 8.83,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.8/光影8.7/透视8.8/质感8.9/风格9.2/无瑕度8.7",
+      "dims_parsed": {
+        "composition": 8.8,
+        "lighting_color": 8.7,
+        "perspective_anatomy": 8.8,
+        "texture_detail": 8.9,
+        "spec_style": 9.2,
+        "flawlessness": 8.7
+      },
+      "weighted_score": 8.83,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +-0.18 低于当前档位 (recompose) 的最小跃升 +0.20。下一轮更贴近指定构图方向",
+        "独立视觉裁判已采纳：openai_compatible/gpt-5.6-sol",
+        "recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机"
+      ],
+      "stagnated": true,
+      "strengths": "单人居中半身与眨眼仍成立；冠顶留白略好；无管家无UI",
+      "defects": "整体过于正中且接近证件照式对称，姿态与轮廓节奏略显保守；皇冠顶部离画框较近，视觉呼吸空间有限。面部高光较均匀，鼻部与双颊的蜡感稍重；嘴部被胡须夹压成很窄的横缝，局部结构略黏连。衣服下方裁切较硬，蓝色袖肩区域细节相对空泛，背景花木也偏模板化。；recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机",
+      "next_fix": "在保持角色身份与眨眼表情不变的前提下，略缩小并下移头部以增加皇冠上方留白，同时加入轻微肩线转角或头部倾斜，打破完全正中的证件照感；分离胡须、上唇和嘴角的层次，降低鼻颊高光的塑料感，并补充衣领与肩部的褶皱、材质变化，使前景细节密度更均衡。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.King\n- 置信度: 0.45（fast-track 资格: 否）\n- 个人口味: 光影=冷光源 / 暖光；构图=居中/对称构图 / 半身；色温=避免过饱和\n- 个人禁用习惯: 错误头身比/头过大；电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差；廉价塑料感/油腻高光；过曝高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [tech-celshade] 赛璐珞分层: 硬边色块分层，高光形状干净，层数克制。\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n原图画风优先：保画风色板，按「NEW framing (pad layout VOID): solo King half-body/chest-up portrait, face and torso centered as the sole hero. Soft shallow-depth castle hint far behind OK. Butler ABSENT or tiny blur in extreme far edge only. Forbidden: King peeking from bottom-left corner; butler with parasol as main subject; dual-character promo layout from identity pad.」重构机位，笔触和光的类型跟参考图| 机位保持指定方向：NEW framing (pad layout VOID): solo King half-body/chest-up portrait, face and torso centered as the sole hero. Soft shallow-depth castle hint far behind OK. Butler ABSENT or tiny blur in extreme far edge only. Forbidden: King peeking from bottom-left corner; butler with parasol as main subject; dual-character promo layout from identity pad.。垫图是目前分数最高的那张成图。只改这一处：重构时给皇冠顶部和双肩增加少量呼吸空间，并用轻微头部偏转或肩线错位减少证件照式正中感；收敛胡须重复纹理，略微缩小睁眼侧眼白并优化上下眼睑包裹关系。。没点名的地方保持垫图。",
+      "continuation": true,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.8,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "independent_vlm",
+      "remote_vlm": {
+        "source": "independent_vlm",
+        "provider": "openai_compatible",
+        "model": "gpt-5.6-sol",
+        "error": "",
+        "active": true
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_MAX_ROUNDS",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "composition",
+          "lesson": "本轮短板偏「composition」：整体过于正中且接近证件照式对称，姿态与轮廓节奏略显保守；皇冠顶部离画框较近，视觉呼吸空间有限。面部高光较均匀，鼻部与双颊的蜡感稍重；嘴部被胡须夹压成很窄的横缝，",
+          "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+          "from_score": "8.83"
+        },
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：整体过于正中且接近证件照式对称，姿态与轮廓节奏略显保守；皇冠顶部离画框较近，视觉呼吸空间有限。面部高光较均匀，鼻部与双颊的蜡感稍重；嘴部被胡须夹压成很窄的横缝，",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.83"
+        },
+        {
+          "category": "ui_9slice",
+          "lesson": "本轮短板偏「ui_9slice」：整体过于正中且接近证件照式对称，姿态与轮廓节奏略显保守；皇冠顶部离画框较近，视觉呼吸空间有限。面部高光较均匀，鼻部与双颊的蜡感稍重；嘴部被胡须夹压成很窄的横缝，",
+          "drill": "主面板只画九宫格线框 → 再填中心色，确认中心可双向拉伸",
+          "from_score": "8.83"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "03:51:49"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "/Users/yanghu/Desktop/pmem-art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-11-05 00:55:15 UTC+8"
+    },
+    "module": "character.King",
+    "goal": "1105c-variant-rerun P0: King wink/blink expression variant. Lock identity only: face, gold crown with red gem, white beard, blue-yellow robe. only_named_delta=blink. No butler as hero. 1:1 glossy 3D mobile cartoon.",
+    "confidence": 0.45,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "个人口味档案非空",
+      "红线可控（0 条）",
+      "挂载 2 张项目知识卡 + 0 张全局美术底层基础卡"
+    ],
+    "top_recipes": [],
+    "top_redlines": [],
+    "art_decisions": [],
+    "private_knowledge": [
+      {
+        "id": "tech-celshade",
+        "title": "赛璐珞分层",
+        "body": "硬边色块分层，高光形状干净，层数克制。",
+        "layer_scope": "private"
+      },
+      {
+        "id": "tech-painterly",
+        "title": "厚涂笔触",
+        "body": "可见笔触方向跟随形体，暗部透气勿脏。",
+        "layer_scope": "private"
+      }
+    ],
+    "shared_knowledge": [],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [
+        "冷光源",
+        "暖光"
+      ],
+      "preferred_composition": [
+        "居中/对称构图",
+        "半身"
+      ],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [
+        "避免过饱和"
+      ],
+      "banned_habits": [
+        "禁止偏离样张画风：过度霓虹、脏暗阴影、油腻高光、写实皮肤毛孔、扁平UI描边",
+        "电池审稿：原画竖构图避免贴样张布局；边缘反光勿过曝",
+        "错误头身比/头过大",
+        "电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感",
+        "黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差",
+        "廉价塑料感/油腻高光",
+        "过曝高光",
+        "漏抠/黑底/毛边",
+        "赛博霓虹/霓虹紫",
+        "脏暗阴影/脏色"
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.King\n- 置信度: 0.45（fast-track 资格: 否）\n- 个人口味: 光影=冷光源 / 暖光；构图=居中/对称构图 / 半身；色温=避免过饱和\n- 个人禁用习惯: 错误头身比/头过大；电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差；廉价塑料感/油腻高光；过曝高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [tech-celshade] 赛璐珞分层: 硬边色块分层，高光形状干净，层数克制。\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。",
+    "built_at": "2026-11-05 03:46:26 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：构图较为标准化且高度居中，皇冠顶部与画框距离略紧，肩部裁切也稍显拥挤；胡须内部的细丝纹理较均匀，局部呈现梳理式重复感。睁眼一侧眼白面积偏大，与眨眼侧组合后略有夸",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "9.19"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：构图较为标准化且高度居中，皇冠顶部与画框距离略紧，肩部裁切也稍显拥挤；胡须内部的细丝纹理较均匀，局部呈现梳理式重复感。睁眼一侧眼白面积偏大，与眨眼侧组合后略有夸",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "9.19"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：单人国王半身居中主视觉成立，已摆脱左下窥视+管家占位；右眼上睑压合形成可读眨眼差分",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.19"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：构图较为正中且对称，姿态和镜头语言略显静态；皇冠顶部离画面边缘稍近。胡须、眉毛与服装表面的细纹较均匀，局部带有程序化梳理感；嘴部被胡须压缩成较弱的小区域，表情层",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "9.0"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：构图较为正中且对称，姿态和镜头语言略显静态；皇冠顶部离画面边缘稍近。胡须、眉毛与服装表面的细纹较均匀，局部带有程序化梳理感；嘴部被胡须压缩成较弱的小区域，表情层",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "9.0"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：构图较为正中且对称，姿态和镜头语言略显静态；皇冠顶部离画面边缘稍近。胡须、眉毛与服装表面的细纹较均匀，局部带有程序化梳理感；嘴部被胡须压缩成较弱的小区域，表情层",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "9.0"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：构图偏正中且下缘裁切较紧，姿态与轮廓变化略显保守。胡须内部细丝较均匀，局部呈梳理纹理重复感；服装大面积材质偏光滑，蓝布、黄边和金属王冠之间的粗糙度区分仍可加强。",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "9.01"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：构图偏正中且下缘裁切较紧，姿态与轮廓变化略显保守。胡须内部细丝较均匀，局部呈梳理纹理重复感；服装大面积材质偏光滑，蓝布、黄边和金属王冠之间的粗糙度区分仍可加强。",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.01"
+    },
+    {
+      "category": "material",
+      "lesson": "本轮短板偏「material」：构图偏正中且下缘裁切较紧，姿态与轮廓变化略显保守。胡须内部细丝较均匀，局部呈梳理纹理重复感；服装大面积材质偏光滑，蓝布、黄边和金属王冠之间的粗糙度区分仍可加强。",
+      "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+      "from_score": "9.01"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：整体过于正中且接近证件照式对称，姿态与轮廓节奏略显保守；皇冠顶部离画框较近，视觉呼吸空间有限。面部高光较均匀，鼻部与双颊的蜡感稍重；嘴部被胡须夹压成很窄的横缝，",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "8.83"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：整体过于正中且接近证件照式对称，姿态与轮廓节奏略显保守；皇冠顶部离画框较近，视觉呼吸空间有限。面部高光较均匀，鼻部与双颊的蜡感稍重；嘴部被胡须夹压成很窄的横缝，",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.83"
+    },
+    {
+      "category": "ui_9slice",
+      "lesson": "本轮短板偏「ui_9slice」：整体过于正中且接近证件照式对称，姿态与轮廓节奏略显保守；皇冠顶部离画框较近，视觉呼吸空间有限。面部高光较均匀，鼻部与双颊的蜡感稍重；嘴部被胡须夹压成很窄的横缝，",
+      "drill": "主面板只画九宫格线框 → 再填中心色，确认中心可双向拉伸",
+      "from_score": "8.83"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 2,
+  "regression_drop": 0.15,
+  "reasonableness_history": [
+    {
+      "reviewed_at": 1793821599.098751,
+      "passed": true,
+      "skill": "variant",
+      "issues": []
+    }
+  ],
+  "reasonableness": {
+    "passed": true,
+    "skill": "variant",
+    "draft_prompt": "King from identity pad, wink expression, half body",
+    "revised_prompt": "Square 1:1 glossy 3D mobile-game cartoon portrait. SUBJECT: a single elderly King as the ONLY hero, half-body / chest-up, face and torso centered in frame, slight three-quarter turn toward camera. ACTION / DELTA: one measurable wink — his left upper eyelid pressed down covering most of the iris (near closed), right eye open oval with clear black pupil and tiny specular; friendly smile under thick white mustache. IDENTITY LOCK from pad (face/costume only): chunky solid gold crown with one large red diamond gem centered; thick rounded white beard and mustache; tan skin; blue-and-yellow royal robe with soft fabric folds on shoulders and chest. Soft warm key light from upper left, gentle rim, clean cel-shade-like soft volumes. BACKGROUND: soft out-of-focus garden/sky wash only — no competing character, no UI, no text. ELEMENT BUDGET: King + soft BG only. HARD LOCKS: aspect 1:1; only_named_delta=wink/blink; identity face/crown/beard/robe; solo centered hero crop. FAIL AT A GLANCE if: King squeezed bottom-left peeking; butler or red-coat servant as main/equal subject; parasol as hero prop; dual-character promo layout copied from pad; no wink (both eyes equally open); UI chrome. Joints continuous; both eyes present and readable as wink asymmetry.",
+    "checklist": {
+      "subject_action": {
+        "status": "ok",
+        "note": ""
+      },
+      "contact_scale": {
+        "status": "ok",
+        "note": ""
+      },
+      "element_budget": {
+        "status": "ok",
+        "note": ""
+      },
+      "hard_locks": {
+        "status": "ok",
+        "note": ""
+      },
+      "fail_at_glance": {
+        "status": "ok",
+        "note": ""
+      },
+      "only_named_delta": {
+        "status": "ok",
+        "note": ""
+      }
+    },
+    "issues": [],
+    "notes": "",
+    "reviewed_at": 1793821599.098751,
+    "reviewed_at_iso": "2026-11-05 03:46:39",
+    "force_pass": false
+  },
+  "discussions": [
+    {
+      "round": 0,
+      "kind": "reasonableness",
+      "prompt": "Square 1:1 glossy 3D mobile-game cartoon portrait. SUBJECT: a single elderly King as the ONLY hero, half-body / chest-up, face and torso centered in frame, slight three-quarter turn toward camera. ACTION / DELTA: one measurable wink — his left upper eyelid pressed down covering most of the iris (near closed), right eye open oval with clear black pupil and tiny specular; friendly smile under thick white mustache. IDENTITY LOCK from pad (face/costume only): chunky solid gold crown with one large red diamond gem centered; thick rounded white beard and mustache; tan skin; blue-and-yellow royal robe with soft fabric folds on shoulders and chest. Soft warm key light from upper left, gentle rim, clean cel-shade-like soft volumes. BACKGROUND: soft out-of-focus garden/sky wash only — no competing character, no UI, no text. ELEMENT BUDGET: King + soft BG only. HARD LOCKS: aspect 1:1; only_named_delta=wink/blink; identity face/crown/beard/robe; solo centered hero crop. FAIL AT A GLANCE if: King squeezed bottom-left peeking; butler or red-coat servant as main/equal subject; parasol as hero prop; dual-character promo layout copied from pad; no wink (both eyes equally open); UI chrome. Joints continuous; both eyes present and readable as wink asymmetry.",
+      "strengths": "合理性闸已过：subject_action=ok；contact_scale=ok；element_budget=ok；hard_locks=ok；fail_at_glance=ok；only_named_delta=ok",
+      "defects": "",
+      "next_fix": "首轮 generate 使用本修订提示词；审美迭代不得推翻硬锁与元素预算"
+    }
+  ],
+  "ActionRequired": "STOP_PICK_BEST",
+  "showcase_ready": true,
+  "winner": {
+    "round": 1,
+    "round_label": "第 1 轮初稿",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "1:1",
+    "reference_image_paths": [
+      "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105c/refs/rm_king_identity_1x1.png"
+    ],
+    "param_validation": {
+      "valid": true,
+      "validation_passed": true,
+      "case_id": "1105c-variant-rerun",
+      "scale": "recompose",
+      "aspect_ratio": "1:1",
+      "ref_aspect_ratio": "1:1",
+      "ref_dimensions": "1024x1024",
+      "output_aspect_ratio": "1:1",
+      "output_dimensions": "1024x1024",
+      "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105c/refs/rm_king_identity_1x1.png",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/skill_full_run_1105c/refs/rm_king_identity_1x1.png"
+      ],
+      "inherited_default_aspect_ratio": true,
+      "inherited_default_pad_image": true,
+      "matched_ref_aspect_ratio": true,
+      "matched_ref_pad_image": true,
+      "matched_output_aspect_ratio": true,
+      "three_step_stage": "step3_judge",
+      "three_step_verified": true,
+      "warnings": [],
+      "continuation_pad": false,
+      "pad_diverged": false
+    },
+    "generated_at": "03:47:16",
+    "image": "assets/skill_full_run_1105c/variant/r1.jpg",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 235396,
+      "size_kb": 229.9,
+      "width": 1024,
+      "height": 1024,
+      "aspect_ratio": "1:1",
+      "canonical_aspect_ratio": "1:1",
+      "color_entropy": 7.23
+    },
+    "raw_score": 9.19,
+    "score": 9.19,
+    "target_score_threshold": 9.5,
+    "dims": "构图9.1/光影9.3/透视9.0/质感9.2/风格9.5/无瑕度9.1",
+    "dims_parsed": {
+      "composition": 9.1,
+      "lighting_color": 9.3,
+      "perspective_anatomy": 9.0,
+      "texture_detail": 9.2,
+      "spec_style": 9.5,
+      "flawlessness": 9.1
+    },
+    "weighted_score": 9.19,
+    "audit_warnings": [
+      "独立视觉裁判已采纳：openai_compatible/gpt-5.6-sol",
+      "recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机"
+    ],
+    "stagnated": false,
+    "strengths": "单人国王半身居中主视觉成立，已摆脱左下窥视+管家占位；右眼上睑压合形成可读眨眼差分",
+    "defects": "构图较为标准化且高度居中，皇冠顶部与画框距离略紧，肩部裁切也稍显拥挤；胡须内部的细丝纹理较均匀，局部呈现梳理式重复感。睁眼一侧眼白面积偏大，与眨眼侧组合后略有夸张的不对称张力。；recompose 未检出机位/布局变化证据（相对 --recompose-dir），拒绝贴原停机",
+    "next_fix": "重构时给皇冠顶部和双肩增加少量呼吸空间，并用轻微头部偏转或肩线错位减少证件照式正中感；收敛胡须重复纹理，略微缩小睁眼侧眼白并优化上下眼睑包裹关系。",
+    "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.King\n- 置信度: 0.45（fast-track 资格: 否）\n- 个人口味: 光影=冷光源 / 暖光；构图=居中/对称构图 / 半身；色温=避免过饱和\n- 个人禁用习惯: 错误头身比/头过大；电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差；廉价塑料感/油腻高光；过曝高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [tech-celshade] 赛璐珞分层: 硬边色块分层，高光形状干净，层数克制。\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n原图画风优先：保画风色板，按「NEW framing (pad layout VOID): solo King half-body/chest-up portrait, face and torso centered as the sole hero. Soft shallow-depth castle hint far behind OK. Butler ABSENT or tiny blur in extreme far edge only. Forbidden: King peeking from bottom-left corner; butler with parasol as main subject; dual-character promo layout from identity pad.」重构机位，笔触和光的类型跟参考图| Square 1:1 glossy 3D mobile-game cartoon portrait. SUBJECT: a single elderly King as the ONLY hero, half-body / chest-up, face and torso centered in frame, slight three-quarter turn toward camera. ACTION / DELTA: one measurable wink — his left upper eyelid pressed down covering most of the iris (near closed), right eye open oval with clear black pupil and tiny specular; friendly smile under thick white mustache. IDENTITY LOCK from pad (face/costume only): chunky solid gold crown with one large red diamond gem centered; thick rounded white beard and mustache; tan skin; blue-and-yellow royal robe with soft fabric folds on shoulders and chest. Soft warm key light from upper left, gentle rim, clean cel-shade-like soft volumes. BACKGROUND: soft out-of-focus garden/sky wash only — no competing character, no UI, no text. ELEMENT BUDGET: King + soft BG only. HARD LOCKS: aspect 1:1; only_named_delta=wink/blink; identity face/crown/beard/robe; solo centered hero crop. FAIL AT A GLANCE if: King squeezed bottom-left peeking; butler or red-coat servant as main/equal subject; parasol as hero prop; dual-character promo layout copied from pad; no wink (both eyes equally open); UI chrome. Joints continuous; both eyes present and readable as wink asymmetry.| 约束：保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观；不偏离指定构图方向 | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props",
+    "continuation": false,
+    "passed": false,
+    "gate_blocked": true,
+    "image_gate_blocked": false,
+    "anatomy_score": 9.0,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "humanoid",
+    "judge_source": "independent_vlm",
+    "remote_vlm": {
+      "source": "independent_vlm",
+      "provider": "openai_compatible",
+      "model": "gpt-5.6-sol",
+      "error": "",
+      "active": true
+    },
+    "should_continue_next_round": true,
+    "decision": "CONTINUE_NEXT_ROUND",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "composition",
+        "lesson": "本轮短板偏「composition」：构图较为标准化且高度居中，皇冠顶部与画框距离略紧，肩部裁切也稍显拥挤；胡须内部的细丝纹理较均匀，局部呈现梳理式重复感。睁眼一侧眼白面积偏大，与眨眼侧组合后略有夸",
+        "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+        "from_score": "9.19"
+      },
+      {
+        "category": "narrative_camera",
+        "lesson": "本轮短板偏「narrative_camera」：构图较为标准化且高度居中，皇冠顶部与画框距离略紧，肩部裁切也稍显拥挤；胡须内部的细丝纹理较均匀，局部呈现梳理式重复感。睁眼一侧眼白面积偏大，与眨眼侧组合后略有夸",
+        "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+        "from_score": "9.19"
+      },
+      {
+        "category": "keep",
+        "lesson": "保留本轮已做对的：单人国王半身居中主视觉成立，已摆脱左下窥视+管家占位；右眼上睑压合形成可读眨眼差分",
+        "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+        "from_score": "9.19"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "03:47:56",
+    "asset_image": "assets/skill_full_run_1105c/variant/r1.jpg"
+  },
+  "rounds_to_converge": 4,
+  "convergence_badge": "共 4 轮未达阈值，采用最高分",
+  "process_board": ".memory-art/converge/boards/1105c-variant-rerun/index.html"
+}
