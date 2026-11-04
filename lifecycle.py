@@ -568,6 +568,9 @@ def ensure_cursor_stubs(root: Path) -> None:
     """写入/刷新 Cursor hooks，并安装 Cursor / Claude Code / Codex 技能。规则正文由 install_skills 写入 pmem-art.mdc。"""
     (root / ".cursor" / "rules").mkdir(parents=True, exist_ok=True)
     hooks = root / ".cursor" / "hooks.json"
+    # Windows：pythonw 无控制台；禁止 || / .cmd（Cursor 经 PowerShell 起 Hook 时会弹黑框）
+    # 仅绑 GenerateImage，避免每个 Write/Read 都弹一次宿主窗口
+    py = "pythonw -u" if sys.platform == "win32" else "python3"
     hooks.write_text(
         json.dumps(
             {
@@ -575,22 +578,15 @@ def ensure_cursor_stubs(root: Path) -> None:
                 "hooks": {
                     "preToolUse": [
                         {
-                            "command": "python3 pmem_art.py hook pre-gen || py -3 pmem_art.py hook pre-gen",
-                            "matcher": "GenerateImage|Write|Edit|StrReplace|MCP",
+                            "command": f"{py} pmem_art.py hook pre-gen",
+                            "matcher": "GenerateImage",
                             "failClosed": False,
                         }
                     ],
                     "postToolUse": [
                         {
-                            "command": "python3 pmem_art.py hook post-asset || py -3 pmem_art.py hook post-asset",
-                            "matcher": "GenerateImage|Write|Edit",
-                        }
-                    ],
-                    "stop": [{"command": "python3 pmem_art.py hook stop || py -3 pmem_art.py hook stop", "loop_limit": 8}],
-                    "sessionStart": [
-                        {
-                            "command": "python3 pmem_art.py hook session || py -3 pmem_art.py hook session",
-                            "failClosed": False,
+                            "command": f"{py} pmem_art.py hook post-asset",
+                            "matcher": "GenerateImage",
                         }
                     ],
                 },

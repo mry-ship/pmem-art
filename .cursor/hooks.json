@@ -3,25 +3,15 @@
   "hooks": {
     "preToolUse": [
       {
-        "command": "py -3 pmem_art.py hook pre-gen",
+        "command": "pythonw -u pmem_art.py hook pre-gen",
         "matcher": "GenerateImage",
-        "failClosed": false
-      },
-      {
-        "command": "pmemw hook pre-tool",
-        "matcher": "Write|StrReplace|Edit|MultiEdit|EditNotebook|Delete|Shell|MCP|record_memory|search_memory",
         "failClosed": false
       }
     ],
     "postToolUse": [
       {
-        "command": "py -3 pmem_art.py hook post-asset",
+        "command": "pythonw -u pmem_art.py hook post-asset",
         "matcher": "GenerateImage"
-      }
-    ],
-    "afterMCPExecution": [
-      {
-        "command": "pmemw hook after-mcp"
       }
     ]
   }
