@@ -292,7 +292,8 @@ flowchart LR
 
 ```bash
 python3 pmem_art.py atlas
-# 终端会打印类似：http://127.0.0.1:27865/art-atlas.html
+# 终端会打印本项目专属 http 地址（端口按项目自动分配，勿假定永远是 27865）
+# 也可双击根目录「打开工作台.cmd」
 ```
 
 **请用终端给出的 http 地址打开**，不要只双击磁盘上的 `art-atlas.html`。`file://` 下浏览器常会拦住「删除 / 打开文件夹」请求。

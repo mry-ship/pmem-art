@@ -120,7 +120,7 @@ Runtime: `pillow`, `numpy`, `pyyaml`. Tests: `pytest`（见 `pytest.ini`，`test
 python3 pmem_art.py atlas
 ```
 
-终端会打印本机地址，例如 `http://127.0.0.1:27865/art-atlas.html`。**请用这个 http 链接打开**（不要只双击本地 `art-atlas.html`：`file://` 下删除/定位常被浏览器拦住）。
+终端会打印本机地址（端口按项目自动分配，多开时不会互抢，例如 `http://127.0.0.1:27913/art-atlas.html`）。**请用打印出的 http 链接打开**，或双击根目录「打开工作台.cmd」（不要只双击本地 `art-atlas.html`：`file://` 下删除/定位常被浏览器拦住；也不要假定永远是 27865）。
 
 - 默认只看定稿；过程图请进放大预览的「显示进化过程」
 - 删除 = 移入 `.memory-art/_trash/`（可找回）；刷新后不会再把已删图加载回来
