@@ -3,15 +3,21 @@
   "hooks": {
     "preToolUse": [
       {
-        "command": "pythonw -u pmem_art.py hook pre-gen",
+        "command": "pyw -3 -u pmem_art.py hook pre-gen",
         "matcher": "GenerateImage",
         "failClosed": false
       }
     ],
     "postToolUse": [
       {
-        "command": "pythonw -u pmem_art.py hook post-asset",
+        "command": "pyw -3 -u pmem_art.py hook post-asset",
         "matcher": "GenerateImage"
+      }
+    ],
+    "stop": [
+      {
+        "command": "pyw -3 -u pmem_art.py hook stop",
+        "loop_limit": 8
       }
     ]
   }

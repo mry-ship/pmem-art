@@ -564,13 +564,20 @@ def write_config_yaml(root: Path, config: dict) -> Path:
     return path
 
 
+def _hook_python_prefix() -> str:
+    """Cursor 经 PowerShell 起 Hook：Windows 用 pyw（无黑框、系统路径稳）；禁止 || / .cmd。"""
+    if sys.platform == "win32":
+        return "pyw -3 -u"
+    return "python3"
+
+
 def ensure_cursor_stubs(root: Path) -> None:
     """写入/刷新 Cursor hooks，并安装 Cursor / Claude Code / Codex 技能。规则正文由 install_skills 写入 pmem-art.mdc。"""
     (root / ".cursor" / "rules").mkdir(parents=True, exist_ok=True)
     hooks = root / ".cursor" / "hooks.json"
-    # Windows：pythonw 无控制台；禁止 || / .cmd（Cursor 经 PowerShell 起 Hook 时会弹黑框）
-    # 仅绑 GenerateImage，避免每个 Write/Read 都弹一次宿主窗口
-    py = "pythonw -u" if sys.platform == "win32" else "python3"
+    # 仅绑 GenerateImage 的 pre/post，避免每个 Write/Read 弹宿主窗口；
+    # stop 必须保留：出图后 followup_message 才能把闭环审图拉回对话。
+    py = _hook_python_prefix()
     hooks.write_text(
         json.dumps(
             {
@@ -587,6 +594,12 @@ def ensure_cursor_stubs(root: Path) -> None:
                         {
                             "command": f"{py} pmem_art.py hook post-asset",
                             "matcher": "GenerateImage",
+                        }
+                    ],
+                    "stop": [
+                        {
+                            "command": f"{py} pmem_art.py hook stop",
+                            "loop_limit": 8,
                         }
                     ],
                 },

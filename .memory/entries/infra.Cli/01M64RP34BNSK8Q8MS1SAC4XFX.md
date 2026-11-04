@@ -18,6 +18,8 @@ aliases:
 - 错窗催办
 - followup_message
 - 还没审图
+verified: '2026-11-04'
+verified_at: '2026-11-04T19:21:55.133+08:00'
 source:
   conversation: 91c058f7-a82a-4700-bc33-06d0c5543085
 ---
