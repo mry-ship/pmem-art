@@ -433,6 +433,49 @@ def write_atlas_data_sidecar(root: Path, data: dict[str, Any]) -> Path:
     return out
 
 
+def _posix_asset_key(raw: str) -> str:
+    s = str(raw or "").replace("\\", "/").lstrip("./")
+    while "//" in s:
+        s = s.replace("//", "/")
+    return s
+
+
+def collapse_assets_path_aliases(assets_info: dict[str, dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    """Merge Windows/backslash keys into POSIX keys so the gallery never doubles a file."""
+    if not isinstance(assets_info, dict) or not assets_info:
+        return assets_info
+    preferred: dict[str, str] = {}
+    for key in list(assets_info.keys()):
+        norm = _posix_asset_key(key)
+        if not norm:
+            continue
+        cur = preferred.get(norm)
+        # Prefer already-POSIX keys; keep first seen otherwise
+        if cur is None or ("\\" in cur and "\\" not in key):
+            preferred[norm] = key
+    for norm, keep in preferred.items():
+        keep_info = assets_info.get(keep)
+        if not isinstance(keep_info, dict):
+            continue
+        keep_info["path"] = norm
+        if keep != norm:
+            assets_info[norm] = keep_info
+            assets_info.pop(keep, None)
+        # Drop every other alias of the same file
+        for key in list(assets_info.keys()):
+            if key == norm:
+                continue
+            if _posix_asset_key(key) == norm:
+                other = assets_info.pop(key, None)
+                if isinstance(other, dict):
+                    for k, v in other.items():
+                        if k == "path":
+                            continue
+                        if keep_info.get(k) in (None, "", [], {}):
+                            keep_info[k] = v
+    return assets_info
+
+
 def merge_index_into_assets(
     assets_info: dict[str, dict[str, Any]],
     images: list[dict[str, Any]],
@@ -451,10 +494,17 @@ def merge_index_into_assets(
     }
     cats = categories or {}
     for it in images:
-        rel = str(it.get("path") or "")
+        rel = str(it.get("path") or "").replace("\\", "/").lstrip("./")
         if not rel:
             continue
         existing = assets_info.get(rel)
+        if existing is None:
+            # 兼容旧索引里残留的反斜杠键
+            for alt in (rel.replace("/", "\\"),):
+                if alt in assets_info:
+                    existing = assets_info.pop(alt)
+                    assets_info[rel] = existing
+                    break
         cat = str(it.get("category") or "misc")
         cat_m = cats.get(cat) or default_cat.get(cat) or default_cat["misc"]
         plate = str(

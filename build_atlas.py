@@ -1445,6 +1445,14 @@ function getFilteredAssets() {
     const blob = [a.path, a.module, a.description, a.prompt, a.source, a.category, assetPlate(a)].join(" ").toLowerCase();
     return blob.includes(q);
   });
+  // 防旧数据里同一文件 / 与 \\ 两套键并排出现
+  const seen = new Set();
+  list = list.filter(a => {
+    const n = String((a && a.path) || "").replace(/\\/g, "/");
+    if (!n || seen.has(n)) return false;
+    seen.add(n);
+    return true;
+  });
   list.sort((x, y) => (Number(y.mtime) || 0) - (Number(x.mtime) || 0));
   return list;
 }
@@ -2451,6 +2459,8 @@ async function waitForRevealBridge(msTotal, stepMs) {
 function downloadRevealHelper(absFile) {
   const win = isWindowsAbs(absFile) || /win/i.test(navigator.platform || "");
   const root = String(DATA.root || "");
+  // 禁止写死 27865：多项目时用 ensure_reveal_daemon 按根路径选口
+  const pyBoot = "from pathlib import Path; from atlas_reveal import ensure_reveal_daemon; print(ensure_reveal_daemon(Path('.').resolve()))";
   if (win) {
     const winPath = String(absFile).replace(/\//g, "\\");
     const rootWin = root.replace(/\//g, "\\");
@@ -2458,13 +2468,20 @@ function downloadRevealHelper(absFile) {
       "@echo off",
       "chcp 65001 >nul",
       "cd /d \"" + rootWin + "\"",
-      "start \"\" /b python atlas_reveal.py \"" + rootWin + "\" 27865",
+      "set \"PORTFILE=%TEMP%\\pmem_atlas_port.txt\"",
+      "py -3 -c \"" + pyBoot + "\" > \"%PORTFILE%\" 2>nul",
+      "if errorlevel 1 python -c \"" + pyBoot + "\" > \"%PORTFILE%\" 2>nul",
       "explorer /select,\"" + winPath + "\"",
       ""
     ].join("\r\n");
     downloadTextFile("打开图片位置.bat", body);
   } else {
-    const body = "#!/bin/bash\ncd " + JSON.stringify(root) + "\n(python3 atlas_reveal.py " + JSON.stringify(root) + " 27865 >/dev/null 2>&1 &)\nopen -R " + JSON.stringify(absFile) + "\n";
+    const body = (
+      "#!/bin/bash\ncd " + JSON.stringify(root)
+      + "\npython3 -c " + JSON.stringify(pyBoot)
+      + " >/dev/null 2>&1 || python -c " + JSON.stringify(pyBoot)
+      + " >/dev/null 2>&1\nopen -R " + JSON.stringify(absFile) + "\n"
+    );
     downloadTextFile("打开图片位置.command", body);
   }
 }
@@ -2537,13 +2554,15 @@ window.openInEditor = function(relPath) {
 
 function revealPorts() {
   const ports = [];
-  const fromData = Number(DATA.reveal_port || 0);
-  if (fromData) ports.push(fromData);
-  const fromPing = Number((window.__PMEM_ATLAS_PING__ || {}).reveal_port || 0);
-  if (fromPing && !ports.includes(fromPing)) ports.push(fromPing);
-  for (const p of [27865, 27866, 27867, 27868, 27869, 8765, 8766, 8767, 8768]) {
-    if (!ports.includes(p)) ports.push(p);
-  }
+  const push = (p) => {
+    const n = Number(p || 0);
+    if (n > 0 && !ports.includes(n)) ports.push(n);
+  };
+  push(DATA.reveal_port);
+  push((window.__PMEM_ATLAS_PING__ || {}).reveal_port);
+  // 与 atlas_reveal.PREFERRED_PORT_SPAN 对齐：按项目哈希偏好 + 顺延探测
+  for (let p = 27865; p < 27865 + 64; p++) push(p);
+  for (let p = 8765; p < 8765 + 16; p++) push(p);
   return ports;
 }
 
@@ -2553,7 +2572,12 @@ function setRevealBanner(ok) {
   if (el) el.classList.toggle("show", !ok);
 }
 
+function normRevealRoot(p) {
+  return String(p || "").replace(/\\/g, "/").replace(/\/+$/, "").toLowerCase();
+}
+
 async function pingRevealBridge() {
+  const wantRoot = normRevealRoot(DATA.root || "");
   for (const port of revealPorts()) {
     try {
       const res = await fetch("http://127.0.0.1:" + port + "/api/ping", {
@@ -2563,6 +2587,8 @@ async function pingRevealBridge() {
       const j = await res.json().catch(() => ({}));
       if (j && j.ok && j.service === "pmem-atlas-reveal" && Array.isArray(j.apis)
           && j.apis.indexOf("promote") >= 0 && j.apis.indexOf("trash") >= 0) {
+        // 多项目同机：不能认领别人项目的 27865
+        if (wantRoot && j.root && normRevealRoot(j.root) !== wantRoot) continue;
         DATA.reveal_port = port;
         setRevealBanner(true);
         return port;
@@ -2575,46 +2601,58 @@ async function pingRevealBridge() {
 
 async function revealViaBridge(relPath) {
   const q = encodeURIComponent(relPath);
-  for (const port of revealPorts()) {
-    try {
-      const res = await fetch("http://127.0.0.1:" + port + "/api/reveal?path=" + q, {
-        method: "GET",
-        cache: "no-store",
-        mode: "cors"
-      });
-      if (res.ok) {
-        const j = await res.json().catch(() => ({ ok: true }));
-        if (j && j.ok !== false && (!j.service || j.service === "pmem-atlas-reveal")) {
-          DATA.reveal_port = port;
-          setRevealBanner(true);
-          return true;
-        }
+  let port = Number(DATA.reveal_port || 0);
+  if (!port) port = await pingRevealBridge();
+  if (!port) return false;
+  try {
+    const res = await fetch("http://127.0.0.1:" + port + "/api/reveal?path=" + q, {
+      method: "GET",
+      cache: "no-store",
+      mode: "cors"
+    });
+    if (res.ok) {
+      const j = await res.json().catch(() => ({ ok: true }));
+      if (j && j.ok !== false && (!j.service || j.service === "pmem-atlas-reveal")) {
+        setRevealBanner(true);
+        return true;
       }
-    } catch (e) {}
+    }
+  } catch (e) {}
+  // 端口过期时重探一次
+  port = await pingRevealBridge();
+  if (!port) return false;
+  try {
+    const res = await fetch("http://127.0.0.1:" + port + "/api/reveal?path=" + q, {
+      method: "GET", cache: "no-store", mode: "cors"
+    });
+    if (!res.ok) return false;
+    const j = await res.json().catch(() => ({ ok: true }));
+    return !!(j && j.ok !== false);
+  } catch (e) {
+    return false;
   }
-  return false;
 }
 
 async function deleteViaBridge(paths) {
   const list = Array.isArray(paths) ? paths.filter(Boolean) : [];
   if (!list.length) return { ok: false, deleted: [], errors: [{ error: "empty" }] };
-  for (const port of revealPorts()) {
-    try {
-      const res = await fetch("http://127.0.0.1:" + port + "/api/delete", {
-        method: "POST",
-        cache: "no-store",
-        mode: "cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ paths: list })
-      });
-      const j = await res.json().catch(() => null);
-      if (j && Array.isArray(j.deleted)) {
-        DATA.reveal_port = port;
-        setRevealBanner(true);
-        return j;
-      }
-    } catch (e) {}
-  }
+  let port = Number(DATA.reveal_port || 0);
+  if (!port) port = await pingRevealBridge();
+  if (!port) return null;
+  try {
+    const res = await fetch("http://127.0.0.1:" + port + "/api/delete", {
+      method: "POST",
+      cache: "no-store",
+      mode: "cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ paths: list })
+    });
+    const j = await res.json().catch(() => null);
+    if (j && Array.isArray(j.deleted)) {
+      setRevealBanner(true);
+      return j;
+    }
+  } catch (e) {}
   return null;
 }
 

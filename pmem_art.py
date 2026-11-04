@@ -28,7 +28,7 @@ from lifecycle import ensure_stdio_survives_locale
 
 ensure_stdio_survives_locale()
 
-VERSION = "0.16.1-art"
+VERSION = "0.16.2-art"
 MEMORY_DIR = ".memory-art"
 
 KIND_META = {
@@ -967,7 +967,10 @@ def load_project(root: Path, *, embed_images: bool = False) -> dict[str, Any]:
     for e in entries:
         for a in e.get("assets") or []:
             if isinstance(a, dict) and a.get("path"):
-                asset_Set.add(a["path"])
+                # 记忆条目常带 Windows 反斜杠；必须归一成 POSIX，否则画廊同一张出两张卡
+                norm = _norm_project_rel(root, str(a.get("path") or ""))
+                if norm:
+                    asset_Set.add(norm)
 
     assets_info: dict[str, dict[str, Any]] = {}
     for rel_path in sorted(asset_Set):
@@ -989,13 +992,25 @@ def load_project(root: Path, *, embed_images: bool = False) -> dict[str, Any]:
     # Visibility index: also surface Cursor/converge/generated images (no formal ingest)
     index_images: list[dict[str, Any]] = []
     try:
-        from atlas_index import merge_index_into_assets, scan_project_images, write_atlas_index
+        from atlas_index import (
+            collapse_assets_path_aliases,
+            merge_index_into_assets,
+            scan_project_images,
+            write_atlas_index,
+        )
 
         index_images = scan_project_images(root, modules=modules)
         write_atlas_index(root, index_images, modules=modules)
         merge_index_into_assets(assets_info, index_images, categories=categories)
+        collapse_assets_path_aliases(assets_info)
     except Exception:
         index_images = []
+        try:
+            from atlas_index import collapse_assets_path_aliases
+
+            collapse_assets_path_aliases(assets_info)
+        except Exception:
+            pass
 
     # Paths explicitly marked rejected/draft_violation in entries are intentional
     # counter-examples — still inspect, but do not fail gate / stale on their QA diffs.

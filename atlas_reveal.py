@@ -7,6 +7,7 @@ and /api/delete.
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import re
@@ -24,6 +25,8 @@ from typing import Any
 
 # 避开本机常被占满的 8765 一带；旧版仍会回退探测
 DEFAULT_PORT = 27865
+# 每个项目按根路径哈希挑偏好端口，减少多开互抢；占用则顺延
+PREFERRED_PORT_SPAN = 64
 SERVICE_NAME = "pmem-atlas-reveal"
 TRASH_REL = ".memory-art/_trash"
 # 教学示例图写死目录：工作台删除一律拒绝
@@ -538,8 +541,32 @@ def run_server(root: Path, port: int = DEFAULT_PORT) -> None:
     httpd.serve_forever()
 
 
-def ping_server(port: int = DEFAULT_PORT, timeout: float = 0.4) -> bool:
-    """True only when our service answers (ignore unrelated listeners on the port)."""
+def _norm_root(path: Path | str | None) -> str:
+    if path is None or path == "":
+        return ""
+    try:
+        return str(Path(path).resolve()).replace("\\", "/").rstrip("/").lower()
+    except OSError:
+        return str(path).replace("\\", "/").rstrip("/").lower()
+
+
+def preferred_port_for_root(root: Path | str) -> int:
+    """Stable preferred port for a project root (DEFAULT_PORT .. +SPAN-1)."""
+    dig = hashlib.sha1(_norm_root(root).encode("utf-8")).hexdigest()
+    return DEFAULT_PORT + (int(dig[:8], 16) % PREFERRED_PORT_SPAN)
+
+
+def ping_server(
+    port: int = DEFAULT_PORT,
+    timeout: float = 0.4,
+    *,
+    root: Path | str | None = None,
+) -> bool:
+    """True only when our service answers (ignore unrelated listeners on the port).
+
+    If ``root`` is given, also require ping JSON root to match that project —
+    otherwise another pmem-art workbench on 27865 looks "healthy" and steals the URL.
+    """
     try:
         with urllib.request.urlopen(f"http://127.0.0.1:{port}/api/ping", timeout=timeout) as resp:
             if int(getattr(resp, "status", 200) or 200) != 200:
@@ -549,7 +576,12 @@ def ping_server(port: int = DEFAULT_PORT, timeout: float = 0.4) -> bool:
                 return False
             # 旧守护缺 trash/promote 时当作不可用，迫使换端口拉起新进程
             apis = data.get("apis")
-            return isinstance(apis, list) and ("promote" in apis) and ("trash" in apis)
+            if not (isinstance(apis, list) and ("promote" in apis) and ("trash" in apis)):
+                return False
+            if root is not None:
+                if _norm_root(data.get("root")) != _norm_root(root):
+                    return False
+            return True
     except (urllib.error.URLError, TimeoutError, OSError, json.JSONDecodeError, ValueError):
         return False
 
@@ -566,11 +598,15 @@ def _port_free(port: int) -> bool:
         s.close()
 
 
-def _pick_listen_port(preferred: int = DEFAULT_PORT) -> int:
+def _pick_listen_port(preferred: int = DEFAULT_PORT, *, root: Path | str | None = None) -> int:
+    """Pick a port: reuse only if already serving *this* root; never hijack another project."""
     for base in (preferred, DEFAULT_PORT, 8765):
         for candidate in range(base, base + 48):
-            if ping_server(candidate):
+            if root is not None and ping_server(candidate, root=root):
                 return candidate
+            # Occupied by another project (or unrelated listener) → skip
+            if ping_server(candidate):
+                continue
             if _port_free(candidate):
                 return candidate
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -647,35 +683,45 @@ def _stop_daemon(root: Path, port: int) -> None:
         time.sleep(0.05)
 
 
-def ensure_reveal_daemon(root: Path, port: int = DEFAULT_PORT) -> int:
-    """Ensure localhost reveal bridge is up; return port (0 if failed)."""
+def ensure_reveal_daemon(root: Path, port: int | None = None) -> int:
+    """Ensure localhost reveal bridge is up; return port (0 if failed).
+
+    Multi-project safe:
+    - each root prefers a stable hash port (not everyone starts at 27865)
+    - never treat another project's daemon as ours
+    - if preferred port is taken, bind the next free port
+    """
     root = root.resolve()
-    # Prefer previously written port if it is still our service AND code is current
+    preferred = preferred_port_for_root(root) if port is None else int(port)
+    # Prefer previously written port if it is still *this* project's service AND code is current
     port_file = root / ".memory-art" / "atlas_reveal.port"
     if port_file.is_file():
         try:
             old = int((port_file.read_text(encoding="utf-8") or "0").strip() or "0")
         except ValueError:
             old = 0
-        if old and ping_server(old):
+        if old and ping_server(old, root=root):
             if _daemon_matches_current_code(root):
                 write_port_files(root, old)  # 不盖章
                 return old
             _stop_daemon(root, old)
 
-    if ping_server(port):
+    if ping_server(preferred, root=root):
         if _daemon_matches_current_code(root):
-            write_port_files(root, port)
-            return port
-        _stop_daemon(root, port)
+            write_port_files(root, preferred)
+            return preferred
+        _stop_daemon(root, preferred)
 
-    chosen = _pick_listen_port(port)
-    if ping_server(chosen) and _daemon_matches_current_code(root):
+    chosen = _pick_listen_port(preferred, root=root)
+    if ping_server(chosen, root=root) and _daemon_matches_current_code(root):
         write_port_files(root, chosen)
         return chosen
-    if ping_server(chosen) and not _daemon_matches_current_code(root):
+    # Same port number occupied by *another* project: do not kill it; pick again without reuse
+    if ping_server(chosen) and not ping_server(chosen, root=root):
+        chosen = _pick_listen_port(preferred, root=root)
+    elif ping_server(chosen, root=root) and not _daemon_matches_current_code(root):
         _stop_daemon(root, chosen)
-        chosen = _pick_listen_port(port)
+        chosen = _pick_listen_port(preferred, root=root)
 
     cmd = [
         sys.executable,
@@ -696,15 +742,15 @@ def ensure_reveal_daemon(root: Path, port: int = DEFAULT_PORT) -> int:
     write_port_files(root, chosen, proc.pid)
     for _ in range(50):
         time.sleep(0.05)
-        if ping_server(chosen):
+        if ping_server(chosen, root=root):
             return chosen
-    return chosen if ping_server(chosen, timeout=1.0) else 0
+    return chosen if ping_server(chosen, timeout=1.0, root=root) else 0
 
 
 def main(argv: list[str] | None = None) -> int:
     argv = list(argv or sys.argv[1:])
     root = Path(argv[0]).resolve() if argv else Path.cwd().resolve()
-    port = int(argv[1]) if len(argv) > 1 else DEFAULT_PORT
+    port = int(argv[1]) if len(argv) > 1 else preferred_port_for_root(root)
     write_port_files(root, port, os.getpid())
     run_server(root, port)
     return 0
