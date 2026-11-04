@@ -233,6 +233,29 @@ class TestGenerateMergesMemory(unittest.TestCase):
                 )
             self.assertEqual(rc_start, 0)
             self.assertIn("会自动并入提示词", buf.getvalue())
+            # 出图前须过合理性闸门（测 Warm-Start 并入，不测闸门本身）
+            from skills_kit.reasonableness_gate import (
+                apply_review_to_session,
+                default_checklist_template,
+                review_reasonableness,
+            )
+            from skills_kit.converge import _session_file
+
+            sf = _session_file(td, sid)
+            sess = json.loads(sf.read_text(encoding="utf-8"))
+            rev = (
+                "蜜桃糖果药瓶单件居中，透明或纯黑隔离底，方构图无字；"
+                "一眼失败是焊进蛋糕或挤成场景杂物。"
+            )
+            review = review_reasonableness(
+                skill="merge",
+                draft="peach candy bottle game icon square",
+                revised=rev,
+                checklist_text=default_checklist_template("merge"),
+            )
+            self.assertTrue(review["passed"], review.get("issues"))
+            sess = apply_review_to_session(sess, review)
+            sf.write_text(json.dumps(sess, ensure_ascii=False, indent=2), encoding="utf-8")
             img = _noisy_png(td / "out.png")
             gen_buf = io.StringIO()
             with redirect_stdout(gen_buf):

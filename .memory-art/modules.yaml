@@ -88,6 +88,9 @@ modules:
     palette: []
     specs:
       resolution: 1024x576
+      allowed_resolutions:
+        - 1024x576
+        - 1024x1024
       aspect_ratio: "16:9"
       alpha_required: false
       max_size_kb: 2048
@@ -137,7 +140,6 @@ modules:
     description: "主菜单与 HUD 概念板：16:9 RGB 商店截图级概念稿（非九宫格切图）。九宫格弹窗底板见 ui.InventoryHUD。"
     paths:
       - "assets/ui/hud/**"
-      - "assets/ui/mainmenu/**"
     aliases:
       - HUD
       - MainMenu
@@ -573,6 +575,7 @@ modules:
     specs:
       resolution: 1152x864
       allowed_resolutions:
+        - 864x1152
         - 1152x864
       alpha_required: false
       safe_margin_px: 16
@@ -584,13 +587,17 @@ modules:
     description: "仙侠水墨夜色风：锁视角与姿态，仅微修局部质感| Micro-polish reference celestial night city only. Same g · 自动归类至 场景与原画 (scene.CelestialCity) · 置信度 0.787"
     paths:
       - "assets/scene/celestialcity/**"
+      - "assets/scene/celestial_night_city/**"
     aliases:
       - CelestialCity
     entities: []
     palette: []
     specs:
       resolution: 720x1280
-      aspect_ratio: "16:9"
+      allowed_resolutions:
+        - 720x1280
+        - 864x1152
+      aspect_ratio: "9:16"
       alpha_required: false
       max_size_kb: 2048
     parent: scene.MainArea
@@ -696,7 +703,7 @@ modules:
       resolution: 864x1152
       allowed_resolutions:
         - 864x1152
-      alpha_required: true
+      alpha_required: false
       safe_margin_px: 16
       max_size_kb: 1024
     parent: brand.WorldStyle
@@ -716,14 +723,16 @@ modules:
       resolution: 720x1280
       allowed_resolutions:
         - 720x1280
-      alpha_required: true
+        - 1280x720
+        - 941x1672
+      alpha_required: false
       nine_slice:
         - 48
         - 48
         - 48
         - 48
       safe_margin_px: 4
-      max_size_kb: 512
+      max_size_kb: 2048
     parent: ui.HUD
     inherits: ui.HUD
   prop.HealPotionMerge:
@@ -815,6 +824,7 @@ modules:
       resolution: 768x768
       allowed_resolutions:
         - 768x768
+        - 1024x1024
       alpha_required: true
       safe_margin_px: 16
       max_size_kb: 1024
@@ -887,9 +897,11 @@ modules:
     palette: []
     specs:
       resolution: 941x1672
-      aspect_ratio: "16:9"
+      allowed_resolutions:
+        - 941x1672
+      aspect_ratio: "9:16"
       alpha_required: false
-      max_size_kb: 2048
+      max_size_kb: 4096
     parent: scene.MainArea
     inherits: scene.MainArea
   ui.Offer.BlackFriday:
@@ -907,14 +919,14 @@ modules:
       resolution: 720x1280
       allowed_resolutions:
         - 720x1280
-      alpha_required: true
+      alpha_required: false
       nine_slice:
         - 48
         - 48
         - 48
         - 48
       safe_margin_px: 4
-      max_size_kb: 512
+      max_size_kb: 2048
   icon.BirdBatch:
     title: icon·BirdBatch
     category: icon

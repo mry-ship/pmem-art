@@ -246,7 +246,7 @@ def observations_from_vlm_payload(payload: dict[str, Any]) -> dict[str, Any]:
         "perspective_anatomy": ("perspective_anatomy", "perspective", "anatomy", "透视", "解剖", "结构"),
         "texture_detail": ("texture_detail", "texture", "质感", "肌理", "细节"),
         "spec_style": ("spec_style", "style", "spec", "风格", "规格"),
-        "flawlessness": ("flawlessness", "flawless", "无瑕疵", "无暇"),
+        "flawlessness": ("flawlessness", "flawless", "无瑕度", "无瑕疵", "无暇"),
     }
     scores: dict[str, float] = {}
     for dest, keys in aliases.items():
@@ -266,7 +266,7 @@ def observations_from_vlm_payload(payload: dict[str, Any]) -> dict[str, Any]:
             f"风格{scores['spec_style']:.1f}"
         )
         if "flawlessness" in scores:
-            dims += f"/无瑕疵{scores['flawlessness']:.1f}"
+            dims += f"/无瑕度{scores['flawlessness']:.1f}"
     return {
         "dims": dims,
         "dims_scores": scores,

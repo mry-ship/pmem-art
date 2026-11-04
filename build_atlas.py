@@ -1382,18 +1382,39 @@ function dayCounts() {
 }
 
 function assetPlate(a) {
-  if (a && a.plate) return a.plate;
   const p = String((a && a.path) || "").replace(/\\/g, "/");
   const name = p.split("/").pop() || "";
   const src = (a && a.source) || "";
   const role = String((a && a.role) || (a && a.png_meta && a.png_meta.pmem_role) || "").toLowerCase();
+  const stored = a && a.plate ? String(a.plate) : "";
   if (role === "rejected" || /reject/i.test(name)) return "rejected";
   if (role === "reference") return "reference";
+  // 原图 / 风格样张 / refs/：只在进化对照里看（覆盖旧索引误标 final）
+  if (p.includes("/refs/") || /(?:^|[_-])(?:ref|style|refpad|pad)(?:[._-]|$)|refpad/i.test(name)
+      || /^\d{2}_(style|character|structure|prop|ui)\./i.test(name)) return "reference";
   if (src === "converge" || src === "cursor_generated" || src === "generated" || src === "other") return "process";
   if (p.includes("/boards/") || p.includes("/.memory-art/converge/")) return "process";
-  if (/(^|[_-])r\d{1,2}\./i.test(name) || /^r\d{1,2}\./i.test(name)) return "process";
-  if (role === "draft" || role === "draft_violation" || /draft/i.test(name)) return "process";
+  // r1.png / r2_916.png / concept_r1_916.png — 会话终稿已被后端盖成 plate=final+可见
+  if (/(?:^|[_-])r\d{1,2}(?:[._-]|$)/i.test(name)) {
+    if (stored === "final" && a && a.workbench_hide === false) return "final";
+    return "process";
+  }
+  if (role === "draft" || role === "draft_violation" || /draft/i.test(name) || /_work\.(png|jpe?g|webp)$/i.test(name)) return "process";
+  if (stored) return stored;
   return "final";
+}
+
+/** 闭环会话里的参考原图：即使旧索引误标 final，也不进主画廊 */
+function isSessionReferenceAsset(a) {
+  const key = normViewerPath((a && a.path) || "");
+  if (!key) return false;
+  const sessions = DATA.converge_sessions || {};
+  for (const sess of Object.values(sessions)) {
+    if (!sess) continue;
+    if (pathMetaKeyMatch(sess.ref_image || "", key)) return true;
+    if ((sess.reference_image_paths || []).some(p => pathMetaKeyMatch(p, key))) return true;
+  }
+  return false;
 }
 
 function plateCounts() {
@@ -1413,8 +1434,9 @@ function isWorkbenchHiddenAsset(a) {
   if (a.exists === false) return true;
   const role = String((a.role) || (a.png_meta && a.png_meta.pmem_role) || "").toLowerCase();
   if (role === "reference") return true;
+  if (typeof isSessionReferenceAsset === "function" && isSessionReferenceAsset(a)) return true;
   const plate = assetPlate(a);
-  // 过程图 / 参考原图不单独进主画廊，避免刷屏；进化面板再看
+  // 过程图 / 参考原图不单独进主画廊，避免刷屏；点定稿进「详情·进化对照」再看
   return plate === "process" || plate === "reference";
 }
 
@@ -4157,7 +4179,7 @@ const TEACH_DIM_LABELS = {
   perspective_anatomy: "透视",
   texture_detail: "材质",
   spec_style: "风格",
-  flawlessness: "完成度"
+  flawlessness: "无瑕度"
 };
 function formatDimsHtml(dims, cls) {
   if (!dims || typeof dims !== "object") return "";

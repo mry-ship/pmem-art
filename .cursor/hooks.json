@@ -6,6 +6,11 @@
         "command": "pyw -3 -u pmem_art.py hook pre-gen",
         "matcher": "GenerateImage",
         "failClosed": false
+      },
+      {
+        "command": "pmemw hook pre-tool",
+        "matcher": "Write|StrReplace|Edit|MultiEdit|EditNotebook|Delete|Shell|MCP|record_memory|search_memory",
+        "failClosed": false
       }
     ],
     "postToolUse": [
@@ -18,6 +23,11 @@
       {
         "command": "pyw -3 -u pmem_art.py hook stop",
         "loop_limit": 8
+      }
+    ],
+    "afterMCPExecution": [
+      {
+        "command": "pmemw hook after-mcp"
       }
     ]
   }

@@ -13,8 +13,18 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
-_ROUND_NAME_RE = re.compile(r"(?:^|[_-])r\d{1,2}\.", re.IGNORECASE)
-_ROUND_ONLY_RE = re.compile(r"^r\d{1,2}\.(png|jpe?g|webp)$", re.IGNORECASE)
+# r1.png / r2_916.png / concept_r1_916.png / popcorn_r2.png（不能只认 rN. 紧贴扩展名）
+_ROUND_NAME_RE = re.compile(r"(?:^|[_-])r\d{1,2}(?:[._-]|$)", re.IGNORECASE)
+_ROUND_ONLY_RE = re.compile(r"^r\d{1,2}(?:[._-].*)?\.(png|jpe?g|webp)$", re.IGNORECASE)
+# 原图 / 垫图 / 风格样张：只进进化对照，不占主画廊
+_REF_NAME_RE = re.compile(
+    r"(?:^|[_-])(?:ref|style|refpad|pad)(?:[._-]|$)|refpad|(?:^|[_-])style(?:[._-]|$)",
+    re.IGNORECASE,
+)
+_STYLE_PACK_RE = re.compile(
+    r"^\d{2}_(style|character|structure|prop|ui)\.(png|jpe?g|webp)$",
+    re.IGNORECASE,
+)
 
 IMAGE_EXTS = {".png", ".jpg", ".jpeg", ".webp"}
 DEFAULT_SCAN_PREFIXES = (
@@ -79,13 +89,16 @@ def classify_plate(
         return "rejected"
     if role_l == "reference":
         return "reference"
+    # 原图 / 风格样张 / refs/：只在进化对照里看
+    if "/refs/" in f"/{p}/" or _REF_NAME_RE.search(name) or _STYLE_PACK_RE.match(name):
+        return "reference"
     if src in {"converge", "cursor_generated", "generated", "other"}:
         return "process"
     if "/.memory-art/converge/" in f"/{p}" or "/boards/" in p:
         return "process"
     if _ROUND_ONLY_RE.match(name) or _ROUND_NAME_RE.search(name):
         return "process"
-    if role_l in {"draft", "draft_violation"} or "draft" in name.lower():
+    if role_l in {"draft", "draft_violation"} or "draft" in name.lower() or name.lower().endswith("_work.png") or name.lower().endswith("_work.jpg"):
         return "process"
     # assets 里的 L01–L08 合成梯交货、final、anchor 都算定稿
     return "final"
@@ -114,6 +127,15 @@ def infer_category(rel_path: str, module: str | None = None) -> str:
     return "misc"
 
 
+def path_pattern_score(pat: str) -> tuple[int, int, int]:
+    """Higher = more specific. Prefer longer literal prefix and fewer wildcards."""
+    text = str(pat or "")
+    wild = text.count("*") + text.count("?")
+    literal = len(text) - wild
+    exactish = 0 if wild else 1
+    return (literal, exactish, -wild)
+
+
 def match_module(
     rel_path: str,
     modules: dict[str, Any] | None,
@@ -126,13 +148,27 @@ def match_module(
         return "unassigned"
     import fnmatch
 
+    best_id: str | None = None
+    best_key: tuple[Any, ...] | None = None
     for mod_id, mod_cfg in modules.items():
         if not isinstance(mod_cfg, dict):
             continue
         for pat in mod_cfg.get("paths") or []:
-            if fnmatch.fnmatch(rel_path, pat):
-                return mod_id
-    return "unassigned"
+            if not fnmatch.fnmatch(rel_path, str(pat)):
+                continue
+            status = 1 if str(mod_cfg.get("status") or "").lower() == "active" else 0
+            # Prefer specific path, then active, then deeper module id; last key keeps deterministic.
+            key = (
+                path_pattern_score(str(pat)),
+                status,
+                str(mod_id).count("."),
+                len(str(mod_id)),
+                str(mod_id),
+            )
+            if best_key is None or key > best_key:
+                best_key = key
+                best_id = str(mod_id)
+    return best_id or "unassigned"
 
 
 def _light_dims(path: Path) -> dict[str, Any]:

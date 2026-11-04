@@ -79,7 +79,7 @@ description: 玩家要一条同域合成升级梯，或生图分流判成合成�
 
 ## 第一段 · 升级链与画风（3 稿，先不出图）
 
-固定 **3 稿**。定清：链型、档数、交付、（若有）行列、升级链、画风一句。3 稿仍说不通就停，一张图都不出。
+固定 **3 稿**，不再拉到 8 稿。定清：链型、档数、交付、（若有）行列、升级链、画风一句。机读数字过了、合成说不通，仍然不算定稿；画风已经写成一句才能出图。3 稿仍说不通就停，一张图都不出。
 
 每一稿先写 `chain_mode`（或注明轻门）/ `levels` / `delivery` / 可选 `grid_rows×grid_cols`，再写 N 行升级 + 一句画风。交给独立文本判断。没过只改未过行；已说通的锁住。
 
@@ -87,7 +87,7 @@ description: 玩家要一条同域合成升级梯，或生图分流判成合成�
 python3 pmem_art.py converge discuss --round <稿次> --prompt "<链型+N行>" --defects "<没过的是哪一行>" --next-fix "<下一稿只改哪几行>"
 ```
 
-### 六条（全链型都要过）
+### 六条都要过（全链型）
 
 1. 正好 `levels` 件，`level` 为 1..N 连续。同一任务域，不许串成同色杂物。
 2. 每一档画面里将只有一件、居中（或整表中每格一件）。无脸，无等级字。
@@ -117,13 +117,13 @@ python3 pmem_art.py converge discuss --round <稿次> --prompt "<链型+N行>" -
   - 轻门 / `same_object`：`parts_add`（L1=`—`）  
   - `shop_ladder` / `species_change`：`evolve_to`、`merge_why`（L1 的 `merge_why` 可为 `—`）；`parts_add` 可 `—`
 
-`scale_pct` 单调递增（建议 L1 ≥ 0.58，末档 ≤ 0.80；机读下限约 0.55 / 上限约 0.82）。
+`scale_pct` 单调递增（建议 L1 ≥ 0.58，L8 ≤ 0.80；机读下限约 0.55 / 上限约 0.82）。
 
 ```bash
 python pmem_art.py merge relation-judge --file <yaml> --all
 ```
 
-**exit 0 才能出图。** 旧 canonical（无 `chain_mode`、八行、`parts_add`）仍应能过轻门。
+**exit 0 才能出图。** 旧 canonical（无 `chain_mode`、八行、`parts_add`）仍应能过轻门。写成副本时不要改掉这份 canonical 里已有的 track。
 
 **同范围重跑**（`same_object`）：`surface`、`base_body`、零件链从旧稿抄死；出图句每档重复母体 + 只加本档 `parts_add`。
 
@@ -131,8 +131,8 @@ python pmem_art.py merge relation-judge --file <yaml> --all
 
 ### `delivery=per_cell`（无整表信号时的默认）
 
-关系过了 → 一档一张正方形 → `merge audit` → 可选 `normalize` 一次再 audit → 第二段 converge（最多 4 轮，≥9.5）。  
-每档首轮仍过 reasonableness review。不垫风格参考文件；不垫对方模型成图做「公平对比」。
+关系过了 → 每一档单独出一张正方形 → `merge audit` → 可选 `normalize` 后再跑一次 audit → 第二段 converge（最多 4 轮，≥9.5）。  
+同框不是交货（同框整梯只作体量预览）。每档首轮仍过 reasonableness review。不要把参考图文件垫进生图；不垫对方模型成图做「公平对比」。
 
 ### `delivery=overview_sheet`
 

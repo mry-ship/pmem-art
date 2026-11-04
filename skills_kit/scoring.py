@@ -413,7 +413,7 @@ def _read_labeled(dims_str: str, patterns: dict[str, tuple[str, float]]) -> dict
 
 def _attach_flawlessness(raw: dict[str, float], dims_str: str) -> dict[str, float]:
     m = re.search(
-        r"(?:无瑕疵|无暇|flawlessness|flawless)[^0-9]*([0-9]+(?:\.[0-9]+)?)",
+        r"(?:无瑕度|无瑕疵|无暇|flawlessness|flawless)[^0-9]*([0-9]+(?:\.[0-9]+)?)",
         dims_str or "",
         flags=re.IGNORECASE,
     )
@@ -576,7 +576,7 @@ def parse_5d_dims(
             r"(?<![A-Za-z])style(?![A-Za-z_]))"
             r"[^0-9]*([0-9]+(?:\.[0-9]+)?)"
         ),
-        "flawlessness": r"(?:无瑕疵|无暇|flawlessness|flawless)[^0-9]*([0-9]+(?:\.[0-9]+)?)",
+        "flawlessness": r"(?:无瑕度|无瑕疵|无暇|flawlessness|flawless)[^0-9]*([0-9]+(?:\.[0-9]+)?)",
     }
     parsed: dict[str, float] = {}
     for k, pat in patterns.items():

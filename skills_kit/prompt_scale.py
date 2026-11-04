@@ -787,7 +787,7 @@ _DIM_WEIGHT_ZH: dict[str, str] = {
     "perspective_anatomy": "透视与解剖",
     "texture_detail": "质感",
     "spec_style": "规格与风格",
-    "flawlessness": "无瑕疵",
+    "flawlessness": "无瑕度",
 }
 
 _SCALE_LABEL_ZH: dict[str, str] = {
@@ -892,6 +892,7 @@ _DIM_ALIAS_TO_KEY: dict[str, str] = {
     "style": "spec_style",
     "spec_style": "spec_style",
     "无瑕疵": "flawlessness",
+    "无瑕度": "flawlessness",
     "无暇": "flawlessness",
     "flawlessness": "flawlessness",
 }
@@ -988,7 +989,7 @@ def parse_dim_lock_overrides(
     found: dict[str, int] = {}
     # Explicit kv: 构图=60 / composition:70 / 光影锁定 40%
     for m in re.finditer(
-        r"(构图|光影色彩|光影|透视与解剖|透视解剖|透视|解剖|质感|材质|规格与风格|规格风格|风格|规格|无瑕疵|"
+        r"(构图|光影色彩|光影|透视与解剖|透视解剖|透视|解剖|质感|材质|规格与风格|规格风格|风格|规格|无瑕度|无瑕疵|"
         r"composition|lighting_color|perspective_anatomy|texture_detail|spec_style|flawlessness)"
         r"\s*(?:的?\s*锁定(?:程度)?\s*)?(?:[=:：]|降到|调到|改为|改到|到)\s*(\d{1,3})\s*%?",
         raw,
@@ -1000,7 +1001,7 @@ def parse_dim_lock_overrides(
 
     # Relative relax / tighten
     for m in re.finditer(
-        r"(构图|光影色彩|光影|透视与解剖|透视解剖|透视|解剖|质感|材质|规格与风格|规格风格|风格|规格|无瑕疵)"
+        r"(构图|光影色彩|光影|透视与解剖|透视解剖|透视|解剖|质感|材质|规格与风格|规格风格|风格|规格|无瑕度|无瑕疵)"
         r".{0,10}(再?松一点|松一些|放宽|松点儿|放松|再松)",
         raw,
     ):
@@ -1008,7 +1009,7 @@ def parse_dim_lock_overrides(
         if key and key not in found:
             found[key] = max(0, _eff(key) - LOCK_RELAX_STEP)
     for m in re.finditer(
-        r"(构图|光影色彩|光影|透视与解剖|透视解剖|透视|解剖|质感|材质|规格与风格|规格风格|风格|规格|无瑕疵)"
+        r"(构图|光影色彩|光影|透视与解剖|透视解剖|透视|解剖|质感|材质|规格与风格|规格风格|风格|规格|无瑕度|无瑕疵)"
         r".{0,10}(再?紧一点|紧一些|收紧|再紧)",
         raw,
     ):

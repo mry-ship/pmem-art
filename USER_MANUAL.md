@@ -1,9 +1,9 @@
 # 📘 pmem-art 画师使用手册 — 怎么在 Cursor / Codex 里越画越准
 
-> **版本**：`v0.16.2-art`  
+> **版本**：`v0.16.3-art`  
 > **核心理念（零门槛）**：**直接说人话就行**。例如「画一张窗边女孩」「参考这张，换成一只猫」。**不用背技能名、不用敲斜杠、不用碰命令行、不用写 YAML。** 附图可有可无。  
 > 电脑会自己认路；认不清会**先问你一句**，不会默默画错。你只会看到类似 `【按 克隆 走了】` / `【走默认路径】` 这种标签。  
-> **用户包下载（不含研发用 pmem）** → [GitHub Release v0.16.2-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.2-art)  
+> **用户包下载（不含研发用 pmem）** → [GitHub Release v0.16.3-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.3-art)  
 > **认路白话流程图** → [docs/route_pipeline.html](docs/route_pipeline.html)（推荐先看：大白话从提需到出图）  
 > **先看总览？** → [README.md](README.md) · **进阶斜杠技能**见下文（可选用） · 旧点选流程 [docs/skills/flows.html](docs/skills/flows.html)  
 > **看图墙 / 技能用法与结果？** → [README · 效果长什么样](README.md#效果长什么样) · [全页展陈](docs/showcase/skills-homepage/index.html)（图源 `homepage_rerun_1028`）

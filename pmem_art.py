@@ -28,7 +28,7 @@ from lifecycle import ensure_stdio_survives_locale
 
 ensure_stdio_survives_locale()
 
-VERSION = "0.16.2-art"
+VERSION = "0.16.3-art"
 MEMORY_DIR = ".memory-art"
 
 KIND_META = {
@@ -836,9 +836,12 @@ def attach_converge_prompt_traces(
                 info["score"] = rr.get("score")
             info["passed"] = bool(rr.get("passed"))
             if not info.get("plate") or info.get("plate") == "final":
-                # rN / converge 产出保持过程档，避免刷屏
+                # rN / rN_916 / converge 产出保持过程档，避免刷屏
                 name = Path(str(info.get("path") or asset_key)).name
-                if re.search(r"(^|[_-])r\d{1,2}\.", name, re.I) or "/converge/" in str(asset_key).replace("\\", "/"):
+                if (
+                    re.search(r"(?:^|[_-])r\d{1,2}(?:[._-]|$)", name, re.I)
+                    or "/converge/" in str(asset_key).replace("\\", "/")
+                ):
                     info["plate"] = "process"
         for ref in refs:
             rk = _resolve_asset_key(ref)
@@ -857,9 +860,8 @@ def attach_converge_prompt_traces(
                 assets_info[wk]["workbench_hide"] = False
                 if assets_info[wk].get("converge_round") is None and slim_rounds:
                     assets_info[wk]["converge_round"] = slim_rounds[-1].get("round")
-                # 终稿槽位保持可见
-                if assets_info[wk].get("plate") == "process" and "final" in Path(wk).name.lower():
-                    assets_info[wk]["plate"] = "final"
+                # 终稿槽位保持可见且算定稿（文件名常是 r3_916.png，不能因过程规则藏进进化里）
+                assets_info[wk]["plate"] = "final"
     return sessions
 
 
@@ -979,11 +981,9 @@ def load_project(root: Path, *, embed_images: bool = False) -> dict[str, Any]:
         # Match module by path glob or png_meta
         matched_mod = info.get("png_meta", {}).get("pmem_module")
         if not matched_mod:
-            for mod_id, mod_cfg in modules.items():
-                for pat in mod_cfg.get("paths", []):
-                    if fnmatch.fnmatch(rel_path, pat):
-                        matched_mod = mod_id
-                        break
+            from atlas_index import match_module as _match_module_for_path
+
+            matched_mod = _match_module_for_path(rel_path, modules)
         info["module"] = matched_mod or "unassigned"
         info.setdefault("source", "module")
         info.setdefault("formal", True)
@@ -1353,11 +1353,10 @@ def cmd_list(data: dict[str, Any]) -> int:
 def cmd_search(data: dict[str, Any], module: str, path: str, query: str) -> int:
     target_mod = module
     if not target_mod and path:
-        for mod_id, mod_cfg in data["modules"].items():
-            for pat in mod_cfg.get("paths", []):
-                if fnmatch.fnmatch(path, pat):
-                    target_mod = mod_id
-                    break
+        from atlas_index import match_module as _match_module_for_path
+
+        hit = _match_module_for_path(path, data["modules"])
+        target_mod = "" if hit == "unassigned" else hit
     # Resolve module inheritance chain up to MAX_INHERITS_DEPTH (4 layers, aligned with mry-ship/pmem!)
     from lifecycle import MAX_INHERITS_DEPTH, resolve_module_lineage
     lineage = resolve_module_lineage(target_mod, data["modules"], max_depth=MAX_INHERITS_DEPTH, warn=True) if target_mod else []

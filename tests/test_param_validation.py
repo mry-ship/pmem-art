@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import shutil
 import sys
 import tempfile
 import unittest
@@ -312,15 +313,25 @@ class TestGateFixes(unittest.TestCase):
         self.assertLess(parsed["weighted_score"], 9.5)
 
     def test_jpeg_header_has_resolution(self) -> None:
+        import tempfile
+
         import pmem_art as pa
-        # Case02 interim style-ref master is 720×580 (4:3 whitelist); old 3:4 cold-start lives as counter-example.
-        info = pa.inspect_png(ROOT / "assets/character/pastelgirl/pmem_02_pastel_sketch_girl.jpg")
-        self.assertEqual(info["resolution"], "720x580")
-        self.assertEqual(info["mode"], "RGB")
-        counter = pa.inspect_png(
-            ROOT / "assets/character/pastelgirl/pmem_02_pastel_sketch_girl_aspect3x4.jpg"
-        )
-        self.assertEqual(counter["resolution"], "864x1152")
+        from PIL import Image
+
+        # Repo may slim away Case02 master JPEGs; probe header parsing with local fixtures.
+        td = Path(tempfile.mkdtemp(prefix="pmem_jpeg_hdr_"))
+        try:
+            master = td / "master_720x580.jpg"
+            counter = td / "aspect_3x4_864x1152.jpg"
+            Image.new("RGB", (720, 580), color=(200, 100, 80)).save(master, format="JPEG", quality=90)
+            Image.new("RGB", (864, 1152), color=(80, 120, 200)).save(counter, format="JPEG", quality=90)
+            info = pa.inspect_png(master)
+            self.assertEqual(info["resolution"], "720x580")
+            self.assertEqual(info["mode"], "RGB")
+            info2 = pa.inspect_png(counter)
+            self.assertEqual(info2["resolution"], "864x1152")
+        finally:
+            shutil.rmtree(td, ignore_errors=True)
 
     def test_high_directive_does_not_import_foreign_props(self) -> None:
         prof = get_converge_scale_profile("high", goal="峡谷天井绿龙", ref_image="canyon")

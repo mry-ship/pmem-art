@@ -26,7 +26,7 @@ synonyms:
 modules:
   infra.Cli:
     description: pmem-art 总入口、Hook、MCP serve、生命周期、分类与反馈命令
-    paths: [pmem_art.py, lifecycle.py, classify.py, feedback.py, build_atlas.py]
+    paths: [pmem_art.py, lifecycle.py, classify.py, feedback.py, build_atlas.py, atlas_index.py, atlas_reveal.py]
     aliases: [CLI, 入口, pmem_art]
     entities: [Hook, MCP, Atlas, Feedback]
   feature.SkillsKit:
@@ -56,6 +56,11 @@ candidates:
 third_party: []
 ignored:
   - _tmp_*.py
+  - _fix_*.py
+  - _healthcheck_*.py
+  - _validate_*.txt
+  - _chk_*.txt
+  - _doctor_*.txt
   - generated_*/
   - generated/
   - assets/
