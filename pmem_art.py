@@ -28,7 +28,7 @@ from lifecycle import ensure_stdio_survives_locale
 
 ensure_stdio_survives_locale()
 
-VERSION = "0.14.0-art"
+VERSION = "0.15.0-art"
 MEMORY_DIR = ".memory-art"
 
 KIND_META = {

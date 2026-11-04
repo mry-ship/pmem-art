@@ -64,9 +64,10 @@ def _is_pmem_command(command: str) -> bool:
     text = " ".join(str(command or "").replace("\\", "/").split())
     if not text:
         return False
-    if text == "pmem" or text.startswith("pmem "):
+    # pmem / pmemw 都是研发记忆入口，用户包禁止带入
+    if text in {"pmem", "pmemw"} or text.startswith("pmem ") or text.startswith("pmemw "):
         return True
-    if "pmem hook" in text or text.startswith("pmem hook"):
+    if "pmem hook" in text or "pmemw hook" in text:
         return True
     if ".memory/bin/pmem-hook" in text:
         return True
@@ -201,7 +202,11 @@ def assert_pack_clean(zip_path: Path) -> None:
                     servers = (data.get("mcpServers") or {}) if isinstance(data, dict) else {}
                     if "pmem" in servers:
                         raise SystemExit(f"pack leaked pmem MCP in {name}")
-                if "pmem hook" in raw or ".memory/bin/pmem-hook" in raw:
+                if (
+                    "pmem hook" in raw
+                    or "pmemw hook" in raw
+                    or ".memory/bin/pmem-hook" in raw
+                ):
                     raise SystemExit(f"pack leaked pmem hook in {name}")
             if name.endswith(("AGENTS.md", "CLAUDE.md")):
                 raw = zf.read(orig).decode("utf-8")
