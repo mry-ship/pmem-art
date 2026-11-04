@@ -10,7 +10,7 @@
       ]
     },
     "pmem": {
-      "command": "pmemw",
+      "command": "pmem",
       "args": [
         "serve",
         "--root",
