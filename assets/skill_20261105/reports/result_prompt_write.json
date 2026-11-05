@@ -1,0 +1,23 @@
+{
+  "route_id": "prompt.write",
+  "skill": "pmem-prompt",
+  "status": "ok",
+  "execute_ok": true,
+  "generated_images": 0,
+  "banner": "【按 提示词生成器：按交付类型扩写可选方案 走了】",
+  "delivery_type": "普通图",
+  "target_draw_route_id": "draw.ordinary",
+  "subject": "蘑菇芝士果盘",
+  "ref_image": "assets/skill_20261103/04_prop.png",
+  "outputs": [
+    "assets/skill_20261105/prompt/ordinary_briefs.md"
+  ],
+  "briefs": [
+    {"id": "A", "name": "棚拍居中", "focus": "棚拍识别度"},
+    {"id": "B", "name": "俯视果盘", "focus": "高俯视陈列"},
+    {"id": "C", "name": "暖窗侧光", "focus": "光色戏剧"},
+    {"id": "D", "name": "黏土特写", "focus": "媒介笔触特写"}
+  ],
+  "awaiting_selection": true,
+  "summary": "蘑菇芝士果盘普通图扩出 A–D 四套可选 brief（机位/光色/笔触分叉），写入 ordinary_briefs.md；本支不生图。"
+}

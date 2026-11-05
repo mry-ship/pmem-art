@@ -17,6 +17,8 @@ summary: Fix5：过程板闸门认第N轮只审胜出；交付词入库；pre-ge
 verify: pyw -3 -u -m unittest tests.test_showcase_gate tests.test_route_bank_delivery
   -q
 applies: converge finish / 过程板展陈 / GenerateImage Hook / merge 交付词路由检索
+verified: '2026-11-05'
+verified_at: '2026-11-05T20:36:04.523+08:00'
 ---
 需求来源：Round5 审计——真实过程板文案「第 N 轮 · score」被 round_count 跳过「第」解析成 None，且闸门扫全部 figcaption，导致历史低分卡拖垮整页。
 

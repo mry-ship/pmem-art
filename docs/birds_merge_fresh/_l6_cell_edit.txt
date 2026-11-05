@@ -1,0 +1,3 @@
+﻿Single white rounded-square merge inventory card on transparent or plain white. Soft-plastic Merge Mansion hen, cute big eyes, plump laying hen with large red comb and wattles, cream-brown layered plumage. 
+
+CRITICAL: the hen must be SMALLER in the frame — leave generous empty white margin on ALL sides (top comb tip, bottom feet, left/right feathers). Target about 70-75% of the card filled, similar padding to a typical merge icon. Do not let any part touch the rounded border. Centered. No text. No second bird. No nested frames.

@@ -9,7 +9,8 @@ project:
 vcs: auto
 gate:
   mode: warn
-  auto_validate_on_save: true
+  # 保留字段：当前无落盘 hook 读取；质检请手动/CI 跑 validate 或 doctor（见 ARCHITECTURE Step 3）
+  auto_validate_on_save: false
   stale_check:
     hash: true
     dimensions: true

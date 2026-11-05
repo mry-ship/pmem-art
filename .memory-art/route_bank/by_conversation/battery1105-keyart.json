@@ -1,0 +1,14 @@
+{
+  "saved_at": 1793889179.1700292,
+  "text": "妖精花园 Key Art 主视觉；有风格样张；只借画风；禁止复刻花屋香蕉船鼹鼠礼盒分区；走原画",
+  "banner": "【按 原画 走了】",
+  "route_ids": [
+    "draw.key"
+  ],
+  "mode": "skill",
+  "execute_ok": true,
+  "artist_say": "【按 原画 走了】\n按原画/主视觉来做。",
+  "plan_conflict": false,
+  "confidence": "high",
+  "conversation_id": "battery1105-keyart"
+}

@@ -1,0 +1,26 @@
+# 蘑菇芝士果盘合成梯 · shop_ladder L1–L8（overview_sheet 2×4）
+# 商业对标：Travel Town / Merge Mansion 同店食物货柜形变链
+# 过程类型：同族形变货柜（原料→半成品台面→成品盛宴）
+version: mushroom-cheese-platter-20261105-v1
+pipeline: art-merge-two-phase
+delivery: overview_sheet
+
+tracks:
+  mushroom_cheese_platter:
+    module: prop.FairyGarden.MushroomPlatter
+    chain_mode: shop_ladder
+    levels: 8
+    grid_rows: 2
+    grid_cols: 4
+    surface: Travel Town/Merge Mansion级休闲merge货柜品质；软塑胶厚实圆润，棚柔光短接触影，饱和友好不油亮；2×4白圆角卡深炭灰底；每格一件居中无等级字；家族基因=红菇盖乳白圆点+奶油茎+暖黄芝士/蓝果/橙樱/绿叶；道具无脸；禁金铠海报风、禁跨店焊城堡
+    commercial_ref: "Travel Town/Merge Mansion food shop_ladder: raw ingredient → working surface → topped platter → feast reward"
+    process_type: "shop_ladder_same_family_food_platter_evolution"
+    rows:
+      - { level: 1, name: 小红菇, silhouette: 单枚矮红盖乳白点短奶油茎, scale_delta: 基档, scale_pct: 0.58, evolve_to: TinySpottedMushroom, merge_why: "—", parts_add: "—" }
+      - { level: 2, name: 双菇芽, silhouette: 一大一小并蒂红菇同簇仍一货件, scale_delta: "+小", scale_pct: 0.61, evolve_to: TwinMushroomBud, merge_why: 两枚小红菇并蒂成一大一小可读双菇簇, parts_add: "—" }
+      - { level: 3, name: 宽盖菇台, silhouette: 单座更宽扁红盖乳白点可承物台面, scale_delta: "+小", scale_pct: 0.64, evolve_to: FlatCapTable, merge_why: 两簇双菇芽合成单座更宽扁可承物的菇台, parts_add: "—" }
+      - { level: 4, name: 芝士菇台, silhouette: 宽盖菇台上一方带孔淡黄芝士块, scale_delta: "+中", scale_pct: 0.67, evolve_to: CheeseOnMushroom, merge_why: 两座宽盖菇台合成台上出现一方带孔芝士的芝士菇台, parts_add: "—" }
+      - { level: 5, name: 蓝果菇盘, silhouette: 芝士菇台再加一枚蓝梨形果与短绿叶, scale_delta: "+中", scale_pct: 0.70, evolve_to: BlueFruitPlate, merge_why: 两座芝士菇台合成再加蓝果与短叶的果点菇盘, parts_add: "—" }
+      - { level: 6, name: 樱叶果盘, silhouette: 菇盘上芝士+蓝果+两三橙樱与阔叶, scale_delta: "+中", scale_pct: 0.73, evolve_to: CherryLeafPlatter, merge_why: 两盘蓝果菇盘合成再添橙樱与阔叶的樱叶果盘, parts_add: "—" }
+      - { level: 7, name: 丰盛果盘, silhouette: 更大菇盖双芝士楔蓝果簇橙樱叶丛, scale_delta: "+大", scale_pct: 0.76, evolve_to: AbundantPlatter, merge_why: 两盘樱叶果盘合成更大盖面双芝士与果叶更密的丰盛果盘, parts_add: "—" }
+      - { level: 8, name: 盛宴菇盘, silhouette: 最宽红菇宴台双芝士蓝果簇橙樱绿叶盛满留边, scale_delta: "+大", scale_pct: 0.80, evolve_to: FeastMushroomPlatter, merge_why: 两盘丰盛果盘合成最宽红菇宴台食材盛满仍留卡边的盛宴菇盘, parts_add: "—" }

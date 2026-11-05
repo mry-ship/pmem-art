@@ -1,0 +1,36 @@
+{
+  "route_id": "style.lock",
+  "skill": "pmem-style-lock",
+  "status": "ok",
+  "execute_ok": true,
+  "generated_images": 0,
+  "banner": "【按 参考图/样张一键提炼风格圣经与色板锁定 走了】",
+  "module": "style.miniature_garden",
+  "ref_image": "assets/skill_20261103/01_style.png",
+  "outputs": [
+    "assets/skill_20261105/style_lock/style_card.md"
+  ],
+  "palette": {
+    "primary": ["#7CB342", "#9575CD", "#4FC3F7"],
+    "secondary": ["#8D6E63", "#F5F5F5"],
+    "accent": ["#F06292", "#FFD54F"]
+  },
+  "lighting": "左上柔漫日光；短青绿接触影；哑光到缎面",
+  "redlines": [
+    "写实脏暗",
+    "赛博霓虹",
+    "油腻镜面高光",
+    "硬金属机械",
+    "真人比例",
+    "扁平2D厚描边",
+    "城市水泥",
+    "血腥恐怖",
+    "过曝闪光"
+  ],
+  "feedback": {
+    "art_decision": ".memory-art/entries/style.miniature_garden/CHAT20261105221134260DECISION.md",
+    "style_redline": ".memory-art/entries/style.miniature_garden/CHAT20261105221225647REDLINE.md",
+    "taste_sync_warning": "WinError 32 on unrelated REDLINE lock; entries written"
+  },
+  "summary": "从 01_style.png 锁定微型花园软立体色板/光影/禁用词，写入 style_card.md 与 module feedback；本支不生图。"
+}

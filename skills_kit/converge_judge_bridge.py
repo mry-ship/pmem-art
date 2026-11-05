@@ -203,6 +203,9 @@ def score_for_converge(
                         "grade": remote.get("grade"),
                         "model": remote.get("model"),
                         "provider": remote.get("provider"),
+                        "score_evidence": remote.get("score_evidence") or {},
+                        "evidence_missing_dims": remote.get("evidence_missing_dims") or [],
+                        "review": remote.get("review") or {},
                     }
                     return _normalize_vlm_result(parsed, item, "independent_vlm")
         except Exception as exc:  # noqa: BLE001

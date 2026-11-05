@@ -1,0 +1,3 @@
+﻿This is a finished 2x3 merge chicken overview. Keep L1-L5 pixel-identical if possible.
+
+ONLY L6 bottom-right: redraw that one hen smaller so it has the SAME comfortable white margin around it as L5 (bottom-middle). Comb tip, wattle, feet, and tail must all sit clearly inside the rounded white card with empty white padding — do not touch edges. Keep L6 still slightly plumper with a bigger red comb than L5. Cute eyes. No nested boxes, no black border artifacts, no second white rectangle inside the card.

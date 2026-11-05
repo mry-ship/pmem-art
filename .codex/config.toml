@@ -1,3 +1,18 @@
 [mcp_servers.pmem]
 command = "pmem"
 args = ["serve"]
+
+[mcp_servers.pmem.tools.search_memory]
+approval_mode = "approve"
+
+[mcp_servers.pmem.tools.confirm_memory]
+approval_mode = "approve"
+
+[mcp_servers.pmem.tools.record_memory]
+approval_mode = "approve"
+
+[mcp_servers.pmem.tools.list_modules]
+approval_mode = "approve"
+
+[mcp_servers.pmem.tools.memory_graph]
+approval_mode = "approve"

@@ -1,0 +1,28 @@
+{
+  "branch": "draw.multi",
+  "session": "battery1105-multi",
+  "route_id": "draw.multi",
+  "contract": "split",
+  "banner": "【按 多图分工 走了】",
+  "aspect_ratio": "16:9",
+  "module": "character.FairyPink",
+  "reference_roles": {
+    "structure": "assets/skill_suite_20261103/03_structure.png",
+    "identity": "assets/skill_suite_20261103/02_character.png"
+  },
+  "output_dir": "assets/skill_suite_20261105/draw_multi",
+  "final_image": "assets/skill_suite_20261105/draw_multi/final.png",
+  "rounds_used": 1,
+  "max_rounds": 1,
+  "threshold": 9.5,
+  "winner_round": 1,
+  "winner_score": 8.56,
+  "passed": false,
+  "pass_line_label": "未过线（≥9.5）",
+  "dims": "构图8.3/光影9.0/透视8.6/质感9.0/风格7.8/无瑕疵8.7",
+  "strengths": "16:9横构图；前景蘑菇芝士果盘与紫花灯、左池香蕉黄帆、右鼹鼠礼盒、紫花屋顶小屋齐在；粉裙金发双辫仙子捧果篮走石径，蓝翅可读；粘土三渲二正午柔亮",
+  "defects": "对照身份02：仙子瞳色偏青绿/蓝而非绿瞳，珍珠项链中央蓝宝石与粉裙三白扣几乎不可辨，鞋偏白非粉；对照结构03：机位偏低近于平视斜切而非高俯三分之四，黄梯树屋与蜗牛壳大雏菊缺失，小提琴男仙被推到左前景抢层次",
+  "board": ".memory-art/converge/boards/battery1105-multi/index.html",
+  "report": ".memory-art/converge/battery1105-multi_report.md",
+  "notes": "split 合同强制 max_rounds=1（生1→judge1→finish）；仓库已迁 skill_suite_*（原 skill_battery_*）；finish 首次因文件锁失败后 --no-apply 结算成功"
+}

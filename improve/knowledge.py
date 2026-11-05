@@ -690,6 +690,7 @@ def cmd_learn(
     seed_modules: bool = False,
     ids: list[str] | None = None,
     silent: bool = False,
+    stash_only: bool = False,
 ) -> int:
     if action in ("suggest", "propose", ""):
         props = propose_breadth_expansions(root, data, limit=limit)
@@ -722,6 +723,10 @@ def cmd_learn(
             except Exception:
                 props = []
         if not props:
+            if stash_only:
+                if not silent:
+                    print("   · learn：队列无待收提案，跳过（不现场生成；先用 learn suggest 或 finish 入队）")
+                return 0
             props = propose_breadth_expansions(root, data, limit=limit)
         if ids:
             idset = set(ids)
@@ -729,14 +734,31 @@ def cmd_learn(
         elif not accept_all:
             print("❌ 请指定 --all 或 --ids id1,id2")
             return 1
+        if not props:
+            if not silent:
+                print("   · learn：无匹配提案可写入")
+            return 0
+        accepted_ids = {str(p.get("id") or "") for p in props if p.get("id")}
         result = accept_breadth_proposals(root, data, props, seed_modules=seed_modules)
-        print("✅ 已写入知识卡:")
-        for w in result["written"]:
-            print(f"   · {w}")
-        if result["module_stubs"]:
-            print("🌱 模块种子:")
-            for s in result["module_stubs"]:
-                print(f"   · {s}")
+        if stash.is_file() and accepted_ids:
+            try:
+                stash_doc = json.loads(stash.read_text(encoding="utf-8"))
+                remaining = [p for p in (stash_doc.get("proposals") or []) if str(p.get("id") or "") not in accepted_ids]
+                if remaining:
+                    stash_doc["proposals"] = remaining
+                    stash.write_text(json.dumps(stash_doc, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+                else:
+                    stash.unlink()
+            except Exception:
+                pass
+        if not silent:
+            print("✅ 已写入知识卡:")
+            for w in result["written"]:
+                print(f"   · {w}")
+            if result["module_stubs"]:
+                print("🌱 模块种子:")
+                for s in result["module_stubs"]:
+                    print(f"   · {s}")
         return 0
 
     if action == "list":

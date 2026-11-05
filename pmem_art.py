@@ -1049,11 +1049,15 @@ def load_project(root: Path, *, embed_images: bool = False) -> dict[str, Any]:
             asset_Set.add(str(p.relative_to(root)).replace("\\", "/"))
     for e in entries:
         for a in e.get("assets") or []:
-            if isinstance(a, dict) and a.get("path"):
-                # 记忆条目常带 Windows 反斜杠；必须归一成 POSIX，否则画廊同一张出两张卡
-                norm = _norm_project_rel(root, str(a.get("path") or ""))
-                if norm:
-                    asset_Set.add(norm)
+            if not isinstance(a, dict) or not a.get("path"):
+                continue
+            # Detached / counter-example anchors are text history — do not re-index missing files as live QA targets.
+            if str(a.get("role") or "") in ("detached", "rejected", "draft_violation"):
+                continue
+            # 记忆条目常带 Windows 反斜杠；必须归一成 POSIX，否则画廊同一张出两张卡
+            norm = _norm_project_rel(root, str(a.get("path") or ""))
+            if norm:
+                asset_Set.add(norm)
 
     assets_info: dict[str, dict[str, Any]] = {}
     for rel_path in sorted(asset_Set):
@@ -1140,21 +1144,30 @@ def load_project(root: Path, *, embed_images: bool = False) -> dict[str, Any]:
         if issues and not info["qa_intentional_reject"]:
             qa_issues.append({"path": rel_path, "module": mod_id, "issues": issues})
 
-    # Check staleness on entries (compare recorded sha256_16 & QA status of anchored assets)
+    # Check staleness on entries (hash drift / live QA). Missing files are asset gaps, NOT content-stale.
     stale_entries: list[dict[str, Any]] = []
+    asset_gap_entries: list[dict[str, Any]] = []
     for e in entries:
         reasons: list[str] = []
+        gaps: list[str] = []
         for a in e.get("assets") or []:
             if not isinstance(a, dict):
                 continue
             ap = a.get("path", "")
             role = str(a.get("role") or "")
             expected_sha = a.get("sha256_16")
-            actual = assets_info.get(ap, {})
-            if role in ("rejected", "draft_violation"):
-                # Counter-example drafts: hash drift is expected when regenerating bad samples;
-                # pipeline violations are the point of the sample — never mark entry STALE for them.
-                a["actual"] = {k: v for k, v in actual.items() if k != "data_uri"}
+            actual = assets_info.get(ap, {}) if ap else {}
+            if role in ("rejected", "draft_violation", "detached"):
+                # Counter-examples / intentionally detached anchors never mark content STALE.
+                a["actual"] = {k: v for k, v in actual.items() if k != "data_uri"} if actual else {}
+                continue
+            missing = bool(ap) and (
+                (actual and actual.get("exists") is False)
+                or (not actual and not (root / str(ap)).is_file())
+            )
+            if missing:
+                gaps.append(str(ap))
+                a["actual"] = {"exists": False, "path": ap}
                 continue
             # YAML may parse pure-hex sha as int; coerce before compare/slice.
             exp_s = str(expected_sha) if expected_sha is not None else ""
@@ -1163,13 +1176,20 @@ def load_project(root: Path, *, embed_images: bool = False) -> dict[str, Any]:
                 reasons.append(
                     f"关联图片 {ap} 哈希已变更（记录 {exp_s[:8]}… → 当前 {act_s[:8]}…）"
                 )
-            if actual.get("qa_issues") and not actual.get("qa_intentional_reject"):
-                reasons.append(f"关联图片 {ap} 存在管线违规：{'；'.join(actual['qa_issues'])}")
+            live_issues = [
+                iss for iss in (actual.get("qa_issues") or [])
+                if "文件缺失" not in str(iss)
+            ]
+            if live_issues and not actual.get("qa_intentional_reject"):
+                reasons.append(f"关联图片 {ap} 存在管线违规：{'；'.join(live_issues)}")
             a["actual"] = {k: v for k, v in actual.items() if k != "data_uri"}
         e["stale"] = len(reasons) > 0
         e["stale_reasons"] = reasons
+        e["asset_gaps"] = gaps
         if e["stale"]:
             stale_entries.append({"id": e["id"], "module": e["module"], "summary": e.get("summary"), "reasons": reasons})
+        if gaps:
+            asset_gap_entries.append({"id": e["id"], "module": e["module"], "paths": gaps})
 
     # Enrich each asset with category, human description, prompt, role, and linked entries
     from datetime import datetime, timezone, timedelta
@@ -1402,6 +1422,7 @@ def load_project(root: Path, *, embed_images: bool = False) -> dict[str, Any]:
         "index_images": index_images,
         "qa_issues": qa_issues,
         "stale_entries": stale_entries,
+        "asset_gap_entries": asset_gap_entries,
         "profile": profile_data,
         "converge_sessions": converge_sessions,
     }
@@ -1422,13 +1443,33 @@ def cmd_list(data: dict[str, Any]) -> int:
     print(f"🎨 {data['config'].get('project', {}).get('name', 'pmem-art')} · 美术模块与资产总览\n")
     print(f"{'模块 ID':<28} {'模块名称':<22} {'记忆数':<8} {'图片资产':<8} {'红线数':<8} {'状态'}")
     print("-" * 92)
+    hidden_empty = 0
+    shown = 0
     for mod_id, mod_cfg in data["modules"].items():
         mod_entries = [e for e in data["entries"] if e.get("module") == mod_id]
         mod_assets = [a for a in data["assets"].values() if a.get("module") == mod_id]
         redlines = [e for e in mod_entries if e.get("kind") == "style_redline"]
-        has_issue = any(not a["qa_passed"] for a in mod_assets) or any(e["stale"] for e in mod_entries)
-        status_str = "⚠️ 需复核/修复" if has_issue else "✅ 健康"
-        print(f"{mod_id:<28} {mod_cfg.get('title', '')[:20]:<22} {len(mod_entries):<8} {len(mod_assets):<8} {len(redlines):<8} {status_str}")
+        status = str(mod_cfg.get("status") or "active").lower()
+        if status in ("scaffold", "candidate") and not mod_entries and not mod_assets:
+            hidden_empty += 1
+            continue
+        if status == "active" and not mod_entries and not mod_assets:
+            hidden_empty += 1
+            continue
+        has_issue = any(not a.get("qa_passed", True) for a in mod_assets) or any(e.get("stale") for e in mod_entries)
+        gap_n = sum(len(e.get("asset_gaps") or []) for e in mod_entries)
+        if has_issue:
+            status_str = "⚠️ 需复核/修复"
+        elif gap_n:
+            status_str = f"📎 文字有效·缺图{gap_n}"
+        else:
+            status_str = "✅ 健康"
+        print(
+            f"{mod_id:<28} {str(mod_cfg.get('title', '') or '')[:20]:<22} "
+            f"{len(mod_entries):<8} {len(mod_assets):<8} {len(redlines):<8} {status_str}"
+        )
+        shown += 1
+    print(f"\n显示 {shown} 个有内容/有资产模块；已隐藏空壳 {hidden_empty} 个（scaffold/空 active）。")
     return 0
 
 def cmd_search(data: dict[str, Any], module: str, path: str, query: str) -> int:
@@ -1528,15 +1569,30 @@ def cmd_validate(data: dict[str, Any]) -> int:
         for iss in info["qa_issues"]:
             prefix = "反例样张（不计入门禁）" if info.get("qa_intentional_reject") else "违规项"
             print(f"         ↳ ⚠️ {prefix}: {iss}")
-    print("\n📌 记忆条目过期核对（Stale Check）：")
+    print("\n📌 记忆条目过期核对（Stale Check · 仅哈希/规格漂移，缺图不算文字过期）：")
     if not data["stale_entries"]:
-        print("  ✅ 所有美术记忆条目的关联图片哈希与规格均匹配，无过期条目。")
+        print("  ✅ 无内容过期条目（哈希与存活规格匹配）。")
     else:
         for se in data["stale_entries"]:
             print(f"  ⚠️ STALE  [{se['id']}] ({se['module']}) {se['summary']}")
             for r in se["reasons"]:
                 print(f"         ↳ 原因: {r}")
-    return 0 if not data["qa_issues"] else 1
+    gaps = data.get("asset_gap_entries") or []
+    print("\n📎 缺图锚点（文字仍有效；`hygiene` 默认含 detach 步骤）：")
+    if not gaps:
+        print("  ✅ 无缺图锚点。")
+    else:
+        print(f"  · {len(gaps)} 条记忆挂着已删图片（不计入 STALE）")
+        for g in gaps[:12]:
+            print(f"    - [{g.get('id')}] ({g.get('module')}) {', '.join((g.get('paths') or [])[:2])}")
+        if len(gaps) > 12:
+            print(f"    … 另有 {len(gaps) - 12} 条")
+    # Missing-file QA alone should not fail validate exit after STALE semantic split.
+    hard_qa = [
+        q for q in (data.get("qa_issues") or [])
+        if not all("文件缺失" in str(x) for x in (q.get("issues") or []))
+    ]
+    return 0 if (not hard_qa and not data["stale_entries"]) else 1
 
 def parse_hook_payload(payload: dict[str, Any]) -> tuple[str, dict[str, Any], str]:
     """Normalize Cursor / Claude hook stdin: (tool_name, tool_input, user_message)."""
@@ -1893,6 +1949,16 @@ def main() -> int:
         "--source", default="cli",
         help="写入 last_doctor.source（cli / hook:pre-gen …）",
     )
+    p_hyg = sub.add_parser(
+        "hygiene",
+        help="记忆卫生：detach 缺图、清噪声 candidates、补长期 specs、taste 去重、归档旧报告（默认不收 learn）",
+    )
+    p_hyg.add_argument("--dry-run", action="store_true", help="只统计不改盘")
+    p_hyg.add_argument(
+        "--accept-learn",
+        action="store_true",
+        help="额外执行 learn accept --all（仅消费 .memory-art/_profile/learn_proposals.json 队列，不现场生成）",
+    )
     p_atlas = sub.add_parser("atlas", help="生成/更新可视化美术记忆图谱工作台 HTML (art-atlas.html)")
     p_atlas.add_argument("--out", default="art-atlas.html")
     p_atlas.add_argument(
@@ -2183,11 +2249,14 @@ def main() -> int:
                 flag = "" if route["routable"] else "  unroutable"
                 print(f"  {route['id']:<16} {route['skill']:<18} {route['heading']}{flag}")
             print()
+            from art_cli import rewrite_cli_invocations
+
             for sp in SKILL_SPECS:
                 extras = " ".join(f"/{n}" for n in command_names(sp) if n != sp["name"])
                 print(f"  /{sp['name']:<18} {extras}")
                 print(f"     {sp['title']}")
-                print(f"     ↳ {sp['description']}\n")
+                # list 与本机 CLI 一致；源码 description 仍可写 python3，避免 Windows 误导
+                print(f"     ↳ {rewrite_cli_invocations(sp['description'])}\n")
             return 0
         install_skills_and_agent_configs(root, quiet=False)
         return 0
@@ -2364,6 +2433,23 @@ def main() -> int:
         except Exception as exc:
             print(f"⚠️ [pmem-art] doctor state stamp failed: {exc}", file=sys.stderr)
         return rc1 or rc2
+    if args.command == "hygiene":
+        from improve.memory_hygiene import print_hygiene_report, run_hygiene
+
+        apply = not bool(getattr(args, "dry_run", False))
+        accept_learn = bool(getattr(args, "accept_learn", False))
+        report = run_hygiene(root, data, apply=apply, accept_learn=accept_learn and apply)
+        print_hygiene_report(report)
+        # Refresh doctor stamp after mutations.
+        if apply:
+            try:
+                from lifecycle import run_doctor_quiet
+
+                fresh = load_project(root, embed_images=False)
+                run_doctor_quiet(root, fresh, source="hygiene", offer_tip=False)
+            except Exception as exc:  # noqa: BLE001
+                print(f"⚠️ [pmem-art] hygiene doctor stamp failed: {exc}", file=sys.stderr)
+        return 0
     if args.command == "atlas":
         from build_atlas import generate_atlas_html
         out_file = root / args.out

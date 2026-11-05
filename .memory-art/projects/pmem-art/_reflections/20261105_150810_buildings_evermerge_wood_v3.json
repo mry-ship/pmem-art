@@ -1,0 +1,52 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-11-05 15:08:10 UTC+8",
+  "session_id": "buildings_evermerge_wood_v3",
+  "goal": "/pmem-merge-ladder 对标EverMerge木屋支线整表2x4：原木堆→木料捆→木屋框架→草顶木棚→木屋→精致木屋→大宅→木庄园；红陶瓦从L5起；禁城堡角楼军旗；忽略旧棚到城堡结论",
+  "module": "prop.BuildingsMerge.Cute",
+  "converge_mode": "quality",
+  "guided_mode": "text_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 1,
+  "winner_round": 1,
+  "winner_score": 9.51,
+  "winner_image": "assets/prop/buildingsmerge/overview_sheet_final.png",
+  "winner_passed": true,
+  "outcome": "✅ **经过 1 轮迭代达标定稿**（generate 与 judge 分步收敛，第 1 轮达到 `9.51 / 10.0` 分 ≥ `9.50` 分档位目标线即刻停机）",
+  "what_fixed": [],
+  "what_still_weak": "残余可接受点：L3与L4占地还可更同框一些以强化封皮读感",
+  "strengths": "对标EverMerge木支线：原料→框架→草棚→瓦屋→庄园；L1无瓦；末档非城堡",
+  "taste_deltas": {
+    "from_strengths": [
+      "对标EverMerge木支线：原料→框架→草棚→瓦屋→庄园；L1无瓦；末档非城堡"
+    ],
+    "from_defects": []
+  },
+  "warm_start_confidence": 0.95,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 9.51,
+      "passed": true
+    }
+  ],
+  "lessons": [
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：L3与L4占地还可更同框一些以强化封皮读感",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.51"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：对标EverMerge木支线：原料→框架→草棚→瓦屋→庄园；L1无瓦；末档非城堡",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.51"
+    }
+  ]
+}

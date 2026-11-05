@@ -1,0 +1,13 @@
+{
+  "out": "assets/skill_20261105/draw_ordinary/_route_result.json",
+  "args": [
+    "route",
+    "--text",
+    "黑底棚拍休闲手游道具卡：毒蝇伞形蘑菇芝士果盘；蘑菇盖作盘面，上置瑞士芝士块与三角楔、泪滴蓝莓、橙红樱桃与绿叶；纯黑实色底；顶级休闲手游道具卡棚拍完成度；题材与参考不变，medium 锁机位；垫图4，走普通图",
+    "--canonical",
+    "要画一张图；有参考；题材不变；走普通图",
+    "--conversation",
+    "battery1105-ordinary",
+    "--json"
+  ]
+}

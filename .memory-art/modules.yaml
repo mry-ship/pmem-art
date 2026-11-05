@@ -3523,3 +3523,37 @@ modules:
       aspect_ratio: "16:9"
       alpha_required: false
       max_size_kb: 2048
+  prop.BuildingsMerge.Cute:
+    title: prop·BuildingsMerge (Cyber)
+    category: prop
+    status: active
+    description: "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/p · 自动归类至 prop (prop.BuildingsMerge.Cute) · 置信度 0.92"
+    paths:
+      - "assets/prop/buildingsmerge/**"
+    aliases:
+      - BuildingsMerge
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      alpha_required: false
+      max_size_kb: 2048
+    parent: brand.WorldStyle
+    inherits: brand.WorldStyle
+  prop.BirdsMerge.Cute:
+    title: prop·BirdsMerge (Cyber)
+    category: prop
+    status: active
+    description: "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/p · 自动归类至 prop (prop.BirdsMerge.Cute) · 置信度 0.92"
+    paths:
+      - "assets/prop/birdsmerge/**"
+    aliases:
+      - BirdsMerge
+    entities: []
+    palette: []
+    specs:
+      resolution: 1774x887
+      alpha_required: false
+      max_size_kb: 2048
+    parent: brand.WorldStyle
+    inherits: brand.WorldStyle

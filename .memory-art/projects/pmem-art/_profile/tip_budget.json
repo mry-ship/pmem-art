@@ -22,13 +22,6 @@
     "converge_finish:instrument-5x3-cursor": "2026-11-03 18:04:20 UTC+8",
     "doctor:20261103": "2026-11-03 18:04:20 UTC+8",
     "converge_finish:instrument-rebuild-5x3": "2026-11-03 19:46:42 UTC+8",
-    "converge_finish:battery-rerun-keyart": "2026-11-03 20:09:35 UTC+8",
-    "converge_finish:battery-rerun-style-clone": "2026-11-03 20:15:55 UTC+8",
-    "converge_finish:battery-rerun-ordinary": "2026-11-03 20:22:06 UTC+8",
-    "converge_finish:battery-rerun-multi": "2026-11-03 20:24:01 UTC+8",
-    "converge_finish:battery-rerun-variant": "2026-11-03 20:24:31 UTC+8",
-    "converge_finish:battery-ui-concept": "2026-11-03 20:39:29 UTC+8",
-    "converge_finish:battery-icon-c": "2026-11-03 20:49:45 UTC+8",
     "converge_finish:casual1105_ordinary": "2026-11-05 01:33:24 UTC+8",
     "converge_finish:casual1105_clone": "2026-11-05 01:36:15 UTC+8",
     "converge_finish:casual1105_merge": "2026-11-05 01:37:53 UTC+8",
@@ -39,7 +32,14 @@
     "converge_finish:casual1105_ui": "2026-11-05 01:49:53 UTC+8",
     "converge_finish:casual1105_lens_a": "2026-11-05 01:49:57 UTC+8",
     "converge_finish:casual1105_multi_closed": "2026-11-05 01:50:01 UTC+8",
-    "converge_finish:casual1105_multi_open": "2026-11-05 01:50:44 UTC+8"
+    "converge_finish:casual1105_multi_open": "2026-11-05 01:50:44 UTC+8",
+    "converge_finish:buildings_cute_merge": "2026-11-05 14:27:56 UTC+8",
+    "converge_finish:buildings_cute_overview_v2": "2026-11-05 14:53:35 UTC+8",
+    "converge_finish:buildings_evermerge_wood_v3": "2026-11-05 15:08:11 UTC+8",
+    "converge_finish:birds_mm_chicken_v1": "2026-11-05 15:55:27 UTC+8",
+    "converge_finish:birds_prestige_v3": "2026-11-05 16:10:49 UTC+8",
+    "converge_finish:birds_mm_commercial_v3": "2026-11-05 16:18:24 UTC+8",
+    "doctor:20261105": "2026-11-05 17:08:52 UTC+8"
   },
-  "updated_at": "2026-11-05 01:50:44 UTC+8"
+  "updated_at": "2026-11-05 17:08:52 UTC+8"
 }

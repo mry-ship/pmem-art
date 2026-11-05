@@ -1,0 +1,18 @@
+{
+  "route_id": "icon.a",
+  "session": "battery1105-icon-a",
+  "conversation": "battery1105-icon-a",
+  "mode": "A",
+  "delivery": "Light master only",
+  "rounds": 1,
+  "score": 9.35,
+  "passed_threshold_9_5": false,
+  "dims": "识别度9.4/安全区9.5/光影质感9.3/多尺寸合规9.4/色板纯粹9.4/无瑕疵9.2",
+  "defects": "蘑菇桌语义偏弱，更像单菇符号而非桌台；高光略平",
+  "outputs": {
+    "dir": "assets/skill_20261105/icon_a",
+    "master": "assets/skill_20261105/icon_a/app_icon_light_1024.png",
+    "battery_mirror": "assets/skill_battery_20261105/icon_a/app_icon_light_1024.png"
+  },
+  "note": "出图一轮交件；Dark/Tinted 未点名未派生"
+}

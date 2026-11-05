@@ -455,7 +455,8 @@ def default_config(project_name: str = "Untitled Art Project", mode: str = "youn
         "vcs": "auto",
         "gate": {
             "mode": "warn" if mode == "young" else "block",
-            "auto_validate_on_save": True,
+            # Reserved: no post-save validate hook reads this yet (see ARCHITECTURE Step 3).
+            "auto_validate_on_save": False,
             "stale_check": {"hash": True, "dimensions": True, "alpha": True, "png_metadata": True},
             "skip_markers": ["跳过美术记忆", "skip-art-memory"],
         },
@@ -1435,8 +1436,24 @@ def cmd_sync(root: Path, data: dict[str, Any], auto_accept_depth: int | None = N
             c["status"] = "active"
             c["auto_accepted"] = True
         else:
+            try:
+                from improve.memory_hygiene import is_noise_candidate
+                if is_noise_candidate(str(c.get("module_id") or ""), str(c.get("folder") or "")):
+                    continue
+            except Exception:
+                pass
             candidates = merge_candidate(candidates, c)
             new_proposals.append(c)
+
+    # Drop historical junk candidates so doctor backlog stays honest.
+    try:
+        from improve.memory_hygiene import is_noise_candidate
+        candidates = [
+            c for c in candidates
+            if not is_noise_candidate(str(c.get("module_id") or ""), str(c.get("folder") or ""))
+        ]
+    except Exception:
+        pass
 
     # orphan files: under roots but not matching any active/candidate/scaffold path
     all_mods = modules
@@ -1984,28 +2001,43 @@ def collect_doctor_summary(root: Path, data: dict[str, Any]) -> dict[str, Any]:
         for e in (data.get("entries") or [])
         if isinstance(e, dict) and e.get("module")
     }
+    # Only long-lived modules (enough entries) need specs; one-shot batteries can stay text-only.
+    entry_counts: dict[str, int] = defaultdict(int)
+    for e in (data.get("entries") or []):
+        if isinstance(e, dict) and e.get("module"):
+            entry_counts[str(e.get("module"))] += 1
     missing_specs = sorted(
         m for m in entry_mods
-        if m and m not in specs_mods and not str(m).startswith("vlm.")
+        if m and m not in specs_mods and not str(m).startswith("vlm.") and entry_counts.get(m, 0) >= 3
     )
 
     stale_entries = list(data.get("stale_entries") or [])
+    asset_gaps = list(data.get("asset_gap_entries") or [])
     qa_issues = list(data.get("qa_issues") or [])
+    hard_qa = [
+        q for q in qa_issues
+        if not all("文件缺失" in str(x) for x in (q.get("issues") or []))
+    ]
 
-    # 巡检信号：发现问题即记（严格）；是否打扰用户另由 tip_budget 节流
+    # 巡检信号：内容 STALE / 硬 QA / 冲突才算真问题；缺图锚点与覆盖率降为轻提示
     signals: list[str] = []
+    soft_signals: list[str] = []
     if conflicts:
         signals.append(f"多风格冲突 {len(conflicts)}")
-    if orphans:
-        signals.append(f"孤儿 {len(orphans)}")
-    if cov < 80.0 and total > 0:
-        signals.append(f"覆盖率 {cov:.0f}%")
     if stale_entries:
         signals.append(f"STALE {len(stale_entries)}")
-    if qa_issues:
-        signals.append(f"QA {len(qa_issues)}")
+    if hard_qa:
+        signals.append(f"QA {len(hard_qa)}")
     if missing_specs:
         signals.append(f"缺specs {len(missing_specs)}")
+    if orphans:
+        soft_signals.append(f"孤儿 {len(orphans)}")
+    if cov < 80.0 and total > 0:
+        soft_signals.append(f"覆盖率 {cov:.0f}%")
+    if asset_gaps:
+        soft_signals.append(f"缺图锚点 {len(asset_gaps)}")
+    if len(candidates) > 20:
+        soft_signals.append(f"candidates {len(candidates)}")
 
     needs_attention = bool(signals)
     tip_line = None
@@ -2030,8 +2062,11 @@ def collect_doctor_summary(root: Path, data: dict[str, Any]) -> dict[str, Any]:
         "missing_specs": missing_specs,
         "conflicts": conflicts,
         "stale_count": len(stale_entries),
-        "qa_issue_count": len(qa_issues),
+        "asset_gap_count": len(asset_gaps),
+        "qa_issue_count": len(hard_qa),
+        "qa_missing_file_count": max(0, len(qa_issues) - len(hard_qa)),
         "signals": signals,
+        "soft_signals": soft_signals,
         "needs_attention": needs_attention,
         "tip_line": tip_line,
     }
@@ -2076,6 +2111,18 @@ def print_doctor_summary(summary: dict[str, Any]) -> None:
         print("\n   多风格冲突提示:")
         for c in conflicts:
             print(f"      ⚠️ {c}")
+    hard = list(summary.get("signals") or [])
+    soft = list(summary.get("soft_signals") or [])
+    print(
+        f"\n   硬信号(需关注): {', '.join(hard) if hard else '无'}  |  "
+        f"软信号(账本卫生): {', '.join(soft) if soft else '无'}"
+    )
+    print(
+        f"   STALE(内容)={summary.get('stale_count', 0)}  "
+        f"缺图锚点={summary.get('asset_gap_count', 0)}  "
+        f"硬QA={summary.get('qa_issue_count', 0)}  "
+        f"缺图QA={summary.get('qa_missing_file_count', 0)}"
+    )
     print("\n   Mode C 持续循环: sync → candidates/accept → search/validate → record → atlas")
 
 
@@ -2126,14 +2173,17 @@ def run_doctor_quiet(
                 "tip_pending": bool(needs and offer_tip),
                 "tip_line": summary.get("tip_line") or "",
                 "signals": list(summary.get("signals") or []),
+                "soft_signals": list(summary.get("soft_signals") or []),
                 "coverage_pct": summary.get("coverage_pct"),
                 "orphans": summary.get("orphans"),
                 "orphan_samples": list(summary.get("orphan_samples") or [])[:8],
                 "stale_count": summary.get("stale_count"),
+                "asset_gap_count": summary.get("asset_gap_count"),
                 "qa_issue_count": summary.get("qa_issue_count"),
                 "conflicts": list(summary.get("conflicts") or []),
                 "missing_specs": list(summary.get("missing_specs") or [])[:20],
                 "missing_specs_count": len(summary.get("missing_specs") or []),
+                "candidates_pending": summary.get("candidates_pending"),
                 "inbox_filed": list(summary.get("inbox_filed") or []),
                 "inbox_discarded": list(summary.get("inbox_discarded") or []),
                 "inspect_only": True,

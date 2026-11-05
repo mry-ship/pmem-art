@@ -1,0 +1,16 @@
+﻿draw.ordinary chars 9670 -> pack_draw_ordinary.md
+draw.key chars 10203 -> pack_draw_key.md
+draw.clone chars 10637 -> pack_draw_clone.md
+draw.variant chars 10165 -> pack_draw_variant.md
+draw.multi chars 10576 -> pack_draw_multi.md
+draw.lens chars 1190 -> pack_draw_lens.md
+ui.kit chars 7467 -> pack_ui_kit.md
+icon.a chars 2231 -> pack_icon_a.md
+icon.b chars 2638 -> pack_icon_b.md
+icon.c chars 1361 -> pack_icon_c.md
+merge.ladder chars 10828 -> pack_merge_ladder.md
+style.lock chars 844 -> pack_style_lock.md
+prompt.write chars 4935 -> pack_prompt_write.md
+critique.review chars 1170 -> pack_critique_review.md
+atlas.file chars 600 -> pack_atlas_file.md
+coach.report chars 612 -> pack_coach_report.md

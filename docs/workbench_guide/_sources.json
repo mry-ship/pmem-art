@@ -1,177 +1,177 @@
-[
-  {
-    "dest": "merge-ladder/original.jpg",
-    "from": "assets/prop/instrumentmerge/ref_boat_5x3_user.jpg",
-    "bytes": 101866
-  },
-  {
-    "dest": "merge-ladder/process_r1.jpg",
-    "from": "assets/prop/instrumentmerge/overview_5x3_cursor_refpad.jpg",
-    "bytes": 136209
-  },
-  {
-    "dest": "merge-ladder/process_r4.jpg",
-    "from": "assets/prop/instrumentmerge/overview_5x3_cursor_r4.jpg",
-    "bytes": 136209
-  },
-  {
-    "dest": "merge-ladder/final.jpg",
-    "from": "assets/prop/instrumentmerge/overview_5x3_rebuild_final.png",
-    "bytes": 139597
-  },
-  {
-    "dest": "draw-ordinary/original.jpg",
-    "from": "assets/skill_battery_20261103/04_prop.png",
-    "bytes": 19213
-  },
-  {
-    "dest": "draw-ordinary/process_r1.jpg",
-    "from": "assets/skill_battery_20261103/draw_ordinary_A/r1.png",
-    "bytes": 108808
-  },
-  {
-    "dest": "draw-ordinary/final.jpg",
-    "from": "assets/skill_battery_20261103/draw_ordinary_A/r4.png",
-    "bytes": 103053
-  },
-  {
-    "dest": "draw-keyart/original.jpg",
-    "from": "assets/skill_battery_20261103/01_style.png",
-    "bytes": 18731
-  },
-  {
-    "dest": "draw-keyart/process_r1.jpg",
-    "from": "assets/skill_battery_20261103/draw_keyart/r1.png",
-    "bytes": 216986
-  },
-  {
-    "dest": "draw-keyart/final.jpg",
-    "from": "assets/skill_battery_20261103/draw_keyart/r4.png",
-    "bytes": 216415
-  },
-  {
-    "dest": "draw-clone/original.jpg",
-    "from": "assets/skill_battery_20261103/01_style.png",
-    "bytes": 18731
-  },
-  {
-    "dest": "draw-clone/process_r1.jpg",
-    "from": "assets/skill_battery_20261103/rerun_style_lock/r1_916.png",
-    "bytes": 146231
-  },
-  {
-    "dest": "draw-clone/final.jpg",
-    "from": "assets/skill_battery_20261103/rerun_style_lock/r4_916.png",
-    "bytes": 114063
-  },
-  {
-    "dest": "draw-variant/original.jpg",
-    "from": "assets/skill_battery_20261103/02_character.png",
-    "bytes": 30671
-  },
-  {
-    "dest": "draw-variant/process_r1.jpg",
-    "from": "assets/skill_battery_20261103/draw_variant/r1.png",
-    "bytes": 152224
-  },
-  {
-    "dest": "draw-variant/final.jpg",
-    "from": "assets/skill_battery_20261103/draw_variant/r4.png",
-    "bytes": 167224
-  },
-  {
-    "dest": "draw-multi/original.jpg",
-    "from": "assets/skill_battery_20261103/03_structure.png",
-    "bytes": 87847
-  },
-  {
-    "dest": "draw-multi/process_r1.jpg",
-    "from": "assets/skill_battery_20261103/draw_multi/r1.png",
-    "bytes": 205903
-  },
-  {
-    "dest": "draw-multi/process_r2.jpg",
-    "from": "assets/skill_battery_20261103/draw_multi/r2.png",
-    "bytes": 223665
-  },
-  {
-    "dest": "draw-multi/final.jpg",
-    "from": "assets/skill_battery_20261103/draw_multi/r4.png",
-    "bytes": 197460
-  },
-  {
-    "dest": "icon-a/original.jpg",
-    "from": "assets/skill_battery_20261103/02_character.png",
-    "bytes": 30671
-  },
-  {
-    "dest": "icon-a/process_r1.jpg",
-    "from": "assets/skill_battery_20261103/rerun_icon_a/r1.png",
-    "bytes": 128216
-  },
-  {
-    "dest": "icon-a/final.jpg",
-    "from": "assets/skill_battery_20261103/rerun_icon_a/r2.png",
-    "bytes": 158499
-  },
-  {
-    "dest": "icon-c/original.jpg",
-    "from": "assets/skill_battery_20261103/04_prop.png",
-    "bytes": 19213
-  },
-  {
-    "dest": "icon-c/process_r1.png",
-    "from": "assets/skill_battery_20261103/rerun_icon_c/popcorn_r1.png",
-    "bytes": 413002
-  },
-  {
-    "dest": "icon-c/final.png",
-    "from": "assets/skill_battery_20261103/rerun_icon_c/popcorn_r2.png",
-    "bytes": 413002
-  },
-  {
-    "dest": "ui/original.jpg",
-    "from": "assets/skill_battery_20261103/05_ui.png",
-    "bytes": 93494
-  },
-  {
-    "dest": "ui/process_r1.jpg",
-    "from": "assets/skill_battery_20261103/rerun_ui/concept_r1.png",
-    "bytes": 230754
-  },
-  {
-    "dest": "ui/final.jpg",
-    "from": "assets/skill_battery_20261103/rerun_ui/concept_r2.png",
-    "bytes": 240376
-  },
-  {
-    "dest": "style-lock/original.jpg",
-    "from": "assets/skill_battery_20261103/01_style.png",
-    "bytes": 18731
-  },
-  {
-    "dest": "style-lock/process_r1.jpg",
-    "from": "assets/skill_battery_20261103/style_lock_proof/r1.png",
-    "bytes": 148309
-  },
-  {
-    "dest": "style-lock/final.jpg",
-    "from": "assets/skill_battery_20261103/style_lock_proof/r4.png",
-    "bytes": 162919
-  },
-  {
-    "dest": "agent/original.jpg",
-    "from": "assets/prop/instrumentmerge/ref_boat_5x3_user.jpg",
-    "bytes": 101866
-  },
-  {
-    "dest": "prompt/original.jpg",
-    "from": "assets/skill_battery_20261103/04_prop.png",
-    "bytes": 19213
-  },
-  {
-    "dest": "critique/original.jpg",
-    "from": "assets/skill_battery_20261103/draw_ordinary_A/r4.png",
-    "bytes": 103053
-  }
-]
+[
+  {
+    "dest": "merge-ladder/original.jpg",
+    "from": "assets/prop/instrumentmerge/ref_boat_5x3_user.jpg",
+    "bytes": 101866
+  },
+  {
+    "dest": "merge-ladder/process_r1.jpg",
+    "from": "assets/prop/instrumentmerge/overview_5x3_cursor_refpad.jpg",
+    "bytes": 136209
+  },
+  {
+    "dest": "merge-ladder/process_r4.jpg",
+    "from": "assets/prop/instrumentmerge/overview_5x3_cursor_r4.jpg",
+    "bytes": 136209
+  },
+  {
+    "dest": "merge-ladder/final.jpg",
+    "from": "assets/prop/instrumentmerge/overview_5x3_rebuild_final.png",
+    "bytes": 139597
+  },
+  {
+    "dest": "draw-ordinary/original.jpg",
+    "from": "assets/skill_20261103/04_prop.png",
+    "bytes": 19213
+  },
+  {
+    "dest": "draw-ordinary/process_r1.jpg",
+    "from": "assets/skill_20261103/draw_ordinary_A/r1.png",
+    "bytes": 108808
+  },
+  {
+    "dest": "draw-ordinary/final.jpg",
+    "from": "assets/skill_20261103/draw_ordinary_A/r4.png",
+    "bytes": 103053
+  },
+  {
+    "dest": "draw-keyart/original.jpg",
+    "from": "assets/skill_20261103/01_style.png",
+    "bytes": 18731
+  },
+  {
+    "dest": "draw-keyart/process_r1.jpg",
+    "from": "assets/skill_20261103/draw_keyart/r1.png",
+    "bytes": 216986
+  },
+  {
+    "dest": "draw-keyart/final.jpg",
+    "from": "assets/skill_20261103/draw_keyart/r4.png",
+    "bytes": 216415
+  },
+  {
+    "dest": "draw-clone/original.jpg",
+    "from": "assets/skill_20261103/01_style.png",
+    "bytes": 18731
+  },
+  {
+    "dest": "draw-clone/process_r1.jpg",
+    "from": "assets/skill_20261103/rerun_style_lock/r1_916.png",
+    "bytes": 146231
+  },
+  {
+    "dest": "draw-clone/final.jpg",
+    "from": "assets/skill_20261103/rerun_style_lock/r4_916.png",
+    "bytes": 114063
+  },
+  {
+    "dest": "draw-variant/original.jpg",
+    "from": "assets/skill_20261103/02_character.png",
+    "bytes": 30671
+  },
+  {
+    "dest": "draw-variant/process_r1.jpg",
+    "from": "assets/skill_20261103/draw_variant/r1.png",
+    "bytes": 152224
+  },
+  {
+    "dest": "draw-variant/final.jpg",
+    "from": "assets/skill_20261103/draw_variant/r4.png",
+    "bytes": 167224
+  },
+  {
+    "dest": "draw-multi/original.jpg",
+    "from": "assets/skill_20261103/03_structure.png",
+    "bytes": 87847
+  },
+  {
+    "dest": "draw-multi/process_r1.jpg",
+    "from": "assets/skill_20261103/draw_multi/r1.png",
+    "bytes": 205903
+  },
+  {
+    "dest": "draw-multi/process_r2.jpg",
+    "from": "assets/skill_20261103/draw_multi/r2.png",
+    "bytes": 223665
+  },
+  {
+    "dest": "draw-multi/final.jpg",
+    "from": "assets/skill_20261103/draw_multi/r4.png",
+    "bytes": 197460
+  },
+  {
+    "dest": "icon-a/original.jpg",
+    "from": "assets/skill_20261103/02_character.png",
+    "bytes": 30671
+  },
+  {
+    "dest": "icon-a/process_r1.jpg",
+    "from": "assets/skill_20261103/rerun_icon_a/r1.png",
+    "bytes": 128216
+  },
+  {
+    "dest": "icon-a/final.jpg",
+    "from": "assets/skill_20261103/rerun_icon_a/r2.png",
+    "bytes": 158499
+  },
+  {
+    "dest": "icon-c/original.jpg",
+    "from": "assets/skill_20261103/04_prop.png",
+    "bytes": 19213
+  },
+  {
+    "dest": "icon-c/process_r1.png",
+    "from": "assets/skill_20261103/rerun_icon_c/popcorn_r1.png",
+    "bytes": 413002
+  },
+  {
+    "dest": "icon-c/final.png",
+    "from": "assets/skill_20261103/rerun_icon_c/popcorn_r2.png",
+    "bytes": 413002
+  },
+  {
+    "dest": "ui/original.jpg",
+    "from": "assets/skill_20261103/05_ui.png",
+    "bytes": 93494
+  },
+  {
+    "dest": "ui/process_r1.jpg",
+    "from": "assets/skill_20261103/rerun_ui/concept_r1.png",
+    "bytes": 230754
+  },
+  {
+    "dest": "ui/final.jpg",
+    "from": "assets/skill_20261103/rerun_ui/concept_r2.png",
+    "bytes": 240376
+  },
+  {
+    "dest": "style-lock/original.jpg",
+    "from": "assets/skill_20261103/01_style.png",
+    "bytes": 18731
+  },
+  {
+    "dest": "style-lock/process_r1.jpg",
+    "from": "assets/skill_20261103/style_lock_proof/r1.png",
+    "bytes": 148309
+  },
+  {
+    "dest": "style-lock/final.jpg",
+    "from": "assets/skill_20261103/style_lock_proof/r4.png",
+    "bytes": 162919
+  },
+  {
+    "dest": "agent/original.jpg",
+    "from": "assets/prop/instrumentmerge/ref_boat_5x3_user.jpg",
+    "bytes": 101866
+  },
+  {
+    "dest": "prompt/original.jpg",
+    "from": "assets/skill_20261103/04_prop.png",
+    "bytes": 19213
+  },
+  {
+    "dest": "critique/original.jpg",
+    "from": "assets/skill_20261103/draw_ordinary_A/r4.png",
+    "bytes": 103053
+  }
+]

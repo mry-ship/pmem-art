@@ -1,0 +1,12 @@
+﻿pyw : usage: pmem-art [-h] [--root ROOT] [--version]
+所在位置 行:10 字符: 5
++ '@; pyw -3 -u pmem_art.py reasonableness review --id battery1105-icon ...
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (usage: pmem-art...OT] [--version]:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+                {init,bootstrap,sync,candidates,accept,place,classify,ingest,classify-watch,list,search,validate,doctor
+,hygiene,atlas,reveal,feedback,note,ref-read,merge,skills,route,showcase-gate,reasonableness,check-scale-gates,vlm-judg
+e,converge,improve,progress,taste,coach,learn,hook}
+                ...
+pmem-art: error: unrecognized arguments: --conversation battery1105-icon-a

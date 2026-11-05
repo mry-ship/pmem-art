@@ -1,0 +1,39 @@
+﻿{
+  "route_id": "draw.key",
+  "session": "battery1105-keyart",
+  "module": "scene.FairyGarden.KeyArt",
+  "scale": "recompose",
+  "passed": true,
+  "best_round": 3,
+  "best_score": 9.5,
+  "threshold": 9.5,
+  "rounds": [
+    {
+      "round": 1,
+      "score": 8.56,
+      "dims": "构图9.2/光影8.7/透视9.0/质感8.1/风格7.9/无瑕疵8.6",
+      "image": "assets/skill_battery_20261105/draw_keyart/r1.png",
+      "passed": false,
+      "note": "session later overwritten by concurrent suite branch to 8.77"
+    },
+    {
+      "round": 2,
+      "score": 9.32,
+      "dims": "构图9.4/光影9.3/透视9.3/质感9.4/风格9.4/无瑕疵9.2",
+      "image": "assets/skill_battery_20261105/draw_keyart/r2.png",
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 9.5,
+      "dims": "构图9.6/光影9.5/透视9.5/质感9.5/风格9.6/无瑕疵9.4",
+      "image": "assets/skill_battery_20261105/draw_keyart/r3.png",
+      "passed": true
+    }
+  ],
+  "final_image": "assets/skill_battery_20261105/draw_keyart/final.png",
+  "style_ref": "assets/skill_battery_20261103/01_style.png",
+  "layout_not_style_echo": true,
+  "composition": "extreme worm's-eye leaf-tunnel; petal bridge + seed lanterns; floating teacups; dew waterfall",
+  "notes": "只借软塑胶画风；全新仰视机位；禁止花屋/香蕉船/鼹鼠礼盒分区；R3达9.50停"
+}

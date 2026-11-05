@@ -1,0 +1,13 @@
+﻿Merge Mansion shipped inventory prop quality. Casual merge overview sheet: exactly 2x4 grid, eight white rounded-square cards on flat dark charcoal, even gaps. Soft-plastic thick cute chickens, studio softbox upper-left, short soft contact shadow, polished game-ready (NOT generic AI illustration, NOT gold fantasy armor/crown/cape). One inventory item centered per card. Light cute faces OK; slight head-tilt / pose variation between tiers; same camera family. No text, no level numbers, no hen house, no coop, no building.
+
+Commercial Bake-off Chickens ladder left-to-right, top then bottom:
+L1 Hatchling: tiny yellow fluff in cracked eggshell.
+L2 Baby Chick: single standing round yellow chick, slight head tilt.
+L3 Chicks: ONE item = two tiny yellow chicks side-by-side cluster.
+L4 Pullet: single lean young chicken, small red comb bud, short tail.
+L5 Hen: single round adult hen, clear red comb+wattle, cream-brown layered feathers, calm pose.
+L6 Laying Hen: single fuller hen, bigger red comb, richer hanging plumage (completion upgrade, still ONE bird).
+L7 Chickens: ONE item = about three adult hens clustered together.
+L8 A Brood of Hens: denser larger cluster of more adult hens, still no architecture.
+
+Readable silhouette steps; gentle size ramp; family warm yellow to amber-brown to red comb.

@@ -1,0 +1,22 @@
+{
+  "route_id": "draw.lens",
+  "skill": "pmem-draw",
+  "contract": "镜头包",
+  "status": "ok",
+  "execute_ok": true,
+  "generated_images": 0,
+  "banner": "【按 镜头包 走了】",
+  "subject": "粉裙仙子",
+  "ref_image": "assets/skill_20261103/02_character.png",
+  "outputs": [
+    "assets/skill_20261105/draw_lens/shotpack.md"
+  ],
+  "shots": [
+    {"id": "A", "label": "远景全身", "camera": "低机位仰拍全景", "near_original": false},
+    {"id": "B", "label": "中景半身", "camera": "平视腰上半身", "near_original": true},
+    {"id": "C", "label": "近景脸翅", "camera": "平视略俯头肩", "near_original": false},
+    {"id": "D", "label": "特殊仰视", "camera": "低机位大仰角翅下透光", "near_original": false}
+  ],
+  "awaiting_selection": true,
+  "summary": "粉裙仙子写出远/中/近/特殊四套机位句供点选，B 近原图、A/C/D 换机位；点选前禁止生图。"
+}

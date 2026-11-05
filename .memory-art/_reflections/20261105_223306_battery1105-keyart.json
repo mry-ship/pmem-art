@@ -1,0 +1,56 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-11-05 22:33:06 UTC+8",
+  "session_id": "battery1105-keyart",
+  "goal": "妖精花园 Key Art 主视觉；有风格样张；只借画风；禁止复刻花屋香蕉船鼹鼠礼盒分区；走原画",
+  "module": "scene.FairyGarden.KeyArt",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 3,
+  "winner_round": 2,
+  "winner_score": 9.32,
+  "winner_image": "assets/skill_20261105/draw_keyart/r2.png",
+  "winner_passed": false,
+  "outcome": "🛑 **安全早停后结算**：已审 3 轮，最高 `9.32` < `9.50`，交付历史最高分（第 2 轮）",
+  "what_fixed": [
+    "整体改成软塑胶微搪胶体积与宽柔高光；把中景漂浮紫花篮明确改成漂浮茶杯花圃",
+    "加厚中段可走花瓣桥板并保持软塑胶宽柔高光；叶缘高光再收柔",
+    "恢复中心花瓣吊桥为清晰主记忆点，灯笼串挂在桥上，保持瘦前景与茶杯花圃"
+  ],
+  "what_still_weak": "仰视；无人；主光天顶金午加灯笼点光。中段仍偏花蔓灯串，可走的花瓣桥面厚度不够；个别叶缘高光略尖",
+  "strengths": "软塑胶微搪胶与宽柔高光已立住：叶缘SSS与灯笼暖体积可读；漂浮茶杯花圃轮廓清楚；仍保持虫眼仰视且无花屋/船/鼹鼠分区",
+  "taste_deltas": {
+    "from_strengths": [
+      "软塑胶微搪胶与宽柔高光已立住：叶缘SSS与灯笼暖体积可读；漂浮茶杯花圃轮廓清楚；仍保持虫眼仰视且无花屋/船/鼹鼠分区"
+    ],
+    "from_defects": [
+      "仰视全景，主体吊桥约占画面中部三分之一，主光为顶部逆光金午加灯笼暖点光。材质偏写实植被纤维与摄影级露珠，软塑胶休闲手游完成度不够；茶杯花圃记忆点弱成紫花篮",
+      "仰视；无人；主光天顶金午加灯笼点光。中段仍偏花蔓灯串，可走的花瓣桥面厚度不够；个别叶缘高光略尖",
+      "仰视全景，吊桥记忆点变弱约占不到四分之一，主光顶部逆光加灯笼。花瓣吊桥主体被灯笼绳串取代，主视觉英雄点不够"
+    ]
+  },
+  "warm_start_confidence": 0.45,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 8.77,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 9.32,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 9.14,
+      "passed": false
+    }
+  ]
+}

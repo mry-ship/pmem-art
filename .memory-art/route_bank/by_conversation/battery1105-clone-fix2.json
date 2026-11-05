@@ -1,0 +1,14 @@
+{
+  "saved_at": 1793888137.2978463,
+  "text": "克隆：锁妖精花园粘土童话画风，换新题材冬日农场雪地农夫抱小羊。禁止抄参考构图分区与物件。",
+  "banner": "【按 克隆 走了】",
+  "route_ids": [
+    "draw.clone"
+  ],
+  "mode": "skill",
+  "execute_ok": false,
+  "artist_say": "【按 克隆 走了】\n按克隆：锁参考画风，换成新题材。",
+  "plan_conflict": false,
+  "confidence": "low",
+  "conversation_id": "battery1105-clone-fix2"
+}

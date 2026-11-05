@@ -15,6 +15,20 @@ from typing import Any
 
 from ._time import _now_cst
 
+# 共用短段：各技能正文用占位符引用；改这里即可，避免 draw/ui/icon 副本漂移。
+# heading 前缀「## 记忆静默」勿改（pack_headings / slice_route_body 依赖）。
+_MEMORY_SILENT_DRAW = """## 记忆静默 / 履历可见（Agent 必读）
+- `converge finish` 后系统**自动**写反思、更新 `taste.json`、强化 recipe/红线、悄悄排队 1–2 条知识建议——**无需**再跑 `/pmem-coach`。
+- 对用户默认展示：**参考图分析 + 每轮六维与总分 + 可点开的过程板 + 总结**；记忆写入不要旁白。
+- 用户要安静出图时用 `--quiet` 或说「只要终稿」。想看进步、短板或知识卡时再用 `/pmem-coach`。
+"""
+
+_MEMORY_SILENT_KIT = """## 记忆静默 / 履历可见（Agent 必读）
+- `converge finish` 后系统自动写反思/口味/learn 队列——**无需**再跑 `/pmem-coach`。
+- 对用户默认展示：**每轮六维分 + 不足 + 改点 + 胜出图 + 全轮履历**；若有「小提示」原样转述（每会话最多 1 条）。**禁止**旁白记忆写入。
+- 只要终稿：`--quiet`。教练 / 广度：用户明确要求或进阶技能时再给。
+"""
+
 SKILL_SPECS: list[dict[str, Any]] = [
     {
         "name": "pmem-agent",
@@ -25,7 +39,7 @@ SKILL_SPECS: list[dict[str, Any]] = [
             "玩家另提要求就再审一遍，仍等确认后再执行。"
             "可默认的路径/版式/同范围不要当成多种情况。"
             "第二段前必须先跑 python3 pmem_art.py route（本地规则+近邻），禁止只靠读长 SKILL 盲猜。"
-            "定稳后由总控读注册表对上那一节，只把定稿、全部附图和那一节交给一个 agent 去执行。"
+            "定稳后由总控读注册表 pack_headings，用 slice_route_body 打包执行包（出图=闭环+合同），只把定稿、全部附图和该执行包交给一个 agent。"
             "总控自己不生图。回显按哪一节走了；默认兜底最前写【走默认路径】。结算格式仍是那一支自己的。"
         ),
         "body": r"""# `/pmem-agent` — 总控
@@ -33,6 +47,18 @@ SKILL_SPECS: list[dict[str, Any]] = [
 玩家没点名具体技能时走这一条。玩家已经点名界面、图标、合成梯、原画、克隆、变体、镜头包、提示词、锁风格、审图、归档或教练时，直接读那一支，不要再绕这里。
 
 总控自己不生图、不审图、不归档。一轮审核列完分析，才决定进不进第二段。路径、版式、命名这类可默认项写进分析，不要当成多种情况。
+
+## 章节导航
+
+本表只标章节。路由句、确认边界、步骤表和降级话术都在原节。
+
+| 现在要做 | 读 |
+| :--- | :--- |
+| 写标准路由句并跑 route | 「第零段」 |
+| 一轮审核 | 「第一段」 |
+| 对表、步骤表、交给执行 | 「第二段」 |
+| 两张参考要同框 | 「第二段」里的「双参考同框」 |
+| 写给玩家的结论 | 「交给玩家的结论」 |
 
 ## 第零段 · 标准路由句 + 强制本地路由（禁止盲猜）
 
@@ -78,7 +104,7 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 
 只审一轮。这一轮写明交付物是什么、每张图锁什么、每张图不锁什么，并查合理性、缺漏和理解错误：合不合理，漏了什么，有没有理解错。漏的补上。理解错的按原话改回来。合不合理是看这句话能不能和原话、附图同时成立。
 
-不要再开第二轮去复查。分析列给玩家看。不要把分析和执行并成一句口头分流：分析先写出来。**执行默认（两套写法同一合同）**：有 Task/子 agent 就开一个，只交命中的那一节（不是八份全文）；没有子 agent 就在本对话只读那一节执行。禁止另选技能或把整份 SKILL 塞给执行侧。**按 heading 裁节时必须跳过围栏代码块**（```…``` 内的 `#` 是 bash 注释，不是标题）；可用 `skills_kit.skill_registry.slice_markdown_section`。
+不要再开第二轮去复查。分析列给玩家看。不要把分析和执行并成一句口头分流：分析先写出来。**执行默认（两套写法同一合同）**：有 Task/子 agent 就开一个，只交注册表 `pack_headings` 拼成的执行包（不是八份全文、也不是单挂合同丢闭环）；没有子 agent 就在本对话只读该执行包。禁止另选技能或把整份 SKILL 塞给执行侧。裁节用 `skills_kit.skill_registry.slice_route_body(body, route)`（内部按 `pack_headings` 调 `slice_markdown_section`，并跳过围栏内伪标题）。**子 agent / 本对话执行失败时**：总控在本对话按同一执行包自行续跑或收束，禁止甩锅「已交给子 agent」后沉默；缺图/闸拦/冲突先向玩家说清并给可改说法。
 
 ### 默认 vs 硬不确定（防卡死）
 
@@ -107,19 +133,19 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 2. 整屏、HUD、九宫格、按钮状态族是界面。桌面 1024 是图标 A，一套线性 SVG 是图标 B，背包 64/128/256 是图标 C。A/B/C 同时命中就停下来，只问这一处。同一套东西一档比一档大，是合成梯。
 3. 「以后按这张画」是锁风格。同一句还要画一张时，锁完再克隆验证。「只审、不画」是审图；「别画成某种风格」「不画背景」不是审图。「归档 / 散图归位 / 收进图谱」是归档，画面里的「归位」不是归档。进步、短板，以及知识卡的查看或收下，是教练。要写提示词、先不出图，是提示词。
 4. 以上都不是，才是普通图。
-5. 定稿写明两张参考的像素必须同时出现在同一张成图里：**当前能力缺口**——注册表没有 `simultaneous_pixels: true` 的行。必须停，向玩家说清「暂不支持双参考像素同框」，可改成多图分工（各管一事）或分别出图；**禁止**改派硬做、禁止假装能同框。
+5. 定稿写明两张参考的像素必须同时出现在同一张成图里：**当前能力缺口**——注册表没有 `simultaneous_pixels: true` 的行。必须停，并贴标准降级话术（见下「双参考同框 · 怎么改说」）；**禁止**改派硬做、禁止假装能同框。
 
 局部修、设定表、分镜、姿势锁、同一场景换光、画幅延展、放大清稿、序列帧、平铺贴图、带字主视觉、字标、色板点选、情绪板，注册表里没有这些节。对不上就写「没有识别到可用技能」，停，不开始出图，也不改走普通图。不另编一节。透明底、表情表、拼板、远中近、镜头包点选后的机位、审完再改，落在已有的普通图、变体、多图分工、镜头包、审图那几行里，不新开技能。
 
-命中之后，在该文件里查找这一行的 `heading`。标题里的反引号可以忽略，文字对上即可。找不到，注册表过期：停，写明要跑 `python3 pmem_art.py skills --install`，不用过期的那一行出图。
+命中之后，在该文件里查找这一行的 `heading`，并读取同行的 `pack_headings`。标题里的反引号可以忽略，文字对上即可。找不到，注册表过期：停，写明要跑 `python3 pmem_art.py skills --install`，不用过期的那一行出图。
 
 对上之后先写步骤表，再执行。步骤表是告知，不再开一轮点选。简单任务一行，写完就执行。每一步只走一支。下一步拿上一步交出来的图。上一步没做完，下一步不开始。每一行写全这六样，缺一样这步不能开始：
 
-1. 用哪一支、哪一节
+1. 用哪一支、哪一节（及 `pack_headings`）
 2. 这一步交什么
 3. 垫哪张，不垫哪张
 4. 锁什么
-5. 怎样算做完（生图步：≥9.5 或满 4 轮；展陈 HTML 还要 `python3 pmem_art.py showcase-gate --html <路径>` 通过）
+5. 怎样算做完（生图步：≥9.5 到线，或达到该会话轮次硬顶并标明未过线；普通图最多 4，重路径出图一轮；展陈 HTML 还要 `python3 pmem_art.py showcase-gate --html <路径>` 通过）
 6. 交给下一步什么
 
 回显以 `route` 的 `banner` 为准（最前一行）。例如「【按 多图分工 走了】」「【走默认路径】按 普通图 走了」「【按 Mode A 走了】」。这句只说明选了哪一节，不问选哪条技能。
@@ -128,20 +154,29 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 
 多图分工的关、开写成前后两行。第一行身份图和结构图都垫上，身份图原来的机位作废，开会话用 `converge start --contract split`，不要写 `--scale medium`。下一行只垫已经通过的那张，只改这一态。
 
-按上面的执行默认开子 agent（或本对话只读一节）。交给执行侧的只有命中的那一节，不是八份全文。三样缺一不可：
+### 双参考同框 · 怎么改说（标准降级）
+
+玩家要「两张参考像素必须同时出现在同一张成图」时，原样回复这四行后停（可改称谓，勿改选项义）：
+
+1. 目前做不到双参考像素同框，不能硬画。
+2. 改成 **多图分工**：一张管身份、一张管结构/状态，分两次出再拼（说「走多图分工」）。
+3. 或 **分两次出**：先出锁定机位的那张，再垫它出第二态/第二物。
+4. 不要说「先按克隆凑一张」——那是假装同框。
+
+按上面的执行默认开子 agent（或本对话只读执行包）。交给执行侧的是 `slice_route_body` 结果，不是单 heading、也不是八份全文。三样缺一不可：
 
 1. 这一轮列出的分析，加上这一步的六样。
 2. 每一张图的路径。不能在交出去之前收成一张。
-3. 这一行的 `file` 和 `heading`。只读这一节。
+3. 这一行的 `file`、`heading` 与 `pack_headings`（或已裁好的执行包正文）。只读该执行包。
 
-它按这一节执行。总控不在候选里。父级把 `banner`（含【走默认路径】或【按 XX 走了】）原样写给玩家，放在结论最前。
+它按执行包执行。总控不在候选里。父级把 `banner`（含【走默认路径】或【按 XX 走了】）原样写给玩家，放在结论最前。
 
 - **普通单交付**：只执行一支。
 - **定稿写明是「整页展陈 / 对比页 / 多技能同范围重跑」**：按定稿清单**依次点名**调用对应技能（每次一支、做完再下一支），最后收成新 HTML；不要因为清单里有多项就打回重问范围。
 
 执行会生图的技能时，定稿和每一张图一起带上。会 `converge start` 的，`--reference-image-paths` 写上每一张图，第一张是宽高比要对上交付物的那张，其余按定稿顺序跟在后面，一张不删。`--ref-image` 可以是其中一张，不能把其余的图从列表里拿掉。`--ref-analysis` 按每张图的分工写。`--aspect-ratio` 按交付物写。身份图宽高比不同，也不从列表里删。生成轮若只能垫一张，垫宽高比对齐的那张；打分时仍把成图和每一张参考图按定稿并排看。
 
-定稿写明两张参考的像素必须同时出现在同一张成图里：注册表里没有 `simultaneous_pixels` 为 true 的行——**暂不支持**，停在这一步并告知玩家；不改派到多图分工冒充同框，不开始出图。
+定稿写明两张参考的像素必须同时出现在同一张成图里：注册表里没有 `simultaneous_pixels` 为 true 的行——**暂不支持**，停并贴「双参考同框 · 怎么改说」；不改派到多图分工冒充同框，不开始出图。
 
 选中的技能会 `converge start` 时，启动后先把这一轮分析用 `converge discuss` 记进同一会话；**首轮 generate 前必须再跑** `reasonableness review`（`--draft` + 更合理的 `--revised` + 该技能 checklist），过闸后才出图。过程板上会留下需求与合理性修订。多技能依次跑时，每一支用自己的会话；对比 HTML 在全部完成后写。
 
@@ -159,10 +194,10 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
     },
     {
         "name": "pmem-draw",
-        "title": "【强制4轮≥9.5收敛】生图总入口：先认类型再进对应合同",
+        "title": "【到线即停·最多4兜底】生图总入口：先 route 锁子合同再执行",
         "description": (
-            "玩家要生图时使用。玩家点名了原画、克隆、变体、镜头包、界面、图标或合成梯就听玩家的；"
-            "没点名则看这句话和附图自己认，认完直接做，不问选哪条技能。"
+            "玩家要生图时使用。点名 /pmem-draw 时必须先跑 route，以 CLI banner/route_ids 锁定子合同；"
+            "禁止先自判定案。点名了原画/克隆/变体/镜头包等只作点名锁定核对。"
             "普通图、原画、克隆、变体、多图分工、镜头包在本技能里做。"
             "两张及以上的图各管一件事，或同一物件的多个状态要锁同一个机位，走多图分工，不走四档。"
             "整套 UI、图标集、合成梯读对应技能再做，禁止用单张插画合同代替。"
@@ -170,25 +205,38 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
         "body": r"""
 # `/pmem-draw` — 生图总入口
 
-玩家点名了类型就听玩家的。没点名就看这句话和附图自己认，认完直接往下做，中间不再让人选技能。先回显一句，例如「按原画走了」。这句只供改口，不等确认。
+**路由以 CLI 为准；本技能只做绘图执行。** 点名 `/pmem-draw` 时：**禁止先自判定案**——先跑 `route`（零点五），以 `route_ids` / `banner` 锁定子合同；本技能只认子合同条款与点名锁定，不问选哪条技能、不再让人选技能。回显 banner 只供改口，不等确认。需求路由、标准路由句模板与确认边界见 `/pmem-agent`。整套 UI / 图标 / 合成梯不在本文件生图。
 
-## 零、先认类型（一次只走一支）
+## 子合同目录
 
-玩家这句话里点了类型，就按点名走，不要改判。
+`route` 锁定后，用下表跳到章节。停止条件、垫图和评分门槛都在原节。分流看下一节「认成」表。
+
+| route_id | 跳到 |
+| :--- | :--- |
+| `draw.ordinary` | 「零点五」「二、标准执行流程」「记忆静默」 |
+| `draw.key` | 「零点五」「二、标准执行流程」「合同 · 原画」「记忆静默」 |
+| `draw.clone` | 「零点五」「二、标准执行流程」「合同 · 克隆」「记忆静默」 |
+| `draw.variant` | 「零点五」「二、标准执行流程」「合同 · 变体」「记忆静默」 |
+| `draw.multi` | 「零点五」「二、标准执行流程」「合同 · 多图分工」「记忆静默」 |
+| `draw.lens` | 「零点五」「合同 · 镜头包」 |
+
+## 零、本技能边界与对照表（registry 抽出 when；分流以 CLI 为准，此处不重判）
+
+玩家点了类型当作**点名锁定**（不改判），仍须先跑零点五。总控交来的是 `pack_headings` 执行包（闭环+合同），不要只读合同丢第二节。下表「什么时候」供注册表与 tighten 解析；「接着做什么」只标落点，**不作第二次分流**。
 
 | 认成 | 什么时候 | 接着做什么 |
 | :--- | :--- | :--- |
-| **界面** | 玩家要整屏、HUD、弹窗套件、九宫格、按钮状态 | **不要在本文件生图**。先读 `.cursor/skills/pmem-ui/SKILL.md`，只执行那一份 |
-| **图标** | 桌面图标、一套线性 SVG、背包道具格 | **不要在本文件生图**。先读 `.cursor/skills/pmem-icon/SKILL.md`。A/B/C 不混用 |
-| **合成梯** | 同域升级梯（默认整表一组、L1–L8；有参考跟格数，点名数量跟点名；仅点名逐格才 per_cell）；糖果/甜品默认 shop_ladder；工具瓶罐可 same_object；未点名非糖果可轻门 | **不要在本文件生图**。先读 `.cursor/skills/pmem-merge-ladder/SKILL.md` |
-| **镜头包** | 玩家明确要几套机位 / 镜头 / 光给自己挑 | 只做文末「合同 · 镜头包」，然后停。点选前禁止生图 |
-| **克隆** | 有参考，并且要换一个新题材，锁的是画风 | 只做文末「合同 · 克隆」 |
-| **变体** | 已有角色要换画风，或做表情 / 动作差分。身份和机位已经在同一张图上 | 只做文末「合同 · 变体」 |
-| **多图分工** | 两张及以上的图各管一件事，或同一物件的多个状态要锁同一个机位，机位和身份不在同一张图上 | 只做文末「合同 · 多图分工」。不走四档 |
-| **原画** | 主视觉、Key Art、气氛图、概念海报 | 用下面的 4 轮闭环，提示词再守文末「合同 · 原画」 |
-| **普通图** | 以上都不是 | 用下面的 4 轮闭环 |
+| **界面** | 玩家要整屏、HUD、弹窗套件、九宫格、按钮状态 | **不要在本文件生图**。转交 `pmem-ui` |
+| **图标** | 桌面图标、一套线性 SVG、背包道具格 | **不要在本文件生图**。转交 `pmem-icon`（A/B/C 不混） |
+| **合成梯** | 同域升级梯（默认整表一组、L1–L8；有参考跟格数，点名数量跟点名；仅点名逐格才 per_cell）；糖果/甜品默认 shop_ladder；工具瓶罐可 same_object；未点名非糖果可轻门 | **不要在本文件生图**。转交 `pmem-merge-ladder` |
+| **镜头包** | 玩家明确要几套机位 / 镜头 / 光给自己挑 | 「合同 · 镜头包」；点选前禁止生图 |
+| **克隆** | 有参考，并且要换一个新题材，锁的是画风 | 零点五+第二节+「合同 · 克隆」 |
+| **变体** | 已有角色要换画风，或做表情 / 动作差分。身份和机位已经在同一张图上 | 零点五+第二节+「合同 · 变体」 |
+| **多图分工** | 两张及以上的图各管一件事，或同一物件的多个状态要锁同一个机位，机位和身份不在同一张图上 | 零点五+第二节+「合同 · 多图分工」（不走四档） |
+| **原画** | 主视觉、Key Art、气氛图、概念海报 | 零点五+第二节+「合同 · 原画」 |
+| **普通图** | 以上都不是 | 零点五+第二节 |
 
-认不准时按这个顺序收紧，不要猜成更重的合同：
+认不准时按这个顺序收紧，不要猜成更重的合同（收成标准句后仍以 `route` 为准）：
 
 1. 没人要「几套镜头」→ 不进镜头包。有参考图本身不是镜头包。
 2. 有参考，但没说新题材、新物件、新角色 → **普通图**，不进克隆。
@@ -197,26 +245,26 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 5. 两张图分工不同，或关/开这类状态和身份不在同一张图上 → **多图分工**。一张图改表情仍走变体。
 6. 回显的类型必须和实际执行的合同是同一个。玩家下一句改口，丢掉这一支重来；已经画完的图不能拿去冒充新合同的结果。
 
-普通图和原画走第一节到第三节。克隆和变体仍用第二节的打分轮次和 `converge` 命令，但不要按第一节继承构图。多图分工也用第二节的打分轮次，垫图和停机按文末合同，不走四档。镜头包、界面、图标、合成梯不要从第一节往下生。
+普通图和原画走第二节闭环。克隆和变体仍用第二节的打分轮次和 `converge` 命令（多图分工也用第二节），但不要按第一节继承构图；垫图和停机按合同。镜头包、界面、图标、合成梯不要从第二节往下生。缺风格时查 `docs/COMMERCIAL_BENCHMARK.md` 填一句同品类气质，禁止一律套软塑胶 merge。
 
 ## 零点五、开画前强制 route（与总控同闸；点名 `/pmem-draw` 也要跑）
 
-本技能**不能**绕开路由闸。认完类型、回显 banner 之后、任何 `converge start` 之前，必须：
+本技能**不能**绕开路由闸。标准路由句模板、冲突闸与 `execute_ok`/`ask` 语义见 `/pmem-agent` 第零段（此处不重写完整分流）。**任何自拟子合同或 `converge start` 之前**必须：
 
-1. 把玩家原话收成一行标准路由句（模板见 `/pmem-agent` 第零段）。
+1. 把玩家原话收成一行标准路由句（模板见 agent）。
 2. 跑：
 ```bash
 python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>"
 ```
-3. 以 `route` 的 `route_ids` / `banner` 为准写入闸门缓存；点名了类型则**点名锁定不改判**，但仍须跑 route。
-4. 若已认清类型且缺缓存：`converge start --route-id draw.ordinary|draw.clone|draw.key|…` 可**点名种闸**（与完整 route 等价放行；仍禁止 `--skip-route-gate` 偷跑）。
-5. **禁止**默认 `--skip-route-gate` / `PMEM_ART_SKIP_ROUTE_GATE` 偷跑。
-6. 若本技能自认类型与 `route_ids` 明显冲突：停下来问玩家，禁止硬开画。
-7. 判成界面 / 图标 / 合成梯：读对应技能前也先留下本次 route 缓存。
+3. 以 `route_ids` / `banner` 写入闸门缓存并锁定子合同；点名锁定不改判，仍须跑 route。
+4. 缺缓存时可 `converge start --route-id draw.ordinary|draw.clone|draw.key|…` **点名种闸**（与完整 route 等价放行）。
+5. **禁止** `--skip-route-gate` / `PMEM_ART_SKIP_ROUTE_GATE` 偷跑。
+6. 点名锁定/口头草稿与 `route_ids` 冲突：停问玩家，禁止硬开画。
+7. 判成界面 / 图标 / 合成梯：先留下本次 route 缓存，再读对应技能。
 
-认类型后**只读**本文件对应的 `## 合同 · …` 或公共 4 轮正文；不要整份合同全读串味。镜头包点选前不生图，仍须先 route。
+route 锁定后只读注册表该行的 **`pack_headings` 执行包**；不要整份全文串味。镜头包点选前不生图，仍须先 route。
 
-你现在运行在 **pmem-art 闭环自评收敛生图模式**。进入普通图或原画后，**绝不能只生一张图就草草交差**（除非第 1 轮真实严苛评分就达到 `>= 9.5`）。
+你现在运行在 **pmem-art 闭环自评收敛生图模式**。进入普通图或原画后：**第 1 轮真实评分 ≥9.5 就立刻 finish**，禁止为凑轮次再画；不到线才进入下一轮，最多 4 轮兜底后交最高分并标明「未过线」。
 
 ---
 
@@ -256,7 +304,7 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
    ```bash
    python3 pmem_art.py converge start --goal "<用户目标描述>" --module <目标模块> [--mode quality|fast] [--scale low|medium|high|recompose] [--recompose-dir "<新构图方向>"] [--ref-image <参考图>] [--ref-analysis "<参考图分析>"]
    ```
-   - 默认 `--mode quality` = 完整 4 轮、合格线 ≥9.5。
+   - 默认 `--mode quality` = 合格线 ≥9.5 **到线即停**；最多 4 轮兜底，不鼓励跑满。
    - `--scale`：`low` 贴原修瑕 · `medium` 小优化锁机位（默认）· `high` 大胆跃升+可叙事 · `recompose` 须配 `--recompose-dir`。
    - `--mode fast`：warm-start 置信度高时可走 **fast track**（仍须每张打分；最终采纳默认仍要 ≥9.5，除非用户明确说「草稿/fast/先看看」）。
    - `converge generate` **自动把 Warm-Start `prompt_block` 并入提示词**。Cursor **GenerateImage** 路径上，`preToolUse` Hook 再用 `updated_input` 灌一次。对话里回显「pmem-art 已自动并入记忆」。禁止再靠手贴。
@@ -276,11 +324,11 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
      --checklist "subject_action=ok;contact_scale=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok"
    ```
    清单模板：`python3 pmem_art.py reasonableness template --skill ordinary`。修订句必须写清：主体动作、接触/尺度、元素预算、硬锁、一眼失败条件。首轮 `generate` **强制使用 revised**（未再审的其他 `--prompt` 会被忽略）；可省略 `--prompt`。非首轮空 `--prompt` 回退 revised。后续审美迭代不得推翻硬锁与预算。调试才允许 `--skip-reasonableness-gate`。
-4. **可选 Best-of-N 首帧**：第 1 轮先构思 2~3 个方向（或并行想法），挑最佳进入后续 converge（在回复里写明选了哪条）。须在合理性闸之后。
+4. **Best-of-N 首帧（默认禁止）**：只有玩家明确说「先试几套方向 / 并行挑一张 / Best-of-N」才开；默认同方向进 R1，禁止自作主张先画 2~3 张再挑。若开了：须在合理性闸之后，并写明选了哪条。
 
 ---
 
-### Step 2：闭环自评收敛循环（最多 4 轮，合格线 `>= 9.5 / 10.0`）
+### Step 2：闭环自评收敛循环（到线即停；最多 4 轮兜底；合格线 `>= 9.5 / 10.0`）
 
 令轮次 $i = 1, 2, \dots, 4$：
 
@@ -374,7 +422,7 @@ python3 pmem_art.py converge finish
 3. 生成并**默认打印**标准 Markdown 评分履历，同时写出可点开的过程板 HTML（只要一行结论时加 `--quiet`，过程板路径仍给出）。
 4. 收展陈页前跑 `python3 pmem_art.py showcase-gate --html <index.html>`。有格 < 9.5 且未满 4 轮、也未标安全早停，这一页不能交。
 
-**开跑缺风格（商业气质默认，可默认不必再问）**：玩家未点名画风且无风格参考时，首轮 revised / goal 必须写清**同品类顶级商业完成度气质**一句。先认题材品类再选标尺（例：休闲三消道具棚拍 / 上架 Key Art / 软塑胶 merge 货柜 / 写实立绘棚拍 / 扁平产品插画——**按题材选，禁止一律套软塑胶 merge**）。只抽气质与密度，**禁止**垫竞品截图像素。有玩家风格句、风格样张、或模块已锁 style-lock 时跟已有锁，不另套泛默认。关系/布局已对标商业时，风格不得回落成无关泛卡通插画。克隆/变体有参考画风时本条不覆盖参考锁。
+**开跑缺风格（商业气质默认，可默认不必再问）**：玩家未点名画风且无风格参考时，首轮 revised / goal 必须写清**同品类顶级商业完成度气质**一句。先查 `docs/COMMERCIAL_BENCHMARK.md` 按品类填一句（例：休闲三消道具棚拍 / 上架 Key Art / 软塑胶 merge 货柜 / 写实立绘棚拍 / 扁平产品插画——**按题材选，禁止一律套软塑胶 merge**）。只抽气质与密度，**禁止**垫竞品截图像素。有玩家风格句、风格样张、或模块已锁 style-lock 时跟已有锁，不另套泛默认。关系/布局已对标商业时，风格不得回落成无关泛卡通插画。克隆/变体有参考画风时本条不覆盖参考锁。
 
 **终稿拿不准时（商业对标诊断）**：终稿自己拿不准、六维 borderline、或满 4 轮仍心里没底 → 先找同品类顶级商业范例并排对比，定性是理解问题、合理性问题，还是完成度/画风问题，再决定改 brief、改闸或继续收敛。**禁止**把商业范例当垫图抄构图 / 抄机位。结算总结里写清：对标了哪类、诊断属哪一类、下一步动哪一层。
 
@@ -401,10 +449,8 @@ improve/coach/learn 推销仅在用户主动要时再给。
 
 ### 闭环总览
 `装上就用 → 先认类型 → 画 → 每轮摊开评分与改点 → 偶发一行小提示 → 记忆后台变强；只要终稿用 --quiet；进阶偷看用 /pmem-coach`
-## 记忆静默 / 履历可见（Agent 必读）
-- `converge finish` 后系统**自动**写反思、更新 `taste.json`、强化 recipe/红线、悄悄排队 1–2 条知识建议——**无需**再跑 `/pmem-coach`。
-- 对用户默认展示：**参考图分析 + 每轮六维与总分 + 可点开的过程板 + 总结**；记忆写入不要旁白。
-- 用户要安静出图时用 `--quiet` 或说「只要终稿」。想看进步、短板或知识卡时再用 `/pmem-coach`。
+
+{{MEMORY_SILENT_DRAW}}
 
 ## 合同 · 原画
 
@@ -452,7 +498,7 @@ improve/coach/learn 推销仅在用户主动要时再给。
 
 每张图必须有一个分工：机位、身份、状态、画风、版式。定稿里没写分工的图不垫。一次交来两张图时，先看它们各管什么，不要并成一张参考再画。
 
-交付张数按定稿写死：一张拼板，或每个状态各一张。每个交付物各自最多 4 轮，画质合格线 ≥9.5。分工没对上不能停。定稿写了拼板，验收看两态的转角和侧壁宽度。定稿写死底：实色、场景，或透明。透明交 PNG。品红块和品红底 JPG 不能当交付。
+交付张数按定稿写死：一张拼板，或每个状态各一张。每个交付物 **出图一轮交件**（生1→judge1，CLI `max_rounds=1`）；finish 时必须标明「过线/未过线（≥9.5）」；分工问题写在评分里，禁止叠轮。定稿写了拼板，验收看两态的转角和侧壁宽度。定稿写死底：实色、场景，或透明。透明交 PNG。品红块和品红底 JPG 不能当交付。
 
 - **第一态**：身份图和结构图都垫上。身份图原来的机位作废，机位以结构图为准。开会话用 `converge start --contract split`，不要写 `--scale medium`。
 - **下一态**：只垫已经通过的上一张。锁机位和身份，只改这个状态。转角和侧壁宽度跟上一张一致。
@@ -475,11 +521,17 @@ improve/coach/learn 推销仅在用户主动要时再给。
         "title": "参考图/样张一键提炼风格圣经与色板锁定",
         "description": (
             "当用户输入 /pmem-style-lock 并附带样张/参考图时触发。"
-            "自动解构样张的主辅色板 HEX、光影法则、笔触特征与禁用词，一键锁定为项目或模块的风格基准（art_decision + recipe）。"
+            "自动解构样张的主辅色板 HEX、光影法则、笔触特征与禁用词，并写入 art_decision、recipe 与 style_redline。"
+            "未指定模块时按单角色模块或项目级 brand.WorldStyle 规则落库，不留待确认收件箱。"
         ),
         "body": r"""# `/pmem-style-lock` — 样张提炼风格圣经与色板锁定
 
 当用户丢入 1~3 张满意的样张或概念图，希望「以后项目/这个角色就按这个画风来」时执行：
+
+0. **确定锁定范围（每条写入必须带 `--module`）**：
+   - 玩家明确点名模块时，使用该模块。
+   - 玩家指定一个角色/资产，且现有模块能唯一对应时，使用该模块；没有对应模块时使用 `character.<角色名>`。
+   - 其他未指定范围的请求按项目级风格写入 `brand.WorldStyle`。回显所选范围，不要把项目级风格写进待确认收件箱。
 
 1. **视觉基因深度提取**：
    - **主辅色板（Palette）**：提取主色（70%）、辅色（20%）、点缀色（10%）的精确 `#HEX` 值与中文命名。
@@ -487,9 +539,11 @@ improve/coach/learn 推销仅在用户主动要时再给。
    - **光影与氛围（Lighting）**：主光源角度、环境光色温、高光材质表现（金属/丝绸/青瓷/发光体）。
    - **严禁偏离项（Anti-Style Redlines）**：明确列出哪类常见 AI 坏习惯会破坏该画风（如过度霓虹、脏暗阴影、油腻高光、错误头身比）。
 2. **自动写入记忆库**：
-   - 调用 `python3 pmem_art.py feedback "以后统一按此样张画风：<核心色板+光影+笔触摘要>" --module <目标模块> --asset <样张路径> --kind art_decision`
-   - 调用 `python3 pmem_art.py feedback "禁止偏离样张画风：<反例禁用词汇总>" --module <目标模块> --kind style_redline`
-3. **输出《风格锁定卡片》**：用清晰的表格展示色板 HEX、正向风格词、负向禁用词与已写入的记忆路径。卡片外再附一段可以直接拿去画的完整句子。同模块下一张开场必须带上已锁的 HEX 和禁用词。记忆仍只在这一支里写入。
+    - 写一条风格决策：`python3 pmem_art.py feedback "以后统一按此样张画风：<核心色板+光影+笔触摘要>" --module <目标模块> --kind art_decision`。
+    - 对每一张满意样张写一条正向配方并关联图片：`python3 pmem_art.py feedback "确认作为风格正向锚点：<该样张可复用的风格摘要>" --module <目标模块> --asset <样张路径> --kind recipe`。用户提交为满意样张即视为同意将其作为 approved 正向锚点。
+    - 写一条禁用红线：`python3 pmem_art.py feedback "禁止偏离样张画风：<反例禁用词汇总>" --module <目标模块> --kind style_redline`。
+    - 三类记录都必须写入步骤 0 确定的同一模块；不得省略 `--module`，因为省略会进入待确认收件箱。
+3. **输出《风格锁定卡片》**：用清晰的表格展示色板 HEX、正向风格词、负向禁用词，以及 `art_decision`、每条 `recipe`、`style_redline` 的实际写入路径。卡片外再附一段可以直接拿去生图的完整句子。同模块下一张开场必须带上已锁的 HEX 和禁用词。记忆仍只在这一支里写入。
 4. **锁完要验证成图时**：路由若是 `style.lock` → `draw.clone` 串行（口语含「验证图 / 锁完出图 / 为了出图」等），本技能只交卡片；第二步按克隆合同换新题材出验证图，禁止用卡片或样张本身交差。纯「以后都按这张」仍只锁不画。
 """,
     },
@@ -529,11 +583,11 @@ improve/coach/learn 推销仅在用户主动要时再给。
 
 当用户想阶段性整理项目里的生成图、查看目前积累了多少条红线与定稿配方时执行：
 
-1. **扫描未归档新图**：
+1. **扫描并自动归档未分类散图**：
    ```bash
-   python3 pmem_art.py classify-watch
+    python3 pmem_art.py classify-watch --apply
    ```
-   汇报有哪些散图待归档（若用户同意，加 `--apply` 自动归位）。
+    命令自动归档高置信度候选；汇报实际归档的路径。低置信度或无法分类的文件保持原位并列出原因，不要为了清空列表强行移动。**无散图 / 空结果**：说「没有待归档散图」，不要装作扫到了文件。调用 `/pmem-atlas` 即授权执行这项自动归档，无需再等待确认。
 2. **模块与记忆总览**：
    ```bash
    python3 pmem_art.py list
@@ -543,16 +597,18 @@ improve/coach/learn 推销仅在用户主动要时再给。
    python3 pmem_art.py atlas
    ```
    告知用户用终端打印的 **`http://127.0.0.1:<端口>/art-atlas.html`** 打开工作台（或双击根目录「打开工作台.cmd」）。**禁止**只双击磁盘上的 `art-atlas.html`：`file://` 下删除/文件夹定位常被浏览器拦住。
+
+**失败话术**：端口占用 → 换端口或关掉旧 atlas 进程后再开，把新 URL 给玩家；命令非 0 → 贴最后几行 stderr，不要假装图谱已刷新。
 """,
     },
 
     {
         "name": "pmem-ui",
-        "title": "【强制4轮≥9.5收敛】SpriteCook式 UI Kit/HUD/九宫格整套",
+        "title": "【出图一轮交件】SpriteCook式 UI Kit/HUD/九宫格整套",
         "description": (
             "仅当玩家点名 UI/HUD/九宫格，或生图分流判成整套界面时使用。不要用来画普通插画、单张克隆或合成梯。"
-            "概念稿与关键组件均强制「最多4轮、合格线≥9.5」闭环自评收敛（生1张→打分挑刺→展示不足与改点→<9.5叠加修正→满4轮挑最高分→评分履历可见）。"
-            "流水线对标 SpriteCook：概念先行 → 透明组件表 → 九宫格切线 → 状态族。"
+            "默认 concept-only。概念/组件表均为出图一轮交件（只限生图轮次=1；交件标明是否≥9.5）；full kit 默认1张总表。"
+            "流水线对标 SpriteCook：概念先行 →（仅点名）透明组件表 → 九宫格切线 → 状态族。"
             "触发例：「/pmem-ui 生成一套蒸汽朋克主菜单 HUD」「/pmem-ui [附概念图] 拆出九宫格弹窗与按钮态」。"
         ),
         "body": r"""# `/pmem-ui` — SpriteCook 式 UI Kit / HUD / 九宫格整套生成
@@ -567,9 +623,17 @@ improve/coach/learn 推销仅在用户主动要时再给。
 ```
 
 ## 原理（截图摘要）
-1. `search` 召回 `ui.*` 红线与定稿 → 2. **概念先行** → 3. 透明组件表 → 4. 九宫格 + 状态族 → 5. **强制 4轮 ≥9.5**（每轮展示评分履历） → `finish` 打印履历 + **记忆静默写入**（勿旁白记忆）
+1. `search` 召回 `ui.*` 红线与定稿 → 2. **概念先行（默认停这里）** → 3. **仅点名 full kit** 才透明组件表 → 4. 九宫格切线（切线/清单，不重生图闭环）→ 5. **出图一轮交件** → `finish` + **记忆静默写入**
 
 你现在运行在 **pmem-art UI Kit 模式**（对标 SpriteCook UI Kit Builder：概念先行 → 组件表 → 九宫格切线 → 状态族）。**禁止**把整屏各控件零散各生一张再硬拼；必须先锁一个统一视觉语言的概念稿，再从同一概念抽出可复用零件。
+
+### 耗时闸（出图一轮交件·必守）
+- **名字含义**：只限制**生图轮次=1**；关系/合理性/切线清单仍要做，不是整段技能只审一次。
+- **默认 concept-only**：口语没点「组件表 / 九宫格切线 / 状态族 / UI kit / 拆按钮」→ 概念一轮交件，**禁止**自作主张开全家桶。
+- **交件语义**：每个 converge **生 1 → judge 1 → finish**；finish 必须写明「过线/未过线（≥9.5）」；未过线也是合法终态，**禁止**为凑 9.5 叠第 2 张。
+- **full kit**：概念 1 次 + **默认仅 1 张**组件总表；**禁止**第 2 张 sheet、禁止关键件二次 converge。
+- **九宫格/manifest**：在已有图上标切线与清单，不另开生图闭环。
+- **浅/深双主题**：仅玩家点名才各跑一次；默认只交一主题。
 
 ---
 
@@ -582,8 +646,8 @@ improve/coach/learn 推销仅在用户主动要时再给。
 ### 交付档（先分叉；可默认，不必再问类型以外的事）
 | 档 | 何时 | 做到哪停 |
 | :--- | :--- | :--- |
-| **concept-only（最小档）** | 只要主菜单/某一屏概念、截图级气氛；**没**点名九宫格、组件表、状态族、UI kit 套件 | 只做 Step 1 概念稿（最多 4 轮 ≥9.5），交概念稿即完。**禁止**默开组件表/九宫格全家桶 |
-| **full kit（全套）** | 点名组件表 / 九宫格 / 状态族 / 套件，或「整套 UI kit」 | Concept → Sheets → 9-Slice → 状态族；概念未过线不准拆件 |
+| **concept-only（最小档·默认）** | 只要主菜单/某一屏概念、截图级气氛；**没**点名九宫格、组件表、状态族、UI kit 套件 | 只做 Step 1 概念稿（出图一轮交件），标明是否 ≥9.5。**禁止**默开组件表/九宫格全家桶 |
+| **full kit（全套）** | 点名组件表 / 九宫格 / 状态族 / 套件，或「整套 UI kit」 | Concept（1）→ 总表 Sheet（1）→ 9-Slice 切线/清单；概念未审完不准拆件 |
 
 玩家口语含糊但只提「主界面/主菜单长什么样」→ 默认 **concept-only**。点了「拆按钮/九宫格/pressed」→ **full kit**。
 
@@ -595,17 +659,16 @@ python3 pmem_art.py search --module <ui.模块>
 
 ### Step 1：概念先行（Concept First）—— 不可跳过
 1. 若用户丢入概念图：先做参考图视觉解构（构图分区、主辅色 HEX、金属/木纹/霓虹材质、控件密度），再进入组件抽取。
-2. 若无概念图：先生成 **1 张完整屏幕概念稿**（整屏布局，统一材质与色板），用 `/pmem-draw` 同款 **4轮 >= 9.5 收敛** 打磨概念稿：
+2. 若无概念图：先生成 **1 张完整屏幕概念稿**（整屏布局，统一材质与色板），**出图一轮交件**（生1→judge1→finish，标明是否 ≥9.5）：
    ```bash
-   python3 pmem_art.py converge start --goal "UI概念稿：<屏幕类型+风格>" --module <ui.模块> [--scale medium|high]
+   python3 pmem_art.py converge start --goal "UI概念稿：<屏幕类型+风格>" --module <ui.模块> --route-id ui.kit [--scale medium|high]
    # 首轮前必过合理性闸（同时交出更合理提示词）：
    python3 pmem_art.py reasonableness review --id <session> --skill ui \
      --draft "<草稿>" --revised "<分区/控件/禁忌写清的修订句>" \
      --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;layout_zones=ok;no_content_clutter=ok;chrome_not_illustration=ok;cta_clear_of_faces=ok;control_craft=ok"
-   # 每轮：converge generate 生图，再 converge judge 审图，直到 >= 9.5 或满 4 轮
-   python3 pmem_art.py converge finish
+   python3 pmem_art.py converge generate … && converge judge … && converge finish
    ```
-3. **概念稿通过后才进入组件表**——不要在概念未锁定时散生按钮。合理性闸不过不许 generate。
+3. **concept-only 到此交货**。仅 full kit：**概念稿审完后才进入组件表**——不要在概念未锁定时散生按钮。合理性闸不过不许 generate。
 
 ### 点名了某款产品的主界面
 主界面概念不是空心九宫格，也不是关卡棋盘。玩家点名某款游戏的主界面时，可以先看一张该产品主界面的真实截图，只为了把下面八项写进提示词。生图只交这段文字，不把截图垫进生成，也不要照着像素克隆。
@@ -647,29 +710,29 @@ python3 pmem_art.py search --module <ui.模块>
 - 左侧入口不压进度条，也不压底部按钮；进度条不压顶栏；两枚主按钮之间留缝，也不压底栏。右侧钥匙留在画面上段，不要掉到按钮旁边。
 - 结构分在复刻时同时看这件事：两块界面叠在一起，或钥匙、侧栏掉出自己的矩形，结构低于 7.5，不能停。背景张的问题不拿到界面张里改，界面张的问题也不要重画房间。
 
-### Step 2：从概念抽取组件表（Component Sheets）
-以概念稿为垫图/参考，在 **透明底** 上生成组件表（1~3 张 sheet），覆盖：
+### Step 2：从概念抽取组件表（Component Sheets）——仅 full kit
+以概念稿为垫图/参考，在 **透明底** 上生成 **恰好 1 张**总表，盖齐下列零件；**禁止**第 2 张 sheet：
 - **面板 / 边框 / 装饰条**（可九宫格拉伸）
 - **按钮族**：至少 normal + pressed（最好含 hover / disabled）
 - **进度条 / 血条**：空轨 + 满轨（或分段填充）
 - **标签 / Tab**：选中 + 未选中
 - **图标位 / 分隔线 / 角花** 等概念中出现或隐含的零件
-同一概念参考下批量生成，保证木纹/螺栓/色板/光影角度一致。概念稿和组件表的每一轮都垫最初那张参考（用户概念图，或已定稿的概念稿），不改垫上一轮生成结果，修正只追加进提示词。缺件时只补缺件，不要整套重开。
+垫最初概念参考；出图一轮交件：`converge start --goal "UI组件表：…" --route-id ui.kit` → generate → judge → finish（CLI `max_rounds=1`，标明是否 ≥9.5）。
 
 ### Step 3：九宫格切线与清单（9-Slice + Manifest）
-对每个可缩放件标注九宫格：四角固定、四边单向拉伸、中心双向拉伸。输出清单建议：
+对每个可缩放件标注九宫格：四角固定、四边单向拉伸、中心双向拉伸。**只写切线与清单，不另开生图闭环。** 输出：
 ```
 ui_kit_<name>/
 ├── concept.png
 ├── sheets/
-├── elements/          # 透明 PNG 单件
+├── elements/          # 透明 PNG 单件（可从总表裁）
 ├── manifest.json      # name / group / state / rect / nine_slice {l,r,t,b}
 └── preview.html       # 可选：拼装预览
 ```
 `manifest.json` 示例字段：`name`, `group`, `state`, `file`, `nine_slice: {left,right,top,bottom}`, `scalable: true|false`。
 
-### Step 4：关键件二次收敛（可选但推荐）
-对主面板、主按钮等核心件，若六维评分 `< 9.5`（重点查：中心拉伸区是否干净、转角是否形变、透明底毛边、状态族是否同系），再跑一轮 `converge generate` 局部重绘，然后 `converge judge` 审图。
+### Step 4：关键件二次收敛（禁止默认）
+出图一轮交件路径下 **跳过**本步。缺件只在总表提示词里写清后新开短会话重开整表（仍只生 1 张），禁止逐零件 converge。
 
 ### Step 5：沉淀记忆
 ```bash
@@ -690,26 +753,21 @@ python3 pmem_art.py feedback "UI套件色板与九宫格规范：<摘要>" --mod
 管线合规另记、**不进** `--dims` 乘积，可写在缺陷旁：`管线合规9.0（门槛）`。
 
 ## 四、最终交付必须包含
-- **concept-only**：概念稿（≥9.5 或满 4 轮最高分）+ 评分履历；**不要**为了清单去补假组件表。
-- **full kit**：概念稿 + 组件表 + `elements/` + `manifest.json`（含九宫格）；缺件只补缺件。
+- **concept-only**：概念稿（出图一轮交件 + 过线/未过线标注）+ 评分卡；**不要**为了清单去补假组件表。
+- **full kit**：概念稿 + **1 张**组件总表 + `elements/` + `manifest.json`（含九宫格）；缺件只补缺件。
 - 若跑了收敛：默认附上全轮次评分优劣总表（不足/改点）；只要终稿用 `--quiet`
 - 已写入 `.memory-art` 的 recipe / redline 路径（若本趟有 ingest/feedback）
 
-
-## 记忆静默 / 履历可见（Agent 必读）
-- `converge finish` 后系统自动写反思/口味/learn 队列——**无需**再跑 `/pmem-coach`。
-- 对用户默认展示：**每轮六维分 + 不足 + 改点 + 胜出图 + 全轮履历**；若有「小提示」原样转述（每会话最多 1 条）。**禁止**旁白记忆写入。
-- 只要终稿：`--quiet`。教练 / 广度：用户明确要求或进阶技能时再给。
+{{MEMORY_SILENT_KIT}}
 """,
     },
     {
         "name": "pmem-icon",
-        "title": "【强制4轮≥9.5收敛】iOS/Android App Icon 应用图标母版 + jezweb式一致化 SVG 图标集 + 游戏道具栅格图标",
+        "title": "【出图一轮交件·批量优先】iOS/Android App Icon + SVG 图标集 + 游戏道具栅格",
         "description": (
             "仅当玩家点名图标，或生图分流判成桌面图标、SVG 图标集、游戏道具格时使用。A/B/C 不混用。不要用来画普通插画或合成梯。"
-            "(A) iOS/Android 1024×1024 App Icon 桌面启动图标母版（满幅直角出图+72%~80%圆角安全区+多尺寸导出矩阵+深浅色自适应）；"
-            "(B) jezweb 式一致化 SVG 矢量图标集；(C) 游戏道具 64/128/256px 透明底栅格图标。"
-            "全部支持 converge generate 与 converge judge 两步分离，以及动态阈值收敛闭环。"
+            "(A) 默认只交 Light 母版（出图一轮）；Dark/Tinted 仅玩家点名才另出，禁止口头宣称已派生齐套。"
+            "(B)(C) 只批量预览；关键枚闭环默认禁止，点名翻车才开且生1→judge1。"
         ),
         "body": r"""
 # `/pmem-icon` — jezweb 式一致化图标集 / SVG 取向生成
@@ -725,10 +783,16 @@ python3 pmem_art.py feedback "UI套件色板与九宫格规范：<摘要>" --mod
 ```
 
 ## 原理（截图摘要）
-- **Mode A**：满幅直角母版 → 安全区单符号 → Light/Dark/Tinted → 尺寸矩阵 → 关键枚最多 4 轮 ≥9.5
-- **Mode B**：锁 style-spec → SVG 硬规则 → 分批生成 → preview → 关键枚可选 4 轮 ≥9.5（对标 jezweb；禁止拼 Lucide/Heroicons 冒充定制集）
-- **Mode C**：锁道具格 style-spec → 透明底 PNG → 关键枚最多 4 轮 ≥9.5
+- **Mode A**：满幅直角母版 → 安全区单符号 → 尺寸矩阵；默认只交 **Light 母版**（出图一轮交件）；Dark/Tinted **仅点名才另出**
+- **Mode B**：锁 style-spec → SVG 硬规则 → 分批生成 → preview（对标 jezweb）；关键枚闭环默认不开
+- **Mode C**：锁道具格 style-spec → 透明底 PNG **只批量**；关键枚闭环默认不开
 先分 A/B/C，再进对应节；反思写进记忆，要看报告再用 /pmem-coach。
+
+### 耗时闸（出图一轮交件·必守）
+- **名字含义**：只限生图轮次=1；style-spec/批量预览/清单仍要做。
+- **B/C 批量**：整套一次出齐 → 肉眼/清单一致性审查（**不算** converge 叠轮）；**禁止**默认逐枚 converge。
+- **关键枚闭环**：仅玩家点名某枚翻车；开则生1→judge1（CLI `max_rounds=1`），finish 标明是否 ≥9.5。
+- **Mode A 三态**：**禁止**在无可靠导出/上色工具时口头说「Dark/Tinted 已派生齐」。默认交付 = Light 母版 + 尺寸矩阵；玩家点名 Dark 或 Tinted 时再各开一轮出图。
 
 ---
 
@@ -749,10 +813,10 @@ A/B/C **标题并列**，禁止把 C 嵌进 B、把 A 甩到 B 的 Step 之后�
 
 ### A2. 光学微立体质感与光影层次
 - **三层景深**：① 底板环境渐变（70% 主色）→ ② 中心主符号微倾体块（20% 辅色 + 接触阴影）→ ③ 顶部 45° 高光切角（10% 点缀色）。
-- **iOS 18+ 三态**：Light / Dark / Tinted 都要齐。
+- **iOS 18+ 三态**：默认只保证 **Light 母版**过关。Dark / Tinted **仅玩家点名**才另开 converge（各出图一轮）；没有点名就不要交假齐套，也不要写「已派生」。
 
 ### A3. 多尺寸导出与 `app-icon-preview.html`
-母版收敛后导出：iOS `1024/180/167/120/60/29`；Android/桌面 `512/192`。
+母版收敛后导出：iOS `1024/180/167/120/60/29`；Android/桌面 `512/192`（导出几乎零墙钟，勿当成再生图轮次）。
 
 ### A4. App Icon 审图与命令
 识别度或安全区低于 **8.0** 时正式分改取该维，不能停。维：小尺寸识别 / 安全区 / 光影质感 / 深浅色·多尺寸 / 色板纯粹（再加无瑕疵盲评，占 25%）。
@@ -760,13 +824,14 @@ A/B/C **标题并列**，禁止把 C 嵌进 B、把 A 甩到 B 的 Step 之后�
 **App Icon 多维透镜（通用）**：明细见 `docs/APPICON_MULTI_LENS.md`——①栅格体验；②小尺寸去色仍认；③符号权重 P0 英雄撑满；④满幅直角 + 72%–80% 安全区；⑤色 70/20/10；⑥一主光、形先于质；⑦同品类上架图标气质（非泛插画海报）。缺画风时 revised 必须写同品类顶级上架图标气质。空喊「高级」却剪影糊 → 识别度或安全区 <8.0 不能停。
 
 ```bash
-python3 pmem_art.py converge start --session appicon --module brand.WorldStyle --scale high --goal "iOS 1024x1024 App Icon: 青瓷质感记账应用，中心单枚立体青釉金币流光符号"
+python3 pmem_art.py converge start --session appicon --module brand.WorldStyle --scale high --route-id icon.a --goal "iOS 1024x1024 App Icon: 青瓷质感记账应用，中心单枚立体青釉金币流光符号"
 python3 pmem_art.py reasonableness review --id appicon --skill icon.a \
   --draft "<草稿>" --revised "<单符号+72%-80%安全区+满幅直角无字的修订句>" \
   --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;safe_zone=ok;single_symbol=ok;full_bleed_no_round_mask=ok"
 python3 pmem_art.py converge generate --session appicon --round 1 --image app_icon_r1.png
 python3 pmem_art.py converge judge --session appicon --round 1 --image app_icon_r1.png \
   --dims "识别度9.6/安全区9.7/光影质感9.5/多尺寸合规9.6/色板纯粹9.7/无瑕疵9.5"
+# CLI 出图一轮交件：max_rounds=1；judge 后 finish，并标明是否 ≥9.5
 ```
 
 ## 三、Mode B：一致化 SVG 矢量图标集流程（Brief → Spec → Batch → Review → Converge）
@@ -814,14 +879,14 @@ icons/
 └── …
 ```
 
-### B5：关键图标 4轮9.5 收敛（可选）
-用户点名某枚「不对」或一致性不过时，垫最初 style-spec/样张，不垫上一轮成图：
+### B5：关键图标出图一轮交件（可选·默认跳过）
+用户点名某枚「不对」或一致性不过时才开；垫最初 style-spec/样张；**禁止**对整套每枚开闭环：
 ```bash
-python3 pmem_art.py converge start --goal "图标 <name> 对齐 style-spec" --module brand.WorldStyle
+python3 pmem_art.py converge start --goal "图标 <name> 对齐 style-spec" --module brand.WorldStyle --route-id icon.b
 python3 pmem_art.py reasonableness review --id <session> --skill icon.b \
   --draft "<草稿>" --revised "<线宽/端点/清单写清的修订句>" \
   --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;stroke_consistency=ok"
-然后：converge generate → converge judge → finish
+然后：generate → judge → finish（CLI max_rounds=1；标明是否 ≥9.5）
 ```
 
 ### B6：沉淀
@@ -832,7 +897,8 @@ python3 pmem_art.py ingest icons/preview.html -p "icon set preview" --apply
 
 ## 四、Mode C：游戏道具透明底栅格图标（64/128/256px PNG，非 SVG）
 
-先锁「线宽/圆角/色板/投影」style-spec，再批量生成透明底 PNG。关键单枚 `converge` 最多 4 轮，≥9.5。首轮 generate 前：
+先锁「线宽/圆角/色板/投影」style-spec，再**批量**生成透明底 PNG 做 preview。  
+**关键枚 converge 默认禁止**：仅玩家点名某枚不对、或一致性审查不过时才开；开则出图一轮交件（CLI `max_rounds=1`，标明是否 ≥9.5）。**禁止**默认对背包每一格开闭环。
 ```bash
 python3 pmem_art.py converge start --session <icon_c_id> --goal "道具格：<name>" --module brand.WorldStyle --route-id icon.c
 python3 pmem_art.py reasonableness review --id <icon_c_id> --skill icon.c \
@@ -852,8 +918,8 @@ python3 pmem_art.py reasonableness review --id <icon_c_id> --skill icon.c \
 ### Mode A
 - [ ] 1024 满幅直角，未预裁圆角蒙版
 - [ ] 主符号在 72%–80% 安全区；无字
-- [ ] Light / Dark / Tinted 与尺寸矩阵齐
-- [ ] 跑了收敛则展示评分履历（只要终稿用 --quiet）
+- [ ] Light 母版 + 尺寸矩阵齐；Dark/Tinted 仅点名才有，未点名勿写已齐套
+- [ ] 跑了收敛则展示评分履历并标明过线/未过线（只要终稿用 --quiet）
 
 ### Mode B
 - [ ] 全部 SVG 同 viewBox / stroke-width / linecap / linejoin
@@ -868,10 +934,7 @@ python3 pmem_art.py reasonableness review --id <icon_c_id> --skill icon.c \
 - [ ] 品类主光 + 接触影；无场景插画
 - [ ] 关键枚若收敛：评分履历可见
 
-## 记忆静默 / 履历可见（Agent 必读）
-- `converge finish` 后系统自动写反思/口味/learn 队列——**无需**再跑 `/pmem-coach`。
-- 对用户默认展示：**每轮六维分 + 不足 + 改点 + 胜出图 + 全轮履历**；若有「小提示」原样转述（每会话最多 1 条）。**禁止**旁白记忆写入。
-- 只要终稿：`--quiet`。教练 / 广度：用户明确要求或进阶技能时再给。
+{{MEMORY_SILENT_KIT}}
 """,
     },
     {
@@ -939,6 +1002,20 @@ python3 pmem_art.py learn list
 
 一条合同。**merge 本身就是一组**：默认整表一次出齐。有附图时**先认参考是不是整表格子**，再定链型、档数、交付。
 
+## 章节导航
+
+本表只标章节。链型、五问、验收和禁区以原节为准。
+
+| 现在要做 | 读 |
+| :--- | :--- |
+| 认附图是不是整表格子 | 「开场 0」 |
+| 定链型、档数、交付 | 「开场必选」 |
+| 写画风一句 | 「风格」 |
+| 写关系稿 | 「第一段」 |
+| 出整表 | 「出图」的 overview_sheet，「第二段 · 美术」的 overview_sheet |
+| 出逐格 | 「出图」的 per_cell，「第二段 · 美术」的 per_cell |
+| 看禁区 | 「禁止」 |
+
 ## 开场 0 · 整表参考闸（有附图先做；写进第 1 稿）
 
 附图若是多格白圆角卡 / 深灰底图集（常见 3×3=9、4×3=12、5×3=15），视为**整表版式参考**：
@@ -988,12 +1065,14 @@ python3 pmem_art.py learn list
 
 | 交付 | 含义 |
 | :--- | :--- |
-| `overview_sheet`（**默认**） | 关系门过后 **单次整表一组出齐**；**最多重出 3 次**；满 3 次列缺陷停手。禁止从整表抠格冒充逐格成品。无参考时默认 8 档、常见 2×4 |
+| `overview_sheet`（**默认**） | 关系门过后 **整表一组出齐**；**出图一轮交件**（只生 1 张整表→judge→`finish`，标明是否过线）；第 2 次 `generate` 拒跑。禁止从整表抠格冒充逐格成品。无参考时默认 8 档、常见 2×4；竞品段 6 档说得通 → `levels=6` |
 | `per_cell`（仅点名） | 一档一张等大正方形；同框整梯只作体量预览，不是成品（MergePerCell） |
 
 **默认 `overview_sheet`（可默认，不必再问）：** 玩家说 merge / 合成梯 / 一组；无交付点名时。  
 **才走 `per_cell`：** 玩家明确说「一档一张 / 逐格 / 单张 / per_cell」。  
 **仍强制整表：** 整表格子参考；「整表 / 一起出 / 一次出齐 / 不要逐格 / 参考咋出就咋出」；多轨总览。
+
+**耗时合同（出图一轮交件，banner 须写清）：** ①关系段不出图、最多 **2** 稿（第 1 过了就停）；②整表只生 1 张→judge 1 次→finish，并标明是否 ≥9.5/清单过关；③禁止叠轮重出、禁止垫上一张成图；④禁止 overview 套 ordinary「凑满 4 轮」；⑤商业诊断只打字；⑥未点名逐格必须整表（per_cell 仅点名）。
 
 多轨（多张 L1）时：一个 yaml 多个 `tracks`；`overview_sheet` 可一行一轨。
 
@@ -1014,11 +1093,11 @@ python3 pmem_art.py learn list
 
 **域内红线（仍通用）**：糖果/甜品轨禁止默认焊进蛋糕、马卡龙、纸杯蛋糕（除非玩家点名蛋糕店链）。
 
-## 第一段 · 升级链与画风（3 稿，先不出图）
+## 第一段 · 升级链与画风（最多 2 稿，过了就停；先不出图）
 
-固定 **3 稿**，不再拉到 8 稿。定清：链型、档数、交付、（若有）行列、升级链、画风一句。机读数字过了、合成说不通，仍然不算定稿；画风已经写成一句才能出图。3 稿仍说不通就停，一张图都不出。
+**最多 2 稿**（CLI discuss 第 3 稿拒写）。**第 1 稿已过五问 + `relation-judge` + 商业对标档序 + 画风已经写成一句 → 立刻进出图**；第 2 稿只改未过行。禁止凑满空写。机读数字过了、合成说不通，仍然不算定稿；画风已经写成一句才能出图。2 稿仍说不通就停，一张图都不出。
 
-每一稿先写 `chain_mode`（或注明轻门）/ `levels` / `delivery` / 可选 `grid_rows×grid_cols`，再写 N 行升级 + 一句画风。交给独立文本判断。没过只改未过行；已说通的锁住。
+第 1 稿就必须写死：对标链名+档序、过程类型、`chain_mode`（或轻门）、`levels`（跟竞品合理，不硬凑 8）、`delivery`、可选行列、N 行升级、`surface` 一句。没过只改未过行；已说通的锁住。
 
 ```bash
 python3 pmem_art.py converge start --session <merge_id> --goal "merge 关系讨论：<题材>" --module <模块> --route-id merge.ladder
@@ -1096,31 +1175,34 @@ python3 pmem_art.py converge judge --session <merge_id> --round <N> --image <she
 - 有整表格子参考：垫该参考，行列与白卡深底跟参考；格内换题材；`levels` 跟格数。
 - 有多张 L1：可垫 L1 锁第 1 列 / 各行首格。
 - **玩家说不对 / 重做 / 不要旧逻辑**：禁止垫上一版失败整表；按当前关系稿从零出。
-3. **整表固定验收清单（每张必过；失败改提示词重出，累计 ≤ 3 次）**：
+3. **整表固定验收清单（出图一轮交件：生1→judge1；第 2 次 generate 会被 CLI 拒绝）**：
    - [ ] 超框：每格主体（含冠/尾/翅尖）落在白卡/格内并留边
    - [ ] 邻档：缩略约 64px 相邻档可分
    - [ ] 眼睛：生物链每格有可读眼睛/轻表情（道具默认无脸）
    - [ ] 白卡/版式：有参考则跟参考白卡深底；无等级字；一格一件
    - [ ] 五问+链表：关系仍说得通，无回退/大跳档
-4. **收束**：清单过了或满 3 次停手后必须：
+   - **禁止叠轮重出 / 禁止垫上一张成图**：judge 完就 `finish`；要重做就**新开短会话**，不要垫失败整表。
+4. **收束**：出图一轮后必须：
 ```bash
 python3 pmem_art.py converge finish --session <merge_id>
 ```
-禁止跳过 `start`/`generate`/`judge`/`finish` 只丢一张散图当终稿。满 3 次仍不过：停止并列出缺陷，禁止继续狂刷。  
+禁止跳过 `start`/`generate`/`judge`/`finish` 只丢一张散图当终稿。`finish` 交这张时**必须写明过线/未过线**并列出未过项，**禁止继续狂刷**。  
+停机看本清单，**禁止**把 overview 当成普通图「凑满 4 轮」。  
 禁止整表抠格当逐格成品。多模型对比时禁止把 A 模型整表垫进 B 模型参考。
 
-### `delivery=per_cell`（仅玩家点名逐格）
+### `delivery=per_cell`（仅玩家点名逐格；默认仍走整表）
 
-关系过了 → 每一档单独出一张正方形 → `merge audit` → 可选 `normalize` 后再跑一次 audit → 第二段 converge（最多 4 轮，≥9.5）。  
-同框不是交货（同框整梯只作体量预览）。每档首轮仍过 reasonableness review；`--session` 用本档自己的 id，禁止默写 `latest`。不要把参考图文件垫进生图；不垫对方模型成图做「公平对比」。
+关系过了 → 每一档单独出一张正方形 → `merge audit` → 可选 `normalize` 后再跑一次 audit → 第二段出图一轮交件（每档生1→judge1）。  
+同框不是交货（同框整梯只作体量预览）。每档首轮仍过 reasonableness review；`--session` 用本档自己的 id，禁止默写 `latest`。不要把参考图文件垫进生图；不垫对方模型成图做「公平对比」。  
+**未点名逐格禁止走本段。**
 
 ## 第二段 · 美术
 
 ### overview_sheet
-首张整表前必须过 `reasonableness`（见上）。整表用固定验收清单，**累计 ≤ 3 次**重出；不走 per_cell 的 audit/单格 4 轮 ≥9.5。但 **必须** `converge start` → `generate`/`judge` 记账 → `finish`（过程板可见）；停机以清单为准，不是「口头说合格就算」。
+首张整表前必须过 `reasonableness`（见上）。整表 **只生 1 张→judge 1 次**（`max_rounds=1`）；不走 per_cell。**必须** `converge start` → `generate`/`judge` → `finish`（过程板可见）；finish 标明是否清单过关/≥9.5。
 
 ### per_cell（仅点名逐格）
-最多 4 轮，≥9.5。表面句原样保留。关系散了或 audit 不过，美术分再高也不算过。
+每档出图一轮交件；表面句原样保留。关系散了或 audit 不过，美术分再高也不算过。禁止叠轮。
 
 ```bash
 python3 pmem_art.py merge audit --dir <目录> --phase1 <yaml> --track <域名>
@@ -1140,7 +1222,11 @@ python3 pmem_art.py merge audit --dir <目录> --phase1 <yaml> --track <域名>
 - **非糖果且未点名链型**却默认锁 `shop_ladder`；或未选链型却强行锁 `base_body`。（糖果/同店升级按上文默认可 `shop_ladder`，不算违规。）
 - 玩家只要六档却硬凑八档无意义补档。
 - 空有链型过关却无视 `docs/MERGE_MULTI_LENS.md`：邻档不可分、无犒赏曲线、合两下说不出理由。
-- `overview_sheet` 超过 3 次整表重出仍不停手。
+- `overview_sheet` / `per_cell` 审完仍叠轮重出（CLI 第 2 次 `generate` 已拒）。
+- 关系第 1 稿已过仍空写凑满 2 稿；或 overview 套 ordinary「凑满 4 轮」。
+- 整表 judge 完仍垫上一张成图叠轮。
+- 商业诊断再连刷整表（只打字）。
+- 未点名 Dark/Tinted 却宣称 App Icon 三态已派生齐套。
 - 从同框/整表抠图代替逐格交货（当 `delivery=per_cell` 时）。
 - 公平对比时垫对方成图。
 - `per_cell` 用白/灰卡底交差；或把整表参考拆成单张白卡狂刷。
@@ -1170,25 +1256,30 @@ python3 pmem_art.py merge audit --dir <目录> --phase1 <yaml> --track <域名>
 
 ---
 
-## Step 0 · 先定类型（必做，写进回复第一行）
+## Step 0 · 先定类型 + 跑 route（必做，写进回复第一行）
 
-用一行写出：**判定类型：`…` · 依据：… · 将交给：`/pmem-…`**
+1. 用一行写出草稿：**判定类型：`…` · 依据：… · 将交给：`/pmem-…`**
+2. **立刻**把原话收成标准路由句并跑（与总控同闸，禁止只靠本表盲猜定案）：
+```bash
+python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>"
+```
+3. 以 CLI `route_ids` / `banner` 校正类型行；冲突时改类型行并注明「以 route 为准」。后续每套方案旁标注 **`route_id=…`**（通常与校正后类型一致）。
 
-| 类型码 | 怎么认 | 交给 |
-| :--- | :--- | :--- |
-| **普通图** | 单张插画/气氛/道具静物，没说整套 UI、没说升级梯、没说换题材克隆 | `/pmem-draw` |
-| **原画 / Key Art** | 主视觉、Key Art、概念气氛、宣传立绘、无操作控件的大场面 | `/pmem-draw`（原画合同） |
-| **克隆** | 有参考且说「按这风格画新题材 / 锁画风换主体」 | `/pmem-draw`（克隆合同） |
-| **变体** | 同一身份，只改表情/动作/小道具/局部 | `/pmem-draw`（变体合同） |
-| **镜头包** | 同一主体要几套机位/景别可选 | `/pmem-draw`（镜头包；点选前不生图） |
-| **UI / HUD** | 主菜单、弹窗、九宫格、按钮态、整屏 HUD、商店截图级界面 | `/pmem-ui` |
-| **图标 A** | iOS/Android 桌面启动图标、App Icon 1024 母版 | `/pmem-icon` A |
-| **图标 B** | 线性 SVG 导航/功能图标集 | `/pmem-icon` B |
-| **图标 C** | 游戏背包道具格、透明底栅格图标 | `/pmem-icon` C |
-| **合成梯** | 同域升级链（默认整表一组 8 档；点名数量或参考跟格数）、一档比一档大 | `/pmem-merge-ladder` |
-| **锁风格 brief** | 只要色板/光影/禁用词文字规格，不求出图 | `/pmem-style-lock`（或先出文字再锁） |
+| 类型码 | 怎么认 | 交给 | 典型 route_id |
+| :--- | :--- | :--- | :--- |
+| **普通图** | 单张插画/气氛/道具静物，没说整套 UI、没说升级梯、没说换题材克隆 | `/pmem-draw` | `draw.ordinary` |
+| **原画 / Key Art** | 主视觉、Key Art、概念气氛、宣传立绘、无操作控件的大场面 | `/pmem-draw`（原画合同） | `draw.key` |
+| **克隆** | 有参考且说「按这风格画新题材 / 锁画风换主体」 | `/pmem-draw`（克隆合同） | `draw.clone` |
+| **变体** | 同一身份，只改表情/动作/小道具/局部 | `/pmem-draw`（变体合同） | `draw.variant` |
+| **镜头包** | 同一主体要几套机位/景别可选 | `/pmem-draw`（镜头包；点选前不生图） | `draw.lens` |
+| **UI / HUD** | 主菜单、弹窗、九宫格、按钮态、整屏 HUD、商店截图级界面 | `/pmem-ui` | `ui.kit` |
+| **图标 A** | iOS/Android 桌面启动图标、App Icon 1024 母版 | `/pmem-icon` A | `icon.a` |
+| **图标 B** | 线性 SVG 导航/功能图标集 | `/pmem-icon` B | `icon.b` |
+| **图标 C** | 游戏背包道具格、透明底栅格图标 | `/pmem-icon` C | `icon.c` |
+| **合成梯** | 同域升级链（默认整表一组 8 档；点名数量或参考跟格数）、一档比一档大 | `/pmem-merge-ladder` | `merge.ladder` |
+| **锁风格 brief** | 只要色板/光影/禁用词文字规格，不求出图 | `/pmem-style-lock`（或先出文字再锁） | `style.lock` |
 
-认成 UI / 图标 / 合成梯时：**禁止**用普通插画句式交差。类型在「原画 vs 普通图」「图标 A vs C」之间晃，先问玩家，不要猜完就出 4 套混类方案。
+认成 UI / 图标 / 合成梯时：**禁止**用普通插画句式交差。类型在「原画 vs 普通图」「图标 A vs C」之间晃，先问玩家，不要猜完就出 4 套混类方案。缺画风时查 `docs/COMMERCIAL_BENCHMARK.md` 填一句。
 
 ---
 
@@ -1277,11 +1368,11 @@ python3 pmem_art.py merge audit --dir <目录> --phase1 <yaml> --track <域名>
 2. 两三行复述：听懂的交付物、已锁定、还晃的点（晃的若影响类型，先问）
 3. 方案：
    - 默认 **2～4 套**（须同属已判定类型；禁止 A 套 UI、B 套插画这种混类）
-   - 每套：**方案名**（≤四字）· **中文目标句** · **英文执行句** · **本套侧重** · **相对原话改了什么** · **建议交给：`/pmem-…`**
+   - 每套：**方案名**（≤四字）· **`route_id=…`** · **中文目标句** · **英文执行句** · **本套侧重** · **相对原话改了什么** · **建议交给：`/pmem-…`**
    - 变体/锁死 brief 等极确定时只出 **1 套**，并写：「只有一套：因为……再拆会和原话冲突。」
 4. 问玩家：选字母，或补充/改口（含「其实我要的是 UI 不是原画」这类改类型）。**点选前禁止开生图。**
 5. 玩家选定某套后交给出图技能时：该套中文/英文目标句可作为 `reasonableness review` 的 `--draft`；出图支路仍须再跑一次闸门并产出 `--revised`（可在选定句上补硬锁与元素预算）。
-6. **若之后要出图**：先跑 `python3 pmem_art.py route --text "<原话或选定方案>" --canonical "<标准路由句>"` 与总控/近邻库对齐，再进对应 `/pmem-…`；禁止只凭本技能自判类型直接 `converge start`。
+6. **若之后要出图**：再跑一次 `python3 pmem_art.py route --text "<原话或选定方案>" --canonical "<标准路由句>"`（可用方案旁已标的 `route_id` 种闸），再进对应 `/pmem-…`；禁止只凭本技能自判类型直接 `converge start`。
 
 ## 怎么用（复制即用）
 ```text
@@ -1304,3 +1395,15 @@ python3 pmem_art.py merge audit --dir <目录> --phase1 <yaml> --track <域名>
 """,
     },
 ]
+
+_MEMORY_EXPAND = {
+    "{{MEMORY_SILENT_DRAW}}": _MEMORY_SILENT_DRAW.strip(),
+    "{{MEMORY_SILENT_KIT}}": _MEMORY_SILENT_KIT.strip(),
+}
+for _spec in SKILL_SPECS:
+    _body = _spec.get("body") or ""
+    for _token, _block in _MEMORY_EXPAND.items():
+        if _token in _body:
+            _body = _body.replace(_token, _block)
+    _spec["body"] = _body
+

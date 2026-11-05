@@ -1,0 +1,15 @@
+﻿Casual merge-game prop overview sheet, exactly 2 rows x 4 columns, eight identical white rounded-square cards on flat dark charcoal background, even spacing. Soft-plastic cute cartoon chickens, warm upper-left softbox, short contact shadow, clean not oily. ONE single chicken centered per card. No text, no numbers, no UI, no henhouse, no cage, NO flocks / NO multiple birds in any card.
+
+TOP ROW growth (keep modest):
+L1: tiny yellow fluff hatchling in cracked eggshell.
+L2: standing round yellow baby chick short wings.
+L3: juvenile, yellow+tan two-tone feathers.
+L4: lean pullet, short tail, small red comb bud.
+
+BOTTOM ROW — adult then PRESTIGE, each MUST be thumbnail-distinct, still ONE bird:
+L5 plain adult hen: round body, bright RED comb+wattle, cream-brown feathers, wings folded. No gold.
+L6 ornate plumage hen: MUCH thicker feathers; BOTH wings fully opened into a wide feather FAN; big TAIL FAN fanned high behind; still RED comb (no gold). Silhouette clearly wider than L5.
+L7 gold-crest hen: body feathers with bright GOLD edge trim on every primary; tall GOLDEN comb-crest like a crown made of comb; amber-gold sheen; wings half-open showing gold edges. No metal armor plates.
+L8 regal hen LARGEST: flowing GOLD FEATHER cape/cloak of feathers draped over back (feather texture not steel armor); gem on golden crown-crest; richest ornate single chicken.
+
+Fail if L5/L6/L7 look like twins. Fail if any card has 2+ birds. Fail if plate-armor knight chicken.

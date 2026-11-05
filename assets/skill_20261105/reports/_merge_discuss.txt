@@ -1,0 +1,2 @@
+﻿❌ 未找到收敛会话 `battery1105-merge`。请先显式启动：
+   pyw -3 -u pmem_art.py converge start --id battery1105-merge [--goal ...] [--module brand.WorldStyle] [--ref-image ...] [--scale medium]

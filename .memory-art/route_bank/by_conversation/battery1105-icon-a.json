@@ -1,0 +1,15 @@
+{
+  "saved_at": 1793888258.424274,
+  "text": "1024桌面图标：妖精花园蘑菇桌符号 Light 母版",
+  "banner": "【按点名锁定 icon.a】",
+  "route_ids": [
+    "icon.a"
+  ],
+  "mode": "skill",
+  "execute_ok": true,
+  "artist_say": "【按点名锁定 icon.a】",
+  "plan_conflict": false,
+  "confidence": "named",
+  "conversation_id": "battery1105-icon-a",
+  "named_seed": true
+}

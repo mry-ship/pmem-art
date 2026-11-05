@@ -1,0 +1,2 @@
+﻿❌ [生成与评分隔离拦截] 第 1 轮尚无 `converge generate` 记录，禁止直接 `judge`/`round`。
+   👉 请先：`pyw -3 -u pmem_art.py converge generate --id battery1105-icon-c --round 1 --image <path> --prompt <prompt>`

@@ -1,0 +1,20 @@
+{
+  "route_id": "ui.kit",
+  "skill": "pmem-ui",
+  "session": "battery1105-ui",
+  "delivery": "concept-only",
+  "max_rounds": 1,
+  "rounds_used": 1,
+  "banner": "【按 【出图一轮交件】SpriteCook式 UI Kit/HUD/九宫格整套 走了】",
+  "category_benchmark": "竖屏休闲三消局内 HUD",
+  "ref_image": "assets/skill_20261103/05_ui.png",
+  "output_image": "assets/skill_20261105/ui_concept/r1.png",
+  "score": 8.87,
+  "threshold": 9.5,
+  "passed_threshold": false,
+  "dims": "构图8.9/光影8.8/透视8.6/质感9.0/风格9.1/无瑕疵8.7",
+  "strengths": "顶栏四控件同排单行可读；深蓝托盘七槽与底三圆钮同族描边体积；秋山虚化底铺满且无手机框",
+  "defects": "中央牌堆层叠遮挡偏浅、更像整齐网格；底钮下只有播放三角、Ad角标语义不足；礼盒压牌边缘略糊",
+  "status": "ok_under_threshold",
+  "summary": "concept-only 出图一轮交件；未过线（8.87<9.5），合法终态。"
+}

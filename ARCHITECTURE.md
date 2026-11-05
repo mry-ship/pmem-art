@@ -24,7 +24,7 @@
 | **模块元数据契约** | `paths` 代码路径映射、`synonyms` 同义词 | 除路径与美术黑话同义词外，新增 **`palette`（主辅点缀色 HEX 色板）** 与 **`specs`（标准分辨率、宽高比、RGBA 透明通道强制开关、九宫格切线 `nine_slice`、安全边距 `safe_margin_px`）** |
 | **7 大记忆类型 (`kind`)** | `exclusion` / `risk` / `correction` / `decision` / `conclusion` / `feature` / `plan` | 1. `style_redline`（风格红线/打回废案正反例对比）<br>2. `pipeline_constraint`（引擎切图/图层/Alpha 硬约束）<br>3. `visual_correction`（角色/光影设定迭代勘误）<br>4. `art_decision`（主美拍板定稿与视觉锚点）<br>5. `recipe`（可复现 AI 生图配方：LoRA/Prompt/Seed/ComfyUI）<br>6. `asset_record`（入库资产台账与引擎 Prefab 引用）<br>7. `art_plan`（待产美术需求规格单） |
 | **锚点与过期检测 (`Stale`)** | 基于 Python/TS AST 检查函数签名是否被修改 | **像素与元数据级锚点检测**：自动计算图片 **SHA-256 指纹**、解析 PNG `IHDR`（实际宽高、色深、RGBA 通道）与内嵌 `tEXt` 元数据；一旦资产被覆盖改尺寸或漏去背，关联记忆立即标 `STALE` |
-| **AI Agent 自动化闸门 (`Hooks`)** | 改代码前强制调 `search_memory` | **双端美术闸门**：<br>① **生图前闸门（Pre-Gen Gate）**：调用生图/修图工具前强制拉取模块红线、色板与标准 Recipe；<br>② **落盘质检门（Post-Asset Validator）**：图片落盘瞬间校验分辨率、RGBA 透明通道与外框安全留白，违规立即拦截重修 |
+| **AI Agent 自动化闸门 (`Hooks`)** | 改代码前强制调 `search_memory` | **生图前闸门（Pre-Gen）**：调用生图/修图前拉取模块红线、色板与 Recipe；落盘后 Hook 仅提示 feedback/ingest。**资产质检**靠手动或 CI 跑 `validate`/`doctor`，非落盘自动阻断 |
 | **可视化产物 (`HTML`)** | 知识图谱节点网络 `map.html` + 文本 `wiki` | **`art-atlas.html` 专业美术看图与记忆工作台**：支持瀑布流画廊、**棋盘格/深灰/亮白/实机四底色切换**、**Do vs. Don't 左右拖动滑杆对比**、**九宫格切线叠加预览**、**色卡点击复制 HEX** 与 **AI 配方一键复制** |
 
 ---
@@ -80,11 +80,12 @@
        │
        ▼
 ┌─────────────────────────────────────────────────────────────────────────┐
-│ Step 3: 落盘自动质检门 (Post-Asset Validator Hook)                      │
-│ 图片写入 assets/ 后，自动触发 pmem_art.py validate：                    │
+│ Step 3: 资产质检 (validate / doctor)                                    │
+│ 手动或 CI：`pyw -3 -u pmem_art.py validate` 或 `doctor`（含 validate）   │
 │ ↳ 检查分辨率是否等于模块契约 (如 1024x1024 / 512x512)                   │
 │ ↳ 检查颜色通道是否为 RGBA 透明底，外圈 safe_margin_px 像素是否全透明     │
-│ ↳ 若发现违规（如生成了 768x768 RGB 白底），立即阻断并要求 AI 重新抠图扩边│
+│ Hook post-tool/post-asset 仅提示 ingest/feedback，不自动跑 validate 阻断 │
+│ config 中 gate.auto_validate_on_save 为保留字段，当前 CLI 未读取        │
 └─────────────────────────────────────────────────────────────────────────┘
        │
        ▼

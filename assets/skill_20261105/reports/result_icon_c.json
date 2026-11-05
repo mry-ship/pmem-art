@@ -1,0 +1,15 @@
+{
+  "route_id": "icon.c",
+  "session": "battery1105-icon-c",
+  "conversation": "battery1105-icon-c",
+  "mode": "C",
+  "rounds": 1,
+  "score": 9.36,
+  "passed_threshold_9_5": false,
+  "dims": "剪影识别9.5/描边色板9.3/棚拍光9.4/透明底9.6/无字9.7/无瑕疵9.2",
+  "defects": "角隅半透明毛边仍可见；接触影偏轻",
+  "true_alpha": true,
+  "outputs": {
+    "master": "assets/skill_20261105/icon_c/prop_mushroom_platter_1024.png"
+  }
+}

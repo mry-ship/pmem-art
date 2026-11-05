@@ -1,0 +1,17 @@
+﻿usage: pmem-art route [-h] [--text TEXT] [--canonical CANONICAL]
+                      [--image IMAGE] [--role ROLE] [--top TOP] [--json]
+                      [--brief] [--rebuild] [--conversation CONVERSATION]
+
+options:
+  -h, --help            show this help message and exit
+  --text TEXT           玩家原话
+  --canonical CANONICAL
+                        Agent 写的标准路由句（口语先标准化）；用于检索增强与双路冲突校验
+  --image IMAGE         附图路径，可重复
+  --role ROLE           附图角色（与 --image 顺序对齐），如 identity / structure
+  --top TOP             近邻条数，默认 8
+  --json                只打印 JSON
+  --brief               只打印给美术看的人话标签（不含技术字段）
+  --rebuild             从 2500+ 用例蒸馏重建打包话术库，并同步到 .memory-art/route_bank/
+  --conversation CONVERSATION
+                        当前对话 id。写入后，别的对话不能拿这次路由开画

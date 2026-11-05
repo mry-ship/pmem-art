@@ -1,0 +1,7 @@
+exit=1
+STDOUT:
+🧠 [合理性闸门] 已注入合理性修订提示词
+❌ [生成前硬性参数校验拦截] [battery1105-ordinary] Parameter 'reference_image_paths' file not found on disk: 'assets/skill_20261103/04_prop.png' (expected: 'assets/skill_20261103/04_prop.png', actual: missing file 'assets/skill_20261103/04_prop.png')
+
+STDERR:
+

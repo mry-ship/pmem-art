@@ -1,0 +1,14 @@
+{
+  "saved_at": 1793887992.9307685,
+  "text": "克隆：锁妖精花园粘土童话画风，换新题材「冬日农场雪地，农夫抱小羊」。禁止抄参考构图、分区与物件（无鼹鼠、花瓣屋、溪流、蘑菇桌、巨型热带叶）。雪要像光滑白粘土而非写实冰晶；农夫与小羊为圆角粘土Q版；柔和高键棚光+糖果饱和冬日色；双眼有虹膜高光禁黑点瞳。",
+  "banner": "【按 克隆 走了】",
+  "route_ids": [
+    "draw.clone"
+  ],
+  "mode": "skill",
+  "execute_ok": false,
+  "artist_say": "【按 克隆 走了】\n按克隆：锁参考画风，换成新题材。",
+  "plan_conflict": false,
+  "confidence": "low",
+  "conversation_id": "battery1105-clone-v2"
+}

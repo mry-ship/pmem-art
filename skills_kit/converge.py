@@ -68,6 +68,383 @@ def _norm_ref_paths(paths: Any) -> list[str]:
     return out
 
 
+# 重路径：出图轮次硬顶 1（生1→judge1→finish；交件须标明是否 ≥9.5；禁止叠轮）
+# 只限制生图轮次；关系/合理性仍要写，不叫「整段只审一次」
+MERGE_OVERVIEW_MAX_ROUNDS = 1
+MERGE_OVERVIEW_MAX_DISCUSS = 2  # 论述便宜；第 1 稿过了就停
+MERGE_PER_CELL_MAX_ROUNDS = 1
+UI_CONCEPT_MAX_ROUNDS = 1
+UI_SHEET_MAX_ROUNDS = 1
+ICON_KEY_MAX_ROUNDS = 1
+SPLIT_MAX_ROUNDS = 1
+# 出图硬顶=1 时不再垫上一张成图叠轮（保留函数仅供单测/调试抬高 max_rounds）
+MERGE_OVERVIEW_PAD_PREV_MIN_SCORE = 8.5
+_MERGE_STRUCTURAL_FAIL_MARKERS = (
+    "回退",
+    "跳档",
+    "错链",
+    "关系散",
+    "换物种",
+    "拼盘",
+    "结构塌",
+    "档序错",
+    "对标错",
+    "叙事错",
+    "整链错",
+    "不是同店",
+)
+
+
+def _route_blob(
+    *,
+    goal: str = "",
+    expect_route: str = "",
+    route_ids: list[str] | None = None,
+    delivery_hint: str = "",
+    module: str = "",
+) -> tuple[list[str], str]:
+    ids = [str(x) for x in (route_ids or []) if str(x)]
+    er = (expect_route or "").strip()
+    if er:
+        ids.append(er)
+    blob = f"{goal or ''} {delivery_hint or ''} {module or ''} {' '.join(ids)}".lower()
+    return ids, blob
+
+
+def _merge_overview_requested(
+    *,
+    goal: str = "",
+    expect_route: str = "",
+    route_ids: list[str] | None = None,
+    delivery_hint: str = "",
+) -> bool:
+    """True when this converge is a merge ladder overview sheet (not per_cell)."""
+    ids, blob = _route_blob(
+        goal=goal, expect_route=expect_route, route_ids=route_ids, delivery_hint=delivery_hint
+    )
+    if any(k in blob for k in ("per_cell", "一档一张", "逐格", "单张正方形")):
+        return False
+    # 只认明确 merge 路由/合成梯，避免 goal 里偶然出现「合成」误套
+    if "merge.ladder" in ids or expect_route == "merge.ladder":
+        return True
+    if "merge.ladder" in blob or "合成梯" in (goal or "") or "/pmem-merge" in blob:
+        return True
+    if ("overview_sheet" in blob or "整表一组" in blob or "整表出齐" in blob) and (
+        "merge.ladder" in blob or "合成梯" in (goal or "")
+    ):
+        return True
+    return False
+
+
+def _merge_per_cell_requested(
+    *,
+    goal: str = "",
+    expect_route: str = "",
+    route_ids: list[str] | None = None,
+    delivery_hint: str = "",
+) -> bool:
+    """True when merge ladder is explicitly per-cell delivery."""
+    ids, blob = _route_blob(
+        goal=goal, expect_route=expect_route, route_ids=route_ids, delivery_hint=delivery_hint
+    )
+    if not any(k in blob for k in ("per_cell", "一档一张", "逐格", "单张正方形")):
+        return False
+    return (
+        "merge.ladder" in ids
+        or expect_route == "merge.ladder"
+        or "merge.ladder" in blob
+        or "合成梯" in (goal or "")
+        or "/pmem-merge" in blob
+    )
+
+
+def _ui_speed_requested(
+    *,
+    goal: str = "",
+    expect_route: str = "",
+    route_ids: list[str] | None = None,
+    module: str = "",
+) -> str:
+    """Return '' | 'concept' | 'sheet' for UI kit speed caps."""
+    ids, blob = _route_blob(
+        goal=goal, expect_route=expect_route, route_ids=route_ids, module=module
+    )
+    # 收窄：禁止仅因 goal 含 hud/九宫格就套 UI 硬顶
+    is_ui = (
+        "ui.kit" in ids
+        or expect_route == "ui.kit"
+        or str(module or "").lower().startswith("ui.")
+        or "ui概念" in blob
+        or "ui组件" in blob
+        or "ui kit" in blob
+        or "/pmem-ui" in blob
+        or "pmem-ui" in blob
+    )
+    if not is_ui:
+        return ""
+    if any(
+        k in blob
+        for k in (
+            "组件表",
+            "ui组件",
+            "component sheet",
+            "sheets/",
+            "状态族",
+            "9-slice",
+            "九宫格切",
+            "elements/",
+        )
+    ):
+        return "sheet"
+    return "concept"
+
+
+def _icon_speed_requested(
+    *,
+    goal: str = "",
+    expect_route: str = "",
+    route_ids: list[str] | None = None,
+    module: str = "",
+) -> bool:
+    ids, blob = _route_blob(
+        goal=goal, expect_route=expect_route, route_ids=route_ids, module=module
+    )
+    if any(x.startswith("icon.") for x in ids) or str(expect_route or "").startswith("icon."):
+        return True
+    # 收窄：不要仅凭「道具格/app icon」口头词套硬顶
+    return str(module or "").lower().startswith("icon.") or "/pmem-icon" in blob or "pmem-icon" in blob
+
+
+def _split_speed_requested(
+    *,
+    goal: str = "",
+    expect_route: str = "",
+    route_ids: list[str] | None = None,
+    contract: str = "",
+) -> bool:
+    """多图分工 / 远中近 / split 合同：每交付物只审一次。"""
+    if str(contract or "").strip().lower() == "split":
+        return True
+    ids, blob = _route_blob(
+        goal=goal, expect_route=expect_route, route_ids=route_ids
+    )
+    if "draw.split" in ids or expect_route == "draw.split":
+        return True
+    return any(
+        k in blob
+        for k in (
+            "多图分工",
+            "远中近",
+            "远景",
+            "中景",
+            "近景",
+            "打开这一态",
+            "关合",
+            "contract split",
+            "--contract split",
+        )
+    )
+
+
+def _apply_merge_overview_caps(
+    sess: dict[str, Any],
+    *,
+    goal: str = "",
+    expect_route: str = "",
+    max_rounds: int,
+) -> int:
+    """Stamp overview caps onto session; return effective max_rounds."""
+    route_ids = [str(x) for x in (sess.get("route_ids") or []) if str(x)]
+    if not _merge_overview_requested(
+        goal=goal or str(sess.get("goal") or ""),
+        expect_route=expect_route,
+        route_ids=route_ids,
+    ):
+        return int(max_rounds)
+    capped = min(int(max_rounds), MERGE_OVERVIEW_MAX_ROUNDS)
+    sess["merge_delivery"] = "overview_sheet"
+    sess["merge_sheet_cap"] = MERGE_OVERVIEW_MAX_ROUNDS
+    sess["merge_discuss_cap"] = MERGE_OVERVIEW_MAX_DISCUSS
+    sess["max_rounds"] = capped
+    # 停机以整表清单为准；出图轮次硬顶 1，禁止叠轮垫图
+    sess["stop_policy"] = "merge_overview_checklist"
+    sess["single_judge"] = True
+    return capped
+
+
+def _apply_merge_per_cell_caps(
+    sess: dict[str, Any],
+    *,
+    goal: str = "",
+    expect_route: str = "",
+    max_rounds: int,
+) -> int:
+    route_ids = [str(x) for x in (sess.get("route_ids") or []) if str(x)]
+    if not _merge_per_cell_requested(
+        goal=goal or str(sess.get("goal") or ""),
+        expect_route=expect_route,
+        route_ids=route_ids,
+    ):
+        return int(max_rounds)
+    capped = min(int(max_rounds), MERGE_PER_CELL_MAX_ROUNDS)
+    sess["merge_delivery"] = "per_cell"
+    sess["merge_discuss_cap"] = MERGE_OVERVIEW_MAX_DISCUSS
+    sess["merge_cell_cap"] = MERGE_PER_CELL_MAX_ROUNDS
+    sess["max_rounds"] = capped
+    # 出图一轮交件：记分并标明是否 ≥9.5；禁止第 2 张
+    sess["stop_policy"] = "image_round_cap"
+    sess["single_judge"] = True
+    return capped
+
+
+def _apply_ui_speed_caps(
+    sess: dict[str, Any],
+    *,
+    goal: str = "",
+    expect_route: str = "",
+    module: str = "",
+    max_rounds: int,
+) -> int:
+    stage = _ui_speed_requested(
+        goal=goal or str(sess.get("goal") or ""),
+        expect_route=expect_route,
+        route_ids=[str(x) for x in (sess.get("route_ids") or []) if str(x)],
+        module=module or str(sess.get("module") or ""),
+    )
+    if not stage:
+        return int(max_rounds)
+    hard = UI_SHEET_MAX_ROUNDS if stage == "sheet" else UI_CONCEPT_MAX_ROUNDS
+    capped = min(int(max_rounds), hard)
+    sess["ui_delivery"] = stage
+    sess["ui_round_cap"] = hard
+    sess["max_rounds"] = capped
+    sess["stop_policy"] = "image_round_cap"
+    sess["single_judge"] = True
+    return capped
+
+
+def _apply_icon_speed_caps(
+    sess: dict[str, Any],
+    *,
+    goal: str = "",
+    expect_route: str = "",
+    module: str = "",
+    max_rounds: int,
+) -> int:
+    if not _icon_speed_requested(
+        goal=goal or str(sess.get("goal") or ""),
+        expect_route=expect_route,
+        route_ids=[str(x) for x in (sess.get("route_ids") or []) if str(x)],
+        module=module or str(sess.get("module") or ""),
+    ):
+        return int(max_rounds)
+    capped = min(int(max_rounds), ICON_KEY_MAX_ROUNDS)
+    sess["icon_key_cap"] = ICON_KEY_MAX_ROUNDS
+    sess["max_rounds"] = capped
+    sess["stop_policy"] = "image_round_cap"
+    sess["single_judge"] = True
+    return capped
+
+
+def _apply_split_speed_caps(
+    sess: dict[str, Any],
+    *,
+    goal: str = "",
+    expect_route: str = "",
+    max_rounds: int,
+) -> int:
+    if not _split_speed_requested(
+        goal=goal or str(sess.get("goal") or ""),
+        expect_route=expect_route,
+        route_ids=[str(x) for x in (sess.get("route_ids") or []) if str(x)],
+        contract=str(sess.get("contract") or ""),
+    ):
+        return int(max_rounds)
+    capped = min(int(max_rounds), SPLIT_MAX_ROUNDS)
+    sess["split_round_cap"] = SPLIT_MAX_ROUNDS
+    sess["max_rounds"] = capped
+    sess["stop_policy"] = "image_round_cap"
+    sess["single_judge"] = True
+    return capped
+
+
+def _apply_skill_speed_caps(
+    sess: dict[str, Any],
+    *,
+    goal: str = "",
+    expect_route: str = "",
+    module: str = "",
+    max_rounds: int,
+) -> int:
+    """Heavy-path: image-round cap=1 (not 'whole skill one review'). First match wins."""
+    g = goal or str(sess.get("goal") or "")
+    er = expect_route or ""
+    mod = module or str(sess.get("module") or "")
+    eff = _apply_merge_overview_caps(sess, goal=g, expect_route=er, max_rounds=int(max_rounds))
+    if sess.get("merge_delivery") == "overview_sheet":
+        sess["single_judge"] = True
+        return eff
+    eff = _apply_merge_per_cell_caps(sess, goal=g, expect_route=er, max_rounds=int(max_rounds))
+    if sess.get("merge_delivery") == "per_cell":
+        return eff
+    # merge.ladder 关系会话（尚未写出 delivery）：仍锁论述上限
+    ids = [str(x) for x in (sess.get("route_ids") or []) if str(x)]
+    if "merge.ladder" in ids or er == "merge.ladder":
+        sess["merge_discuss_cap"] = MERGE_OVERVIEW_MAX_DISCUSS
+    eff = _apply_ui_speed_caps(
+        sess, goal=g, expect_route=er, module=mod, max_rounds=int(max_rounds)
+    )
+    if sess.get("ui_delivery"):
+        return eff
+    eff = _apply_icon_speed_caps(
+        sess, goal=g, expect_route=er, module=mod, max_rounds=int(max_rounds)
+    )
+    if sess.get("icon_key_cap"):
+        return eff
+    return _apply_split_speed_caps(
+        sess, goal=g, expect_route=er, max_rounds=int(max_rounds)
+    )
+
+
+def _merge_overview_pad_decision(
+    rounds: list[dict[str, Any]],
+    *,
+    rebuild: bool,
+    prompt: str = "",
+    next_fix: str = "",
+    min_score: float = MERGE_OVERVIEW_PAD_PREV_MIN_SCORE,
+) -> tuple[bool, str, str, float]:
+    """Return (pad_previous, reason, best_image, best_score).
+
+    垫上一张只适合「已经接近、只修局部」。低分或关系/档序硬伤时垫失败成图会锁死错误 DNA。
+    """
+    best_img = ""
+    best_sc = -1.0
+    last_defects = ""
+    for row in rounds:
+        img = str(row.get("image") or "").strip()
+        if not img:
+            continue
+        try:
+            sc = float(row.get("score") or 0.0)
+        except (TypeError, ValueError):
+            sc = 0.0
+        if sc >= best_sc:
+            best_sc = sc
+            best_img = img
+            last_defects = str(row.get("defects") or "")
+    if rebuild:
+        return False, "rebuild_no_pad_prev", best_img, best_sc
+    if not best_img:
+        return False, "no_prior_sheet", "", -1.0
+    blob = f"{last_defects} {next_fix or ''} {prompt or ''}"
+    if any(m in blob for m in _MERGE_STRUCTURAL_FAIL_MARKERS):
+        return False, "structural_or_relation_fail", best_img, best_sc
+    if best_sc + 1e-9 < float(min_score):
+        return False, f"score_below_{min_score:g}", best_img, best_sc
+    return True, f"local_polish_pad_best(score={best_sc:.2f})", best_img, best_sc
+
+
 def converge_start(
     root: Path,
     data: dict[str, Any],
@@ -653,6 +1030,41 @@ def cmd_converge(
                 cfg_conv.get("regression_drop") or DEFAULT_REGRESSION_DROP
             ),
         }
+        if expect_route and expect_route not in sess["route_ids"]:
+            sess["route_ids"] = list(sess["route_ids"]) + [str(expect_route)]
+        eff_max = _apply_skill_speed_caps(
+            sess,
+            goal=goal or "",
+            expect_route=expect_route or "",
+            module=module or "",
+            max_rounds=int(max_rounds),
+        )
+        if sess.get("merge_delivery") == "overview_sheet":
+            print(
+                f"🪜 [merge overview] 出图一轮交件：整表生1→judge1→finish；"
+                f"关系稿最多 {MERGE_OVERVIEW_MAX_DISCUSS}（过了就停）；"
+                f"交件须标明是否 ≥9.5/清单过关；禁止叠轮垫图；max_rounds={eff_max}。"
+            )
+        elif sess.get("merge_delivery") == "per_cell":
+            print(
+                f"🪜 [merge per_cell] 出图一轮交件：每档生1→judge1；"
+                f"关系稿最多 {MERGE_OVERVIEW_MAX_DISCUSS}；交件标明是否 ≥9.5；max_rounds={eff_max}。"
+            )
+        elif sess.get("ui_delivery"):
+            print(
+                f"🖥️ [ui] 出图一轮交件：{sess.get('ui_delivery')} 生1→judge1→finish；"
+                f"交件标明是否 ≥9.5；未点名 full kit 禁止拆组件表；max_rounds={eff_max}。"
+            )
+        elif sess.get("icon_key_cap"):
+            print(
+                f"🧩 [icon] 出图一轮交件：关键枚若开闭环生1→judge1；"
+                f"交件标明是否 ≥9.5；批量默认不逐枚开闭环；max_rounds={eff_max}。"
+            )
+        elif sess.get("split_round_cap"):
+            print(
+                f"🗂️ [split] 出图一轮交件：本交付物生1→judge1→finish；"
+                f"交件标明是否 ≥9.5；max_rounds={eff_max}。"
+            )
         if lock_text or goal:
             from skills_kit.prompt_scale import merge_dim_lock_overrides, format_dim_lock_summary_zh
             ov = merge_dim_lock_overrides(eff_scale, {}, goal or "", lock_text or "")
@@ -734,6 +1146,18 @@ def cmd_converge(
             return 1
         notes = [d for d in (sess.get("discussions") or []) if int(d.get("round") or 0) != (round_num or 0)]
         n = round_num if round_num > 0 else (len(sess.get("discussions") or []) + 1)
+        discuss_cap = int(sess.get("merge_discuss_cap") or 0)
+        if not discuss_cap and (
+            sess.get("merge_delivery") in ("overview_sheet", "per_cell")
+            or "merge.ladder" in [str(x) for x in (sess.get("route_ids") or [])]
+        ):
+            discuss_cap = MERGE_OVERVIEW_MAX_DISCUSS
+        if discuss_cap and n > discuss_cap:
+            print(
+                f"🛑 [merge 关系] 已满 {discuss_cap} 稿上限。"
+                "仍说不通就停、不出图；说通了请 reasonableness → generate，禁止再凑论述。"
+            )
+            return 1
         notes = [d for d in notes if int(d.get("round") or 0) != n]
         notes.append({
             "round": n,
@@ -745,7 +1169,13 @@ def cmd_converge(
         notes.sort(key=lambda d: int(d.get("round") or 0))
         sess["discussions"] = notes
         _write_session_json(sf, sess)
-        print(f"📝 已记下论述第 {n} 稿（session={session_id}）。finish 的过程板会列出全部 {len(notes)} 稿。")
+        early = ""
+        if discuss_cap:
+            early = f" 过了五问+relation-judge+商业对标可立刻出图，不必凑满 {discuss_cap}。"
+        print(
+            f"📝 已记下论述第 {n} 稿（session={session_id}）。"
+            f"finish 的过程板会列出全部 {len(notes)} 稿。{early}"
+        )
         return 0
 
     th = float(sess.get("accept_threshold") or sess.get("threshold", DEFAULT_THRESHOLD))
@@ -946,9 +1376,38 @@ def cmd_converge(
             )
             return 0
         if r_no > mr:
-            print(f"🛑 已超过最大轮次上限 ({mr} 轮)，请直接运行 `{pmem_art_cli()} converge finish --id {session_id}` 结算最高分图。")
+            if sess.get("merge_delivery") == "overview_sheet":
+                print(
+                    f"🛑 [merge overview] 整表已达硬顶 {mr} 次，禁止再刷。"
+                    f"请 `{pmem_art_cli()} converge finish --id {session_id}` 交清单最优一张，并列未过项。"
+                )
+            elif sess.get("merge_delivery") == "per_cell":
+                print(
+                    f"🛑 [merge per_cell] 本档已达硬顶 {mr} 次，禁止再刷。"
+                    f"请 `{pmem_art_cli()} converge finish --id {session_id}` 交本档最高分（仍须 audit/关系过关）。"
+                )
+            elif sess.get("ui_delivery"):
+                print(
+                    f"🛑 [ui speed] {sess.get('ui_delivery')} 已达硬顶 {mr} 次，禁止再刷。"
+                    f"请 `{pmem_art_cli()} converge finish --id {session_id}` 交最高分。"
+                )
+            elif sess.get("icon_key_cap"):
+                print(
+                    f"🛑 [icon speed] 关键枚已达硬顶 {mr} 次，禁止再刷。"
+                    f"请 `{pmem_art_cli()} converge finish --id {session_id}` 交最高分；"
+                    "批量其余枚不要再开闭环。"
+                )
+            elif sess.get("split_round_cap"):
+                print(
+                    f"🛑 [split speed] 本交付物已审过 1 次，禁止再刷。"
+                    f"请 `{pmem_art_cli()} converge finish --id {session_id}` 交件并列不足。"
+                )
+            else:
+                print(
+                    f"🛑 已超过最大轮次上限 ({mr} 轮)，请直接运行 "
+                    f"`{pmem_art_cli()} converge finish --id {session_id}` 结算最高分图。"
+                )
             return 1
-
         eff_ref_img = (ref_image or sess.get("ref_image") or "").strip()
         eff_ar = (aspect_ratio or sess.get("default_aspect_ratio") or sess.get("aspect_ratio") or "").strip()
         pad_mode = str(sess.get("pad_mode") or DEFAULT_PAD_MODE)
@@ -1189,6 +1648,16 @@ def cmd_converge(
         fix_line = ""
         if continuation and carry_fix and carry_fix not in composed_prompt:
             fix_line = f"   · 改点: {carry_fix}\n"
+        fallback_judge_prompt = agent_absolute_5d_judge_prompt(
+            goal=str(sess.get("goal") or goal or ""),
+            target_threshold=th,
+            round_num=r_no,
+            max_rounds=mr,
+            scale=str(sess.get("scale") or ""),
+            ref_analysis=str(sess.get("ref_analysis") or ""),
+            dim_weights=s_prof.get("dim_weights"),
+            anatomy_floor=float(sess.get("anatomy_floor") or 7.5),
+        )
         print(
             f"🎨 [Step 2A · 仅生图阶段完成] 第 {r_no}/{mr} 轮图像已生成: `{image}` ({v_badge})\n"
             f"{pad_line}"
@@ -1198,7 +1667,7 @@ def cmd_converge(
             f"{stub_line}"
             f"   · 置顶风格指令 Prompt: {composed_prompt}\n"
             f"   · 当前未执行任何自评或 VLM 裁判；请先看图再打六维，不要从 9.3 起跳：\n"
-            f"{agent_absolute_5d_judge_prompt(round_num=r_no, max_rounds=mr, scale=str(sess.get('scale') or ''), ref_analysis=str(sess.get('ref_analysis') or ''))}\n"
+            f"{fallback_judge_prompt}\n"
             f"   · 然后：`{pmem_art_cli()} converge judge --id {session_id} --round {r_no} --image {image} --dims ...`"
         )
         return 0
@@ -1600,6 +2069,35 @@ def cmd_converge(
                 )
             msg += f"   👉 先用上面这张垫图出第 {r_no + 1} 轮，再 `converge generate`，然后 `converge judge`。"
 
+        vlm_report = judge_res.get("remote_vlm") or {}
+        if vlm_report.get("source") == "independent_vlm":
+            review = vlm_report.get("review") or {}
+            if review.get("rerated"):
+                spread = review.get("score_spread")
+                spread_text = f"，两次分差 {float(spread):.2f}" if spread is not None else ""
+                msg += f"\n   · 自动复评：临界分/门槛触发，共 {review.get('pass_count', 2)} 次{spread_text}。"
+            elif review.get("recheck_error"):
+                msg += "\n   · 自动复评尝试失败，保留首评结果。"
+            evidence_labels = {
+                "composition": "构图", "lighting_color": "光影",
+                "perspective_anatomy": "透视", "texture_detail": "质感",
+                "spec_style": "风格", "flawlessness": "无瑕度",
+            }
+            evidence = vlm_report.get("score_evidence") or {}
+            if isinstance(evidence, dict):
+                evidence_line = "；".join(
+                    f"{evidence_labels.get(str(key), str(key))}：{str(value)[:48]}"
+                    for key, value in evidence.items()
+                    if str(value or "").strip()
+                )
+                if evidence_line:
+                    msg += f"\n   · 评分证据（画面像素）：{evidence_line[:360]}"
+            missing_evidence = vlm_report.get("evidence_missing_dims") or []
+            if missing_evidence:
+                msg += "\n   · 评分证据缺项：" + "、".join(
+                    evidence_labels.get(str(key), str(key)) for key in missing_evidence
+                )
+
         _write_session_json(sf, sess)
         mark_active_session(root, session_id)
         print(msg)
@@ -1681,9 +2179,10 @@ def cmd_converge(
                 badge_text = f"共 {len(judged_for_finish)} 轮未达阈值，采用最高分"
 
         win_score = _score_of(winner)
-        # 与 showcase_gate / ConvergeGate 一致：STOP_REGRESSION|PLATEAU 后允许 <9.5 结算最高分
+        # 与 showcase_gate / ConvergeGate 一致：STOP_REGRESSION|PLATEAU / 出图一轮硬顶后允许 <9.5 结算
         early_safe = (
             str(sess.get("status") or "") == "early_safe_stop"
+            or bool(sess.get("single_judge"))
             or any(
                 str((r or {}).get("early_safe_stop") or "")
                 in ("STOP_REGRESSION", "STOP_PLATEAU")
@@ -1700,19 +2199,27 @@ def cmd_converge(
             early_safe_stop=early_safe,
         )
         if early_safe and win_score < float(accept_th):
-            # 展陈 caption / HTML audit 依赖「安全早停」字样识别 early_safe_stop
-            badge_text = f"安全早停 · 共 {n_judged} 轮未达阈值，采用最高分"
-            if "安全早停" not in outcome_str:
+            # 展陈 caption / HTML audit 依赖「安全早停|出图一轮交件」识别
+            if sess.get("single_judge"):
+                badge_text = f"出图一轮交件 · 未过线，采用第 {winner['round']} 轮"
                 outcome_str = (
-                    f"🛑 **安全早停后结算**：已审 {n_judged} 轮，最高 "
-                    f"`{win_score:.2f}` < `{float(accept_th):.2f}`，交付历史最高分"
-                    f"（第 {winner['round']} 轮）"
+                    f"⚠️ **出图一轮交件（未过线）**：已审 {n_judged}/{mr} 轮，最高 "
+                    f"`{win_score:.2f}` < `{float(accept_th):.2f}`，交本张并列不足"
+                    f"（第 {winner['round']} 轮）；禁止叠轮。"
                 )
+            else:
+                badge_text = f"安全早停 · 共 {n_judged} 轮未达阈值，采用最高分"
+                if "安全早停" not in outcome_str:
+                    outcome_str = (
+                        f"🛑 **安全早停后结算**：已审 {n_judged} 轮，最高 "
+                        f"`{win_score:.2f}` < `{float(accept_th):.2f}`，交付历史最高分"
+                        f"（第 {winner['round']} 轮）"
+                    )
         if action == "finish" and not sess["showcase_ready"]:
             print(
                 f"❌ 还不能 finish：最高 {win_score:.2f} < {float(accept_th):.2f}，"
                 f"且只审了 {n_judged}/{mr} 轮。继续 converge generate / judge。"
-                " 未满 4 轮且不到线时不能结算终稿，也不能复制成 final.jpg。"
+                f" 未满硬顶 {mr} 轮且不到线时不能结算终稿，也不能复制成 final.jpg。"
             )
             _write_session_json(sf, sess)
             return 1
@@ -1729,7 +2236,7 @@ def cmd_converge(
             _write_session_json(sf, sess)
             if not sess["showcase_ready"]:
                 print(
-                    "ℹ️ 这是预览，会话还没结算。未满 4 轮且不到 9.5 时不能当终稿，"
+                    f"ℹ️ 这是预览，会话还没结算。未满硬顶 {mr} 轮且不到 9.5 时不能当终稿，"
                     "继续 converge generate / judge。"
                 )
             else:

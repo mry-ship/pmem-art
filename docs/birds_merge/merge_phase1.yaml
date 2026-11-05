@@ -1,0 +1,30 @@
+# 鸟类合成梯 · shop_ladder L1–L8（overview_sheet 2×4）
+# 商业对标（优先于口语提案）：Merge Mansion Great Bake-off · Chickens 生物段
+# Hatchling → Baby Chick → Chicks → Pullet → Hen → Laying Hen → Chickens → A Brood of Hens
+# Small Hen House / Hen House / Chicken Coop = 生产者另链，禁止焊入
+# 过程：幼体生长 + 成体完成度 + 末段数量群（竞品货柜原有，非硬凑）
+# 画风默认：顶级休闲 merge 货柜软塑胶品质（未点名风格）
+# 新鲜感：邻档可微调神态/头向/站姿，锁同棚机位与家族色
+version: birds-mm-chicken-20261105-v3-commercial
+pipeline: art-merge-two-phase
+delivery: overview_sheet
+
+tracks:
+  birds_cute:
+    module: prop.BirdsMerge.Cute
+    chain_mode: shop_ladder
+    levels: 8
+    grid_rows: 2
+    grid_cols: 4
+    surface: Merge Mansion级休闲merge货柜品质；软塑胶厚实圆润，棚柔光短接触影，饱和友好不油亮；2×4白圆角卡深炭灰底；每格一个货柜道具居中无等级字；暖黄绒→橙褐成羽→冠红；生物可有轻表情邻档微变神态；禁金铠换装海报风、禁鸡舍建筑焊入
+    commercial_ref: "Merge Mansion Bake-off Chickens: Hatchling→Baby Chick→Chicks→Pullet→Hen→Laying Hen→Chickens→A Brood of Hens (hen house separate)"
+    process_type: "shop_ladder_creature_growth_plus_commercial_flock"
+    rows:
+      - { level: 1, name: 破壳幼雏, silhouette: 破壳圆滚黄绒几乎无翅单件, scale_delta: 基档, scale_pct: 0.58, evolve_to: Hatchling破壳黄绒, merge_why: "—", parts_add: "—" }
+      - { level: 2, name: 小鸡, silhouette: 单只黄绒短翅站姿可微侧头, scale_delta: "+小", scale_pct: 0.61, evolve_to: Baby Chick站立小鸡, merge_why: 两只破壳幼雏合成能站立的短翅小鸡, parts_add: "—" }
+      - { level: 3, name: 雏双, silhouette: 两只小黄绒并排同簇仍一货件, scale_delta: "+小", scale_pct: 0.64, evolve_to: Chicks双雏簇, merge_why: 两只小鸡合成并排可读的双雏同簇货件, parts_add: "—" }
+      - { level: 4, name: 青年鸡, silhouette: 单只瘦长短尾冠芽, scale_delta: "+中", scale_pct: 0.67, evolve_to: Pullet青年鸡, merge_why: 两簇雏双合成单只瘦长并出现短尾与冠芽的青年鸡, parts_add: "—" }
+      - { level: 5, name: 母鸡, silhouette: 单只圆身成羽清晰红冠, scale_delta: "+中", scale_pct: 0.70, evolve_to: Hen成羽母鸡, merge_why: 两只青年鸡合成圆身成羽清晰鸡冠的母鸡, parts_add: "—" }
+      - { level: 6, name: 下蛋母鸡, silhouette: 单只更丰满垂羽大红冠, scale_delta: "+中", scale_pct: 0.73, evolve_to: Laying Hen下蛋母鸡, merge_why: 两只母鸡合成更丰满垂羽与更大红冠的下蛋母鸡, parts_add: "—" }
+      - { level: 7, name: 鸡群, silhouette: 两三成鸡同簇群剪影一货件, scale_delta: "+大", scale_pct: 0.76, evolve_to: Chickens小簇成鸡, merge_why: 两只下蛋母鸡合成两三只成鸡同簇的货柜群件, parts_add: "—" }
+      - { level: 8, name: 母鸡群, silhouette: 更大多只母鸡同簇无建筑, scale_delta: "+大", scale_pct: 0.80, evolve_to: Brood大簇母鸡群, merge_why: 两簇鸡群合成更多只母鸡同簇的大群货件, parts_add: "—" }

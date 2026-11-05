@@ -21,6 +21,8 @@ aliases:
 - 锁风验证
 - style_then_clone
 - layout_not_style_echo
+verified: '2026-11-05'
+verified_at: '2026-11-05T23:10:01.441+08:00'
 ---
 需求来源：电池测「锁风格为了出图」卡在只入库；原画贴样张构图被说成大体对，玩家要很好。
 必须保持：

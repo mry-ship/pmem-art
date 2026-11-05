@@ -1,0 +1,3 @@
+ℹ️ 当前收敛会话还没有轮次记录（先 converge generate，再 converge judge，然后 finish）。
+🧠 [合理性闸门] 已注入合理性修订提示词
+❌ [生成前硬性参数校验拦截] [battery1105-multi] Parameter 'reference_image_paths' file not found on disk: 'C:\Users\ZhengLangPC\Desktop\Cursor-Pmem-Art\assets\skill_battery_20261103\03_structure.png,C:\Users\ZhengLangPC\Desktop\Cursor-Pmem-Art\assets\skill_battery_20261103\02_character.png' (expected: 'C:\Users\ZhengLangPC\Desktop\Cursor-Pmem-Art\assets\skill_battery_20261103\03_structure.png,C:\Users\ZhengLangPC\Desktop\Cursor-Pmem-Art\assets\skill_battery_20261103\02_character.png', actual: missing file 'C:\Users\ZhengLangPC\Desktop\Cursor-Pmem-Art\assets\skill_battery_20261103\03_structure.png,C:\Users\ZhengLangPC\Desktop\Cursor-Pmem-Art\assets\skill_battery_20261103\02_character.png')

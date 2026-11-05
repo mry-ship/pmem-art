@@ -1,0 +1,15 @@
+{
+  "route_id": "icon.b",
+  "session": null,
+  "mode": "B",
+  "preset": "Soft",
+  "strokeWidth": 2,
+  "grid": 24,
+  "bitmap_converge": false,
+  "passed_checklist": true,
+  "note": "线性 SVG 一套写文件交付，未走 bitmap 生图",
+  "outputs": {
+    "dir": "assets/skill_battery_20261105/icon_b",
+    "icons": ["home.svg", "shop.svg", "bag.svg", "settings.svg"]
+  }
+}

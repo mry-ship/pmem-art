@@ -1,6 +1,6 @@
 ---
 name: pmem-icon
-description: 仅当玩家点名图标，或生图分流判成桌面图标、SVG 图标集、游戏道具格时使用。A/B/C 不混用。不要用来画普通插画或合成梯。(A) iOS/Android 1024×1024 App Icon 桌面启动图标母版（满幅直角出图+72%~80%圆角安全区+多尺寸导出矩阵+深浅色自适应）；(B) jezweb 式一致化 SVG 矢量图标集；(C) 游戏道具 64/128/256px 透明底栅格图标。全部支持 converge generate 与 converge judge 两步分离，以及动态阈值收敛闭环。
+description: 仅当玩家点名图标，或生图分流判成桌面图标、SVG 图标集、游戏道具格时使用。A/B/C 不混用。不要用来画普通插画或合成梯。(A) 默认只交 Light 母版（出图一轮）；Dark/Tinted 仅玩家点名才另出，禁止口头宣称已派生齐套。(B)(C) 只批量预览；关键枚闭环默认禁止，点名翻车才开且生1→judge1。
 ---
 
 # `/pmem-icon` — jezweb 式一致化图标集 / SVG 取向生成
@@ -16,10 +16,16 @@ description: 仅当玩家点名图标，或生图分流判成桌面图标、SVG 
 ```
 
 ## 原理（截图摘要）
-- **Mode A**：满幅直角母版 → 安全区单符号 → Light/Dark/Tinted → 尺寸矩阵 → 关键枚最多 4 轮 ≥9.5
-- **Mode B**：锁 style-spec → SVG 硬规则 → 分批生成 → preview → 关键枚可选 4 轮 ≥9.5（对标 jezweb；禁止拼 Lucide/Heroicons 冒充定制集）
-- **Mode C**：锁道具格 style-spec → 透明底 PNG → 关键枚最多 4 轮 ≥9.5
+- **Mode A**：满幅直角母版 → 安全区单符号 → 尺寸矩阵；默认只交 **Light 母版**（出图一轮交件）；Dark/Tinted **仅点名才另出**
+- **Mode B**：锁 style-spec → SVG 硬规则 → 分批生成 → preview（对标 jezweb）；关键枚闭环默认不开
+- **Mode C**：锁道具格 style-spec → 透明底 PNG **只批量**；关键枚闭环默认不开
 先分 A/B/C，再进对应节；反思写进记忆，要看报告再用 /pmem-coach。
+
+### 耗时闸（出图一轮交件·必守）
+- **名字含义**：只限生图轮次=1；style-spec/批量预览/清单仍要做。
+- **B/C 批量**：整套一次出齐 → 肉眼/清单一致性审查（**不算** converge 叠轮）；**禁止**默认逐枚 converge。
+- **关键枚闭环**：仅玩家点名某枚翻车；开则生1→judge1（CLI `max_rounds=1`），finish 标明是否 ≥9.5。
+- **Mode A 三态**：**禁止**在无可靠导出/上色工具时口头说「Dark/Tinted 已派生齐」。默认交付 = Light 母版 + 尺寸矩阵；玩家点名 Dark 或 Tinted 时再各开一轮出图。
 
 ---
 
@@ -40,10 +46,10 @@ A/B/C **标题并列**，禁止把 C 嵌进 B、把 A 甩到 B 的 Step 之后�
 
 ### A2. 光学微立体质感与光影层次
 - **三层景深**：① 底板环境渐变（70% 主色）→ ② 中心主符号微倾体块（20% 辅色 + 接触阴影）→ ③ 顶部 45° 高光切角（10% 点缀色）。
-- **iOS 18+ 三态**：Light / Dark / Tinted 都要齐。
+- **iOS 18+ 三态**：默认只保证 **Light 母版**过关。Dark / Tinted **仅玩家点名**才另开 converge（各出图一轮）；没有点名就不要交假齐套，也不要写「已派生」。
 
 ### A3. 多尺寸导出与 `app-icon-preview.html`
-母版收敛后导出：iOS `1024/180/167/120/60/29`；Android/桌面 `512/192`。
+母版收敛后导出：iOS `1024/180/167/120/60/29`；Android/桌面 `512/192`（导出几乎零墙钟，勿当成再生图轮次）。
 
 ### A4. App Icon 审图与命令
 识别度或安全区低于 **8.0** 时正式分改取该维，不能停。维：小尺寸识别 / 安全区 / 光影质感 / 深浅色·多尺寸 / 色板纯粹（再加无瑕疵盲评，占 25%）。
@@ -51,13 +57,14 @@ A/B/C **标题并列**，禁止把 C 嵌进 B、把 A 甩到 B 的 Step 之后�
 **App Icon 多维透镜（通用）**：明细见 `docs/APPICON_MULTI_LENS.md`——①栅格体验；②小尺寸去色仍认；③符号权重 P0 英雄撑满；④满幅直角 + 72%–80% 安全区；⑤色 70/20/10；⑥一主光、形先于质；⑦同品类上架图标气质（非泛插画海报）。缺画风时 revised 必须写同品类顶级上架图标气质。空喊「高级」却剪影糊 → 识别度或安全区 <8.0 不能停。
 
 ```bash
-pyw -3 -u pmem_art.py converge start --session appicon --module brand.WorldStyle --scale high --goal "iOS 1024x1024 App Icon: 青瓷质感记账应用，中心单枚立体青釉金币流光符号"
+pyw -3 -u pmem_art.py converge start --session appicon --module brand.WorldStyle --scale high --route-id icon.a --goal "iOS 1024x1024 App Icon: 青瓷质感记账应用，中心单枚立体青釉金币流光符号"
 pyw -3 -u pmem_art.py reasonableness review --id appicon --skill icon.a \
   --draft "<草稿>" --revised "<单符号+72%-80%安全区+满幅直角无字的修订句>" \
   --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;safe_zone=ok;single_symbol=ok;full_bleed_no_round_mask=ok"
 pyw -3 -u pmem_art.py converge generate --session appicon --round 1 --image app_icon_r1.png
 pyw -3 -u pmem_art.py converge judge --session appicon --round 1 --image app_icon_r1.png \
   --dims "识别度9.6/安全区9.7/光影质感9.5/多尺寸合规9.6/色板纯粹9.7/无瑕疵9.5"
+# CLI 出图一轮交件：max_rounds=1；judge 后 finish，并标明是否 ≥9.5
 ```
 
 ## 三、Mode B：一致化 SVG 矢量图标集流程（Brief → Spec → Batch → Review → Converge）
@@ -105,14 +112,14 @@ icons/
 └── …
 ```
 
-### B5：关键图标 4轮9.5 收敛（可选）
-用户点名某枚「不对」或一致性不过时，垫最初 style-spec/样张，不垫上一轮成图：
+### B5：关键图标出图一轮交件（可选·默认跳过）
+用户点名某枚「不对」或一致性不过时才开；垫最初 style-spec/样张；**禁止**对整套每枚开闭环：
 ```bash
-pyw -3 -u pmem_art.py converge start --goal "图标 <name> 对齐 style-spec" --module brand.WorldStyle
+pyw -3 -u pmem_art.py converge start --goal "图标 <name> 对齐 style-spec" --module brand.WorldStyle --route-id icon.b
 pyw -3 -u pmem_art.py reasonableness review --id <session> --skill icon.b \
   --draft "<草稿>" --revised "<线宽/端点/清单写清的修订句>" \
   --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;stroke_consistency=ok"
-然后：converge generate → converge judge → finish
+然后：generate → judge → finish（CLI max_rounds=1；标明是否 ≥9.5）
 ```
 
 ### B6：沉淀
@@ -123,7 +130,8 @@ pyw -3 -u pmem_art.py ingest icons/preview.html -p "icon set preview" --apply
 
 ## 四、Mode C：游戏道具透明底栅格图标（64/128/256px PNG，非 SVG）
 
-先锁「线宽/圆角/色板/投影」style-spec，再批量生成透明底 PNG。关键单枚 `converge` 最多 4 轮，≥9.5。首轮 generate 前：
+先锁「线宽/圆角/色板/投影」style-spec，再**批量**生成透明底 PNG 做 preview。  
+**关键枚 converge 默认禁止**：仅玩家点名某枚不对、或一致性审查不过时才开；开则出图一轮交件（CLI `max_rounds=1`，标明是否 ≥9.5）。**禁止**默认对背包每一格开闭环。
 ```bash
 pyw -3 -u pmem_art.py converge start --session <icon_c_id> --goal "道具格：<name>" --module brand.WorldStyle --route-id icon.c
 pyw -3 -u pmem_art.py reasonableness review --id <icon_c_id> --skill icon.c \
@@ -143,8 +151,8 @@ pyw -3 -u pmem_art.py reasonableness review --id <icon_c_id> --skill icon.c \
 ### Mode A
 - [ ] 1024 满幅直角，未预裁圆角蒙版
 - [ ] 主符号在 72%–80% 安全区；无字
-- [ ] Light / Dark / Tinted 与尺寸矩阵齐
-- [ ] 跑了收敛则展示评分履历（只要终稿用 --quiet）
+- [ ] Light 母版 + 尺寸矩阵齐；Dark/Tinted 仅点名才有，未点名勿写已齐套
+- [ ] 跑了收敛则展示评分履历并标明过线/未过线（只要终稿用 --quiet）
 
 ### Mode B
 - [ ] 全部 SVG 同 viewBox / stroke-width / linecap / linejoin

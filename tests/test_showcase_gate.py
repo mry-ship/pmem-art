@@ -31,6 +31,7 @@ class TestCanAcceptWinner(unittest.TestCase):
         self.assertTrue(can_accept_winner(4, 8.56))
 
     def test_early_safe_stop_may_ship_best(self) -> None:
+        self.assertTrue(can_accept_winner(1, 7.66, early_safe_stop=True))
         self.assertTrue(can_accept_winner(2, 7.66, early_safe_stop=True))
         self.assertFalse(can_accept_winner(2, 7.66, early_safe_stop=False))
 
@@ -93,6 +94,21 @@ class TestHtmlAudit(unittest.TestCase):
         self.assertEqual(len(issues), 1)
         self.assertEqual(issues[0]["score"], 9.22)
         self.assertEqual(issues[0]["rounds"], 2)
+
+    def test_process_board_image_round_cap_ships_with_badge(self) -> None:
+        html = """
+        <p class="summary">出图一轮交件 · 未过线，采用第 1 轮。胜出第 1 轮，总分 8.80。未到 9.50。</p>
+        <figure class="card win"><figcaption><b>第 1 轮 · 8.80</b></figcaption></figure>
+        """
+        self.assertEqual(audit_showcase_html(html), [])
+
+    def test_process_board_safe_early_marker_ships(self) -> None:
+        html = """
+        <p class="summary">安全早停 · 共 2 轮未达阈值，采用最高分。</p>
+        <figure class="card"><figcaption><b>第 1 轮 · 8.50</b></figcaption></figure>
+        <figure class="card win"><figcaption><b>第 2 轮 · 9.22</b></figcaption></figure>
+        """
+        self.assertEqual(audit_showcase_html(html), [])
 
     def test_process_board_without_win_gates_best_score_only(self) -> None:
         html = """

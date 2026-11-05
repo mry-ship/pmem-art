@@ -1,0 +1,117 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-11-05 16:10:48 UTC+8",
+  "session_id": "birds_prestige_v3",
+  "goal": "/pmem-merge-ladder 鸟类整表重出 L6翼扇L7金冠L8羽氅单只禁群拉开档差",
+  "module": "prop.BirdsMerge.Cute",
+  "converge_mode": "quality",
+  "guided_mode": "text_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 4,
+  "winner_score": 9.5,
+  "winner_image": "assets/prop/birdsmerge/overview_sheet_r6.png",
+  "winner_passed": true,
+  "outcome": "✅ **经过 4 轮迭代达标定稿**（generate 与 judge 分步收敛，第 4 轮达到 `9.50 / 10.0` 分 ≥ `9.50` 分档位目标线即刻停机）",
+  "what_fixed": [
+    "锁鸡脸鸡身;L6加宽翼扇仍红冠;L8金羽披氅削弱胸甲",
+    "若未达标则略收L8金量并略增L6尾羽簇可读；已接近线可定稿",
+    "解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁止糊边融边；L6展羽扇略偏华美鸟类感，需靠鸡脸红冠锁物种；可接受为锦羽犒赏档"
+  ],
+  "what_still_weak": "残余可接受点：L8金色披氅略满，但与L7金冠档仍可辨",
+  "strengths": "L1-5生长合理;L6张翼锦羽仍锁鸡种;L7金缘金冠;L8羽氅冠宝石;无数量群硬凑;邻档可分",
+  "taste_deltas": {
+    "from_strengths": [
+      "L1-5生长合理;L6张翼锦羽仍锁鸡种;L7金缘金冠;L8羽氅冠宝石;无数量群硬凑;邻档可分"
+    ],
+    "from_defects": [
+      "L6尾扇偏孔雀火鸡感;L8胸甲铠甲感过重羽氅被抢;L6翼扇不够醒目",
+      "L6尾扇增量仍弱于翼扇，缩略时主要靠张翼辨认;L8金色面积偏满需注意与L7金冠档差仍可读",
+      "L6展羽扇略偏华美鸟类感，需靠鸡脸红冠锁物种；可接受为锦羽犒赏档"
+    ]
+  },
+  "warm_start_confidence": 1.0,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 8.44,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 9.19,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 9.39,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 9.5,
+      "passed": true
+    }
+  ],
+  "lessons": [
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：L6尾扇偏孔雀火鸡感;L8胸甲铠甲感过重羽氅被抢;L6翼扇不够醒目",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.44"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：取消数量群;L6尾扇与L5可分;L7金羽金冠落地;L1-5生长清楚",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.44"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：L6尾扇增量仍弱于翼扇，缩略时主要靠张翼辨认;L8金色面积偏满需注意与L7金冠档差仍可读",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.19"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：L5折翅朴素与L6张翼扇可分;L7金羽缘金冠落地;L8金羽氅冠宝石且无数量群无板甲抢戏;L1-5生长梯清楚",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.19"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：L6展羽扇略偏华美鸟类感，需靠鸡脸红冠锁物种；可接受为锦羽犒赏档",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "9.39"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：L6展羽扇略偏华美鸟类感，需靠鸡脸红冠锁物种；可接受为锦羽犒赏档",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.39"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：L6展羽扇略偏华美鸟类感，需靠鸡脸红冠锁物种；可接受为锦羽犒赏档",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "9.39"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：L8金色披氅略满，但与L7金冠档仍可辨",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.5"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：L1-5生长合理;L6张翼锦羽仍锁鸡种;L7金缘金冠;L8羽氅冠宝石;无数量群硬凑;邻档可分",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.5"
+    }
+  ]
+}

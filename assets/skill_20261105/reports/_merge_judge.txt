@@ -1,0 +1,11 @@
+﻿
+=== 第一段关系审 · mushroom_cheese_platter ===
+✅ 机读检查通过（chain_mode=shop_ladder）→ 可标记「文字定稿」并进入出图
+  L01 小红菇 | 单枚矮红盖乳白点短奶油茎 | pct=0.58 | TinySpottedMushroom
+  L02 双菇芽 | 一大一小并蒂红菇同簇仍一货件 | pct=0.61 | TwinMushroomBud
+  L03 宽盖菇台 | 单座更宽扁红盖乳白点可承物台面 | pct=0.64 | FlatCapTable
+  L04 芝士菇台 | 宽盖菇台上一方带孔淡黄芝士块 | pct=0.67 | CheeseOnMushroom
+  L05 蓝果菇盘 | 芝士菇台再加一枚蓝梨形果与短绿叶 | pct=0.70 | BlueFruitPlate
+  L06 樱叶果盘 | 菇盘上芝士+蓝果+两三橙樱与阔叶 | pct=0.73 | CherryLeafPlatter
+  L07 丰盛果盘 | 更大菇盖双芝士楔蓝果簇橙樱叶丛 | pct=0.76 | AbundantPlatter
+  L08 盛宴菇盘 | 最宽红菇宴台双芝士蓝果簇橙樱绿叶盛满留边 | pct=0.80 | FeastMushroomPlatter

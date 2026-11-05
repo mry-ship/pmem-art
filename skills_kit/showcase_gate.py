@@ -42,8 +42,8 @@ def can_accept_winner(
         return True
     if rounds is not None and int(rounds) >= int(max_rounds):
         return True
-    # finish 在 STOP_REGRESSION / STOP_PLATEAU 后收最高分，允许低于 9.5 入展陈
-    if early_safe_stop and rounds is not None and int(rounds) >= 2:
+    # finish 在 STOP_REGRESSION / STOP_PLATEAU / 出图一轮交件硬顶后收最高分，允许低于 9.5 入展陈
+    if early_safe_stop and rounds is not None and int(rounds) >= 1:
         return True
     return False
 
@@ -157,7 +157,9 @@ def audit_showcase_html(html: str) -> list[dict[str, Any]]:
         provisional_key = max(
             ((sc if sc is not None else -1.0), n) for *_a, n, sc in process_cells
         )
-    page_early = bool(re.search(r"(安全早停|STOP_REGRESSION|STOP_PLATEAU)", body, re.I))
+    page_early = bool(
+        re.search(r"(安全早停|出图一轮交件|STOP_REGRESSION|STOP_PLATEAU)", body, re.I)
+    )
 
     for attrs, caption, inner in cells:
         if not caption or _SKIP_CAPTION.search(caption):
@@ -193,7 +195,11 @@ def audit_showcase_html(html: str) -> list[dict[str, Any]]:
         ):
             rounds = max_process_rounds
         early = bool(
-            re.search(r"(安全早停|STOP_REGRESSION|STOP_PLATEAU)", caption + " " + inner, re.I)
+            re.search(
+                r"(安全早停|出图一轮交件|STOP_REGRESSION|STOP_PLATEAU)",
+                caption + " " + inner,
+                re.I,
+            )
         )
         if (
             not early

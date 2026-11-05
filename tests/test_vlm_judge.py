@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from vlm_judge import (
+    build_judge_system_prompt,
     is_vlm_judge_configured,
     load_vlm_judge_config,
     maybe_run_independent_vlm_judge,
@@ -90,9 +91,189 @@ class TestVlmJudgeParse(unittest.TestCase):
             "defects": "平光",
             "strengths": "色板稳",
             "next_fix": "加轮廓光",
+            "score_evidence": {
+                "composition": "主体偏左，右侧留白",
+                "lighting_color": "脸部受光均匀",
+            },
         })
         self.assertIn("构图8.6", obs["dims"])
         self.assertEqual(obs["defects"], "平光")
+        self.assertEqual(obs["score_evidence"]["composition"], "主体偏左，右侧留白")
+        self.assertEqual(obs["score_evidence"]["lighting_color"], "脸部受光均匀")
+
+    def test_agent_fallback_prompt_requires_pixel_evidence_and_borderline_reread(self) -> None:
+        from skills_kit.absolute_5d_agent_rubric import agent_absolute_5d_judge_prompt
+
+        prompt = agent_absolute_5d_judge_prompt(
+            target_threshold=9.5,
+            dim_weights={"composition": 0.2, "lighting_color": 0.25},
+            anatomy_floor=7.5,
+        )
+        self.assertIn("像素依据", prompt)
+        self.assertIn("自动临界复评", prompt)
+        self.assertIn("不参考第一遍分数", prompt)
+        self.assertIn("构图=15%", prompt)
+        vlm_prompt = build_judge_system_prompt({
+            "dim_weights": {
+                "composition": 0.20,
+                "lighting_color": 0.25,
+                "perspective_anatomy": 0.20,
+                "texture_detail": 0.20,
+                "spec_style": 0.15,
+            }
+        })
+        self.assertIn("构图15%", vlm_prompt)
+        self.assertIn("无瑕度25%", vlm_prompt)
+
+    def test_borderline_remote_score_gets_one_independent_rerate(self) -> None:
+        td = Path(tempfile.mkdtemp())
+        (td / ".memory-art").mkdir()
+        img = td / "candidate.png"
+        img.write_bytes(b"image")
+
+        def judged(score: float) -> dict[str, object]:
+            obs = observations_from_vlm_payload({
+                "composition": score,
+                "lighting_color": score,
+                "perspective_anatomy": score,
+                "texture_detail": score,
+                "spec_style": score,
+                "flawlessness": score,
+                "score_evidence": {"composition": f"主体边界可见，评分 {score}"},
+                "defects": "边缘略软",
+                "strengths": "主体轮廓清楚",
+                "next_fix": "收紧边缘",
+            })
+            obs.update({"provider": "openai", "model": "test-vlm"})
+            return obs
+
+        with mock.patch("vlm_judge.is_vlm_judge_configured", return_value=True), \
+             mock.patch("vlm_judge.call_vision_judge", side_effect=[judged(9.4), judged(9.5)]) as call:
+            res = maybe_run_independent_vlm_judge(
+                str(img),
+                root=td,
+                data={"config": {"vlm_judge": {
+                    "enabled": "auto",
+                    "api_key": "sk-proj-unit-test-key-abcdef",
+                    "write_sidecar": True,
+                }}},
+                scale_prof={"scale": "medium", "target_score_threshold": 9.5},
+            )
+
+        self.assertEqual(call.call_count, 2)
+        self.assertIn("构图9.5", res["dims"])
+        self.assertTrue(res["review"]["rerated"])
+        self.assertEqual(res["review"]["pass_count"], 2)
+        self.assertEqual(res["review"]["score_spread"], 0.1)
+        self.assertIn("composition", res["score_evidence"])
+        self.assertIn("flawlessness", res["evidence_missing_dims"])
+        self.assertTrue(call.call_args_list[1].kwargs["independent_rereview"])
+        saved = json.loads(img.with_suffix(".png.vlm.json").read_text(encoding="utf-8"))
+        self.assertTrue(saved["review"]["rerated"])
+        self.assertIn("composition", saved["score_evidence"])
+        self.assertIn("flawlessness", saved["evidence_missing_dims"])
+
+    def test_remote_score_far_from_threshold_is_not_rerated(self) -> None:
+        td = Path(tempfile.mkdtemp())
+        (td / ".memory-art").mkdir()
+        img = td / "candidate.png"
+        img.write_bytes(b"image")
+        obs = observations_from_vlm_payload({
+            "composition": 8.0,
+            "lighting_color": 8.0,
+            "perspective_anatomy": 8.0,
+            "texture_detail": 8.0,
+            "spec_style": 8.0,
+            "flawlessness": 8.0,
+        })
+        obs.update({"provider": "openai", "model": "test-vlm"})
+
+        with mock.patch("vlm_judge.is_vlm_judge_configured", return_value=True), \
+             mock.patch("vlm_judge.call_vision_judge", return_value=obs) as call:
+            res = maybe_run_independent_vlm_judge(
+                str(img),
+                root=td,
+                data={"config": {"vlm_judge": {
+                    "enabled": "auto",
+                    "api_key": "sk-proj-unit-test-key-abcdef",
+                    "write_sidecar": False,
+                }}},
+                scale_prof={"scale": "medium", "target_score_threshold": 9.5},
+            )
+
+        self.assertEqual(call.call_count, 1)
+        self.assertFalse(res["review"]["rerated"])
+
+    def test_failed_rerate_keeps_first_valid_score(self) -> None:
+        td = Path(tempfile.mkdtemp())
+        (td / ".memory-art").mkdir()
+        img = td / "candidate.png"
+        img.write_bytes(b"image")
+        first = observations_from_vlm_payload({
+            "composition": 9.4,
+            "lighting_color": 9.4,
+            "perspective_anatomy": 9.4,
+            "texture_detail": 9.4,
+            "spec_style": 9.4,
+            "flawlessness": 9.4,
+        })
+
+        with mock.patch("vlm_judge.is_vlm_judge_configured", return_value=True), \
+             mock.patch("vlm_judge.call_vision_judge", side_effect=[first, RuntimeError("temporary API error")]):
+            res = maybe_run_independent_vlm_judge(
+                str(img),
+                root=td,
+                data={"config": {"vlm_judge": {
+                    "enabled": "auto",
+                    "api_key": "sk-proj-unit-test-key-abcdef",
+                    "write_sidecar": False,
+                }}},
+                scale_prof={"scale": "medium", "target_score_threshold": 9.5},
+            )
+
+        self.assertEqual(res["source"], "independent_vlm")
+        self.assertIn("构图9.4", res["dims"])
+        self.assertFalse(res["review"]["rerated"])
+        self.assertIn("temporary API error", res["review"]["recheck_error"])
+
+    def test_bridge_keeps_vlm_evidence_and_rerate_metadata(self) -> None:
+        from skills_kit.converge_judge_bridge import score_for_converge
+
+        td = Path(tempfile.mkdtemp())
+        image = td / "candidate.png"
+        remote = {
+            "active": True,
+            "source": "independent_vlm",
+            "dims": "构图9.4/光影9.4/透视9.4/质感9.4/风格9.4/无瑕度9.4",
+            "defects": "边缘略软",
+            "provider": "openai",
+            "model": "test-vlm",
+            "score_evidence": {"composition": "主体偏左"},
+            "evidence_missing_dims": ["flawlessness"],
+            "review": {"pass_count": 2, "rerated": True, "score_spread": 0.1},
+        }
+        with mock.patch("vlm_judge.maybe_run_independent_vlm_judge", return_value=remote):
+            result = score_for_converge(
+                {"path": str(image), "module": "art.general", "round": 1},
+                {},
+                "test-model",
+                root=td,
+                scale_prof={
+                    "scale": "medium",
+                    "target_score_threshold": 9.5,
+                    "dim_weights": {
+                        "composition": 0.20,
+                        "lighting_color": 0.25,
+                        "perspective_anatomy": 0.20,
+                        "texture_detail": 0.20,
+                        "spec_style": 0.15,
+                    },
+                },
+            )
+
+        self.assertEqual(result["score_evidence"]["composition"], "主体偏左")
+        self.assertEqual(result["evidence_missing_dims"], ["flawlessness"])
+        self.assertTrue(result["review"]["rerated"])
 
     def test_maybe_run_falls_back_without_key(self) -> None:
         # Use an empty temp project root so repo .memory-art/vlm_judge.local.yaml

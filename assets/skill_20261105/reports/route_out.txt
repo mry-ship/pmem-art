@@ -1,0 +1,8 @@
+﻿pyw : C:\Users\ZhengLangPC\AppData\Local\Programs\Python\Python312\pythonw.exe: can't open file 'C:\\Users\\ZhengLangPC
+\\Desktop\\Cursor-Pmem-Art\\assets\\pmem_art.py': [Errno 2] No such file or directory
+所在位置 行:8 字符: 100
++ ... ce_out.txt; pyw -3 -u ..\..\pmem_art.py route --text "黑底蘑菇芝士果盘棚拍道具卡，垫 ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (C:\Users\ZhengL...le or directory:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 

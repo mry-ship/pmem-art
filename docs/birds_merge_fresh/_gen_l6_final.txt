@@ -1,0 +1,10 @@
+﻿Merge Mansion inventory quality. Exactly 2 rows x 3 columns, six equal white rounded-square cards on dark charcoal, even gaps. Soft-plastic cute chickens, big readable eyes, studio softbox, short contact shadow. No text. No hen house. No gold armor. No flame crest.
+
+L1 Hatchling in cracked eggshell.
+L2 single standing yellow chick.
+L3 two yellow chicks side-by-side as one inventory item.
+L4 pullet lean cream-brown small red comb bud.
+L5 adult hen clear red comb wattle cream-brown feathers — note the comfortable white margin around the hen inside its card.
+L6 laying hen plumper with BIGGER red comb and richer plumage than L5, BUT keep the SAME comfortable white margin inside the card as L5 (about 12-15% padding). Comb tip and tail must NOT touch or cross the rounded card edge. Centered. One bird only.
+
+All six cards same visual padding language. Soft plastic shipped-game quality.

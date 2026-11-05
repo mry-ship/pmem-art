@@ -1,0 +1,34 @@
+{
+  "route_id": "draw.clone",
+  "session": "battery1105-clone-ok",
+  "conversation": "battery1105-clone-ok",
+  "passed": true,
+  "threshold": 9.5,
+  "best_round": 3,
+  "best_score": 9.57,
+  "rounds": [
+    {
+      "round": 1,
+      "score": 8.83,
+      "dims": "构图9.0/光影9.0/透视8.9/质感9.2/风格8.5/无瑕疵8.6",
+      "image": "assets/skill_suite_20261105/draw_clone/r1.png"
+    },
+    {
+      "round": 2,
+      "score": 9.39,
+      "dims": "构图9.5/光影9.5/透视9.4/质感9.6/风格9.3/无瑕疵9.2",
+      "image": "assets/skill_suite_20261105/draw_clone/r2.png"
+    },
+    {
+      "round": 3,
+      "score": 9.57,
+      "dims": "构图9.6/光影9.6/透视9.5/质感9.7/风格9.6/无瑕疵9.5",
+      "image": "assets/skill_suite_20261105/draw_clone/r3.png"
+    }
+  ],
+  "final_image": "assets/skill_suite_20261105/draw_clone/final.png",
+  "style_ref": "assets/skill_suite_20261103/01_style.png",
+  "subject": "冬日农场雪地，农夫抱小羊",
+  "style_lock": "妖精花园粘土童话画风",
+  "notes": "3轮达标；R1黑点瞳未过线；R2虹膜上色；R3巩膜月牙与脚印收束后过线"
+}

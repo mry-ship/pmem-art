@@ -1,0 +1,26 @@
+# 建筑合成梯 · shop_ladder L1–L8（overview_sheet 2×4）
+# 商业对标：EverMerge Wood branch
+# Log → Timber → Wooden Frame → Wooden Building(Hay shack) → Wooden House → Rich House → Grand House → Wooden Mansion
+# 城堡 Castle Beauty 为另链喂养目标，禁止焊成 L8
+version: buildings-evermerge-wood-20261105-v3
+pipeline: art-merge-two-phase
+delivery: overview_sheet
+
+tracks:
+  buildings_cute:
+    module: prop.BuildingsMerge.Cute
+    chain_mode: shop_ladder
+    levels: 8
+    grid_rows: 2
+    grid_cols: 4
+    surface: 休闲merge软塑胶卡通，圆润倒角，饱和友好色，左上软光短接触影，光洁不油亮；2×4白圆角卡深炭灰底整表；每格一件居中无脸无等级字；家族暖蜜木色；干草顶仅L4；红陶瓦从L5起；禁角楼旗阵军堡城堡
+    commercial_ref: "EverMerge Wood: Log→Timber→Wooden Frame→Wooden Building→Wooden House→Rich House→Grand House→Wooden Mansion (castle separate)"
+    rows:
+      - { level: 1, name: 原木堆, silhouette: 两三根横卧原木, scale_delta: 基档, scale_pct: 0.58, evolve_to: 原木堆, merge_why: "—", parts_add: "—" }
+      - { level: 2, name: 木料捆, silhouette: 绳捆整齐木料堆, scale_delta: "+小", scale_pct: 0.61, evolve_to: 木料捆, merge_why: 两堆原木捆扎成整齐木料捆, parts_add: "—" }
+      - { level: 3, name: 木屋框架, silhouette: 人字梁四立柱空框无墙, scale_delta: "+小", scale_pct: 0.64, evolve_to: 木屋空框架, merge_why: 木料立成人字梁与四立柱空框架, parts_add: "—" }
+      - { level: 4, name: 草顶木棚, silhouette: 封板墙干草单坡顶门洞无烟囱, scale_delta: "+中", scale_pct: 0.67, evolve_to: 干草顶木棚, merge_why: 框架封上木板墙并加干草单坡顶与门洞, parts_add: "—" }
+      - { level: 5, name: 木屋, silhouette: 双坡红陶瓦木屋门窗矮烟囱, scale_delta: "+中", scale_pct: 0.70, evolve_to: 瓦顶木屋, merge_why: 两座草棚合成封闭双坡瓦顶木屋并加门窗烟囱, parts_add: "—" }
+      - { level: 6, name: 精致木屋, silhouette: 带木门廊花箱厚檐瓦顶木屋, scale_delta: "+中", scale_pct: 0.73, evolve_to: 门廊精致木屋, merge_why: 两座木屋合成带门廊花箱与厚檐的精致木屋, parts_add: "—" }
+      - { level: 7, name: 大宅, silhouette: 两层木石混构对称立面石阶, scale_delta: "+大", scale_pct: 0.76, evolve_to: 两层木石大宅, merge_why: 两座精致木屋抬升为带石阶的两层对称大宅, parts_add: "—" }
+      - { level: 8, name: 木庄园, silhouette: 三层双翼木庄园中央石阶无角楼无军旗, scale_delta: "+大", scale_pct: 0.80, evolve_to: 双翼木庄园, merge_why: 两座大宅扩成中央石阶双翼三层木庄园, parts_add: "—" }

@@ -1,0 +1,40 @@
+🧠 [合理性闸门] 已注入合理性修订提示词
+🎨 [Step 2A · 仅生图阶段完成] 第 1/1 轮图像已生成: `assets/skill_suite_20261105/draw_multi/r1.png` (1280x720 (16:9, 1328.5KB))
+   · 策略建议垫图: assets/skill_suite_20261103/03_structure.png（pad=auto→style_ref（每轮垫最初参考，修正只写进提示词））
+   · 本轮实际垫图: ['C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_suite_20261103\\03_structure.png']
+   · 📚 pmem-art 已自动并入记忆：模块 character.FairyPink （recipe 0 · 红线 1）
+   · 结构底线: 结构底线：人物关节与握持清楚，双眼瞳孔同向；动物按物种连接肢体，不要改成人类双肘；接触阴影可读；禁止肢体融化进道具
+   · 置顶风格指令 Prompt: 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】
+- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)
+- 目标模块: character.FairyPink
+- 置信度: 0.45（fast-track 资格: 否）
+- 正向保留（要怎样）:
+  · 软塑胶干净分层：宽柔高光+边缘散射，不要油腻镜面
+  · 商业完成度优先：剪影可读、主体撑满安全区、禁霓虹脏暗
+- 必须避开红线:
+  · [CHAT20261103164437836REDLINE] [收敛踩坑红线] 变体：同一粉裙金发尖耳仙子，绿瞳珍珠项链果篮翅膀全锁；只改困：避免「上眼睑是否压到虹膜中线仍偏浅、右眼更开；右腕多出紫手链非点名改项；嘴角偏坏笑不够软困笑」
+- 个人口味: 光影=冷光源 / 暖光；构图=半身 / 居中/对称构图；色温=避免过饱和
+- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色
+- 项目私有知识卡 (Private Layer):
+  · [eye-hierarchy] 人体结构：五官主次与第一识别锚点: 先定十字中线、眼位与眉弓转折，再定鼻底与唇裂；角色标志性面部特征（如单侧眼镜、异色瞳、机械义眼、面部纹印）必须作为第一识别锚点显式锁定高权重，严禁漏画或左右镜像翻转。
+  · [anatomy-head-ratio] 人体结构：头身比尺规与重心控制: 写实/二次元立绘标准锁定 7~8 头身（常用 7.5 头身），Q版锁定 2~3 头身；草图阶段必须先标头顶、下巴、胸线、胯部、膝盖五道刻度线并校核重心垂线，严禁头肩比例失调或幼态大头漂移。
+胶片逆光轻厚涂：身份图和结构图各管一件事，机位以结构图为准| One 16:9 landscape delivery that locks STRUCTURE camera from ref 03 and IDENTITY of the pink-dress fairy from ref 02. High three-quarter overlook of a whimsical fairy garden: near-mid-far readable layers. Foreground right: oversized red-spotted mushroom table with Swiss cheese wedges, cherries and blueberries. Foreground left/bottom: purple bellflower lamp. Midground stone path: the pink-dress fairy as clear hero, standing small-to-mid scale on the path holding a woven wicker fruit basket (red apple, yellow pear, green grapes). Keep supporting cast from the structure plate only as secondary: blue-hatted violin elf slightly smaller than the fairy, banana yellow-sail boat in the left stone-rim pond, mole with gift boxes emerging from a burrow on the right. Background: purple-flower-roof cottage, yellow-ladder treehouse, giant daisies in a blue snail-shell planter, lush forest canopy. Camera MUST match structure ref: elevated three-quarter overlook, wide landscape framing, not a black-backdrop half-body portrait. Fairy identity MUST match identity ref: bright blonde twin braids with pink bands, pointed elf ears, large green eyes with iris highlight (no black-dot pupils), cheerful smile, pearl necklace with one central blue gem, bright pink dress with white collar and three white buttons, four translucent light-blue insect wings with white veins, pink shoes, clay/3D stylized soft volumes. Commercial finish of top casual fairy-park Key Art: bright noon soft light, saturated clean colors, crisp silhouettes, store-screenshot readability. Solid scenic background, no magenta matte, no UI text. Hard locks: aspect 16:9; structure camera + scene layout; identity facial and costume anchors; no black void portrait framing. Fail at a glance if: black half-body studio crop returns, fairy face/costume drifts off identity, or purple-roof cottage / yellow-ladder / banana yellow sail / mole / mushroom cheese table missing from the structure plate. Joint continuity, two eyes same height, hands gripping basket, contact shadows on path. Role separation: structure equals camera and set dressing only; identity equals fairy look only; do not swap roles. State machine: hinge N/A, padlock removed N/A, no lid or cover change, single still garden frame only.| 约束：保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: the person's joints and grip stay clear and both pupils share a direction; the animal's limbs follow its species and are not converted into human elbows; contact shadows read; do not melt limbs into props
+   · 当前未执行任何自评或 VLM 裁判；请先看图再打六维，不要从 9.3 起跳：
+你是独立主美裁判。先只看附图，不要看生成提示词给自己加分。
+档位锚：3=失败 / 5=差 / 7=合格 / 8.5=近优 / 9.5=优（可到 10）
+普通完成图应在 7.0～8.5。9.3+ 只给明显优于合格线的画面。不要因为后面还要迭代就从 9.3 起跳，也不要把六维打成一串几乎相同的 9.3+。只写各维分数。正式分由程序按加权调和平均计算，门槛维低于线时改取该维。像素、Q版、平涂、水彩、剪纸、等轴按该媒介自己的尺子打偏低的那一维，断肢和塌缩仍按硬伤。
+六维（各 0–10，一位小数）：构图 composition / 光影 lighting_color / 透视解剖 perspective_anatomy / 质感 texture_detail / 风格规格 spec_style / 无瑕疵 flawlessness。无瑕疵与另外五维一样盲评，不另写扣分清单。看不清就保守给分并写进缺陷。
+六维有效权重：构图=15% 光影=15% 透视=15% 质感=15% 风格=15% 无瑕度=25%。 自动临界复评：先完成一遍六维；若按上述权重计算的调和分与停机线相差 ≤0.25，或透视解剖分与硬门槛 7.5 相差 ≤0.25，则重新只看图像作第二遍六维，不参考第一遍分数；最终 dims 各维取两遍均值（四舍五入到一位小数）。无需人工确认。
+合同只用来写 defects（画没画到），禁止因为 Prompt 写过就加分：结构图机位构图 + 身份图粉裙仙子，多图分工一张成图，画幅跟结构约16:9
+参考解构摘要（只作对照，像素优先）：【结构03·机位锁】848x488约16:9横图；高角度略俯视三分之四全景；前景蘑菇芝士果盘+紫花灯；中景石径上粉裙仙子捧果篮与蓝帽小提琴男仙；左池塘香蕉黄帆船；右鼹鼠持礼盒出洞；远景紫花屋顶花屋+黄梯树屋+蜗牛壳大雏菊；正午柔亮饱和。身份图机位作废。【身份02·角色锁】金发双辫粉发圈、尖耳、大绿瞳微笑、珍珠项链中央蓝圆宝石、粉裙白领三白扣、四片半透明浅蓝翅白脉、藤编果篮（红苹果黄梨绿葡萄）；粘土三渲二。禁止黑底半身特写。商业气质：休闲童话乐园上架场景 Key Art。
+medium 档：姿态可动时仍须写清相对参考多出来的姿态/机位变化，禁空话。
+停机门槛 ≥9.50 是停机线，不是「合格=9.5」。本轮 1/1；满轮取最高分（best-of-N）。
+必须输出：
+1) dims 一行：`构图x.x/光影x.x/透视x.x/质感x.x/风格x.x/无瑕疵x.x`
+2) defects：至少一条可核验画面问题（禁「无明显硬伤」套话）。必须写本张图上看得见的部位、颜色、边缘或空间关系，禁止把上一轮 defects 原句贴过来。
+3) strengths：1–2 条，只写这张图已经有的，并指出可见的像素依据；不写提示词里的目标。六维分数必须能从这些可见证据解释，不能用任务描述代替画面证据。
+4) next_fix：下一轮可执行叠加修正（已达标可写「已达标」）
+recompose：defects 第一句必须回答仰还是俯、人占画面大约多少、主光是窗火还是灯笼。提示词里的「重构机位」不算成图已经换了机位。
+high：必须写明相对原图多出来的那一处光影或叙事；写不出来就把构图当贴原打。
+
+   · 然后：`pyw -3 -u pmem_art.py converge judge --id battery1105-multi --round 1 --image assets/skill_suite_20261105/draw_multi/r1.png --dims ...`

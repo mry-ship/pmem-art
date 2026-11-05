@@ -1,0 +1,14 @@
+{
+  "saved_at": 1793888190.4474502,
+  "text": "结构图机位构图 + 身份图粉裙仙子，多图分工一张成图，画幅跟结构约16:9",
+  "banner": "【按 多图分工 走了】",
+  "route_ids": [
+    "draw.multi"
+  ],
+  "mode": "skill",
+  "execute_ok": true,
+  "artist_say": "【按 多图分工 走了】\n按多图分工：几张参考各管一件事。",
+  "plan_conflict": false,
+  "confidence": "medium",
+  "conversation_id": "battery1105-multi"
+}

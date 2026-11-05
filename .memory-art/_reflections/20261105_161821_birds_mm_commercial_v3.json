@@ -1,0 +1,98 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-11-05 16:18:21 UTC+8",
+  "session_id": "birds_mm_commercial_v3",
+  "goal": "/pmem-merge-ladder 鸟类整表八档对标MergeMansion Bake-off Chickens货柜链重出",
+  "module": "prop.BirdsMerge.Cute",
+  "converge_mode": "quality",
+  "guided_mode": "text_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 3,
+  "winner_round": 3,
+  "winner_score": 9.5,
+  "winner_image": "assets/prop/birdsmerge/overview_sheet_commercial_r3.png",
+  "winner_passed": true,
+  "outcome": "✅ **经过 3 轮迭代达标定稿**（generate 与 judge 分步收敛，第 3 轮达到 `9.50 / 10.0` 分 ≥ `9.50` 分档位目标线即刻停机）",
+  "what_fixed": [
+    "垫本图:L7簇改用更接近L6丰满垂羽大红冠的成鸡;L8大簇个体姿态微错开减少复贴感;仍禁鸡舍金铠",
+    "解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁止糊边融边；L8五鸡间距略紧，缩略仍可读为大簇"
+  ],
+  "what_still_weak": "残余可接受点：L3双雏间距略近但不影响货件识别",
+  "strengths": "MM档序完整混生长完成度与群;L8簇间距更透气;货柜品质;神态微差;无金铠鸡舍",
+  "taste_deltas": {
+    "from_strengths": [
+      "MM档序完整混生长完成度与群;L8簇间距更透气;货柜品质;神态微差;无金铠鸡舍"
+    ],
+    "from_defects": [
+      "L7三鸡体态更像套用L5而非承接L6下蛋母鸡完成度;L8群内个体几乎复贴略模板",
+      "L8五鸡间距略紧，缩略仍可读为大簇"
+    ]
+  },
+  "warm_start_confidence": 1.0,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 9.13,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 9.45,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 9.5,
+      "passed": true
+    }
+  ],
+  "lessons": [
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：L7三鸡体态更像套用L5而非承接L6下蛋母鸡完成度;L8群内个体几乎复贴略模板",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.13"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：对标MM Chickens档序清楚;L1-6生长+完成度;L3双雏与L7L8群是竞品过程;货柜软塑胶质感;邻档神态有微差;无金铠",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.13"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：L8五鸡间距略紧，缩略仍可读为大簇",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "9.45"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：L8五鸡间距略紧，缩略仍可读为大簇",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.45"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：L8五鸡间距略紧，缩略仍可读为大簇",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "9.45"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：L3双雏间距略近但不影响货件识别",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.5"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：MM档序完整混生长完成度与群;L8簇间距更透气;货柜品质;神态微差;无金铠鸡舍",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.5"
+    }
+  ]
+}

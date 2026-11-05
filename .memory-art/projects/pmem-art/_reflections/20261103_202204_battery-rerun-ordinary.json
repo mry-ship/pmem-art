@@ -1,79 +1,79 @@
-{
-  "schema": "pmem-art.reflection.v1",
-  "project_id": "pmem-art",
-  "project_name": "pmem-art",
-  "layer_scope": "private",
-  "written_at": "2026-11-03 20:22:04 UTC+8",
-  "session_id": "battery-rerun-ordinary",
-  "goal": "普通图：04蘑菇奶酪道具黑底",
-  "module": "art.BatteryRerun",
-  "converge_mode": "quality",
-  "guided_mode": "ref_image_guided",
-  "threshold": 9.5,
-  "max_rounds": 4,
-  "rounds_used": 2,
-  "winner_round": 2,
-  "winner_score": 9.54,
-  "winner_image": "assets/skill_battery_20261103/rerun_ordinary/r2_sq.png",
-  "winner_passed": true,
-  "outcome": "✅ **经过 2 轮迭代达标定稿**（generate 与 judge 分步收敛，第 2 轮达到 `9.54 / 10.0` 分 ≥ `9.50` 分档位目标线即刻停机）",
-  "what_fixed": [
-    "解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁止糊边融边；菌盖斑点可更匀"
-  ],
-  "what_still_weak": "残余可接受点：斑点更匀",
-  "strengths": "黑底静物机位锁；黏土统一",
-  "taste_deltas": {
-    "from_strengths": [
-      "黑底静物机位锁；黏土统一"
-    ],
-    "from_defects": [
-      "菌盖斑点可更匀"
-    ]
-  },
-  "warm_start_confidence": 1.0,
-  "fast_track": false,
-  "scores": [
-    {
-      "round": 1,
-      "score": 9.44,
-      "passed": false
-    },
-    {
-      "round": 2,
-      "score": 9.54,
-      "passed": true
-    }
-  ],
-  "lessons": [
-    {
-      "category": "composition",
-      "lesson": "本轮短板偏「composition」：菌盖斑点可更匀",
-      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
-      "from_score": "9.44"
-    },
-    {
-      "category": "lighting",
-      "lesson": "本轮短板偏「lighting」：菌盖斑点可更匀",
-      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
-      "from_score": "9.44"
-    },
-    {
-      "category": "anatomy",
-      "lesson": "本轮短板偏「anatomy」：菌盖斑点可更匀",
-      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
-      "from_score": "9.44"
-    },
-    {
-      "category": "style_lock",
-      "lesson": "本轮短板偏「style_lock」：斑点更匀",
-      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
-      "from_score": "9.54"
-    },
-    {
-      "category": "keep",
-      "lesson": "保留本轮已做对的：黑底静物机位锁；黏土统一",
-      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
-      "from_score": "9.54"
-    }
-  ]
-}
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-11-03 20:22:04 UTC+8",
+  "session_id": "battery-rerun-ordinary",
+  "goal": "普通图：04蘑菇奶酪道具黑底",
+  "module": "art.BatteryRerun",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 2,
+  "winner_round": 2,
+  "winner_score": 9.54,
+  "winner_image": "assets/skill_20261103/rerun_ordinary/r2_sq.png",
+  "winner_passed": true,
+  "outcome": "✅ **经过 2 轮迭代达标定稿**（generate 与 judge 分步收敛，第 2 轮达到 `9.54 / 10.0` 分 ≥ `9.50` 分档位目标线即刻停机）",
+  "what_fixed": [
+    "解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁止糊边融边；菌盖斑点可更匀"
+  ],
+  "what_still_weak": "残余可接受点：斑点更匀",
+  "strengths": "黑底静物机位锁；黏土统一",
+  "taste_deltas": {
+    "from_strengths": [
+      "黑底静物机位锁；黏土统一"
+    ],
+    "from_defects": [
+      "菌盖斑点可更匀"
+    ]
+  },
+  "warm_start_confidence": 1.0,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 9.44,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 9.54,
+      "passed": true
+    }
+  ],
+  "lessons": [
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：菌盖斑点可更匀",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "9.44"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：菌盖斑点可更匀",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.44"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：菌盖斑点可更匀",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "9.44"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：斑点更匀",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.54"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：黑底静物机位锁；黏土统一",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.54"
+    }
+  ]
+}

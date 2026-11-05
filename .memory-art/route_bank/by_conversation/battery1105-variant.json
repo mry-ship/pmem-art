@@ -1,0 +1,14 @@
+{
+  "saved_at": 1793889204.9762342,
+  "text": "同一粉裙金发仙子+果篮身份与机位，只改表情为困倦眯眼/打哈欠感；可量测部位要可验收：双眼上眼睑缘压到绿虹膜水平中线以下只留一条绿虹膜缝+高光；嘴轻张打哈欠或软困倦微张禁坏笑；禁新增手链",
+  "banner": "【按 变体 走了】",
+  "route_ids": [
+    "draw.variant"
+  ],
+  "mode": "skill",
+  "execute_ok": true,
+  "artist_say": "【按 变体 走了】\n按变体：同一身份，换表情/动作/画风。",
+  "plan_conflict": false,
+  "confidence": "high",
+  "conversation_id": "battery1105-variant"
+}

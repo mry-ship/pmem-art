@@ -1,0 +1,11 @@
+﻿❌ [合理性闸 · icon.a] 未通过
+  ✓ subject_action（主体在做什么/交付物是什么）
+  ✓ element_budget（元素预算（不堆景不过载））
+  ✓ hard_locks（硬锁（画幅/透明底/无字/机位等））
+  ✓ fail_at_glance（一眼失败条件已写明）
+  ✓ safe_zone（72%–80% 安全区）
+  ✓ single_symbol（单符号高识别）
+  ✓ full_bleed_no_round_mask（满幅直角母版，禁止烤进圆角底板）
+  · icon.a 禁止圆角底板：母版必须直角满幅；圆角由系统蒙版后加，不可烤进成图
+请按未过项改 revised / checklist 后重跑 review，禁止跳过直接 generate。
+已写入会话（passed=false）；generate 仍会被拦截，请按未过项改 revised/checklist 后重跑 review。

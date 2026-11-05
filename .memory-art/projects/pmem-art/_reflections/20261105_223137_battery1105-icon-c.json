@@ -1,0 +1,56 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-11-05 22:31:37 UTC+8",
+  "session_id": "battery1105-icon-c",
+  "goal": "prop icon transparent mushroom cheese platter",
+  "module": "brand.WorldStyle",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.5,
+  "max_rounds": 1,
+  "rounds_used": 1,
+  "winner_round": 1,
+  "winner_score": 9.36,
+  "winner_image": "assets/skill_20261105/icon_c/prop_mushroom_platter_1024.png",
+  "winner_passed": false,
+  "outcome": "⚠️ **出图一轮交件（未过线）**：已审 1/1 轮，最高 `9.36` < `9.50`，交本张并列不足（第 1 轮）；禁止叠轮。",
+  "what_fixed": [
+    "角隅半透明毛边仍可见；接触影偏轻"
+  ],
+  "what_still_weak": "角隅半透明毛边仍可见；接触影偏轻",
+  "strengths": "真alpha四角透明；厚剪影；红菇芝士果盘身份完整无字",
+  "taste_deltas": {
+    "from_strengths": [
+      "真alpha四角透明；厚剪影；红菇芝士果盘身份完整无字"
+    ],
+    "from_defects": [
+      "角隅半透明毛边仍可见；接触影偏轻"
+    ]
+  },
+  "warm_start_confidence": 0.45,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 9.36,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：角隅半透明毛边仍可见；接触影偏轻",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "9.36"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：真alpha四角透明；厚剪影；红菇芝士果盘身份完整无字",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.36"
+    }
+  ]
+}

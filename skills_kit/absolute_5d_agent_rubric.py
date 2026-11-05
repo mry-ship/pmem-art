@@ -22,6 +22,8 @@ def agent_absolute_5d_judge_prompt(
     max_rounds: int = 4,
     scale: str = "",
     ref_analysis: str = "",
+    dim_weights: dict[str, float] | None = None,
+    anatomy_floor: float = 7.5,
 ) -> str:
     """Prompt the current vision-capable model to score one plate Absolute-5D."""
     contract = (
@@ -43,6 +45,33 @@ def agent_absolute_5d_judge_prompt(
     ra = (ref_analysis or "").strip()
     if ra:
         ref_hint = f"参考解构摘要（只作对照，像素优先）：{ra[:280]}\n"
+    weights = {
+        "composition": 0.20,
+        "lighting_color": 0.25,
+        "perspective_anatomy": 0.20,
+        "texture_detail": 0.20,
+        "spec_style": 0.15,
+    }
+    craft_keys = tuple(weights)
+    weights.update({key: value for key, value in (dim_weights or {}).items() if key in weights})
+    weight_total = sum(float(weights.get(key) or 0) for key in craft_keys)
+    effective_weights = {
+        key: (0.75 * float(weights.get(key) or 0) / weight_total if weight_total > 0 else 0.15)
+        for key in craft_keys
+    }
+    weights_hint = "".join(
+        f"{name}={effective_weights[key]:.0%} "
+        for key, name in (
+            ("composition", "构图"),
+            ("lighting_color", "光影"),
+            ("perspective_anatomy", "透视"),
+            ("texture_detail", "质感"),
+            ("spec_style", "风格"),
+        )
+        if key in weights
+    )
+    if weights_hint:
+        weights_hint = f"六维有效权重：{weights_hint.strip()} 无瑕度=25%。"
     return (
         f"你是独立主美裁判。先只看附图，不要看生成提示词给自己加分。\n"
         f"{_BANDS}\n"
@@ -53,6 +82,9 @@ def agent_absolute_5d_judge_prompt(
         "六维（各 0–10，一位小数）：构图 composition / 光影 lighting_color / "
         "透视解剖 perspective_anatomy / 质感 texture_detail / 风格规格 spec_style / "
         "无瑕疵 flawlessness。无瑕疵与另外五维一样盲评，不另写扣分清单。看不清就保守给分并写进缺陷。\n"
+        f"{weights_hint} 自动临界复评：先完成一遍六维；若按上述权重计算的调和分与停机线相差 ≤0.25，"
+        f"或透视解剖分与硬门槛 {float(anatomy_floor):.1f} 相差 ≤0.25，则重新只看图像作第二遍六维，"
+        "不参考第一遍分数；最终 dims 各维取两遍均值（四舍五入到一位小数）。无需人工确认。\n"
         f"{contract}"
         f"{ref_hint}"
         f"{pose_gate}"
@@ -61,8 +93,9 @@ def agent_absolute_5d_judge_prompt(
         "必须输出：\n"
         "1) dims 一行：`构图x.x/光影x.x/透视x.x/质感x.x/风格x.x/无瑕疵x.x`\n"
         "2) defects：至少一条可核验画面问题（禁「无明显硬伤」套话）。"
-        "必须写本张图上看得见的部位，禁止把上一轮 defects 原句贴过来。\n"
-        "3) strengths：1–2 条，只写这张图已经有的，不写提示词里的目标。\n"
+        "必须写本张图上看得见的部位、颜色、边缘或空间关系，禁止把上一轮 defects 原句贴过来。\n"
+        "3) strengths：1–2 条，只写这张图已经有的，并指出可见的像素依据；不写提示词里的目标。"
+        "六维分数必须能从这些可见证据解释，不能用任务描述代替画面证据。\n"
         "4) next_fix：下一轮可执行叠加修正（已达标可写「已达标」）\n"
         "recompose：defects 第一句必须回答仰还是俯、人占画面大约多少、主光是窗火还是灯笼。"
         "提示词里的「重构机位」不算成图已经换了机位。\n"

@@ -124,6 +124,9 @@ def auto_vlm_judge_image(
                 "model": remote.get("model"),
                 "error": remote.get("error") or "",
                 "active": bool(remote.get("active")),
+                "score_evidence": remote.get("score_evidence") or {},
+                "evidence_missing_dims": remote.get("evidence_missing_dims") or [],
+                "review": remote.get("review") or {},
             }
             judge_source = str(remote.get("source") or "agent_self_judge")
             if judge_source == "independent_vlm":

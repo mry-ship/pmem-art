@@ -150,6 +150,7 @@ def write_process_board(root: Path, sess: dict[str, Any], *, winner: dict[str, A
         line = float(sess.get("accept_threshold") or sess.get("threshold") or 9.5)
     except (TypeError, ValueError):
         line = 9.5
+    badge = str(sess.get("convergence_badge") or "").strip()
     if winner:
         mark = "到线。" if sc_win is not None and sc_win >= line else f"未到 {line:.2f}。"
         total = "" if sc_win is None else f"{sc_win:.2f}"
@@ -159,6 +160,8 @@ def write_process_board(root: Path, sess: dict[str, Any], *, winner: dict[str, A
         )
     else:
         end = "还没有胜出轮。"
+    if badge:
+        end = f"{_esc(badge)}。{end}"
     goal = _esc(sess.get("goal") or session_id)
     ref_block = ""
     if ref_names or sess.get("ref_analysis"):

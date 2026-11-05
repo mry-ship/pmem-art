@@ -1,0 +1,15 @@
+exit=0
+STDOUT:
+✅ [合理性闸 · variant] 通过
+  ✓ subject_action（主体在做什么/交付物是什么）
+  ✓ contact_scale（接触关系与相对尺度）
+  ✓ element_budget（元素预算（不堆景不过载））
+  ✓ hard_locks（硬锁（画幅/透明底/无字/机位等））
+  ✓ fail_at_glance（一眼失败条件已写明）
+  ✓ only_named_delta（只改点名的差分项）
+修订提示词（generate 将优先用这句）：
+Same identity and locked camera as the reference: medium close-up waist-up blonde fairy on solid black, slight three-quarter facing camera, cartoon 3D soft-plastic render. KEEP LOCKED: bright blonde thick side-swept bangs and twin braids with pink bands; pointed elf ears with pink inner tone; emerald green irises; pink puffed-sleeve dress with white collar and vertical pearl buttons; pearl necklace with one turquoise circular pendant; four translucent light-blue veined fairy wings; right hand (v…
+已写入会话 `battery1105-variant`。下一步用 revised 做 converge generate（可省略 --prompt，将自动注入）。
+
+STDERR:
+

@@ -1,0 +1,24 @@
+﻿── 给美术看（请只转述下面这块）──
+【按 【出图一轮交件】SpriteCook式 UI Kit/HUD/九宫格整套 走了】
+按整套界面（HUD/菜单/九宫格）来做，不是单张插画。
+── Agent 技术明细 ──
+【按 【出图一轮交件】SpriteCook式 UI Kit/HUD/九宫格整套 走了】
+confidence: high  execute_ok: True
+mode: skill  would_execute: True
+route_ids: ['ui.kit']
+announce: 按 【出图一轮交件】SpriteCook式 UI Kit/HUD/九宫格整套 走了
+match: lexical_ngram+colloquial_expand+canonical
+canonical[agent]: 竖屏三消局内 HUD 概念稿：跟附图分区（顶栏/托盘/底钮），不抄可读乱码；出图轮次硬顶=1；商业气质顶级休闲三消HUD
+reason: ui
+steps:
+  1. pmem-ui/【出图一轮交件】SpriteCook式 UI Kit/HUD/九宫格整套 → 竖屏三消局内HUD概念稿 concept-only 顶栏托盘底钮
+top neighbors (k=8, calibrate only):
+  · 0.7972  skill ['ui.kit'] | 做一整套界面，方案1
+  · 0.7972  skill ['ui.kit'] | 做一整套界面，方案13
+  · 0.7972  skill ['ui.kit'] | 做一整套界面，方案17
+  · 0.7972  skill ['ui.kit'] | 做一整套界面，方案5
+  · 0.7972  skill ['ui.kit'] | 做一整套界面，方案9
+  · 0.6944  stop [] | 到底是整套界面还是一张插画，第0问
+  · 0.6944  stop [] | 到底是整套界面还是一张插画，第10问
+  · 0.6944  stop [] | 到底是整套界面还是一张插画，第11问
+对美术只贴 artist_say（标签+一句人话），禁止刷 confidence/json。先写标准路由句再 route --canonical；execute_ok 才开画；plan_conflict / confidence=ask|low / vague 先问人。

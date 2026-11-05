@@ -15,9 +15,12 @@
       "id": "ui.kit",
       "when": "玩家要整屏、HUD、弹窗套件、九宫格、按钮状态",
       "skill": "pmem-ui",
-      "section": "【强制4轮≥9.5收敛】SpriteCook式 UI Kit/HUD/九宫格整套",
+      "section": "【出图一轮交件】SpriteCook式 UI Kit/HUD/九宫格整套",
       "file": ".cursor/skills/pmem-ui/SKILL.md",
       "heading": "# `/pmem-ui` — SpriteCook 式 UI Kit / HUD / 九宫格整套生成",
+      "pack_headings": [
+        "# `/pmem-ui` — SpriteCook 式 UI Kit / HUD / 九宫格整套生成"
+      ],
       "routable": true,
       "simultaneous_pixels": false,
       "phase": 10
@@ -29,6 +32,11 @@
       "section": "Mode A",
       "file": ".cursor/skills/pmem-icon/SKILL.md",
       "heading": "## 二、Mode A：App Icon 1024×1024 母版专项（iOS App Store / Android Adaptive 桌面启动图标）",
+      "pack_headings": [
+        "## 二、Mode A：App Icon 1024×1024 母版专项（iOS App Store / Android Adaptive 桌面启动图标）",
+        "### Mode A",
+        "## 记忆静默 / 履历可见（Agent 必读）"
+      ],
       "routable": true,
       "simultaneous_pixels": false,
       "phase": 20
@@ -40,6 +48,11 @@
       "section": "Mode B",
       "file": ".cursor/skills/pmem-icon/SKILL.md",
       "heading": "## 三、Mode B：一致化 SVG 矢量图标集流程（Brief → Spec → Batch → Review → Converge）",
+      "pack_headings": [
+        "## 三、Mode B：一致化 SVG 矢量图标集流程（Brief → Spec → Batch → Review → Converge）",
+        "### Mode B",
+        "## 记忆静默 / 履历可见（Agent 必读）"
+      ],
       "routable": true,
       "simultaneous_pixels": false,
       "phase": 21
@@ -51,6 +64,11 @@
       "section": "Mode C",
       "file": ".cursor/skills/pmem-icon/SKILL.md",
       "heading": "## 四、Mode C：游戏道具透明底栅格图标（64/128/256px PNG，非 SVG）",
+      "pack_headings": [
+        "## 四、Mode C：游戏道具透明底栅格图标（64/128/256px PNG，非 SVG）",
+        "### Mode C",
+        "## 记忆静默 / 履历可见（Agent 必读）"
+      ],
       "routable": true,
       "simultaneous_pixels": false,
       "phase": 22
@@ -62,6 +80,9 @@
       "section": "同域合成梯：先定链型与关系，再按交付出图",
       "file": ".cursor/skills/pmem-merge-ladder/SKILL.md",
       "heading": "# `/pmem-merge-ladder` — 同域合成梯",
+      "pack_headings": [
+        "# `/pmem-merge-ladder` — 同域合成梯"
+      ],
       "routable": true,
       "simultaneous_pixels": false,
       "phase": 30
@@ -73,6 +94,10 @@
       "section": "镜头包",
       "file": ".cursor/skills/pmem-draw/SKILL.md",
       "heading": "## 合同 · 镜头包",
+      "pack_headings": [
+        "## 零点五、开画前强制 route（与总控同闸；点名 `/pmem-draw` 也要跑）",
+        "## 合同 · 镜头包"
+      ],
       "routable": true,
       "simultaneous_pixels": false,
       "phase": 40
@@ -84,6 +109,12 @@
       "section": "克隆",
       "file": ".cursor/skills/pmem-draw/SKILL.md",
       "heading": "## 合同 · 克隆",
+      "pack_headings": [
+        "## 零点五、开画前强制 route（与总控同闸；点名 `/pmem-draw` 也要跑）",
+        "## 二、标准执行流程（Step 1 ~ Step 3）",
+        "## 合同 · 克隆",
+        "## 记忆静默 / 履历可见（Agent 必读）"
+      ],
       "routable": true,
       "simultaneous_pixels": false,
       "phase": 50
@@ -95,6 +126,12 @@
       "section": "变体",
       "file": ".cursor/skills/pmem-draw/SKILL.md",
       "heading": "## 合同 · 变体",
+      "pack_headings": [
+        "## 零点五、开画前强制 route（与总控同闸；点名 `/pmem-draw` 也要跑）",
+        "## 二、标准执行流程（Step 1 ~ Step 3）",
+        "## 合同 · 变体",
+        "## 记忆静默 / 履历可见（Agent 必读）"
+      ],
       "routable": true,
       "simultaneous_pixels": false,
       "phase": 60
@@ -106,6 +143,12 @@
       "section": "多图分工",
       "file": ".cursor/skills/pmem-draw/SKILL.md",
       "heading": "## 合同 · 多图分工",
+      "pack_headings": [
+        "## 零点五、开画前强制 route（与总控同闸；点名 `/pmem-draw` 也要跑）",
+        "## 二、标准执行流程（Step 1 ~ Step 3）",
+        "## 合同 · 多图分工",
+        "## 记忆静默 / 履历可见（Agent 必读）"
+      ],
       "routable": true,
       "simultaneous_pixels": false,
       "phase": 70
@@ -117,6 +160,12 @@
       "section": "原画",
       "file": ".cursor/skills/pmem-draw/SKILL.md",
       "heading": "## 合同 · 原画",
+      "pack_headings": [
+        "## 零点五、开画前强制 route（与总控同闸；点名 `/pmem-draw` 也要跑）",
+        "## 二、标准执行流程（Step 1 ~ Step 3）",
+        "## 合同 · 原画",
+        "## 记忆静默 / 履历可见（Agent 必读）"
+      ],
       "routable": true,
       "simultaneous_pixels": false,
       "phase": 80
@@ -128,6 +177,9 @@
       "section": "参考图/样张一键提炼风格圣经与色板锁定",
       "file": ".cursor/skills/pmem-style-lock/SKILL.md",
       "heading": "# `/pmem-style-lock` — 样张提炼风格圣经与色板锁定",
+      "pack_headings": [
+        "# `/pmem-style-lock` — 样张提炼风格圣经与色板锁定"
+      ],
       "routable": true,
       "simultaneous_pixels": false,
       "phase": 90
@@ -139,6 +191,9 @@
       "section": "单图/批量图主美级六维审稿与红线入库",
       "file": ".cursor/skills/pmem-critique/SKILL.md",
       "heading": "# `/pmem-critique` — 主美级六维审稿与红线入库",
+      "pack_headings": [
+        "# `/pmem-critique` — 主美级六维审稿与红线入库"
+      ],
       "routable": true,
       "simultaneous_pixels": false,
       "phase": 91
@@ -150,6 +205,9 @@
       "section": "一键归档散图、记忆体检并刷新可视化图谱工作台",
       "file": ".cursor/skills/pmem-atlas/SKILL.md",
       "heading": "# `/pmem-atlas` — 整理散图与刷新可视化图谱",
+      "pack_headings": [
+        "# `/pmem-atlas` — 整理散图与刷新可视化图谱"
+      ],
       "routable": true,
       "simultaneous_pixels": false,
       "phase": 92
@@ -161,6 +219,9 @@
       "section": "【进阶/可选】进步、短板与知识卡（日常已静默写过）",
       "file": ".cursor/skills/pmem-coach/SKILL.md",
       "heading": "# `/pmem-coach` — 进步 / 短板 / 知识（三条偷看合成一条）",
+      "pack_headings": [
+        "# `/pmem-coach` — 进步 / 短板 / 知识（三条偷看合成一条）"
+      ],
       "routable": true,
       "simultaneous_pixels": false,
       "phase": 93
@@ -172,6 +233,9 @@
       "section": "提示词生成器：按交付类型扩写可选方案",
       "file": ".cursor/skills/pmem-prompt/SKILL.md",
       "heading": "# `/pmem-prompt` — 提示词生成器（按类型分流）",
+      "pack_headings": [
+        "# `/pmem-prompt` — 提示词生成器（按类型分流）"
+      ],
       "routable": true,
       "simultaneous_pixels": false,
       "phase": 94
@@ -183,6 +247,11 @@
       "section": "普通图",
       "file": ".cursor/skills/pmem-draw/SKILL.md",
       "heading": "## 二、标准执行流程（Step 1 ~ Step 3）",
+      "pack_headings": [
+        "## 零点五、开画前强制 route（与总控同闸；点名 `/pmem-draw` 也要跑）",
+        "## 二、标准执行流程（Step 1 ~ Step 3）",
+        "## 记忆静默 / 履历可见（Agent 必读）"
+      ],
       "routable": true,
       "simultaneous_pixels": false,
       "phase": 100

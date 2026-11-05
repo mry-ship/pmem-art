@@ -1,0 +1,4 @@
+{
+  "out": "assets/skill_20261105/draw_ordinary/_help_start.json",
+  "args": ["converge", "start", "--help"]
+}

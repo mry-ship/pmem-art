@@ -68,6 +68,42 @@ def slice_markdown_section(body: str, heading: str) -> str:
     return "\n".join(lines[start:end])
 
 
+def slice_route_body(body: str, route: dict[str, Any]) -> str:
+    """按 route.pack_headings（缺省则 [heading]）顺序拼接多节，供总控交给执行侧。"""
+    headings = list(route.get("pack_headings") or [])
+    primary = str(route.get("heading") or "").strip()
+    if not headings and primary:
+        headings = [primary]
+    parts: list[str] = []
+    seen: set[str] = set()
+    for h in headings:
+        want = (h or "").strip()
+        if not want or want in seen:
+            continue
+        seen.add(want)
+        chunk = slice_markdown_section(body, want).strip()
+        if chunk:
+            parts.append(chunk)
+    return "\n\n".join(parts)
+
+
+def _h2_by_prefix(body: str, prefix: str) -> str:
+    for line in _headings(body):
+        if line.startswith(prefix):
+            return line
+    return ""
+
+
+def _any_heading(body: str, exact: str) -> str:
+    want = (exact or "").strip()
+    if not want:
+        return ""
+    for line in body.splitlines():
+        if line.strip() == want:
+            return want
+    return ""
+
+
 def _first_heading(body: str) -> str:
     found = _headings(body)
     if found:
@@ -154,15 +190,18 @@ def _mode_heading(body: str, letter: str) -> str:
 
 
 def _icon_routes(body: str) -> list[dict[str, Any]]:
-    """Mode A/B/C from the分流 section, pointed at the heading that section names."""
+    """Mode A/B/C + 该 Mode 交付清单 + 记忆静默，打包进 pack_headings。"""
     spec = (
         ("icon.a", "A", "桌面图标、1024 母版"),
         ("icon.b", "B", "一套线性 SVG"),
         ("icon.c", "C", "背包道具格"),
     )
+    memory = _h2_by_prefix(body, "## 记忆静默")
     routes: list[dict[str, Any]] = []
     for rid, letter, when in spec:
         heading = _mode_heading(body, letter)
+        checklist = _any_heading(body, f"### Mode {letter}")
+        pack = [h for h in (heading, checklist, memory) if h]
         routes.append(
             {
                 "id": rid,
@@ -171,6 +210,7 @@ def _icon_routes(body: str) -> list[dict[str, Any]]:
                 "section": f"Mode {letter}",
                 "file": ".cursor/skills/pmem-icon/SKILL.md",
                 "heading": heading,
+                "pack_headings": pack,
                 "routable": bool(heading),
                 "simultaneous_pixels": False,
             }
@@ -180,15 +220,25 @@ def _icon_routes(body: str) -> list[dict[str, Any]]:
 
 def _contract_heading(body: str, section: str) -> str:
     if section == "普通图":
-        for line in _headings(body):
-            if line.startswith("## 二、"):
-                return line
-        return ""
+        return _h2_by_prefix(body, "## 二、")
     needle = f"## 合同 · {section}"
     for line in _headings(body):
         if line.startswith(needle):
             return line
     return ""
+
+
+def _draw_pack_headings(body: str, section: str, heading: str) -> list[str]:
+    """出图合同：零点五 route + 第二节闭环（镜头包除外）+ 合同 + 记忆静默。"""
+    route_gate = _h2_by_prefix(body, "## 零点五")
+    loop = _h2_by_prefix(body, "## 二、")
+    memory = _h2_by_prefix(body, "## 记忆静默")
+    if section == "普通图":
+        return [h for h in (route_gate, loop or heading, memory) if h]
+    if section == "镜头包":
+        return [h for h in (route_gate, heading) if h]
+    # 克隆 / 变体 / 多图分工 / 原画：公共闭环 + 叠加合同
+    return [h for h in (route_gate, loop, heading, memory) if h]
 
 
 def build_registry(specs: list[dict[str, Any]], *, installed_root: Path | None = None) -> dict[str, Any]:
@@ -209,9 +259,11 @@ def build_registry(specs: list[dict[str, Any]], *, installed_root: Path | None =
         if skill == "pmem-draw":
             heading = _contract_heading(draw_body, name)
             section = name
+            pack = _draw_pack_headings(draw_body, name, heading)
         else:
             heading = _skill_open(body)
             section = by_name[skill]["title"]
+            pack = [heading] if heading else []
         routes.append(
             {
                 "id": rid,
@@ -220,6 +272,7 @@ def build_registry(specs: list[dict[str, Any]], *, installed_root: Path | None =
                 "section": section,
                 "file": f".cursor/skills/{skill}/SKILL.md",
                 "heading": heading,
+                "pack_headings": pack,
                 "routable": bool(heading),
                 "simultaneous_pixels": False,
             }
@@ -243,6 +296,7 @@ def build_registry(specs: list[dict[str, Any]], *, installed_root: Path | None =
                 "section": by_name[skill]["title"],
                 "file": f".cursor/skills/{skill}/SKILL.md",
                 "heading": heading,
+                "pack_headings": [heading] if heading else [],
                 "routable": bool(heading),
                 "simultaneous_pixels": False,
             }
@@ -292,12 +346,12 @@ def build_registry(specs: list[dict[str, Any]], *, installed_root: Path | None =
                 frontmatter_ok = False
                 stale.append(spec["name"])
 
-    # heading 字符串命中 ≠ 按节裁剪正确：校验 Icon Mode 节互不吞并
+    # heading 字符串命中 ≠ 按节裁剪正确：校验 Icon Mode 节互不吞并；出图 pack 含闭环
     section_cut_ok = True
     section_cut_fails: list[str] = []
+    by_rid = {r["id"]: r for r in routes}
     icon_body = by_name.get("pmem-icon", {}).get("body") or ""
     if icon_body:
-        by_rid = {r["id"]: r for r in routes}
         checks = (
             ("icon.a", ("Mode A",), ("## 三、Mode B", "## 四、Mode C")),
             ("icon.b", ("Mode B", "### B6"), ("## 四、Mode C",)),
@@ -310,15 +364,34 @@ def build_registry(specs: list[dict[str, Any]], *, installed_root: Path | None =
                 section_cut_ok = False
                 section_cut_fails.append(f"{rid}:heading_not_h2")
                 continue
-            sec = slice_markdown_section(icon_body, heading)
+            mode_only = slice_markdown_section(icon_body, heading)
             for needle in must_have:
-                if needle not in sec:
+                if needle not in mode_only:
                     section_cut_ok = False
                     section_cut_fails.append(f"{rid}:missing:{needle}")
             for bad in must_not:
-                if bad in sec:
+                if bad in mode_only:
                     section_cut_ok = False
                     section_cut_fails.append(f"{rid}:leaked:{bad}")
+            packed = slice_route_body(icon_body, route)
+            for needle in (f"### Mode {rid[-1].upper()}", "记忆静默"):
+                if needle not in packed:
+                    section_cut_ok = False
+                    section_cut_fails.append(f"{rid}:pack_missing:{needle}")
+
+    for rid, must in (
+        ("draw.clone", ("reasonableness", "converge judge", "合同 · 克隆", "零点五")),
+        ("draw.variant", ("reasonableness", "converge judge", "合同 · 变体")),
+        ("draw.multi", ("reasonableness", "converge judge", "合同 · 多图分工")),
+        ("draw.key", ("reasonableness", "converge judge", "合同 · 原画")),
+        ("draw.ordinary", ("reasonableness", "converge judge", "零点五", "标准执行流程")),
+    ):
+        route = by_rid.get(rid) or {}
+        packed = slice_route_body(draw_body, route)
+        for needle in must:
+            if needle not in packed:
+                section_cut_ok = False
+                section_cut_fails.append(f"{rid}:pack_missing:{needle}")
 
     return {
         "source": "skills_kit/skill_specs.py",
@@ -350,14 +423,23 @@ def render_registry_md(reg: dict[str, Any]) -> str:
     lines.append("")
     lines.append("## 路由")
     lines.append("")
-    lines.append(f"执行以 `{pmem_art_cli()} route` 的 `route_ids` 为准。这张表只核对 heading。phase 是查阅顺序，不要用它改判。普通图 phase 最大，只作兜底。")
+    lines.append(
+        f"执行以 `{pmem_art_cli()} route` 的 `route_ids` 为准。"
+        "这张表核对 heading；**交给执行侧用 `pack_headings` + `slice_route_body`**"
+        "（出图合同=零点五+第二节+合同；图标=Mode+§五清单+记忆静默）。"
+        "phase 是查阅顺序，不要用它改判。普通图 phase 最大，只作兜底。"
+    )
     lines.append("")
-    lines.append("| id | phase | when | skill | heading | routable |")
-    lines.append("| :--- | :--- | :--- | :--- | :--- | :--- |")
+    lines.append("| id | phase | when | skill | heading | pack | routable |")
+    lines.append("| :--- | :--- | :--- | :--- | :--- | :--- | :--- |")
     for route in reg.get("routes") or []:
         heading = str(route["heading"]).replace("|", "\\|")
+        pack = " + ".join(
+            (h[:22] + "…" if len(h) > 22 else h).replace("|", "\\|")
+            for h in (route.get("pack_headings") or [route["heading"]])
+        )
         lines.append(
-            f"| `{route['id']}` | {route.get('phase', '')} | {route['when']} | `{route['skill']}` | {heading} | {str(route['routable']).lower()} |"
+            f"| `{route['id']}` | {route.get('phase', '')} | {route['when']} | `{route['skill']}` | {heading} | {pack} | {str(route['routable']).lower()} |"
         )
     lines.append("")
     lines.append("## unroutable_headings")
@@ -372,10 +454,13 @@ def render_registry_md(reg: dict[str, Any]) -> str:
     lines.append("## section_cut")
     lines.append("")
     if reg.get("section_cut_ok", True):
-        lines.append("ok：Icon Mode A/B/C 按 `slice_markdown_section` 互不吞并，且 Mode B 含 B6。")
+        lines.append(
+            "ok：Icon Mode 互不吞并且 pack 含清单；"
+            "draw.clone/variant/multi/key/ordinary 的 `slice_route_body` 含 reasonableness/闭环。"
+        )
     else:
         fails = "、".join(reg.get("section_cut_fails") or []) or "unknown"
-        lines.append(f"fail：{fails}。heading 字符串命中不够，须修 skill_specs 层级或围栏内伪 H1。")
+        lines.append(f"fail：{fails}。须修 pack_headings / skill_specs 层级或围栏内伪 H1。")
     lines.append("")
     return "\n".join(lines)
 

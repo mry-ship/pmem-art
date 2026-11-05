@@ -9,7 +9,7 @@ project:
 vcs: auto
 gate:
   mode: warn
-  auto_validate_on_save: true
+  auto_validate_on_save: false
   stale_check:
     hash: true
     dimensions: true

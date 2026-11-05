@@ -1,0 +1,20 @@
+{
+  "preset": "Soft",
+  "grid": 24,
+  "viewBox": "0 0 24 24",
+  "strokeWidth": 2,
+  "strokeLinecap": "round",
+  "strokeLinejoin": "round",
+  "cornerRadiusHint": 4,
+  "padding": 2,
+  "opticalBalance": true,
+  "color": "currentColor",
+  "fill": "none",
+  "theme": "妖精花园导航线性图标",
+  "icons": [
+    { "id": "home", "label": "Home", "file": "home.svg" },
+    { "id": "shop", "label": "Shop", "file": "shop.svg" },
+    { "id": "bag", "label": "Bag", "file": "bag.svg" },
+    { "id": "settings", "label": "Settings", "file": "settings.svg" }
+  ]
+}

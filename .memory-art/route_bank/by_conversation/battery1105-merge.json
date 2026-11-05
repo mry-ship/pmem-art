@@ -1,0 +1,15 @@
+{
+  "saved_at": 1793888258.4658372,
+  "text": "合成梯整表：蘑菇芝士果盘 shop_ladder 8档 overview",
+  "banner": "【按点名锁定 merge.ladder】",
+  "route_ids": [
+    "merge.ladder"
+  ],
+  "mode": "skill",
+  "execute_ok": true,
+  "artist_say": "【按点名锁定 merge.ladder】",
+  "plan_conflict": false,
+  "confidence": "named",
+  "conversation_id": "battery1105-merge",
+  "named_seed": true
+}

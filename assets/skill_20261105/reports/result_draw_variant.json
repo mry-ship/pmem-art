@@ -1,0 +1,42 @@
+{
+  "route_id": "draw.variant",
+  "session": "battery1105-variant",
+  "module": "character.FairyPink",
+  "banner": "【按 变体 走了】",
+  "passed": false,
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "best_round": 4,
+  "best_score": 9.24,
+  "final_image": "assets/skill_battery_20261105/draw_variant/final.png",
+  "rounds": [
+    {
+      "round": 1,
+      "score": 8.88,
+      "dims": "构图9.4/光影9.2/透视解剖9.0/质感9.1/风格9.0/无瑕疵8.2",
+      "defects": "上睑偏浅、紫手链、吊坠偏金"
+    },
+    {
+      "round": 2,
+      "score": 9.0,
+      "dims": "构图9.0/光影9.2/透视解剖9.0/质感9.2/风格9.1/无瑕疵8.7",
+      "defects": "上睑未过中线；嘴偏闭合；视线略下偏"
+    },
+    {
+      "round": 3,
+      "score": 9.15,
+      "dims": "构图9.3/光影9.3/透视解剖9.2/质感9.2/风格9.2/无瑕疵8.9",
+      "defects": "上睑半闭未压过中线只留虹膜缝"
+    },
+    {
+      "round": 4,
+      "score": 9.24,
+      "dims": "构图9.4/光影9.3/透视解剖9.3/质感9.3/风格9.3/无瑕疵9.0",
+      "defects": "上睑仍未稳定压到虹膜下半只留虹膜缝"
+    }
+  ],
+  "hard_accept": {
+    "target": "上睑压过虹膜中线只留虹膜缝+轻哈欠+禁手链",
+    "status": "未完全兑现；满4轮最高9.24未过线"
+  }
+}

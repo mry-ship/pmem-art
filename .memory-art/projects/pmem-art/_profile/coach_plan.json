@@ -1,11 +1,11 @@
 {
   "schema": "pmem-art.coach.v1",
-  "built_at": "2026-11-05 03:20:43 UTC+8",
+  "built_at": "2026-11-05 20:05:07 UTC+8",
   "reflections_scanned": 20,
   "weak_spots": [
     {
       "category": "lighting",
-      "hits": 94,
+      "hits": 71,
       "drills": [
         "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
         "只改光源方向重绘一轮，强制统一高光材质"
@@ -13,31 +13,31 @@
     },
     {
       "category": "line_edge",
-      "hits": 81,
+      "hits": 62,
       "drills": [
         "透明底边缘检查：放大 200% 查毛边与漏抠",
         "统一描边宽度预设（如 1.5px round）整套重描"
       ]
     },
     {
-      "category": "material",
-      "hits": 63,
-      "drills": [
-        "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
-        "去掉油腻高光：改用硬边分层或青瓷釉面高光"
-      ]
-    },
-    {
       "category": "composition",
-      "hits": 37,
+      "hits": 49,
       "drills": [
         "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
         "用简单色块缩略图先定重心，再进细节"
       ]
     },
     {
+      "category": "material",
+      "hits": 40,
+      "drills": [
+        "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+        "去掉油腻高光：改用硬边分层或青瓷釉面高光"
+      ]
+    },
+    {
       "category": "color_palette",
-      "hits": 31,
+      "hits": 27,
       "drills": [
         "从模块 palette 抽 3 HEX 做限色练习，禁止引入霓虹辅色",
         "把上次红线里的脏色/霓虹写成 Negative，重跑 1 轮"
@@ -54,22 +54,21 @@
       "category": "line_edge"
     },
     {
-      "draw_goal": "下一张专门练「material」：同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
-      "category": "material"
+      "draw_goal": "下一张专门练「composition」：练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "category": "composition"
     }
   ],
   "capability_trend": {
     "declining_weaknesses": [
-      "material",
-      "line_edge",
-      "lighting"
-    ],
-    "rising_weaknesses": [
-      "anatomy",
-      "ui_9slice",
+      "composition",
       "narrative_camera",
-      "icon_consistency"
+      "icon_consistency",
+      "line_edge",
+      "material",
+      "lighting",
+      "anatomy"
     ],
+    "rising_weaknesses": [],
     "note": "newer vs older half of reflections"
   },
   "encouragement": "短板在下降，保持 warm-start + 每轮「本轮可学」闭环。"

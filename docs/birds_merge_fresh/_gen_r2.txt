@@ -1,0 +1,9 @@
+﻿Keep the same 2x4 Merge Mansion inventory overview layout, soft-plastic shelf quality, dark charcoal, white cards. Keep L1 egg, L2 hatching fluff, L3 standing downy chick, L7 red crest, L8 ornate feather mantle direction.
+
+FIX:
+- Remove ALL faces: no eyes, no pupils, no mouth smile — toy-like faceless bird props with only beak nub shape if needed, or smooth head.
+- Differentiate L4 vs L5 vs L6 hard at thumbnail:
+  L4: still partly downy, short stubby tail, small wing feather patches.
+  L5: full honey-apricot adult plumage, neat layered closed wings, small tidy tail fan.
+  L6: MUCH thicker plumage, wing edges clearly opened wider, distinctly larger tail fan — silhouette wider than L5.
+Still exactly one bird per card. No flock, no coop, no gold armor.

@@ -691,6 +691,27 @@
       "strengths": "合理性闸已过：subject_action=ok；element_budget=ok；hard_locks=ok；fail_at_glance=ok；layout_zones=ok；no_content_clutter=ok；chrome_not_illustration=ok；cta_clear_of_faces=ok；control_craft=ok",
       "defects": "",
       "next_fix": "首轮 generate 使用本修订提示词；审美迭代不得推翻硬锁与元素预算"
+    },
+    {
+      "round": 1,
+      "prompt": "忽略此前棚屋到城堡分析与结论，勿沿用历史推理；基于EverMerge木屋支线商业标尺从零定链。 对标EverMerge Wood branch（商业货柜）：Log→Timber→Wooden Frame→Wooden Building/Hay shack→Wooden House→Rich House→Grand House→Wooden Mansion；城堡Castle Beauty是另链喂养目标，禁止焊成L8。chain_mode=shop_ladder levels=8 delivery=overview_sheet 2x4。家族=暖蜜木色+干草/红陶瓦递进（瓦从住宅档才出现）。L1原木 单根或两三根原木横堆 0.58; L2木料捆 整齐三五根木料捆扎 0.61 两堆原木捆成料; L3木屋框架 人字梁立柱无墙空框架 0.64 木料立成框架; L4草顶木棚 草/木瓦单坡简陋棚有墙门洞无烟囱 0.67 框架封墙加廉价顶; L5木屋 封闭双坡木屋门窗矮烟囱 0.70 两棚合成完整木屋首次像家; L6精致木屋 门廊花窗更厚木墙 0.73 两木屋合成带门廊精致屋; L7大宅 两层木石混构宽立面对称窗 0.76 两精致屋叠成两层大宅; L8木庄园 三层翼楼石阶顶楼天窗无角楼军堡无旗阵城堡 0.80 两大宅合成庄园末档。surface=软塑胶休闲merge白卡深底。",
+      "strengths": "",
+      "defects": "旧链L1红瓦过早、末档城堡跨链",
+      "next_fix": "锁EverMerge八档；禁城堡"
+    },
+    {
+      "round": 2,
+      "prompt": "五问：同店=EverMerge木建筑支线；无回退；无城堡硬跳；64px=原木/捆/空框架/草棚/小屋/门廊屋/两层大宅/翼楼庄园可分；merge_why具体。LOCK。补：L4草顶不要红陶瓦；红陶瓦最早L5木屋；L8禁止角楼旗阵军堡。",
+      "strengths": "",
+      "defects": "瓦材出现档位再钉",
+      "next_fix": "定稿写yaml"
+    },
+    {
+      "round": 3,
+      "prompt": "定稿 commercial_ref=MergeMansion Bake-off Chickens L1-L8 creature only。shop_ladder overview 2x4。L1破壳幼雏 sil=圆滚黄绒几乎无翅 0.58; L2小鸡 sil=黄绒短喙短翅站姿 0.61; L3半大雏 sil=分色羽短翅形 0.64; L4青年鸡 sil=瘦长雏形短尾冠芽 0.67; L5母鸡 sil=圆身成羽清晰冠 0.70; L6下蛋母鸡 sil=丰满垂羽大红冠 0.73; L7鸡群 sil=两三成鸡同簇群剪影 0.76; L8母鸡群 sil=更大多只母鸡同簇无建筑 0.80。surface=软塑胶白卡深底。",
+      "strengths": "",
+      "defects": "无",
+      "next_fix": "relation-judge出图"
     }
   ],
   "ActionRequired": "STOP_PICK_BEST",

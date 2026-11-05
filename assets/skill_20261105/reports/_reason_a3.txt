@@ -1,0 +1,11 @@
+﻿✅ [合理性闸 · icon.a] 通过
+  ✓ subject_action（主体在做什么/交付物是什么）
+  ✓ element_budget（元素预算（不堆景不过载））
+  ✓ hard_locks（硬锁（画幅/透明底/无字/机位等））
+  ✓ fail_at_glance（一眼失败条件已写明）
+  ✓ safe_zone（72%–80% 安全区）
+  ✓ single_symbol（单符号高识别）
+  ✓ full_bleed_no_round_mask（满幅直角母版，禁止烤进圆角底板）
+修订提示词（generate 将优先用这句）：
+iOS App Store top-tier casual game app icon Light master: 1024x1024 full-bleed orthogonal square PNG with square edges only, system mask applied later never baked into art; single hero fairy-garden mushroom-desk symbol in soft micro-3D plastic toy finish; core mark inside center 72 to 80 percent safe zone with breathing margin; soft pastel moss-green to soft-pink ambient gradient board; one upper-left key light and short contact shadow; no text no UI chrome; silhouette still readable at 29px
+已写入会话 `battery1105-icon-a`。下一步用 revised 做 converge generate（可省略 --prompt，将自动注入）。

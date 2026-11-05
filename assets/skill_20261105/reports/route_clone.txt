@@ -1,0 +1,27 @@
+﻿── 给美术看（请只转述下面这块）──
+【按 克隆 走了】
+按克隆：锁参考画风，换成新题材。
+── Agent 技术明细 ──
+【按 克隆 走了】
+confidence: high  execute_ok: True
+mode: skill  would_execute: True
+route_ids: ['draw.clone']
+announce: 按 克隆 走了
+match: lexical_ngram+colloquial_expand+canonical
+canonical[agent]: 【有参考图】【换新题材】【锁画风】【走克隆】冬日农场雪地，农夫抱小羊，锁妖精花园粘土童话画风，禁止抄参考构图与物件
+reason: clone
+steps:
+  1. pmem-draw/克隆 → 有参考图；换新题材冬日农场雪地农夫抱小羊；锁妖精花园粘土童话画风；走克隆；禁止抄参考构图、分区与物件；无鼹鼠、花瓣屋、溪流、蘑菇桌、巨型热带叶；雪像光滑白粘土；
+top neighbors (k=8, calibrate only):
+  · 0.3673  skill ['draw.clone'] | 参考这张的画风，别画原来的人，换成渡船
+  · 0.3673  skill ['draw.clone'] | 参考这张的画风，别画原来的人，换成邮局
+  · 0.3673  skill ['draw.clone'] | 参考这张的画风，别画原来的人，换成钟楼
+  · 0.3673  skill ['draw.clone'] | 参考这张的画风，别画原来的人，换成陶罐
+  · 0.3673  skill ['draw.clone'] | 参考这张的画风，别画原来的人，换成雪狐
+  · 0.3603  skill ['draw.clone'] | 参考这张的画风，别画原来的人，换成一只猫
+  · 0.3603  skill ['draw.clone'] | 参考这张的画风，别画原来的人，换成一盏灯
+  · 0.3481  skill ['draw.clone'] | 参考这张的画风，别画原来的人，换成修车的男孩
+confusion:
+  · 有参考但没说新题材、新物件、新角色 → 普通图，不进克隆。
+对美术只贴 artist_say（标签+一句人话），禁止刷 confidence/json。先写标准路由句再 route --canonical；execute_ok 才开画；plan_conflict / confidence=ask|low / vague 先问人。
+

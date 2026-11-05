@@ -47,9 +47,11 @@ class ProcessBoardTests(unittest.TestCase):
                 "next_fix": "打开态转到同一侧角",
             }],
             "winner": {"round": 1, "score": 9.11, "defects": "两态角度还没对齐"},
+            "convergence_badge": "出图一轮交件 · 未过线，采用第 1 轮",
         }
         index = write_process_board(td, sess, winner=sess["winner"])
         page = index.read_text(encoding="utf-8")
+        self.assertIn("出图一轮交件 · 未过线，采用第 1 轮", page)
         self.assertIn("参考图分析", page)
         self.assertIn("图1锁机位", page)
         self.assertIn("<b>图1</b>", page)

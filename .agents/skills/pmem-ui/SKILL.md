@@ -1,6 +1,6 @@
 ---
 name: pmem-ui
-description: 仅当玩家点名 UI/HUD/九宫格，或生图分流判成整套界面时使用。不要用来画普通插画、单张克隆或合成梯。概念稿与关键组件均强制「最多4轮、合格线≥9.5」闭环自评收敛（生1张→打分挑刺→展示不足与改点→<9.5叠加修正→满4轮挑最高分→评分履历可见）。流水线对标 SpriteCook：概念先行 → 透明组件表 → 九宫格切线 → 状态族。触发例：「/pmem-ui 生成一套蒸汽朋克主菜单 HUD」「/pmem-ui [附概念图] 拆出九宫格弹窗与按钮态」。
+description: 仅当玩家点名 UI/HUD/九宫格，或生图分流判成整套界面时使用。不要用来画普通插画、单张克隆或合成梯。默认 concept-only。概念/组件表均为出图一轮交件（只限生图轮次=1；交件标明是否≥9.5）；full kit 默认1张总表。流水线对标 SpriteCook：概念先行 →（仅点名）透明组件表 → 九宫格切线 → 状态族。触发例：「/pmem-ui 生成一套蒸汽朋克主菜单 HUD」「/pmem-ui [附概念图] 拆出九宫格弹窗与按钮态」。
 ---
 
 # `/pmem-ui` — SpriteCook 式 UI Kit / HUD / 九宫格整套生成
@@ -15,9 +15,17 @@ description: 仅当玩家点名 UI/HUD/九宫格，或生图分流判成整套�
 ```
 
 ## 原理（截图摘要）
-1. `search` 召回 `ui.*` 红线与定稿 → 2. **概念先行** → 3. 透明组件表 → 4. 九宫格 + 状态族 → 5. **强制 4轮 ≥9.5**（每轮展示评分履历） → `finish` 打印履历 + **记忆静默写入**（勿旁白记忆）
+1. `search` 召回 `ui.*` 红线与定稿 → 2. **概念先行（默认停这里）** → 3. **仅点名 full kit** 才透明组件表 → 4. 九宫格切线（切线/清单，不重生图闭环）→ 5. **出图一轮交件** → `finish` + **记忆静默写入**
 
 你现在运行在 **pmem-art UI Kit 模式**（对标 SpriteCook UI Kit Builder：概念先行 → 组件表 → 九宫格切线 → 状态族）。**禁止**把整屏各控件零散各生一张再硬拼；必须先锁一个统一视觉语言的概念稿，再从同一概念抽出可复用零件。
+
+### 耗时闸（出图一轮交件·必守）
+- **名字含义**：只限制**生图轮次=1**；关系/合理性/切线清单仍要做，不是整段技能只审一次。
+- **默认 concept-only**：口语没点「组件表 / 九宫格切线 / 状态族 / UI kit / 拆按钮」→ 概念一轮交件，**禁止**自作主张开全家桶。
+- **交件语义**：每个 converge **生 1 → judge 1 → finish**；finish 必须写明「过线/未过线（≥9.5）」；未过线也是合法终态，**禁止**为凑 9.5 叠第 2 张。
+- **full kit**：概念 1 次 + **默认仅 1 张**组件总表；**禁止**第 2 张 sheet、禁止关键件二次 converge。
+- **九宫格/manifest**：在已有图上标切线与清单，不另开生图闭环。
+- **浅/深双主题**：仅玩家点名才各跑一次；默认只交一主题。
 
 ---
 
@@ -30,8 +38,8 @@ description: 仅当玩家点名 UI/HUD/九宫格，或生图分流判成整套�
 ### 交付档（先分叉；可默认，不必再问类型以外的事）
 | 档 | 何时 | 做到哪停 |
 | :--- | :--- | :--- |
-| **concept-only（最小档）** | 只要主菜单/某一屏概念、截图级气氛；**没**点名九宫格、组件表、状态族、UI kit 套件 | 只做 Step 1 概念稿（最多 4 轮 ≥9.5），交概念稿即完。**禁止**默开组件表/九宫格全家桶 |
-| **full kit（全套）** | 点名组件表 / 九宫格 / 状态族 / 套件，或「整套 UI kit」 | Concept → Sheets → 9-Slice → 状态族；概念未过线不准拆件 |
+| **concept-only（最小档·默认）** | 只要主菜单/某一屏概念、截图级气氛；**没**点名九宫格、组件表、状态族、UI kit 套件 | 只做 Step 1 概念稿（出图一轮交件），标明是否 ≥9.5。**禁止**默开组件表/九宫格全家桶 |
+| **full kit（全套）** | 点名组件表 / 九宫格 / 状态族 / 套件，或「整套 UI kit」 | Concept（1）→ 总表 Sheet（1）→ 9-Slice 切线/清单；概念未审完不准拆件 |
 
 玩家口语含糊但只提「主界面/主菜单长什么样」→ 默认 **concept-only**。点了「拆按钮/九宫格/pressed」→ **full kit**。
 
@@ -43,17 +51,16 @@ pyw -3 -u pmem_art.py search --module <ui.模块>
 
 ### Step 1：概念先行（Concept First）—— 不可跳过
 1. 若用户丢入概念图：先做参考图视觉解构（构图分区、主辅色 HEX、金属/木纹/霓虹材质、控件密度），再进入组件抽取。
-2. 若无概念图：先生成 **1 张完整屏幕概念稿**（整屏布局，统一材质与色板），用 `/pmem-draw` 同款 **4轮 >= 9.5 收敛** 打磨概念稿：
+2. 若无概念图：先生成 **1 张完整屏幕概念稿**（整屏布局，统一材质与色板），**出图一轮交件**（生1→judge1→finish，标明是否 ≥9.5）：
    ```bash
-   pyw -3 -u pmem_art.py converge start --goal "UI概念稿：<屏幕类型+风格>" --module <ui.模块> [--scale medium|high]
+   pyw -3 -u pmem_art.py converge start --goal "UI概念稿：<屏幕类型+风格>" --module <ui.模块> --route-id ui.kit [--scale medium|high]
    # 首轮前必过合理性闸（同时交出更合理提示词）：
    pyw -3 -u pmem_art.py reasonableness review --id <session> --skill ui \
      --draft "<草稿>" --revised "<分区/控件/禁忌写清的修订句>" \
      --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;layout_zones=ok;no_content_clutter=ok;chrome_not_illustration=ok;cta_clear_of_faces=ok;control_craft=ok"
-   # 每轮：converge generate 生图，再 converge judge 审图，直到 >= 9.5 或满 4 轮
-   pyw -3 -u pmem_art.py converge finish
+   pyw -3 -u pmem_art.py converge generate … && converge judge … && converge finish
    ```
-3. **概念稿通过后才进入组件表**——不要在概念未锁定时散生按钮。合理性闸不过不许 generate。
+3. **concept-only 到此交货**。仅 full kit：**概念稿审完后才进入组件表**——不要在概念未锁定时散生按钮。合理性闸不过不许 generate。
 
 ### 点名了某款产品的主界面
 主界面概念不是空心九宫格，也不是关卡棋盘。玩家点名某款游戏的主界面时，可以先看一张该产品主界面的真实截图，只为了把下面八项写进提示词。生图只交这段文字，不把截图垫进生成，也不要照着像素克隆。
@@ -95,29 +102,29 @@ pyw -3 -u pmem_art.py search --module <ui.模块>
 - 左侧入口不压进度条，也不压底部按钮；进度条不压顶栏；两枚主按钮之间留缝，也不压底栏。右侧钥匙留在画面上段，不要掉到按钮旁边。
 - 结构分在复刻时同时看这件事：两块界面叠在一起，或钥匙、侧栏掉出自己的矩形，结构低于 7.5，不能停。背景张的问题不拿到界面张里改，界面张的问题也不要重画房间。
 
-### Step 2：从概念抽取组件表（Component Sheets）
-以概念稿为垫图/参考，在 **透明底** 上生成组件表（1~3 张 sheet），覆盖：
+### Step 2：从概念抽取组件表（Component Sheets）——仅 full kit
+以概念稿为垫图/参考，在 **透明底** 上生成 **恰好 1 张**总表，盖齐下列零件；**禁止**第 2 张 sheet：
 - **面板 / 边框 / 装饰条**（可九宫格拉伸）
 - **按钮族**：至少 normal + pressed（最好含 hover / disabled）
 - **进度条 / 血条**：空轨 + 满轨（或分段填充）
 - **标签 / Tab**：选中 + 未选中
 - **图标位 / 分隔线 / 角花** 等概念中出现或隐含的零件
-同一概念参考下批量生成，保证木纹/螺栓/色板/光影角度一致。概念稿和组件表的每一轮都垫最初那张参考（用户概念图，或已定稿的概念稿），不改垫上一轮生成结果，修正只追加进提示词。缺件时只补缺件，不要整套重开。
+垫最初概念参考；出图一轮交件：`converge start --goal "UI组件表：…" --route-id ui.kit` → generate → judge → finish（CLI `max_rounds=1`，标明是否 ≥9.5）。
 
 ### Step 3：九宫格切线与清单（9-Slice + Manifest）
-对每个可缩放件标注九宫格：四角固定、四边单向拉伸、中心双向拉伸。输出清单建议：
+对每个可缩放件标注九宫格：四角固定、四边单向拉伸、中心双向拉伸。**只写切线与清单，不另开生图闭环。** 输出：
 ```
 ui_kit_<name>/
 ├── concept.png
 ├── sheets/
-├── elements/          # 透明 PNG 单件
+├── elements/          # 透明 PNG 单件（可从总表裁）
 ├── manifest.json      # name / group / state / rect / nine_slice {l,r,t,b}
 └── preview.html       # 可选：拼装预览
 ```
 `manifest.json` 示例字段：`name`, `group`, `state`, `file`, `nine_slice: {left,right,top,bottom}`, `scalable: true|false`。
 
-### Step 4：关键件二次收敛（可选但推荐）
-对主面板、主按钮等核心件，若六维评分 `< 9.5`（重点查：中心拉伸区是否干净、转角是否形变、透明底毛边、状态族是否同系），再跑一轮 `converge generate` 局部重绘，然后 `converge judge` 审图。
+### Step 4：关键件二次收敛（禁止默认）
+出图一轮交件路径下 **跳过**本步。缺件只在总表提示词里写清后新开短会话重开整表（仍只生 1 张），禁止逐零件 converge。
 
 ### Step 5：沉淀记忆
 ```bash
@@ -138,11 +145,10 @@ pyw -3 -u pmem_art.py feedback "UI套件色板与九宫格规范：<摘要>" --m
 管线合规另记、**不进** `--dims` 乘积，可写在缺陷旁：`管线合规9.0（门槛）`。
 
 ## 四、最终交付必须包含
-- **concept-only**：概念稿（≥9.5 或满 4 轮最高分）+ 评分履历；**不要**为了清单去补假组件表。
-- **full kit**：概念稿 + 组件表 + `elements/` + `manifest.json`（含九宫格）；缺件只补缺件。
+- **concept-only**：概念稿（出图一轮交件 + 过线/未过线标注）+ 评分卡；**不要**为了清单去补假组件表。
+- **full kit**：概念稿 + **1 张**组件总表 + `elements/` + `manifest.json`（含九宫格）；缺件只补缺件。
 - 若跑了收敛：默认附上全轮次评分优劣总表（不足/改点）；只要终稿用 `--quiet`
 - 已写入 `.memory-art` 的 recipe / redline 路径（若本趟有 ingest/feedback）
-
 
 ## 记忆静默 / 履历可见（Agent 必读）
 - `converge finish` 后系统自动写反思/口味/learn 队列——**无需**再跑 `/pmem-coach`。

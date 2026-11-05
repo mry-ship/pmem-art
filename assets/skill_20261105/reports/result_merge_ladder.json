@@ -1,0 +1,19 @@
+﻿{
+  "route_id": "merge.ladder",
+  "session": "battery1105-merge",
+  "conversation": "battery1105-merge",
+  "chain_mode": "shop_ladder",
+  "levels": 8,
+  "delivery": "overview_sheet",
+  "relation_judge": "passed",
+  "rounds": 1,
+  "score": 8.75,
+  "passed_threshold_9_5": false,
+  "checklist_passed": false,
+  "dims": "构图8.6/光影9.0/透视8.8/质感9.0/风格9.0/无瑕疵8.4",
+  "defects": "L5-L8 家族基因断裂：红菇台面消失换成陶瓷盘；L3 四脚桌偏离宽盖菇台",
+  "outputs": {
+    "sheet": "assets/skill_20261105/merge_overview/merge_overview_r1.jpg",
+    "phase1": "assets/skill_20261105/merge_overview/merge_phase1.yaml"
+  }
+}

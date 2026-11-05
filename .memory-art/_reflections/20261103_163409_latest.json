@@ -1,124 +1,124 @@
-{
-  "schema": "pmem-art.reflection.v1",
-  "project_id": "pmem-art",
-  "project_name": "pmem-art",
-  "layer_scope": "private",
-  "written_at": "2026-11-03 16:34:09 UTC+8",
-  "session_id": "latest",
-  "goal": "原画Key Art竖构图：妖精微缩花园主视觉，中景花屋紫花屋顶与旁侧树屋黄梯，左下石缘池塘香蕉帆船，右下红菇果盘点缀，暖顶左日光空气透视，草绿#5DBF6A紫#8E5BC8粉#E8A0BF木褐#8B5A2B香蕉黄#F4C430菇红#D64545，休闲手游粘土三渲二商业完成度，无UI控件无可读乱码字无角色也可有小鼹鼠礼盒作记忆点",
-  "module": "scene.FairyGarden",
-  "converge_mode": "quality",
-  "guided_mode": "ref_image_guided",
-  "threshold": 9.5,
-  "max_rounds": 4,
-  "rounds_used": 4,
-  "winner_round": 4,
-  "winner_score": 9.46,
-  "winner_image": "assets/skill_battery_20261103/draw_keyart/r4.png",
-  "winner_passed": false,
-  "outcome": "⚠️ **共执行 4 轮审图（目标阈值 `9.50` 分），未达标，已挑选全阶段最高分**（胜出：第 4 轮 `9.46 / 10.0` 分）",
-  "what_fixed": [
-    "保持花屋英雄剪影：加一束顶左暖体积光扫过紫花屋顶与树屋；远景粉花空气雾更明显；右下补完整菇上芝士果点缀",
-    "收束成一条更清晰的暖光柱扫屋顶；鼹鼠缩小一点别抢中心",
-    "鼹鼠再缩小半档；果盘减到芝士+两三颗果",
-    "解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁止糊边融边；整体齐，仅远景雾可再柔"
-  ],
-  "what_still_weak": "整体齐，仅远景雾可再柔",
-  "strengths": "鼹鼠体量更克制；果盘更简；紫顶暖光柱与花屋英雄读图仍在",
-  "taste_deltas": {
-    "from_strengths": [
-      "鼹鼠体量更克制；果盘更简；紫顶暖光柱与花屋英雄读图仍在"
-    ],
-    "from_defects": [
-      "体积光略糊可再收束成一束可读光柱；鼹鼠礼盒略抢花屋中心",
-      "鼹鼠仍略大一点；果盘浆果略多但不伤主读",
-      "整体齐，仅远景雾可再柔"
-    ]
-  },
-  "warm_start_confidence": 1.0,
-  "fast_track": false,
-  "scores": [
-    {
-      "round": 1,
-      "score": 8.87,
-      "passed": false
-    },
-    {
-      "round": 2,
-      "score": 9.26,
-      "passed": false
-    },
-    {
-      "round": 3,
-      "score": 9.4,
-      "passed": false
-    },
-    {
-      "round": 4,
-      "score": 9.46,
-      "passed": false
-    }
-  ],
-  "lessons": [
-    {
-      "category": "composition",
-      "lesson": "本轮短板偏「composition」：相对样张几乎同机位同布局，high档缺少多出来的一处光影叙事；右下芝士只有方块不够果盘点缀；空气透视与体积光偏平、商业海报戏剧感不足",
-      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
-      "from_score": "8.87"
-    },
-    {
-      "category": "lighting",
-      "lesson": "本轮短板偏「lighting」：相对样张几乎同机位同布局，high档缺少多出来的一处光影叙事；右下芝士只有方块不够果盘点缀；空气透视与体积光偏平、商业海报戏剧感不足",
-      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
-      "from_score": "8.87"
-    },
-    {
-      "category": "narrative_camera",
-      "lesson": "本轮短板偏「narrative_camera」：相对样张几乎同机位同布局，high档缺少多出来的一处光影叙事；右下芝士只有方块不够果盘点缀；空气透视与体积光偏平、商业海报戏剧感不足",
-      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
-      "from_score": "8.87"
-    },
-    {
-      "category": "style_lock",
-      "lesson": "本轮短板偏「style_lock」：体积光略糊可再收束成一束可读光柱；鼹鼠礼盒略抢花屋中心",
-      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
-      "from_score": "9.26"
-    },
-    {
-      "category": "keep",
-      "lesson": "保留本轮已做对的：相对r1多出顶左暖体积光扫过紫顶与树屋；右下果盘点缀更满；花屋英雄剪影仍清晰",
-      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
-      "from_score": "9.26"
-    },
-    {
-      "category": "style_lock",
-      "lesson": "本轮短板偏「style_lock」：鼹鼠仍略大一点；果盘浆果略多但不伤主读",
-      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
-      "from_score": "9.4"
-    },
-    {
-      "category": "keep",
-      "lesson": "保留本轮已做对的：暖光柱更收束可读；花屋仍是英雄剪影；体积光叙事相对样张成立",
-      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
-      "from_score": "9.4"
-    },
-    {
-      "category": "composition",
-      "lesson": "本轮短板偏「composition」：整体齐，仅远景雾可再柔",
-      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
-      "from_score": "9.46"
-    },
-    {
-      "category": "lighting",
-      "lesson": "本轮短板偏「lighting」：整体齐，仅远景雾可再柔",
-      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
-      "from_score": "9.46"
-    },
-    {
-      "category": "anatomy",
-      "lesson": "本轮短板偏「anatomy」：整体齐，仅远景雾可再柔",
-      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
-      "from_score": "9.46"
-    }
-  ]
-}
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-11-03 16:34:09 UTC+8",
+  "session_id": "latest",
+  "goal": "原画Key Art竖构图：妖精微缩花园主视觉，中景花屋紫花屋顶与旁侧树屋黄梯，左下石缘池塘香蕉帆船，右下红菇果盘点缀，暖顶左日光空气透视，草绿#5DBF6A紫#8E5BC8粉#E8A0BF木褐#8B5A2B香蕉黄#F4C430菇红#D64545，休闲手游粘土三渲二商业完成度，无UI控件无可读乱码字无角色也可有小鼹鼠礼盒作记忆点",
+  "module": "scene.FairyGarden",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 4,
+  "winner_score": 9.46,
+  "winner_image": "assets/skill_20261103/draw_keyart/r4.png",
+  "winner_passed": false,
+  "outcome": "⚠️ **共执行 4 轮审图（目标阈值 `9.50` 分），未达标，已挑选全阶段最高分**（胜出：第 4 轮 `9.46 / 10.0` 分）",
+  "what_fixed": [
+    "保持花屋英雄剪影：加一束顶左暖体积光扫过紫花屋顶与树屋；远景粉花空气雾更明显；右下补完整菇上芝士果点缀",
+    "收束成一条更清晰的暖光柱扫屋顶；鼹鼠缩小一点别抢中心",
+    "鼹鼠再缩小半档；果盘减到芝士+两三颗果",
+    "解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁止糊边融边；整体齐，仅远景雾可再柔"
+  ],
+  "what_still_weak": "整体齐，仅远景雾可再柔",
+  "strengths": "鼹鼠体量更克制；果盘更简；紫顶暖光柱与花屋英雄读图仍在",
+  "taste_deltas": {
+    "from_strengths": [
+      "鼹鼠体量更克制；果盘更简；紫顶暖光柱与花屋英雄读图仍在"
+    ],
+    "from_defects": [
+      "体积光略糊可再收束成一束可读光柱；鼹鼠礼盒略抢花屋中心",
+      "鼹鼠仍略大一点；果盘浆果略多但不伤主读",
+      "整体齐，仅远景雾可再柔"
+    ]
+  },
+  "warm_start_confidence": 1.0,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 8.87,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 9.26,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 9.4,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 9.46,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：相对样张几乎同机位同布局，high档缺少多出来的一处光影叙事；右下芝士只有方块不够果盘点缀；空气透视与体积光偏平、商业海报戏剧感不足",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "8.87"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：相对样张几乎同机位同布局，high档缺少多出来的一处光影叙事；右下芝士只有方块不够果盘点缀；空气透视与体积光偏平、商业海报戏剧感不足",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.87"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：相对样张几乎同机位同布局，high档缺少多出来的一处光影叙事；右下芝士只有方块不够果盘点缀；空气透视与体积光偏平、商业海报戏剧感不足",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "8.87"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：体积光略糊可再收束成一束可读光柱；鼹鼠礼盒略抢花屋中心",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.26"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：相对r1多出顶左暖体积光扫过紫顶与树屋；右下果盘点缀更满；花屋英雄剪影仍清晰",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.26"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：鼹鼠仍略大一点；果盘浆果略多但不伤主读",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.4"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：暖光柱更收束可读；花屋仍是英雄剪影；体积光叙事相对样张成立",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.4"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：整体齐，仅远景雾可再柔",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "9.46"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：整体齐，仅远景雾可再柔",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.46"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：整体齐，仅远景雾可再柔",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "9.46"
+    }
+  ]
+}
