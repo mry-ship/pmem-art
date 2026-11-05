@@ -129,8 +129,10 @@ class TestCursorHooksStubs(unittest.TestCase):
         hooks = json.loads((cursor / "hooks.json").read_text(encoding="utf-8"))["hooks"]
         pre = [h for h in hooks["preToolUse"] if "pmemw hook pre-tool" in h["command"]][0]
         self.assertNotIn("Shell", pre["matcher"])
-        self.assertIn("Write", pre["matcher"])
+        # 写 md 也走 Write：Windows 上匹配 Write 仍会经 PowerShell 弹窗，一并去掉
+        self.assertNotIn("Write", pre["matcher"])
         self.assertIn("MCP", pre["matcher"])
+        self.assertIn("search_memory", pre["matcher"])
 
     def test_rewrites_python3_art_launcher_to_pyw_on_windows(self) -> None:
         from lifecycle import ensure_cursor_stubs
