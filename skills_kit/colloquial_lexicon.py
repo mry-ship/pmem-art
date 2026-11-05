@@ -45,6 +45,15 @@ _SEED: dict[str, list[str]] = {
     "道具格": ["背包", "透明底"],
     "合成升级": ["合成梯", "一档比一档大"],
     "越升越大": ["合成梯", "一档比一档大"],
+    "整表": ["overview_sheet", "合成梯", "一组出齐"],
+    "一组出齐": ["overview_sheet", "整表", "合成梯"],
+    "overview": ["overview_sheet", "整表"],
+    "overview_sheet": ["整表", "一组出齐", "合成梯"],
+    "一档一张": ["per_cell", "逐格", "合成梯"],
+    "逐格": ["per_cell", "一档一张", "合成梯"],
+    "per_cell": ["一档一张", "逐格", "合成梯"],
+    "shop_ladder": ["同店升级", "合成梯", "一档比一档大"],
+    "同店升级": ["shop_ladder", "合成梯"],
     "先别画": ["先不出图"],
     "先看看哪不行": ["只审", "别画"],
     "收进图谱": ["散图归位"],
@@ -194,6 +203,28 @@ def build_colloquial_expand(*, min_entries: int = 8000) -> dict[str, list[str]]:
             _add(out, item + s, "合成梯", "一档比一档大")
             _add(out, s + item, "合成梯", "一档比一档大")
             # 不把「继续药水」单独折成合成梯（无图续画应问清）
+    merge_delivery = [
+        ("整表", ["overview_sheet", "一组出齐", "合成梯"]),
+        ("一组出齐", ["overview_sheet", "整表", "合成梯"]),
+        ("一起出齐", ["overview_sheet", "整表", "合成梯"]),
+        ("一张表", ["overview_sheet", "整表", "合成梯"]),
+        ("overview", ["overview_sheet", "整表"]),
+        ("overview_sheet", ["整表", "一组出齐", "合成梯"]),
+        ("一档一张", ["per_cell", "逐格", "合成梯"]),
+        ("逐格", ["per_cell", "一档一张", "合成梯"]),
+        ("逐格出", ["per_cell", "一档一张", "合成梯"]),
+        ("单张出档", ["per_cell", "一档一张", "合成梯"]),
+        ("per_cell", ["一档一张", "逐格", "合成梯"]),
+        ("shop_ladder", ["同店升级", "合成梯", "一档比一档大"]),
+        ("同店升级", ["shop_ladder", "合成梯"]),
+        ("同族形变", ["shop_ladder", "合成梯"]),
+    ]
+    for src, dst in merge_delivery:
+        _add(out, src, *dst)
+        for pref in ("做", "要", "走", "按", "默认", "强制"):
+            _add(out, pref + src, *dst)
+        for suf in ("出", "交货", "交付", "路径", "一组"):
+            _add(out, src + suf, *dst)
 
     key_src = ["主视觉", "概念海报", "气氛图", "key art", "KeyArt", "海报主视觉", "宣传图"]
     for s in key_src:

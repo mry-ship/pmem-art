@@ -570,7 +570,7 @@ def run_full_benchmark(bench_root: Path) -> dict[str, Any]:
         },
         {
             "task_id": "T3-FloatingRuins",
-            "skill": "/pmem-concept",
+            "skill": "/pmem-draw",
             "domain": "scene",
             "domain_label": "🏯 场景与原画 (scene.FloatingRuins)",
             "module": "scene.FloatingRuins",
@@ -684,7 +684,7 @@ def run_full_benchmark(bench_root: Path) -> dict[str, Any]:
         },
         {
             "task_id": "T3-Observatory",
-            "skill": "/pmem-concept",
+            "skill": "/pmem-draw",
             "domain": "scene",
             "domain_label": "🏯 场景与原画 (scene.FloatingRuins)",
             "module": "scene.FloatingRuins",

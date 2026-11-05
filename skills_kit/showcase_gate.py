@@ -1,7 +1,11 @@
 """Showcase HTML finish gate.
 
-A scored cell cannot be a final if last score < 9.5 and rounds < 4.
-Style-lock / prompt / refs do not generate, so they are skipped.
+A scored **final** cell cannot ship if last score < 9.5 and completed rounds < 4
+(unless early safe-stop). Style-lock / prompt / refs do not generate, so they are skipped.
+
+Process boards (`process_board.py`) caption each history card as「第 N 轮 · score」and mark
+the winner with ``figure.card.win``. Intermediate history cards are **not** finals — only
+the winner card (or showcase cells like「low · 3 轮」) are gated.
 """
 from __future__ import annotations
 
@@ -14,10 +18,11 @@ DEFAULT_THRESHOLD = 9.5
 DEFAULT_MAX_ROUNDS = 4
 
 _SKIP_CAPTION = re.compile(
-    r"^(原图|风格参考|样张|锁定卡|不生图|身份参考|参考)\b"
+    r"^(原图|风格参考|样张|锁定卡|不生图|身份参考|参考|图\d+)\b"
 )
 _DROP_SECTIONS = ("prompt", "style")
 _ROUND_RE = re.compile(r"(\d+)\s*轮")
+_PROCESS_ROUND_RE = re.compile(r"^第\s*(\d+)\s*轮\b")
 _SCORE_RE = re.compile(r"(\d+\.\d{2})")
 _SCORE_RUN_RE = re.compile(r"\d+\.\d{2}(?:\s*→\s*\d+\.\d{2})+")
 
@@ -51,13 +56,33 @@ def last_score(caption: str) -> float | None:
 
 
 def round_count(caption: str) -> int | None:
-    """Completed rounds for this cell. Ignore「前 N 轮作废」history."""
-    text = caption or ""
+    """Completed rounds / process-board round index for this cell.
+
+    - 「第 N 轮 · score」→ N（过程板真实文案；旧逻辑因跳过「第」而解析成 None）
+    - 「low · 3 轮」「完成 4 轮」→ 显式完成轮次
+    - 「前 N 轮作废」「胜出第 N 轮」单独出现 → 不当完成轮次（后者需另有「M 轮」）
+    """
+    text = (caption or "").strip()
+    if not text:
+        return None
+
+    # 过程板单卡：第 N 轮 · 9.22
+    m_proc = _PROCESS_ROUND_RE.match(text)
+    if m_proc:
+        return int(m_proc.group(1))
+
     explicit: list[int] = []
     for match in _ROUND_RE.finditer(text):
-        prefix = text[max(0, match.start() - 4):match.start()]
-        # 「前 4 轮作废」「胜出第 3 轮」「第 1 轮最高」都不是完成轮次。
-        if "前" in prefix or "第" in prefix:
+        prefix = text[max(0, match.start() - 4) : match.start()]
+        # 「前 4 轮作废」
+        if "前" in prefix:
+            continue
+        # 「胜出第 3 轮」——胜出指针，不是完成轮次计数
+        window = text[max(0, match.start() - 6) : match.start()]
+        if "胜出" in window:
+            continue
+        # 「第 1 轮最高」嵌在「4 轮 · 第 1 轮最高」里：跳过嵌套「第」，保留「4 轮」
+        if re.search(r"第\s*$", prefix):
             continue
         explicit.append(int(match.group(1)))
     if explicit:
@@ -89,13 +114,66 @@ def _plain_caption(raw: str) -> str:
 
 
 def audit_showcase_html(html: str) -> list[dict[str, Any]]:
-    """Return incomplete scored cells. Empty list means the page may ship."""
+    """Return incomplete **final** scored cells. Empty list means the page may ship.
+
+    Process-board history cards（非 win 的「第 N 轮」）跳过；只审胜出格与展陈终稿格。
+    """
     body = _strip_sections(html)
     issues: list[dict[str, Any]] = []
-    for match in re.finditer(r"<figcaption>(.*?)</figcaption>", body, flags=re.S | re.I):
-        caption = _plain_caption(match.group(1))
+    # Prefer figure-scoped scan so we can see class="card win"
+    figure_iter = list(
+        re.finditer(r"<figure([^>]*)>(.*?)</figure>", body, flags=re.S | re.I)
+    )
+    if figure_iter:
+        cells: list[tuple[str, str, str]] = []
+        for fig in figure_iter:
+            attrs = fig.group(1) or ""
+            inner = fig.group(2) or ""
+            cap_m = re.search(r"<figcaption>(.*?)</figcaption>", inner, flags=re.S | re.I)
+            if not cap_m:
+                continue
+            cells.append((attrs, _plain_caption(cap_m.group(1)), inner))
+    else:
+        cells = [
+            ("", _plain_caption(m.group(1)), m.group(1))
+            for m in re.finditer(r"<figcaption>(.*?)</figcaption>", body, flags=re.S | re.I)
+        ]
+
+    # 过程板：胜出卡写的是「第 N 轮」= 胜出轮次号，完成轮次取页上最大「第 M 轮」
+    process_cells: list[tuple[str, str, str, int, float | None]] = []
+    for attrs, cap, inner in cells:
+        m = _PROCESS_ROUND_RE.match(cap or "")
+        if not m:
+            continue
+        process_cells.append((attrs, cap, inner, int(m.group(1)), last_score(cap)))
+    max_process_rounds = max((n for *_, n, _sc in process_cells), default=None)
+    has_process_win = any(
+        re.search(r'(?:^|[\s"\'])win(?:[\s"\']|$)', attrs, flags=re.I)
+        for attrs, *_rest in process_cells
+    )
+    # 无 win（预览板）：只审「最高分」那张；同分取轮次更大的，避免历史低分拖垮整页、也避免无 win 整页误放行
+    provisional_key: tuple[float, int] | None = None
+    if process_cells and not has_process_win:
+        provisional_key = max(
+            ((sc if sc is not None else -1.0), n) for *_a, n, sc in process_cells
+        )
+    page_early = bool(re.search(r"(安全早停|STOP_REGRESSION|STOP_PLATEAU)", body, re.I))
+
+    for attrs, caption, inner in cells:
         if not caption or _SKIP_CAPTION.search(caption):
             continue
+        is_process_round = bool(_PROCESS_ROUND_RE.match(caption))
+        is_win = bool(re.search(r'(?:^|[\s"\'])win(?:[\s"\']|$)', attrs, flags=re.I))
+        if is_process_round and not is_win:
+            if has_process_win:
+                # 有胜出格：历史卡跳过
+                continue
+            # 无胜出格：只审临时最高分卡
+            m = _PROCESS_ROUND_RE.match(caption)
+            sc = last_score(caption)
+            key = (sc if sc is not None else -1.0, int(m.group(1)) if m else 0)
+            if provisional_key is None or key != provisional_key:
+                continue
         if "未出图" in caption:
             issues.append(
                 {
@@ -110,7 +188,20 @@ def audit_showcase_html(html: str) -> list[dict[str, Any]]:
         if score is None:
             continue
         rounds = round_count(caption)
-        early = bool(re.search(r"(安全早停|STOP_REGRESSION|STOP_PLATEAU)", caption, re.I))
+        if is_process_round and max_process_rounds is not None and (
+            is_win or not has_process_win
+        ):
+            rounds = max_process_rounds
+        early = bool(
+            re.search(r"(安全早停|STOP_REGRESSION|STOP_PLATEAU)", caption + " " + inner, re.I)
+        )
+        if (
+            not early
+            and page_early
+            and is_process_round
+            and (is_win or not has_process_win)
+        ):
+            early = True
         if can_accept_winner(rounds, score, early_safe_stop=early):
             continue
         issues.append(

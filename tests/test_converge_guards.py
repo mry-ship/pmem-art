@@ -859,7 +859,7 @@ class TestJudgeAnatomyVeto(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             img = Path(td) / "ui.png"
             img.write_bytes(b"\x89PNG\r\n\x1a\n" + b"\x00" * 200)
-            dims = "风格色板9.7/九宫格9.6/光影材质9.5/透明底合规9.5/状态族9.6"
+            dims = "风格色板9.7/九宫格9.6/光影材质9.5/透明底合规9.5/状态族9.6/无瑕疵9.6"
             prof = get_converge_scale_profile("medium", goal="空内容弹框", module="ui.PopupClone")
             with mock.patch("skills_kit.judge_auto._physical_image_gate", return_value={"blocked": False, "reasons": [], "score_cap": None}):
                 with mock.patch(
@@ -884,6 +884,7 @@ class TestJudgeAnatomyVeto(unittest.TestCase):
                                 "lighting_material": 9.5,
                                 "rgba_pipeline_compliance": 9.5,
                                 "state_suite_cohesion": 9.6,
+                                "flawlessness": 9.6,
                             },
                             "weighted_score": 9.68,
                             "raw_score": 9.68,
@@ -911,7 +912,7 @@ class TestJudgeAnatomyVeto(unittest.TestCase):
             img = Path(td) / "ui.png"
             img.write_bytes(b"\x89PNG\r\n\x1a\n" + b"\x00" * 200)
             # UI dedicated dims (no perspective_anatomy)
-            dims = "风格色板9.7/九宫格9.6/光影材质9.5/透明底合规9.5/状态族9.6"
+            dims = "风格色板9.7/九宫格9.6/光影材质9.5/透明底合规9.5/状态族9.6/无瑕疵9.6"
             with mock.patch("skills_kit.judge_auto._physical_image_gate", return_value={"blocked": False, "reasons": [], "score_cap": None}):
                 with mock.patch(
                     "skills_kit.judge_auto._inspect_image_physical_traits",

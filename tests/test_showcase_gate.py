@@ -69,6 +69,41 @@ class TestHtmlAudit(unittest.TestCase):
         self.assertFalse(can_accept_winner(round_count("前 4 轮作废 · 本张 9.18"), 9.18))
         self.assertEqual(round_count("low · 4 轮 · 胜出第 3 轮 8.37 → 8.95 → 9.08 → 8.72"), 4)
         self.assertEqual(round_count("4 轮 · 第 1 轮最高 8.67 → 8.36 → 8.41 → 8.47"), 4)
+        # 过程板真实文案
+        self.assertEqual(round_count("第 1 轮 · 9.22"), 1)
+        self.assertEqual(round_count("第 4 轮 · 9.60"), 4)
+        self.assertEqual(last_score("第 1 轮 · 9.22"), 9.22)
+
+    def test_process_board_only_gates_winner(self) -> None:
+        html = """
+        <figure class="card"><figcaption><b>第 1 轮 · 8.50</b></figcaption></figure>
+        <figure class="card"><figcaption><b>第 2 轮 · 9.10</b></figcaption></figure>
+        <figure class="card win"><figcaption><b>第 3 轮 · 9.46</b></figcaption></figure>
+        <figure class="card"><figcaption><b>第 4 轮 · 9.20</b></figcaption></figure>
+        """
+        # 历史卡不审；胜出 9.46 但页上满 4 轮 → 可交
+        self.assertEqual(audit_showcase_html(html), [])
+
+    def test_process_board_winner_under_threshold_before_max_fails(self) -> None:
+        html = """
+        <figure class="card"><figcaption><b>第 1 轮 · 8.50</b></figcaption></figure>
+        <figure class="card win"><figcaption><b>第 2 轮 · 9.22</b></figcaption></figure>
+        """
+        issues = audit_showcase_html(html)
+        self.assertEqual(len(issues), 1)
+        self.assertEqual(issues[0]["score"], 9.22)
+        self.assertEqual(issues[0]["rounds"], 2)
+
+    def test_process_board_without_win_gates_best_score_only(self) -> None:
+        html = """
+        <figure class="card"><figcaption><b>第 1 轮 · 8.50</b></figcaption></figure>
+        <figure class="card"><figcaption><b>第 2 轮 · 9.22</b></figcaption></figure>
+        <figure class="card"><figcaption><b>第 3 轮 · 9.10</b></figcaption></figure>
+        """
+        issues = audit_showcase_html(html)
+        self.assertEqual(len(issues), 1)
+        self.assertEqual(issues[0]["score"], 9.22)
+        self.assertEqual(issues[0]["rounds"], 3)
 
     def test_missing_image_flagged(self) -> None:
         html = "<figure><figcaption><strong>clone · 1 轮</strong>未出图</figcaption></figure>"

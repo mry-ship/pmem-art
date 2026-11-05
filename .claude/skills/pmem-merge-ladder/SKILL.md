@@ -98,15 +98,17 @@ description: 玩家要一条同域合成升级梯，或生图分流判成合成�
 每一稿先写 `chain_mode`（或注明轻门）/ `levels` / `delivery` / 可选 `grid_rows×grid_cols`，再写 N 行升级 + 一句画风。交给独立文本判断。没过只改未过行；已说通的锁住。
 
 ```bash
-pyw -3 -u pmem_art.py converge discuss --round <稿次> --prompt "<链型+N行>" --defects "<没过的是哪一行>" --next-fix "<下一稿只改哪几行>"
+pyw -3 -u pmem_art.py converge start --session <merge_id> --goal "merge 关系讨论：<题材>" --module <模块> --route-id merge.ladder
+pyw -3 -u pmem_art.py converge discuss --session <merge_id> --round <稿次> --prompt "<链型+N行>" --defects "<没过的是哪一行>" --next-fix "<下一稿只改哪几行>"
 ```
+论述必须带 `--session <merge_id>`（或沿用已 start 的活跃会话）；**禁止**无 `--session` 默认写入 `latest`。
 
 ### 六条都要过（全链型）
 
 1. 正好 `levels` 件，`level` 为 1..N 连续。同一任务域，不许串成同色杂物。
 2. 每一档画面里将只有一件、居中（或整表中每格一件）。无等级字。**道具默认无脸**；**生物链须有可读眼睛/轻表情**（竞品同类有脸时），禁止抠成无眼空头。数量群档仍算「一件货柜件」。
 3. 两件相同的这一档合成下一档。下一档仍是一件，且说得出合成理由。换成同色无关物件，没过。
-4. 体量只大一圈。低档占格大半，高档留边。末档最大。**overview 白卡安全区**：整只主体（含冠/尾/翅尖）必须落在圆角卡内并留边，禁止超框切边；`scale_pct` 上限不是许可顶满溢出。
+4. 体量只大一圈。低档占格大半，高档留边。末档最大。**overview 白卡安全区**：整只主体（含冠/尾/翅尖）必须落在圆角卡内并留边，禁止超框切边；scale_pct 上限不是许可顶满溢出。
 5. 沿档位更复杂或物件类升级。轻门/`same_object` 看 `parts_add`（累计可读）；`shop_ladder`/`species_change` 看 `evolve_to`。只写「更华丽/加光/特效」没过。缩略图看不出的小饰片也算没过。
 6. 相邻 `silhouette` 整句不能相同。  
    - `same_object`：必须 `base_body`，每档留母体词；零件累计或明示替换式升级。  
@@ -132,7 +134,7 @@ pyw -3 -u pmem_art.py converge discuss --round <稿次> --prompt "<链型+N行>"
   - 轻门 / `same_object`：`parts_add`（L1=`—`）  
   - `shop_ladder` / `species_change`：`evolve_to`、`merge_why`（L1 的 `merge_why` 可为 `—`）；`parts_add` 可 `—`
 
-`scale_pct` 单调递增（建议 L1 ≥ 0.58，末档 ≤ 0.78～0.80；机读下限约 0.55 / 上限约 0.82）。末档剪影复杂（大冠/羽扇/群簇）时优先降填充保白卡留边，勿顶格超框。
+`scale_pct` 单调递增（建议 L1 ≥ 0.58，L8 ≤ 0.80；机读下限约 0.55 / 上限约 0.82）。
 
 ```bash
 pyw -3 -u pmem_art.py merge relation-judge --file <yaml> --all
@@ -146,33 +148,67 @@ pyw -3 -u pmem_art.py merge relation-judge --file <yaml> --all
 
 ### `delivery=overview_sheet`（默认）
 
-关系过了 → **单次**生成整表一组：
-- 无参考：按已定稿 `levels` 排（8→常见 2×4；6→常见 2×3）；白卡深底或纯深底整表均可，写进表面句并锁住。
-- 有整表格子参考：垫该参考，行列与白卡深底跟参考一致；格内换题材；`levels` 跟格数。
+关系过了 → **先开会话 + 合理性 + 出图记账 + finish**，不是「过了关系就闷头出一张交账」：
+
+**会话 id 必显式**（禁止 discuss/generate 默写 `latest`）：取 `<merge_id>`，全程同一值。
+
+1. **开会话 + 合理性（整表也要）**：
+```bash
+pyw -3 -u pmem_art.py converge start --session <merge_id> --goal "merge overview_sheet：<题材+档数+链型>" --module <模块> --route-id merge.ladder
+pyw -3 -u pmem_art.py reasonableness review --id <merge_id> --skill merge \
+  --draft "<整表草稿提示词>" --revised "<链型/档序/白卡深底/超框禁令/邻档可分写清的修订句>" \
+  --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;single_centered_item=ok;chain_mode_declared=ok;upgrade_reason_concrete=ok;family_or_base_lock=ok;sheet_safe_zone=ok"
+```
+   不过闸不许出第一张整表。
+2. **出图（须进 converge 记账；可用 Cursor GenerateImage / 外部生图，但路径要 generate）**：
+```bash
+# 生图工具出整表 → 落到 <sheet_rN.png>
+pyw -3 -u pmem_art.py converge generate --session <merge_id> --round <N> --image <sheet_rN.png> --prompt "<本轮修订句>"
+pyw -3 -u pmem_art.py converge judge --session <merge_id> --round <N> --image <sheet_rN.png> \
+  --dims "构图9.0/光影9.0/透视9.0/质感9.0/风格9.0/无瑕疵9.0" \
+  --defects "<对照固定清单：超框/邻档/眼睛/白卡/关系…具体部位>" \
+  --next-fix "<下一张整表只改哪几条清单项>"
+```
+- 无参考：默认 `levels=8`，常见 `2×4`；白卡深底或纯深底写进表面句并锁住。
+- 有整表格子参考：垫该参考，行列与白卡深底跟参考；格内换题材；`levels` 跟格数。
 - 有多张 L1：可垫 L1 锁第 1 列 / 各行首格。
 - **玩家说不对 / 重做 / 不要旧逻辑**：禁止垫上一版失败整表；按当前关系稿从零出。
-- 验收另加：每格主体不超框（冠/尾/翅尖留在卡内）；邻档可分；生物链有眼睛。
-- 按五问+链表验收。失败只改提示词重出，**累计 ≤ 3 次**；满 3 次停止并列出缺陷。  
+3. **整表固定验收清单（每张必过；失败改提示词重出，累计 ≤ 3 次）**：
+   - [ ] 超框：每格主体（含冠/尾/翅尖）落在白卡/格内并留边
+   - [ ] 邻档：缩略约 64px 相邻档可分
+   - [ ] 眼睛：生物链每格有可读眼睛/轻表情（道具默认无脸）
+   - [ ] 白卡/版式：有参考则跟参考白卡深底；无等级字；一格一件
+   - [ ] 五问+链表：关系仍说得通，无回退/大跳档
+4. **收束**：清单过了或满 3 次停手后必须：
+```bash
+pyw -3 -u pmem_art.py converge finish --session <merge_id>
+```
+禁止跳过 `start`/`generate`/`judge`/`finish` 只丢一张散图当终稿。满 3 次仍不过：停止并列出缺陷，禁止继续狂刷。  
 禁止整表抠格当逐格成品。多模型对比时禁止把 A 模型整表垫进 B 模型参考。
 
 ### `delivery=per_cell`（仅玩家点名逐格）
 
 关系过了 → 每一档单独出一张正方形 → `merge audit` → 可选 `normalize` 后再跑一次 audit → 第二段 converge（最多 4 轮，≥9.5）。  
-同框不是交货（同框整梯只作体量预览）。每档首轮仍过 reasonableness review。不要把参考图文件垫进生图；不垫对方模型成图做「公平对比」。
+同框不是交货（同框整梯只作体量预览）。每档首轮仍过 reasonableness review；`--session` 用本档自己的 id，禁止默写 `latest`。不要把参考图文件垫进生图；不垫对方模型成图做「公平对比」。
 
-## 第二段 · 美术（仅 per_cell）
+## 第二段 · 美术
 
+### overview_sheet
+首张整表前必须过 `reasonableness`（见上）。整表用固定验收清单，**累计 ≤ 3 次**重出；不走 per_cell 的 audit/单格 4 轮 ≥9.5。但 **必须** `converge start` → `generate`/`judge` 记账 → `finish`（过程板可见）；停机以清单为准，不是「口头说合格就算」。
+
+### per_cell（仅点名逐格）
 最多 4 轮，≥9.5。表面句原样保留。关系散了或 audit 不过，美术分再高也不算过。
 
 ```bash
 pyw -3 -u pmem_art.py merge audit --dir <目录> --phase1 <yaml> --track <域名>
 ```
 
-`converge generate` / `judge` / `finish` 记账。默认整表用 overview 验收；点名 `per_cell` 才走本段 audit 闭环。
+`converge generate` / `judge` / `finish` 记账（均带 `--session`）。默认整表用 overview 验收；点名 `per_cell` 才走本段 audit 闭环。
 
 ## 禁止
 
 - 没过 `relation-judge` / 五问就出图。
+- **overview_sheet 没过 reasonableness 或固定验收清单就当终稿**。
 - **未点名逐格却默认走 `per_cell` 单张狂刷**（merge / 一组 / 合成梯默认必须整表）。
 - 有整表格子参考或「一起出」却走 `per_cell` 逐格狂刷。
 - 有整表参考却不数行列、不垫参考、硬做成默认 8 档。

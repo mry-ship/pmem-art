@@ -2092,7 +2092,7 @@ function renderImproveTab() {
         <div style="font-size:12px;color:var(--text-main);line-height:1.6;">
           <div style="padding:8px 10px;background:#090d16;border-radius:8px;border:1px solid var(--border);margin-bottom:8px;">
             <strong style="color:var(--gold);">1️⃣ 各类型图片自动入库带描述：</strong><br>
-            无论是 <code>python3 pmem_art.py ingest &lt;图片&gt; -p "中文描述/Prompt" --apply</code>，还是 <code>/pmem-draw</code>、<code>/pmem-ui</code>、<code>/pmem-concept</code>、<code>/pmem-icon</code> 收敛胜出，都会<b>自动识别分类（角色/场景/UI/特效/风格圣经）</b>、生成中文描述并立即重建本看板。
+            无论是 <code>python3 pmem_art.py ingest &lt;图片&gt; -p "中文描述/Prompt" --apply</code>，还是 <code>/pmem-draw</code>（含普通图/原画/克隆/变体）、<code>/pmem-ui</code>、<code>/pmem-icon</code>、<code>/pmem-merge-ladder</code> 收敛胜出，都会<b>自动识别分类（角色/场景/UI/特效/风格圣经）</b>、生成中文描述并立即重建本看板。
           </div>
           <div style="padding:8px 10px;background:#090d16;border-radius:8px;border:1px solid var(--border);margin-bottom:8px;">
             <strong style="color:var(--teal);">2️⃣ 4轮 ≥9.5分 闭环自评收敛 (Converge Engine)：</strong><br>

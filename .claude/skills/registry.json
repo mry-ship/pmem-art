@@ -28,7 +28,7 @@
       "skill": "pmem-icon",
       "section": "Mode A",
       "file": ".cursor/skills/pmem-icon/SKILL.md",
-      "heading": "## 二之二、Mode A：App Icon 1024×1024 母版专项（iOS App Store / Android Adaptive 桌面启动图标）",
+      "heading": "## 二、Mode A：App Icon 1024×1024 母版专项（iOS App Store / Android Adaptive 桌面启动图标）",
       "routable": true,
       "simultaneous_pixels": false,
       "phase": 20
@@ -39,7 +39,7 @@
       "skill": "pmem-icon",
       "section": "Mode B",
       "file": ".cursor/skills/pmem-icon/SKILL.md",
-      "heading": "## 二、Mode B：一致化 SVG 矢量图标集流程（Brief → Spec → Batch → Review → Converge）",
+      "heading": "## 三、Mode B：一致化 SVG 矢量图标集流程（Brief → Spec → Batch → Review → Converge）",
       "routable": true,
       "simultaneous_pixels": false,
       "phase": 21
@@ -50,7 +50,7 @@
       "skill": "pmem-icon",
       "section": "Mode C",
       "file": ".cursor/skills/pmem-icon/SKILL.md",
-      "heading": "### 二之三、Mode C：游戏道具透明底栅格图标（64/128/256px PNG，非 SVG）",
+      "heading": "## 四、Mode C：游戏道具透明底栅格图标（64/128/256px PNG，非 SVG）",
       "routable": true,
       "simultaneous_pixels": false,
       "phase": 22
@@ -188,5 +188,7 @@
       "phase": 100
     }
   ],
-  "unroutable_headings": []
+  "unroutable_headings": [],
+  "section_cut_ok": true,
+  "section_cut_fails": []
 }

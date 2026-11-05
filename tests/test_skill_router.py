@@ -52,7 +52,9 @@ class SkillRouterTests(unittest.TestCase):
         for spec in SKILL_SPECS:
             self.assertEqual(command_names(spec), [spec["name"]])
             self.assertNotIn("alias", spec)
-            self.assertNotIn("/art-", spec["body"])
+            # Ban retired slash commands (/art-draw 等); art-atlas.html path is OK
+            for retired in ("/art-draw", "/art-ui", "/art-icon", "/art-merge", "/art-prompt"):
+                self.assertNotIn(retired, spec["body"], spec["name"])
         self.assertIn("禁止自动 `accept --all`", _spec("pmem-coach")["body"])
 
     def test_router_safety_gates_stay_in_the_contract(self):
@@ -71,7 +73,12 @@ class SkillRouterTests(unittest.TestCase):
         self.assertIn("最多 4 轮", draw)
         self.assertNotIn("最多 8 轮", draw)
         self.assertIn("过程板", draw)
-        self.assertIn("converge discuss", _spec("pmem-merge-ladder")["body"])
+        merge_body = _spec("pmem-merge-ladder")["body"]
+        self.assertIn("converge discuss", merge_body)
+        self.assertIn("converge start --session <merge_id>", merge_body)
+        self.assertIn("converge finish --session <merge_id>", merge_body)
+        self.assertIn("converge generate --session <merge_id>", merge_body)
+        self.assertIn("默认写入 `latest`", merge_body)
         merge_body = _spec("pmem-merge-ladder")["body"]
         self.assertIn("固定 **3 稿**", merge_body)
         self.assertIn("不再拉到 8 稿", merge_body)
@@ -87,6 +94,9 @@ class SkillRouterTests(unittest.TestCase):
         self.assertIn("同框不是交货", merge)
         self.assertIn("一档一张正方形", merge)
         self.assertIn("overview_sheet`（**默认**）", merge)
+        self.assertIn("先开会话 + 合理性 + 出图记账 + finish", merge)
+        self.assertIn("sheet_safe_zone=ok", merge)
+        self.assertIn("overview_sheet 没过 reasonableness", merge)
         self.assertIn("未点名逐格却默认走 `per_cell`", merge)
         self.assertIn("默认 8", merge)
         self.assertIn("L1 ≥ 0.58", merge)
@@ -121,7 +131,7 @@ class SkillRouterTests(unittest.TestCase):
         self.assertIn("格式不改", console)
         self.assertIn("不能在交出去之前收成一张", console)
         self.assertIn("--reference-image-paths", console)
-        self.assertIn("仍按下面停和执行", console)
+        self.assertIn("执行默认（两套写法同一合同）", console)
         self.assertNotIn("和上一句相同才停", console)
         self.assertIn(".cursor/skills/registry.md", console)
         self.assertIn("没有识别到可用技能", console)
@@ -141,10 +151,44 @@ class SkillRouterTests(unittest.TestCase):
             self.assertIn(route["heading"], bodies[route["skill"]], route["id"])
             self.assertFalse(route["simultaneous_pixels"], route["id"])
         by_id = {route["id"]: route for route in reg["routes"]}
-        self.assertIn("二之二", by_id["icon.a"]["heading"])
+        self.assertIn("Mode A", by_id["icon.a"]["heading"])
+        self.assertTrue(by_id["icon.a"]["heading"].startswith("## "), by_id["icon.a"]["heading"])
         self.assertNotIn("Step 5", by_id["icon.a"]["heading"])
         self.assertIn("Mode B", by_id["icon.b"]["heading"])
+        self.assertTrue(by_id["icon.b"]["heading"].startswith("## "), by_id["icon.b"]["heading"])
         self.assertIn("Mode C", by_id["icon.c"]["heading"])
+        self.assertTrue(by_id["icon.c"]["heading"].startswith("## "), by_id["icon.c"]["heading"])
+        # Mode C must not be nested under Mode B as ###
+        self.assertNotIn("### 二之三", by_id["icon.c"]["heading"])
+        # 按 heading 裁节：Mode B 须含沉淀、不能吞进 Mode C；须跳过 bash # 注释
+        from skills_kit.skill_registry import slice_markdown_section
+
+        icon_body = _spec("pmem-icon")["body"]
+        mode_b = slice_markdown_section(icon_body, by_id["icon.b"]["heading"])
+        mode_c = slice_markdown_section(icon_body, by_id["icon.c"]["heading"])
+        self.assertIn("### B6：沉淀", mode_b)
+        self.assertNotIn("## 四、Mode C", mode_b)
+        self.assertIn("Mode C", mode_c.splitlines()[0])
+        self.assertGreater(len(mode_b.splitlines()), 40)
+        self.assertTrue(reg.get("section_cut_ok"), reg.get("section_cut_fails"))
+        self.assertEqual(reg.get("section_cut_fails") or [], [])
+        atlas = _spec("pmem-atlas")["body"]
+        self.assertIn("http://127.0.0.1", atlas)
+        self.assertIn("**禁止**只双击", atlas)
+        self.assertNotIn("双击项目根目录的 `art-atlas.html`", atlas)
+        critique = _spec("pmem-critique")["body"]
+        self.assertIn("打六维", critique)
+        self.assertIn("禁止再说「五维」", critique)
+        self.assertIn("红线入库（默认不自动刷）", critique)
+        self.assertIn("**禁止**仅因外审分", critique)
+        self.assertIn("开画前强制 route", draw)
+        self.assertIn("**不能**绕开路由闸", draw)
+        self.assertIn("concept-only", _spec("pmem-ui")["body"])
+        self.assertIn("若之后要出图", _spec("pmem-prompt")["body"])
+        self.assertIn("**仍须**先跑 `route`", console)
+        self.assertIn("点名种闸", console)
+        self.assertIn("slice_markdown_section", console)
+        self.assertIn("暂不支持", console)
         joined = "\n".join(route["heading"] + route["when"] + route["id"] for route in reg["routes"])
         for banned in ("局部修", "设定表", "分镜", "姿势锁"):
             self.assertNotIn(banned, joined)

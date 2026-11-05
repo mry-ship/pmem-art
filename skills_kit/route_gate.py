@@ -1,17 +1,54 @@
 """开画前 route 闸门：没有近期本地路由结果则拒绝 converge start。
 
 美术零门槛：他们不用管；Agent 必须先跑 route。可用 --skip-route-gate 逃生（点名调试）。
+
+点名锁定：`converge start --route-id <已知路由>` 仅在**无缓存/已过期**时可自动种闸；
+已有新鲜且路由不一致的缓存时必须重跑 route，禁止静默覆盖。
 """
 from __future__ import annotations
 
 from .platform_cli import pmem_art_cli
 import json
+import re
 import time
 from pathlib import Path
 from typing import Any
 
 _LAST_NAME = "last_advise.json"
 _MAX_AGE_SEC = 2 * 60 * 60  # 2 小时内有效
+
+# 可点名种闸的 route_id（与 reasonableness ROUTE_TO_REVIEW_SKILL 对齐）
+_SEEDABLE_ROUTES = frozenset(
+    {
+        "draw.ordinary",
+        "draw.key",
+        "draw.clone",
+        "draw.variant",
+        "draw.multi",
+        "draw.lens",
+        "ui.kit",
+        "icon.a",
+        "icon.b",
+        "icon.c",
+        "merge.ladder",
+        "style.lock",
+        "critique.review",
+        "atlas.file",
+        "coach.report",
+        "prompt.write",
+    }
+)
+
+# 斜杠技能里子类型唯一的可从 goal 推断；/pmem-draw / /pmem-icon 须显式 --route-id
+_SLASH_TO_ROUTE: dict[str, str] = {
+    "/pmem-ui": "ui.kit",
+    "/pmem-merge-ladder": "merge.ladder",
+    "/pmem-style-lock": "style.lock",
+    "/pmem-critique": "critique.review",
+    "/pmem-atlas": "atlas.file",
+    "/pmem-coach": "coach.report",
+    "/pmem-prompt": "prompt.write",
+}
 
 
 def _path(root: Path) -> Path:
@@ -54,6 +91,8 @@ def save_route_advise(
         "confidence": payload.get("confidence"),
         "conversation_id": (conversation_id or "").strip(),
     }
+    if payload.get("named_seed"):
+        blob["named_seed"] = True
     raw = json.dumps(blob, ensure_ascii=False, indent=2) + "\n"
     dest.write_text(raw, encoding="utf-8")
     cid = (conversation_id or "").strip()
@@ -79,6 +118,106 @@ def load_route_advise(root: Path, conversation_id: str = "") -> dict[str, Any] |
     return data
 
 
+def resolve_named_route_id(*, goal: str = "", expect_route: str = "") -> str:
+    """从 --route-id 或唯一斜杠技能推断可种闸的 route_id；推不出则空串。"""
+    want = (expect_route or "").strip()
+    if want in _SEEDABLE_ROUTES:
+        return want
+    g = goal or ""
+    low = g.lower()
+    for slash, rid in _SLASH_TO_ROUTE.items():
+        if slash in low or slash in g:
+            return rid
+    return ""
+
+
+def seed_named_route(
+    root: Path,
+    route_id: str,
+    *,
+    goal: str = "",
+    conversation_id: str = "",
+) -> Path:
+    """按点名锁定写入闸门缓存（execute_ok=true）。"""
+    rid = (route_id or "").strip()
+    banner = f"【按点名锁定 {rid}】"
+    payload = {
+        "banner": banner,
+        "route_ids": [rid],
+        "mode": "default" if rid == "draw.ordinary" else "skill",
+        "execute_ok": True,
+        "artist_say": banner,
+        "plan_conflict": False,
+        "confidence": "named",
+        "named_seed": True,
+    }
+    return save_route_advise(
+        root,
+        payload,
+        text=(goal or f"named:{rid}")[:8000],
+        conversation_id=conversation_id,
+    )
+
+
+def goal_match_tokens(goal: str) -> list[str]:
+    """从 goal 抽匹配锚点：中文≥2 字、英文≥3 字母、≥2 位数字。
+
+    旧实现只抽中文≥4，英文/「出图」「糖果」抽不出 → 内容校验被跳过而误放行。
+    """
+    g = (goal or "").strip()
+    if not g:
+        return []
+    out: list[str] = []
+    seen: set[str] = set()
+
+    def _add(tok: str) -> None:
+        key = tok.lower()
+        if key in seen:
+            return
+        seen.add(key)
+        out.append(tok)
+
+    for m in re.findall(r"[\u4e00-\u9fff]{2,}", g):
+        _add(m)
+    for m in re.findall(r"[A-Za-z]{3,}", g):
+        _add(m.lower())
+    for m in re.findall(r"\d{2,}", g):
+        _add(m)
+    return out
+
+
+def goal_matches_route_text(goal: str, route_text: str) -> tuple[bool, str]:
+    """True 当 goal 与 route 原文对得上。"""
+    g = (goal or "").strip()
+    t = (route_text or "").strip()
+    if not g or not t:
+        return True, ""
+    # 极短 goal（<2）无法可靠匹配 → 与原文不等则拦
+    if len(g) < 2:
+        if g not in t:
+            return False, f"goal 过短且不在 route 原文中：{g!r}"
+        return True, ""
+    tokens = goal_match_tokens(g)
+    t_low = t.lower()
+    if not tokens:
+        # 抽不出锚点：要求归一化后互相包含其一
+        gn = re.sub(r"\s+", "", g).lower()
+        tn = re.sub(r"\s+", "", t).lower()
+        if gn in tn or tn in gn:
+            return True, ""
+        return False, "goal 与 route 原文无法对齐（无可用锚点）"
+    missing = [tok for tok in tokens if tok.lower() not in t_low and tok not in t]
+    if not missing:
+        return True, ""
+    # 长句：任一≥4 字中文锚点缺失即拦（保持旧行为强度）
+    # 短句/英文：任一锚点缺失即拦（修英文与「出图」「糖果」误放行）
+    heavy = [m for m in missing if re.fullmatch(r"[\u4e00-\u9fff]{4,}", m) or re.fullmatch(r"[a-z]{3,}", m.lower()) or re.fullmatch(r"\d{2,}", m) or re.fullmatch(r"[\u4e00-\u9fff]{2,3}", m)]
+    if heavy:
+        shown = "、".join(heavy[:6])
+        return False, f"goal 锚点未出现在 route 原文：{shown}"
+    return True, ""
+
+
 def check_route_gate(
     root: Path,
     *,
@@ -91,17 +230,45 @@ def check_route_gate(
     data = load_route_advise(root, conversation_id)
     if data and data.get("_foreign"):
         return False, "上次路由属于另一对话。请对当前这句话重新跑 route。"
+
+    named_id = resolve_named_route_id(goal=goal, expect_route=expect_route)
+
+    def _try_named_seed(why: str) -> tuple[bool, str] | None:
+        """仅无缓存/过期时可种闸；禁止覆盖新鲜且路由不一致的缓存。"""
+        if not named_id:
+            return None
+        seed_named_route(root, named_id, goal=goal, conversation_id=conversation_id)
+        return (
+            True,
+            f"{why}已按点名种闸 route_id={named_id}（仍建议正式跑 route；禁止用 --skip-route-gate 代替）。",
+        )
+
     if not data:
+        seeded = _try_named_seed("开画前缺少本地路由结果；")
+        if seeded:
+            return seeded
+        hint = ""
+        g = (goal or "").lower()
+        if "/pmem-draw" in g or "/pmem-icon" in g:
+            hint = (
+                " 点名 /pmem-draw 或 /pmem-icon 时请先 route，"
+                "或在 converge start 加 --route-id（如 draw.ordinary / icon.a）。"
+            )
         return (
             False,
             f"开画前缺少本地路由结果。请先：{pmem_art_cli()} route --text \"<玩家原话>\" "
-            "[--canonical \"<标准句>\"] [--brief]；点名调试可加 --skip-route-gate。",
+            f"[--canonical \"<标准句>\"] [--brief]；或 converge start --route-id <路由> 点名种闸。"
+            f"{hint}",
         )
     age = time.time() - float(data.get("saved_at") or 0)
     if age > _MAX_AGE_SEC:
+        seeded = _try_named_seed(f"本地路由结果已过期（{int(age // 60)} 分钟前）；")
+        if seeded:
+            return seeded
         return (
             False,
-            f"本地路由结果已过期（{int(age // 60)} 分钟前）。请对当前这句话重新跑 route。",
+            f"本地路由结果已过期（{int(age // 60)} 分钟前）。请对当前这句话重新跑 route。"
+            "或 converge start --route-id <路由> 点名种闸。",
         )
     if data.get("mode") == "stop" or data.get("execute_ok") is False:
         ask = str(data.get("artist_say") or data.get("banner") or "路由未放行")
@@ -109,14 +276,14 @@ def check_route_gate(
     saved_ids = [str(x) for x in (data.get("route_ids") or []) if str(x)]
     want = (expect_route or "").strip()
     if want and want not in saved_ids:
+        # 新鲜缓存路由不一致：必须重跑 route，禁止 --route-id 静默覆盖（防半失效锁）
         shown = "、".join(saved_ids) or "（空）"
         return False, f"本次要开的是 {want}，上次路由是 {shown}。请对当前这句话重新跑 route。"
     g = (goal or "").strip()
     t = str(data.get("text") or "")
-    if match_goal and g and t and len(g) >= 4:
-        import re
-
-        chunks = re.findall(r"[\u4e00-\u9fff]{4,}", g)
-        if chunks and any(c not in t for c in chunks):
-            return False, f"上次 route 原文与当前 goal 对不上，请重新 route。route 原文：{t[:40]}"
+    if match_goal and g and t:
+        ok_match, why = goal_matches_route_text(g, t)
+        if not ok_match:
+            # 有新鲜缓存时不对 goal 漂移做点名覆盖；要求重 route
+            return False, f"上次 route 原文与当前 goal 对不上，请重新 route。{why}；route 原文：{t[:40]}"
     return True, str(data.get("banner") or "route ok")

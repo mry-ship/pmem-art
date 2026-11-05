@@ -34,6 +34,40 @@ def _headings(body: str) -> list[str]:
     return [line.strip() for line in body.splitlines() if line.startswith("## ")]
 
 
+def slice_markdown_section(body: str, heading: str) -> str:
+    """按 heading 裁到下一同级/更高级标题；忽略围栏代码块内以 # 开头的行（防 bash 注释截断）。"""
+    want = (heading or "").strip()
+    if not want:
+        return ""
+    lines = body.splitlines()
+    start = -1
+    for i, ln in enumerate(lines):
+        if ln.strip() == want:
+            start = i
+            break
+    if start < 0:
+        return ""
+    level = len(want) - len(want.lstrip("#"))
+    if level <= 0:
+        level = 1
+    end = len(lines)
+    in_fence = False
+    for j in range(start + 1, len(lines)):
+        raw = lines[j]
+        stripped = raw.strip()
+        if stripped.startswith("```"):
+            in_fence = not in_fence
+            continue
+        if in_fence:
+            continue
+        if stripped.startswith("#"):
+            lv = len(stripped) - len(stripped.lstrip("#"))
+            if lv <= level:
+                end = j
+                break
+    return "\n".join(lines[start:end])
+
+
 def _first_heading(body: str) -> str:
     found = _headings(body)
     if found:
@@ -258,6 +292,34 @@ def build_registry(specs: list[dict[str, Any]], *, installed_root: Path | None =
                 frontmatter_ok = False
                 stale.append(spec["name"])
 
+    # heading 字符串命中 ≠ 按节裁剪正确：校验 Icon Mode 节互不吞并
+    section_cut_ok = True
+    section_cut_fails: list[str] = []
+    icon_body = by_name.get("pmem-icon", {}).get("body") or ""
+    if icon_body:
+        by_rid = {r["id"]: r for r in routes}
+        checks = (
+            ("icon.a", ("Mode A",), ("## 三、Mode B", "## 四、Mode C")),
+            ("icon.b", ("Mode B", "### B6"), ("## 四、Mode C",)),
+            ("icon.c", ("Mode C",), ("## 三、Mode B", "### B6")),
+        )
+        for rid, must_have, must_not in checks:
+            route = by_rid.get(rid) or {}
+            heading = str(route.get("heading") or "")
+            if not heading.startswith("## "):
+                section_cut_ok = False
+                section_cut_fails.append(f"{rid}:heading_not_h2")
+                continue
+            sec = slice_markdown_section(icon_body, heading)
+            for needle in must_have:
+                if needle not in sec:
+                    section_cut_ok = False
+                    section_cut_fails.append(f"{rid}:missing:{needle}")
+            for bad in must_not:
+                if bad in sec:
+                    section_cut_ok = False
+                    section_cut_fails.append(f"{rid}:leaked:{bad}")
+
     return {
         "source": "skills_kit/skill_specs.py",
         "frontmatter_ok": frontmatter_ok,
@@ -265,6 +327,8 @@ def build_registry(specs: list[dict[str, Any]], *, installed_root: Path | None =
         "tighten": tighten,
         "routes": routes,
         "unroutable_headings": unroutable,
+        "section_cut_ok": section_cut_ok,
+        "section_cut_fails": section_cut_fails,
     }
 
 
@@ -304,6 +368,14 @@ def render_registry_md(reg: dict[str, Any]) -> str:
     else:
         for item in extra:
             lines.append(f"- `{item}`")
+    lines.append("")
+    lines.append("## section_cut")
+    lines.append("")
+    if reg.get("section_cut_ok", True):
+        lines.append("ok：Icon Mode A/B/C 按 `slice_markdown_section` 互不吞并，且 Mode B 含 B6。")
+    else:
+        fails = "、".join(reg.get("section_cut_fails") or []) or "unknown"
+        lines.append(f"fail：{fails}。heading 字符串命中不够，须修 skill_specs 层级或围栏内伪 H1。")
     lines.append("")
     return "\n".join(lines)
 

@@ -97,6 +97,12 @@ CONFUSION_CARDS: list[dict[str, str]] = [
         "tip": "【走默认路径】普通图；单张 medium，≤4 轮，≥9.50。",
         "keywords": "画一张|出一张|来一张",
     },
+    {
+        "id": "merge_delivery",
+        "when": "合成梯交付形态",
+        "tip": "默认整表 overview_sheet（一组出齐、常 L1–L8）；仅点名一档一张/逐格/per_cell 才走逐格。",
+        "keywords": "整表|overview|一档一张|逐格|per_cell|一组出齐|合成梯",
+    },
 ]
 
 _PACKAGED_NAME = "route_bank.jsonl"
@@ -177,9 +183,13 @@ def _case_to_entry(case: Case, *, source: str = "packaged") -> BankEntry:
 
 
 def distill_entries(cases: Iterable[Case] | None = None) -> list[BankEntry]:
-    """从 2500+ 组合用例蒸馏：难例全留 + 每路由原型上限。"""
+    """从 2500+ 组合用例蒸馏：难例全留 + 每「路由×桶」原型上限。
+
+    按桶分层，避免同一 route_ids（如 merge.ladder）下整表 / per_cell /
+    shop_ladder 被步进抽样挤成只剩「一档比一档大」原型。
+    """
     cases = list(cases if cases is not None else build_cases())
-    by_route: dict[str, list[BankEntry]] = defaultdict(list)
+    by_route_bucket: dict[str, list[BankEntry]] = defaultdict(list)
     hard: list[BankEntry] = []
     seen: set[str] = set()
 
@@ -193,10 +203,13 @@ def distill_entries(cases: Iterable[Case] | None = None) -> list[BankEntry]:
             hard.append(entry)
             continue
         rid = ",".join(entry.route_ids) or entry.mode
-        by_route[rid].append(entry)
+        # 桶内再按文案指纹分槽，让 overview / shop_ladder 等交付词进库
+        fingerprint = _delivery_fingerprint(entry.text)
+        slot = f"{rid}::{entry.bucket}::{fingerprint}"
+        by_route_bucket[slot].append(entry)
 
     out = list(hard)
-    for rid, items in by_route.items():
+    for _slot, items in by_route_bucket.items():
         # 均匀抽样：头尾 + 步进
         if len(items) <= _PROTOTYPE_CAP:
             out.extend(items)
@@ -205,6 +218,26 @@ def distill_entries(cases: Iterable[Case] | None = None) -> list[BankEntry]:
         picked = items[::step][:_PROTOTYPE_CAP]
         out.extend(picked)
     return out
+
+
+def _delivery_fingerprint(text: str) -> str:
+    """粗分交付/链型话术，避免同桶异文案被同一步进抽样淹没。"""
+    t = text or ""
+    tags: list[str] = []
+    for token in (
+        "overview_sheet",
+        "整表",
+        "一组出齐",
+        "per_cell",
+        "一档一张",
+        "逐格",
+        "shop_ladder",
+        "同店升级",
+        "同族形变",
+    ):
+        if token in t:
+            tags.append(token)
+    return "+".join(tags) if tags else "base"
 
 
 def write_bank(entries: list[BankEntry], path: Path) -> Path:

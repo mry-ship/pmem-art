@@ -26,6 +26,42 @@ class TestNormalizeAndParse(unittest.TestCase):
         self.assertEqual(normalize_skill("图标A"), "icon.a")
         self.assertEqual(normalize_skill("合成梯"), "merge")
         self.assertEqual(normalize_skill("普通图"), "ordinary")
+        self.assertEqual(normalize_skill("lens"), "shotpack")
+        self.assertEqual(normalize_skill("镜头包"), "shotpack")
+        self.assertEqual(normalize_skill("镜头"), "shotpack")
+        self.assertEqual(normalize_skill("draw.lens"), "shotpack")
+        self.assertEqual(normalize_skill("多图"), "split")
+        self.assertEqual(normalize_skill("multi"), "split")
+        self.assertEqual(normalize_skill("draw.multi"), "split")
+        self.assertEqual(normalize_skill("合成"), "merge")
+        self.assertEqual(normalize_skill("merge.ladder"), "merge")
+        self.assertEqual(normalize_skill("UI kit"), "ui")
+        self.assertEqual(normalize_skill("ui.kit"), "ui")
+        self.assertEqual(normalize_skill("整表"), "merge")
+        self.assertEqual(normalize_skill("icon"), "icon.unspecified")
+        self.assertEqual(normalize_skill("图标"), "icon.unspecified")
+        self.assertNotEqual(normalize_skill("icon"), "icon.a")
+        self.assertNotEqual(normalize_skill("icon"), "ordinary")
+        self.assertNotEqual(normalize_skill("镜头"), "ordinary")
+        self.assertNotEqual(normalize_skill("draw.lens"), "ordinary")
+
+    def test_bare_icon_fails_review(self) -> None:
+        out = review_reasonableness(
+            skill="图标",
+            draft="画个图标",
+            revised="随便画",
+            checklist_text="subject_action=ok",
+        )
+        self.assertFalse(out["passed"])
+        self.assertTrue(any("icon.a" in x or "图标A" in x for x in out["issues"]), out["issues"])
+
+    def test_merge_checklist_not_same_object_only(self) -> None:
+        chk = default_checklist_template("merge")
+        self.assertIn("chain_mode_declared=ok", chk)
+        self.assertIn("upgrade_reason_concrete=ok", chk)
+        self.assertIn("family_or_base_lock=ok", chk)
+        self.assertNotIn("parts_add_concrete=ok", chk)
+        self.assertNotIn("base_body_retained=ok", chk)
 
     def test_parse_checklist(self) -> None:
         d = parse_checklist("subject_action=ok;element_budget=fail:窗外太满")
@@ -199,6 +235,28 @@ class TestReview(unittest.TestCase):
         )
         self.assertFalse(bad["passed"])
         self.assertTrue(any("母体" in x for x in bad["issues"]), bad["issues"])
+
+    def test_merge_shop_ladder_does_not_require_parts_add_keys(self) -> None:
+        chk = default_checklist_template("merge")
+        rev = (
+            "shop_ladder 草莓软糖单件居中：锁家族色相；evolve_to 糖纸→罐装可读；"
+            "merge_why 两件同级合成升级包装；软糖半透明 SSS；一眼失败是装饰换装断故事。"
+        )
+        out = review_reasonableness(
+            skill="merge", draft="软糖合成梯", revised=rev, checklist_text=chk
+        )
+        self.assertTrue(out["passed"], out["issues"])
+
+    def test_merge_light_gate_ok_without_same_object_parts(self) -> None:
+        chk = default_checklist_template("merge")
+        rev = (
+            "轻门：木屋建造单件居中，同任务域棚→框架→封皮；每档体量只大一圈；"
+            "升级理由具体可读；一眼失败是跨店乱跳或回退。"
+        )
+        out = review_reasonableness(
+            skill="merge", draft="木屋合成梯", revised=rev, checklist_text=chk
+        )
+        self.assertTrue(out["passed"], out["issues"])
 
     def test_wu_zi_does_not_negate_hard_plastic(self) -> None:
         """「无字」不得把后面的肯定硬塑当成已禁止。"""

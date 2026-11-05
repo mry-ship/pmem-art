@@ -293,6 +293,18 @@ def _wants_merge(text: str) -> bool:
             "越升越大",
             "合成升级",
             "升档",
+            # 交付/链型词：用例与口语常省略「合成梯」本体
+            "shop_ladder",
+            "同店升级",
+            "同族形变",
+            "species_change",
+            "same_object",
+            "overview_sheet",
+            "一组出齐",
+            "整表",
+            "per_cell",
+            "一档一张",
+            "逐格",
         ),
     )
 

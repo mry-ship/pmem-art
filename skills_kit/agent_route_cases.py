@@ -146,7 +146,43 @@ def build_cases() -> list[Case]:
 
     for i in range(80):
         _add(out, bucket="merge", text=f"这把剑一档比一档大，做成合成梯，第{i}条", mode="skill", routes=["merge.ladder"])
+        _add(
+            out,
+            bucket="merge",
+            text=f"合成梯整表一组出齐，overview_sheet，八档 2×4，第{i}条",
+            mode="skill",
+            routes=["merge.ladder"],
+        )
+        _add(
+            out,
+            bucket="merge",
+            text=f"合成梯默认整表，不要一档一张，第{i}条",
+            mode="skill",
+            routes=["merge.ladder"],
+        )
         _add(out, bucket="key", text=f"一张概念海报，当主视觉，第{i}张", mode="skill", routes=["draw.key"])
+    for i in range(40):
+        _add(
+            out,
+            bucket="merge_per_cell",
+            text=f"合成梯一档一张逐格出，per_cell，第{i}条",
+            mode="skill",
+            routes=["merge.ladder"],
+        )
+        _add(
+            out,
+            bucket="merge_per_cell",
+            text=f"合成梯逐格单张 per_cell，不要整表，第{i}条",
+            mode="skill",
+            routes=["merge.ladder"],
+        )
+        _add(
+            out,
+            bucket="merge",
+            text=f"合成梯 shop_ladder 同店升级整表 overview_sheet，第{i}条",
+            mode="skill",
+            routes=["merge.ladder"],
+        )
 
     for i in range(50):
         _add(out, bucket="style", text=f"以后都按这张的颜色画，先锁风格，第{i}张", mode="skill", routes=["style.lock"], images=["ref/style.png"])

@@ -5,7 +5,7 @@
       {
         "command": "pyw -3 -u pmem_art.py hook pre-gen",
         "matcher": "GenerateImage",
-        "failClosed": false
+        "failClosed": true
       },
       {
         "command": "pyw -3 -u art_shell_hook.py",
@@ -14,7 +14,7 @@
       },
       {
         "command": "pmemw hook pre-tool",
-        "matcher": "Write|StrReplace|Edit|MultiEdit|EditNotebook|Delete|MCP|record_memory|search_memory",
+        "matcher": "MCP|record_memory|search_memory",
         "failClosed": false
       }
     ],

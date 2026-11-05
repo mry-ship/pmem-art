@@ -111,29 +111,48 @@ SKILL_CHECKLISTS: dict[str, tuple[str, ...]] = {
         "hard_locks",
         "fail_at_glance",
         "single_centered_item",
-        "parts_add_concrete",
-        "base_body_retained",
+        "chain_mode_declared",
+        "upgrade_reason_concrete",
+        "family_or_base_lock",
     ),
 }
 
 SKILL_ALIASES: dict[str, str] = {
     "draw": "ordinary",
     "普通图": "ordinary",
+    "draw.ordinary": "ordinary",
     "原画": "keyart",
     "key-art": "keyart",
     "key_art": "keyart",
+    "draw.key": "keyart",
+    "keyart": "keyart",
     "克隆": "clone",
+    "draw.clone": "clone",
     "变体": "variant",
+    "draw.variant": "variant",
     "多图分工": "split",
+    "多图": "split",
+    "multi": "split",
+    "multi-image": "split",
+    "multi_image": "split",
+    "draw.multi": "split",
     "镜头包": "shotpack",
+    "镜头": "shotpack",
     "shot-pack": "shotpack",
     "shot_pack": "shotpack",
+    "lens": "shotpack",
+    "lenses": "shotpack",
+    "draw.lens": "shotpack",
     "界面": "ui",
     "UI": "ui",
     "ui": "ui",
     "HUD": "ui",
     "hud": "ui",
-    "icon": "icon.a",
+    "uikit": "ui",
+    "ui-kit": "ui",
+    "ui_kit": "ui",
+    "ui.kit": "ui",
+    # 禁止裸 icon/图标 → icon.a；须显式 A/B/C
     "appicon": "icon.a",
     "app-icon": "icon.a",
     "app_icon": "icon.a",
@@ -153,9 +172,19 @@ SKILL_ALIASES: dict[str, str] = {
     "图标C": "icon.c",
     "道具格": "icon.c",
     "合成梯": "merge",
+    "合成": "merge",
     "merge-ladder": "merge",
     "merge_ladder": "merge",
+    "merge.ladder": "merge",
+    "overview": "merge",
+    "overview_sheet": "merge",
+    "per_cell": "merge",
+    "整表": "merge",
+    "一档一张": "merge",
 }
+
+# 裸「icon / 图标」不能默成 App Icon 或 ordinary
+_AMBIGUOUS_ICON = frozenset({"icon", "图标", "图标集", "iconset", "icons"})
 
 CHECK_LABELS_ZH: dict[str, str] = {
     "subject_action": "主体在做什么/交付物是什么",
@@ -181,9 +210,12 @@ CHECK_LABELS_ZH: dict[str, str] = {
     "silhouette_read": "厚剪影可读",
     "transparent_friendly": "透明底友好",
     "single_centered_item": "每档单件居中",
-    "parts_add_concrete": "零件增量具体可画",
-    "base_body_retained": "same_object 保留母体；shop_ladder 锁家族基因",
-    "chain_mode_declared": "写清 same_object / shop_ladder / species_change",
+    "parts_add_concrete": "（旧键，改用 upgrade_reason_concrete）零件增量具体可画",
+    "base_body_retained": "（旧键，改用 family_or_base_lock）same_object 保留母体；shop 锁家族",
+    "chain_mode_declared": "写清 same_object / shop_ladder / species_change / 轻门",
+    "upgrade_reason_concrete": "升级理由具体（same_object→parts_add；shop/species→evolve_to+merge_why；轻门写具体可读升级）",
+    "family_or_base_lock": "锁住母体或家族（same_object→母体词；shop/species→家族色相/题材；轻门→同任务域）",
+    "sheet_safe_zone": "整表白卡/格内留边、主体不超框",
     "framing_lock": "景别硬锁写进修订句",
     "state_machine": "开关态逻辑自洽（铰链/解锁）",
 }
@@ -273,6 +305,8 @@ def normalize_skill(skill: str) -> str:
     if not raw:
         return "ordinary"
     key = raw.lower().replace(" ", "")
+    if key in _AMBIGUOUS_ICON or raw in _AMBIGUOUS_ICON:
+        return "icon.unspecified"
     if key in SKILL_CHECKLISTS:
         return key
     if raw in SKILL_ALIASES:
@@ -386,11 +420,16 @@ def _heuristic_issues(skill: str, draft: str, revised: str, notes: str = "") -> 
             blob,
             re.I,
         ))
+        light_gate = bool(re.search(r"轻门", blob))
         candyish = bool(re.search(r"(软糖|草莓糖|棒棒糖|糖纸|硬糖|gummy|soft\s*candy)", blob, re.I))
-        # MergePerCell 轻门：非糖果可省略链型；糖果必须显式 shop_ladder（「轻门」不能冒充）
+        # 非糖果可明示轻门；糖果必须显式 shop_ladder（「轻门」不能冒充）
         if candyish and not re.search(r"(shop_ladder|同族形变)", blob, re.I):
             issues.append(
                 "merge 糖果链须点名 shop_ladder（同族形变）；禁止用轻门/same_object/省略冒充商业糖果升级"
+            )
+        elif not has_named_mode and not light_gate:
+            issues.append(
+                "merge 须点名 same_object / shop_ladder / species_change，或明示轻门（勿默认按同模加装填 parts_add）"
             )
         if re.search(r"(same_object|同模加装|同物件)", blob, re.I) and not re.search(
             r"(保留母体|母体词|同一草莓|同一软糖|base_body|每档.?仍?是.?同一|母体\+?零件|累计)",
@@ -471,6 +510,23 @@ def review_reasonableness(
 ) -> dict[str, Any]:
     """Return review payload. passed=False when checklist or heuristics fail."""
     sk = normalize_skill(skill)
+    if sk == "icon.unspecified":
+        return {
+            "passed": False,
+            "skill": sk,
+            "skill_raw": (skill or "").strip(),
+            "draft_prompt": (draft or "").strip(),
+            "revised_prompt": (revised or "").strip(),
+            "checklist": {},
+            "issues": [
+                "须点名 icon.a / icon.b / icon.c（或 图标A/B/C / SVG / 道具格），"
+                "禁止裸 icon / 图标（会误当成普通图或一律 App Icon）"
+            ],
+            "notes": (notes or "").strip(),
+            "force_pass": bool(force_pass),
+            "reviewed_at": time.time(),
+            "reviewed_at_iso": time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),
+        }
     required = SKILL_CHECKLISTS.get(sk, SKILL_CHECKLISTS["ordinary"])
     parsed = parse_checklist(checklist_text)
     missing = [k for k in required if k not in parsed]

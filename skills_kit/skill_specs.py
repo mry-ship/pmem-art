@@ -1,4 +1,9 @@
-"""Skill markdown specs for Cursor / Claude / Codex install."""
+"""Skill markdown specs for Cursor / Claude / Codex install.
+
+正文里的 CLI 一律写 `python3 pmem_art.py`；`skills --install` 会按本机改成
+`pyw -3 -u`（Windows）等。改技能只改本文件再 install，不要只改
+`.cursor` / `.claude` / `.agents` 副本（下次 install 会盖掉）。
+"""
 from __future__ import annotations
 
 import json
@@ -62,10 +67,10 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 - **禁止**只靠通读长 SKILL / 注册表散文来猜路由。
 - **禁止**把 `route_bank` 整库或上千条话术贴进上下文。
 - **对美术只贴 `artist_say`**（已含 banner + 一句人话或「先问你一句」）。
-- `execute_ok=true`：写步骤表并执行；随后才能 `converge start`（无 route 缓存会被闸门拦住；调试才允许 `--skip-route-gate`）。
+- `execute_ok=true`：写步骤表并执行；随后才能 `converge start`（无 route 缓存会被闸门拦住）。
 - `confidence=ask` / 糊话门 / `plan_conflict` / `mode=stop`：先问美术，**禁止默默走普通图开画**。
 - **路由冲突闸（即使 execute_ok）**：近邻 `route_ids` 与本判明显不一致；或一次甩出 **≥3** 个互斥支路且原话不是整页展陈/对比页/同范围全清单；或「再跑一遍」被扩成九支全开——一律当 **ask**，列选项问人，**禁止**只信 `execute_ok` 硬开画。
-- 点名了 `/pmem-ui` 等：仍建议跑 `route` 写入闸门缓存；**点名锁定**不改判。
+- 点名了 `/pmem-ui` / `/pmem-draw` / `/pmem-icon` / `/pmem-merge-ladder` 等：**仍须**先跑 `route`（点名锁定不改判）。若已认清 `route_id`，`converge start --route-id <id>` 在缺缓存时可**点名种闸**，不必 `--skip-route-gate`。`/pmem-draw` / `/pmem-icon` 子类型不唯一时必须带 `--route-id` 或先跑完整 route。禁止靠 `--skip-route-gate` 偷跑，除非用户明确说调试跳闸。
 
 白话流程图：`docs/route_pipeline.html`。重建库：`route --rebuild`。用户正负例：`.memory-art/route_bank/user.jsonl`。
 
@@ -73,7 +78,7 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 
 只审一轮。这一轮写明交付物是什么、每张图锁什么、每张图不锁什么，并查合理性、缺漏和理解错误：合不合理，漏了什么，有没有理解错。漏的补上。理解错的按原话改回来。合不合理是看这句话能不能和原话、附图同时成立。
 
-不要再开第二轮去复查。分析列给玩家看。没有子 agent 时，同一条对话里仍按下面停和执行。不要把分析和执行并成一句口头分流：分析先写出来。
+不要再开第二轮去复查。分析列给玩家看。不要把分析和执行并成一句口头分流：分析先写出来。**执行默认（两套写法同一合同）**：有 Task/子 agent 就开一个，只交命中的那一节（不是八份全文）；没有子 agent 就在本对话只读那一节执行。禁止另选技能或把整份 SKILL 塞给执行侧。**按 heading 裁节时必须跳过围栏代码块**（```…``` 内的 `#` 是 bash 注释，不是标题）；可用 `skills_kit.skill_registry.slice_markdown_section`。
 
 ### 默认 vs 硬不确定（防卡死）
 
@@ -102,7 +107,7 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 2. 整屏、HUD、九宫格、按钮状态族是界面。桌面 1024 是图标 A，一套线性 SVG 是图标 B，背包 64/128/256 是图标 C。A/B/C 同时命中就停下来，只问这一处。同一套东西一档比一档大，是合成梯。
 3. 「以后按这张画」是锁风格。同一句还要画一张时，锁完再克隆验证。「只审、不画」是审图；「别画成某种风格」「不画背景」不是审图。「归档 / 散图归位 / 收进图谱」是归档，画面里的「归位」不是归档。进步、短板，以及知识卡的查看或收下，是教练。要写提示词、先不出图，是提示词。
 4. 以上都不是，才是普通图。
-5. 定稿写明两张参考的像素必须同时出现在同一张成图里：只接受 `simultaneous_pixels: true` 的行。现在没有这种行，就停，写明原因，不改派到多图分工，不开始出图。
+5. 定稿写明两张参考的像素必须同时出现在同一张成图里：**当前能力缺口**——注册表没有 `simultaneous_pixels: true` 的行。必须停，向玩家说清「暂不支持双参考像素同框」，可改成多图分工（各管一事）或分别出图；**禁止**改派硬做、禁止假装能同框。
 
 局部修、设定表、分镜、姿势锁、同一场景换光、画幅延展、放大清稿、序列帧、平铺贴图、带字主视觉、字标、色板点选、情绪板，注册表里没有这些节。对不上就写「没有识别到可用技能」，停，不开始出图，也不改走普通图。不另编一节。透明底、表情表、拼板、远中近、镜头包点选后的机位、审完再改，落在已有的普通图、变体、多图分工、镜头包、审图那几行里，不新开技能。
 
@@ -123,7 +128,7 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 
 多图分工的关、开写成前后两行。第一行身份图和结构图都垫上，身份图原来的机位作废，开会话用 `converge start --contract split`，不要写 `--scale medium`。下一行只垫已经通过的那张，只改这一态。
 
-再开一个子 agent。交给它的只有命中的那一节，不是八份全文。三样缺一不可：
+按上面的执行默认开子 agent（或本对话只读一节）。交给执行侧的只有命中的那一节，不是八份全文。三样缺一不可：
 
 1. 这一轮列出的分析，加上这一步的六样。
 2. 每一张图的路径。不能在交出去之前收成一张。
@@ -136,7 +141,7 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 
 执行会生图的技能时，定稿和每一张图一起带上。会 `converge start` 的，`--reference-image-paths` 写上每一张图，第一张是宽高比要对上交付物的那张，其余按定稿顺序跟在后面，一张不删。`--ref-image` 可以是其中一张，不能把其余的图从列表里拿掉。`--ref-analysis` 按每张图的分工写。`--aspect-ratio` 按交付物写。身份图宽高比不同，也不从列表里删。生成轮若只能垫一张，垫宽高比对齐的那张；打分时仍把成图和每一张参考图按定稿并排看。
 
-定稿写明两张参考的像素必须同时出现在同一张成图里：注册表里没有 `simultaneous_pixels` 为 true 的行，就停在这一步，写明原因，不改派到多图分工，不开始出图。
+定稿写明两张参考的像素必须同时出现在同一张成图里：注册表里没有 `simultaneous_pixels` 为 true 的行——**暂不支持**，停在这一步并告知玩家；不改派到多图分工冒充同框，不开始出图。
 
 选中的技能会 `converge start` 时，启动后先把这一轮分析用 `converge discuss` 记进同一会话；**首轮 generate 前必须再跑** `reasonableness review`（`--draft` + 更合理的 `--revised` + 该技能 checklist），过闸后才出图。过程板上会留下需求与合理性修订。多技能依次跑时，每一支用自己的会话；对比 HTML 在全部完成后写。
 
@@ -194,6 +199,23 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 
 普通图和原画走第一节到第三节。克隆和变体仍用第二节的打分轮次和 `converge` 命令，但不要按第一节继承构图。多图分工也用第二节的打分轮次，垫图和停机按文末合同，不走四档。镜头包、界面、图标、合成梯不要从第一节往下生。
 
+## 零点五、开画前强制 route（与总控同闸；点名 `/pmem-draw` 也要跑）
+
+本技能**不能**绕开路由闸。认完类型、回显 banner 之后、任何 `converge start` 之前，必须：
+
+1. 把玩家原话收成一行标准路由句（模板见 `/pmem-agent` 第零段）。
+2. 跑：
+```bash
+python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>"
+```
+3. 以 `route` 的 `route_ids` / `banner` 为准写入闸门缓存；点名了类型则**点名锁定不改判**，但仍须跑 route。
+4. 若已认清类型且缺缓存：`converge start --route-id draw.ordinary|draw.clone|draw.key|…` 可**点名种闸**（与完整 route 等价放行；仍禁止 `--skip-route-gate` 偷跑）。
+5. **禁止**默认 `--skip-route-gate` / `PMEM_ART_SKIP_ROUTE_GATE` 偷跑。
+6. 若本技能自认类型与 `route_ids` 明显冲突：停下来问玩家，禁止硬开画。
+7. 判成界面 / 图标 / 合成梯：读对应技能前也先留下本次 route 缓存。
+
+认类型后**只读**本文件对应的 `## 合同 · …` 或公共 4 轮正文；不要整份合同全读串味。镜头包点选前不生图，仍须先 route。
+
 你现在运行在 **pmem-art 闭环自评收敛生图模式**。进入普通图或原画后，**绝不能只生一张图就草草交差**（除非第 1 轮真实严苛评分就达到 `>= 9.5`）。
 
 ---
@@ -237,7 +259,8 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
    - 默认 `--mode quality` = 完整 4 轮、合格线 ≥9.5。
    - `--scale`：`low` 贴原修瑕 · `medium` 小优化锁机位（默认）· `high` 大胆跃升+可叙事 · `recompose` 须配 `--recompose-dir`。
    - `--mode fast`：warm-start 置信度高时可走 **fast track**（仍须每张打分；最终采纳默认仍要 ≥9.5，除非用户明确说「草稿/fast/先看看」）。
-   - `converge generate` **自动把 Warm-Start `prompt_block` 并入提示词**；GenerateImage Hook 再用 `updated_input` 灌一次。对话里回显「pmem-art 已自动并入记忆」。禁止再靠手贴；没并入就是 bug。
+   - `converge generate` **自动把 Warm-Start `prompt_block` 并入提示词**。Cursor **GenerateImage** 路径上，`preToolUse` Hook 再用 `updated_input` 灌一次。对话里回显「pmem-art 已自动并入记忆」。禁止再靠手贴。
+   - **外部生图**（Shell / apikey-image 等、不经 Cursor GenerateImage）：Hook 可能整段不触发——以 `converge generate` 并入的 prompt 为准，开画前确认会话里已有 warm-start / revised；不要把「没跑到 GenerateImage Hook」误报成「没并入就是 bug」。
    - **档位只规定能动多少，出图句用开会话打印的那一家**：
      - `low`：写成一处可改，并点名邻区保持原样。
      - `medium`：只留一处看得见的打磨，机位锁死。
@@ -444,7 +467,7 @@ improve/coach/learn 推销仅在用户主动要时再给。
 
 只在类型是镜头包时执行。看参考图，给 4 套可点的机位方案，然后停。禁止在这一步生图，禁止编分数。
 
-每套写清：机位（高度、角度、景别）、光（方向和色）、1–3 个具体道具、明确禁止项、一句可直接拿去生图的目标。至少一套接近原图机位，至少一套真的换机位。用具体名词，不要写「加强氛围」。身份和媒介留在参考上。**点选后成图不得与普通图同机位同构图**——景别/高度/角度至少改两项，一眼能分出「镜头包」而非又一张棚拍正中图。玩家点了一套之后，把点中的句子写成新机位，写明原机位作废，再交给 `recompose` 或原画。没点选就停。点选前不生图。
+每套写清：机位（高度、角度、景别）、光（方向和色）、1–3 个具体道具、明确禁止项、一句可直接拿去生图的目标。至少一套接近原图机位，至少一套真的换机位。用具体名词，不要写「加强氛围」。身份和媒介留在参考上。**点选后成图不得与普通图同机位同构图**——景别/高度/角度至少改两项，一眼能分出「镜头包」而非又一张棚拍正中图。玩家点了一套之后，把点中的句子写成新机位，写明原机位作废，再交给 `recompose` 或原画合同。首轮 `reasonableness`：**默认 `--skill shotpack`**（验机位差）；若明确走原画合同可用 `--skill keyart`，但仍须满足镜头包机位差条款。**禁止**点选后用 `--skill ordinary` 冒充。没点选就停。点选前不生图。
 """,
     },
     {
@@ -485,12 +508,13 @@ improve/coach/learn 推销仅在用户主动要时再给。
    - 运行 `python3 pmem_art.py search --module <模块>` 获取已有红线、色板与管线规格。
    - 运行 `python3 pmem_art.py classify <图片路径>` 获取分辨率、宽高比、Alpha 透明通道等物理参数。
 2. **拿不准时先商业对标（诊断，非垫图）**：终稿或送审图自己拿不准时，先找同品类顶级商业范例并排对比，定性是理解问题、合理性问题，还是完成度/画风问题，再打维。**禁止**把商业范例当垫图抄构图 / 抄机位；结论里写清对标品类与问题类型。
-3. **按交付类型打维（每维 0–10，不要手填总分）**：
-   - 角色、场景、原画用 **`构图 / 光影 / 透视 / 质感 / 风格`**（例：`构图8.8/光影8.5/透视7.9/质感8.4/风格8.8`）。界面、图标 A/B/C 用各自那一组维度，检查项写进对应维，不另算一个平均。
+3. **按交付类型打六维（每维 0–10，不要手填总分；口径统一，禁止再说「五维」）**：
+   - 角色、场景、原画固定六维：**`构图 / 光影 / 透视 / 质感 / 风格 / 无瑕疵`**（例：`构图8.8/光影8.5/透视7.9/质感8.4/风格8.8/无瑕疵8.6`）。界面、图标 A/B/C 用各自那一组维度名，同样补上无瑕疵；检查项写进对应维，不另算一个平均。
    - 程序用六维加权调和平均得到正式分。无瑕疵跟另外五维一样盲评。门槛维低于线时，正式分改取该维，并且不能当达标。**分尺说明（禁止混用）**：`/pmem-critique` 外审「普通完成」常见 7.0–8.5，用来挑刺与排优先级；`converge` / 出图技能交付门仍是 ≥9.5。外审 8 分≠可以当闭环终稿。回复里若两尺都出现，必须分行标明「外审尺」与「交付门」。审完默认停。玩家说按这条改，才把点名部位交给普通图 `low`。多张一起审时加一条：是不是同一光源、同一描边。
    - 明确列出 **✅ 合理亮点** 与 **❌ 不合理/需返修点**，并给出可直接用于下一轮重绘的 **修正 Prompt 建议**。
-4. **自动沉淀红线**：
-   - 若评分 `< 9.5` 或用户认可某条挑刺结论，调用 `python3 pmem_art.py feedback "<具体不合理点>" --module <模块> --asset <图片路径>` 自动写入记忆库。
+4. **红线入库（默认不自动刷）**：
+   - **禁止**仅因外审分 `< 9.5` 就写红线（外审常在 7–8.5，会把正常挑刺刷成噪声）。
+   - 仅当满足其一才调用 `python3 pmem_art.py feedback "<具体不合理点>" --module <模块> --asset <图片路径>`：①玩家明确说「记红线 / 入库 / 以后别这样」；②玩家认可某条挑刺并要求沉淀；③同一硬伤在本模块已反复出现且玩家未反对入库。
 5. **静默默认**：向用户最多一句「小提示」（如「下次注意：光影」）；完整教练报告仅当用户明确要 `/pmem-coach` 或 `--verbose`。
 """,
     },
@@ -518,7 +542,7 @@ improve/coach/learn 推销仅在用户主动要时再给。
    ```bash
    python3 pmem_art.py atlas
    ```
-   告知用户可随时双击项目根目录的 `art-atlas.html` 检视正反例滑杆与配方卡。
+   告知用户用终端打印的 **`http://127.0.0.1:<端口>/art-atlas.html`** 打开工作台（或双击根目录「打开工作台.cmd」）。**禁止**只双击磁盘上的 `art-atlas.html`：`file://` 下删除/文件夹定位常被浏览器拦住。
 """,
     },
 
@@ -554,6 +578,14 @@ improve/coach/learn 推销仅在用户主动要时再给。
 - 需要 **九宫格可拉伸面板、按钮多状态（normal/hover/pressed/disabled）、进度条空满态、标签选中/未选中** 的成套 UI
 
 ## 二、标准流水线（Concept → Sheets → 9-Slice → Converge）
+
+### 交付档（先分叉；可默认，不必再问类型以外的事）
+| 档 | 何时 | 做到哪停 |
+| :--- | :--- | :--- |
+| **concept-only（最小档）** | 只要主菜单/某一屏概念、截图级气氛；**没**点名九宫格、组件表、状态族、UI kit 套件 | 只做 Step 1 概念稿（最多 4 轮 ≥9.5），交概念稿即完。**禁止**默开组件表/九宫格全家桶 |
+| **full kit（全套）** | 点名组件表 / 九宫格 / 状态族 / 套件，或「整套 UI kit」 | Concept → Sheets → 9-Slice → 状态族；概念未过线不准拆件 |
+
+玩家口语含糊但只提「主界面/主菜单长什么样」→ 默认 **concept-only**。点了「拆按钮/九宫格/pressed」→ **full kit**。
 
 ### Step 0：确定屏幕类型与规格
 确认：屏幕类型、平台（桌面/主机 vs 移动）、画幅（16:9 / 超宽 / 竖屏）、目标模块（如 `ui.MainMenu` / `ui.InventoryHUD`）。玩家写了画幅，或点名了某一块具体的屏，以那一块屏为准。模块里过期的方图规格不能把主界面收成 1:1。
@@ -654,12 +686,14 @@ python3 pmem_art.py feedback "UI套件色板与九宫格规范：<摘要>" --mod
 - **管线（只做门槛）**：概念稿 16:9 或 9:16，没有手机外框；组件表透明、无脏边、分辨率对、manifest 有切线。复刻概念不拿透明底当这一维。
 - **弹框克隆**：内容区空，不要把参考道具放在正中；顶饰最多一件；底栏只有符号按钮。内容区回声参考主体：正式分不超过 8.85，不能停。
 
-示例：`风格色板8.6/结构8.2/光影材质8.4/管线合规9.0/套件一致8.5`
+正式分示例（四项+无瑕疵进乘积）：`风格色板8.6/结构8.2/光影材质8.4/套件一致8.5/无瑕疵8.8`  
+管线合规另记、**不进** `--dims` 乘积，可写在缺陷旁：`管线合规9.0（门槛）`。
 
 ## 四、最终交付必须包含
-1. 概念稿 + 组件表 + `elements/` + `manifest.json`（含九宫格）
-2. 若跑了收敛：默认附上全轮次评分优劣总表（不足/改点）；只要终稿用 `--quiet`
-3. 已写入 `.memory-art` 的 recipe / redline 路径
+- **concept-only**：概念稿（≥9.5 或满 4 轮最高分）+ 评分履历；**不要**为了清单去补假组件表。
+- **full kit**：概念稿 + 组件表 + `elements/` + `manifest.json`（含九宫格）；缺件只补缺件。
+- 若跑了收敛：默认附上全轮次评分优劣总表（不足/改点）；只要终稿用 `--quiet`
+- 已写入 `.memory-art` 的 recipe / redline 路径（若本趟有 ingest/feedback）
 
 
 ## 记忆静默 / 履历可见（Agent 必读）
@@ -691,26 +725,56 @@ python3 pmem_art.py feedback "UI套件色板与九宫格规范：<摘要>" --mod
 ```
 
 ## 原理（截图摘要）
-1. 先锁 **style-spec** → 2. SVG 硬规则 → 3. 分批生成 → 4. 交付 preview → 5. 关键枚 **Warm-Start + 最多 4 轮 ≥9.5** → 6. 反思写进记忆，要看报告再用 /pmem-coach
-
-你现在运行在 **pmem-art 图标集模式**（对标 jezweb `icon-set-generator`）：先锁 **一份 style-spec**，再批量生成，保证 stroke、圆角、视口、视觉重量一致——**禁止**从 Lucide/Heroicons 随便拼一套「看起来差不多」的通用库图标冒充项目定制集。
+- **Mode A**：满幅直角母版 → 安全区单符号 → Light/Dark/Tinted → 尺寸矩阵 → 关键枚最多 4 轮 ≥9.5
+- **Mode B**：锁 style-spec → SVG 硬规则 → 分批生成 → preview → 关键枚可选 4 轮 ≥9.5（对标 jezweb；禁止拼 Lucide/Heroicons 冒充定制集）
+- **Mode C**：锁道具格 style-spec → 透明底 PNG → 关键枚最多 4 轮 ≥9.5
+先分 A/B/C，再进对应节；反思写进记忆，要看报告再用 /pmem-coach。
 
 ---
 
 ## 一、三大模式分流（入口只有 `/pmem-icon`，按需求进对应分节，严禁串味）
-- **【Mode A · App Icon 1024 母版】**（手机桌面启动图标 / iOS App Store / Android Adaptive / 产品 Logo）→ 直接跳至下方 **「## 二之二、Mode A：App Icon 1024×1024 母版专项」**（满幅直角 + 72%–80% 安全区 + 微立体光影，不用 SVG 规则）。
-- **【Mode B · 24px 线性 SVG 图标集】**（网页 / App 导航栏 / HUD 矢量图标）→ 执行下方 **「## 二、Mode B：一致化 SVG 矢量图标集流程」**（只用 `currentColor` + 统一 stroke/viewBox）。
-- **【Mode C · 游戏道具栅格图标】**（背包 64/128/256px 透明底 PNG 道具）→ 执行下方 **「## 二之三、Mode C：游戏道具透明底栅格图标」**（锁描边/色板/投影，不用 SVG 代码）。
+- **【Mode A · App Icon 1024 母版】** → 只读下方 **「## 二、Mode A：…」**（满幅直角 + 72%–80% 安全区；不用 SVG 规则）。
+- **【Mode B · 24px 线性 SVG 图标集】** → 只读下方 **「## 三、Mode B：…」**（`currentColor` + 统一 stroke/viewBox）。
+- **【Mode C · 游戏道具栅格图标】** → 只读下方 **「## 四、Mode C：…」**（透明底 PNG；不用 SVG 代码）。
+A/B/C **标题并列**，禁止把 C 嵌进 B、把 A 甩到 B 的 Step 之后。读错节 = 串味。
 
-## 二、Mode B：一致化 SVG 矢量图标集流程（Brief → Spec → Batch → Review → Converge）
+## 二、Mode A：App Icon 1024×1024 母版专项（iOS App Store / Android Adaptive 桌面启动图标）
 
-### Step 1：理解项目与图标清单
-收集：行业/项目气质、品牌色（即使 SVG 用 `currentColor` 也影响线型选择）、大约数量。
-按组建议清单（可让用户增删）：
-- Navigation / Communication / Trust / Actions / Industry-Specific（或游戏：Inventory / Combat / Status / Crafting）
+当用户要求制作 **App Icon / 手机桌面图标 / iOS 启动图标 / Android 自适应图标 / 产品 Logo 图标** 时走本节约。
 
-### Step 2：锁定 Style Spec（生成前必须确认）
-推荐预设起步：
+### A1. 1024×1024 满幅直角母版与系统圆角安全区铁律
+- **严禁预裁透明圆角**：母版必须输出 **`1024×1024` 满幅直角正方形（Full-bleed Square PNG，无 Alpha 透明缺角）**，防止系统套用 iOS 超椭圆或 Android Adaptive 遮罩时露出黑边/白边裂隙。
+- **核心图形安全区（Center 72%–80% Safe Zone）**：核心主符号收束在画布中心 **`72%–80%`（约 `740×740 px`）** 内，四周留呼吸负空间，绝不贴边。
+- **零细碎文字红线**：只保留 **1 个高辨识度核心记忆符号**；缩放到 `29×29` / `60×60` 仍一眼可认。
+
+### A2. 光学微立体质感与光影层次
+- **三层景深**：① 底板环境渐变（70% 主色）→ ② 中心主符号微倾体块（20% 辅色 + 接触阴影）→ ③ 顶部 45° 高光切角（10% 点缀色）。
+- **iOS 18+ 三态**：Light / Dark / Tinted 都要齐。
+
+### A3. 多尺寸导出与 `app-icon-preview.html`
+母版收敛后导出：iOS `1024/180/167/120/60/29`；Android/桌面 `512/192`。
+
+### A4. App Icon 审图与命令
+识别度或安全区低于 **8.0** 时正式分改取该维，不能停。维：小尺寸识别 / 安全区 / 光影质感 / 深浅色·多尺寸 / 色板纯粹（再加无瑕疵盲评，占 25%）。
+
+**App Icon 多维透镜（通用）**：明细见 `docs/APPICON_MULTI_LENS.md`——①栅格体验；②小尺寸去色仍认；③符号权重 P0 英雄撑满；④满幅直角 + 72%–80% 安全区；⑤色 70/20/10；⑥一主光、形先于质；⑦同品类上架图标气质（非泛插画海报）。缺画风时 revised 必须写同品类顶级上架图标气质。空喊「高级」却剪影糊 → 识别度或安全区 <8.0 不能停。
+
+```bash
+python3 pmem_art.py converge start --session appicon --module brand.WorldStyle --scale high --goal "iOS 1024x1024 App Icon: 青瓷质感记账应用，中心单枚立体青釉金币流光符号"
+python3 pmem_art.py reasonableness review --id appicon --skill icon.a \
+  --draft "<草稿>" --revised "<单符号+72%-80%安全区+满幅直角无字的修订句>" \
+  --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;safe_zone=ok;single_symbol=ok;full_bleed_no_round_mask=ok"
+python3 pmem_art.py converge generate --session appicon --round 1 --image app_icon_r1.png
+python3 pmem_art.py converge judge --session appicon --round 1 --image app_icon_r1.png \
+  --dims "识别度9.6/安全区9.7/光影质感9.5/多尺寸合规9.6/色板纯粹9.7/无瑕疵9.5"
+```
+
+## 三、Mode B：一致化 SVG 矢量图标集流程（Brief → Spec → Batch → Review → Converge）
+
+### B1：理解项目与图标清单
+收集：行业/项目气质、品牌色、大约数量。按组：Navigation / Communication / Trust / Actions / Industry-Specific（或游戏 Inventory / Combat / Status / Crafting）。
+
+### B2：锁定 Style Spec（生成前必须确认）
 
 | Preset | 适用 | Stroke | Caps/Joins | Corners |
 |--------|------|--------|------------|---------|
@@ -722,7 +786,7 @@ python3 pmem_art.py feedback "UI套件色板与九宫格规范：<摘要>" --mod
 
 写入 `icons/style-spec.json`（含 grid/viewBox、strokeWidth、linecap、linejoin、padding、opticalBalance、icons[]）。
 
-### Step 3：SVG 硬规则（整套必须统一）
+### B3：SVG 硬规则（整套必须统一）
 ```xml
 <svg xmlns="http://www.w3.org/2000/svg" width="{grid}" height="{grid}"
   viewBox="0 0 {grid} {grid}" fill="none" stroke="currentColor"
@@ -736,111 +800,73 @@ python3 pmem_art.py feedback "UI套件色板与九宫格规范：<摘要>" --mod
 4. 坐标最多 2 位小数；保持 padding；视觉居中（光学校正）
 5. 路径尽量少；简单图标略加重以平衡视觉重量
 
-图标 B 的正式分是加权调和平均。原来四项占 75%，无瑕疵占 25%，盲评。笔画多不加分。补进已经锁好的 style-spec，沿用原预设和原 viewBox。
+图标 B 正式分：笔画一致 / 视觉重量 / 留白与光学居中 / 24px 功能识别（四项 75%）+ 无瑕疵 25%。线宽或拐角混用、目标尺寸认不出 → 正式分改取该维（<8.0）不能停。judge 示例：`--dims "笔画一致8.6/视觉重量8.4/留白8.5/功能识别8.8/无瑕疵8.7"`。
 
-- **笔画一致**：同一 viewBox、线宽、端点、拐角，只用 currentColor
-- **视觉重量**
-- **留白与光学居中**
-- **24px 能对上功能**
+**图标 B 短透镜**：①同一 stroke/viewBox/端点拐角；②光学重量接近；③padding 一致；④24px 可认；⑤只用 currentColor；⑥禁止拼公开图标库冒充定制集。
 
-一套里线宽或拐角混用，或目标尺寸认不出，不能停，正式分改取该维（低于 8.0）。示例：`笔画一致8.6/视觉重量8.4/留白8.5/功能识别8.8`
-
-**图标 B 短透镜（通用）**：①整套同一 stroke/viewBox/端点拐角；②光学重量接近，简单符略加重；③padding 一致、不贴边；④目标尺寸（常 24px）功能可认；⑤只用 `currentColor`；⑥禁止拼公开图标库冒充定制集。
-
-### 二之三、Mode C：游戏道具透明底栅格图标（64/128/256px PNG，非 SVG）
-若用户要的是 **游戏道具栅格图标**：先锁「线宽/圆角/色板/投影」style-spec，再批量生成透明底 PNG。关键单枚用 `converge` 跑最多 4 轮，合格线 ≥9.5。关键枚首轮 generate 前：
-```bash
-python3 pmem_art.py reasonableness review --id <session> --skill icon.c \
-  --draft "<草稿>" --revised "<厚剪影+透明底+棚拍光+无字的修订句>" \
-  --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;silhouette_read=ok;transparent_friendly=ok"
-```
-
-正式分是加权调和平均。原来三项占 75%，无瑕疵占 25%，盲评。透明底和无字仍是门槛。交付文件要有 alpha，白底和品红底不算透明底。
-
-- **剪影识别（30%，也是门槛）**：64px 仍能认出，居中
-- **描边色板（20%）**
-- **棚拍光（20%）**
-- **透明底（15%，只做门槛）**、**无字（15%，只做门槛）**：脏底，或出现任何字（含等级字），不能停
-
-剪影认不出同样不能停。门槛低于 8.0 时正式分改取该维。示例：`剪影识别8.6/描边色板8.4/棚拍光8.5/透明底9.0/无字9.2`
-
-**同店气质对齐（缺风格时强制）**：玩家未点名画风且无风格参考时，style-spec / revised 须写**同品类顶级游戏道具格气质**（先认品类：休闲软塑胶货柜 / RPG 金属皮革 / 像素等——**禁止非休闲题材硬套软塑胶 merge**；棚拍或品类主光、64px 可读）。若同任务已有合成梯 / 同模块 `surface`（已锁表面句），**必须复用同一句表面气质**，禁止另起一套无关卡通。无同店 surface 时才自写品类气质。仍**禁止**垫竞品截图像素抄物件脸。
-
-**图标 C 短透镜（通用）**：①厚剪影 64px 可认；②真 alpha 透明底；③品类主光+接触影；④套件描边/色板/投影锁死；⑤无字无场景插画；⑥形先于质，禁微细节糊成噪；⑦缺风格时优先复用同店 merge/`surface`，否则按本题材品类顶级道具格。
-
-### Step 4：分批生成（约每批 5 个）+ 一致性审查
-每批完成后检查：stroke 是否漂移、圆角是否混用、有无图标明显偏轻/偏重、是否贴边。
-全部完成后生成：
+### B4：分批生成（约每批 5 个）+ 一致性审查
+检查 stroke/圆角/重量/贴边。全部完成后生成：
 ```
 icons/
 ├── style-spec.json
-├── preview.html      # 含 1x/2x 与深色底对比，内联 SVG
+├── preview.html
 ├── home.svg
 └── …
 ```
 
-### Step 5：关键图标 4轮9.5 收敛（可选）
-用户点名某枚「不对」或一致性审查不通过时，每一轮垫最初的风格参考或 style-spec 样张，不垫上一轮成图：
+### B5：关键图标 4轮9.5 收敛（可选）
+用户点名某枚「不对」或一致性不过时，垫最初 style-spec/样张，不垫上一轮成图：
 ```bash
 python3 pmem_art.py converge start --goal "图标 <name> 对齐 style-spec" --module brand.WorldStyle
 python3 pmem_art.py reasonableness review --id <session> --skill icon.b \
   --draft "<草稿>" --revised "<线宽/端点/清单写清的修订句>" \
   --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;stroke_consistency=ok"
-# 生成 → 自评 → converge generate / converge judge → finish
+然后：converge generate → converge judge → finish
 ```
 
-### Step 6：沉淀
+### B6：沉淀
 ```bash
 python3 pmem_art.py feedback "图标集 style-spec：<preset+stroke+grid摘要>" --module brand.WorldStyle --kind art_decision
-python3 pmem_art.py ingest icons/preview.html -p "icon set preview" --apply   # 若适用
+python3 pmem_art.py ingest icons/preview.html -p "icon set preview" --apply
 ```
 
-## 二之二、Mode A：App Icon 1024×1024 母版专项（iOS App Store / Android Adaptive 桌面启动图标）
+## 四、Mode C：游戏道具透明底栅格图标（64/128/256px PNG，非 SVG）
 
-当用户要求制作 **App Icon / 手机桌面图标 / iOS 启动图标 / Android 自适应图标 / 产品 Logo 图标** 时，自动切换至 **App Icon 专项模式**：
-
-### 1. 1024×1024 满幅直角母版与系统圆角安全区铁律
-- **严禁预裁透明圆角**：母版必须输出 **`1024×1024` 满幅直角正方形（Full-bleed Square PNG，无 Alpha 透明缺角）**，防止系统套用 iOS 超椭圆（Superellipse Squircle）或 Android Adaptive 遮罩时露出黑边/白边裂隙。
-- **核心图形安全区（Center 72%–80% Safe Zone）**：核心主符号（Hero Glyph）必须收束在画布中心 **`72%–80%`（约 `740×740 px`）安全圆/超椭圆内**，四周留出充足呼吸负空间，绝不贴边。
-- **零细碎文字红线**：App Icon 严禁堆砌 Slogan、副标题或复杂多角色场景；只保留 **1 个高辨识度核心记忆符号**，确保缩放到 `29×29 px`（设置页）与 `60×60 px`（通知栏）时依然一眼认出。
-
-### 2. 光学微立体质感与光影层次（Tactile Material & Lighting）
-- **三层景深结构**：① 底板环境渐变层（70% 主色）→ ② 中心主符号微倾体块层（20% 辅色 + 柔和接触阴影 Contact Shadow）→ ③ 顶部 45° 高光切角边缘（Top-Edge Specular Rim，10% 点缀色）。
-- **支持 iOS 18+ 三态适配**：输出标准浅色版（Light）、深色模式版（Dark Mode 深邃底板+自发光边缘）与单色着色版（Tinted 单通道明度层次）。
-
-### 3. 多尺寸导出矩阵与 `app-icon-preview.html`
-通过 `converge generate` 与 `converge judge` 分两步收敛出 `1024×1024` 母版后，自动导出标准尺寸包：
-- **iOS 矩阵**：`1024×1024` (App Store)、`180×180` (@3x Home)、`167×167` (iPad Pro)、`120×120` (@2x)、`60×60` (Notification)、`29×29` (Settings)
-- **Android / 桌面矩阵**：`512×512` (Play Store)、`192×192` (xxxhdpi Foreground/Background)
-
-### 4. App Icon 审图（五项加无瑕疵，加权调和平均；无瑕疵占 25%，盲评。母版分够了，Light / Dark / Tinted 或尺寸矩阵没齐，不能停）
-识别度或安全区低于 **8.0** 时，正式分改取该维，不能停。
-
-1. **小尺寸识别（25%）**：一个主符号；缩到 29px 和 60px 仍是同一个剪影。
-2. **安全区（25%）**：1024 满幅直角，不预裁圆角；主体在中心 72%–80%；不贴边。
-3. **光影质感（20%）**：底板、符号、顶缘高光；接触阴影；不要廉价塑料。
-4. **深浅色 / 多尺寸（15%）**：Light / Dark / Tinted；导出尺寸不糊成一团。
-5. **色板纯粹（15%）**：70-20-10；没有口号、小字、杂物。
-
+先锁「线宽/圆角/色板/投影」style-spec，再批量生成透明底 PNG。关键单枚 `converge` 最多 4 轮，≥9.5。首轮 generate 前：
 ```bash
-python3 pmem_art.py converge start --session appicon --module brand.WorldStyle --scale high --goal "iOS 1024x1024 App Icon: 青瓷质感记账应用，中心单枚立体青釉金币流光符号"
-python3 pmem_art.py reasonableness review --id appicon --skill icon.a \
-  --draft "<草稿>" --revised "<单符号+72%-80%安全区+满幅直角无字的修订句>" \
-  --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;safe_zone=ok;single_symbol=ok;full_bleed_no_round_mask=ok"
-
-**App Icon 多维透镜（通用·商店栅格，不只材质）**：明细见 `docs/APPICON_MULTI_LENS.md`——①**栅格体验**：并排可停、剪影答品类、单记忆点；②**小尺寸**：60/29px 去色仍认，夸张体块，禁密纹理认人；③**符号权重**：P0 英雄撑满 >> P1 附件 >> P2 底衬，禁字/第二英雄；④**画幅**：满幅直角 + 72%–80% 安全区，英雄尽量撑满，忌小物漂浮大留白；⑤**色**：底衬对比服务主体（冷暖对立），70/20/10，禁花底抢戏；⑥**光材质**：一主光，形先于质；⑦**风格**：与产品同品类渲染，但是特写符号不是缩略海报。对标真上架图标，禁止垫像素抄脸。**缺画风时** revised 必须写同品类顶级上架图标气质（非泛插画小海报）。空喊「高级」却剪影糊/棚拍留白 → 识别度或安全区 <8.0 不能停。
-python3 pmem_art.py converge generate --session appicon --round 1 --image app_icon_r1.png
-python3 pmem_art.py converge judge --session appicon --round 1 --image app_icon_r1.png \
-  --dims "识别度9.6/安全区9.7/光影质感9.5/多尺寸合规9.6/色板纯粹9.7"
+python3 pmem_art.py converge start --session <icon_c_id> --goal "道具格：<name>" --module brand.WorldStyle --route-id icon.c
+python3 pmem_art.py reasonableness review --id <icon_c_id> --skill icon.c \
+  --draft "<草稿>" --revised "<厚剪影+透明底+棚拍光+无字的修订句>" \
+  --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;silhouette_read=ok;transparent_friendly=ok"
+# 然后：converge generate → judge → finish（均带 --session <icon_c_id>）
 ```
-Mode C 关键枚同理：`--skill icon.c`，修订句须含透明底与厚剪影。
 
-## 三、交付检查清单
+正式分：剪影识别 30%（门槛）/ 描边色板 20% / 棚拍光 20% / 透明底 15%（门槛）/ 无字 15%（门槛）；无瑕疵盲评同库（展示六维时须带上）。judge 示例：`--dims "剪影识别8.6/描边色板8.4/棚拍光8.5/透明底9.0/无字9.2/无瑕疵8.8"`。交付须真 alpha；白底/品红底不算透明底。门槛 <8.0 → 正式分改取该维。
+
+**同店气质对齐（缺风格时强制）**：未点名画风且无风格参考时，写同品类顶级道具格气质（先认品类；禁止非休闲硬套软塑胶 merge）。同任务已有合成梯/`surface` 必须复用同一句。禁止垫竞品像素抄脸。
+
+**图标 C 短透镜**：①厚剪影 64px 可认；②真 alpha；③品类主光+接触影；④描边/色板/投影锁死；⑤无字无场景；⑥形先于质；⑦优先复用同店 surface。
+
+## 五、交付检查清单（按模式分流，禁止混用）
+
+### Mode A
+- [ ] 1024 满幅直角，未预裁圆角蒙版
+- [ ] 主符号在 72%–80% 安全区；无字
+- [ ] Light / Dark / Tinted 与尺寸矩阵齐
+- [ ] 跑了收敛则展示评分履历（只要终稿用 --quiet）
+
+### Mode B
 - [ ] 全部 SVG 同 viewBox / stroke-width / linecap / linejoin
 - [ ] 全部 `currentColor`
 - [ ] 视觉重量平衡、padding 一致、光学居中
 - [ ] 文件名 kebab-case；`preview.html` + `style-spec.json` 齐全
-- [ ] 若跑了收敛：默认展示每轮评分/不足/改点 + 胜出图（只要终稿用 --quiet）
+- [ ] 若跑了收敛：展示每轮评分/不足/改点 + 胜出图
+
+### Mode C
+- [ ] 真 alpha 透明底；厚剪影 64px 可认
+- [ ] 套件描边/色板/投影一致；无字
+- [ ] 品类主光 + 接触影；无场景插画
+- [ ] 关键枚若收敛：评分履历可见
 
 ## 记忆静默 / 履历可见（Agent 必读）
 - `converge finish` 后系统自动写反思/口味/learn 队列——**无需**再跑 `/pmem-coach`。
@@ -995,8 +1021,10 @@ python3 pmem_art.py learn list
 每一稿先写 `chain_mode`（或注明轻门）/ `levels` / `delivery` / 可选 `grid_rows×grid_cols`，再写 N 行升级 + 一句画风。交给独立文本判断。没过只改未过行；已说通的锁住。
 
 ```bash
-python3 pmem_art.py converge discuss --round <稿次> --prompt "<链型+N行>" --defects "<没过的是哪一行>" --next-fix "<下一稿只改哪几行>"
+python3 pmem_art.py converge start --session <merge_id> --goal "merge 关系讨论：<题材>" --module <模块> --route-id merge.ladder
+python3 pmem_art.py converge discuss --session <merge_id> --round <稿次> --prompt "<链型+N行>" --defects "<没过的是哪一行>" --next-fix "<下一稿只改哪几行>"
 ```
+论述必须带 `--session <merge_id>`（或沿用已 start 的活跃会话）；**禁止**无 `--session` 默认写入 `latest`。
 
 ### 六条都要过（全链型）
 
@@ -1043,33 +1071,67 @@ python pmem_art.py merge relation-judge --file <yaml> --all
 
 ### `delivery=overview_sheet`（默认）
 
-关系过了 → **单次**生成整表一组：
-- 无参考：默认 `levels=8`，常见 `grid_rows×grid_cols = 2×4`（或其他与档数匹配的整齐排法）；白卡深底或纯深底整表均可，写进表面句并锁住。
-- 有整表格子参考：垫该参考，行列与白卡深底跟参考一致；格内换题材；`levels` 跟格数。
+关系过了 → **先开会话 + 合理性 + 出图记账 + finish**，不是「过了关系就闷头出一张交账」：
+
+**会话 id 必显式**（禁止 discuss/generate 默写 `latest`）：取 `<merge_id>`，全程同一值。
+
+1. **开会话 + 合理性（整表也要）**：
+```bash
+python3 pmem_art.py converge start --session <merge_id> --goal "merge overview_sheet：<题材+档数+链型>" --module <模块> --route-id merge.ladder
+python3 pmem_art.py reasonableness review --id <merge_id> --skill merge \
+  --draft "<整表草稿提示词>" --revised "<链型/档序/白卡深底/超框禁令/邻档可分写清的修订句>" \
+  --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;single_centered_item=ok;chain_mode_declared=ok;upgrade_reason_concrete=ok;family_or_base_lock=ok;sheet_safe_zone=ok"
+```
+   不过闸不许出第一张整表。
+2. **出图（须进 converge 记账；可用 Cursor GenerateImage / 外部生图，但路径要 generate）**：
+```bash
+# 生图工具出整表 → 落到 <sheet_rN.png>
+python3 pmem_art.py converge generate --session <merge_id> --round <N> --image <sheet_rN.png> --prompt "<本轮修订句>"
+python3 pmem_art.py converge judge --session <merge_id> --round <N> --image <sheet_rN.png> \
+  --dims "构图9.0/光影9.0/透视9.0/质感9.0/风格9.0/无瑕疵9.0" \
+  --defects "<对照固定清单：超框/邻档/眼睛/白卡/关系…具体部位>" \
+  --next-fix "<下一张整表只改哪几条清单项>"
+```
+- 无参考：默认 `levels=8`，常见 `2×4`；白卡深底或纯深底写进表面句并锁住。
+- 有整表格子参考：垫该参考，行列与白卡深底跟参考；格内换题材；`levels` 跟格数。
 - 有多张 L1：可垫 L1 锁第 1 列 / 各行首格。
 - **玩家说不对 / 重做 / 不要旧逻辑**：禁止垫上一版失败整表；按当前关系稿从零出。
-- 验收另加：每格主体不超框（冠/尾/翅尖留在卡内）；邻档可分；生物链有眼睛。
-- 按五问+链表验收。失败只改提示词重出，**累计 ≤ 3 次**；满 3 次停止并列出缺陷。  
+3. **整表固定验收清单（每张必过；失败改提示词重出，累计 ≤ 3 次）**：
+   - [ ] 超框：每格主体（含冠/尾/翅尖）落在白卡/格内并留边
+   - [ ] 邻档：缩略约 64px 相邻档可分
+   - [ ] 眼睛：生物链每格有可读眼睛/轻表情（道具默认无脸）
+   - [ ] 白卡/版式：有参考则跟参考白卡深底；无等级字；一格一件
+   - [ ] 五问+链表：关系仍说得通，无回退/大跳档
+4. **收束**：清单过了或满 3 次停手后必须：
+```bash
+python3 pmem_art.py converge finish --session <merge_id>
+```
+禁止跳过 `start`/`generate`/`judge`/`finish` 只丢一张散图当终稿。满 3 次仍不过：停止并列出缺陷，禁止继续狂刷。  
 禁止整表抠格当逐格成品。多模型对比时禁止把 A 模型整表垫进 B 模型参考。
 
 ### `delivery=per_cell`（仅玩家点名逐格）
 
 关系过了 → 每一档单独出一张正方形 → `merge audit` → 可选 `normalize` 后再跑一次 audit → 第二段 converge（最多 4 轮，≥9.5）。  
-同框不是交货（同框整梯只作体量预览）。每档首轮仍过 reasonableness review。不要把参考图文件垫进生图；不垫对方模型成图做「公平对比」。
+同框不是交货（同框整梯只作体量预览）。每档首轮仍过 reasonableness review；`--session` 用本档自己的 id，禁止默写 `latest`。不要把参考图文件垫进生图；不垫对方模型成图做「公平对比」。
 
-## 第二段 · 美术（仅 per_cell）
+## 第二段 · 美术
 
+### overview_sheet
+首张整表前必须过 `reasonableness`（见上）。整表用固定验收清单，**累计 ≤ 3 次**重出；不走 per_cell 的 audit/单格 4 轮 ≥9.5。但 **必须** `converge start` → `generate`/`judge` 记账 → `finish`（过程板可见）；停机以清单为准，不是「口头说合格就算」。
+
+### per_cell（仅点名逐格）
 最多 4 轮，≥9.5。表面句原样保留。关系散了或 audit 不过，美术分再高也不算过。
 
 ```bash
-python pmem_art.py merge audit --dir <目录> --phase1 <yaml> --track <域名>
+python3 pmem_art.py merge audit --dir <目录> --phase1 <yaml> --track <域名>
 ```
 
-`converge generate` / `judge` / `finish` 记账。默认整表用 overview 验收；点名 `per_cell` 才走本段 audit 闭环。
+`converge generate` / `judge` / `finish` 记账（均带 `--session`）。默认整表用 overview 验收；点名 `per_cell` 才走本段 audit 闭环。
 
 ## 禁止
 
 - 没过 `relation-judge` / 五问就出图。
+- **overview_sheet 没过 reasonableness 或固定验收清单就当终稿**。
 - **未点名逐格却默认走 `per_cell` 单张狂刷**（merge / 一组 / 合成梯默认必须整表）。
 - 有整表格子参考或「一起出」却走 `per_cell` 逐格狂刷。
 - 有整表参考却不数行列、不垫参考、硬做成默认 8 档。
@@ -1219,6 +1281,7 @@ python pmem_art.py merge audit --dir <目录> --phase1 <yaml> --track <域名>
    - 变体/锁死 brief 等极确定时只出 **1 套**，并写：「只有一套：因为……再拆会和原话冲突。」
 4. 问玩家：选字母，或补充/改口（含「其实我要的是 UI 不是原画」这类改类型）。**点选前禁止开生图。**
 5. 玩家选定某套后交给出图技能时：该套中文/英文目标句可作为 `reasonableness review` 的 `--draft`；出图支路仍须再跑一次闸门并产出 `--revised`（可在选定句上补硬锁与元素预算）。
+6. **若之后要出图**：先跑 `python3 pmem_art.py route --text "<原话或选定方案>" --canonical "<标准路由句>"` 与总控/近邻库对齐，再进对应 `/pmem-…`；禁止只凭本技能自判类型直接 `converge start`。
 
 ## 怎么用（复制即用）
 ```text
@@ -1237,6 +1300,7 @@ python pmem_art.py merge audit --dir <目录> --phase1 <yaml> --track <域名>
 - **不混类型**：未判定或判定为 UI 时，禁止交普通插画 prompt；反之亦然
 - 不编造玩家没给的身份锚点（发色瞳色等）；缺了标「还不确定」或做成选项
 - 不写「加强氛围 / 提升质感」这类空话当方案差异
+- 选定后出图却跳过 `route`，与总控/近邻库分叉
 """,
     },
 ]

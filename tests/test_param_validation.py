@@ -980,22 +980,34 @@ class TestGateFixes(unittest.TestCase):
         self.assertEqual(info["rubric_mode"], "general_5d")
         self.assertGreater(info["weighted_score"], 8.0)
         self.assertLess(info["weighted_score"], 9.0)
+        ui_missing = parse_5d_dims(
+            "风格色板9.5/结构9.2/光影材质9.4/管线合规9.0/套件一致9.3",
+            module="ui.hud",
+        )
+        self.assertEqual(ui_missing["rubric_mode"], "ui_5d")
+        self.assertIsNone(ui_missing["weighted_score"])
+        self.assertEqual(ui_missing.get("missing_required_dims"), ["flawlessness"])
         ui = parse_5d_dims(
-            "风格色板9.5/结构7.2/光影材质9.4/管线合规9.0/套件一致9.3",
+            "风格色板9.5/结构7.2/光影材质9.4/管线合规9.0/套件一致9.3/无瑕疵9.0",
             module="ui.hud",
         )
         self.assertEqual(ui["rubric_mode"], "ui_5d")
         self.assertAlmostEqual(ui["weighted_score"], 7.2)
+        icon_missing = parse_5d_dims(
+            "识别度9.5/安全区9.5/光影质感9.4/多尺寸合规9.2/色板纯粹9.3",
+            module="icon.appicon",
+        )
+        self.assertIsNone(icon_missing["weighted_score"])
         icon = parse_5d_dims(
-            "识别度7.5/安全区9.5/光影质感9.4/多尺寸合规9.2/色板纯粹9.3",
+            "识别度7.5/安全区9.5/光影质感9.4/多尺寸合规9.2/色板纯粹9.3/无瑕疵9.0",
             module="icon.appicon",
         )
         self.assertEqual(icon["rubric_mode"], "app_icon_5d")
         self.assertAlmostEqual(icon["weighted_score"], 7.5)
-        prop = parse_5d_dims("剪影识别9.2/描边色板9.0/棚拍光8.8/透明底6.0/无字9.5")
+        prop = parse_5d_dims("剪影识别9.2/描边色板9.0/棚拍光8.8/透明底6.0/无字9.5/无瑕疵9.0")
         self.assertEqual(prop["rubric_mode"], "icon_prop_5d")
         self.assertAlmostEqual(prop["weighted_score"], 6.0)
-        svg = parse_5d_dims("笔画一致7.0/视觉重量8.5/留白8.8/功能识别9.0")
+        svg = parse_5d_dims("笔画一致7.0/视觉重量8.5/留白8.8/功能识别9.0/无瑕疵9.0")
         self.assertEqual(svg["rubric_mode"], "icon_svg_5d")
         self.assertAlmostEqual(svg["weighted_score"], 7.0)
         ordinary = parse_5d_dims(
@@ -1014,18 +1026,18 @@ class TestGateFixes(unittest.TestCase):
         self.assertGreater(weak["weighted_score"], 8.4)
         self.assertLess(weak["weighted_score"], 8.9)
         pipe_hi = parse_5d_dims(
-            "风格色板9.2/结构9.2/光影材质9.2/管线合规10/套件一致9.2", module="ui.hud"
+            "风格色板9.2/结构9.2/光影材质9.2/管线合规10/套件一致9.2/无瑕疵9.0", module="ui.hud"
         )
         pipe_ok = parse_5d_dims(
-            "风格色板9.2/结构9.2/光影材质9.2/管线合规8.0/套件一致9.2", module="ui.hud"
+            "风格色板9.2/结构9.2/光影材质9.2/管线合规8.0/套件一致9.2/无瑕疵9.0", module="ui.hud"
         )
         pipe_low = parse_5d_dims(
-            "风格色板9.2/结构9.2/光影材质9.2/管线合规7.9/套件一致9.2", module="ui.hud"
+            "风格色板9.2/结构9.2/光影材质9.2/管线合规7.9/套件一致9.2/无瑕疵9.0", module="ui.hud"
         )
         self.assertAlmostEqual(pipe_hi["geometric_score"], pipe_ok["geometric_score"])
         self.assertAlmostEqual(pipe_low["weighted_score"], 7.9)
         self.assertGreater(pipe_low["geometric_score"], 7.9)
-        texty = parse_5d_dims("剪影识别9.4/描边色板9.2/棚拍光9.1/透明底9.0/无字4.0")
+        texty = parse_5d_dims("剪影识别9.4/描边色板9.2/棚拍光9.1/透明底9.0/无字4.0/无瑕疵9.0")
         self.assertAlmostEqual(texty["weighted_score"], 4.0)
         self.assertGreater(texty["geometric_score"], 4.0)
 
@@ -1037,13 +1049,13 @@ class TestGateFixes(unittest.TestCase):
         self.assertGreater(info["weighted_score"], 8.5)
         self.assertLess(info["weighted_score"], 9.5)
         leaked = parse_5d_dims(
-            "风格色板10/结构10/光影材质10/管线合规7.9/还原10",
+            "风格色板10/结构10/光影材质10/管线合规7.9/还原10/无瑕疵9.0",
             module="ui.hud",
         )
         self.assertEqual(leaked["rubric_mode"], "ui_5d")
         self.assertAlmostEqual(leaked["weighted_score"], 7.9)
         weak_ui = parse_5d_dims(
-            "风格色板10/结构7.2/光影材质10/管线合规10/还原10",
+            "风格色板10/结构7.2/光影材质10/管线合规10/还原10/无瑕疵9.0",
             module="ui.hud",
         )
         self.assertAlmostEqual(weak_ui["weighted_score"], 7.2)
@@ -1186,7 +1198,11 @@ class TestGateFixes(unittest.TestCase):
         """旧 concept 侧重标签不得再把 converge judge 打成 0 分。"""
         from skills_kit import parse_5d_dims, audit_score_inflation, get_converge_scale_profile
 
-        legacy = "风格色板9.5/构图叙事与透视9.2/光影材质9.0/红线合规8.8/氛围意图还原9.1"
+        legacy_missing = "风格色板9.5/构图叙事与透视9.2/光影材质9.0/红线合规8.8/氛围意图还原9.1"
+        missing = parse_5d_dims(legacy_missing)
+        self.assertEqual(missing.get("missing_required_dims"), ["flawlessness"])
+        self.assertIsNone(missing["weighted_score"])
+        legacy = legacy_missing + "/无瑕疵9.0"
         info = parse_5d_dims(legacy)
         self.assertIsNotNone(info["weighted_score"], info)
         self.assertGreater(info["weighted_score"], 8.5)
@@ -1387,39 +1403,48 @@ class TestGateFixes(unittest.TestCase):
         self.assertTrue(any("俯瞰" in x or "飞檐" in x for x in redlines))
 
     def test_soft_defects_cannot_stop_target(self) -> None:
+        from PIL import Image
+
         from skills_kit import defects_are_substantive, _round_counts_as_passed
         prof = get_converge_scale_profile("medium")
-        img = ROOT / "comparison" / "scale_01_night_city_high.jpg"
-        for soft in ("", "无", "无明显硬伤", "细节达标", "画面干净", "基本无明显硬伤"):
-            self.assertFalse(defects_are_substantive(soft), soft)
-            res = auto_vlm_judge_image(
-                str(img),
-                prof,
-                round_num=1,
-                dims="构图9.7/光影9.7/透视9.6/质感9.6/风格9.5",
-                defects=soft,
-                root=ROOT,
-                use_remote_vlm=False,
-            )
-            self.assertFalse(res["passed"], soft)
-            self.assertLess(res["calibrated_score"], 9.5)
-        # finish path must reject rubber-stamp defects even if score/trace look passed
-        forged = {
-            "round": 1,
-            "score": 9.7,
-            "image": str(img),
-            "stage": "judged",
-            "judged": True,
-            "passed": True,
-            "gate_blocked": False,
-            "image_gate_blocked": False,
-            "dims": "构图9.7/光影9.7/透视9.6/质感9.6/风格9.5",
-            "step_trace": ["step1_start", "step2_generate", "step3_judge"],
-            "defects": "无明显硬伤",
-        }
-        self.assertFalse(_round_counts_as_passed(forged, 9.6, root=ROOT))
-        forged["defects"] = "远景空气层次偏弱"
-        self.assertTrue(_round_counts_as_passed(forged, 9.6, root=ROOT))
+        with tempfile.TemporaryDirectory() as td:
+            img = Path(td) / "soft.jpg"
+            canvas = Image.new("RGB", (640, 800), color=(60, 90, 140))
+            px = canvas.load()
+            for y in range(0, 800, 3):
+                for x in range(0, 640, 3):
+                    px[x, y] = ((x * 3 + y) % 255, (y * 2) % 255, (x + y * 5) % 255)
+            canvas.save(img, format="JPEG", quality=90)
+            for soft in ("", "无", "无明显硬伤", "细节达标", "画面干净", "基本无明显硬伤"):
+                self.assertFalse(defects_are_substantive(soft), soft)
+                res = auto_vlm_judge_image(
+                    str(img),
+                    prof,
+                    round_num=1,
+                    dims="构图9.7/光影9.7/透视9.6/质感9.6/风格9.5/无瑕疵9.6",
+                    defects=soft,
+                    root=ROOT,
+                    use_remote_vlm=False,
+                )
+                self.assertFalse(res["passed"], soft)
+                self.assertLess(res["calibrated_score"], 9.5)
+            # finish path must reject rubber-stamp defects even if score/trace look passed
+            forged = {
+                "round": 1,
+                "score": 9.7,
+                "image": str(img),
+                "stage": "judged",
+                "judged": True,
+                "passed": True,
+                "gate_blocked": False,
+                "image_gate_blocked": False,
+                "dims": "构图9.7/光影9.7/透视9.6/质感9.6/风格9.5/无瑕疵9.6",
+                "step_trace": ["step1_start", "step2_generate", "step3_judge"],
+                "defects": "无明显硬伤",
+            }
+            self.assertFalse(_round_counts_as_passed(forged, 9.6, root=ROOT))
+            forged["defects"] = "远景空气层次偏弱"
+            self.assertTrue(_round_counts_as_passed(forged, 9.6, root=ROOT))
 
     def test_finish_rejects_judge_only_without_generate(self) -> None:
         from skills_kit import converge_finish, _inspect_image_physical_traits, _round_counts_as_passed

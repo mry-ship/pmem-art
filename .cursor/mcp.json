@@ -1,29 +1,25 @@
 {
   "mcpServers": {
     "pmem-art": {
-      "command": "/usr/bin/python3",
+      "command": "py",
       "args": [
-        "/Users/yanghu/Desktop/pmem-art/pmem_art.py",
+        "-3",
+        "pmem_art.py",
         "serve",
         "--root",
         "${workspaceFolder}"
       ],
       "env": {
-        "PYTHONUNBUFFERED": "1",
-        "PATH": "/Users/yanghu/.local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Frameworks/Python.framework/Versions/3.13/bin"
+        "PYTHONUNBUFFERED": "1"
       }
     },
     "pmem": {
-      "command": "/Users/yanghu/.local/bin/pmem",
+      "command": "pmem",
       "args": [
         "serve",
         "--root",
         "${workspaceFolder}"
-      ],
-      "env": {
-        "PYTHONUNBUFFERED": "1",
-        "PATH": "/Users/yanghu/.local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
-      }
+      ]
     }
   }
 }

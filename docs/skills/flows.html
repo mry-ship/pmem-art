@@ -123,7 +123,7 @@
       <a href="../route_pipeline.html">docs/route_pipeline.html</a>
       （直接说人话即可，不必背斜杠）。本页是进阶：点选各技能内部流程图。
     </p>
-    <p>现在是 10 个技能。没点名走总控大白话认路。原画、克隆、变体、镜头包收在 draw 里；合成梯先过关系，再一档一张。手册见 <a href="../../USER_MANUAL.md">USER_MANUAL.md</a>。</p>
+    <p>现在是 10 个技能。没点名走总控大白话认路。原画、克隆、变体、镜头包收在 draw 里；合成梯先过关系，<strong>默认整表一组</strong>，仅点名逐格才一档一张。手册见 <a href="../../USER_MANUAL.md">USER_MANUAL.md</a>。</p>
   </header>
   <main>
     <div class="pick" id="pick" role="group" aria-label="选择技能"></div>
@@ -173,20 +173,6 @@
       ],
       edges: [["a","b"],["b","c"],["c","d"],["d","e","no"],["d","f","yes"],["e","b","下一轮",true],["f","g"]]
     },
-    concept: {
-      label: "concept",
-      title: "/pmem-concept",
-      sub: "已并入 /pmem-draw · 原画这一支",
-      aria: "可选垫图解构，FLUX 完整句 Prompt，再进与 draw 相同的四轮收敛。",
-      nodes: [
-        { id: "a", x: 30, y: 24, w: 140, h: 48, t1: "0 垫图解构", t2: "可选", c: "n-neu" },
-        { id: "b", x: 200, y: 24, w: 150, h: 48, t1: "1 Warm-Start", t2: "search + start", c: "n-neu" },
-        { id: "c", x: 380, y: 24, w: 160, h: 48, t1: "2 FLUX 完整句", t2: "主体靠前", c: "n-blue" },
-        { id: "d", x: 570, y: 24, w: 140, h: 48, t1: "3 四轮环", t2: "同 draw ≥9.5", c: "n-blue" },
-        { id: "e", x: 380, y: 120, w: 160, h: 48, t1: "finish", t2: "履历 + 记忆", c: "n-mem" }
-      ],
-      edges: [["a","b"],["b","c"],["c","d"],["d","e"]]
-    },
     ui: {
       label: "ui",
       title: "/pmem-ui",
@@ -219,8 +205,8 @@
     },
     clone: {
       label: "clone",
-      title: "/pmem-clone-image",
-      sub: "已并入 /pmem-draw · 克隆这一支",
+      title: "/pmem-draw · 克隆",
+      sub: "合同在 /pmem-draw 内 · 无独立斜杠",
       aria: "写圣经与新题材 brief，Mode B 每轮垫参考，四轮打分，连续三组过线才算稳。",
       nodes: [
         { id: "a", x: 30, y: 20, w: 160, h: 48, t1: "1 圣经+Brief", t2: "Mode A/B", c: "n-neu" },
@@ -235,22 +221,23 @@
     ladder: {
       label: "ladder",
       title: "/pmem-merge-ladder",
-      sub: "/pmem-merge-ladder · 先关系后逐张",
-      aria: "先写八行关系，relation-judge 必须通过，再每一档单独一张正方形，关系还在且达到 9.5 才交付。",
+      sub: "/pmem-merge-ladder · 默认整表一组",
+      aria: "三稿定链型与画风，relation-judge 过线后 reasonableness，再整表一组出齐；固定验收清单，最多重出三次。仅点名逐格才一档一张。",
       nodes: [
-        { id: "a", x: 30, y: 24, w: 150, h: 48, t1: "0 三稿定稿", t2: "升级链和画风", c: "n-neu" },
-        { id: "b", x: 220, y: 24, w: 170, h: 48, t1: "1 relation-judge", t2: "exit 0 才能出图", c: "n-blue" },
-        { id: "c", x: 430, y: 24, w: 150, h: 48, t1: "2 一档一张", t2: "正方形核对", c: "n-neu" },
-        { id: "d", x: 430, y: 110, w: 150, h: 48, t1: "关系在且≥9.5?", t2: "第二段只抬质感", c: "n-neu" },
-        { id: "e", x: 210, y: 110, w: 180, h: 48, t1: "关系散了不算过", t2: "回到过关稿", c: "n-bad" },
-        { id: "f", x: 610, y: 110, w: 110, h: 48, t1: "交付", t2: "八张正方形", c: "n-ok" }
+        { id: "a", x: 24, y: 24, w: 150, h: 48, t1: "0 三稿定稿", t2: "链型/档数/画风", c: "n-neu" },
+        { id: "b", x: 200, y: 24, w: 170, h: 48, t1: "1 relation-judge", t2: "exit 0 才能出图", c: "n-blue" },
+        { id: "c", x: 400, y: 24, w: 170, h: 48, t1: "2 reasonableness", t2: "整表闸", c: "n-neu" },
+        { id: "d", x: 600, y: 24, w: 120, h: 48, t1: "3 整表一组", t2: "默认 overview", c: "n-blue" },
+        { id: "e", x: 400, y: 110, w: 170, h: 48, t1: "验收清单", t2: "超框/邻档/眼睛", c: "n-neu" },
+        { id: "f", x: 200, y: 110, w: 160, h: 48, t1: "不过改提示词", t2: "≤3 次重出", c: "n-bad" },
+        { id: "g", x: 610, y: 110, w: 110, h: 48, t1: "交付", t2: "整表终稿", c: "n-ok" }
       ],
-      edges: [["a","b"],["b","c"],["c","d"],["d","e","no"],["d","f","yes"],["e","b","",true]]
+      edges: [["a","b"],["b","c"],["c","d"],["d","e"],["e","f","no"],["e","g","yes"],["f","d","",true]]
     },
     lens: {
       label: "lens",
-      title: "/pmem-lens-propose",
-      sub: "已并入 /pmem-draw · 玩家要几套机位才走",
+      title: "/pmem-draw · 镜头包",
+      sub: "合同在 /pmem-draw 内 · 点选前不出图",
       aria: "读参考图，提案四套镜头光影道具包，用户点选后写入 goal，再决定是否开收敛。",
       nodes: [
         { id: "a", x: 30, y: 40, w: 130, h: 48, t1: "读参考图", t2: "身份/媒介", c: "n-neu" },
@@ -291,19 +278,19 @@
       label: "critique",
       title: "/pmem-critique",
       sub: "/pmem-critique · 只审不出图",
-      aria: "召回模块基准，六维打分挑刺，低分或用户认可后写入红线。",
+      aria: "召回模块基准，六维打分挑刺；红线仅玩家认可或反复硬伤才入库，禁止仅因外审<9.5自动刷。",
       nodes: [
         { id: "a", x: 40, y: 50, w: 150, h: 48, t1: "search+classify", t2: "红线与物理参", c: "n-neu" },
         { id: "b", x: 230, y: 50, w: 170, h: 48, t1: "六维挑刺", t2: "亮点+返修点", c: "n-blue" },
-        { id: "c", x: 440, y: 50, w: 150, h: 48, t1: "< 9.5 或认可", t2: "feedback 红线", c: "n-mem" },
+        { id: "c", x: 440, y: 50, w: 150, h: 48, t1: "认可才入库", t2: "禁止刷红线", c: "n-mem" },
         { id: "d", x: 630, y: 50, w: 90, h: 48, t1: "审稿卡", t2: "可一句提示", c: "n-ok" }
       ],
       edges: [["a","b"],["b","c"],["c","d"]]
     },
     variant: {
       label: "variant",
-      title: "/pmem-variant",
-      sub: "已并入 /pmem-draw · 变体这一支",
+      title: "/pmem-draw · 变体",
+      sub: "合同在 /pmem-draw 内 · 无独立斜杠",
       aria: "读父模块锚点，定子模块规格，按九六点六收敛生图并 ingest 归档。",
       nodes: [
         { id: "a", x: 40, y: 50, w: 150, h: 48, t1: "读父锚点", t2: "发色瞳色配饰", c: "n-neu" },
@@ -364,7 +351,7 @@
     }
   };
 
-  const order = ["agent","draw","concept","ui","icon","clone","ladder","prompt","lens","style","critique","variant","atlas","improve","coach","learn"];
+  const order = ["agent","draw","ui","icon","clone","ladder","prompt","lens","style","critique","variant","atlas","improve","coach","learn"];
   const pick = document.getElementById("pick");
   const host = document.getElementById("svg-host");
   const titleEl = document.getElementById("title");

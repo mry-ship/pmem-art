@@ -198,6 +198,12 @@ def apply_hurdles(
     return round(float(score), 2), hit
 
 
+# UI / Icon 专用尺：无瑕疵占 25%，缺维则不算正式分（与技能文案一致）
+_FLAWLESSNESS_REQUIRED_MODES = frozenset(
+    {"ui_5d", "app_icon_5d", "icon_prop_5d", "icon_svg_5d"}
+)
+
+
 def _bundle_score(
     parsed: dict[str, float],
     weights: dict[str, float],
@@ -207,6 +213,18 @@ def _bundle_score(
 ) -> dict[str, Any] | None:
     use_weights = dict(weights)
     use_keys = score_keys
+    require_flaw = mode in _FLAWLESSNESS_REQUIRED_MODES
+    if require_flaw and "flawlessness" not in parsed:
+        # 仍算工艺调和均值作诊断，正式分置空——照抄缺无瑕疵的示例不能出可停机分
+        craft_mean = weighted_harmonic(parsed, use_weights, use_keys)
+        return {
+            "parsed": parsed,
+            "weighted_score": None,
+            "geometric_score": craft_mean,
+            "harmonic_score": craft_mean,
+            "rubric_mode": mode,
+            "missing_required_dims": ["flawlessness"],
+        }
     if "flawlessness" in parsed:
         craft = [k for k in score_keys if k != "flawlessness"]
         base = {k: float(weights.get(k) or 0) for k in craft}

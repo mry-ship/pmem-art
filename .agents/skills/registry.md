@@ -18,9 +18,9 @@
 | id | phase | when | skill | heading | routable |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | `ui.kit` | 10 | 玩家要整屏、HUD、弹窗套件、九宫格、按钮状态 | `pmem-ui` | # `/pmem-ui` — SpriteCook 式 UI Kit / HUD / 九宫格整套生成 | true |
-| `icon.a` | 20 | 桌面图标、1024 母版 | `pmem-icon` | ## 二之二、Mode A：App Icon 1024×1024 母版专项（iOS App Store / Android Adaptive 桌面启动图标） | true |
-| `icon.b` | 21 | 一套线性 SVG | `pmem-icon` | ## 二、Mode B：一致化 SVG 矢量图标集流程（Brief → Spec → Batch → Review → Converge） | true |
-| `icon.c` | 22 | 背包道具格 | `pmem-icon` | ### 二之三、Mode C：游戏道具透明底栅格图标（64/128/256px PNG，非 SVG） | true |
+| `icon.a` | 20 | 桌面图标、1024 母版 | `pmem-icon` | ## 二、Mode A：App Icon 1024×1024 母版专项（iOS App Store / Android Adaptive 桌面启动图标） | true |
+| `icon.b` | 21 | 一套线性 SVG | `pmem-icon` | ## 三、Mode B：一致化 SVG 矢量图标集流程（Brief → Spec → Batch → Review → Converge） | true |
+| `icon.c` | 22 | 背包道具格 | `pmem-icon` | ## 四、Mode C：游戏道具透明底栅格图标（64/128/256px PNG，非 SVG） | true |
 | `merge.ladder` | 30 | 同域升级梯（默认整表一组、L1–L8；有参考跟格数，点名数量跟点名；仅点名逐格才 per_cell）；糖果/甜品默认 shop_ladder；工具瓶罐可 same_object；未点名非糖果可轻门 | `pmem-merge-ladder` | # `/pmem-merge-ladder` — 同域合成梯 | true |
 | `draw.lens` | 40 | 玩家明确要几套机位 / 镜头 / 光给自己挑 | `pmem-draw` | ## 合同 · 镜头包 | true |
 | `draw.clone` | 50 | 有参考，并且要换一个新题材，锁的是画风 | `pmem-draw` | ## 合同 · 克隆 | true |
@@ -37,3 +37,7 @@
 ## unroutable_headings
 
 （无）
+
+## section_cut
+
+ok：Icon Mode A/B/C 按 `slice_markdown_section` 互不吞并，且 Mode B 含 B6。

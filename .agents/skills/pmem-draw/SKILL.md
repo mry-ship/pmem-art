@@ -34,6 +34,23 @@ description: 玩家要生图时使用。玩家点名了原画、克隆、变体�
 
 普通图和原画走第一节到第三节。克隆和变体仍用第二节的打分轮次和 `converge` 命令，但不要按第一节继承构图。多图分工也用第二节的打分轮次，垫图和停机按文末合同，不走四档。镜头包、界面、图标、合成梯不要从第一节往下生。
 
+## 零点五、开画前强制 route（与总控同闸；点名 `/pmem-draw` 也要跑）
+
+本技能**不能**绕开路由闸。认完类型、回显 banner 之后、任何 `converge start` 之前，必须：
+
+1. 把玩家原话收成一行标准路由句（模板见 `/pmem-agent` 第零段）。
+2. 跑：
+```bash
+pyw -3 -u pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>"
+```
+3. 以 `route` 的 `route_ids` / `banner` 为准写入闸门缓存；点名了类型则**点名锁定不改判**，但仍须跑 route。
+4. 若已认清类型且缺缓存：`converge start --route-id draw.ordinary|draw.clone|draw.key|…` 可**点名种闸**（与完整 route 等价放行；仍禁止 `--skip-route-gate` 偷跑）。
+5. **禁止**默认 `--skip-route-gate` / `PMEM_ART_SKIP_ROUTE_GATE` 偷跑。
+6. 若本技能自认类型与 `route_ids` 明显冲突：停下来问玩家，禁止硬开画。
+7. 判成界面 / 图标 / 合成梯：读对应技能前也先留下本次 route 缓存。
+
+认类型后**只读**本文件对应的 `## 合同 · …` 或公共 4 轮正文；不要整份合同全读串味。镜头包点选前不生图，仍须先 route。
+
 你现在运行在 **pmem-art 闭环自评收敛生图模式**。进入普通图或原画后，**绝不能只生一张图就草草交差**（除非第 1 轮真实严苛评分就达到 `>= 9.5`）。
 
 ---
@@ -77,7 +94,8 @@ description: 玩家要生图时使用。玩家点名了原画、克隆、变体�
    - 默认 `--mode quality` = 完整 4 轮、合格线 ≥9.5。
    - `--scale`：`low` 贴原修瑕 · `medium` 小优化锁机位（默认）· `high` 大胆跃升+可叙事 · `recompose` 须配 `--recompose-dir`。
    - `--mode fast`：warm-start 置信度高时可走 **fast track**（仍须每张打分；最终采纳默认仍要 ≥9.5，除非用户明确说「草稿/fast/先看看」）。
-   - `converge generate` **自动把 Warm-Start `prompt_block` 并入提示词**；GenerateImage Hook 再用 `updated_input` 灌一次。对话里回显「pmem-art 已自动并入记忆」。禁止再靠手贴；没并入就是 bug。
+   - `converge generate` **自动把 Warm-Start `prompt_block` 并入提示词**。Cursor **GenerateImage** 路径上，`preToolUse` Hook 再用 `updated_input` 灌一次。对话里回显「pmem-art 已自动并入记忆」。禁止再靠手贴。
+   - **外部生图**（Shell / apikey-image 等、不经 Cursor GenerateImage）：Hook 可能整段不触发——以 `converge generate` 并入的 prompt 为准，开画前确认会话里已有 warm-start / revised；不要把「没跑到 GenerateImage Hook」误报成「没并入就是 bug」。
    - **档位只规定能动多少，出图句用开会话打印的那一家**：
      - `low`：写成一处可改，并点名邻区保持原样。
      - `medium`：只留一处看得见的打磨，机位锁死。
@@ -284,4 +302,4 @@ improve/coach/learn 推销仅在用户主动要时再给。
 
 只在类型是镜头包时执行。看参考图，给 4 套可点的机位方案，然后停。禁止在这一步生图，禁止编分数。
 
-每套写清：机位（高度、角度、景别）、光（方向和色）、1–3 个具体道具、明确禁止项、一句可直接拿去生图的目标。至少一套接近原图机位，至少一套真的换机位。用具体名词，不要写「加强氛围」。身份和媒介留在参考上。**点选后成图不得与普通图同机位同构图**——景别/高度/角度至少改两项，一眼能分出「镜头包」而非又一张棚拍正中图。玩家点了一套之后，把点中的句子写成新机位，写明原机位作废，再交给 `recompose` 或原画。没点选就停。点选前不生图。
+每套写清：机位（高度、角度、景别）、光（方向和色）、1–3 个具体道具、明确禁止项、一句可直接拿去生图的目标。至少一套接近原图机位，至少一套真的换机位。用具体名词，不要写「加强氛围」。身份和媒介留在参考上。**点选后成图不得与普通图同机位同构图**——景别/高度/角度至少改两项，一眼能分出「镜头包」而非又一张棚拍正中图。玩家点了一套之后，把点中的句子写成新机位，写明原机位作废，再交给 `recompose` 或原画合同。首轮 `reasonableness`：**默认 `--skill shotpack`**（验机位差）；若明确走原画合同可用 `--skill keyart`，但仍须满足镜头包机位差条款。**禁止**点选后用 `--skill ordinary` 冒充。没点选就停。点选前不生图。

@@ -28,7 +28,10 @@ CANON_TEMPLATES: dict[str, str] = {
     "icon.a": "1024 桌面启动图标母版；走图标A",
     "icon.b": "一套线性 SVG 图标；走图标B",
     "icon.c": "背包道具透明底栅格图标；走图标C",
-    "merge.ladder": "同一套东西一档比一档大；走合成梯",
+    "merge.ladder": "同一套东西一档比一档大；默认整表 overview_sheet、L1–L8；走合成梯",
+    # 交付形态词进标准句，供近邻检索（route_id 仍是 merge.ladder）
+    "merge.overview": "合成梯整表一组出齐；overview_sheet；走合成梯",
+    "merge.per_cell": "合成梯一档一张逐格；per_cell；仅点名才走；走合成梯",
     "style.lock": "以后按这张色板画风；走锁风格；不生图",
     # 锁风后还要成图验证：标准句必须带「验证图」，否则二次 plan 会卡在只入库
     "style.then_clone": "先锁风格再出一张验证图；走锁风格后克隆验证",
@@ -96,7 +99,15 @@ def infer_signals(
         "icon_a": _has(raw, r"1024|桌面图标|启动图标|应用图标"),
         "icon_b": _has(raw, r"线性\s*svg|线性图标|svg\s*图标"),
         "icon_c": _has(raw, r"背包|道具格|透明底") and _has(raw, r"64|128|256|图标"),
-        "merge": _has(raw, r"合成梯|一档比一档|越升越大|合成升级"),
+        "merge": _has(
+            raw,
+            r"合成梯|一档比一档|越升越大|合成升级|shop_ladder|同店升级|"
+            r"overview(?:_sheet)?|per_cell|一档一张|逐格|整表|一组出齐",
+        ),
+        "merge_overview": _has(
+            raw, r"整表|overview(?:_sheet)?|一组出齐|一张表|整组出|2\s*[×x]\s*4"
+        ),
+        "merge_per_cell": _has(raw, r"一档一张|逐格|per_cell|单张出档|每档一张"),
         "key": _has(raw, r"主视觉|概念海报|Key\s*Art|气氛图"),
         "style": _has(raw, r"以后按这张|锁风格|都用这张的色|锁定画风|锁定风格|风格锁定"),
         # 锁完还要验证成图（排除「以后/往后出图都按」只锁不画）
@@ -175,7 +186,14 @@ def build_canonical_brief(
     elif sig["has_ref"] and sig["keep_subject"]:
         rid = "draw.ordinary"
 
-    template = CANON_TEMPLATES.get(rid, CANON_TEMPLATES["draw.ordinary"])
+    template_key = rid
+    if rid == "merge.ladder":
+        # 默认整表；仅点名逐格且未同时要整表时用 per_cell 模板
+        if sig.get("merge_per_cell") and not sig.get("merge_overview"):
+            template_key = "merge.per_cell"
+        else:
+            template_key = "merge.overview"
+    template = CANON_TEMPLATES.get(template_key, CANON_TEMPLATES.get(rid, CANON_TEMPLATES["draw.ordinary"]))
     # 附一点原话锚点，方便人看，不干扰关键词
     tip = (text or "").strip().replace("\n", " ")[:40]
     canonical = template if not tip else f"{template}。原话要点：{tip}"
@@ -183,6 +201,7 @@ def build_canonical_brief(
         "canonical": canonical,
         "guess_route_id": rid,
         "template": template,
+        "template_key": template_key,
         "signals": sig,
         "source": "local_heuristic",
     }

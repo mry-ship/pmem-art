@@ -245,6 +245,60 @@ class RouteAdviseTests(unittest.TestCase):
             self.assertTrue(ok2)
             self.assertIn("默认路径", msg)
 
+    def test_route_gate_named_seed_without_cache(self) -> None:
+        from skills_kit.route_gate import check_route_gate, load_route_advise
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            ok, msg = check_route_gate(
+                root,
+                goal="/pmem-draw 画一张窗边女孩",
+                expect_route="draw.ordinary",
+            )
+            self.assertTrue(ok, msg)
+            self.assertIn("点名种闸", msg)
+            cached = load_route_advise(root)
+            self.assertIsNotNone(cached)
+            self.assertEqual(cached.get("route_ids"), ["draw.ordinary"])
+            self.assertTrue(cached.get("named_seed"))
+            # 唯一斜杠技能也可从 goal 推断
+            root2 = Path(tmp) / "ui"
+            root2.mkdir()
+            ok_ui, msg_ui = check_route_gate(root2, goal="/pmem-ui 做主菜单 HUD")
+            self.assertTrue(ok_ui, msg_ui)
+            self.assertIn("ui.kit", msg_ui)
+
+    def test_route_gate_blocks_english_and_short_goal_drift(self) -> None:
+        from skills_kit.route_gate import check_route_gate, save_route_advise
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            save_route_advise(
+                root,
+                {
+                    "banner": "【按 合成梯 走了】",
+                    "route_ids": ["merge.ladder"],
+                    "mode": "skill",
+                    "execute_ok": True,
+                },
+                text="软糖合成梯八档整表一组出齐",
+            )
+            en, msg_en = check_route_gate(root, goal="draw a watercolor girl by the window")
+            self.assertFalse(en, msg_en)
+            self.assertIn("对不上", msg_en)
+            short1, _ = check_route_gate(root, goal="出图")
+            self.assertFalse(short1)
+            short2, _ = check_route_gate(root, goal="糖果")
+            self.assertFalse(short2)
+            # 新鲜缓存 + 不一致 expect：拦截，不静默覆盖
+            wrong, msg_w = check_route_gate(
+                root,
+                goal="画一张窗边水彩女孩半身立绘",
+                expect_route="draw.ordinary",
+            )
+            self.assertFalse(wrong, msg_w)
+            self.assertIn("draw.ordinary", msg_w)
+
     def test_style_lock_only_when_future_palette(self) -> None:
         plan = plan_route("往后出图都用这张的色板", images=["ref/style.png"])
         self.assertEqual(plan.route_ids, ["style.lock"])

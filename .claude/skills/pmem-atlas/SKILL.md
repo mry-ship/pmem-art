@@ -20,4 +20,4 @@ description: 当用户输入 /pmem-atlas 时触发。自动扫描归位未分类
    ```bash
    pyw -3 -u pmem_art.py atlas
    ```
-   告知用户可随时双击项目根目录的 `art-atlas.html` 检视正反例滑杆与配方卡。
+   告知用户用终端打印的 **`http://127.0.0.1:<端口>/art-atlas.html`** 打开工作台（或双击根目录「打开工作台.cmd」）。**禁止**只双击磁盘上的 `art-atlas.html`：`file://` 下删除/文件夹定位常被浏览器拦住。

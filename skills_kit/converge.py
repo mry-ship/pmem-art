@@ -38,7 +38,7 @@ from .image_gates import _inspect_image_physical_traits, resolve_case_config
 from .validate_params import _physical_image_gate, _round_counts_as_passed, validate_converge_params
 from .judge_auto import auto_vlm_judge_image
 from .absolute_5d_agent_rubric import agent_absolute_5d_judge_prompt
-from .converge_loop import clear_active_session, mark_active_session
+from .converge_loop import active_session_id, clear_active_session, mark_active_session
 from .converge_policy import (
     DEFAULT_ANATOMY_FLOOR,
     DEFAULT_EARLY_STOP_MIN_ROUND,
@@ -699,6 +699,25 @@ def cmd_converge(
         )
         return 0
 
+    if action == "discuss" and (session_id or "latest") == "latest":
+        # 先于 exists 检查：禁止默写 latest；有活跃会话则改绑
+        active = ""
+        try:
+            active = str(active_session_id(root) or "").strip()
+        except Exception:
+            active = ""
+        if active and active != "latest":
+            session_id = active
+            sf = _session_file(root, session_id)
+            print(f"ℹ️ discuss 未带 --session，已改绑活跃会话 `{session_id}`。")
+        else:
+            print(
+                "❌ converge discuss 禁止默认写入 `latest`（易覆盖别人的论述稿）。\n"
+                f"   请先：{pmem_art_cli()} converge start --session <本任务id> …\n"
+                f"   再：{pmem_art_cli()} converge discuss --session <本任务id> --round <n> --prompt \"…\""
+            )
+            return 1
+
     if not sf.exists():
         print(
             f"❌ 未找到收敛会话 `{session_id}`。请先显式启动：\n"
@@ -726,7 +745,7 @@ def cmd_converge(
         notes.sort(key=lambda d: int(d.get("round") or 0))
         sess["discussions"] = notes
         _write_session_json(sf, sess)
-        print(f"📝 已记下论述第 {n} 稿。finish 的过程板会列出全部 {len(notes)} 稿。")
+        print(f"📝 已记下论述第 {n} 稿（session={session_id}）。finish 的过程板会列出全部 {len(notes)} 稿。")
         return 0
 
     th = float(sess.get("accept_threshold") or sess.get("threshold", DEFAULT_THRESHOLD))

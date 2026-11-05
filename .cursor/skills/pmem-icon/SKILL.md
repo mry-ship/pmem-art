@@ -16,26 +16,56 @@ description: 仅当玩家点名图标，或生图分流判成桌面图标、SVG 
 ```
 
 ## 原理（截图摘要）
-1. 先锁 **style-spec** → 2. SVG 硬规则 → 3. 分批生成 → 4. 交付 preview → 5. 关键枚 **Warm-Start + 最多 4 轮 ≥9.5** → 6. 反思写进记忆，要看报告再用 /pmem-coach
-
-你现在运行在 **pmem-art 图标集模式**（对标 jezweb `icon-set-generator`）：先锁 **一份 style-spec**，再批量生成，保证 stroke、圆角、视口、视觉重量一致——**禁止**从 Lucide/Heroicons 随便拼一套「看起来差不多」的通用库图标冒充项目定制集。
+- **Mode A**：满幅直角母版 → 安全区单符号 → Light/Dark/Tinted → 尺寸矩阵 → 关键枚最多 4 轮 ≥9.5
+- **Mode B**：锁 style-spec → SVG 硬规则 → 分批生成 → preview → 关键枚可选 4 轮 ≥9.5（对标 jezweb；禁止拼 Lucide/Heroicons 冒充定制集）
+- **Mode C**：锁道具格 style-spec → 透明底 PNG → 关键枚最多 4 轮 ≥9.5
+先分 A/B/C，再进对应节；反思写进记忆，要看报告再用 /pmem-coach。
 
 ---
 
 ## 一、三大模式分流（入口只有 `/pmem-icon`，按需求进对应分节，严禁串味）
-- **【Mode A · App Icon 1024 母版】**（手机桌面启动图标 / iOS App Store / Android Adaptive / 产品 Logo）→ 直接跳至下方 **「## 二之二、Mode A：App Icon 1024×1024 母版专项」**（满幅直角 + 72%–80% 安全区 + 微立体光影，不用 SVG 规则）。
-- **【Mode B · 24px 线性 SVG 图标集】**（网页 / App 导航栏 / HUD 矢量图标）→ 执行下方 **「## 二、Mode B：一致化 SVG 矢量图标集流程」**（只用 `currentColor` + 统一 stroke/viewBox）。
-- **【Mode C · 游戏道具栅格图标】**（背包 64/128/256px 透明底 PNG 道具）→ 执行下方 **「## 二之三、Mode C：游戏道具透明底栅格图标」**（锁描边/色板/投影，不用 SVG 代码）。
+- **【Mode A · App Icon 1024 母版】** → 只读下方 **「## 二、Mode A：…」**（满幅直角 + 72%–80% 安全区；不用 SVG 规则）。
+- **【Mode B · 24px 线性 SVG 图标集】** → 只读下方 **「## 三、Mode B：…」**（`currentColor` + 统一 stroke/viewBox）。
+- **【Mode C · 游戏道具栅格图标】** → 只读下方 **「## 四、Mode C：…」**（透明底 PNG；不用 SVG 代码）。
+A/B/C **标题并列**，禁止把 C 嵌进 B、把 A 甩到 B 的 Step 之后。读错节 = 串味。
 
-## 二、Mode B：一致化 SVG 矢量图标集流程（Brief → Spec → Batch → Review → Converge）
+## 二、Mode A：App Icon 1024×1024 母版专项（iOS App Store / Android Adaptive 桌面启动图标）
 
-### Step 1：理解项目与图标清单
-收集：行业/项目气质、品牌色（即使 SVG 用 `currentColor` 也影响线型选择）、大约数量。
-按组建议清单（可让用户增删）：
-- Navigation / Communication / Trust / Actions / Industry-Specific（或游戏：Inventory / Combat / Status / Crafting）
+当用户要求制作 **App Icon / 手机桌面图标 / iOS 启动图标 / Android 自适应图标 / 产品 Logo 图标** 时走本节约。
 
-### Step 2：锁定 Style Spec（生成前必须确认）
-推荐预设起步：
+### A1. 1024×1024 满幅直角母版与系统圆角安全区铁律
+- **严禁预裁透明圆角**：母版必须输出 **`1024×1024` 满幅直角正方形（Full-bleed Square PNG，无 Alpha 透明缺角）**，防止系统套用 iOS 超椭圆或 Android Adaptive 遮罩时露出黑边/白边裂隙。
+- **核心图形安全区（Center 72%–80% Safe Zone）**：核心主符号收束在画布中心 **`72%–80%`（约 `740×740 px`）** 内，四周留呼吸负空间，绝不贴边。
+- **零细碎文字红线**：只保留 **1 个高辨识度核心记忆符号**；缩放到 `29×29` / `60×60` 仍一眼可认。
+
+### A2. 光学微立体质感与光影层次
+- **三层景深**：① 底板环境渐变（70% 主色）→ ② 中心主符号微倾体块（20% 辅色 + 接触阴影）→ ③ 顶部 45° 高光切角（10% 点缀色）。
+- **iOS 18+ 三态**：Light / Dark / Tinted 都要齐。
+
+### A3. 多尺寸导出与 `app-icon-preview.html`
+母版收敛后导出：iOS `1024/180/167/120/60/29`；Android/桌面 `512/192`。
+
+### A4. App Icon 审图与命令
+识别度或安全区低于 **8.0** 时正式分改取该维，不能停。维：小尺寸识别 / 安全区 / 光影质感 / 深浅色·多尺寸 / 色板纯粹（再加无瑕疵盲评，占 25%）。
+
+**App Icon 多维透镜（通用）**：明细见 `docs/APPICON_MULTI_LENS.md`——①栅格体验；②小尺寸去色仍认；③符号权重 P0 英雄撑满；④满幅直角 + 72%–80% 安全区；⑤色 70/20/10；⑥一主光、形先于质；⑦同品类上架图标气质（非泛插画海报）。缺画风时 revised 必须写同品类顶级上架图标气质。空喊「高级」却剪影糊 → 识别度或安全区 <8.0 不能停。
+
+```bash
+pyw -3 -u pmem_art.py converge start --session appicon --module brand.WorldStyle --scale high --goal "iOS 1024x1024 App Icon: 青瓷质感记账应用，中心单枚立体青釉金币流光符号"
+pyw -3 -u pmem_art.py reasonableness review --id appicon --skill icon.a \
+  --draft "<草稿>" --revised "<单符号+72%-80%安全区+满幅直角无字的修订句>" \
+  --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;safe_zone=ok;single_symbol=ok;full_bleed_no_round_mask=ok"
+pyw -3 -u pmem_art.py converge generate --session appicon --round 1 --image app_icon_r1.png
+pyw -3 -u pmem_art.py converge judge --session appicon --round 1 --image app_icon_r1.png \
+  --dims "识别度9.6/安全区9.7/光影质感9.5/多尺寸合规9.6/色板纯粹9.7/无瑕疵9.5"
+```
+
+## 三、Mode B：一致化 SVG 矢量图标集流程（Brief → Spec → Batch → Review → Converge）
+
+### B1：理解项目与图标清单
+收集：行业/项目气质、品牌色、大约数量。按组：Navigation / Communication / Trust / Actions / Industry-Specific（或游戏 Inventory / Combat / Status / Crafting）。
+
+### B2：锁定 Style Spec（生成前必须确认）
 
 | Preset | 适用 | Stroke | Caps/Joins | Corners |
 |--------|------|--------|------------|---------|
@@ -47,7 +77,7 @@ description: 仅当玩家点名图标，或生图分流判成桌面图标、SVG 
 
 写入 `icons/style-spec.json`（含 grid/viewBox、strokeWidth、linecap、linejoin、padding、opticalBalance、icons[]）。
 
-### Step 3：SVG 硬规则（整套必须统一）
+### B3：SVG 硬规则（整套必须统一）
 ```xml
 <svg xmlns="http://www.w3.org/2000/svg" width="{grid}" height="{grid}"
   viewBox="0 0 {grid} {grid}" fill="none" stroke="currentColor"
@@ -61,111 +91,73 @@ description: 仅当玩家点名图标，或生图分流判成桌面图标、SVG 
 4. 坐标最多 2 位小数；保持 padding；视觉居中（光学校正）
 5. 路径尽量少；简单图标略加重以平衡视觉重量
 
-图标 B 的正式分是加权调和平均。原来四项占 75%，无瑕疵占 25%，盲评。笔画多不加分。补进已经锁好的 style-spec，沿用原预设和原 viewBox。
+图标 B 正式分：笔画一致 / 视觉重量 / 留白与光学居中 / 24px 功能识别（四项 75%）+ 无瑕疵 25%。线宽或拐角混用、目标尺寸认不出 → 正式分改取该维（<8.0）不能停。judge 示例：`--dims "笔画一致8.6/视觉重量8.4/留白8.5/功能识别8.8/无瑕疵8.7"`。
 
-- **笔画一致**：同一 viewBox、线宽、端点、拐角，只用 currentColor
-- **视觉重量**
-- **留白与光学居中**
-- **24px 能对上功能**
+**图标 B 短透镜**：①同一 stroke/viewBox/端点拐角；②光学重量接近；③padding 一致；④24px 可认；⑤只用 currentColor；⑥禁止拼公开图标库冒充定制集。
 
-一套里线宽或拐角混用，或目标尺寸认不出，不能停，正式分改取该维（低于 8.0）。示例：`笔画一致8.6/视觉重量8.4/留白8.5/功能识别8.8`
-
-**图标 B 短透镜（通用）**：①整套同一 stroke/viewBox/端点拐角；②光学重量接近，简单符略加重；③padding 一致、不贴边；④目标尺寸（常 24px）功能可认；⑤只用 `currentColor`；⑥禁止拼公开图标库冒充定制集。
-
-### 二之三、Mode C：游戏道具透明底栅格图标（64/128/256px PNG，非 SVG）
-若用户要的是 **游戏道具栅格图标**：先锁「线宽/圆角/色板/投影」style-spec，再批量生成透明底 PNG。关键单枚用 `converge` 跑最多 4 轮，合格线 ≥9.5。关键枚首轮 generate 前：
-```bash
-pyw -3 -u pmem_art.py reasonableness review --id <session> --skill icon.c \
-  --draft "<草稿>" --revised "<厚剪影+透明底+棚拍光+无字的修订句>" \
-  --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;silhouette_read=ok;transparent_friendly=ok"
-```
-
-正式分是加权调和平均。原来三项占 75%，无瑕疵占 25%，盲评。透明底和无字仍是门槛。交付文件要有 alpha，白底和品红底不算透明底。
-
-- **剪影识别（30%，也是门槛）**：64px 仍能认出，居中
-- **描边色板（20%）**
-- **棚拍光（20%）**
-- **透明底（15%，只做门槛）**、**无字（15%，只做门槛）**：脏底，或出现任何字（含等级字），不能停
-
-剪影认不出同样不能停。门槛低于 8.0 时正式分改取该维。示例：`剪影识别8.6/描边色板8.4/棚拍光8.5/透明底9.0/无字9.2`
-
-**同店气质对齐（缺风格时强制）**：玩家未点名画风且无风格参考时，style-spec / revised 须写**同品类顶级游戏道具格气质**（先认品类：休闲软塑胶货柜 / RPG 金属皮革 / 像素等——**禁止非休闲题材硬套软塑胶 merge**；棚拍或品类主光、64px 可读）。若同任务已有合成梯 / 同模块 `surface`（已锁表面句），**必须复用同一句表面气质**，禁止另起一套无关卡通。无同店 surface 时才自写品类气质。仍**禁止**垫竞品截图像素抄物件脸。
-
-**图标 C 短透镜（通用）**：①厚剪影 64px 可认；②真 alpha 透明底；③品类主光+接触影；④套件描边/色板/投影锁死；⑤无字无场景插画；⑥形先于质，禁微细节糊成噪；⑦缺风格时优先复用同店 merge/`surface`，否则按本题材品类顶级道具格。
-
-### Step 4：分批生成（约每批 5 个）+ 一致性审查
-每批完成后检查：stroke 是否漂移、圆角是否混用、有无图标明显偏轻/偏重、是否贴边。
-全部完成后生成：
+### B4：分批生成（约每批 5 个）+ 一致性审查
+检查 stroke/圆角/重量/贴边。全部完成后生成：
 ```
 icons/
 ├── style-spec.json
-├── preview.html      # 含 1x/2x 与深色底对比，内联 SVG
+├── preview.html
 ├── home.svg
 └── …
 ```
 
-### Step 5：关键图标 4轮9.5 收敛（可选）
-用户点名某枚「不对」或一致性审查不通过时，每一轮垫最初的风格参考或 style-spec 样张，不垫上一轮成图：
+### B5：关键图标 4轮9.5 收敛（可选）
+用户点名某枚「不对」或一致性不过时，垫最初 style-spec/样张，不垫上一轮成图：
 ```bash
 pyw -3 -u pmem_art.py converge start --goal "图标 <name> 对齐 style-spec" --module brand.WorldStyle
 pyw -3 -u pmem_art.py reasonableness review --id <session> --skill icon.b \
   --draft "<草稿>" --revised "<线宽/端点/清单写清的修订句>" \
   --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;stroke_consistency=ok"
-# 生成 → 自评 → converge generate / converge judge → finish
+然后：converge generate → converge judge → finish
 ```
 
-### Step 6：沉淀
+### B6：沉淀
 ```bash
 pyw -3 -u pmem_art.py feedback "图标集 style-spec：<preset+stroke+grid摘要>" --module brand.WorldStyle --kind art_decision
-pyw -3 -u pmem_art.py ingest icons/preview.html -p "icon set preview" --apply   # 若适用
+pyw -3 -u pmem_art.py ingest icons/preview.html -p "icon set preview" --apply
 ```
 
-## 二之二、Mode A：App Icon 1024×1024 母版专项（iOS App Store / Android Adaptive 桌面启动图标）
+## 四、Mode C：游戏道具透明底栅格图标（64/128/256px PNG，非 SVG）
 
-当用户要求制作 **App Icon / 手机桌面图标 / iOS 启动图标 / Android 自适应图标 / 产品 Logo 图标** 时，自动切换至 **App Icon 专项模式**：
-
-### 1. 1024×1024 满幅直角母版与系统圆角安全区铁律
-- **严禁预裁透明圆角**：母版必须输出 **`1024×1024` 满幅直角正方形（Full-bleed Square PNG，无 Alpha 透明缺角）**，防止系统套用 iOS 超椭圆（Superellipse Squircle）或 Android Adaptive 遮罩时露出黑边/白边裂隙。
-- **核心图形安全区（Center 72%–80% Safe Zone）**：核心主符号（Hero Glyph）必须收束在画布中心 **`72%–80%`（约 `740×740 px`）安全圆/超椭圆内**，四周留出充足呼吸负空间，绝不贴边。
-- **零细碎文字红线**：App Icon 严禁堆砌 Slogan、副标题或复杂多角色场景；只保留 **1 个高辨识度核心记忆符号**，确保缩放到 `29×29 px`（设置页）与 `60×60 px`（通知栏）时依然一眼认出。
-
-### 2. 光学微立体质感与光影层次（Tactile Material & Lighting）
-- **三层景深结构**：① 底板环境渐变层（70% 主色）→ ② 中心主符号微倾体块层（20% 辅色 + 柔和接触阴影 Contact Shadow）→ ③ 顶部 45° 高光切角边缘（Top-Edge Specular Rim，10% 点缀色）。
-- **支持 iOS 18+ 三态适配**：输出标准浅色版（Light）、深色模式版（Dark Mode 深邃底板+自发光边缘）与单色着色版（Tinted 单通道明度层次）。
-
-### 3. 多尺寸导出矩阵与 `app-icon-preview.html`
-通过 `converge generate` 与 `converge judge` 分两步收敛出 `1024×1024` 母版后，自动导出标准尺寸包：
-- **iOS 矩阵**：`1024×1024` (App Store)、`180×180` (@3x Home)、`167×167` (iPad Pro)、`120×120` (@2x)、`60×60` (Notification)、`29×29` (Settings)
-- **Android / 桌面矩阵**：`512×512` (Play Store)、`192×192` (xxxhdpi Foreground/Background)
-
-### 4. App Icon 审图（五项加无瑕疵，加权调和平均；无瑕疵占 25%，盲评。母版分够了，Light / Dark / Tinted 或尺寸矩阵没齐，不能停）
-识别度或安全区低于 **8.0** 时，正式分改取该维，不能停。
-
-1. **小尺寸识别（25%）**：一个主符号；缩到 29px 和 60px 仍是同一个剪影。
-2. **安全区（25%）**：1024 满幅直角，不预裁圆角；主体在中心 72%–80%；不贴边。
-3. **光影质感（20%）**：底板、符号、顶缘高光；接触阴影；不要廉价塑料。
-4. **深浅色 / 多尺寸（15%）**：Light / Dark / Tinted；导出尺寸不糊成一团。
-5. **色板纯粹（15%）**：70-20-10；没有口号、小字、杂物。
-
+先锁「线宽/圆角/色板/投影」style-spec，再批量生成透明底 PNG。关键单枚 `converge` 最多 4 轮，≥9.5。首轮 generate 前：
 ```bash
-pyw -3 -u pmem_art.py converge start --session appicon --module brand.WorldStyle --scale high --goal "iOS 1024x1024 App Icon: 青瓷质感记账应用，中心单枚立体青釉金币流光符号"
-pyw -3 -u pmem_art.py reasonableness review --id appicon --skill icon.a \
-  --draft "<草稿>" --revised "<单符号+72%-80%安全区+满幅直角无字的修订句>" \
-  --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;safe_zone=ok;single_symbol=ok;full_bleed_no_round_mask=ok"
-
-**App Icon 多维透镜（通用·商店栅格，不只材质）**：明细见 `docs/APPICON_MULTI_LENS.md`——①**栅格体验**：并排可停、剪影答品类、单记忆点；②**小尺寸**：60/29px 去色仍认，夸张体块，禁密纹理认人；③**符号权重**：P0 英雄撑满 >> P1 附件 >> P2 底衬，禁字/第二英雄；④**画幅**：满幅直角 + 72%–80% 安全区，英雄尽量撑满，忌小物漂浮大留白；⑤**色**：底衬对比服务主体（冷暖对立），70/20/10，禁花底抢戏；⑥**光材质**：一主光，形先于质；⑦**风格**：与产品同品类渲染，但是特写符号不是缩略海报。对标真上架图标，禁止垫像素抄脸。**缺画风时** revised 必须写同品类顶级上架图标气质（非泛插画小海报）。空喊「高级」却剪影糊/棚拍留白 → 识别度或安全区 <8.0 不能停。
-pyw -3 -u pmem_art.py converge generate --session appicon --round 1 --image app_icon_r1.png
-pyw -3 -u pmem_art.py converge judge --session appicon --round 1 --image app_icon_r1.png \
-  --dims "识别度9.6/安全区9.7/光影质感9.5/多尺寸合规9.6/色板纯粹9.7"
+pyw -3 -u pmem_art.py converge start --session <icon_c_id> --goal "道具格：<name>" --module brand.WorldStyle --route-id icon.c
+pyw -3 -u pmem_art.py reasonableness review --id <icon_c_id> --skill icon.c \
+  --draft "<草稿>" --revised "<厚剪影+透明底+棚拍光+无字的修订句>" \
+  --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;silhouette_read=ok;transparent_friendly=ok"
+# 然后：converge generate → judge → finish（均带 --session <icon_c_id>）
 ```
-Mode C 关键枚同理：`--skill icon.c`，修订句须含透明底与厚剪影。
 
-## 三、交付检查清单
+正式分：剪影识别 30%（门槛）/ 描边色板 20% / 棚拍光 20% / 透明底 15%（门槛）/ 无字 15%（门槛）；无瑕疵盲评同库（展示六维时须带上）。judge 示例：`--dims "剪影识别8.6/描边色板8.4/棚拍光8.5/透明底9.0/无字9.2/无瑕疵8.8"`。交付须真 alpha；白底/品红底不算透明底。门槛 <8.0 → 正式分改取该维。
+
+**同店气质对齐（缺风格时强制）**：未点名画风且无风格参考时，写同品类顶级道具格气质（先认品类；禁止非休闲硬套软塑胶 merge）。同任务已有合成梯/`surface` 必须复用同一句。禁止垫竞品像素抄脸。
+
+**图标 C 短透镜**：①厚剪影 64px 可认；②真 alpha；③品类主光+接触影；④描边/色板/投影锁死；⑤无字无场景；⑥形先于质；⑦优先复用同店 surface。
+
+## 五、交付检查清单（按模式分流，禁止混用）
+
+### Mode A
+- [ ] 1024 满幅直角，未预裁圆角蒙版
+- [ ] 主符号在 72%–80% 安全区；无字
+- [ ] Light / Dark / Tinted 与尺寸矩阵齐
+- [ ] 跑了收敛则展示评分履历（只要终稿用 --quiet）
+
+### Mode B
 - [ ] 全部 SVG 同 viewBox / stroke-width / linecap / linejoin
 - [ ] 全部 `currentColor`
 - [ ] 视觉重量平衡、padding 一致、光学居中
 - [ ] 文件名 kebab-case；`preview.html` + `style-spec.json` 齐全
-- [ ] 若跑了收敛：默认展示每轮评分/不足/改点 + 胜出图（只要终稿用 --quiet）
+- [ ] 若跑了收敛：展示每轮评分/不足/改点 + 胜出图
+
+### Mode C
+- [ ] 真 alpha 透明底；厚剪影 64px 可认
+- [ ] 套件描边/色板/投影一致；无字
+- [ ] 品类主光 + 接触影；无场景插画
+- [ ] 关键枚若收敛：评分履历可见
 
 ## 记忆静默 / 履历可见（Agent 必读）
 - `converge finish` 后系统自动写反思/口味/learn 队列——**无需**再跑 `/pmem-coach`。
