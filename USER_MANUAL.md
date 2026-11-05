@@ -6,7 +6,7 @@
 > **用户包下载（不含研发用 pmem）** → [GitHub Release v0.16.4-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.4-art)  
 > **认路白话流程图** → [docs/route_pipeline.html](docs/route_pipeline.html)（推荐先看：大白话从提需到出图）  
 > **先看总览？** → [README.md](README.md) · **进阶斜杠技能**见下文（可选用） · 旧点选流程 [docs/skills/flows.html](docs/skills/flows.html)  
-> **看图墙 / 技能用法与结果？** → [README · 效果长什么样](README.md#效果长什么样) · [全页展陈](docs/showcase/skills-homepage/index.html)（图源 `homepage_rerun_1028`）
+> **看图墙 / 技能用法与结果？** → [README · 效果长什么样](README.md#效果长什么样) · [全页展陈](docs/showcase/skills-homepage/index.html)（图源 `docs/workbench_guide/` + 最新合成梯）
 
 ---
 
@@ -570,6 +570,6 @@ pyw -3 -u pmem_art.py converge finish   --id <sid>   # 默认写记忆、打印�
 - **规模**：4 案例 × 5 档（含 `recompose_bold` 大改）= **20** Bot  
 - **条件**：每 Bot 独立空目录、项目私有记忆 = 0、三步分离、画幅/垫图继承校验  
 - **结果**：**20 / 20** 达到 `≥ 9.50` 停机  
-- **当前首页图墙**：见 [README.md §效果长什么样](README.md#效果长什么样) 与 [全页展陈](docs/showcase/skills-homepage/index.html)（`homepage_rerun_1028`）
+- **当前首页图墙**：见 [README.md §效果长什么样](README.md#效果长什么样) 与 [全页展陈](docs/showcase/skills-homepage/index.html)（`docs/workbench_guide/` + 鸟类合成梯整表）
 - **认路思路**：[docs/route_pipeline.html](docs/route_pipeline.html)
 - 附录 B 的 V4 冷启动 HTML 仍可作为历史验收对照。

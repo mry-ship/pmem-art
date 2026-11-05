@@ -193,64 +193,36 @@ pyw -3 -u pmem_art.py atlas
 ## 效果长什么样
 
 > **怎么认路、怎么用技能** → [认路白话流程图](docs/route_pipeline.html)（推荐先打开）  
-> **全页展陈（话术 + 逐轮分 + 结果图）** → [docs/showcase/skills-homepage/index.html](docs/showcase/skills-homepage/index.html)  
-> 图源：`docs/showcase/homepage_rerun_1028/` · 闭环最多 4 轮 · ≥9.50 · 下面是正式跑分胜出图
+> **全页展陈（话术 + 过程图 + 终稿）** → [docs/showcase/skills-homepage/index.html](docs/showcase/skills-homepage/index.html)  
+> 图源：`docs/workbench_guide/`（技能教学样例）+ 最新合成梯整表 · 闭环最多 4 轮 · ≥9.50
 
-### draw · 四案例 × 四档
+### draw · 普通图 / 原画 / 克隆 / 变体
 
-从左到右：原图 → low → medium → high → recompose。表头分是胜出轮总分。
+从左到右：原图 → 过程 → 终稿（表头分是终稿总分）。
 
-#### 案例 01 · 仙侠不夜城
+| 普通图 · 蘑菇芝士果盘 **9.54** | 原画 · 微缩庭院 Key Art **9.50** | 克隆 · 新题材锁画风 **9.52** | 变体 · 同身份改一项 **9.55** |
+| :---: | :---: | :---: | :---: |
+| ![ord](docs/workbench_guide/draw-ordinary/final.jpg) | ![key](docs/workbench_guide/draw-keyart/final.jpg) | ![clone](docs/workbench_guide/draw-clone/final.jpg) | ![var](docs/workbench_guide/draw-variant/final.jpg) |
 
-| 原图 | low · **9.54** | medium · **9.54** | high · **9.54** | recompose · **9.40** |
-| :---: | :---: | :---: | :---: | :---: |
-| ![c01_ref](docs/showcase/homepage_rerun_1028/draw_matrix/c01/ref.jpg) | ![c01_low](docs/showcase/homepage_rerun_1028/draw_matrix/c01/low/r4.jpg) | ![c01_med](docs/showcase/homepage_rerun_1028/draw_matrix/c01/medium/r4.jpg) | ![c01_high](docs/showcase/homepage_rerun_1028/draw_matrix/c01/high/r4.jpg) | ![c01_rec](docs/showcase/homepage_rerun_1028/draw_matrix/c01/recompose/r4.jpg) |
+| 普通图 · 原图 | 过程 R1 · 9.44 | 终稿 · **9.54** | 多图分工终稿 · **9.55** |
+| :---: | :---: | :---: | :---: |
+| ![ord0](docs/workbench_guide/draw-ordinary/original.jpg) | ![ord1](docs/workbench_guide/draw-ordinary/process_r1.jpg) | ![ord2](docs/workbench_guide/draw-ordinary/final.jpg) | ![multi](docs/workbench_guide/draw-multi/final.jpg) |
 
-#### 案例 02 · 粉彩速写少女
+### 界面 · 图标 · 锁风格
 
-| 原图 | low · **9.50** | medium · **9.52** | high · **9.52** | recompose · **9.53** |
-| :---: | :---: | :---: | :---: | :---: |
-| ![c02_ref](docs/showcase/homepage_rerun_1028/draw_matrix/c02/ref.jpg) | ![c02_low](docs/showcase/homepage_rerun_1028/draw_matrix/c02/low/r3.jpg) | ![c02_med](docs/showcase/homepage_rerun_1028/draw_matrix/c02/medium/r4.jpg) | ![c02_high](docs/showcase/homepage_rerun_1028/draw_matrix/c02/high/r4.jpg) | ![c02_rec](docs/showcase/homepage_rerun_1028/draw_matrix/c02/recompose/r4.jpg) |
+| 三消 HUD · **9.55** | 图标 A 桌面母版 · **9.55** | 图标 C 道具格 · **9.55** | 锁风格卡 |
+| :---: | :---: | :---: | :---: |
+| ![ui](docs/workbench_guide/ui/final.jpg) | ![ia](docs/workbench_guide/icon-a/final.jpg) | ![ic](docs/workbench_guide/icon-c/final.png) | ![style](docs/workbench_guide/style-lock/final.jpg) |
 
-#### 案例 03 · 窗边日光胸像
+### 合成梯 · 整表一组（默认）
 
-| 原图 | low · **9.55** | medium · **9.55** | high · **9.50** | recompose · **9.40** |
-| :---: | :---: | :---: | :---: | :---: |
-| ![c03_ref](docs/showcase/homepage_rerun_1028/draw_matrix/c03/ref.jpg) | ![c03_low](docs/showcase/homepage_rerun_1028/draw_matrix/c03/low/r4.jpg) | ![c03_med](docs/showcase/homepage_rerun_1028/draw_matrix/c03/medium/r4.jpg) | ![c03_high](docs/showcase/homepage_rerun_1028/draw_matrix/c03/high/r3.jpg) | ![c03_rec](docs/showcase/homepage_rerun_1028/draw_matrix/c03/recompose/r3.jpg) |
+乐器 5×3 整表（垫海船版式）终稿 **9.55**；鸟类轻门 2×3（破壳→下蛋母鸡，档数跟合理=6）。
 
-#### 案例 04 · 天井石院
+| 乐器合成梯 · 终稿 | 鸟类 Chickens · L1–L6 整表 |
+| :---: | :---: |
+| ![merge](docs/workbench_guide/merge-ladder/final.jpg) | ![birds](docs/showcase/skills-homepage/birds_merge_overview.png) |
 
-| 原图 | low · **9.51** | medium · **9.53** | high · **9.55** | recompose · **9.42** |
-| :---: | :---: | :---: | :---: | :---: |
-| ![c04_ref](docs/showcase/homepage_rerun_1028/draw_matrix/c04/ref.jpg) | ![c04_low](docs/showcase/homepage_rerun_1028/draw_matrix/c04/low/r4.jpg) | ![c04_med](docs/showcase/homepage_rerun_1028/draw_matrix/c04/medium/r4.jpg) | ![c04_high](docs/showcase/homepage_rerun_1028/draw_matrix/c04/high/r4.jpg) | ![c04_rec](docs/showcase/homepage_rerun_1028/draw_matrix/c04/recompose/r4.jpg) |
-
-### 界面 · 图标 · 克隆 / 变体 · 合成梯
-
-| 花房 UI | 浮城 A · **9.55** | 青瓷金 A | 锻炉 A | 治疗药 C · **9.55** |
-| :---: | :---: | :---: | :---: | :---: |
-| ![ui](docs/showcase/homepage_rerun_1028/v2/ui_royal/portrait/final.jpg) | ![ia](docs/showcase/homepage_rerun_1028/v2/icon_a/final.jpg) | ![ia2](docs/showcase/homepage_rerun_1028/v2/icon_a2/final.jpg) | ![ia3](docs/showcase/homepage_rerun_1028/v2/icon_a3/final.jpg) | ![heal](docs/showcase/homepage_rerun_1028/v2/icon_c_set/heal.jpg) |
-
-| 少年纸风筝 · **9.48** | 白兔 · **9.54** | 光影变体 · **9.53** | 惊喜 · **9.42** | 晶冠瓶 · **9.51** |
-| :---: | :---: | :---: | :---: | :---: |
-| ![kite](docs/showcase/homepage_rerun_1028/v2/clone/final.jpg) | ![rabbit](docs/showcase/homepage_rerun_1028/v2/clone_rabbit/final.jpg) | ![light](docs/showcase/homepage_rerun_1028/v2/variant/final.jpg) | ![surprise](docs/showcase/homepage_rerun_1028/v2/variant_expr/final.jpg) | ![crown](docs/showcase/homepage_rerun_1028/v2/merge/final.jpg) |
-
-#### 合成梯 · 青金治疗药 L1→L6
-
-空瓶 → 塞 → 半药 → 满药 → 签环叶饰 → 金托（一档一张正方形）。
-
-| L1 空瓶 | L2 +塞 | L3 半药 | L4 满药 | L5 签环 | L6 金托 |
-| :---: | :---: | :---: | :---: | :---: | :---: |
-| ![p1](docs/showcase/homepage_rerun_1028/v2/merge_potion_l16/L01.jpg) | ![p2](docs/showcase/homepage_rerun_1028/v2/merge_potion_l16/L02.jpg) | ![p3](docs/showcase/homepage_rerun_1028/v2/merge_potion_l16/L03.jpg) | ![p4](docs/showcase/homepage_rerun_1028/v2/merge_potion_l16/L04.jpg) | ![p5](docs/showcase/homepage_rerun_1028/v2/merge_potion_l16/L05.jpg) | ![p6](docs/showcase/homepage_rerun_1028/v2/merge_potion_l16/L06.jpg) |
-
-#### 合成梯 · 蜜桃糖 L1→L6
-
-裸糖 → 糖纸 → 贴纸 → 纸托 → 丝带 → 托盘（一档一张正方形）。
-
-| L1 裸糖 | L2 糖纸 | L3 贴纸 | L4 纸托 | L5 丝带 | L6 托盘 |
-| :---: | :---: | :---: | :---: | :---: | :---: |
-| ![c1](docs/showcase/homepage_rerun_1028/v2/merge_candy_l16/L01.jpg) | ![c2](docs/showcase/homepage_rerun_1028/v2/merge_candy_l16/L02.jpg) | ![c3](docs/showcase/homepage_rerun_1028/v2/merge_candy_l16/L03.jpg) | ![c4](docs/showcase/homepage_rerun_1028/v2/merge_candy_l16/L04.jpg) | ![c5](docs/showcase/homepage_rerun_1028/v2/merge_candy_l16/L05.jpg) | ![c6](docs/showcase/homepage_rerun_1028/v2/merge_candy_l16/L06.jpg) |
-
-锁风格卡、`/pmem-prompt` 样例与完整玩家话术 → [全页展陈](docs/showcase/skills-homepage/index.html)。认路思路 → [route_pipeline.html](docs/route_pipeline.html)。
+完整话术与过程轮次 → [全页展陈](docs/showcase/skills-homepage/index.html)。认路思路 → [route_pipeline.html](docs/route_pipeline.html)。
 
 ---
 
