@@ -4,6 +4,7 @@
 """
 from __future__ import annotations
 
+from .platform_cli import pmem_art_cli
 import json
 import time
 from pathlib import Path
@@ -93,7 +94,7 @@ def check_route_gate(
     if not data:
         return (
             False,
-            "开画前缺少本地路由结果。请先：python3 pmem_art.py route --text \"<玩家原话>\" "
+            f"开画前缺少本地路由结果。请先：{pmem_art_cli()} route --text \"<玩家原话>\" "
             "[--canonical \"<标准句>\"] [--brief]；点名调试可加 --skip-route-gate。",
         )
     age = time.time() - float(data.get("saved_at") or 0)

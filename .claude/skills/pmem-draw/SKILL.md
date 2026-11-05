@@ -15,7 +15,7 @@ description: 玩家要生图时使用。玩家点名了原画、克隆、变体�
 | :--- | :--- | :--- |
 | **界面** | 玩家要整屏、HUD、弹窗套件、九宫格、按钮状态 | **不要在本文件生图**。先读 `.cursor/skills/pmem-ui/SKILL.md`，只执行那一份 |
 | **图标** | 桌面图标、一套线性 SVG、背包道具格 | **不要在本文件生图**。先读 `.cursor/skills/pmem-icon/SKILL.md`。A/B/C 不混用 |
-| **合成梯** | 同域升级梯（默认 L1–L8，可 6 档）；糖果/甜品默认 shop_ladder；工具瓶罐可 same_object；未点名非糖果可轻门 / 整表 | **不要在本文件生图**。先读 `.cursor/skills/pmem-merge-ladder/SKILL.md` |
+| **合成梯** | 同域升级梯（默认整表一组、L1–L8；有参考跟格数，点名数量跟点名；仅点名逐格才 per_cell）；糖果/甜品默认 shop_ladder；工具瓶罐可 same_object；未点名非糖果可轻门 | **不要在本文件生图**。先读 `.cursor/skills/pmem-merge-ladder/SKILL.md` |
 | **镜头包** | 玩家明确要几套机位 / 镜头 / 光给自己挑 | 只做文末「合同 · 镜头包」，然后停。点选前禁止生图 |
 | **克隆** | 有参考，并且要换一个新题材，锁的是画风 | 只做文末「合同 · 克隆」 |
 | **变体** | 已有角色要换画风，或做表情 / 动作差分。身份和机位已经在同一张图上 | 只做文末「合同 · 变体」 |
@@ -49,14 +49,14 @@ description: 玩家要生图时使用。玩家点名了原画、克隆、变体�
 ### 方式 B：丢入一张参考图 / 垫图 + 生成指令
 > 例：`/pmem-draw [附带一张图] 只修手指和接触阴影，机位和人物不要动`
 - **必须先执行 Step 0（参考图深度解构）**：
-  1. 仔细观察用户丢过来的图片（必要时用 Read 查看图像或运行 `python3 pmem_art.py classify <参考图路径>` 获取物理特征）。
+  1. 仔细观察用户丢过来的图片（必要时用 Read 查看图像或运行 `pyw -3 -u pmem_art.py classify <参考图路径>` 获取物理特征）。
   2. 输出 **【参考图视觉解构报告】**：
      - **构图与视角**：镜头景别、透视角度、主体占比、重心位置
      - **姿态落点（有角色时必写）**：左右手/脚具体落在哪（膝上、小腿、身侧纸面、托腮、握武器等）；禁止只用「坐姿/站姿」含糊带过。写错落点会把 low 锁死在错误 DNA 上。
      - **色板与光影**：提取 3~5 个主辅色 HEX、主光源方向、明暗交界线冷暖关系
      - **笔触与材质**：线条粗细/软硬、厚涂/赛璐珞/水彩颗粒感、边缘处理
      - **比例与结构特征**：头身比、关键视觉锚点、哪些亮点必须继承、哪些瑕疵不要继承
-  3. 将上述解构结论写入收敛会话（`python3 pmem_art.py converge start --goal "..." --ref-image "<路径>" --ref-analysis "<解构摘要>"`），再进入 Step 1 & Step 2。
+  3. 将上述解构结论写入收敛会话（`pyw -3 -u pmem_art.py converge start --goal "..." --ref-image "<路径>" --ref-analysis "<解构摘要>"`），再进入 Step 1 & Step 2。
 - 同范围重跑必须重新看参考图像素写解构。禁止把上一趟 session 的 `ref_analysis` 当发色、光影或服装真值。
 - low 档对照的是参考图像素上的肢体落点，不是上一轮错读的「撑地/后仰」叙事；缺陷里一旦写出姿态相对参考漂移，评分侧会 fail-closed 压到 ≤8.50。
 - 一次交来多张图时，每一张都放进 `--reference-image-paths`。第一张是宽高比要对上交付物的那张，其余按分工跟在后面，一张不删。`--ref-image` 只标其中一张。`--ref-analysis` 按每张图的分工写。身份图宽高比不同，也不从列表里删。
@@ -68,11 +68,11 @@ description: 玩家要生图时使用。玩家点名了原画、克隆、变体�
 ### Step 1：Warm-Start 召回 & 初始化收敛会话（首轮就要接近 9 分）
 1. 记忆召回是自动的，禁止再靠手贴：`converge start` 写入 Warm-Start；`converge generate` 并入提示词；Cursor `preToolUse` 在 GenerateImage 时用 `updated_input` 再灌一次。`search --module` 只在要给画师看召回结果时可选跑：
    ```bash
-   python3 pmem_art.py search --module <目标模块>
+   pyw -3 -u pmem_art.py search --module <目标模块>
    ```
 2. **启动收敛（自动注入 Warm-Start 包：Top recipes + 红线 + 个人口味）**：
    ```bash
-   python3 pmem_art.py converge start --goal "<用户目标描述>" --module <目标模块> [--mode quality|fast] [--scale low|medium|high|recompose] [--recompose-dir "<新构图方向>"] [--ref-image <参考图>] [--ref-analysis "<参考图分析>"]
+   pyw -3 -u pmem_art.py converge start --goal "<用户目标描述>" --module <目标模块> [--mode quality|fast] [--scale low|medium|high|recompose] [--recompose-dir "<新构图方向>"] [--ref-image <参考图>] [--ref-analysis "<参考图分析>"]
    ```
    - 默认 `--mode quality` = 完整 4 轮、合格线 ≥9.5。
    - `--scale`：`low` 贴原修瑕 · `medium` 小优化锁机位（默认）· `high` 大胆跃升+可叙事 · `recompose` 须配 `--recompose-dir`。
@@ -84,15 +84,15 @@ description: 玩家要生图时使用。玩家点名了原画、克隆、变体�
      - `high`：只抬这一媒介已经有的长处。体积光只写进厚涂。**≥2 轮才停**。
      - `recompose`：写出新布局，并写明旧机位作废。**≥2 轮**；未换机位勿停。`--goal` 只锁画风、身份和禁令；姿势和机位只写在 `--recompose-dir`。禁止 goal 里再写旧机位姿态。
    - 同模块已经锁过风格时，第 1 轮提示词带上已锁的 HEX 和禁用词。
-   - **最优方向按档分流**（加法，不是第二份锁）。出图前可跑：`python3 pmem_art.py check-scale-gates --self-check`。
+   - **最优方向按档分流**（加法，不是第二份锁）。出图前可跑：`pyw -3 -u pmem_art.py check-scale-gates --self-check`。
    - **不要中途改去镜头包**。玩家没要几套机位，就按当前这一支继续。`high` / `recompose` 缺一句机位时，用玩家已经写的目标或档位骨架，不要停下来提议 4 套镜头。
 3. **合理性闸（首轮 generate 前必过，至少一次）**：先写草稿提示词，按清单自审，**同时交出更合理的修订提示词**，再写入会话。不过闸 `converge generate` 会被拦截。克隆/变体/多图分工/原画同样走这一步（`--skill` 用 `clone`/`variant`/`split`/`keyart`）。
    ```bash
-   python3 pmem_art.py reasonableness review --id <session> --skill ordinary \
+   pyw -3 -u pmem_art.py reasonableness review --id <session> --skill ordinary \
      --draft "<草稿提示词>" --revised "<更合理的提示词>" \
      --checklist "subject_action=ok;contact_scale=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok"
    ```
-   清单模板：`python3 pmem_art.py reasonableness template --skill ordinary`。修订句必须写清：主体动作、接触/尺度、元素预算、硬锁、一眼失败条件。首轮 `generate` **强制使用 revised**（未再审的其他 `--prompt` 会被忽略）；可省略 `--prompt`。非首轮空 `--prompt` 回退 revised。后续审美迭代不得推翻硬锁与预算。调试才允许 `--skip-reasonableness-gate`。
+   清单模板：`pyw -3 -u pmem_art.py reasonableness template --skill ordinary`。修订句必须写清：主体动作、接触/尺度、元素预算、硬锁、一眼失败条件。首轮 `generate` **强制使用 revised**（未再审的其他 `--prompt` 会被忽略）；可省略 `--prompt`。非首轮空 `--prompt` 回退 revised。后续审美迭代不得推翻硬锁与预算。调试才允许 `--skip-reasonableness-gate`。
 4. **可选 Best-of-N 首帧**：第 1 轮先构思 2~3 个方向（或并行想法），挑最佳进入后续 converge（在回复里写明选了哪条）。须在合理性闸之后。
 
 ---
@@ -150,9 +150,9 @@ description: 玩家要生图时使用。玩家点名了原画、克隆、变体�
 
 #### 2.3 记录到收敛器（生图和审图必须分两步）
 ```bash
-python3 pmem_art.py converge generate \
+pyw -3 -u pmem_art.py converge generate \
   --session <id> --round <i> --image "<图片路径>" --prompt "<本轮 Prompt>"
-python3 pmem_art.py converge judge \
+pyw -3 -u pmem_art.py converge judge \
   --session <id> --round <i> --image "<图片路径>" \
   --dims "构图8.6/光影8.2/透视7.8/质感8.0/风格8.4/无瑕疵8.0" \
   --strengths "<亮点>" \
@@ -183,13 +183,13 @@ python3 pmem_art.py converge judge \
 
 循环结束后，运行：
 ```bash
-python3 pmem_art.py converge finish
+pyw -3 -u pmem_art.py converge finish
 ```
 该命令会自动：
 1. 选出达标轮次（`>= 9.5`）或全阶段最高分轮次（`Best of 4` / 安全早停后的历史最高分）。不到 9.5 且未满 4 轮、也未触发安全早停时，禁止把这一张当展陈终稿，也禁止把 r1 复制成 `final.jpg`。
 2. 将最终胜出图通过 `ingest` / `feedback` 写入 `.memory-art` 的 `recipe`（正向定稿锚点），并把迭代过程中暴露的典型不合理点写入 `style_redline` / `visual_correction`。
 3. 生成并**默认打印**标准 Markdown 评分履历，同时写出可点开的过程板 HTML（只要一行结论时加 `--quiet`，过程板路径仍给出）。
-4. 收展陈页前跑 `python3 pmem_art.py showcase-gate --html <index.html>`。有格 < 9.5 且未满 4 轮、也未标安全早停，这一页不能交。
+4. 收展陈页前跑 `pyw -3 -u pmem_art.py showcase-gate --html <index.html>`。有格 < 9.5 且未满 4 轮、也未标安全早停，这一页不能交。
 
 **终稿拿不准时（商业对标诊断）**：终稿自己拿不准、六维 borderline、或满 4 轮仍心里没底 → 先找同品类顶级商业范例并排对比，定性是理解问题、合理性问题，还是完成度/画风问题，再决定改 brief、改闸或继续收敛。**禁止**把商业范例当垫图抄构图 / 抄机位。结算总结里写清：对标了哪类、诊断属哪一类、下一步动哪一层。
 
@@ -202,7 +202,7 @@ python3 pmem_art.py converge finish
 4. **总结**：胜出哪一轮、总分、留下的那一处不足；若触发了商业对标，附诊断结论。
 有多轮论述（合成梯关系稿）时，每一稿都要先记，不能只留在对话里：
 ```bash
-python3 pmem_art.py converge discuss --round <稿次> --prompt "<这一稿正文>" --defects "<没过的行>" --next-fix "<下一稿只改哪里>"
+pyw -3 -u pmem_art.py converge discuss --round <稿次> --prompt "<这一稿正文>" --defects "<没过的行>" --next-fix "<下一稿只改哪里>"
 ```
 报告**最底部**必须带档位合同脚注（`converge finish` 已打印），原样转述，例如：
 > **目前是 LOW 档**… 若画师说「构图松一点」，表上该维显示 **`75%（默认95%，-20%）`**（档位仍是 low，只微调这一维）。
@@ -253,13 +253,13 @@ improve/coach/learn 推销仅在用户主动要时再给。
 
 ## 合同 · 变体
 
-只在类型是变体时执行。轮次用第二节的 `converge generate` / `judge` / `finish`。先 `python3 pmem_art.py search --module <父模块>`，锁住不能改的人设：发色、瞳色、标志配饰、主色板。
+只在类型是变体时执行。轮次用第二节的 `converge generate` / `judge` / `finish`。先 `pyw -3 -u pmem_art.py search --module <父模块>`，锁住不能改的人设：发色、瞳色、标志配饰、主色板。
 
 - 换画风：另建子模块（如 `character.Astra.Chibi`）。不垫旧画风原图，人设只写进提示词。
 - 表情或动作差分：几张写死几张。每一轮垫最初的角色原图，修正只写进提示词。锁五官比例和机位。单张表情只交付这一张。
 - **局部表情硬验收（困倦/半眯/眨眼等）**：`next_fix` 与 defects 必须写可量测部位（如上眼睑是否压到虹膜中线、单眼是否闭合）。成图上该部位没兑现，风格分再高也不能停；禁止只靠「更困一点」空话抬分。风格维应保持 ≥8.5，不要为改表情把画风打崩到 6 档。
 
-然后按上面的 4 轮、≥9.5 闭环生图。完成后 `python3 pmem_art.py ingest <新图路径> -p "<含角色名和画风或差分的提示词>" --apply`。
+然后按上面的 4 轮、≥9.5 闭环生图。完成后 `pyw -3 -u pmem_art.py ingest <新图路径> -p "<含角色名和画风或差分的提示词>" --apply`。
 
 ## 合同 · 多图分工
 

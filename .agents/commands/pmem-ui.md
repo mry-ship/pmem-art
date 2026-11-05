@@ -29,20 +29,20 @@ description: 【强制4轮≥9.5收敛】SpriteCook式 UI Kit/HUD/九宫格整�
 ### Step 0：确定屏幕类型与规格
 确认：屏幕类型、平台（桌面/主机 vs 移动）、画幅（16:9 / 超宽 / 竖屏）、目标模块（如 `ui.MainMenu` / `ui.InventoryHUD`）。玩家写了画幅，或点名了某一块具体的屏，以那一块屏为准。模块里过期的方图规格不能把主界面收成 1:1。
 ```bash
-python3 pmem_art.py search --module <ui.模块>
+pyw -3 -u pmem_art.py search --module <ui.模块>
 ```
 
 ### Step 1：概念先行（Concept First）—— 不可跳过
 1. 若用户丢入概念图：先做参考图视觉解构（构图分区、主辅色 HEX、金属/木纹/霓虹材质、控件密度），再进入组件抽取。
 2. 若无概念图：先生成 **1 张完整屏幕概念稿**（整屏布局，统一材质与色板），用 `/pmem-draw` 同款 **4轮 >= 9.5 收敛** 打磨概念稿：
    ```bash
-   python3 pmem_art.py converge start --goal "UI概念稿：<屏幕类型+风格>" --module <ui.模块> [--scale medium|high]
+   pyw -3 -u pmem_art.py converge start --goal "UI概念稿：<屏幕类型+风格>" --module <ui.模块> [--scale medium|high]
    # 首轮前必过合理性闸（同时交出更合理提示词）：
-   python3 pmem_art.py reasonableness review --id <session> --skill ui \
+   pyw -3 -u pmem_art.py reasonableness review --id <session> --skill ui \
      --draft "<草稿>" --revised "<分区/控件/禁忌写清的修订句>" \
      --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;layout_zones=ok;no_content_clutter=ok;chrome_not_illustration=ok;cta_clear_of_faces=ok;control_craft=ok"
    # 每轮：converge generate 生图，再 converge judge 审图，直到 >= 9.5 或满 4 轮
-   python3 pmem_art.py converge finish
+   pyw -3 -u pmem_art.py converge finish
    ```
 3. **概念稿通过后才进入组件表**——不要在概念未锁定时散生按钮。合理性闸不过不许 generate。
 
@@ -112,8 +112,8 @@ ui_kit_<name>/
 
 ### Step 5：沉淀记忆
 ```bash
-python3 pmem_art.py ingest <concept或主面板路径> -p "UI kit <屏幕> 概念/主面板" --apply
-python3 pmem_art.py feedback "UI套件色板与九宫格规范：<摘要>" --module <ui.模块> --kind art_decision
+pyw -3 -u pmem_art.py ingest <concept或主面板路径> -p "UI kit <屏幕> 概念/主面板" --apply
+pyw -3 -u pmem_art.py feedback "UI套件色板与九宫格规范：<摘要>" --module <ui.模块> --kind art_decision
 ```
 
 ## 三、界面审图（概念稿和组件表同名五项；管线只做门槛）

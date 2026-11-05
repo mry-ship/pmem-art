@@ -1,18 +1,20 @@
 ---
 name: pmem-merge-ladder
-description: 玩家要一条同域合成升级梯，或生图分流判成合成梯时使用。只有 /pmem-merge-ladder：先文字定链型与升级关系，再说通再出图。同族形变（主流）走 shop_ladder；同模加装才 same_object；乐器整表走 species_change。无整表信号时默认一档一张；附格子参考或说整表一起出时强制 overview_sheet，先数行列并垫参考锁版式。
+description: 玩家要一条同域合成升级梯，或生图分流判成合成梯时使用。只有 /pmem-merge-ladder：先文字定链型与升级关系，再说通再出图。同族形变（主流）走 shop_ladder；同模加装才 same_object；乐器整表走 species_change。merge 默认就是一组：delivery=overview_sheet、levels=8；有格子参考跟格数与版式；玩家点名档数跟点名；仅当玩家明确说一档一张/逐格/单张时才走 per_cell。
 ---
 
 # `/pmem-merge-ladder` — 同域合成梯
 
 ## 怎么用（复制即用）
 ```text
-/pmem-merge-ladder 青瓷药瓶同物件八档：空瓶→塞→半药→满药→签环→金托→晶冠→罩瓶；chain_mode=same_object；一档一张正方形
-/pmem-merge-ladder 节日五条 L1 参考，各 1–6 级同店升级；chain_mode=shop_ladder；delivery=overview_sheet；先文字定链再单次整表
+/pmem-merge-ladder 一组建筑；chain_mode=shop_ladder
+/pmem-merge-ladder 青瓷药瓶同物件八档：空瓶→塞→半药→满药→签环→金托→晶冠→罩瓶；chain_mode=same_object
+/pmem-merge-ladder 节日五条 L1 参考，各 1–6 级同店升级；chain_mode=shop_ladder；levels=6
 /pmem-merge-ladder [附船图格子参考] 一组乐器；参考咋排就咋出；垫参考锁白卡深底；不抄船
+/pmem-merge-ladder 青瓷药瓶八档；一档一张正方形；chain_mode=same_object
 ```
 
-一条合同。有附图时**先认参考是不是整表格子**，再定链型、档数、交付。
+一条合同。**merge 本身就是一组**：默认整表一次出齐。有附图时**先认参考是不是整表格子**，再定链型、档数、交付。
 
 ## 开场 0 · 整表参考闸（有附图先做；写进第 1 稿）
 
@@ -24,7 +26,7 @@ description: 玩家要一条同域合成升级梯，或生图分流判成合成�
 4. 玩家说「参考咋出就咋出 / 按我这张 / 一起出 / 不要单张」→ 同上，不问交付。
 5. 格数不在机读允许集 `{6,8,9,12,15}` 时先问一句，或取最接近允许值并在讨论稿写明。
 
-无整表信号时，才回落到下方默认 `per_cell`（MergePerCell）。
+**无格子参考时不要回落逐格。** 默认仍是 `overview_sheet` + `levels=8`（常见排法 2×4）；只有玩家明确要「一档一张 / 逐格 / 单张」才走 `per_cell`。
 
 ## 开场必选（第 1 稿写死；拿不准就先问一句，不准闷头出图）
 
@@ -39,29 +41,36 @@ description: 玩家要一条同域合成升级梯，或生图分流判成合成�
 
 **商业 merge（禁止只懂叠零件）：** 验同链家族基因 + 相邻档可读进化 + 体量缓增 + 合成理由。有糖果/同店升级信号时先想 `shop_ladder`；同模加装才用 `same_object`；**非糖果未点名则轻门，勿默锁 shop_ladder**。禁止装饰换装（例：糖纸档后突然没纸只换彩带，故事断——例句非唯一题材）。多维透镜见 `docs/MERGE_MULTI_LENS.md`（合两下体验 / 64px 可读 / 稀有度曲线 / 链型 / 色材质 / 套件）。
 
+**商业标尺闸（拿不准就先做；建筑/新题材强制）：** 第 1 稿必须写明对标的**顶级同品类 merge 货柜/棋盘链**名称与档序（例：EverMerge 木屋支线 Log→Timber→Frame→Building→House→Rich→Grand→Mansion）。只抽链型与密度，**禁止垫像素抄物件**。禁止只靠自拟「棚→屋→城堡」叙事过五问；城堡/地标若在对标游戏里是**另一条链或喂养目标**，禁止默默焊成末档。机读 `relation-judge` 过了但没写对标档序，仍不算可出图。
+
+**过程类型（先认再画；详见 `docs/MERGE_MULTI_LENS.md` §8）：** 同族形变货柜 / 同模加装 / 同域换物种 / 原料→半成品→成品 / 生产者升级 / 碎片修复 / 数量捆扎 / 多轨并列。第 1 稿除 `chain_mode` 外写清过程类型。通用铁律：合两下可倒推；未完成→完成；犒赏材质晚出现；一链一合同；**机读过了 ≠ 商业合理**。
+
 **默认怎么选：**
 
 1. 明确同模加零件 / 工具瓶罐加装 → `same_object`
 2. 糖果/甜品包装升级、同店货柜、一档比一档高级形态且未说焊零件 → **`shop_ladder`**；禁止默默把软糖锁成 `same_object`
-3. 「一组 X / 多种 X」或整表乐器/船参考 → `species_change`（或 `shop_ladder`）。禁止默默焊单母体
+3. 「一组 X / 多种 X」或整表乐器/船参考 → `species_change`（或 `shop_ladder`）。禁止默默焊单母体。「一组」同时确认交付是整表，不是逐格。
 4. 单件 L1：工具瓶罐像加装→可 `same_object` 草案；糖果食物包装进化→先 `shop_ladder` 草案。禁止「有 L1 就默认 same_object」
 5. 「零件必须累计」**只约束** `same_object`；不覆盖同族形变 / 一组不同 X
 6. **非糖果且未点名链型** → 轻门，**禁止**默锁 `shop_ladder` 或强行 `base_body`
 
 ### B. `levels`
 
-- 无整表参考：默认 **8**（L1–L8）；玩家只要六档 → `levels: 6`。
-- 有整表格子参考：`levels` **跟格数**（允许 `6|8|9|12|15`）。禁止无视参考硬做成 8 再逐格刷。
+- **默认 8**（L1–L8）。merge 没给数量就按 8，不必再问。
+- 玩家点名固定数量（六档 / 只要 6 / `levels: 6` 等）→ 跟点名（允许 `6|8|9|12|15`）。
+- 有整表格子参考：`levels` **跟格数**（允许 `6|8|9|12|15`）。禁止无视参考硬做成 8。
 - 门禁按 N 审，禁止为凑档硬编无意义补档。
 
 ### C. `delivery`
 
 | 交付 | 含义 |
 | :--- | :--- |
-| `per_cell`（无整表信号时的**默认**） | 一档一张等大正方形；同框整梯只作体量预览，不是成品（MergePerCell） |
-| `overview_sheet` | 关系门过后 **单次整表**；**最多重出 3 次**；满 3 次列缺陷停手。禁止从整表抠格冒充逐格成品 |
+| `overview_sheet`（**默认**） | 关系门过后 **单次整表一组出齐**；**最多重出 3 次**；满 3 次列缺陷停手。禁止从整表抠格冒充逐格成品。无参考时默认 8 档、常见 2×4 |
+| `per_cell`（仅点名） | 一档一张等大正方形；同框整梯只作体量预览，不是成品（MergePerCell） |
 
-**何时强制 `overview_sheet`（可默认，不必再问）：** 整表格子参考；「整表 / 一起出 / 一次出齐 / 不要逐格 / 参考咋出就咋出」；多轨总览。
+**默认 `overview_sheet`（可默认，不必再问）：** 玩家说 merge / 合成梯 / 一组；无交付点名时。  
+**才走 `per_cell`：** 玩家明确说「一档一张 / 逐格 / 单张 / per_cell」。  
+**仍强制整表：** 整表格子参考；「整表 / 一起出 / 一次出齐 / 不要逐格 / 参考咋出就咋出」；多轨总览。
 
 多轨（多张 L1）时：一个 yaml 多个 `tracks`；`overview_sheet` 可一行一轨。
 
@@ -69,7 +78,7 @@ description: 玩家要一条同域合成升级梯，或生图分流判成合成�
 
 1. 玩家写下了风格，就用写下的。
 2. **整表格子参考**（开场 0）：表面句写「软塑胶圆润厚实体 + 白圆角卡 + 深灰/炭黑底」等眼睛看见的；**出图垫参考文件**锁版式。不抄参考物件。
-3. 单件风格参考、非整表：先跑 `python3 pmem_art.py ref-read <参考图路径>`，把看见的表面写成一句。`per_cell` 底写成「透明或纯黑隔离」；小高光不要写成油亮。不垫参考文件（除非锁 L1 外观）。不抄参考无关物件。
+3. 单件风格参考、非整表：先跑 `pyw -3 -u pmem_art.py ref-read <参考图路径>`，把看见的表面写成一句。`per_cell` 底写成「透明或纯黑隔离」；小高光不要写成油亮。不垫参考文件（除非锁 L1 外观）。不抄参考无关物件。
 4. 风格和参考都没有：质感好的卡通可爱。圆润倒角、软阴影、饱和友好色，道具本身无脸，除非玩家要求有脸。
 
 **底色闸**：
@@ -87,7 +96,7 @@ description: 玩家要一条同域合成升级梯，或生图分流判成合成�
 每一稿先写 `chain_mode`（或注明轻门）/ `levels` / `delivery` / 可选 `grid_rows×grid_cols`，再写 N 行升级 + 一句画风。交给独立文本判断。没过只改未过行；已说通的锁住。
 
 ```bash
-python3 pmem_art.py converge discuss --round <稿次> --prompt "<链型+N行>" --defects "<没过的是哪一行>" --next-fix "<下一稿只改哪几行>"
+pyw -3 -u pmem_art.py converge discuss --round <稿次> --prompt "<链型+N行>" --defects "<没过的是哪一行>" --next-fix "<下一稿只改哪几行>"
 ```
 
 ### 六条都要过（全链型）
@@ -105,11 +114,11 @@ python3 pmem_art.py converge discuss --round <稿次> --prompt "<链型+N行>" -
 
 ### 独立文本判断 · 五问（任一项「否」→ 改稿，不准出图）
 
-1. 同店/同域吗？家族基因（色相/题材）锁住了吗？  
-2. 有没有回退到更低档物件类？  
-3. 有没有缺过渡的大跳档？  
-4. 缩略图（约 64px）相邻档能分清吗？  
-5. 升级理由具体吗？轻门/`same_object` 看 `parts_add`；`shop_ladder`/`species_change` 看 `merge_why`（不是「更高级/更华丽」）。形变链允许换包装/容器，但必须说得出「两件同级合成后为何变成这一件」。
+1. 同店/同域吗？家族基因（色相/题材）锁住了吗？过程类型（`MERGE_MULTI_LENS` §8）认对了吗？对标档序写了吗？  
+2. 有没有回退到更低档物件类？（含「框架封皮」看起来像降级成无关简陋物）  
+3. 有没有缺过渡的大跳档？有没有把另链地标/城堡焊进末档？  
+4. 缩略图（约 64px）相邻档能分清吗？L1 是否过满、犒赏材质是否过早？  
+5. 升级理由具体吗？轻门/`same_object` 看 `parts_add`；`shop_ladder`/`species_change` 看 `merge_why`（不是「更高级/更华丽」）。形变链允许换包装/容器，但必须说得出「两件同级合成后为何变成这一件」，且最好能倒推。
 
 ### 机读 yaml
 
@@ -124,7 +133,7 @@ python3 pmem_art.py converge discuss --round <稿次> --prompt "<链型+N行>" -
 `scale_pct` 单调递增（建议 L1 ≥ 0.58，L8 ≤ 0.80；机读下限约 0.55 / 上限约 0.82）。
 
 ```bash
-python pmem_art.py merge relation-judge --file <yaml> --all
+pyw -3 -u pmem_art.py merge relation-judge --file <yaml> --all
 ```
 
 **exit 0 才能出图。** 旧 canonical（无 `chain_mode`、八行、`parts_add`）仍应能过轻门。写成副本时不要改掉这份 canonical 里已有的 track。
@@ -133,32 +142,34 @@ python pmem_art.py merge relation-judge --file <yaml> --all
 
 ## 出图
 
-### `delivery=per_cell`（无整表信号时的默认）
+### `delivery=overview_sheet`（默认）
 
-关系过了 → 每一档单独出一张正方形 → `merge audit` → 可选 `normalize` 后再跑一次 audit → 第二段 converge（最多 4 轮，≥9.5）。  
-同框不是交货（同框整梯只作体量预览）。每档首轮仍过 reasonableness review。不要把参考图文件垫进生图；不垫对方模型成图做「公平对比」。
-
-### `delivery=overview_sheet`
-
-关系过了 → **单次**生成整表：
-- 有整表格子参考：垫该参考，行列与白卡深底跟参考一致；格内换题材。
+关系过了 → **单次**生成整表一组：
+- 无参考：默认 `levels=8`，常见 `grid_rows×grid_cols = 2×4`（或其他与档数匹配的整齐排法）；白卡深底或纯深底整表均可，写进表面句并锁住。
+- 有整表格子参考：垫该参考，行列与白卡深底跟参考一致；格内换题材；`levels` 跟格数。
 - 有多张 L1：可垫 L1 锁第 1 列 / 各行首格。
 - 按五问+链表验收。失败只改提示词重出，**累计 ≤ 3 次**；满 3 次停止并列出缺陷。  
 禁止整表抠格当逐格成品。多模型对比时禁止把 A 模型整表垫进 B 模型参考。
+
+### `delivery=per_cell`（仅玩家点名逐格）
+
+关系过了 → 每一档单独出一张正方形 → `merge audit` → 可选 `normalize` 后再跑一次 audit → 第二段 converge（最多 4 轮，≥9.5）。  
+同框不是交货（同框整梯只作体量预览）。每档首轮仍过 reasonableness review。不要把参考图文件垫进生图；不垫对方模型成图做「公平对比」。
 
 ## 第二段 · 美术（仅 per_cell）
 
 最多 4 轮，≥9.5。表面句原样保留。关系散了或 audit 不过，美术分再高也不算过。
 
 ```bash
-python pmem_art.py merge audit --dir <目录> --phase1 <yaml> --track <域名>
+pyw -3 -u pmem_art.py merge audit --dir <目录> --phase1 <yaml> --track <域名>
 ```
 
-`converge generate` / `judge` / `finish` 记账。
+`converge generate` / `judge` / `finish` 记账。默认整表用 overview 验收；点名 `per_cell` 才走本段 audit 闭环。
 
 ## 禁止
 
 - 没过 `relation-judge` / 五问就出图。
+- **未点名逐格却默认走 `per_cell` 单张狂刷**（merge / 一组 / 合成梯默认必须整表）。
 - 有整表格子参考或「一起出」却走 `per_cell` 逐格狂刷。
 - 有整表参考却不数行列、不垫参考、硬做成默认 8 档。
 - 「一组 X」未说同模加零件却默认 `same_object` 焊单母体。

@@ -16,21 +16,21 @@ description: 【进阶/可选】进步、短板与知识卡（日常已静默写
 
 ## 进步
 ```bash
-python3 pmem_art.py improve run
-python3 pmem_art.py progress
-python3 pmem_art.py taste show
+pyw -3 -u pmem_art.py improve run
+pyw -3 -u pmem_art.py progress
+pyw -3 -u pmem_art.py taste show
 ```
 
 ## 短板
 ```bash
-python3 pmem_art.py coach
-python3 pmem_art.py progress
+pyw -3 -u pmem_art.py coach
+pyw -3 -u pmem_art.py progress
 ```
 红线加会话反思，收成构图、光影、解剖、九宫格等短板，给下一张该练什么。
 
 ## 知识
 ```bash
-python3 pmem_art.py learn suggest
-python3 pmem_art.py learn list
+pyw -3 -u pmem_art.py learn suggest
+pyw -3 -u pmem_art.py learn list
 ```
-只列出建议。玩家明确说「收下」或「写入」之后，才运行 `python3 pmem_art.py learn accept`。禁止自动 `accept --all`。
+只列出建议。玩家明确说「收下」或「写入」之后，才运行 `pyw -3 -u pmem_art.py learn accept`。禁止自动 `accept --all`。

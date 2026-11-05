@@ -39,8 +39,8 @@
 ```bash
 # 解压 pmem-art-0.16.3-art.zip 后
 pip install -r requirements.txt
-python3 pmem_art.py init --name "MyArtProject"
-python3 pmem_art.py skills --install
+pyw -3 -u pmem_art.py init --name "MyArtProject"
+pyw -3 -u pmem_art.py skills --install
 ```
 
 开发仓克隆：
@@ -49,8 +49,8 @@ python3 pmem_art.py skills --install
 git clone https://github.com/mry-ship/pmem-art.git
 cd pmem-art
 pip install -r requirements.txt
-python3 pmem_art.py init --name "MyArtProject"
-python3 pmem_art.py skills --install
+pyw -3 -u pmem_art.py init --name "MyArtProject"
+pyw -3 -u pmem_art.py skills --install
 ```
 
 Runtime: `pillow`, `numpy`, `pyyaml`. Tests: `pytest`（见 `pytest.ini`，`testpaths=tests`）。
@@ -61,7 +61,7 @@ Runtime: `pillow`, `numpy`, `pyyaml`. Tests: `pytest`（见 `pytest.ini`，`test
 | :--- | :--- |
 | 空项目 / 用户包 | `init` → `skills --install` |
 | 已有美术目录（不乱移文件） | `bootstrap --mode legacy --roots Art assets` → `accept --all` → `skills --install` |
-| 只刷新技能 | `python3 pmem_art.py skills --install` |
+| 只刷新技能 | `pyw -3 -u pmem_art.py skills --install` |
 
 ---
 
@@ -117,7 +117,7 @@ Runtime: `pillow`, `numpy`, `pyyaml`. Tests: `pytest`（见 `pytest.ini`，`test
 ### 看图工作台（art-atlas）
 
 ```bash
-python3 pmem_art.py atlas
+pyw -3 -u pmem_art.py atlas
 ```
 
 终端会打印本机地址（端口按项目自动分配，多开时不会互抢，例如 `http://127.0.0.1:27913/art-atlas.html`）。**请用打印出的 http 链接打开**，或双击根目录「打开工作台.cmd」（不要只双击本地 `art-atlas.html`：`file://` 下删除/定位常被浏览器拦住；也不要假定永远是 27865）。
@@ -261,8 +261,8 @@ python3 pmem_art.py atlas
 你也可以随口沉淀：
 
 ```bash
-python3 pmem_art.py feedback "太赛博了，别这样画" -m character.Astra
-python3 pmem_art.py feedback "这版留着" -m character.Astra -a path/to/keep.png
+pyw -3 -u pmem_art.py feedback "太赛博了，别这样画" -m character.Astra
+pyw -3 -u pmem_art.py feedback "这版留着" -m character.Astra -a path/to/keep.png
 ```
 
 下次再画同角色 / 同场景，Agent 会先翻这些记录，少重复翻车。细节见 [USER_MANUAL.md](USER_MANUAL.md)。

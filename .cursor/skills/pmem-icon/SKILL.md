@@ -75,7 +75,7 @@ description: 仅当玩家点名图标，或生图分流判成桌面图标、SVG 
 ### 二之三、Mode C：游戏道具透明底栅格图标（64/128/256px PNG，非 SVG）
 若用户要的是 **游戏道具栅格图标**：先锁「线宽/圆角/色板/投影」style-spec，再批量生成透明底 PNG。关键单枚用 `converge` 跑最多 4 轮，合格线 ≥9.5。关键枚首轮 generate 前：
 ```bash
-python3 pmem_art.py reasonableness review --id <session> --skill icon.c \
+pyw -3 -u pmem_art.py reasonableness review --id <session> --skill icon.c \
   --draft "<草稿>" --revised "<厚剪影+透明底+棚拍光+无字的修订句>" \
   --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;silhouette_read=ok;transparent_friendly=ok"
 ```
@@ -105,8 +105,8 @@ icons/
 ### Step 5：关键图标 4轮9.5 收敛（可选）
 用户点名某枚「不对」或一致性审查不通过时，每一轮垫最初的风格参考或 style-spec 样张，不垫上一轮成图：
 ```bash
-python3 pmem_art.py converge start --goal "图标 <name> 对齐 style-spec" --module brand.WorldStyle
-python3 pmem_art.py reasonableness review --id <session> --skill icon.b \
+pyw -3 -u pmem_art.py converge start --goal "图标 <name> 对齐 style-spec" --module brand.WorldStyle
+pyw -3 -u pmem_art.py reasonableness review --id <session> --skill icon.b \
   --draft "<草稿>" --revised "<线宽/端点/清单写清的修订句>" \
   --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;stroke_consistency=ok"
 # 生成 → 自评 → converge generate / converge judge → finish
@@ -114,8 +114,8 @@ python3 pmem_art.py reasonableness review --id <session> --skill icon.b \
 
 ### Step 6：沉淀
 ```bash
-python3 pmem_art.py feedback "图标集 style-spec：<preset+stroke+grid摘要>" --module brand.WorldStyle --kind art_decision
-python3 pmem_art.py ingest icons/preview.html -p "icon set preview" --apply   # 若适用
+pyw -3 -u pmem_art.py feedback "图标集 style-spec：<preset+stroke+grid摘要>" --module brand.WorldStyle --kind art_decision
+pyw -3 -u pmem_art.py ingest icons/preview.html -p "icon set preview" --apply   # 若适用
 ```
 
 ## 二之二、Mode A：App Icon 1024×1024 母版专项（iOS App Store / Android Adaptive 桌面启动图标）
@@ -146,14 +146,14 @@ python3 pmem_art.py ingest icons/preview.html -p "icon set preview" --apply   # 
 5. **色板纯粹（15%）**：70-20-10；没有口号、小字、杂物。
 
 ```bash
-python3 pmem_art.py converge start --session appicon --module brand.WorldStyle --scale high --goal "iOS 1024x1024 App Icon: 青瓷质感记账应用，中心单枚立体青釉金币流光符号"
-python3 pmem_art.py reasonableness review --id appicon --skill icon.a \
+pyw -3 -u pmem_art.py converge start --session appicon --module brand.WorldStyle --scale high --goal "iOS 1024x1024 App Icon: 青瓷质感记账应用，中心单枚立体青釉金币流光符号"
+pyw -3 -u pmem_art.py reasonableness review --id appicon --skill icon.a \
   --draft "<草稿>" --revised "<单符号+72%-80%安全区+满幅直角无字的修订句>" \
   --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;safe_zone=ok;single_symbol=ok;full_bleed_no_round_mask=ok"
 
 **App Icon 多维透镜（通用·商店栅格，不只材质）**：明细见 `docs/APPICON_MULTI_LENS.md`——①**栅格体验**：并排可停、剪影答品类、单记忆点；②**小尺寸**：60/29px 去色仍认，夸张体块，禁密纹理认人；③**符号权重**：P0 英雄撑满 >> P1 附件 >> P2 底衬，禁字/第二英雄；④**画幅**：满幅直角 + 72%–80% 安全区，英雄尽量撑满，忌小物漂浮大留白；⑤**色**：底衬对比服务主体（冷暖对立），70/20/10，禁花底抢戏；⑥**光材质**：一主光，形先于质；⑦**风格**：与产品同品类渲染，但是特写符号不是缩略海报。对标真上架图标，禁止垫像素抄脸。空喊「高级」却剪影糊/棚拍留白 → 识别度或安全区 <8.0 不能停。
-python3 pmem_art.py converge generate --session appicon --round 1 --image app_icon_r1.png
-python3 pmem_art.py converge judge --session appicon --round 1 --image app_icon_r1.png \
+pyw -3 -u pmem_art.py converge generate --session appicon --round 1 --image app_icon_r1.png
+pyw -3 -u pmem_art.py converge judge --session appicon --round 1 --image app_icon_r1.png \
   --dims "识别度9.6/安全区9.7/光影质感9.5/多尺寸合规9.6/色板纯粹9.7"
 ```
 Mode C 关键枚同理：`--skill icon.c`，修订句须含透明底与厚剪影。

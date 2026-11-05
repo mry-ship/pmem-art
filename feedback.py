@@ -7,9 +7,11 @@ pmem-art feedback: 把画师在 Cursor 对话里说的自然语言反馈，自�
 
 画师不需要手写 YAML；Agent 或你自己只要把原话丢给：
   python3 pmem_art.py feedback "太赛博了，别这样画" --module character.Astra --asset assets/...
+  （Windows 安装后会改成 pyw -3 -u；运行时报错提示也会按本机改写）
 """
 from __future__ import annotations
 
+from art_cli import pmem_art_cli
 import hashlib
 import json
 import re
@@ -465,7 +467,7 @@ def cmd_feedback(
         silent = False
     text = (text or "").strip()
     if not text:
-        print("❌ 请传入画师原话，例如：python3 pmem_art.py feedback \"太赛博了，别这样画\" --module character.Astra")
+        print(f"❌ 请传入画师原话，例如：{pmem_art_cli()} feedback \"太赛博了，别这样画\" --module character.Astra")
         return 1
 
     detected = kind or detect_kind(text)

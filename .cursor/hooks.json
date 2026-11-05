@@ -8,8 +8,13 @@
         "failClosed": false
       },
       {
+        "command": "pyw -3 -u art_shell_hook.py",
+        "matcher": "Shell",
+        "failClosed": false
+      },
+      {
         "command": "pmemw hook pre-tool",
-        "matcher": "Write|StrReplace|Edit|MultiEdit|EditNotebook|Delete|Shell|MCP|record_memory|search_memory",
+        "matcher": "Write|StrReplace|Edit|MultiEdit|EditNotebook|Delete|MCP|record_memory|search_memory",
         "failClosed": false
       }
     ],
@@ -17,45 +22,17 @@
       {
         "command": "pyw -3 -u pmem_art.py hook post-asset",
         "matcher": "GenerateImage"
-      },
-      {
-        "command": "pmemw hook post-tool",
-        "matcher": "Read|Grep|Glob|SemanticSearch|codebase_search|Shell"
       }
     ],
     "stop": [
       {
         "command": "pyw -3 -u pmem_art.py hook stop",
         "loop_limit": 8
-      },
-      {
-        "command": "pmemw hook stop",
-        "loop_limit": 1
-      }
-    ],
-    "sessionStart": [
-      {
-        "command": "pmemw hook session"
-      }
-    ],
-    "beforeSubmitPrompt": [
-      {
-        "command": "pmemw hook prompt"
       }
     ],
     "afterMCPExecution": [
       {
         "command": "pmemw hook after-mcp"
-      }
-    ],
-    "afterFileEdit": [
-      {
-        "command": "pmemw hook edited"
-      }
-    ],
-    "preCompact": [
-      {
-        "command": "pmemw hook compact"
       }
     ]
   }

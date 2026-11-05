@@ -949,7 +949,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 
   <div class="reveal-banner" id="revealBanner">
     <span>📁 本地服务未连通：删除/文件夹定位会失败。浏览器不能从 file:// 直接启动 Python——请点「重试连通」下载启动脚本并双击运行，或双击项目里的「打开工作台」脚本。</span>
-    <code>python pmem_art.py atlas</code>
+    <code>python3 pmem_art.py atlas</code>
     <button type="button" class="btn-copy" id="btnRevealRetry" style="padding:3px 9px;font-size:11px;">重试连通</button>
     <button type="button" class="btn-copy" id="btnOpenHttpWorkbench" style="padding:3px 9px;font-size:11px;">用 http 打开</button>
   </div>
@@ -2837,7 +2837,7 @@ async function deleteAssetPaths(paths, { confirmMsg } = {}) {
     downloadDeleteHelper(list.map(absAssetPath));
   } catch (e) {}
   setRevealBanner(false);
-  showToast("垃圾桶服务未连通。已下载脚本；或先 python pmem_art.py atlas，再用 http://127.0.0.1:端口/art-atlas.html 打开");
+  showToast("垃圾桶服务未连通。已下载脚本；或先 python3 pmem_art.py atlas，再用 http://127.0.0.1:端口/art-atlas.html 打开");
   return false;
 }
 
@@ -2849,7 +2849,7 @@ window.openTrashFolder = async function() {
     showToast("♻️ 已打开垃圾桶：把文件挪回原相对路径即可恢复");
     return;
   }
-  showToast("定位服务未连通。请先 python pmem_art.py atlas，再手动打开 .memory-art/_trash/");
+  showToast("定位服务未连通。请先 python3 pmem_art.py atlas，再手动打开 .memory-art/_trash/");
 };
 
 /** 打开教学素材目录（git 跟踪，不可工作台删除） */
@@ -2861,7 +2861,7 @@ window.openTeachFolder = async function() {
     showToast("📁 已打开教学素材：" + base);
     return;
   }
-  showToast("定位服务未连通。请先 python pmem_art.py atlas，再打开 " + base);
+  showToast("定位服务未连通。请先 python3 pmem_art.py atlas，再打开 " + base);
 };
 
 window.deleteSelectedAssets = function() {
@@ -3746,7 +3746,7 @@ window.promoteAsFinal = async function(sourcePath, sessionId, roundNum, finalPat
     round: roundNum
   });
   if (!result || !result.ok) {
-    showToast("设为终稿失败：" + ((result && result.error) || "定位服务未连通，请先 python pmem_art.py atlas"));
+    showToast("设为终稿失败：" + ((result && result.error) || "定位服务未连通，请先 python3 pmem_art.py atlas"));
     return;
   }
   const fp = result.final_path;
@@ -4448,7 +4448,7 @@ async function connectOrOfferWorkbenchLauncher() {
   showToast("未连通。已下载「启动工作台服务」脚本——请双击运行；我会在后台继续探测…");
   port = await waitForRevealBridge(45000, 1200);
   if (!port) {
-    showToast("仍未连通。请双击刚下载的启动脚本，或运行 python pmem_art.py atlas");
+    showToast("仍未连通。请双击刚下载的启动脚本，或运行 python3 pmem_art.py atlas");
     return 0;
   }
   showToast("已连通 · 端口 " + port);
@@ -4862,6 +4862,8 @@ def generate_atlas_html(data: dict[str, Any], out_path: Path) -> Path:
         .replace("__BUILD_ID__", html.escape(build_id))
         .replace("__ATLAS_JSON__", json_str)
     )
+    from art_cli import rewrite_cli_invocations
+    html_out = rewrite_cli_invocations(html_out)
     out_path.write_text(html_out, encoding="utf-8", newline="\n")
     try:
         write_workbench_launchers(root)

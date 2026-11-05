@@ -33,7 +33,7 @@ description: 总控：一轮审核，确定就执行（pmem-art）
 ### 0.2 再跑本地 route
 
 ```bash
-python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>"
+pyw -3 -u pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>"
 ```
 
 有附图时加 `--image <路径>`（可多次）；有身份/结构分工时加 `--role identity` / `--role structure`（与 `--image` 顺序对齐）。Agent 自用加 `--json`；**给美术看时只用输出里的 `artist_say`**（或 `route --brief`），禁止把 confidence / neighbors / json 刷给画师。
@@ -85,7 +85,7 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 
 局部修、设定表、分镜、姿势锁、同一场景换光、画幅延展、放大清稿、序列帧、平铺贴图、带字主视觉、字标、色板点选、情绪板，注册表里没有这些节。对不上就写「没有识别到可用技能」，停，不开始出图，也不改走普通图。不另编一节。透明底、表情表、拼板、远中近、镜头包点选后的机位、审完再改，落在已有的普通图、变体、多图分工、镜头包、审图那几行里，不新开技能。
 
-命中之后，在该文件里查找这一行的 `heading`。标题里的反引号可以忽略，文字对上即可。找不到，注册表过期：停，写明要跑 `python3 pmem_art.py skills --install`，不用过期的那一行出图。
+命中之后，在该文件里查找这一行的 `heading`。标题里的反引号可以忽略，文字对上即可。找不到，注册表过期：停，写明要跑 `pyw -3 -u pmem_art.py skills --install`，不用过期的那一行出图。
 
 对上之后先写步骤表，再执行。步骤表是告知，不再开一轮点选。简单任务一行，写完就执行。每一步只走一支。下一步拿上一步交出来的图。上一步没做完，下一步不开始。每一行写全这六样，缺一样这步不能开始：
 
@@ -93,7 +93,7 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 2. 这一步交什么
 3. 垫哪张，不垫哪张
 4. 锁什么
-5. 怎样算做完（生图步：≥9.5 或满 4 轮；展陈 HTML 还要 `python3 pmem_art.py showcase-gate --html <路径>` 通过）
+5. 怎样算做完（生图步：≥9.5 或满 4 轮；展陈 HTML 还要 `pyw -3 -u pmem_art.py showcase-gate --html <路径>` 通过）
 6. 交给下一步什么
 
 回显以 `route` 的 `banner` 为准（最前一行）。例如「【按 多图分工 走了】」「【走默认路径】按 普通图 走了」「【按 Mode A 走了】」。这句只说明选了哪一节，不问选哪条技能。

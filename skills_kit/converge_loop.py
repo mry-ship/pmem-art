@@ -1,6 +1,7 @@
 """Force the generate → judge → next-round loop without relying on agent memory."""
 from __future__ import annotations
 
+from .platform_cli import pmem_art_cli
 import json
 from pathlib import Path
 from typing import Any
@@ -151,7 +152,7 @@ def loop_followup(root: Path, session_id: str = "") -> dict[str, str] | None:
             "session_id": sid,
             "message": (
                 f"第 {rno} 轮还没审图，不能停。先看图打六维，再运行："
-                f"`python pmem_art.py converge judge --id {sid} --round {rno} "
+                f"`{pmem_art_cli()} converge judge --id {sid} --round {rno} "
                 f"--image \"{image}\" --dims \"构图x/光影x/透视x/质感x/风格x/无瑕疵x\" "
                 f"--defects \"...\" --next-fix \"...\"`"
             ),
@@ -178,7 +179,7 @@ def loop_followup(root: Path, session_id: str = "") -> dict[str, str] | None:
             "reason": "need_finish",
             "session_id": sid,
             "message": (
-                f"这一格可以结算了。运行 `python pmem_art.py converge finish --id {sid}`，"
+                f"这一格可以结算了。运行 `{pmem_art_cli()} converge finish --id {sid}`，"
                 "不要把未审或未满轮的 r1 当成终稿。"
             ),
         }
@@ -189,7 +190,7 @@ def loop_followup(root: Path, session_id: str = "") -> dict[str, str] | None:
         "message": (
             f"第 {n_judged} 轮 {best:.2f} < {th:.2f}，未满 {mr} 轮，不能停。"
             f"必须再出第 {nxt} 轮：GenerateImage → "
-            f"`python pmem_art.py converge generate --id {sid} --round {nxt} --image <path> --prompt \"...\"` "
-            f"→ `python pmem_art.py converge judge --id {sid} --round {nxt} --image <path> --dims ...`。"
+            f"`{pmem_art_cli()} converge generate --id {sid} --round {nxt} --image <path> --prompt \"...\"` "
+            f"→ `{pmem_art_cli()} converge judge --id {sid} --round {nxt} --image <path> --dims ...`。"
         ),
     }

@@ -1,6 +1,7 @@
 """Converge state machine and CLI cmd_converge."""
 from __future__ import annotations
 
+from .platform_cli import pmem_art_cli
 import json
 import os
 import re
@@ -692,7 +693,7 @@ def cmd_converge(
                 print(f"🔍 参考图解构基准: {ref_analysis}")
         print(
             "\n👉 Agent：首轮出图前先过合理性闸 "
-            "`python3 pmem_art.py reasonableness review --id <session> --skill <…> "
+            f"`{pmem_art_cli()} reasonableness review --id <session> --skill <…> "
             "--draft \"…\" --revised \"…\" --checklist \"…\"`（必须同时交出更合理的提示词）；"
             "再 `converge generate`（仅生图，不打分），然后 `converge judge`。"
         )
@@ -701,7 +702,7 @@ def cmd_converge(
     if not sf.exists():
         print(
             f"❌ 未找到收敛会话 `{session_id}`。请先显式启动：\n"
-            f"   python3 pmem_art.py converge start --id {session_id} "
+            f"   {pmem_art_cli()} converge start --id {session_id} "
             f"[--goal ...] [--module brand.WorldStyle] [--ref-image ...] [--scale medium]"
         )
         return 1
@@ -767,8 +768,8 @@ def cmd_converge(
         print(
             "❌ [架构隔离拦截] 已禁用单次合并调用 `converge step`（禁止在同一调用/同一回合内同时执行生图与自我打分）！\n"
             "   👉 请严格分两步调用：\n"
-            "      1) 生图阶段（无打分、无VLM裁判）：`python3 pmem_art.py converge generate --id <id> --round <n> --image <path> --prompt <prompt> [--generate-cmd ...]`\n"
-            "      2) 独立审图阶段（无生成Prompt自评）：`python3 pmem_art.py converge judge --id <id> --round <n> --image <path> --dims <5D> --defects <...> --next-fix <...>`"
+            f"      1) 生图阶段（无打分、无VLM裁判）：`{pmem_art_cli()} converge generate --id <id> --round <n> --image <path> --prompt <prompt> [--generate-cmd ...]`\n"
+            f"      2) 独立审图阶段（无生成Prompt自评）：`{pmem_art_cli()} converge judge --id <id> --round <n> --image <path> --dims <5D> --defects <...> --next-fix <...>`"
         )
         return 1
 
@@ -922,11 +923,11 @@ def cmd_converge(
             _write_session_json(sf, sess)
             print(
                 f"🛑 [动态达标停机拦截] 会话已在第 {p_r['round']} 轮达到 {p_r['score']:.2f} >= {th:.2f} 达标停止，"
-                f"禁止继续生成第 {r_no} 轮！请直接运行 `python3 pmem_art.py converge finish --id {session_id}`。"
+                f"禁止继续生成第 {r_no} 轮！请直接运行 `{pmem_art_cli()} converge finish --id {session_id}`。"
             )
             return 0
         if r_no > mr:
-            print(f"🛑 已超过最大轮次上限 ({mr} 轮)，请直接运行 `python3 pmem_art.py converge finish --id {session_id}` 结算最高分图。")
+            print(f"🛑 已超过最大轮次上限 ({mr} 轮)，请直接运行 `{pmem_art_cli()} converge finish --id {session_id}` 结算最高分图。")
             return 1
 
         eff_ref_img = (ref_image or sess.get("ref_image") or "").strip()
@@ -1179,7 +1180,7 @@ def cmd_converge(
             f"   · 置顶风格指令 Prompt: {composed_prompt}\n"
             f"   · 当前未执行任何自评或 VLM 裁判；请先看图再打六维，不要从 9.3 起跳：\n"
             f"{agent_absolute_5d_judge_prompt(round_num=r_no, max_rounds=mr, scale=str(sess.get('scale') or ''), ref_analysis=str(sess.get('ref_analysis') or ''))}\n"
-            f"   · 然后：`python3 pmem_art.py converge judge --id {session_id} --round {r_no} --image {image} --dims ...`"
+            f"   · 然后：`{pmem_art_cli()} converge judge --id {session_id} --round {r_no} --image {image} --dims ...`"
         )
         return 0
 
@@ -1198,7 +1199,7 @@ def cmd_converge(
         if existing_r is None:
             print(
                 f"❌ [生成与评分隔离拦截] 第 {r_no} 轮尚无 `converge generate` 记录，禁止直接 `judge`/`round`。\n"
-                f"   👉 请先：`python3 pmem_art.py converge generate --id {session_id} --round {r_no} --image <path> --prompt <prompt>`"
+                f"   👉 请先：`{pmem_art_cli()} converge generate --id {session_id} --round {r_no} --image <path> --prompt <prompt>`"
             )
             return 1
         trace = existing_r.get("step_trace") or []
@@ -1228,11 +1229,11 @@ def cmd_converge(
             _write_session_json(sf, sess)
             print(
                 f"🛑 [动态达标停机拦截] 会话已在第 {p_r['round']} 轮达到 {p_r['score']:.2f} >= {th:.2f} 达标停止，"
-                f"禁止继续执行第 {r_no} 轮！请直接运行 `python3 pmem_art.py converge finish --id {session_id}`。"
+                f"禁止继续执行第 {r_no} 轮！请直接运行 `{pmem_art_cli()} converge finish --id {session_id}`。"
             )
             return 0
         if r_no > mr:
-            print(f"🛑 已超过最大轮次上限 ({mr} 轮)，请直接运行 `python3 pmem_art.py converge finish --id {session_id}` 结算最高分图。")
+            print(f"🛑 已超过最大轮次上限 ({mr} 轮)，请直接运行 `{pmem_art_cli()} converge finish --id {session_id}` 结算最高分图。")
             return 1
 
         prev_sc = None
@@ -1523,7 +1524,7 @@ def cmd_converge(
             msg = (
                 f"✅ [Step 2B · 六维审图 · {src_badge}] 第 {r_no} 轮得分 {score:.2f} >= 目标阈值 {th:.2f}（经过 {r_no} 轮迭代达标停止）！\n"
                 f"   · 图像校验: {v_badge} | 六维: {judge_res['dims']}\n"
-                f"   · ready_to_finish = True，请运行 `python3 pmem_art.py converge finish --id {session_id}` 完成定稿。"
+                f"   · ready_to_finish = True，请运行 `{pmem_art_cli()} converge finish --id {session_id}` 完成定稿。"
             )
         elif skip_ahead and sess.get("draft_ok"):
             sess["status"] = "fast_soft_accept"
@@ -1543,7 +1544,7 @@ def cmd_converge(
                 f"🛑 [安全早停 · {early_safe_stop}] 第 {r_no}/{mr} 轮得分 {score:.2f}，"
                 f"后半程掉分/平台，停止继续糊化。\n"
                 f"   · 保底最高分：第 {best.get('round')} 轮 ({best.get('score'):.2f} 分: {best.get('image')})。\n"
-                f"   · 请运行 `python3 pmem_art.py converge finish --id {session_id}` 结算。"
+                f"   · 请运行 `{pmem_art_cli()} converge finish --id {session_id}` 结算。"
             )
         elif r_no >= mr:
             best = max([r for r in rounds if r.get("score") is not None], key=lambda x: x["score"])
@@ -1553,7 +1554,7 @@ def cmd_converge(
             msg = (
                 f"🏁 第 {r_no}/{mr} 轮得分 {score:.2f} < {th:.2f}，已满 {mr} 轮上限！\n"
                 f"   · 全阶段最高分为第 {best['round']} 轮 ({best['score']:.2f} 分: {best['image']})。\n"
-                f"   · 请立即运行 `python3 pmem_art.py converge finish --id {session_id}` 结算（默认写记忆并打印评分履历；只要一行结论加 `--quiet`）。"
+                f"   · 请立即运行 `{pmem_art_cli()} converge finish --id {session_id}` 结算（默认写记忆并打印评分履历；只要一行结论加 `--quiet`）。"
             )
         else:
             sess["status"] = "continue"

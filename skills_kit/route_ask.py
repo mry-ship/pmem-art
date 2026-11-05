@@ -168,7 +168,7 @@ def artist_detail_for(plan: Plan | None, *, route_ids: list[str] | None = None) 
         "icon.a": "按桌面启动图标（1024 母版）来做。",
         "icon.b": "按线性 SVG 图标套装来做。",
         "icon.c": "按背包道具格透明底图标来做。",
-        "merge.ladder": "按合成梯：先说清升级关系，再一档一张正方形。",
+        "merge.ladder": "按合成梯：先说清升级关系，再默认整表一组出齐（通常 8 档）。",
         "style.lock": "先锁风格/色板，这步不生图。",
         "critique.review": "只审图，不生图。",
         "atlas.file": "整理散图归档，不生图。",

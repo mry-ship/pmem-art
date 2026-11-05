@@ -9,15 +9,15 @@ description: 当用户输入 /pmem-atlas 时触发。自动扫描归位未分类
 
 1. **扫描未归档新图**：
    ```bash
-   python3 pmem_art.py classify-watch
+   pyw -3 -u pmem_art.py classify-watch
    ```
    汇报有哪些散图待归档（若用户同意，加 `--apply` 自动归位）。
 2. **模块与记忆总览**：
    ```bash
-   python3 pmem_art.py list
+   pyw -3 -u pmem_art.py list
    ```
 3. **重新编译单文件交互式图谱**：
    ```bash
-   python3 pmem_art.py atlas
+   pyw -3 -u pmem_art.py atlas
    ```
    告知用户可随时双击项目根目录的 `art-atlas.html` 检视正反例滑杆与配方卡。

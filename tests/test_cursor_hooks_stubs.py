@@ -82,6 +82,56 @@ class TestCursorHooksStubs(unittest.TestCase):
         with mock.patch("lifecycle.sys.platform", "darwin"):
             self.assertEqual(_hook_python_prefix(), "python3")
 
+    def test_windows_adds_pre_shell_rewriter(self) -> None:
+        from lifecycle import ensure_cursor_stubs
+
+        td = Path(tempfile.mkdtemp(prefix="pmem_hooks_preshell_"))
+        with mock.patch("lifecycle.sys.platform", "win32"):
+            with mock.patch.dict(sys.modules, {"skills_kit": mock.MagicMock()}):
+                ensure_cursor_stubs(td)
+        hooks = json.loads((td / ".cursor" / "hooks.json").read_text(encoding="utf-8"))["hooks"]
+        shell_hooks = [
+            h for h in hooks["preToolUse"] if h.get("matcher") == "Shell"
+        ]
+        self.assertEqual(len(shell_hooks), 1)
+        self.assertIn("art_shell_hook.py", shell_hooks[0]["command"])
+        self.assertTrue(shell_hooks[0]["command"].startswith("pyw"))
+
+    def test_windows_strips_shell_from_pmem_pretool_matcher(self) -> None:
+        from lifecycle import ensure_cursor_stubs
+
+        td = Path(tempfile.mkdtemp(prefix="pmem_hooks_noshell_"))
+        cursor = td / ".cursor"
+        cursor.mkdir(parents=True)
+        (cursor / "hooks.json").write_text(
+            json.dumps(
+                {
+                    "version": 1,
+                    "hooks": {
+                        "preToolUse": [
+                            {
+                                "command": "pmemw hook pre-tool",
+                                "matcher": "Write|Shell|MCP|search_memory",
+                                "failClosed": False,
+                            }
+                        ],
+                    },
+                },
+                ensure_ascii=False,
+                indent=2,
+            )
+            + "\n",
+            encoding="utf-8",
+        )
+        with mock.patch("lifecycle.sys.platform", "win32"):
+            with mock.patch.dict(sys.modules, {"skills_kit": mock.MagicMock()}):
+                ensure_cursor_stubs(td)
+        hooks = json.loads((cursor / "hooks.json").read_text(encoding="utf-8"))["hooks"]
+        pre = [h for h in hooks["preToolUse"] if "pmemw hook pre-tool" in h["command"]][0]
+        self.assertNotIn("Shell", pre["matcher"])
+        self.assertIn("Write", pre["matcher"])
+        self.assertIn("MCP", pre["matcher"])
+
     def test_rewrites_python3_art_launcher_to_pyw_on_windows(self) -> None:
         from lifecycle import ensure_cursor_stubs
 

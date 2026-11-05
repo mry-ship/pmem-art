@@ -1,6 +1,7 @@
 """Build the skill route index from SKILL_SPECS. Disk skills that were not installed are ignored."""
 from __future__ import annotations
 
+from .platform_cli import pmem_art_cli
 import json
 import re
 from pathlib import Path
@@ -24,7 +25,7 @@ _ONE_SECTION = {
     "pmem-atlas": ("atlas.file", "散图归位"),
     "pmem-coach": ("coach.report", "要看进步、短板、知识卡"),
     "pmem-prompt": ("prompt.write", "要写提示词、扩写 brief"),
-    "pmem-merge-ladder": ("merge.ladder", "同域升级梯默认八档可六档"),
+    "pmem-merge-ladder": ("merge.ladder", "同域升级梯默认整表一组八档；点名数量或参考跟格数"),
     "pmem-ui": ("ui.kit", "整屏、HUD、弹窗套件、九宫格、按钮状态"),
 }
 
@@ -271,7 +272,7 @@ def render_registry_md(reg: dict[str, Any]) -> str:
     lines = [
         "# 技能注册表",
         "",
-        f"来源：`{reg['source']}`。生成：`python3 pmem_art.py skills --install`。",
+        f"来源：`{reg['source']}`。生成：`{pmem_art_cli()} skills --install`。",
         "",
     ]
     if not reg.get("frontmatter_ok", True):
@@ -285,7 +286,7 @@ def render_registry_md(reg: dict[str, Any]) -> str:
     lines.append("")
     lines.append("## 路由")
     lines.append("")
-    lines.append("执行以 `python3 pmem_art.py route` 的 `route_ids` 为准。这张表只核对 heading。phase 是查阅顺序，不要用它改判。普通图 phase 最大，只作兜底。")
+    lines.append(f"执行以 `{pmem_art_cli()} route` 的 `route_ids` 为准。这张表只核对 heading。phase 是查阅顺序，不要用它改判。普通图 phase 最大，只作兜底。")
     lines.append("")
     lines.append("| id | phase | when | skill | heading | routable |")
     lines.append("| :--- | :--- | :--- | :--- | :--- | :--- |")

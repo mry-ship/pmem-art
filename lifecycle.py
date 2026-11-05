@@ -5,6 +5,7 @@ Guarantees a mountable memory workflow that is never fully blind magic — auto-
 """
 from __future__ import annotations
 
+from art_cli import pmem_art_cli
 import fnmatch
 import json
 import re
@@ -567,9 +568,14 @@ def write_config_yaml(root: Path, config: dict) -> Path:
 
 def _hook_python_prefix() -> str:
     """Cursor 经 PowerShell 起 Hook：Windows 用 pyw（无黑框、系统路径稳）；禁止 || / .cmd。"""
-    if sys.platform == "win32":
-        return "pyw -3 -u"
-    return "python3"
+    try:
+        from art_cli import cli_python_prefix
+
+        return cli_python_prefix()
+    except Exception:
+        if sys.platform == "win32":
+            return "pyw -3 -u"
+        return "python3"
 
 
 def _is_pmem_rd_hook_command(command: str) -> bool:
@@ -589,16 +595,38 @@ def _is_pmem_rd_hook_command(command: str) -> bool:
 
 
 def _is_pmem_art_hook_command(command: str) -> bool:
-    return "pmem_art.py" in str(command or "") and "hook" in str(command or "")
+    cmd = str(command or "")
+    if "art_shell_hook.py" in cmd:
+        return True
+    return "pmem_art.py" in cmd and "hook" in cmd
 
 
 def _rewrite_art_hook_command(command: str, py: str) -> str:
     """把 python3/pythonw/py -3 等 art hook 启动器统一成当前平台前缀。"""
     cmd = str(command or "").strip()
+    if "art_shell_hook.py" in cmd:
+        return f"{py} art_shell_hook.py"
     m = re.search(r"pmem_art\.py\s+hook\s+(\S+)", cmd)
     if not m:
         return cmd
     return f"{py} pmem_art.py hook {m.group(1)}"
+
+
+def _strip_shell_from_pmem_pretool(item: dict[str, Any]) -> dict[str, Any]:
+    """Windows 上 converge/出图大量走 Shell+python，pmem 再匹配 Shell 会每条命令闪一次。
+    闸门仍拦 Write/Edit/MCP；Shell 改文件靠事后核对或人工。"""
+    if sys.platform != "win32":
+        return item
+    cmd = str(item.get("command") or "")
+    if not _is_pmem_rd_hook_command(cmd) or "pre-tool" not in cmd:
+        return item
+    matcher = str(item.get("matcher") or "")
+    if "Shell" not in matcher:
+        return item
+    parts = [p for p in matcher.split("|") if p and p != "Shell"]
+    out = dict(item)
+    out["matcher"] = "|".join(parts)
+    return out
 
 
 def _merge_cursor_hook_list(
@@ -616,7 +644,7 @@ def _merge_cursor_hook_list(
         if _is_pmem_art_hook_command(cmd):
             continue
         if _is_pmem_rd_hook_command(cmd):
-            kept.append(dict(raw))
+            kept.append(_strip_shell_from_pmem_pretool(dict(raw)))
             continue
         # 未知第三方 hook 也保留，避免误删
         if cmd.strip():
@@ -629,6 +657,8 @@ def _merge_cursor_hook_list(
         if _is_pmem_art_hook_command(cmd):
             item = dict(item)
             item["command"] = _rewrite_art_hook_command(cmd, py)
+        elif _is_pmem_rd_hook_command(cmd):
+            item = _strip_shell_from_pmem_pretool(dict(item))
         fixed.append(item)
     return fixed
 
@@ -641,14 +671,25 @@ def ensure_cursor_stubs(root: Path) -> None:
     # stop 必须保留：出图后 followup_message 才能把闭环审图拉回对话。
     # 已有 pmemw/pmem/.memory/bin/pmem-hook 闸门时合并保留，禁止整文件覆盖。
     py = _hook_python_prefix()
-    art_hooks = {
-        "preToolUse": [
+    pre_tool_items: list[dict[str, Any]] = [
+        {
+            "command": f"{py} pmem_art.py hook pre-gen",
+            "matcher": "GenerateImage",
+            "failClosed": False,
+        }
+    ]
+    # Windows：强制把 Shell 里的 python/python3 改成 pyw，否则 Agent 照抄旧习惯仍疯狂弹窗。
+    # 用独立 art_shell_hook.py（只依赖 art_cli），禁止走 pmem_art.py（冷启动太慢）。
+    if sys.platform == "win32":
+        pre_tool_items.append(
             {
-                "command": f"{py} pmem_art.py hook pre-gen",
-                "matcher": "GenerateImage",
+                "command": f"{py} art_shell_hook.py",
+                "matcher": "Shell",
                 "failClosed": False,
             }
-        ],
+        )
+    art_hooks = {
+        "preToolUse": pre_tool_items,
         "postToolUse": [
             {
                 "command": f"{py} pmem_art.py hook post-asset",
@@ -687,7 +728,9 @@ def ensure_cursor_stubs(root: Path) -> None:
                 item = dict(raw)
                 item["command"] = _rewrite_art_hook_command(cmd, py)
                 kept.append(item)
-            elif _is_pmem_rd_hook_command(cmd) or cmd.strip():
+            elif _is_pmem_rd_hook_command(cmd):
+                kept.append(_strip_shell_from_pmem_pretool(dict(raw)))
+            elif cmd.strip():
                 kept.append(dict(raw))
         if kept:
             merged[key] = kept
@@ -703,11 +746,47 @@ def ensure_cursor_stubs(root: Path) -> None:
         + "\n",
         encoding="utf-8",
     )
+    _rewrite_codex_art_hook_launchers(root / ".codex" / "hooks.json", py=py)
     try:
         from skills_kit import install_skills_and_agent_configs
         install_skills_and_agent_configs(root, quiet=True)
     except Exception as exc:
         print(f"⚠️ 安装技能包时出现警告: {exc}")
+
+
+def _rewrite_codex_art_hook_launchers(path: Path, *, py: str) -> None:
+    """Codex 三层 hooks：把 pmem_art 启动器改成当前平台前缀（Windows=pyw）。"""
+    if not path.exists():
+        return
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return
+    table = data.get("hooks")
+    if not isinstance(table, dict):
+        return
+    changed = False
+    for groups in table.values():
+        if not isinstance(groups, list):
+            continue
+        for group in groups:
+            if not isinstance(group, dict) or not isinstance(group.get("hooks"), list):
+                continue
+            for handler in group["hooks"]:
+                if not isinstance(handler, dict):
+                    continue
+                cmd = str(handler.get("command") or "")
+                if not _is_pmem_art_hook_command(cmd):
+                    continue
+                new_cmd = _rewrite_art_hook_command(cmd, py)
+                if new_cmd != cmd:
+                    handler["command"] = new_cmd
+                    changed = True
+    if changed:
+        path.write_text(
+            json.dumps(data, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
 
 
 
@@ -1159,8 +1238,8 @@ def cmd_init(root: Path, project_name: str = "Untitled Art Project", force: bool
             pass
     if mem.exists() and not force and not was_copied:
         print(f"⚠️  已存在 {mem}。若要重建脚手架请加 --force（不会删除已有 entries）。")
-        print("   年轻项目下一步: python3 pmem_art.py bootstrap --mode young")
-        print("   老项目下一步:   python3 pmem_art.py bootstrap --mode legacy")
+        print(f"   年轻项目下一步: {pmem_art_cli()} bootstrap --mode young")
+        print(f"   老项目下一步:   {pmem_art_cli()} bootstrap --mode legacy")
         return 0
 
     config = default_config(eff_name, mode="young")
@@ -1205,8 +1284,8 @@ def cmd_init(root: Path, project_name: str = "Untitled Art Project", force: bool
         "## 工程脚手架（可后做）\n\n"
         "1. `init` 已放入 **scaffold（脚手架）** 模块与 `assets/{brand,character,scene,ui,vfx,anim}/` 空目录。\n"
         "2. 把第一批图拖进对应目录（或任意子文件夹）。\n"
-        "3. 运行 `python3 pmem_art.py sync` → 系统提出 **candidate** 模块（带置信度）。\n"
-        "4. `python3 pmem_art.py candidates` 查看；`accept <module_id>` 确认提升为 **active**。\n"
+        f"3. 运行 `{pmem_art_cli()} sync` → 系统提出 **candidate** 模块（带置信度）。\n"
+        f"4. `{pmem_art_cli()} candidates` 查看；`accept <module_id>` 确认提升为 **active**。\n"
         "5. 可选：`bootstrap --mode young --auto-accept-depth 2` 自动接受前 1–2 层路径为模块。\n"
         "6. 用 `place <文件> --module character.Hero --apply` 把散落文件归位到规范路径。\n"
         "7. 闸门默认 `gate.mode=warn`，直到 `bootstrap` 确认后可改为 `block`。\n"
@@ -1227,7 +1306,7 @@ def cmd_init(root: Path, project_name: str = "Untitled Art Project", force: bool
     print("   认路白话图：docs/route_pipeline.html")
     print("\n保证工作流（非盲目魔法）：")
     print("   落盘 → sync 提议 candidate → accept 一次确认 → search 闸门生效 → record/validate → atlas")
-    print("\n下一步: python3 pmem_art.py bootstrap --mode young")
+    print(f"\n下一步: {pmem_art_cli()} bootstrap --mode young")
     return 0
 
 
@@ -1372,9 +1451,9 @@ def cmd_sync(root: Path, data: dict[str, Any], auto_accept_depth: int | None = N
             print(f"      - {o}")
     if len(orphans) > 10:
         print(f"      … 另有 {len(orphans) - 10} 个")
-    print("\n下一步: python3 pmem_art.py candidates")
-    print("       python3 pmem_art.py accept <module_id>")
-    print("       python3 pmem_art.py place <file> --module <id> --apply")
+    print(f"\n下一步: {pmem_art_cli()} candidates")
+    print(f"       {pmem_art_cli()} accept <module_id>")
+    print(f"       {pmem_art_cli()} place <file> --module <id> --apply")
     return 0
 
 
@@ -1391,8 +1470,8 @@ def cmd_candidates(root: Path) -> int:
         print(f"{c['module_id']:<36} {c.get('confidence', 0):<8} {c.get('file_count', 0):<8} {c.get('folder', '')}")
         for s in (c.get("sample_files") or [])[:3]:
             print(f"   ↳ {s}")
-    print("\n确认: python3 pmem_art.py accept <module_id>")
-    print("全部: python3 pmem_art.py accept --all")
+    print(f"\n确认: {pmem_art_cli()} accept <module_id>")
+    print(f"全部: {pmem_art_cli()} accept --all")
     return 0
 
 
@@ -1602,7 +1681,7 @@ def cmd_bootstrap(root: Path, data: dict[str, Any], mode: str, auto_accept_depth
             print("   2) 新文件 → sync 提议 candidate（带置信度），默认不静默改 modules.yaml")
             print(f"   3) `--auto-accept-depth {auto_accept_depth}` + `--apply` 才自动接受浅层模块")
             print("   4) place 默认 dry-run；加 --apply 才移动文件")
-            print("\n确认脚手架后: python3 pmem_art.py bootstrap --mode young --apply")
+            print(f"\n确认脚手架后: {pmem_art_cli()} bootstrap --mode young --apply")
         return 0
 
     if mode == "legacy":
@@ -1682,11 +1761,11 @@ def cmd_bootstrap(root: Path, data: dict[str, Any], mode: str, auto_accept_depth
         print("   3) place --plan（或 place 默认 dry-run）预览归位；--apply 才执行")
         print("   4) 若发现 StyleGuide/README，仅列入报告，不自动改写记忆")
         print("\n下一步:")
-        print("   python3 pmem_art.py candidates")
-        print("   python3 pmem_art.py accept --all          # 确认提议")
-        print("   python3 pmem_art.py place --plan-orphans  # 预览孤儿归位")
-        print("   python3 pmem_art.py place --plan-orphans --apply  # 确认后执行")
-        print("   python3 pmem_art.py doctor")
+        print(f"   {pmem_art_cli()} candidates")
+        print(f"   {pmem_art_cli()} accept --all          # 确认提议")
+        print(f"   {pmem_art_cli()} place --plan-orphans  # 预览孤儿归位")
+        print(f"   {pmem_art_cli()} place --plan-orphans --apply  # 确认后执行")
+        print(f"   {pmem_art_cli()} doctor")
 
         if apply:
             # Only auto-accept within depth, still never move files
@@ -1917,7 +1996,7 @@ def collect_doctor_summary(root: Path, data: dict[str, Any]) -> dict[str, Any]:
     needs_attention = bool(signals)
     tip_line = None
     if needs_attention:
-        tip_line = "🩺 记忆医生：" + " · ".join(signals[:4]) + "（可 `python3 pmem_art.py doctor`）"
+        tip_line = f"🩺 记忆医生：" + " · ".join(signals[:4]) + "（可 `{pmem_art_cli()} doctor`）"
 
     return {
         "lifecycle_mode": (config.get("project") or {}).get("lifecycle_mode", "?"),

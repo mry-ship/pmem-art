@@ -12,6 +12,7 @@
 """
 from __future__ import annotations
 
+from .platform_cli import pmem_art_cli
 import json
 import re
 import time
@@ -635,7 +636,7 @@ def check_reasonableness_gate(
         return (
             False,
             "出图前缺少已通过的合理性审核。请先：\n"
-            "  python3 pmem_art.py reasonableness review --id <session> "
+            f"  {pmem_art_cli()} reasonableness review --id <session> "
             "--skill <ordinary|keyart|clone|variant|split|ui|icon.a|icon.b|icon.c|merge> "
             "--draft \"<草稿提示词>\" --revised \"<更合理的提示词>\" "
             "--checklist \"subject_action=ok;contact_scale=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok\"\n"
@@ -738,7 +739,7 @@ def cmd_reasonableness_at_root(
     if not sf.is_file():
         print(
             f"❌ 未找到收敛会话 `{session_id}`。请先 converge start，再跑合理性审核。\n"
-            f"   python3 pmem_art.py converge start --id {session_id} --goal ..."
+            f"   {pmem_art_cli()} converge start --id {session_id} --goal ..."
         )
         return 1
     if not (revised or "").strip():

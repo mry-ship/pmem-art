@@ -1,6 +1,7 @@
 """pmem-agent 第二段对表。只产出分配，不调用任何生图或审图技能。"""
 from __future__ import annotations
 
+from .platform_cli import pmem_art_cli
 import re
 from dataclasses import dataclass, field
 from typing import Any
@@ -868,7 +869,7 @@ def plan_route(
         if not route or not route.get("routable"):
             return _stop("unrecognized", "没有识别到可用技能")
         if not _heading_ok(route["heading"], bodies.get(route["skill"], "")):
-            return _stop("stale_registry", "注册表过期，先跑 python3 pmem_art.py skills --install")
+            return _stop(f"stale_registry", "注册表过期，先跑 {pmem_art_cli()} skills --install")
         if rid == "draw.multi" and _two_states(raw):
             route_ids.append(rid)
             steps.append(
@@ -912,8 +913,8 @@ def plan_route(
             done = "该档母版或图标过 9.50，A/B/C 不混"
             locks = route["when"]
         elif rid == "merge.ladder":
-            done = "本链各档关系说得通之后，每档正方形 ≥ 9.50"
-            locks = "同一条升级链，不改成另一套东西"
+            done = "本链各档关系说得通之后，默认整表一组出齐（通常 8 档）；点名逐格时每档正方形 ≥ 9.50"
+            locks = "同一条升级链，不改成另一套东西；未点名逐格禁止拆成单张狂刷"
         elif rid == "prompt.write":
             done = "交出提示词方案，不生图"
             locks = "只写提示词"

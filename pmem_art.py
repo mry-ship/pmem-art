@@ -11,6 +11,7 @@ v0.12：评分履历默认可见（`--quiet` 只要终稿）· 记忆写入仍�
 """
 from __future__ import annotations
 
+from art_cli import pmem_art_cli, rewrite_cli_invocations
 import argparse
 import base64
 import fnmatch
@@ -1628,8 +1629,35 @@ def cmd_hook(root: Path, data: dict[str, Any], event: str) -> int:
     advice: list[str] = []
     updated_input: dict[str, Any] | None = None
     deny_gen = False
+
+    # Windows：Agent 仍爱写 python/python3 跑 CLI/出图脚本，每条 Shell 弹黑框。
+    # 在真正执行前改成 pyw；Mac 上 rewrite 返回 None，原样放行。
+    if event == "pre-shell":
+        from art_cli import rewrite_shell_to_windowless
+
+        cmd = str(args_obj.get("command") or args_obj.get("cmd") or "")
+        rewritten = rewrite_shell_to_windowless(cmd)
+        out = {
+            "continue": True,
+            "server": "pmem-art",
+            "version": VERSION,
+            "event": event,
+            "agentMessage": "",
+        }
+        if rewritten is not None:
+            new_args = dict(args_obj)
+            if "command" in new_args or "cmd" not in new_args:
+                new_args["command"] = rewritten
+            if "cmd" in args_obj:
+                new_args["cmd"] = rewritten
+            out["updated_input"] = new_args
+            out["permission"] = "allow"
+        print(json.dumps(out, ensure_ascii=False))
+        return 0
+
     # 生图前 / 写资产前：自动 search 相关记忆（有活跃 converge 会话时用会话模块，不靠猜）
     if event in ("pre-tool", "pre-gen"):
+
         q = prompt or user_msg or path
         module = ""
         warm: dict[str, Any] = {}
@@ -1745,7 +1773,7 @@ def cmd_hook(root: Path, data: dict[str, Any], event: str) -> int:
         advice.append("💬 若这张不对/要留着：直接说「太赛博 / 头太大 / 这版留着 / 换成水彩」，我会写入 pmem-art 记忆。")
         # 若落盘路径像图片，提示 ingest
         if path and re.search(r"\.(png|jpe?g|webp)$", path, re.I):
-            advice.append(f'📥 可选归档：python3 pmem_art.py ingest {path} -p "{(prompt or "")[:80]}" --apply')
+            advice.append(f'📥 可选归档：{pmem_art_cli()} ingest {path} -p "{(prompt or "")[:80]}" --apply')
 
     followup = ""
     if event == "stop":
@@ -1785,9 +1813,11 @@ def cmd_hook(root: Path, data: dict[str, Any], event: str) -> int:
     if deny_gen:
         out["permission"] = "deny"
     if followup:
-        out["followup_message"] = followup
+        out["followup_message"] = rewrite_cli_invocations(str(followup))
     agent_text = str(out.get("agentMessage") or "")
     if agent_text:
+        agent_text = rewrite_cli_invocations(agent_text)
+        out["agentMessage"] = agent_text
         out["agent_message"] = agent_text
     if updated_input is not None and not deny_gen:
         out["updated_input"] = updated_input
@@ -2123,7 +2153,15 @@ def main() -> int:
     p_hook = sub.add_parser("hook", help="处理 Cursor / Claude Code / Codex 的 Hook 闸门事件")
     p_hook.add_argument(
         "event",
-        choices=("pre-tool", "post-tool", "stop", "pre-gen", "post-asset", "session"),
+        choices=(
+            "pre-tool",
+            "post-tool",
+            "stop",
+            "pre-gen",
+            "post-asset",
+            "pre-shell",
+            "session",
+        ),
     )
 
     args = parser.parse_args()

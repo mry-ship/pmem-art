@@ -97,7 +97,7 @@
 
 ### 4.1 开画路由闸门与 Absolute-5D 分数
 
-- **Route gate**：`converge start` 前必须有近期本地 `route` 结果（`.memory-art/route_bank/last_advise.json`，默认 2 小时内有效）。美术零门槛；Agent 先跑 `python3 pmem_art.py route --text "…"`。点名调试可用 `--skip-route-gate` / `PMEM_ART_SKIP_ROUTE_GATE=1`。
+- **Route gate**：`converge start` 前必须有近期本地 `route` 结果（`.memory-art/route_bank/last_advise.json`，默认 2 小时内有效）。美术零门槛；Agent 先跑 `pyw -3 -u pmem_art.py route --text "…"`。点名调试可用 `--skip-route-gate` / `PMEM_ART_SKIP_ROUTE_GATE=1`。
 - **评分**：收敛以 Absolute-5D（构图/光影/透视解剖/质感/风格）为主闸；`recompose`/`high` 档贴原停机前需在 **strengths/defects** 中检出机位变化证据（`_recompose_change_evidence`），提示词里的「重构机位」不算。
 - **垫图策略**：`pad=auto` 默认每轮垫最初 style_ref；仅在机位已换证据成立时才链最高分换机位成图。
 
@@ -159,10 +159,10 @@ Cursor 生图额外走：`classify` / `ingest` / `classify-watch`。
 
 ```bash
 # Agent 刚 GenerateImage 落到 .cursor/generated/xxx.png
-python3 pmem_art.py classify .cursor/generated/xxx.png -p "$PROMPT"
-python3 pmem_art.py ingest  .cursor/generated/xxx.png -p "$PROMPT" --apply   # 年轻项目可开 auto_place
-python3 pmem_art.py classify-watch          # 扫未映射图，低置信进 misc/candidate
-python3 pmem_art.py atlas
+pyw -3 -u pmem_art.py classify .cursor/generated/xxx.png -p "$PROMPT"
+pyw -3 -u pmem_art.py ingest  .cursor/generated/xxx.png -p "$PROMPT" --apply   # 年轻项目可开 auto_place
+pyw -3 -u pmem_art.py classify-watch          # 扫未映射图，低置信进 misc/candidate
+pyw -3 -u pmem_art.py atlas
 ```
 
 `classify.auto_add_modules: true` 时，**只追加**新模块键，绝不清空已有 `modules.yaml`。

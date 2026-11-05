@@ -10,10 +10,11 @@ from typing import Any
 
 from ._time import _now_cst
 
+from art_cli import pmem_art_cli, rewrite_cli_invocations
 from .skill_specs import SKILL_SPECS
 
 def _render_skill_md(spec: dict[str, Any], command_name: str) -> str:
-    return (
+    return rewrite_cli_invocations(
         f"---\n"
         f"name: {command_name}\n"
         f"description: {spec['description']}\n"
@@ -41,7 +42,7 @@ def _route_banner(spec: dict[str, Any], command_name: str) -> str:
 
 
 def _render_command_md(spec: dict[str, Any], command_name: str) -> str:
-    return (
+    return rewrite_cli_invocations(
         f"---\n"
         f"description: {spec['title']}（pmem-art）\n"
         f"---\n\n"
@@ -55,15 +56,20 @@ AGENT_DOC_MARKER_END = "<!-- pmem-art:skills:end -->"
 
 
 def _render_agent_doc_block() -> str:
+    cli = pmem_art_cli()
     return f"""{AGENT_DOC_MARKER_START}
 ## 🎨 pmem-art 美术记忆系统与内置斜杠技能（Skills）
 
 本项目挂载了 **pmem-art**（面向 Cursor / Claude Code / Codex 的个人美术积累记忆与闭环自评生图系统）。
 
+### 0. 本机 CLI（安装时已按平台写死，照抄即可）
+- 本仓库当前入口是 **`{cli}`**。Windows=`pyw -3 -u`，macOS/Linux=`python3`；**禁止**改成 `python` / `python3` / `py`（Windows 上控制台版会弹黑框）。
+- 也可直接跑仓库根目录的 `pmem_artw.cmd …`（仅 Windows）。出图优先走 Cursor **GenerateImage**；只有 converge 等必须走 CLI 时才用上面入口。
+
 ### 1. 总控优先，点名仍按点名走
 - 玩家没点名具体技能时，走 `/pmem-agent`。总控只审一轮：查合理性、缺漏和理解错误，先把分析列出来。只有一种确定情况就直接执行；多种情况列出来等玩家确认，确认前不执行。玩家另提要求就再审一遍，仍要等确认后再执行。总控自己不生图。路径/版式/「再跑一遍」同范围等可默认项直接写入分析；只有交付物类型或身份题材会做错才算多种情况。
 - 玩家点名了界面、图标、合成梯、原画、克隆、变体或镜头包，就按点名走，不再绕总控。
-- 总控选定后回显 `banner`（【按 XX 走了】或【走默认路径】），只说明选了哪一支，不问选哪条技能。没点名时先把口语收成一行标准路由句，再跑 `python3 pmem_art.py route --text "…" --canonical "…"`（字面 n-gram+口语扩展，非语义向量；禁止整库进上下文）。流程图见 `docs/route_pipeline.html`。
+- 总控选定后回显 `banner`（【按 XX 走了】或【走默认路径】），只说明选了哪一支，不问选哪条技能。没点名时先把口语收成一行标准路由句，再跑 `{cli} route --text "…" --canonical "…"`（字面 n-gram+口语扩展，非语义向量；禁止整库进上下文）。流程图见 `docs/route_pipeline.html`。
 - 平时一次只走一支。定稿若是整页展陈/对比页/多技能同范围重跑，允许按清单依次点名多支，最后收新 HTML。判成界面、图标或合成梯时，先读对应技能再动手，禁止用普通单张合同交差。
 - 有参考但没说新题材 → 普通图，不进克隆。没人要几套机位 → 不进镜头包，点选前不生图。
 - 交出去的是定稿和每一张图，不能在调用前收成一张参考图。
@@ -78,7 +84,7 @@ def _render_agent_doc_block() -> str:
 | **`/pmem-draw`** | **生图**。普通图 / 原画 / 克隆 / 变体 / 镜头包在这一条里。点名了类型就按点名做 |
 | **`/pmem-ui`** | **整套界面**。概念先行→组件表→九宫格→状态族。判成界面才走，禁止用单张插画代替 |
 | **`/pmem-icon`** | **图标**。A 桌面母版 / B 线性 SVG / C 道具格，三档不混 |
-| **`/pmem-merge-ladder`** | **合成梯**。先定链型与关系（糖果默认 shop_ladder；工具可 same_object；非糖果可轻门），默认一档一张正方形；要总览可整表（≤3 次）。同框只预览 |
+| **`/pmem-merge-ladder`** | **合成梯**。先定链型与关系（糖果默认 shop_ladder；工具可 same_object；非糖果可轻门），默认整表一组（8 档）；有参考跟格数，点名数量跟点名；仅点名逐格才一档一张 |
 | **`/pmem-prompt`** | **提示词**。把玩家原话按合理性/美观/画风/特写等扩成 2～4 套可选方案（或唯一方案）。不生图 |
 | **`/pmem-style-lock`** | **锁风格**。从样张抽色板、光影、禁用词。不进自动生图 |
 | **`/pmem-critique`** | **只审图**。六维挑刺，翻车点记入红线。不生图 |
@@ -91,10 +97,10 @@ def _render_agent_doc_block() -> str:
 - 进步、短板、知识卡用 `/pmem-coach`。知识卡没有玩家明确收下，不要写入。
 
 ### 4. 日常自然语言反馈沉淀（无需手写 YAML）
-- 生图前先运行：`python3 pmem_art.py search --module <模块>` 或 `python3 pmem_art.py search "<关键词>"`
+- 生图前先运行：`{cli} search --module <模块>` 或 `{cli} search "<关键词>"`
 - 当画师说「太赛博 / 头太大 / 别这样画 / 这版留着 / 换成水彩 / 以后都用…」时，立即运行：
-  `python3 pmem_art.py feedback "<画师原话>" --module <模块> [--asset <图片路径>]`
-- 运行闭环收敛追踪器：`python3 pmem_art.py converge start`，然后每轮 `converge generate` 与 `converge judge`，最后 `converge finish`（默认打印评分履历）
+  `{cli} feedback "<画师原话>" --module <模块> [--asset <图片路径>]`
+- 运行闭环收敛追踪器：`{cli} converge start`，然后每轮 `converge generate` 与 `converge judge`，最后 `converge finish`（默认打印评分履历）
 
 ### 5. 跑偏纠偏（条件触发，非常驻重置）
 - 出现明确跑偏信号时，当次执行 brief 自动带上温和重置句；平时不加。禁止写进各技能常驻前缀，也禁止「必须换一条与旧案不同的路线」。
@@ -184,7 +190,9 @@ def install_skills_and_agent_configs(root: Path, quiet: bool = False) -> dict[st
         installed["agent_docs"].append(".memory-art/route_bank/route_bank.jsonl")
     except Exception as exc:  # noqa: BLE001 — 技能文件已写完；话术库失败单独提示，不虚标已装
         if not quiet:
-            print(f"⚠️  route_bank 同步失败（技能已安装，请手动 python3 pmem_art.py route --rebuild）：{exc}")
+            print(
+                f"⚠️  route_bank 同步失败（技能已安装，请手动 {pmem_art_cli()} route --rebuild）：{exc}"
+            )
 
     # 4. Upsert CLAUDE.md and AGENTS.md
     claude_md = root / "CLAUDE.md"
@@ -211,6 +219,17 @@ def install_skills_and_agent_configs(root: Path, quiet: bool = False) -> dict[st
         encoding="utf-8",
     )
     installed["agent_docs"].append(".cursor/rules/pmem-art.mdc")
+
+    # 手册/说明里若仍写死 python3，一并改成本机入口（不改 .memory 历史条目）
+    for rel in ("USER_MANUAL.md", "README.md", "ARCHITECTURE.md"):
+        path = root / rel
+        if not path.is_file():
+            continue
+        old = path.read_text(encoding="utf-8")
+        new = rewrite_cli_invocations(old)
+        if new != old:
+            path.write_text(new, encoding="utf-8")
+            installed["agent_docs"].append(rel)
 
     if not quiet:
         print(f"✨ 已自动安装 pmem-art {len(SKILL_SPECS)} 项美术技能（每个技能一个 /pmem- 入口）到 Cursor / Claude Code / Codex：")
