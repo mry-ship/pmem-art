@@ -612,20 +612,34 @@ def _rewrite_art_hook_command(command: str, py: str) -> str:
     return f"{py} pmem_art.py hook {m.group(1)}"
 
 
+# Windows quiet：pmem pre-tool 再匹配这些工具名，Cursor 经 PowerShell 转发必弹黑框。
+# 写 md/技能文档走 Write；出图闭环走 Shell。闸门改只拦 MCP 记忆读写。
+_PMEM_PRETOOL_FLASH_MATCHERS = frozenset({
+    "Shell",
+    "Bash",
+    "Write",
+    "StrReplace",
+    "Edit",
+    "MultiEdit",
+    "EditNotebook",
+    "Delete",
+})
+
+
 def _strip_shell_from_pmem_pretool(item: dict[str, Any]) -> dict[str, Any]:
-    """Windows 上 converge/出图大量走 Shell+python，pmem 再匹配 Shell 会每条命令闪一次。
-    闸门仍拦 Write/Edit/MCP；Shell 改文件靠事后核对或人工。"""
+    """Windows：去掉会因写 md / Shell 狂弹的 matcher，只留 MCP|record_memory|search_memory。
+    改代码时闸门不再拦 Write/Edit，靠规则与 afterMCP；换平台仍保留完整 matcher。"""
     if sys.platform != "win32":
         return item
     cmd = str(item.get("command") or "")
     if not _is_pmem_rd_hook_command(cmd) or "pre-tool" not in cmd:
         return item
     matcher = str(item.get("matcher") or "")
-    if "Shell" not in matcher:
+    parts = [p for p in matcher.split("|") if p and p not in _PMEM_PRETOOL_FLASH_MATCHERS]
+    if "|".join(parts) == matcher:
         return item
-    parts = [p for p in matcher.split("|") if p and p != "Shell"]
     out = dict(item)
-    out["matcher"] = "|".join(parts)
+    out["matcher"] = "|".join(parts) if parts else "MCP|record_memory|search_memory"
     return out
 
 

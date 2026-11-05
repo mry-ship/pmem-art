@@ -79,7 +79,7 @@ Runtime: `pillow`, `numpy`, `pyyaml`. Tests: `pytest`（见 `pytest.ini`，`test
 
 其余命令还在，直接点也能用。日常不用记，交给 `/pmem-agent` 就行。
 
-合成梯多一步：先用 3 稿把八件升级链和画风定清楚（这一段不出图），说不通就不出图，通过后再按上面的 4 轮出图。同框大图只是体量预览。
+合成梯多一步：先用 3 稿把升级链和画风定清楚（这一段不出图），说不通就不出图；默认整表一组出齐（通常 8 档，对标后可改为 6 等合理档数），只有点名逐格才一档一张。白卡内禁超框；生物链要有眼睛。
 
 ### 复制即用
 
@@ -105,7 +105,7 @@ Runtime: `pillow`, `numpy`, `pyyaml`. Tests: `pytest`（见 `pytest.ini`，`test
 <tr><td>2</td><td>生图</td><td><code>/pmem-draw</code></td><td>普通图、原画、克隆、变体或镜头包。生图最多 4 轮，合格线 ≥9.5。结算给一张可点开的过程板。有参考但没说新题材时，不进克隆。</td></tr>
 <tr><td>3</td><td>界面</td><td><code>/pmem-ui</code></td><td>一整套 HUD / 菜单 / 九宫格。不用单张插画代替。</td></tr>
 <tr><td>4</td><td>图标</td><td><code>/pmem-icon</code></td><td>三档不混：A 桌面母版、B 线性 SVG、C 道具格。</td></tr>
-<tr><td>5</td><td>合成梯</td><td><code>/pmem-merge-ladder</code></td><td>先用 3 稿把升级链和画风定清楚（说不通就不出图），再一档一张正方形。同框只是体量预览。出图最多 4 轮。论述和出图轮都留在过程板上。</td></tr>
+<tr><td>5</td><td>合成梯</td><td><code>/pmem-merge-ladder</code></td><td>先用 3 稿定链型/档数/画风（说不通就不出图）；默认整表一组（通常 8 档，对标后跟合理档数）；仅点名逐格才一档一张。商业对标优先；生物链要眼睛；白卡禁超框。论述和出图留在过程板。</td></tr>
 <tr><td>6</td><td>提示词</td><td><code>/pmem-prompt</code></td><td>按交付类型扩成 2～4 套可选 brief。不生图，点选后再交给对应技能。</td></tr>
 <tr><td>7</td><td>锁风格</td><td><code>/pmem-style-lock</code></td><td>从样张抽色板、光影、禁用词。不进自动生图。</td></tr>
 <tr><td>8</td><td>审图</td><td><code>/pmem-critique</code></td><td>只打分挑刺，不生图。</td></tr>

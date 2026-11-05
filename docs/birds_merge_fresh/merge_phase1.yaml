@@ -1,0 +1,26 @@
+# 鸟类合成梯 · 轻门 · overview 2×3 · levels=6
+# 合理性结论：默认8不够用真档硬凑；自创红冠/金铠未过关；数量群你侧也不认
+# → 按 §9「档数跟合理」：只取 Merge Mansion Chickens 生物段说得通的前6档
+# 对标：Hatchling → Baby Chick → Chicks → Pullet → Hen → Laying Hen
+# Chickens / Brood / Hen House = 另过程或另链，本表不焊
+# 过程：幼体生长 + 成体完成度（A）；非 G 数量捆扎
+version: birds-mm-chickens-L6-reason-20261105
+pipeline: art-merge-two-phase
+delivery: overview_sheet
+
+tracks:
+  birds_chickens:
+    module: prop.BirdsMerge.Cute
+    levels: 6
+    grid_rows: 2
+    grid_cols: 3
+    surface: Merge Mansion Bake-off Chickens货柜气质；软塑胶厚实圆润，棚柔光短接触影，饱和友好不油亮；2×3白圆角卡深炭灰底；每格一货柜件居中无等级字；L2起可读可爱大眼轻表情；暖黄绒→橙褐成羽→冠红；禁红火焰冠/金铠自创华丽、禁鸡舍、禁为凑满8而堆群
+    commercial_ref: "MM Bake-off Chickens L1-L6 only: Hatchling→Baby Chick→Chicks→Pullet→Hen→Laying Hen; omit Chickens/Brood/HenHouse"
+    process_type: "creature_growth_plus_completion_stop_before_flock"
+    rows:
+      - { level: 1, name: 破壳幼雏, silhouette: 破壳探出圆黄绒几乎无翅, scale_delta: 基档, scale_pct: 0.58, parts_add: "—" }
+      - { level: 2, name: 小鸡, silhouette: 单只可站黄绒短翅大眼, scale_delta: "+小", scale_pct: 0.62, parts_add: "站姿短肢+短翅+大眼" }
+      - { level: 3, name: 雏双, silhouette: 两只小黄绒并排同簇一货件, scale_delta: "+小", scale_pct: 0.66, parts_add: "并排第二只同簇雏" }
+      - { level: 4, name: 青年鸡, silhouette: 单只瘦长初羽短尾冠芽, scale_delta: "+中", scale_pct: 0.70, parts_add: "瘦长身+初羽+短尾+冠芽" }
+      - { level: 5, name: 母鸡, silhouette: 单只圆身成羽清晰红冠, scale_delta: "+中", scale_pct: 0.74, parts_add: "圆身成羽+清晰红冠肉髯" }
+      - { level: 6, name: 下蛋母鸡, silhouette: 单只更丰满垂羽更大红冠卡内留边, scale_delta: "+大", scale_pct: 0.74, parts_add: "体更丰+垂羽层+大红冠；整只落白卡内留边禁超框" }
