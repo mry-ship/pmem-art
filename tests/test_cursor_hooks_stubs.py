@@ -82,6 +82,61 @@ class TestCursorHooksStubs(unittest.TestCase):
         with mock.patch("lifecycle.sys.platform", "darwin"):
             self.assertEqual(_hook_python_prefix(), "python3")
 
+    def test_rewrites_python3_art_launcher_to_pyw_on_windows(self) -> None:
+        from lifecycle import ensure_cursor_stubs
+
+        td = Path(tempfile.mkdtemp(prefix="pmem_hooks_pyw_"))
+        cursor = td / ".cursor"
+        cursor.mkdir(parents=True)
+        (cursor / "hooks.json").write_text(
+            json.dumps(
+                {
+                    "version": 1,
+                    "hooks": {
+                        "preToolUse": [
+                            {
+                                "command": "python3 pmem_art.py hook pre-gen",
+                                "matcher": "GenerateImage",
+                                "failClosed": False,
+                            },
+                            {
+                                "command": "pmemw hook pre-tool",
+                                "matcher": "Write|Shell",
+                                "failClosed": False,
+                            },
+                        ],
+                        "postToolUse": [
+                            {
+                                "command": "python3 pmem_art.py hook post-asset",
+                                "matcher": "GenerateImage",
+                            }
+                        ],
+                        "stop": [
+                            {
+                                "command": "python3 pmem_art.py hook stop",
+                                "loop_limit": 8,
+                            }
+                        ],
+                    },
+                },
+                ensure_ascii=False,
+                indent=2,
+            )
+            + "\n",
+            encoding="utf-8",
+        )
+        with mock.patch("lifecycle.sys.platform", "win32"):
+            with mock.patch.dict(sys.modules, {"skills_kit": mock.MagicMock()}):
+                ensure_cursor_stubs(td)
+        hooks = json.loads((cursor / "hooks.json").read_text(encoding="utf-8"))["hooks"]
+        for section in ("preToolUse", "postToolUse", "stop"):
+            for item in hooks[section]:
+                cmd = item["command"]
+                if "pmem_art.py" in cmd:
+                    self.assertTrue(cmd.startswith("pyw -3 -u "), cmd)
+                    self.assertNotIn("python3 ", cmd)
+        self.assertIn("pmemw hook pre-tool", [h["command"] for h in hooks["preToolUse"]])
+
 
 if __name__ == "__main__":
     unittest.main()

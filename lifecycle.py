@@ -572,38 +572,130 @@ def _hook_python_prefix() -> str:
     return "python3"
 
 
+def _is_pmem_rd_hook_command(command: str) -> bool:
+    """True for pmem / pmemw / .memory/bin/pmem-hook 闸门入口（刷新 stubs 时必须保留）。"""
+    cmd = str(command or "").strip()
+    if not cmd:
+        return False
+    if "pmem_art.py" in cmd:
+        return False
+    return bool(
+        re.search(r"(^|[\s/\\])pmemw(\s|$)", cmd)
+        or re.search(r"(^|[\s/\\])pmem(\s+hook\b)", cmd)
+        or ".memory/bin/pmem-hook" in cmd.replace("\\", "/")
+        or cmd.replace("\\", "/").endswith("pmem-hook")
+        or "pmem-hook " in cmd.replace("\\", "/")
+    )
+
+
+def _is_pmem_art_hook_command(command: str) -> bool:
+    return "pmem_art.py" in str(command or "") and "hook" in str(command or "")
+
+
+def _rewrite_art_hook_command(command: str, py: str) -> str:
+    """把 python3/pythonw/py -3 等 art hook 启动器统一成当前平台前缀。"""
+    cmd = str(command or "").strip()
+    m = re.search(r"pmem_art\.py\s+hook\s+(\S+)", cmd)
+    if not m:
+        return cmd
+    return f"{py} pmem_art.py hook {m.group(1)}"
+
+
+def _merge_cursor_hook_list(
+    existing: list[Any],
+    art_items: list[dict[str, Any]],
+    *,
+    py: str,
+) -> list[dict[str, Any]]:
+    """保留 pmem 闸门 hook，并用正确启动器覆写/补齐 art hook。"""
+    kept: list[dict[str, Any]] = []
+    for raw in existing or []:
+        if not isinstance(raw, dict):
+            continue
+        cmd = str(raw.get("command") or "")
+        if _is_pmem_art_hook_command(cmd):
+            continue
+        if _is_pmem_rd_hook_command(cmd):
+            kept.append(dict(raw))
+            continue
+        # 未知第三方 hook 也保留，避免误删
+        if cmd.strip():
+            kept.append(dict(raw))
+    out = list(art_items) + kept
+    # 二次保险：若别处留下了 python3 art 命令，统一改写
+    fixed: list[dict[str, Any]] = []
+    for item in out:
+        cmd = str(item.get("command") or "")
+        if _is_pmem_art_hook_command(cmd):
+            item = dict(item)
+            item["command"] = _rewrite_art_hook_command(cmd, py)
+        fixed.append(item)
+    return fixed
+
+
 def ensure_cursor_stubs(root: Path) -> None:
     """写入/刷新 Cursor hooks，并安装 Cursor / Claude Code / Codex 技能。规则正文由 install_skills 写入 pmem-art.mdc。"""
     (root / ".cursor" / "rules").mkdir(parents=True, exist_ok=True)
     hooks = root / ".cursor" / "hooks.json"
     # 仅绑 GenerateImage 的 pre/post，避免每个 Write/Read 弹宿主窗口；
     # stop 必须保留：出图后 followup_message 才能把闭环审图拉回对话。
+    # 已有 pmemw/pmem/.memory/bin/pmem-hook 闸门时合并保留，禁止整文件覆盖。
     py = _hook_python_prefix()
+    art_hooks = {
+        "preToolUse": [
+            {
+                "command": f"{py} pmem_art.py hook pre-gen",
+                "matcher": "GenerateImage",
+                "failClosed": False,
+            }
+        ],
+        "postToolUse": [
+            {
+                "command": f"{py} pmem_art.py hook post-asset",
+                "matcher": "GenerateImage",
+            }
+        ],
+        "stop": [
+            {
+                "command": f"{py} pmem_art.py hook stop",
+                "loop_limit": 8,
+            }
+        ],
+    }
+    existing: dict[str, Any] = {}
+    if hooks.exists():
+        try:
+            existing = json.loads(hooks.read_text(encoding="utf-8"))
+        except Exception:
+            existing = {}
+    old_sections = existing.get("hooks") if isinstance(existing.get("hooks"), dict) else {}
+    merged: dict[str, list[dict[str, Any]]] = {}
+    for key, art_items in art_hooks.items():
+        old_list = old_sections.get(key) if isinstance(old_sections.get(key), list) else []
+        merged[key] = _merge_cursor_hook_list(old_list, art_items, py=py)
+    for key, val in old_sections.items():
+        if key in merged:
+            continue
+        if not isinstance(val, list):
+            continue
+        kept = []
+        for raw in val:
+            if not isinstance(raw, dict):
+                continue
+            cmd = str(raw.get("command") or "")
+            if _is_pmem_art_hook_command(cmd):
+                item = dict(raw)
+                item["command"] = _rewrite_art_hook_command(cmd, py)
+                kept.append(item)
+            elif _is_pmem_rd_hook_command(cmd) or cmd.strip():
+                kept.append(dict(raw))
+        if kept:
+            merged[key] = kept
     hooks.write_text(
         json.dumps(
             {
-                "version": 1,
-                "hooks": {
-                    "preToolUse": [
-                        {
-                            "command": f"{py} pmem_art.py hook pre-gen",
-                            "matcher": "GenerateImage",
-                            "failClosed": False,
-                        }
-                    ],
-                    "postToolUse": [
-                        {
-                            "command": f"{py} pmem_art.py hook post-asset",
-                            "matcher": "GenerateImage",
-                        }
-                    ],
-                    "stop": [
-                        {
-                            "command": f"{py} pmem_art.py hook stop",
-                            "loop_limit": 8,
-                        }
-                    ],
-                },
+                "version": int(existing.get("version") or 1),
+                "hooks": merged,
             },
             ensure_ascii=False,
             indent=2,

@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 pmem_art.py hook pre-gen",
+            "command": "pyw -3 -u pmem_art.py hook pre-gen",
             "timeout": 30
           }
         ]
@@ -28,7 +28,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 pmem_art.py hook post-asset",
+            "command": "pyw -3 -u pmem_art.py hook post-asset",
             "timeout": 30
           }
         ]
