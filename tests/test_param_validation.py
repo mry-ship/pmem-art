@@ -1445,6 +1445,10 @@ class TestGateFixes(unittest.TestCase):
             self.assertFalse(_round_counts_as_passed(forged, 9.6, root=ROOT))
             forged["defects"] = "远景空气层次偏弱"
             self.assertTrue(_round_counts_as_passed(forged, 9.6, root=ROOT))
+            body = dict(forged)
+            body["subject_kind"] = "humanoid"
+            body["dims_parsed"] = {"composition": 9.7}
+            self.assertFalse(_round_counts_as_passed(body, 9.6, root=ROOT))
 
     def test_finish_rejects_judge_only_without_generate(self) -> None:
         from skills_kit import converge_finish, _inspect_image_physical_traits, _round_counts_as_passed

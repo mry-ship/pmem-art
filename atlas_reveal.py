@@ -51,7 +51,6 @@ _STATIC_TYPES = {
     ".html": "text/html; charset=utf-8",
     ".js": "application/javascript; charset=utf-8",
     ".css": "text/css; charset=utf-8",
-    ".json": "application/json; charset=utf-8",
     ".svg": "image/svg+xml",
     ".png": "image/png",
     ".jpg": "image/jpeg",
@@ -60,8 +59,11 @@ _STATIC_TYPES = {
     ".gif": "image/gif",
     ".bmp": "image/bmp",
     ".ico": "image/x-icon",
-    ".txt": "text/plain; charset=utf-8",
-    ".md": "text/plain; charset=utf-8",
+}
+# 工作台页面实际会取的 JSON。其它 .json / .py / .md 不从本机接口读出。
+_PUBLIC_JSON = {
+    ".memory-art/atlas_data.json",
+    ".memory-art/_trash/manifest.json",
 }
 
 _STATIC_BLOCK_PREFIXES = (
@@ -69,6 +71,22 @@ _STATIC_BLOCK_PREFIXES = (
     ".env",
     "node_modules/",
 )
+
+
+def _loopback_caller(origin: str) -> bool:
+    """浏览器跨站页面带自己的 Origin。file:// 是 null，本机脚本通常不带 Origin。"""
+    raw = (origin or "").strip()
+    if not raw or raw.lower() == "null":
+        return True
+    low = raw.lower()
+    return low.startswith(("http://127.0.0.1", "http://localhost", "http://[::1]"))
+
+
+def _static_allowed(rel: str) -> bool:
+    low = (rel or "").replace("\\", "/").lstrip("/").lower()
+    if low.endswith(".json"):
+        return low.split("?", 1)[0] in _PUBLIC_JSON
+    return Path(low).suffix.lower() in _STATIC_TYPES
 
 
 def _safe_under_root(root: Path, rel_or_abs: str, *, must_exist: bool = True) -> Path | None:
@@ -302,7 +320,11 @@ def promote_final(
     sess_path: Path | None = None
     sess_doc: dict[str, Any] | None = None
     if session_id:
-        cand = root_r / ".memory-art" / "converge" / f"{session_id}.json"
+        from skills_kit.converge_loop import session_json_path
+
+        cand = session_json_path(root_r, session_id)
+        if cand is None:
+            return {"ok": False, "error": "bad session id", "service": SERVICE_NAME}
         if cand.is_file():
             sess_path = cand
             try:
@@ -419,7 +441,7 @@ class RevealHandler(BaseHTTPRequestHandler):
         if raw in ("", "/"):
             raw = "/art-atlas.html"
         rel = raw.lstrip("/").replace("\\", "/")
-        if not rel or ".." in rel.split("/"):
+        if not rel or ".." in rel.split("/") or not _static_allowed(rel):
             self._json(404, {"ok": False, "error": "not found", "service": SERVICE_NAME})
             return
         low = rel.lower()
@@ -435,7 +457,7 @@ class RevealHandler(BaseHTTPRequestHandler):
         except OSError:
             self._json(500, {"ok": False, "error": "read failed", "service": SERVICE_NAME})
             return
-        ctype = _STATIC_TYPES.get(target.suffix.lower(), "application/octet-stream")
+        ctype = _STATIC_TYPES.get(target.suffix.lower(), "application/json; charset=utf-8")
         self.send_response(200)
         _cors(self)
         self.send_header("Content-Type", ctype)
@@ -464,6 +486,9 @@ class RevealHandler(BaseHTTPRequestHandler):
             )
             return
         if parsed.path in ("/api/reveal", "/reveal"):
+            if not _loopback_caller(self.headers.get("Origin") or ""):
+                self._json(403, {"ok": False, "error": "origin", "service": SERVICE_NAME})
+                return
             qs = urllib.parse.parse_qs(parsed.query)
             target = self._resolve_reveal_target((qs.get("path") or [""])[0])
             if not target:
@@ -500,6 +525,9 @@ class RevealHandler(BaseHTTPRequestHandler):
 
     def do_POST(self) -> None:  # noqa: N802
         parsed = urllib.parse.urlparse(self.path)
+        if not _loopback_caller(self.headers.get("Origin") or ""):
+            self._json(403, {"ok": False, "error": "origin", "service": SERVICE_NAME})
+            return
         payload = self._read_json()
         if parsed.path in ("/api/reveal", "/reveal"):
             target = self._resolve_reveal_target(str(payload.get("path") or ""))

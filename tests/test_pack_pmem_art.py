@@ -30,23 +30,22 @@ class TestPackPmemArt(unittest.TestCase):
             self.assertTrue(any(n.endswith("skills_kit/route_bank.py") for n in names))
             self.assertTrue(any(n.endswith("skills_kit/data/route_bank.jsonl") for n in names))
             self.assertTrue(any(n.endswith("build_atlas.py") for n in names))
-            self.assertTrue(any(n.endswith("art-atlas.html") for n in names))
+            self.assertFalse(any(n.endswith("art-atlas.html") for n in names))
+            norm = [n.replace("\\", "/") for n in names]
+            self.assertFalse(any("/worktrees/" in n for n in norm))
+            self.assertFalse(any(n.split("/")[-1].startswith("_") and n.count("/") == 1 for n in norm))
             self.assertTrue(any(n.endswith("atlas_reveal.py") for n in names))
             self.assertFalse(any("/.memory/" in n.replace("\\", "/") for n in names))
             self.assertFalse(any(n.endswith("pmem.mdc") for n in names))
             mcp_name = next(n for n in names if n.endswith(".cursor/mcp.json"))
             atlas_name = next(n for n in names if n.endswith("build_atlas.py"))
-            html_name = next(n for n in names if n.endswith("art-atlas.html"))
             with zipfile.ZipFile(zip_path) as zf:
                 mcp = json.loads(zf.read(mcp_name).decode("utf-8"))
                 atlas_txt = zf.read(atlas_name).decode("utf-8")
-                html_txt = zf.read(html_name).decode("utf-8")
             self.assertIn("pmem-art", mcp.get("mcpServers") or {})
             self.assertNotIn("pmem", mcp.get("mcpServers") or {})
             self.assertIn('flawlessness: "无瑕度"', atlas_txt)
-            self.assertIn('flawlessness: "无瑕度"', html_txt)
             self.assertNotIn('flawlessness: "完成度"', atlas_txt)
-            self.assertNotIn('flawlessness: "完成度"', html_txt)
 
 
 if __name__ == "__main__":

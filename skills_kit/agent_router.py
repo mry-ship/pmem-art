@@ -37,6 +37,145 @@ UNRECOGNIZED_JOBS = (
     "三视图设定",
 )
 
+# 研发/排查口语（看代码、查 bug、跑测试、审仓库）不是出图。
+# 关键词分不开 draw a bug / fix a bug，所以分四层：
+#   1. 没有代码锚点 → 放行。整库检查和 review the code 算锚点。
+#   2. 代码场景尾巴（bug in the renderer / in the backlog）→ 查代码，压过名词框。
+#   3. 同形词真是画面主体才放行：draw/paint/sketch 的宾语、bug/hooks on a/the、画一张。
+#      draw 左边要单词边界（withdraw 不算）。
+#   4. 只有软美术词、没有硬代码词 → 放行；硬代码词压过软词。
+# bug/hook/skill 认单复数；cli 不吃 clip，bug 不吃 debugger。
+_DEV_OPS_PLURAL = frozenset({"bug", "hook", "skill"})
+_DEV_OPS_ASCII = (
+    "bug",
+    "hook",
+    "pytest",
+    "cli",
+    "skill",
+    "registry",
+    "agent_router",
+    "converge",
+)
+_DEV_OPS_CJK = (
+    "漏洞",
+    "单元测试",
+    "跑测试",
+    "跑一下测试",
+    "注册表",
+    "代码",
+    "这段代码",
+    "脚本",
+    "函数",
+    "报错",
+    "堆栈",
+    "技能",
+    "路由",
+    "闸门",
+    "实现是否有问题",
+    "实现有没有问题",
+    "逻辑是否有问题",
+    "逻辑有没有问题",
+)
+_DEV_OPS_HARD_ASCII = (
+    "bug",
+    "hook",
+    "pytest",
+    "skill",
+    "registry",
+    "agent_router",
+    "converge",
+    "cli",
+)
+_DEV_OPS_HARD_CJK = (
+    "漏洞",
+    "单元测试",
+    "注册表",
+    "代码",
+    "报错",
+    "堆栈",
+    "路由",
+    "技能",
+    "闸门",
+    "实现是否有问题",
+    "实现有没有问题",
+    "逻辑是否有问题",
+    "逻辑有没有问题",
+)
+_ART_HOMONYM = r"(?:bugs?|hooks|skills?)"
+_ART_SUBJECT_GUARDS = (
+    rf"(?<![a-z])(?:draw|paint|sketch|illustrate)(?:ing)?\s+"
+    rf"(?:a|an|the|some|one\s+)?(?:[a-z]+\s+){{0,2}}?{_ART_HOMONYM}\b",
+    rf"(?<![a-z])a\s+(?:cute|cuddly|shiny|pile|school|swarm)\s+"
+    rf"(?:[a-z]+\s+){{0,3}}?{_ART_HOMONYM}\b",
+    rf"(?<![a-z]){_ART_HOMONYM}\s+on\s+(?:a|the)\s+[a-z]+",
+    r"(?<![a-z])(?:her|his|their)\s+skill\s+with\b",
+    r"(?<![刻动])画(一)?(只|个|张|群|条|头|幅)",
+)
+_CODE_CONTEXT = (
+    r"(?<![a-z])(?:bugs?|hooks|skills?)\s+in\s+(?:the\s+)?"
+    r"(?:renderer|registry|code|codebase|repo|backlog|function|module|file|parser|router|converge)\b",
+    r"(?<![a-z])(?:in|from)\s+the\s+backlog\b",
+    r"(?<![a-z])bugs?\s+in\s+the\b",
+)
+_DEV_OPS_PHRASE = (
+    r"(?:深度检查|检查|审计|排查|审查|再查|查一遍).{0,16}(?:整个项目|全项目|仓库|代码库)",
+    r"(?<![a-z])(?:review(?:ing)?\s+(?:the\s+|this\s+)?code|code\s+review)\b",
+)
+_ART_OBJ_ASCII = ("ui", "icon", "svg", "key art", "lighting")
+_ART_OBJ_CJK = (
+    "图片",
+    "立绘",
+    "构图",
+    "光影",
+    "色板",
+    "这张",
+    "画风",
+    "画一张",
+    "画个",
+    "画张",
+    "画幅",
+    "场景",
+    "插画",
+    "素材",
+    "原画",
+    "图标",
+    "界面",
+    "合成梯",
+    "海报",
+    "头像",
+    "道具",
+    "贴图",
+    "色彩",
+    "渲染",
+    "半身",
+    "立体",
+    "颜色",
+    "金属",
+    "接缝",
+    "特写",
+    "脸",
+    "比例",
+    "角色",
+    "曲线",
+)
+
+
+def _ascii_word_hit(words: tuple[str, ...], low: str) -> bool:
+    """ASCII 走单词边界。bug/hook/skill 同时认单复数。"""
+    for word in words:
+        if word in _DEV_OPS_PLURAL:
+            pat = r"(?<![a-z])" + re.escape(word) + r"s?(?![a-z])"
+        else:
+            pat = r"(?<![a-z])" + re.escape(word) + r"(?![a-z])"
+        if re.search(pat, low):
+            return True
+    return False
+
+
+def _pattern_hit(patterns: tuple[str, ...], low: str) -> bool:
+    return any(re.search(p, low) for p in patterns)
+
+
 _NAMED = re.compile(r"/pmem-([a-z0-9-]+)")
 _LENS = re.compile(
     r"(几|[2-9两三四五六七八])\s*套\s*(机位|镜头|光)"
@@ -482,6 +621,9 @@ def _wants_style(text: str) -> bool:
             "以后都用",
             "往后出图",
             "都用这张",
+            "都按这张色板",
+            "都按这张画风",
+            "都按这张的色",
             "锁定画风",
             "锁定风格",
             "锁成风格",
@@ -489,6 +631,9 @@ def _wants_style(text: str) -> bool:
             "风格锁定",
             "色板锁上",
             "以后照这个画",
+            # 若口语折叠仍把「按」收成「参考」，兜底认锁风格
+            "以后参考这张",
+            "都参考这张",
         ),
     )
 
@@ -651,10 +796,16 @@ def _showcase_ids(text: str) -> list[str]:
         ("界面", "ui.kit"),
         ("HUD", "ui.kit"),
         ("桌面图标", "icon.a"),
+        ("图标A", "icon.a"),
+        ("图标a", "icon.a"),
         ("1024", "icon.a"),
         ("线性", "icon.b"),
+        ("图标B", "icon.b"),
+        ("图标b", "icon.b"),
         ("svg", "icon.b"),
         ("道具", "icon.c"),
+        ("图标C", "icon.c"),
+        ("图标c", "icon.c"),
         ("合成梯", "merge.ladder"),
         ("原画", "draw.key"),
         ("普通图", "draw.ordinary"),
@@ -677,6 +828,59 @@ def _showcase_ids(text: str) -> list[str]:
     if not out and _showcase_page(body) and (_hit(body, "全部重跑") or _bare_rerun(body)):
         return list(_SHOWCASE_DEFAULT_FULL)
     return out
+
+
+def _showcase_bare_icon(text: str) -> bool:
+    """展陈/对比页提了图标，但没落到 A/B/C —— 禁止默默丢掉图标支。"""
+    body = text or ""
+    if not (_hit(body, "图标") or _hit(body, "icon") or _hit(body, "Icon")):
+        return False
+    if _icon_modes(body):
+        return False
+    if _any(
+        body,
+        (
+            "桌面图标",
+            "启动图标",
+            "应用图标",
+            "图标A",
+            "图标a",
+            "图标B",
+            "图标b",
+            "图标C",
+            "图标c",
+            "1024",
+            "线性",
+            "svg",
+            "SVG",
+            "道具格",
+            "道具图标",
+            "背包",
+        ),
+    ):
+        return False
+    return True
+
+
+def _dev_ops_ask(text: str) -> bool:
+    """纯研发/排查口语。代码场景尾巴优先于画面名词框。"""
+    low = (text or "").lower()
+    anchored = (
+        _pattern_hit(_DEV_OPS_PHRASE, low)
+        or _ascii_word_hit(_DEV_OPS_ASCII, low)
+        or any(word in low for word in _DEV_OPS_CJK)
+    )
+    if not anchored:
+        return False
+    if _pattern_hit(_CODE_CONTEXT, low):
+        return True
+    if _pattern_hit(_ART_SUBJECT_GUARDS, low):
+        return False
+    art = _ascii_word_hit(_ART_OBJ_ASCII, low) or any(word in low for word in _ART_OBJ_CJK)
+    hard = _ascii_word_hit(_DEV_OPS_HARD_ASCII, low) or any(word in low for word in _DEV_OPS_HARD_CJK)
+    if art and not hard:
+        return False
+    return True
 
 
 def _section_label(route: dict[str, Any]) -> str:
@@ -751,6 +955,10 @@ def plan_route(
     if banned:
         return _stop("unrecognized", f"没有识别到可用技能：{banned}")
 
+    # 对原话也查一遍：折叠前的「检查技能」等不应被默认普通图吃掉
+    if _dev_ops_ask(raw) or _dev_ops_ask(spoken):
+        return _stop("unrecognized", "没有识别到可用技能")
+
     if _hard(raw):
         return _stop("hard_ambiguity", "还有一处硬不确定，先问这一处")
 
@@ -768,6 +976,9 @@ def plan_route(
     open_specialist = (not named) or draw_only
     page = _showcase_page(raw)
     showcase_ids = _showcase_ids(raw) if page else []
+    # 对比页/展陈提了裸「图标」却没 A/B/C：停问，禁止只剩合成梯等其它支还执行
+    if open_specialist and page and _showcase_bare_icon(raw):
+        return _stop("icon_unspecified", "只说图标，A/B/C 没分开，先问这一处")
 
     if named in {"pmem-ui", "pmem-merge-ladder", "pmem-style-lock", "pmem-critique", "pmem-atlas", "pmem-coach", "pmem-prompt"}:
         chosen = {

@@ -67,6 +67,9 @@ class SkillSpeedCapsTests(unittest.TestCase):
         self.assertFalse(_icon_speed_requested(goal="画个道具格气氛图", expect_route=""))
         self.assertTrue(_icon_speed_requested(expect_route="icon.c", goal="道具格：药水"))
         self.assertTrue(_split_speed_requested(goal="多图分工", contract="split"))
+        self.assertTrue(_split_speed_requested(route_ids=["draw.multi"]))
+        self.assertTrue(_split_speed_requested(expect_route="draw.multi"))
+        self.assertFalse(_split_speed_requested(goal="", route_ids=["draw.ordinary"]))
 
     def test_apply_caps(self) -> None:
         ov: dict = {"route_ids": ["merge.ladder"], "max_rounds": 4}
@@ -77,6 +80,13 @@ class SkillSpeedCapsTests(unittest.TestCase):
             1,
         )
         self.assertEqual(ov.get("merge_discuss_cap"), 2)
+
+        multi: dict = {"route_ids": ["draw.multi"], "max_rounds": 4}
+        self.assertEqual(
+            _apply_skill_speed_caps(multi, goal="", expect_route="", max_rounds=4),
+            1,
+        )
+        self.assertEqual(multi.get("split_round_cap"), 1)
 
         cell: dict = {"route_ids": ["merge.ladder"], "max_rounds": 4}
         self.assertEqual(

@@ -15,6 +15,18 @@ def _converge_dir(root: Path) -> Path:
     return Path(root) / ".memory-art" / "converge"
 
 
+def session_json_path(root: Path, session_id: str, *, suffix: str = ".json") -> Path | None:
+    """会话文件必须落在 .memory-art/converge 这一层。拒绝 .. 和分隔符。"""
+    folder = _converge_dir(root).resolve()
+    sid = (session_id or "").strip()
+    if not sid or any(ch in sid for ch in "/\\:\0"):
+        return None
+    path = (folder / f"{sid}{suffix}").resolve()
+    if path.parent != folder:
+        return None
+    return path
+
+
 def _read_active(root: Path) -> dict[str, Any]:
     path = _converge_dir(root) / _ACTIVE
     if not path.is_file():
@@ -112,8 +124,8 @@ def clear_active_session(root: Path, session_id: str = "") -> None:
 
 
 def load_session(root: Path, session_id: str) -> dict[str, Any]:
-    path = _converge_dir(root) / f"{session_id}.json"
-    if not path.is_file():
+    path = session_json_path(root, session_id)
+    if path is None or not path.is_file():
         return {}
     try:
         data = json.loads(path.read_text(encoding="utf-8"))

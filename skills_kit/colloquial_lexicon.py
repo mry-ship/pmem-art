@@ -397,6 +397,31 @@ _REWRITE_REPLACE: dict[str, str] = {
     "立绘": "半身",
 }
 
+# 「按/照/跟这张」折成「参考这张」时，锁风格触发句必须保留「按」：
+# 否则「以后按这张画」→「以后参考这张画」后 _wants_style 认不到。
+_REF_FOLD_KEYS = frozenset({"按这张", "按这张的", "照这张", "跟这张"})
+_STYLE_LOCK_LEFT = ("以后都", "以后", "往后出图都", "往后都", "都")
+
+
+def _style_lock_left(text: str, idx: int) -> bool:
+    left = text[max(0, idx - 12) : idx]
+    return any(left.endswith(p) for p in _STYLE_LOCK_LEFT)
+
+
+def _replace_once(text: str, src: str, dest: str) -> str:
+    """只替第一处；锁风格左邻的按/照/跟这张不折成参考。"""
+    if src not in _REF_FOLD_KEYS:
+        return text.replace(src, dest, 1) if src in text else text
+    start = 0
+    while True:
+        i = text.find(src, start)
+        if i < 0:
+            return text
+        if _style_lock_left(text, i):
+            start = i + len(src)
+            continue
+        return text[:i] + dest + text[i + len(src) :]
+
 
 def rewrite_colloquial(
     text: str,
@@ -414,7 +439,7 @@ def rewrite_colloquial(
     rewritten = raw
     for src in sorted(_REWRITE_REPLACE.keys(), key=len, reverse=True):
         if src in rewritten:
-            rewritten = rewritten.replace(src, _REWRITE_REPLACE[src], 1)
+            rewritten = _replace_once(rewritten, src, _REWRITE_REPLACE[src])
 
     if not append_extras:
         return rewritten

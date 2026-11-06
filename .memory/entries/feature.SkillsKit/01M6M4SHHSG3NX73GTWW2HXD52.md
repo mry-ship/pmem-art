@@ -22,6 +22,8 @@ aliases:
 - 误路由
 - 全清单
 - 开画串台
+verified: '2026-11-06'
+verified_at: '2026-11-06T18:50:03.210+08:00'
 source:
   conversation: bebd9fbe-2671-4d95-aa71-a5515c6fdbf6
 ---

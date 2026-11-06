@@ -42,6 +42,17 @@ class ShowcaseRouteTests(unittest.TestCase):
         self.assertIn("style.lock", plan.route_ids)
         self.assertIn("prompt.write", plan.route_ids)
 
+    def test_bare_icon_with_merge_asks_abc(self) -> None:
+        plan = plan_route("对比页把图标和合成梯都再跑一遍")
+        self.assertEqual(plan.mode, "stop")
+        self.assertEqual(plan.reason, "icon_unspecified")
+        self.assertNotEqual(plan.route_ids, ["merge.ladder"])
+
+    def test_named_icon_a_with_merge_keeps_both(self) -> None:
+        plan = plan_route("对比页把图标A和合成梯都再跑一遍")
+        self.assertEqual(plan.reason, "showcase")
+        self.assertEqual(plan.route_ids, ["icon.a", "merge.ladder"])
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -516,8 +516,8 @@ def split_sheet_grid(
             inset = max(2, int(0.05 * min(x1 - x0, y1 - y0)))
             cell = im.crop((x0 + inset, y0 + inset, x1 - inset, y1 - inset))
             dest = out_dir / f"L{n:02d}.jpg"
-            centered = cell_to_equal_square(cell, size)
-            cell_to_equal_square(centered, size).save(dest, quality=92)
+            # 只居中一次。再调用会把已经摆正的方图按主体占比再缩一次，构图被挪走。
+            cell_to_equal_square(cell, size).save(dest, quality=92)
             written.append(dest)
     return written
 

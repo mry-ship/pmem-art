@@ -108,7 +108,7 @@ class TestDoctorQuietAndTip(unittest.TestCase):
             "modules": {},
             "entries": [{"module": "character.Demo", "id": "x"}],
             "stale_entries": [{"id": "x"}],
-            "qa_issues": ["edge"],
+            "qa_issues": [{"path": "assets/edge.png", "module": "character.Demo", "issues": ["edge"]}],
         }
         run_doctor_quiet(self.td, data, source="safe", offer_tip=False)
         self.assertEqual(self.entry.read_text(encoding="utf-8"), before_entry)
@@ -133,16 +133,17 @@ class TestDoctorQuietAndTip(unittest.TestCase):
             "modules": {},
             "entries": [{"module": "character.Demo"}],
             "stale_entries": [{"id": "s1"}],
-            "qa_issues": ["bad"],
+            "qa_issues": [{"path": "assets/bad.png", "module": "character.Demo", "issues": ["bad"]}],
         }
         summary = collect_doctor_summary(self.td, data)
         self.assertGreaterEqual(summary["orphans"], 1)
         self.assertTrue(summary["needs_attention"])
         joined = " ".join(summary["signals"])
-        self.assertIn("孤儿", joined)
         self.assertIn("STALE", joined)
         self.assertIn("QA", joined)
-        self.assertIn("缺specs", joined)
+        # 一条记忆不够「缺 specs」门槛；孤儿是轻提示，不进硬信号。
+        self.assertNotIn("缺specs", joined)
+        self.assertIn("孤儿", " ".join(summary["soft_signals"]))
 
     def test_claim_preserves_prior_report_fields(self) -> None:
         from lifecycle import load_doctor_state, save_doctor_state, try_claim_lazy_doctor

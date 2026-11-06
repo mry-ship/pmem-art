@@ -52,6 +52,79 @@ class RouteFalseFireTests(unittest.TestCase):
         plan = plan_route("往后出图都用这张的色板", images=["ref/style.png"])
         self.assertEqual(plan.route_ids, ["style.lock"])
 
+    def test_style_lock_an_zhe_not_folded_to_ordinary(self) -> None:
+        from skills_kit.route_normalize import normalize_for_route
+
+        for text in ("以后按这张画", "以后都按这张画风", "都按这张色板"):
+            self.assertIn("按这张", normalize_for_route(text), text)
+            plan = plan_route(text, images=["ref/style.png"])
+            self.assertEqual(plan.route_ids, ["style.lock"], text)
+            self.assertEqual(plan.reason, "style", text)
+        # 无样张：plan 仍是锁风格，advise 层再问贴图（不是普通图）
+        plan_bare = plan_route("以后按这张画")
+        self.assertEqual(plan_bare.route_ids, ["style.lock"])
+        advised = advise_route("以后按这张画")
+        self.assertFalse(advised["execute_ok"])
+        self.assertEqual(advised.get("confidence"), "ask")
+
+    def test_ref_fold_still_works_for_ordinary_pad(self) -> None:
+        from skills_kit.route_normalize import normalize_for_route
+
+        folded = normalize_for_route("按这张画一张窗边女孩")
+        self.assertIn("参考这张", folded)
+        self.assertNotIn("按这张", folded)
+
+    def test_non_art_ops_stop_not_ordinary(self) -> None:
+        for text in (
+            "检查分析下技能是否有问题",
+            "审计一下技能文档",
+            "跑一下单元测试",
+            "修一下 converge bug",
+            "你再深度检查下整个项目是否还有什么漏洞bug，问题",
+            "详细检查是否哪里有漏洞bug",
+            "帮我看看有没有 bug",
+            "帮我看看有没有 bugs",
+            "fix the bugs",
+            "审计一下 hooks",
+            "审计一下 hook",
+            "看看 agent_router 有没有坑",
+            "检查角色代码有没有 bug",
+            "看看报错比例",
+            "a little bug in the renderer",
+            "withdraw a bug from the backlog",
+            "深度检查整个项目",
+            "再查一遍仓库",
+            "审计一下整个项目",
+            "review the code",
+            "code review this module",
+        ):
+            plan = plan_route(text)
+            self.assertEqual(plan.mode, "stop", text)
+            self.assertEqual(plan.reason, "unrecognized", text)
+            self.assertEqual(plan.route_ids, [], text)
+            advised = advise_route(text)
+            self.assertFalse(advised["execute_ok"], text)
+
+    def test_dev_ops_gate_keeps_draw_and_review(self) -> None:
+        keep = {
+            "draw a cute bug": "draw.ordinary",
+            "a pile of fish hooks": "draw.ordinary",
+            "画一只 bug 怪物": "draw.ordinary",
+            "用这个技能画一张猫": "draw.ordinary",
+            "clip the character": "draw.ordinary",
+            "review the lighting": "draw.ordinary",
+            "简单测试一下这个姿势": "draw.ordinary",
+            "使用例子说明构图": "draw.ordinary",
+            "写个角色脚本": "draw.ordinary",
+            "函数曲线不好看": "draw.ordinary",
+            "脸哪里不对": "draw.ordinary",
+            "都按这张画一张窗边女孩": "draw.ordinary",
+        }
+        for text, rid in keep.items():
+            plan = plan_route(text, images=["a.png"] if "这张" in text or "窗边" in text else None)
+            self.assertNotEqual(plan.reason, "unrecognized", text)
+            self.assertEqual(plan.route_ids, [rid], text)
+
     def test_accept_knowledge_card_is_coach(self) -> None:
         plan = plan_route("把这条知识卡收下")
         self.assertEqual(plan.route_ids, ["coach.report"])

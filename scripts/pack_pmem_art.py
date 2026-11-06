@@ -129,6 +129,9 @@ def should_skip(path: Path, root: Path) -> bool:
         return True
     if path.name in SKIP_FILE_NAMES:
         return True
+    # 项目画廊是 atlas 现生成的，且被 gitignore。打进用户包会带上本仓画廊。
+    if path.name == "art-atlas.html":
+        return True
     if path.parent.name == "rules" and path.name == "pmem.mdc":
         return True
     if path.parent.name == ".codex" and path.name == "config.toml":
@@ -138,6 +141,11 @@ def should_skip(path: Path, root: Path) -> bool:
     if path.suffix in SKIP_SUFFIXES:
         return True
     if path.name.startswith(TMP_PREFIXES):
+        return True
+    # Claude 工作树是整仓副本；仓库根上划线开头的是本地探针，都不进用户包。
+    if "worktrees" in parts:
+        return True
+    if len(parts) == 1 and path.name.startswith("_"):
         return True
     if path.name.endswith(".local.yaml"):
         return True

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -13,6 +14,7 @@ from skills_kit.merge_relation import (
     load_phase1,
     parse_rows,
     place_subject_on_square,
+    split_sheet_grid,
     square_grid_boxes,
 )
 
@@ -392,6 +394,23 @@ class MergeRelationTests(unittest.TestCase):
         self.assertGreater(len(ys), 200)
         self.assertAlmostEqual(float(ys.mean()) / 200, 0.5, delta=0.12)
         self.assertAlmostEqual(float(xs.mean()) / 200, 0.5, delta=0.12)
+
+    def test_split_sheet_centers_each_cell_once(self) -> None:
+        sheet = Image.new("RGB", (400, 200), (210, 210, 210))
+        px = sheet.load()
+        for y in range(10, 40):
+            for x in range(10, 40):
+                px[x, y] = (40, 160, 80)
+        with tempfile.TemporaryDirectory() as td:
+            src = Path(td) / "sheet.jpg"
+            out = Path(td) / "cells"
+            sheet.save(src, quality=95)
+            paths = split_sheet_grid(src, out, rows=2, columns=4, size=80)
+            self.assertEqual(len(paths), 8)
+            once = cell_to_equal_square(Image.open(src).crop((5, 5, 95, 95)), 80)
+            got = Image.open(paths[0])
+            self.assertEqual(got.size, once.size)
+            self.assertLess(float(np.abs(np.array(got).astype(int) - np.array(once).astype(int)).mean()), 8.0)
 
 
 if __name__ == "__main__":

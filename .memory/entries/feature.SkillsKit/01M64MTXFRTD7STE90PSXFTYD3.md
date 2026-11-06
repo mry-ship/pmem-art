@@ -17,6 +17,8 @@ summary: 同范围全部重跑默认全清单；展陈路径不被 assets 覆盖
 verify: python3 -m unittest tests.test_showcase_route tests.test_showcase_gate -q；pmem_art.py
   route --text "全部重跑 homepage" --canonical "整页展陈同范围重跑"；showcase-gate --html docs/showcase/homepage_rerun_1028_regen3/index.html
 applies: /pmem-agent 展陈同范围重跑与 converge finish/status
+verified: '2026-11-06'
+verified_at: '2026-11-06T18:50:03.210+08:00'
 source:
   conversation: ad2110dc-14c1-4866-a441-1909136ea8d1
 ---

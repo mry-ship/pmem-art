@@ -516,6 +516,7 @@ class AtlasAllImagesTests(unittest.TestCase):
         """工作台需由 reveal 用 http 托管，避免 file:// 下删除 POST 被浏览器拦截。"""
         import socket
         import threading
+        import urllib.error
         import urllib.request
         from http.server import ThreadingHTTPServer
 
@@ -546,6 +547,43 @@ class AtlasAllImagesTests(unittest.TestCase):
             ) as resp:
                 self.assertEqual(resp.status, 200)
                 self.assertGreater(len(resp.read()), 10)
+            py = self.td / "notes.py"
+            py.write_text("print('no')\n", encoding="utf-8")
+            try:
+                urllib.request.urlopen(f"http://127.0.0.1:{port}/notes.py", timeout=2)
+                self.fail("source file should not be served")
+            except urllib.error.HTTPError as exc:
+                self.assertEqual(exc.code, 404)
+            side = self.td / ".memory-art" / "atlas_data.json"
+            side.parent.mkdir(parents=True, exist_ok=True)
+            side.write_text("{}", encoding="utf-8")
+            with urllib.request.urlopen(
+                f"http://127.0.0.1:{port}/.memory-art/atlas_data.json", timeout=2
+            ) as resp:
+                self.assertEqual(resp.status, 200)
+            taste = self.td / ".memory-art" / "_profile"
+            taste.mkdir(parents=True, exist_ok=True)
+            (taste / "taste.json").write_text("{}", encoding="utf-8")
+            try:
+                urllib.request.urlopen(
+                    f"http://127.0.0.1:{port}/.memory-art/_profile/taste.json", timeout=2
+                )
+                self.fail("taste json should not be served")
+            except urllib.error.HTTPError as exc:
+                self.assertEqual(exc.code, 404)
+            req = urllib.request.Request(
+                f"http://127.0.0.1:{port}/api/delete",
+                data=b'{"paths":["assets/scene/demo/keep.png"]}',
+                headers={"Origin": "https://evil.example", "Content-Type": "application/json"},
+                method="POST",
+            )
+            try:
+                urllib.request.urlopen(req, timeout=2)
+                self.fail("foreign origin should not delete")
+            except urllib.error.HTTPError as exc:
+                self.assertEqual(exc.code, 403)
+            self.assertTrue(img.is_file())
+
             with urllib.request.urlopen(f"http://127.0.0.1:{port}/api/ping", timeout=2) as resp:
                 payload = json.loads(resp.read().decode("utf-8"))
                 self.assertTrue(payload.get("ok"))
@@ -574,6 +612,21 @@ class AtlasAllImagesTests(unittest.TestCase):
         (self.td / ".memory-art" / "converge" / "promo-demo.json").write_text(
             json.dumps(sess, ensure_ascii=False), encoding="utf-8"
         )
+        leaked = self.td / "secret.json"
+        leaked.write_text('{"keep": true}\n', encoding="utf-8")
+        blocked = promote_final(
+            self.td,
+            source_path="assets/scene/demo/shot_r2.png",
+            session_id="../../secret",
+        )
+        self.assertFalse(blocked.get("ok"))
+        self.assertEqual(blocked.get("error"), "bad session id")
+        self.assertEqual(leaked.read_text(encoding="utf-8"), '{"keep": true}\n')
+        from skills_kit.converge import _session_file
+
+        with self.assertRaises(ValueError):
+            _session_file(self.td, "../../secret")
+
         out = promote_final(
             self.td,
             source_path="assets/scene/demo/shot_r2.png",

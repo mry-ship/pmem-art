@@ -257,7 +257,9 @@ class TestGenerateMergesMemory(unittest.TestCase):
             sf = _session_file(td, sid)
             sess = json.loads(sf.read_text(encoding="utf-8"))
             rev = (
-                "蜜桃糖果药瓶单件居中，透明或纯黑隔离底，方构图无字；"
+                "蜜桃糖果药瓶单件居中，shop_ladder 同族形变："
+                "同家族色相逐档升级包装，合成理由是药瓶把散糖收成一罐；"
+                "透明或纯黑隔离底，方构图无字；"
                 "一眼失败是焊进蛋糕或挤成场景杂物。"
             )
             review = review_reasonableness(

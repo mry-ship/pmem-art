@@ -228,7 +228,8 @@ def _split_speed_requested(
     ids, blob = _route_blob(
         goal=goal, expect_route=expect_route, route_ids=route_ids
     )
-    if "draw.split" in ids or expect_route == "draw.split":
+    # 路由实际写的是 draw.multi（不是 draw.split）；两个 id 都认。
+    if {"draw.split", "draw.multi"} & set(ids) or expect_route in ("draw.split", "draw.multi"):
         return True
     return any(
         k in blob
@@ -491,7 +492,9 @@ def converge_start(
         verbose=verbose,
         silent=silent,
     )
-    sf = _session_file(root, session_id)
+    sf, err = _try_session_file(root, session_id)
+    if sf is None:
+        return {"exit_code": rc or 1, "session_id": session_id, "error": err, "session": {}}
     sess = json.loads(sf.read_text(encoding="utf-8")) if sf.exists() else {}
     return {
         "exit_code": rc,
@@ -560,7 +563,9 @@ def converge_generate(
         verbose=verbose,
         silent=silent,
     )
-    sf = _session_file(root, session_id)
+    sf, err = _try_session_file(root, session_id)
+    if sf is None:
+        return {"exit_code": rc or 1, "session_id": session_id, "error": err, "session": {}}
     sess = json.loads(sf.read_text(encoding="utf-8")) if sf.exists() else {}
     last_round = (sess.get("rounds") or [-1])[-1] if sess.get("rounds") else {}
     return {
@@ -599,7 +604,9 @@ def converge_finish(
         verbose=verbose,
         silent=silent,
     )
-    sf = _session_file(root, session_id)
+    sf, err = _try_session_file(root, session_id)
+    if sf is None:
+        return {"exit_code": rc or 1, "session_id": session_id, "error": err, "session": {}}
     sess = json.loads(sf.read_text(encoding="utf-8")) if sf.exists() else {}
     return {
         "exit_code": rc,
@@ -656,7 +663,9 @@ def converge_judge(
         verbose=verbose,
         silent=silent,
     )
-    sf = _session_file(root, session_id)
+    sf, err = _try_session_file(root, session_id)
+    if sf is None:
+        return {"exit_code": rc or 1, "session_id": session_id, "error": err, "session": {}}
     sess = json.loads(sf.read_text(encoding="utf-8")) if sf.exists() else {}
     last_round = (sess.get("rounds") or [-1])[-1] if sess.get("rounds") else {}
     return {
@@ -681,9 +690,21 @@ def converge_step(*args: Any, **kwargs: Any) -> dict[str, Any]:
 
 
 def _session_file(root: Path, session_id: str = "latest") -> Path:
+    from .converge_loop import session_json_path
+
     d = root / ".memory-art" / "converge"
     d.mkdir(parents=True, exist_ok=True)
-    return d / f"{session_id}.json"
+    path = session_json_path(root, (session_id or "latest").strip() or "latest")
+    if path is None:
+        raise ValueError(f"会话 id 不能包含路径：{session_id}")
+    return path
+
+
+def _try_session_file(root: Path, session_id: str) -> tuple[Path | None, str]:
+    try:
+        return _session_file(root, session_id), ""
+    except ValueError as exc:
+        return None, str(exc)
 
 
 def _plate_file(raw: str, root: Path) -> str:
@@ -866,7 +887,11 @@ def cmd_converge(
     """
     if verbose:
         silent = False
-    sf = _session_file(root, session_id)
+    try:
+        sf = _session_file(root, session_id)
+    except ValueError as exc:
+        print(f"❌ {exc}")
+        return 1
     converge_mode = (converge_mode or "quality").lower()
     if converge_mode not in ("quality", "fast"):
         converge_mode = "quality"
@@ -2585,7 +2610,7 @@ def cmd_converge(
             md_lines.extend(["", f"过程板未写出：{exc}", ""])
 
         report_text = "\n".join(md_lines)
-        report_file = root / ".memory-art" / "converge" / f"{session_id}_report.md"
+        report_file = sf.with_name(f"{sf.stem}_report.md")
         report_file.parent.mkdir(parents=True, exist_ok=True)
         report_file.write_text(report_text + "\n", encoding="utf-8")
 
