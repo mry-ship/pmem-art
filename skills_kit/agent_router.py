@@ -1104,9 +1104,9 @@ def plan_route(
                     deliverable="先交关上这一态",
                     images=pics,
                     locks="身份图的身份；机位以结构图为准，身份图原来的机位作废",
-                    done="关上这一态：出图一轮交件（标明是否≥9.5）",
+                    done="关上这一态：最多4轮、≥9.5到线即停（标明是否≥9.5）",
                     next_output="通过的关上这一张",
-                    note="converge start --contract split；出图一轮交件；不要写 --scale medium",
+                    note="converge start --contract split；最多4轮到线即停；不要写 --scale medium",
                 )
             )
             route_ids.append(rid)
@@ -1116,10 +1116,10 @@ def plan_route(
                     deliverable="只改成打开这一态",
                     images=["上一步通过的那张"],
                     locks="机位不变，只改开合",
-                    done="打开这一态：出图一轮交件（标明是否≥9.5）",
+                    done="打开这一态：最多4轮、≥9.5到线即停（标明是否≥9.5）",
                     next_output="打开这一张",
                     skip=pics,
-                    note="只垫已经通过的那张；出图一轮交件",
+                    note="只垫已经通过的那张；最多4轮到线即停",
                 )
             )
             continue
@@ -1133,23 +1133,23 @@ def plan_route(
                 note = "单张、medium、≥9.50到线即停，最多4兜底。不说成多图分工"
                 locks = "锁机位和身份。多张参考留在列表里，生成只垫宽高比对齐的那张"
             elif rid in ("draw.multi", "draw.split"):
-                note = "banner：每交付物出图一轮交件（标明是否≥9.5）"
-                done = "每交付物生1→judge1，标明过线/未过线"
+                note = "banner：每交付物最多4轮、≥9.5到线即停（标明是否≥9.5）"
+                done = "每交付物最多4轮到线即停，标明过线/未过线"
         elif rid == "ui.kit":
-            done = "默认概念出图一轮交件；仅点名 full kit 再加1张总表+切线清单"
+            done = "默认概念最多4轮到线即停；仅点名 full kit 再加1张总表+切线清单"
             locks = "整套界面，不用单张插画交差；未点名禁止拆全家桶"
-            note = "banner：出图一轮交件（只限生图轮次）；默认 concept-only"
+            note = "banner：最多4轮·≥9.5到线即停；默认 concept-only"
         elif rid.startswith("icon."):
-            done = "批量预览齐；关键枚默认不开；翻车才出图一轮；A 默认只交 Light"
+            done = "批量预览齐；关键枚默认不开；翻车才开最多4轮闭环；A 默认只交 Light"
             locks = route["when"]
             note = "banner：B/C 只批量；关键枚默认禁；A 未点名勿假齐套三态"
         elif rid == "merge.ladder":
             done = (
-                "关系最多2稿（过了就停）→整表出图一轮交件（通常8、竞品合理可6）；"
-                "点名逐格时每档出图一轮；未点名必须整表"
+                "关系最多2稿（过了就停）→整表最多4轮到线即停（通常8、竞品合理可6）；"
+                "点名逐格时各档并行独立 session、每档最多4轮；未点名必须整表"
             )
-            locks = "同一条升级链；未点名逐格禁止拆单张；overview 禁凑满 ordinary 4 轮"
-            note = "banner：出图一轮交件；关系≤2；整表1张；交件标明是否过线"
+            locks = "同一条升级链；未点名逐格禁止拆单张；到线即停不鼓励凑满4轮"
+            note = "banner：最多4轮到线即停；关系≤2；逐格须并行；交件标明是否过线"
         elif rid == "prompt.write":
             done = "交出提示词方案，不生图"
             locks = "只写提示词"

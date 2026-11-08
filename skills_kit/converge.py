@@ -68,16 +68,15 @@ def _norm_ref_paths(paths: Any) -> list[str]:
     return out
 
 
-# 重路径：出图轮次硬顶 1（生1→judge1→finish；交件须标明是否 ≥9.5；禁止叠轮）
-# 只限制生图轮次；关系/合理性仍要写，不叫「整段只审一次」
-MERGE_OVERVIEW_MAX_ROUNDS = 1
+# 重路径：与普通图对齐——≥9.5 到线即停，最多 4 轮兜底（关系/合理性仍要写）
+MERGE_OVERVIEW_MAX_ROUNDS = 4
 MERGE_OVERVIEW_MAX_DISCUSS = 2  # 论述便宜；第 1 稿过了就停
-MERGE_PER_CELL_MAX_ROUNDS = 1
-UI_CONCEPT_MAX_ROUNDS = 1
-UI_SHEET_MAX_ROUNDS = 1
-ICON_KEY_MAX_ROUNDS = 1
-SPLIT_MAX_ROUNDS = 1
-# 出图硬顶=1 时不再垫上一张成图叠轮（保留函数仅供单测/调试抬高 max_rounds）
+MERGE_PER_CELL_MAX_ROUNDS = 4
+UI_CONCEPT_MAX_ROUNDS = 4
+UI_SHEET_MAX_ROUNDS = 4
+ICON_KEY_MAX_ROUNDS = 4
+SPLIT_MAX_ROUNDS = 4
+# 整表叠轮垫上一张：仅当上一张够高分且无结构/关系硬伤
 MERGE_OVERVIEW_PAD_PREV_MIN_SCORE = 8.5
 _MERGE_STRUCTURAL_FAIL_MARKERS = (
     "回退",
@@ -222,7 +221,7 @@ def _split_speed_requested(
     route_ids: list[str] | None = None,
     contract: str = "",
 ) -> bool:
-    """多图分工 / 远中近 / split 合同：每交付物只审一次。"""
+    """多图分工 / 远中近 / split 合同：每交付物最多4轮、≥9.5到线即停。"""
     if str(contract or "").strip().lower() == "split":
         return True
     ids, blob = _route_blob(
@@ -267,9 +266,9 @@ def _apply_merge_overview_caps(
     sess["merge_sheet_cap"] = MERGE_OVERVIEW_MAX_ROUNDS
     sess["merge_discuss_cap"] = MERGE_OVERVIEW_MAX_DISCUSS
     sess["max_rounds"] = capped
-    # 停机以整表清单为准；出图轮次硬顶 1，禁止叠轮垫图
+    # 停机以整表清单 + ≥9.5 到线为准；最多 4 轮兜底
     sess["stop_policy"] = "merge_overview_checklist"
-    sess["single_judge"] = True
+    sess["single_judge"] = False
     return capped
 
 
@@ -292,9 +291,8 @@ def _apply_merge_per_cell_caps(
     sess["merge_discuss_cap"] = MERGE_OVERVIEW_MAX_DISCUSS
     sess["merge_cell_cap"] = MERGE_PER_CELL_MAX_ROUNDS
     sess["max_rounds"] = capped
-    # 出图一轮交件：记分并标明是否 ≥9.5；禁止第 2 张
-    sess["stop_policy"] = "image_round_cap"
-    sess["single_judge"] = True
+    sess["stop_policy"] = "dynamic_threshold"
+    sess["single_judge"] = False
     return capped
 
 
@@ -319,8 +317,8 @@ def _apply_ui_speed_caps(
     sess["ui_delivery"] = stage
     sess["ui_round_cap"] = hard
     sess["max_rounds"] = capped
-    sess["stop_policy"] = "image_round_cap"
-    sess["single_judge"] = True
+    sess["stop_policy"] = "dynamic_threshold"
+    sess["single_judge"] = False
     return capped
 
 
@@ -342,8 +340,8 @@ def _apply_icon_speed_caps(
     capped = min(int(max_rounds), ICON_KEY_MAX_ROUNDS)
     sess["icon_key_cap"] = ICON_KEY_MAX_ROUNDS
     sess["max_rounds"] = capped
-    sess["stop_policy"] = "image_round_cap"
-    sess["single_judge"] = True
+    sess["stop_policy"] = "dynamic_threshold"
+    sess["single_judge"] = False
     return capped
 
 
@@ -364,8 +362,8 @@ def _apply_split_speed_caps(
     capped = min(int(max_rounds), SPLIT_MAX_ROUNDS)
     sess["split_round_cap"] = SPLIT_MAX_ROUNDS
     sess["max_rounds"] = capped
-    sess["stop_policy"] = "image_round_cap"
-    sess["single_judge"] = True
+    sess["stop_policy"] = "dynamic_threshold"
+    sess["single_judge"] = False
     return capped
 
 
@@ -377,13 +375,12 @@ def _apply_skill_speed_caps(
     module: str = "",
     max_rounds: int,
 ) -> int:
-    """Heavy-path: image-round cap=1 (not 'whole skill one review'). First match wins."""
+    """Heavy-path: max 4 rounds, ≥9.5 early stop (not single-shot). First match wins."""
     g = goal or str(sess.get("goal") or "")
     er = expect_route or ""
     mod = module or str(sess.get("module") or "")
     eff = _apply_merge_overview_caps(sess, goal=g, expect_route=er, max_rounds=int(max_rounds))
     if sess.get("merge_delivery") == "overview_sheet":
-        sess["single_judge"] = True
         return eff
     eff = _apply_merge_per_cell_caps(sess, goal=g, expect_route=er, max_rounds=int(max_rounds))
     if sess.get("merge_delivery") == "per_cell":
@@ -1066,29 +1063,29 @@ def cmd_converge(
         )
         if sess.get("merge_delivery") == "overview_sheet":
             print(
-                f"🪜 [merge overview] 出图一轮交件：整表生1→judge1→finish；"
+                f"🪜 [merge overview] ≥9.5到线即停，最多 {eff_max} 轮；"
                 f"关系稿最多 {MERGE_OVERVIEW_MAX_DISCUSS}（过了就停）；"
-                f"交件须标明是否 ≥9.5/清单过关；禁止叠轮垫图；max_rounds={eff_max}。"
+                f"交件须标明是否 ≥9.5/清单过关。"
             )
         elif sess.get("merge_delivery") == "per_cell":
             print(
-                f"🪜 [merge per_cell] 出图一轮交件：每档生1→judge1；"
-                f"关系稿最多 {MERGE_OVERVIEW_MAX_DISCUSS}；交件标明是否 ≥9.5；max_rounds={eff_max}。"
+                f"🪜 [merge per_cell] 本档 ≥9.5到线即停，最多 {eff_max} 轮；"
+                f"关系稿最多 {MERGE_OVERVIEW_MAX_DISCUSS}；"
+                f"多档须并行开独立 session 生图（禁止串行等完一档再开下一档）。"
             )
         elif sess.get("ui_delivery"):
             print(
-                f"🖥️ [ui] 出图一轮交件：{sess.get('ui_delivery')} 生1→judge1→finish；"
-                f"交件标明是否 ≥9.5；未点名 full kit 禁止拆组件表；max_rounds={eff_max}。"
+                f"🖥️ [ui] {sess.get('ui_delivery')} ≥9.5到线即停，最多 {eff_max} 轮；"
+                f"未点名 full kit 禁止拆组件表。"
             )
         elif sess.get("icon_key_cap"):
             print(
-                f"🧩 [icon] 出图一轮交件：关键枚若开闭环生1→judge1；"
-                f"交件标明是否 ≥9.5；批量默认不逐枚开闭环；max_rounds={eff_max}。"
+                f"🧩 [icon] 关键枚若开闭环：≥9.5到线即停，最多 {eff_max} 轮；"
+                f"批量默认不逐枚开闭环。"
             )
         elif sess.get("split_round_cap"):
             print(
-                f"🗂️ [split] 出图一轮交件：本交付物生1→judge1→finish；"
-                f"交件标明是否 ≥9.5；max_rounds={eff_max}。"
+                f"🗂️ [split] 本交付物 ≥9.5到线即停，最多 {eff_max} 轮。"
             )
         if lock_text or goal:
             from skills_kit.prompt_scale import merge_dim_lock_overrides, format_dim_lock_summary_zh
@@ -1424,8 +1421,8 @@ def cmd_converge(
                 )
             elif sess.get("split_round_cap"):
                 print(
-                    f"🛑 [split speed] 本交付物已审过 1 次，禁止再刷。"
-                    f"请 `{pmem_art_cli()} converge finish --id {session_id}` 交件并列不足。"
+                    f"🛑 [split speed] 本交付物已达硬顶 {mr} 次，禁止再刷。"
+                    f"请 `{pmem_art_cli()} converge finish --id {session_id}` 交最高分并列不足。"
                 )
             else:
                 print(
@@ -2630,7 +2627,11 @@ def cmd_converge(
                 print("（未写入记忆：已指定 --no-apply）")
             if doctor_tip:
                 print(doctor_tip)
-            print(f"📎 评分履历已写盘: {report_file.relative_to(root)} （去掉 --quiet 可在终端打印）")
+            try:
+                report_rel = report_file.resolve().relative_to(Path(root).resolve())
+            except ValueError:
+                report_rel = report_file
+            print(f"📎 评分履历已写盘: {report_rel} （去掉 --quiet 可在终端打印）")
         else:
             print(report_text)
             if action == "finish":

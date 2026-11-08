@@ -145,7 +145,7 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 2. 这一步交什么
 3. 垫哪张，不垫哪张
 4. 锁什么
-5. 怎样算做完（生图步：≥9.5 到线，或达到该会话轮次硬顶并标明未过线；普通图最多 4，重路径出图一轮；展陈 HTML 还要 `python3 pmem_art.py showcase-gate --html <路径>` 通过）
+5. 怎样算做完（生图步：≥9.5 到线，或达到该会话轮次硬顶并标明未过线；普通图与重路径均为最多 4，≥9.5到线即停；展陈 HTML 还要 `python3 pmem_art.py showcase-gate --html <路径>` 通过）
 6. 交给下一步什么
 
 回显以 `route` 的 `banner` 为准（最前一行）。例如「【按 多图分工 走了】」「【走默认路径】按 普通图 走了」「【按 Mode A 走了】」。这句只说明选了哪一节，不问选哪条技能。
@@ -498,7 +498,7 @@ improve/coach/learn 推销仅在用户主动要时再给。
 
 每张图必须有一个分工：机位、身份、状态、画风、版式。定稿里没写分工的图不垫。一次交来两张图时，先看它们各管什么，不要并成一张参考再画。
 
-交付张数按定稿写死：一张拼板，或每个状态各一张。每个交付物 **出图一轮交件**（生1→judge1，CLI `max_rounds=1`）；finish 时必须标明「过线/未过线（≥9.5）」；分工问题写在评分里，禁止叠轮。定稿写了拼板，验收看两态的转角和侧壁宽度。定稿写死底：实色、场景，或透明。透明交 PNG。品红块和品红底 JPG 不能当交付。
+交付张数按定稿写死：一张拼板，或每个状态各一张。每个交付物 **最多4轮、≥9.5到线即停**（CLI `max_rounds=4`）；finish 时必须标明「过线/未过线（≥9.5）」；分工问题写在评分里，到线即停、不鼓励凑满。定稿写了拼板，验收看两态的转角和侧壁宽度。定稿写死底：实色、场景，或透明。透明交 PNG。品红块和品红底 JPG 不能当交付。
 
 - **第一态**：身份图和结构图都垫上。身份图原来的机位作废，机位以结构图为准。开会话用 `converge start --contract split`，不要写 `--scale medium`。
 - **下一态**：只垫已经通过的上一张。锁机位和身份，只改这个状态。转角和侧壁宽度跟上一张一致。
@@ -604,10 +604,10 @@ improve/coach/learn 推销仅在用户主动要时再给。
 
     {
         "name": "pmem-ui",
-        "title": "【出图一轮交件】SpriteCook式 UI Kit/HUD/九宫格整套",
+        "title": "【最多4轮·到线即停】SpriteCook式 UI Kit/HUD/九宫格整套",
         "description": (
             "仅当玩家点名 UI/HUD/九宫格，或生图分流判成整套界面时使用。不要用来画普通插画、单张克隆或合成梯。"
-            "默认 concept-only。概念/组件表均为出图一轮交件（只限生图轮次=1；交件标明是否≥9.5）；full kit 默认1张总表。"
+            "默认 concept-only。概念/组件表均为最多4轮·到线即停（≥9.5到线即停，最多4轮兜底；交件标明是否≥9.5）；full kit 默认1张总表。"
             "流水线对标 SpriteCook：概念先行 →（仅点名）透明组件表 → 九宫格切线 → 状态族。"
             "触发例：「/pmem-ui 生成一套蒸汽朋克主菜单 HUD」「/pmem-ui [附概念图] 拆出九宫格弹窗与按钮态」。"
         ),
@@ -623,15 +623,15 @@ improve/coach/learn 推销仅在用户主动要时再给。
 ```
 
 ## 原理（截图摘要）
-1. `search` 召回 `ui.*` 红线与定稿 → 2. **概念先行（默认停这里）** → 3. **仅点名 full kit** 才透明组件表 → 4. 九宫格切线（切线/清单，不重生图闭环）→ 5. **出图一轮交件** → `finish` + **记忆静默写入**
+1. `search` 召回 `ui.*` 红线与定稿 → 2. **概念先行（默认停这里）** → 3. **仅点名 full kit** 才透明组件表 → 4. 九宫格切线（切线/清单，不重生图闭环）→ 5. **最多4轮闭环** → `finish` + **记忆静默写入**
 
 你现在运行在 **pmem-art UI Kit 模式**（对标 SpriteCook UI Kit Builder：概念先行 → 组件表 → 九宫格切线 → 状态族）。**禁止**把整屏各控件零散各生一张再硬拼；必须先锁一个统一视觉语言的概念稿，再从同一概念抽出可复用零件。
 
-### 耗时闸（出图一轮交件·必守）
-- **名字含义**：只限制**生图轮次=1**；关系/合理性/切线清单仍要做，不是整段技能只审一次。
-- **默认 concept-only**：口语没点「组件表 / 九宫格切线 / 状态族 / UI kit / 拆按钮」→ 概念一轮交件，**禁止**自作主张开全家桶。
-- **交件语义**：每个 converge **生 1 → judge 1 → finish**；finish 必须写明「过线/未过线（≥9.5）」；未过线也是合法终态，**禁止**为凑 9.5 叠第 2 张。
-- **full kit**：概念 1 次 + **默认仅 1 张**组件总表；**禁止**第 2 张 sheet、禁止关键件二次 converge。
+### 耗时闸（最多4轮·≥9.5到线即停·必守）
+- **名字含义**：生图闭环最多 **4** 轮、≥9.5 到线即停；关系/合理性/切线清单仍要做。
+- **默认 concept-only**：口语没点「组件表 / 九宫格切线 / 状态族 / UI kit / 拆按钮」→ 只做概念稿闭环，**禁止**自作主张开全家桶。
+- **交件语义**：每个 converge **生→judge→不到线再改，最多4轮**；≥9.5 到线即 finish；满4轮交最高分并写明「过线/未过线（≥9.5）」。
+- **full kit**：概念最多4轮 + **默认仅 1 张**组件总表（该表本身也最多4轮）；**禁止**无点名狂刷多张 sheet、禁止零件级二次 converge 全家桶。
 - **九宫格/manifest**：在已有图上标切线与清单，不另开生图闭环。
 - **浅/深双主题**：仅玩家点名才各跑一次；默认只交一主题。
 
@@ -646,7 +646,7 @@ improve/coach/learn 推销仅在用户主动要时再给。
 ### 交付档（先分叉；可默认，不必再问类型以外的事）
 | 档 | 何时 | 做到哪停 |
 | :--- | :--- | :--- |
-| **concept-only（最小档·默认）** | 只要主菜单/某一屏概念、截图级气氛；**没**点名九宫格、组件表、状态族、UI kit 套件 | 只做 Step 1 概念稿（出图一轮交件），标明是否 ≥9.5。**禁止**默开组件表/九宫格全家桶 |
+| **concept-only（最小档·默认）** | 只要主菜单/某一屏概念、截图级气氛；**没**点名九宫格、组件表、状态族、UI kit 套件 | 只做 Step 1 概念稿（最多4轮·到线即停），标明是否 ≥9.5。**禁止**默开组件表/九宫格全家桶 |
 | **full kit（全套）** | 点名组件表 / 九宫格 / 状态族 / 套件，或「整套 UI kit」 | Concept（1）→ 总表 Sheet（1）→ 9-Slice 切线/清单；概念未审完不准拆件 |
 
 玩家口语含糊但只提「主界面/主菜单长什么样」→ 默认 **concept-only**。点了「拆按钮/九宫格/pressed」→ **full kit**。
@@ -659,7 +659,7 @@ python3 pmem_art.py search --module <ui.模块>
 
 ### Step 1：概念先行（Concept First）—— 不可跳过
 1. 若用户丢入概念图：先做参考图视觉解构（构图分区、主辅色 HEX、金属/木纹/霓虹材质、控件密度），再进入组件抽取。
-2. 若无概念图：先生成 **1 张完整屏幕概念稿**（整屏布局，统一材质与色板），**出图一轮交件**（生1→judge1→finish，标明是否 ≥9.5）：
+2. 若无概念图：先生成 **1 张完整屏幕概念稿**（整屏布局，统一材质与色板），**最多4轮、≥9.5到线即停**（生→judge→不到线再改；满4轮交最高分并标明是否≥9.5）：
    ```bash
    python3 pmem_art.py converge start --goal "UI概念稿：<屏幕类型+风格>" --module <ui.模块> --route-id ui.kit [--scale medium|high]
    # 首轮前必过合理性闸（同时交出更合理提示词）：
@@ -717,7 +717,7 @@ python3 pmem_art.py search --module <ui.模块>
 - **进度条 / 血条**：空轨 + 满轨（或分段填充）
 - **标签 / Tab**：选中 + 未选中
 - **图标位 / 分隔线 / 角花** 等概念中出现或隐含的零件
-垫最初概念参考；出图一轮交件：`converge start --goal "UI组件表：…" --route-id ui.kit` → generate → judge → finish（CLI `max_rounds=1`，标明是否 ≥9.5）。
+垫最初概念参考；最多4轮：`converge start --goal "UI组件表：…" --route-id ui.kit` → generate → judge（循环到线或满4）→ finish（标明是否 ≥9.5）。
 
 ### Step 3：九宫格切线与清单（9-Slice + Manifest）
 对每个可缩放件标注九宫格：四角固定、四边单向拉伸、中心双向拉伸。**只写切线与清单，不另开生图闭环。** 输出：
@@ -732,7 +732,7 @@ ui_kit_<name>/
 `manifest.json` 示例字段：`name`, `group`, `state`, `file`, `nine_slice: {left,right,top,bottom}`, `scalable: true|false`。
 
 ### Step 4：关键件二次收敛（禁止默认）
-出图一轮交件路径下 **跳过**本步。缺件只在总表提示词里写清后新开短会话重开整表（仍只生 1 张），禁止逐零件 converge。
+概念/组件表走最多4轮闭环。缺件只在总表提示词里写清后新开短会话重开整表，禁止逐零件 converge。
 
 ### Step 5：沉淀记忆
 ```bash
@@ -753,7 +753,7 @@ python3 pmem_art.py feedback "UI套件色板与九宫格规范：<摘要>" --mod
 管线合规另记、**不进** `--dims` 乘积，可写在缺陷旁：`管线合规9.0（门槛）`。
 
 ## 四、最终交付必须包含
-- **concept-only**：概念稿（出图一轮交件 + 过线/未过线标注）+ 评分卡；**不要**为了清单去补假组件表。
+- **concept-only**：概念稿（最多4轮·到线即停 + 过线/未过线标注）+ 评分卡；**不要**为了清单去补假组件表。
 - **full kit**：概念稿 + **1 张**组件总表 + `elements/` + `manifest.json`（含九宫格）；缺件只补缺件。
 - 若跑了收敛：默认附上全轮次评分优劣总表（不足/改点）；只要终稿用 `--quiet`
 - 已写入 `.memory-art` 的 recipe / redline 路径（若本趟有 ingest/feedback）
@@ -763,11 +763,11 @@ python3 pmem_art.py feedback "UI套件色板与九宫格规范：<摘要>" --mod
     },
     {
         "name": "pmem-icon",
-        "title": "【出图一轮交件·批量优先】iOS/Android App Icon + SVG 图标集 + 游戏道具栅格",
+        "title": "【最多4轮·批量优先】iOS/Android App Icon + SVG 图标集 + 游戏道具栅格",
         "description": (
             "仅当玩家点名图标，或生图分流判成桌面图标、SVG 图标集、游戏道具格时使用。A/B/C 不混用。不要用来画普通插画或合成梯。"
-            "(A) 默认只交 Light 母版（出图一轮）；Dark/Tinted 仅玩家点名才另出，禁止口头宣称已派生齐套。"
-            "(B)(C) 只批量预览；关键枚闭环默认禁止，点名翻车才开且生1→judge1。"
+            "(A) 默认只交 Light 母版（最多4轮·到线即停）；Dark/Tinted 仅玩家点名才另出，禁止口头宣称已派生齐套。"
+            "(B)(C) 只批量预览；关键枚闭环默认禁止，点名翻车才开且最多4轮·到线即停。"
         ),
         "body": r"""
 # `/pmem-icon` — jezweb 式一致化图标集 / SVG 取向生成
@@ -783,15 +783,15 @@ python3 pmem_art.py feedback "UI套件色板与九宫格规范：<摘要>" --mod
 ```
 
 ## 原理（截图摘要）
-- **Mode A**：满幅直角母版 → 安全区单符号 → 尺寸矩阵；默认只交 **Light 母版**（出图一轮交件）；Dark/Tinted **仅点名才另出**
+- **Mode A**：满幅直角母版 → 安全区单符号 → 尺寸矩阵；默认只交 **Light 母版**（最多4轮·≥9.5到线即停）；Dark/Tinted **仅点名才另出**
 - **Mode B**：锁 style-spec → SVG 硬规则 → 分批生成 → preview（对标 jezweb）；关键枚闭环默认不开
 - **Mode C**：锁道具格 style-spec → 透明底 PNG **只批量**；关键枚闭环默认不开
 先分 A/B/C，再进对应节；反思写进记忆，要看报告再用 /pmem-coach。
 
-### 耗时闸（出图一轮交件·必守）
-- **名字含义**：只限生图轮次=1；style-spec/批量预览/清单仍要做。
+### 耗时闸（最多4轮·≥9.5到线即停·必守）
+- **名字含义**：≥9.5到线即停，最多4轮；style-spec/批量预览/清单仍要做。
 - **B/C 批量**：整套一次出齐 → 肉眼/清单一致性审查（**不算** converge 叠轮）；**禁止**默认逐枚 converge。
-- **关键枚闭环**：仅玩家点名某枚翻车；开则生1→judge1（CLI `max_rounds=1`），finish 标明是否 ≥9.5。
+- **关键枚闭环**：仅玩家点名某枚翻车；开则最多4轮·到线即停（CLI `max_rounds=4`），finish 标明是否 ≥9.5。
 - **Mode A 三态**：**禁止**在无可靠导出/上色工具时口头说「Dark/Tinted 已派生齐」。默认交付 = Light 母版 + 尺寸矩阵；玩家点名 Dark 或 Tinted 时再各开一轮出图。
 
 ---
@@ -813,7 +813,7 @@ A/B/C **标题并列**，禁止把 C 嵌进 B、把 A 甩到 B 的 Step 之后�
 
 ### A2. 光学微立体质感与光影层次
 - **三层景深**：① 底板环境渐变（70% 主色）→ ② 中心主符号微倾体块（20% 辅色 + 接触阴影）→ ③ 顶部 45° 高光切角（10% 点缀色）。
-- **iOS 18+ 三态**：默认只保证 **Light 母版**过关。Dark / Tinted **仅玩家点名**才另开 converge（各出图一轮）；没有点名就不要交假齐套，也不要写「已派生」。
+- **iOS 18+ 三态**：默认只保证 **Light 母版**过关。Dark / Tinted **仅玩家点名**才另开 converge（各开最多4轮闭环）；没有点名就不要交假齐套，也不要写「已派生」。
 
 ### A3. 多尺寸导出与 `app-icon-preview.html`
 母版收敛后导出：iOS `1024/180/167/120/60/29`；Android/桌面 `512/192`（导出几乎零墙钟，勿当成再生图轮次）。
@@ -831,7 +831,7 @@ python3 pmem_art.py reasonableness review --id appicon --skill icon.a \
 python3 pmem_art.py converge generate --session appicon --round 1 --image app_icon_r1.png
 python3 pmem_art.py converge judge --session appicon --round 1 --image app_icon_r1.png \
   --dims "识别度9.6/安全区9.7/光影质感9.5/多尺寸合规9.6/色板纯粹9.7/无瑕疵9.5"
-# CLI 出图一轮交件：max_rounds=1；judge 后 finish，并标明是否 ≥9.5
+# CLI：max_rounds=4；≥9.5到线即停；满4轮交最高分并标明是否 ≥9.5
 ```
 
 ## 三、Mode B：一致化 SVG 矢量图标集流程（Brief → Spec → Batch → Review → Converge）
@@ -879,14 +879,14 @@ icons/
 └── …
 ```
 
-### B5：关键图标出图一轮交件（可选·默认跳过）
+### B5：关键图标最多4轮闭环（可选·默认跳过）
 用户点名某枚「不对」或一致性不过时才开；垫最初 style-spec/样张；**禁止**对整套每枚开闭环：
 ```bash
 python3 pmem_art.py converge start --goal "图标 <name> 对齐 style-spec" --module brand.WorldStyle --route-id icon.b
 python3 pmem_art.py reasonableness review --id <session> --skill icon.b \
   --draft "<草稿>" --revised "<线宽/端点/清单写清的修订句>" \
   --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;stroke_consistency=ok"
-然后：generate → judge → finish（CLI max_rounds=1；标明是否 ≥9.5）
+然后：generate → judge →（不到线继续，最多4轮）→ finish（标明是否 ≥9.5）
 ```
 
 ### B6：沉淀
@@ -898,7 +898,7 @@ python3 pmem_art.py ingest icons/preview.html -p "icon set preview" --apply
 ## 四、Mode C：游戏道具透明底栅格图标（64/128/256px PNG，非 SVG）
 
 先锁「线宽/圆角/色板/投影」style-spec，再**批量**生成透明底 PNG 做 preview。  
-**关键枚 converge 默认禁止**：仅玩家点名某枚不对、或一致性审查不过时才开；开则出图一轮交件（CLI `max_rounds=1`，标明是否 ≥9.5）。**禁止**默认对背包每一格开闭环。
+**关键枚 converge 默认禁止**：仅玩家点名某枚不对、或一致性审查不过时才开；开则最多4轮、≥9.5到线即停（CLI `max_rounds=4`，标明是否 ≥9.5）。**禁止**默认对背包每一格开闭环。
 ```bash
 python3 pmem_art.py converge start --session <icon_c_id> --goal "道具格：<name>" --module brand.WorldStyle --route-id icon.c
 python3 pmem_art.py reasonableness review --id <icon_c_id> --skill icon.c \
@@ -1065,14 +1065,14 @@ python3 pmem_art.py learn list
 
 | 交付 | 含义 |
 | :--- | :--- |
-| `overview_sheet`（**默认**） | 关系门过后 **整表一组出齐**；**出图一轮交件**（只生 1 张整表→judge→`finish`，标明是否过线）；第 2 次 `generate` 拒跑。禁止从整表抠格冒充逐格成品。无参考时默认 8 档、常见 2×4；竞品段 6 档说得通 → `levels=6` |
+| `overview_sheet`（**默认**） | 关系门过后 **整表一组出齐**；**最多4轮、≥9.5到线即停**（整表会话 `max_rounds=4`；到线即 `finish`，满4轮交最高分并标明是否过线）。禁止从整表抠格冒充逐格成品。无参考时默认 8 档、常见 2×4；竞品段 6 档说得通 → `levels=6` |
 | `per_cell`（仅点名） | 一档一张等大正方形；同框整梯只作体量预览，不是成品（MergePerCell） |
 
 **默认 `overview_sheet`（可默认，不必再问）：** 玩家说 merge / 合成梯 / 一组；无交付点名时。  
 **才走 `per_cell`：** 玩家明确说「一档一张 / 逐格 / 单张 / per_cell」。  
 **仍强制整表：** 整表格子参考；「整表 / 一起出 / 一次出齐 / 不要逐格 / 参考咋出就咋出」；多轨总览。
 
-**耗时合同（出图一轮交件，banner 须写清）：** ①关系段不出图、最多 **2** 稿（第 1 过了就停）；②整表只生 1 张→judge 1 次→finish，并标明是否 ≥9.5/清单过关；③禁止叠轮重出、禁止垫上一张成图；④禁止 overview 套 ordinary「凑满 4 轮」；⑤商业诊断只打字；⑥未点名逐格必须整表（per_cell 仅点名）。
+**耗时合同（最多4轮·到线即停，banner 须写清）：** ①关系段不出图、最多 **2** 稿（第 1 过了就停）；②整表会话 ≥9.5到线即停，最多 **4** 轮兜底，finish 标明是否 ≥9.5/清单过关；③不到线才叠轮，高分可垫上一张整表微调，结构/关系硬伤禁止垫失败整表；④禁止为凑满硬跑满 4 轮；⑤商业诊断只打字；⑥未点名逐格必须整表（per_cell 仅点名）；⑦点名逐格时各档**并行**开独立 session 生图，禁止串行等完一档再开下一档。
 
 多轨（多张 L1）时：一个 yaml 多个 `tracks`；`overview_sheet` 可一行一轨。
 
@@ -1175,34 +1175,34 @@ python3 pmem_art.py converge judge --session <merge_id> --round <N> --image <she
 - 有整表格子参考：垫该参考，行列与白卡深底跟参考；格内换题材；`levels` 跟格数。
 - 有多张 L1：可垫 L1 锁第 1 列 / 各行首格。
 - **玩家说不对 / 重做 / 不要旧逻辑**：禁止垫上一版失败整表；按当前关系稿从零出。
-3. **整表固定验收清单（出图一轮交件：生1→judge1；第 2 次 generate 会被 CLI 拒绝）**：
+3. **整表固定验收清单（最多4轮：不到线继续改；满4轮交最高分）**：
    - [ ] 超框：每格主体（含冠/尾/翅尖）落在白卡/格内并留边
    - [ ] 邻档：缩略约 64px 相邻档可分
    - [ ] 眼睛：生物链每格有可读眼睛/轻表情（道具默认无脸）
    - [ ] 白卡/版式：有参考则跟参考白卡深底；无等级字；一格一件
    - [ ] 五问+链表：关系仍说得通，无回退/大跳档
-   - **禁止叠轮重出 / 禁止垫上一张成图**：judge 完就 `finish`；要重做就**新开短会话**，不要垫失败整表。
-4. **收束**：出图一轮后必须：
+   - **到线即停**：≥9.5/清单过关就 `finish`；不到线才叠下一轮。结构/关系硬伤禁止垫失败整表，应新开短会话。
+4. **收束**：到线或满4轮后必须：
 ```bash
 python3 pmem_art.py converge finish --session <merge_id>
 ```
-禁止跳过 `start`/`generate`/`judge`/`finish` 只丢一张散图当终稿。`finish` 交这张时**必须写明过线/未过线**并列出未过项，**禁止继续狂刷**。  
-停机看本清单，**禁止**把 overview 当成普通图「凑满 4 轮」。  
+禁止跳过 `start`/`generate`/`judge`/`finish` 只丢一张散图当终稿。`finish` 交这张时**必须写明过线/未过线**并列出未过项。  
+停机看本清单 + ≥9.5；**到线即停，不鼓励凑满 4 轮**。  
 禁止整表抠格当逐格成品。多模型对比时禁止把 A 模型整表垫进 B 模型参考。
 
 ### `delivery=per_cell`（仅玩家点名逐格；默认仍走整表）
 
-关系过了 → 每一档单独出一张正方形 → `merge audit` → 可选 `normalize` 后再跑一次 audit → 第二段出图一轮交件（每档生1→judge1）。  
+关系过了 → **各档并行**各出一张正方形（每档独立 `--session`，同一回合并行 GenerateImage / 并行子任务；**禁止**串行等 L1 finish 再开 L2）→ 各档各自最多4轮、≥9.5到线即停 → `merge audit` → 可选 `normalize` 后再跑一次 audit。  
 同框不是交货（同框整梯只作体量预览）。每档首轮仍过 reasonableness review；`--session` 用本档自己的 id，禁止默写 `latest`。不要把参考图文件垫进生图；不垫对方模型成图做「公平对比」。  
 **未点名逐格禁止走本段。**
 
 ## 第二段 · 美术
 
 ### overview_sheet
-首张整表前必须过 `reasonableness`（见上）。整表 **只生 1 张→judge 1 次**（`max_rounds=1`）；不走 per_cell。**必须** `converge start` → `generate`/`judge` → `finish`（过程板可见）；finish 标明是否清单过关/≥9.5。
+首张整表前必须过 `reasonableness`（见上）。整表 **最多4轮、≥9.5到线即停**（`max_rounds=4`）；不走 per_cell。**必须** `converge start` → `generate`/`judge`（循环）→ `finish`（过程板可见）；finish 标明是否清单过关/≥9.5。
 
 ### per_cell（仅点名逐格）
-每档出图一轮交件；表面句原样保留。关系散了或 audit 不过，美术分再高也不算过。禁止叠轮。
+每档最多4轮、≥9.5到线即停；**多档必须并行生图**（独立 session）。表面句原样保留。关系散了或 audit 不过，美术分再高也不算过。
 
 ```bash
 python3 pmem_art.py merge audit --dir <目录> --phase1 <yaml> --track <域名>
@@ -1222,9 +1222,10 @@ python3 pmem_art.py merge audit --dir <目录> --phase1 <yaml> --track <域名>
 - **非糖果且未点名链型**却默认锁 `shop_ladder`；或未选链型却强行锁 `base_body`。（糖果/同店升级按上文默认可 `shop_ladder`，不算违规。）
 - 玩家只要六档却硬凑八档无意义补档。
 - 空有链型过关却无视 `docs/MERGE_MULTI_LENS.md`：邻档不可分、无犒赏曲线、合两下说不出理由。
-- `overview_sheet` / `per_cell` 审完仍叠轮重出（CLI 第 2 次 `generate` 已拒）。
-- 关系第 1 稿已过仍空写凑满 2 稿；或 overview 套 ordinary「凑满 4 轮」。
-- 整表 judge 完仍垫上一张成图叠轮。
+- `overview_sheet` / `per_cell` 已到线或已满4轮仍继续狂刷。
+- 关系第 1 稿已过仍空写凑满 2 稿；或已到线仍硬凑满 4 轮。
+- 结构/关系硬伤后仍垫失败整表叠轮。
+- 点名逐格却串行等完一档再开下一档（须并行）。
 - 商业诊断再连刷整表（只打字）。
 - 未点名 Dark/Tinted 却宣称 App Icon 三态已派生齐套。
 - 从同框/整表抠图代替逐格交货（当 `delivery=per_cell` 时）。

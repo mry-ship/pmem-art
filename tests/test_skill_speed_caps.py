@@ -1,4 +1,4 @@
-"""重路径：出图一轮交件 + 检测收窄 + 关系最多 2。"""
+"""重路径：最多4轮·到线即停 + 检测收窄 + 关系最多 2。"""
 from __future__ import annotations
 
 import json
@@ -35,12 +35,12 @@ def _body(name: str) -> str:
 
 class SkillSpeedCapsTests(unittest.TestCase):
     def test_constants(self) -> None:
-        self.assertEqual(MERGE_OVERVIEW_MAX_ROUNDS, 1)
+        self.assertEqual(MERGE_OVERVIEW_MAX_ROUNDS, 4)
         self.assertEqual(MERGE_OVERVIEW_MAX_DISCUSS, 2)
-        self.assertEqual(MERGE_PER_CELL_MAX_ROUNDS, 1)
-        self.assertEqual(UI_CONCEPT_MAX_ROUNDS, 1)
-        self.assertEqual(ICON_KEY_MAX_ROUNDS, 1)
-        self.assertEqual(SPLIT_MAX_ROUNDS, 1)
+        self.assertEqual(MERGE_PER_CELL_MAX_ROUNDS, 4)
+        self.assertEqual(UI_CONCEPT_MAX_ROUNDS, 4)
+        self.assertEqual(ICON_KEY_MAX_ROUNDS, 4)
+        self.assertEqual(SPLIT_MAX_ROUNDS, 4)
 
     def test_detection_narrow(self) -> None:
         self.assertEqual(
@@ -77,16 +77,18 @@ class SkillSpeedCapsTests(unittest.TestCase):
             _apply_skill_speed_caps(
                 ov, goal="整表一组合成梯", expect_route="merge.ladder", max_rounds=4
             ),
-            1,
+            4,
         )
         self.assertEqual(ov.get("merge_discuss_cap"), 2)
+        self.assertFalse(ov.get("single_judge"))
 
         multi: dict = {"route_ids": ["draw.multi"], "max_rounds": 4}
         self.assertEqual(
             _apply_skill_speed_caps(multi, goal="", expect_route="", max_rounds=4),
-            1,
+            4,
         )
-        self.assertEqual(multi.get("split_round_cap"), 1)
+        self.assertEqual(multi.get("split_round_cap"), 4)
+        self.assertFalse(multi.get("single_judge"))
 
         cell: dict = {"route_ids": ["merge.ladder"], "max_rounds": 4}
         self.assertEqual(
@@ -96,15 +98,53 @@ class SkillSpeedCapsTests(unittest.TestCase):
                 expect_route="merge.ladder",
                 max_rounds=4,
             ),
-            1,
+            4,
         )
+        self.assertFalse(cell.get("single_judge"))
 
-    def test_generate_blocks_round_2(self) -> None:
+        ui: dict = {"route_ids": ["ui.kit"], "max_rounds": 8}
+        self.assertEqual(
+            _apply_skill_speed_caps(
+                ui, goal="UI概念稿：主菜单", expect_route="ui.kit", max_rounds=8
+            ),
+            4,
+        )
+        self.assertEqual(ui.get("ui_delivery"), "concept")
+        self.assertFalse(ui.get("single_judge"))
+
+        sheet: dict = {"route_ids": ["ui.kit"], "max_rounds": 8}
+        self.assertEqual(
+            _apply_skill_speed_caps(
+                sheet, goal="UI组件表：按钮态", expect_route="ui.kit", max_rounds=8
+            ),
+            4,
+        )
+        self.assertEqual(sheet.get("ui_delivery"), "sheet")
+        self.assertEqual(sheet.get("ui_round_cap"), 4)
+        self.assertFalse(sheet.get("single_judge"))
+
+        icon: dict = {"route_ids": ["icon.c"], "max_rounds": 8}
+        self.assertEqual(
+            _apply_skill_speed_caps(
+                icon, goal="道具格：药水", expect_route="icon.c", max_rounds=8
+            ),
+            4,
+        )
+        self.assertEqual(icon.get("icon_key_cap"), 4)
+        self.assertFalse(icon.get("single_judge"))
+
+    def test_generate_allows_round_2_blocks_past_cap(self) -> None:
+        from PIL import Image
+
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             data: dict = {"config": {"converge": {}}}
             sf = _session_file(root, "cell_cap_test")
             sf.parent.mkdir(parents=True, exist_ok=True)
+            img2 = root / "c.png"
+            Image.new("RGB", (64, 64), (20, 30, 40)).save(img2)
+            overflow = root / "too_many.png"
+            Image.new("RGB", (64, 64), (20, 30, 40)).save(overflow)
             sess = {
                 "session_id": "cell_cap_test",
                 "goal": "merge per_cell L2",
@@ -112,9 +152,9 @@ class SkillSpeedCapsTests(unittest.TestCase):
                 "status": "running",
                 "threshold": 9.5,
                 "accept_threshold": 9.5,
-                "max_rounds": 1,
+                "max_rounds": 4,
                 "merge_delivery": "per_cell",
-                "single_judge": True,
+                "single_judge": False,
                 "route_ids": ["merge.ladder"],
                 "rounds": [{"round": 1, "image": "a.png", "score": 8.0, "judged": True}],
                 "reasonableness": {
@@ -127,32 +167,54 @@ class SkillSpeedCapsTests(unittest.TestCase):
                 "pad_mode": "ref",
             }
             sf.write_text(json.dumps(sess, ensure_ascii=False, indent=2), encoding="utf-8")
-            rc = cmd_converge(
+            rc2 = cmd_converge(
                 root,
                 data,
                 "generate",
                 session_id="cell_cap_test",
                 round_num=2,
-                image="c.png",
+                image=str(img2),
                 prompt="next",
                 skip_route_gate=True,
                 skip_reasonableness_gate=True,
             )
-            self.assertEqual(rc, 1)
+            self.assertEqual(rc2, 0)
+
+            sess2 = json.loads(sf.read_text(encoding="utf-8"))
+            sess2["rounds"] = [
+                {"round": i, "image": f"r{i}.png", "score": 8.0, "judged": True}
+                for i in range(1, 5)
+            ]
+            sess2["max_rounds"] = 4
+            sf.write_text(json.dumps(sess2, ensure_ascii=False, indent=2), encoding="utf-8")
+            rc5 = cmd_converge(
+                root,
+                data,
+                "generate",
+                session_id="cell_cap_test",
+                round_num=5,
+                image=str(overflow),
+                prompt="overflow",
+                skip_route_gate=True,
+                skip_reasonableness_gate=True,
+            )
+            self.assertEqual(rc5, 1)
 
     def test_skill_text(self) -> None:
+        for name in ("pmem-ui", "pmem-icon", "pmem-merge-ladder", "pmem-draw"):
+            body = _body(name)
+            self.assertNotIn("出图一轮交件", body, name)
+            self.assertIn("到线即停", body, name)
         ui = _body("pmem-ui")
-        self.assertIn("出图一轮交件", ui)
-        self.assertIn("过线/未过线", ui)
+        self.assertIn("最多4轮", ui)
         icon = _body("pmem-icon")
         self.assertIn("未点名勿写已齐套", icon)
         self.assertIn("Dark/Tinted 已派生齐", icon)
         merge = _body("pmem-merge-ladder")
         self.assertIn("最多 2 稿", merge)
-        self.assertIn("禁止垫上一张成图", merge)
-        self.assertNotIn("才垫上一张成图", merge)
+        self.assertIn("并行", merge)
+        self.assertIn("禁止串行", merge)
         draw = _body("pmem-draw")
-        self.assertIn("到线即停", draw)
         self.assertNotIn("绝不能只生一张图就草草交差", draw)
 
 

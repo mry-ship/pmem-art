@@ -65,7 +65,7 @@ pyw -3 -u pmem_art.py route --text "<玩家原话>" --canonical "<标准路由�
 
 只审一轮。这一轮写明交付物是什么、每张图锁什么、每张图不锁什么，并查合理性、缺漏和理解错误：合不合理，漏了什么，有没有理解错。漏的补上。理解错的按原话改回来。合不合理是看这句话能不能和原话、附图同时成立。
 
-不要再开第二轮去复查。分析列给玩家看。不要把分析和执行并成一句口头分流：分析先写出来。**执行默认（两套写法同一合同）**：有 Task/子 agent 就开一个，只交注册表 `pack_headings` 拼成的执行包（不是八份全文、也不是单挂合同丢闭环）；没有子 agent 就在本对话只读该执行包。禁止另选技能或把整份 SKILL 塞给执行侧。**子 agent 侧栏标题（Task `description`）直接叫技能**：用「技能·普通图 / 技能·原画 / …」；目录用 `assets/skill_YYYYMMDD/`；**禁止**「电池 / battery / 技能测 / skill_suite / skill_battery」（黑话，玩家会懵）。裁节用 `skills_kit.skill_registry.slice_route_body(body, route)`（内部按 `pack_headings` 调 `slice_markdown_section`，并跳过围栏内伪标题）。**子 agent / 本对话执行失败时**：总控在本对话按同一执行包自行续跑或收束，禁止甩锅「已交给子 agent」后沉默；缺图/闸拦/冲突先向玩家说清并给可改说法。
+不要再开第二轮去复查。分析列给玩家看。不要把分析和执行并成一句口头分流：分析先写出来。**执行默认（两套写法同一合同）**：有 Task/子 agent 就开一个，只交注册表 `pack_headings` 拼成的执行包（不是八份全文、也不是单挂合同丢闭环）；没有子 agent 就在本对话只读该执行包。禁止另选技能或把整份 SKILL 塞给执行侧。裁节用 `skills_kit.skill_registry.slice_route_body(body, route)`（内部按 `pack_headings` 调 `slice_markdown_section`，并跳过围栏内伪标题）。**子 agent / 本对话执行失败时**：总控在本对话按同一执行包自行续跑或收束，禁止甩锅「已交给子 agent」后沉默；缺图/闸拦/冲突先向玩家说清并给可改说法。
 
 ### 默认 vs 硬不确定（防卡死）
 
@@ -106,7 +106,7 @@ pyw -3 -u pmem_art.py route --text "<玩家原话>" --canonical "<标准路由�
 2. 这一步交什么
 3. 垫哪张，不垫哪张
 4. 锁什么
-5. 怎样算做完（生图步：≥9.5 到线，或达到该会话轮次硬顶并标明未过线；普通图最多 4，重路径出图一轮；展陈 HTML 还要 `pyw -3 -u pmem_art.py showcase-gate --html <路径>` 通过）
+5. 怎样算做完（生图步：≥9.5 到线，或达到该会话轮次硬顶并标明未过线；普通图与重路径均为最多 4，≥9.5到线即停；展陈 HTML 还要 `pyw -3 -u pmem_art.py showcase-gate --html <路径>` 通过）
 6. 交给下一步什么
 
 回显以 `route` 的 `banner` 为准（最前一行）。例如「【按 多图分工 走了】」「【走默认路径】按 普通图 走了」「【按 Mode A 走了】」。这句只说明选了哪一节，不问选哪条技能。

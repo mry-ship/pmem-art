@@ -1,4 +1,4 @@
-"""merge overview：出图一轮交件 + 关系稿上限 2。"""
+"""merge overview：最多4轮·到线即停 + 关系稿上限 2。"""
 from __future__ import annotations
 
 import json
@@ -37,17 +37,17 @@ class MergeOverviewCapsTests(unittest.TestCase):
             )
         )
 
-    def test_apply_caps_sets_max_rounds_1(self) -> None:
+    def test_apply_caps_sets_max_rounds_4(self) -> None:
         sess: dict = {"route_ids": ["merge.ladder"], "max_rounds": 4}
         got = _apply_merge_overview_caps(
             sess, goal="整表一组合成梯", expect_route="merge.ladder", max_rounds=4
         )
         self.assertEqual(got, MERGE_OVERVIEW_MAX_ROUNDS)
-        self.assertEqual(sess["max_rounds"], 1)
+        self.assertEqual(sess["max_rounds"], 4)
         self.assertEqual(sess["merge_delivery"], "overview_sheet")
         self.assertEqual(sess["merge_discuss_cap"], 2)
         self.assertEqual(MERGE_OVERVIEW_MAX_DISCUSS, 2)
-        self.assertTrue(sess.get("single_judge"))
+        self.assertFalse(sess.get("single_judge"))
 
     def test_pad_previous_only_when_high_score_local(self) -> None:
         high = [{"round": 1, "image": "a.png", "score": 8.7, "defects": "L3 冠尖轻微超框"}]
@@ -66,12 +66,16 @@ class MergeOverviewCapsTests(unittest.TestCase):
         self.assertFalse(ok3)
         self.assertEqual(why3, "structural_or_relation_fail")
 
-    def test_generate_blocks_round_2_and_discuss_3(self) -> None:
+    def test_generate_allows_round_2_discuss_blocks_3(self) -> None:
+        from PIL import Image
+
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             data: dict = {"config": {"converge": {}}}
             sf = _session_file(root, "merge_cap_test")
             sf.parent.mkdir(parents=True, exist_ok=True)
+            img2 = root / "b.png"
+            Image.new("RGB", (64, 64), (20, 30, 40)).save(img2)
             sess = {
                 "session_id": "merge_cap_test",
                 "goal": "merge overview_sheet：测试",
@@ -79,11 +83,11 @@ class MergeOverviewCapsTests(unittest.TestCase):
                 "status": "running",
                 "threshold": 9.5,
                 "accept_threshold": 9.5,
-                "max_rounds": 1,
+                "max_rounds": 4,
                 "merge_delivery": "overview_sheet",
-                "merge_sheet_cap": 1,
+                "merge_sheet_cap": 4,
                 "merge_discuss_cap": 2,
-                "single_judge": True,
+                "single_judge": False,
                 "route_ids": ["merge.ladder"],
                 "rounds": [
                     {"round": 1, "image": "a.png", "score": 8.0, "judged": True},
@@ -109,12 +113,33 @@ class MergeOverviewCapsTests(unittest.TestCase):
                 "generate",
                 session_id="merge_cap_test",
                 round_num=2,
-                image="b.png",
+                image=str(img2),
                 prompt="next",
                 skip_route_gate=True,
                 skip_reasonableness_gate=True,
             )
-            self.assertEqual(rc2, 1)
+            self.assertEqual(rc2, 0)
+
+            sess2 = json.loads(sf.read_text(encoding="utf-8"))
+            sess2["rounds"] = [
+                {"round": i, "image": f"r{i}.png", "score": 8.0, "judged": True}
+                for i in range(1, 5)
+            ]
+            sf.write_text(json.dumps(sess2, ensure_ascii=False, indent=2), encoding="utf-8")
+            overflow = root / "too_many.png"
+            Image.new("RGB", (64, 64), (20, 30, 40)).save(overflow)
+            rc5 = cmd_converge(
+                root,
+                data,
+                "generate",
+                session_id="merge_cap_test",
+                round_num=5,
+                image=str(overflow),
+                prompt="overflow",
+                skip_route_gate=True,
+                skip_reasonableness_gate=True,
+            )
+            self.assertEqual(rc5, 1)
 
             rc_d = cmd_converge(
                 root,
