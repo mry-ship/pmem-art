@@ -1,0 +1,17 @@
+Casual merge-game shop_ladder overview_sheet, aspect 4:3, 2x4 equal white rounded cards on deep charcoal, one single centered prop per card, no text no numbers no labels.
+
+chain_mode=shop_ladder 同族形变 complete SKU evolution. Family gene lock: red mushroom cap + cream white dots + dessert language. Commercial ref Travel Town/Merge Mansion food cabinet.
+
+merge_why / evolve_to chain (two of previous make next):
+L1 evolve_to=MiniMushroomGummy — tiny complete translucent mushroom gummy, SSS jelly, wide soft highlight.
+L2 evolve_to=MushroomGummyStick merge_why=two MiniMushroomGummy merge into linked gummy stick snack.
+L3 evolve_to=PouchMushroomCandy merge_why=two sticks merge into clear retail pouch SKU.
+L4 evolve_to=MushroomPuddingCup merge_why=two pouches merge into clear pudding cup with mushroom top.
+L5 evolve_to=MushroomCreamCup merge_why=two pudding cups merge into taller cream-swirl cup SKU.
+L6 evolve_to=MushroomCakeSlice merge_why=two cream cups merge into triangular frosted cake slice.
+L7 evolve_to=WholeMushroomCake merge_why=two slices merge into whole round mushroom cream cake.
+L8 evolve_to=GiftBoxMushroomCake merge_why=two whole cakes merge into open gift-box packaged cake reward SKU.
+
+Materials: soft translucent candy SSS subsurface, cream frosting soft matte, studio softbox, short contact shadows, saturated friendly. No faces, no birds, no characters. Scale L1~58% to L8~80% of cell. Element budget: exactly one product per cell, empty white margins, no garnish piles on one mushroom pedestal, no raw ingredients, no half-built frames.
+
+Fail at glance if topping-pile same base, missing bag/cup/slice/cake/box silhouette jumps, text on cards, birds, hard opaque plastic gummies without translucency, uneven grid.

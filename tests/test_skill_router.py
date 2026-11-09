@@ -111,7 +111,8 @@ class SkillRouterTests(unittest.TestCase):
         self.assertIn("再跑一次 audit", merge)
         self.assertIn("各档并行", merge)
         self.assertIn("一档一张正方形", merge)
-        self.assertIn("玩家写下了风格，就用写下的", merge)
+        self.assertIn("有文字风格描述", merge)
+        self.assertIn("默认钉 **Merge Mansion 货柜软塑胶**", merge)
         self.assertIn("产品实拍", merge)
         self.assertIn("有参考又要换题材的这一张，走克隆", draw)
         self.assertIn("--reference-image-paths", draw)
@@ -140,7 +141,7 @@ class SkillRouterTests(unittest.TestCase):
         self.assertNotIn("和上一句相同才停", console)
         self.assertIn(".cursor/skills/registry.md", console)
         self.assertIn("没有识别到可用技能", console)
-        self.assertIn("也不改走普通图", console)
+        self.assertIn("remap/ask", console)
         self.assertIn("普通图排在最后", console)
         self.assertIn("先跑 `tighten`", console)
         self.assertIn("缺一样这步不能开始", console)
@@ -191,7 +192,11 @@ class SkillRouterTests(unittest.TestCase):
             self.assertIn("记忆静默", packed)
             self.assertIn(f"### Mode {rid[-1].upper()}", packed)
             self.assertTrue(
-                "满幅直角" in packed or "currentColor" in packed or "真 alpha" in packed,
+                "满幅直角" in packed
+                or "currentColor" in packed
+                or "真 alpha" in packed
+                or "底隔离" in packed
+                or "不支持真透明" in packed,
                 rid,
             )
         self.assertTrue(reg.get("section_cut_ok"), reg.get("section_cut_fails"))
@@ -272,14 +277,25 @@ class SkillRouterTests(unittest.TestCase):
             self.assertIn("不要当成跑偏", rule)
             self.assertIn("推倒重来", rule)
             self.assertIn("终稿商业对标诊断", rule)
-            self.assertIn("开跑缺风格", rule)
-            self.assertIn("禁止一律套软塑胶 merge", rule)
+            self.assertIn("开跑风格优先级", rule)
+            self.assertIn("默认钉 **Merge Mansion 软塑胶**", rule)
+            self.assertIn("禁止非 merge 品类一律套软塑胶 merge", rule)
             self.assertIn("同品类顶级商业范例", rule)
             self.assertIn("把商业范例当垫图抄构图", rule)
             draw_skill = (root / ".cursor" / "skills" / "pmem-draw" / "SKILL.md").read_text(encoding="utf-8")
             self.assertIn("终稿拿不准时（商业对标诊断）", draw_skill)
-            self.assertIn("开跑缺风格（商业气质默认", draw_skill)
-            self.assertIn("禁止一律套软塑胶 merge", draw_skill)
+            self.assertIn("开跑风格优先级（可默认不必再问）", draw_skill)
+            self.assertIn("禁止非 merge 一律套软塑胶", draw_skill)
+            self.assertIn("仅 merge 品类钉 Merge Mansion", draw_skill)
+            self.assertIn("禁止非 merge 套软塑胶", draw_skill)
+            prompt_skill = (root / ".cursor" / "skills" / "pmem-prompt" / "SKILL.md").read_text(encoding="utf-8")
+            self.assertIn("有文字跟文字（有构图/整表参考时参考只锁版式", prompt_skill)
+            self.assertIn("无参考仅题材/链型文字按文字推出", prompt_skill)
+            self.assertIn("仅判成 merge 时钉 Merge Mansion", prompt_skill)
+            merge_skill = (root / ".cursor" / "skills" / "pmem-merge-ladder" / "SKILL.md").read_text(encoding="utf-8")
+            self.assertIn("出图必须垫这张参考锁版式", merge_skill)
+            self.assertIn("有文字风格跟文字（本参考不锁画风）", merge_skill)
+            self.assertIn("有整表参考时垫图**只锁版式**", merge_skill)
             critique = (root / ".cursor" / "skills" / "pmem-critique" / "SKILL.md").read_text(encoding="utf-8")
             self.assertIn("拿不准时先商业对标", critique)
             self.assertIn("外审尺", critique)

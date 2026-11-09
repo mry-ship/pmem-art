@@ -7,8 +7,9 @@
 
 不改动 ConvergeGate 的 9.5 / 满4轮 / 垫图规则；只把错误前提挡在 R1 之前。
 
-逃生：`--skip-reasonableness-gate` 或环境变量 `PMEM_ART_SKIP_REASONABLENESS_GATE=1`
-（仅调试；日常出图技能禁止跳过）。
+逃生：须 `PMEM_ART_ALLOW_GATE_SKIP=1` + `--skip-reason`，可另加
+`--skip-reasonableness-gate` / `PMEM_ART_SKIP_REASONABLENESS_GATE=1`
+（仅调试；日常出图技能禁止跳过；仅设 SKIP 环境变量不够）。
 """
 from __future__ import annotations
 
@@ -208,7 +209,7 @@ CHECK_LABELS_ZH: dict[str, str] = {
     "full_bleed_no_round_mask": "满幅直角母版，禁止烤进圆角底板",
     "stroke_consistency": "线宽/端点一致",
     "silhouette_read": "厚剪影可读",
-    "transparent_friendly": "透明底友好",
+    "transparent_friendly": "底隔离友好（透明引擎真alpha / Cursor实色空底）",
     "single_centered_item": "每档单件居中",
     "parts_add_concrete": "（旧键，改用 upgrade_reason_concrete）零件增量具体可画",
     "base_body_retained": "（旧键，改用 family_or_base_lock）same_object 保留母体；shop 锁家族",
@@ -230,6 +231,12 @@ _SAFE_ZONE_RE = re.compile(r"(安全区|safe.?zone|72\s*%|80\s*%|72%-80%|72%–8
 _ICON_SQUARE_RE = re.compile(r"(1\s*:\s*1|1024|正方形|square|满幅)", re.I)
 _UI_ZONE_RE = re.compile(r"(九宫格|顶栏|底栏|内容区|面板|弹窗|HUD|9-?slice|panel)", re.I)
 _TRANSPARENT_RE = re.compile(r"(透明|transparent|alpha)", re.I)
+# Cursor 无 alpha 时用纯黑/实色隔离底；透明引擎仍写透明/alpha
+_ISOLATION_BG_RE = re.compile(
+    r"(透明|transparent|alpha|纯黑|黑底|实色隔离|隔离底|opaque\s*isolation|"
+    r"solid\s*(black|isolation)|flat\s*black|#000000)",
+    re.I,
+)
 _NO_TEXT_RE = re.compile(r"(无字|不要字|no\s*text|without\s*text|无可读)", re.I)
 _SINGLE_ITEM_RE = re.compile(r"(单件|一件|居中|centered|single\s+item)", re.I)
 _FULL_BLEED_RE = re.compile(
@@ -385,8 +392,10 @@ def _heuristic_issues(skill: str, draft: str, revised: str, notes: str = "") -> 
             issues.append(
                 "icon.a 禁止圆角底板：母版必须直角满幅；圆角由系统蒙版后加，不可烤进成图"
             )
-    if skill == "icon.c" and not _TRANSPARENT_RE.search(r):
-        issues.append("icon.c 缺透明底：修订句须写透明底/transparent")
+    if skill == "icon.c" and not _ISOLATION_BG_RE.search(r):
+        issues.append(
+            "icon.c 缺底隔离：修订句须写纯黑/实色隔离底（Cursor）或透明底/transparent（透明引擎）；禁止后抠冒充 alpha"
+        )
     if skill in {"ordinary", "keyart", "icon.c", "shotpack", "clone", "variant", "merge"} and _SOFT_CANDY_SUBJECT_RE.search(blob):
         if not _SOFT_CANDY_MEDIA_RE.search(r):
             issues.append(

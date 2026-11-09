@@ -6,6 +6,8 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from .alpha_policy import bg_prompt_clause, engine_supports_alpha, policy_summary
+
 REPO = Path(__file__).resolve().parent.parent
 
 AR_SIZE = {
@@ -87,6 +89,9 @@ def try_apikey_fan(
     return {
         "ok": True,
         "gen_engine": "apikey.fan",
+        "supports_alpha": engine_supports_alpha("apikey.fan"),
+        "bg_clause": bg_prompt_clause("apikey.fan"),
+        "alpha_policy": policy_summary("apikey.fan"),
         "path": str(out_path.resolve()),
         "bytes": out_path.stat().st_size,
     }
@@ -115,6 +120,9 @@ def fan_or_generate_image_job(
     ar = aspect_ratio if aspect_ratio in AR_SIZE else "1:1"
     job = {
         "gen_engine": "cursor.GenerateImage",
+        "supports_alpha": False,
+        "bg_clause": bg_prompt_clause("cursor.GenerateImage"),
+        "alpha_policy": policy_summary("cursor.GenerateImage"),
         "description": prompt[:4000],
         "filename": out_path.name,
         "reference_image_paths": refs,

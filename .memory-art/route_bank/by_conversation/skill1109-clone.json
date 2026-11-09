@@ -1,0 +1,15 @@
+{
+  "saved_at": 1794236086.044428,
+  "text": "锁妖精花园粘土童话画风，换新题材：冬日雪地农场，农夫抱小羊。只锁画风不锁构图；禁止抄回参考的妖精屋/鼹鼠/花屋题材。",
+  "banner": "【按点名锁定 draw.clone】",
+  "route_ids": [
+    "draw.clone"
+  ],
+  "mode": "skill",
+  "execute_ok": true,
+  "artist_say": "【按点名锁定 draw.clone】",
+  "plan_conflict": false,
+  "confidence": "named",
+  "conversation_id": "skill1109-clone",
+  "named_seed": true
+}

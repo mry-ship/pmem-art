@@ -1,0 +1,11 @@
+{
+  "route_id": "atlas.file",
+  "skill": "pmem-atlas",
+  "banner": "【按 归档 atlas 走了】",
+  "status": "refreshed",
+  "generated_at": "2026-11-10 02:01:52 UTC+8",
+  "output": "art-atlas.html",
+  "via": "write_atlas_html (cross-process lock)",
+  "includes_icon_c_wave2": true,
+  "note": "wave2 在补齐 icon_c 后重刷；与 converge finish 同入口"
+}

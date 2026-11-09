@@ -1,0 +1,14 @@
+{
+  "saved_at": 1794235894.421124,
+  "text": "要几套机位给玩家挑；先不出成图；走镜头包",
+  "banner": "【按 镜头包 走了】",
+  "route_ids": [
+    "draw.lens"
+  ],
+  "mode": "skill",
+  "execute_ok": true,
+  "artist_say": "【按 镜头包 走了】\n按镜头包：先出几套机位给你挑，点选前不生图。",
+  "plan_conflict": false,
+  "confidence": "high",
+  "conversation_id": "skill1109-lens"
+}

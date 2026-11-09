@@ -1,0 +1,46 @@
+{
+  "route_id": "icon.b",
+  "banner": "【按 Mode B 走了】",
+  "session": null,
+  "conversation": "skill1109-icon-b",
+  "mode": "B",
+  "preset": "Soft",
+  "strokeWidth": 2,
+  "strokeLinecap": "round",
+  "strokeLinejoin": "round",
+  "grid": 24,
+  "padding": 2,
+  "bitmap_converge": false,
+  "passed_checklist": true,
+  "theme": "妖精花园休闲游戏 · 功能入口线性 SVG",
+  "commercial_benchmark": "休闲花园/精灵养成 HUD 导航：亲和圆角、轻视觉重量、24px 可认",
+  "consistency": {
+    "same_viewBox": true,
+    "same_stroke": true,
+    "currentColor_only": true,
+    "no_hardcoded_color": true,
+    "no_root_transform": true,
+    "decimals_le_2": true,
+    "optical_weight": "balanced_soft",
+    "24px_readable": true,
+    "notes": "10 枚统一 Soft 2px round/round；未开单枚 converge；肉眼/清单一致性审查通过"
+  },
+  "note": "线性 SVG 一套写文件交付，未走 bitmap 生图 / 单枚 converge",
+  "outputs": {
+    "dir": "assets/skill_20261109/icon_b",
+    "style_spec": "assets/skill_20261109/icon_b/style-spec.json",
+    "preview": "assets/skill_20261109/icon_b/preview.html",
+    "icons": [
+      "home.svg",
+      "bag.svg",
+      "shop.svg",
+      "quest.svg",
+      "settings.svg",
+      "bestiary.svg",
+      "map.svg",
+      "watering-can.svg",
+      "sprout.svg",
+      "wings.svg"
+    ]
+  }
+}

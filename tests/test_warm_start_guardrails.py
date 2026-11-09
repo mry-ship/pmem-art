@@ -10,6 +10,7 @@ from improve.warm_start import (
     filter_habits_for_task,
     filter_keeps_for_task,
     habit_relevant_for_task,
+    _soft_goal_overlap_ok,
 )
 
 
@@ -96,6 +97,51 @@ class TestOffTopicEntries(unittest.TestCase):
             entry_on_topic_for_task(entry, "prop.CasualBattery", "草莓软糖普通图")
         )
 
+    def test_prop_icon_mushroom_dropped_for_watercolor_portrait(self) -> None:
+        entry = {
+            "summary": "[收敛胜出 9.36分] prop icon transparent mushroom cheese platter — 真alpha四角透明",
+            "body": "厚剪影；红菇芝士果盘身份完整无字",
+            "module": "brand.WorldStyle",
+        }
+        self.assertFalse(
+            entry_on_topic_for_task(
+                entry, "brand.WorldStyle", "验收出图：画一张窗边水彩半身女孩，缺风格走商业对标"
+            )
+        )
+        # Same recipe stays when the task is actually a prop icon.
+        self.assertTrue(
+            entry_on_topic_for_task(
+                entry, "prop.InstrumentMerge", "prop icon transparent mushroom platter"
+            )
+        )
+
+    def test_merge_overview_redline_dropped_for_watercolor(self) -> None:
+        entry = {
+            "summary": "[收敛踩坑红线] merge overview_sheet mushroom ：避免「L2草甸略增景」",
+            "body": "",
+            "module": "brand.WorldStyle",
+        }
+        self.assertFalse(
+            entry_on_topic_for_task(entry, "brand.WorldStyle", "窗边水彩半身女孩")
+        )
+
+    def test_soft_overlap_keeps_generic_redline(self) -> None:
+        entry = {
+            "summary": "禁止偏离样张画风：霓虹赛博、脏暗阴影",
+            "body": "",
+            "module": "brand.WorldStyle",
+        }
+        self.assertTrue(_soft_goal_overlap_ok(entry, "窗边水彩半身女孩"))
+
+    def test_soft_overlap_drops_scored_foreign_artifact(self) -> None:
+        entry = {
+            "summary": "[收敛胜出 9.7分] STUNNING 1024 App Icon remake full-bleed",
+            "body": "满幅直角商店图标",
+            "module": "brand.WorldStyle",
+        }
+        self.assertFalse(_soft_goal_overlap_ok(entry, "窗边水彩半身女孩"))
+        self.assertTrue(_soft_goal_overlap_ok(entry, "做一个 1024 App Icon"))
+
 
 class TestBuildPackIntegration(unittest.TestCase):
     def test_pack_filters_bleed_and_caps_redlines(self) -> None:
@@ -148,8 +194,19 @@ class TestBuildPackIntegration(unittest.TestCase):
         block = pack_ui["prompt_block"]
         self.assertNotIn("糖果勿焊蛋糕", block)
         self.assertNotIn("气球档差", block)
-        # constructive keeps section should exist when taste has keeps
-        self.assertIn("正向保留", block)
+        # constructive keeps section only when on-disk taste still has keep_phrases
+        from improve.taste_profile import load_taste
+        from improve.warm_start import filter_keeps_for_task
+
+        keeps = filter_keeps_for_task(
+            (load_taste(root).get("keep_phrases") or []),
+            "ui.MainMenu",
+            "休闲主菜单概念稿",
+        )
+        if keeps:
+            self.assertIn("正向保留", block)
+        else:
+            self.assertNotIn("正向保留", block)
 
 
 if __name__ == "__main__":

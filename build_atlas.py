@@ -962,7 +962,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 
 <!-- 半透明叠层预览（点图默认进这里；点空白关闭） -->
 <div class="img-viewer" id="imgViewer" title="点击空白处关闭">
-  <button type="button" class="iv-nav prev" id="ivPrev" title="上一张 (←)">‹</button>
+  <button type="button" class="iv-nav prev" id="ivPrev" title="上一张定稿 (←)">‹</button>
   <div class="img-viewer-card" id="imgViewerCard">
     <div class="iv-stage" id="ivStage">
       <div class="iv-pane main">
@@ -977,8 +977,8 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
     <div class="iv-meta" id="ivMetaPanel"></div>
     <div class="img-viewer-bar">
       <span class="iv-path" id="ivPath"></span>
-      <button type="button" class="btn-copy" id="ivPrevBtn" title="上一张">←</button>
-      <button type="button" class="btn-copy" id="ivNextBtn" title="下一张">→</button>
+      <button type="button" class="btn-copy" id="ivPrevBtn" title="上一张进化图">←</button>
+      <button type="button" class="btn-copy" id="ivNextBtn" title="下一张进化图">→</button>
       <button type="button" class="btn-copy" id="ivCompare" title="与参考原图并列对比">并列参考图</button>
       <button type="button" class="btn-copy" id="ivReveal" title="在访达中显示并选中">📁 文件夹</button>
       <button type="button" class="btn-copy" id="ivCopy" title="复制绝对路径">📋 路径</button>
@@ -987,7 +987,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
       <button type="button" class="btn-copy" id="ivClose" style="background:var(--danger-bg);color:#fda4af;border-color:rgba(244,63,94,0.4);">✕</button>
     </div>
   </div>
-  <button type="button" class="iv-nav next" id="ivNext" title="下一张 (→)">›</button>
+  <button type="button" class="iv-nav next" id="ivNext" title="下一张定稿 (→)">›</button>
 </div>
 
 <!-- Lightbox 详情（可选） -->
@@ -2948,7 +2948,9 @@ function renderPromptTraceHtml(info) {
 let _viewerCompare = false;
 let _viewerAnchorPath = ""; // 当前终稿槽位（设为最终交稿的目标）
 let _viewerSessionId = "";
-let _viewerNavPaths = []; // 当前放大可左右切的图链（教学课内 / 会话轮次 / 主画廊）
+let _viewerNavPaths = []; // 大按钮左右链：主画廊=定稿；详情/教学=进化
+let _viewerEvoPaths = []; // 底栏小按钮：同会话进化轮次（主画廊放大时用）
+let _viewerNavMode = "gallery"; // gallery | evolve | teach
 let _viewerMetaByPath = {}; // path -> {prompt,score,dims,defects,next_fix,...}
 let _viewerFromTeach = false;
 let _viewerIgnoreCloseUntil = 0; // 打开当下这一击会落到遮罩上，短时忽略关闭
@@ -2956,7 +2958,7 @@ let _viewerIgnoreCloseUntil = 0; // 打开当下这一击会落到遮罩上，�
 function normViewerPath(p) {
   return String(p || "").replace(/\\/g, "/");
 }
-function setViewerNav(paths, metaMap) {
+function dedupeViewerPaths(paths) {
   const seen = new Set();
   const out = [];
   (paths || []).forEach(p => {
@@ -2966,11 +2968,28 @@ function setViewerNav(paths, metaMap) {
     seen.add(k);
     out.push(p);
   });
-  _viewerNavPaths = out;
-  _viewerMetaByPath = metaMap || {};
+  return out;
+}
+function setViewerNav(paths, metaMap) {
+  _viewerNavPaths = dedupeViewerPaths(paths);
+  if (metaMap) _viewerMetaByPath = metaMap;
+}
+function setViewerEvoNav(paths) {
+  _viewerEvoPaths = dedupeViewerPaths(paths);
 }
 function galleryNavPaths() {
   return (_galleryAssets || []).map(a => a.path).filter(Boolean);
+}
+function findViewerPathIndex(paths, path, opts) {
+  const cur = normViewerPath(path);
+  if (!cur) return -1;
+  let idx = (paths || []).findIndex(p => normViewerPath(p) === cur);
+  if (idx >= 0) return idx;
+  // 主画廊定稿链禁止 basename 误命中（进化中图常与定稿同名）
+  if (opts && opts.exactOnly) return -1;
+  const base = cur.split("/").pop();
+  if (!base) return -1;
+  return (paths || []).findIndex(p => normViewerPath(p).split("/").pop() === base);
 }
 /** 从第 1 轮 Prompt 里抽出「分析原图/参考图不足」段，挂回原图卡 */
 function extractRefCritiqueFromPrompt(prompt) {
@@ -3240,10 +3259,21 @@ function renderViewerMeta(info) {
     ? `<div class="iv-meta-score">总分 ${Number(scoreVal).toFixed(2)}${passed ? " · 达标" : " · 未达标"}</div>`
     : "";
   const navPaths = _viewerNavPaths.length ? _viewerNavPaths : galleryNavPaths();
-  const idx = navPaths.findIndex(p => normViewerPath(p) === normViewerPath(path));
-  const navHint = (idx >= 0 && navPaths.length > 1)
-    ? `<div class="iv-meta-navhint">← → ${idx + 1}/${navPaths.length} · Prompt/不足见「详情 · 进化对照」</div>`
-    : `<div class="iv-meta-navhint">Prompt / 不足 / 改点 → 点「详情 · 进化对照」</div>`;
+  const navIdx = findViewerPathIndex(navPaths, path, { exactOnly: _viewerNavMode === "gallery" });
+  const evoIdx = findViewerPathIndex(_viewerEvoPaths, path);
+  let navHint = `<div class="iv-meta-navhint">Prompt / 不足 / 改点 → 点「详情 · 进化对照」</div>`;
+  if (_viewerNavMode === "gallery") {
+    const galParts = [];
+    let galIdx = navIdx;
+    if (galIdx < 0 && _viewerAnchorPath) galIdx = findViewerPathIndex(navPaths, _viewerAnchorPath, { exactOnly: true });
+    if (galIdx >= 0 && navPaths.length > 1) galParts.push(`大按钮定稿 ${galIdx + 1}/${navPaths.length}`);
+    if (evoIdx >= 0 && _viewerEvoPaths.length > 1) galParts.push(`底栏进化 ${evoIdx + 1}/${_viewerEvoPaths.length}`);
+    if (galParts.length) {
+      navHint = `<div class="iv-meta-navhint">${galParts.join(" · ")} · Prompt/不足见「详情 · 进化对照」</div>`;
+    }
+  } else if (navIdx >= 0 && navPaths.length > 1) {
+    navHint = `<div class="iv-meta-navhint">← → ${navIdx + 1}/${navPaths.length} · Prompt/不足见「详情 · 进化对照」</div>`;
+  }
   panel.innerHTML = `
     <div class="iv-meta-head">
       <b style="color:var(--text-main);">${esc(head || "评分摘要")}</b>
@@ -3405,22 +3435,39 @@ function updateViewerChrome(info) {
     }
   }
   const paths = _viewerNavPaths.length ? _viewerNavPaths : galleryNavPaths();
-  const cur = normViewerPath(state.lbPath);
-  let idx = paths.findIndex(p => normViewerPath(p) === cur);
-  if (idx < 0 && state.lbPath) {
-    const base = cur.split("/").pop();
-    idx = paths.findIndex(p => normViewerPath(p).split("/").pop() === base);
+  const exactGal = _viewerNavMode === "gallery";
+  let idx = findViewerPathIndex(paths, state.lbPath, { exactOnly: exactGal });
+  // 主画廊放大看进化中图时，大按钮仍相对定稿锚点禁用
+  if (idx < 0 && exactGal && _viewerAnchorPath) {
+    idx = findViewerPathIndex(paths, _viewerAnchorPath, { exactOnly: true });
   }
   const atStart = idx <= 0;
   const atEnd = idx < 0 || idx >= paths.length - 1;
-  ["ivPrev", "ivPrevBtn"].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.disabled = atStart;
-  });
-  ["ivNext", "ivNextBtn"].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.disabled = atEnd;
-  });
+  const evoPaths = _viewerEvoPaths;
+  let evoIdx = findViewerPathIndex(evoPaths, state.lbPath);
+  const evoStart = evoPaths.length < 2 || evoIdx <= 0;
+  const evoEnd = evoPaths.length < 2 || evoIdx < 0 || evoIdx >= evoPaths.length - 1;
+  const largeIsEvo = _viewerNavMode === "evolve" || _viewerNavMode === "teach";
+  const prev = document.getElementById("ivPrev");
+  const next = document.getElementById("ivNext");
+  if (prev) {
+    prev.disabled = atStart;
+    prev.title = largeIsEvo ? "上一张进化图 (←)" : "上一张定稿 (←)";
+  }
+  if (next) {
+    next.disabled = atEnd;
+    next.title = largeIsEvo ? "下一张进化图 (→)" : "下一张定稿 (→)";
+  }
+  const prevBtn = document.getElementById("ivPrevBtn");
+  const nextBtn = document.getElementById("ivNextBtn");
+  if (prevBtn) {
+    prevBtn.disabled = largeIsEvo ? atStart : evoStart;
+    prevBtn.title = largeIsEvo ? "上一张进化图" : "上一张进化图";
+  }
+  if (nextBtn) {
+    nextBtn.disabled = largeIsEvo ? atEnd : evoEnd;
+    nextBtn.title = largeIsEvo ? "下一张进化图" : "下一张进化图";
+  }
 }
 
 let _detailPath = "";
@@ -3574,14 +3621,14 @@ function renderDetailPipelineHtml(examples, sess) {
     } else if (pack.main || e.prompt) {
       actions.push(`<button type="button" class="btn-copy" onclick='event.stopPropagation(); copyText(${JSON.stringify(pack.main || e.prompt || "")}, "Prompt")'>📋 Prompt</button>`);
     }
-    actions.push(`<button type="button" class="btn-copy" onclick='event.stopPropagation(); openViewer(${JSON.stringify(e.path)}, { keepAnchor: true })'>🔍 放大</button>`);
+    actions.push(`<button type="button" class="btn-copy" onclick='event.stopPropagation(); openViewer(${JSON.stringify(e.path)}, { keepAnchor: true, fromDetail: true })'>🔍 放大</button>`);
     if (role === "process" && sid) {
       actions.push(`<button type="button" class="btn-copy" style="background:var(--success-bg);color:#6ee7b7;border-color:rgba(16,185,129,0.45);" onclick='event.stopPropagation(); promoteAsFinal(${JSON.stringify(e.path)}, ${JSON.stringify(sid)}, ${JSON.stringify(e.round)}, ${JSON.stringify(anchor)})'>设置为最终交稿</button>`);
     }
     const isCur = _detailPath && pathMetaKeyMatch(e.path, _detailPath);
     const imgHtml = (e.missing || !e.src)
       ? `<div style="height:180px;display:flex;align-items:center;justify-content:center;color:var(--text-dim);font-size:12px;border:1px dashed var(--border);border-radius:8px;background:#0b101d;">图缺失<br/><span style="opacity:.7;font-size:10px;">${esc(PathName(e.path || ""))}</span></div>`
-      : `<img src="${esc(e.src)}" data-full="${esc(e.full || e.src)}" alt="" loading="eager" decoding="async" onclick='event.stopPropagation(); openViewer(${JSON.stringify(e.path)}, { keepAnchor: true })' onerror="if(!this.dataset.retried && this.dataset.full && this.dataset.full!==this.src){this.dataset.retried='1';this.src=this.dataset.full;}else{this.replaceWith(Object.assign(document.createElement('div'),{style:'height:180px;display:flex;align-items:center;justify-content:center;color:#94a3b8;font-size:12px;border:1px dashed rgba(148,163,184,.35);border-radius:8px',textContent:'图加载失败'}));}" />`;
+      : `<img src="${esc(e.src)}" data-full="${esc(e.full || e.src)}" alt="" loading="eager" decoding="async" onclick='event.stopPropagation(); openViewer(${JSON.stringify(e.path)}, { keepAnchor: true, fromDetail: true })' onerror="if(!this.dataset.retried && this.dataset.full && this.dataset.full!==this.src){this.dataset.retried='1';this.src=this.dataset.full;}else{this.replaceWith(Object.assign(document.createElement('div'),{style:'height:180px;display:flex;align-items:center;justify-content:center;color:#94a3b8;font-size:12px;border:1px dashed rgba(148,163,184,.35);border-radius:8px',textContent:'图加载失败'}));}" />`;
     parts.push(`<div class="teach-ex role-${role}${isCur ? " current" : ""}" style="${isCur ? "outline:2px solid var(--teal);" : ""}">
       ${imgHtml}
       <div class="cap">
@@ -3610,7 +3657,10 @@ function renderDetailMain() {
     examples.forEach(e => {
       navMeta[normViewerPath(e.path)] = e;
     });
-    setViewerNav(examples.map(e => e.path).filter(Boolean), navMeta);
+    const detailPaths = examples.map(e => e.path).filter(Boolean);
+    setViewerNav(detailPaths, navMeta);
+    setViewerEvoNav(detailPaths);
+    _viewerNavMode = "evolve";
     const missN = examples.filter(e => e.missing || !e.src).length;
     const head = `
       <div class="detail-meta-bar">
@@ -3678,23 +3728,52 @@ window.closeViewer = function(force) {
   }
   _viewerCompare = false;
   _viewerFromTeach = false;
+  _viewerNavMode = "gallery";
+  _viewerEvoPaths = [];
   _viewerIgnoreCloseUntil = 0;
   const meta = document.getElementById("ivMetaPanel");
   if (meta) meta.innerHTML = "";
 };
 
 window.viewerStep = function(delta) {
+  // 大按钮：主画廊切定稿；详情/教学切进化
   const paths = _viewerNavPaths.length ? _viewerNavPaths : galleryNavPaths();
   if (!paths.length || !state.lbPath) return;
-  const cur = normViewerPath(state.lbPath);
-  let idx = paths.findIndex(p => normViewerPath(p) === cur);
-  if (idx < 0) {
-    const base = cur.split("/").pop();
-    idx = paths.findIndex(p => normViewerPath(p).split("/").pop() === base);
+  const exactGal = _viewerNavMode === "gallery";
+  let idx = findViewerPathIndex(paths, state.lbPath, { exactOnly: exactGal });
+  if (idx < 0 && exactGal && _viewerAnchorPath) {
+    idx = findViewerPathIndex(paths, _viewerAnchorPath, { exactOnly: true });
   }
   const next = idx + delta;
   if (idx < 0 || next < 0 || next >= paths.length) return;
-  openViewer(paths[next], { keepAnchor: true, fromTeach: _viewerFromTeach });
+  if (_viewerNavMode === "gallery") {
+    openViewer(paths[next], { navMode: "gallery" });
+    return;
+  }
+  openViewer(paths[next], {
+    keepAnchor: true,
+    fromTeach: _viewerFromTeach,
+    fromDetail: _viewerNavMode === "evolve"
+  });
+};
+
+window.viewerEvoStep = function(delta) {
+  // 底栏小按钮：主画廊放大时切本图进化；详情/教学与大按钮同链
+  const paths = (_viewerEvoPaths && _viewerEvoPaths.length)
+    ? _viewerEvoPaths
+    : ((_viewerNavMode === "evolve" || _viewerNavMode === "teach")
+      ? (_viewerNavPaths.length ? _viewerNavPaths : [])
+      : []);
+  if (paths.length < 2 || !state.lbPath) return;
+  const idx = findViewerPathIndex(paths, state.lbPath);
+  const next = idx + delta;
+  if (idx < 0 || next < 0 || next >= paths.length) return;
+  openViewer(paths[next], {
+    keepAnchor: true,
+    stepKind: "evo",
+    fromTeach: _viewerFromTeach,
+    fromDetail: _viewerNavMode === "evolve"
+  });
 };
 
 window.toggleCompare = function(force) {
@@ -3795,36 +3874,72 @@ window.openViewer = function(assetPath, opts) {
     if (opts.fromTeach) _viewerFromTeach = true;
     else if (!opts.keepAnchor) _viewerFromTeach = false;
 
-    // 建立可左右切换的图链：教学课内样例 / 会话轮次 / 主画廊
-    if (opts.fromTeach || _viewerFromTeach) {
+    // 建立可左右切换的图链：
+    // - 主画廊：大按钮=定稿，底栏小按钮=本图进化
+    // - 详情进化对照 / 教学：大按钮=进化（与原先一致）
+    if (opts.stepKind === "evo" && opts.keepAnchor) {
+      // 底栏切进化：保留现有大/小链与 mode
+    } else if (opts.fromTeach || (_viewerFromTeach && opts.keepAnchor)) {
       const tn = teachNavAndMeta();
+      _viewerNavMode = "teach";
       setViewerNav(tn.paths, tn.meta);
+      setViewerEvoNav(tn.paths);
+    } else if (opts.fromDetail || opts.navMode === "evolve") {
+      const sessD = sessionOfAsset(info)
+        || (_viewerSessionId && (DATA.converge_sessions || {})[_viewerSessionId])
+        || null;
+      const sn = sessionNavAndMeta(sessD);
+      _viewerNavMode = "evolve";
+      if (Array.isArray(opts.navPaths) && opts.navPaths.length) {
+        setViewerNav(opts.navPaths, opts.navMeta || sn.meta || {});
+        setViewerEvoNav(opts.navPaths);
+      } else if (sn.paths.length) {
+        setViewerNav(sn.paths, Object.assign({}, _viewerMetaByPath, sn.meta));
+        setViewerEvoNav(sn.paths);
+      } else if (_viewerNavPaths.length) {
+        // 详情 renderDetailMain 已用 examples 建链（含无会话对照）；禁止回落定稿
+        setViewerEvoNav(_viewerNavPaths);
+      } else {
+        setViewerNav([key], Object.assign({}, _viewerMetaByPath, sn.meta || {}));
+        setViewerEvoNav([key]);
+      }
     } else if (Array.isArray(opts.navPaths) && opts.navPaths.length) {
+      _viewerNavMode = opts.navMode || "evolve";
       setViewerNav(opts.navPaths, opts.navMeta || {});
-    } else if (!opts.keepAnchor) {
+      setViewerEvoNav(opts.navPaths);
+    } else if (!opts.keepAnchor || opts.navMode === "gallery") {
       const sess0 = sessionOfAsset(info);
       const sn = sessionNavAndMeta(sess0);
-      const inSess = sn.paths.some(p => normViewerPath(p) === normViewerPath(key));
-      if (inSess && sn.paths.length > 1) {
-        setViewerNav(sn.paths, sn.meta);
-      } else if (sess0) {
-        setViewerNav(galleryNavPaths(), sn.meta);
-      } else {
-        setViewerNav(galleryNavPaths(), {});
-      }
+      _viewerNavMode = "gallery";
+      setViewerNav(galleryNavPaths(), sn.meta || {});
+      setViewerEvoNav(sn.paths);
     } else {
+      // keepAnchor：尽量保留链；当前图不在大按钮链时，按 mode 补链
       const cur = normViewerPath(key);
       const inNav = _viewerNavPaths.some(p => normViewerPath(p) === cur);
       if (!inNav) {
         const sessKeep = sessionOfAsset(info)
           || (_viewerSessionId && (DATA.converge_sessions || {})[_viewerSessionId])
           || null;
-        if (sessKeep) {
+        if (_viewerNavMode === "gallery") {
+          if (!_viewerNavPaths.length) setViewerNav(galleryNavPaths(), _viewerMetaByPath);
+          if (sessKeep) {
+            const sn = sessionNavAndMeta(sessKeep);
+            setViewerEvoNav(sn.paths);
+            _viewerMetaByPath = Object.assign({}, _viewerMetaByPath, sn.meta);
+          }
+        } else if (sessKeep) {
           const sn = sessionNavAndMeta(sessKeep);
           setViewerNav(sn.paths, Object.assign({}, _viewerMetaByPath, sn.meta));
+          setViewerEvoNav(sn.paths);
         } else if (!_viewerNavPaths.length) {
           setViewerNav(galleryNavPaths(), _viewerMetaByPath);
         }
+      } else if (_viewerNavMode === "gallery" && (!_viewerEvoPaths || !_viewerEvoPaths.length)) {
+        const sessKeep = sessionOfAsset(info)
+          || (_viewerSessionId && (DATA.converge_sessions || {})[_viewerSessionId])
+          || null;
+        if (sessKeep) setViewerEvoNav(sessionNavAndMeta(sessKeep).paths);
       }
     }
 
@@ -4125,8 +4240,8 @@ function bindIvBtn(id, fn) {
 bindIvBtn("ivClose", () => closeViewer(true));
 bindIvBtn("ivPrev", () => viewerStep(-1));
 bindIvBtn("ivNext", () => viewerStep(1));
-bindIvBtn("ivPrevBtn", () => viewerStep(-1));
-bindIvBtn("ivNextBtn", () => viewerStep(1));
+bindIvBtn("ivPrevBtn", () => viewerEvoStep(-1));
+bindIvBtn("ivNextBtn", () => viewerEvoStep(1));
 bindIvBtn("ivCompare", () => toggleCompare());
 bindIvBtn("ivReveal", () => { if (state.lbPath) revealInFolder(state.lbPath); });
 bindIvBtn("ivCopy", () => { if (state.lbPath) copyText(absAssetPath(state.lbPath), "绝对路径"); });

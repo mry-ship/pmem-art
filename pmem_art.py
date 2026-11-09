@@ -29,7 +29,7 @@ from lifecycle import ensure_stdio_survives_locale
 
 ensure_stdio_survives_locale()
 
-VERSION = "0.16.6-art"
+VERSION = "0.16.7-art"
 MEMORY_DIR = ".memory-art"
 
 KIND_META = {
@@ -719,22 +719,34 @@ def _sibling_final_slot(root: Path, image: str) -> str:
 
 
 def _guess_final_image(root: Path, slim_rounds: list[dict[str, Any]], winner: str) -> str:
-    # 有同目录 final.jpg 时永远优先它（即使 winner 仍是 r3 过程板）
-    anchors = [winner] + [str(r.get("image") or "") for r in (slim_rounds or [])]
-    for anchor in anchors:
-        sib = _sibling_final_slot(root, anchor)
-        if sib:
-            return sib
+    """推断终稿槽路径：优先「分数最高轮」同目录 final.*，再回退 winner。
+
+    旧逻辑「有 final.jpg 就永远用它」会在终稿文件落后于更高分轮时，让进化链显示错终稿。
+    """
     scored = [
-        r for r in slim_rounds
+        r for r in (slim_rounds or [])
         if r.get("image") and r.get("score") is not None
     ]
+    best_img = ""
     if scored:
-        best = max(scored, key=lambda r: float(r.get("score") or 0))
-        img = str(best.get("image") or "")
-        if winner:
-            return winner
-        return img
+        best = max(
+            scored,
+            key=lambda r: (float(r.get("score") or 0), int(r.get("round") or 0)),
+        )
+        best_img = str(best.get("image") or "")
+    # 1) 最高分轮同目录已有 final.* → 用它（与 converge finish 落盘一致）
+    if best_img:
+        sib = _sibling_final_slot(root, best_img)
+        if sib:
+            return sib
+    # 2) winner 同目录 final.*
+    if winner:
+        sib = _sibling_final_slot(root, winner)
+        if sib:
+            return sib
+    # 3) 没有独立 final 槽时，展示路径跟最高分轮（或 winner）
+    if best_img:
+        return best_img
     if winner:
         return winner
     return str((slim_rounds[-1] or {}).get("image") or "") if slim_rounds else ""
@@ -1134,7 +1146,13 @@ def load_project(root: Path, *, embed_images: bool = False) -> dict[str, Any]:
                 except Exception:
                     pass
             if mspecs.get("alpha_required") and not info.get("has_alpha"):
-                issues.append(f"缺失透明通道：当前色彩模式为 {info.get('mode')}，模块要求 RGBA 透明通道")
+                # Cursor GenerateImage 无 alpha：不透明隔离底算合格，除非模块显式 alpha_strict。
+                if mspecs.get("alpha_strict"):
+                    issues.append(
+                        f"缺失透明通道：当前色彩模式为 {info.get('mode')}，"
+                        "模块 alpha_strict 要求真 RGBA（透明引擎交付）"
+                    )
+                # 否则：opaque_isolation 可通过；真 alpha 仅透明引擎路径要求。
             if mspecs.get("max_size_kb") and info.get("size_kb", 0) > mspecs["max_size_kb"]:
                 issues.append(f"文件体积超标：当前 {info.get('size_kb')} KB > 上限 {mspecs['max_size_kb']} KB")
         info["qa_issues"] = issues
@@ -1161,9 +1179,22 @@ def load_project(root: Path, *, embed_images: bool = False) -> dict[str, Any]:
                 # Counter-examples / intentionally detached anchors never mark content STALE.
                 a["actual"] = {k: v for k, v in actual.items() if k != "data_uri"} if actual else {}
                 continue
+            def _asset_file_present(asset_path: str) -> bool:
+                # Foreign Windows abs paths / overlong names must not crash load_project on macOS.
+                raw = str(asset_path or "")
+                if not raw or len(raw) > 400 or re.match(r"^[A-Za-z]:[\\/]", raw) or raw.startswith("\\\\"):
+                    return False
+                try:
+                    p = Path(raw)
+                    if p.is_absolute():
+                        return p.is_file()
+                    return (root / raw).is_file()
+                except OSError:
+                    return False
+
             missing = bool(ap) and (
                 (actual and actual.get("exists") is False)
-                or (not actual and not (root / str(ap)).is_file())
+                or (not actual and not _asset_file_present(str(ap)))
             )
             if missing:
                 gaps.append(str(ap))
@@ -1428,15 +1459,118 @@ def load_project(root: Path, *, embed_images: bool = False) -> dict[str, Any]:
     }
 
 
+_ATLAS_REFRESH_LOCKS: dict[str, Any] = {}
+_ATLAS_REFRESH_GUARD = None
+
+
+def _atlas_refresh_lock_for(root: Path) -> Any:
+    """Per-root in-process mutex（与跨进程文件锁叠用）。"""
+    import threading
+
+    global _ATLAS_REFRESH_GUARD
+    if _ATLAS_REFRESH_GUARD is None:
+        _ATLAS_REFRESH_GUARD = threading.Lock()
+    key = str(Path(root).resolve())
+    with _ATLAS_REFRESH_GUARD:
+        lock = _ATLAS_REFRESH_LOCKS.get(key)
+        if lock is None:
+            lock = threading.Lock()
+            _ATLAS_REFRESH_LOCKS[key] = lock
+        return lock
+
+
+class _AtlasInterprocessLock:
+    """跨进程互斥：`.memory-art/art-atlas.write.lock` + fcntl/msvcrt。"""
+
+    def __init__(self, root: Path) -> None:
+        self.root = Path(root)
+        self.lock_path = self.root / ".memory-art" / "art-atlas.write.lock"
+        self._fh: Any = None
+
+    def __enter__(self) -> "_AtlasInterprocessLock":
+        self.lock_path.parent.mkdir(parents=True, exist_ok=True)
+        self._fh = open(self.lock_path, "a+", encoding="utf-8")
+        try:
+            import fcntl
+
+            fcntl.flock(self._fh.fileno(), fcntl.LOCK_EX)
+        except ImportError:
+            try:
+                import msvcrt
+
+                self._fh.seek(0)
+                if self._fh.read(1) == "":
+                    self._fh.write("0")
+                    self._fh.flush()
+                self._fh.seek(0)
+                msvcrt.locking(self._fh.fileno(), msvcrt.LK_LOCK, 1)
+            except Exception:
+                pass
+        except Exception:
+            pass
+        return self
+
+    def __exit__(self, *exc: Any) -> None:
+        if self._fh is None:
+            return
+        try:
+            import fcntl
+
+            fcntl.flock(self._fh.fileno(), fcntl.LOCK_UN)
+        except ImportError:
+            try:
+                import msvcrt
+
+                self._fh.seek(0)
+                msvcrt.locking(self._fh.fileno(), msvcrt.LK_UNLCK, 1)
+            except Exception:
+                pass
+        except Exception:
+            pass
+        try:
+            self._fh.close()
+        except Exception:
+            pass
+        self._fh = None
+
+
+def write_atlas_html(
+    root: Path,
+    out_name: str = "art-atlas.html",
+    *,
+    data: dict[str, Any] | None = None,
+    embed_images: bool = False,
+) -> Path:
+    """统一写 atlas：进程内锁 + 跨进程文件锁 + 临时文件原子替换。"""
+    from build_atlas import generate_atlas_html
+
+    root = Path(root)
+    out_file = root / out_name
+    with _AtlasInterprocessLock(root):
+        with _atlas_refresh_lock_for(root):
+            payload = data if data is not None else load_project(root, embed_images=embed_images)
+            tmp = out_file.with_suffix(out_file.suffix + f".{os.getpid()}.tmp")
+            try:
+                generate_atlas_html(payload, tmp)
+                os.replace(str(tmp), str(out_file))
+            finally:
+                if tmp.is_file():
+                    try:
+                        tmp.unlink()
+                    except OSError:
+                        pass
+            return out_file
+
+
 def refresh_atlas_silent(root: Path, out_name: str = "art-atlas.html") -> Path | None:
     """Automatically regenerate art-atlas.html and .memory-art/atlas_ping.js after any write op."""
     try:
-        from build_atlas import generate_atlas_html
-        fresh_data = load_project(root, embed_images=False)
-        out_file = root / out_name
-        generate_atlas_html(fresh_data, out_file)
-        return out_file
-    except Exception:
+        return write_atlas_html(root, out_name=out_name, embed_images=False)
+    except Exception as exc:
+        try:
+            print(f"⚠️ refresh_atlas_silent 失败：{exc}", flush=True)
+        except Exception:
+            pass
         return None
 
 def cmd_list(data: dict[str, Any]) -> int:
@@ -2013,6 +2147,24 @@ def main() -> int:
     p_skills = sub.add_parser("skills", help="安装/刷新或列出内置的 Cursor / Claude Code / Codex 美术技能 (/pmem-draw 等)")
     p_skills.add_argument("--install", action="store_true", help="安装或刷新全部技能文件到 .cursor / .claude / .agents")
     p_skills.add_argument("--list", action="store_true", help="列出所有内置美术技能与触发方式")
+    p_skills.add_argument(
+        "--verify",
+        action="store_true",
+        help="验证 section_cut / 执行包行数 / benchmark 卡 / 关键路由单测（改技能后必跑）",
+    )
+    p_skills.add_argument(
+        "--quick",
+        action="store_true",
+        help="配合 --verify：跳过 unittest 子集，只跑静态检查",
+    )
+
+    p_bench = sub.add_parser(
+        "benchmark",
+        help="商业对标范例卡：lookup/list（只出气质句与档序；禁止当垫图）",
+    )
+    p_bench.add_argument("action", nargs="?", default="lookup", help="lookup|list")
+    p_bench.add_argument("--query", "-q", default="", help="id / 关键词")
+    p_bench.add_argument("--category", "-c", default="", help="品类，如 merge / ui.casual / keyart")
 
     p_route = sub.add_parser(
         "route",
@@ -2111,8 +2263,8 @@ def main() -> int:
     p_conv = sub.add_parser("converge", help="闭环收敛（Warm-Start + 严格两步分离：converge generate 仅生图 -> converge judge 独立VLM审图 · 按档位目标阈值动态停机）")
     p_conv.add_argument(
         "action",
-        choices=("start", "generate", "judge", "next", "step", "round", "finish", "table", "status", "warm", "lock", "discuss"),
-        help="子操作（next=出图前打印最高分垫图；generate=仅登记生图；judge=独立审图）",
+        choices=("start", "generate", "judge", "next", "step", "round", "finish", "settle", "table", "status", "warm", "lock", "discuss"),
+        help="子操作（next=出图前打印最高分垫图；generate=仅登记生图；judge=独立审图；settle=finish 后后台记忆/atlas）",
     )
     p_conv.add_argument("--session", "--id", dest="session", default="latest", help="会话 ID（默认 latest，支持 --id 或 --session）")
     p_conv.add_argument("--goal", "--brief", "-g", dest="goal", default="", help="本次生图目标描述（支持 --goal 或 --brief）")
@@ -2161,8 +2313,13 @@ def main() -> int:
     )
     p_conv.add_argument("--no-apply", action="store_true", help="finish 时仅结算/出报告，不写入记忆（默认会写）")
     p_conv.add_argument(
+        "--settle-sync",
+        action="store_true",
+        help="finish 时同步写记忆/atlas（默认后台 settle，不挡返回；也可用 PMEM_FINISH_SETTLE_BG=0）",
+    )
+    p_conv.add_argument(
         "--verbose", "-v", action="store_true",
-        help="打印完整 Markdown 报告（默认已打印评分履历表；记忆写入仍后台静默）",
+        help="打印完整 Markdown 报告（默认已打印评分履历表；记忆默认后台 settle）",
     )
     p_conv.add_argument(
         "--quiet", "-q", action="store_true",
@@ -2173,12 +2330,17 @@ def main() -> int:
     p_conv.add_argument(
         "--skip-route-gate",
         action="store_true",
-        help="跳过开画前 route 闸门（仅点名/调试；默认必须先 route）",
+        help="跳过开画前 route 闸门（须 PMEM_ART_ALLOW_GATE_SKIP=1 + --skip-reason；默认必须先 route）",
     )
     p_conv.add_argument(
         "--skip-reasonableness-gate",
         action="store_true",
-        help="跳过出图前合理性闸（仅调试；默认必须先 reasonableness review）",
+        help="跳过出图前合理性闸（须 ALLOW + --skip-reason；默认必须先 reasonableness review）",
+    )
+    p_conv.add_argument(
+        "--skip-reason",
+        default="",
+        help="跳闸审计原因（与 --skip-*-gate 或 ALLOW 联用；无原因则拒）",
     )
     p_conv.add_argument(
         "--route-id",
@@ -2190,6 +2352,25 @@ def main() -> int:
         default="",
         help="当前对话 id。与另一对话未结束的同一 session 冲突时拒绝开画",
     )
+
+    p_contract = sub.add_parser(
+        "contract",
+        help="理解合同：外置冻理解 + 每轮最小工作集 + 反馈归层（不改 9.5/4轮/route 硬闸）",
+    )
+    p_contract.add_argument(
+        "action",
+        choices=("show", "set", "patch", "working-set", "defaults-check", "classify"),
+        help="show|set|patch|working-set|defaults-check|classify",
+    )
+    p_contract.add_argument("--session", "--id", dest="session", default="latest", help="converge 会话 ID")
+    p_contract.add_argument("--defaults", default="", help="本趟默认项，逗号/分号分隔，建议含「默认：…」")
+    p_contract.add_argument("--locks", default="", help="L1 锁点，逗号/分号分隔")
+    p_contract.add_argument("--unlocks", default="", help="L1 不锁，逗号/分号分隔")
+    p_contract.add_argument("--vibe", dest="commercial_vibe", default="", help="缺风格时的商业气质一句")
+    p_contract.add_argument("--surface-fix", default="", help="L2 当轮只改一处")
+    p_contract.add_argument("--feedback", default="", help="patch 时的画师原话")
+    p_contract.add_argument("--text", default="", help="classify/patch 用的文本")
+    p_contract.add_argument("--json", dest="json_out", action="store_true", help="JSON 输出")
 
     p_improve = sub.add_parser("improve", help="自我迭代：扫描反思+反馈 → 更新口味档案（/pmem-coach）")
     p_improve.add_argument("action", nargs="?", default="run", choices=("run", "progress", "reflect"), help="run|progress|reflect")
@@ -2239,6 +2420,10 @@ def main() -> int:
         return cmd_init(root, project_name=args.name, force=args.force)
     if args.command == "skills":
         from skills_kit import install_skills_and_agent_configs, SKILL_SPECS
+        if getattr(args, "verify", False):
+            from skills_kit.skills_verify import cmd_skills_verify
+
+            return cmd_skills_verify(root, quick=bool(getattr(args, "quick", False)))
         if args.list and not args.install:
             print("🎨 pmem-art 内置美术技能列表（Cursor / Claude Code / Codex 通用）：\n")
             from skills_kit.install import command_names
@@ -2302,6 +2487,16 @@ def main() -> int:
         else:
             print(format_advise_text(payload, brief=bool(args.brief)), end="")
         return 0
+    if args.command == "benchmark":
+        from skills_kit.benchmark_catalog import cmd_benchmark
+
+        return cmd_benchmark(
+            root,
+            action=getattr(args, "action", "lookup") or "lookup",
+            query=getattr(args, "query", "") or "",
+            category=getattr(args, "category", "") or "",
+        )
+
     if args.command == "showcase-gate":
         from skills_kit.showcase_gate import audit_showcase_file, format_report
         html_path = Path(args.html)
@@ -2451,9 +2646,12 @@ def main() -> int:
                 print(f"⚠️ [pmem-art] hygiene doctor stamp failed: {exc}", file=sys.stderr)
         return 0
     if args.command == "atlas":
-        from build_atlas import generate_atlas_html
-        out_file = root / args.out
-        generate_atlas_html(data, out_file)
+        out_file = write_atlas_html(
+            root,
+            out_name=args.out,
+            data=data,
+            embed_images=embed_images,
+        )
         n_idx = len(data.get("index_images") or [])
         mode = "嵌入原图" if embed_images else "相对路径懒加载"
         print(
@@ -2540,7 +2738,14 @@ def main() -> int:
     if args.command == "converge":
         from skills_kit import cmd_converge
         from skills_kit.prompt_scale import DEFAULT_MAX_ROUNDS
-        _max_rounds = DEFAULT_MAX_ROUNDS if args.max_rounds is None else int(args.max_rounds)
+        _cfg_conv = (data.get("config") or {}).get("converge") or {}
+        if args.max_rounds is None:
+            try:
+                _max_rounds = int(_cfg_conv.get("max_rounds") or DEFAULT_MAX_ROUNDS)
+            except (TypeError, ValueError):
+                _max_rounds = DEFAULT_MAX_ROUNDS
+        else:
+            _max_rounds = int(args.max_rounds)
         return cmd_converge(
             root,
             data,
@@ -2578,8 +2783,31 @@ def main() -> int:
             contract=getattr(args, "converge_contract", "") or "",
             skip_route_gate=bool(getattr(args, "skip_route_gate", False)),
             skip_reasonableness_gate=bool(getattr(args, "skip_reasonableness_gate", False)),
+            skip_reason=getattr(args, "skip_reason", "") or "",
             expect_route=getattr(args, "route_id", "") or "",
             conversation_id=getattr(args, "conversation", "") or "",
+            # CLI finish：默认后台 settle；--settle-sync / settle 子命令走同步
+            settle_background=(
+                False
+                if (getattr(args, "action", "") == "settle" or bool(getattr(args, "settle_sync", False)))
+                else True
+            ),
+        )
+    if args.command == "contract":
+        from skills_kit.understanding_contract import cmd_contract
+
+        return cmd_contract(
+            root,
+            action=getattr(args, "action", "show") or "show",
+            session_id=getattr(args, "session", "latest") or "latest",
+            defaults=getattr(args, "defaults", "") or "",
+            locks=getattr(args, "locks", "") or "",
+            unlocks=getattr(args, "unlocks", "") or "",
+            commercial_vibe=getattr(args, "commercial_vibe", "") or "",
+            surface_fix=getattr(args, "surface_fix", "") or "",
+            feedback=getattr(args, "feedback", "") or "",
+            text=getattr(args, "text", "") or "",
+            json_out=bool(getattr(args, "json_out", False)),
         )
     if args.command == "reasonableness":
         from skills_kit.reasonableness_gate import cmd_reasonableness_at_root

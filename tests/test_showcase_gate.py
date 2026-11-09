@@ -145,6 +145,21 @@ class TestHtmlAudit(unittest.TestCase):
         self.assertEqual(len(issues), 1)
         self.assertEqual(issues[0]["score"], 9.00)
 
+    def test_missing_image_file_flagged(self) -> None:
+        import tempfile
+        from pathlib import Path
+        from skills_kit.showcase_gate import audit_showcase_file
+
+        with tempfile.TemporaryDirectory() as td:
+            page = Path(td) / "index.html"
+            page.write_text(
+                '<figure class="card win"><img src="nope.jpg" alt="x" />'
+                "<figcaption>终稿 · 4 轮 · 9.60</figcaption></figure>",
+                encoding="utf-8",
+            )
+            issues = audit_showcase_file(page)
+            self.assertTrue(any(i.get("reason") == "missing_image_file" for i in issues))
+
 
 if __name__ == "__main__":
     unittest.main()

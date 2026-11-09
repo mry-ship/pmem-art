@@ -1,9 +1,9 @@
 # 📘 pmem-art 画师使用手册 — 怎么在 Cursor / Codex 里越画越准
 
-> **版本**：`v0.16.6-art`  
+> **版本**：`v0.16.7-art`  
 > **核心理念（零门槛）**：**直接说人话就行**。例如「画一张窗边女孩」「参考这张，换成一只猫」。**不用背技能名、不用敲斜杠、不用碰命令行、不用写 YAML。** 附图可有可无。  
 > 电脑会自己认路；认不清会**先问你一句**，不会默默画错。你只会看到类似 `【按 克隆 走了】` / `【走默认路径】` 这种标签。  
-> **用户包下载（不含研发用 pmem）** → [GitHub Release v0.16.6-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.6-art)  
+> **用户包下载（不含研发用 pmem）** → [GitHub Release v0.16.7-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.7-art)  
 > **认路白话流程图** → [docs/route_pipeline.html](docs/route_pipeline.html)（推荐先看：大白话从提需到出图）  
 > **先看总览？** → [README.md](README.md) · **进阶斜杠技能**见下文（可选用） · 旧点选流程 [docs/skills/flows.html](docs/skills/flows.html)  
 > **看图墙 / 技能用法与结果？** → [README · 效果长什么样](README.md#效果长什么样) · [全页展陈](docs/showcase/skills-homepage/index.html)（图源 `docs/workbench_guide/` + 最新合成梯）
@@ -42,7 +42,7 @@
 
 玩家没点名具体技能时走总控（大白话也会进这里）。总控只审一轮：列出合理性、缺漏和理解错误。只有一种确定情况就直接执行；多种情况先列出来等你确认。你如果改了要求，就再审一遍，确认后再执行。可默认的路径/版式/同范围写入分析，不当成多种情况。确认或直接执行之后，把分析和每一张图交给下面某一支（整页对比可依次多支），并写明选了哪一支。点名了某一条，就直接走那一条。
 
-当你运行 `pyw -3 -u pmem_art.py init`（或 `pyw -3 -u pmem_art.py skills --install`）时，系统会自动在项目根目录生成技能文件（**你一般不用管这些路径**）：
+当你运行 `python3 pmem_art.py init`（或 `python3 pmem_art.py skills --install`）时，系统会自动在项目根目录生成技能文件（**你一般不用管这些路径**）：
 
 - **Cursor**：`.cursor/skills/<技能名>/SKILL.md` 与 `.cursor/commands/<技能名>.md`
 - **Claude Code**：`.claude/skills/<技能名>/SKILL.md`、`.claude/commands/<技能名>.md` 与 `CLAUDE.md`
@@ -67,7 +67,7 @@
 
 镜头包点选前不生图。有参考但没说新题材时，不会走进克隆。
 
-进步曲线 CLI：`pyw -3 -u pmem_art.py progress`（也可用 `/pmem-coach`，说「进步」）。
+进步曲线 CLI：`python3 pmem_art.py progress`（也可用 `/pmem-coach`，说「进步」）。
 
 ---
 
@@ -290,7 +290,7 @@ flowchart LR
 ```
 
 ```bash
-pyw -3 -u pmem_art.py atlas
+python3 pmem_art.py atlas
 # 终端会打印本项目专属 http 地址（端口按项目自动分配，勿假定永远是 27865）
 # 也可双击根目录「打开工作台.cmd」
 ```
@@ -348,7 +348,7 @@ flowchart TD
 ### 2.1 两种输入姿势
 
 #### 姿势 A：直接文字描述
-> `/pmem-draw 生成一张青瓷幻想风格的阿斯特拉全身立绘，7.5头身，透明底`
+> `/pmem-draw 生成一张青瓷幻想风格的阿斯特拉全身立绘，7.5头身，隔离底（Cursor 用纯黑；透明引擎才真 alpha）`
 
 #### 姿势 B：丢入一张图 + 文字要求（垫图解构模式）
 > `/pmem-draw [拖入一张参考图] 生成一张这种构图和笔触的浮空遗迹场景气氛图`
@@ -402,7 +402,7 @@ flowchart TD
 - **怎么用**
   - **Mode A（1024×1024 App Icon 母版）**：`/pmem-icon 生成 1024×1024 iOS/Android 应用图标母版，中心符号占 62%–72%，带小字号缩略可读性检查`
   - **Mode B（24px `currentColor` 一致化 SVG 矢量图标集）**：`/pmem-icon 做一套 24px Clean 导航+背包 SVG，输出 style-spec 与 preview.html`
-  - **Mode C（64/128/256px 游戏透明底道具栅格图标）**：`/pmem-icon 生成一套 RPG 药水与宝箱透明底道具图标，双层外描边 + 剪影秒认`
+  - **Mode C（64/128/256px 游戏隔离底道具栅格图标）**：`/pmem-icon 生成一套 RPG 药水与宝箱隔离底道具图标，双层外描边 + 剪影秒认`（Cursor 不透明隔离底，禁止后抠；gpt-image 等才真 alpha）
 - **原理**：在 Step 0 先判定 Mode A / Mode B / Mode C 三选一（严禁把 SVG 网格规则套在栅格图标上，也严禁把 iOS 圆角遮罩套在透明底道具上）→ 关键枚 **强制 4轮 ≥9.5** → 写记忆。
 
 ---
@@ -412,9 +412,9 @@ flowchart TD
 即使不用 `/pmem-draw`，你平时在 Cursor 里随口评一句，Agent 也会调用 `feedback` 记下来：
 
 ```bash
-pyw -3 -u pmem_art.py feedback "太赛博了，别这样画" -m character.Astra -a .cursor/generated/try1.png
-pyw -3 -u pmem_art.py feedback "这版留着" -m character.Astra -a .cursor/generated/try2.png
-pyw -3 -u pmem_art.py feedback "换成水彩" -m character.Astra
+python3 pmem_art.py feedback "太赛博了，别这样画" -m character.Astra -a .cursor/generated/try1.png
+python3 pmem_art.py feedback "这版留着" -m character.Astra -a .cursor/generated/try2.png
+python3 pmem_art.py feedback "换成水彩" -m character.Astra
 ```
 
 - **否定词**（太赛博 / 头太大 / 别这样画 / 漏抠） → 自动记为 **`style_redline`（红线）**
@@ -428,20 +428,20 @@ pyw -3 -u pmem_art.py feedback "换成水彩" -m character.Astra
 
 ### 4.1 空项目冷启动
 ```bash
-pyw -3 -u pmem_art.py init --name "Project-Celadon"
-pyw -3 -u pmem_art.py bootstrap --mode young --apply
+python3 pmem_art.py init --name "Project-Celadon"
+python3 pmem_art.py bootstrap --mode young --apply
 ```
 
 ### 4.2 老项目无损挂载（绝不乱移旧文件）
 ```bash
-pyw -3 -u pmem_art.py bootstrap --mode legacy --roots Art Content assets
-pyw -3 -u pmem_art.py accept --all
-pyw -3 -u pmem_art.py skills --install
+python3 pmem_art.py bootstrap --mode legacy --roots Art Content assets
+python3 pmem_art.py accept --all
+python3 pmem_art.py skills --install
 ```
 
 ### 4.3 持续生图自动分类入库
 ```bash
-pyw -3 -u pmem_art.py ingest .cursor/generated/new.png -p "角色Astra 水彩 概念图" --apply
+python3 pmem_art.py ingest .cursor/generated/new.png -p "角色Astra 水彩 概念图" --apply
 ```
 
 ---
@@ -458,18 +458,18 @@ pyw -3 -u pmem_art.py ingest .cursor/generated/new.png -p "角色Astra 水彩 �
 
 | 命令 | 说明 |
 | :--- | :--- |
-| `pyw -3 -u pmem_art.py skills --install` | 安装/刷新 `.cursor`、`.claude`、`.agents` 下的 10 个技能。每个技能一个 `/pmem-` 命令 |
-| `pyw -3 -u pmem_art.py skills --list` | 查看所有内置技能列表 |
-| `pyw -3 -u pmem_art.py converge start -g "<目标>" -m <模块> [--scale medium] [--ref-image <图> --ref-analysis "<解构>"]` | 开启一轮最多 4 次、`>= 9.5` 分的收敛生图会话 |
-| `pyw -3 -u pmem_art.py converge generate --round <i> -i <图> -p "<Prompt>"` | **仅生图登记**（禁止带 score/dims；与 judge 必须分两步）。上一轮没审完不能开下一轮 |
-| `pyw -3 -u pmem_art.py converge judge --round <i> -i <图> --dims "..." --strengths "..." --defects "..." --next-fix "..."` | **独立审图**：六维打分、亮点、不合理处与下一轮修正（须先有 generate） |
-| `pyw -3 -u pmem_art.py converge discuss --round <稿次> -p "<正文>" --defects "<没过的行>" --next-fix "<下一稿只改哪里>"` | 记下还没出图的论述稿（合成梯关系讨论）。结算时列进过程板 |
-| `pyw -3 -u pmem_art.py converge finish` | 结算达标图或 4 轮最高分图；**默认写入记忆、打印评分履历，并写出可点开的过程板**（`--no-apply` 可跳过写记忆；`--quiet` 只要一行结论，过程板路径仍给出）。不到 9.5 且未满 4 轮时直接失败，不能当终稿 |
-| `pyw -3 -u pmem_art.py showcase-gate --html <index.html>` | 展陈 HTML 终稿闸门：正式分 < 9.5 且未满 4 轮的格不能交 |
-| `pyw -3 -u pmem_art.py feedback "<原话>" -m <模块> [-a <图>]` | 把画师自然语言评价沉淀为记忆 |
-| `pyw -3 -u pmem_art.py search -m <模块>` | 召回该模块（含父模块）的红线、定稿与色板 |
-| `pyw -3 -u pmem_art.py ingest <图> -p "<说明>" --apply` | 四信号分类并归档图片 |
-| `pyw -3 -u pmem_art.py atlas` | 生成看图工作台，并拉起本机 reveal 服务；**用打印出的 http 地址打开**（删除/定位才稳定） |
+| `python3 pmem_art.py skills --install` | 安装/刷新 `.cursor`、`.claude`、`.agents` 下的 10 个技能。每个技能一个 `/pmem-` 命令 |
+| `python3 pmem_art.py skills --list` | 查看所有内置技能列表 |
+| `python3 pmem_art.py converge start -g "<目标>" -m <模块> [--scale medium] [--ref-image <图> --ref-analysis "<解构>"]` | 开启一轮最多 4 次、`>= 9.5` 分的收敛生图会话 |
+| `python3 pmem_art.py converge generate --round <i> -i <图> -p "<Prompt>"` | **仅生图登记**（禁止带 score/dims；与 judge 必须分两步）。上一轮没审完不能开下一轮 |
+| `python3 pmem_art.py converge judge --round <i> -i <图> --dims "..." --strengths "..." --defects "..." --next-fix "..."` | **独立审图**：六维打分、亮点、不合理处与下一轮修正（须先有 generate） |
+| `python3 pmem_art.py converge discuss --round <稿次> -p "<正文>" --defects "<没过的行>" --next-fix "<下一稿只改哪里>"` | 记下还没出图的论述稿（合成梯关系讨论）。结算时列进过程板 |
+| `python3 pmem_art.py converge finish` | 结算达标图或 4 轮最高分图；**默认写入记忆、打印评分履历，并写出可点开的过程板**（`--no-apply` 可跳过写记忆；`--quiet` 只要一行结论，过程板路径仍给出）。不到 9.5 且未满 4 轮时直接失败，不能当终稿 |
+| `python3 pmem_art.py showcase-gate --html <index.html>` | 展陈 HTML 终稿闸门：正式分 < 9.5 且未满 4 轮的格不能交 |
+| `python3 pmem_art.py feedback "<原话>" -m <模块> [-a <图>]` | 把画师自然语言评价沉淀为记忆 |
+| `python3 pmem_art.py search -m <模块>` | 召回该模块（含父模块）的红线、定稿与色板 |
+| `python3 pmem_art.py ingest <图> -p "<说明>" --apply` | 四信号分类并归档图片 |
+| `python3 pmem_art.py atlas` | 生成看图工作台，并拉起本机 reveal 服务；**用打印出的 http 地址打开**（删除/定位才稳定） |
 
 ---
 
@@ -482,13 +482,13 @@ A：到了第 4 轮仍未达 9.5 分时，`converge finish` 会自动停止循�
 A：它会先做 **Step 0 参考图深度解构**（分析构图、提取主辅色 HEX、判断光影与笔触、识别头身结构），把解构结论记入收敛会话基准，然后带着这份基准进入 1~4 轮自评收敛循环。
 
 **Q3：以后升级了 `pmem-art`，怎么刷新已安装项目的技能文件？**  
-A：在项目根目录运行 `pyw -3 -u pmem_art.py skills --install` 即可一键无损刷新 `.cursor`、`.claude`、`.agents` 下的全部技能定义。画师也可重新下载 [最新用户包](https://github.com/mry-ship/pmem-art/releases/latest)（不含研发用 pmem）。
+A：在项目根目录运行 `python3 pmem_art.py skills --install` 即可一键无损刷新 `.cursor`、`.claude`、`.agents` 下的全部技能定义。画师也可重新下载 [最新用户包](https://github.com/mry-ship/pmem-art/releases/latest)（不含研发用 pmem）。
 
 **Q4：没点名技能，直接说「画一张」会怎样？**  
 A：直接说人话即可（不必先敲 `/pmem-agent`）。系统会认路并回显 `【按 XX 走了】` 或 `【走默认路径】`；说不清会先问你一句。多种情况等你确认，确认前不生图。想锁死某类合同再点名 `/pmem-ui` 等。详见 [docs/route_pipeline.html](docs/route_pipeline.html)。
 
 **Q5：工作台里删了图，一刷新又回来了？ / 点删除没进垃圾桶？**  
-A：请确认用的是 `pyw -3 -u pmem_art.py atlas` 打印的 **http://127.0.0.1:…/art-atlas.html**，不要只双击 `file://`。删除会移入 `.memory-art/_trash/`，索引会同步踢掉；刷新不应再出现。若仍异常，再跑一次 `atlas` 后硬刷新页面。
+A：请确认用的是 `python3 pmem_art.py atlas` 打印的 **http://127.0.0.1:…/art-atlas.html**，不要只双击 `file://`。删除会移入 `.memory-art/_trash/`，索引会同步踢掉；刷新不应再出现。若仍异常，再跑一次 `atlas` 后硬刷新页面。
 
 **Q6：用户包和 GitHub 开发仓有什么区别？**  
 A：用户 zip（`pmem-art-*-art.zip`）只含美术记忆运行时，**不含** `.memory`、pmem hook/MCP。开发仓给维护者用，带研发记忆脚手架。画师日常下 Release 即可。
@@ -499,11 +499,11 @@ A：用户 zip（`pmem-art-*-art.zip`）只含美术记忆运行时，**不含**
 ## v0.11 连续自我迭代（能力 + 广度）
 
 ```bash
-pyw -3 -u pmem_art.py converge start -g "…" -m <模块>          # Warm-Start
-pyw -3 -u pmem_art.py converge start -g "…" -m <模块> --mode fast
-pyw -3 -u pmem_art.py improve run && pyw -3 -u pmem_art.py progress
-pyw -3 -u pmem_art.py coach
-pyw -3 -u pmem_art.py learn suggest && pyw -3 -u pmem_art.py learn accept --all
+python3 pmem_art.py converge start -g "…" -m <模块>          # Warm-Start
+python3 pmem_art.py converge start -g "…" -m <模块> --mode fast
+python3 pmem_art.py improve run && python3 pmem_art.py progress
+python3 pmem_art.py coach
+python3 pmem_art.py learn suggest && python3 pmem_art.py learn accept --all
 ```
 
 闭环（v0.14 履历可见）：`warm-start → 生图最多 4 轮、≥9.5（每轮展示评分/不足/改点）→ finish 打印履历 + 记忆静默自动驾驶 → 最多一行小提示 → 越用越好`。合成梯的关系讨论是 3 稿，用来定升级链和画风。只要终稿用 `--quiet`；`improve/coach/learn/progress` 为进阶 peek。看图工作台用 http 打开，删除进垃圾桶后刷新不会回来。
@@ -542,9 +542,9 @@ pyw -3 -u pmem_art.py learn suggest && pyw -3 -u pmem_art.py learn accept --all
 | medium 光影弱 | 「medium：允许更强体积光与雾层，仍禁止换镜头」 |
 | high 构图乱动 | 「high：禁止改机位与布局，只升级光影材质」 |
 | recompose 跑偏 | 「必须保留原图 X；禁止出现 Y；严格执行 recompose-dir」 |
-| 想长期生效 | `pyw -3 -u pmem_art.py feedback "以后 medium 禁止改发色" -m <模块>` |
+| 想长期生效 | `python3 pmem_art.py feedback "以后 medium 禁止改发色" -m <模块>` |
 
-全局改默认闸门（权重 / 改动上限 / forbidden 列表）：改 `prompt_scale.py` 后 `pyw -3 -u pmem_art.py skills --install`。
+全局改默认闸门（权重 / 改动上限 / forbidden 列表）：改 `prompt_scale.py` 后 `python3 pmem_art.py skills --install`。
 
 ```text
 /pmem-draw --scale low @comparison/style_refs/style_ref_02_pastel_sketch.png 只修五指与球鞋透视
@@ -556,9 +556,9 @@ pyw -3 -u pmem_art.py learn suggest && pyw -3 -u pmem_art.py learn accept --all
 生图与审图必须分两步（Skill 会自动跑）：
 
 ```bash
-pyw -3 -u pmem_art.py converge generate --id <sid> --round 1 -i out.jpg -p "<prompt>"
-pyw -3 -u pmem_art.py converge judge    --id <sid> --round 1 -i out.jpg --dims "构图9.2/光影9.1/透视9.0/质感9.0/风格9.2" --defects "..." --next-fix "..."
-pyw -3 -u pmem_art.py converge finish   --id <sid>   # 默认写记忆、打印评分履历，并写出过程板；只要终稿加 --quiet
+python3 pmem_art.py converge generate --id <sid> --round 1 -i out.jpg -p "<prompt>"
+python3 pmem_art.py converge judge    --id <sid> --round 1 -i out.jpg --dims "构图9.2/光影9.1/透视9.0/质感9.0/风格9.2" --defects "..." --next-fix "..."
+python3 pmem_art.py converge finish   --id <sid>   # 默认写记忆、打印评分履历，并写出过程板；只要终稿加 --quiet
 ```
 
 ---

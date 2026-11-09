@@ -435,6 +435,21 @@ class TestGateFixes(unittest.TestCase):
         self.assertFalse(res["inherited_default_pad_image"])
         self.assertEqual(res["aspect_ratio"], "9:16")
 
+    def test_invalid_aspect_ratio_rejected_without_pad(self) -> None:
+        """无垫图 / allow_empty_pad 也必须硬拒 2:1 等非法画幅。"""
+        from skills_kit.validate_params import validate_case_generation_params
+
+        with self.assertRaises(ValueError) as ctx:
+            validate_case_generation_params(
+                "converge_session",
+                aspect_ratio="2:1",
+                reference_image_paths=[],
+                allow_empty_pad=True,
+                root=ROOT,
+            )
+        self.assertIn("2:1", str(ctx.exception))
+        self.assertIn("aspect_ratio", str(ctx.exception))
+
     def test_best_plate_skips_a_later_worse_round(self) -> None:
         from skills_kit.converge import _best_plate
 

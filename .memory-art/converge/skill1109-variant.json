@@ -1,0 +1,1096 @@
+{
+  "session_id": "skill1109-variant",
+  "started_at": "2026-11-09 22:54:51 UTC+8",
+  "goal": "同一身份金发粉裙小精灵持果篮；换表情为开心大笑+挥手；机位锁死在参考图",
+  "module": "character.Fairy",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "medium",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "medium",
+    "label": "中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.5)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 1,
+    "target_score_threshold": 9.5,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.15,
+      "perspective_anatomy": 0.15,
+      "texture_detail": 0.15,
+      "spec_style": 0.15,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "viewpoint_frame",
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图，只在提示词上补还没过的那一处（提示词改动仍 ≤40%）",
+    "max_prompt_delta_ratio": 0.4,
+    "allow_recompose": false,
+    "allow_viewpoint_change": false,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "viewpoint_angle (不改机位与镜头视角)",
+      "element_count (不增删主体元素清单)",
+      "no_full_recompose (不做整体 recompose / 换景别故事)",
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)"
+    ],
+    "min_round_leap": 0.15,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光",
+    "medium_family": "generic",
+    "best_direction_hint": "最优方向：光影·空气·介质；可小幅姿态/局部布局",
+    "goal": "同一身份金发粉裙小精灵持果篮；换表情为开心大笑+挥手；机位锁死在参考图",
+    "module": "character.Fairy",
+    "ref_image": "assets/skill_20261109/_refs/ref_character_fairy.png",
+    "ref_analysis": "半身正面略偏右；金发双辫；粉裙持果篮；现闭嘴浅笑；纯黑底"
+  },
+  "medium_family": "generic",
+  "contract": "",
+  "target_score_threshold": 9.5,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "assets/skill_20261109/_refs/ref_character_fairy.png",
+  "ref_analysis": "半身正面略偏右；金发双辫；粉裙持果篮；现闭嘴浅笑；纯黑底",
+  "default_aspect_ratio": "1:1",
+  "default_reference_image_paths": [
+    "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_character_fairy.png"
+  ],
+  "aspect_ratio": "1:1",
+  "reference_image_paths": [
+    "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_character_fairy.png"
+  ],
+  "ref_physical_traits": {
+    "exists": true,
+    "size_bytes": 253167,
+    "size_kb": 247.2,
+    "width": 460,
+    "height": 460,
+    "aspect_ratio": "1:1",
+    "canonical_aspect_ratio": "1:1",
+    "color_entropy": 7.99
+  },
+  "param_validation": {
+    "valid": true,
+    "validation_passed": true,
+    "case_id": "skill1109-variant",
+    "scale": "medium",
+    "aspect_ratio": "1:1",
+    "ref_aspect_ratio": "1:1",
+    "ref_dimensions": "460x460",
+    "output_aspect_ratio": "",
+    "output_dimensions": "",
+    "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_character_fairy.png",
+    "reference_image_paths": [
+      "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_character_fairy.png"
+    ],
+    "inherited_default_aspect_ratio": true,
+    "inherited_default_pad_image": false,
+    "matched_ref_aspect_ratio": true,
+    "matched_ref_pad_image": true,
+    "matched_output_aspect_ratio": true,
+    "three_step_stage": "step1_start",
+    "three_step_verified": false,
+    "warnings": []
+  },
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.5,
+  "accept_threshold": 9.5,
+  "max_rounds": 4,
+  "ready_to_finish": true,
+  "status": "finished",
+  "owner_conversation_id": "skill1109-variant",
+  "route_ids": [
+    "draw.variant"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "1:1",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_character_fairy.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "skill1109-variant",
+        "scale": "medium",
+        "aspect_ratio": "1:1",
+        "ref_aspect_ratio": "1:1",
+        "ref_dimensions": "460x460",
+        "output_aspect_ratio": "1:1",
+        "output_dimensions": "1024x1024",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_character_fairy.png",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_character_fairy.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "22:59:55",
+      "image": "assets/skill_20261109/draw_variant/variant_r1.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 258988,
+        "size_kb": 252.9,
+        "width": 1024,
+        "height": 1024,
+        "aspect_ratio": "1:1",
+        "canonical_aspect_ratio": "1:1",
+        "color_entropy": 7.16
+      },
+      "raw_score": 8.79,
+      "score": 8.79,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.8/光影9.0/透视8.4/质感9.1/风格9.2/无瑕度8.5",
+      "dims_parsed": {
+        "composition": 8.8,
+        "lighting_color": 9.0,
+        "perspective_anatomy": 8.4,
+        "texture_detail": 9.1,
+        "spec_style": 9.2,
+        "flawlessness": 8.5
+      },
+      "weighted_score": 8.79,
+      "audit_warnings": [
+        "独立视觉裁判已采纳：openai_compatible/gpt-5.6-sol"
+      ],
+      "stagnated": false,
+      "strengths": "1) 张口大笑露上齿、颧骨抬起可见，相对参考闭嘴浅笑差分成立；2) 左手掌心朝外抬起挥手，右手仍握篮柄，果篮水果种类可读",
+      "defects": "底部裁切使裙摆与篮筐缺少完整收束；提篮手像搭在篮柄前方而非真正握紧，腕部姿态略硬；皮肤与水果高光都较强，局部材质区分稍显塑料化。",
+      "next_fix": "优先重做提篮手与篮柄的穿插和握持受力，放松腕部轮廓；随后略向上收纳篮筐或增加底部留白，并降低皮肤和部分水果的镜面高光以拉开材质差异。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.Fairy\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 个人口味: 光影=冷光源 / 暖光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [style-chibi] Q版头身: 2~3 头身，五官放大但识别锚点保留。\n  · [tech-watercolor] 水彩渲染: 边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光| 同一身份金发粉裙小精灵半身立绘变体：保持机位半身正面略偏右、纯黑底、头身与五官比例不变。金发侧分刘海+双粗辫粉发带、翠绿大眼、尖耳、粉裙白领口珍珠钮、珍珠项链青绿吊坠、淡蓝半透明翅脉翅。右手仍持柳编果篮（红苹果、橙黄果、绿葡萄、深色浆果），篮柄握在右手。表情改为开心大笑：嘴明显张开、上排牙齿可见、眼角弯起笑纹、颧骨抬起。左手抬起向镜头挥手招呼（掌心朝外、腕部弯曲、手指自然张开）。休闲手游3D角色立绘：柔光塑形、干净高光、材质分层清晰，禁止廉价塑料油腻高光与赛博霓虹。一眼失败：闭嘴浅笑、左手仍贴身侧、机位景别漂移、丢果篮或增删翅膀配饰。约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose；保持原图画风笔触与色板；保持性别物种年龄段与核心外观。| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: the subject silhouette stays continuous, supports and contact shadows read; do not melt the structure",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.4,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "generic",
+      "judge_source": "independent_vlm",
+      "remote_vlm": {
+        "source": "independent_vlm",
+        "provider": "openai_compatible",
+        "model": "gpt-5.6-sol",
+        "error": "",
+        "active": true,
+        "score_evidence": {
+          "composition": "头部居于上方视觉中心，双翼向左右展开，挥手与前景果篮形成高低错落的三角构图，但裙摆和篮筐在底边被截断。",
+          "lighting_color": "金发、面部、粉裙和水果均呈现统一的左上方高光与右下方柔和暗部，青蓝翅膀在黑底上轮廓清楚。",
+          "perspective_anatomy": "面部五官随三分之二侧向头部自然转折，挥手可辨认出拇指与四指，但提篮手的拳形和腕部连接略显僵硬。",
+          "texture_detail": "篮筐交错藤条、发辫股束、珍珠项链、半透明翼脉和水果高光均有清晰可辨的局部细节。",
+          "spec_style": "全图保持圆润高饱和的三维卡通渲染，面部、服装、翅膀、篮筐与水果的造型语言一致。",
+          "flawlessness": "主体边缘整体干净，手指、发梢和翅缘没有明显破碎，但篮柄与握拳处遮挡关系偏拥挤，部分珠饰和衣扣的排列略机械。"
+        },
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 1,
+          "rerated": false,
+          "reason": "",
+          "first_score": 8.79
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "composition",
+          "lesson": "本轮短板偏「composition」：底部裁切使裙摆与篮筐缺少完整收束；提篮手像搭在篮柄前方而非真正握紧，腕部姿态略硬；皮肤与水果高光都较强，局部材质区分稍显塑料化。",
+          "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+          "from_score": "8.79"
+        },
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：底部裁切使裙摆与篮筐缺少完整收束；提篮手像搭在篮柄前方而非真正握紧，腕部姿态略硬；皮肤与水果高光都较强，局部材质区分稍显塑料化。",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.79"
+        },
+        {
+          "category": "material",
+          "lesson": "本轮短板偏「material」：底部裁切使裙摆与篮筐缺少完整收束；提篮手像搭在篮柄前方而非真正握紧，腕部姿态略硬；皮肤与水果高光都较强，局部材质区分稍显塑料化。",
+          "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+          "from_score": "8.79"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "23:02:26"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "1:1",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_character_fairy.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "skill1109-variant",
+        "scale": "medium",
+        "aspect_ratio": "1:1",
+        "ref_aspect_ratio": "1:1",
+        "ref_dimensions": "460x460",
+        "output_aspect_ratio": "1:1",
+        "output_dimensions": "1024x1024",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_character_fairy.png",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_character_fairy.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "23:08:34",
+      "image": "assets/skill_20261109/draw_variant/variant_r2.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 248706,
+        "size_kb": 242.9,
+        "width": 1024,
+        "height": 1024,
+        "aspect_ratio": "1:1",
+        "canonical_aspect_ratio": "1:1",
+        "color_entropy": 7.17
+      },
+      "raw_score": 8.79,
+      "score": 8.79,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.8/光影9.0/透视8.4/质感9.1/风格9.2/无瑕度8.5",
+      "dims_parsed": {
+        "composition": 8.8,
+        "lighting_color": 9.0,
+        "perspective_anatomy": 8.4,
+        "texture_detail": 9.1,
+        "spec_style": 9.2,
+        "flawlessness": 8.5
+      },
+      "weighted_score": 8.79,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.00 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "独立视觉裁判已采纳：openai_compatible/gpt-5.6-sol"
+      ],
+      "stagnated": true,
+      "strengths": "1) 张口大笑与左手挥手仍成立；2) 右手与篮柄接触更可读，底部主体收束比上轮完整",
+      "defects": "握篮手没有形成十分可信的环握关系，拳头像压在篮柄前方；挥手侧腕掌衔接略膨胀，裙摆底部被画框截断，黑色背景使翅膀边缘的高亮显得稍硬。",
+      "next_fix": "优先重画握篮手的指节与篮柄前后遮挡，并收窄挥手腕部、校准掌指连接；随后给裙摆底部留出少量空间，并减弱翅缘和发梢的硬亮高光。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.Fairy\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 个人口味: 光影=冷光源 / 暖光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [style-chibi] Q版头身: 2~3 头身，五官放大但识别锚点保留。\n  · [tech-watercolor] 水彩渲染: 边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光| 同一身份金发粉裙小精灵半身立绘变体（第2轮）：锁机位半身正面略偏右、纯黑底、底部略留白收住裙摆与篮筐。金发双辫粉发带、翠绿大眼、尖耳、粉裙白领口珍珠钮、珍珠链青绿吊坠、淡蓝透翅不变。开心大笑张口露齿+左手挥手掌心朝外保留。只改：右手手指真正环握柳编篮柄、穿插与受力可读、腕部自然放松不僵；皮肤与水果改哑光柔高光、拉开材质差、禁止油腻镜面塑料感。不增删配饰（无新手镯）。| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: the subject silhouette stays continuous, supports and contact shadows read; do not melt the structure | 优先重做提篮手与篮柄的穿插和握持受力，放松腕部轮廓；随后略向上收纳篮筐或增加底部留白，并降低皮肤和部分水果的镜面高光以拉开材质差异。",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.4,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "generic",
+      "judge_source": "independent_vlm",
+      "remote_vlm": {
+        "source": "independent_vlm",
+        "provider": "openai_compatible",
+        "model": "gpt-5.6-sol",
+        "error": "",
+        "active": true,
+        "score_evidence": {
+          "composition": "角色头部、双翼与裙身形成稳定的中央三角构图，挥手和果篮分别占据画面右上与左下并取得平衡，但裙摆在底边被截断。",
+          "lighting_color": "金发、肤色和粉裙均有统一的左上方高光及柔和暗部，青色翅膀与橙黄色水果形成清楚的冷暖对比。",
+          "perspective_anatomy": "面部五官、双臂和五指结构均可辨识，前伸的挥手具有近大远小关系，但握篮手的拳形与篮柄接触方式略显僵硬。",
+          "texture_detail": "发束有连续的丝缕高光，篮筐呈现多层交错编织，水果表面、珠链和半透明翅膀也有区分明确的材质细节。",
+          "spec_style": "人物、服装、水果与翅膀均使用圆润饱满的三维卡通塑形和高光处理，边缘语言及细节密度保持一致。",
+          "flawlessness": "主体轮廓整体干净且没有明显破碎区域，但握篮手与篮柄叠接略生硬，挥手腕部偏粗，部分发梢和翅缘呈现过度光滑的塑料感。"
+        },
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 1,
+          "rerated": false,
+          "reason": "",
+          "first_score": 8.79
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：握篮手没有形成十分可信的环握关系，拳头像压在篮柄前方；挥手侧腕掌衔接略膨胀，裙摆底部被画框截断，黑色背景使翅膀边缘的高亮显得稍硬。",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.79"
+        },
+        {
+          "category": "line_edge",
+          "lesson": "本轮短板偏「line_edge」：握篮手没有形成十分可信的环握关系，拳头像压在篮柄前方；挥手侧腕掌衔接略膨胀，裙摆底部被画框截断，黑色背景使翅膀边缘的高亮显得稍硬。",
+          "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+          "from_score": "8.79"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：1) 张口大笑与左手挥手仍成立；2) 右手与篮柄接触更可读，底部主体收束比上轮完整",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.79"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "23:10:58"
+    },
+    {
+      "round": 3,
+      "round_label": "第 3 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "1:1",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_character_fairy.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "skill1109-variant",
+        "scale": "medium",
+        "aspect_ratio": "1:1",
+        "ref_aspect_ratio": "1:1",
+        "ref_dimensions": "460x460",
+        "output_aspect_ratio": "1:1",
+        "output_dimensions": "1024x1024",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_character_fairy.png",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_character_fairy.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "23:21:22",
+      "image": "assets/skill_20261109/draw_variant/variant_r3.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 256245,
+        "size_kb": 250.2,
+        "width": 1024,
+        "height": 1024,
+        "aspect_ratio": "1:1",
+        "canonical_aspect_ratio": "1:1",
+        "color_entropy": 7.16
+      },
+      "raw_score": 8.87,
+      "score": 8.87,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.8/光影9.1/透视8.6/质感9.0/风格9.2/无瑕度8.7",
+      "dims_parsed": {
+        "composition": 8.8,
+        "lighting_color": 9.1,
+        "perspective_anatomy": 8.6,
+        "texture_detail": 9.0,
+        "spec_style": 9.2,
+        "flawlessness": 8.7
+      },
+      "weighted_score": 8.87,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.08 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "独立视觉裁判已采纳：openai_compatible/gpt-5.6-sol"
+      ],
+      "stagnated": true,
+      "strengths": "1) 大笑张口与挥手姿态清晰；2) 果篮水果色彩层次与编织纹理可读",
+      "defects": "下沿裁切使篮筐和裙摆缺少完整收束；握篮手的指节变化偏少，像整体弯曲的软块；皮肤、衣料和翅膀的高光处理较相似，材质区分仍可加强。",
+      "next_fix": "略微缩小主体或向上调整，完整保留篮底与更多裙摆；重塑握篮手的指缝和指节转折，并分别降低皮肤高光、增加布料细微纹理与翼面半透明层次。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.Fairy\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 个人口味: 光影=冷光源 / 暖光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [style-chibi] Q版头身: 2~3 头身，五官放大但识别锚点保留。\n  · [tech-watercolor] 水彩渲染: 边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光| 同一身份金发粉裙小精灵半身立绘变体（第3轮）：锁机位半身正面略偏右、纯黑底、裙摆底部留白。身份锁：金发双辫粉发带、翠绿大眼、尖耳、粉裙白领口珍珠钮、仅珍珠链+青绿吊坠（无任何手镯）、淡蓝透翅。保留开心大笑张口露齿+左手挥手掌心朝外。只改：右手指节真正环绕篮柄前后遮挡清晰、腕部自然；挥手腕部收窄、掌指连接校准；翅缘与发梢硬亮高光减弱。哑光材质拉开，禁止塑料油腻。水果锁：红苹果/橙黄果/绿葡萄/深色浆果。| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: the subject silhouette stays continuous, supports and contact shadows read; do not melt the structure | 优先重画握篮手的指节与篮柄前后遮挡，并收窄挥手腕部、校准掌指连接；随后给裙摆底部留出少量空间，并减弱翅缘和发梢的硬亮高光。 | MUST_FIX (≤2): 优先重画握篮手的指节与篮柄前后遮挡，；并收窄挥手腕部、校准掌指连接",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.6,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "generic",
+      "judge_source": "independent_vlm",
+      "remote_vlm": {
+        "source": "independent_vlm",
+        "provider": "openai_compatible",
+        "model": "gpt-5.6-sol",
+        "error": "",
+        "active": true,
+        "score_evidence": {
+          "composition": "人物头部居中偏上，双翼向左右展开形成稳定三角轮廓，果篮占据左下并与右上挥手形成对角平衡，但裙摆和篮底贴近下边缘。",
+          "lighting_color": "面部、头发、手臂和果实均有统一的左上方高光与右下方柔和阴影，粉、金、青三组主色分离清楚。",
+          "perspective_anatomy": "头部、躯干与手臂的前后遮挡连贯，挥手五指和握篮手均可辨，但握篮手指呈较整齐的块状弯曲。",
+          "texture_detail": "篮筐交错编织、发辫束股、珍珠项链和翼面脉纹均有清晰细节，皮肤与裙面则主要表现为平滑渐变。",
+          "spec_style": "圆润的大眼、夸张耳形、柔软高光和统一的三维卡通塑形贯穿人物、翅膀、果实及篮筐。",
+          "flawlessness": "人物与翅膀外轮廓干净，眼口和手指结构完整，主要可见问题是篮底及裙摆被画面下沿截断、局部材质过度光滑。"
+        },
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 1,
+          "rerated": false,
+          "reason": "",
+          "first_score": 8.87
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "composition",
+          "lesson": "本轮短板偏「composition」：下沿裁切使篮筐和裙摆缺少完整收束；握篮手的指节变化偏少，像整体弯曲的软块；皮肤、衣料和翅膀的高光处理较相似，材质区分仍可加强。",
+          "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+          "from_score": "8.87"
+        },
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：下沿裁切使篮筐和裙摆缺少完整收束；握篮手的指节变化偏少，像整体弯曲的软块；皮肤、衣料和翅膀的高光处理较相似，材质区分仍可加强。",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.87"
+        },
+        {
+          "category": "material",
+          "lesson": "本轮短板偏「material」：下沿裁切使篮筐和裙摆缺少完整收束；握篮手的指节变化偏少，像整体弯曲的软块；皮肤、衣料和翅膀的高光处理较相似，材质区分仍可加强。",
+          "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+          "from_score": "8.87"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "23:24:00",
+      "asset_image": "assets/skill_20261109/draw_variant/variant_r3.jpg"
+    },
+    {
+      "round": 4,
+      "round_label": "第 4 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "1:1",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_character_fairy.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "skill1109-variant",
+        "scale": "medium",
+        "aspect_ratio": "1:1",
+        "ref_aspect_ratio": "1:1",
+        "ref_dimensions": "460x460",
+        "output_aspect_ratio": "1:1",
+        "output_dimensions": "1024x1024",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_character_fairy.png",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_character_fairy.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "23:28:11",
+      "image": "assets/skill_20261109/draw_variant/variant_r4.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 255763,
+        "size_kb": 249.8,
+        "width": 1024,
+        "height": 1024,
+        "aspect_ratio": "1:1",
+        "canonical_aspect_ratio": "1:1",
+        "color_entropy": 7.17
+      },
+      "raw_score": 8.78,
+      "score": 8.78,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.8/光影9.0/透视8.5/质感8.8/风格9.1/无瑕度8.6",
+      "dims_parsed": {
+        "composition": 8.8,
+        "lighting_color": 9.0,
+        "perspective_anatomy": 8.5,
+        "texture_detail": 8.8,
+        "spec_style": 9.1,
+        "flawlessness": 8.6
+      },
+      "weighted_score": 8.78,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +-0.09 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "独立视觉裁判已采纳：openai_compatible/gpt-5.6-sol"
+      ],
+      "stagnated": true,
+      "strengths": "1) 张口大笑露齿与左手挥手清晰成立；2) 篮底与裙摆收束更完整，绿葡萄等水果可读",
+      "defects": "持篮手的握持结构略僵，篮把与拳头接触处缺少更明确的压握关系；皮肤、裙料和翅膀的表面处理偏同质化，部分边缘过度圆滑，裙摆底部截断也略削弱完整展示感。",
+      "next_fix": "优先重画持篮手与篮把接触处，补出拇指包覆、指节受力和篮把遮挡层级；随后拉开皮肤、布料与翼膜的粗糙度差异，并为底部增加少量空间以完整呈现裙摆轮廓。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.Fairy\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 个人口味: 光影=冷光源 / 暖光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [style-chibi] Q版头身: 2~3 头身，五官放大但识别锚点保留。\n  · [tech-watercolor] 水彩渲染: 边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光| 同一身份金发粉裙小精灵半身立绘变体（第4轮终稿冲刺）：锁机位半身正面略偏右、纯黑底；主体略缩小保留篮底与更多裙摆。身份锁：金发双辫粉发带、翠绿大眼、尖耳、粉裙白领口珍珠钮、仅珍珠链青绿吊坠、双手腕裸露无手镯、淡蓝透翅。保留开心大笑张口露齿+左手挥手掌心朝外指节清晰。只改：握篮手指缝与指节转折分明并绕到篮柄后方；皮肤高光更柔、裙面微纹理、翼面半透明分层。水果：红苹果/橙黄果/绿葡萄/深色浆果。禁止塑料油腻与新增配饰。| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: the subject silhouette stays continuous, supports and contact shadows read; do not melt the structure | 略微缩小主体或向上调整，完整保留篮底与更多裙摆；重塑握篮手的指缝和指节转折，并分别降低皮肤高光、增加布料细微纹理与翼面半透明层次。",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.5,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "generic",
+      "judge_source": "independent_vlm",
+      "remote_vlm": {
+        "source": "independent_vlm",
+        "provider": "openai_compatible",
+        "model": "gpt-5.6-sol",
+        "error": "",
+        "active": true,
+        "score_evidence": {
+          "composition": "人物头部、双翼与果篮形成稳定三角布局，挥手完整落在右上留白内，但裙摆在画面底边被截断。",
+          "lighting_color": "金发、面部、粉裙和水果均受左上方暖光照亮，鼻尖、眼球与果皮高光方向基本统一，蓝翼提供清晰冷暖对比。",
+          "perspective_anatomy": "头部为轻微侧转的正面视角，双眼与耳朵随转向产生合理大小差，挥手五指可辨且手臂连接连续，但持篮手腕与拳面的转折略显紧硬。",
+          "texture_detail": "篮筐交错编织、发辫股束、珍珠串和翼脉都有清楚层次，水果表皮高光可区分形体，但皮肤与裙面整体偏均匀光滑。",
+          "spec_style": "面部的大眼比例、圆润渐变塑形、金色发束与半透明蓝翼保持统一的高完成度卡通三维插画语言。",
+          "flawlessness": "人物外轮廓整体干净，手指、发梢和翼缘未见明显断裂或多余肢体；局部发丝尖端、耳缘及篮把交叠处有轻微塑料化和粘连感。"
+        },
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 1,
+          "rerated": false,
+          "reason": "",
+          "first_score": 8.78
+        }
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_MAX_ROUNDS",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "line_edge",
+          "lesson": "本轮短板偏「line_edge」：持篮手的握持结构略僵，篮把与拳头接触处缺少更明确的压握关系；皮肤、裙料和翅膀的表面处理偏同质化，部分边缘过度圆滑，裙摆底部截断也略削弱完整展示感。",
+          "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+          "from_score": "8.78"
+        },
+        {
+          "category": "material",
+          "lesson": "本轮短板偏「material」：持篮手的握持结构略僵，篮把与拳头接触处缺少更明确的压握关系；皮肤、裙料和翅膀的表面处理偏同质化，部分边缘过度圆滑，裙摆底部截断也略削弱完整展示感。",
+          "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+          "from_score": "8.78"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：1) 张口大笑露齿与左手挥手清晰成立；2) 篮底与裙摆收束更完整，绿葡萄等水果可读",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.78"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "23:30:51"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "/Users/yanghu/Desktop/pmem-art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-11-09 04:30:07 UTC+8"
+    },
+    "module": "character.Fairy",
+    "goal": "同一身份金发粉裙小精灵持果篮；换表情为开心大笑+挥手；机位锁死在参考图",
+    "confidence": 0.45,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "个人口味/正向保留非空",
+      "注入红线可控（0 条，已按任务主题过滤）",
+      "挂载 2 张项目知识卡 + 0 张全局美术底层基础卡"
+    ],
+    "top_recipes": [],
+    "top_redlines": [],
+    "art_decisions": [],
+    "private_knowledge": [
+      {
+        "id": "style-chibi",
+        "title": "Q版头身",
+        "body": "2~3 头身，五官放大但识别锚点保留。",
+        "layer_scope": "private"
+      },
+      {
+        "id": "tech-watercolor",
+        "title": "水彩渲染",
+        "body": "边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。",
+        "layer_scope": "private"
+      }
+    ],
+    "shared_knowledge": [],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [
+        "冷光源",
+        "暖光"
+      ],
+      "preferred_composition": [
+        "半身",
+        "居中/对称构图"
+      ],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [
+        "避免过饱和"
+      ],
+      "banned_habits": [
+        "廉价塑料感/油腻高光",
+        "漏抠/黑底/毛边",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色"
+      ],
+      "keep_phrases": [
+        "确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色"
+      ],
+      "banned_habits_raw_tail": [
+        "禁止偏离样张画风：过度霓虹、脏暗阴影、油腻高光、写实皮肤毛孔、扁平UI描边",
+        "电池审稿：原画竖构图避免贴样张布局；边缘反光勿过曝",
+        "错误头身比/头过大",
+        "电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感",
+        "黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差",
+        "廉价塑料感/油腻高光",
+        "漏抠/黑底/毛边",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色"
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.Fairy\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 个人口味: 光影=冷光源 / 暖光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [style-chibi] Q版头身: 2~3 头身，五官放大但识别锚点保留。\n  · [tech-watercolor] 水彩渲染: 边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。",
+    "built_at": "2026-11-09 22:54:51 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：底部裁切使裙摆与篮筐缺少完整收束；提篮手像搭在篮柄前方而非真正握紧，腕部姿态略硬；皮肤与水果高光都较强，局部材质区分稍显塑料化。",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "8.79"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：底部裁切使裙摆与篮筐缺少完整收束；提篮手像搭在篮柄前方而非真正握紧，腕部姿态略硬；皮肤与水果高光都较强，局部材质区分稍显塑料化。",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.79"
+    },
+    {
+      "category": "material",
+      "lesson": "本轮短板偏「material」：底部裁切使裙摆与篮筐缺少完整收束；提篮手像搭在篮柄前方而非真正握紧，腕部姿态略硬；皮肤与水果高光都较强，局部材质区分稍显塑料化。",
+      "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+      "from_score": "8.79"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：握篮手没有形成十分可信的环握关系，拳头像压在篮柄前方；挥手侧腕掌衔接略膨胀，裙摆底部被画框截断，黑色背景使翅膀边缘的高亮显得稍硬。",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.79"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：握篮手没有形成十分可信的环握关系，拳头像压在篮柄前方；挥手侧腕掌衔接略膨胀，裙摆底部被画框截断，黑色背景使翅膀边缘的高亮显得稍硬。",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "8.79"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：1) 张口大笑与左手挥手仍成立；2) 右手与篮柄接触更可读，底部主体收束比上轮完整",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.79"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：下沿裁切使篮筐和裙摆缺少完整收束；握篮手的指节变化偏少，像整体弯曲的软块；皮肤、衣料和翅膀的高光处理较相似，材质区分仍可加强。",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "8.87"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：下沿裁切使篮筐和裙摆缺少完整收束；握篮手的指节变化偏少，像整体弯曲的软块；皮肤、衣料和翅膀的高光处理较相似，材质区分仍可加强。",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.87"
+    },
+    {
+      "category": "material",
+      "lesson": "本轮短板偏「material」：下沿裁切使篮筐和裙摆缺少完整收束；握篮手的指节变化偏少，像整体弯曲的软块；皮肤、衣料和翅膀的高光处理较相似，材质区分仍可加强。",
+      "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+      "from_score": "8.87"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：持篮手的握持结构略僵，篮把与拳头接触处缺少更明确的压握关系；皮肤、裙料和翅膀的表面处理偏同质化，部分边缘过度圆滑，裙摆底部截断也略削弱完整展示感。",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "8.78"
+    },
+    {
+      "category": "material",
+      "lesson": "本轮短板偏「material」：持篮手的握持结构略僵，篮把与拳头接触处缺少更明确的压握关系；皮肤、裙料和翅膀的表面处理偏同质化，部分边缘过度圆滑，裙摆底部截断也略削弱完整展示感。",
+      "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+      "from_score": "8.78"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：1) 张口大笑露齿与左手挥手清晰成立；2) 篮底与裙摆收束更完整，绿葡萄等水果可读",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.78"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 2,
+  "regression_drop": 0.15,
+  "safe_early_stop": false,
+  "understanding_contract": {
+    "version": 1,
+    "raw_utterance": "同一身份金发粉裙小精灵持果篮；换表情为开心大笑+挥手；机位锁死在参考图",
+    "l0": {
+      "route_ids": [
+        "draw.variant"
+      ],
+      "banner": "【按 变体 走了】",
+      "delivery": "draw.variant"
+    },
+    "l1": {
+      "locks": [
+        "锁：金发双辫粉发带",
+        "翠绿大眼",
+        "尖耳",
+        "粉裙白领口珍珠钮",
+        "珍珠链青绿吊坠",
+        "淡蓝透翅",
+        "果篮水果种类与构图机位景别",
+        "画风与色板"
+      ],
+      "unlocks": [
+        "不锁：嘴部开合与表情肌",
+        "左手从身侧改为挥手弧度"
+      ],
+      "defaults_shown": [
+        "默认：半身正面略偏右纯黑底",
+        "同一金发粉裙小精灵持果篮",
+        "表情改开心大笑（张口露齿可见）",
+        "左手挥手招呼",
+        "右手仍持篮",
+        "休闲手游3D立绘气质"
+      ],
+      "commercial_vibe": "休闲手游角色立绘顶级完成度：柔光塑形、干净高光、材质分层清晰，非廉价塑料油腻"
+    },
+    "l2": {
+      "open": true,
+      "surface_fix": "只改：提篮右手握柄穿插受力更真、腕部放松；底部略留白收住裙摆篮筐；皮肤与水果镜面高光降一点拉开材质",
+      "last_feedback": "只改：提篮右手握柄穿插受力更真、腕部放松；底部略留白收住裙摆篮筐；皮肤与水果镜面高光降一点拉开材质",
+      "feedback_layer": "l2"
+    },
+    "notes": ""
+  },
+  "reasonableness_history": [
+    {
+      "reviewed_at": 1794236179.44045,
+      "passed": true,
+      "skill": "variant",
+      "issues": []
+    },
+    {
+      "reviewed_at": 1794236234.268981,
+      "passed": true,
+      "skill": "variant",
+      "issues": []
+    },
+    {
+      "reviewed_at": 1794236388.480022,
+      "passed": true,
+      "skill": "variant",
+      "issues": []
+    },
+    {
+      "reviewed_at": 1794236913.948054,
+      "passed": true,
+      "skill": "variant",
+      "issues": []
+    },
+    {
+      "reviewed_at": 1794237323.224065,
+      "passed": true,
+      "skill": "variant",
+      "issues": []
+    },
+    {
+      "reviewed_at": 1794237681.754061,
+      "passed": true,
+      "skill": "variant",
+      "issues": []
+    },
+    {
+      "reviewed_at": 1794238090.2185311,
+      "passed": true,
+      "skill": "variant",
+      "issues": []
+    }
+  ],
+  "reasonableness": {
+    "passed": true,
+    "skill": "variant",
+    "draft_prompt": "精灵大笑挥手终稿",
+    "revised_prompt": "同一身份金发粉裙小精灵半身立绘变体（第4轮终稿冲刺）：锁机位半身正面略偏右、纯黑底；主体略缩小保留篮底与更多裙摆。身份锁：金发双辫粉发带、翠绿大眼、尖耳、粉裙白领口珍珠钮、仅珍珠链青绿吊坠、双手腕裸露无手镯、淡蓝透翅。保留开心大笑张口露齿+左手挥手掌心朝外指节清晰。只改：握篮手指缝与指节转折分明并绕到篮柄后方；皮肤高光更柔、裙面微纹理、翼面半透明分层。水果：红苹果/橙黄果/绿葡萄/深色浆果。禁止塑料油腻与新增配饰。",
+    "checklist": {
+      "subject_action": {
+        "status": "ok",
+        "note": ""
+      },
+      "contact_scale": {
+        "status": "ok",
+        "note": ""
+      },
+      "element_budget": {
+        "status": "ok",
+        "note": ""
+      },
+      "hard_locks": {
+        "status": "ok",
+        "note": ""
+      },
+      "fail_at_glance": {
+        "status": "ok",
+        "note": ""
+      },
+      "only_named_delta": {
+        "status": "ok",
+        "note": ""
+      }
+    },
+    "issues": [],
+    "notes": "",
+    "reviewed_at": 1794238090.2185311,
+    "reviewed_at_iso": "2026-11-09 23:28:10",
+    "force_pass": false,
+    "skill_raw": "variant"
+  },
+  "discussions": [
+    {
+      "round": 0,
+      "kind": "reasonableness",
+      "prompt": "同一身份金发粉裙小精灵半身立绘变体（第4轮终稿冲刺）：锁机位半身正面略偏右、纯黑底；主体略缩小保留篮底与更多裙摆。身份锁：金发双辫粉发带、翠绿大眼、尖耳、粉裙白领口珍珠钮、仅珍珠链青绿吊坠、双手腕裸露无手镯、淡蓝透翅。保留开心大笑张口露齿+左手挥手掌心朝外指节清晰。只改：握篮手指缝与指节转折分明并绕到篮柄后方；皮肤高光更柔、裙面微纹理、翼面半透明分层。水果：红苹果/橙黄果/绿葡萄/深色浆果。禁止塑料油腻与新增配饰。",
+      "strengths": "合理性闸已过：subject_action=ok；contact_scale=ok；element_budget=ok；hard_locks=ok；fail_at_glance=ok；only_named_delta=ok",
+      "defects": "",
+      "next_fix": "首轮 generate 使用本修订提示词；审美迭代不得推翻硬锁与元素预算"
+    }
+  ],
+  "warm_start_merged": true,
+  "warm_start_merged_at": "2026-11-09 23:28:11",
+  "warm_start_block_sha1": "5f44cbec1352",
+  "ActionRequired": "STOP_PICK_BEST",
+  "showcase_ready": true,
+  "process_board": ".memory-art/converge/boards/skill1109-variant/index.html",
+  "winner": {
+    "round": 3,
+    "round_label": "第 3 轮精修",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "1:1",
+    "reference_image_paths": [
+      "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_character_fairy.png"
+    ],
+    "param_validation": {
+      "valid": true,
+      "validation_passed": true,
+      "case_id": "skill1109-variant",
+      "scale": "medium",
+      "aspect_ratio": "1:1",
+      "ref_aspect_ratio": "1:1",
+      "ref_dimensions": "460x460",
+      "output_aspect_ratio": "1:1",
+      "output_dimensions": "1024x1024",
+      "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_character_fairy.png",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_character_fairy.png"
+      ],
+      "inherited_default_aspect_ratio": true,
+      "inherited_default_pad_image": true,
+      "matched_ref_aspect_ratio": true,
+      "matched_ref_pad_image": true,
+      "matched_output_aspect_ratio": true,
+      "three_step_stage": "step3_judge",
+      "three_step_verified": true,
+      "warnings": [],
+      "continuation_pad": false,
+      "pad_diverged": false
+    },
+    "generated_at": "23:21:22",
+    "image": "assets/skill_20261109/draw_variant/variant_r3.jpg",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 256245,
+      "size_kb": 250.2,
+      "width": 1024,
+      "height": 1024,
+      "aspect_ratio": "1:1",
+      "canonical_aspect_ratio": "1:1",
+      "color_entropy": 7.16
+    },
+    "raw_score": 8.87,
+    "score": 8.87,
+    "target_score_threshold": 9.5,
+    "dims": "构图8.8/光影9.1/透视8.6/质感9.0/风格9.2/无瑕度8.7",
+    "dims_parsed": {
+      "composition": 8.8,
+      "lighting_color": 9.1,
+      "perspective_anatomy": 8.6,
+      "texture_detail": 9.0,
+      "spec_style": 9.2,
+      "flawlessness": 8.7
+    },
+    "weighted_score": 8.87,
+    "audit_warnings": [
+      "收敛停滞预警：本轮净增 +0.08 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+      "独立视觉裁判已采纳：openai_compatible/gpt-5.6-sol"
+    ],
+    "stagnated": true,
+    "strengths": "1) 大笑张口与挥手姿态清晰；2) 果篮水果色彩层次与编织纹理可读",
+    "defects": "下沿裁切使篮筐和裙摆缺少完整收束；握篮手的指节变化偏少，像整体弯曲的软块；皮肤、衣料和翅膀的高光处理较相似，材质区分仍可加强。",
+    "next_fix": "略微缩小主体或向上调整，完整保留篮底与更多裙摆；重塑握篮手的指缝和指节转折，并分别降低皮肤高光、增加布料细微纹理与翼面半透明层次。",
+    "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.Fairy\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 个人口味: 光影=冷光源 / 暖光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [style-chibi] Q版头身: 2~3 头身，五官放大但识别锚点保留。\n  · [tech-watercolor] 水彩渲染: 边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光| 同一身份金发粉裙小精灵半身立绘变体（第3轮）：锁机位半身正面略偏右、纯黑底、裙摆底部留白。身份锁：金发双辫粉发带、翠绿大眼、尖耳、粉裙白领口珍珠钮、仅珍珠链+青绿吊坠（无任何手镯）、淡蓝透翅。保留开心大笑张口露齿+左手挥手掌心朝外。只改：右手指节真正环绕篮柄前后遮挡清晰、腕部自然；挥手腕部收窄、掌指连接校准；翅缘与发梢硬亮高光减弱。哑光材质拉开，禁止塑料油腻。水果锁：红苹果/橙黄果/绿葡萄/深色浆果。| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: the subject silhouette stays continuous, supports and contact shadows read; do not melt the structure | 优先重画握篮手的指节与篮柄前后遮挡，并收窄挥手腕部、校准掌指连接；随后给裙摆底部留出少量空间，并减弱翅缘和发梢的硬亮高光。 | MUST_FIX (≤2): 优先重画握篮手的指节与篮柄前后遮挡，；并收窄挥手腕部、校准掌指连接",
+    "continuation": false,
+    "passed": false,
+    "gate_blocked": false,
+    "image_gate_blocked": false,
+    "anatomy_score": 8.6,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "generic",
+    "judge_source": "independent_vlm",
+    "remote_vlm": {
+      "source": "independent_vlm",
+      "provider": "openai_compatible",
+      "model": "gpt-5.6-sol",
+      "error": "",
+      "active": true,
+      "score_evidence": {
+        "composition": "人物头部居中偏上，双翼向左右展开形成稳定三角轮廓，果篮占据左下并与右上挥手形成对角平衡，但裙摆和篮底贴近下边缘。",
+        "lighting_color": "面部、头发、手臂和果实均有统一的左上方高光与右下方柔和阴影，粉、金、青三组主色分离清楚。",
+        "perspective_anatomy": "头部、躯干与手臂的前后遮挡连贯，挥手五指和握篮手均可辨，但握篮手指呈较整齐的块状弯曲。",
+        "texture_detail": "篮筐交错编织、发辫束股、珍珠项链和翼面脉纹均有清晰细节，皮肤与裙面则主要表现为平滑渐变。",
+        "spec_style": "圆润的大眼、夸张耳形、柔软高光和统一的三维卡通塑形贯穿人物、翅膀、果实及篮筐。",
+        "flawlessness": "人物与翅膀外轮廓干净，眼口和手指结构完整，主要可见问题是篮底及裙摆被画面下沿截断、局部材质过度光滑。"
+      },
+      "evidence_missing_dims": [],
+      "review": {
+        "pass_count": 1,
+        "rerated": false,
+        "reason": "",
+        "first_score": 8.87
+      }
+    },
+    "should_continue_next_round": true,
+    "decision": "CONTINUE_NEXT_ROUND",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "composition",
+        "lesson": "本轮短板偏「composition」：下沿裁切使篮筐和裙摆缺少完整收束；握篮手的指节变化偏少，像整体弯曲的软块；皮肤、衣料和翅膀的高光处理较相似，材质区分仍可加强。",
+        "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+        "from_score": "8.87"
+      },
+      {
+        "category": "lighting",
+        "lesson": "本轮短板偏「lighting」：下沿裁切使篮筐和裙摆缺少完整收束；握篮手的指节变化偏少，像整体弯曲的软块；皮肤、衣料和翅膀的高光处理较相似，材质区分仍可加强。",
+        "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+        "from_score": "8.87"
+      },
+      {
+        "category": "material",
+        "lesson": "本轮短板偏「material」：下沿裁切使篮筐和裙摆缺少完整收束；握篮手的指节变化偏少，像整体弯曲的软块；皮肤、衣料和翅膀的高光处理较相似，材质区分仍可加强。",
+        "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+        "from_score": "8.87"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "23:24:00",
+    "asset_image": "assets/skill_20261109/draw_variant/variant_r3.jpg"
+  },
+  "rounds_to_converge": 4,
+  "convergence_badge": "共 4 轮未达阈值，采用最高分",
+  "winner_image": "assets/skill_20261109/draw_variant/variant_r3.jpg",
+  "best_image": "assets/skill_20261109/draw_variant/variant_r3.jpg",
+  "final_image": "assets/skill_20261109/draw_variant/final.jpg"
+}

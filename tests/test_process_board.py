@@ -211,6 +211,57 @@ class ProcessBoardTests(unittest.TestCase):
         self.assertIn("这是预览", buf.getvalue())
         self.assertIn("还没结算", buf.getvalue())
 
+    def test_finish_background_settle_does_not_block(self):
+        """CLI-style finish should spawn settle and return without writing recipe sync."""
+        from unittest import mock
+
+        td = Path(tempfile.mkdtemp())
+        mem = td / ".memory-art" / "converge"
+        mem.mkdir(parents=True)
+        img = td / "win.jpg"
+        shutil.copy2(ROOT / "comparison" / "scale_01_night_city_high.jpg", img)
+        sess = {
+            "session_id": "bg-settle",
+            "goal": "后台 settle",
+            "module": "prop.Check",
+            "scale": "medium",
+            "accept_threshold": 9.5,
+            "threshold": 9.5,
+            "max_rounds": 1,
+            "single_judge": True,
+            "status": "running",
+            "rounds": [{
+                "round": 1,
+                "score": 8.2,
+                "dims": "构图8.2/光影8.2/透视8.2/质感8.2/风格8.2/无瑕疵8.2",
+                "image": str(img),
+                "judged": True,
+                "passed": False,
+                "strengths": "清楚",
+                "defects": "差一点",
+                "next_fix": "抛光",
+                "prompt": "x",
+            }],
+        }
+        (mem / "bg-settle.json").write_text(json.dumps(sess, ensure_ascii=False), encoding="utf-8")
+        with mock.patch("skills_kit.converge._spawn_detached_finish_settle", return_value=True) as spawn:
+            rc = cmd_converge(
+                td,
+                {"config": {}, "entries": [], "modules": {}},
+                "finish",
+                session_id="bg-settle",
+                apply_memory=True,
+                settle_background=True,
+                silent=True,
+            )
+        self.assertEqual(rc, 0)
+        spawn.assert_called_once()
+        after = json.loads((mem / "bg-settle.json").read_text(encoding="utf-8"))
+        self.assertEqual(after.get("status"), "finished")
+        self.assertTrue(after.get("settle_pending"))
+        recipes = list((td / ".memory-art" / "entries").rglob("*.md")) if (td / ".memory-art" / "entries").exists() else []
+        self.assertEqual(recipes, [])
+
 
 if __name__ == "__main__":
     unittest.main()

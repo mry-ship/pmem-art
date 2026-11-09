@@ -27,7 +27,7 @@ CANON_TEMPLATES: dict[str, str] = {
     "ui.kit": "整套界面或 HUD 或九宫格与状态族；走界面",
     "icon.a": "1024 桌面启动图标母版；走图标A",
     "icon.b": "一套线性 SVG 图标；走图标B",
-    "icon.c": "背包道具透明底栅格图标；走图标C",
+    "icon.c": "背包道具隔离底栅格图标；走图标C",
     "merge.ladder": "同一套东西一档比一档大；默认整表 overview_sheet、L1–L8；走合成梯",
     # 交付形态词进标准句，供近邻检索（route_id 仍是 merge.ladder）
     "merge.overview": "合成梯整表一组出齐；overview_sheet；走合成梯",
@@ -99,13 +99,21 @@ def infer_signals(
         "icon_a": _has(raw, r"1024|桌面图标|启动图标|应用图标"),
         "icon_b": _has(raw, r"线性\s*svg|线性图标|svg\s*图标"),
         "icon_c": _has(raw, r"背包|道具格|透明底") and _has(raw, r"64|128|256|图标"),
-        "merge": _has(
-            raw,
-            r"合成梯|一档比一档|越升越大|合成升级|shop_ladder|同店升级|"
-            r"overview(?:_sheet)?|per_cell|一档一张|逐格|整表|一组出齐",
+        "merge": (
+            not _has(raw, r"没有合成梯|不要合成梯|不做合成梯|别做合成梯")
+            and _has(
+                raw,
+                # 与 plan_route 对齐：不含裸越升越大/裸整表/裸八档/裸升档
+                r"合成梯|一档比一档|合成升级|shop_ladder|同店升级|升级链|"
+                r"overview_sheet|per_cell|一档一张|逐格|一组出齐|"
+                r"升档.{0,12}(剑|糖|药水|宝石|道具|合成|梯子)|(剑|糖|药水|宝石|道具|合成|梯子).{0,12}升档|"
+                r"(八档|八个等级).{0,24}(合成梯|升级链|一档比一档|越来越大|越升越大)|"
+                r"(合成梯|升级链|一档比一档|越来越大|越升越大).{0,24}(八档|八个等级)|"
+                r"(越升越大|越来越大).{0,12}(剑|糖|药水|宝石|道具)|(剑|糖|药水|宝石|道具).{0,12}(越升越大|越来越大)",
+            )
         ),
         "merge_overview": _has(
-            raw, r"整表|overview(?:_sheet)?|一组出齐|一张表|整组出|2\s*[×x]\s*4"
+            raw, r"overview_sheet|一组出齐|一张表|整组出|2\s*[×x]\s*4|合成梯.*整表|整表.*合成"
         ),
         "merge_per_cell": _has(raw, r"一档一张|逐格|per_cell|单张出档|每档一张"),
         "key": _has(raw, r"主视觉|概念海报|Key\s*Art|气氛图"),
@@ -136,6 +144,27 @@ def infer_signals(
         "image_count": len(pics),
         "roles": roles,
     }
+
+
+def validate_canonical(canonical: str) -> list[str]:
+    """标准句自检：命中则 advise 降为 conflict/low，禁止硬执行。
+
+    历史坑：普通图写「不换题材」→ 子串「换题材」二次 plan 自毒成克隆。
+    """
+    c = (canonical or "").strip()
+    if not c:
+        return []
+    warns: list[str] = []
+    # 普通图路径禁止带「不换题材/也不换题材」这类自毒否定子串
+    if re.search(r"走普通图", c) and re.search(r"(不|也不|不要|别)\s*换题材", c):
+        warns.append("ordinary_canon_self_poison:用「题材不变」代替「不换题材」")
+    if re.search(r"有参考也不换题材|有参考但也不换", c):
+        warns.append("ordinary_canon_self_poison:改用「有参考；题材不变；走普通图」")
+    # 锁风格验证句缺「验证图」易卡在只入库
+    if re.search(r"锁风格|锁定风格|锁定画风", c) and re.search(r"出图|生图|画一张", c):
+        if not re.search(r"验证图|锁完出图|锁风格后克隆|克隆验证", c):
+            warns.append("style_verify_canon_gap:锁完还要出图时须写「验证图」或走 style.then_clone 模板")
+    return warns
 
 
 def build_canonical_brief(

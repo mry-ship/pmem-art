@@ -1,0 +1,23 @@
+{
+  "route_id": "draw.lens",
+  "skill": "pmem-draw",
+  "contract": "镜头包",
+  "status": "awaiting_pick",
+  "execute_ok": true,
+  "generated_images": 0,
+  "banner": "【按 镜头包 走了】",
+  "conversation": "skill1109-lens",
+  "subject": "金发粉裙小精灵",
+  "ref_image": "assets/skill_20261109/_refs/ref_character_fairy.png",
+  "outputs": [
+    "assets/skill_20261109/draw_lens/lens_options.md"
+  ],
+  "shots": [
+    {"id": "A", "label": "中景半身", "camera": "平视略仰腰上半身", "near_original": true},
+    {"id": "B", "label": "远景全身", "camera": "低机位仰拍全景", "near_original": false},
+    {"id": "C", "label": "近景头肩", "camera": "平视略俯头肩", "near_original": false},
+    {"id": "D", "label": "特殊仰视", "camera": "低机位大仰角翅下透光", "near_original": false}
+  ],
+  "awaiting_selection": true,
+  "summary": "金发粉裙小精灵写出中/远/近/特殊四套机位句供点选，A 近原图、B/C/D 换机位；点选前禁止生图。"
+}

@@ -73,6 +73,24 @@ class TestPolicyDefaults(unittest.TestCase):
             "STOP_REGRESSION",
         )
 
+    def test_safe_early_stop_disabled_skips_regression(self) -> None:
+        self.assertIsNone(
+            decide_round_stop(
+                score_ok=True,
+                total=8.0,
+                dims={"perspective_anatomy": 9.0},
+                round_num=3,
+                min_rounds=1,
+                threshold=9.5,
+                anatomy_floor=7.5,
+                best_total=9.0,
+                no_improve_streak=5,
+                regression_drop=0.15,
+                early_stop_min_round=2,
+                safe_early_stop=False,
+            )
+        )
+
     def test_missing_anat_fail_closed(self) -> None:
         self.assertFalse(anatomy_ok_for_stop(None))
         self.assertFalse(anatomy_ok_for_stop({"composition": 9.9}))

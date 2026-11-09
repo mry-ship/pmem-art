@@ -45,6 +45,9 @@ DEFAULT_PLATEAU_ROUNDS = 2
 DEFAULT_REGRESSION_DROP = 0.15
 DEFAULT_AUTO_PAD_DROP = 0.2
 DEFAULT_EARLY_STOP_MIN_ROUND = 2
+# Project config can set converge.safe_early_stop: false to skip STOP_REGRESSION/PLATEAU
+# while keeping the 0.15/R2 defaults intact for when it is re-enabled.
+DEFAULT_SAFE_EARLY_STOP = True
 PROMPT_CHAR_BUDGET = 3500
 
 
@@ -865,6 +868,7 @@ def decide_round_stop(
     plateau_rounds: int = DEFAULT_PLATEAU_ROUNDS,
     regression_drop: float = DEFAULT_REGRESSION_DROP,
     early_stop_min_round: int = DEFAULT_EARLY_STOP_MIN_ROUND,
+    safe_early_stop: bool = DEFAULT_SAFE_EARLY_STOP,
     subject_kind: str = "",
     defects: str = "",
     style_text: str = "",
@@ -886,6 +890,8 @@ def decide_round_stop(
         )
     ):
         return "STOP_TARGET_REACHED"
+    if not safe_early_stop:
+        return None
     if round_num >= int(early_stop_min_round):
         if best_total is not None and total <= float(best_total) - float(regression_drop):
             return "STOP_REGRESSION"

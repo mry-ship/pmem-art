@@ -1,0 +1,81 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-11-10 03:03:06 UTC+8",
+  "session_id": "merge_mushroom_dessert_v5b",
+  "goal": "合成梯整表重跑：偏写实要改软塑胶；第5档必须双球大甜筒不能像第3档；八档一直进化上升",
+  "module": "prop.FairyGarden.MushroomDessert",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.5,
+  "max_rounds": 2,
+  "rounds_used": 2,
+  "winner_round": 1,
+  "winner_score": 8.44,
+  "winner_image": "assets/skill_20261109/merge_overview_v5b/merge_overview_v5b_r1.jpg",
+  "winner_passed": false,
+  "outcome": "共 2 轮未达阈值，采用最高分",
+  "what_fixed": [
+    "优先清理三只透明杯内部的奶油果粒交界，减少红色渗染并明确前后遮挡；同时简化莓果微小颗粒、放大圆钝高光，让其更贴合软塑胶质感，并加强第六至第八格在杯型或奶油轮廓上的递进差异。",
+    "统一所有食物为更圆润的软塑胶表面，弱化球体细孔并增加宽而柔的高光；重新整理后两格莓果与奶油、碗沿的接触边界，避免半嵌和碎片式遮挡，同时略压暗奶油背光侧以增强轮廓层次。"
+  ],
+  "what_still_weak": "下排杯装阶段的内部层次较浑，奶油与莓果边界有融化般的染色；莓果颗粒度比其余主体更写实，软塑胶风格统一性稍弱；后几档主要依靠尺寸和水果数量增长，外轮廓变化有限。",
+  "strengths": "2x4版式清晰；L5已改成双球叠高，与L3单软旋剪影分开；前四档玩具感尚可",
+  "taste_deltas": {
+    "from_strengths": [
+      "2x4版式清晰；L5已改成双球叠高，与L3单软旋剪影分开；前四档玩具感尚可"
+    ],
+    "from_defects": [
+      "下排杯装阶段的内部层次较浑，奶油与莓果边界有融化般的染色；莓果颗粒度比其余主体更写实，软塑胶风格统一性稍弱；后几档主要依靠尺寸和水果数量增长，外轮廓变化有限。",
+      "材质统一性仍不足，颗粒冰淇淋球偏多孔，而奶油、杯体和甜筒更接近光滑软塑胶；后几格莓果数量较密，局部嵌入奶油或被边缘截断，接触关系略显粘连；白色奶油与浅背景的亮部对比偏弱。"
+    ]
+  },
+  "warm_start_confidence": 0.45,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 8.44,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 8.42,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：下排杯装阶段的内部层次较浑，奶油与莓果边界有融化般的染色；莓果颗粒度比其余主体更写实，软塑胶风格统一性稍弱；后几档主要依靠尺寸和水果数量增长，外轮廓变化有限。",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.44"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：2x4版式清晰；L5已改成双球叠高，与L3单软旋剪影分开；前四档玩具感尚可",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.44"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：材质统一性仍不足，颗粒冰淇淋球偏多孔，而奶油、杯体和甜筒更接近光滑软塑胶；后几格莓果数量较密，局部嵌入奶油或被边缘截断，接触关系略显粘连；白色奶油与浅背景的亮部",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.42"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：材质统一性仍不足，颗粒冰淇淋球偏多孔，而奶油、杯体和甜筒更接近光滑软塑胶；后几格莓果数量较密，局部嵌入奶油或被边缘截断，接触关系略显粘连；白色奶油与浅背景的亮部",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "8.42"
+    },
+    {
+      "category": "material",
+      "lesson": "本轮短板偏「material」：材质统一性仍不足，颗粒冰淇淋球偏多孔，而奶油、杯体和甜筒更接近光滑软塑胶；后几格莓果数量较密，局部嵌入奶油或被边缘截断，接触关系略显粘连；白色奶油与浅背景的亮部",
+      "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+      "from_score": "8.42"
+    }
+  ]
+}

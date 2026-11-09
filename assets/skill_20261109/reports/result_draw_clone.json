@@ -1,0 +1,48 @@
+{
+  "route_id": "draw.clone",
+  "skill": "pmem-draw",
+  "contract": "克隆",
+  "banner": "【按 克隆 走了】",
+  "conversation": "skill1109-clone",
+  "session": "skill1109-clone",
+  "execute_ok": true,
+  "named_seed": true,
+  "subject": "冬日雪地农场，农夫抱小羊",
+  "style_lock": "妖精花园粘土童话（聚合物粘土/软立体玩具）",
+  "ref_image": "assets/skill_20261109/_refs/ref_style_fairy_garden.png",
+  "aspect_ratio": "9:16",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "passed": false,
+  "best_round": 4,
+  "best_score": 8.99,
+  "final": "assets/skill_20261109/draw_clone/final.jpg",
+  "board": ".memory-art/converge/boards/skill1109-clone/index.html",
+  "rounds": [
+    {
+      "round": 1,
+      "image": "assets/skill_20261109/draw_clone/r1_winter_snow_farm.jpg",
+      "score": 8.59,
+      "dims": "构图8.8/光影8.7/透视8.3/质感8.8/风格9.1/无瑕度8.2"
+    },
+    {
+      "round": 2,
+      "image": "assets/skill_20261109/draw_clone/r2_winter_snow_farm.jpg",
+      "score": 8.68,
+      "dims": "构图8.8/光影8.7/透视8.3/质感9.1/风格9.0/无瑕度8.4"
+    },
+    {
+      "round": 3,
+      "image": "assets/skill_20261109/draw_clone/r3_winter_snow_farm.jpg",
+      "score": 8.66,
+      "dims": "构图8.8/光影8.9/透视8.1/质感9.0/风格9.2/无瑕度8.3"
+    },
+    {
+      "round": 4,
+      "image": "assets/skill_20261109/draw_clone/r4_winter_snow_farm.jpg",
+      "score": 8.99,
+      "dims": "构图9.1/光影9.0/透视8.7/质感9.2/风格9.3/无瑕度8.8"
+    }
+  ],
+  "summary": "锁妖精花园粘土画风换冬日农场农夫抱羊；4 轮未过 9.5，胜出 R4=8.99（未过线）。主残留：抱持区手套/羊腿遮挡仍挤、门洞过黑。"
+}

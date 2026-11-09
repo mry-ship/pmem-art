@@ -14,8 +14,7 @@ from html import unescape
 from pathlib import Path
 from typing import Any
 
-DEFAULT_THRESHOLD = 9.5
-DEFAULT_MAX_ROUNDS = 4
+from .prompt_scale import DEFAULT_MAX_ROUNDS, DEFAULT_THRESHOLD
 
 _SKIP_CAPTION = re.compile(
     r"^(原图|风格参考|样张|锁定卡|不生图|身份参考|参考|图\d+)\b"
@@ -222,8 +221,29 @@ def audit_showcase_html(html: str) -> list[dict[str, Any]]:
 
 
 def audit_showcase_file(path: str | Path) -> list[dict[str, Any]]:
-    html = Path(path).read_text(encoding="utf-8")
-    return audit_showcase_html(html)
+    html_path = Path(path)
+    html = html_path.read_text(encoding="utf-8")
+    issues = audit_showcase_html(html)
+    # 终稿/展陈页引用的本地图片必须存在（相对 HTML 路径解析）
+    for m in re.finditer(r'<img\b[^>]*\bsrc=["\']([^"\']+)["\']', html, flags=re.I):
+        src = (m.group(1) or "").strip()
+        if not src or src.startswith(("http://", "https://", "data:")):
+            continue
+        target = (html_path.parent / src).resolve()
+        try:
+            target.relative_to(html_path.resolve().parents[2] if len(html_path.resolve().parts) > 2 else html_path.resolve().parent)
+        except ValueError:
+            pass
+        if not target.is_file():
+            issues.append(
+                {
+                    "caption": src[:160],
+                    "rounds": None,
+                    "score": None,
+                    "reason": "missing_image_file",
+                }
+            )
+    return issues
 
 
 def format_report(issues: list[dict[str, Any]]) -> str:

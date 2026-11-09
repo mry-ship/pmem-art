@@ -285,7 +285,13 @@ class TestGenerateMergesMemory(unittest.TestCase):
                     apply_memory=True,
                 )
             self.assertEqual(rc_gen, 0, gen_buf.getvalue())
-            self.assertIn("已自动并入记忆", gen_buf.getvalue())
+            gen_out = gen_buf.getvalue()
+            # 现行回显是「📚 pmem-art 记忆已并入」+ WARM_START_MERGED=1（旧文案「已自动并入记忆」仍兼容）
+            self.assertTrue(
+                ("已自动并入记忆" in gen_out)
+                or ("记忆已并入" in gen_out and "WARM_START_MERGED=1" in gen_out),
+                gen_out,
+            )
             sess = json.loads(
                 (td / ".memory-art" / "converge" / f"{sid}.json").read_text(encoding="utf-8")
             )

@@ -1,0 +1,37 @@
+{
+  "route_id": "icon.a",
+  "session": "skill1109-icon-a",
+  "banner": "【按 Mode A 走了】",
+  "passed_threshold": false,
+  "best_score": 9.06,
+  "best_round": 1,
+  "final_image": "assets/skill_20261109/icon_a/final.png",
+  "rounds": [
+    {
+      "round": 1,
+      "score": 9.06,
+      "image": "assets/skill_20261109/icon_a/icon_a_r1.png",
+      "dims": "构图9.2/光影9.0/透视9.1/质感9.0/风格9.3/无瑕疵8.9"
+    },
+    {
+      "round": 2,
+      "score": 8.4,
+      "image": "assets/skill_20261109/icon_a/icon_a_r2.png",
+      "dims": "构图8.6/光影8.8/透视8.3/质感7.9/风格8.8/无瑕度8.2"
+    },
+    {
+      "round": 3,
+      "score": 8.54,
+      "image": "assets/skill_20261109/icon_a/icon_a_r3.png",
+      "dims": "构图8.7/光影8.8/透视8.3/质感8.6/风格8.9/无瑕度8.2"
+    },
+    {
+      "round": 4,
+      "score": 8.5,
+      "image": "assets/skill_20261109/icon_a/icon_a_r4.png",
+      "dims": "构图8.7/光影8.8/透视8.4/质感8.2/风格8.8/无瑕度8.3"
+    }
+  ],
+  "status": "finished",
+  "note": "未过线·取最高分"
+}

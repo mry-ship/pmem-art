@@ -1,0 +1,646 @@
+{
+  "session_id": "merge_mushroom_dessert_v5",
+  "started_at": "2026-11-10 02:24:01 UTC+8",
+  "goal": "检查v5无误后出一组合成梯整表，生成一遍就行；merge overview_sheet 妖精花园甜点店冰淇淋盛装链 L1-L8 shop_ladder 2x4 Travel Town Ice Cream；家族=店域奶油+柔红非纹样",
+  "module": "prop.FairyGarden.MushroomDessert",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "merge_overview_checklist",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "medium",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "medium",
+    "label": "中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.5)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 1,
+    "target_score_threshold": 9.5,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.15,
+      "perspective_anatomy": 0.15,
+      "texture_detail": 0.15,
+      "spec_style": 0.15,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "viewpoint_frame",
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图，只在提示词上补还没过的那一处（提示词改动仍 ≤40%）",
+    "max_prompt_delta_ratio": 0.4,
+    "allow_recompose": false,
+    "allow_viewpoint_change": false,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "viewpoint_angle (不改机位与镜头视角)",
+      "element_count (不增删主体元素清单)",
+      "no_full_recompose (不做整体 recompose / 换景别故事)",
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)"
+    ],
+    "min_round_leap": 0.15,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光，表面那一句不动，只修没过的那一格",
+    "medium_family": "generic",
+    "best_direction_hint": "最优方向：光影·空气·介质；可小幅姿态/局部布局",
+    "goal": "检查v5无误后出一组合成梯整表，生成一遍就行；merge overview_sheet 妖精花园甜点店冰淇淋盛装链 L1-L8 shop_ladder 2x4 Travel Town Ice Cream；家族=店域奶油+柔红非纹样",
+    "module": "prop.FairyGarden.MushroomDessert",
+    "ref_image": "assets/skill_20261109/_refs/ref_merge_birds_sheet.png",
+    "ref_analysis": "整表版式参考：2x4白圆角卡深炭灰底；只锁版式不抄鸟"
+  },
+  "medium_family": "generic",
+  "contract": "",
+  "target_score_threshold": 9.5,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "assets/skill_20261109/_refs/ref_merge_birds_sheet.png",
+  "ref_analysis": "整表版式参考：2x4白圆角卡深炭灰底；只锁版式不抄鸟",
+  "default_aspect_ratio": "16:9",
+  "default_reference_image_paths": [
+    "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_merge_birds_sheet.png"
+  ],
+  "aspect_ratio": "16:9",
+  "reference_image_paths": [
+    "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_merge_birds_sheet.png"
+  ],
+  "ref_physical_traits": {
+    "exists": true,
+    "size_bytes": 1819167,
+    "size_kb": 1776.5,
+    "width": 1774,
+    "height": 887,
+    "aspect_ratio": "2:1",
+    "canonical_aspect_ratio": "16:9",
+    "color_entropy": 6.72
+  },
+  "param_validation": {
+    "valid": true,
+    "validation_passed": true,
+    "case_id": "merge_mushroom_dessert_v5",
+    "scale": "medium",
+    "aspect_ratio": "16:9",
+    "ref_aspect_ratio": "16:9",
+    "ref_dimensions": "1774x887",
+    "output_aspect_ratio": "",
+    "output_dimensions": "",
+    "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_merge_birds_sheet.png",
+    "reference_image_paths": [
+      "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_merge_birds_sheet.png"
+    ],
+    "inherited_default_aspect_ratio": false,
+    "inherited_default_pad_image": false,
+    "matched_ref_aspect_ratio": true,
+    "matched_ref_pad_image": true,
+    "matched_output_aspect_ratio": true,
+    "three_step_stage": "step1_start",
+    "three_step_verified": false,
+    "warnings": []
+  },
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.5,
+  "accept_threshold": 9.5,
+  "max_rounds": 1,
+  "ready_to_finish": true,
+  "status": "finished",
+  "owner_conversation_id": "",
+  "route_ids": [
+    "merge.ladder"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "16:9",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_merge_birds_sheet.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "merge_mushroom_dessert_v5",
+        "scale": "medium",
+        "aspect_ratio": "16:9",
+        "ref_aspect_ratio": "16:9",
+        "ref_dimensions": "1774x887",
+        "output_aspect_ratio": "16:9",
+        "output_dimensions": "1280x720",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_merge_birds_sheet.png",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_merge_birds_sheet.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "02:25:56",
+      "image": "assets/skill_20261109/merge_overview/merge_overview_v5_r1.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 185767,
+        "size_kb": 181.4,
+        "width": 1280,
+        "height": 720,
+        "aspect_ratio": "16:9",
+        "canonical_aspect_ratio": "16:9",
+        "color_entropy": 7.16
+      },
+      "raw_score": 8.54,
+      "score": 8.54,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.8/光影8.7/透视8.4/质感8.5/风格8.9/无瑕度8.2",
+      "dims_parsed": {
+        "composition": 8.8,
+        "lighting_color": 8.7,
+        "perspective_anatomy": 8.4,
+        "texture_detail": 8.5,
+        "spec_style": 8.9,
+        "flawlessness": 8.2
+      },
+      "weighted_score": 8.54,
+      "audit_warnings": [
+        "独立视觉裁判已采纳：openai_compatible/gpt-5.6-sol"
+      ],
+      "stagnated": false,
+      "strengths": "整表排版规整，层级由单体逐步扩展到杯装与碗装甜品；光向、配色、圆润造型和投影处理统一，蛋筒及莓果细节具有良好识别度。",
+      "defects": "第三格与第五格的蛋筒形态和内容高度接近，视觉递进略有重复；透明杯的材质区分不足，内部奶油、果层与杯壁有局部糊在一起的感觉；若干莓果与奶油缺少明确接触阴影，呈轻微贴片或陷入感。",
+      "next_fix": "优先拉开相近蛋筒款的轮廓或装饰差异，并加强玻璃杯沿高光、杯壁折射和食材接触阴影；同时清理右下碗沿与奶油交界，使前后遮挡更明确。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.FairyGarden.MushroomDessert\n- 置信度: 0.45（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261110014524393RECIPE] [收敛胜出 8.81分] 合成梯 overview_sheet 8档 shop_ladder：蘑菇甜点完整SKU形变 Mini — 版式整齐，八个SKU一眼可分；统一的红白菌盖、柔光和干净白卡\n- 正向保留（要怎样）:\n  · 五链合成：不必每档保留L1原件/母体锁死；同域合理升级、档差明显即可\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 必须避开红线:\n  · [CHAT20261110021024736REDLINE] [收敛踩坑红线] 合成梯 overview_sheet 8档 shop_lad：避免「相邻阶段的主体尺度和俯视角略有跳动；玻璃杯的透明写实感比其余软塑胶物件更强；切片奶油后缘、」\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色；廉价塑料感/油腻高光；白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [nine-slice-basics] UI切图规范：九宫格 48px 包角锁死与纯色拉伸中心: 九宫格（9-Slice）组件四角 48x48px 为固定不拉伸包角区（一切雕花装饰必须严格收束在 48px 切线内），四边为单向拉伸区，中央区域必须保持均匀纯色或无方向性平铺底纹以支持 3 倍以上双向拉伸零畸变，严禁在中心拉伸区放置圆盘、斜线或大图案；外周强制保留 4px 纯透明安全边距防止图集溢色（Atlas Bleeding）。\n  · [button-state-family] UI交互规范：按钮四态同系家族规范: 同一交互组件家族必须同步具备 Normal（默认）、Hover（悬停提亮+内发光）、Pressed（按下明度收暗+内凹位移）、Disabled（降饱和灰化降透明度）四态，保持外轮廓、圆角与切线 100% 对齐。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光，表面那一句不动，只修没过的那一格| chain_mode=shop_ladder 同族形变/同店升级；按merge_phase1_v5：妖精花园甜点店同店盛装升级；L1迷你奶油球（可选极小红糖点缀非必菇盖）→L2奶油雪糕棒→L3奶油甜筒→L4浆果奶油甜筒→L5双球大甜筒→L6豪华奶油杯（软塑胶杯非写实玻璃）→L7奶油圣代→L8豪华盛宴圣代碗；家族基因=暖奶油+柔红店域色相非纹样贯穿；禁止八档必贴蘑菇盖；忽略warm-start红白菌盖贯穿与零件累计；每格一件居中无字无脸；2x4白圆角卡深炭灰底安全区留边；体量缓增统一视平线投影；禁同底座堆料禁礼盒禁金铠禁鸟；垫鸟表只锁版式不抄鸟| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: limb count and joints match this species, and legs, wings, or the tail connect clearly; contact shadows read; do not melt extra limbs. Do not convert this into a human elbow pair or force two eyes",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.4,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "creature",
+      "judge_source": "independent_vlm",
+      "remote_vlm": {
+        "source": "independent_vlm",
+        "provider": "openai_compatible",
+        "model": "gpt-5.6-sol",
+        "error": "",
+        "active": true,
+        "score_evidence": {
+          "composition": "八个圆角单元按2×4等距排布，主体均居中并保留稳定留白，右下大碗体量最大但仍未触碰边框。",
+          "lighting_color": "各格主体均呈左上方暖亮面与右下方灰褐投影，奶油黄、蛋筒橙和莓果红在整表中保持统一。",
+          "perspective_anatomy": "蛋筒网格随锥体向底端收束，杯口、碗口和底座均显示一致的椭圆透视，但杯把与杯身连接处略显厚钝。",
+          "texture_detail": "蛋筒交叉压纹、莓果颗粒分瓣和奶油旋纹均清晰可见，透明甜品杯内的分层边界相对偏软。",
+          "spec_style": "所有物件都采用圆润低锐度轮廓、柔和奶油色渐变和简化细节，八格造型语言高度一致。",
+          "flawlessness": "外轮廓整体干净且无明显断裂或杂点，但部分莓果像嵌入奶油表面，右下碗内奶油与碗沿的接触边界略黏连。"
+        },
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 1,
+          "rerated": false,
+          "reason": "",
+          "first_score": 8.54
+        }
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_MAX_ROUNDS",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：第三格与第五格的蛋筒形态和内容高度接近，视觉递进略有重复；透明杯的材质区分不足，内部奶油、果层与杯壁有局部糊在一起的感觉；若干莓果与奶油缺少明确接触阴影，呈轻微",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.54"
+        },
+        {
+          "category": "material",
+          "lesson": "本轮短板偏「material」：第三格与第五格的蛋筒形态和内容高度接近，视觉递进略有重复；透明杯的材质区分不足，内部奶油、果层与杯壁有局部糊在一起的感觉；若干莓果与奶油缺少明确接触阴影，呈轻微",
+          "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+          "from_score": "8.54"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：整表排版规整，层级由单体逐步扩展到杯装与碗装甜品；光向、配色、圆润造型和投影处理统一，蛋筒及莓果细节具有良好识别度。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.54"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "02:28:32",
+      "asset_image": "assets/skill_20261109/merge_overview/merge_overview_v5_r1.jpg"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "/Users/yanghu/Desktop/pmem-art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-11-09 04:30:07 UTC+8"
+    },
+    "module": "prop.FairyGarden.MushroomDessert",
+    "goal": "检查v5无误后出一组合成梯整表，生成一遍就行；merge overview_sheet 妖精花园甜点店冰淇淋盛装链 L1-L8 shop_ladder 2x4 Travel Town Ice Cream；家族=店域奶油+柔红非纹样",
+    "confidence": 0.45,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "只有未达标 provisional recipe，不计入定稿置信",
+      "个人口味/正向保留非空",
+      "注入红线可控（1 条，已按任务主题过滤）",
+      "挂载 0 张项目知识卡 + 2 张全局美术底层基础卡"
+    ],
+    "top_recipes": [
+      {
+        "id": "CHAT20261110014524393RECIPE",
+        "summary": "[收敛胜出 8.81分] 合成梯 overview_sheet 8档 shop_ladder：蘑菇甜点完整SKU形变 Mini — 版式整齐，八个SKU一眼可分；统一的红白菌盖、柔光和干净白卡",
+        "module": "prop.FairyGarden.MushroomDessert"
+      }
+    ],
+    "top_redlines": [
+      {
+        "id": "CHAT20261110021024736REDLINE",
+        "summary": "[收敛踩坑红线] 合成梯 overview_sheet 8档 shop_lad：避免「相邻阶段的主体尺度和俯视角略有跳动；玻璃杯的透明写实感比其余软塑胶物件更强；切片奶油后缘、」",
+        "module": "prop.FairyGarden.MushroomDessert"
+      }
+    ],
+    "art_decisions": [],
+    "private_knowledge": [],
+    "shared_knowledge": [
+      {
+        "id": "nine-slice-basics",
+        "title": "UI切图规范：九宫格 48px 包角锁死与纯色拉伸中心",
+        "body": "九宫格（9-Slice）组件四角 48x48px 为固定不拉伸包角区（一切雕花装饰必须严格收束在 48px 切线内），四边为单向拉伸区，中央区域必须保持均匀纯色或无方向性平铺底纹以支持 3 倍以上双向拉伸零畸变，严禁在中心拉伸区放置圆盘、斜线或大图案；外周强制保留 4px 纯透明安全边距防止图集溢色（Atlas Bleeding）。",
+        "layer_scope": "shared"
+      },
+      {
+        "id": "button-state-family",
+        "title": "UI交互规范：按钮四态同系家族规范",
+        "body": "同一交互组件家族必须同步具备 Normal（默认）、Hover（悬停提亮+内发光）、Pressed（按下明度收暗+内凹位移）、Disabled（降饱和灰化降透明度）四态，保持外轮廓、圆角与切线 100% 对齐。",
+        "layer_scope": "shared"
+      }
+    ],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [
+        "冷光源",
+        "暖光",
+        "柔光"
+      ],
+      "preferred_composition": [
+        "半身",
+        "居中/对称构图"
+      ],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [
+        "避免过饱和"
+      ],
+      "banned_habits": [
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色",
+        "廉价塑料感/油腻高光",
+        "白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计"
+      ],
+      "keep_phrases": [
+        "五链合成：不必每档保留L1原件/母体锁死；同域合理升级、档差明显即可",
+        "确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色"
+      ],
+      "banned_habits_raw_tail": [
+        "禁止偏离样张画风：过度霓虹、脏暗阴影、油腻高光、写实皮肤毛孔、扁平UI描边",
+        "电池审稿：原画竖构图避免贴样张布局；边缘反光勿过曝",
+        "电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感",
+        "黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差",
+        "错误头身比/头过大",
+        "漏抠/黑底/毛边",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色",
+        "廉价塑料感/油腻高光"
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.FairyGarden.MushroomDessert\n- 置信度: 0.45（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261110014524393RECIPE] [收敛胜出 8.81分] 合成梯 overview_sheet 8档 shop_ladder：蘑菇甜点完整SKU形变 Mini — 版式整齐，八个SKU一眼可分；统一的红白菌盖、柔光和干净白卡\n- 正向保留（要怎样）:\n  · 五链合成：不必每档保留L1原件/母体锁死；同域合理升级、档差明显即可\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 必须避开红线:\n  · [CHAT20261110021024736REDLINE] [收敛踩坑红线] 合成梯 overview_sheet 8档 shop_lad：避免「相邻阶段的主体尺度和俯视角略有跳动；玻璃杯的透明写实感比其余软塑胶物件更强；切片奶油后缘、」\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色；廉价塑料感/油腻高光；白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [nine-slice-basics] UI切图规范：九宫格 48px 包角锁死与纯色拉伸中心: 九宫格（9-Slice）组件四角 48x48px 为固定不拉伸包角区（一切雕花装饰必须严格收束在 48px 切线内），四边为单向拉伸区，中央区域必须保持均匀纯色或无方向性平铺底纹以支持 3 倍以上双向拉伸零畸变，严禁在中心拉伸区放置圆盘、斜线或大图案；外周强制保留 4px 纯透明安全边距防止图集溢色（Atlas Bleeding）。\n  · [button-state-family] UI交互规范：按钮四态同系家族规范: 同一交互组件家族必须同步具备 Normal（默认）、Hover（悬停提亮+内发光）、Pressed（按下明度收暗+内凹位移）、Disabled（降饱和灰化降透明度）四态，保持外轮廓、圆角与切线 100% 对齐。",
+    "built_at": "2026-11-10 02:24:01 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：第三格与第五格的蛋筒形态和内容高度接近，视觉递进略有重复；透明杯的材质区分不足，内部奶油、果层与杯壁有局部糊在一起的感觉；若干莓果与奶油缺少明确接触阴影，呈轻微",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.54"
+    },
+    {
+      "category": "material",
+      "lesson": "本轮短板偏「material」：第三格与第五格的蛋筒形态和内容高度接近，视觉递进略有重复；透明杯的材质区分不足，内部奶油、果层与杯壁有局部糊在一起的感觉；若干莓果与奶油缺少明确接触阴影，呈轻微",
+      "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+      "from_score": "8.54"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：整表排版规整，层级由单体逐步扩展到杯装与碗装甜品；光向、配色、圆润造型和投影处理统一，蛋筒及莓果细节具有良好识别度。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.54"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 2,
+  "regression_drop": 0.15,
+  "safe_early_stop": true,
+  "merge_delivery": "overview_sheet",
+  "merge_sheet_cap": 4,
+  "merge_discuss_cap": 2,
+  "single_judge": false,
+  "understanding_contract": {
+    "version": 1,
+    "raw_utterance": "检查v5无误后出一组合成梯整表，生成一遍就行；merge overview_sheet 妖精花园甜点店冰淇淋盛装链 L1-L8 shop_ladder 2x4 Travel Town Ice Cream；家族=店域奶油+柔红非纹样",
+    "l0": {
+      "route_ids": [
+        "merge.ladder"
+      ],
+      "banner": "【按 同域合成梯：先定链型与关系，再按交付出图 走了】",
+      "delivery": "merge.ladder"
+    },
+    "l1": {
+      "locks": [
+        "锁：店域暖奶油+柔红",
+        "白卡深底",
+        "一格一件无字无脸",
+        "软塑胶棚光",
+        "禁止八档必贴蘑菇盖",
+        "禁止礼盒末档",
+        "禁止同底座堆料",
+        "禁止抄鸟"
+      ],
+      "unlocks": [
+        "不锁：每格蘑菇盖纹样",
+        "不锁旧v1-v4档序",
+        "允许同店类型跳球棒筒杯圣代"
+      ],
+      "defaults_shown": [
+        "默认：overview_sheet 2x4",
+        "levels=8",
+        "shop_ladder",
+        "垫鸟表只锁版式",
+        "生成一遍即finish",
+        "对标Travel Town Ice Cream压缩档序",
+        "忽略warm-start里红白菌盖贯穿与零件累计"
+      ],
+      "commercial_vibe": "Travel Town级休闲merge甜点货柜完成度"
+    },
+    "l2": {
+      "open": true,
+      "surface_fix": "软塑胶厚实圆润；暖奶油+柔红点缀；棚柔光短接触影；饱和友好；64px可读",
+      "last_feedback": "",
+      "feedback_layer": ""
+    },
+    "notes": ""
+  },
+  "reasonableness_history": [
+    {
+      "reviewed_at": 1794248679.5630531,
+      "passed": false,
+      "skill": "merge",
+      "issues": [
+        "merge 须点名 same_object / shop_ladder / species_change，或明示轻门（勿默认按同模加装填 parts_add）"
+      ]
+    },
+    {
+      "reviewed_at": 1794248686.4234712,
+      "passed": true,
+      "skill": "merge",
+      "issues": []
+    }
+  ],
+  "reasonableness": {
+    "passed": true,
+    "skill": "merge",
+    "draft_prompt": "2x4白卡深底八格全贴红白菌盖的蘑菇甜点烘焙链，未点名链型",
+    "revised_prompt": "chain_mode=shop_ladder 同族形变/同店升级；按merge_phase1_v5：妖精花园甜点店同店盛装升级；L1迷你奶油球（可选极小红糖点缀非必菇盖）→L2奶油雪糕棒→L3奶油甜筒→L4浆果奶油甜筒→L5双球大甜筒→L6豪华奶油杯（软塑胶杯非写实玻璃）→L7奶油圣代→L8豪华盛宴圣代碗；家族基因=暖奶油+柔红店域色相非纹样贯穿；禁止八档必贴蘑菇盖；忽略warm-start红白菌盖贯穿与零件累计；每格一件居中无字无脸；2x4白圆角卡深炭灰底安全区留边；体量缓增统一视平线投影；禁同底座堆料禁礼盒禁金铠禁鸟；垫鸟表只锁版式不抄鸟",
+    "checklist": {
+      "subject_action": {
+        "status": "ok",
+        "note": ""
+      },
+      "element_budget": {
+        "status": "ok",
+        "note": ""
+      },
+      "hard_locks": {
+        "status": "ok",
+        "note": ""
+      },
+      "fail_at_glance": {
+        "status": "ok",
+        "note": ""
+      },
+      "single_centered_item": {
+        "status": "ok",
+        "note": ""
+      },
+      "chain_mode_declared": {
+        "status": "ok",
+        "note": ""
+      },
+      "upgrade_reason_concrete": {
+        "status": "ok",
+        "note": ""
+      },
+      "family_or_base_lock": {
+        "status": "ok",
+        "note": ""
+      }
+    },
+    "issues": [],
+    "notes": "",
+    "reviewed_at": 1794248686.4234712,
+    "reviewed_at_iso": "2026-11-10 02:24:46",
+    "force_pass": false,
+    "skill_raw": "merge"
+  },
+  "discussions": [
+    {
+      "round": 0,
+      "kind": "reasonableness",
+      "prompt": "chain_mode=shop_ladder 同族形变/同店升级；按merge_phase1_v5：妖精花园甜点店同店盛装升级；L1迷你奶油球（可选极小红糖点缀非必菇盖）→L2奶油雪糕棒→L3奶油甜筒→L4浆果奶油甜筒→L5双球大甜筒→L6豪华奶油杯（软塑胶杯非写实玻璃）→L7奶油圣代→L8豪华盛宴圣代碗；家族基因=暖奶油+柔红店域色相非纹样贯穿；禁止八档必贴蘑菇盖；忽略warm-start红白菌盖贯穿与零件累计；每格一件居中无字无脸；2x4白圆角卡深炭灰底安全区留边；体量缓增统一视平线投影；禁同底座堆料禁礼盒禁金铠禁鸟；垫鸟表只锁版式不抄鸟",
+      "strengths": "合理性闸已过：subject_action=ok；element_budget=ok；hard_locks=ok；fail_at_glance=ok；single_centered_item=ok；chain_mode_declared=ok；upgrade_reason_concrete=ok；family_or_base_lock=ok",
+      "defects": "",
+      "next_fix": "首轮 generate 使用本修订提示词；审美迭代不得推翻硬锁与元素预算"
+    }
+  ],
+  "warm_start_merged": true,
+  "warm_start_merged_at": "2026-11-10 02:25:56",
+  "warm_start_block_sha1": "6f278a10a104",
+  "ActionRequired": "STOP_PICK_BEST",
+  "showcase_ready": true,
+  "winner": {
+    "round": 1,
+    "round_label": "第 1 轮初稿",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "16:9",
+    "reference_image_paths": [
+      "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_merge_birds_sheet.png"
+    ],
+    "param_validation": {
+      "valid": true,
+      "validation_passed": true,
+      "case_id": "merge_mushroom_dessert_v5",
+      "scale": "medium",
+      "aspect_ratio": "16:9",
+      "ref_aspect_ratio": "16:9",
+      "ref_dimensions": "1774x887",
+      "output_aspect_ratio": "16:9",
+      "output_dimensions": "1280x720",
+      "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_merge_birds_sheet.png",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_merge_birds_sheet.png"
+      ],
+      "inherited_default_aspect_ratio": true,
+      "inherited_default_pad_image": true,
+      "matched_ref_aspect_ratio": true,
+      "matched_ref_pad_image": true,
+      "matched_output_aspect_ratio": true,
+      "three_step_stage": "step3_judge",
+      "three_step_verified": true,
+      "warnings": [],
+      "continuation_pad": false,
+      "pad_diverged": false
+    },
+    "generated_at": "02:25:56",
+    "image": "assets/skill_20261109/merge_overview/merge_overview_v5_r1.jpg",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 185767,
+      "size_kb": 181.4,
+      "width": 1280,
+      "height": 720,
+      "aspect_ratio": "16:9",
+      "canonical_aspect_ratio": "16:9",
+      "color_entropy": 7.16
+    },
+    "raw_score": 8.54,
+    "score": 8.54,
+    "target_score_threshold": 9.5,
+    "dims": "构图8.8/光影8.7/透视8.4/质感8.5/风格8.9/无瑕度8.2",
+    "dims_parsed": {
+      "composition": 8.8,
+      "lighting_color": 8.7,
+      "perspective_anatomy": 8.4,
+      "texture_detail": 8.5,
+      "spec_style": 8.9,
+      "flawlessness": 8.2
+    },
+    "weighted_score": 8.54,
+    "audit_warnings": [
+      "独立视觉裁判已采纳：openai_compatible/gpt-5.6-sol"
+    ],
+    "stagnated": false,
+    "strengths": "整表排版规整，层级由单体逐步扩展到杯装与碗装甜品；光向、配色、圆润造型和投影处理统一，蛋筒及莓果细节具有良好识别度。",
+    "defects": "第三格与第五格的蛋筒形态和内容高度接近，视觉递进略有重复；透明杯的材质区分不足，内部奶油、果层与杯壁有局部糊在一起的感觉；若干莓果与奶油缺少明确接触阴影，呈轻微贴片或陷入感。",
+    "next_fix": "优先拉开相近蛋筒款的轮廓或装饰差异，并加强玻璃杯沿高光、杯壁折射和食材接触阴影；同时清理右下碗沿与奶油交界，使前后遮挡更明确。",
+    "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.FairyGarden.MushroomDessert\n- 置信度: 0.45（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261110014524393RECIPE] [收敛胜出 8.81分] 合成梯 overview_sheet 8档 shop_ladder：蘑菇甜点完整SKU形变 Mini — 版式整齐，八个SKU一眼可分；统一的红白菌盖、柔光和干净白卡\n- 正向保留（要怎样）:\n  · 五链合成：不必每档保留L1原件/母体锁死；同域合理升级、档差明显即可\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 必须避开红线:\n  · [CHAT20261110021024736REDLINE] [收敛踩坑红线] 合成梯 overview_sheet 8档 shop_lad：避免「相邻阶段的主体尺度和俯视角略有跳动；玻璃杯的透明写实感比其余软塑胶物件更强；切片奶油后缘、」\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色；廉价塑料感/油腻高光；白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [nine-slice-basics] UI切图规范：九宫格 48px 包角锁死与纯色拉伸中心: 九宫格（9-Slice）组件四角 48x48px 为固定不拉伸包角区（一切雕花装饰必须严格收束在 48px 切线内），四边为单向拉伸区，中央区域必须保持均匀纯色或无方向性平铺底纹以支持 3 倍以上双向拉伸零畸变，严禁在中心拉伸区放置圆盘、斜线或大图案；外周强制保留 4px 纯透明安全边距防止图集溢色（Atlas Bleeding）。\n  · [button-state-family] UI交互规范：按钮四态同系家族规范: 同一交互组件家族必须同步具备 Normal（默认）、Hover（悬停提亮+内发光）、Pressed（按下明度收暗+内凹位移）、Disabled（降饱和灰化降透明度）四态，保持外轮廓、圆角与切线 100% 对齐。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光，表面那一句不动，只修没过的那一格| chain_mode=shop_ladder 同族形变/同店升级；按merge_phase1_v5：妖精花园甜点店同店盛装升级；L1迷你奶油球（可选极小红糖点缀非必菇盖）→L2奶油雪糕棒→L3奶油甜筒→L4浆果奶油甜筒→L5双球大甜筒→L6豪华奶油杯（软塑胶杯非写实玻璃）→L7奶油圣代→L8豪华盛宴圣代碗；家族基因=暖奶油+柔红店域色相非纹样贯穿；禁止八档必贴蘑菇盖；忽略warm-start红白菌盖贯穿与零件累计；每格一件居中无字无脸；2x4白圆角卡深炭灰底安全区留边；体量缓增统一视平线投影；禁同底座堆料禁礼盒禁金铠禁鸟；垫鸟表只锁版式不抄鸟| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: limb count and joints match this species, and legs, wings, or the tail connect clearly; contact shadows read; do not melt extra limbs. Do not convert this into a human elbow pair or force two eyes",
+    "continuation": false,
+    "passed": false,
+    "gate_blocked": false,
+    "image_gate_blocked": false,
+    "anatomy_score": 8.4,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "creature",
+    "judge_source": "independent_vlm",
+    "remote_vlm": {
+      "source": "independent_vlm",
+      "provider": "openai_compatible",
+      "model": "gpt-5.6-sol",
+      "error": "",
+      "active": true,
+      "score_evidence": {
+        "composition": "八个圆角单元按2×4等距排布，主体均居中并保留稳定留白，右下大碗体量最大但仍未触碰边框。",
+        "lighting_color": "各格主体均呈左上方暖亮面与右下方灰褐投影，奶油黄、蛋筒橙和莓果红在整表中保持统一。",
+        "perspective_anatomy": "蛋筒网格随锥体向底端收束，杯口、碗口和底座均显示一致的椭圆透视，但杯把与杯身连接处略显厚钝。",
+        "texture_detail": "蛋筒交叉压纹、莓果颗粒分瓣和奶油旋纹均清晰可见，透明甜品杯内的分层边界相对偏软。",
+        "spec_style": "所有物件都采用圆润低锐度轮廓、柔和奶油色渐变和简化细节，八格造型语言高度一致。",
+        "flawlessness": "外轮廓整体干净且无明显断裂或杂点，但部分莓果像嵌入奶油表面，右下碗内奶油与碗沿的接触边界略黏连。"
+      },
+      "evidence_missing_dims": [],
+      "review": {
+        "pass_count": 1,
+        "rerated": false,
+        "reason": "",
+        "first_score": 8.54
+      }
+    },
+    "should_continue_next_round": false,
+    "decision": "STOP_MAX_ROUNDS",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "lighting",
+        "lesson": "本轮短板偏「lighting」：第三格与第五格的蛋筒形态和内容高度接近，视觉递进略有重复；透明杯的材质区分不足，内部奶油、果层与杯壁有局部糊在一起的感觉；若干莓果与奶油缺少明确接触阴影，呈轻微",
+        "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+        "from_score": "8.54"
+      },
+      {
+        "category": "material",
+        "lesson": "本轮短板偏「material」：第三格与第五格的蛋筒形态和内容高度接近，视觉递进略有重复；透明杯的材质区分不足，内部奶油、果层与杯壁有局部糊在一起的感觉；若干莓果与奶油缺少明确接触阴影，呈轻微",
+        "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+        "from_score": "8.54"
+      },
+      {
+        "category": "keep",
+        "lesson": "保留本轮已做对的：整表排版规整，层级由单体逐步扩展到杯装与碗装甜品；光向、配色、圆润造型和投影处理统一，蛋筒及莓果细节具有良好识别度。",
+        "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+        "from_score": "8.54"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "02:28:32",
+    "asset_image": "assets/skill_20261109/merge_overview/merge_overview_v5_r1.jpg"
+  },
+  "rounds_to_converge": 1,
+  "convergence_badge": "共 1 轮未达阈值，采用最高分",
+  "winner_image": "assets/skill_20261109/merge_overview/merge_overview_v5_r1.jpg",
+  "best_image": "assets/skill_20261109/merge_overview/merge_overview_v5_r1.jpg",
+  "final_image": "assets/skill_20261109/merge_overview/final.jpg",
+  "process_board": ".memory-art/converge/boards/merge_mushroom_dessert_v5/index.html"
+}

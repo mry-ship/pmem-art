@@ -1,0 +1,14 @@
+{
+  "saved_at": 1794240694.138355,
+  "text": "妖精花园休闲游戏上架 Key Art——竖构图主视觉，小精灵与蘑菇家园气氛。风格样张只锁画风禁止贴构图。结构气氛可看但不锁机位。对标顶级休闲上架 Key Art。",
+  "banner": "【按 原画 走了】",
+  "route_ids": [
+    "draw.key"
+  ],
+  "mode": "skill",
+  "execute_ok": true,
+  "artist_say": "【按 原画 走了】\n按原画/主视觉来做。",
+  "plan_conflict": false,
+  "confidence": "high",
+  "conversation_id": "skill1109-key"
+}

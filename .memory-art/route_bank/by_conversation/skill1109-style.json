@@ -1,0 +1,14 @@
+{
+  "saved_at": 1794235958.109797,
+  "text": "/pmem-style-lock 以后按这张",
+  "banner": "【按 参考图/样张一键提炼风格圣经与色板锁定 走了】",
+  "route_ids": [
+    "style.lock"
+  ],
+  "mode": "skill",
+  "execute_ok": true,
+  "artist_say": "【按 参考图/样张一键提炼风格圣经与色板锁定 走了】\n先锁风格/色板，这步不生图。",
+  "plan_conflict": false,
+  "confidence": "high",
+  "conversation_id": "skill1109-style"
+}

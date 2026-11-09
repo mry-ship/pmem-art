@@ -1,0 +1,27 @@
+{
+  "preset": "Soft",
+  "grid": 24,
+  "viewBox": "0 0 24 24",
+  "strokeWidth": 2,
+  "strokeLinecap": "round",
+  "strokeLinejoin": "round",
+  "cornerRadiusHint": 4,
+  "padding": 2,
+  "opticalBalance": true,
+  "color": "currentColor",
+  "fill": "none",
+  "theme": "妖精花园休闲游戏 · 功能入口线性图标",
+  "commercial_benchmark": "休闲花园/精灵养成 HUD 导航：亲和圆角、轻视觉重量、24px 可认",
+  "icons": [
+    { "id": "home", "label": "家园", "group": "Navigation", "file": "home.svg" },
+    { "id": "bag", "label": "背包", "group": "Inventory", "file": "bag.svg" },
+    { "id": "shop", "label": "商店", "group": "Actions", "file": "shop.svg" },
+    { "id": "quest", "label": "任务", "group": "Actions", "file": "quest.svg" },
+    { "id": "settings", "label": "设置", "group": "Actions", "file": "settings.svg" },
+    { "id": "bestiary", "label": "图鉴", "group": "Industry-Specific", "file": "bestiary.svg" },
+    { "id": "map", "label": "地图", "group": "Navigation", "file": "map.svg" },
+    { "id": "watering-can", "label": "浇水", "group": "Crafting", "file": "watering-can.svg" },
+    { "id": "sprout", "label": "种植", "group": "Crafting", "file": "sprout.svg" },
+    { "id": "wings", "label": "精灵", "group": "Industry-Specific", "file": "wings.svg" }
+  ]
+}

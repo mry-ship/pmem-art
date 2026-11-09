@@ -1,0 +1,11 @@
+id: ui.casual_hud
+category: ui.casual
+title: 三消/装修休闲主菜单 HUD
+aliases:
+  - 三消
+  - royal match
+  - 主菜单
+  - hud
+surface: 上架截图密度：顶栏资源清晰、主 CTA 一眼最大、chrome 与场景同系、可点控件完成度
+layout_notes: 顶栏尽量单行；主任务中下最大；底栏有无跟对标；勿右侧四 squircles 万能骨架；未点名三消勿默套 RM
+forbid_pad: true

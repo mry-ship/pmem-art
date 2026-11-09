@@ -1,0 +1,106 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-11-09 21:22:02 UTC+8",
+  "session_id": "latest",
+  "goal": "验收出图：画一张窗边水彩半身女孩，缺风格走商业对标",
+  "module": "brand.WorldStyle",
+  "converge_mode": "quality",
+  "guided_mode": "text_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 3,
+  "winner_round": 2,
+  "winner_score": 8.92,
+  "winner_image": "assets/accept_gen_20261109/accept_watercolor_window_girl_r2.jpg",
+  "winner_passed": false,
+  "outcome": "🛑 **安全早停后结算**：已审 3 轮，最高 `8.92` < `9.50`，交付历史最高分（第 2 轮）",
+  "what_fixed": [
+    "优先删减发髻外围交叉线并整理发束走向，再用轻微明暗补强近侧眼窝、鼻翼和面颊转折；合并右肩零碎衣褶色块，并弱化胸口突兀的白色留痕。",
+    "优先删减发髻外缘和耳后相互穿插的杂线，校窄右肩轮廓；随后合并领口与右袖的小碎褶皱，用更连续的明暗块恢复衣料体积，同时保留现有窗光与纸纹。",
+    "适当缩短颈部并拓宽近侧肩线，清理耳后与发髻外缘的交叉飞发；将面部高频毛孔与锐利轮廓稍作水彩化概括，同时拆分右肩粘连的灰蓝褶皱色块。"
+  ],
+  "what_still_weak": "发髻及耳后游丝数量偏多且交叉杂乱，右肩略厚；衣领、胸口和右袖的褶皱切分较碎，部分深浅笔触没有充分归纳成明确布料体积。；prompt 改动 43% 超过档位上限 40%",
+  "strengths": "机位与窗光冷暖仍锁住；发束走向比上轮更干净",
+  "taste_deltas": {
+    "from_strengths": [
+      "机位与窗光冷暖仍锁住；发束走向比上轮更干净"
+    ],
+    "from_defects": [
+      "发髻周围的游丝数量偏多且互相穿插，局部像杂乱描线；近侧眼部与鼻翼体积稍平，右肩衣褶的边缘和色块较碎，胸口白色斑点会分散视线。",
+      "发髻及耳后游丝数量偏多且交叉杂乱，右肩略厚；衣领、胸口和右袖的褶皱切分较碎，部分深浅笔触没有充分归纳成明确布料体积。；prompt 改动 43% 超过档位上限 40%",
+      "面部写实度明显高于背景的松散水彩笔触，局部风格统一性不足；颈部略长且肩线偏窄，右肩衣褶的暗色笔触略显拥挤，少量飞发形成杂乱交叉。"
+    ]
+  },
+  "warm_start_confidence": 0.45,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 8.73,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 8.92,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 8.65,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：发髻周围的游丝数量偏多且互相穿插，局部像杂乱描线；近侧眼部与鼻翼体积稍平，右肩衣褶的边缘和色块较碎，胸口白色斑点会分散视线。",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.73"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：发髻周围的游丝数量偏多且互相穿插，局部像杂乱描线；近侧眼部与鼻翼体积稍平，右肩衣褶的边缘和色块较碎，胸口白色斑点会分散视线。",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "8.73"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：水彩纸纹飞白可读；窗侧暖光与帘侧冷区分离清楚；半身窗边身份一眼成立；无霓虹/赛博/油腻塑胶",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.73"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：发髻及耳后游丝数量偏多且交叉杂乱，右肩略厚；衣领、胸口和右袖的褶皱切分较碎，部分深浅笔触没有充分归纳成明确布料体积。；prompt 改动 43% 超过档位上限 ",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.92"
+    },
+    {
+      "category": "material",
+      "lesson": "本轮短板偏「material」：发髻及耳后游丝数量偏多且交叉杂乱，右肩略厚；衣领、胸口和右袖的褶皱切分较碎，部分深浅笔触没有充分归纳成明确布料体积。；prompt 改动 43% 超过档位上限 ",
+      "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+      "from_score": "8.92"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：机位与窗光冷暖仍锁住；发束走向比上轮更干净",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.92"
+    },
+    {
+      "category": "material",
+      "lesson": "本轮短板偏「material」：面部写实度明显高于背景的松散水彩笔触，局部风格统一性不足；颈部略长且肩线偏窄，右肩衣褶的暗色笔触略显拥挤，少量飞发形成杂乱交叉。",
+      "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+      "from_score": "8.65"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：窗光冷暖与纸纹仍在；发丝杂线应少于上轮",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.65"
+    }
+  ]
+}

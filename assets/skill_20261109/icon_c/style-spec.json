@@ -1,0 +1,40 @@
+{
+  "mode": "C",
+  "grid_px": 256,
+  "family": "fairy_garden_props",
+  "surface": "软塑胶厚实圆润、棚柔光短接触影、饱和友好、棋盘缩略可读、上架货柜完成度",
+  "style_locks": {
+    "silhouette": "thick chunky toy proportions, readable at 64px",
+    "material": "matte soft-plastic / clay satin, gentle AO in creases",
+    "lighting": "soft top studio key + short contact shadow under object",
+    "outline": "none or ultra-soft form edge only; no hard black stroke",
+    "palette": {
+      "red": "#E53935",
+      "cream": "#FFF3D6",
+      "yellow": "#FFD54F",
+      "blue": "#2979FF",
+      "orange": "#FF9800",
+      "green": "#66BB6A",
+      "ribbon_gold": "#FFC107"
+    },
+    "background": "true alpha transparent; no scene, no text, no UI frame",
+    "forbid": [
+      "scene illustration",
+      "text/logo",
+      "white/magenta flat plate as final",
+      "photoreal food",
+      "thin fragile edges",
+      "fringed semi-transparent corner halo"
+    ]
+  },
+  "icons": [
+    {"id": "prop_mushroom", "label": "蘑菇"},
+    {"id": "prop_cheese", "label": "奶酪"},
+    {"id": "prop_blue_fruit", "label": "蓝果"},
+    {"id": "prop_cherry", "label": "樱桃"},
+    {"id": "prop_gift_box", "label": "礼物盒"},
+    {"id": "prop_leaf", "label": "绿叶"}
+  ],
+  "reference": "assets/skill_20261109/_refs/ref_prop_mushroom.png",
+  "benchmark": "merge.cabinet"
+}

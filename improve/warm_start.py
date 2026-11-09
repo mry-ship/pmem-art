@@ -24,11 +24,17 @@ _TOPIC_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
     ("xmas", re.compile(r"圣诞|christmas|xmas|ginger|gingerbread|暴雪呵气|冰晶碎玻璃", re.I)),
     ("candy_merge", re.compile(r"糖果|焊蛋糕|气球档|棒糖|马戏|奖牌体量|L1像素锁|L1锁与气球|节日合成", re.I)),
     ("merge_ladder", re.compile(
-        r"合成梯|五链合成|整表多格|邻档剪影|同域合理升级|shop_ladder|"
-        r"白底不可接受|禁止换物种|零件必须累计|档差要一眼|和L1一样透明|黑空底",
+        r"合成梯|五链合成|整表多格|邻档剪影|同域合理升级|shop_ladder|overview_sheet|"
+        r"merge\s*overview|白底不可接受|禁止换物种|零件必须累计|档差要一眼|和L1一样透明|黑空底",
         re.I,
     )),
     ("softcandy", re.compile(r"草莓软糖|软糖SSS|籽粒凹|蒂叶|半透明SSS|软糖表面", re.I)),
+    # Prop-icon / platter recipes bleed into portrait goals under brand.WorldStyle if unmarked.
+    ("prop_icon", re.compile(
+        r"prop\s*icon|透明底道具|道具格|cheese\s*platter|mushroom\s*(cheese|platter)|"
+        r"红菇|果盘|真alpha|四角透明|厚剪影|角隅半透明",
+        re.I,
+    )),
     ("instrument", re.compile(r"乐器|竖琴|钢琴|species_change|吉他同物件", re.I)),
     ("building", re.compile(r"建筑|木屋|城堡|evermerge|庄园|吊桥|洋葱圆顶|木棚", re.I)),
     ("bird_merge", re.compile(r"鸟合成|禽类|母鸡|birds?merge|无脸抠|鸡群|翅层|尾扇", re.I)),
@@ -36,6 +42,7 @@ _TOPIC_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
     ("app_icon", re.compile(r"App Icon|1024\s*x\s*1024|满幅直角|商店图标|桌面图标|启动图标", re.I)),
     ("keyart", re.compile(r"Key Art|原画主视觉|竖构图主视觉|海报主视觉", re.I)),
     ("clone_style", re.compile(r"锁风验证|风格克隆|禁止回声|只借画风", re.I)),
+    ("watercolor", re.compile(r"水彩|watercolor|wash\b|纸纹飞白|绘本立绘|湿画", re.I)),
 ]
 
 _STRONG_TOPICS = frozenset(name for name, _ in _TOPIC_PATTERNS)
@@ -83,6 +90,12 @@ def _context_scopes(module: str, goal: str = "") -> set[str]:
         scopes.add("keyart")
     if "clone" in low or "stylelock" in low.replace(".", "") or "worldstyle" in low.replace(".", ""):
         scopes.add("clone_style")
+    if any(k in (goal or "") for k in ("水彩", "watercolor", "绘本", "wash")):
+        scopes.add("watercolor")
+    if any(k in low for k in ("prop", "icon")) and "appicon" not in low.replace(".", ""):
+        # prop.* / icon.Prop* modules keep prop_icon recipes; brand.WorldStyle does not.
+        if dom in ("prop", "icon") or "prop" in low:
+            scopes.add("prop_icon")
     return scopes
 
 
@@ -100,12 +113,61 @@ def habit_relevant_for_task(habit: str, module: str, goal: str = "") -> bool:
     return bool(habit_topics & _context_scopes(module, goal))
 
 
+_FOREIGN_ARTIFACT = re.compile(
+    r"App Icon|1024\s*x\s*1024|overview_sheet|合成梯|主菜单|HUD|九宫格|"
+    r"platter|prop\s*icon|currentColor|SVG 图标|桌面图标|启动图标",
+    re.I,
+)
+
+
+def _goal_tokens(goal: str) -> list[str]:
+    """ASCII words + CJK bigrams so「窗边水彩半身女孩」也能做重叠判断。"""
+    goal_l = (goal or "").strip().lower()
+    parts = [t for t in re.split(r"[\s,，。、·:：/|+()-]+", goal_l) if t]
+    out: list[str] = []
+    seen: set[str] = set()
+    for p in parts:
+        cjk = bool(re.search(r"[\u4e00-\u9fff]", p))
+        pieces = [p[i : i + 2] for i in range(len(p) - 1)] if (cjk and len(p) >= 4) else ([p] if len(p) >= 2 else [])
+        for tok in pieces:
+            if len(tok) < 2 or tok in seen:
+                continue
+            if cjk and not re.search(r"[\u4e00-\u9fff]", tok):
+                continue
+            seen.add(tok)
+            out.append(tok)
+    return out
+
+
+def _soft_goal_overlap_ok(entry: dict[str, Any], goal: str) -> bool:
+    """When entry has no strong topic tags: drop scored foreign-artifact recipes with 0 goal overlap.
+
+    Conservative: vague goals / generic short redlines always keep (stability first).
+    """
+    g_toks = _goal_tokens(goal)
+    if len(g_toks) < 2:
+        return True
+    blob = f"{entry.get('summary') or ''} {entry.get('body') or ''}"
+    hay = blob.lower()
+    if any(t in hay for t in g_toks):
+        return True
+    # Only drop concrete high-score recipes that clearly belong to another artifact family.
+    if not re.search(r"\d+\.\d+\s*分|收敛胜出", blob):
+        return True
+    if not _FOREIGN_ARTIFACT.search(blob):
+        return True
+    # Goal itself is that artifact → keep.
+    if _FOREIGN_ARTIFACT.search(goal or ""):
+        return True
+    return False
+
+
 def entry_on_topic_for_task(entry: dict[str, Any], module: str, goal: str = "") -> bool:
     """Drop recipes/redlines whose strong topic is absent from the current task."""
     blob = f"{entry.get('summary') or ''} {entry.get('body') or ''}"
     entry_topics = _scopes_in(blob) & _STRONG_TOPICS
     if not entry_topics:
-        return True
+        return _soft_goal_overlap_ok(entry, goal)
     ctx = _context_scopes(module, goal)
     # Exclusive strong topics on the entry that the task does not carry → off-topic bleed.
     if entry_topics - ctx:
@@ -341,6 +403,17 @@ def build_warm_start_pack(
     # Two-layer knowledge recall: Project-Private (_knowledge) > Cross-Project Shared (~/.pmem-art/shared)
     from .knowledge import recall_layered_knowledge_cards
     recalled_cards = recall_layered_knowledge_cards(root, target_module=module, query=goal, limit=2)
+    # Drop hard medium clashes (e.g. cel-shade card into watercolor portrait goals).
+    ctx_scopes = _context_scopes(module, goal)
+    def _knowledge_ok(card: dict[str, Any]) -> bool:
+        blob = f"{card.get('title') or ''} {card.get('body') or ''}"
+        if "watercolor" in ctx_scopes and re.search(r"赛璐珞|cel.?shade|硬边色块分层", blob, re.I):
+            return False
+        if "prop_icon" not in ctx_scopes and re.search(r"prop\s*icon|真alpha|cheese\s*platter", blob, re.I):
+            return False
+        return True
+
+    recalled_cards = [c for c in recalled_cards if _knowledge_ok(c)]
     private_kcards = [c for c in recalled_cards if c.get("layer_scope") == "private"]
     shared_kcards = [c for c in recalled_cards if c.get("layer_scope") == "shared"]
     if shared_kcards or private_kcards:

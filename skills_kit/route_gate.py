@@ -1,6 +1,6 @@
 """开画前 route 闸门：没有近期本地路由结果则拒绝 converge start。
 
-美术零门槛：他们不用管；Agent 必须先跑 route。可用 --skip-route-gate 逃生（点名调试）。
+美术零门槛：他们不用管；Agent 必须先跑 route。调试跳闸见 gate_skip（ALLOW + --skip-reason）。
 
 点名锁定：`converge start --route-id <已知路由>` 仅在**无缓存/已过期**时可自动种闸；
 已有新鲜且路由不一致的缓存时必须重跑 route，禁止静默覆盖。
@@ -94,21 +94,22 @@ def save_route_advise(
     if payload.get("named_seed"):
         blob["named_seed"] = True
     raw = json.dumps(blob, ensure_ascii=False, indent=2) + "\n"
-    dest.write_text(raw, encoding="utf-8")
     cid = (conversation_id or "").strip()
     if cid:
+        # 有对话窗：只写分槽，禁止覆盖全局 last_advise（并发多技能会互相踩闸）
         slot = _conv_path(root, cid)
         slot.parent.mkdir(parents=True, exist_ok=True)
         slot.write_text(raw, encoding="utf-8")
+        return slot
+    dest.write_text(raw, encoding="utf-8")
     return dest
 
 
 def load_route_advise(root: Path, conversation_id: str = "") -> dict[str, Any] | None:
     cid = (conversation_id or "").strip()
     if cid:
-        slot = _read_json(_conv_path(root, cid))
-        if slot:
-            return slot
+        # 有对话窗：只认分槽。无分槽时 fail-closed，禁止回落全局（并发串闸）。
+        return _read_json(_conv_path(root, cid))
     data = _read_json(_path(root))
     if not data:
         return None
@@ -186,8 +187,29 @@ def goal_match_tokens(goal: str) -> list[str]:
     return out
 
 
+def _heavy_missing(tokens: list[str], haystack: str) -> list[str]:
+    """返回未出现在 haystack 中的重锚点（中文≥2 / 英文≥3 / 数字≥2）。"""
+    h_low = (haystack or "").lower()
+    missing = [tok for tok in tokens if tok.lower() not in h_low and tok not in haystack]
+    return [
+        m
+        for m in missing
+        if re.fullmatch(r"[\u4e00-\u9fff]{4,}", m)
+        or re.fullmatch(r"[a-z]{3,}", m.lower())
+        or re.fullmatch(r"\d{2,}", m)
+        or re.fullmatch(r"[\u4e00-\u9fff]{2,3}", m)
+    ]
+
+
 def goal_matches_route_text(goal: str, route_text: str) -> tuple[bool, str]:
-    """True 当 goal 与 route 原文对得上。"""
+    """True 当 goal 与 route 原文对得上。
+
+    规则（兼容同题扩写，拦住换题）：
+    1) 归一化后互相包含 → 过（goal 扩写含 route 原文，或 route 含 goal）
+    2) route 锚点全落在 goal → 过（开画 goal 常比 route 句更长）
+    3) goal 锚点全落在 route → 过（短 goal / 旧行为）
+    4) 否则拦
+    """
     g = (goal or "").strip()
     t = (route_text or "").strip()
     if not g or not t:
@@ -197,25 +219,32 @@ def goal_matches_route_text(goal: str, route_text: str) -> tuple[bool, str]:
         if g not in t:
             return False, f"goal 过短且不在 route 原文中：{g!r}"
         return True, ""
-    tokens = goal_match_tokens(g)
-    t_low = t.lower()
-    if not tokens:
-        # 抽不出锚点：要求归一化后互相包含其一
-        gn = re.sub(r"\s+", "", g).lower()
-        tn = re.sub(r"\s+", "", t).lower()
-        if gn in tn or tn in gn:
-            return True, ""
-        return False, "goal 与 route 原文无法对齐（无可用锚点）"
-    missing = [tok for tok in tokens if tok.lower() not in t_low and tok not in t]
-    if not missing:
+    gn = re.sub(r"\s+", "", g).lower()
+    tn = re.sub(r"\s+", "", t).lower()
+    if gn in tn or tn in gn:
         return True, ""
-    # 长句：任一≥4 字中文锚点缺失即拦（保持旧行为强度）
-    # 短句/英文：任一锚点缺失即拦（修英文与「出图」「糖果」误放行）
-    heavy = [m for m in missing if re.fullmatch(r"[\u4e00-\u9fff]{4,}", m) or re.fullmatch(r"[a-z]{3,}", m.lower()) or re.fullmatch(r"\d{2,}", m) or re.fullmatch(r"[\u4e00-\u9fff]{2,3}", m)]
+
+    route_tokens = goal_match_tokens(t)
+    if route_tokens and not _heavy_missing(route_tokens, g):
+        return True, ""
+
+    tokens = goal_match_tokens(g)
+    if tokens and not _heavy_missing(tokens, t):
+        return True, ""
+
+    if not tokens and not route_tokens:
+        return False, "goal 与 route 原文无法对齐（无可用锚点）"
+    # 优先报「换题」：route 锚点不在 goal
+    if route_tokens:
+        heavy = _heavy_missing(route_tokens, g)
+        if heavy:
+            shown = "、".join(heavy[:6])
+            return False, f"route 原文锚点未出现在 goal：{shown}"
+    heavy = _heavy_missing(tokens, t) if tokens else []
     if heavy:
         shown = "、".join(heavy[:6])
         return False, f"goal 锚点未出现在 route 原文：{shown}"
-    return True, ""
+    return False, "goal 与 route 原文无法对齐"
 
 
 def check_route_gate(
@@ -234,9 +263,32 @@ def check_route_gate(
     named_id = resolve_named_route_id(goal=goal, expect_route=expect_route)
 
     def _try_named_seed(why: str) -> tuple[bool, str] | None:
-        """仅无缓存/过期时可种闸；禁止覆盖新鲜且路由不一致的缓存。"""
+        """仅无缓存/过期时可种闸；禁止覆盖新鲜且路由不一致的缓存。
+
+        若 goal 按规则会 stop（序列帧/分镜问句等），禁止 --route-id 静默种闸硬开画。
+        """
         if not named_id:
             return None
+        g = (goal or "").strip()
+        if g:
+            from .agent_router import plan_route
+
+            probe = plan_route(g)
+            if probe.mode == "stop":
+                detail = (probe.announce or probe.reason or "stop").strip()
+                return (
+                    False,
+                    f"{why}点名种闸被拒绝：规则路由为 stop（{probe.reason}）。{detail}"
+                    " 请改口或先 route，禁止用 --route-id 绕过停闸。",
+                )
+            probe_ids = [str(x) for x in (probe.route_ids or []) if str(x)]
+            if probe_ids and named_id not in probe_ids:
+                shown = "、".join(probe_ids)
+                return (
+                    False,
+                    f"{why}点名种闸被拒绝：规则路由是 {shown}，与 --route-id {named_id} 不一致。"
+                    " 请对当前这句话重跑 route，禁止用 --route-id 静默换支。",
+                )
         seed_named_route(root, named_id, goal=goal, conversation_id=conversation_id)
         return (
             True,
@@ -262,6 +314,15 @@ def check_route_gate(
         )
     age = time.time() - float(data.get("saved_at") or 0)
     if age > _MAX_AGE_SEC:
+        # 过期且 route_id 与缓存不一致：禁止静默换路由（与新鲜冲突对称）
+        saved_ids_expired = [str(x) for x in (data.get("route_ids") or []) if str(x)]
+        if named_id and saved_ids_expired and named_id not in saved_ids_expired:
+            shown = "、".join(saved_ids_expired) or "（空）"
+            return (
+                False,
+                f"本地路由已过期（{int(age // 60)} 分钟前），上次是 {shown}、本次要 {named_id}。"
+                "请对当前这句话重新跑 route（禁止过期后用 --route-id 静默换路由）。",
+            )
         seeded = _try_named_seed(f"本地路由结果已过期（{int(age // 60)} 分钟前）；")
         if seeded:
             return seeded

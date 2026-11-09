@@ -1,0 +1,14 @@
+{
+  "saved_at": 1794240390.156332,
+  "text": "Mode A：iOS 1024x1024 Light 母版 App Icon——妖精花园休闲游戏，中心单符号为红点蘑菇上的奶酪水果拼盘，满幅直角无字，72%-80%安全区，顶级休闲App Store图标完成度",
+  "banner": "【按 Mode A 走了】",
+  "route_ids": [
+    "icon.a"
+  ],
+  "mode": "skill",
+  "execute_ok": true,
+  "artist_say": "【按 Mode A 走了】\n按桌面启动图标（1024 母版）来做。",
+  "plan_conflict": false,
+  "confidence": "medium",
+  "conversation_id": "skill1109-icon-a"
+}

@@ -1,0 +1,29 @@
+# 妖精花园「蘑菇甜点」合成梯 · shop_ladder L1–L8（overview_sheet 2×4）· 关系第2稿
+# 商业对标：Travel Town / Merge Mansion 同店甜点货柜（烘焙形变链，非整菜单乱跳）
+# 对标档序气质：MiniTreat→Macaron→Cupcake→CreamCup→Tart→CakeSlice→WholeCake→GiftBox
+# 过程类型：同族形变货柜（朴素完整小甜点→换代完整件→…→礼盒犒赏）
+# 翻车纠正：禁软糖袋→布丁杯跨品类硬跳；禁同杯双胞胎；禁实拍食物照片风
+# 版式：2×4 白圆角卡深炭灰底；每格一件居中无等级字
+version: fairy-garden-mushroom-dessert-20261110-v3
+pipeline: art-merge-two-phase
+delivery: overview_sheet
+
+tracks:
+  mushroom_dessert:
+    module: prop.FairyGarden.MushroomDessert
+    chain_mode: shop_ladder
+    levels: 8
+    grid_rows: 2
+    grid_cols: 4
+    surface: Travel Town/Merge Mansion级休闲merge甜点货柜；软塑胶厚实圆润玩具感（禁实拍食物油光），棚柔光短接触影，饱和友好，64px缩略可读，上架货柜完成度；2×4白圆角卡深炭灰底；每格一件居中无字；家族基因=红菇盖+乳白圆点+奶油色甜品语言贯穿八档；道具无脸；禁同底座堆料、禁糖果袋硬跳布丁、禁金铠海报风、禁鸟类
+    commercial_ref: "Travel Town/Merge Mansion dessert bakery shop_ladder: MiniCreamPuff→Macaron→Cupcake→CreamCup→Tart→CakeSlice→WholeCake→GiftBox"
+    process_type: "shop_ladder_same_family_dessert_SKU_evolution"
+    rows:
+      - { level: 1, name: 迷你蘑菇奶油泡芙, silhouette: 单颗拇指大圆润奶油泡芙顶红菇盖白点，完整小甜点一件, scale_delta: 基档, scale_pct: 0.56, evolve_to: MiniMushroomCreamPuff, merge_why: "—", parts_add: "—" }
+      - { level: 2, name: 蘑菇马卡龙, silhouette: 扁圆夹心马卡龙，上壳红菇盖白点下壳奶油色，完整一件剪影大变, scale_delta: "+小", scale_pct: 0.60, evolve_to: MushroomMacaron, merge_why: 两颗迷你蘑菇奶油泡芙合成一枚扁圆蘑菇马卡龙, parts_add: "—" }
+      - { level: 3, name: 蘑菇纸杯蛋糕, silhouette: 纸托纸杯蛋糕顶红菇盖白点与奶油旋，杯托圆柱剪影, scale_delta: "+小", scale_pct: 0.64, evolve_to: MushroomCupcake, merge_why: 两枚蘑菇马卡龙合成一只蘑菇纸杯蛋糕, parts_add: "—" }
+      - { level: 4, name: 蘑菇奶油杯, silhouette: 透明矮杯装蘑菇奶油甜点带旋顶，玻璃杯装SKU, scale_delta: "+中", scale_pct: 0.68, evolve_to: MushroomCreamCup, merge_why: 两只蘑菇纸杯蛋糕合成一杯蘑菇奶油杯, parts_add: "—" }
+      - { level: 5, name: 蘑菇奶油塔, silhouette: 宽扁敞口塔皮盛奶油与红菇盖顶饰，塔形剪影明显宽于杯, scale_delta: "+中", scale_pct: 0.72, evolve_to: MushroomCreamTart, merge_why: 两杯蘑菇奶油杯合成一只蘑菇奶油塔, parts_add: "—" }
+      - { level: 6, name: 蘑菇蛋糕切片, silhouette: 三角形蘑菇奶油蛋糕切片露分层切面，三角楔形剪影, scale_delta: "+中", scale_pct: 0.76, evolve_to: MushroomCakeSlice, merge_why: 两只蘑菇奶油塔合成一块蘑菇蛋糕切片, parts_add: "—" }
+      - { level: 7, name: 整只蘑菇蛋糕, silhouette: 整只圆形多层蘑菇奶油蛋糕，完整整饼SKU, scale_delta: "+大", scale_pct: 0.78, evolve_to: WholeMushroomCake, merge_why: 两块蘑菇蛋糕切片合成整只蘑菇奶油蛋糕, parts_add: "—" }
+      - { level: 8, name: 礼盒蘑菇蛋糕, silhouette: 开盖礼盒中的整只蘑菇蛋糕，礼盒包装犒赏件仍同家族, scale_delta: "+大", scale_pct: 0.80, evolve_to: GiftBoxMushroomCake, merge_why: 两只整只蘑菇蛋糕合成礼盒装蘑菇蛋糕犒赏件, parts_add: "—" }

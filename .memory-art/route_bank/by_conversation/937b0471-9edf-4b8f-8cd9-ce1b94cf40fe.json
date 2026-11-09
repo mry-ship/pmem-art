@@ -1,0 +1,15 @@
+{
+  "saved_at": 1794248003.187297,
+  "text": "合成梯 overview_sheet 8档 shop_ladder：蘑菇甜点烘焙同店 泡芙→马卡龙→纸杯蛋糕→奶油杯→塔→切片→整蛋糕→三层犒赏蛋糕；软塑胶货柜；禁礼盒末档",
+  "banner": "【按点名锁定 merge.ladder】",
+  "route_ids": [
+    "merge.ladder"
+  ],
+  "mode": "skill",
+  "execute_ok": true,
+  "artist_say": "【按点名锁定 merge.ladder】",
+  "plan_conflict": false,
+  "confidence": "named",
+  "conversation_id": "937b0471-9edf-4b8f-8cd9-ce1b94cf40fe",
+  "named_seed": true
+}

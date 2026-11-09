@@ -229,16 +229,19 @@ def _contract_heading(body: str, section: str) -> str:
 
 
 def _draw_pack_headings(body: str, section: str, heading: str) -> list[str]:
-    """出图合同：零点五 route + 第二节闭环（镜头包除外）+ 合同 + 记忆静默。"""
+    """出图合同：零点五 route + 执行卡（优先）/第二节 + 合同 + 记忆静默。"""
     route_gate = _h2_by_prefix(body, "## 零点五")
+    card = _h2_by_prefix(body, "## 执行卡")
     loop = _h2_by_prefix(body, "## 二、")
+    # 有执行卡则不再塞整节「二、」（降合规长度）；卡内须含 reasonableness/converge 关键词
+    loop_or_card = card or loop
     memory = _h2_by_prefix(body, "## 记忆静默")
     if section == "普通图":
-        return [h for h in (route_gate, loop or heading, memory) if h]
+        return [h for h in (route_gate, loop_or_card or heading, memory) if h]
     if section == "镜头包":
         return [h for h in (route_gate, heading) if h]
     # 克隆 / 变体 / 多图分工 / 原画：公共闭环 + 叠加合同
-    return [h for h in (route_gate, loop, heading, memory) if h]
+    return [h for h in (route_gate, loop_or_card, heading, memory) if h]
 
 
 def build_registry(specs: list[dict[str, Any]], *, installed_root: Path | None = None) -> dict[str, Any]:
@@ -263,7 +266,15 @@ def build_registry(specs: list[dict[str, Any]], *, installed_root: Path | None =
         else:
             heading = _skill_open(body)
             section = by_name[skill]["title"]
-            pack = [heading] if heading else []
+            if rid == "merge.ladder":
+                card = _h2_by_prefix(body, "## 执行卡")
+                forbid = _h2_by_prefix(body, "## 禁止")
+                pack = [h for h in (card, forbid) if h] or ([heading] if heading else [])
+            elif rid in {"ui.kit", "prompt.write"}:
+                card = _h2_by_prefix(body, "## 执行卡")
+                pack = [card] if card else ([heading] if heading else [])
+            else:
+                pack = [heading] if heading else []
         routes.append(
             {
                 "id": rid,
@@ -287,7 +298,18 @@ def build_registry(specs: list[dict[str, Any]], *, installed_root: Path | None =
     for skill, (rid, when) in _ONE_SECTION.items():
         if rid in seen or skill not in by_name:
             continue
-        heading = _skill_open(by_name[skill]["body"])
+        body = by_name[skill]["body"]
+        heading = _skill_open(body)
+        card = _h2_by_prefix(body, "## 执行卡")
+        if rid == "prompt.write" and card:
+            pack = [card]
+        elif rid == "merge.ladder":
+            forbid = _h2_by_prefix(body, "## 禁止")
+            pack = [h for h in (card, forbid) if h] or ([heading] if heading else [])
+        elif rid == "ui.kit" and card:
+            pack = [card]
+        else:
+            pack = [heading] if heading else []
         routes.append(
             {
                 "id": rid,
@@ -296,7 +318,7 @@ def build_registry(specs: list[dict[str, Any]], *, installed_root: Path | None =
                 "section": by_name[skill]["title"],
                 "file": f".cursor/skills/{skill}/SKILL.md",
                 "heading": heading,
-                "pack_headings": [heading] if heading else [],
+                "pack_headings": pack,
                 "routable": bool(heading),
                 "simultaneous_pixels": False,
             }
@@ -378,13 +400,24 @@ def build_registry(specs: list[dict[str, Any]], *, installed_root: Path | None =
                 if needle not in packed:
                     section_cut_ok = False
                     section_cut_fails.append(f"{rid}:pack_missing:{needle}")
+            # Mode A must not leak SVG B rules; must keep Light-only / 点名三态.
+            if rid == "icon.a":
+                if "currentColor" in packed:
+                    section_cut_ok = False
+                    section_cut_fails.append("icon.a:leaked:currentColor")
+                if "仅玩家点名" not in packed and "仅点名" not in packed:
+                    section_cut_ok = False
+                    section_cut_fails.append("icon.a:pack_missing:仅点名三态")
+            if rid == "icon.b" and "满幅直角" in packed and "Mode A" in packed:
+                section_cut_ok = False
+                section_cut_fails.append("icon.b:leaked:ModeA满幅")
 
     for rid, must in (
         ("draw.clone", ("reasonableness", "converge judge", "合同 · 克隆", "零点五")),
         ("draw.variant", ("reasonableness", "converge judge", "合同 · 变体")),
         ("draw.multi", ("reasonableness", "converge judge", "合同 · 多图分工")),
         ("draw.key", ("reasonableness", "converge judge", "合同 · 原画")),
-        ("draw.ordinary", ("reasonableness", "converge judge", "零点五", "标准执行流程")),
+        ("draw.ordinary", ("reasonableness", "converge judge", "零点五", "执行卡")),
     ):
         route = by_rid.get(rid) or {}
         packed = slice_route_body(draw_body, route)

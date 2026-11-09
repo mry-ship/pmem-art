@@ -1,0 +1,888 @@
+{
+  "session_id": "skill1109-merge-v3",
+  "started_at": "2026-11-10 02:06:41 UTC+8",
+  "goal": "合成梯 overview_sheet 8档 shop_ladder：蘑菇甜点烘焙同店形变 泡芙→马卡龙→纸杯蛋糕→奶油杯→奶油塔→切片→整蛋糕→礼盒；软塑胶货柜风禁实拍；禁糖果袋硬跳",
+  "module": "prop.FairyGarden.MushroomDessert",
+  "mode": "text_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "merge_overview_checklist",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "medium",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "medium",
+    "label": "中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.5)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 1,
+    "target_score_threshold": 9.5,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.15,
+      "perspective_anatomy": 0.15,
+      "texture_detail": 0.15,
+      "spec_style": 0.15,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "viewpoint_frame",
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图，只在提示词上补还没过的那一处（提示词改动仍 ≤40%）",
+    "max_prompt_delta_ratio": 0.4,
+    "allow_recompose": false,
+    "allow_viewpoint_change": false,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "viewpoint_angle (不改机位与镜头视角)",
+      "element_count (不增删主体元素清单)",
+      "no_full_recompose (不做整体 recompose / 换景别故事)",
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)"
+    ],
+    "min_round_leap": 0.15,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光，表面那一句不动，只修没过的那一格",
+    "medium_family": "generic",
+    "best_direction_hint": "最优方向：光影·空气·介质；可小幅姿态/局部布局",
+    "goal": "合成梯 overview_sheet 8档 shop_ladder：蘑菇甜点烘焙同店形变 泡芙→马卡龙→纸杯蛋糕→奶油杯→奶油塔→切片→整蛋糕→礼盒；软塑胶货柜风禁实拍；禁糖果袋硬跳",
+    "module": "prop.FairyGarden.MushroomDessert",
+    "ref_image": "",
+    "ref_analysis": ""
+  },
+  "medium_family": "generic",
+  "contract": "",
+  "target_score_threshold": 9.5,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "",
+  "ref_analysis": "",
+  "default_aspect_ratio": "4:3",
+  "default_reference_image_paths": [
+    "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/pad_4x3_blank.png"
+  ],
+  "aspect_ratio": "4:3",
+  "reference_image_paths": [
+    "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/pad_4x3_blank.png"
+  ],
+  "ref_physical_traits": {
+    "exists": true,
+    "size_bytes": 4840,
+    "size_kb": 4.7,
+    "width": 1152,
+    "height": 864,
+    "aspect_ratio": "4:3",
+    "canonical_aspect_ratio": "4:3",
+    "color_entropy": 3.07
+  },
+  "param_validation": {
+    "valid": true,
+    "validation_passed": true,
+    "case_id": "skill1109-merge-v3",
+    "scale": "medium",
+    "aspect_ratio": "4:3",
+    "ref_aspect_ratio": "4:3",
+    "ref_dimensions": "1152x864",
+    "output_aspect_ratio": "",
+    "output_dimensions": "",
+    "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/pad_4x3_blank.png",
+    "reference_image_paths": [
+      "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/pad_4x3_blank.png"
+    ],
+    "inherited_default_aspect_ratio": false,
+    "inherited_default_pad_image": false,
+    "matched_ref_aspect_ratio": true,
+    "matched_ref_pad_image": true,
+    "matched_output_aspect_ratio": true,
+    "three_step_stage": "step1_start",
+    "three_step_verified": false,
+    "warnings": []
+  },
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.5,
+  "accept_threshold": 9.5,
+  "max_rounds": 4,
+  "ready_to_finish": true,
+  "status": "finished",
+  "owner_conversation_id": "937b0471-9edf-4b8f-8cd9-ce1b94cf40fe",
+  "route_ids": [
+    "merge.ladder"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "4:3",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/pad_4x3_blank.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "skill1109-merge-v3",
+        "scale": "medium",
+        "aspect_ratio": "4:3",
+        "ref_aspect_ratio": "4:3",
+        "ref_dimensions": "1152x864",
+        "output_aspect_ratio": "4:3",
+        "output_dimensions": "1152x864",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/pad_4x3_blank.png",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/pad_4x3_blank.png"
+        ],
+        "inherited_default_aspect_ratio": false,
+        "inherited_default_pad_image": false,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": true
+      },
+      "generated_at": "02:07:53",
+      "image": "assets/skill_20261109/merge_overview_v3/merge_overview_r1.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 168748,
+        "size_kb": 164.8,
+        "width": 1152,
+        "height": 864,
+        "aspect_ratio": "4:3",
+        "canonical_aspect_ratio": "4:3",
+        "color_entropy": 7.09
+      },
+      "raw_score": 8.74,
+      "score": 8.74,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.0/光影8.8/透视8.6/质感8.4/风格9.0/无瑕度8.7",
+      "dims_parsed": {
+        "composition": 9.0,
+        "lighting_color": 8.8,
+        "perspective_anatomy": 8.6,
+        "texture_detail": 8.4,
+        "spec_style": 9.0,
+        "flawlessness": 8.7
+      },
+      "weighted_score": 8.74,
+      "audit_warnings": [
+        "独立视觉裁判已采纳：openai_compatible/gpt-5.6-sol"
+      ],
+      "stagnated": false,
+      "strengths": "总览表秩序清晰，八个阶段一眼可读；红色菌盖与奶油、烘焙色形成稳定识别系统，光照和软塑胶式圆润造型高度统一。",
+      "defects": "前两格与后续甜点的形态差异较弱，首格更接近独立蘑菇摆件；部分阶段主要依靠容器或外轮廓变化，内部材质仍较同质。切片顶层红面与奶油边的结合略僵，透明杯的杯壁和液层边界稍显浑浊，礼盒盖与后方蝴蝶结局部空间关系偏挤。",
+      "next_fix": "优先强化前两阶段的烘焙结构特征和八档之间的连续形变；随后清理透明杯沿、切片顶层交界与礼盒内缘的重叠边线，并增加蛋糕胚、奶油和挞壳之间细微但统一的表面差异。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.FairyGarden.MushroomDessert\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 五链合成：不必每档保留L1原件/母体锁死；同域合理升级、档差明显即可\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 过曝高光；脏暗阴影/脏色；廉价塑料感/油腻高光；白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光，表面那一句不动，只修没过的那一格 | Casual merge-game dessert bakery shop_ladder overview_sheet, aspect 4:3, 2x4 equal white rounded cards on deep charcoal, one single centered soft-plastic TOY prop per card, no text no numbers. NOT photoreal food photography — matte soft-plastic / clay toy render like Travel Town Merge Mansion cabinet icons, soft studio key, short contact shadow, saturated friendly, 64px readable. chain_mode=shop_ladder 同族形变. Family gene lock: red mushroom cap + cream white dots + cream dessert language on EVERY tier. commercial_ref Travel Town/Merge Mansion dessert bakery: MiniCreamPuff→Macaron→Cupcake→CreamCup→Tart→CakeSlice→WholeCake→GiftBox. merge_why / evolve_to: L1 evolve_to=MiniMushroomCreamPuff — tiny round cream puff topped with red mushroom cap white dots, complete mini dessert SKU. L2 evolve_to=MushroomMacaron merge_why=two cream puffs merge into flat round mushroom macaron sandwich, disc silhouette. L3 evolve_to=MushroomCupcake merge_why=two macarons merge into paper-liner cupcake with cream swirl and mushroom cap. L4 evolve_to=MushroomCreamCup merge_why=two cupcakes merge into clear short glass cream cup dessert with swirl top. L5 evolve_to=MushroomCreamTart merge_why=two cream cups merge into wide flat open tart shell with cream and mushroom top — tart silhouette clearly wider than cup. L6 evolve_to=MushroomCakeSlice merge_why=two tarts merge into triangular frosted cake slice with visible layers. L7 evolve_to=WholeMushroomCake merge_why=two slices merge into whole round multi-layer mushroom cream cake. L8 evolve_to=GiftBoxMushroomCake merge_why=two whole cakes merge into open gift-box packaged cake reward SKU. Hard locks: soft plastic toy medium SSS only as toy glaze not food photo oil; exactly one product per cell; silhouette class MUST jump each tier (ball→disc→cupcake→glass cup→tart→triangle→round cake→box); fail at glance if candy bag appears, if L4/L5 look like twin cups, if photoreal food, if topping pile on one mushroom pedestal, if birds/faces/text. | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: limb count and joints match this species, and legs, wings, or the tail connect clearly; contact shadows read; do not melt extra limbs. Do not convert this into a human elbow pair or force two eyes",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.6,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "creature",
+      "judge_source": "independent_vlm",
+      "remote_vlm": {
+        "source": "independent_vlm",
+        "provider": "openai_compatible",
+        "model": "gpt-5.6-sol",
+        "error": "",
+        "active": true,
+        "score_evidence": {
+          "composition": "八个白底圆角卡片以两列四行等距排列，主体均居中且尺寸递进清楚，四周黑色留白稳定。",
+          "lighting_color": "各格主体左上侧高光、右下侧柔灰投影基本一致，红、奶油白与烘焙金色在全表中保持统一。",
+          "perspective_anatomy": "多数物件使用略俯视的三分之四视角，杯口、蛋糕顶面和礼盒开口的椭圆及侧面关系整体成立。",
+          "texture_detail": "奶油旋纹、纸杯褶皱、蛋糕夹层、挞壳压纹和礼盒缎带均有可辨细节，但大面积表面偏均匀光滑。",
+          "spec_style": "八件物体都采用圆润厚实的软质造型、简化边缘与统一红白斑点图案，整套视觉语言连贯。",
+          "flawlessness": "轮廓总体干净，卡片边缘和物件接触阴影完整，仅玻璃杯沿、礼盒盖内缘及部分奶油交界处略显粘连或厚薄不匀。"
+        },
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 1,
+          "rerated": false,
+          "reason": "",
+          "first_score": 8.74
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "material",
+          "lesson": "本轮短板偏「material」：前两格与后续甜点的形态差异较弱，首格更接近独立蘑菇摆件；部分阶段主要依靠容器或外轮廓变化，内部材质仍较同质。切片顶层红面与奶油边的结合略僵，透明杯的杯壁和液层边",
+          "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+          "from_score": "8.74"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：总览表秩序清晰，八个阶段一眼可读；红色菌盖与奶油、烘焙色形成稳定识别系统，光照和软塑胶式圆润造型高度统一。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.74"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "02:08:05"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "4:3",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/merge_overview_v3/merge_overview_r1.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "skill1109-merge-v3",
+        "scale": "medium",
+        "aspect_ratio": "4:3",
+        "ref_aspect_ratio": "4:3",
+        "ref_dimensions": "1152x864",
+        "output_aspect_ratio": "4:3",
+        "output_dimensions": "1152x864",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/merge_overview_v3/merge_overview_r1.jpg",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/merge_overview_v3/merge_overview_r1.jpg"
+        ],
+        "inherited_default_aspect_ratio": false,
+        "inherited_default_pad_image": false,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": true
+      },
+      "generated_at": "02:08:46",
+      "image": "assets/skill_20261109/merge_overview_v3/merge_overview_r2.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 174783,
+        "size_kb": 170.7,
+        "width": 1152,
+        "height": 864,
+        "aspect_ratio": "4:3",
+        "canonical_aspect_ratio": "4:3",
+        "color_entropy": 7.11
+      },
+      "raw_score": 8.48,
+      "score": 8.48,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.8/光影8.6/透视8.3/质感8.4/风格8.8/无瑕度8.2",
+      "dims_parsed": {
+        "composition": 8.8,
+        "lighting_color": 8.6,
+        "perspective_anatomy": 8.3,
+        "texture_detail": 8.4,
+        "spec_style": 8.8,
+        "flawlessness": 8.2
+      },
+      "weighted_score": 8.48,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +-0.26 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "独立视觉裁判已采纳：openai_compatible/gpt-5.6-sol",
+        "prompt 改动 68% 超过档位上限 40%"
+      ],
+      "stagnated": true,
+      "strengths": "版式整齐易读，八个阶段在轮廓、层数和容器上有明确变化；红白菌盖母题贯穿稳定，光照、色板与圆润商品化渲染高度统一。",
+      "defects": "相邻阶段的主体尺度和俯视角略有跳动；玻璃杯的透明写实感比其余软塑胶物件更强；切片奶油后缘、礼盒盖透视及蝴蝶结连接处是最明显的局部不顺。；prompt 改动 68% 超过档位上限 40%",
+      "next_fix": "统一八格主体的基准高度、视平线与右下投影长度；将玻璃杯折射和高光进一步简化为软塑胶质感，并重画切片顶部奶油边及礼盒盖、蝴蝶结的连接和透视。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.FairyGarden.MushroomDessert\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 五链合成：不必每档保留L1原件/母体锁死；同域合理升级、档差明显即可\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 过曝高光；脏暗阴影/脏色；廉价塑料感/油腻高光；白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光，表面那一句不动，只修没过的那一格 | Same plate soft-plastic dessert ladder. Only polish: L1 cream PUFF pastry body under mushroom cap not plain mushroom; L8 gift box contains WHOLE L7 cake not mini mushroom; bakery structure progression; sponge/cream/tart/glass micro texture; clean cup rim slice join gift-box lid edges. No candy bag no photoreal no text. | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: limb count and joints match this species, and legs, wings, or the tail connect clearly; contact shadows read; do not melt extra limbs. Do not convert this into a human elbow pair or force two eyes | 优先强化前两阶段的烘焙结构特征和八档之间的连续形变；随后清理透明杯沿、切片顶层交界与礼盒内缘的重叠边线，并增加蛋糕胚、奶油和挞壳之间细微但统一的表面差异。",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.3,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "creature",
+      "judge_source": "independent_vlm",
+      "remote_vlm": {
+        "source": "independent_vlm",
+        "provider": "openai_compatible",
+        "model": "gpt-5.6-sol",
+        "error": "",
+        "active": true,
+        "score_evidence": {
+          "composition": "八张白底卡片以四行两列等距排列，主体均居中且留白接近，红色菌盖在各格形成清晰连续的视觉节奏。",
+          "lighting_color": "各甜点左上侧有一致的暖白高光、右下侧有柔灰投影，红、奶油白与烘焙金色的明度层级清楚。",
+          "perspective_anatomy": "多数物体保持略俯视的三分之四视角，圆形糕体的椭圆顶面与底部投影基本吻合，但礼盒盖和盒身的透视角度略有偏差。",
+          "texture_detail": "泡芙与蛋糕胚可见细密烘焙颗粒，奶油有连续挤花沟槽，玻璃杯具备透明杯壁、杯沿和折射层次。",
+          "spec_style": "八格都采用圆润厚边、低锐度高光和简化材质，红色圆点菌盖与米白糕体构成统一的软塑胶货柜式造型语言。",
+          "flawlessness": "整体轮廓干净且无明显粘连或破碎，但切片顶部后缘的奶油边不均，礼盒上盖悬接关系和蝴蝶结局部形状略显生硬。"
+        },
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 1,
+          "rerated": false,
+          "reason": "",
+          "first_score": 8.48
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "composition",
+          "lesson": "本轮短板偏「composition」：相邻阶段的主体尺度和俯视角略有跳动；玻璃杯的透明写实感比其余软塑胶物件更强；切片奶油后缘、礼盒盖透视及蝴蝶结连接处是最明显的局部不顺。；prompt 改动 68",
+          "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+          "from_score": "8.48"
+        },
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：相邻阶段的主体尺度和俯视角略有跳动；玻璃杯的透明写实感比其余软塑胶物件更强；切片奶油后缘、礼盒盖透视及蝴蝶结连接处是最明显的局部不顺。；prompt 改动 68",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.48"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：版式整齐易读，八个阶段在轮廓、层数和容器上有明确变化；红白菌盖母题贯穿稳定，光照、色板与圆润商品化渲染高度统一。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.48"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "02:08:59"
+    },
+    {
+      "round": 3,
+      "round_label": "第 3 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "4:3",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/merge_overview_v3/merge_overview_r1.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "skill1109-merge-v3",
+        "scale": "medium",
+        "aspect_ratio": "4:3",
+        "ref_aspect_ratio": "4:3",
+        "ref_dimensions": "1152x864",
+        "output_aspect_ratio": "4:3",
+        "output_dimensions": "1152x864",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/merge_overview_v3/merge_overview_r1.jpg",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/merge_overview_v3/merge_overview_r1.jpg"
+        ],
+        "inherited_default_aspect_ratio": false,
+        "inherited_default_pad_image": false,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": true
+      },
+      "generated_at": "02:09:46",
+      "image": "assets/skill_20261109/merge_overview_v3/merge_overview_r3.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 177566,
+        "size_kb": 173.4,
+        "width": 1152,
+        "height": 864,
+        "aspect_ratio": "4:3",
+        "canonical_aspect_ratio": "4:3",
+        "color_entropy": 7.1
+      },
+      "raw_score": 8.74,
+      "score": 8.74,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.2/光影8.9/透视8.6/质感8.4/风格9.1/无瑕度8.5",
+      "dims_parsed": {
+        "composition": 9.2,
+        "lighting_color": 8.9,
+        "perspective_anatomy": 8.6,
+        "texture_detail": 8.4,
+        "spec_style": 9.1,
+        "flawlessness": 8.5
+      },
+      "weighted_score": 8.74,
+      "audit_warnings": [
+        "独立视觉裁判已采纳：openai_compatible/gpt-5.6-sol",
+        "安全早停 STOP_PLATEAU：第 3 轮起连续掉分/平台，保底结算历史最高分轮次（门槛 drop≥0.15，R≥2）"
+      ],
+      "stagnated": false,
+      "strengths": "整页排版规整，红白斑点顶饰提供了很强的系列识别；八个物件从独立小体量到分层蛋糕、切片和礼盒，轮廓差异清楚，灯光与软塑胶质感也保持一致。",
+      "defects": "部分奶油层贴近白色卡片背景时边缘偏淡；若干红色覆面与白点的尺寸、排布较相似，使中段造型变化略显重复；礼盒格的盖子、丝带和盒内主体相互遮挡，空间结构不如其余七格直观。",
+      "next_fix": "优先整理右下礼盒：抬高或后移盒盖并拉开蝴蝶结、盒沿与内部红顶的轮廓间距；随后略加深浅色奶油的接触阴影，并调整中段红顶的轮廓和白点分布，以增强各档造型辨识度。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.FairyGarden.MushroomDessert\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 五链合成：不必每档保留L1原件/母体锁死；同域合理升级、档差明显即可\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 过曝高光；脏暗阴影/脏色；廉价塑料感/油腻高光；白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光，表面那一句不动，只修没过的那一格 | Same plate. Only polish: unify scale and top-down angle; soft-plastic toy glass cup not photoreal; clean slice cream back edge; fix gift-box lid and ribbon; L8 open box must show WHOLE round layered mushroom cake inside. No text. | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: limb count and joints match this species, and legs, wings, or the tail connect clearly; contact shadows read; do not melt extra limbs. Do not convert this into a human elbow pair or force two eyes | 优先强化前两阶段的烘焙结构特征和八档之间的连续形变；随后清理透明杯沿、切片顶层交界与礼盒内缘的重叠边线，并增加蛋糕胚、奶油和挞壳之间细微但统一的表面差异。",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.6,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "creature",
+      "judge_source": "independent_vlm",
+      "remote_vlm": {
+        "source": "independent_vlm",
+        "provider": "openai_compatible",
+        "model": "gpt-5.6-sol",
+        "error": "",
+        "active": true,
+        "score_evidence": {
+          "composition": "八张白色圆角卡片以两列四行等距排列，主体均居中且留白接近，红色顶饰在整张深色底板上形成清晰连续的视觉节奏。",
+          "lighting_color": "各格主体普遍呈左上方亮面、右下方柔灰投影，红、奶油白与烘焙棕的明度层级稳定，只有少数白色奶油与白底的边界对比偏弱。",
+          "perspective_anatomy": "多数甜点保持一致的略俯视视角，圆形顶面、杯口和蛋糕层线方向协调；右下礼盒的盒盖、盒口与前侧面角度略有分离感。",
+          "texture_detail": "杯纸褶皱、挤花奶油、蛋糕胚孔隙和挞壳起伏均可辨认，同时大面积红色覆面保持圆润光滑的软塑胶触感。",
+          "spec_style": "八格均采用圆角化、低纹理密度的三维货柜模型语言，红底白点顶饰和奶油棕色体块贯穿全组，造型统一度高。",
+          "flawlessness": "主体边缘总体干净，未见明显破图或多余碎片；右下礼盒中盒盖、蝴蝶结、盒沿和蘑菇顶在小范围内密集重叠，局部轮廓读取稍显拥挤。"
+        },
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 1,
+          "rerated": false,
+          "reason": "",
+          "first_score": 8.74
+        }
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_PLATEAU",
+      "early_safe_stop": "STOP_PLATEAU",
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：部分奶油层贴近白色卡片背景时边缘偏淡；若干红色覆面与白点的尺寸、排布较相似，使中段造型变化略显重复；礼盒格的盖子、丝带和盒内主体相互遮挡，空间结构不如其余七格直",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.74"
+        },
+        {
+          "category": "line_edge",
+          "lesson": "本轮短板偏「line_edge」：部分奶油层贴近白色卡片背景时边缘偏淡；若干红色覆面与白点的尺寸、排布较相似，使中段造型变化略显重复；礼盒格的盖子、丝带和盒内主体相互遮挡，空间结构不如其余七格直",
+          "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+          "from_score": "8.74"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：整页排版规整，红白斑点顶饰提供了很强的系列识别；八个物件从独立小体量到分层蛋糕、切片和礼盒，轮廓差异清楚，灯光与软塑胶质感也保持一致。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.74"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "02:10:01",
+      "asset_image": "assets/skill_20261109/merge_overview_v3/merge_overview_r3.jpg"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "/Users/yanghu/Desktop/pmem-art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-11-09 04:30:07 UTC+8"
+    },
+    "module": "prop.FairyGarden.MushroomDessert",
+    "goal": "合成梯 overview_sheet 8档 shop_ladder：蘑菇甜点烘焙同店形变 泡芙→马卡龙→纸杯蛋糕→奶油杯→奶油塔→切片→整蛋糕→礼盒；软塑胶货柜风禁实拍；禁糖果袋硬跳",
+    "confidence": 0.45,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "个人口味/正向保留非空",
+      "注入红线可控（0 条，已按任务主题过滤）",
+      "挂载 0 张项目知识卡 + 1 张全局美术底层基础卡"
+    ],
+    "top_recipes": [],
+    "top_redlines": [],
+    "art_decisions": [],
+    "private_knowledge": [],
+    "shared_knowledge": [
+      {
+        "id": "palette-70-20-10",
+        "title": "色彩构成：70-20-10 色板比例黄金法则",
+        "body": "画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+        "layer_scope": "shared"
+      }
+    ],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [
+        "冷光源",
+        "暖光",
+        "柔光"
+      ],
+      "preferred_composition": [
+        "半身",
+        "居中/对称构图"
+      ],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [
+        "避免过饱和"
+      ],
+      "banned_habits": [
+        "过曝高光",
+        "脏暗阴影/脏色",
+        "廉价塑料感/油腻高光",
+        "白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计",
+        "黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差"
+      ],
+      "keep_phrases": [
+        "五链合成：不必每档保留L1原件/母体锁死；同域合理升级、档差明显即可",
+        "确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色"
+      ],
+      "banned_habits_raw_tail": [
+        "禁止偏离样张画风：过度霓虹、脏暗阴影、油腻高光、写实皮肤毛孔、扁平UI描边",
+        "电池审稿：原画竖构图避免贴样张布局；边缘反光勿过曝",
+        "电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感",
+        "黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差",
+        "错误头身比/头过大",
+        "漏抠/黑底/毛边",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色",
+        "廉价塑料感/油腻高光"
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.FairyGarden.MushroomDessert\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 五链合成：不必每档保留L1原件/母体锁死；同域合理升级、档差明显即可\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 过曝高光；脏暗阴影/脏色；廉价塑料感/油腻高光；白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+    "built_at": "2026-11-10 02:06:41 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "material",
+      "lesson": "本轮短板偏「material」：前两格与后续甜点的形态差异较弱，首格更接近独立蘑菇摆件；部分阶段主要依靠容器或外轮廓变化，内部材质仍较同质。切片顶层红面与奶油边的结合略僵，透明杯的杯壁和液层边",
+      "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+      "from_score": "8.74"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：总览表秩序清晰，八个阶段一眼可读；红色菌盖与奶油、烘焙色形成稳定识别系统，光照和软塑胶式圆润造型高度统一。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.74"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：相邻阶段的主体尺度和俯视角略有跳动；玻璃杯的透明写实感比其余软塑胶物件更强；切片奶油后缘、礼盒盖透视及蝴蝶结连接处是最明显的局部不顺。；prompt 改动 68",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "8.48"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：相邻阶段的主体尺度和俯视角略有跳动；玻璃杯的透明写实感比其余软塑胶物件更强；切片奶油后缘、礼盒盖透视及蝴蝶结连接处是最明显的局部不顺。；prompt 改动 68",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.48"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：版式整齐易读，八个阶段在轮廓、层数和容器上有明确变化；红白菌盖母题贯穿稳定，光照、色板与圆润商品化渲染高度统一。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.48"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：部分奶油层贴近白色卡片背景时边缘偏淡；若干红色覆面与白点的尺寸、排布较相似，使中段造型变化略显重复；礼盒格的盖子、丝带和盒内主体相互遮挡，空间结构不如其余七格直",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.74"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：部分奶油层贴近白色卡片背景时边缘偏淡；若干红色覆面与白点的尺寸、排布较相似，使中段造型变化略显重复；礼盒格的盖子、丝带和盒内主体相互遮挡，空间结构不如其余七格直",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "8.74"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：整页排版规整，红白斑点顶饰提供了很强的系列识别；八个物件从独立小体量到分层蛋糕、切片和礼盒，轮廓差异清楚，灯光与软塑胶质感也保持一致。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.74"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 2,
+  "regression_drop": 0.15,
+  "safe_early_stop": true,
+  "merge_delivery": "overview_sheet",
+  "merge_sheet_cap": 4,
+  "merge_discuss_cap": 2,
+  "single_judge": false,
+  "understanding_contract": {
+    "version": 1,
+    "raw_utterance": "合成梯 overview_sheet 8档 shop_ladder：蘑菇甜点烘焙同店形变 泡芙→马卡龙→纸杯蛋糕→奶油杯→奶油塔→切片→整蛋糕→礼盒；软塑胶货柜风禁实拍；禁糖果袋硬跳",
+    "l0": {
+      "route_ids": [
+        "merge.ladder"
+      ],
+      "banner": "【按点名锁定 merge.ladder】",
+      "delivery": "merge.ladder"
+    },
+    "l1": {
+      "locks": [],
+      "unlocks": [],
+      "defaults_shown": [],
+      "commercial_vibe": ""
+    },
+    "l2": {
+      "open": true,
+      "surface_fix": "",
+      "last_feedback": "",
+      "feedback_layer": ""
+    },
+    "notes": ""
+  },
+  "reasonableness_history": [
+    {
+      "reviewed_at": 1794247601.392001,
+      "passed": true,
+      "skill": "merge",
+      "issues": []
+    }
+  ],
+  "reasonableness": {
+    "passed": true,
+    "skill": "merge",
+    "draft_prompt": "蘑菇甜点合成梯v3烘焙同店形变",
+    "revised_prompt": "Casual merge-game dessert bakery shop_ladder overview_sheet, aspect 4:3, 2x4 equal white rounded cards on deep charcoal, one single centered soft-plastic TOY prop per card, no text no numbers. NOT photoreal food photography — matte soft-plastic / clay toy render like Travel Town Merge Mansion cabinet icons, soft studio key, short contact shadow, saturated friendly, 64px readable.\n\nchain_mode=shop_ladder 同族形变. Family gene lock: red mushroom cap + cream white dots + cream dessert language on EVERY tier. commercial_ref Travel Town/Merge Mansion dessert bakery: MiniCreamPuff→Macaron→Cupcake→CreamCup→Tart→CakeSlice→WholeCake→GiftBox.\n\nmerge_why / evolve_to:\nL1 evolve_to=MiniMushroomCreamPuff — tiny round cream puff topped with red mushroom cap white dots, complete mini dessert SKU.\nL2 evolve_to=MushroomMacaron merge_why=two cream puffs merge into flat round mushroom macaron sandwich, disc silhouette.\nL3 evolve_to=MushroomCupcake merge_why=two macarons merge into paper-liner cupcake with cream swirl and mushroom cap.\nL4 evolve_to=MushroomCreamCup merge_why=two cupcakes merge into clear short glass cream cup dessert with swirl top.\nL5 evolve_to=MushroomCreamTart merge_why=two cream cups merge into wide flat open tart shell with cream and mushroom top — tart silhouette clearly wider than cup.\nL6 evolve_to=MushroomCakeSlice merge_why=two tarts merge into triangular frosted cake slice with visible layers.\nL7 evolve_to=WholeMushroomCake merge_why=two slices merge into whole round multi-layer mushroom cream cake.\nL8 evolve_to=GiftBoxMushroomCake merge_why=two whole cakes merge into open gift-box packaged cake reward SKU.\n\nHard locks: soft plastic toy medium SSS only as toy glaze not food photo oil; exactly one product per cell; silhouette class MUST jump each tier (ball→disc→cupcake→glass cup→tart→triangle→round cake→box); fail at glance if candy bag appears, if L4/L5 look like twin cups, if photoreal food, if topping pile on one mushroom pedestal, if birds/faces/text.",
+    "checklist": {
+      "subject_action": {
+        "status": "ok",
+        "note": ""
+      },
+      "element_budget": {
+        "status": "ok",
+        "note": ""
+      },
+      "hard_locks": {
+        "status": "ok",
+        "note": ""
+      },
+      "fail_at_glance": {
+        "status": "ok",
+        "note": ""
+      },
+      "single_centered_item": {
+        "status": "ok",
+        "note": ""
+      },
+      "chain_mode_declared": {
+        "status": "ok",
+        "note": ""
+      },
+      "upgrade_reason_concrete": {
+        "status": "ok",
+        "note": ""
+      },
+      "family_or_base_lock": {
+        "status": "ok",
+        "note": ""
+      }
+    },
+    "issues": [],
+    "notes": "relation-judge passed merge_phase1_v3; commercial dessert bakery shop_ladder",
+    "reviewed_at": 1794247601.392001,
+    "reviewed_at_iso": "2026-11-10 02:06:41",
+    "force_pass": false,
+    "skill_raw": "merge"
+  },
+  "discussions": [
+    {
+      "round": 0,
+      "kind": "reasonableness",
+      "prompt": "Casual merge-game dessert bakery shop_ladder overview_sheet, aspect 4:3, 2x4 equal white rounded cards on deep charcoal, one single centered soft-plastic TOY prop per card, no text no numbers. NOT photoreal food photography — matte soft-plastic / clay toy render like Travel Town Merge Mansion cabinet icons, soft studio key, short contact shadow, saturated friendly, 64px readable.\n\nchain_mode=shop_ladder 同族形变. Family gene lock: red mushroom cap + cream white dots + cream dessert language on EVERY tier. commercial_ref Travel Town/Merge Mansion dessert bakery: MiniCreamPuff→Macaron→Cupcake→CreamCup→Tart→CakeSlice→WholeCake→GiftBox.\n\nmerge_why / evolve_to:\nL1 evolve_to=MiniMushroomCreamPuff — tiny round cream puff topped with red mushroom cap white dots, complete mini dessert SKU.\nL2 evolve_to=MushroomMacaron merge_why=two cream puffs merge into flat round mushroom macaron sandwich, disc silhouette.\nL3 evolve_to=MushroomCupcake merge_why=two macarons merge into paper-liner cupcake with cream swirl and mushroom cap.\nL4 evolve_to=MushroomCreamCup merge_why=two cupcakes merge into clear short glass cream cup dessert with swirl top.\nL5 evolve_to=MushroomCreamTart merge_why=two cream cups merge into wide flat open tart shell with cream and mushroom top — tart silhouette clearly wider than cup.\nL6 evolve_to=MushroomCakeSlice merge_why=two tarts merge into triangular frosted cake slice with visible layers.\nL7 evolve_to=WholeMushroomCake merge_why=two slices merge into whole round multi-layer mushroom cream cake.\nL8 evolve_to=GiftBoxMushroomCake merge_why=two whole cakes merge into open gift-box packaged cake reward SKU.\n\nHard locks: soft plastic toy medium SSS only as toy glaze not food photo oil; exactly one product per cell; silhouette class MUST jump each tier (ball→disc→cupcake→glass cup→tart→triangle→round cake→box); fail at glance if candy bag appears, if L4/L5 look like twin cups, if photoreal food, if topping pile on one mushroom pedestal, if birds/faces/text.",
+      "strengths": "合理性闸已过：subject_action=ok；element_budget=ok；hard_locks=ok；fail_at_glance=ok；single_centered_item=ok；chain_mode_declared=ok；upgrade_reason_concrete=ok；family_or_base_lock=ok",
+      "defects": "",
+      "next_fix": "首轮 generate 使用本修订提示词；审美迭代不得推翻硬锁与元素预算"
+    }
+  ],
+  "warm_start_merged": true,
+  "warm_start_merged_at": "2026-11-10 02:09:46",
+  "warm_start_block_sha1": "a32414f3e657",
+  "ActionRequired": "STOP_PICK_BEST",
+  "showcase_ready": true,
+  "winner": {
+    "round": 3,
+    "round_label": "第 3 轮精修",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "4:3",
+    "reference_image_paths": [
+      "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/merge_overview_v3/merge_overview_r1.jpg"
+    ],
+    "param_validation": {
+      "valid": true,
+      "validation_passed": true,
+      "case_id": "skill1109-merge-v3",
+      "scale": "medium",
+      "aspect_ratio": "4:3",
+      "ref_aspect_ratio": "4:3",
+      "ref_dimensions": "1152x864",
+      "output_aspect_ratio": "4:3",
+      "output_dimensions": "1152x864",
+      "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/merge_overview_v3/merge_overview_r1.jpg",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/merge_overview_v3/merge_overview_r1.jpg"
+      ],
+      "inherited_default_aspect_ratio": false,
+      "inherited_default_pad_image": false,
+      "matched_ref_aspect_ratio": true,
+      "matched_ref_pad_image": true,
+      "matched_output_aspect_ratio": true,
+      "three_step_stage": "step3_judge",
+      "three_step_verified": true,
+      "warnings": [],
+      "continuation_pad": false,
+      "pad_diverged": true
+    },
+    "generated_at": "02:09:46",
+    "image": "assets/skill_20261109/merge_overview_v3/merge_overview_r3.jpg",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 177566,
+      "size_kb": 173.4,
+      "width": 1152,
+      "height": 864,
+      "aspect_ratio": "4:3",
+      "canonical_aspect_ratio": "4:3",
+      "color_entropy": 7.1
+    },
+    "raw_score": 8.74,
+    "score": 8.74,
+    "target_score_threshold": 9.5,
+    "dims": "构图9.2/光影8.9/透视8.6/质感8.4/风格9.1/无瑕度8.5",
+    "dims_parsed": {
+      "composition": 9.2,
+      "lighting_color": 8.9,
+      "perspective_anatomy": 8.6,
+      "texture_detail": 8.4,
+      "spec_style": 9.1,
+      "flawlessness": 8.5
+    },
+    "weighted_score": 8.74,
+    "audit_warnings": [
+      "独立视觉裁判已采纳：openai_compatible/gpt-5.6-sol",
+      "安全早停 STOP_PLATEAU：第 3 轮起连续掉分/平台，保底结算历史最高分轮次（门槛 drop≥0.15，R≥2）"
+    ],
+    "stagnated": false,
+    "strengths": "整页排版规整，红白斑点顶饰提供了很强的系列识别；八个物件从独立小体量到分层蛋糕、切片和礼盒，轮廓差异清楚，灯光与软塑胶质感也保持一致。",
+    "defects": "部分奶油层贴近白色卡片背景时边缘偏淡；若干红色覆面与白点的尺寸、排布较相似，使中段造型变化略显重复；礼盒格的盖子、丝带和盒内主体相互遮挡，空间结构不如其余七格直观。",
+    "next_fix": "优先整理右下礼盒：抬高或后移盒盖并拉开蝴蝶结、盒沿与内部红顶的轮廓间距；随后略加深浅色奶油的接触阴影，并调整中段红顶的轮廓和白点分布，以增强各档造型辨识度。",
+    "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.FairyGarden.MushroomDessert\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 五链合成：不必每档保留L1原件/母体锁死；同域合理升级、档差明显即可\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 过曝高光；脏暗阴影/脏色；廉价塑料感/油腻高光；白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计；黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光，表面那一句不动，只修没过的那一格 | Same plate. Only polish: unify scale and top-down angle; soft-plastic toy glass cup not photoreal; clean slice cream back edge; fix gift-box lid and ribbon; L8 open box must show WHOLE round layered mushroom cake inside. No text. | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: limb count and joints match this species, and legs, wings, or the tail connect clearly; contact shadows read; do not melt extra limbs. Do not convert this into a human elbow pair or force two eyes | 优先强化前两阶段的烘焙结构特征和八档之间的连续形变；随后清理透明杯沿、切片顶层交界与礼盒内缘的重叠边线，并增加蛋糕胚、奶油和挞壳之间细微但统一的表面差异。",
+    "continuation": false,
+    "passed": false,
+    "gate_blocked": false,
+    "image_gate_blocked": false,
+    "anatomy_score": 8.6,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "creature",
+    "judge_source": "independent_vlm",
+    "remote_vlm": {
+      "source": "independent_vlm",
+      "provider": "openai_compatible",
+      "model": "gpt-5.6-sol",
+      "error": "",
+      "active": true,
+      "score_evidence": {
+        "composition": "八张白色圆角卡片以两列四行等距排列，主体均居中且留白接近，红色顶饰在整张深色底板上形成清晰连续的视觉节奏。",
+        "lighting_color": "各格主体普遍呈左上方亮面、右下方柔灰投影，红、奶油白与烘焙棕的明度层级稳定，只有少数白色奶油与白底的边界对比偏弱。",
+        "perspective_anatomy": "多数甜点保持一致的略俯视视角，圆形顶面、杯口和蛋糕层线方向协调；右下礼盒的盒盖、盒口与前侧面角度略有分离感。",
+        "texture_detail": "杯纸褶皱、挤花奶油、蛋糕胚孔隙和挞壳起伏均可辨认，同时大面积红色覆面保持圆润光滑的软塑胶触感。",
+        "spec_style": "八格均采用圆角化、低纹理密度的三维货柜模型语言，红底白点顶饰和奶油棕色体块贯穿全组，造型统一度高。",
+        "flawlessness": "主体边缘总体干净，未见明显破图或多余碎片；右下礼盒中盒盖、蝴蝶结、盒沿和蘑菇顶在小范围内密集重叠，局部轮廓读取稍显拥挤。"
+      },
+      "evidence_missing_dims": [],
+      "review": {
+        "pass_count": 1,
+        "rerated": false,
+        "reason": "",
+        "first_score": 8.74
+      }
+    },
+    "should_continue_next_round": false,
+    "decision": "STOP_PLATEAU",
+    "early_safe_stop": "STOP_PLATEAU",
+    "lessons": [
+      {
+        "category": "lighting",
+        "lesson": "本轮短板偏「lighting」：部分奶油层贴近白色卡片背景时边缘偏淡；若干红色覆面与白点的尺寸、排布较相似，使中段造型变化略显重复；礼盒格的盖子、丝带和盒内主体相互遮挡，空间结构不如其余七格直",
+        "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+        "from_score": "8.74"
+      },
+      {
+        "category": "line_edge",
+        "lesson": "本轮短板偏「line_edge」：部分奶油层贴近白色卡片背景时边缘偏淡；若干红色覆面与白点的尺寸、排布较相似，使中段造型变化略显重复；礼盒格的盖子、丝带和盒内主体相互遮挡，空间结构不如其余七格直",
+        "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+        "from_score": "8.74"
+      },
+      {
+        "category": "keep",
+        "lesson": "保留本轮已做对的：整页排版规整，红白斑点顶饰提供了很强的系列识别；八个物件从独立小体量到分层蛋糕、切片和礼盒，轮廓差异清楚，灯光与软塑胶质感也保持一致。",
+        "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+        "from_score": "8.74"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "02:10:01",
+    "asset_image": "assets/skill_20261109/merge_overview_v3/merge_overview_r3.jpg"
+  },
+  "rounds_to_converge": 3,
+  "convergence_badge": "安全早停 · 共 3 轮未达阈值，采用最高分",
+  "winner_image": "assets/skill_20261109/merge_overview_v3/merge_overview_r3.jpg",
+  "best_image": "assets/skill_20261109/merge_overview_v3/merge_overview_r3.jpg",
+  "final_image": "assets/skill_20261109/merge_overview_v3/final.jpg",
+  "process_board": ".memory-art/converge/boards/skill1109-merge-v3/index.html"
+}

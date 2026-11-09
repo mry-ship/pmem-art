@@ -1,0 +1,14 @@
+{
+  "saved_at": 1794235839.1289659,
+  "text": "游戏背包透明底道具格妖精花园同族蘑菇奶酪蓝果樱桃礼物盒",
+  "banner": "【按 Mode C 走了】",
+  "route_ids": [
+    "icon.c"
+  ],
+  "mode": "skill",
+  "execute_ok": true,
+  "artist_say": "【按 Mode C 走了】\n按背包道具格透明底图标来做。",
+  "plan_conflict": false,
+  "confidence": "high",
+  "conversation_id": "skill1109-icon-c"
+}

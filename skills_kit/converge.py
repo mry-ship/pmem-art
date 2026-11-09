@@ -20,6 +20,14 @@ def _write_session_json(sf: Path, sess: dict[str, Any]) -> None:
     tmp.write_text(json.dumps(sess, ensure_ascii=False, indent=2), encoding="utf-8")
     os.replace(tmp, sf)
 
+
+def _score_of_round(r: dict[str, Any]) -> float:
+    try:
+        val = r.get("score")
+        return float(val) if val is not None else -1.0
+    except (TypeError, ValueError):
+        return -1.0
+
 from .prompt_scale import (
     DEFAULT_MAX_ROUNDS,
     DEFAULT_THRESHOLD,
@@ -45,6 +53,7 @@ from .converge_policy import (
     DEFAULT_PAD_MODE,
     DEFAULT_PLATEAU_ROUNDS,
     DEFAULT_REGRESSION_DROP,
+    DEFAULT_SAFE_EARLY_STOP,
     coerce_dims_dict,
     decide_round_stop,
     round_passes_structure_gates,
@@ -577,6 +586,76 @@ def converge_generate(
     }
 
 
+def _spawn_detached_finish_settle(root: Path, session_id: str) -> bool:
+    """Fire-and-forget settle so finish can return without waiting on memory/atlas."""
+    import subprocess
+    import sys
+
+    script = Path(__file__).resolve().parents[1] / "pmem_art.py"
+    if not script.is_file():
+        script = root / "pmem_art.py"
+    if not script.is_file():
+        return False
+    cmd = [
+        sys.executable,
+        "-u",
+        str(script),
+        "--root",
+        str(root),
+        "converge",
+        "settle",
+        "--session",
+        session_id,
+        "--quiet",
+    ]
+    try:
+        kwargs: dict[str, Any] = {
+            "stdout": subprocess.DEVNULL,
+            "stderr": subprocess.DEVNULL,
+            "stdin": subprocess.DEVNULL,
+            "cwd": str(root),
+        }
+        if os.name == "nt":
+            kwargs["creationflags"] = getattr(subprocess, "CREATE_NO_WINDOW", 0) | getattr(
+                subprocess, "DETACHED_PROCESS", 0
+            )
+        else:
+            kwargs["start_new_session"] = True
+        subprocess.Popen(cmd, **kwargs)
+        return True
+    except OSError:
+        return False
+
+
+def _finish_write_final_slot(root: Path, sf: Path, sess: dict[str, Any], winner: dict[str, Any]) -> None:
+    """Sync workbench final.* slot — must not wait on memory settle."""
+    try:
+        win_rel = str(winner.get("image") or "").replace("\\", "/")
+        if not win_rel or win_rel.startswith("docs/showcase/"):
+            return
+        win_path = Path(win_rel) if Path(win_rel).is_absolute() else (root / win_rel)
+        if not win_path.is_file():
+            return
+        ext = win_path.suffix.lower() or ".jpg"
+        if ext not in {".jpg", ".jpeg", ".png", ".webp"}:
+            ext = ".jpg"
+        try:
+            parent_rel = win_path.resolve().parent.relative_to(root.resolve()).as_posix()
+        except Exception:
+            parent_rel = str(Path(win_rel).parent).replace("\\", "/")
+        final_rel = f"{parent_rel}/final{ext}"
+        final_path = root / final_rel
+        if win_path.resolve() != final_path.resolve():
+            final_path.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(str(win_path), str(final_path))
+        sess["winner_image"] = win_rel
+        sess["best_image"] = win_rel
+        sess["final_image"] = final_rel
+        _write_session_json(sf, sess)
+    except Exception as _final_slot_exc:
+        print(f"⚠️ 终稿槽 final.* 未写上：{_final_slot_exc}")
+
+
 def converge_finish(
     root: Path,
     data: dict[str, Any],
@@ -585,12 +664,15 @@ def converge_finish(
     apply_memory: bool = True,
     verbose: bool = False,
     silent: bool = False,
+    settle_background: bool = False,
 ) -> dict[str, Any]:
     """
     Finish & Settle Step:
     Settles the winning round after `STOP_TARGET_REACHED` (`score >= 9.50`), writes recipe/redline/reflection
     into `.memory-art`, and runs silent autopilot maintenance.
     By default prints the per-round score trail; pass silent=True (CLI --quiet) for one-line whisper.
+    API/tests default settle_background=False（同步写记忆，断言可立刻读到）；
+    CLI finish 默认后台 settle，不挡用户。
     """
     rc = cmd_converge(
         root,
@@ -600,6 +682,7 @@ def converge_finish(
         apply_memory=apply_memory,
         verbose=verbose,
         silent=silent,
+        settle_background=settle_background,
     )
     sf, err = _try_session_file(root, session_id)
     if sf is None:
@@ -836,6 +919,320 @@ def _resolve_pad_auto(
     return style, carry_fix, 0, False, why
 
 
+def _apply_finish_memory_and_atlas(
+    root: Path,
+    data: dict[str, Any],
+    sess: dict[str, Any],
+    sf: Path,
+    *,
+    winner: dict[str, Any],
+    rounds: list[dict[str, Any]],
+    all_lessons: list[dict[str, Any]],
+    passing_rounds: list[dict[str, Any]],
+    early_safe: bool,
+    accept_th: float,
+    canonical_th: float,
+    session_id: str,
+    verbose: bool = False,
+    refresh_atlas: bool = True,
+) -> tuple[list[str], Any]:
+    """Write recipe/redline/reflection + silent autopilot (+ optional atlas). Returns (saved_paths, tip)."""
+    from feedback import write_memory_entry
+    from improve import write_session_reflection, ingest_term_to_knowledge
+
+    saved_paths: list[str] = []
+    tip = None
+
+    for blob in (sess.get("goal", ""), sess.get("ref_analysis", "")):
+        if blob:
+            ingest_term_to_knowledge(root, blob, source="converge_finish")
+    for r in rounds:
+        for blob in (r.get("defects", ""), r.get("next_fix", ""), r.get("strengths", "")):
+            if blob:
+                ingest_term_to_knowledge(root, blob, source="converge_finish")
+
+    mod = sess.get("module") or "brand.WorldStyle"
+
+    def _ensure_conv_asset(img_str: str, m_id: str, prompt_str: str) -> str:
+        if not img_str:
+            return ""
+        cand = Path(img_str)
+        if not cand.is_absolute():
+            cand = root / img_str
+        if not cand.is_file():
+            return img_str
+        try:
+            rel_c = cand.resolve().relative_to(root.resolve()).as_posix()
+            if rel_c.startswith("assets/"):
+                return rel_c
+        except Exception:
+            pass
+        dom = m_id.split(".")[0] if "." in m_id else "misc"
+        ent = m_id.split(".")[1].lower() if "." in m_id else "general"
+        dest_rel = f"assets/{dom}/{ent}/{cand.name}"
+        dest_p = root / dest_rel
+        dest_p.parent.mkdir(parents=True, exist_ok=True)
+        if cand.resolve() != dest_p.resolve():
+            shutil.copy2(str(cand), str(dest_p))
+        try:
+            from classify import classify_asset, ensure_module_from_classification
+            cl = classify_asset(root, data, path=dest_rel, prompt=prompt_str)
+            cl["suggested_module"] = m_id
+            cl["domain"] = dom
+            cl["entity"] = m_id.split(".")[1] if "." in m_id else m_id
+            cl["canonical_rel"] = dest_rel
+            ensure_module_from_classification(root, data, cl, force_active=True)
+        except Exception:
+            pass
+        return dest_rel
+
+    win_img_orig = str(winner.get("image") or "")
+    win_img = _ensure_conv_asset(
+        win_img_orig,
+        mod,
+        str(winner.get("prompt") or sess.get("goal") or ""),
+    )
+    if win_img:
+        winner["asset_image"] = win_img
+        keep_showcase = win_img_orig.replace("\\", "/").startswith("docs/showcase/")
+        if not keep_showcase:
+            winner["image"] = win_img
+
+    settle_word = (
+        "达标"
+        if passing_rounds
+        else (
+            "安全早停，采用最高分"
+            if early_safe
+            else "未达阈值，采用最高分"
+        )
+    )
+    win_summary = f"[收敛胜出 {winner['score']:.2f}分] {sess.get('goal', '')[:50]} — {winner.get('strengths', '')[:30]}"
+    win_caption = (
+        f"🏆 收敛胜出定稿 ({winner['score']:.2f}/10分 · 经过{len(rounds)}轮{settle_word})："
+        f"{sess.get('goal', '')}"
+        + (f" · 亮点：{winner.get('strengths')}" if winner.get("strengths") else "")
+    )
+    warm = sess.get("warm_start") or {}
+    win_body = (
+        f"**【闭环收敛胜出定稿（经过 {len(rounds)} 轮{settle_word} · {winner['score']:.2f} 分）】**\n"
+        f"- **生成目标**：{sess.get('goal')}\n"
+        f"- **收敛档位**：{sess.get('scale', 'medium')} (目标阈值 >= {accept_th:.2f})\n"
+        f"- **保留原因（亮点）**：{winner.get('strengths')}\n"
+        f"- **最终使用 Prompt**：`{winner.get('prompt') or sess.get('goal')}`\n"
+    )
+    if sess.get("ref_image"):
+        win_body += f"- **参考垫图**：`{sess.get('ref_image')}`（解构：{sess.get('ref_analysis')}）\n"
+    if warm.get("prompt_block"):
+        win_body += f"\n<details><summary>Warm-Start 包</summary>\n\n```\n{warm.get('prompt_block')}\n```\n</details>\n"
+    met_bar = _score_of_round(winner) >= canonical_th
+    recipe_status = "active" if met_bar else "provisional"
+    p_rec = write_memory_entry(
+        root,
+        module=mod,
+        kind="recipe",
+        summary=win_summary,
+        body=win_body,
+        asset=win_img,
+        role="approved" if met_bar else "reference",
+        caption=win_caption,
+        status=recipe_status,
+        extra_meta={
+            "ai_params": {
+                "prompt": str(winner.get("prompt") or sess.get("goal") or ""),
+                "score": winner.get("score"),
+                "round": winner.get("round"),
+                "dims": winner.get("dims", ""),
+            }
+        },
+        replace_same_asset=met_bar,
+    )
+    saved_paths.append(str(p_rec.relative_to(root)))
+
+    failed = [r for r in rounds if not r.get("passed") and r.get("defects")]
+    if failed:
+        def _soft_defects(text: object) -> bool:
+            try:
+                from improve.taste_profile import is_soft_defect_phrase
+                return is_soft_defect_phrase(str(text or ""))
+            except Exception:
+                s = str(text or "").strip()
+                return (not s) or s in ("微瑕", "几乎无") or s.startswith("几乎无")
+
+        actionable = [r for r in failed if not _soft_defects(r.get("defects", ""))]
+        worst = None if not actionable else min(actionable, key=lambda x: x["score"])
+        if worst is not None:
+            worst_img = _ensure_conv_asset(
+                worst.get("image", ""),
+                mod,
+                str(worst.get("prompt") or sess.get("goal") or ""),
+            )
+            red_summary = f"[收敛踩坑红线] {sess.get('goal', '')[:30]}：避免「{worst.get('defects', '')[:45]}」"
+            red_caption = (
+                f"❌ 第{worst['round']}轮收敛打回 ({worst['score']:.2f}分)："
+                f"{worst.get('defects', '')} → 修正：{worst.get('next_fix', '')}"
+            )
+            defect_bullets = "\n".join(
+                f"- 第 {r['round']} 轮 ({float(r.get('score') or 0):.2f}分) 不合理处：{r['defects']} → 修正：{r['next_fix']}"
+                for r in actionable
+            )
+            red_body = (
+                f"**【迭代过程中暴露的不合理项（下次生图直接规避）】**\n\n"
+                f"{defect_bullets}\n"
+            )
+            p_red = write_memory_entry(
+                root,
+                module=mod,
+                kind="style_redline",
+                summary=red_summary,
+                body=red_body,
+                asset=worst_img,
+                role="rejected",
+                caption=red_caption,
+                replace_same_asset=True,
+            )
+            saved_paths.append(str(p_red.relative_to(root)))
+
+    sess["lessons_all"] = all_lessons
+    outcome_str = str(sess.get("convergence_badge") or "结算")
+    reflection_path = write_session_reflection(root, sess, winner=winner, outcome=outcome_str)
+    try:
+        import json as _json
+        ref_data = _json.loads(reflection_path.read_text(encoding="utf-8"))
+        ref_data["lessons"] = all_lessons[:12]
+        reflection_path.write_text(_json.dumps(ref_data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    except Exception:
+        pass
+    saved_paths.append(str(reflection_path.relative_to(root)))
+
+    try:
+        from improve import run_silent_autopilot
+        auto = run_silent_autopilot(
+            root,
+            data,
+            session_id=session_id,
+            lessons=all_lessons,
+            defects=str(winner.get("defects") or ""),
+            strengths=str(winner.get("strengths") or ""),
+            winner=winner,
+            rounds=rounds,
+            source="converge_finish",
+        )
+        tip = auto.get("tip")
+    except Exception as ex:
+        tip = None
+        if verbose:
+            print(f"⚠️ autopilot 跳过: {ex}")
+
+    # atlas：仅 settle 子进程默认同步刷；测例同步 finish 跳过，避免卡单测
+    if refresh_atlas:
+        try:
+            from pmem_art import refresh_atlas_silent
+            out = refresh_atlas_silent(root)
+            if out is None and verbose:
+                print(f"⚠️ atlas 刷新未写出（session={session_id}）", flush=True)
+        except Exception as atlas_exc:
+            if verbose:
+                print(f"⚠️ atlas 刷新失败（session={session_id}）：{atlas_exc}", flush=True)
+
+    sess["settle_pending"] = False
+    sess["settle_done_at"] = _now_cst().strftime("%Y-%m-%d %H:%M:%S UTC+8")
+    sess["settle_saved_paths"] = saved_paths
+    sess["winner"] = winner
+    _write_session_json(sf, sess)
+
+    report_file = sf.with_name(f"{sf.stem}_report.md")
+    if report_file.is_file() and saved_paths:
+        try:
+            extra = [
+                "",
+                "#### 🧠 已自动沉淀至 `.memory-art` 的记忆条目",
+                *[f"- `{sp}`" for sp in saved_paths],
+                "",
+                "> 🔇 记忆沉淀已完成（反思 + taste + learn 队列）。",
+                "",
+            ]
+            with report_file.open("a", encoding="utf-8") as fh:
+                fh.write("\n".join(extra) + "\n")
+        except Exception:
+            pass
+    return saved_paths, tip
+
+
+def _cmd_converge_settle(
+    root: Path,
+    data: dict[str, Any],
+    sf: Path,
+    *,
+    session_id: str,
+    silent: bool = False,
+    verbose: bool = False,
+) -> int:
+    """Background worker: apply finish memory + atlas for an already-finished session."""
+    if not sf.exists():
+        print(f"❌ settle：会话不存在 `{session_id}`")
+        return 1
+    sess = json.loads(sf.read_text(encoding="utf-8"))
+    if str(sess.get("status") or "") not in ("finished", "early_safe_stop", "max_rounds_reached"):
+        if not sess.get("winner"):
+            print(f"❌ settle：会话 `{session_id}` 尚未 finish（无 winner）")
+            return 1
+    winner = sess.get("winner") or {}
+    rounds = list(sess.get("rounds") or [])
+    if not winner or not rounds:
+        print(f"❌ settle：会话 `{session_id}` 缺 winner/rounds")
+        return 1
+    accept_th = float(sess.get("accept_threshold") or sess.get("threshold") or DEFAULT_THRESHOLD)
+    canonical_th = float(DEFAULT_THRESHOLD)
+    passing_rounds = [
+        r for r in rounds
+        if _round_counts_as_passed(r, accept_th, root=root)
+    ]
+    early_safe = (
+        str(sess.get("status") or "") == "early_safe_stop"
+        or bool(sess.get("single_judge"))
+        or any(
+            str((r or {}).get("early_safe_stop") or "") in ("STOP_REGRESSION", "STOP_PLATEAU")
+            or str((r or {}).get("decision") or "") in ("STOP_REGRESSION", "STOP_PLATEAU")
+            for r in rounds
+        )
+    )
+    all_lessons: list[dict[str, Any]] = []
+    for r in rounds:
+        all_lessons.extend(r.get("lessons") or [])
+    if not all_lessons:
+        all_lessons = list(sess.get("lessons_all") or [])
+    try:
+        saved, tip = _apply_finish_memory_and_atlas(
+            root,
+            data,
+            sess,
+            sf,
+            winner=winner,
+            rounds=rounds,
+            all_lessons=all_lessons,
+            passing_rounds=passing_rounds,
+            early_safe=early_safe,
+            accept_th=accept_th,
+            canonical_th=canonical_th,
+            session_id=session_id,
+            verbose=verbose,
+            refresh_atlas=True,
+        )
+    except Exception as ex:
+        print(f"❌ settle 失败：{ex}")
+        return 1
+    if not silent:
+        print(f"✅ settle 完成 · 写入 {len(saved)} 条 · session={session_id}")
+        if tip:
+            try:
+                from improve import print_whisper_tip
+                print_whisper_tip(tip)
+            except Exception:
+                pass
+    return 0
+
+
 def cmd_converge(
     root: Path,
     data: dict[str, Any],
@@ -871,16 +1268,21 @@ def cmd_converge(
     contract: str = "",
     skip_route_gate: bool = False,
     skip_reasonableness_gate: bool = False,
+    skip_reason: str = "",
     expect_route: str = "",
     conversation_id: str = "",
+    settle_background: bool | None = None,
 ) -> int:
     """
     converge_mode: quality (default, dynamic threshold per scale, max 4 rounds, stop ≥9.5 or best-of-4) | fast (warm-start fast-track hints).
     draft_ok: if True (user said 草稿/fast), final accept may use soft threshold in fast mode.
-    silent: default False — 默认打印评分履历；True/--quiet 仅一行结论；记忆写入始终后台静默。verbose=True 等同强制打印全量报告。
+    silent: default False — 默认打印评分履历；True/--quiet 仅一行结论。verbose=True 等同强制打印全量报告。
+    settle_background: finish 时记忆/atlas 是否后台 settle。None=CLI 默认后台（PMEM_FINISH_SETTLE_BG=0 可关）；
+      API/tests 经 converge_finish 默认 False 同步写。settle 子命令始终同步。
     lock_text: artist one-liner to loosen/tighten per-dim locks (e.g. 「构图松一点」→ show 95%→75%).
-    skip_route_gate: 跳过「开画前必须先 route」闸门（仅点名调试；默认 False）。
-    skip_reasonableness_gate: 跳过「出图前必须 reasonableness review」闸门（仅调试；默认 False）。
+    skip_route_gate: 跳过「开画前必须先 route」闸门（须 ALLOW + skip_reason；默认 False）。
+    skip_reasonableness_gate: 跳过合理性闸（同上）。
+    skip_reason: 跳闸审计原因（生产跳闸必填）。
     """
     if verbose:
         silent = False
@@ -889,6 +1291,10 @@ def cmd_converge(
     except ValueError as exc:
         print(f"❌ {exc}")
         return 1
+
+    if action == "settle":
+        return _cmd_converge_settle(root, data, sf, session_id=session_id, silent=silent, verbose=verbose)
+
     converge_mode = (converge_mode or "quality").lower()
     if converge_mode not in ("quality", "fast"):
         converge_mode = "quality"
@@ -911,14 +1317,20 @@ def cmd_converge(
     eff_scale = scale_prof["scale"]
 
     if action == "start":
-        import os as _os
+        from .gate_skip import resolve_skip_request
+        from .benchmark_catalog import assert_refs_not_benchmark_pads
 
-        env_skip = _os.environ.get("PMEM_ART_SKIP_ROUTE_GATE", "").strip().lower() in (
-            "1",
-            "true",
-            "yes",
+        skip_ok, skip_msg = resolve_skip_request(
+            flag=bool(skip_route_gate),
+            reason=skip_reason or "",
+            env_name="PMEM_ART_SKIP_ROUTE_GATE",
         )
-        if not skip_route_gate and not env_skip:
+        if skip_msg.startswith("拒绝"):
+            print(f"❌ [路由闸门] {skip_msg}")
+            return 1
+        if skip_ok:
+            print(f"⚠️ [路由闸门跳过] {skip_msg}")
+        else:
             from .route_gate import check_route_gate
 
             ok_gate, gate_msg = check_route_gate(
@@ -934,6 +1346,17 @@ def cmd_converge(
                 print(f"⚠️ [路由闸门] {gate_msg}")
             else:
                 print(f"✅ [路由闸门] {gate_msg}")
+        _ref_list = (
+            list(reference_image_paths)
+            if isinstance(reference_image_paths, (list, tuple))
+            else ([str(reference_image_paths)] if reference_image_paths else [])
+        )
+        if ref_image:
+            _ref_list = [str(ref_image)] + [p for p in _ref_list if str(p) != str(ref_image)]
+        pad_ok, pad_why = assert_refs_not_benchmark_pads(_ref_list)
+        if not pad_ok:
+            print(f"❌ [商业对标] {pad_why}")
+            return 1
         if eff_scale == "recompose" and not str(recompose_dir or "").strip():
             print("❌ [档位合同] recompose 必须提供 --recompose-dir，写明新机位或景别。")
             return 1
@@ -958,6 +1381,16 @@ def cmd_converge(
         default_ref_paths: list[str] = []
         ref_traits: dict[str, Any] = {}
         start_param_val: dict[str, Any] = {}
+        # 无垫图也先拦非法画幅（如 2:1），禁止拖到 GenerateImage 才炸
+        if default_ar:
+            from .image_gates import VALID_ASPECT_RATIOS
+
+            if default_ar not in VALID_ASPECT_RATIOS:
+                print(
+                    f"❌ [Step 1 · 会话启动参数校验拦截] Parameter 'aspect_ratio' invalid: "
+                    f"'{default_ar}'. Must be one of {VALID_ASPECT_RATIOS}."
+                )
+                return 1
         if ref_image or reference_image_paths:
             try:
                 start_param_val = validate_converge_params(
@@ -1051,6 +1484,11 @@ def cmd_converge(
             "regression_drop": float(
                 cfg_conv.get("regression_drop") or DEFAULT_REGRESSION_DROP
             ),
+            "safe_early_stop": (
+                DEFAULT_SAFE_EARLY_STOP
+                if cfg_conv.get("safe_early_stop") is None
+                else bool(cfg_conv.get("safe_early_stop"))
+            ),
         }
         if expect_route and expect_route not in sess["route_ids"]:
             sess["route_ids"] = list(sess["route_ids"]) + [str(expect_route)]
@@ -1096,6 +1534,19 @@ def cmd_converge(
                     {"at": "start", "text": lock_text or goal, "overrides": dict(ov)}
                 )
                 print(f"🔓 画师锁定微调已生效：{format_dim_lock_summary_zh(eff_scale, ov)}")
+        # 理解合同 v1：外置当前理解（不改 route/9.5/4轮/垫图等硬闸）
+        from .understanding_contract import (
+            contract_from_session_bootstrap,
+            defaults_visibility_ok,
+            format_contract_summary,
+        )
+
+        understanding = contract_from_session_bootstrap(
+            goal=goal or "",
+            route_ids=list(sess.get("route_ids") or []),
+            advise=advise_now,
+        )
+        sess["understanding_contract"] = understanding
         _write_session_json(sf, sess)
         mark_active_session(root, session_id, conversation_id or "")
         print(
@@ -1105,6 +1556,16 @@ def cmd_converge(
             f" | 最早停机轮次: {int(scale_prof.get('min_rounds_before_stop') or 1)}"
             f" | 媒介: {sess.get('medium_family')}"
             f"{' | 合同: split' if sess.get('contract') == 'split' else ''}"
+            f"{' | 安全早停: 已屏蔽' if not sess.get('safe_early_stop', True) else ''}"
+        )
+        print("📋 " + format_contract_summary(understanding).replace("\n", "\n   "))
+        _def_ok, _def_msg = defaults_visibility_ok(understanding)
+        print(("   ✅ " if _def_ok else "   ⚠️ ") + _def_msg)
+        print(
+            f"   👉 补默认/锁点：`{pmem_art_cli()} contract set --id {session_id} "
+            "--defaults \"默认：…\" [--locks \"…\" --unlocks \"…\" --vibe \"…\" "
+            "--surface-fix \"只改一处…\"]`；"
+            f"每轮最小包：`{pmem_art_cli()} contract working-set --id {session_id}`"
         )
         print(f"🎚️  Scale 内部权重与约束: weights={scale_prof['dim_weights']} | budget={scale_prof['next_fix_budget']}")
         print(f"🧭 Scale 指令: {scale_prof['prompt_directive']}")
@@ -1328,17 +1789,17 @@ def cmd_converge(
             return 1
 
         r_no = round_num if round_num > 0 else (len(rounds) + 1)
-        env_skip_reas = _os.environ.get("PMEM_ART_SKIP_REASONABLENESS_GATE", "").strip().lower() in (
-            "1",
-            "true",
-            "yes",
+        from .gate_skip import resolve_skip_request
+
+        skip_route_ok, skip_route_msg = resolve_skip_request(
+            flag=bool(skip_route_gate),
+            reason=skip_reason or "",
+            env_name="PMEM_ART_SKIP_ROUTE_GATE",
         )
-        env_skip_route = _os.environ.get("PMEM_ART_SKIP_ROUTE_GATE", "").strip().lower() in (
-            "1",
-            "true",
-            "yes",
-        )
-        if not skip_route_gate and not env_skip_route:
+        if skip_route_msg.startswith("拒绝"):
+            print(f"❌ [路由闸门] {skip_route_msg}")
+            return 1
+        if not skip_route_ok:
             from .route_gate import check_route_gate
 
             ok_gen_route, gen_route_msg = check_route_gate(
@@ -1357,7 +1818,17 @@ def cmd_converge(
                 fresh_ids = [str(x) for x in (advise_gen.get("route_ids") or []) if str(x)]
                 if fresh_ids:
                     sess["route_ids"] = fresh_ids
-        if not skip_reasonableness_gate and not env_skip_reas:
+        skip_reas_ok, skip_reas_msg = resolve_skip_request(
+            flag=bool(skip_reasonableness_gate),
+            reason=skip_reason or "",
+            env_name="PMEM_ART_SKIP_REASONABLENESS_GATE",
+        )
+        if skip_reas_msg.startswith("拒绝"):
+            print(f"❌ [合理性闸门] {skip_reas_msg}")
+            return 1
+        if skip_reas_ok:
+            print(f"⚠️ [合理性闸门跳过] {skip_reas_msg}")
+        else:
             from .reasonableness_gate import check_reasonableness_gate
 
             ok_reas, reas_msg, prompt_use = check_reasonableness_gate(
@@ -1371,8 +1842,6 @@ def cmd_converge(
                 prompt = prompt_use
             elif reas_msg:
                 print(f"🧠 [合理性闸门] {reas_msg}")
-        elif skip_reasonableness_gate or env_skip_reas:
-            print("⚠️ [合理性闸门] 已跳过（仅调试）；日常出图技能请先 reasonableness review。")
         pending_unjudged = [
             r for r in rounds
             if not r.get("judged") and str(r.get("image") or "").strip()
@@ -1432,6 +1901,15 @@ def cmd_converge(
             return 1
         eff_ref_img = (ref_image or sess.get("ref_image") or "").strip()
         eff_ar = (aspect_ratio or sess.get("default_aspect_ratio") or sess.get("aspect_ratio") or "").strip()
+        if eff_ar:
+            from .image_gates import VALID_ASPECT_RATIOS
+
+            if eff_ar not in VALID_ASPECT_RATIOS:
+                print(
+                    f"❌ [Step 2 · 参数校验拦截] Parameter 'aspect_ratio' invalid: "
+                    f"'{eff_ar}'. Must be one of {VALID_ASPECT_RATIOS}."
+                )
+                return 1
         pad_mode = str(sess.get("pad_mode") or DEFAULT_PAD_MODE)
         subject_kind = classify_subject(
             goal=str(sess.get("goal") or goal or ""),
@@ -1481,6 +1959,15 @@ def cmd_converge(
                 or sess.get("reference_image_paths")
                 or ([eff_ref_img] if eff_ref_img else [])
             )
+        from .benchmark_catalog import assert_refs_not_benchmark_pads
+
+        _gen_refs = list(eff_ref_paths)
+        if eff_ref_img:
+            _gen_refs = [str(eff_ref_img)] + [p for p in _gen_refs if str(p) != str(eff_ref_img)]
+        pad_ok_gen, pad_why_gen = assert_refs_not_benchmark_pads(_gen_refs)
+        if not pad_ok_gen:
+            print(f"❌ [商业对标] {pad_why_gen}")
+            return 1
         matched_case_cfg = resolve_case_config(session_id, eff_ref_img)
         val_res: dict[str, Any] = {}
         if matched_case_cfg is not None or eff_ref_img or eff_ref_paths:
@@ -1548,8 +2035,22 @@ def cmd_converge(
         if not continuation and carry_fix and carry_fix not in composed_prompt:
             composed_prompt = f"{composed_prompt} | {carry_fix}".strip(" |")
 
+        # Stability: r2+ always pin ≤2 must-fix lines from prior judge (additive, idempotent).
+        if int(r_no) >= 2:
+            from .must_fix import inject_must_fix, previous_round_next_fix
+
+            prior_fix = (carry_fix or "").strip() or previous_round_next_fix(rounds, r_no)
+            if not prior_fix:
+                prior_fix = str(next_fix or "").strip()
+            if prior_fix:
+                composed_prompt = inject_must_fix(composed_prompt, prior_fix)
+
         from improve import build_warm_start_pack, merge_warm_start_prompt
+        import hashlib as _hashlib
+
         warm = sess.get("warm_start") if isinstance(sess.get("warm_start"), dict) else {}
+        warm_merged = False
+        warm_hash = ""
         if apply_memory:
             if not str(warm.get("prompt_block") or "").strip():
                 warm = build_warm_start_pack(
@@ -1559,7 +2060,24 @@ def cmd_converge(
                     goal=str(sess.get("goal") or goal or ""),
                 )
                 sess["warm_start"] = warm
+            block = str(warm.get("prompt_block") or "").strip()
+            before = composed_prompt
             composed_prompt = merge_warm_start_prompt(composed_prompt, warm)
+            warm_merged = bool(block) and (
+                block in composed_prompt or composed_prompt != before or "【Warm-Start" in composed_prompt
+            )
+            if block:
+                warm_hash = _hashlib.sha1(block.encode("utf-8")).hexdigest()[:12]
+            sess["warm_start_merged"] = warm_merged
+            sess["warm_start_merged_at"] = _now_cst().strftime("%Y-%m-%d %H:%M:%S")
+            sess["warm_start_block_sha1"] = warm_hash
+            # 并入证据先落盘：后续垫图/物理闸失败也不丢，避免误报「没并入」
+            _write_session_json(sf, sess)
+            print(
+                f"WARM_START_MERGED={'1' if warm_merged else '0'}"
+                f" sha1={warm_hash or '-'} source=converge.generate"
+                f" (并以本字段为准；勿用 GenerateImage Hook 有无判断并入)"
+            )
 
         if generate_cmd:
             proc = subprocess.run(
@@ -1660,9 +2178,11 @@ def cmd_converge(
         warm_n_rec = len((warm or {}).get("top_recipes") or [])
         memory_line = ""
         if apply_memory and str((warm or {}).get("prompt_block") or "").strip():
+            merged_bit = "已并入" if sess.get("warm_start_merged") else "未并入"
             memory_line = (
-                f"   · 📚 pmem-art 已自动并入记忆：模块 {warm.get('module') or sess.get('module') or '?'} "
-                f"（recipe {warm_n_rec} · 红线 {warm_n_red}）\n"
+                f"   · 📚 pmem-art 记忆{merged_bit}：模块 {warm.get('module') or sess.get('module') or '?'} "
+                f"（recipe {warm_n_rec} · 红线 {warm_n_red}；"
+                f"WARM_START_MERGED={'1' if sess.get('warm_start_merged') else '0'}）\n"
             )
         stub_line = ""
         if stub_notes:
@@ -1894,6 +2414,11 @@ def cmd_converge(
                 early_stop_min_round=int(
                     sess.get("early_stop_min_round") or DEFAULT_EARLY_STOP_MIN_ROUND
                 ),
+                safe_early_stop=(
+                    DEFAULT_SAFE_EARLY_STOP
+                    if sess.get("safe_early_stop") is None
+                    else bool(sess.get("safe_early_stop"))
+                ),
             )
             if early_safe_stop in ("STOP_REGRESSION", "STOP_PLATEAU"):
                 should_continue = False
@@ -2089,6 +2614,18 @@ def cmd_converge(
                     f"   · ⚡ Fast-track 提示：已 ≥{soft_th} 且与上轮变化很小 — "
                     f"可少做大重生、做局部修正；最终采纳仍要 ≥{th:.2f}（非草稿）。\n"
                 )
+            # Soft hint only — never auto-raise scale (stability).
+            cur_scale = str(sess.get("scale") or "medium").lower()
+            defect_blob = str(entry.get("defects") or "")
+            if (
+                cur_scale == "medium"
+                and float(score) < 9.0
+                and re.search(r"碎|杂线|交叉|糊化|塌|体积|可读性弱", defect_blob)
+            ):
+                msg += (
+                    "   · 稳定性提示：medium 锁机位下连续大修易糊；"
+                    "若下一轮仍同类碎边/体积问题，可显式 `--scale high`（需你确认，不会自动升档）。\n"
+                )
             msg += f"   👉 先用上面这张垫图出第 {r_no + 1} 轮，再 `converge generate`，然后 `converge judge`。"
 
         vlm_report = judge_res.get("remote_vlm") or {}
@@ -2160,30 +2697,39 @@ def cmd_converge(
             )
 
         struct_ok = [r for r in judged_for_finish if _structure_ok(r)]
-        pool = struct_ok if struct_ok else judged_for_finish
         if struct_ok and len(struct_ok) < len(judged_for_finish):
             sess["structure_gate_fallback"] = True
+            dropped = [
+                f"R{r.get('round')}={_score_of(r):.2f}"
+                for r in judged_for_finish
+                if r not in struct_ok
+            ]
+            if dropped:
+                print(
+                    "⚠️ [结构闸] 以下轮未过结构合理性，仍参与「最高分定稿」竞选："
+                    + "、".join(dropped[:8])
+                )
 
+        # 终稿合同：分数最高者胜出（过线轮取其中最高；未过线取全场最高）。
+        # 禁止「先到线截断后轮」或「结构闸剔掉更高分」导致进化链终稿不是最高分。
         passing_rounds = [
-            r for r in pool
+            r for r in judged_for_finish
             if _round_counts_as_passed(r, accept_th, root=root)
         ]
         from .showcase_gate import can_accept_winner
         n_judged = len(judged_for_finish)
         mr = int(sess.get("max_rounds") or DEFAULT_MAX_ROUNDS)
         if passing_rounds:
-            first_pass = min(passing_rounds, key=lambda x: x["round"])
-            rounds = [r for r in rounds if r.get("round", 0) <= first_pass["round"]]
-            sess["rounds"] = rounds
-            winner = first_pass
+            winner = max(passing_rounds, key=lambda x: (_score_of(x), x.get("round") or 0))
             sess["converged_at_round"] = winner["round"]
             outcome_str = (
-                f"✅ **经过 {winner['round']} 轮迭代达标定稿**（generate 与 judge 分步收敛，"
-                f"第 {winner['round']} 轮达到 `{_score_of(winner):.2f} / 10.0` 分 ≥ `{accept_th:.2f}` 分档位目标线即刻停机）"
+                f"✅ **达标定稿取最高分**（generate 与 judge 分步收敛，"
+                f"第 {winner['round']} 轮 `{_score_of(winner):.2f} / 10.0` ≥ `{accept_th:.2f}`；"
+                f"过线轮共 {len(passing_rounds)}，取分最高者）"
             )
-            badge_text = f"经过 {len([r for r in rounds if _score_of(r) >= 0])} 轮达标定稿"
+            badge_text = f"达标定稿 · 最高分第 {winner['round']} 轮"
         else:
-            winner = max(pool, key=lambda x: (_score_of(x), x.get("round") or 0))
+            winner = max(judged_for_finish, key=lambda x: (_score_of(x), x.get("round") or 0))
             preview_only = action != "finish"
             under_max = n_judged < mr
             if preview_only and under_max:
@@ -2252,6 +2798,7 @@ def cmd_converge(
             sess["convergence_badge"] = badge_text
             sess["status"] = "finished"
             _write_session_json(sf, sess)
+            _finish_write_final_slot(root, sf, sess, winner)
             clear_active_session(root, session_id)
         else:
             # status / table 只预览，不能把会话标成 finished，否则 stop hook 会放行。
@@ -2355,232 +2902,66 @@ def cmd_converge(
         except Exception:
             pass
 
-        saved_paths: list[str] = []
-        reflection_path = None
         tip = None
         doctor_tip = None
         if action == "finish" and apply_memory:
-            from feedback import write_memory_entry
-            from improve import write_session_reflection, ingest_term_to_knowledge
-
-            for blob in (sess.get("goal", ""), sess.get("ref_analysis", "")):
-                if blob:
-                    ingest_term_to_knowledge(root, blob, source="converge_finish")
-            for r in rounds:
-                for blob in (r.get("defects", ""), r.get("next_fix", ""), r.get("strengths", "")):
-                    if blob:
-                        ingest_term_to_knowledge(root, blob, source="converge_finish")
-
-            mod = sess.get("module") or "brand.WorldStyle"
-            def _ensure_conv_asset(img_str: str, m_id: str, prompt_str: str) -> str:
-                if not img_str:
-                    return ""
-                import shutil
-                cand = Path(img_str)
-                if not cand.is_absolute():
-                    cand = root / img_str
-                if not cand.is_file():
-                    return img_str
-                try:
-                    rel_c = cand.resolve().relative_to(root.resolve()).as_posix()
-                    if rel_c.startswith("assets/"):
-                        return rel_c
-                except Exception:
-                    pass
-                dom = m_id.split(".")[0] if "." in m_id else "misc"
-                ent = m_id.split(".")[1].lower() if "." in m_id else "general"
-                dest_rel = f"assets/{dom}/{ent}/{cand.name}"
-                dest_p = root / dest_rel
-                dest_p.parent.mkdir(parents=True, exist_ok=True)
-                if cand.resolve() != dest_p.resolve():
-                    shutil.copy2(str(cand), str(dest_p))
-                try:
-                    from classify import classify_asset, ensure_module_from_classification
-                    cl = classify_asset(root, data, path=dest_rel, prompt=prompt_str)
-                    cl["suggested_module"] = m_id
-                    cl["domain"] = dom
-                    cl["entity"] = m_id.split(".")[1] if "." in m_id else m_id
-                    cl["canonical_rel"] = dest_rel
-                    ensure_module_from_classification(root, data, cl, force_active=True)
-                except Exception:
-                    pass
-                return dest_rel
-
-            win_img_orig = str(winner.get("image") or "")
-            win_img = _ensure_conv_asset(
-                win_img_orig,
-                mod,
-                str(winner.get("prompt") or sess.get("goal") or ""),
+            env_bg = os.environ.get("PMEM_FINISH_SETTLE_BG", "1").strip().lower()
+            want_bg = settle_background if settle_background is not None else env_bg not in (
+                "0",
+                "false",
+                "no",
+                "off",
             )
-            if win_img:
-                # 展陈目录里的成图路径必须保留；assets 副本只进 library，不覆盖 winner.image
-                winner["asset_image"] = win_img
-                keep_showcase = win_img_orig.replace("\\", "/").startswith("docs/showcase/")
-                if not keep_showcase:
-                    winner["image"] = win_img
-            # 通用终稿槽：同目录写 final.*，并落盘 winner_image/final_image，工作台进化对照才能挂上
-            try:
-                import shutil as _shutil
-                win_rel = str(winner.get("image") or win_img or "").replace("\\", "/")
-                if win_rel and not win_rel.startswith("docs/showcase/"):
-                    win_path = Path(win_rel) if Path(win_rel).is_absolute() else (root / win_rel)
-                    if win_path.is_file():
-                        ext = win_path.suffix.lower() or ".jpg"
-                        if ext not in {".jpg", ".jpeg", ".png", ".webp"}:
-                            ext = ".jpg"
-                        try:
-                            parent_rel = win_path.resolve().parent.relative_to(root.resolve()).as_posix()
-                        except Exception:
-                            parent_rel = str(Path(win_rel).parent).replace("\\", "/")
-                        final_rel = f"{parent_rel}/final{ext}"
-                        final_path = root / final_rel
-                        if win_path.resolve() != final_path.resolve():
-                            final_path.parent.mkdir(parents=True, exist_ok=True)
-                            _shutil.copy2(str(win_path), str(final_path))
-                        sess["winner_image"] = win_rel
-                        sess["best_image"] = win_rel
-                        sess["final_image"] = final_rel
-                        _write_session_json(sf, sess)
-            except Exception as _final_slot_exc:
-                print(f"⚠️ 终稿槽 final.* 未写上：{_final_slot_exc}")
-
-            settle_word = (
-                "达标"
-                if passing_rounds
-                else (
-                    "安全早停，采用最高分"
-                    if early_safe
-                    else "未达阈值，采用最高分"
-                )
-            )
-            win_summary = f"[收敛胜出 {winner['score']:.2f}分] {sess.get('goal', '')[:50]} — {winner.get('strengths', '')[:30]}"
-            win_caption = (
-                f"🏆 收敛胜出定稿 ({winner['score']:.2f}/10分 · 经过{len(rounds)}轮{settle_word})："
-                f"{sess.get('goal', '')}"
-                + (f" · 亮点：{winner.get('strengths')}" if winner.get("strengths") else "")
-            )
-            win_body = (
-                f"**【闭环收敛胜出定稿（经过 {len(rounds)} 轮{settle_word} · {winner['score']:.2f} 分）】**\n"
-                f"- **生成目标**：{sess.get('goal')}\n"
-                f"- **收敛档位**：{sess.get('scale', 'medium')} (目标阈值 >= {accept_th:.2f})\n"
-                f"- **保留原因（亮点）**：{winner.get('strengths')}\n"
-                f"- **最终使用 Prompt**：`{winner.get('prompt') or sess.get('goal')}`\n"
-            )
-            if sess.get("ref_image"):
-                win_body += f"- **参考垫图**：`{sess.get('ref_image')}`（解构：{sess.get('ref_analysis')}）\n"
-            if warm.get("prompt_block"):
-                win_body += f"\n<details><summary>Warm-Start 包</summary>\n\n```\n{warm.get('prompt_block')}\n```\n</details>\n"
-            met_bar = _score_of(winner) >= canonical_th
-            recipe_status = "active" if met_bar else "provisional"
-            p_rec = write_memory_entry(
-                root,
-                module=mod,
-                kind="recipe",
-                summary=win_summary,
-                body=win_body,
-                asset=win_img,
-                role="approved" if met_bar else "reference",
-                caption=win_caption,
-                status=recipe_status,
-                extra_meta={
-                    "ai_params": {
-                        "prompt": str(winner.get("prompt") or sess.get("goal") or ""),
-                        "score": winner.get("score"),
-                        "round": winner.get("round"),
-                        "dims": winner.get("dims", ""),
-                    }
-                },
-                replace_same_asset=met_bar,
-            )
-            saved_paths.append(str(p_rec.relative_to(root)))
-
-            failed = [r for r in rounds if not r.get("passed") and r.get("defects")]
-            if failed:
-                def _soft_defects(text: object) -> bool:
-                    try:
-                        from improve.taste_profile import is_soft_defect_phrase
-                        return is_soft_defect_phrase(str(text or ""))
-                    except Exception:
-                        s = str(text or "").strip()
-                        return (not s) or s in ("微瑕", "几乎无") or s.startswith("几乎无")
-
-                actionable = [r for r in failed if not _soft_defects(r.get("defects", ""))]
-                if not actionable:
-                    # Soft-only defects: keep audit in session reflection, skip redline habit seed
-                    worst = None
+            spawn_failed_fallback = False
+            if want_bg:
+                sess["settle_pending"] = True
+                sess["winner"] = winner
+                sess["lessons_all"] = all_lessons
+                _write_session_json(sf, sess)
+                spawned = _spawn_detached_finish_settle(root, session_id)
+                md_lines.append("")
+                if spawned:
+                    md_lines.append(
+                        "> 🔇 记忆沉淀 / atlas 已后台排队（不挡 finish）。"
+                        f"需要同步可 `converge settle --session {session_id}`；或设 `PMEM_FINISH_SETTLE_BG=0`。"
+                    )
+                    print(
+                        f"🔇 记忆沉淀已后台排队（session={session_id}）；finish 不阻塞。"
+                        " 需要同步：`python3 pmem_art.py converge settle --session "
+                        f"{session_id}`",
+                        flush=True,
+                    )
                 else:
-                    worst = min(actionable, key=lambda x: x["score"])
-                if worst is not None:
-                    worst_img = _ensure_conv_asset(
-                        worst.get("image", ""),
-                        mod,
-                        str(worst.get("prompt") or sess.get("goal") or ""),
-                    )
-                    red_summary = f"[收敛踩坑红线] {sess.get('goal', '')[:30]}：避免「{worst.get('defects', '')[:45]}」"
-                    red_caption = (
-                        f"❌ 第{worst['round']}轮收敛打回 ({worst['score']:.2f}分)："
-                        f"{worst.get('defects', '')} → 修正：{worst.get('next_fix', '')}"
-                    )
-                    defect_bullets = "\n".join(
-                        f"- 第 {r['round']} 轮 ({float(r.get('score') or 0):.2f}分) 不合理处：{r['defects']} → 修正：{r['next_fix']}"
-                        for r in actionable
-                    )
-                    red_body = (
-                        f"**【迭代过程中暴露的不合理项（下次生图直接规避）】**\n\n"
-                        f"{defect_bullets}\n"
-                    )
-                    p_red = write_memory_entry(
-                        root,
-                        module=mod,
-                        kind="style_redline",
-                        summary=red_summary,
-                        body=red_body,
-                        asset=worst_img,
-                        role="rejected",
-                        caption=red_caption,
-                        replace_same_asset=True,
-                    )
-                    saved_paths.append(str(p_red.relative_to(root)))
-
-            sess["lessons_all"] = all_lessons
-            reflection_path = write_session_reflection(root, sess, winner=winner, outcome=outcome_str)
-            try:
-                import json as _json
-                ref_data = _json.loads(reflection_path.read_text(encoding="utf-8"))
-                ref_data["lessons"] = all_lessons[:12]
-                reflection_path.write_text(_json.dumps(ref_data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-            except Exception:
-                pass
-            saved_paths.append(str(reflection_path.relative_to(root)))
-
-            md_lines.append("")
-            md_lines.append("#### 🧠 已自动沉淀至 `.memory-art` 的记忆条目")
-            for sp in saved_paths:
-                md_lines.append(f"- `{sp}`")
-            md_lines.append("")
-            md_lines.append(
-                "> 🔇 记忆沉淀已在后台完成（反思 + taste + learn 队列；不对用户旁白）。"
-                "进阶 peek：`improve run` · `coach` · `learn suggest` · `progress`；只要一行结论用 `--quiet`。"
-            )
-
-            try:
-                from improve import run_silent_autopilot
-                auto = run_silent_autopilot(
+                    print("⚠️ 后台 settle 启动失败，改为同步写入记忆", flush=True)
+                    want_bg = False
+                    spawn_failed_fallback = True
+            if not want_bg:
+                # API/测例默认同步写记忆且不刷 atlas；仅「后台 spawn 失败被迫同步」时顺带刷 atlas
+                saved_paths, tip = _apply_finish_memory_and_atlas(
                     root,
                     data,
-                    session_id=session_id,
-                    lessons=all_lessons,
-                    defects=str(winner.get("defects") or ""),
-                    strengths=str(winner.get("strengths") or ""),
+                    sess,
+                    sf,
                     winner=winner,
                     rounds=rounds,
-                    source="converge_finish",
+                    all_lessons=all_lessons,
+                    passing_rounds=passing_rounds,
+                    early_safe=early_safe,
+                    accept_th=float(accept_th),
+                    canonical_th=float(canonical_th),
+                    session_id=session_id,
+                    verbose=verbose,
+                    refresh_atlas=spawn_failed_fallback,
                 )
-                tip = auto.get("tip")
-            except Exception as ex:
-                tip = None
-                if verbose:
-                    print(f"⚠️ autopilot 跳过: {ex}")
+                md_lines.append("")
+                md_lines.append("#### 🧠 已自动沉淀至 `.memory-art` 的记忆条目")
+                for sp in saved_paths:
+                    md_lines.append(f"- `{sp}`")
+                md_lines.append("")
+                md_lines.append(
+                    "> 🔇 记忆沉淀已完成（反思 + taste + learn 队列；不对用户旁白）。"
+                    "进阶 peek：`improve run` · `coach` · `learn suggest` · `progress`；只要一行结论用 `--quiet`。"
+                )
 
         if action == "finish":
             try:
@@ -2589,12 +2970,6 @@ def cmd_converge(
             except Exception:
                 doctor_tip = None
 
-        if action == "finish" and apply_memory:
-            try:
-                from pmem_art import refresh_atlas_silent
-                refresh_atlas_silent(root)
-            except Exception:
-                pass
         board_rel = ""
         try:
             from skills_kit.process_board import write_process_board

@@ -1,0 +1,68 @@
+{
+  "route_id": "icon.c",
+  "banner": "【按 Mode C 走了】",
+  "conversation": "skill1109-icon-c",
+  "session": "skill1109-icon-c",
+  "mode": "C",
+  "delivery": "batch_preview_256",
+  "single_icon_converge": false,
+  "count": 6,
+  "surface": "软塑胶厚实圆润、棚柔光短接触影、饱和友好、棋盘缩略可读、上架货柜完成度",
+  "benchmark": "merge.cabinet",
+  "reference": "assets/skill_20261109/_refs/ref_prop_mushroom.png",
+  "style_spec": "assets/skill_20261109/icon_c/style-spec.json",
+  "true_alpha": true,
+  "outputs": [
+    {
+      "id": "prop_mushroom",
+      "label": "蘑菇",
+      "path_256": "assets/skill_20261109/icon_c/prop_mushroom_256.png",
+      "path_1024": "assets/skill_20261109/icon_c/prop_mushroom_1024.png"
+    },
+    {
+      "id": "prop_cheese",
+      "label": "奶酪",
+      "path_256": "assets/skill_20261109/icon_c/prop_cheese_256.png",
+      "path_1024": "assets/skill_20261109/icon_c/prop_cheese_1024.png"
+    },
+    {
+      "id": "prop_blue_fruit",
+      "label": "蓝果",
+      "path_256": "assets/skill_20261109/icon_c/prop_blue_fruit_256.png",
+      "path_1024": "assets/skill_20261109/icon_c/prop_blue_fruit_1024.png"
+    },
+    {
+      "id": "prop_cherry",
+      "label": "樱桃",
+      "path_256": "assets/skill_20261109/icon_c/prop_cherry_256.png",
+      "path_1024": "assets/skill_20261109/icon_c/prop_cherry_1024.png"
+    },
+    {
+      "id": "prop_gift_box",
+      "label": "礼物盒",
+      "path_256": "assets/skill_20261109/icon_c/prop_gift_box_256.png",
+      "path_1024": "assets/skill_20261109/icon_c/prop_gift_box_1024.png"
+    },
+    {
+      "id": "prop_leaf",
+      "label": "绿叶",
+      "path_256": "assets/skill_20261109/icon_c/prop_leaf_256.png",
+      "path_1024": "assets/skill_20261109/icon_c/prop_leaf_1024.png"
+    }
+  ],
+  "consistency_review": {
+    "silhouette_read_64": "pass_family",
+    "palette_lock": "pass_saturated_fairy",
+    "studio_light": "pass_soft_top_key",
+    "transparent_friendly": "pass_true_alpha_corners_zero",
+    "no_text": "pass",
+    "notes": [
+      "同族软塑胶/厚剪影/棚柔光大体齐，对标 merge 货柜道具格完成度可用作批量预览。",
+      "樱桃梗偏绿褐（参考盘偏褐梗）、蓝果皮略柑橘点纹，相对参考盘略有材质漂移，未开单枚闭环。",
+      "接触影整体偏短浅；若上架需加强接地，点名翻车枚再开 converge。",
+      "2026-11-10 wave2：补齐缺失的 6×(256+1024) 透明底文件并角点 alpha=0。"
+    ]
+  },
+  "brief": "妖精花园同族 6 枚 256 透明底批量齐；默认未做单枚闭环。剪影与色板成套可读，礼物盒为扩展件仍同店气质。",
+  "regenerated_at": "2026-11-10"
+}

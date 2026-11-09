@@ -593,7 +593,8 @@ def _default_specs_for_domain(domain: str, traits: dict, style_fork: str | None 
         return {
             "resolution": res or "512x512",
             "allowed_resolutions": [res] if res else ["512x512", "256x256", "128x128"],
-            "alpha_required": True,
+            # Cursor 无 alpha：隔离底即可；真透明仅透明引擎 + alpha_strict
+            "alpha_required": False,
             "nine_slice": [48, 48, 48, 48],
             "safe_margin_px": 4,
             "max_size_kb": 512,

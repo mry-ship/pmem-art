@@ -6,6 +6,7 @@ import io
 import json
 import sys
 import tempfile
+import time
 import unittest
 from pathlib import Path
 
@@ -27,10 +28,87 @@ from skills_kit.route_gate import check_route_gate, save_route_advise  # noqa: E
 
 class RouteFalseFireTests(unittest.TestCase):
     def test_style_constraint_is_not_critique(self) -> None:
-        for text in ("画一张猫，别画成赛博", "不画背景，只要角色"):
+        for text in ("画一张猫，别画成赛博", "不画背景，只要角色", "别画背景，只要角色"):
             plan = plan_route(text)
             self.assertEqual(plan.route_ids, ["draw.ordinary"], text)
             self.assertNotIn("critique.review", plan.route_ids, text)
+
+    def test_merge_bare_sheet_or_grow_not_ladder(self) -> None:
+        for text in ("把这套道具整表导出一下", "表格整表打印", "越来越大的宝箱", "八档剑"):
+            plan = plan_route(text)
+            self.assertNotEqual(plan.route_ids, ["merge.ladder"], text)
+        for text in (
+            "糖果一档比一档大做合成梯",
+            "从木剑长到圣剑，八个等级越来越大",
+            "合成梯整表一组出齐",
+            "逐格出八档鸟",
+            "越升越大那条剑",
+        ):
+            plan = plan_route(text)
+            self.assertEqual(plan.route_ids, ["merge.ladder"], text)
+
+    def test_bare_concept_sketch_not_keyart(self) -> None:
+        plan = plan_route("给我一张概念图")
+        self.assertEqual(plan.route_ids, ["draw.ordinary"])
+        plan_key = plan_route("一张概念海报，当主视觉")
+        self.assertEqual(plan_key.route_ids, ["draw.key"])
+
+    def test_icon_set_asks_abc(self) -> None:
+        plan = plan_route("一套图标")
+        self.assertEqual(plan.mode, "stop")
+        self.assertEqual(plan.reason, "icon_unspecified")
+
+    def test_style_verify_phrases_chain_clone(self) -> None:
+        for text in ("锁完出图", "锁完再画", "锁风验证"):
+            plan = plan_route(text, images=["ref/style.png"])
+            self.assertEqual(plan.route_ids, ["style.lock", "draw.clone"], text)
+            self.assertEqual(plan.reason, "style_then_clone", text)
+        # 「以后都用…生图」只锁风，不串克隆
+        only = plan_route("以后都用这张生图", images=["ref/style.png"])
+        self.assertEqual(only.route_ids, ["style.lock"])
+        self.assertEqual(only.reason, "style")
+        # 裸「验证图」当题材名 ≠ 锁风验证串
+        sketch = plan_route("画一张验证图普通猫")
+        self.assertEqual(sketch.route_ids, ["draw.ordinary"])
+
+    def test_named_seed_refuses_stop_jobs(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            ok, msg = check_route_gate(
+                root,
+                goal="序列帧动画",
+                expect_route="draw.ordinary",
+            )
+            self.assertFalse(ok, msg)
+            self.assertIn("stop", msg)
+            # 规则已判 style→clone 时，禁止种成普通图
+            ok2, msg2 = check_route_gate(
+                root,
+                goal="锁完出图",
+                expect_route="draw.ordinary",
+            )
+            self.assertFalse(ok2, msg2)
+            self.assertIn("不一致", msg2)
+
+    def test_merge_negation_and_grow_without_ladder(self) -> None:
+        for text in (
+            "宝箱越来越大没有合成",
+            "越升越大的太阳",
+            "这颗星越升越大",
+            "太阳越来越大一档光",
+            "export整表overview",
+            "八档鸟但没有合成梯",
+            "不要合成梯八档剑",
+        ):
+            plan = plan_route(text)
+            self.assertNotEqual(plan.route_ids, ["merge.ladder"], text)
+            advised = advise_route(text)
+            self.assertNotEqual(advised.get("vague_reason"), "artist_ask_merge", text)
+            self.assertNotIn("merge.ladder", advised.get("route_ids") or [])
+        # advise 也不要因裸「越升越大」逼问合成梯
+        advised = advise_route("越升越大的太阳")
+        self.assertNotEqual(advised.get("vague_reason"), "artist_ask_merge")
+        self.assertNotIn("merge.ladder", advised.get("route_ids") or [])
 
     def test_guiwei_in_frame_is_not_atlas(self) -> None:
         plan = plan_route("角色归位到画面中心，出一张立绘")
@@ -161,7 +239,7 @@ class RouteFalseFireTests(unittest.TestCase):
 
     def test_real_storyboard_still_stops(self) -> None:
         plan = plan_route("帮我做分镜，第0件")
-        self.assertEqual(plan.reason, "unrecognized")
+        self.assertEqual(plan.reason, "job_ask")
 
     def test_neighbor_disagreement_is_low(self) -> None:
         plan = Plan(
@@ -204,6 +282,107 @@ class RouteFalseFireTests(unittest.TestCase):
             anon, _ = check_route_gate(root, goal="画一张水彩半身的窗边女孩")
             self.assertFalse(anon)
 
+    def test_conversation_route_does_not_poison_global_last_advise(self) -> None:
+        """带 conversation 的 route 只写分槽，并发时不覆盖全局 last_advise。"""
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            save_route_advise(
+                root,
+                {
+                    "banner": "【按 普通图 走了】",
+                    "route_ids": ["draw.ordinary"],
+                    "mode": "default",
+                    "execute_ok": True,
+                },
+                text="画一张猫",
+            )
+            global_before = (root / ".memory-art" / "route_bank" / "last_advise.json").read_text(
+                encoding="utf-8"
+            )
+            save_route_advise(
+                root,
+                {
+                    "banner": "【按 合成梯 走了】",
+                    "route_ids": ["merge.ladder"],
+                    "mode": "skill",
+                    "execute_ok": True,
+                },
+                text="软糖合成梯八档",
+                conversation_id="conv-merge",
+            )
+            global_after = (root / ".memory-art" / "route_bank" / "last_advise.json").read_text(
+                encoding="utf-8"
+            )
+            self.assertEqual(global_before, global_after)
+            ok_m, _ = check_route_gate(
+                root, goal="软糖合成梯八档", conversation_id="conv-merge", expect_route="merge.ladder"
+            )
+            self.assertTrue(ok_m)
+            ok_g, _ = check_route_gate(root, goal="画一张猫", expect_route="draw.ordinary")
+            self.assertTrue(ok_g)
+            # 有 cid 但无分槽：禁止回落全局（即使全局无 owner）
+            leak, msg_leak = check_route_gate(
+                root, goal="画一张猫", conversation_id="conv-other"
+            )
+            self.assertFalse(leak, msg_leak)
+            self.assertIn("缺少本地路由", msg_leak)
+
+    def test_expired_route_id_conflict_refuses_silent_reseed(self) -> None:
+        """过期缓存与本次 --route-id 不一致时禁止静默换路由。"""
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            save_route_advise(
+                root,
+                {
+                    "banner": "【按 合成梯 走了】",
+                    "route_ids": ["merge.ladder"],
+                    "mode": "skill",
+                    "execute_ok": True,
+                },
+                text="软糖合成梯八档",
+                conversation_id="conv-exp",
+            )
+            slot = root / ".memory-art" / "route_bank" / "by_conversation" / "conv-exp.json"
+            blob = json.loads(slot.read_text(encoding="utf-8"))
+            blob["saved_at"] = time.time() - (3 * 60 * 60)
+            slot.write_text(json.dumps(blob, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+            ok, msg = check_route_gate(
+                root,
+                goal="画一张水彩窗边女孩",
+                expect_route="draw.ordinary",
+                conversation_id="conv-exp",
+            )
+            self.assertFalse(ok, msg)
+            self.assertIn("静默换路由", msg)
+            self.assertIn("merge.ladder", msg)
+
+    def test_expanded_goal_matches_shorter_route_text(self) -> None:
+        """开画 goal 比 route 原文更长时，只要 route 锚点都在 goal 里就放行。"""
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            save_route_advise(
+                root,
+                {
+                    "banner": "【按 普通图 走了】",
+                    "route_ids": ["draw.ordinary"],
+                    "mode": "default",
+                    "execute_ok": True,
+                },
+                text="画一张水彩窗边女孩",
+                conversation_id="conv-draw",
+            )
+            long_goal = (
+                "画一张水彩窗边女孩半身立绘；柔光；无字；休闲商业气质；"
+                "不要赛博；交给 converge start"
+            )
+            ok, msg = check_route_gate(
+                root,
+                goal=long_goal,
+                conversation_id="conv-draw",
+                expect_route="draw.ordinary",
+            )
+            self.assertTrue(ok, msg)
+
     def test_negated_showcase_does_not_pull_full_pack(self) -> None:
         full = list(_SHOWCASE_DEFAULT_FULL)
         stopped = plan_route("整页展陈，不要全部重跑")
@@ -227,8 +406,13 @@ class RouteFalseFireTests(unittest.TestCase):
                 {"route_ids": ["draw.ordinary"], "mode": "default", "execute_ok": True, "banner": "ok"},
                 text=base,
             )
-            extra, _ = check_route_gate(root, goal=base + "，壬壬壬壬")
-            self.assertFalse(extra)
+            # 同题扩写（route 原文仍在 goal 里）→ 放行
+            expand, msg_e = check_route_gate(root, goal=base + "，柔光无字商业气质")
+            self.assertTrue(expand, msg_e)
+            # 换题 → 拦截
+            drift, msg_d = check_route_gate(root, goal="合成梯八档软糖整表一组")
+            self.assertFalse(drift, msg_d)
+            self.assertIn("对不上", msg_d)
             long_text = "画一张猫" + ("甲" * 600)
             save_route_advise(
                 root,

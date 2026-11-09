@@ -1,0 +1,14 @@
+{
+  "saved_at": 1794235904.005076,
+  "text": "先写提示词，先不出图",
+  "banner": "【按 提示词生成器：按交付类型扩写可选方案 走了】",
+  "route_ids": [
+    "prompt.write"
+  ],
+  "mode": "skill",
+  "execute_ok": true,
+  "artist_say": "【按 提示词生成器：按交付类型扩写可选方案 走了】\n先写提示词方案，这步不生图。",
+  "plan_conflict": false,
+  "confidence": "high",
+  "conversation_id": "skill1109-prompt"
+}

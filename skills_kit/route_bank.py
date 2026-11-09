@@ -21,7 +21,7 @@ from typing import Any, Iterable
 from .agent_route_cases import Case, build_cases
 from .agent_router import Plan, plan_route
 from .route_ask import artist_detail_for, artist_say_for, detect_vague_ask
-from .route_normalize import build_canonical_brief, expand_colloquial
+from .route_normalize import build_canonical_brief, expand_colloquial, validate_canonical
 
 # 每条路由保留的原型上限（组合生成会去重）
 _PROTOTYPE_CAP = 24
@@ -419,10 +419,13 @@ def match_confusion(text: str) -> list[dict[str, str]]:
 
 def banner_for(plan: Plan) -> str:
     if plan.mode == "stop" or not plan.would_execute:
-        if str(plan.reason or "").startswith("artist_ask"):
+        reason = str(plan.reason or "")
+        if reason.startswith("artist_ask") or reason in {"job_ask", "vague"}:
             return "【路由停】先问你一句"
-        return f"【路由停】{plan.reason}"
-    if plan.mode == "default" or plan.route_ids == ["draw.ordinary"]:
+        return f"【路由停】{reason}"
+    if plan.mode == "default" or (
+        plan.route_ids == ["draw.ordinary"] and plan.reason != "job_remap"
+    ):
         return "【走默认路径】按 普通图 走了"
     label = plan.announce.replace("按 ", "").replace(" 走了", "").strip()
     if not label:
@@ -478,10 +481,13 @@ def advise_route(
     )
     # 仅 Agent 显式标准句才做双路冲突；本地启发式不准时不误伤置信度
     conflict = False
+    canon_warnings = validate_canonical(agent_canon) if agent_canon else []
     if agent_canon:
         if plan.would_execute and plan_canon.would_execute:
             conflict = list(plan.route_ids) != list(plan_canon.route_ids)
         elif plan.mode != plan_canon.mode:
+            conflict = True
+        if canon_warnings:
             conflict = True
 
     neighbors = _merge_neighbors(
@@ -492,6 +498,22 @@ def advise_route(
     confusion = match_confusion(raw + " " + canon_for_retrieve)
     if plan.mode == "default":
         confusion = [c for c in confusion if c.get("id") != "default_ordinary"]
+
+    # 近邻冲突闸：top 近邻 route_ids 与本判明显不一致 → 降置信（execute_ok 已依赖 confidence_for）
+    neighbor_conflict = False
+    if plan.would_execute and plan.route_ids:
+        labeled = [n for n in neighbors if list(n.get("route_ids") or [])]
+        if labeled and list(labeled[0].get("route_ids") or []) != list(plan.route_ids):
+            neighbor_conflict = True
+
+    # ≥3 互斥支且非展陈/对比页 → 硬 ask（与 SKILL 冲突闸对齐；禁止只信 execute_ok）
+    from .agent_router import _showcase_page
+
+    multi_branch_ask = False
+    if plan.would_execute:
+        unique_rids = list(dict.fromkeys(str(x) for x in (plan.route_ids or []) if str(x)))
+        if len(unique_rids) >= 3 and not _showcase_page(raw):
+            multi_branch_ask = True
 
     vague = detect_vague_ask(raw, images=pics, plan=plan)
     artist_ask = ""
@@ -514,13 +536,21 @@ def advise_route(
     conf = confidence_for(plan, neighbors)
     if conflict and conf in {"high", "medium"}:
         conf = "low"
+    # 近邻不同意：high/medium 一律降 low，堵住 medium+conflict 仍 execute_ok
+    if neighbor_conflict and conf in {"high", "medium"}:
+        conf = "low"
+    if multi_branch_ask:
+        conf = "ask"
     if vague:
         conf = "ask"
+    if canon_warnings and conf in {"high", "medium"}:
+        conf = "low"
 
     execute_ok = (
         bool(plan.would_execute)
         and not conflict
         and not vague
+        and not multi_branch_ask
         and conf in {"high", "medium"}
     )
     detail = artist_detail_for(plan, route_ids=list(plan.route_ids))
@@ -533,6 +563,9 @@ def advise_route(
         "canonical_source": canon_source,
         "local_canonical": local,
         "plan_conflict": conflict,
+        "canonical_warnings": canon_warnings,
+        "neighbor_conflict": neighbor_conflict,
+        "multi_branch_ask": multi_branch_ask,
         "neighbors": neighbors,
         "confusion": confusion,
         "announce": plan.announce,
@@ -596,6 +629,10 @@ def format_advise_text(payload: dict[str, Any], *, brief: bool = False) -> str:
         lines.append(f"canonical[{payload.get('canonical_source')}]: {payload.get('canonical')}")
     if payload.get("plan_conflict"):
         lines.append("⚠ plan_conflict: 原话规则 vs 标准句规则不一致 → 先问人，勿硬执行")
+    if payload.get("canonical_warnings"):
+        lines.append("⚠ canonical_warnings: " + "；".join(payload.get("canonical_warnings") or []))
+    if payload.get("neighbor_conflict"):
+        lines.append("⚠ neighbor_conflict: 近邻 top1 route_ids 与本判不一致 → confidence 已降")
     if payload.get("vague_reason"):
         lines.append(f"vague: {payload.get('vague_reason')}")
     plan = payload.get("plan") or {}

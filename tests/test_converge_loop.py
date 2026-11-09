@@ -40,6 +40,7 @@ class TestConvergeLoop(unittest.TestCase):
         hit = loop_followup(td)
         self.assertEqual(hit["reason"], "pending_judge")
         self.assertIn("judge", hit["message"])
+        self.assertIn("最小工作集", hit["message"])
 
     def test_under_threshold_needs_next_round(self) -> None:
         td = Path(tempfile.mkdtemp())
@@ -52,6 +53,7 @@ class TestConvergeLoop(unittest.TestCase):
         hit = loop_followup(td)
         self.assertEqual(hit["reason"], "need_next_round")
         self.assertIn("第 2 轮", hit["message"])
+        self.assertIn("最小工作集", hit["message"])
 
     def test_four_rounds_asks_finish(self) -> None:
         td = Path(tempfile.mkdtemp())

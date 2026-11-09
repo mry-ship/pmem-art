@@ -1,19 +1,19 @@
 {
   "schema": "pmem-art.coach.v1",
-  "built_at": "2026-11-05 20:05:07 UTC+8",
-  "reflections_scanned": 20,
+  "built_at": "2026-11-10 01:51:44 UTC+8",
+  "reflections_scanned": 10,
   "weak_spots": [
     {
-      "category": "lighting",
-      "hits": 71,
+      "category": "material",
+      "hits": 25,
       "drills": [
-        "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
-        "只改光源方向重绘一轮，强制统一高光材质"
+        "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+        "去掉油腻高光：改用硬边分层或青瓷釉面高光"
       ]
     },
     {
       "category": "line_edge",
-      "hits": 62,
+      "hits": 24,
       "drills": [
         "透明底边缘检查：放大 200% 查毛边与漏抠",
         "统一描边宽度预设（如 1.5px round）整套重描"
@@ -21,33 +21,33 @@
     },
     {
       "category": "composition",
-      "hits": 49,
+      "hits": 22,
       "drills": [
         "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
         "用简单色块缩略图先定重心，再进细节"
       ]
     },
     {
-      "category": "material",
-      "hits": 40,
+      "category": "anatomy",
+      "hits": 22,
       "drills": [
-        "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
-        "去掉油腻高光：改用硬边分层或青瓷釉面高光"
+        "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+        "头身比尺规：在草图上标 7.5 头身刻度再细化"
       ]
     },
     {
-      "category": "color_palette",
-      "hits": 27,
+      "category": "lighting",
+      "hits": 21,
       "drills": [
-        "从模块 palette 抽 3 HEX 做限色练习，禁止引入霓虹辅色",
-        "把上次红线里的脏色/霓虹写成 Negative，重跑 1 轮"
+        "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+        "只改光源方向重绘一轮，强制统一高光材质"
       ]
     }
   ],
   "next_draw_goals": [
     {
-      "draw_goal": "下一张专门练「lighting」：同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
-      "category": "lighting"
+      "draw_goal": "下一张专门练「material」：同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+      "category": "material"
     },
     {
       "draw_goal": "下一张专门练「line_edge」：透明底边缘检查：放大 200% 查毛边与漏抠",
@@ -60,15 +60,16 @@
   ],
   "capability_trend": {
     "declining_weaknesses": [
-      "composition",
-      "narrative_camera",
-      "icon_consistency",
-      "line_edge",
-      "material",
       "lighting",
-      "anatomy"
+      "material",
+      "icon_consistency"
     ],
-    "rising_weaknesses": [],
+    "rising_weaknesses": [
+      "line_edge",
+      "anatomy",
+      "composition",
+      "color_palette"
+    ],
     "note": "newer vs older half of reflections"
   },
   "encouragement": "短板在下降，保持 warm-start + 每轮「本轮可学」闭环。"

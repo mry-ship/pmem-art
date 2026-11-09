@@ -18,7 +18,7 @@ description: 仅当玩家点名图标，或生图分流判成桌面图标、SVG 
 ## 原理（截图摘要）
 - **Mode A**：满幅直角母版 → 安全区单符号 → 尺寸矩阵；默认只交 **Light 母版**（最多4轮·≥9.5到线即停）；Dark/Tinted **仅点名才另出**
 - **Mode B**：锁 style-spec → SVG 硬规则 → 分批生成 → preview（对标 jezweb）；关键枚闭环默认不开
-- **Mode C**：锁道具格 style-spec → 透明底 PNG **只批量**；关键枚闭环默认不开
+- **Mode C**：锁道具格 style-spec → 隔离底 PNG **只批量**（Cursor=不透明隔离底；透明引擎=真 alpha）；关键枚闭环默认不开
 先分 A/B/C，再进对应节；反思写进记忆，要看报告再用 /pmem-coach。
 
 ### 耗时闸（最多4轮·≥9.5到线即停·必守）
@@ -32,7 +32,7 @@ description: 仅当玩家点名图标，或生图分流判成桌面图标、SVG 
 ## 一、三大模式分流（入口只有 `/pmem-icon`，按需求进对应分节，严禁串味）
 - **【Mode A · App Icon 1024 母版】** → 只读下方 **「## 二、Mode A：…」**（满幅直角 + 72%–80% 安全区；不用 SVG 规则）。
 - **【Mode B · 24px 线性 SVG 图标集】** → 只读下方 **「## 三、Mode B：…」**（`currentColor` + 统一 stroke/viewBox）。
-- **【Mode C · 游戏道具栅格图标】** → 只读下方 **「## 四、Mode C：…」**（透明底 PNG；不用 SVG 代码）。
+- **【Mode C · 游戏道具栅格图标】** → 只读下方 **「## 四、Mode C：…」**（隔离底 PNG；不用 SVG 代码）。
 A/B/C **标题并列**，禁止把 C 嵌进 B、把 A 甩到 B 的 Step 之后。读错节 = 串味。
 
 ## 二、Mode A：App Icon 1024×1024 母版专项（iOS App Store / Android Adaptive 桌面启动图标）
@@ -57,12 +57,12 @@ A/B/C **标题并列**，禁止把 C 嵌进 B、把 A 甩到 B 的 Step 之后�
 **App Icon 多维透镜（通用）**：明细见 `docs/APPICON_MULTI_LENS.md`——①栅格体验；②小尺寸去色仍认；③符号权重 P0 英雄撑满；④满幅直角 + 72%–80% 安全区；⑤色 70/20/10；⑥一主光、形先于质；⑦同品类上架图标气质（非泛插画海报）。缺画风时 revised 必须写同品类顶级上架图标气质。空喊「高级」却剪影糊 → 识别度或安全区 <8.0 不能停。
 
 ```bash
-pyw -3 -u pmem_art.py converge start --session appicon --module brand.WorldStyle --scale high --route-id icon.a --goal "iOS 1024x1024 App Icon: 青瓷质感记账应用，中心单枚立体青釉金币流光符号"
-pyw -3 -u pmem_art.py reasonableness review --id appicon --skill icon.a \
+python3 pmem_art.py converge start --session appicon --module brand.WorldStyle --scale high --route-id icon.a --goal "iOS 1024x1024 App Icon: 青瓷质感记账应用，中心单枚立体青釉金币流光符号"
+python3 pmem_art.py reasonableness review --id appicon --skill icon.a \
   --draft "<草稿>" --revised "<单符号+72%-80%安全区+满幅直角无字的修订句>" \
   --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;safe_zone=ok;single_symbol=ok;full_bleed_no_round_mask=ok"
-pyw -3 -u pmem_art.py converge generate --session appicon --round 1 --image app_icon_r1.png
-pyw -3 -u pmem_art.py converge judge --session appicon --round 1 --image app_icon_r1.png \
+python3 pmem_art.py converge generate --session appicon --round 1 --image app_icon_r1.png
+python3 pmem_art.py converge judge --session appicon --round 1 --image app_icon_r1.png \
   --dims "识别度9.6/安全区9.7/光影质感9.5/多尺寸合规9.6/色板纯粹9.7/无瑕疵9.5"
 # CLI：max_rounds=4；≥9.5到线即停；满4轮交最高分并标明是否 ≥9.5
 ```
@@ -115,8 +115,8 @@ icons/
 ### B5：关键图标最多4轮闭环（可选·默认跳过）
 用户点名某枚「不对」或一致性不过时才开；垫最初 style-spec/样张；**禁止**对整套每枚开闭环：
 ```bash
-pyw -3 -u pmem_art.py converge start --goal "图标 <name> 对齐 style-spec" --module brand.WorldStyle --route-id icon.b
-pyw -3 -u pmem_art.py reasonableness review --id <session> --skill icon.b \
+python3 pmem_art.py converge start --goal "图标 <name> 对齐 style-spec" --module brand.WorldStyle --route-id icon.b
+python3 pmem_art.py reasonableness review --id <session> --skill icon.b \
   --draft "<草稿>" --revised "<线宽/端点/清单写清的修订句>" \
   --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;stroke_consistency=ok"
 然后：generate → judge →（不到线继续，最多4轮）→ finish（标明是否 ≥9.5）
@@ -124,27 +124,32 @@ pyw -3 -u pmem_art.py reasonableness review --id <session> --skill icon.b \
 
 ### B6：沉淀
 ```bash
-pyw -3 -u pmem_art.py feedback "图标集 style-spec：<preset+stroke+grid摘要>" --module brand.WorldStyle --kind art_decision
-pyw -3 -u pmem_art.py ingest icons/preview.html -p "icon set preview" --apply
+python3 pmem_art.py feedback "图标集 style-spec：<preset+stroke+grid摘要>" --module brand.WorldStyle --kind art_decision
+python3 pmem_art.py ingest icons/preview.html -p "icon set preview" --apply
 ```
 
-## 四、Mode C：游戏道具透明底栅格图标（64/128/256px PNG，非 SVG）
+## 四、Mode C：游戏道具隔离底栅格图标（64/128/256px PNG，非 SVG）
 
-先锁「线宽/圆角/色板/投影」style-spec，再**批量**生成透明底 PNG 做 preview。  
+## 底与透明度（按生图引擎 · Agent 必读）
+- **Cursor `GenerateImage` 不支持真透明**。口语要「透明底」时，改写为**不透明隔离底**（默认纯黑 `#000000`，或定稿写死的实色空底）；交不透明 PNG/JPG 即可。**禁止**成图后再抠色、抠角、本地挖洞冒充 alpha。
+- **第三方支持透明的引擎**（如 `gpt-image` / 明确带 alpha 的 API）：可**直接**生成真 alpha PNG；白底/品红底不算透明底。
+- 结算时写清用的是哪类底：`true_alpha` 或 `opaque_isolation`。默认出图路径是 Cursor 时，不要为了凑 alpha 去跑 `export_mode_c_icon` 抠图。
+
+先锁「线宽/圆角/色板/投影」style-spec，再**批量**生成隔离底 PNG 做 preview。  
 **关键枚 converge 默认禁止**：仅玩家点名某枚不对、或一致性审查不过时才开；开则最多4轮、≥9.5到线即停（CLI `max_rounds=4`，标明是否 ≥9.5）。**禁止**默认对背包每一格开闭环。
 ```bash
-pyw -3 -u pmem_art.py converge start --session <icon_c_id> --goal "道具格：<name>" --module brand.WorldStyle --route-id icon.c
-pyw -3 -u pmem_art.py reasonableness review --id <icon_c_id> --skill icon.c \
-  --draft "<草稿>" --revised "<厚剪影+透明底+棚拍光+无字的修订句>" \
+python3 pmem_art.py converge start --session <icon_c_id> --goal "道具格：<name>" --module brand.WorldStyle --route-id icon.c
+python3 pmem_art.py reasonableness review --id <icon_c_id> --skill icon.c \
+  --draft "<草稿>" --revised "<厚剪影+纯黑隔离底或真alpha+棚拍光+无字的修订句>" \
   --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;silhouette_read=ok;transparent_friendly=ok"
 # 然后：converge generate → judge → finish（均带 --session <icon_c_id>）
 ```
 
-正式分：剪影识别 30%（门槛）/ 描边色板 20% / 棚拍光 20% / 透明底 15%（门槛）/ 无字 15%（门槛）；无瑕疵盲评同库（展示六维时须带上）。judge 示例：`--dims "剪影识别8.6/描边色板8.4/棚拍光8.5/透明底9.0/无字9.2/无瑕疵8.8"`。交付须真 alpha；白底/品红底不算透明底。门槛 <8.0 → 正式分改取该维。
+正式分：剪影识别 30%（门槛）/ 描边色板 20% / 棚拍光 20% / 底隔离（展示名可写「透明底」）15%（门槛）/ 无字 15%（门槛）；无瑕疵盲评同库（展示六维时须带上）。judge 示例：`--dims "剪影识别8.6/描边色板8.4/棚拍光8.5/透明底9.0/无字9.2/无瑕疵8.8"`（Cursor 路径该维=隔离底是否干净）。**Cursor：交不透明纯黑/实色隔离底，禁止后抠冒充 alpha**；**gpt-image 等：须真 alpha**；白底/品红底都不算合格隔离。门槛 <8.0 → 正式分改取该维。
 
-**同店气质对齐（缺风格时强制）**：未点名画风且无风格参考时，写同品类顶级道具格气质（先认品类；禁止非休闲硬套软塑胶 merge）。同任务已有合成梯/`surface` 必须复用同一句。禁止垫竞品像素抄脸。
+**同店气质对齐（风格优先级）**：有文字跟文字；有参考无文字跟参考；都无才写同品类顶级道具格气质（先认品类；禁止非休闲硬套软塑胶 merge）。同任务已有合成梯/`surface` 必须复用同一句。禁止垫竞品像素抄脸。
 
-**图标 C 短透镜**：①厚剪影 64px 可认；②真 alpha；③品类主光+接触影；④描边/色板/投影锁死；⑤无字无场景；⑥形先于质；⑦优先复用同店 surface。
+**图标 C 短透镜**：①厚剪影 64px 可认；②底隔离（Cursor=实色空底 / 透明引擎=真 alpha）；③品类主光+接触影；④描边/色板/投影锁死；⑤无字无场景；⑥形先于质；⑦优先复用同店 surface。
 
 ## 五、交付检查清单（按模式分流，禁止混用）
 
@@ -162,7 +167,7 @@ pyw -3 -u pmem_art.py reasonableness review --id <icon_c_id> --skill icon.c \
 - [ ] 若跑了收敛：展示每轮评分/不足/改点 + 胜出图
 
 ### Mode C
-- [ ] 真 alpha 透明底；厚剪影 64px 可认
+- [ ] 底隔离合格：Cursor=纯黑/实色空底（未后抠）；透明引擎=真 alpha；厚剪影 64px 可认
 - [ ] 套件描边/色板/投影一致；无字
 - [ ] 品类主光 + 接触影；无场景插画
 - [ ] 关键枚若收敛：评分履历可见

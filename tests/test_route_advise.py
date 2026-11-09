@@ -309,6 +309,7 @@ class RouteAdviseTests(unittest.TestCase):
             "锁风格再出一张验证图证明色板",
             "先锁风格为了出图验证",
             "/pmem-style-lock 锁完出图验证",
+            "锁完出图",
         ):
             plan = plan_route(text, images=["ref/style.png"])
             self.assertEqual(plan.route_ids, ["style.lock", "draw.clone"], text)

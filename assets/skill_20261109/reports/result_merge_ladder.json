@@ -1,0 +1,33 @@
+{
+  "route_id": "merge.ladder",
+  "skill": "pmem-merge-ladder",
+  "banner": "【按 同域合成梯走了】",
+  "conversation": "skill1109-merge-v3",
+  "session": "skill1109-merge-v3",
+  "chain_mode": "shop_ladder",
+  "levels": 8,
+  "delivery": "overview_sheet",
+  "grid": "2x4",
+  "relation_file": "assets/skill_20261109/merge_overview/merge_phase1_v3.yaml",
+  "commercial_ref": "Travel Town/Merge Mansion dessert bakery: MiniCreamPuff→Macaron→Cupcake→CreamCup→Tart→CakeSlice→WholeCake→GiftBox",
+  "process_type": "shop_ladder_same_family_dessert_SKU_evolution",
+  "status": "finished_under_threshold_early_stop",
+  "stop_reason": "STOP_PLATEAU",
+  "passed_threshold_9_5": false,
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_run": 3,
+  "best_score": 8.74,
+  "best_round": 3,
+  "winner_round": 3,
+  "final": "assets/skill_20261109/merge_overview_v3/final.jpg",
+  "final_image": "assets/skill_20261109/merge_overview_v3/final.jpg",
+  "summary": "关系第2稿改甜点烘焙同店形变；满轮前平台早停；最高R1=8.74未过线；L8礼盒仍易回退感需再改犒赏末档",
+  "artist_feedback": "merge合理性不过关，根本达不到别人顶级休闲游戏merge的那种标准",
+  "diagnosis": [
+    "v2糖果袋→布丁跨品类硬跳",
+    "v2实拍食物风非软塑胶货柜",
+    "v3链型已改烘焙形变",
+    "L8礼盒装小件犒赏感仍弱于顶级货柜末档"
+  ]
+}

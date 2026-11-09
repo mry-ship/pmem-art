@@ -159,6 +159,9 @@ def loop_followup(root: Path, session_id: str = "") -> dict[str, str] | None:
         row = pending[-1]
         rno = int(row.get("round") or 0)
         image = str(row.get("image") or "")
+        from .understanding_contract import working_set_from_session
+
+        ws = working_set_from_session(sess, session_id=sid)
         return {
             "reason": "pending_judge",
             "session_id": sid,
@@ -166,7 +169,7 @@ def loop_followup(root: Path, session_id: str = "") -> dict[str, str] | None:
                 f"第 {rno} 轮还没审图，不能停。先看图打六维，再运行："
                 f"`{pmem_art_cli()} converge judge --id {sid} --round {rno} "
                 f"--image \"{image}\" --dims \"构图x/光影x/透视x/质感x/风格x/无瑕疵x\" "
-                f"--defects \"...\" --next-fix \"...\"`"
+                f"--defects \"...\" --next-fix \"...\"`\n{ws}"
             ),
         }
     judged = [r for r in rounds if r.get("judged") and r.get("score") is not None]
@@ -196,6 +199,9 @@ def loop_followup(root: Path, session_id: str = "") -> dict[str, str] | None:
             ),
         }
     nxt = n_judged + 1
+    from .understanding_contract import working_set_from_session
+
+    ws = working_set_from_session(sess, session_id=sid)
     return {
         "reason": "need_next_round",
         "session_id": sid,
@@ -203,6 +209,7 @@ def loop_followup(root: Path, session_id: str = "") -> dict[str, str] | None:
             f"第 {n_judged} 轮 {best:.2f} < {th:.2f}，未满 {mr} 轮，不能停。"
             f"必须再出第 {nxt} 轮：GenerateImage → "
             f"`{pmem_art_cli()} converge generate --id {sid} --round {nxt} --image <path> --prompt \"...\"` "
-            f"→ `{pmem_art_cli()} converge judge --id {sid} --round {nxt} --image <path> --dims ...`。"
+            f"→ `{pmem_art_cli()} converge judge --id {sid} --round {nxt} --image <path> --dims ...`。\n"
+            f"先读最小工作集（勿重谈合同）：`{pmem_art_cli()} contract working-set --id {sid}`\n{ws}"
         ),
     }

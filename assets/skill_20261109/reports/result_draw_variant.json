@@ -1,0 +1,32 @@
+{
+  "route_id": "draw.variant",
+  "session": "skill1109-variant",
+  "banner": "【按 变体 走了】",
+  "passed_threshold": false,
+  "best_score": 8.87,
+  "best_round": 3,
+  "rounds": [
+    {
+      "round": 1,
+      "score": 8.79,
+      "image": "assets/skill_20261109/draw_variant/variant_r1.jpg"
+    },
+    {
+      "round": 2,
+      "score": 8.79,
+      "image": "assets/skill_20261109/draw_variant/variant_r2.jpg"
+    },
+    {
+      "round": 3,
+      "score": 8.87,
+      "image": "assets/skill_20261109/draw_variant/variant_r3.jpg"
+    },
+    {
+      "round": 4,
+      "score": 8.78,
+      "image": "assets/skill_20261109/draw_variant/variant_r4.jpg"
+    }
+  ],
+  "final_image": "assets/skill_20261109/draw_variant/final.png",
+  "status": "finished_under_threshold"
+}

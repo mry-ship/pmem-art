@@ -1,0 +1,22 @@
+id: merge.cabinet
+category: merge
+title: 休闲 merge 货柜（默认钉 Merge Mansion）
+aliases:
+  - merge
+  - 合成梯
+  - 货柜
+  - merge mansion
+  - evermerge
+  - travel town
+surface: 默认钉 Merge Mansion 货柜软塑胶：厚实圆润哑光、棚柔光短接触影、饱和友好、棋盘缩略可读、上架货柜完成度（Travel Town / EverMerge 仅同系旁证，不另换默认名）
+layout_notes: 每格一件居中；相邻档体量缓增；家族=店域/色相（非纹样贯穿）
+ladder_levels:
+  - L1 朴素完整小件 SKU
+  - L2 换代完整件
+  - L3 再换代（同店形态升级）
+  - L4 包装/结构更完整
+  - L5 中段犒赏形变
+  - L6 高级完整件
+  - L7 高犒赏件
+  - L8 顶档单件犒赏（勿默焊无关城堡喂养目标；半成品句式仅建造/修复链）
+forbid_pad: true

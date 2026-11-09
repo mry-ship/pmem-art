@@ -1,0 +1,29 @@
+# 妖精花园「蘑菇甜点」合成梯 · shop_ladder L1–L8（overview_sheet 2×4）· 关系重开（店域非纹样）
+# 商业对标真链：Travel Town Ice Cream
+#   Vanilla→Watermelon→Kiwi→RainbowPop→Cone→StrawberryCone→BigCone→Luxury→SimpleSundae→DeluxeSundae
+# 本链8档压缩：Scoop→StickPop→Cone→BerryCone→BigCone→LuxuryCup→Sundae→Deluxe
+# 过程类型：同店品类形变（盛装/类型升级）；蘑菇主题=店域色相，非每格必贴菇盖
+# 版式：2×4 白圆角卡深炭灰底；每格一件居中无等级字
+version: fairy-garden-mushroom-dessert-20261110-v5
+pipeline: art-merge-two-phase
+delivery: overview_sheet
+
+tracks:
+  mushroom_dessert:
+    module: prop.FairyGarden.MushroomDessert
+    chain_mode: shop_ladder
+    levels: 8
+    grid_rows: 2
+    grid_cols: 4
+    surface: Travel Town级休闲merge甜点货柜；软塑胶/搪胶玩具厚实圆润哑光（禁实拍食物、禁玻璃折射写实、禁油光摄影），棚柔光短接触影，饱和友好，64px缩略可读；2×4白圆角卡深炭灰底；每格一件居中无字；家族基因=妖精花园甜点店暖奶油+柔红点缀色相（店域非纹样）；红菇糖点缀仅L1可选，禁止八档每格必贴完整蘑菇盖；道具无脸；L5必须双球叠高甜筒且明显异于L3单球软旋筒；八档剪影递进上升禁回退；禁同底座堆料、禁跨店硬跳、禁礼盒回退末档、禁金铠海报风
+    commercial_ref: "Travel Town Ice Cream (real): Vanilla→Watermelon→Kiwi→RainbowPop→Cone→StrawberryCone→BigCone→Luxury→SimpleSundae→DeluxeSundae; compress8=Scoop→StickPop→Cone→BerryCone→BigCone→LuxuryCup→Sundae→Deluxe"
+    process_type: "shop_ladder_same_shop_dessert_serving_evolution"
+    rows:
+      - { level: 1, name: 迷你奶油球, silhouette: 单颗拇指大圆润奶油球完整小甜点，可选极小红糖点缀非必菇盖, scale_delta: 基档, scale_pct: 0.58, evolve_to: MiniCreamScoop, merge_why: "—", parts_add: "—" }
+      - { level: 2, name: 奶油雪糕棒, silhouette: 短柄雪糕棒裹奶油层，棒形剪影大变仍同店甜品, scale_delta: "+小", scale_pct: 0.60, evolve_to: CreamPopStick, merge_why: 两颗迷你奶油球合成一支奶油雪糕棒, parts_add: "—" }
+      - { level: 3, name: 奶油甜筒, silhouette: 威化锥筒托一球奶油旋顶，筒形完整SKU, scale_delta: "+小", scale_pct: 0.64, evolve_to: CreamCone, merge_why: 两支奶油雪糕棒合成一只奶油甜筒, parts_add: "—" }
+      - { level: 4, name: 浆果奶油甜筒, silhouette: 甜筒加两三颗柔红浆果顶饰，仍单筒剪影更密, scale_delta: "+中", scale_pct: 0.68, evolve_to: BerryCreamCone, merge_why: 两只奶油甜筒合成带浆果顶饰的浆果奶油甜筒, parts_add: "—" }
+      - { level: 5, name: 双球大甜筒, silhouette: 高威化筒垂直叠两整球圆奶油（非软旋单峰），总高明显大于L3/L4单球筒，剪影读作双球, scale_delta: "+中", scale_pct: 0.72, evolve_to: DoubleScoopCone, merge_why: 两只浆果奶油甜筒合成双球大甜筒, parts_add: "—" }
+      - { level: 6, name: 豪华奶油杯, silhouette: 矮杯盛多层奶油与浆果，杯装SKU剪影异于筒, scale_delta: "+中", scale_pct: 0.75, evolve_to: LuxuryCreamCup, merge_why: 两只双球大甜筒合成一杯豪华奶油杯, parts_add: "—" }
+      - { level: 7, name: 奶油圣代, silhouette: 高杯圣代多层奶油旋顶与浆果，圣代形剪影, scale_delta: "+大", scale_pct: 0.78, evolve_to: CreamSundae, merge_why: 两杯豪华奶油杯合成一只奶油圣代, parts_add: "—" }
+      - { level: 8, name: 豪华盛宴圣代, silhouette: 最宽盛宴圣代碗多层奶油浆果体量最大仍一件SKU留边, scale_delta: "+大", scale_pct: 0.80, evolve_to: DeluxeFeastSundae, merge_why: 两只奶油圣代合成豪华盛宴圣代犒赏件, parts_add: "—" }

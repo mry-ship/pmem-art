@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <title>icon_b Soft SVG · 妖精花园</title>
+  <style>
+    body { font-family: ui-sans-serif, system-ui, sans-serif; margin: 24px; background: #0f1419; color: #e8eef5; }
+    h1 { font-size: 18px; font-weight: 600; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px; margin-top: 20px; }
+    .card { background: #1a222c; border-radius: 12px; padding: 16px; text-align: center; }
+    .sizes { display: flex; gap: 12px; justify-content: center; align-items: flex-end; margin-top: 10px; color: #9ad0ff; }
+    .sizes span { display: inline-flex; }
+    .label { margin-top: 8px; font-size: 13px; opacity: 0.85; }
+    .meta { font-size: 12px; opacity: 0.65; margin-top: 4px; }
+    .light { margin-top: 28px; padding: 20px; background: #f4f7fb; color: #1a222c; border-radius: 12px; }
+    .light .card { background: #ffffff; box-shadow: 0 1px 0 rgba(0,0,0,.06); }
+    .light .sizes { color: #2a6f4e; }
+  </style>
+</head>
+<body>
+  <h1>Mode B · Soft 2px · currentColor · 24 grid</h1>
+  <p class="meta">skill_20261109 · 妖精花园功能入口 · Soft round/round</p>
+  <div class="grid" id="grid-dark"></div>
+  <div class="light">
+    <p class="meta" style="opacity:0.7;margin:0 0 8px">浅底预览</p>
+    <div class="grid" id="grid-light"></div>
+  </div>
+  <script>
+    const icons = [
+      ["home", "家园"],
+      ["bag", "背包"],
+      ["shop", "商店"],
+      ["quest", "任务"],
+      ["settings", "设置"],
+      ["bestiary", "图鉴"],
+      ["map", "地图"],
+      ["watering-can", "浇水"],
+      ["sprout", "种植"],
+      ["wings", "精灵"]
+    ];
+    async function fill(id) {
+      const grid = document.getElementById(id);
+      for (const [name, label] of icons) {
+        const svg = await (await fetch(name + ".svg")).text();
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `<div class="sizes">
+          <span style="width:24px;height:24px">${svg}</span>
+          <span style="width:32px;height:32px">${svg}</span>
+          <span style="width:48px;height:48px">${svg}</span>
+        </div><div class="label">${label} · ${name}.svg</div><div class="meta">24 / 32 / 48</div>`;
+        grid.appendChild(card);
+      }
+    }
+    fill("grid-dark");
+    fill("grid-light");
+  </script>
+</body>
+</html>

@@ -1,0 +1,1060 @@
+{
+  "session_id": "skill1109-clone",
+  "started_at": "2026-11-09 22:54:46 UTC+8",
+  "goal": "锁妖精花园粘土童话画风，换新题材：冬日雪地农场，农夫抱小羊。只锁画风不锁构图；禁止抄回参考的妖精屋/鼹鼠/花屋题材。",
+  "module": "brand.WorldStyle",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "medium",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "medium",
+    "label": "中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.5)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 1,
+    "target_score_threshold": 9.5,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.15,
+      "perspective_anatomy": 0.15,
+      "texture_detail": 0.15,
+      "spec_style": 0.15,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "viewpoint_frame",
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图，只在提示词上补还没过的那一处（提示词改动仍 ≤40%）",
+    "max_prompt_delta_ratio": 0.4,
+    "allow_recompose": false,
+    "allow_viewpoint_change": false,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "viewpoint_angle (不改机位与镜头视角)",
+      "element_count (不增删主体元素清单)",
+      "no_full_recompose (不做整体 recompose / 换景别故事)",
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)"
+    ],
+    "min_round_leap": 0.15,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光",
+    "medium_family": "generic",
+    "best_direction_hint": "最优方向：光影·空气·介质；可小幅姿态/局部布局",
+    "goal": "锁妖精花园粘土童话画风，换新题材：冬日雪地农场，农夫抱小羊。只锁画风不锁构图；禁止抄回参考的妖精屋/鼹鼠/花屋题材。",
+    "module": "",
+    "ref_image": "assets/skill_20261109/_refs/ref_style_fairy_garden.png",
+    "ref_analysis": "媒介：光滑聚合物粘土/3D玩具渲染，圆角软边、哑光体+柔和高光。色板：翠绿#2E8B57、淡紫#9B7EBD、暖褐#A67C52、天蓝#5BA3D9、粉花#E88BA8。光感：明亮漫射全局光，软阴影。角色Q版虹膜高光。不锁参考构图与妖精花园题材。"
+  },
+  "medium_family": "generic",
+  "contract": "",
+  "target_score_threshold": 9.5,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "assets/skill_20261109/_refs/ref_style_fairy_garden.png",
+  "ref_analysis": "媒介：光滑聚合物粘土/3D玩具渲染，圆角软边、哑光体+柔和高光。色板：翠绿#2E8B57、淡紫#9B7EBD、暖褐#A67C52、天蓝#5BA3D9、粉花#E88BA8。光感：明亮漫射全局光，软阴影。角色Q版虹膜高光。不锁参考构图与妖精花园题材。",
+  "default_aspect_ratio": "9:16",
+  "default_reference_image_paths": [
+    "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_style_fairy_garden.png"
+  ],
+  "aspect_ratio": "9:16",
+  "reference_image_paths": [
+    "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_style_fairy_garden.png"
+  ],
+  "ref_physical_traits": {
+    "exists": true,
+    "size_bytes": 115490,
+    "size_kb": 112.8,
+    "width": 169,
+    "height": 276,
+    "aspect_ratio": "169:276",
+    "canonical_aspect_ratio": "9:16",
+    "color_entropy": 7.99
+  },
+  "param_validation": {
+    "valid": true,
+    "validation_passed": true,
+    "case_id": "skill1109-clone",
+    "scale": "medium",
+    "aspect_ratio": "9:16",
+    "ref_aspect_ratio": "9:16",
+    "ref_dimensions": "169x276",
+    "output_aspect_ratio": "",
+    "output_dimensions": "",
+    "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_style_fairy_garden.png",
+    "reference_image_paths": [
+      "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_style_fairy_garden.png"
+    ],
+    "inherited_default_aspect_ratio": false,
+    "inherited_default_pad_image": true,
+    "matched_ref_aspect_ratio": true,
+    "matched_ref_pad_image": true,
+    "matched_output_aspect_ratio": true,
+    "three_step_stage": "step1_start",
+    "three_step_verified": false,
+    "warnings": []
+  },
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.5,
+  "accept_threshold": 9.5,
+  "max_rounds": 4,
+  "ready_to_finish": true,
+  "status": "finished",
+  "owner_conversation_id": "skill1109-clone",
+  "route_ids": [
+    "draw.clone"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_style_fairy_garden.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "skill1109-clone",
+        "scale": "medium",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "169x276",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_style_fairy_garden.png",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_style_fairy_garden.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "22:58:37",
+      "image": "assets/skill_20261109/draw_clone/r1_winter_snow_farm.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 223124,
+        "size_kb": 217.9,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.23
+      },
+      "raw_score": 8.59,
+      "score": 8.59,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.8/光影8.7/透视8.3/质感8.8/风格9.1/无瑕度8.2",
+      "dims_parsed": {
+        "composition": 8.8,
+        "lighting_color": 8.7,
+        "perspective_anatomy": 8.3,
+        "texture_detail": 8.8,
+        "spec_style": 9.1,
+        "flawlessness": 8.2
+      },
+      "weighted_score": 8.59,
+      "audit_warnings": [
+        "独立视觉裁判已采纳：openai_compatible/gpt-5.6-sol"
+      ],
+      "stagnated": false,
+      "strengths": "全新冬日农场题材未回声鼹鼠/花屋；粘土霜雪堆与针织帽围巾哑光圆角体量贴参考玩具媒介；农夫双臂环抱小羊接触关系清楚。",
+      "defects": "人物与小羊接触区域过于拥挤，手套、羊腿和羊毛团块的边界部分互相融合；右侧木屋占幅偏大并被画框截断，视觉重量略向右倾斜；部分雪面过度平滑，局部形态重复。",
+      "next_fix": "优先拉开抱持区域的轮廓层级，明确两只手、小羊前后腿与腹部的遮挡关系；随后略减轻右侧建筑的面积或明暗重量，并给近景雪面补充少量有方向性的起伏和接触阴影。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: brand.WorldStyle\n- 置信度: 1.00（fast-track 资格: 是）\n- 优先复用定稿方向:\n  · [CHAT20261109225423885RECIPE] 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 必须避开红线:\n  · [CHAT20261105023206398REDLINE] 禁止偏离样张画风：霓虹赛博、脏暗阴影、油腻镜面高光、写实皮肤毛孔、恐怖暗黑、扁平无体积贴纸、赛博紫雾、灰雾废土、可读乱码UI字\n  · [CHAT20261105032252452REDLINE] 禁止偏离样张画风：霓虹赛博、脏暗阴影、油腻镜面高光、写实皮肤毛孔、恐怖暗黑、扁平无体积贴纸、赛博紫雾、灰雾废土、可读乱码UI字\n- 审美拍板:\n  · 图标集 style-spec：Soft 2px round/round grid24 padding2 · 妖精花园功能入口 10 枚线性 SVG\n  · 以后统一按此样张画风：妖精花园休闲merge缩景；主色草绿#77B733/铃兰紫#9D55D1/暖陶木褐#A66B3E，辅色池水青蓝#59B1F5/奶油白…\n  · 图标集 style-spec：Soft 2px round/round grid24 padding2 · 妖精花园功能入口 10 枚线性 SVG\n- 个人口味: 光影=冷光源 / 暖光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [tech-watercolor] 水彩渲染: 边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。\n  · [tech-celshade] 赛璐珞分层: 硬边色块分层，高光形状干净，层数克制。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光 | Vertical 9:16 casual mobile game key art of a cozy winter snow farm scene in the exact soft polymer-clay toy medium of the reference: smooth matte rounded volumes, gentle satin highlights, saturated friendly pastels, soft diffuse daylight from upper-left, no neon, no oily mirror speculars, no realistic pores. NEW SUBJECT ONLY: a chubby chibi farmer in a warm wool coat, knit scarf and soft beanie, both arms cradling a small fluffy white lamb against their chest; farmer stands in a snowy farmyard with rounded clay-snow drifts like frosting, a chunky timber barn with soft curved edges and warm window glow, a short wobbly fence, a few evergreen saplings dusted with clay snow, maybe one snow-capped wooden trough. Eyes: clear iris, scleral crescent, soft catchlight — never black-dot pupils. Keep warm cozy winter, not bleak cold. Completely new composition — do NOT copy the fairy flower houses, mole character, mushrooms, banana boat, stone path layout, or giant tulip framing from the style reference. Style lock only: clay medium, pastel saturation, soft lighting grammar, Q proportions. Clean solid background sky of soft winter blue with gentle clay clouds. No readable UI text, no cyberpunk, no dirty dark shadows. | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: the person's joints and grip stay clear and both pupils share a direction; the animal's limbs follow its species and are not converted into human elbows; contact shadows read; do not melt limbs into props",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.3,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "both",
+      "judge_source": "independent_vlm",
+      "remote_vlm": {
+        "source": "independent_vlm",
+        "provider": "openai_compatible",
+        "model": "gpt-5.6-sol",
+        "error": "",
+        "active": true,
+        "score_evidence": {
+          "composition": "人物与小羊位于画面中下部视觉中心，右后方木屋和左侧覆雪松树形成高低错落的三角围合，前景雪团增强纵深但右侧木屋切边略重。",
+          "lighting_color": "暖色人物和木屋与蓝天、蓝紫雪地阴影形成清晰冷暖对比，面部、帽檐和积雪上的柔和高光方向基本一致。",
+          "perspective_anatomy": "围栏、木屋墙面和右下木槽呈现可辨识的前后缩短，人物双脚着地稳定，但抱羊的两只手与羊腿在胸前局部挤叠。",
+          "texture_detail": "帽子罗纹、围巾针织、衣袋编纹、木板纹路和羊毛团块均有可见差异，近景细节清楚而远景适度虚化。",
+          "spec_style": "全图采用圆润体块、软化边缘、低对比阴影和细腻黏土式表面，人物、动物、建筑及植物的造型语言统一。",
+          "flawlessness": "主体轮廓和五官干净完整，但小羊下腹的短腿、人物手套与羊身连接处略显粘连，右手附近的肢体层级不够清楚。"
+        },
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 1,
+          "rerated": false,
+          "reason": "",
+          "first_score": 8.59
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：人物与小羊接触区域过于拥挤，手套、羊腿和羊毛团块的边界部分互相融合；右侧木屋占幅偏大并被画框截断，视觉重量略向右倾斜；部分雪面过度平滑，局部形态重复。",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.59"
+        },
+        {
+          "category": "icon_consistency",
+          "lesson": "本轮短板偏「icon_consistency」：人物与小羊接触区域过于拥挤，手套、羊腿和羊毛团块的边界部分互相融合；右侧木屋占幅偏大并被画框截断，视觉重量略向右倾斜；部分雪面过度平滑，局部形态重复。",
+          "drill": "5 枚图标同 viewBox/stroke 批量生成后做一致性审查表",
+          "from_score": "8.59"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：全新冬日农场题材未回声鼹鼠/花屋；粘土霜雪堆与针织帽围巾哑光圆角体量贴参考玩具媒介；农夫双臂环抱小羊接触关系清楚。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.59"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "23:00:35"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_style_fairy_garden.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "skill1109-clone",
+        "scale": "medium",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "169x276",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_style_fairy_garden.png",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_style_fairy_garden.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "23:02:56",
+      "image": "assets/skill_20261109/draw_clone/r2_winter_snow_farm.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 267467,
+        "size_kb": 261.2,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.24
+      },
+      "raw_score": 8.68,
+      "score": 8.68,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.8/光影8.7/透视8.3/质感9.1/风格9.0/无瑕度8.4",
+      "dims_parsed": {
+        "composition": 8.8,
+        "lighting_color": 8.7,
+        "perspective_anatomy": 8.3,
+        "texture_detail": 9.1,
+        "spec_style": 9.0,
+        "flawlessness": 8.4
+      },
+      "weighted_score": 8.68,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.09 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "独立视觉裁判已采纳：openai_compatible/gpt-5.6-sol",
+        "prompt 改动 48% 超过档位上限 40%"
+      ],
+      "stagnated": true,
+      "strengths": "抱持中近景更紧，木屋圆角雪檐与粘土雪丘起伏可读；针织橙围巾与羊毛团块质感分离清楚；题材仍是农夫抱羊无回声花屋鼹鼠。",
+      "defects": "抱持区域的信息密度偏高，手套、羊身、耳朵和腿部多处相互贴合；右侧房屋占幅较大且被画框切断，使主体右后方稍显拥挤。；prompt 改动 48% 超过档位上限 40%",
+      "next_fix": "优先拉开羊耳、袖口、手套和躯干之间的轮廓间隙，并重新整理羊腿根部的连接与前后遮挡；随后略减弱或后移右侧房屋的视觉体量。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: brand.WorldStyle\n- 置信度: 1.00（fast-track 资格: 是）\n- 优先复用定稿方向:\n  · [CHAT20261109225423885RECIPE] 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 必须避开红线:\n  · [CHAT20261105023206398REDLINE] 禁止偏离样张画风：霓虹赛博、脏暗阴影、油腻镜面高光、写实皮肤毛孔、恐怖暗黑、扁平无体积贴纸、赛博紫雾、灰雾废土、可读乱码UI字\n  · [CHAT20261105032252452REDLINE] 禁止偏离样张画风：霓虹赛博、脏暗阴影、油腻镜面高光、写实皮肤毛孔、恐怖暗黑、扁平无体积贴纸、赛博紫雾、灰雾废土、可读乱码UI字\n- 审美拍板:\n  · 图标集 style-spec：Soft 2px round/round grid24 padding2 · 妖精花园功能入口 10 枚线性 SVG\n  · 以后统一按此样张画风：妖精花园休闲merge缩景；主色草绿#77B733/铃兰紫#9D55D1/暖陶木褐#A66B3E，辅色池水青蓝#59B1F5/奶油白…\n  · 图标集 style-spec：Soft 2px round/round grid24 padding2 · 妖精花园功能入口 10 枚线性 SVG\n- 个人口味: 光影=冷光源 / 暖光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [tech-watercolor] 水彩渲染: 边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。\n  · [tech-celshade] 赛璐珞分层: 硬边色块分层，高光形状干净，层数克制。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光 | R2 fixes: iris+scleral crescent+catchlight on farmer and lamb (no black-dot pupils); separate mitten/lamb limb occlusion layers; softer smaller clay barn on right; directional clay snow mounds with contact shadows. Same winter farm farmer-holding-lamb clay-toy style lock. | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: the person's joints and grip stay clear and both pupils share a direction; the animal's limbs follow its species and are not converted into human elbows; contact shadows read; do not melt limbs into props | 优先拉开抱持区域的轮廓层级，明确两只手、小羊前后腿与腹部的遮挡关系；随后略减轻右侧建筑的面积或明暗重量，并给近景雪面补充少量有方向性的起伏和接触阴影。",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.3,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "both",
+      "judge_source": "independent_vlm",
+      "remote_vlm": {
+        "source": "independent_vlm",
+        "provider": "openai_compatible",
+        "model": "gpt-5.6-sol",
+        "error": "",
+        "active": true,
+        "score_evidence": {
+          "composition": "人物与羊位于中央前景，屋门和三角屋顶在右后方形成稳定框景，左右松树与前景木栅栏提供清晰层次。",
+          "lighting_color": "左上方暖光统一照亮帽檐、脸颊、羊毛和积雪，右下侧阴影柔和，蓝天、奶白雪地与橙棕服饰形成清楚的冷暖对比。",
+          "perspective_anatomy": "房屋梁柱、门洞和栅栏具有一致的前后遮挡关系，但羊的四条短腿集中悬在躯干下方，和抱持手臂的交叠略显拥挤。",
+          "texture_detail": "围巾针织颗粒、帽檐绒面、羊毛团块、木材细纹与雪层柔软边缘均有可辨识且彼此区分的表面细节。",
+          "spec_style": "人物、动物、房屋和植物均由圆润厚实的塑形体块构成，低锐度边缘、柔软材质与统一的暖色比例贯穿全图。",
+          "flawlessness": "整体边缘干净且没有明显破碎噪点，但羊右侧耳朵贴入袖口、两只手套压在羊身上的交界以及羊腿根部存在轻微粘连和结构含混。"
+        },
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 1,
+          "rerated": false,
+          "reason": "",
+          "first_score": 8.68
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：抱持区域的信息密度偏高，手套、羊身、耳朵和腿部多处相互贴合；右侧房屋占幅较大且被画框切断，使主体右后方稍显拥挤。；prompt 改动 48% 超过档位上限 40",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.68"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：抱持中近景更紧，木屋圆角雪檐与粘土雪丘起伏可读；针织橙围巾与羊毛团块质感分离清楚；题材仍是农夫抱羊无回声花屋鼹鼠。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.68"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "23:05:38"
+    },
+    {
+      "round": 3,
+      "round_label": "第 3 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_style_fairy_garden.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "skill1109-clone",
+        "scale": "medium",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "169x276",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_style_fairy_garden.png",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_style_fairy_garden.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "23:08:52",
+      "image": "assets/skill_20261109/draw_clone/r3_winter_snow_farm.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 255349,
+        "size_kb": 249.4,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.25
+      },
+      "raw_score": 8.66,
+      "score": 8.66,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.8/光影8.9/透视8.1/质感9.0/风格9.2/无瑕度8.3",
+      "dims_parsed": {
+        "composition": 8.8,
+        "lighting_color": 8.9,
+        "perspective_anatomy": 8.1,
+        "texture_detail": 9.0,
+        "spec_style": 9.2,
+        "flawlessness": 8.3
+      },
+      "weighted_score": 8.66,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +-0.02 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "独立视觉裁判已采纳：openai_compatible/gpt-5.6-sol"
+      ],
+      "stagnated": true,
+      "strengths": "小屋完整入画且居中后置，抱持手套与羊身轮廓间隙更清楚；粉衣蓝巾冷暖对比与粘土霜雪坨感统一。",
+      "defects": "构图偏标准化正中肖像，动态和留白变化有限；双手、羊腹与羊腿交叠处存在体块粘连，部分肢体连接关系不够清楚；细节普遍采用相近的圆润软化处理，材质边缘差异略少。",
+      "next_fix": "优先拉开小羊前肢、腹部、农夫手套和外套之间的轮廓间隙，明确两只手腕的起点与受力方向；随后略微调整主体偏位或背景木屋位置，增加构图的不对称层次，并强化木材硬边与羊毛软边的对比。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: brand.WorldStyle\n- 置信度: 1.00（fast-track 资格: 是）\n- 优先复用定稿方向:\n  · [CHAT20261109225423885RECIPE] 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 必须避开红线:\n  · [CHAT20261105023206398REDLINE] 禁止偏离样张画风：霓虹赛博、脏暗阴影、油腻镜面高光、写实皮肤毛孔、恐怖暗黑、扁平无体积贴纸、赛博紫雾、灰雾废土、可读乱码UI字\n  · [CHAT20261105032252452REDLINE] 禁止偏离样张画风：霓虹赛博、脏暗阴影、油腻镜面高光、写实皮肤毛孔、恐怖暗黑、扁平无体积贴纸、赛博紫雾、灰雾废土、可读乱码UI字\n- 审美拍板:\n  · 图标集 style-spec：Soft 2px round/round grid24 padding2 · 妖精花园功能入口 10 枚线性 SVG\n  · 以后统一按此样张画风：妖精花园休闲merge缩景；主色草绿#77B733/铃兰紫#9D55D1/暖陶木褐#A66B3E，辅色池水青蓝#59B1F5/奶油白…\n  · 图标集 style-spec：Soft 2px round/round grid24 padding2 · 妖精花园功能入口 10 枚线性 SVG\n- 个人口味: 光影=冷光源 / 暖光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [tech-watercolor] 水彩渲染: 边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。\n  · [tech-celshade] 赛璐珞分层: 硬边色块分层，高光形状干净，层数克制。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光 | Keep same winter clay farm farmer+lamb. Only: open hug silhouette gaps (ear/cuff/mittens/leg roots); shrink soften right house inside frame. | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: the person's joints and grip stay clear and both pupils share a direction; the animal's limbs follow its species and are not converted into human elbows; contact shadows read; do not melt limbs into props | 优先拉开羊耳、袖口、手套和躯干之间的轮廓间隙，并重新整理羊腿根部的连接与前后遮挡；随后略减弱或后移右侧房屋的视觉体量。 | MUST_FIX (≤2): 优先拉开羊耳、袖口、手套和躯干之间的轮廓间隙，；并重新整理羊腿根部的连接与前后遮挡",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.1,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "both",
+      "judge_source": "independent_vlm",
+      "remote_vlm": {
+        "source": "independent_vlm",
+        "provider": "openai_compatible",
+        "model": "gpt-5.6-sol",
+        "error": "",
+        "active": true,
+        "score_evidence": {
+          "composition": "农夫与小羊形成居中的三角主体，头部位于画面上半部，右后方木屋和两侧树木围合出清晰层次，但主体接近正中且占幅较满。",
+          "lighting_color": "左上方暖光一致照亮帽檐、鼻尖、羊毛和雪面，右下侧保留柔和蓝灰阴影，粉、蓝、棕与雪白的色彩过渡协调。",
+          "perspective_anatomy": "木屋檐线、围栏和雪地由前向后缩小，空间前后关系明确；农夫双臂环抱小羊的姿势可读，但两只棕色手套在羊身前并排粘连，手腕归属略显含混。",
+          "texture_detail": "帽沿、袖口和羊身均有连续的团簇状绒毛起伏，木门、围巾、外套与雪面的颗粒和软硬差异清楚。",
+          "spec_style": "人物、动物、木屋、树木和云朵均采用圆润低锐度边缘、柔软体块及手塑般表面，整幅视觉语言统一。",
+          "flawlessness": "主体轮廓整体干净，但小羊下方两条腿与农夫外套、手套和羊腹发生多处贴合，右侧羊耳根部及前肢连接略显挤压，局部结构不够利落。"
+        },
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 1,
+          "rerated": false,
+          "reason": "",
+          "first_score": 8.66
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "composition",
+          "lesson": "本轮短板偏「composition」：构图偏标准化正中肖像，动态和留白变化有限；双手、羊腹与羊腿交叠处存在体块粘连，部分肢体连接关系不够清楚；细节普遍采用相近的圆润软化处理，材质边缘差异略少。",
+          "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+          "from_score": "8.66"
+        },
+        {
+          "category": "line_edge",
+          "lesson": "本轮短板偏「line_edge」：构图偏标准化正中肖像，动态和留白变化有限；双手、羊腹与羊腿交叠处存在体块粘连，部分肢体连接关系不够清楚；细节普遍采用相近的圆润软化处理，材质边缘差异略少。",
+          "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+          "from_score": "8.66"
+        },
+        {
+          "category": "material",
+          "lesson": "本轮短板偏「material」：构图偏标准化正中肖像，动态和留白变化有限；双手、羊腹与羊腿交叠处存在体块粘连，部分肢体连接关系不够清楚；细节普遍采用相近的圆润软化处理，材质边缘差异略少。",
+          "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+          "from_score": "8.66"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "23:11:27"
+    },
+    {
+      "round": 4,
+      "round_label": "第 4 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_style_fairy_garden.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "skill1109-clone",
+        "scale": "medium",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "169x276",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_style_fairy_garden.png",
+        "reference_image_paths": [
+          "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_style_fairy_garden.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "23:15:07",
+      "image": "assets/skill_20261109/draw_clone/r4_winter_snow_farm.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 266538,
+        "size_kb": 260.3,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.24
+      },
+      "raw_score": 8.99,
+      "score": 8.99,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.1/光影9.0/透视8.7/质感9.2/风格9.3/无瑕度8.8",
+      "dims_parsed": {
+        "composition": 9.1,
+        "lighting_color": 9.0,
+        "perspective_anatomy": 8.7,
+        "texture_detail": 9.2,
+        "spec_style": 9.3,
+        "flawlessness": 8.8
+      },
+      "weighted_score": 8.99,
+      "audit_warnings": [
+        "独立视觉裁判已采纳：openai_compatible/gpt-5.6-sol"
+      ],
+      "stagnated": false,
+      "strengths": "农夫略偏左、右侧小屋完整入画；抱持手套与羊身轮廓间隙更清楚；青绿冬装与粘土霜雪坨感统一，题材无回声花屋鼹鼠。",
+      "defects": "中央下半部的手套、羊毛身体和多条腿挤在一起，遮挡关系不如面部清晰；背景松树的形体重复度较高，木屋暗门洞接近纯黑，内部层次偏少。",
+      "next_fix": "优先拉开小羊右侧手套与腿部的轮廓间距，并补出人物被遮挡靴子的少量可辨边缘；给木屋门洞加入很弱的棕色反光，同时调整一两棵背景松树的枝层和高度以减少重复。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: brand.WorldStyle\n- 置信度: 1.00（fast-track 资格: 是）\n- 优先复用定稿方向:\n  · [CHAT20261109225423885RECIPE] 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 必须避开红线:\n  · [CHAT20261105023206398REDLINE] 禁止偏离样张画风：霓虹赛博、脏暗阴影、油腻镜面高光、写实皮肤毛孔、恐怖暗黑、扁平无体积贴纸、赛博紫雾、灰雾废土、可读乱码UI字\n  · [CHAT20261105032252452REDLINE] 禁止偏离样张画风：霓虹赛博、脏暗阴影、油腻镜面高光、写实皮肤毛孔、恐怖暗黑、扁平无体积贴纸、赛博紫雾、灰雾废土、可读乱码UI字\n- 审美拍板:\n  · 图标集 style-spec：Soft 2px round/round grid24 padding2 · 妖精花园功能入口 10 枚线性 SVG\n  · 以后统一按此样张画风：妖精花园休闲merge缩景；主色草绿#77B733/铃兰紫#9D55D1/暖陶木褐#A66B3E，辅色池水青蓝#59B1F5/奶油白…\n  · 图标集 style-spec：Soft 2px round/round grid24 padding2 · 妖精花园功能入口 10 枚线性 SVG\n- 个人口味: 光影=冷光源 / 暖光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [tech-watercolor] 水彩渲染: 边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。\n  · [tech-celshade] 赛璐珞分层: 硬边色块分层，高光形状干净，层数克制。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光 | Last round: layered hug occlusion gaps; iris+sclera+catchlight; farmer slightly left; smaller full barn right. Same clay winter farm style. | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: the person's joints and grip stay clear and both pupils share a direction; the animal's limbs follow its species and are not converted into human elbows; contact shadows read; do not melt limbs into props | 优先拉开羊耳、袖口、手套和躯干之间的轮廓间隙，并重新整理羊腿根部的连接与前后遮挡；随后略减弱或后移右侧房屋的视觉体量。 | MUST_FIX (≤2): 优先拉开羊耳、袖口、手套和躯干之间的轮廓间隙，；并重新整理羊腿根部的连接与前后遮挡",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.7,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "both",
+      "judge_source": "independent_vlm",
+      "remote_vlm": {
+        "source": "independent_vlm",
+        "provider": "openai_compatible",
+        "model": "gpt-5.6-sol",
+        "error": "",
+        "active": true,
+        "score_evidence": {
+          "composition": "人物与小羊形成居中的紧密三角主体，右后方木屋与左侧高松树平衡画面，前景叶片和雪丘构成自然框景。",
+          "lighting_color": "左上方柔光在帽檐、面颊、羊毛和屋顶积雪上形成一致高光，阴影柔和且青绿、暖棕、乳白三组颜色区分清楚。",
+          "perspective_anatomy": "木屋檐口、横梁和门洞具有统一的前后缩进，人物双臂环抱小羊的关系可读，但手套、羊身与腿部在中央下方重叠较紧。",
+          "texture_detail": "针织帽与衣领可见连续绳纹，羊毛由大小不同的团块组成，木墙保留压痕和细微颗粒，材质层次清晰。",
+          "spec_style": "人物、动物、树木、云和木屋均采用圆润软边、低锐度颗粒与手塑压痕，整张图的黏土玩偶语言高度统一。",
+          "flawlessness": "主体轮廓整体干净，五官与服饰边缘连续；小羊右侧手套贴近身体和后腿、人物右靴被遮挡较多，使局部肢体归属略显含混。"
+        },
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 1,
+          "rerated": false,
+          "reason": "",
+          "first_score": 8.99
+        }
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_MAX_ROUNDS",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "line_edge",
+          "lesson": "本轮短板偏「line_edge」：中央下半部的手套、羊毛身体和多条腿挤在一起，遮挡关系不如面部清晰；背景松树的形体重复度较高，木屋暗门洞接近纯黑，内部层次偏少。",
+          "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+          "from_score": "8.99"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：农夫略偏左、右侧小屋完整入画；抱持手套与羊身轮廓间隙更清楚；青绿冬装与粘土霜雪坨感统一，题材无回声花屋鼹鼠。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.99"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "23:25:19",
+      "asset_image": "assets/skill_20261109/draw_clone/r4_winter_snow_farm.jpg"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "/Users/yanghu/Desktop/pmem-art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-11-09 04:30:07 UTC+8"
+    },
+    "module": "brand.WorldStyle",
+    "goal": "锁妖精花园粘土童话画风，换新题材：冬日雪地农场，农夫抱小羊。只锁画风不锁构图；禁止抄回参考的妖精屋/鼹鼠/花屋题材。",
+    "confidence": 1.0,
+    "fast_track_eligible": true,
+    "confidence_reasons": [
+      "命中 1 条达标 recipe",
+      "命中 3 条审美拍板",
+      "个人口味/正向保留非空",
+      "注入红线可控（2 条，已按任务主题过滤）",
+      "挂载 2 张项目知识卡 + 0 张全局美术底层基础卡"
+    ],
+    "top_recipes": [
+      {
+        "id": "CHAT20261109225423885RECIPE",
+        "summary": "确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色",
+        "module": "brand.WorldStyle"
+      }
+    ],
+    "top_redlines": [
+      {
+        "id": "CHAT20261105023206398REDLINE",
+        "summary": "禁止偏离样张画风：霓虹赛博、脏暗阴影、油腻镜面高光、写实皮肤毛孔、恐怖暗黑、扁平无体积贴纸、赛博紫雾、灰雾废土、可读乱码UI字",
+        "module": "brand.WorldStyle"
+      },
+      {
+        "id": "CHAT20261105032252452REDLINE",
+        "summary": "禁止偏离样张画风：霓虹赛博、脏暗阴影、油腻镜面高光、写实皮肤毛孔、恐怖暗黑、扁平无体积贴纸、赛博紫雾、灰雾废土、可读乱码UI字",
+        "module": "brand.WorldStyle"
+      }
+    ],
+    "art_decisions": [
+      {
+        "id": "CHAT20261109225223848DECISION",
+        "summary": "图标集 style-spec：Soft 2px round/round grid24 padding2 · 妖精花园功能入口 10 枚线性 SVG",
+        "layer_scope": "private"
+      },
+      {
+        "id": "CHAT20261109225251379DECISION",
+        "summary": "以后统一按此样张画风：妖精花园休闲merge缩景；主色草绿#77B733/铃兰紫#9D55D1/暖陶木褐#A66B3E，辅色池水青蓝#59B1F5/奶油白…",
+        "layer_scope": "private"
+      },
+      {
+        "id": "CHAT20261109225425834DECISION",
+        "summary": "图标集 style-spec：Soft 2px round/round grid24 padding2 · 妖精花园功能入口 10 枚线性 SVG",
+        "layer_scope": "private"
+      }
+    ],
+    "private_knowledge": [
+      {
+        "id": "tech-watercolor",
+        "title": "水彩渲染",
+        "body": "边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。",
+        "layer_scope": "private"
+      },
+      {
+        "id": "tech-celshade",
+        "title": "赛璐珞分层",
+        "body": "硬边色块分层，高光形状干净，层数克制。",
+        "layer_scope": "private"
+      }
+    ],
+    "shared_knowledge": [],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [
+        "冷光源",
+        "暖光"
+      ],
+      "preferred_composition": [
+        "半身",
+        "居中/对称构图"
+      ],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [
+        "避免过饱和"
+      ],
+      "banned_habits": [
+        "廉价塑料感/油腻高光",
+        "漏抠/黑底/毛边",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色"
+      ],
+      "keep_phrases": [
+        "确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色"
+      ],
+      "banned_habits_raw_tail": [
+        "禁止偏离样张画风：过度霓虹、脏暗阴影、油腻高光、写实皮肤毛孔、扁平UI描边",
+        "电池审稿：原画竖构图避免贴样张布局；边缘反光勿过曝",
+        "错误头身比/头过大",
+        "电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感",
+        "黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差",
+        "廉价塑料感/油腻高光",
+        "漏抠/黑底/毛边",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色"
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: brand.WorldStyle\n- 置信度: 1.00（fast-track 资格: 是）\n- 优先复用定稿方向:\n  · [CHAT20261109225423885RECIPE] 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 必须避开红线:\n  · [CHAT20261105023206398REDLINE] 禁止偏离样张画风：霓虹赛博、脏暗阴影、油腻镜面高光、写实皮肤毛孔、恐怖暗黑、扁平无体积贴纸、赛博紫雾、灰雾废土、可读乱码UI字\n  · [CHAT20261105032252452REDLINE] 禁止偏离样张画风：霓虹赛博、脏暗阴影、油腻镜面高光、写实皮肤毛孔、恐怖暗黑、扁平无体积贴纸、赛博紫雾、灰雾废土、可读乱码UI字\n- 审美拍板:\n  · 图标集 style-spec：Soft 2px round/round grid24 padding2 · 妖精花园功能入口 10 枚线性 SVG\n  · 以后统一按此样张画风：妖精花园休闲merge缩景；主色草绿#77B733/铃兰紫#9D55D1/暖陶木褐#A66B3E，辅色池水青蓝#59B1F5/奶油白…\n  · 图标集 style-spec：Soft 2px round/round grid24 padding2 · 妖精花园功能入口 10 枚线性 SVG\n- 个人口味: 光影=冷光源 / 暖光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [tech-watercolor] 水彩渲染: 边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。\n  · [tech-celshade] 赛璐珞分层: 硬边色块分层，高光形状干净，层数克制。",
+    "built_at": "2026-11-09 22:54:46 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：人物与小羊接触区域过于拥挤，手套、羊腿和羊毛团块的边界部分互相融合；右侧木屋占幅偏大并被画框截断，视觉重量略向右倾斜；部分雪面过度平滑，局部形态重复。",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.59"
+    },
+    {
+      "category": "icon_consistency",
+      "lesson": "本轮短板偏「icon_consistency」：人物与小羊接触区域过于拥挤，手套、羊腿和羊毛团块的边界部分互相融合；右侧木屋占幅偏大并被画框截断，视觉重量略向右倾斜；部分雪面过度平滑，局部形态重复。",
+      "drill": "5 枚图标同 viewBox/stroke 批量生成后做一致性审查表",
+      "from_score": "8.59"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：全新冬日农场题材未回声鼹鼠/花屋；粘土霜雪堆与针织帽围巾哑光圆角体量贴参考玩具媒介；农夫双臂环抱小羊接触关系清楚。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.59"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：抱持区域的信息密度偏高，手套、羊身、耳朵和腿部多处相互贴合；右侧房屋占幅较大且被画框切断，使主体右后方稍显拥挤。；prompt 改动 48% 超过档位上限 40",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.68"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：抱持中近景更紧，木屋圆角雪檐与粘土雪丘起伏可读；针织橙围巾与羊毛团块质感分离清楚；题材仍是农夫抱羊无回声花屋鼹鼠。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.68"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：构图偏标准化正中肖像，动态和留白变化有限；双手、羊腹与羊腿交叠处存在体块粘连，部分肢体连接关系不够清楚；细节普遍采用相近的圆润软化处理，材质边缘差异略少。",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "8.66"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：构图偏标准化正中肖像，动态和留白变化有限；双手、羊腹与羊腿交叠处存在体块粘连，部分肢体连接关系不够清楚；细节普遍采用相近的圆润软化处理，材质边缘差异略少。",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "8.66"
+    },
+    {
+      "category": "material",
+      "lesson": "本轮短板偏「material」：构图偏标准化正中肖像，动态和留白变化有限；双手、羊腹与羊腿交叠处存在体块粘连，部分肢体连接关系不够清楚；细节普遍采用相近的圆润软化处理，材质边缘差异略少。",
+      "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+      "from_score": "8.66"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：中央下半部的手套、羊毛身体和多条腿挤在一起，遮挡关系不如面部清晰；背景松树的形体重复度较高，木屋暗门洞接近纯黑，内部层次偏少。",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "8.99"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：农夫略偏左、右侧小屋完整入画；抱持手套与羊身轮廓间隙更清楚；青绿冬装与粘土霜雪坨感统一，题材无回声花屋鼹鼠。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.99"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 2,
+  "regression_drop": 0.15,
+  "safe_early_stop": false,
+  "understanding_contract": {
+    "version": 1,
+    "raw_utterance": "锁妖精花园粘土童话画风，换新题材：冬日雪地农场，农夫抱小羊。只锁画风不锁构图；禁止抄回参考的妖精屋/鼹鼠/花屋题材。",
+    "l0": {
+      "route_ids": [
+        "draw.clone"
+      ],
+      "banner": "【按点名锁定 draw.clone】",
+      "delivery": "draw.clone"
+    },
+    "l1": {
+      "locks": [
+        "锁：聚合物粘土/软立体玩具媒介",
+        "哑光缎面+柔高光",
+        "饱和友好pastel",
+        "柔漫日光",
+        "Q版圆润比例",
+        "虹膜+巩膜月牙+高光（禁黑点瞳）"
+      ],
+      "unlocks": [
+        "不锁：参考花园构图/机位/前景摆位",
+        "不锁妖精屋/鼹鼠/花瓣顶/橡果屋题材身份"
+      ],
+      "defaults_shown": [
+        "默认：竖幅冬日雪地农场场景",
+        "农夫抱小羊居中偏前",
+        "只锁妖精花园粘土童话画风",
+        "构图全新，禁止抄回花屋/鼹鼠/蘑菇。"
+      ],
+      "commercial_vibe": "同品类顶级商业气质：休闲 merge 农场缩景玩具渲染完成度，温暖冬日而非冷冽写实"
+    },
+    "l2": {
+      "open": true,
+      "surface_fix": "只改题材为冬日农场农夫抱羊，画风贴参考粘土童话",
+      "last_feedback": "",
+      "feedback_layer": ""
+    },
+    "notes": ""
+  },
+  "reasonableness_history": [
+    {
+      "reviewed_at": 1794236166.273258,
+      "passed": true,
+      "skill": "clone",
+      "issues": []
+    }
+  ],
+  "reasonableness": {
+    "passed": true,
+    "skill": "clone",
+    "draft_prompt": "Clay style fairy garden winter farm farmer with sheep",
+    "revised_prompt": "Vertical 9:16 casual mobile game key art of a cozy winter snow farm scene in the exact soft polymer-clay toy medium of the reference: smooth matte rounded volumes, gentle satin highlights, saturated friendly pastels, soft diffuse daylight from upper-left, no neon, no oily mirror speculars, no realistic pores. NEW SUBJECT ONLY: a chubby chibi farmer in a warm wool coat, knit scarf and soft beanie, both arms cradling a small fluffy white lamb against their chest; farmer stands in a snowy farmyard with rounded clay-snow drifts like frosting, a chunky timber barn with soft curved edges and warm window glow, a short wobbly fence, a few evergreen saplings dusted with clay snow, maybe one snow-capped wooden trough. Eyes: clear iris, scleral crescent, soft catchlight — never black-dot pupils. Keep warm cozy winter, not bleak cold. Completely new composition — do NOT copy the fairy flower houses, mole character, mushrooms, banana boat, stone path layout, or giant tulip framing from the style reference. Style lock only: clay medium, pastel saturation, soft lighting grammar, Q proportions. Clean solid background sky of soft winter blue with gentle clay clouds. No readable UI text, no cyberpunk, no dirty dark shadows.",
+    "checklist": {
+      "subject_action": {
+        "status": "ok",
+        "note": ""
+      },
+      "contact_scale": {
+        "status": "ok",
+        "note": ""
+      },
+      "element_budget": {
+        "status": "ok",
+        "note": ""
+      },
+      "hard_locks": {
+        "status": "ok",
+        "note": ""
+      },
+      "fail_at_glance": {
+        "status": "ok",
+        "note": ""
+      },
+      "new_subject_not_ref_echo": {
+        "status": "ok",
+        "note": ""
+      }
+    },
+    "issues": [],
+    "notes": "",
+    "reviewed_at": 1794236166.273258,
+    "reviewed_at_iso": "2026-11-09 22:56:06",
+    "force_pass": false,
+    "skill_raw": "clone"
+  },
+  "discussions": [
+    {
+      "round": 0,
+      "kind": "reasonableness",
+      "prompt": "Vertical 9:16 casual mobile game key art of a cozy winter snow farm scene in the exact soft polymer-clay toy medium of the reference: smooth matte rounded volumes, gentle satin highlights, saturated friendly pastels, soft diffuse daylight from upper-left, no neon, no oily mirror speculars, no realistic pores. NEW SUBJECT ONLY: a chubby chibi farmer in a warm wool coat, knit scarf and soft beanie, both arms cradling a small fluffy white lamb against their chest; farmer stands in a snowy farmyard with rounded clay-snow drifts like frosting, a chunky timber barn with soft curved edges and warm window glow, a short wobbly fence, a few evergreen saplings dusted with clay snow, maybe one snow-capped wooden trough. Eyes: clear iris, scleral crescent, soft catchlight — never black-dot pupils. Keep warm cozy winter, not bleak cold. Completely new composition — do NOT copy the fairy flower houses, mole character, mushrooms, banana boat, stone path layout, or giant tulip framing from the style reference. Style lock only: clay medium, pastel saturation, soft lighting grammar, Q proportions. Clean solid background sky of soft winter blue with gentle clay clouds. No readable UI text, no cyberpunk, no dirty dark shadows.",
+      "strengths": "合理性闸已过：subject_action=ok；contact_scale=ok；element_budget=ok；hard_locks=ok；fail_at_glance=ok；new_subject_not_ref_echo=ok",
+      "defects": "",
+      "next_fix": "首轮 generate 使用本修订提示词；审美迭代不得推翻硬锁与元素预算"
+    }
+  ],
+  "warm_start_merged": true,
+  "warm_start_merged_at": "2026-11-09 23:15:07",
+  "warm_start_block_sha1": "f6239e915c64",
+  "ActionRequired": "STOP_PICK_BEST",
+  "showcase_ready": true,
+  "winner": {
+    "round": 4,
+    "round_label": "第 4 轮精修",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "9:16",
+    "reference_image_paths": [
+      "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_style_fairy_garden.png"
+    ],
+    "param_validation": {
+      "valid": true,
+      "validation_passed": true,
+      "case_id": "skill1109-clone",
+      "scale": "medium",
+      "aspect_ratio": "9:16",
+      "ref_aspect_ratio": "9:16",
+      "ref_dimensions": "169x276",
+      "output_aspect_ratio": "9:16",
+      "output_dimensions": "720x1280",
+      "reference_image": "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_style_fairy_garden.png",
+      "reference_image_paths": [
+        "/Users/yanghu/Desktop/pmem-art/assets/skill_20261109/_refs/ref_style_fairy_garden.png"
+      ],
+      "inherited_default_aspect_ratio": true,
+      "inherited_default_pad_image": true,
+      "matched_ref_aspect_ratio": true,
+      "matched_ref_pad_image": true,
+      "matched_output_aspect_ratio": true,
+      "three_step_stage": "step3_judge",
+      "three_step_verified": true,
+      "warnings": [],
+      "continuation_pad": false,
+      "pad_diverged": false
+    },
+    "generated_at": "23:15:07",
+    "image": "assets/skill_20261109/draw_clone/r4_winter_snow_farm.jpg",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 266538,
+      "size_kb": 260.3,
+      "width": 720,
+      "height": 1280,
+      "aspect_ratio": "9:16",
+      "canonical_aspect_ratio": "9:16",
+      "color_entropy": 7.24
+    },
+    "raw_score": 8.99,
+    "score": 8.99,
+    "target_score_threshold": 9.5,
+    "dims": "构图9.1/光影9.0/透视8.7/质感9.2/风格9.3/无瑕度8.8",
+    "dims_parsed": {
+      "composition": 9.1,
+      "lighting_color": 9.0,
+      "perspective_anatomy": 8.7,
+      "texture_detail": 9.2,
+      "spec_style": 9.3,
+      "flawlessness": 8.8
+    },
+    "weighted_score": 8.99,
+    "audit_warnings": [
+      "独立视觉裁判已采纳：openai_compatible/gpt-5.6-sol"
+    ],
+    "stagnated": false,
+    "strengths": "农夫略偏左、右侧小屋完整入画；抱持手套与羊身轮廓间隙更清楚；青绿冬装与粘土霜雪坨感统一，题材无回声花屋鼹鼠。",
+    "defects": "中央下半部的手套、羊毛身体和多条腿挤在一起，遮挡关系不如面部清晰；背景松树的形体重复度较高，木屋暗门洞接近纯黑，内部层次偏少。",
+    "next_fix": "优先拉开小羊右侧手套与腿部的轮廓间距，并补出人物被遮挡靴子的少量可辨边缘；给木屋门洞加入很弱的棕色反光，同时调整一两棵背景松树的枝层和高度以减少重复。",
+    "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: brand.WorldStyle\n- 置信度: 1.00（fast-track 资格: 是）\n- 优先复用定稿方向:\n  · [CHAT20261109225423885RECIPE] 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 必须避开红线:\n  · [CHAT20261105023206398REDLINE] 禁止偏离样张画风：霓虹赛博、脏暗阴影、油腻镜面高光、写实皮肤毛孔、恐怖暗黑、扁平无体积贴纸、赛博紫雾、灰雾废土、可读乱码UI字\n  · [CHAT20261105032252452REDLINE] 禁止偏离样张画风：霓虹赛博、脏暗阴影、油腻镜面高光、写实皮肤毛孔、恐怖暗黑、扁平无体积贴纸、赛博紫雾、灰雾废土、可读乱码UI字\n- 审美拍板:\n  · 图标集 style-spec：Soft 2px round/round grid24 padding2 · 妖精花园功能入口 10 枚线性 SVG\n  · 以后统一按此样张画风：妖精花园休闲merge缩景；主色草绿#77B733/铃兰紫#9D55D1/暖陶木褐#A66B3E，辅色池水青蓝#59B1F5/奶油白…\n  · 图标集 style-spec：Soft 2px round/round grid24 padding2 · 妖精花园功能入口 10 枚线性 SVG\n- 个人口味: 光影=冷光源 / 暖光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [tech-watercolor] 水彩渲染: 边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。\n  · [tech-celshade] 赛璐珞分层: 硬边色块分层，高光形状干净，层数克制。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光 | Last round: layered hug occlusion gaps; iris+sclera+catchlight; farmer slightly left; smaller full barn right. Same clay winter farm style. | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: the person's joints and grip stay clear and both pupils share a direction; the animal's limbs follow its species and are not converted into human elbows; contact shadows read; do not melt limbs into props | 优先拉开羊耳、袖口、手套和躯干之间的轮廓间隙，并重新整理羊腿根部的连接与前后遮挡；随后略减弱或后移右侧房屋的视觉体量。 | MUST_FIX (≤2): 优先拉开羊耳、袖口、手套和躯干之间的轮廓间隙，；并重新整理羊腿根部的连接与前后遮挡",
+    "continuation": false,
+    "passed": false,
+    "gate_blocked": false,
+    "image_gate_blocked": false,
+    "anatomy_score": 8.7,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "both",
+    "judge_source": "independent_vlm",
+    "remote_vlm": {
+      "source": "independent_vlm",
+      "provider": "openai_compatible",
+      "model": "gpt-5.6-sol",
+      "error": "",
+      "active": true,
+      "score_evidence": {
+        "composition": "人物与小羊形成居中的紧密三角主体，右后方木屋与左侧高松树平衡画面，前景叶片和雪丘构成自然框景。",
+        "lighting_color": "左上方柔光在帽檐、面颊、羊毛和屋顶积雪上形成一致高光，阴影柔和且青绿、暖棕、乳白三组颜色区分清楚。",
+        "perspective_anatomy": "木屋檐口、横梁和门洞具有统一的前后缩进，人物双臂环抱小羊的关系可读，但手套、羊身与腿部在中央下方重叠较紧。",
+        "texture_detail": "针织帽与衣领可见连续绳纹，羊毛由大小不同的团块组成，木墙保留压痕和细微颗粒，材质层次清晰。",
+        "spec_style": "人物、动物、树木、云和木屋均采用圆润软边、低锐度颗粒与手塑压痕，整张图的黏土玩偶语言高度统一。",
+        "flawlessness": "主体轮廓整体干净，五官与服饰边缘连续；小羊右侧手套贴近身体和后腿、人物右靴被遮挡较多，使局部肢体归属略显含混。"
+      },
+      "evidence_missing_dims": [],
+      "review": {
+        "pass_count": 1,
+        "rerated": false,
+        "reason": "",
+        "first_score": 8.99
+      }
+    },
+    "should_continue_next_round": false,
+    "decision": "STOP_MAX_ROUNDS",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "line_edge",
+        "lesson": "本轮短板偏「line_edge」：中央下半部的手套、羊毛身体和多条腿挤在一起，遮挡关系不如面部清晰；背景松树的形体重复度较高，木屋暗门洞接近纯黑，内部层次偏少。",
+        "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+        "from_score": "8.99"
+      },
+      {
+        "category": "keep",
+        "lesson": "保留本轮已做对的：农夫略偏左、右侧小屋完整入画；抱持手套与羊身轮廓间隙更清楚；青绿冬装与粘土霜雪坨感统一，题材无回声花屋鼹鼠。",
+        "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+        "from_score": "8.99"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "23:25:19",
+    "asset_image": "assets/skill_20261109/draw_clone/r4_winter_snow_farm.jpg"
+  },
+  "rounds_to_converge": 4,
+  "convergence_badge": "共 4 轮未达阈值，采用最高分",
+  "winner_image": "assets/skill_20261109/draw_clone/r4_winter_snow_farm.jpg",
+  "best_image": "assets/skill_20261109/draw_clone/r4_winter_snow_farm.jpg",
+  "final_image": "assets/skill_20261109/draw_clone/final.jpg",
+  "process_board": ".memory-art/converge/boards/skill1109-clone/index.html"
+}

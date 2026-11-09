@@ -1,0 +1,53 @@
+{
+  "ok": true,
+  "route_id": "draw.ordinary",
+  "session": "skill1109-ordinary",
+  "banner": "【走默认路径】按 普通图 走了",
+  "passed_threshold": false,
+  "threshold": 9.5,
+  "best_score": 8.6,
+  "best_round": 2,
+  "final_image": "assets/skill_20261109/draw_ordinary/r2_mushroom_prop.jpg",
+  "rounds": [
+    {
+      "round": 1,
+      "score": 8.3,
+      "dims": "构图8.5/光影8.7/透视8.2/质感7.8/风格8.7/无瑕度8.1",
+      "image": "assets/skill_20261109/draw_ordinary/r1_mushroom_prop.jpg",
+      "passed": false,
+      "defects": "表面材质区分仍偏弱，奶酪、果皮、叶片和红色台面共享相近的塑料质感；右侧轮廓重叠较拥挤，叶片、蓝果与橙果之间的切线和粘连削弱空间清晰度，局部边缘黑缝也影响洁净度。",
+      "strengths": "黑底居中剪影干净可读；红盖白点菌伞托盘身份明确，橙果蓝果绿叶与奶酪堆叠层次比参考更疏朗"
+    },
+    {
+      "round": 2,
+      "score": 8.6,
+      "dims": "构图8.7/光影8.8/透视8.4/质感8.3/风格9.0/无瑕度8.5",
+      "image": "assets/skill_20261109/draw_ordinary/r2_mushroom_prop.jpg",
+      "passed": false,
+      "defects": "上半部元素密度较高，右侧叶片与蓝色果实、前方绿叶互相叠压；材质之间主要依赖颜色区分，奶酪、果实与伞盖的表面粗糙度差异不够大；少数连接处和边缘仍有轻微软塌或切口感。",
+      "strengths": "奶酪恢复竖立淡黄楔+上层小黄楔；蓝果仅一枚带叶；材质分层更清（奶酪哑光孔、果皮细点、叶脉起伏）"
+    },
+    {
+      "round": 3,
+      "score": 8.2,
+      "dims": "构图8.4/光影8.6/透视8.1/质感7.8/风格8.5/无瑕度8.0",
+      "image": "assets/skill_20261109/draw_ordinary/r3_mushroom_prop.jpg",
+      "passed": false,
+      "defects": "左上奶酪体量过大，压缩了果实与叶片的展示空间；中右部枝梗、果实和叶片叠压密集，局部切线较多；菌盖白斑形状与分布略零散，部分材质主要依赖颜色区分，触感变化不足。",
+      "strengths": "双楔奶酪与红盖白点蘑菇托盘身份清晰；橙果果梗圆头自然；黑底居中软塑胶完成度高；蓝果细点与叶脉可读"
+    },
+    {
+      "round": 4,
+      "score": 8.51,
+      "dims": "构图8.7/光影8.8/透视8.4/质感8.3/风格8.9/无瑕度8.2",
+      "image": "assets/skill_20261109/draw_ordinary/r4_mushroom_prop.jpg",
+      "passed": false,
+      "defects": "材质区分主要依赖颜色，奶酪、果皮和菌盖的表面粗糙度较接近；右侧果实、果梗和叶片堆叠偏密，局部连接关系不够自然；奶酪孔洞的边缘清晰度和内部明暗存在轻微不一致。",
+      "strengths": "黑底居中剪影干净；双层奶酪与橙果蓝果绿叶齐全；果皮细点与叶脉、软塑胶棚柔光可读；白斑边缘比前轮更利落"
+    }
+  ],
+  "goal": "有参考题材不变——把蘑菇甜点拼盘画成更干净的道具特写；身份不变不进克隆；对标顶级merge道具完成度",
+  "scale": "medium",
+  "max_rounds": 4,
+  "note": "满4轮未到线；交付最高分轮次"
+}

@@ -147,7 +147,17 @@ class AtlasAllImagesTests(unittest.TestCase):
         self.assertIn("promoteAsFinal", html)
         self.assertIn("isWorkbenchHiddenAsset", html)
         self.assertIn("viewerStep", html)
+        self.assertIn("viewerEvoStep", html)
         self.assertIn("setViewerNav", html)
+        self.assertIn("setViewerEvoNav", html)
+        self.assertIn("_viewerEvoPaths", html)
+        self.assertIn('_viewerNavMode = "gallery"', html)
+        self.assertIn("fromDetail: true", html)
+        self.assertIn('bindIvBtn("ivPrevBtn", () => viewerEvoStep(-1))', html)
+        self.assertIn('bindIvBtn("ivPrev", () => viewerStep(-1))', html)
+        self.assertIn("大按钮定稿", html)
+        self.assertIn("上一张定稿", html)
+        self.assertIn("上一张进化图", html)
         self.assertIn("teachNavAndMeta", html)
         self.assertIn("renderViewerMeta", html)
         self.assertIn("stripPrevCritiqueFromPrompt", html)
@@ -537,12 +547,14 @@ class AtlasAllImagesTests(unittest.TestCase):
         httpd = ThreadingHTTPServer(("127.0.0.1", port), RevealHandler)
         t = threading.Thread(target=httpd.serve_forever, daemon=True)
         t.start()
+        # 本机系统/环境代理会劫持 127.0.0.1，环回测必须直连
+        opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
         try:
-            with urllib.request.urlopen(f"http://127.0.0.1:{port}/art-atlas.html", timeout=2) as resp:
+            with opener.open(f"http://127.0.0.1:{port}/art-atlas.html", timeout=2) as resp:
                 body = resp.read().decode("utf-8", errors="replace")
                 self.assertEqual(resp.status, 200)
                 self.assertIn("workbench-ok", body)
-            with urllib.request.urlopen(
+            with opener.open(
                 f"http://127.0.0.1:{port}/assets/scene/demo/keep.png", timeout=2
             ) as resp:
                 self.assertEqual(resp.status, 200)
@@ -550,14 +562,14 @@ class AtlasAllImagesTests(unittest.TestCase):
             py = self.td / "notes.py"
             py.write_text("print('no')\n", encoding="utf-8")
             try:
-                urllib.request.urlopen(f"http://127.0.0.1:{port}/notes.py", timeout=2)
+                opener.open(f"http://127.0.0.1:{port}/notes.py", timeout=2)
                 self.fail("source file should not be served")
             except urllib.error.HTTPError as exc:
                 self.assertEqual(exc.code, 404)
             side = self.td / ".memory-art" / "atlas_data.json"
             side.parent.mkdir(parents=True, exist_ok=True)
             side.write_text("{}", encoding="utf-8")
-            with urllib.request.urlopen(
+            with opener.open(
                 f"http://127.0.0.1:{port}/.memory-art/atlas_data.json", timeout=2
             ) as resp:
                 self.assertEqual(resp.status, 200)
@@ -565,7 +577,7 @@ class AtlasAllImagesTests(unittest.TestCase):
             taste.mkdir(parents=True, exist_ok=True)
             (taste / "taste.json").write_text("{}", encoding="utf-8")
             try:
-                urllib.request.urlopen(
+                opener.open(
                     f"http://127.0.0.1:{port}/.memory-art/_profile/taste.json", timeout=2
                 )
                 self.fail("taste json should not be served")
@@ -578,13 +590,13 @@ class AtlasAllImagesTests(unittest.TestCase):
                 method="POST",
             )
             try:
-                urllib.request.urlopen(req, timeout=2)
+                opener.open(req, timeout=2)
                 self.fail("foreign origin should not delete")
             except urllib.error.HTTPError as exc:
                 self.assertEqual(exc.code, 403)
             self.assertTrue(img.is_file())
 
-            with urllib.request.urlopen(f"http://127.0.0.1:{port}/api/ping", timeout=2) as resp:
+            with opener.open(f"http://127.0.0.1:{port}/api/ping", timeout=2) as resp:
                 payload = json.loads(resp.read().decode("utf-8"))
                 self.assertTrue(payload.get("ok"))
                 self.assertIn("static", payload.get("apis") or [])

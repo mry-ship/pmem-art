@@ -309,7 +309,7 @@ STARTER_MODULES: dict[str, dict[str, Any]] = {
         "title": "库存 / 弹窗九宫格底板（脚手架）",
         "category": "ui",
         "status": "scaffold",
-        "description": "冷启动脚手架：512 RGBA 九宫格弹窗/库存底板放入 assets/ui/inventory/ 或 modal_frame*.png。",
+        "description": "冷启动脚手架：512 隔离底九宫格弹窗/库存底板放入 assets/ui/inventory/ 或 modal_frame*.png（Cursor=实色隔离；透明引擎才真 alpha）。",
         "paths": ["assets/ui/modal_frame*.png", "assets/ui/inventory/**"],
         "aliases": ["InventoryHUD", "NineSlice", "弹窗底板", "九宫格底板"],
         "entities": ["NineSlice", "ModalFrame"],
@@ -317,7 +317,7 @@ STARTER_MODULES: dict[str, dict[str, Any]] = {
         "specs": {
             "resolution": "512x512",
             "aspect_ratio": "1:1",
-            "alpha_required": True,
+            "alpha_required": False,
             "nine_slice": [48, 48, 48, 48],
             "safe_margin_px": 4,
             "max_size_kb": 512,

@@ -1,0 +1,14 @@
+{
+  "saved_at": 1793844923.935897,
+  "text": "Cozy Clues 商业软发背包道具图标 Mode C 透明底人物饮料失物要能上架观感",
+  "banner": "【按 Mode C 走了】",
+  "route_ids": [
+    "icon.c"
+  ],
+  "mode": "skill",
+  "execute_ok": true,
+  "artist_say": "【按 Mode C 走了】\n按背包道具格透明底图标来做。",
+  "plan_conflict": false,
+  "confidence": "high",
+  "conversation_id": "cozy-clues-commercial-art"
+}

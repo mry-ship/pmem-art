@@ -1,14 +1,14 @@
 {
-  "saved_at": 1793889403.305921,
-  "text": "有参考图；换新题材冬日农场雪地农夫抱小羊；锁妖精花园粘土童话画风；走克隆；禁止抄参考构图分区与物件；雪像光滑白粘土；农夫小羊圆角粘土Q版；柔和高键棚光；双眼虹膜高光禁黑点瞳",
-  "banner": "【按 克隆 走了】",
+  "saved_at": 1794250426.1932302,
+  "text": "合成梯整表重跑：偏写实要改软塑胶；第5档必须双球大甜筒不能像第3档；八档一直进化上升",
+  "banner": "【按 同域合成梯：先定链型与关系，再按交付出图 走了】",
   "route_ids": [
-    "draw.clone"
+    "merge.ladder"
   ],
   "mode": "skill",
   "execute_ok": true,
-  "artist_say": "【按 克隆 走了】\n按克隆：锁参考画风，换成新题材。",
+  "artist_say": "【按 同域合成梯：先定链型与关系，再按交付出图 走了】\n按合成梯：先说清升级关系，再默认整表一组出齐（通常 8 档）。",
   "plan_conflict": false,
   "confidence": "high",
-  "conversation_id": "battery1105-clone-ok"
+  "conversation_id": ""
 }

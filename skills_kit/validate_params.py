@@ -58,6 +58,11 @@ def validate_case_generation_params(
         expected_ar = (case_cfg["aspect_ratio"] if case_cfg else "") or str(aspect_ratio or "").strip() or "1:1"
         actual_ar = str(aspect_ratio or "").strip() or expected_ar
         warnings: list[str] = ["本轮不垫风格参考，也不垫上一轮成图。"]
+        if actual_ar not in VALID_ASPECT_RATIOS:
+            raise ValueError(
+                f"[{case_label}] Parameter 'aspect_ratio' invalid: '{actual_ar}'. "
+                f"Must be one of {VALID_ASPECT_RATIOS}."
+            )
         if case_cfg is not None and actual_ar != expected_ar:
             raise ValueError(
                 f"[{case_label}] Parameter 'aspect_ratio' mismatch: expected '{expected_ar}', got '{actual_ar}'."

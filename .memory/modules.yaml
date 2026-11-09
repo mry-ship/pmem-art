@@ -1,17 +1,14 @@
 # pmem 模块目录：模块是“业务单元”而不是目录，一个模块可以拥有多个路径。
 # 首次划分：对 Agent 说“按 pmem-bootstrap 技能划分模块”。之后新增模块直接在这里加。
 #
-# modules:
-#   gameplay.Jigsaw:
-#     paths: ["Assets/Game/Jigsaw/**", "Assets/UI/JigsawPanel/**"]
-#     aliases: [Puzzle]            # 别名，写入/检索时自动归一
-#     entities: [Reward, Config]   # 模块内常用议题
-#   gameplay.Jigsaw.Daily:         # 子模块：名字用点号续写（最多 4 段），父模块必须已登记
-#     paths: ["Assets/Game/Jigsaw/Daily/**"]
-#     related: [{ module: infra.Build, reason: 每日关卡随包下发 }]   # 名字看不出的深层关联
-# synonyms: 同一件事的不同叫法，检索时互相展开，如 - [闪退, 崩溃, crash]（可按 pmem-normalize 技能整理）
-# candidates: 冷门目录，先登记路径，有记忆写入后再转为正式模块
-# third_party / ignored: 第三方 SDK、示例、生成代码，不参与闸门
+# SkillsKit 存取约定（自动闸门按 paths 最具体优先）：
+# - 改哪个文件，闸门就要求先查对应子模块；写记忆默认写该子模块。
+# - 通吃结论（停机线/透明底/商业气质默认）写 feature.SkillsKit。
+# - merge_relation.py / 合成梯 SKILL 闸门落 MergeLadder；写记忆时按议题下沉：
+#     链型/家族/商业档序 → MergeLadder.Relation
+#     整表/逐格/切格     → MergeLadder.Delivery
+#     说不清才写 MergeLadder
+# - 查父模块会带出下级摘要；查子模块也能见到父级通吃坑。
 schema_version: 1
 categories:
   feature:
@@ -23,6 +20,9 @@ synonyms:
   - [闭环, converge, 自评收敛]
   - [闸门, gate, showcase-gate]
   - [记忆, pmem, pmem-art]
+  - [合成梯, merge-ladder, merge ladder, shop_ladder]
+  - [路由, route, 分流]
+  - [锁风格, style-lock, style.lock]
 modules:
   infra.Cli:
     description: pmem-art 总入口、Hook、MCP serve、生命周期、分类与反馈命令
@@ -30,20 +30,163 @@ modules:
     aliases: [CLI, 入口, pmem_art]
     entities: [Hook, MCP, Atlas, Feedback]
   feature.SkillsKit:
-    description: 技能引擎：路由、规格、闭环 converge、评分、生图与展陈闸门
-    paths: [skills_kit/**]
-    aliases: [技能引擎, 闭环, Converge]
-    entities: [Converge, Router, Spec, Scoring, Judge, Showcase]
+    description: 技能引擎通吃层：跨技能结论（停机线、透明底、商业气质默认等）；专属结论下沉子模块
+    paths:
+      - skills_kit/__init__.py
+      - skills_kit/_time.py
+      - skills_kit/alpha_policy.py
+      - skills_kit/benchmark_catalog.py
+      - skills_kit/gate_skip.py
+      - skills_kit/medium_family.py
+      - skills_kit/platform_cli.py
+      - skills_kit/prompt_scale.py
+      - skills_kit/skill_image_gen.py
+      - skills_kit/skills_verify.py
+      - skills_kit/validate_params.py
+      - skills_kit/data/**
+    aliases: [技能引擎, SkillsKit]
+    entities: [StopThreshold, AlphaByEngine, NoPostKeyFakeAlpha, CommercialVibeDefault, CommercialBenchmarkDiagnose, SkillsKitHierarchy]
+  feature.SkillsKit.Router:
+    description: 本地分流、误判闸、DevOps 口误、标准路由句
+    paths:
+      - skills_kit/agent_router.py
+      - skills_kit/agent_route_cases.py
+      - skills_kit/route_ask.py
+      - skills_kit/route_bank.py
+      - skills_kit/route_gate.py
+      - skills_kit/route_normalize.py
+      - skills_kit/colloquial_lexicon.py
+      - skills_kit/subject_lexicon.py
+    aliases: [路由, 分流]
+    entities: [AgentRoute, DevOpsTalkGate, RouteFalseFireGate, RouteKeywordFalseFire, RouteGateConcurrent, RouteGateAndRegistryFixes, RouteThreeFixes1106, RouteExpiredIdConflict, RouteAuditFix20261110, OrdinaryCanonSelfPoison, DevOpsGateThreeLayer, DevOpsGateWordlistTightened]
+    related: [{ module: feature.SkillsKit.Agent, reason: 总控选定后仍走 route }]
+  feature.SkillsKit.Agent:
+    description: /pmem-agent 总控、跑偏重置、理解合同
+    paths:
+      - skills_kit/understanding_contract.py
+      - .agents/skills/pmem-agent/**
+      - .cursor/skills/pmem-agent/**
+    aliases: [总控, pmem-agent]
+    entities: [DriftResetRule, UnderstandingContract, SkillSuiteNaming, StopFollowupScope]
+  feature.SkillsKit.Converge:
+    description: 闭环轮次、finish 结算、合理性闸、打分与垫图策略
+    paths:
+      - skills_kit/converge.py
+      - skills_kit/converge_loop.py
+      - skills_kit/converge_policy.py
+      - skills_kit/converge_judge_bridge.py
+      - skills_kit/reasonableness_gate.py
+      - skills_kit/scoring.py
+      - skills_kit/absolute_5d_agent_rubric.py
+      - skills_kit/judge_auto.py
+      - skills_kit/process_board.py
+      - skills_kit/must_fix.py
+      - skills_kit/image_gates.py
+    aliases: [闭环, Converge]
+    entities: [ConvergeGate, ReasonablenessGate, ConvergeWinnerMaxScore, ConvergeFinishEarlyStop, SkillSpeedCaps, MergeOverviewSpeedCaps, AnatomyVeto, LowPoseLockGate, LowPoseLock, SoftInflationCap, PadBestPlate, PadChangedCamera, RecomposeEvidence, AspectWhitelistStart, AutomatedScoreEvidence, FinishSettleBackground, ImageRoundCapShowcaseGate, FinishAndMergeFeedback, SkillRoundCap4, RecallGap, AutoRecall, SkillStablePolish, SkillHardening20261109, SkillPolish20261109]
+    related: [{ module: infra.Judge, reason: 打分口径与 VLM judge 共用 }]
+  feature.SkillsKit.Registry:
+    description: 技能注册表、执行包切片、导航与技能文档审计、技能安装
+    paths:
+      - skills_kit/skill_registry.py
+      - skills_kit/skill_specs.py
+      - skills_kit/install.py
+      - .agents/skills/registry.json
+      - .agents/skills/registry.md
+      - .cursor/skills/registry.json
+      - .cursor/skills/registry.md
+    aliases: [注册表, 技能规格]
+    entities: [SkillNavIndexGuard, RegistryFilePathNeutral, SkillNavCompleteness, SkillSlicePackGap, SkillDocAudit20261105, SkillDocAuditFix2_20261105, SkillDocAuditFix3, SkillDocAuditFix4, SkillDocAuditFix20261105, SkillSpecAudit20261105]
+  feature.SkillsKit.Showcase:
+    description: 展陈页闸门、过程板、同范围重跑清单
+    paths: [skills_kit/showcase_gate.py]
+    aliases: [展陈闸, showcase-gate]
+    entities: [ShowcaseGateProcessBoard, ShowcaseRerun, ShowcaseBareIconDrop, ShowcaseMissingImageFile, Dim6Label]
+  feature.SkillsKit.Draw:
+    description: /pmem-draw 普通图·原画·克隆·变体·多图·镜头包
+    paths:
+      - .agents/skills/pmem-draw/**
+      - .cursor/skills/pmem-draw/**
+    aliases: [生图, pmem-draw]
+    entities: [StyleThenCloneKeyartGate]
+  feature.SkillsKit.UI:
+    description: /pmem-ui 整套界面与 HUD
+    paths:
+      - .agents/skills/pmem-ui/**
+      - .cursor/skills/pmem-ui/**
+    aliases: [界面, pmem-ui]
+    entities: [UIMultiLens, UITopBarIA]
+  feature.SkillsKit.Icon:
+    description: /pmem-icon A/B/C 三档图标
+    paths:
+      - .agents/skills/pmem-icon/**
+      - .cursor/skills/pmem-icon/**
+      - skills_kit/export_mode_c_icon.py
+    aliases: [图标, pmem-icon]
+    entities: [AppIconMultiLens, IconConvergeOptional]
+  feature.SkillsKit.MergeLadder:
+    description: /pmem-merge-ladder 合成梯通吃；写记忆时按议题下沉 Relation/Delivery
+    paths:
+      - skills_kit/merge_relation.py
+      - .agents/skills/pmem-merge-ladder/**
+      - .cursor/skills/pmem-merge-ladder/**
+    aliases: [合成梯, merge-ladder, pmem-merge-ladder]
+    entities: [MergeLadder]
+  feature.SkillsKit.MergeLadder.Relation:
+    description: 合成梯链型、家族基因、商业档序与合理性
+    paths: [docs/MERGE_MULTI_LENS.md]
+    aliases: [合成关系, 链型, 家族基因]
+    entities: [MergeChainMode, MergeFamilyGeneDomain, MergeCasualLadderContract, MergeLadder, MergeCommercialReasonableness, MergeReasonableness, MergeBaseBody, MergeSurface]
+    related: [{ module: feature.SkillsKit.MergeLadder, reason: 共用 merge_relation 与技能正文；闸门改 py 时先查父再按下沉写 }]
+  feature.SkillsKit.MergeLadder.Delivery:
+    description: 合成梯整表/逐格交付、切格居中、格子参考
+    paths: []
+    aliases: [合成交付, 整表, per_cell, overview_sheet]
+    entities: [MergeDelivery, MergePerCell, GroupSheet, MergeSheetCenter, MergeBoard, MergeAtlasRef, SplitOffset, MergeRelation]
+    related: [{ module: feature.SkillsKit.MergeLadder, reason: 共用 merge_relation；改交付结论写本模块勿堆父级 }]
+  feature.SkillsKit.StyleLock:
+    description: /pmem-style-lock 锁风格入库
+    paths:
+      - .agents/skills/pmem-style-lock/**
+      - .cursor/skills/pmem-style-lock/**
+    aliases: [锁风格, pmem-style-lock]
+    entities: [StyleLockDeliveryContract, StyleLockNormalizeFold]
+  feature.SkillsKit.Atlas:
+    description: /pmem-atlas 归档与画廊归位
+    paths:
+      - .agents/skills/pmem-atlas/**
+      - .cursor/skills/pmem-atlas/**
+    aliases: [归档, pmem-atlas]
+    entities: [AtlasApprovalBoundary]
+  feature.SkillsKit.Prompt:
+    description: /pmem-prompt 提示词扩写（不生图）
+    paths:
+      - .agents/skills/pmem-prompt/**
+      - .cursor/skills/pmem-prompt/**
+    aliases: [提示词, pmem-prompt]
+  feature.SkillsKit.Critique:
+    description: /pmem-critique 只审图
+    paths:
+      - .agents/skills/pmem-critique/**
+      - .cursor/skills/pmem-critique/**
+    aliases: [审图, pmem-critique]
+  feature.SkillsKit.Coach:
+    description: /pmem-coach 进阶偷看（进步/短板/知识卡）
+    paths:
+      - .agents/skills/pmem-coach/**
+      - .cursor/skills/pmem-coach/**
+    aliases: [pmem-coach, 进阶偷看]
+    related: [{ module: feature.Improve, reason: 知识卡/taste 落盘在 Improve }]
   feature.Improve:
     description: 教练/学习/口味：知识卡、反思、autopilot、taste
     paths: [improve/**]
-    aliases: [教练, 学习, Coach]
+    aliases: [学习, 教练系统, Taste, Autopilot]
     entities: [Taste, Knowledge, Autopilot]
   infra.Judge:
     description: VLM 打分入口，与 skills_kit 评分联动
     paths: [vlm_judge.py]
     aliases: [VLM]
-    related: [{ module: feature.SkillsKit, reason: 打分口径与 converge judge 共用 }]
+    related: [{ module: feature.SkillsKit.Converge, reason: 打分口径与 converge judge 共用 }]
   infra.Scripts:
     description: 展陈重跑与批处理脚本，不是产品入口
     paths: [scripts/**, benchmark_evolution.py]

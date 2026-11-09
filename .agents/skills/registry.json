@@ -19,7 +19,7 @@
       "file": ".cursor/skills/pmem-ui/SKILL.md",
       "heading": "# `/pmem-ui` — SpriteCook 式 UI Kit / HUD / 九宫格整套生成",
       "pack_headings": [
-        "# `/pmem-ui` — SpriteCook 式 UI Kit / HUD / 九宫格整套生成"
+        "## 执行卡 · UI（Agent 必读）"
       ],
       "routable": true,
       "simultaneous_pixels": false,
@@ -63,9 +63,9 @@
       "skill": "pmem-icon",
       "section": "Mode C",
       "file": ".cursor/skills/pmem-icon/SKILL.md",
-      "heading": "## 四、Mode C：游戏道具透明底栅格图标（64/128/256px PNG，非 SVG）",
+      "heading": "## 四、Mode C：游戏道具隔离底栅格图标（64/128/256px PNG，非 SVG）",
       "pack_headings": [
-        "## 四、Mode C：游戏道具透明底栅格图标（64/128/256px PNG，非 SVG）",
+        "## 四、Mode C：游戏道具隔离底栅格图标（64/128/256px PNG，非 SVG）",
         "### Mode C",
         "## 记忆静默 / 履历可见（Agent 必读）"
       ],
@@ -81,7 +81,8 @@
       "file": ".cursor/skills/pmem-merge-ladder/SKILL.md",
       "heading": "# `/pmem-merge-ladder` — 同域合成梯",
       "pack_headings": [
-        "# `/pmem-merge-ladder` — 同域合成梯"
+        "## 执行卡 · 合成梯（Agent 必读；细则见后文）",
+        "## 禁止"
       ],
       "routable": true,
       "simultaneous_pixels": false,
@@ -111,7 +112,7 @@
       "heading": "## 合同 · 克隆",
       "pack_headings": [
         "## 零点五、开画前强制 route（与总控同闸；点名 `/pmem-draw` 也要跑）",
-        "## 二、标准执行流程（Step 1 ~ Step 3）",
+        "## 执行卡 · 出图闭环（Agent 必读；细则见第二节）",
         "## 合同 · 克隆",
         "## 记忆静默 / 履历可见（Agent 必读）"
       ],
@@ -128,7 +129,7 @@
       "heading": "## 合同 · 变体",
       "pack_headings": [
         "## 零点五、开画前强制 route（与总控同闸；点名 `/pmem-draw` 也要跑）",
-        "## 二、标准执行流程（Step 1 ~ Step 3）",
+        "## 执行卡 · 出图闭环（Agent 必读；细则见第二节）",
         "## 合同 · 变体",
         "## 记忆静默 / 履历可见（Agent 必读）"
       ],
@@ -145,7 +146,7 @@
       "heading": "## 合同 · 多图分工",
       "pack_headings": [
         "## 零点五、开画前强制 route（与总控同闸；点名 `/pmem-draw` 也要跑）",
-        "## 二、标准执行流程（Step 1 ~ Step 3）",
+        "## 执行卡 · 出图闭环（Agent 必读；细则见第二节）",
         "## 合同 · 多图分工",
         "## 记忆静默 / 履历可见（Agent 必读）"
       ],
@@ -162,7 +163,7 @@
       "heading": "## 合同 · 原画",
       "pack_headings": [
         "## 零点五、开画前强制 route（与总控同闸；点名 `/pmem-draw` 也要跑）",
-        "## 二、标准执行流程（Step 1 ~ Step 3）",
+        "## 执行卡 · 出图闭环（Agent 必读；细则见第二节）",
         "## 合同 · 原画",
         "## 记忆静默 / 履历可见（Agent 必读）"
       ],
@@ -234,7 +235,7 @@
       "file": ".cursor/skills/pmem-prompt/SKILL.md",
       "heading": "# `/pmem-prompt` — 提示词生成器（按类型分流）",
       "pack_headings": [
-        "# `/pmem-prompt` — 提示词生成器（按类型分流）"
+        "## 执行卡 · 提示词（Agent 必读）"
       ],
       "routable": true,
       "simultaneous_pixels": false,
@@ -249,7 +250,7 @@
       "heading": "## 二、标准执行流程（Step 1 ~ Step 3）",
       "pack_headings": [
         "## 零点五、开画前强制 route（与总控同闸；点名 `/pmem-draw` 也要跑）",
-        "## 二、标准执行流程（Step 1 ~ Step 3）",
+        "## 执行卡 · 出图闭环（Agent 必读；细则见第二节）",
         "## 记忆静默 / 履历可见（Agent 必读）"
       ],
       "routable": true,

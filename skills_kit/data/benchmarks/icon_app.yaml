@@ -1,0 +1,10 @@
+id: icon.app
+category: icon.a
+title: 桌面 App Icon 母版
+aliases:
+  - app icon
+  - 1024
+  - 启动图标
+surface: 同品类上架图标：单符号撑满、约 72%–80% 安全区、满幅直角、小尺寸剪影可读
+layout_notes: 禁棚拍小物大留白；禁风景海报式构图
+forbid_pad: true

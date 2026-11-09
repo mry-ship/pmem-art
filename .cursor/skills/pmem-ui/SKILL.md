@@ -7,6 +7,13 @@ description: 仅当玩家点名 UI/HUD/九宫格，或生图分流判成整套�
 
 只在玩家点名界面，或 `/pmem-draw` 判成「界面」之后执行。不要用单张插画合同代替这套管线。
 
+## 执行卡 · UI（Agent 必读）
+
+1. 默认 **concept-only**：未点名组件表/九宫格/状态族 → 只做概念稿闭环（最多4轮、≥9.5到线即停）。
+2. full kit：概念 + **1 张**组件总表 + 切线清单；禁零件级二次 converge 全家桶。
+3. 风格优先级：有文字跟文字（有参考时垫图只锁版式/机位）；有参考无文字跟参考表面；无参考仅题材文字按文字推出；都无才 `benchmark lookup --category ui.casual`（或该品类卡）写「对标品类=…」进 vibe/surface；**禁止垫竞品截图像素**；未点名三消勿默套 RM。
+4. 首轮须 reasonableness；converge generate 并入记忆；禁裸 skip-route-gate。
+
 ## 怎么用（复制即用）
 ```text
 /pmem-ui 青瓷幻想主菜单 16:9：可九宫格空内容大面板、顶栏纹章细金线、底栏三枚异形主钮（开始/续关/设置）带体积与接触影、侧栏资源珠；统一青釉+暖金材质，无可读乱码
@@ -46,19 +53,19 @@ description: 仅当玩家点名 UI/HUD/九宫格，或生图分流判成整套�
 ### Step 0：确定屏幕类型与规格
 确认：屏幕类型、平台（桌面/主机 vs 移动）、画幅（16:9 / 超宽 / 竖屏）、目标模块（如 `ui.MainMenu` / `ui.InventoryHUD`）。玩家写了画幅，或点名了某一块具体的屏，以那一块屏为准。模块里过期的方图规格不能把主界面收成 1:1。
 ```bash
-pyw -3 -u pmem_art.py search --module <ui.模块>
+python3 pmem_art.py search --module <ui.模块>
 ```
 
 ### Step 1：概念先行（Concept First）—— 不可跳过
 1. 若用户丢入概念图：先做参考图视觉解构（构图分区、主辅色 HEX、金属/木纹/霓虹材质、控件密度），再进入组件抽取。
 2. 若无概念图：先生成 **1 张完整屏幕概念稿**（整屏布局，统一材质与色板），**最多4轮、≥9.5到线即停**（生→judge→不到线再改；满4轮交最高分并标明是否≥9.5）：
    ```bash
-   pyw -3 -u pmem_art.py converge start --goal "UI概念稿：<屏幕类型+风格>" --module <ui.模块> --route-id ui.kit [--scale medium|high]
+   python3 pmem_art.py converge start --goal "UI概念稿：<屏幕类型+风格>" --module <ui.模块> --route-id ui.kit [--scale medium|high]
    # 首轮前必过合理性闸（同时交出更合理提示词）：
-   pyw -3 -u pmem_art.py reasonableness review --id <session> --skill ui \
+   python3 pmem_art.py reasonableness review --id <session> --skill ui \
      --draft "<草稿>" --revised "<分区/控件/禁忌写清的修订句>" \
      --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;layout_zones=ok;no_content_clutter=ok;chrome_not_illustration=ok;cta_clear_of_faces=ok;control_craft=ok"
-   pyw -3 -u pmem_art.py converge generate … && converge judge … && converge finish
+   python3 pmem_art.py converge generate … && converge judge … && converge finish
    ```
 3. **concept-only 到此交货**。仅 full kit：**概念稿审完后才进入组件表**——不要在概念未锁定时散生按钮。合理性闸不过不许 generate。
 
@@ -103,7 +110,7 @@ pyw -3 -u pmem_art.py search --module <ui.模块>
 - 结构分在复刻时同时看这件事：两块界面叠在一起，或钥匙、侧栏掉出自己的矩形，结构低于 7.5，不能停。背景张的问题不拿到界面张里改，界面张的问题也不要重画房间。
 
 ### Step 2：从概念抽取组件表（Component Sheets）——仅 full kit
-以概念稿为垫图/参考，在 **透明底** 上生成 **恰好 1 张**总表，盖齐下列零件；**禁止**第 2 张 sheet：
+以概念稿为垫图/参考，在 **隔离底** 上生成 **恰好 1 张**总表（Cursor：纯黑/实色空底，禁止后抠；gpt-image 等：真 alpha），盖齐下列零件；**禁止**第 2 张 sheet：
 - **面板 / 边框 / 装饰条**（可九宫格拉伸）
 - **按钮族**：至少 normal + pressed（最好含 hover / disabled）
 - **进度条 / 血条**：空轨 + 满轨（或分段填充）
@@ -117,7 +124,7 @@ pyw -3 -u pmem_art.py search --module <ui.模块>
 ui_kit_<name>/
 ├── concept.png
 ├── sheets/
-├── elements/          # 透明 PNG 单件（可从总表裁）
+├── elements/          # 单件导出（透明引擎=真 alpha；Cursor=实色隔离底裁切，禁止后抠冒充）
 ├── manifest.json      # name / group / state / rect / nine_slice {l,r,t,b}
 └── preview.html       # 可选：拼装预览
 ```
@@ -128,8 +135,8 @@ ui_kit_<name>/
 
 ### Step 5：沉淀记忆
 ```bash
-pyw -3 -u pmem_art.py ingest <concept或主面板路径> -p "UI kit <屏幕> 概念/主面板" --apply
-pyw -3 -u pmem_art.py feedback "UI套件色板与九宫格规范：<摘要>" --module <ui.模块> --kind art_decision
+python3 pmem_art.py ingest <concept或主面板路径> -p "UI kit <屏幕> 概念/主面板" --apply
+python3 pmem_art.py feedback "UI套件色板与九宫格规范：<摘要>" --module <ui.模块> --kind art_decision
 ```
 
 ## 三、界面审图（概念稿和组件表同名五项；管线只做门槛）
@@ -138,7 +145,7 @@ pyw -3 -u pmem_art.py feedback "UI套件色板与九宫格规范：<摘要>" --m
 
 - **概念稿**：点名的那一屏；顶栏、两侧、底栏、主按钮的位置；地面或地毯铺到屏底；控件落在场景上；材质和色板同一套；货架密度；没有可读乱码；该有的字在，不该有的标签没有；不是另一块屏。
 - **组件表**：九宫格（角固定、边单向、中心双向）；拉伸中心干净；角不变形；同一套光；木、金属、玻璃同一套；按钮 normal/pressed，有 hover/disabled 也要在；进度空/满；页签选中/未选；装饰、分割、图标槽对上概念稿。
-- **管线（只做门槛）**：概念稿 16:9 或 9:16，没有手机外框；组件表透明、无脏边、分辨率对、manifest 有切线。复刻概念不拿透明底当这一维。
+- **管线（只做门槛）**：概念稿 16:9 或 9:16，没有手机外框；组件表底隔离干净（Cursor=实色空底；透明引擎=真 alpha）、无脏边、分辨率对、manifest 有切线。复刻概念不拿透明底当这一维。
 - **弹框克隆**：内容区空，不要把参考道具放在正中；顶饰最多一件；底栏只有符号按钮。内容区回声参考主体：正式分不超过 8.85，不能停。
 
 正式分示例（四项+无瑕疵进乘积）：`风格色板8.6/结构8.2/光影材质8.4/套件一致8.5/无瑕疵8.8`  
@@ -149,6 +156,11 @@ pyw -3 -u pmem_art.py feedback "UI套件色板与九宫格规范：<摘要>" --m
 - **full kit**：概念稿 + **1 张**组件总表 + `elements/` + `manifest.json`（含九宫格）；缺件只补缺件。
 - 若跑了收敛：默认附上全轮次评分优劣总表（不足/改点）；只要终稿用 `--quiet`
 - 已写入 `.memory-art` 的 recipe / redline 路径（若本趟有 ingest/feedback）
+
+## 底与透明度（按生图引擎 · Agent 必读）
+- **Cursor `GenerateImage` 不支持真透明**。口语要「透明底」时，改写为**不透明隔离底**（默认纯黑 `#000000`，或定稿写死的实色空底）；交不透明 PNG/JPG 即可。**禁止**成图后再抠色、抠角、本地挖洞冒充 alpha。
+- **第三方支持透明的引擎**（如 `gpt-image` / 明确带 alpha 的 API）：可**直接**生成真 alpha PNG；白底/品红底不算透明底。
+- 结算时写清用的是哪类底：`true_alpha` 或 `opaque_isolation`。默认出图路径是 Cursor 时，不要为了凑 alpha 去跑 `export_mode_c_icon` 抠图。
 
 ## 记忆静默 / 履历可见（Agent 必读）
 - `converge finish` 后系统自动写反思/口味/learn 队列——**无需**再跑 `/pmem-coach`。

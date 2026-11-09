@@ -1,0 +1,10 @@
+id: keyart.store
+category: keyart
+title: 上架 Key Art / 主视觉
+aliases:
+  - key art
+  - 主视觉
+  - 概念海报
+surface: 空气透视、主视觉记忆点、商店截图完成度；媒介具体名词，禁空喊史诗
+layout_notes: 无 UI 控件、无可读乱码字；勿套 merge 货柜格
+forbid_pad: true

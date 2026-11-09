@@ -207,8 +207,32 @@ def build_cases() -> list[Case]:
         _add(out, bucket="prompt_then_draw", text=f"先写提示词，然后再画一张立绘，第{i}套", mode="skill", routes=["prompt.write", "draw.ordinary"])
         _add(out, bucket="critique_then_draw", text=f"审完再改这张立绘，第{i}张", mode="skill", routes=["critique.review", "draw.ordinary"], images=["ref/in.png"])
 
-    banned = ["局部修", "设定表", "分镜", "姿势锁", "同一场景换光", "画幅延展", "放大清稿", "序列帧", "平铺贴图", "带字主视觉", "字标", "色板点选", "情绪板"]
-    for word in banned:
+    # JOB_REMAP：高频活映射到已有合同（不是 unrecognized）
+    for word in ("局部修", "姿势锁", "同一场景换光", "画幅延展", "放大清稿"):
+        for i in range(8):
+            _add(
+                out,
+                bucket="job_remap",
+                text=f"帮我做{word}，第{i}件",
+                mode="skill",
+                routes=["draw.ordinary"],
+                reason="job_remap",
+            )
+    for i in range(8):
+        _add(
+            out,
+            bucket="job_remap",
+            text=f"帮我做设定表，第{i}件",
+            mode="skill",
+            routes=["draw.variant"],
+            reason="job_remap",
+        )
+    # JOB_ASK：说不清交付先问
+    for word in ("分镜", "带字主视觉", "字标", "色板点选", "情绪板"):
+        for i in range(8):
+            _add(out, bucket="job_ask", text=f"帮我做{word}，第{i}件", mode="stop", reason="job_ask")
+    # 真做不到才 unrecognized
+    for word in ("序列帧", "平铺贴图"):
         for i in range(8):
             _add(out, bucket="unrecognized", text=f"帮我做{word}，第{i}件", mode="stop", reason="unrecognized")
 
@@ -261,15 +285,15 @@ def build_cases() -> list[Case]:
         ("仓库里那些没归类的图收进图谱", "skill", ["atlas.file"], [], [], ""),
         ("我最近画得怎么样，短板在哪", "skill", ["coach.report"], [], [], ""),
         ("把这句话扩成可以拿去画的说法，先别出图", "skill", ["prompt.write"], [], [], ""),
-        ("只改手，别的地方别动", "stop", [], [], [], "unrecognized"),
-        ("把这张往外延展画面", "stop", [], [], [], "unrecognized"),
-        ("拉一条故事板", "stop", [], [], [], "unrecognized"),
-        ("锁姿势，人别换动作", "stop", [], [], [], "unrecognized"),
+        ("只改手，别的地方别动", "skill", ["draw.ordinary"], [], [], "job_remap"),
+        ("把这张往外延展画面", "skill", ["draw.ordinary"], [], [], "job_remap"),
+        ("拉一条故事板", "stop", [], [], [], "job_ask"),
+        ("锁姿势，人别换动作", "skill", ["draw.ordinary"], [], [], "job_remap"),
         ("做一串逐帧", "stop", [], [], [], "unrecognized"),
         ("要一张无缝贴图", "stop", [], [], [], "unrecognized"),
-        ("同一场景里只换光", "stop", [], [], [], "unrecognized"),
-        ("放大后清一下线", "stop", [], [], [], "unrecognized"),
-        ("出一张三视图设定", "stop", [], [], [], "unrecognized"),
+        ("同一场景里只换光", "skill", ["draw.ordinary"], [], [], "job_remap"),
+        ("放大后清一下线", "skill", ["draw.ordinary"], [], [], "job_remap"),
+        ("出一张三视图设定", "skill", ["draw.variant"], [], [], "job_remap"),
         ("做一枚 1024 桌面图标，第64版", "skill", ["icon.a"], [], [], ""),
         ("做一套线性 svg 图标，第64套", "skill", ["icon.b"], [], [], ""),
     ]

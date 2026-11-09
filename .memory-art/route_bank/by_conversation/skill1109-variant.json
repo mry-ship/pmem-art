@@ -1,0 +1,14 @@
+{
+  "saved_at": 1794238400.075419,
+  "text": "同一身份（金发粉裙小精灵，持果篮）换表情为开心大笑+挥手动作；机位已在参考图上锁死",
+  "banner": "【按 变体 走了】",
+  "route_ids": [
+    "draw.variant"
+  ],
+  "mode": "skill",
+  "execute_ok": true,
+  "artist_say": "【按 变体 走了】\n按变体：同一身份，换表情/动作/画风。",
+  "plan_conflict": false,
+  "confidence": "high",
+  "conversation_id": "skill1109-variant"
+}

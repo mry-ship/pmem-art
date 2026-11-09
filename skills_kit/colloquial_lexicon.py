@@ -44,8 +44,8 @@ _SEED: dict[str, list[str]] = {
     "线性图标": ["线性 svg"],
     "道具格": ["背包", "透明底"],
     "合成升级": ["合成梯", "一档比一档大"],
-    "越升越大": ["合成梯", "一档比一档大"],
-    "整表": ["overview_sheet", "合成梯", "一组出齐"],
+    # 裸「越升越大」不做合成梯近邻扩展（太阳越升越大 ≠ merge）
+    "整表": ["overview_sheet", "一组出齐"],
     "一组出齐": ["overview_sheet", "整表", "合成梯"],
     "overview": ["overview_sheet", "整表"],
     "overview_sheet": ["整表", "一组出齐", "合成梯"],
@@ -194,7 +194,7 @@ def build_colloquial_expand(*, min_entries: int = 8000) -> dict[str, list[str]]:
             _add(out, pref + s, "背包", "透明底")
 
     merge_src = [
-        "合成梯", "合成升级", "升级链", "一档比一档", "越升越大", "升档", "合并升级",
+        "合成梯", "合成升级", "升级链", "一档比一档", "升档", "合并升级",
         "合成那条", "升级那条", "梯子继续", "merge梯",
     ]
     for s in merge_src:
@@ -204,11 +204,10 @@ def build_colloquial_expand(*, min_entries: int = 8000) -> dict[str, list[str]]:
             _add(out, s + item, "合成梯", "一档比一档大")
             # 不把「继续药水」单独折成合成梯（无图续画应问清）
     merge_delivery = [
-        ("整表", ["overview_sheet", "一组出齐", "合成梯"]),
+        ("整表", ["overview_sheet", "一组出齐"]),
         ("一组出齐", ["overview_sheet", "整表", "合成梯"]),
         ("一起出齐", ["overview_sheet", "整表", "合成梯"]),
-        ("一张表", ["overview_sheet", "整表", "合成梯"]),
-        ("overview", ["overview_sheet", "整表"]),
+        ("一张表", ["overview_sheet", "整表"]),
         ("overview_sheet", ["整表", "一组出齐", "合成梯"]),
         ("一档一张", ["per_cell", "逐格", "合成梯"]),
         ("逐格", ["per_cell", "一档一张", "合成梯"]),
@@ -388,7 +387,7 @@ _REWRITE_REPLACE: dict[str, str] = {
     "线性图标": "线性svg图标",
     "道具格": "背包透明底图标",
     "合成升级": "合成梯一档比一档大",
-    "越升越大": "合成梯一档比一档大",
+    # 禁止把裸「越升越大」折成合成梯（太阳越升越大 ≠ merge）；真合成口语自带合成梯/一档/八档
     "升级那条": "合成梯",
     "继续那条": "合成梯",
     "收进图谱": "散图归位",

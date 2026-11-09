@@ -8,7 +8,7 @@
 
 1. **视觉风格极易跑偏（Style Drift）**：AI 美术（ComfyUI / Flux / SD / Midjourney）每次生成新立绘、新图标或表情差分时，如果没有读取该模块的**主色板（Palette HEX）**、**头身比/透视约束**和**主美曾打回的废案红线（Do vs. Don't）**，极易生成出“好看但完全不像同一个游戏”的废图。
 2. **引擎管线硬指标翻车（Pipeline Violations）**：
-   - 要求导出 **RGBA 透明背景 + 预乘 Alpha**，AI 却生成了实心白底或灰黑底，进引擎做 Additive/Blend 混合时整块发白；
+   - 要求导出 **RGBA 透明背景 + 预乘 Alpha**（**注意**：Cursor GenerateImage 无 alpha 时改为不透明隔离底直接生成，禁止后抠冒充；仅透明引擎路径才强制真 RGBA），AI 却生成了实心白底或灰黑底，进引擎做 Additive/Blend 混合时整块发白；
    - UI 弹窗要求 **九宫格（9-slice `[48, 48, 48, 48]`）中心拉伸区纯净**，AI 却在正中央画了圆形大徽章和斜向纹理，程序一拉伸直接畸变；
    - 角色需要拆 **Spine 2D 骨骼图层**（前发/后发/瞳孔/高光独立），或者特效需要 **4 帧等宽横排序列帧**，缺乏明确记忆约束就会反复返工。
 3. **配方与随机种子丢失（Lost Recipes）**：某张过稿图效果极佳，但几天后要做同系列换装或差分时，当时的 **Base Model、LoRA 权重配比、Prompt 模板、Negative 词库、ControlNet 预处理器和 ComfyUI 工作流 JSON** 散落在个人聊天记录里，无法稳定复现。
@@ -68,7 +68,7 @@
 │ AI 调用 pmem_art.py search --module character.Astra.Expressions         │
 │ ↳ 自动继承父模块 character.Astra 的 7.5 头身立绘锚点与 LoRA 配方        │
 │ ↳ 自动继承全局 brand.WorldStyle 的 70/20/10 青瓷色板与禁用霓虹紫红线    │
-│ ↳ 读取子模块视觉勘误：惊愕表情需保持 1024x1024 RGBA 透明底              │
+│ ↳ 读取子模块视觉勘误：惊愕表情需保持 1024x1024 隔离底（透明引擎才 RGBA） │
 └─────────────────────────────────────────────────────────────────────────┘
        │
        ▼
@@ -81,9 +81,9 @@
        ▼
 ┌─────────────────────────────────────────────────────────────────────────┐
 │ Step 3: 资产质检 (validate / doctor)                                    │
-│ 手动或 CI：`pyw -3 -u pmem_art.py validate` 或 `doctor`（含 validate）   │
+│ 手动或 CI：`python3 pmem_art.py validate` 或 `doctor`（含 validate）   │
 │ ↳ 检查分辨率是否等于模块契约 (如 1024x1024 / 512x512)                   │
-│ ↳ 检查颜色通道是否为 RGBA 透明底，外圈 safe_margin_px 像素是否全透明     │
+│ ↳ 检查底隔离：透明引擎查 RGBA；Cursor 查实色空底（无 alpha_strict 不硬拒） │
 │ Hook post-tool/post-asset 仅提示 ingest/feedback，不自动跑 validate 阻断 │
 │ config 中 gate.auto_validate_on_save 为保留字段，当前 CLI 未读取        │
 └─────────────────────────────────────────────────────────────────────────┘
@@ -98,7 +98,7 @@
 
 ### 4.1 开画路由闸门与 Absolute-5D 分数
 
-- **Route gate**：`converge start` 前必须有近期本地 `route` 结果（`.memory-art/route_bank/last_advise.json`，默认 2 小时内有效）。美术零门槛；Agent 先跑 `pyw -3 -u pmem_art.py route --text "…"`。点名调试可用 `--skip-route-gate` / `PMEM_ART_SKIP_ROUTE_GATE=1`。
+- **Route gate**：`converge start` 前必须有近期本地 `route` 结果（`.memory-art/route_bank/last_advise.json`，默认 2 小时内有效）。美术零门槛；Agent 先跑 `python3 pmem_art.py route --text "…"`。调试跳闸须 `PMEM_ART_ALLOW_GATE_SKIP=1` + `--skip-reason`（可另加 `--skip-route-gate` / env）；仅设 `PMEM_ART_SKIP_ROUTE_GATE` 不够。缺缓存时优先 `converge start --route-id …` 点名种闸。
 - **评分**：收敛以 Absolute-5D（构图/光影/透视解剖/质感/风格）为主闸；`recompose`/`high` 档贴原停机前需在 **strengths/defects** 中检出机位变化证据（`_recompose_change_evidence`），提示词里的「重构机位」不算。
 - **垫图策略**：`pad=auto` 默认每轮垫最初 style_ref；仅在机位已换证据成立时才链最高分换机位成图。
 
@@ -160,10 +160,10 @@ Cursor 生图额外走：`classify` / `ingest` / `classify-watch`。
 
 ```bash
 # Agent 刚 GenerateImage 落到 .cursor/generated/xxx.png
-pyw -3 -u pmem_art.py classify .cursor/generated/xxx.png -p "$PROMPT"
-pyw -3 -u pmem_art.py ingest  .cursor/generated/xxx.png -p "$PROMPT" --apply   # 年轻项目可开 auto_place
-pyw -3 -u pmem_art.py classify-watch          # 扫未映射图，低置信进 misc/candidate
-pyw -3 -u pmem_art.py atlas
+python3 pmem_art.py classify .cursor/generated/xxx.png -p "$PROMPT"
+python3 pmem_art.py ingest  .cursor/generated/xxx.png -p "$PROMPT" --apply   # 年轻项目可开 auto_place
+python3 pmem_art.py classify-watch          # 扫未映射图，低置信进 misc/candidate
+python3 pmem_art.py atlas
 ```
 
 `classify.auto_add_modules: true` 时，**只追加**新模块键，绝不清空已有 `modules.yaml`。

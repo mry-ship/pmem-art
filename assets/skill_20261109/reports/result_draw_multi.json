@@ -1,0 +1,131 @@
+{
+  "ok": true,
+  "route_id": "draw.multi",
+  "contract": "split",
+  "banner": "【按 多图分工 走了】",
+  "threshold": 9.5,
+  "passed_threshold": false,
+  "states": {
+    "off": {
+      "state": "off",
+      "session": "skill1109-multi",
+      "passed_threshold": false,
+      "threshold": 9.5,
+      "best_score": 8.69,
+      "best_round": 3,
+      "final_image": "assets/skill_20261109/draw_multi/off_r3.png",
+      "rounds": [
+        {
+          "round": 1,
+          "score": 8.68,
+          "dims": "构图8.7/光影8.8/透视8.3/质感8.8/风格9.1/无瑕度8.5",
+          "image": "assets/skill_20261109/draw_multi/off_r1.png",
+          "passed": false,
+          "defects": "人物正面感与场景俯视感存在轻微角度差；前景两侧大物件贴边并被截断，右下果盘的体量和高饱和色略抢主体；篮把穿过双手区域的结构不够自然。",
+          "strengths": "16:9高俯花园；绿瞳金发双辫可读；珍珠项链中央蓝宝石与果篮在；紫花灯/蘑菇芝士果盘/香蕉船/石径/鼹鼠礼盒齐；关态双手捧篮不挥手；软立体正午柔亮"
+        },
+        {
+          "round": 2,
+          "score": 8.61,
+          "dims": "构图8.7/光影8.6/透视8.5/质感8.8/风格9.0/无瑕度8.3",
+          "image": "assets/skill_20261109/draw_multi/off_r2.png",
+          "passed": false,
+          "defects": "角色右手抓篮位置存在轻微结构粘连，双翼与浅绿草地局部明度接近；顶部屋顶及左下花灯被边框裁切，前景右下果盘贴边较紧，画面呼吸空间略受压缩。",
+          "strengths": "紫花瓣屋顶蘑菇屋已回；绿瞳双辫果篮与待机捧篮可读；紫花灯香蕉船石径鼹鼠礼盒蘑菇果盘在；软立体正午柔亮"
+        },
+        {
+          "round": 3,
+          "score": 8.69,
+          "dims": "构图8.7/光影8.8/透视8.4/质感8.8/风格9.1/无瑕度8.5",
+          "image": "assets/skill_20261109/draw_multi/off_r3.png",
+          "passed": false,
+          "defects": "画面信息略满，底部两个大型前景物同时被裁切，右下果盘对主体形成一定视觉竞争；角色手指、篮把与裙身附近的重叠偏紧，局部轮廓不够利落。",
+          "strengths": "16:9高俯三分之四花园回；紫花瓣屋顶小屋与蜗牛壳雏菊在；绿瞳金发双辫粉裙三白扣蓝宝石项链四蓝翅果篮可读；关态双手捧篮不挥手；紫花灯香蕉船石径鼹鼠礼盒蘑菇果盘齐；软立体正午柔亮"
+        },
+        {
+          "round": 4,
+          "score": 8.33,
+          "dims": "构图8.3/光影8.5/透视8.1/质感8.6/风格8.7/无瑕度8.0",
+          "image": "assets/skill_20261109/draw_multi/off_r4.png",
+          "passed": false,
+          "defects": "画面信息密度偏高，左右及下缘多个大型物件遭截切，削弱了边框完整性；角色上身偏正视而地面俯角明显；手指抓握篮柄的结构略糊，右下食物堆与叶片之间存在拥堵和相切。",
+          "strengths": "紫花屋顶与场景锚点齐；绿瞳双辫果篮待机；裁切与握篮相对改善"
+        }
+      ],
+      "goal": "多图分工·关态：两张附图各管一件事；身份=小精灵角色特写；结构/场景机位=花园蘑菇屋场景板。金发粉裙绿瞳双辫小精灵站在花园蘑菇屋前石径上安静待机捧果篮（不挥手）；高俯三分之四机位跟结构板；16:9；休闲三渲二粘土风正午柔亮；无字。身份机位作废。场景保留紫花灯蘑菇果盘池塘香蕉船石径鼹鼠礼盒紫花屋顶小屋蜗牛壳雏菊；小提琴男仙弱化去掉。",
+      "max_rounds": 4,
+      "note": "满4轮未到线；交付最高分轮次"
+    },
+    "on": {
+      "state": "on",
+      "session": "skill1109-multi-on",
+      "passed_threshold": false,
+      "threshold": 9.5,
+      "best_score": 8.63,
+      "best_round": 3,
+      "final_image": "assets/skill_20261109/draw_multi/on_r3.png",
+      "rounds": [
+        {
+          "round": 1,
+          "score": 8.39,
+          "dims": "构图8.6/光影8.7/透视8.1/质感8.6/风格9.0/无瑕度7.8",
+          "image": "assets/skill_20261109/draw_multi/on_r1.png",
+          "passed": false,
+          "defects": "前景元素数量偏多并被画框切断，削弱主体周围的留白；提篮手部的交叠关系不够利落，挥手姿态略硬；草地、石块等大面积材质稍显统一光滑。",
+          "strengths": "开态右手挥手欢迎清晰；绿瞳金发双辫粉裙蓝宝石项链果篮齐；16:9高俯花园蘑菇屋紫花灯香蕉船石径鼹鼠礼盒蘑菇果盘蜗牛雏菊在；软立体正午柔亮；相对关态只改挥手"
+        },
+        {
+          "round": 2,
+          "score": 8.61,
+          "dims": "构图8.7/光影8.8/透视8.3/质感8.7/风格9.1/无瑕度8.3",
+          "image": "assets/skill_20261109/draw_multi/on_r2.png",
+          "passed": false,
+          "defects": "右手抓篮把处的手指分节不够清楚，挥手手掌略厚；前景右下食物堆和左下灯花被边框切得较紧，背景屋顶与树干也形成较强裁切，使边缘区域稍显拥挤。",
+          "strengths": "挥手欢迎清晰；绿瞳双辫果篮可读；紫花灯香蕉船石径鼹鼠礼盒在；软立体正午柔亮"
+        },
+        {
+          "round": 3,
+          "score": 8.63,
+          "dims": "构图8.7/光影8.8/透视8.4/质感8.8/风格9.0/无瑕度8.3",
+          "image": "assets/skill_20261109/draw_multi/on_r3.png",
+          "passed": false,
+          "defects": "前景和左右两侧元素较满，右下蘑菇台及果实被硬裁切，左下花灯也贴近边框；持篮手指与篮把的接触关系略含混，部分石板边缘和草地交界过度柔化，鼹鼠礼盒与手掌连接稍显悬浮。",
+          "strengths": "紫花瓣屋顶蘑菇屋已回；开态挥手清晰；绿瞳双辫果篮齐；紫花灯香蕉船石径鼹鼠礼盒蜗牛雏菊在；软立体正午柔亮"
+        },
+        {
+          "round": 4,
+          "score": 8.6,
+          "dims": "构图8.7/光影8.8/透视8.4/质感8.6/风格9.1/无瑕度8.3",
+          "image": "assets/skill_20261109/draw_multi/on_r4.png",
+          "passed": false,
+          "defects": "画面信息量偏满，右下奶酪果物台体积和饱和度较高，与中央角色争抢注意力；提篮手部与篮把连接略拥挤，挥手手指造型稍僵；若干前景植物被边框截断，草地与石板的表面变化不足。",
+          "strengths": "开态挥手清晰；紫花瓣屋顶回；绿瞳双辫果篮齐；场景锚点齐；软立体正午柔亮"
+        }
+      ],
+      "goal": "多图分工·开态：两张附图各管一件事；身份=小精灵角色特写；结构/场景机位=花园蘑菇屋场景板。同一机位同一花园蘑菇屋；金发粉裙绿瞳双辫小精灵挥手欢迎；只改开态挥手；锁关态成图的机位身份场景；16:9；休闲三渲二粘土风正午柔亮；无字。",
+      "max_rounds": 4,
+      "note": "满4轮未到线；交付最高分轮次"
+    }
+  },
+  "best_off": {
+    "score": 8.69,
+    "round": 3,
+    "image": "assets/skill_20261109/draw_multi/off_r3.png",
+    "passed": false
+  },
+  "best_on": {
+    "score": 8.63,
+    "round": 3,
+    "image": "assets/skill_20261109/draw_multi/on_r3.png",
+    "passed": false
+  },
+  "final_images": {
+    "off": "assets/skill_20261109/draw_multi/off_r3.png",
+    "on": "assets/skill_20261109/draw_multi/on_r3.png"
+  },
+  "sessions": {
+    "off": "skill1109-multi",
+    "on": "skill1109-multi-on"
+  },
+  "note": "关态/开态均满4轮未到线（≥9.5）；各取最高分交付。开态同机位挥手欢迎，垫关态定稿。"
+}

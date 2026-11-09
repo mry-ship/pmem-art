@@ -1,0 +1,62 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-11-10 02:30:56 UTC+8",
+  "session_id": "merge_mushroom_dessert_v5",
+  "goal": "检查v5无误后出一组合成梯整表，生成一遍就行；merge overview_sheet 妖精花园甜点店冰淇淋盛装链 L1-L8 shop_ladder 2x4 Travel Town Ice Cream；家族=店域奶油+柔红非纹样",
+  "module": "prop.FairyGarden.MushroomDessert",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.5,
+  "max_rounds": 1,
+  "rounds_used": 1,
+  "winner_round": 1,
+  "winner_score": 8.54,
+  "winner_image": "assets/skill_20261109/merge_overview/merge_overview_v5_r1.jpg",
+  "winner_passed": false,
+  "outcome": "⚠️ **共执行 1 轮审图（目标阈值 `9.50` 分），未达标，已挑选全阶段最高分**（胜出：第 1 轮 `8.54 / 10.0` 分）",
+  "what_fixed": [
+    "优先拉开相近蛋筒款的轮廓或装饰差异，并加强玻璃杯沿高光、杯壁折射和食材接触阴影；同时清理右下碗沿与奶油交界，使前后遮挡更明确。"
+  ],
+  "what_still_weak": "第三格与第五格的蛋筒形态和内容高度接近，视觉递进略有重复；透明杯的材质区分不足，内部奶油、果层与杯壁有局部糊在一起的感觉；若干莓果与奶油缺少明确接触阴影，呈轻微贴片或陷入感。",
+  "strengths": "整表排版规整，层级由单体逐步扩展到杯装与碗装甜品；光向、配色、圆润造型和投影处理统一，蛋筒及莓果细节具有良好识别度。",
+  "taste_deltas": {
+    "from_strengths": [
+      "整表排版规整，层级由单体逐步扩展到杯装与碗装甜品；光向、配色、圆润造型和投影处理统一，蛋筒及莓果细节具有良好识别度。"
+    ],
+    "from_defects": [
+      "第三格与第五格的蛋筒形态和内容高度接近，视觉递进略有重复；透明杯的材质区分不足，内部奶油、果层与杯壁有局部糊在一起的感觉；若干莓果与奶油缺少明确接触阴影，呈轻微贴片或陷入感。"
+    ]
+  },
+  "warm_start_confidence": 0.45,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 8.54,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：第三格与第五格的蛋筒形态和内容高度接近，视觉递进略有重复；透明杯的材质区分不足，内部奶油、果层与杯壁有局部糊在一起的感觉；若干莓果与奶油缺少明确接触阴影，呈轻微",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.54"
+    },
+    {
+      "category": "material",
+      "lesson": "本轮短板偏「material」：第三格与第五格的蛋筒形态和内容高度接近，视觉递进略有重复；透明杯的材质区分不足，内部奶油、果层与杯壁有局部糊在一起的感觉；若干莓果与奶油缺少明确接触阴影，呈轻微",
+      "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+      "from_score": "8.54"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：整表排版规整，层级由单体逐步扩展到杯装与碗装甜品；光向、配色、圆润造型和投影处理统一，蛋筒及莓果细节具有良好识别度。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.54"
+    }
+  ]
+}

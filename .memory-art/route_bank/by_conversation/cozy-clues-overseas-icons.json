@@ -1,0 +1,14 @@
+{
+  "saved_at": 1793826830.503986,
+  "text": "背包道具图标 Mode C 透明底一套给人名饮料失物 Cozy Clues",
+  "banner": "【按 Mode C 走了】",
+  "route_ids": [
+    "icon.c"
+  ],
+  "mode": "skill",
+  "execute_ok": true,
+  "artist_say": "【按 Mode C 走了】\n按背包道具格透明底图标来做。",
+  "plan_conflict": false,
+  "confidence": "high",
+  "conversation_id": "cozy-clues-overseas-icons"
+}

@@ -98,7 +98,7 @@ DOMAIN_SEED_CARDS: dict[str, list[dict[str, Any]]] = {
             "id": "readability-silhouette",
             "title": "剪影可读性与特效预乘 Alpha 通道规范",
             "tags": ["vfx", "line_edge", "icon_consistency"],
-            "body": "特效序列帧与图标必须满足黑白剪影第一眼可读性（外轮廓主次分明、具备清晰负空间，主色阶不超过三段：高光亮芯→主色中调→消散外沿）；透明资产必须使用预乘 Alpha（Premultiplied RGBA）彻底消除半透明边缘脏灰黑边，外周内缩 16px 防止序列帧裁切。",
+            "body": "特效序列帧与图标必须满足黑白剪影第一眼可读性（外轮廓主次分明、具备清晰负空间，主色阶不超过三段：高光亮芯→主色中调→消散外沿）。透明引擎交付的真 alpha 资产用预乘 Alpha（Premultiplied RGBA）消脏边，外周内缩 16px 防序列帧裁切；Cursor GenerateImage 无 alpha 时改用不透明隔离底直接生成，禁止后抠冒充透明。",
         },
     ],
     "anim": [

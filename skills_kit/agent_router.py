@@ -9,33 +9,44 @@ from typing import Any
 from .skill_registry import build_registry
 from .skill_specs import SKILL_SPECS
 
-# 注册表没有这些节。命中就停，不改走普通图。
+# 真做不到：命中就停，不改走普通图。
 UNRECOGNIZED_JOBS = (
-    "局部修",
-    "设定表",
-    "分镜",
-    "姿势锁",
-    "同一场景换光",
-    "画幅延展",
-    "放大清稿",
     "序列帧",
-    "平铺贴图",
-    "带字主视觉",
-    "字标",
-    "色板点选",
-    "情绪板",
-    "只改手",
-    "只修手",
-    "延展画面",
-    "扩画布",
-    "故事板",
-    "锁姿势",
     "逐帧",
+    "平铺贴图",
     "无缝贴图",
-    "同一场景里只换光",
-    "放大后清",
-    "三视图设定",
 )
+
+# 高频活 → 映射到已有合同（不新开技能；banner 带别名）。
+# value: (route_id, reason, announce_label, note)
+JOB_REMAP: dict[str, tuple[str, str, str, str]] = {
+    "局部修": ("draw.ordinary", "job_remap", "普通图·局部修", "scale=low；锁机位只改点名部位"),
+    "只改手指": ("draw.ordinary", "job_remap", "普通图·局部修", "scale=low；只改手指"),
+    "只修手指": ("draw.ordinary", "job_remap", "普通图·局部修", "scale=low；只修手指"),
+    "只改手": ("draw.ordinary", "job_remap", "普通图·局部修", "scale=low；只改手"),
+    "只修手": ("draw.ordinary", "job_remap", "普通图·局部修", "scale=low；只修手"),
+    "放大清稿": ("draw.ordinary", "job_remap", "普通图·清稿", "scale=low；放大清瑕不改机位"),
+    "放大后清": ("draw.ordinary", "job_remap", "普通图·清稿", "scale=low；放大清瑕不改机位"),
+    "同一场景换光": ("draw.ordinary", "job_remap", "普通图·换光", "scale=recompose 或 medium；只改光，身份场景锁"),
+    "同一场景里只换光": ("draw.ordinary", "job_remap", "普通图·换光", "只改光"),
+    "画幅延展": ("draw.ordinary", "job_remap", "普通图·延展", "写明延展边；主体身份锁"),
+    "延展画面": ("draw.ordinary", "job_remap", "普通图·延展", "写明延展边"),
+    "扩画布": ("draw.ordinary", "job_remap", "普通图·延展", "写明延展边"),
+    "姿势锁": ("draw.ordinary", "job_remap", "普通图·姿势锁", "锁姿势与机位，只改允许项"),
+    "锁姿势": ("draw.ordinary", "job_remap", "普通图·姿势锁", "锁姿势与机位"),
+    "设定表": ("draw.variant", "job_remap", "变体·设定表", "同一身份多表情/多态；机位已在图上才变体"),
+    "三视图设定": ("draw.variant", "job_remap", "变体·设定表", "同一身份；禁另开未注册设定表技能"),
+}
+
+# 说不清交付 → 先问，不硬画。
+JOB_ASK: dict[str, str] = {
+    "分镜": "你要几格分镜故事板，还是镜头包（几套机位点选、点选前不出成图）？说清后我再走。",
+    "故事板": "你要几格故事板，还是镜头包点选机位？说清格数或改口「走镜头包」。",
+    "带字主视觉": "带字主视觉目前只能把字当图形装饰；若要可读商标/字标请改口，或去掉可读字走原画/普通图。",
+    "字标": "可靠字标还不在技能表。可改：①无字主视觉 ②把字当图形装饰并接受变形风险。",
+    "色板点选": "色板点选未单独立项。可改：①/pmem-style-lock 锁样张 ②直接说要用的 HEX。",
+    "情绪板": "情绪板未单独立项。可改：①丢参考走锁风格 ②用文字写情绪再走普通图/原画。",
+}
 
 # 研发/排查口语（看代码、查 bug、跑测试、审仓库）不是出图。
 # 关键词分不开 draw a bug / fix a bug，所以分四层：
@@ -220,7 +231,7 @@ _SHOWCASE_DEFAULT_FULL = (
     "style.lock",
     "prompt.write",
 )
-_NEG = ("不要", "别做", "不是", "不做", "别写")
+_NEG = ("不要", "别做", "不是", "不做", "别写", "没有", "无需", "无须")
 
 
 @dataclass
@@ -420,18 +431,21 @@ def _wants_ui(text: str) -> bool:
 
 
 def _wants_merge(text: str) -> bool:
-    return _any(
+    # 明确否掉合成梯时，禁止仅靠八档/逐格/整表硬开
+    if _any(text, ("没有合成梯", "不要合成梯", "不做合成梯", "别做合成梯")):
+        if not _any(
+            text,
+            ("合成升级", "一档比一档", "shop_ladder", "同店升级", "同族形变", "same_object"),
+        ):
+            return False
+    # 强合成词可单独命中；「整表 / 越来越大」须带合成语境，避免表格导出、单物件变大误伤
+    if _any(
         text,
         (
             "合成梯",
             "一档比一档",
             "升级链",
-            "八档",
-            "八个等级",
-            "越来越大",
-            "越升越大",
             "合成升级",
-            "升档",
             # 交付/链型词：用例与口语常省略「合成梯」本体
             "shop_ladder",
             "同店升级",
@@ -440,12 +454,88 @@ def _wants_merge(text: str) -> bool:
             "same_object",
             "overview_sheet",
             "一组出齐",
-            "整表",
             "per_cell",
             "一档一张",
             "逐格",
         ),
-    )
+    ):
+        return True
+    # 「八档 / 八个等级」须真合成语境；禁止「八档剑」仅靠物件误开
+    if _any(text, ("八档", "八个等级")) and _any(
+        text,
+        (
+            "合成",
+            "合成梯",
+            "一档比一档",
+            "升级链",
+            "merge",
+            "ladder",
+            "同店",
+            "同族",
+        ),
+    ):
+        return True
+    # 「升档宝石梯子」：升档 + 货柜物件/合成词
+    if _any(text, ("升档",)) and _any(
+        text,
+        (
+            "合成",
+            "合成梯",
+            "一档比一档",
+            "升级链",
+            "merge",
+            "ladder",
+            "剑",
+            "糖",
+            "药水",
+            "宝石",
+            "道具",
+            "同店",
+            "同族",
+        ),
+    ):
+        return True
+    # 语境用长词；禁止裸「一档/overview/ladder」点亮（光圈一档、Excel overview）
+    # 「整表」只认合成语境，禁止「道具整表导出」靠物件词误开
+    if _any(text, ("整表",)) and _any(
+        text,
+        (
+            "合成梯",
+            "合成升级",
+            "升档",
+            "一档比一档",
+            "八档",
+            "八个等级",
+            "overview_sheet",
+            "同店",
+            "同族",
+            "同模",
+        ),
+    ):
+        return True
+    # 「越升越大那条剑」：体量词 + 货柜物件；太阳/星/宝箱仍靠 false_fire 挡住
+    if _any(text, ("越来越大", "越升越大")) and _any(
+        text,
+        (
+            "合成梯",
+            "合成升级",
+            "升档",
+            "一档比一档",
+            "八档",
+            "八个等级",
+            "overview_sheet",
+            "同店",
+            "同族",
+            "同模",
+            "剑",
+            "糖",
+            "药水",
+            "宝石",
+            "道具",
+        ),
+    ):
+        return True
+    return False
 
 
 def _wants_lens(text: str) -> bool:
@@ -609,7 +699,12 @@ def _wants_multi(text: str, images: list[str], roles: list[str]) -> bool:
 def _wants_key(text: str) -> bool:
     if _hit(text, "带字主视觉"):
         return False
-    return _any(text, ("主视觉", "Key Art", "key art", "气氛图", "概念海报", "概念图", "宣传图", "KeyArt"))
+    if _any(text, ("主视觉", "Key Art", "key art", "气氛图", "概念海报", "宣传图", "KeyArt")):
+        return True
+    # 裸「概念图」不够；须带海报/主视觉/宣传气质，避免随手概念稿升原画合同
+    return _hit(text, "概念图") and _any(
+        text, ("海报", "主视觉", "宣传", "上架", "Key", "key art", "Key Art", "气氛")
+    )
 
 
 def _wants_style(text: str) -> bool:
@@ -639,7 +734,9 @@ def _wants_style(text: str) -> bool:
 
 
 def _dont_draw_this_round(text: str) -> bool:
-    """「别画 / 不画」只表示这轮不出图。别画成风格、不画背景不算审图。"""
+    """「别画 / 不画」只表示这轮不出图。别画成风格、别/不画背景不算审图。"""
+    # 成/得/原：别画成赛博；背/场/环/影：别画背景 / 不画背景
+    _skip_after = {"成", "得", "原", "背", "场", "环", "影"}
     start = 0
     while True:
         idx = text.find("别画", start)
@@ -647,7 +744,7 @@ def _dont_draw_this_round(text: str) -> bool:
             break
         end = idx + 2
         rest = text[end : end + 1]
-        if rest in {"成", "得", "原"} or _left_negated(text, idx) or _right_negated(text, end):
+        if rest in _skip_after or _left_negated(text, idx) or _right_negated(text, end):
             start = end
             continue
         return True
@@ -724,58 +821,99 @@ def _prompt_then_draw(text: str) -> bool:
     return _wants_prompt(text) and _any(text, ("再画", "然后生图", "然后再画"))
 
 
+# 与锁风格同句时认「要验证成图」
+_STYLE_VERIFY_WITH_LOCK = (
+    "验证图",
+    "验证出图",
+    "出一张验证",
+    "锁完出图",
+    "锁完再画",
+    "先锁再画",
+    "为了出图",
+    "证明锁风",
+    "试跑验证",
+    "锁风验证",
+    "锁风格后克隆",
+    "走锁风格后克隆",
+)
+# 即使没写「锁风格」也强制串 style→clone（禁止默默普通图）
+# 不含裸「验证图」：避免「画一张验证图普通猫」误串
+_STYLE_VERIFY_BARE_CHAIN = (
+    "锁完出图",
+    "锁完再画",
+    "先锁再画",
+    "证明锁风",
+    "试跑验证",
+    "锁风验证",
+    "锁风格后克隆",
+    "走锁风格后克隆",
+)
+
+
 def _style_verify_intent(text: str) -> bool:
     """锁完还要成图验证（不含「以后/往后出图都按」只锁不画）。"""
-    if _any(
-        text,
-        (
-            "验证图",
-            "验证出图",
-            "出一张验证",
-            "锁完出图",
-            "锁完再画",
-            "先锁再画",
-            "为了出图",
-            "证明锁风",
-            "试跑验证",
-            "锁风验证",
-            "锁风格后克隆",
-            "走锁风格后克隆",
-        ),
-    ):
+    if _any(text, _STYLE_VERIFY_WITH_LOCK):
         return True
-    # 「以后都用…出图」仍是只锁风格；另写「画一张 / 出一张」才串克隆
-    if _any(text, ("画一张", "生图", "先出一张", "出一张", "再画一张")):
+    # 「以后都用…出图/生图」仍是只锁风格；另写「画一张 / 出一张」才串克隆
+    # 禁止裸「生图」触发（以后都用这张生图 ≠ 立刻出验证图）
+    if _any(text, ("画一张", "先出一张", "出一张", "再画一张")):
         return True
     return False
 
 
 def _style_then_clone(text: str) -> bool:
     """锁风格之后还要验证成图：串 style.lock → draw.clone（不是只入库）。"""
-    return _wants_style(text) and _style_verify_intent(text)
+    if _wants_style(text) and _style_verify_intent(text):
+        return True
+    # 锁完* / 锁风验证 等本身就要求串行；裸「验证图」不够（可能是普通样稿）
+    return _any(text, _STYLE_VERIFY_BARE_CHAIN)
 
 
 # 子串会误伤的未识别工种：后面多一个字就不是这个工种
-_JOB_FALSE_FRIEND = {"分镜": ("感",)}
+# false friend：命中词后紧跟的**单字符**豁免（分镜感 / 只修手臂）
+_JOB_FALSE_FRIEND = {
+    "分镜": ("感", "构", "语", "节"),
+    "只修手": ("臂",),
+    "只改手": ("臂",),
+}
+
+
+def _job_hit(text: str, word: str) -> bool:
+    start = 0
+    while True:
+        idx = text.find(word, start)
+        if idx < 0:
+            return False
+        end = idx + len(word)
+        nxt = text[end : end + 1]
+        if nxt and nxt in _JOB_FALSE_FRIEND.get(word, ()):
+            start = end
+            continue
+        if _left_negated(text, idx) or _right_negated(text, end):
+            start = end
+            continue
+        return True
 
 
 def _unrecognized(text: str) -> str:
     for word in UNRECOGNIZED_JOBS:
-        start = 0
-        while True:
-            idx = text.find(word, start)
-            if idx < 0:
-                break
-            end = idx + len(word)
-            nxt = text[end : end + 1]
-            if nxt and nxt in _JOB_FALSE_FRIEND.get(word, ()):
-                start = end
-                continue
-            if _left_negated(text, idx) or _right_negated(text, end):
-                start = end
-                continue
+        if _job_hit(text, word):
             return word
     return ""
+
+
+def _job_ask(text: str) -> str:
+    for word, ask in JOB_ASK.items():
+        if _job_hit(text, word):
+            return ask
+    return ""
+
+
+def _job_remap(text: str) -> tuple[str, str, str, str] | None:
+    for word in sorted(JOB_REMAP.keys(), key=len, reverse=True):
+        if _job_hit(text, word):
+            return JOB_REMAP[word]
+    return None
 
 
 def _hard(text: str) -> bool:
@@ -783,7 +921,21 @@ def _hard(text: str) -> bool:
 
 
 def _icon_deliverable(text: str) -> bool:
-    return _any(text, ("画个图标", "画一个图标", "做图标", "一张图标", "图标母版", "要个图标"))
+    return _any(
+        text,
+        (
+            "画个图标",
+            "画一个图标",
+            "做图标",
+            "一张图标",
+            "图标母版",
+            "要个图标",
+            "一套图标",
+            "图标集",
+            "做一套图标",
+            "做一套icon",
+        ),
+    )
 
 
 def _two_states(text: str) -> bool:
@@ -951,13 +1103,22 @@ def plan_route(
             "暂不支持双参考像素同框。可改说：①走多图分工（身份/结构分管）②分两次出再拼。不要硬画同框。",
         )
 
+    ask_job = _job_ask(raw)
+    if ask_job:
+        return _stop("job_ask", ask_job)
+
+    _DOWNGRADE_MENU = (
+        "可改口：局部修/只改手→普通图 low；设定表→变体；分镜→先说清故事板或镜头包；"
+        "色板/情绪板→/pmem-style-lock 或文字描述；序列帧/平铺贴图暂无技能。"
+    )
+
     banned = _unrecognized(raw)
     if banned:
-        return _stop("unrecognized", f"没有识别到可用技能：{banned}")
+        return _stop("unrecognized", f"没有识别到可用技能：{banned}。{_DOWNGRADE_MENU}")
 
     # 对原话也查一遍：折叠前的「检查技能」等不应被默认普通图吃掉
     if _dev_ops_ask(raw) or _dev_ops_ask(spoken):
-        return _stop("unrecognized", "没有识别到可用技能")
+        return _stop("unrecognized", f"没有识别到可用技能。{_DOWNGRADE_MENU}")
 
     if _hard(raw):
         return _stop("hard_ambiguity", "还有一处硬不确定，先问这一处")
@@ -969,8 +1130,14 @@ def plan_route(
     if not named and _subject_conflict(raw):
         return _stop("hard_ambiguity", "题材不变和换成新题材同时出现，先问这一处")
 
+    remap = _job_remap(raw)
     chosen: list[str] = []
     reason = ""
+    remap_note = ""
+    remap_label = ""
+    if remap:
+        rid, reason, remap_label, remap_note = remap
+        chosen = [rid]
     draw_only = named == "pmem-draw"
     # 点名 /pmem-draw 仍允许句内的界面、图标、合成梯
     open_specialist = (not named) or draw_only
@@ -980,7 +1147,15 @@ def plan_route(
     if open_specialist and page and _showcase_bare_icon(raw):
         return _stop("icon_unspecified", "只说图标，A/B/C 没分开，先问这一处")
 
-    if named in {"pmem-ui", "pmem-merge-ladder", "pmem-style-lock", "pmem-critique", "pmem-atlas", "pmem-coach", "pmem-prompt"}:
+    if not chosen and named in {
+        "pmem-ui",
+        "pmem-merge-ladder",
+        "pmem-style-lock",
+        "pmem-critique",
+        "pmem-atlas",
+        "pmem-coach",
+        "pmem-prompt",
+    }:
         chosen = {
             "pmem-ui": ["ui.kit"],
             "pmem-merge-ladder": ["merge.ladder"],
@@ -996,10 +1171,12 @@ def plan_route(
         if named == "pmem-style-lock" and _style_verify_intent(raw):
             chosen = ["style.lock", "draw.clone"]
             reason = "style_then_clone"
-    elif open_specialist and len(showcase_ids) >= 2:
+    elif not chosen and open_specialist and len(showcase_ids) >= 2:
         chosen = showcase_ids
         reason = "showcase"
-    elif named == "pmem-icon" or (open_specialist and (_icon_deliverable(raw) or bool(_icon_modes(raw)))):
+    elif not chosen and (
+        named == "pmem-icon" or (open_specialist and (_icon_deliverable(raw) or bool(_icon_modes(raw))))
+    ):
         modes = _icon_modes(raw)
         if len(modes) > 1:
             return _stop("icon_conflict", "图标 A/B/C 同时命中，只问这一处")
@@ -1008,12 +1185,12 @@ def plan_route(
             reason = "icon"
         elif named == "pmem-icon" or _icon_deliverable(raw):
             return _stop("icon_unspecified", "只说图标，A/B/C 没分开，先问这一处")
-    elif open_specialist and len(showcase_ids) == 1:
+    elif not chosen and open_specialist and len(showcase_ids) == 1:
         chosen = showcase_ids
         reason = "showcase"
-    elif open_specialist and page:
+    elif not chosen and open_specialist and page:
         return _stop("showcase_unspecified", "展陈没写要重跑哪几支")
-    elif open_specialist and _bare_rerun(raw):
+    elif not chosen and open_specialist and _bare_rerun(raw):
         probed = _showcase_ids(raw)
         if probed:
             chosen = probed
@@ -1132,6 +1309,10 @@ def plan_route(
             if rid == "draw.ordinary":
                 note = "单张、medium、≥9.50到线即停，最多4兜底。不说成多图分工"
                 locks = "锁机位和身份。多张参考留在列表里，生成只垫宽高比对齐的那张"
+                if reason == "job_remap" and remap_note:
+                    note = f"{remap_note}；{note}"
+            elif rid == "draw.variant" and reason == "job_remap" and remap_note:
+                note = remap_note
             elif rid in ("draw.multi", "draw.split"):
                 note = "banner：每交付物最多4轮、≥9.5到线即停（标明是否≥9.5）"
                 done = "每交付物最多4轮到线即停，标明过线/未过线"
@@ -1187,10 +1368,12 @@ def plan_route(
             )
         )
 
-    mode = "default" if chosen == ["draw.ordinary"] else "skill"
+    mode = "default" if chosen == ["draw.ordinary"] and reason != "job_remap" else "skill"
     labels = "、".join(_section_label(routes[rid]) for rid in chosen)
     if reason == "style_then_clone":
         announce = "按 锁风格→克隆验证 走了"
+    elif reason == "job_remap" and remap_label:
+        announce = f"按 {remap_label} 走了"
     else:
         announce = f"按 {labels} 走了"
     return Plan(

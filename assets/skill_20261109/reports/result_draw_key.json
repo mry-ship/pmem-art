@@ -1,0 +1,37 @@
+{
+  "route_id": "draw.key",
+  "session": "skill1109-key",
+  "banner": "【按 原画 走了】",
+  "passed_threshold": false,
+  "best_score": 8.8,
+  "best_round": 4,
+  "final_image": "assets/skill_20261109/draw_keyart/final.jpg",
+  "rounds": [
+    {
+      "round": 1,
+      "score": 8.74,
+      "image": "assets/skill_20261109/draw_keyart/r1_fairy_garden_keyart.jpg",
+      "dims": "构图8.9/光影9.0/透视8.5/质感8.8/风格9.1/无瑕度8.4"
+    },
+    {
+      "round": 2,
+      "score": 8.78,
+      "image": "assets/skill_20261109/draw_keyart/r2_fairy_garden_keyart.jpg",
+      "dims": "构图8.8/光影9.1/透视8.6/质感8.7/风格9.2/无瑕度8.5"
+    },
+    {
+      "round": 3,
+      "score": 8.54,
+      "image": "assets/skill_20261109/draw_keyart/r3_fairy_garden_keyart.jpg",
+      "dims": "构图8.8/光影8.7/透视8.3/质感8.6/风格8.9/无瑕度8.2"
+    },
+    {
+      "round": 4,
+      "score": 8.8,
+      "image": "assets/skill_20261109/draw_keyart/r4_fairy_garden_keyart.jpg",
+      "dims": "构图9.1/光影8.9/透视8.4/质感9.0/风格9.2/无瑕度8.5"
+    }
+  ],
+  "status": "finished",
+  "note": "未过线·取最高分"
+}

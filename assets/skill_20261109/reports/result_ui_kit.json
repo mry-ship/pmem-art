@@ -1,0 +1,37 @@
+{
+  "route_id": "ui.kit",
+  "session": "skill1109-ui",
+  "banner": "【按 UI Kit 走了】",
+  "passed_threshold": false,
+  "best_score": 9.07,
+  "best_round": 2,
+  "final_image": "assets/skill_20261109/ui_concept/final.png",
+  "rounds": [
+    {
+      "round": 1,
+      "score": 8.77,
+      "image": "assets/skill_20261109/ui_concept/r1.png",
+      "dims": "构图9.1/光影8.8/透视8.5/质感8.8/风格9.2/无瑕度8.4"
+    },
+    {
+      "round": 2,
+      "score": 9.07,
+      "image": "assets/skill_20261109/ui_concept/r2.png",
+      "dims": "构图9.2/光影9.1/透视8.8/质感9.3/风格9.2/无瑕度8.8"
+    },
+    {
+      "round": 3,
+      "score": 8.91,
+      "image": "assets/skill_20261109/ui_concept/r3.png",
+      "dims": "构图9.1/光影8.8/透视8.5/质感9.2/风格9.0/无瑕度8.7"
+    },
+    {
+      "round": 4,
+      "score": 8.83,
+      "image": "assets/skill_20261109/ui_concept/r4.png",
+      "dims": "构图8.8/光影9.0/透视8.6/质感8.9/风格9.1/无瑕度8.7"
+    }
+  ],
+  "status": "finished",
+  "note": "未过线·取最高分"
+}

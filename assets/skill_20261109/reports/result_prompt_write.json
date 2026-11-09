@@ -1,0 +1,25 @@
+{
+  "route_id": "prompt.write",
+  "skill": "pmem-prompt",
+  "status": "ok",
+  "execute_ok": true,
+  "generated_images": 0,
+  "banner": "【按 提示词生成器：按交付类型扩写可选方案 走了】",
+  "conversation": "skill1109-prompt",
+  "delivery_type": "多类型代表 brief 包",
+  "subject": "妖精花园休闲游戏",
+  "ref_pack": "assets/skill_20261109/_refs/",
+  "outputs": [
+    "assets/skill_20261109/prompt/briefs.md"
+  ],
+  "briefs": [
+    {"id": "A", "name": "花园主页", "route_id": "ui.kit", "hand_off": "/pmem-ui", "focus": "花园养成主菜单分区"},
+    {"id": "B", "name": "精灵符标", "route_id": "icon.a", "hand_off": "/pmem-icon A", "focus": "翼+菇单符号 App Icon"},
+    {"id": "C", "name": "线性导航", "route_id": "icon.b", "hand_off": "/pmem-icon B", "focus": "Soft stroke SVG 清单"},
+    {"id": "D", "name": "蘑菇道具", "route_id": "icon.c", "hand_off": "/pmem-icon C", "focus": "真 alpha 道具格同店 surface"},
+    {"id": "E", "name": "蘑菇升级", "route_id": "merge.ladder", "hand_off": "/pmem-merge-ladder", "focus": "shop_ladder 关系稿"},
+    {"id": "F", "name": "花园原画", "route_id": "draw.key", "hand_off": "/pmem-draw", "focus": "黄昏水彩 Key Art"}
+  ],
+  "awaiting_selection": true,
+  "summary": "妖精花园多类型代表 brief（A UI / B 图标A / C 图标B / D 图标C / E 合成梯关系 / F 原画）已写入 prompt/briefs.md；本支不生图，点选后交对应技能。"
+}

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>pmem-art · 技能展陈 2026-11-09 · 妖精花园</title>
+<style>
+  :root { --bg:#0b0f19; --card:#111827; --line:#1e293b; --text:#f1f5f9; --muted:#94a3b8; --accent:#38bdf8; }
+  * { box-sizing:border-box; }
+  body { margin:0; color:var(--text); font:14px/1.55 "PingFang SC","Noto Sans SC",system-ui,sans-serif; background:var(--bg); }
+  .wrap { max-width:1100px; margin:0 auto; padding:28px 18px 72px; }
+  h1 { margin:0 0 8px; font-size:24px; }
+  .lead { color:var(--muted); margin:0 0 18px; }
+  .note { margin:12px 0 18px; padding:10px 12px; border-left:3px solid var(--accent); background:rgba(56,189,248,.08); color:var(--muted); border-radius:0 8px 8px 0; }
+  .grid { display:grid; gap:12px; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); }
+  figure { margin:0; border:1px solid var(--line); border-radius:12px; overflow:hidden; background:#0b1220; }
+  figure.win { border-color:rgba(251,191,36,.55); }
+  figure img { display:block; width:100%; aspect-ratio:1; object-fit:cover; background:#0b1220; }
+  figure.wide img, figure.sheet img { aspect-ratio:4/3; object-fit:contain; }
+  figcaption { padding:8px 10px; font-size:12px; color:var(--muted); border-top:1px solid var(--line); }
+  figcaption strong { display:block; color:var(--text); }
+  section { border:1px solid var(--line); border-radius:16px; background:var(--card); padding:18px; margin-bottom:16px; }
+  section h2 { margin:0 0 10px; font-size:17px; }
+  ul.meta { margin:0; padding-left:18px; color:var(--muted); }
+  code { font-size:11px; color:#7dd3fc; }
+  footer { text-align:center; color:#64748b; font-size:12px; margin-top:20px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>技能展陈 · 2026-11-09 · 妖精花园休闲</h1>
+  <p class="lead">STOP≥9.50 · 最多 4 轮 · 到线即停 · 满轮取最高分。Merge v2 已按完整 SKU 形变重出（禁同底座堆料）。</p>
+  <div class="note">镜头包仍为 awaiting_pick（点选前禁止生图）。未达 9.5 的支线均已满 4 轮后以最高分入展。</div>
+
+  <section id="finals">
+    <h2>闭环终稿（胜出格）</h2>
+    <div class="grid">
+      <figure class="card win wide">
+        <img src="../../../assets/skill_20261109/draw_clone/final.jpg" alt="克隆" />
+        <figcaption><strong>克隆 · 冬日农场</strong>draw.clone · 4 轮 · 8.99 · 胜出第4轮</figcaption>
+      </figure>
+      <figure class="card win wide">
+        <img src="../../../assets/skill_20261109/draw_ordinary/r2_mushroom_prop.jpg" alt="普通图" />
+        <figcaption><strong>普通图 · 蘑菇道具</strong>draw.ordinary · 4 轮 · 8.60 · 胜出第2轮</figcaption>
+      </figure>
+      <figure class="card win wide">
+        <img src="../../../assets/skill_20261109/draw_variant/final.png" alt="变体" />
+        <figcaption><strong>变体</strong>draw.variant · 4 轮 · 8.87 · 胜出第3轮</figcaption>
+      </figure>
+      <figure class="card win wide">
+        <img src="../../../assets/skill_20261109/draw_keyart/final.jpg" alt="原画" />
+        <figcaption><strong>原画 Key Art</strong>draw.key · 4 轮 · 8.80 · 胜出第4轮</figcaption>
+      </figure>
+      <figure class="card win">
+        <img src="../../../assets/skill_20261109/draw_multi/off_final.png" alt="多图关" />
+        <figcaption><strong>多图 · 关</strong>draw.multi · 4 轮 · 8.69 · 胜出第3轮</figcaption>
+      </figure>
+      <figure class="card win">
+        <img src="../../../assets/skill_20261109/draw_multi/on_final.png" alt="多图开" />
+        <figcaption><strong>多图 · 开</strong>draw.multi · 4 轮 · 8.63 · 胜出第3轮</figcaption>
+      </figure>
+      <figure class="card win wide">
+        <img src="../../../assets/skill_20261109/ui_concept/final.png" alt="UI" />
+        <figcaption><strong>UI 概念</strong>ui.kit · 4 轮 · 9.07 · 胜出第2轮</figcaption>
+      </figure>
+      <figure class="card win">
+        <img src="../../../assets/skill_20261109/icon_a/final.png" alt="图标A" />
+        <figcaption><strong>图标A Light母版</strong>icon.a · 4 轮 · 9.06 · 胜出第1轮</figcaption>
+      </figure>
+      <figure class="card win sheet">
+        <img src="../../../assets/skill_20261109/merge_overview_v2/final.jpg" alt="合成梯" />
+        <figcaption><strong>合成梯整表 · 完整SKU</strong>merge.ladder v2 · 4 轮 · 8.81 · 胜出第3轮 · shop_ladder SKU形变</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="meta">
+    <h2>不生图 / 待点选</h2>
+    <ul class="meta">
+      <li><b>icon.b</b> — 图标B SVG预览 · <code>assets/skill_20261109/icon_b/preview.html</code> · 不生图</li>
+      <li><b>icon.c</b> — 图标C 道具格 · <code>assets/skill_20261109/icon_c/prop_mushroom_1024.png</code> · 批量预览</li>
+      <li><b>style.lock</b> — 锁风格卡 · <code>assets/skill_20261109/style_lock/style_card.md</code> · 不生图</li>
+      <li><b>prompt.write</b> — 提示词包 · <code>assets/skill_20261109/prompt/briefs.md</code> · 不生图</li>
+      <li><b>draw.lens</b> — 镜头包方案 · <code>assets/skill_20261109/draw_lens/lens_options.md</code> · awaiting_pick · 点选前禁止生图</li>
+    </ul>
+  </section>
+
+  <footer>docs/showcase/skill_20261109/index.html · merge 过程板 .memory-art/converge/boards/skill1109-merge-v2/</footer>
+</div>
+</body>
+</html>

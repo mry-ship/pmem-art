@@ -1,0 +1,112 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-11-06 03:55:44 UTC+8",
+  "session_id": "cozy-deep-art-v1",
+  "goal": "Cozy Clues Mode C game item icons deep polish: cozy cafe soft-launch, cool paper #F4F7FA + teal #0F766E, thick silhouette readable at 64px, TRUE transparent PNG alpha outside circular badge, soft studio light, NO text NO letters",
+  "module": "icon.cozy_clues_items",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 3,
+  "winner_round": 2,
+  "winner_score": 8.59,
+  "winner_image": "assets/icon/cozy_clues_items/latte.png",
+  "winner_passed": false,
+  "outcome": "🛑 **安全早停后结算**：已审 3 轮，最高 `8.59` < `9.50`，交付历史最高分（第 2 轮）",
+  "what_fixed": [
+    "优先简化拉花内部细线并加大主要心形负形，清理杯柄连接结构和杯底接触阴影；统一外圈描边粗细与抗锯齿，同时略放大左侧叶片或加强其轮廓，以提升64px下的清晰度。",
+    "优先简化并拉开杯柄的内外负形，清理杯柄与杯身交界；统一圆形外框线宽和边缘抗锯齿，同时减淡杯碟右侧灰褐阴影，并把叶片与杯碟之间增加少量留白。",
+    "优先重画杯柄与杯身连接，拉开内轮廓间距并消除切线；统一杯口、杯身和托盘曲线的线宽及平滑度，再加入极轻的明暗渐变与接触阴影提升柔和立体感，同时导出检查圆章外像素的 Alpha 是否为 0。"
+  ],
+  "what_still_weak": "杯柄内外轮廓略显拥挤，连接杯身的位置有轻微黏连感；杯碟右侧阴影稍浑，局部边缘的抗锯齿与外圈线宽不够均匀；叶片靠近杯碟处间距偏紧，小尺寸下容易并成一团。",
+  "strengths": "拉花心形更大更简；叶片轮廓更强；真透明底保留",
+  "taste_deltas": {
+    "from_strengths": [
+      "拉花心形更大更简；叶片轮廓更强；真透明底保留"
+    ],
+    "from_defects": [
+      "杯柄内外轮廓略显拥挤，与杯身连接处的结构和阴影稍黏；托盘右侧与杯底的暗部叠加偏重，局部边界不够利落；拉花细线在64px附近容易糊成高亮纹团，左侧叶片也略小；外圈多重描边有轻微锯齿和厚薄不均。",
+      "杯柄内外轮廓略显拥挤，连接杯身的位置有轻微黏连感；杯碟右侧阴影稍浑，局部边缘的抗锯齿与外圈线宽不够均匀；叶片靠近杯碟处间距偏紧，小尺寸下容易并成一团。",
+      "杯柄内外轮廓略显拥挤，与杯口连接处有轻微切线感；杯体左侧装饰线和托盘线条局部靠得过近。整体偏平面化，柔和棚拍光与材质层次表现较弱，部分曲线粗细和圆顺度仍可统一。仅凭当前白底预览无法确认圆章外是否为真实"
+    ]
+  },
+  "warm_start_confidence": 0.45,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 8.56,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 8.59,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 8.13,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：杯柄内外轮廓略显拥挤，与杯身连接处的结构和阴影稍黏；托盘右侧与杯底的暗部叠加偏重，局部边界不够利落；拉花细线在64px附近容易糊成高亮纹团，左侧叶片也略小；外圈",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.56"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：杯柄内外轮廓略显拥挤，与杯身连接处的结构和阴影稍黏；托盘右侧与杯底的暗部叠加偏重，局部边界不够利落；拉花细线在64px附近容易糊成高亮纹团，左侧叶片也略小；外圈",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "8.56"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：真透明底外圈；厚剪影；青绿纸感一致；无字",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.56"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：杯柄内外轮廓略显拥挤，连接杯身的位置有轻微黏连感；杯碟右侧阴影稍浑，局部边缘的抗锯齿与外圈线宽不够均匀；叶片靠近杯碟处间距偏紧，小尺寸下容易并成一团。",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.59"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：杯柄内外轮廓略显拥挤，连接杯身的位置有轻微黏连感；杯碟右侧阴影稍浑，局部边缘的抗锯齿与外圈线宽不够均匀；叶片靠近杯碟处间距偏紧，小尺寸下容易并成一团。",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "8.59"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：拉花心形更大更简；叶片轮廓更强；真透明底保留",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.59"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：杯柄内外轮廓略显拥挤，与杯口连接处有轻微切线感；杯体左侧装饰线和托盘线条局部靠得过近。整体偏平面化，柔和棚拍光与材质层次表现较弱，部分曲线粗细和圆顺度仍可统一。",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.13"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：杯柄内外轮廓略显拥挤，与杯口连接处有轻微切线感；杯体左侧装饰线和托盘线条局部靠得过近。整体偏平面化，柔和棚拍光与材质层次表现较弱，部分曲线粗细和圆顺度仍可统一。",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "8.13"
+    },
+    {
+      "category": "material",
+      "lesson": "本轮短板偏「material」：杯柄内外轮廓略显拥挤，与杯口连接处有轻微切线感；杯体左侧装饰线和托盘线条局部靠得过近。整体偏平面化，柔和棚拍光与材质层次表现较弱，部分曲线粗细和圆顺度仍可统一。",
+      "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+      "from_score": "8.13"
+    }
+  ]
+}

@@ -54,7 +54,9 @@ converge:
   merged_generate_and_judge: false
   stop_policy: dynamic_threshold
   default_scale: medium
-  max_rounds: 8
+  max_rounds: 4
+  # 掉分/平台安全早停（默认开）：连续平台或掉≥0.15 即交付历史最高，禁止空烧轮次
+  safe_early_stop: true
   target_thresholds:
     low: 9.5
     medium: 9.5

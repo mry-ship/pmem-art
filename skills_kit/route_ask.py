@@ -31,23 +31,45 @@ def detect_vague_ask(
     pl = plan
     icon_ask = {
         "reason": "artist_ask_icon",
-        "ask": "你要哪种图标？回一句就行：A 桌面启动 1024 / B 线性 SVG 一套 / C 背包道具格（透明底）。",
+        "ask": "你要哪种图标？回一句就行：A 桌面启动 1024 / B 线性 SVG 一套 / C 背包道具格（隔离底；Cursor 纯黑、透明引擎才真 alpha）。",
     }
     merge_ask = {
         "reason": "artist_ask_merge",
         "ask": "是继续「合成梯」（同一套东西一档比一档大），还是另画一张普通图？回一句就行。",
     }
-    clear_merge = bool(
-        re.search(
-            r"合成梯|合成升级|一档比一档|升级链|升级那条|八档|越升越大|merge\s*ladder",
-            raw,
-            re.I,
+    neg_merge = bool(
+        re.search(r"没有合成梯|不要合成梯|不做合成梯|别做合成梯", raw)
+    )
+    clear_merge = (not neg_merge) and (
+        bool(
+            re.search(
+                # 强合成词；裸「八档/越升越大」不算清楚（避免普通图被糊话门逼问）
+                r"合成梯|合成升级|一档比一档|升级链|升级那条|merge\s*ladder",
+                raw,
+                re.I,
+            )
+        )
+        or bool(
+            # 与 _wants_merge 体量支对齐：越升/越来越大 + 货柜物件（例：越升越大那条剑）
+            re.search(r"越升越大|越来越大", raw)
+            and re.search(r"剑|糖|药水|宝石|道具", raw)
+        )
+        or bool(
+            # 升档宝石梯子：升档 + 货柜物件；「继续升档那条」仍走 soft_merge 先问
+            re.search(r"升档", raw)
+            and re.search(r"剑|糖|药水|宝石|道具", raw)
+            and not re.search(r"继续|那条|那个", raw)
         )
     )
     # 软口吻＝有合成/升档 + 指代续作；「升档宝石梯子」这类清楚题材升级不算软
-    soft_merge = bool(
-        re.search(r"合成|升档", raw) and re.search(r"继续|那条|那个", raw)
-    ) or bool(re.search(r"合成", raw) and re.search(r"甜品|糖果", raw) and re.search(r"继续|那条", raw))
+    soft_merge = (not neg_merge) and (
+        bool(re.search(r"合成|升档", raw) and re.search(r"继续|那条|那个", raw))
+        or bool(
+            re.search(r"合成", raw)
+            and re.search(r"甜品|糖果", raw)
+            and re.search(r"继续|那条", raw)
+        )
+    )
 
     # plan 已停时：把已有人话 announce 抬成 artist_ask，勿只甩 reason 码
     if pl is not None and pl.mode == "stop":
@@ -167,7 +189,7 @@ def artist_detail_for(plan: Plan | None, *, route_ids: list[str] | None = None) 
         "ui.kit": "按整套界面（HUD/菜单/九宫格）来做，不是单张插画。",
         "icon.a": "按桌面启动图标（1024 母版）来做。",
         "icon.b": "按线性 SVG 图标套装来做。",
-        "icon.c": "按背包道具格透明底图标来做。",
+        "icon.c": "按背包道具格隔离底图标来做（Cursor 纯黑；透明引擎才真 alpha）。",
         "merge.ladder": "按合成梯：先说清升级关系，再默认整表一组出齐（通常 8 档）。",
         "style.lock": "先锁风格/色板，这步不生图。",
         "critique.review": "只审图，不生图。",

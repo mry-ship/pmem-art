@@ -1,0 +1,14 @@
+{
+  "saved_at": 1794241806.564356,
+  "text": "多图分工：关开两态各一张；开态同机位挥手欢迎。两张附图各管一件事已完成关态；下一张只改状态为挥手欢迎，机位身份场景锁关态定稿。金发粉裙绿瞳双辫小精灵一手捧果篮一手挥手；高俯三分之四；16:9；休闲三渲二粘土风正午柔亮；无字。",
+  "banner": "【按 多图分工 走了】",
+  "route_ids": [
+    "draw.multi"
+  ],
+  "mode": "skill",
+  "execute_ok": true,
+  "artist_say": "【按 多图分工 走了】\n按多图分工：几张参考各管一件事。",
+  "plan_conflict": false,
+  "confidence": "high",
+  "conversation_id": "skill1109-multi"
+}
