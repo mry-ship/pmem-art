@@ -1,0 +1,14 @@
+{
+  "saved_at": 1794298104.9671638,
+  "text": "两张图各管一件事。第一张只交身份：花园小妖精正面半身，尖耳、短麦绿发、藕粉领、微笑，纯黑底。第二张只交结构：关着的花园木盒，同一个正面机位，盒盖合拢。渲染锁光泽卡通三维。走多图分工。",
+  "banner": "【按 多图分工 走了】",
+  "route_ids": [
+    "draw.multi"
+  ],
+  "mode": "skill",
+  "execute_ok": true,
+  "artist_say": "【按 多图分工 走了】\n按多图分工：几张参考各管一件事。",
+  "plan_conflict": false,
+  "confidence": "high",
+  "conversation_id": "gh-multi-20261110"
+}

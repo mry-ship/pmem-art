@@ -3,7 +3,7 @@ id: 01M642X7NN3FYC3YHX3TH2GKQ6
 module: infra.Cli
 entity: WindowsCli
 kind: conclusion
-status: seed
+status: active
 supersedes: []
 anchors:
 - pmem_art.py#_cli_entry

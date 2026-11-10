@@ -1,0 +1,1014 @@
+{
+  "session_id": "skill1110-clone",
+  "started_at": "2026-11-10 14:45:09 UTC+8",
+  "goal": "有参考图；换新题材；锁画风；走克隆。窗边写信的小妖精，不要沿用参考里的主体。",
+  "module": "character.FairyLetter",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "medium",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "medium",
+    "label": "中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.5)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 1,
+    "target_score_threshold": 9.5,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.1875,
+      "perspective_anatomy": 0.1125,
+      "texture_detail": 0.1875,
+      "spec_style": 0.1125,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "viewpoint_frame",
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图，只在提示词上补还没过的那一处（提示词改动仍 ≤40%）",
+    "max_prompt_delta_ratio": 0.4,
+    "allow_recompose": false,
+    "allow_viewpoint_change": false,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "viewpoint_angle (不改机位与镜头视角)",
+      "element_count (不增删主体元素清单)",
+      "no_full_recompose (不做整体 recompose / 换景别故事)",
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)"
+    ],
+    "min_round_leap": 0.15,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光",
+    "medium_family": "volume",
+    "best_direction_hint": "最优方向：光影·空气·介质；可小幅姿态/局部布局",
+    "goal": "有参考图；换新题材；锁画风；走克隆。窗边写信的小妖精，不要沿用参考里的主体。",
+    "module": "character.FairyLetter",
+    "ref_image": "assets/skill_20261109/_refs/ref_style_fairy_garden.png",
+    "ref_analysis": "风格参考是饱和休闲三维立体插画，卡通完成度：圆润厚实体块、宽奶油高光、柔和接触影，苔绿暖金与紫青粉高饱和。只锁媒介、饱和色、立体高光和接触影。不锁构图，不锁主体。新题材是室内雨夜，小妖精坐在窗边写信，桌上有信纸和一盏暖灯。禁止树屋、池塘、木船、鼻鼠、巨叶框。原图宽169高276，与3:4相差18.4%，参数闸用同图加边的3:4文件过闸，生图仍垫原图。"
+  },
+  "medium_family": "volume",
+  "contract": "",
+  "target_score_threshold": 9.5,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "assets/skill_20261109/_refs/ref_style_fairy_garden.png",
+  "ref_analysis": "风格参考是饱和休闲三维立体插画，卡通完成度：圆润厚实体块、宽奶油高光、柔和接触影，苔绿暖金与紫青粉高饱和。只锁媒介、饱和色、立体高光和接触影。不锁构图，不锁主体。新题材是室内雨夜，小妖精坐在窗边写信，桌上有信纸和一盏暖灯。禁止树屋、池塘、木船、鼻鼠、巨叶框。原图宽169高276，与3:4相差18.4%，参数闸用同图加边的3:4文件过闸，生图仍垫原图。",
+  "default_aspect_ratio": "3:4",
+  "default_reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_style_fairy_garden_3x4.png",
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_style_fairy_garden.png"
+  ],
+  "aspect_ratio": "3:4",
+  "reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_style_fairy_garden_3x4.png",
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_style_fairy_garden.png"
+  ],
+  "ref_physical_traits": {
+    "exists": true,
+    "size_bytes": 104086,
+    "size_kb": 101.6,
+    "width": 207,
+    "height": 276,
+    "aspect_ratio": "3:4",
+    "canonical_aspect_ratio": "3:4",
+    "color_entropy": 7.99
+  },
+  "param_validation": {
+    "valid": true,
+    "validation_passed": true,
+    "case_id": "skill1110-clone",
+    "scale": "medium",
+    "aspect_ratio": "3:4",
+    "ref_aspect_ratio": "3:4",
+    "ref_dimensions": "207x276",
+    "output_aspect_ratio": "",
+    "output_dimensions": "",
+    "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_style_fairy_garden_3x4.png",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_style_fairy_garden_3x4.png",
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_style_fairy_garden.png"
+    ],
+    "inherited_default_aspect_ratio": false,
+    "inherited_default_pad_image": false,
+    "matched_ref_aspect_ratio": true,
+    "matched_ref_pad_image": true,
+    "matched_output_aspect_ratio": true,
+    "three_step_stage": "step1_start",
+    "three_step_verified": false,
+    "warnings": []
+  },
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.5,
+  "accept_threshold": 9.5,
+  "max_rounds": 4,
+  "ready_to_finish": true,
+  "status": "finished",
+  "owner_conversation_id": "skill1110-clone",
+  "route_ids": [
+    "draw.clone"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "3:4",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_style_fairy_garden_3x4.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "skill1110-clone",
+        "scale": "medium",
+        "aspect_ratio": "3:4",
+        "ref_aspect_ratio": "3:4",
+        "ref_dimensions": "207x276",
+        "output_aspect_ratio": "3:4",
+        "output_dimensions": "864x1152",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_style_fairy_garden_3x4.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_style_fairy_garden_3x4.png"
+        ],
+        "inherited_default_aspect_ratio": false,
+        "inherited_default_pad_image": false,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": true
+      },
+      "generated_at": "14:52:27",
+      "image": "assets/skill_20261110/draw_clone/r1.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 1823056,
+        "size_kb": 1780.3,
+        "width": 864,
+        "height": 1152,
+        "aspect_ratio": "3:4",
+        "canonical_aspect_ratio": "3:4",
+        "color_entropy": 7.96
+      },
+      "raw_score": 8.4,
+      "score": 8.4,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.7；光影8.4；透视8.2；质感8.3；风格8.2；无瑕疵8.5",
+      "dims_parsed": {
+        "composition": 8.7,
+        "lighting_color": 8.4,
+        "perspective_anatomy": 8.2,
+        "texture_detail": 8.3,
+        "spec_style": 8.2,
+        "flawlessness": 8.5
+      },
+      "weighted_score": 8.4,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）"
+      ],
+      "stagnated": false,
+      "strengths": "窗上有竖直雨丝，窗外是深蓝夜色；桌上信纸和一盏亮着的灯都在，小人坐在椅上用笔点着纸。画面里没有树屋、池塘、木船、鼻鼠和巨叶框。",
+      "defects": "头脸是毛绒圆吻和兽耳，读成小动物而不是小人精；握笔的手糊成一只圆拳，看不清分开的手指。灯罩是冷青色，暖光只在灯座和纸面。皮肤和灯罩偏油亮塑料，不是参考那种哑光缎面宽奶油高光。",
+      "next_fix": "保持室内窗边这台机位。把头脸改成小人精：头发盖住头顶，小圆耳或被头发挡住，不要兽吻。握笔的手指分开并碰到纸面。灯罩改成暖黄色。表面改成哑光缎面，高光宽而柔，不要油亮皮肤。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.FairyLetter\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；过曝高光；脏暗阴影/脏色；赛博霓虹/霓虹紫\n- 项目私有知识卡 (Private Layer):\n  · [style-chibi] Q版头身: 2~3 头身，五官放大但识别锚点保留。\n  · [tech-watercolor] 水彩渲染: 边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。\n原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光 | Vertical 3:4 interior, new camera, not the reference layout. One small rounded fairy with two small wings sits on a chair at a wooden desk beside a tall window, writing a letter on a rainy night. On the desk keep only one sheet of letter paper with unreadable ink squiggles and one warm lamp. The fairy has a large head, soft cheeks, two eyes with colored irises and white catchlights, one pen in one hand, the other hand resting on the paper, both hands touching the page. Cool blue rain on the window glass, warm lamp light on the desk, soft contact shadows under the chair, the paper and the lamp. Style lock only: saturated casual volumetric illustration, thick rounded forms, broad creamy highlights, matte satin surfaces, moss green cream gold purple and teal on the clothes lamp and cushion. Element budget: only the fairy, the window, the desk, the letter and the lamp. No treehouse, no pond, no wooden boat, no raccoon, no badger, no giant leaves, no outdoor garden, no mushroom houses, no green side bars, no readable words, no extra limbs. | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: Mode B style ref locks medium/chrome only — the NEW subject silhouette must dominate the frame; do NOT photocopy the reference prop shape (e.g. gift box); name the new subject explicitly in the brief",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.2,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "generic",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：头脸是毛绒圆吻和兽耳，读成小动物而不是小人精；握笔的手糊成一只圆拳，看不清分开的手指。灯罩是冷青色，暖光只在灯座和纸面。皮肤和灯罩偏油亮塑料，不是参考那种哑光缎",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.4"
+        },
+        {
+          "category": "anatomy",
+          "lesson": "本轮短板偏「anatomy」：头脸是毛绒圆吻和兽耳，读成小动物而不是小人精；握笔的手糊成一只圆拳，看不清分开的手指。灯罩是冷青色，暖光只在灯座和纸面。皮肤和灯罩偏油亮塑料，不是参考那种哑光缎",
+          "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+          "from_score": "8.4"
+        },
+        {
+          "category": "narrative_camera",
+          "lesson": "本轮短板偏「narrative_camera」：头脸是毛绒圆吻和兽耳，读成小动物而不是小人精；握笔的手糊成一只圆拳，看不清分开的手指。灯罩是冷青色，暖光只在灯座和纸面。皮肤和灯罩偏油亮塑料，不是参考那种哑光缎",
+          "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+          "from_score": "8.4"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "14:53:03"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "3:4",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_style_fairy_garden_3x4.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "skill1110-clone",
+        "scale": "medium",
+        "aspect_ratio": "3:4",
+        "ref_aspect_ratio": "3:4",
+        "ref_dimensions": "207x276",
+        "output_aspect_ratio": "3:4",
+        "output_dimensions": "864x1152",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_style_fairy_garden_3x4.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_style_fairy_garden_3x4.png"
+        ],
+        "inherited_default_aspect_ratio": false,
+        "inherited_default_pad_image": false,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": true
+      },
+      "generated_at": "14:54:46",
+      "image": "assets/skill_20261110/draw_clone/r2.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 1908131,
+        "size_kb": 1863.4,
+        "width": 864,
+        "height": 1152,
+        "aspect_ratio": "3:4",
+        "canonical_aspect_ratio": "3:4",
+        "color_entropy": 7.96
+      },
+      "raw_score": 8.48,
+      "score": 8.48,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.6；光影8.7；透视8.4；质感8.3；风格8.3；无瑕疵8.5",
+      "dims_parsed": {
+        "composition": 8.6,
+        "lighting_color": 8.7,
+        "perspective_anatomy": 8.4,
+        "texture_detail": 8.3,
+        "spec_style": 8.3,
+        "flawlessness": 8.5
+      },
+      "weighted_score": 8.48,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.08 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "prompt 改动 57% 超过档位上限 40%"
+      ],
+      "stagnated": true,
+      "strengths": "灯罩已是暖琥珀色，纸面被暖光照亮，窗外有雨。右手握笔碰到信纸，左手手掌摊在纸上。圆窗在左，人坐在右侧桌边。",
+      "defects": "头顶仍有一对尖尖的毛绒兽耳，鼻吻偏短，读起来还是小动物而不是小人精。头发丝和皮肤仍偏电影写实，高光偏窄偏亮，不是宽奶油高光的哑光缎面。桌后多了钟、书架和一盆植物，抢了信纸。；prompt 改动 57% 超过档位上限 40%",
+      "next_fix": "保持左圆窗、右坐姿、暖灯在桌左。删掉兽耳，头发完全盖住耳位，只留一张圆脸小人。形体再厚再简，高光改宽改柔。去掉钟、书架和多余植物。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.FairyLetter\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；过曝高光；脏暗阴影/脏色；赛博霓虹/霓虹紫\n- 项目私有知识卡 (Private Layer):\n  · [style-chibi] Q版头身: 2~3 头身，五官放大但识别锚点保留。\n  · [tech-watercolor] 水彩渲染: 边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。\n原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光 | Vertical 3:4, same interior camera: oval rainy window on the left, wooden desk across the lower left, a small fairy seated on the right on a wooden chair. Keep this framing. Change the person into a small humanoid fairy: hair covers the top of the head, tiny round human ears or ears hidden by hair, a small human nose, no animal snout, no furry muzzle, no rodent ears. She writes a letter. One hand holds a slim pen with separated fingers touching the paper. The other hand rests on the page with separated fingers. The lampshade is warm amber yellow, not cool blue. Surfaces are matte satin with broad soft creamy highlights and soft contact shadows, not glossy plastic skin. Saturated casual volumetric game illustration, moss green, cream, gold, purple and teal. Only the fairy, the window, the desk, the letter and the lamp. Indoor rainy night. No treehouse, no pond, no boat, no raccoon, no giant leaves, no outdoor garden, no green side bars, no readable words. | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: Mode B style ref locks medium/chrome only — the NEW subject silhouette must dominate the frame; do NOT photocopy the reference prop shape (e.g. gift box); name the new subject explicitly in the brief | 保持室内窗边这台机位。把头脸改成小人精：头发盖住头顶，小圆耳或被头发挡住，不要兽吻。握笔的手指分开并碰到纸面。灯罩改成暖黄色。表面改成哑光缎面，高光宽而柔，不要油亮皮肤。 | MUST_FIX (≤2): 保持室内窗边这台机位；把头脸改成小人精：头发盖住头顶，小圆耳或被头发挡住，不要兽吻",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.4,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "generic",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：头顶仍有一对尖尖的毛绒兽耳，鼻吻偏短，读起来还是小动物而不是小人精。头发丝和皮肤仍偏电影写实，高光偏窄偏亮，不是宽奶油高光的哑光缎面。桌后多了钟、书架和一盆植物",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.48"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：灯罩已是暖琥珀色，纸面被暖光照亮，窗外有雨。右手握笔碰到信纸，左手手掌摊在纸上。圆窗在左，人坐在右侧桌边。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.48"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "14:55:01"
+    },
+    {
+      "round": 3,
+      "round_label": "第 3 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "3:4",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_style_fairy_garden_3x4.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "skill1110-clone",
+        "scale": "medium",
+        "aspect_ratio": "3:4",
+        "ref_aspect_ratio": "3:4",
+        "ref_dimensions": "207x276",
+        "output_aspect_ratio": "3:4",
+        "output_dimensions": "864x1152",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_style_fairy_garden_3x4.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_style_fairy_garden_3x4.png"
+        ],
+        "inherited_default_aspect_ratio": false,
+        "inherited_default_pad_image": false,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": true
+      },
+      "generated_at": "14:56:40",
+      "image": "assets/skill_20261110/draw_clone/r3.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 1366792,
+        "size_kb": 1334.8,
+        "width": 864,
+        "height": 1152,
+        "aspect_ratio": "3:4",
+        "canonical_aspect_ratio": "3:4",
+        "color_entropy": 7.94
+      },
+      "raw_score": 8.67,
+      "score": 8.67,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.8；光影8.8；透视8.5；质感8.7；风格8.6；无瑕疵8.6",
+      "dims_parsed": {
+        "composition": 8.8,
+        "lighting_color": 8.8,
+        "perspective_anatomy": 8.5,
+        "texture_detail": 8.7,
+        "spec_style": 8.6,
+        "flawlessness": 8.6
+      },
+      "weighted_score": 8.67,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "prompt 改动 47% 超过档位上限 40%"
+      ],
+      "stagnated": false,
+      "strengths": "圆脸小人，头发包住两侧，没有兽耳和吻部。形体是厚实哑光粘土，高光又宽又柔。左圆窗有雨，桌左是暖黄灯，人在右边写信。",
+      "defects": "背上没有翅膀，看起来是粘土小女孩，不是小妖精。握笔的手指仍连成一块。墙面太平，室内只有桌椅，雨夜的冷色几乎只剩窗玻璃。；prompt 改动 47% 超过档位上限 40%",
+      "next_fix": "保持这版粘土圆脸、暖灯和左圆窗。只加一对小而简单的透翅在背上。手指分开碰到纸。不要加回兽耳，也不要加树屋池塘木船。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.FairyLetter\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；过曝高光；脏暗阴影/脏色；赛博霓虹/霓虹紫\n- 项目私有知识卡 (Private Layer):\n  · [style-chibi] Q版头身: 2~3 头身，五官放大但识别锚点保留。\n  · [tech-watercolor] 水彩渲染: 边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。\n原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光 | Vertical 3:4 casual mobile-game illustration, chunky rounded clay forms, simple shapes, broad matte creamy highlights, soft contact shadows, saturated moss green cream gold purple and teal. Same room camera: round rainy window on the left, warm amber lamp on the left of a wooden desk, a small human girl fairy seated on the right writing a letter. Her face is a round human child face with smooth skin, a tiny human nose, and big iris eyes. A hair bun covers both sides of the head so no ears are visible at all. No fur, no animal snout, no pointed ears. One hand with separated fingers holds a pen on the paper. The other hand lies flat on the paper. Only these things: fairy, window, desk, letter, lamp, chair. No clock, no bookshelf, no extra plants, no toys. Indoor rainy night. No treehouse, no pond, no boat, no raccoon, no giant leaves, no outdoor garden, no green side bars, no readable words. | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: Mode B style ref locks medium/chrome only — the NEW subject silhouette must dominate the frame; do NOT photocopy the reference prop shape (e.g. gift box); name the new subject explicitly in the brief | 保持左圆窗、右坐姿、暖灯在桌左。删掉兽耳，头发完全盖住耳位，只留一张圆脸小人。形体再厚再简，高光改宽改柔。去掉钟、书架和多余植物。 | MUST_FIX (≤2): 保持左圆窗、右坐姿、暖灯在桌左；删掉兽耳，头发完全盖住耳位，只留一张圆脸小人",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.5,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "generic",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "anatomy",
+          "lesson": "本轮短板偏「anatomy」：背上没有翅膀，看起来是粘土小女孩，不是小妖精。握笔的手指仍连成一块。墙面太平，室内只有桌椅，雨夜的冷色几乎只剩窗玻璃。；prompt 改动 47% 超过档位上限",
+          "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+          "from_score": "8.67"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：圆脸小人，头发包住两侧，没有兽耳和吻部。形体是厚实哑光粘土，高光又宽又柔。左圆窗有雨，桌左是暖黄灯，人在右边写信。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.67"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "14:56:50"
+    },
+    {
+      "round": 4,
+      "round_label": "第 4 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "3:4",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_style_fairy_garden_3x4.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "skill1110-clone",
+        "scale": "medium",
+        "aspect_ratio": "3:4",
+        "ref_aspect_ratio": "3:4",
+        "ref_dimensions": "207x276",
+        "output_aspect_ratio": "3:4",
+        "output_dimensions": "864x1152",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_style_fairy_garden_3x4.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_style_fairy_garden_3x4.png"
+        ],
+        "inherited_default_aspect_ratio": false,
+        "inherited_default_pad_image": false,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": true
+      },
+      "generated_at": "14:58:03",
+      "image": "assets/skill_20261110/draw_clone/r4.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 1654411,
+        "size_kb": 1615.6,
+        "width": 864,
+        "height": 1152,
+        "aspect_ratio": "3:4",
+        "canonical_aspect_ratio": "3:4",
+        "color_entropy": 7.97
+      },
+      "raw_score": 8.78,
+      "score": 8.78,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.9；光影8.8；透视8.6；质感8.8；风格8.9；无瑕疵8.7",
+      "dims_parsed": {
+        "composition": 8.9,
+        "lighting_color": 8.8,
+        "perspective_anatomy": 8.6,
+        "texture_detail": 8.8,
+        "spec_style": 8.9,
+        "flawlessness": 8.7
+      },
+      "weighted_score": 8.78,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.11 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "prompt 改动 44% 超过档位上限 40%"
+      ],
+      "stagnated": true,
+      "strengths": "圆脸小人精背上有一对小透翅，头发盖住耳位，没有兽耳。粘土形体厚，高光宽而柔。左圆窗有雨滴，桌左暖黄灯，人坐在右边用笔写信。",
+      "defects": "握笔的手仍是连指圆块，笔杆像插在拳头里。桌角多了一本蓝书。窗外偏灰绿，雨滴大而鼓，夜色不够深。翅膀比身体更扁，边缘有一圈白线。；prompt 改动 44% 超过档位上限 40%",
+      "next_fix": "已是最后一轮。若再画，只分开握笔的手指，并拿掉蓝书。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.FairyLetter\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；过曝高光；脏暗阴影/脏色；赛博霓虹/霓虹紫\n- 项目私有知识卡 (Private Layer):\n  · [style-chibi] Q版头身: 2~3 头身，五官放大但识别锚点保留。\n  · [tech-watercolor] 水彩渲染: 边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。\n原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光 | Vertical 3:4 casual mobile-game clay illustration, chunky rounded forms, simple shapes, broad matte creamy highlights, soft contact shadows, saturated moss green cream gold purple and teal. Same camera: round rainy window on the left, warm amber lamp on the left of a wooden desk, a small human girl fairy seated on the right writing a letter. Round human child face, smooth skin, tiny human nose, big iris eyes, hair buns covering both sides so no ears show. Two small simple translucent fairy wings on her back. One hand with separated fingers holds a pen on the paper, the other hand lies flat on the paper. Only the fairy, wings, window, desk, letter, lamp and chair. No clock, no bookshelf, no plants, no fur, no animal snout, no pointed ears, no treehouse, no pond, no boat, no raccoon, no giant leaves, no outdoor garden, no green side bars, no readable words. | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: Mode B style ref locks medium/chrome only — the NEW subject silhouette must dominate the frame; do NOT photocopy the reference prop shape (e.g. gift box); name the new subject explicitly in the brief | 保持这版粘土圆脸、暖灯和左圆窗。只加一对小而简单的透翅在背上。手指分开碰到纸。不要加回兽耳，也不要加树屋池塘木船。 | MUST_FIX (≤2): 保持这版粘土圆脸、暖灯和左圆窗；只加一对小而简单的透翅在背上",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.6,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "generic",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_MAX_ROUNDS",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "anatomy",
+          "lesson": "本轮短板偏「anatomy」：握笔的手仍是连指圆块，笔杆像插在拳头里。桌角多了一本蓝书。窗外偏灰绿，雨滴大而鼓，夜色不够深。翅膀比身体更扁，边缘有一圈白线。；prompt 改动 44% 超过",
+          "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+          "from_score": "8.78"
+        },
+        {
+          "category": "line_edge",
+          "lesson": "本轮短板偏「line_edge」：握笔的手仍是连指圆块，笔杆像插在拳头里。桌角多了一本蓝书。窗外偏灰绿，雨滴大而鼓，夜色不够深。翅膀比身体更扁，边缘有一圈白线。；prompt 改动 44% 超过",
+          "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+          "from_score": "8.78"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：圆脸小人精背上有一对小透翅，头发盖住耳位，没有兽耳。粘土形体厚，高光宽而柔。左圆窗有雨滴，桌左暖黄灯，人坐在右边用笔写信。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.78"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "14:58:13"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-11-10 14:02:24 UTC+8"
+    },
+    "module": "character.FairyLetter",
+    "goal": "有参考图；换新题材；锁画风；走克隆。窗边写信的小妖精，不要沿用参考里的主体。",
+    "confidence": 0.45,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "个人口味/正向保留非空",
+      "注入红线可控（0 条，已按任务主题过滤）",
+      "挂载 2 张项目知识卡 + 0 张全局美术底层基础卡"
+    ],
+    "top_recipes": [],
+    "top_redlines": [],
+    "art_decisions": [],
+    "private_knowledge": [
+      {
+        "id": "style-chibi",
+        "title": "Q版头身",
+        "body": "2~3 头身，五官放大但识别锚点保留。",
+        "layer_scope": "private"
+      },
+      {
+        "id": "tech-watercolor",
+        "title": "水彩渲染",
+        "body": "边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。",
+        "layer_scope": "private"
+      }
+    ],
+    "shared_knowledge": [],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [
+        "冷光源",
+        "暖光",
+        "柔光"
+      ],
+      "preferred_composition": [
+        "半身",
+        "居中/对称构图"
+      ],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [
+        "避免过饱和"
+      ],
+      "banned_habits": [
+        "漏抠/黑底/毛边",
+        "廉价塑料感/油腻高光",
+        "过曝高光",
+        "脏暗阴影/脏色",
+        "赛博霓虹/霓虹紫"
+      ],
+      "keep_phrases": [
+        "确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色",
+        "确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶"
+      ],
+      "banned_habits_raw_tail": [
+        "禁止偏离样张画风：过度霓虹、脏暗阴影、油腻高光、写实皮肤毛孔、扁平UI描边",
+        "电池审稿：原画竖构图避免贴样张布局；边缘反光勿过曝",
+        "电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感",
+        "黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差",
+        "错误头身比/头过大",
+        "漏抠/黑底/毛边",
+        "廉价塑料感/油腻高光",
+        "过曝高光",
+        "脏暗阴影/脏色",
+        "赛博霓虹/霓虹紫"
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.FairyLetter\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；过曝高光；脏暗阴影/脏色；赛博霓虹/霓虹紫\n- 项目私有知识卡 (Private Layer):\n  · [style-chibi] Q版头身: 2~3 头身，五官放大但识别锚点保留。\n  · [tech-watercolor] 水彩渲染: 边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。",
+    "built_at": "2026-11-10 14:45:09 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：头脸是毛绒圆吻和兽耳，读成小动物而不是小人精；握笔的手糊成一只圆拳，看不清分开的手指。灯罩是冷青色，暖光只在灯座和纸面。皮肤和灯罩偏油亮塑料，不是参考那种哑光缎",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.4"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：头脸是毛绒圆吻和兽耳，读成小动物而不是小人精；握笔的手糊成一只圆拳，看不清分开的手指。灯罩是冷青色，暖光只在灯座和纸面。皮肤和灯罩偏油亮塑料，不是参考那种哑光缎",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "8.4"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：头脸是毛绒圆吻和兽耳，读成小动物而不是小人精；握笔的手糊成一只圆拳，看不清分开的手指。灯罩是冷青色，暖光只在灯座和纸面。皮肤和灯罩偏油亮塑料，不是参考那种哑光缎",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "8.4"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：头顶仍有一对尖尖的毛绒兽耳，鼻吻偏短，读起来还是小动物而不是小人精。头发丝和皮肤仍偏电影写实，高光偏窄偏亮，不是宽奶油高光的哑光缎面。桌后多了钟、书架和一盆植物",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.48"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：灯罩已是暖琥珀色，纸面被暖光照亮，窗外有雨。右手握笔碰到信纸，左手手掌摊在纸上。圆窗在左，人坐在右侧桌边。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.48"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：背上没有翅膀，看起来是粘土小女孩，不是小妖精。握笔的手指仍连成一块。墙面太平，室内只有桌椅，雨夜的冷色几乎只剩窗玻璃。；prompt 改动 47% 超过档位上限",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "8.67"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：圆脸小人，头发包住两侧，没有兽耳和吻部。形体是厚实哑光粘土，高光又宽又柔。左圆窗有雨，桌左是暖黄灯，人在右边写信。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.67"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：握笔的手仍是连指圆块，笔杆像插在拳头里。桌角多了一本蓝书。窗外偏灰绿，雨滴大而鼓，夜色不够深。翅膀比身体更扁，边缘有一圈白线。；prompt 改动 44% 超过",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "8.78"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：握笔的手仍是连指圆块，笔杆像插在拳头里。桌角多了一本蓝书。窗外偏灰绿，雨滴大而鼓，夜色不够深。翅膀比身体更扁，边缘有一圈白线。；prompt 改动 44% 超过",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "8.78"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：圆脸小人精背上有一对小透翅，头发盖住耳位，没有兽耳。粘土形体厚，高光宽而柔。左圆窗有雨滴，桌左暖黄灯，人坐在右边用笔写信。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.78"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 2,
+  "regression_drop": 0.15,
+  "safe_early_stop": true,
+  "understanding_contract": {
+    "version": 1,
+    "raw_utterance": "有参考图；换新题材；锁画风；走克隆。窗边写信的小妖精，不要沿用参考里的主体。",
+    "l0": {
+      "route_ids": [
+        "draw.clone"
+      ],
+      "banner": "【按 克隆 走了】",
+      "delivery": "draw.clone"
+    },
+    "l1": {
+      "locks": [
+        "媒介",
+        "饱和色",
+        "休闲立体高光",
+        "柔和接触影"
+      ],
+      "unlocks": [
+        "构图",
+        "主体",
+        "参考机位"
+      ],
+      "defaults_shown": [
+        "默认：画幅3:4",
+        "室内雨夜",
+        "小妖精坐在窗边写信",
+        "桌上信纸和一盏暖灯",
+        "生图只垫最初风格原图",
+        "不垫上一轮成图"
+      ],
+      "commercial_vibe": "饱和休闲三维立体，圆润厚实，奶油高光，柔和接触影，暖灯对着雨夜冷窗"
+    },
+    "l2": {
+      "open": true,
+      "surface_fix": "",
+      "last_feedback": "",
+      "feedback_layer": ""
+    },
+    "notes": ""
+  },
+  "discussions": [
+    {
+      "round": 0,
+      "kind": "reasonableness",
+      "prompt": "Vertical 3:4 interior, new camera, not the reference layout. One small rounded fairy with two small wings sits on a chair at a wooden desk beside a tall window, writing a letter on a rainy night. On the desk keep only one sheet of letter paper with unreadable ink squiggles and one warm lamp. The fairy has a large head, soft cheeks, two eyes with colored irises and white catchlights, one pen in one hand, the other hand resting on the paper, both hands touching the page. Cool blue rain on the window glass, warm lamp light on the desk, soft contact shadows under the chair, the paper and the lamp. Style lock only: saturated casual volumetric illustration, thick rounded forms, broad creamy highlights, matte satin surfaces, moss green cream gold purple and teal on the clothes lamp and cushion. Element budget: only the fairy, the window, the desk, the letter and the lamp. No treehouse, no pond, no wooden boat, no raccoon, no badger, no giant leaves, no outdoor garden, no mushroom houses, no green side bars, no readable words, no extra limbs.",
+      "strengths": "合理性闸已过：subject_action=ok:小妖精坐在窗边写信；contact_scale=ok:人坐椅上，信纸和灯落在桌面并有接触影；element_budget=ok:只留妖精窗桌信纸暖灯；hard_locks=ok:3:4，锁媒介饱和色立体高光柔和接触影，不锁构图主体；fail_at_glance=ok:树屋池塘木船鼻鼠或巨叶框出现即失败；new_subject_not_ref_echo=ok:室内雨夜写信，不是花园树屋",
+      "defects": "",
+      "next_fix": "首轮 generate 使用本修订提示词；审美迭代不得推翻硬锁与元素预算"
+    },
+    {
+      "round": 1,
+      "prompt": "克隆分析：只锁媒介、饱和色、休闲立体高光和柔和接触影。不锁构图和主体。新题材是室内雨夜，一个小妖精坐在窗边写信，桌上有信纸和一盏暖灯。禁止把参考里的树屋、池塘、小船、鼻鼠、巨叶框画回来。画幅3:4。参考原图宽169高276，与3:4差18.4%，参数闸改用同图加边文件，生图垫原图。",
+      "strengths": "",
+      "defects": "",
+      "next_fix": ""
+    }
+  ],
+  "reasonableness_history": [
+    {
+      "reviewed_at": 1794293320.4285023,
+      "passed": true,
+      "skill": "clone",
+      "issues": []
+    }
+  ],
+  "reasonableness": {
+    "passed": true,
+    "skill": "clone",
+    "draft_prompt": "A small fairy sits by a rainy night window writing a letter, with letter paper and a warm lamp on the desk. Saturated rounded volumetric style, creamy highlights, soft contact shadows. Vertical 3:4. New subject, new interior camera.",
+    "revised_prompt": "Vertical 3:4 interior, new camera, not the reference layout. One small rounded fairy with two small wings sits on a chair at a wooden desk beside a tall window, writing a letter on a rainy night. On the desk keep only one sheet of letter paper with unreadable ink squiggles and one warm lamp. The fairy has a large head, soft cheeks, two eyes with colored irises and white catchlights, one pen in one hand, the other hand resting on the paper, both hands touching the page. Cool blue rain on the window glass, warm lamp light on the desk, soft contact shadows under the chair, the paper and the lamp. Style lock only: saturated casual volumetric illustration, thick rounded forms, broad creamy highlights, matte satin surfaces, moss green cream gold purple and teal on the clothes lamp and cushion. Element budget: only the fairy, the window, the desk, the letter and the lamp. No treehouse, no pond, no wooden boat, no raccoon, no badger, no giant leaves, no outdoor garden, no mushroom houses, no green side bars, no readable words, no extra limbs.",
+    "checklist": {
+      "subject_action": {
+        "status": "ok",
+        "note": "小妖精坐在窗边写信"
+      },
+      "contact_scale": {
+        "status": "ok",
+        "note": "人坐椅上，信纸和灯落在桌面并有接触影"
+      },
+      "element_budget": {
+        "status": "ok",
+        "note": "只留妖精窗桌信纸暖灯"
+      },
+      "hard_locks": {
+        "status": "ok",
+        "note": "3:4，锁媒介饱和色立体高光柔和接触影，不锁构图主体"
+      },
+      "fail_at_glance": {
+        "status": "ok",
+        "note": "树屋池塘木船鼻鼠或巨叶框出现即失败"
+      },
+      "new_subject_not_ref_echo": {
+        "status": "ok",
+        "note": "室内雨夜写信，不是花园树屋"
+      }
+    },
+    "issues": [],
+    "notes": "换题材锁画风，室内雨夜窗边写信",
+    "reviewed_at": 1794293320.4285023,
+    "reviewed_at_iso": "2026-11-10 14:48:40",
+    "force_pass": false,
+    "skill_raw": "clone"
+  },
+  "warm_start_merged": true,
+  "warm_start_merged_at": "2026-11-10 14:58:03",
+  "warm_start_block_sha1": "2a346c787e4d",
+  "ActionRequired": "STOP_PICK_BEST",
+  "showcase_ready": true,
+  "winner": {
+    "round": 4,
+    "round_label": "第 4 轮精修",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "3:4",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_style_fairy_garden_3x4.png"
+    ],
+    "param_validation": {
+      "valid": true,
+      "validation_passed": true,
+      "case_id": "skill1110-clone",
+      "scale": "medium",
+      "aspect_ratio": "3:4",
+      "ref_aspect_ratio": "3:4",
+      "ref_dimensions": "207x276",
+      "output_aspect_ratio": "3:4",
+      "output_dimensions": "864x1152",
+      "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_style_fairy_garden_3x4.png",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_style_fairy_garden_3x4.png"
+      ],
+      "inherited_default_aspect_ratio": false,
+      "inherited_default_pad_image": false,
+      "matched_ref_aspect_ratio": true,
+      "matched_ref_pad_image": true,
+      "matched_output_aspect_ratio": true,
+      "three_step_stage": "step3_judge",
+      "three_step_verified": true,
+      "warnings": [],
+      "continuation_pad": false,
+      "pad_diverged": true
+    },
+    "generated_at": "14:58:03",
+    "image": "assets/skill_20261110/draw_clone/r4.png",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 1654411,
+      "size_kb": 1615.6,
+      "width": 864,
+      "height": 1152,
+      "aspect_ratio": "3:4",
+      "canonical_aspect_ratio": "3:4",
+      "color_entropy": 7.97
+    },
+    "raw_score": 8.78,
+    "score": 8.78,
+    "target_score_threshold": 9.5,
+    "dims": "构图8.9；光影8.8；透视8.6；质感8.8；风格8.9；无瑕疵8.7",
+    "dims_parsed": {
+      "composition": 8.9,
+      "lighting_color": 8.8,
+      "perspective_anatomy": 8.6,
+      "texture_detail": 8.8,
+      "spec_style": 8.9,
+      "flawlessness": 8.7
+    },
+    "weighted_score": 8.78,
+    "audit_warnings": [
+      "收敛停滞预警：本轮净增 +0.11 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+      "Agent Absolute-5D 已采纳（门槛 9.5）",
+      "prompt 改动 44% 超过档位上限 40%"
+    ],
+    "stagnated": true,
+    "strengths": "圆脸小人精背上有一对小透翅，头发盖住耳位，没有兽耳。粘土形体厚，高光宽而柔。左圆窗有雨滴，桌左暖黄灯，人坐在右边用笔写信。",
+    "defects": "握笔的手仍是连指圆块，笔杆像插在拳头里。桌角多了一本蓝书。窗外偏灰绿，雨滴大而鼓，夜色不够深。翅膀比身体更扁，边缘有一圈白线。；prompt 改动 44% 超过档位上限 40%",
+    "next_fix": "已是最后一轮。若再画，只分开握笔的手指，并拿掉蓝书。",
+    "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.FairyLetter\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；过曝高光；脏暗阴影/脏色；赛博霓虹/霓虹紫\n- 项目私有知识卡 (Private Layer):\n  · [style-chibi] Q版头身: 2~3 头身，五官放大但识别锚点保留。\n  · [tech-watercolor] 水彩渲染: 边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。\n原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光 | Vertical 3:4 casual mobile-game clay illustration, chunky rounded forms, simple shapes, broad matte creamy highlights, soft contact shadows, saturated moss green cream gold purple and teal. Same camera: round rainy window on the left, warm amber lamp on the left of a wooden desk, a small human girl fairy seated on the right writing a letter. Round human child face, smooth skin, tiny human nose, big iris eyes, hair buns covering both sides so no ears show. Two small simple translucent fairy wings on her back. One hand with separated fingers holds a pen on the paper, the other hand lies flat on the paper. Only the fairy, wings, window, desk, letter, lamp and chair. No clock, no bookshelf, no plants, no fur, no animal snout, no pointed ears, no treehouse, no pond, no boat, no raccoon, no giant leaves, no outdoor garden, no green side bars, no readable words. | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: Mode B style ref locks medium/chrome only — the NEW subject silhouette must dominate the frame; do NOT photocopy the reference prop shape (e.g. gift box); name the new subject explicitly in the brief | 保持这版粘土圆脸、暖灯和左圆窗。只加一对小而简单的透翅在背上。手指分开碰到纸。不要加回兽耳，也不要加树屋池塘木船。 | MUST_FIX (≤2): 保持这版粘土圆脸、暖灯和左圆窗；只加一对小而简单的透翅在背上",
+    "continuation": false,
+    "passed": false,
+    "gate_blocked": true,
+    "image_gate_blocked": false,
+    "anatomy_score": 8.6,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "generic",
+    "judge_source": "agent_absolute_5d",
+    "remote_vlm": {
+      "source": "agent_self_judge",
+      "provider": "",
+      "model": "",
+      "error": "",
+      "active": false,
+      "score_evidence": {},
+      "evidence_missing_dims": [],
+      "review": {
+        "pass_count": 0,
+        "rerated": false,
+        "reason": ""
+      }
+    },
+    "should_continue_next_round": false,
+    "decision": "STOP_MAX_ROUNDS",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "anatomy",
+        "lesson": "本轮短板偏「anatomy」：握笔的手仍是连指圆块，笔杆像插在拳头里。桌角多了一本蓝书。窗外偏灰绿，雨滴大而鼓，夜色不够深。翅膀比身体更扁，边缘有一圈白线。；prompt 改动 44% 超过",
+        "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+        "from_score": "8.78"
+      },
+      {
+        "category": "line_edge",
+        "lesson": "本轮短板偏「line_edge」：握笔的手仍是连指圆块，笔杆像插在拳头里。桌角多了一本蓝书。窗外偏灰绿，雨滴大而鼓，夜色不够深。翅膀比身体更扁，边缘有一圈白线。；prompt 改动 44% 超过",
+        "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+        "from_score": "8.78"
+      },
+      {
+        "category": "keep",
+        "lesson": "保留本轮已做对的：圆脸小人精背上有一对小透翅，头发盖住耳位，没有兽耳。粘土形体厚，高光宽而柔。左圆窗有雨滴，桌左暖黄灯，人坐在右边用笔写信。",
+        "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+        "from_score": "8.78"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "14:58:13",
+    "asset_image": "assets/skill_20261110/draw_clone/r4.png"
+  },
+  "rounds_to_converge": 4,
+  "convergence_badge": "共 4 轮未达阈值，采用最高分",
+  "winner_image": "assets/skill_20261110/draw_clone/r4.png",
+  "best_image": "assets/skill_20261110/draw_clone/r4.png",
+  "final_image": "assets/skill_20261110/draw_clone/final.png",
+  "settle_pending": false,
+  "process_board": ".memory-art/converge/boards/skill1110-clone/index.html",
+  "settle_done_at": "2026-11-10 14:58:39 UTC+8",
+  "settle_saved_paths": [
+    ".memory-art\\entries\\character.FairyLetter\\CHAT20261110145827616RECIPE.md",
+    ".memory-art\\entries\\character.FairyLetter\\CHAT20261110145828170REDLINE.md",
+    ".memory-art\\_reflections\\20261110_145828_skill1110-clone.json"
+  ]
+}

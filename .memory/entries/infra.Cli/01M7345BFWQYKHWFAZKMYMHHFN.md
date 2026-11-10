@@ -20,6 +20,8 @@ aliases:
 - 停 pre-gen
 - 关掉 Warm-Start 灌入
 - PMEM_ART_PRE_GEN_INJECT
+verified: '2026-11-11'
+verified_at: '2026-11-11T01:15:57.631+08:00'
 source:
   conversation: 47f6bbb9-8756-4463-9252-553fb8630b97
 ---

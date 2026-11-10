@@ -1,0 +1,14 @@
+{
+  "ok": true,
+  "route_id": "prompt.write",
+  "banner": "【按 提示词生成器：按交付类型扩写可选方案 走了】",
+  "passed_threshold": null,
+  "best_score": null,
+  "final_image": "",
+  "images": [],
+  "briefs_file": "assets/skill_20261110/prompt/briefs.md",
+  "wall_started_at": "2026-11-10T14:37:11",
+  "wall_ended_at": "2026-11-10T14:38:13",
+  "wall_sec": 62,
+  "notes": "conversation=skill1110-prompt。route_ids 只有 prompt.write，三套都标 route_id=draw.ordinary，题材是妖精花园窗边写信的小妖精。A 窗边中景 / 午后暖侧光 / 哑光水粉；B 信纸特写 / 清晨冷白光 / 水彩纸纹；C 窗框全景 / 黄昏逆光金边 / 齿纹纸色铅笔。无风格句，完成度句取 watercolor.portrait 绘本立绘，未套合成梯软塑胶。未生图，未跑 converge。点选前不出图。"
+}

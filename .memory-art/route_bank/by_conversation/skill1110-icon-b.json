@@ -1,0 +1,14 @@
+{
+  "saved_at": 1794292702.2215312,
+  "text": "线性 SVG；走图标B。妖精花园一套 8 枚导航图标。",
+  "banner": "【按 Mode B 走了】",
+  "route_ids": [
+    "icon.b"
+  ],
+  "mode": "skill",
+  "execute_ok": true,
+  "artist_say": "【按 Mode B 走了】\n按线性 SVG 图标套装来做。",
+  "plan_conflict": false,
+  "confidence": "high",
+  "conversation_id": "skill1110-icon-b"
+}

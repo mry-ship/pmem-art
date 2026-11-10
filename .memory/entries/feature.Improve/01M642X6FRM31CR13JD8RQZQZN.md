@@ -3,7 +3,7 @@ id: 01M642X6FRM31CR13JD8RQZQZN
 module: feature.Improve
 entity: AutoAccept
 kind: exclusion
-status: seed
+status: active
 supersedes: []
 anchors:
 - improve/knowledge.py#cmd_learn

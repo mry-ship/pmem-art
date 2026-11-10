@@ -1,0 +1,981 @@
+{
+  "session_id": "skill1110-multi-shut",
+  "started_at": "2026-11-10 14:39:29 UTC+8",
+  "goal": "多张附图各管一件事；走多图分工。身份图管脸，结构图管关着的花园木门机位，下一张只改成打开。",
+  "module": "scene.FairyDoor",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "medium",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "medium",
+    "label": "多图分工 · 不走四档",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 1,
+    "target_score_threshold": 9.5,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.1875,
+      "perspective_anatomy": 0.1125,
+      "texture_detail": 0.1875,
+      "spec_style": 0.1125,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "viewpoint_frame",
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "不使用四档的提示词预算，也不锁机位",
+    "max_prompt_delta_ratio": 1.0,
+    "allow_recompose": false,
+    "allow_viewpoint_change": true,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)"
+    ],
+    "min_round_leap": 0.15,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "原图画风优先：身份图和结构图各管一件事，机位以结构图为准",
+    "medium_family": "volume",
+    "best_direction_hint": "最优方向：光影·空气·介质；可小幅姿态/局部布局",
+    "contract": "split",
+    "goal": "多张附图各管一件事；走多图分工。身份图管脸，结构图管关着的花园木门机位，下一张只改成打开。",
+    "module": "scene.FairyDoor",
+    "ref_image": "assets/skill_20261109/_refs/ref_structure_board.png",
+    "ref_analysis": "结构图848x488接近16:9，管机位：斜俯视童话花园，左池塘与香蕉船，石径，前景蘑菇与奶酪果盘，右上小木屋。身份图460x460只管脸和服装：金色双辫粉绳、尖耳、绿瞳、粉裙、珍珠蓝宝石项链、浅蓝翅膀、右手握果篮。身份图半身机位作废。不要继承鼻鼠、礼物盒、蓝礼服小提琴老人，也不要妖精腾空跳跃。画风是三维软塑胶，圆润厚实，棚拍柔光，苔绿与暖金，奶油高光。"
+  },
+  "medium_family": "volume",
+  "contract": "split",
+  "target_score_threshold": 9.5,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "assets/skill_20261109/_refs/ref_structure_board.png",
+  "ref_analysis": "结构图848x488接近16:9，管机位：斜俯视童话花园，左池塘与香蕉船，石径，前景蘑菇与奶酪果盘，右上小木屋。身份图460x460只管脸和服装：金色双辫粉绳、尖耳、绿瞳、粉裙、珍珠蓝宝石项链、浅蓝翅膀、右手握果篮。身份图半身机位作废。不要继承鼻鼠、礼物盒、蓝礼服小提琴老人，也不要妖精腾空跳跃。画风是三维软塑胶，圆润厚实，棚拍柔光，苔绿与暖金，奶油高光。",
+  "default_aspect_ratio": "16:9",
+  "default_reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_structure_board.png",
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_character_fairy.png"
+  ],
+  "aspect_ratio": "16:9",
+  "reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_structure_board.png",
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_character_fairy.png"
+  ],
+  "ref_physical_traits": {
+    "exists": true,
+    "size_bytes": 718164,
+    "size_kb": 701.3,
+    "width": 848,
+    "height": 488,
+    "aspect_ratio": "106:61",
+    "canonical_aspect_ratio": "16:9",
+    "color_entropy": 7.99
+  },
+  "param_validation": {
+    "valid": true,
+    "validation_passed": true,
+    "case_id": "skill1110-multi-shut",
+    "scale": "medium",
+    "aspect_ratio": "16:9",
+    "ref_aspect_ratio": "16:9",
+    "ref_dimensions": "848x488",
+    "output_aspect_ratio": "",
+    "output_dimensions": "",
+    "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_structure_board.png",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_structure_board.png",
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_character_fairy.png"
+    ],
+    "inherited_default_aspect_ratio": false,
+    "inherited_default_pad_image": false,
+    "matched_ref_aspect_ratio": true,
+    "matched_ref_pad_image": true,
+    "matched_output_aspect_ratio": true,
+    "three_step_stage": "step1_start",
+    "three_step_verified": false,
+    "warnings": []
+  },
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.5,
+  "accept_threshold": 9.5,
+  "max_rounds": 4,
+  "ready_to_finish": true,
+  "status": "finished",
+  "owner_conversation_id": "skill1110-multi-shut",
+  "route_ids": [
+    "draw.multi"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "16:9",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_structure_board.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "skill1110-multi-shut",
+        "scale": "medium",
+        "aspect_ratio": "16:9",
+        "ref_aspect_ratio": "16:9",
+        "ref_dimensions": "848x488",
+        "output_aspect_ratio": "16:9",
+        "output_dimensions": "1280x720",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_structure_board.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_structure_board.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "14:42:44",
+      "image": "assets/skill_20261110/draw_multi/shut_r1.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 303129,
+        "size_kb": 296.0,
+        "width": 1280,
+        "height": 720,
+        "aspect_ratio": "16:9",
+        "canonical_aspect_ratio": "16:9",
+        "color_entropy": 7.22
+      },
+      "raw_score": 8.46,
+      "score": 8.46,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.2/光影8.7/透视8.0/质感8.6/风格8.8/无瑕疵8.4",
+      "dims_parsed": {
+        "composition": 8.2,
+        "lighting_color": 8.7,
+        "perspective_anatomy": 8.0,
+        "texture_detail": 8.6,
+        "spec_style": 8.8,
+        "flawlessness": 8.4
+      },
+      "weighted_score": 8.46,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）"
+      ],
+      "stagnated": false,
+      "strengths": "斜俯视花园对上结构图：左池塘香蕉船、石径、前景奶酪与蘑菇都在。金发双辫粉裙尖耳果篮对上身份图。没有鼻鼠、礼物盒和拉琴老人。木门关着，16:9。",
+      "defects": "妖精双脚踩在石径旁的草皮上，鞋底没有压住石板。木门左缘只见一根横向金属闩，沿门轴排列的合页没有分开露出来。",
+      "next_fix": "双脚改踩在石径石板中央，鞋底压住石缝。门扇左缘露出上下两枚合页，门闩改到门扇右侧并扣进门框。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: scene.FairyDoor\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [cam-cinematic] 电影感镜头: 景深、侧逆光、叙事构图优先于装饰细节。\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：身份图和结构图各管一件事，机位以结构图为准 | 16:9斜俯视童话后院花园，机位只跟结构图：左侧池塘停着香蕉船，石径从前景通向木屋，前景只留一朵紫花蘑菇和一盘奶酪水果。金色双辫、粉辫绳、尖耳、绿瞳、粉裙、珍珠蓝宝石项链、浅蓝透明翅膀的小妖精站在石径上，双脚落地，右手握住藤条果篮，篮里是红苹果、橙子和黄柠檬。身份图原来的半身机位作废，只借用这张脸和这套衣服。右侧小木屋的木门关严，门轴装在门扇左侧并且看得见，门闩扣上。画面里只有这一位妖精。三维软塑胶，圆润厚实，棚拍柔光，苔绿与暖金，奶油高光。肩肘腕连续，握篮五指分开，双眼同高同向。无字。一眼失败：木门敞开、门闩没扣上、出现鼻鼠或礼物盒或拉小提琴的老人、妖精又变成半身特写。 | 约束：保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.0,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "material",
+          "lesson": "本轮短板偏「material」：妖精双脚踩在石径旁的草皮上，鞋底没有压住石板。木门左缘只见一根横向金属闩，沿门轴排列的合页没有分开露出来。",
+          "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+          "from_score": "8.46"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：斜俯视花园对上结构图：左池塘香蕉船、石径、前景奶酪与蘑菇都在。金发双辫粉裙尖耳果篮对上身份图。没有鼻鼠、礼物盒和拉琴老人。木门关着，16:9。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.46"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "14:43:31"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "16:9",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_structure_board.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "skill1110-multi-shut",
+        "scale": "medium",
+        "aspect_ratio": "16:9",
+        "ref_aspect_ratio": "16:9",
+        "ref_dimensions": "848x488",
+        "output_aspect_ratio": "16:9",
+        "output_dimensions": "1280x720",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_structure_board.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_structure_board.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "14:45:11",
+      "image": "assets/skill_20261110/draw_multi/shut_r2.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 308705,
+        "size_kb": 301.5,
+        "width": 1280,
+        "height": 720,
+        "aspect_ratio": "16:9",
+        "canonical_aspect_ratio": "16:9",
+        "color_entropy": 7.22
+      },
+      "raw_score": 8.46,
+      "score": 8.46,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.4/光影8.7/透视8.0/质感8.6/风格8.8/无瑕疵8.3",
+      "dims_parsed": {
+        "composition": 8.4,
+        "lighting_color": 8.7,
+        "perspective_anatomy": 8.0,
+        "texture_detail": 8.6,
+        "spec_style": 8.8,
+        "flawlessness": 8.3
+      },
+      "weighted_score": 8.46,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.00 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "Agent Absolute-5D 已采纳（门槛 9.5）"
+      ],
+      "stagnated": true,
+      "strengths": "斜俯视花园、左池塘香蕉船、前景奶酪蘑菇和粉裙双辫妖精都还在，木门仍然关着。双脚从草皮改到了一块浅色圆石上。",
+      "defects": "双脚落在石径旁边一块单独的圆石上，主石板路仍在她右侧，鞋底没有压在那条石径的石缝上。门扇左侧仍是一整块横向门闩，右门框没有扣上的门闩，左缘也分不出上下两枚合页。",
+      "next_fix": "把妖精挪到右侧不规则石板路的中间一块上，删掉脚下那块圆石。门左侧的大金属闩改成贴在门缝上的上下两枚窄合页，另在门右缘画一根横闩插进右门框。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: scene.FairyDoor\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [cam-cinematic] 电影感镜头: 景深、侧逆光、叙事构图优先于装饰细节。\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：身份图和结构图各管一件事，机位以结构图为准 | 同一张16:9斜俯视童话花园，只改两处，其余像素保持：妖精双脚改踩在石径石板中央，粉鞋鞋底压住石缝，接触阴影落在石板上。木门仍然关严；门扇左缘露出上下两枚合页作为门轴，门闩改到门扇右侧并扣进门框。池塘、香蕉船、石径走向、前景紫花蘑菇与奶酪果盘、金发双辫粉辫绳、尖耳、绿瞳、粉裙、珍珠蓝宝石项链、浅蓝翅膀、果篮都保持原样。画面里只有这一位妖精。三维软塑胶，圆润厚实，棚拍柔光，苔绿与暖金，奶油高光。无字。 | 约束：保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props | 双脚改踩在石径石板中央，鞋底压住石缝。门扇左缘露出上下两枚合页，门闩改到门扇右侧并扣进门框。 | MUST_FIX (≤2): 双脚改踩在石径石板中央，鞋底压住石缝；门扇左缘露出上下两枚合页，门闩改到门扇右侧并扣进门框",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.0,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "material",
+          "lesson": "本轮短板偏「material」：双脚落在石径旁边一块单独的圆石上，主石板路仍在她右侧，鞋底没有压在那条石径的石缝上。门扇左侧仍是一整块横向门闩，右门框没有扣上的门闩，左缘也分不出上下两枚合页。",
+          "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+          "from_score": "8.46"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：斜俯视花园、左池塘香蕉船、前景奶酪蘑菇和粉裙双辫妖精都还在，木门仍然关着。双脚从草皮改到了一块浅色圆石上。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.46"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "14:46:05"
+    },
+    {
+      "round": 3,
+      "round_label": "第 3 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "16:9",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_structure_board.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "skill1110-multi-shut",
+        "scale": "medium",
+        "aspect_ratio": "16:9",
+        "ref_aspect_ratio": "16:9",
+        "ref_dimensions": "848x488",
+        "output_aspect_ratio": "16:9",
+        "output_dimensions": "1280x720",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_structure_board.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_structure_board.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "14:48:39",
+      "image": "assets/skill_20261110/draw_multi/shut_r3.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 314348,
+        "size_kb": 307.0,
+        "width": 1280,
+        "height": 720,
+        "aspect_ratio": "16:9",
+        "canonical_aspect_ratio": "16:9",
+        "color_entropy": 7.21
+      },
+      "raw_score": 8.58,
+      "score": 8.58,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.4/光影8.7/透视8.1/质感8.7/风格8.9/无瑕疵8.6",
+      "dims_parsed": {
+        "composition": 8.4,
+        "lighting_color": 8.7,
+        "perspective_anatomy": 8.1,
+        "texture_detail": 8.7,
+        "spec_style": 8.9,
+        "flawlessness": 8.6
+      },
+      "weighted_score": 8.58,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.12 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "Agent Absolute-5D 已采纳（门槛 9.5）"
+      ],
+      "stagnated": true,
+      "strengths": "木门左缘能看见合页，右缘横闩插进门框，门仍关着。花园机位、双辫粉裙和果篮都还在。",
+      "defects": "双脚仍踩在草地里那块圆形浅石上，右侧蜿蜒的石板路没有被鞋底压住，圆石和石径之间还隔着一圈草。",
+      "next_fix": "只改落点：两只粉鞋挪到右侧石板路正中那一块上，圆石删除。左合页和右横闩保持现在这样。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: scene.FairyDoor\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [cam-cinematic] 电影感镜头: 景深、侧逆光、叙事构图优先于装饰细节。\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：身份图和结构图各管一件事，机位以结构图为准 | 同一张16:9斜俯视花园，只改妖精落点和木门五金，别的不要动。把妖精从圆石上挪到她右侧那串不规则石板的正中一块，两只粉鞋都压在石板上，圆石从草地上消失。木门保持关闭。拆掉门扇左缘那根粗横闩，改成上下两枚窄金属合页，贴在门与左门框的缝上。在门扇右缘另加一根细横闩，闩头插进右侧门框，表示扣上。池塘、香蕉船、石径走向、前景蘑菇奶酪、金发双辫粉裙尖耳果篮翅膀都保持。只有这一位妖精。三维软塑胶，棚拍柔光，苔绿暖金。无字。 | 约束：保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props | 把妖精挪到右侧不规则石板路的中间一块上，删掉脚下那块圆石。门左侧的大金属闩改成贴在门缝上的上下两枚窄合页，另在门右缘画一根横闩插进右门框。 | MUST_FIX (≤2): 把妖精挪到右侧不规则石板路的中间一块上，删掉脚下那块圆石；门左侧的大金属闩改成贴在门缝上的上下两枚窄合页，另在门右缘画一根横闩插进右门框",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.1,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：双脚仍踩在草地里那块圆形浅石上，右侧蜿蜒的石板路没有被鞋底压住，圆石和石径之间还隔着一圈草。",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.58"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：木门左缘能看见合页，右缘横闩插进门框，门仍关着。花园机位、双辫粉裙和果篮都还在。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.58"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "14:49:33"
+    },
+    {
+      "round": 4,
+      "round_label": "第 4 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "16:9",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_structure_board.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "skill1110-multi-shut",
+        "scale": "medium",
+        "aspect_ratio": "16:9",
+        "ref_aspect_ratio": "16:9",
+        "ref_dimensions": "848x488",
+        "output_aspect_ratio": "16:9",
+        "output_dimensions": "1280x720",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_structure_board.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_structure_board.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "14:51:28",
+      "image": "assets/skill_20261110/draw_multi/shut_r4.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 320887,
+        "size_kb": 313.4,
+        "width": 1280,
+        "height": 720,
+        "aspect_ratio": "16:9",
+        "canonical_aspect_ratio": "16:9",
+        "color_entropy": 7.22
+      },
+      "raw_score": 8.55,
+      "score": 8.55,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.4/光影8.7/透视8.1/质感8.7/风格8.9/无瑕疵8.5",
+      "dims_parsed": {
+        "composition": 8.4,
+        "lighting_color": 8.7,
+        "perspective_anatomy": 8.1,
+        "texture_detail": 8.7,
+        "spec_style": 8.9,
+        "flawlessness": 8.5
+      },
+      "weighted_score": 8.55,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +-0.03 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "Agent Absolute-5D 已采纳（门槛 9.5）"
+      ],
+      "stagnated": true,
+      "strengths": "左缘合页和右缘横闩还在，门关着。池塘、石径、奶酪蘑菇和粉裙双辫果篮没有被整张洗掉。",
+      "defects": "粉鞋仍然整只落在草地上的圆石里，右侧石板路是空的，圆石没有被删掉。",
+      "next_fix": "落点仍未上石径。本态已满4轮，不再加画。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: scene.FairyDoor\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [cam-cinematic] 电影感镜头: 景深、侧逆光、叙事构图优先于装饰细节。\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：身份图和结构图各管一件事，机位以结构图为准 | Same 16:9 oblique fairy garden. Change only where the fairy stands. Delete the round pale stone under her feet and leave plain grass there. Move her onto the irregular beige flagstone path, both pink shoes fully on a path slab with the contact shadow on the stone, about one step closer to the cottage but not blocking the door. Keep the closed wooden door exactly as it is: a hinge on the left edge of the door and a slide bolt on the right edge fastened into the frame. Keep the pond, banana boat, foreground mushroom and cheese, golden twin braids, pink dress, pointed ears, fruit basket, and light-blue wings. Only one fairy. No mole, no gifts, no violinist. Soft matte 3D plastic storybook. No text. | 约束：保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props | 只改落点：两只粉鞋挪到右侧石板路正中那一块上，圆石删除。左合页和右横闩保持现在这样。 | MUST_FIX (≤2): 只改落点：两只粉鞋挪到右侧石板路正中那一块上，圆石删除；左合页和右横闩保持现在这样",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.1,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_MAX_ROUNDS",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：粉鞋仍然整只落在草地上的圆石里，右侧石板路是空的，圆石没有被删掉。",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.55"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：左缘合页和右缘横闩还在，门关着。池塘、石径、奶酪蘑菇和粉裙双辫果篮没有被整张洗掉。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.55"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "14:51:50"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-11-10 14:02:24 UTC+8"
+    },
+    "module": "scene.FairyDoor",
+    "goal": "多张附图各管一件事；走多图分工。身份图管脸，结构图管关着的花园木门机位，下一张只改成打开。",
+    "confidence": 0.45,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "个人口味/正向保留非空",
+      "注入红线可控（0 条，已按任务主题过滤）",
+      "挂载 1 张项目知识卡 + 1 张全局美术底层基础卡"
+    ],
+    "top_recipes": [],
+    "top_redlines": [],
+    "art_decisions": [],
+    "private_knowledge": [
+      {
+        "id": "cam-cinematic",
+        "title": "电影感镜头",
+        "body": "景深、侧逆光、叙事构图优先于装饰细节。",
+        "layer_scope": "private"
+      }
+    ],
+    "shared_knowledge": [
+      {
+        "id": "palette-70-20-10",
+        "title": "色彩构成：70-20-10 色板比例黄金法则",
+        "body": "画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+        "layer_scope": "shared"
+      }
+    ],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [
+        "冷光源",
+        "暖光",
+        "柔光"
+      ],
+      "preferred_composition": [
+        "半身",
+        "居中/对称构图"
+      ],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [
+        "避免过饱和"
+      ],
+      "banned_habits": [
+        "漏抠/黑底/毛边",
+        "廉价塑料感/油腻高光",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色"
+      ],
+      "keep_phrases": [
+        "确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色"
+      ],
+      "banned_habits_raw_tail": [
+        "禁止偏离样张画风：过度霓虹、脏暗阴影、油腻高光、写实皮肤毛孔、扁平UI描边",
+        "电池审稿：原画竖构图避免贴样张布局；边缘反光勿过曝",
+        "电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感",
+        "黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差",
+        "错误头身比/头过大",
+        "漏抠/黑底/毛边",
+        "廉价塑料感/油腻高光",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色"
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: scene.FairyDoor\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [cam-cinematic] 电影感镜头: 景深、侧逆光、叙事构图优先于装饰细节。\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+    "built_at": "2026-11-10 14:39:29 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "material",
+      "lesson": "本轮短板偏「material」：妖精双脚踩在石径旁的草皮上，鞋底没有压住石板。木门左缘只见一根横向金属闩，沿门轴排列的合页没有分开露出来。",
+      "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+      "from_score": "8.46"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：斜俯视花园对上结构图：左池塘香蕉船、石径、前景奶酪与蘑菇都在。金发双辫粉裙尖耳果篮对上身份图。没有鼻鼠、礼物盒和拉琴老人。木门关着，16:9。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.46"
+    },
+    {
+      "category": "material",
+      "lesson": "本轮短板偏「material」：双脚落在石径旁边一块单独的圆石上，主石板路仍在她右侧，鞋底没有压在那条石径的石缝上。门扇左侧仍是一整块横向门闩，右门框没有扣上的门闩，左缘也分不出上下两枚合页。",
+      "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+      "from_score": "8.46"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：斜俯视花园、左池塘香蕉船、前景奶酪蘑菇和粉裙双辫妖精都还在，木门仍然关着。双脚从草皮改到了一块浅色圆石上。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.46"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：双脚仍踩在草地里那块圆形浅石上，右侧蜿蜒的石板路没有被鞋底压住，圆石和石径之间还隔着一圈草。",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.58"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：木门左缘能看见合页，右缘横闩插进门框，门仍关着。花园机位、双辫粉裙和果篮都还在。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.58"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：粉鞋仍然整只落在草地上的圆石里，右侧石板路是空的，圆石没有被删掉。",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.55"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：左缘合页和右缘横闩还在，门关着。池塘、石径、奶酪蘑菇和粉裙双辫果篮没有被整张洗掉。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.55"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 2,
+  "regression_drop": 0.15,
+  "safe_early_stop": true,
+  "split_round_cap": 4,
+  "single_judge": false,
+  "understanding_contract": {
+    "version": 1,
+    "raw_utterance": "多张附图各管一件事；走多图分工。身份图管脸，结构图管关着的花园木门机位，下一张只改成打开。",
+    "l0": {
+      "route_ids": [
+        "draw.multi"
+      ],
+      "banner": "【按 多图分工 走了】",
+      "delivery": "draw.multi"
+    },
+    "l1": {
+      "locks": [
+        "金色双辫",
+        "粉裙",
+        "尖耳",
+        "果篮",
+        "斜俯视",
+        "左池塘",
+        "石径",
+        "前景蘑菇与奶酪",
+        "门轴在门左侧",
+        "门闩扣上"
+      ],
+      "unlocks": [
+        "身份图半身机位",
+        "鼻鼠",
+        "礼物盒",
+        "小提琴老人",
+        "腾空跳跃"
+      ],
+      "defaults_shown": [
+        "默认：16:9场景底，不透明，身份半身机位作废，机位跟结构图，画风跟童话后院软塑胶"
+      ],
+      "commercial_vibe": "童话后院软塑胶，圆润厚实，棚拍柔光，苔绿与暖金，奶油高光"
+    },
+    "l2": {
+      "open": true,
+      "surface_fix": "第一态只交关门：木门关严且门闩扣上",
+      "last_feedback": "",
+      "feedback_layer": ""
+    },
+    "notes": ""
+  },
+  "reasonableness_history": [
+    {
+      "reviewed_at": 1794292797.948049,
+      "passed": true,
+      "skill": "split",
+      "issues": []
+    }
+  ],
+  "reasonableness": {
+    "passed": true,
+    "skill": "split",
+    "draft_prompt": "画一个花园里的小妖精，门是关的。",
+    "revised_prompt": "16:9斜俯视童话后院花园，机位只跟结构图：左侧池塘停着香蕉船，石径从前景通向木屋，前景只留一朵紫花蘑菇和一盘奶酪水果。金色双辫、粉辫绳、尖耳、绿瞳、粉裙、珍珠蓝宝石项链、浅蓝透明翅膀的小妖精站在石径上，双脚落地，右手握住藤条果篮，篮里是红苹果、橙子和黄柠檬。身份图原来的半身机位作废，只借用这张脸和这套衣服。右侧小木屋的木门关严，门轴装在门扇左侧并且看得见，门闩扣上。画面里只有这一位妖精。三维软塑胶，圆润厚实，棚拍柔光，苔绿与暖金，奶油高光。肩肘腕连续，握篮五指分开，双眼同高同向。无字。一眼失败：木门敞开、门闩没扣上、出现鼻鼠或礼物盒或拉小提琴的老人、妖精又变成半身特写。",
+    "checklist": {
+      "subject_action": {
+        "status": "ok",
+        "note": ""
+      },
+      "contact_scale": {
+        "status": "ok",
+        "note": ""
+      },
+      "element_budget": {
+        "status": "ok",
+        "note": ""
+      },
+      "hard_locks": {
+        "status": "ok",
+        "note": ""
+      },
+      "fail_at_glance": {
+        "status": "ok",
+        "note": ""
+      },
+      "role_separation": {
+        "status": "ok",
+        "note": ""
+      },
+      "state_machine": {
+        "status": "ok",
+        "note": ""
+      }
+    },
+    "issues": [],
+    "notes": "",
+    "reviewed_at": 1794292797.948049,
+    "reviewed_at_iso": "2026-11-10 14:39:57",
+    "force_pass": false,
+    "skill_raw": "split"
+  },
+  "discussions": [
+    {
+      "round": 0,
+      "kind": "reasonableness",
+      "prompt": "16:9斜俯视童话后院花园，机位只跟结构图：左侧池塘停着香蕉船，石径从前景通向木屋，前景只留一朵紫花蘑菇和一盘奶酪水果。金色双辫、粉辫绳、尖耳、绿瞳、粉裙、珍珠蓝宝石项链、浅蓝透明翅膀的小妖精站在石径上，双脚落地，右手握住藤条果篮，篮里是红苹果、橙子和黄柠檬。身份图原来的半身机位作废，只借用这张脸和这套衣服。右侧小木屋的木门关严，门轴装在门扇左侧并且看得见，门闩扣上。画面里只有这一位妖精。三维软塑胶，圆润厚实，棚拍柔光，苔绿与暖金，奶油高光。肩肘腕连续，握篮五指分开，双眼同高同向。无字。一眼失败：木门敞开、门闩没扣上、出现鼻鼠或礼物盒或拉小提琴的老人、妖精又变成半身特写。",
+      "strengths": "合理性闸已过：subject_action=ok；contact_scale=ok；element_budget=ok；hard_locks=ok；fail_at_glance=ok；role_separation=ok；state_machine=ok",
+      "defects": "",
+      "next_fix": "首轮 generate 使用本修订提示词；审美迭代不得推翻硬锁与元素预算"
+    }
+  ],
+  "warm_start_merged": true,
+  "warm_start_merged_at": "2026-11-10 14:51:28",
+  "warm_start_block_sha1": "5c7c6155f2fd",
+  "ActionRequired": "STOP_PICK_BEST",
+  "showcase_ready": true,
+  "winner": {
+    "round": 3,
+    "round_label": "第 3 轮精修",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "16:9",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_structure_board.png"
+    ],
+    "param_validation": {
+      "valid": true,
+      "validation_passed": true,
+      "case_id": "skill1110-multi-shut",
+      "scale": "medium",
+      "aspect_ratio": "16:9",
+      "ref_aspect_ratio": "16:9",
+      "ref_dimensions": "848x488",
+      "output_aspect_ratio": "16:9",
+      "output_dimensions": "1280x720",
+      "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_structure_board.png",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_structure_board.png"
+      ],
+      "inherited_default_aspect_ratio": true,
+      "inherited_default_pad_image": true,
+      "matched_ref_aspect_ratio": true,
+      "matched_ref_pad_image": true,
+      "matched_output_aspect_ratio": true,
+      "three_step_stage": "step3_judge",
+      "three_step_verified": true,
+      "warnings": [],
+      "continuation_pad": false,
+      "pad_diverged": false
+    },
+    "generated_at": "14:48:39",
+    "image": "assets/skill_20261110/draw_multi/shut_r3.jpg",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 314348,
+      "size_kb": 307.0,
+      "width": 1280,
+      "height": 720,
+      "aspect_ratio": "16:9",
+      "canonical_aspect_ratio": "16:9",
+      "color_entropy": 7.21
+    },
+    "raw_score": 8.58,
+    "score": 8.58,
+    "target_score_threshold": 9.5,
+    "dims": "构图8.4/光影8.7/透视8.1/质感8.7/风格8.9/无瑕疵8.6",
+    "dims_parsed": {
+      "composition": 8.4,
+      "lighting_color": 8.7,
+      "perspective_anatomy": 8.1,
+      "texture_detail": 8.7,
+      "spec_style": 8.9,
+      "flawlessness": 8.6
+    },
+    "weighted_score": 8.58,
+    "audit_warnings": [
+      "收敛停滞预警：本轮净增 +0.12 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+      "Agent Absolute-5D 已采纳（门槛 9.5）"
+    ],
+    "stagnated": true,
+    "strengths": "木门左缘能看见合页，右缘横闩插进门框，门仍关着。花园机位、双辫粉裙和果篮都还在。",
+    "defects": "双脚仍踩在草地里那块圆形浅石上，右侧蜿蜒的石板路没有被鞋底压住，圆石和石径之间还隔着一圈草。",
+    "next_fix": "只改落点：两只粉鞋挪到右侧石板路正中那一块上，圆石删除。左合页和右横闩保持现在这样。",
+    "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: scene.FairyDoor\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [cam-cinematic] 电影感镜头: 景深、侧逆光、叙事构图优先于装饰细节。\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：身份图和结构图各管一件事，机位以结构图为准 | 同一张16:9斜俯视花园，只改妖精落点和木门五金，别的不要动。把妖精从圆石上挪到她右侧那串不规则石板的正中一块，两只粉鞋都压在石板上，圆石从草地上消失。木门保持关闭。拆掉门扇左缘那根粗横闩，改成上下两枚窄金属合页，贴在门与左门框的缝上。在门扇右缘另加一根细横闩，闩头插进右侧门框，表示扣上。池塘、香蕉船、石径走向、前景蘑菇奶酪、金发双辫粉裙尖耳果篮翅膀都保持。只有这一位妖精。三维软塑胶，棚拍柔光，苔绿暖金。无字。 | 约束：保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props | 把妖精挪到右侧不规则石板路的中间一块上，删掉脚下那块圆石。门左侧的大金属闩改成贴在门缝上的上下两枚窄合页，另在门右缘画一根横闩插进右门框。 | MUST_FIX (≤2): 把妖精挪到右侧不规则石板路的中间一块上，删掉脚下那块圆石；门左侧的大金属闩改成贴在门缝上的上下两枚窄合页，另在门右缘画一根横闩插进右门框",
+    "continuation": false,
+    "passed": false,
+    "gate_blocked": false,
+    "image_gate_blocked": false,
+    "anatomy_score": 8.1,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "humanoid",
+    "judge_source": "agent_absolute_5d",
+    "remote_vlm": {
+      "source": "agent_self_judge",
+      "provider": "",
+      "model": "",
+      "error": "",
+      "active": false,
+      "score_evidence": {},
+      "evidence_missing_dims": [],
+      "review": {
+        "pass_count": 0,
+        "rerated": false,
+        "reason": ""
+      }
+    },
+    "should_continue_next_round": true,
+    "decision": "CONTINUE_NEXT_ROUND",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "style_lock",
+        "lesson": "本轮短板偏「style_lock」：双脚仍踩在草地里那块圆形浅石上，右侧蜿蜒的石板路没有被鞋底压住，圆石和石径之间还隔着一圈草。",
+        "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+        "from_score": "8.58"
+      },
+      {
+        "category": "keep",
+        "lesson": "保留本轮已做对的：木门左缘能看见合页，右缘横闩插进门框，门仍关着。花园机位、双辫粉裙和果篮都还在。",
+        "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+        "from_score": "8.58"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "14:49:33",
+    "asset_image": "assets/skill_20261110/draw_multi/shut_r3.jpg"
+  },
+  "rounds_to_converge": 4,
+  "convergence_badge": "共 4 轮未达阈值，采用最高分",
+  "winner_image": "assets/skill_20261110/draw_multi/shut_r3.jpg",
+  "best_image": "assets/skill_20261110/draw_multi/shut_r3.jpg",
+  "final_image": "assets/skill_20261110/draw_multi/final.jpg",
+  "settle_pending": false,
+  "process_board": ".memory-art/converge/boards/skill1110-multi-shut/index.html",
+  "settle_done_at": "2026-11-10 14:52:32 UTC+8",
+  "settle_saved_paths": [
+    ".memory-art\\entries\\scene.FairyDoor\\CHAT20261110145215178RECIPE.md",
+    ".memory-art\\entries\\scene.FairyDoor\\CHAT20261110145215807REDLINE.md",
+    ".memory-art\\_reflections\\20261110_145217_skill1110-multi-shut.json"
+  ]
+}

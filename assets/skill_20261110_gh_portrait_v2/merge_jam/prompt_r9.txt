@@ -1,0 +1,14 @@
+Portrait 9:16 merge ladder sheet, exact 4 rows by 2 columns, left-to-right then top-to-bottom. Opaque pure black #000000 isolation background everywhere including gaps; NO white grid lines, NO blue cards, NO HUD, NO text, NO faces. Gossip Harbor glossy cartoon 3D, round thick forms, no hard outlines, warm saturated magenta-to-wine, soft studio light. One centered SKU per cell.
+
+CRITICAL VOLUME LADDER ONLY — subject height ratios of each cell MUST be about 0.42 / 0.50 / 0.58 / 0.66 / 0.74 / 0.80 / 0.88 / 0.96. Each next item clearly taller. Cell 8 tallest AND widest. Reference image is for GH gloss and SKU identity ONLY — DO NOT copy short tart, short feast, juice filling the cell, or jar filling the cell.
+
+Cell1 (0.42): one small whole dewberry with green calyx; LARGE black margins; shrink it.
+Cell2 (0.50): tiny peach dish with two halved dewberries, solid full magenta flesh and seeds, NO hollow center; still small with black margins.
+Cell3 (0.58): deeper round bowl of mashed dewberry jam puree with seeds; bowl taller than the dish; NO tomato wedges, NO heart shapes, NO fruit hanging outside.
+Cell4 (0.66): slim tall juice glass of clear magenta juice; MUST leave clear black space above the rim — juice must NOT touch top of cell; taller than bowl but shorter than smoothie.
+Cell5 (0.74): clearly taller and wider smoothie glass than juice, thick frothy peak above rim; NO berry on rim; visibly taller than cell4.
+Cell6 (0.80): fatter jam jar taller than smoothie; magenta jam inside; leave black gap above jar rim — jar must NOT fill cell to top; NO white cream pudding.
+Cell7 (0.88): tall wide jam tart with high jam mound and pastry crust only; MUCH taller than the jar; NO orange slices, NO lemon.
+Cell8 (0.96): feast plate with the tallest widest magenta dessert mound of the whole image; nearly fills height but tiny top gap; NO whole cake layer, NO almonds.
+
+shop_ladder dewberry jam family. Opaque isolation bottom.

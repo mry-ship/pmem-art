@@ -1,0 +1,11 @@
+
+=== 第一段关系审 · garden_instruments ===
+✅ 机读检查通过（chain_mode=species_change）→ 可标记「文字定稿」并进入出图
+  L01 叶笛 | 短叶形木管横置苔绿叶尖 | pct=0.58 | LeafFlute
+  L02 木哨 | 粗短木哨直立吹口带一个气窗 | pct=0.61 | WoodWhistle
+  L03 卵形沙锤 | 卵形封闭沙锤一端小柄 | pct=0.64 | EggShaker
+  L04 小手鼓 | 扁圆手鼓单面鼓皮侧握 | pct=0.67 | HandDrum
+  L05 八音木琴 | 八根渐长木条横排下方两槌 | pct=0.70 | Xylophone8
+  L06 小里拉 | 小U框里拉七根短弦可抱 | pct=0.73 | SmallLyre
+  L07 竖琴 | 高三角框竖琴多根长弦 | pct=0.76 | Harp
+  L08 桌上小管风琴 | 桌面木箱顶一排直立音管 | pct=0.80 | TablePipeOrgan

@@ -1,0 +1,43 @@
+{
+  "route_id": "ui.kit",
+  "source": "assets/skill_20261110_gh/ui_kit/components_r4.png",
+  "canvas": {"width": 1280, "height": 720, "aspect_ratio": "16:9"},
+  "isolation": "opaque_isolation",
+  "background": "#16120E",
+  "note": "零件留在深棕实底上，没有另导出透明图，也没有后抠。",
+  "items": [
+    {
+      "name": "button_main",
+      "group": "button",
+      "state": "default",
+      "file": "components_r4.png",
+      "scalable": false,
+      "label": "默认"
+    },
+    {
+      "name": "button_main",
+      "group": "button",
+      "state": "pressed",
+      "file": "components_r4.png",
+      "scalable": false,
+      "label": "按下"
+    },
+    {
+      "name": "button_main",
+      "group": "button",
+      "state": "disabled",
+      "file": "components_r4.png",
+      "scalable": false,
+      "label": "禁用"
+    },
+    {
+      "name": "popup_frame",
+      "group": "panel",
+      "state": "default",
+      "file": "components_r4.png",
+      "scalable": true,
+      "rect": {"x": 662, "y": 186, "w": 491, "h": 347},
+      "nine_slice": {"left": 48, "right": 48, "top": 48, "bottom": 48}
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+﻿── 给美术看（请只转述下面这块）──
+【按 同域合成梯：先定链型与关系，再按交付出图 走了】
+按合成梯：先说清升级关系，再默认整表一组出齐（通常 8 档）。
+── Agent 技术明细 ──
+【按 同域合成梯：先定链型与关系，再按交付出图 走了】
+confidence: high  execute_ok: True
+mode: skill  would_execute: True
+route_ids: ['merge.ladder']
+announce: 按 同域合成梯：先定链型与关系，再按交付出图 走了
+match: lexical_ngram+colloquial_expand+canonical
+canonical[agent]: merge overview_sheet：花园管乐八档 4x2 竖屏9:16 species_change 对标GH咖啡容器换代；硬闸L8>L6、L4键盖可认、框高0.38-0.96、纯黑隔离底
+reason: merge
+steps:
+  1. pmem-merge-ladder/同域合成梯：先定链型与关系，再按交付出图 → 花园管乐八档合成梯整表 4x2 竖屏 overview_sheet species_change Gossip Harbor货柜
+top neighbors (k=8, calibrate only):
+  · 1.607  skill ['merge.ladder'] | 合成梯整表一组出齐，overview_sheet，八档 2×4，第0条
+  · 1.607  skill ['merge.ladder'] | 合成梯整表一组出齐，overview_sheet，八档 2×4，第12条
+  · 1.607  skill ['merge.ladder'] | 合成梯整表一组出齐，overview_sheet，八档 2×4，第15条
+  · 1.607  skill ['merge.ladder'] | 合成梯整表一组出齐，overview_sheet，八档 2×4，第18条
+  · 1.607  skill ['merge.ladder'] | 合成梯整表一组出齐，overview_sheet，八档 2×4，第21条
+  · 1.607  skill ['merge.ladder'] | 合成梯整表一组出齐，overview_sheet，八档 2×4，第24条
+  · 1.607  skill ['merge.ladder'] | 合成梯整表一组出齐，overview_sheet，八档 2×4，第27条
+  · 1.607  skill ['merge.ladder'] | 合成梯整表一组出齐，overview_sheet，八档 2×4，第30条
+confusion:
+  · 合成梯交付形态 → 默认整表 overview_sheet（一组出齐、常 L1–L8）；仅点名一档一张/逐格/per_cell 才走逐格。
+对美术只贴 artist_say（标签+一句人话），禁止刷 confidence/json。先写标准路由句再 route --canonical；execute_ok 才开画；plan_conflict / confidence=ask|low / vague 先问人。

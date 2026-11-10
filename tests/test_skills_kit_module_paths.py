@@ -33,6 +33,8 @@ class SkillsKitModulePathsTests(unittest.TestCase):
             "skills_kit/colloquial_lexicon.py": "feature.SkillsKit.Router",
             "skills_kit/converge.py": "feature.SkillsKit.Converge",
             "skills_kit/must_fix.py": "feature.SkillsKit.Converge",
+            "skills_kit/delivery_gates.py": "feature.SkillsKit.Converge",
+            "skills_kit/local_locks.py": "feature.SkillsKit.Converge",
             "skills_kit/showcase_gate.py": "feature.SkillsKit.Showcase",
             "skills_kit/skill_specs.py": "feature.SkillsKit.Registry",
             "skills_kit/install.py": "feature.SkillsKit.Registry",

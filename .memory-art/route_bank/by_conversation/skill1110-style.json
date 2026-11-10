@@ -1,0 +1,14 @@
+{
+  "saved_at": 1794292659.5719666,
+  "text": "以后按这张画。只提炼色板、光影和禁用词。",
+  "banner": "【按 参考图/样张一键提炼风格圣经与色板锁定 走了】",
+  "route_ids": [
+    "style.lock"
+  ],
+  "mode": "skill",
+  "execute_ok": true,
+  "artist_say": "【按 参考图/样张一键提炼风格圣经与色板锁定 走了】\n先锁风格/色板，这步不生图。",
+  "plan_conflict": false,
+  "confidence": "high",
+  "conversation_id": "skill1110-style"
+}

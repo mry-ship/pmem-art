@@ -1,0 +1,85 @@
+{
+  "ok": true,
+  "route_id": "draw.variant",
+  "banner": "【按 变体 走了】",
+  "passed_threshold": false,
+  "best_score": 8.88,
+  "best_round": 4,
+  "final_image": "assets/skill_20261110_gh/draw_variant/r4.png",
+  "background": "opaque_isolation",
+  "aspect_ratio": "1:1",
+  "reference_image": "assets/refs/gossip_harbor/gh_icon.jpg",
+  "wall_started_at": "2026-11-10T16:03:00",
+  "wall_ended_at": "2026-11-10T16:09:10",
+  "images": [
+    {
+      "round": 1,
+      "path": "assets/skill_20261110_gh/draw_variant/r1.png",
+      "started_at": "2026-11-10T16:03:20",
+      "ended_at": "2026-11-10T16:04:27",
+      "score": 8.6,
+      "dims": {
+        "构图": 8.4,
+        "光影": 8.5,
+        "透视": 8.7,
+        "质感": 8.7,
+        "风格": 8.8,
+        "无瑕疵": 8.5
+      },
+      "defects": "上眼睑贴着虹膜上沿，眼白主要留在虹膜下方，上沿白带很窄。双手握在领口，肘在画面下缘之外。领口是饱和糖果粉，比藕粉更艳。",
+      "passed": false
+    },
+    {
+      "round": 2,
+      "path": "assets/skill_20261110_gh/draw_variant/r2.png",
+      "started_at": "2026-11-10T16:05:12",
+      "ended_at": "2026-11-10T16:05:58",
+      "score": 8.54,
+      "dims": {
+        "构图": 8.2,
+        "光影": 8.9,
+        "透视": 8.6,
+        "质感": 8.9,
+        "风格": 8.4,
+        "无瑕疵": 8.3
+      },
+      "defects": "左右指尖被画面下缘切开。短发从麦黄绿偏成深翠绿。上眼睑仍压在虹膜顶缘，没有留出完整的上沿眼白。",
+      "passed": false
+    },
+    {
+      "round": 3,
+      "path": "assets/skill_20261110_gh/draw_variant/r3.png",
+      "started_at": "2026-11-10T16:06:47",
+      "ended_at": "2026-11-10T16:07:21",
+      "score": 8.81,
+      "dims": {
+        "构图": 8.5,
+        "光影": 9.0,
+        "透视": 8.6,
+        "质感": 9.1,
+        "风格": 9.0,
+        "无瑕疵": 8.7
+      },
+      "defects": "前臂伸向镜头，双手按在一条看不见的台沿上，肘没有露在身侧。嘴洞偏高，开口高度大于鼻翼宽度。",
+      "passed": false
+    },
+    {
+      "round": 4,
+      "path": "assets/skill_20261110_gh/draw_variant/r4.png",
+      "started_at": "2026-11-10T16:07:56",
+      "ended_at": "2026-11-10T16:08:32",
+      "score": 8.88,
+      "dims": {
+        "构图": 9.1,
+        "光影": 8.9,
+        "透视": 8.8,
+        "质感": 9.1,
+        "风格": 8.5,
+        "无瑕疵": 8.9
+      },
+      "defects": "上眼睑离虹膜顶缘只有一条细眼白，惊讶主要靠小圆嘴，睁大的幅度比第3轮收窄。领口和裙身是同一块藕粉，领边几乎溶进裙子。双臂垂直，肘弯很浅。",
+      "passed": false
+    }
+  ],
+  "notes": "未过线。最高分是第4轮 8.88，不到 9.5。四轮都是惊讶小圆嘴，没有微笑，也没有巫帽、南瓜、长发女巫和标志。第3轮上沿眼白最清楚，但双手按在台沿、肘不在身侧。第4轮肘和完整的手进入画面，上沿眼白变细，所以眼睛睁大这一项没有稳到可以过线。垫图每轮都是 assets/refs/gossip_harbor/gh_icon.jpg，只锁光泽卡通 3D。底是不透明纯黑。终稿是 r4.png。"
+}

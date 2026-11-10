@@ -1,0 +1,68 @@
+{
+  "ok": true,
+  "route_id": "icon.b",
+  "banner": "【按 Mode B 走了】",
+  "delivery": "raster_preview",
+  "passed_threshold": false,
+  "line_status": "未过线",
+  "best_score": 7.6,
+  "best_round": 1,
+  "threshold": 9.5,
+  "max_rounds": 2,
+  "rounds_run": 2,
+  "final_image": "assets/skill_20261110_gh/icon_b/sheet_r1.png",
+  "aspect_ratio": "16:9",
+  "pixel_size": "1280x720",
+  "engine": "Cursor GenerateImage",
+  "style_spec": {
+    "preset": "Soft",
+    "stroke": "同一白色圆角线，round cap / round join",
+    "fill": "none",
+    "ground": "暖深可可底 #2A221C，不透明",
+    "labels": ["花园", "合成", "订单", "好友", "商店", "设置", "背包", "信件"],
+    "reference_use": "只借暖色与圆润，不抄厨房、人物、英文、标志"
+  },
+  "images": [
+    {
+      "round": 1,
+      "path": "assets/skill_20261110_gh/icon_b/sheet_r1.png",
+      "ended_at": "2026-11-10T16:06:12",
+      "score": 7.6,
+      "score_rule": "功能识别 7.6 < 8.0，正式分改取该维",
+      "dims": {
+        "笔画一致": 9.2,
+        "视觉重量": 8.3,
+        "留白与光学居中": 8.6,
+        "功能识别": 7.6,
+        "无瑕疵": 8.8
+      },
+      "defects": [
+        "合成画成左边加号方块、右边等号方块，读成算式，不是两物合并",
+        "好友笔画偏疏，合成两盒外框比齿轮和商店小"
+      ]
+    },
+    {
+      "round": 2,
+      "path": "assets/skill_20261110_gh/icon_b/sheet_r2.png",
+      "ended_at": "2026-11-10T16:07:35",
+      "score": 7.2,
+      "score_rule": "功能识别 7.2 < 8.0，正式分改取该维",
+      "dims": {
+        "笔画一致": 9.1,
+        "视觉重量": 7.7,
+        "留白与光学居中": 8.3,
+        "功能识别": 7.2,
+        "无瑕疵": 9.0
+      },
+      "defects": [
+        "合成只剩两组尖括号，读成代码或快进，没有两个被合并的物体",
+        "合成格子明显更空，视觉重量掉档",
+        "订单内部是三道横线"
+      ]
+    }
+  ],
+  "wall_started_at": "2026-11-10T16:02:00",
+  "wall_ended_at": "2026-11-10T16:08:33",
+  "wall_sec": 393,
+  "notes": "光栅预览，不是 SVG。两轮都未到 9.5，未过线。胜出是第 1 轮，正式分 7.6。第 2 轮正式分 7.2，没有超过第 1 轮。未开逐枚闭环。未改代码。"
+}

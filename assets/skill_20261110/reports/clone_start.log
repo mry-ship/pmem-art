@@ -1,0 +1,19 @@
+✅ [路由闸门] 【按 克隆 走了】
+🔥 Warm-Start 包已写入会话；`converge generate` 会自动并入提示词，不必手贴
+   · 置信度: 0.45 | fast-track 资格: ❌
+   · 个人口味/正向保留非空
+   · 注入红线可控（0 条，已按任务主题过滤）
+   · 挂载 2 张项目知识卡 + 0 张全局美术底层基础卡
+
+【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】
+- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)
+- 目标模块: character.FairyLetter
+- 置信度: 0.45（fast-track 资格: 否）
+- 正向保留（要怎样）:
+  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色
+- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和
+- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色
+- 项目私有知识卡 (Private Layer):
+  · [style-chibi] Q版头身: 2~3 头身，五官放大但识别锚点保留。
+  · [tech-watercolor] 水彩渲染: 边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。
+❌ [Step 1 · 会话启动参数校验拦截] [skill1110-clone] Parameter 'aspect_ratio' mismatch against reference image 'ref_style_fairy_garden.png': expected '3:4', got 169x276 (169:276, 18.4%). Aborting generation round before calling GenerateImage.

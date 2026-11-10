@@ -3,7 +3,7 @@ id: 01M642X4H1C0ZVG4B4N8EBYF5W
 module: infra.Scripts
 entity: NotContract
 kind: exclusion
-status: seed
+status: active
 supersedes: []
 anchors:
 - scripts/pack_pmem_art.py

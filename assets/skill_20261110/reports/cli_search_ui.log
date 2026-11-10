@@ -1,0 +1,113 @@
+{
+  "ok": true,
+  "server": "pmem-art",
+  "queried_module": "ui.FairyGardenMenu",
+  "parent_module_inherited": null,
+  "inherits_chain": [
+    "ui.FairyGardenMenu"
+  ],
+  "max_inherits_depth": 4,
+  "module_specs": {},
+  "module_palette": [],
+  "lessons": [],
+  "asset_records_and_plans": [],
+  "layered_knowledge": [
+    {
+      "id": "tech-9slice",
+      "title": "九宫格切图",
+      "body": "四角固定、中心可拉伸；中心禁止复杂装饰。",
+      "tags": [
+        "ui"
+      ],
+      "source": "converge_finish",
+      "layer_scope": "private",
+      "project_id": "pmem-art",
+      "project_name": "pmem-art",
+      "universal": true,
+      "promoted_to_shared": false,
+      "updated_at": "2026-10-30 16:24:49 UTC+8"
+    },
+    {
+      "id": "tech-watercolor",
+      "title": "水彩渲染",
+      "body": "边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。",
+      "tags": [
+        "style",
+        "material"
+      ],
+      "source": "converge_finish",
+      "layer_scope": "private",
+      "project_id": "pmem-art",
+      "project_name": "pmem-art",
+      "universal": false,
+      "promoted_to_shared": false,
+      "updated_at": "2026-11-09 21:22:01 UTC+8"
+    },
+    {
+      "id": "tech-celshade",
+      "title": "赛璐珞分层",
+      "body": "硬边色块分层，高光形状干净，层数克制。",
+      "tags": [
+        "style",
+        "material"
+      ],
+      "source": "converge_finish",
+      "layer_scope": "private",
+      "project_id": "pmem-art",
+      "project_name": "pmem-art",
+      "universal": false,
+      "promoted_to_shared": false,
+      "updated_at": "2026-11-05 01:33:23 UTC+8"
+    },
+    {
+      "id": "tech-painterly",
+      "title": "厚涂笔触",
+      "body": "可见笔触方向跟随形体，暗部透气勿脏。",
+      "tags": [
+        "style",
+        "material"
+      ],
+      "source": "feedback",
+      "layer_scope": "private",
+      "project_id": "pmem-art",
+      "project_name": "pmem-art",
+      "universal": false,
+      "promoted_to_shared": false,
+      "updated_at": "2026-11-03 16:12:01 UTC+8"
+    },
+    {
+      "id": "palette-70-20-10",
+      "title": "色彩构成：70-20-10 色板比例黄金法则",
+      "body": "画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+      "tags": [
+        "brand",
+        "color_palette",
+        "character",
+        "scene",
+        "ui"
+      ],
+      "source": "auto_promoted:learn_accept",
+      "layer_scope": "shared",
+      "project_id": "global_shared",
+      "project_name": "全局共享通用库 (Global Shared)",
+      "universal": true,
+      "promoted_from": "Cursor-Pmem-Art",
+      "updated_at": "2026-11-05 20:41:42 UTC+8"
+    },
+    {
+      "id": "nine-slice-basics",
+      "title": "UI切图规范：九宫格 48px 包角锁死与纯色拉伸中心",
+      "body": "九宫格（9-Slice）组件四角 48x48px 为固定不拉伸包角区（一切雕花装饰必须严格收束在 48px 切线内），四边为单向拉伸区，中央区域必须保持均匀纯色或无方向性平铺底纹以支持 3 倍以上双向拉伸零畸变，严禁在中心拉伸区放置圆盘、斜线或大图案；外周强制保留 4px 纯透明安全边距防止图集溢色（Atlas Bleeding）。",
+      "tags": [
+        "ui",
+        "ui_9slice",
+        "composition"
+      ],
+      "source": "shared_seed",
+      "layer_scope": "shared",
+      "universal": true,
+      "promoted_from": "builtin_universal_seed",
+      "updated_at": "2026-11-05 19:21:59 UTC+8"
+    }
+  ]
+}

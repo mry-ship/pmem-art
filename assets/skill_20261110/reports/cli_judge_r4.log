@@ -1,0 +1,8 @@
+🏁 第 4/4 轮得分 9.02 < 9.50，已满 4 轮上限！
+   · 全阶段最高分为第 3 轮 (9.03 分: c:\Users\ZhengLangPC\Desktop\Cursor-Pmem-Art\assets\skill_20261110\draw_ordinary\r3.png)。
+   · 请立即运行 `pyw -3 -u pmem_art.py converge finish --id skill1110-ordinary` 结算（默认写记忆并打印评分履历；只要一行结论加 `--quiet`）。
+📚 本轮可学（能力提升）:
+   1. [narrative_camera] 本轮短板偏「narrative_camera」：后排两根褐梗仍然贴着并排，缝比梗本身还窄。盖腹大面还是暖红，苔绿只沾在左下缘那一圈细边。
+      → 练习: 同一场景三种景别（远/中/特写）各一张，只改镜头语言
+   2. [keep] 保留本轮已做对的：右侧蓝果仍是完整圆，没有被樱桃切进。前颗樱桃的大亮斑、后左小亮斑和最右窄亮斑大小能分开。
+      → 练习: 下一轮 Prompt 显式写入这些亮点作为正向锚点

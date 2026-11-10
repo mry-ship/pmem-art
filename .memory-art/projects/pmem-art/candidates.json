@@ -1,226 +1,498 @@
-[
-  {
-    "module_id": "scene.Bird",
-    "category": "scene",
-    "folder": "assets\\scene\\bird",
-    "file_count": 1,
-    "confidence": 0.562,
-    "sample_files": [
-      "assets/bird_batch_final.jpg"
-    ],
-    "paths_glob": [
-      "assets/scene/bird/**"
-    ],
-    "source": "classify_auto_add",
-    "created_at": "2026-11-03T20:52:19+0800",
-    "status": "candidate"
-  },
-  {
-    "module_id": "scene.Overlay",
-    "category": "scene",
-    "folder": "assets\\scene\\overlay",
-    "file_count": 1,
-    "confidence": 0.562,
-    "sample_files": [
-      "assets/farm_layer_decomp/Validation/Overlay.png"
-    ],
-    "paths_glob": [
-      "assets/scene/overlay/**"
-    ],
-    "source": "classify_auto_add",
-    "created_at": "2026-11-03T20:52:25+0800",
-    "status": "candidate"
-  },
-  {
-    "module_id": "character.Water",
-    "category": "character",
-    "folder": "assets\\character\\water",
-    "file_count": 1,
-    "confidence": 0.6,
-    "sample_files": [
-      "assets/farm_layer_decomp/_work/crops/water_tire.png"
-    ],
-    "paths_glob": [
-      "assets/character/water/**"
-    ],
-    "source": "classify_auto_add",
-    "created_at": "2026-11-03T20:52:26+0800",
-    "status": "candidate"
-  },
-  {
-    "module_id": "character.Balloon",
-    "category": "character",
-    "folder": "assets\\character\\balloon",
-    "file_count": 1,
-    "confidence": 0.6,
-    "sample_files": [
-      "assets/festival5_merge/balloon/L02.png"
-    ],
-    "paths_glob": [
-      "assets/character/balloon/**"
-    ],
-    "source": "classify_auto_add",
-    "created_at": "2026-11-03T20:52:26+0800",
-    "status": "candidate"
-  },
-  {
-    "module_id": "character.Box",
-    "category": "character",
-    "folder": "assets\\character\\box",
-    "file_count": 1,
-    "confidence": 0.6,
-    "sample_files": [
-      "assets/festival5_merge/box/L02.png"
-    ],
-    "paths_glob": [
-      "assets/character/box/**"
-    ],
-    "source": "classify_auto_add",
-    "created_at": "2026-11-03T20:52:26+0800",
-    "status": "candidate"
-  },
-  {
-    "module_id": "character.Candy",
-    "category": "character",
-    "folder": "assets\\character\\candy",
-    "file_count": 1,
-    "confidence": 0.6,
-    "sample_files": [
-      "assets/festival5_merge/candy/L02.png"
-    ],
-    "paths_glob": [
-      "assets/character/candy/**"
-    ],
-    "source": "classify_auto_add",
-    "created_at": "2026-11-03T20:52:26+0800",
-    "status": "candidate"
-  },
-  {
-    "module_id": "character.Magic",
-    "category": "character",
-    "folder": "assets\\character\\magic",
-    "file_count": 1,
-    "confidence": 0.6,
-    "sample_files": [
-      "assets/festival5_merge/magic/L02.png"
-    ],
-    "paths_glob": [
-      "assets/character/magic/**"
-    ],
-    "source": "classify_auto_add",
-    "created_at": "2026-11-03T20:52:26+0800",
-    "status": "candidate"
-  },
-  {
-    "module_id": "character.Prize",
-    "category": "character",
-    "folder": "assets\\character\\prize",
-    "file_count": 1,
-    "confidence": 0.6,
-    "sample_files": [
-      "assets/festival5_merge/prize/L02.png"
-    ],
-    "paths_glob": [
-      "assets/character/prize/**"
-    ],
-    "source": "classify_auto_add",
-    "created_at": "2026-11-03T20:52:26+0800",
-    "status": "candidate"
-  },
-  {
-    "module_id": "character.BadV120261102200833",
-    "category": "character",
-    "folder": "assets\\character\\badv120261102200833",
-    "file_count": 1,
-    "confidence": 0.6,
-    "sample_files": [
-      "assets/festival5_merge/_bad_v1_20261102_200833/L02.png"
-    ],
-    "paths_glob": [
-      "assets/character/badv120261102200833/**"
-    ],
-    "source": "classify_auto_add",
-    "created_at": "2026-11-03T20:52:27+0800",
-    "status": "candidate"
-  },
-  {
-    "module_id": "scene.RerunMerge",
-    "category": "scene",
-    "folder": "assets\\scene\\rerunmerge",
-    "file_count": 1,
-    "confidence": 0.562,
-    "sample_files": [
-      "assets/skill_20261103/rerun_merge/L01.png"
-    ],
-    "paths_glob": [
-      "assets/scene/rerunmerge/**"
-    ],
-    "source": "classify_auto_add",
-    "created_at": "2026-11-03T20:52:32+0800",
-    "status": "candidate"
-  },
-  {
-    "module_id": "scene.Open",
-    "category": "scene",
-    "folder": "assets/scene/open",
-    "file_count": 1,
-    "confidence": 0.562,
-    "sample_files": [
-      "assets/skill_full_run_1105/multi/open_r1.jpg"
-    ],
-    "paths_glob": [
-      "assets/scene/open/**"
-    ],
-    "source": "classify_auto_add",
-    "created_at": "2026-11-05T01:37:15+0800",
-    "status": "candidate"
-  },
-  {
-    "module_id": "scene.Closed",
-    "category": "scene",
-    "folder": "assets/scene/closed",
-    "file_count": 1,
-    "confidence": 0.562,
-    "sample_files": [
-      "assets/skill_full_run_1105/multi/closed_r1.jpg"
-    ],
-    "paths_glob": [
-      "assets/scene/closed/**"
-    ],
-    "source": "classify_auto_add",
-    "created_at": "2026-11-05T01:37:15+0800",
-    "status": "candidate"
-  },
-  {
-    "module_id": "scene.Shot",
-    "category": "scene",
-    "folder": "assets/scene/shot",
-    "file_count": 1,
-    "confidence": 0.562,
-    "sample_files": [
-      "assets/skill_full_run_1105/lens/shot_A_r1.jpg"
-    ],
-    "paths_glob": [
-      "assets/scene/shot/**"
-    ],
-    "source": "classify_auto_add",
-    "created_at": "2026-11-05T01:37:15+0800",
-    "status": "candidate"
-  },
-  {
-    "module_id": "character.Royal",
-    "category": "character",
-    "folder": "assets/character/royal",
-    "file_count": 1,
-    "confidence": 0.688,
-    "sample_files": [
-      "assets/skill_full_run_1105/refs/royal_match_main.png"
-    ],
-    "paths_glob": [
-      "assets/character/royal/**"
-    ],
-    "source": "classify_auto_add",
-    "created_at": "2026-11-05T01:37:16+0800",
-    "status": "candidate"
-  }
-]
+[
+  {
+    "module_id": "scene.Bird",
+    "category": "scene",
+    "folder": "assets\\scene\\bird",
+    "file_count": 1,
+    "confidence": 0.562,
+    "sample_files": [
+      "assets/bird_batch_final.jpg"
+    ],
+    "paths_glob": [
+      "assets/scene/bird/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:19+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "scene.Overlay",
+    "category": "scene",
+    "folder": "assets\\scene\\overlay",
+    "file_count": 1,
+    "confidence": 0.562,
+    "sample_files": [
+      "assets/farm_layer_decomp/Validation/Overlay.png"
+    ],
+    "paths_glob": [
+      "assets/scene/overlay/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:25+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.Water",
+    "category": "character",
+    "folder": "assets\\character\\water",
+    "file_count": 1,
+    "confidence": 0.6,
+    "sample_files": [
+      "assets/farm_layer_decomp/_work/crops/water_tire.png"
+    ],
+    "paths_glob": [
+      "assets/character/water/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:26+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.Balloon",
+    "category": "character",
+    "folder": "assets\\character\\balloon",
+    "file_count": 1,
+    "confidence": 0.6,
+    "sample_files": [
+      "assets/festival5_merge/balloon/L02.png"
+    ],
+    "paths_glob": [
+      "assets/character/balloon/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:26+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.Box",
+    "category": "character",
+    "folder": "assets\\character\\box",
+    "file_count": 1,
+    "confidence": 0.6,
+    "sample_files": [
+      "assets/festival5_merge/box/L02.png"
+    ],
+    "paths_glob": [
+      "assets/character/box/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:26+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.Candy",
+    "category": "character",
+    "folder": "assets\\character\\candy",
+    "file_count": 1,
+    "confidence": 0.6,
+    "sample_files": [
+      "assets/festival5_merge/candy/L02.png"
+    ],
+    "paths_glob": [
+      "assets/character/candy/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:26+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.Magic",
+    "category": "character",
+    "folder": "assets\\character\\magic",
+    "file_count": 1,
+    "confidence": 0.6,
+    "sample_files": [
+      "assets/festival5_merge/magic/L02.png"
+    ],
+    "paths_glob": [
+      "assets/character/magic/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:26+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.Prize",
+    "category": "character",
+    "folder": "assets\\character\\prize",
+    "file_count": 1,
+    "confidence": 0.6,
+    "sample_files": [
+      "assets/festival5_merge/prize/L02.png"
+    ],
+    "paths_glob": [
+      "assets/character/prize/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:26+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.BadV120261102200833",
+    "category": "character",
+    "folder": "assets\\character\\badv120261102200833",
+    "file_count": 1,
+    "confidence": 0.6,
+    "sample_files": [
+      "assets/festival5_merge/_bad_v1_20261102_200833/L02.png"
+    ],
+    "paths_glob": [
+      "assets/character/badv120261102200833/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:27+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "scene.RerunMerge",
+    "category": "scene",
+    "folder": "assets\\scene\\rerunmerge",
+    "file_count": 1,
+    "confidence": 0.562,
+    "sample_files": [
+      "assets/skill_20261103/rerun_merge/L01.png"
+    ],
+    "paths_glob": [
+      "assets/scene/rerunmerge/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-03T20:52:32+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "scene.Open",
+    "category": "scene",
+    "folder": "assets/scene/open",
+    "file_count": 1,
+    "confidence": 0.562,
+    "sample_files": [
+      "assets/skill_full_run_1105/multi/open_r1.jpg"
+    ],
+    "paths_glob": [
+      "assets/scene/open/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-05T01:37:15+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "scene.Closed",
+    "category": "scene",
+    "folder": "assets/scene/closed",
+    "file_count": 1,
+    "confidence": 0.562,
+    "sample_files": [
+      "assets/skill_full_run_1105/multi/closed_r1.jpg"
+    ],
+    "paths_glob": [
+      "assets/scene/closed/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-05T01:37:15+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "scene.Shot",
+    "category": "scene",
+    "folder": "assets/scene/shot",
+    "file_count": 1,
+    "confidence": 0.562,
+    "sample_files": [
+      "assets/skill_full_run_1105/lens/shot_A_r1.jpg"
+    ],
+    "paths_glob": [
+      "assets/scene/shot/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-05T01:37:15+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.Royal",
+    "category": "character",
+    "folder": "assets/character/royal",
+    "file_count": 1,
+    "confidence": 0.688,
+    "sample_files": [
+      "assets/skill_full_run_1105/refs/royal_match_main.png"
+    ],
+    "paths_glob": [
+      "assets/character/royal/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-05T01:37:16+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "scene.Help",
+    "category": "scene",
+    "folder": "assets\\scene\\help",
+    "file_count": 1,
+    "confidence": 0.562,
+    "sample_files": [
+      "assets/refs/gossip_harbor/gh_help.jpg"
+    ],
+    "paths_glob": [
+      "assets/scene/help/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-11T01:13:04+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "scene.Life",
+    "category": "scene",
+    "folder": "assets\\scene\\life",
+    "file_count": 1,
+    "confidence": 0.562,
+    "sample_files": [
+      "assets/refs/gossip_harbor/gh_life.jpg"
+    ],
+    "paths_glob": [
+      "assets/scene/life/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-11T01:13:16+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "scene.Loading",
+    "category": "scene",
+    "folder": "assets\\scene\\loading",
+    "file_count": 1,
+    "confidence": 0.562,
+    "sample_files": [
+      "assets/refs/gossip_harbor/gh_loading.jpg"
+    ],
+    "paths_glob": [
+      "assets/scene/loading/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-11T01:13:16+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "scene.Renovate",
+    "category": "scene",
+    "folder": "assets\\scene\\renovate",
+    "file_count": 1,
+    "confidence": 0.562,
+    "sample_files": [
+      "assets/refs/gossip_harbor/gh_renovate.jpg"
+    ],
+    "paths_glob": [
+      "assets/scene/renovate/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-11T01:13:16+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "scene.Story",
+    "category": "scene",
+    "folder": "assets\\scene\\story",
+    "file_count": 1,
+    "confidence": 0.562,
+    "sample_files": [
+      "assets/refs/gossip_harbor/gh_story.jpg"
+    ],
+    "paths_glob": [
+      "assets/scene/story/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-11T01:13:16+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "scene.Source",
+    "category": "scene",
+    "folder": "assets\\scene\\source",
+    "file_count": 1,
+    "confidence": 0.562,
+    "sample_files": [
+      "assets/skill_20261105/draw_multi/r1_source.jpg"
+    ],
+    "paths_glob": [
+      "assets/scene/source/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-11T01:17:26+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "scene.DrawVariant",
+    "category": "scene",
+    "folder": "assets\\scene\\drawvariant",
+    "file_count": 1,
+    "confidence": 0.562,
+    "sample_files": [
+      "assets/skill_20261105/draw_variant/final.png"
+    ],
+    "paths_glob": [
+      "assets/scene/drawvariant/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-11T01:17:36+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "scene.DrawMulti",
+    "category": "scene",
+    "folder": "assets\\scene\\drawmulti",
+    "file_count": 1,
+    "confidence": 0.562,
+    "sample_files": [
+      "assets/skill_20261109/draw_multi/final.png"
+    ],
+    "paths_glob": [
+      "assets/scene/drawmulti/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-11T01:19:30+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "scene.Off",
+    "category": "scene",
+    "folder": "assets\\scene\\off",
+    "file_count": 1,
+    "confidence": 0.562,
+    "sample_files": [
+      "assets/skill_20261109/draw_multi/off_final.png"
+    ],
+    "paths_glob": [
+      "assets/scene/off/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-11T01:19:30+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "scene.On",
+    "category": "scene",
+    "folder": "assets\\scene\\on",
+    "file_count": 1,
+    "confidence": 0.562,
+    "sample_files": [
+      "assets/skill_20261109/draw_multi/on_final.png"
+    ],
+    "paths_glob": [
+      "assets/scene/on/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-11T01:19:30+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "scene.DrawOrdinary",
+    "category": "scene",
+    "folder": "assets\\scene\\drawordinary",
+    "file_count": 1,
+    "confidence": 0.562,
+    "sample_files": [
+      "assets/skill_20261109/draw_ordinary/final.jpg"
+    ],
+    "paths_glob": [
+      "assets/scene/drawordinary/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-11T01:19:31+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "scene.Variant",
+    "category": "scene",
+    "folder": "assets\\scene\\variant",
+    "file_count": 1,
+    "confidence": 0.562,
+    "sample_files": [
+      "assets/skill_20261109/draw_variant/variant_r1.jpg"
+    ],
+    "paths_glob": [
+      "assets/scene/variant/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-11T01:20:34+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "scene.MergeOverviewV2",
+    "category": "scene",
+    "folder": "assets\\scene\\mergeoverviewv2",
+    "file_count": 1,
+    "confidence": 0.562,
+    "sample_files": [
+      "assets/skill_20261109/merge_overview_v2/final.jpg"
+    ],
+    "paths_glob": [
+      "assets/scene/mergeoverviewv2/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-11T01:22:21+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "scene.MergeOverviewV3",
+    "category": "scene",
+    "folder": "assets\\scene\\mergeoverviewv3",
+    "file_count": 1,
+    "confidence": 0.562,
+    "sample_files": [
+      "assets/skill_20261109/merge_overview_v3/final.jpg"
+    ],
+    "paths_glob": [
+      "assets/scene/mergeoverviewv3/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-11T01:22:22+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "scene.Pad",
+    "category": "scene",
+    "folder": "assets\\scene\\pad",
+    "file_count": 1,
+    "confidence": 0.562,
+    "sample_files": [
+      "assets/skill_20261109/_refs/pad_4x3_blank.png"
+    ],
+    "paths_glob": [
+      "assets/scene/pad/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-11T01:24:11+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "scene.Shut",
+    "category": "scene",
+    "folder": "assets\\scene\\shut",
+    "file_count": 1,
+    "confidence": 0.562,
+    "sample_files": [
+      "assets/skill_20261110/draw_multi/shut_r1.jpg"
+    ],
+    "paths_glob": [
+      "assets/scene/shut/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-11T01:27:19+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "scene.Box",
+    "category": "scene",
+    "folder": "assets\\scene\\box",
+    "file_count": 1,
+    "confidence": 0.562,
+    "sample_files": [
+      "assets/skill_20261110_gh/draw_multi/box_r1.png"
+    ],
+    "paths_glob": [
+      "assets/scene/box/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-11T01:31:00+0800",
+    "status": "candidate"
+  }
+]

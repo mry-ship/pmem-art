@@ -1,0 +1,112 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-11-10 14:52:17 UTC+8",
+  "session_id": "skill1110-multi-shut",
+  "goal": "多张附图各管一件事；走多图分工。身份图管脸，结构图管关着的花园木门机位，下一张只改成打开。",
+  "module": "scene.FairyDoor",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 3,
+  "winner_score": 8.58,
+  "winner_image": "assets/skill_20261110/draw_multi/shut_r3.jpg",
+  "winner_passed": false,
+  "outcome": "共 4 轮未达阈值，采用最高分",
+  "what_fixed": [
+    "双脚改踩在石径石板中央，鞋底压住石缝。门扇左缘露出上下两枚合页，门闩改到门扇右侧并扣进门框。",
+    "把妖精挪到右侧不规则石板路的中间一块上，删掉脚下那块圆石。门左侧的大金属闩改成贴在门缝上的上下两枚窄合页，另在门右缘画一根横闩插进右门框。",
+    "只改落点：两只粉鞋挪到右侧石板路正中那一块上，圆石删除。左合页和右横闩保持现在这样。",
+    "落点仍未上石径。本态已满4轮，不再加画。"
+  ],
+  "what_still_weak": "双脚仍踩在草地里那块圆形浅石上，右侧蜿蜒的石板路没有被鞋底压住，圆石和石径之间还隔着一圈草。",
+  "strengths": "木门左缘能看见合页，右缘横闩插进门框，门仍关着。花园机位、双辫粉裙和果篮都还在。",
+  "taste_deltas": {
+    "from_strengths": [
+      "木门左缘能看见合页，右缘横闩插进门框，门仍关着。花园机位、双辫粉裙和果篮都还在。"
+    ],
+    "from_defects": [
+      "双脚落在石径旁边一块单独的圆石上，主石板路仍在她右侧，鞋底没有压在那条石径的石缝上。门扇左侧仍是一整块横向门闩，右门框没有扣上的门闩，左缘也分不出上下两枚合页。",
+      "双脚仍踩在草地里那块圆形浅石上，右侧蜿蜒的石板路没有被鞋底压住，圆石和石径之间还隔着一圈草。",
+      "粉鞋仍然整只落在草地上的圆石里，右侧石板路是空的，圆石没有被删掉。"
+    ]
+  },
+  "warm_start_confidence": 0.45,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 8.46,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 8.46,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 8.58,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 8.55,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "material",
+      "lesson": "本轮短板偏「material」：妖精双脚踩在石径旁的草皮上，鞋底没有压住石板。木门左缘只见一根横向金属闩，沿门轴排列的合页没有分开露出来。",
+      "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+      "from_score": "8.46"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：斜俯视花园对上结构图：左池塘香蕉船、石径、前景奶酪与蘑菇都在。金发双辫粉裙尖耳果篮对上身份图。没有鼻鼠、礼物盒和拉琴老人。木门关着，16:9。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.46"
+    },
+    {
+      "category": "material",
+      "lesson": "本轮短板偏「material」：双脚落在石径旁边一块单独的圆石上，主石板路仍在她右侧，鞋底没有压在那条石径的石缝上。门扇左侧仍是一整块横向门闩，右门框没有扣上的门闩，左缘也分不出上下两枚合页。",
+      "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+      "from_score": "8.46"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：斜俯视花园、左池塘香蕉船、前景奶酪蘑菇和粉裙双辫妖精都还在，木门仍然关着。双脚从草皮改到了一块浅色圆石上。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.46"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：双脚仍踩在草地里那块圆形浅石上，右侧蜿蜒的石板路没有被鞋底压住，圆石和石径之间还隔着一圈草。",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.58"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：木门左缘能看见合页，右缘横闩插进门框，门仍关着。花园机位、双辫粉裙和果篮都还在。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.58"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：粉鞋仍然整只落在草地上的圆石里，右侧石板路是空的，圆石没有被删掉。",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.55"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：左缘合页和右缘横闩还在，门关着。池塘、石径、奶酪蘑菇和粉裙双辫果篮没有被整张洗掉。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.55"
+    }
+  ]
+}

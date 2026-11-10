@@ -1,0 +1,12 @@
+✅ [合理性闸 · merge] 通过
+  ✓ subject_action（主体在做什么/交付物是什么）
+  ✓ element_budget（元素预算（不堆景不过载））
+  ✓ hard_locks（硬锁（画幅/透明底/无字/机位等））
+  ✓ fail_at_glance（一眼失败条件已写明）
+  ✓ single_centered_item（每档单件居中）
+  ✓ chain_mode_declared（写清 same_object / shop_ladder / species_change / 轻门）
+  ✓ upgrade_reason_concrete（升级理由具体（same_object→parts_add；shop/species→evolve_to+merge_why；轻门写具体可读升级））
+  ✓ family_or_base_lock（锁住母体或家族（same_object→母体词；shop/species→家族色相/题材；轻门→同任务域））
+修订提示词（generate 将优先用这句）：
+4比3整表，2行4列共8张白圆角卡，深炭灰底，间距均匀。每格一件居中的花园乐器，软塑胶厚实圆润哑光，棚柔光短接触影，不油亮。色相只留木色与苔绿。无脸、无字、无等级数字。主体含凸起都落在圆角卡内并留边。chain_mode=species_change，每档换一种乐器，禁止画成同一把笛子加零件。从左到右、上排再下排：叶笛短横管苔绿叶尖最小；木哨更粗直立带一个气窗；卵形封闭沙锤带小柄；扁圆小手鼓单面鼓皮；八根渐长木条的八音木琴加两槌；小U框里拉短弦；高三角竖琴长弦；桌上小管风琴木箱顶一排直立音管且最大仍留边。家族基因是花园乐器任务域加木色苔绿色相。合成理由按两件同级变成下一种乐器，不是加零件。
+已写入会话 `skill1110-merge-species`。下一步用 revised 做 converge generate（可省略 --prompt，将自动注入）。

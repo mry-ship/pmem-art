@@ -1144,7 +1144,7 @@ modules:
   character.Ref:
     title: 角色与立绘·Ref
     category: character
-    status: candidate
+    status: active
     description: 自动归类至 角色与立绘 (character.Ref) · 置信度 0.688
     paths:
       - "assets/character/ref/**"
@@ -1153,12 +1153,10 @@ modules:
     entities: []
     palette: []
     specs:
-      resolution: 409x1024
       allowed_resolutions:
-        - 409x1024
+        - 460x460
       alpha_required: true
-      safe_margin_px: 16
-      max_size_kb: 1024
+      max_size_kb: 4096
   ui.Subject:
     title: 界面与九宫格·Subject
     category: ui
@@ -1277,7 +1275,7 @@ modules:
   scene.Overview:
     title: 场景与原画·Overview
     category: scene
-    status: candidate
+    status: active
     description: 自动归类至 场景与原画 (scene.Overview) · 置信度 0.562
     paths:
       - "assets/scene/overview/**"
@@ -1286,10 +1284,10 @@ modules:
     entities: []
     palette: []
     specs:
-      resolution: 1280x720
-      aspect_ratio: "16:9"
+      allowed_resolutions:
+        - 1774x887
       alpha_required: false
-      max_size_kb: 2048
+      max_size_kb: 4096
   scene.Edit:
     title: 场景与原画·Edit
     category: scene
@@ -1414,10 +1412,11 @@ modules:
     entities: []
     palette: []
     specs:
-      resolution: 398x358
-      aspect_ratio: "16:9"
-      alpha_required: false
-      max_size_kb: 2048
+      allowed_resolutions:
+        - 1024x1024
+        - 398x358
+      alpha_required: true
+      max_size_kb: 4096
   ui.05:
     title: 界面与九宫格·05
     category: ui
@@ -1430,17 +1429,10 @@ modules:
     entities: []
     palette: []
     specs:
-      resolution: 463x850
       allowed_resolutions:
         - 463x850
-      alpha_required: true
-      nine_slice:
-        - 48
-        - 48
-        - 48
-        - 48
-      safe_margin_px: 4
-      max_size_kb: 512
+      alpha_required: false
+      max_size_kb: 4096
   scene.06:
     title: 场景与原画·06
     category: scene
@@ -2366,10 +2358,11 @@ modules:
     entities: []
     palette: []
     specs:
-      resolution: 720x1280
-      aspect_ratio: "16:9"
+      allowed_resolutions:
+        - 1280x720
+        - 720x1280
       alpha_required: false
-      max_size_kb: 2048
+      max_size_kb: 4096
   scene.R2:
     title: 场景与原画·R2
     category: scene
@@ -2382,10 +2375,11 @@ modules:
     entities: []
     palette: []
     specs:
-      resolution: 720x1280
-      aspect_ratio: "16:9"
+      allowed_resolutions:
+        - 1280x720
+        - 720x1280
       alpha_required: false
-      max_size_kb: 2048
+      max_size_kb: 4096
   scene.R3:
     title: 场景与原画·R3
     category: scene
@@ -2398,10 +2392,11 @@ modules:
     entities: []
     palette: []
     specs:
-      resolution: 720x1280
-      aspect_ratio: "16:9"
+      allowed_resolutions:
+        - 1280x720
+        - 720x1280
       alpha_required: false
-      max_size_kb: 2048
+      max_size_kb: 4096
   scene.R4:
     title: 场景与原画·R4
     category: scene
@@ -2414,10 +2409,11 @@ modules:
     entities: []
     palette: []
     specs:
-      resolution: 720x1280
-      aspect_ratio: "16:9"
+      allowed_resolutions:
+        - 1280x720
+        - 720x1280
       alpha_required: false
-      max_size_kb: 2048
+      max_size_kb: 4096
   scene.Background:
     title: 场景与原画·Background
     category: scene
@@ -2624,10 +2620,10 @@ modules:
     entities: []
     palette: []
     specs:
-      resolution: 409x1024
-      alpha_required: true
-      safe_margin_px: 16
-      max_size_kb: 1024
+      allowed_resolutions:
+        - 1774x887
+      alpha_required: false
+      max_size_kb: 4096
   character.Reconstructed:
     title: 角色与立绘·Reconstructed
     category: character
@@ -2941,17 +2937,13 @@ modules:
     entities: []
     palette: []
     specs:
-      resolution: 512x512
       allowed_resolutions:
-        - 512x512
-      alpha_required: true
-      nine_slice:
-        - 48
-        - 48
-        - 48
-        - 48
-      safe_margin_px: 4
-      max_size_kb: 512
+        - 1024x1024
+        - 128x128
+        - 463x850
+        - 720x1280
+      alpha_required: false
+      max_size_kb: 4096
   ui.Xmas:
     title: 界面与九宫格·Xmas
     category: ui
@@ -3049,10 +3041,10 @@ modules:
     entities: []
     palette: []
     specs:
-      resolution: 1024x624
-      aspect_ratio: "16:9"
-      alpha_required: false
-      max_size_kb: 2048
+      allowed_resolutions:
+        - 398x358
+      alpha_required: true
+      max_size_kb: 4096
   scene.Raw:
     title: 场景与原画·Raw
     category: scene
@@ -3160,7 +3152,7 @@ modules:
   character.R1:
     title: 角色与立绘·R1
     category: character
-    status: candidate
+    status: active
     description: 自动归类至 角色与立绘 (character.R1) · 置信度 0.6
     paths:
       - "assets/character/r1/**"
@@ -3169,16 +3161,14 @@ modules:
     entities: []
     palette: []
     specs:
-      resolution: 1254x1254
       allowed_resolutions:
-        - 1254x1254
-      alpha_required: true
-      safe_margin_px: 16
-      max_size_kb: 1024
+        - 720x1280
+      alpha_required: false
+      max_size_kb: 4096
   character.R2:
     title: 角色与立绘·R2
     category: character
-    status: candidate
+    status: active
     description: 自动归类至 角色与立绘 (character.R2) · 置信度 0.6
     paths:
       - "assets/character/r2/**"
@@ -3187,12 +3177,10 @@ modules:
     entities: []
     palette: []
     specs:
-      resolution: 1254x1254
       allowed_resolutions:
-        - 1254x1254
-      alpha_required: true
-      safe_margin_px: 16
-      max_size_kb: 1024
+        - 720x1280
+      alpha_required: false
+      max_size_kb: 4096
   character.R4:
     title: 角色与立绘·R4
     category: character
@@ -3223,17 +3211,10 @@ modules:
     entities: []
     palette: []
     specs:
-      resolution: 1254x1254
       allowed_resolutions:
-        - 1254x1254
-      alpha_required: true
-      nine_slice:
-        - 48
-        - 48
-        - 48
-        - 48
-      safe_margin_px: 4
-      max_size_kb: 512
+        - 1024x1024
+      alpha_required: false
+      max_size_kb: 4096
   ui.R2:
     title: 界面与九宫格·R2
     category: ui
@@ -3246,17 +3227,10 @@ modules:
     entities: []
     palette: []
     specs:
-      resolution: 1254x1254
       allowed_resolutions:
-        - 1254x1254
-      alpha_required: true
-      nine_slice:
-        - 48
-        - 48
-        - 48
-        - 48
-      safe_margin_px: 4
-      max_size_kb: 512
+        - 1024x1024
+      alpha_required: false
+      max_size_kb: 4096
   ui.Popcorn:
     title: 界面与九宫格·Popcorn
     category: ui
@@ -3501,12 +3475,10 @@ modules:
     entities: []
     palette: []
     specs:
-      resolution: 899x1222
       allowed_resolutions:
-        - 899x1222
-      alpha_required: true
-      safe_margin_px: 16
-      max_size_kb: 1024
+        - 360x320
+      alpha_required: false
+      max_size_kb: 4096
   scene.Birdmerge:
     title: 场景与原画·Birdmerge
     category: scene
@@ -3565,3 +3537,990 @@ modules:
         - 48
       safe_margin_px: 4
       max_size_kb: 512
+  character.Fairy:
+    title: 角色与立绘·Fairy
+    category: character
+    status: active
+    description: character.Fairy 金发双辫粉裙小妖精，3D软塑胶童话半身，惊讶表情差分：双眼上眼睑抬过绿虹膜，眉毛抬高，嘴仍是小竖椭圆。浅奶油底。 · 自动归类至 角色与立绘 (character.Fairy) · 置信度 0.92
+    paths:
+      - "assets/character/fairy/**"
+    aliases:
+      - Fairy
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      allowed_resolutions:
+        - 1024x1024
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  misc.Accept:
+    title: 待归类资产·Accept (Watercolor)
+    category: misc
+    status: candidate
+    description: 自动归类至 待归类资产 (misc.Accept) · 置信度 0.4
+    paths:
+      - "assets/misc/accept/watercolor/**"
+    aliases:
+      - Accept
+    entities: []
+    palette: []
+    specs:
+      resolution: 864x1152
+      alpha_required: false
+      max_size_kb: 2048
+  anim.Overview:
+    title: 骨骼与动画·Overview
+    category: anim
+    status: active
+    description: 自动归类至 骨骼与动画 (anim.Overview) · 置信度 0.893
+    paths:
+      - "assets/anim/overview/**"
+    aliases:
+      - Overview
+    entities: []
+    palette: []
+    specs:
+      allowed_resolutions:
+        - 1774x887
+      alpha_required: true
+      max_size_kb: 4096
+  scene.Help:
+    title: 场景与原画·Help
+    category: scene
+    status: candidate
+    description: 自动归类至 场景与原画 (scene.Help) · 置信度 0.562
+    paths:
+      - "assets/scene/help/**"
+    aliases:
+      - Help
+    entities: []
+    palette: []
+    specs:
+      resolution: 1242x2688
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  ui.Gh:
+    title: 界面与九宫格·Gh
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.Gh) · 置信度 0.78
+    paths:
+      - "assets/ui/gh/**"
+    aliases:
+      - Gh
+    entities: []
+    palette: []
+    specs:
+      allowed_resolutions:
+        - 1024x1024
+        - 1242x2688
+      alpha_required: false
+      max_size_kb: 4096
+  scene.Life:
+    title: 场景与原画·Life
+    category: scene
+    status: candidate
+    description: 自动归类至 场景与原画 (scene.Life) · 置信度 0.562
+    paths:
+      - "assets/scene/life/**"
+    aliases:
+      - Life
+    entities: []
+    palette: []
+    specs:
+      resolution: 1242x2688
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  scene.Loading:
+    title: 场景与原画·Loading
+    category: scene
+    status: candidate
+    description: 自动归类至 场景与原画 (scene.Loading) · 置信度 0.562
+    paths:
+      - "assets/scene/loading/**"
+    aliases:
+      - Loading
+    entities: []
+    palette: []
+    specs:
+      resolution: 1242x2688
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  scene.Renovate:
+    title: 场景与原画·Renovate
+    category: scene
+    status: candidate
+    description: 自动归类至 场景与原画 (scene.Renovate) · 置信度 0.562
+    paths:
+      - "assets/scene/renovate/**"
+    aliases:
+      - Renovate
+    entities: []
+    palette: []
+    specs:
+      resolution: 1242x2688
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  scene.Story:
+    title: 场景与原画·Story
+    category: scene
+    status: candidate
+    description: 自动归类至 场景与原画 (scene.Story) · 置信度 0.562
+    paths:
+      - "assets/scene/story/**"
+    aliases:
+      - Story
+    entities: []
+    palette: []
+    specs:
+      resolution: 1242x2688
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  ui.16x9:
+    title: 界面与九宫格·16x9
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.16x9) · 置信度 0.78
+    paths:
+      - "assets/ui/16x9/**"
+    aliases:
+      - 16x9
+    entities: []
+    palette: []
+    specs:
+      allowed_resolutions:
+        - 4780x2688
+      alpha_required: false
+      max_size_kb: 5468
+  ui.9x16:
+    title: 界面与九宫格·9x16
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.9x16) · 置信度 0.78
+    paths:
+      - "assets/ui/9x16/**"
+    aliases:
+      - 9x16
+    entities: []
+    palette: []
+    specs:
+      allowed_resolutions:
+        - 1512x2688
+      alpha_required: false
+      max_size_kb: 5194
+  misc.Deluxe:
+    title: 待归类资产·Deluxe
+    category: misc
+    status: candidate
+    description: 自动归类至 待归类资产 (misc.Deluxe) · 置信度 0.4
+    paths:
+      - "assets/misc/deluxe/**"
+    aliases:
+      - Deluxe
+    entities: []
+    palette: []
+    specs:
+      resolution: 96x115
+      alpha_required: false
+      max_size_kb: 2048
+  ui.Gal:
+    title: 界面与九宫格·Gal
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.Gal) · 置信度 0.78
+    paths:
+      - "assets/ui/gal/**"
+    aliases:
+      - Gal
+    entities: []
+    palette: []
+    specs:
+      resolution: 1171x1285
+      allowed_resolutions:
+        - 1171x1285
+      alpha_required: false
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512
+  misc.Orange:
+    title: 待归类资产·Orange
+    category: misc
+    status: candidate
+    description: 自动归类至 待归类资产 (misc.Orange) · 置信度 0.4
+    paths:
+      - "assets/misc/orange/**"
+    aliases:
+      - Orange
+    entities: []
+    palette: []
+    specs:
+      resolution: 90x100
+      alpha_required: false
+      max_size_kb: 2048
+  ui.Reddit:
+    title: 界面与九宫格·Reddit
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.Reddit) · 置信度 0.78
+    paths:
+      - "assets/ui/reddit/**"
+    aliases:
+      - Reddit
+    entities: []
+    palette: []
+    specs:
+      resolution: 1171x1285
+      allowed_resolutions:
+        - 1171x1285
+      alpha_required: false
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512
+  scene.Cell:
+    title: 场景与原画·Cell
+    category: scene
+    status: active
+    description: 自动归类至 场景与原画 (scene.Cell) · 置信度 0.78
+    paths:
+      - "assets/scene/cell/**"
+    aliases:
+      - Cell
+    entities: []
+    palette: []
+    specs:
+      resolution: 151x260
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  scene.Deluxe:
+    title: 场景与原画·Deluxe
+    category: scene
+    status: active
+    description: 自动归类至 场景与原画 (scene.Deluxe) · 置信度 0.78
+    paths:
+      - "assets/scene/deluxe/**"
+    aliases:
+      - Deluxe
+    entities: []
+    palette: []
+    specs:
+      resolution: 96x115
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  scene.Board:
+    title: 场景与原画·Board
+    category: scene
+    status: active
+    description: 自动归类至 场景与原画 (scene.Board) · 置信度 0.893
+    paths:
+      - "assets/scene/board/**"
+    aliases:
+      - Board
+    entities: []
+    palette: []
+    specs:
+      allowed_resolutions:
+        - 1117x1613
+      alpha_required: false
+      max_size_kb: 4096
+  brand.Orange:
+    title: 风格圣经·Orange
+    category: brand
+    status: active
+    description: 自动归类至 风格圣经 (brand.Orange) · 置信度 0.78
+    paths:
+      - "assets/brand/orange/**"
+    aliases:
+      - Orange
+    entities: []
+    palette: []
+    specs:
+      resolution: 512x768
+      alpha_required: false
+      max_size_kb: 2048
+  scene.Orange:
+    title: 场景与原画·Orange
+    category: scene
+    status: active
+    description: 自动归类至 场景与原画 (scene.Orange) · 置信度 0.78
+    paths:
+      - "assets/scene/orange/**"
+    aliases:
+      - Orange
+    entities: []
+    palette: []
+    specs:
+      allowed_resolutions:
+        - 84x93
+        - 90x100
+        - 93x77
+        - 94x105
+      alpha_required: false
+      max_size_kb: 4096
+  scene.DrawKeyart:
+    title: 场景与原画·DrawKeyart
+    category: scene
+    status: active
+    description: 自动归类至 场景与原画 (scene.DrawKeyart) · 置信度 0.893
+    paths:
+      - "assets/scene/drawkeyart/**"
+    aliases:
+      - DrawKeyart
+    entities: []
+    palette: []
+    specs:
+      allowed_resolutions:
+        - 1080x1920
+        - 864x1152
+      alpha_required: false
+      max_size_kb: 4096
+  scene.Source:
+    title: 场景与原画·Source
+    category: scene
+    status: candidate
+    description: 自动归类至 场景与原画 (scene.Source) · 置信度 0.562
+    paths:
+      - "assets/scene/source/**"
+    aliases:
+      - Source
+    entities: []
+    palette: []
+    specs:
+      resolution: 1280x720
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  scene.DrawVariant:
+    title: 场景与原画·DrawVariant
+    category: scene
+    status: candidate
+    description: 自动归类至 场景与原画 (scene.DrawVariant) · 置信度 0.562
+    paths:
+      - "assets/scene/drawvariant/**"
+    aliases:
+      - DrawVariant
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  ui.App:
+    title: 界面与九宫格·App
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.App) · 置信度 0.78
+    paths:
+      - "assets/ui/app/**"
+    aliases:
+      - App
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      allowed_resolutions:
+        - 1024x1024
+      alpha_required: false
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512
+  ui.IconC:
+    title: 界面与九宫格·IconC
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.IconC) · 置信度 0.78
+    paths:
+      - "assets/ui/iconc/**"
+    aliases:
+      - IconC
+    entities: []
+    palette: []
+    specs:
+      allowed_resolutions:
+        - 1024x1024
+      alpha_required: false
+      max_size_kb: 4096
+  scene.UiConcept:
+    title: 场景与原画·UiConcept
+    category: scene
+    status: active
+    description: 自动归类至 场景与原画 (scene.UiConcept) · 置信度 0.78
+    paths:
+      - "assets/scene/uiconcept/**"
+    aliases:
+      - UiConcept
+    entities: []
+    palette: []
+    specs:
+      resolution: 720x1280
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  misc.Winter:
+    title: 待归类资产·Winter
+    category: misc
+    status: candidate
+    description: 自动归类至 待归类资产 (misc.Winter) · 置信度 0.4
+    paths:
+      - "assets/misc/winter/**"
+    aliases:
+      - Winter
+    entities: []
+    palette: []
+    specs:
+      resolution: 720x1280
+      alpha_required: false
+      max_size_kb: 2048
+  scene.Fairy:
+    title: 场景与原画·Fairy
+    category: scene
+    status: active
+    description: 自动归类至 场景与原画 (scene.Fairy) · 置信度 0.78
+    paths:
+      - "assets/scene/fairy/**"
+    aliases:
+      - Fairy
+    entities: []
+    palette: []
+    specs:
+      resolution: 864x1152
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  scene.DrawMulti:
+    title: 场景与原画·DrawMulti
+    category: scene
+    status: candidate
+    description: 自动归类至 场景与原画 (scene.DrawMulti) · 置信度 0.562
+    paths:
+      - "assets/scene/drawmulti/**"
+    aliases:
+      - DrawMulti
+    entities: []
+    palette: []
+    specs:
+      resolution: 1280x720
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  scene.Off:
+    title: 场景与原画·Off
+    category: scene
+    status: candidate
+    description: 自动归类至 场景与原画 (scene.Off) · 置信度 0.562
+    paths:
+      - "assets/scene/off/**"
+    aliases:
+      - Off
+    entities: []
+    palette: []
+    specs:
+      resolution: 1280x720
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  scene.On:
+    title: 场景与原画·On
+    category: scene
+    status: candidate
+    description: 自动归类至 场景与原画 (scene.On) · 置信度 0.562
+    paths:
+      - "assets/scene/on/**"
+    aliases:
+      - On
+    entities: []
+    palette: []
+    specs:
+      resolution: 1280x720
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  scene.DrawOrdinary:
+    title: 场景与原画·DrawOrdinary
+    category: scene
+    status: candidate
+    description: 自动归类至 场景与原画 (scene.DrawOrdinary) · 置信度 0.562
+    paths:
+      - "assets/scene/drawordinary/**"
+    aliases:
+      - DrawOrdinary
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  scene.Mushroom:
+    title: 场景与原画·Mushroom
+    category: scene
+    status: active
+    description: 自动归类至 场景与原画 (scene.Mushroom) · 置信度 0.893
+    paths:
+      - "assets/scene/mushroom/**"
+    aliases:
+      - Mushroom
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  scene.Variant:
+    title: 场景与原画·Variant
+    category: scene
+    status: candidate
+    description: 自动归类至 场景与原画 (scene.Variant) · 置信度 0.562
+    paths:
+      - "assets/scene/variant/**"
+    aliases:
+      - Variant
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  ui.IconA:
+    title: 界面与九宫格·IconA
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.IconA) · 置信度 0.78
+    paths:
+      - "assets/ui/icona/**"
+    aliases:
+      - IconA
+    entities: []
+    palette: []
+    specs:
+      allowed_resolutions:
+        - 1024x1024
+      alpha_required: false
+      max_size_kb: 4096
+  ui.A:
+    title: 界面与九宫格·A
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.A) · 置信度 0.78
+    paths:
+      - "assets/ui/a/**"
+    aliases:
+      - A
+    entities: []
+    palette: []
+    specs:
+      allowed_resolutions:
+        - 1024x1024
+      alpha_required: false
+      max_size_kb: 4096
+  scene.MergeOverviewV2:
+    title: 场景与原画·MergeOverviewV2
+    category: scene
+    status: candidate
+    description: 自动归类至 场景与原画 (scene.MergeOverviewV2) · 置信度 0.562
+    paths:
+      - "assets/scene/mergeoverviewv2/**"
+    aliases:
+      - MergeOverviewV2
+    entities: []
+    palette: []
+    specs:
+      resolution: 1152x864
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  scene.MergeOverviewV3:
+    title: 场景与原画·MergeOverviewV3
+    category: scene
+    status: candidate
+    description: 自动归类至 场景与原画 (scene.MergeOverviewV3) · 置信度 0.562
+    paths:
+      - "assets/scene/mergeoverviewv3/**"
+    aliases:
+      - MergeOverviewV3
+    entities: []
+    palette: []
+    specs:
+      resolution: 1152x864
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  scene.Pad:
+    title: 场景与原画·Pad
+    category: scene
+    status: candidate
+    description: 自动归类至 场景与原画 (scene.Pad) · 置信度 0.562
+    paths:
+      - "assets/scene/pad/**"
+    aliases:
+      - Pad
+    entities: []
+    palette: []
+    specs:
+      resolution: 1152x864
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  scene.Ref.Watercolor:
+    title: 场景与原画·Ref (Watercolor)
+    category: scene
+    status: active
+    description: 自动归类至 场景与原画 (scene.Ref.Watercolor) · 置信度 0.78
+    paths:
+      - "assets/scene/ref/watercolor/**"
+    aliases:
+      - Ref
+    entities: []
+    palette: []
+    specs:
+      resolution: 864x1152
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+    parent: scene.Ref
+    inherits: scene.Ref
+  brand.Ref:
+    title: 风格圣经·Ref
+    category: brand
+    status: active
+    description: 自动归类至 风格圣经 (brand.Ref) · 置信度 0.78
+    paths:
+      - "assets/brand/ref/**"
+    aliases:
+      - Ref
+    entities: []
+    palette: []
+    specs:
+      allowed_resolutions:
+        - 169x276
+        - 207x276
+      alpha_required: false
+      max_size_kb: 4096
+  scene.Shut:
+    title: 场景与原画·Shut
+    category: scene
+    status: candidate
+    description: 自动归类至 场景与原画 (scene.Shut) · 置信度 0.562
+    paths:
+      - "assets/scene/shut/**"
+    aliases:
+      - Shut
+    entities: []
+    palette: []
+    specs:
+      resolution: 1280x720
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  ui.R3:
+    title: 界面与九宫格·R3
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.R3) · 置信度 0.78
+    paths:
+      - "assets/ui/r3/**"
+    aliases:
+      - R3
+    entities: []
+    palette: []
+    specs:
+      allowed_resolutions:
+        - 1024x1024
+      alpha_required: false
+      max_size_kb: 4096
+  ui.R4:
+    title: 界面与九宫格·R4
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.R4) · 置信度 0.78
+    paths:
+      - "assets/ui/r4/**"
+    aliases:
+      - R4
+    entities: []
+    palette: []
+    specs:
+      allowed_resolutions:
+        - 1024x1024
+      alpha_required: false
+      max_size_kb: 4096
+  anim.MergeSame:
+    title: 骨骼与动画·MergeSame
+    category: anim
+    status: active
+    description: 自动归类至 骨骼与动画 (anim.MergeSame) · 置信度 0.78
+    paths:
+      - "assets/anim/mergesame/**"
+    aliases:
+      - MergeSame
+    entities: []
+    palette: []
+    specs:
+      resolution: 1152x864
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  anim.MergeShop:
+    title: 骨骼与动画·MergeShop
+    category: anim
+    status: active
+    description: 自动归类至 骨骼与动画 (anim.MergeShop) · 置信度 0.78
+    paths:
+      - "assets/anim/mergeshop/**"
+    aliases:
+      - MergeShop
+    entities: []
+    palette: []
+    specs:
+      resolution: 1152x864
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  anim.MergeSpecies:
+    title: 骨骼与动画·MergeSpecies
+    category: anim
+    status: active
+    description: 自动归类至 骨骼与动画 (anim.MergeSpecies) · 置信度 0.78
+    paths:
+      - "assets/anim/mergespecies/**"
+    aliases:
+      - MergeSpecies
+    entities: []
+    palette: []
+    specs:
+      resolution: 1152x864
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  ui.Sheets:
+    title: 界面与九宫格·Sheets
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.Sheets) · 置信度 0.78
+    paths:
+      - "assets/ui/sheets/**"
+    aliases:
+      - Sheets
+    entities: []
+    palette: []
+    specs:
+      resolution: 1280x720
+      allowed_resolutions:
+        - 1280x720
+      alpha_required: false
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512
+  scene.Box:
+    title: 场景与原画·Box
+    category: scene
+    status: candidate
+    description: 自动归类至 场景与原画 (scene.Box) · 置信度 0.562
+    paths:
+      - "assets/scene/box/**"
+    aliases:
+      - Box
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  character.Face:
+    title: 角色与立绘·Face
+    category: character
+    status: active
+    description: 自动归类至 角色与立绘 (character.Face) · 置信度 0.78
+    paths:
+      - "assets/character/face/**"
+    aliases:
+      - Face
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      allowed_resolutions:
+        - 1024x1024
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  ui.IconB:
+    title: 界面与九宫格·IconB
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.IconB) · 置信度 0.78
+    paths:
+      - "assets/ui/iconb/**"
+    aliases:
+      - IconB
+    entities: []
+    palette: []
+    specs:
+      resolution: 1280x720
+      allowed_resolutions:
+        - 1280x720
+      alpha_required: false
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512
+  ui.Components:
+    title: 界面与九宫格·Components
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.Components) · 置信度 0.78
+    paths:
+      - "assets/ui/components/**"
+    aliases:
+      - Components
+    entities: []
+    palette: []
+    specs:
+      resolution: 1280x720
+      allowed_resolutions:
+        - 1280x720
+      alpha_required: false
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512
+  character.MergeJam:
+    title: 角色与立绘·MergeJam
+    category: character
+    status: active
+    description: 自动归类至 角色与立绘 (character.MergeJam) · 置信度 0.78
+    paths:
+      - "assets/character/mergejam/**"
+    aliases:
+      - MergeJam
+    entities: []
+    palette: []
+    specs:
+      resolution: 720x1280
+      allowed_resolutions:
+        - 720x1280
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  character.MergeWater:
+    title: 角色与立绘·MergeWater
+    category: character
+    status: active
+    description: 自动归类至 角色与立绘 (character.MergeWater) · 置信度 0.78
+    paths:
+      - "assets/character/mergewater/**"
+    aliases:
+      - MergeWater
+    entities: []
+    palette: []
+    specs:
+      resolution: 720x1280
+      allowed_resolutions:
+        - 720x1280
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  character.MergeWind:
+    title: 角色与立绘·MergeWind
+    category: character
+    status: active
+    description: 自动归类至 角色与立绘 (character.MergeWind) · 置信度 0.78
+    paths:
+      - "assets/character/mergewind/**"
+    aliases:
+      - MergeWind
+    entities: []
+    palette: []
+    specs:
+      resolution: 720x1280
+      allowed_resolutions:
+        - 720x1280
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  character.Components:
+    title: 角色与立绘·Components
+    category: character
+    status: active
+    description: 自动归类至 角色与立绘 (character.Components) · 置信度 0.78
+    paths:
+      - "assets/character/components/**"
+    aliases:
+      - Components
+    entities: []
+    palette: []
+    specs:
+      resolution: 720x1280
+      allowed_resolutions:
+        - 720x1280
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  character.Cell:
+    title: 角色与立绘·Cell
+    category: character
+    status: active
+    description: 自动归类至 角色与立绘 (character.Cell) · 置信度 0.78
+    paths:
+      - "assets/character/cell/**"
+    aliases:
+      - Cell
+    entities: []
+    palette: []
+    specs:
+      allowed_resolutions:
+        - 1024x1024
+        - 795x526
+      alpha_required: false
+      max_size_kb: 4096
+  character.Zoom:
+    title: 角色与立绘·Zoom
+    category: character
+    status: active
+    description: 自动归类至 角色与立绘 (character.Zoom) · 置信度 0.78
+    paths:
+      - "assets/character/zoom/**"
+    aliases:
+      - Zoom
+    entities: []
+    palette: []
+    specs:
+      allowed_resolutions:
+        - 180x96
+        - 512x307
+      alpha_required: false
+      max_size_kb: 4096

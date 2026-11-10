@@ -1,0 +1,56 @@
+--- GENERATE ---
+🧠 [合理性闸门] 已注入合理性修订提示词
+WARM_START_MERGED=1 sha1=ba1b9d03dc92 source=converge.generate (并以本字段为准；勿用 GenerateImage Hook 有无判断并入)
+🎨 [Step 2A · 仅生图阶段完成] 第 1/4 轮图像已生成: `c:\Users\ZhengLangPC\Desktop\Cursor-Pmem-Art\assets\skill_20261110_gh\draw_clone\r1.png` (864x1152 (3:4, 1395.7KB))
+   · 策略建议垫图: C:\Users\ZhengLangPC\Desktop\Cursor-Pmem-Art\assets\refs\gossip_harbor\gh_loading__ar_3x4.png（pad=auto→style_ref（每轮垫最初参考，修正只写进提示词））
+   · 本轮实际垫图: ['C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_loading__ar_3x4.png']
+   · 📚 pmem-art 记忆已并入：模块 character.GhWindowScribe （recipe 0 · 红线 0；WARM_START_MERGED=1）
+   · 结构底线: 结构底线：Mode B 垫参考只锁 medium/材质/描边——新题材主体 silhouette 必须独占画面，禁止复制参考 prop（如礼盒）外形；brief 写清新主体名词
+   · 置顶风格指令 Prompt: 点名锁每轮都要单独留住，不许整张漂掉：三维光泽卡通；圆润；无硬描边；暖饱和；柔光；尖耳；藕粉裙；圆窗；信纸；笔；虹膜高光 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】
+- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)
+- 目标模块: character.GhWindowScribe
+- 置信度: 0.45（fast-track 资格: 否）
+- 正向保留（要怎样）:
+  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色
+  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶
+- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和
+- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色
+- 项目私有知识卡 (Private Layer):
+  · [style-chibi] Q版头身: 2~3 头身，五官放大但识别锚点保留。
+  · [light-rim] 侧逆光: 轮廓分离主体与背景，高光条沿边缘走。
+原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光 | A small fairy with a human child face, smooth pointed ears, and warm cocoa-brown hair writes a letter in a warm dark room. The vertical 3:4 picture shows her from the waist up at eye level, turned three-quarters, looking down at the paper. She wears a lotus-pink dress with soft rounded folds. Her writing hand has a thumb and four separated fingers closed around a slim pen, and the nib touches a blank cream sheet. Her other hand rests flat on the sheet with separated fingers and a soft contact shadow. Both eyes sit at the same height, each with a warm amber iris, a white sclera crescent, and a bright catchlight. A single round window behind one shoulder is a warm golden circle, and the rest of the room is deep warm brown. The rendering is glossy cartoon 3D with thick rounded volumes, no hard ink outlines, warm saturated color, and soft gradient highlights on skin, hair, and cloth. Only this fairy, the round window, the letter, and the pen are in the picture. The paper shows no readable words. | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: Mode B style ref locks medium/chrome only — the NEW subject silhouette must dominate the frame; do NOT photocopy the reference prop shape (e.g. gift box); name the new subject explicitly in the brief
+   · 当前未执行任何自评或 VLM 裁判；请先看图再打六维，不要从 9.3 起跳：
+你是独立主美裁判。先只看附图，不要看生成提示词给自己加分。
+档位锚：3=失败 / 5=差 / 7=合格 / 8.5=近优 / 9.5=优（可到 10）
+普通完成图应在 7.0～8.5。9.3+ 只给明显优于合格线的画面。不要因为后面还要迭代就从 9.3 起跳，也不要把六维打成一串几乎相同的 9.3+。只写各维分数。正式分由程序按加权调和平均计算，门槛维低于线时改取该维。像素、Q版、平涂、水彩、剪纸、等轴按该媒介自己的尺子打偏低的那一维，断肢和塌缩仍按硬伤。
+六维（各 0–10，一位小数）：构图 composition / 光影 lighting_color / 透视解剖 perspective_anatomy / 质感 texture_detail / 风格规格 spec_style / 无瑕疵 flawlessness。无瑕疵与另外五维一样盲评，不另写扣分清单。看不清就保守给分并写进缺陷。
+六维有效权重：构图=15% 光影=19% 透视=11% 质感=19% 风格=11% 无瑕度=25%。 自动临界复评：先完成一遍六维；若按上述权重计算的调和分与停机线相差 ≤0.25，或透视解剖分与硬门槛 7.5 相差 ≤0.25，则重新只看图像作第二遍六维，不参考第一遍分数；最终 dims 各维取两遍均值（四舍五入到一位小数）。无需人工确认。
+合同只用来写 defects（画没画到），禁止因为 Prompt 写过就加分：参考这张的画风，别画原来的人，换成窗边写信的小妖精。换新题材只借三维光泽卡通：圆润、无硬描边、暖饱和、柔光。尖耳、藕粉裙、圆窗、信纸、笔。竖幅3:4半身，暖暗室内，虹膜加高光。
+参考解构摘要（只作对照，像素优先）：竖幅加载海报略仰视。顶中标志，左上宠物，后上绿发披风人物，前下红发人物，右下发光南瓜，底进度条与英文。主光右下暖黄，背后大块冷蓝。只借三维光泽卡通：圆润厚体积、无硬描边、暖饱和、柔光渐变、虹膜高光。不继承双人叠位与前景大物。新题材是单人小妖精。
+medium 档：姿态可动时仍须写清相对参考多出来的姿态/机位变化，禁空话。
+停机门槛 ≥9.50 是停机线，不是「合格=9.5」。本轮 1/4；满轮取最高分（best-of-N）。
+必须输出：
+1) dims 一行：`构图x.x/光影x.x/透视x.x/质感x.x/风格x.x/无瑕疵x.x`
+2) defects：至少一条可核验画面问题（禁「无明显硬伤」套话）。必须写本张图上看得见的部位、颜色、边缘或空间关系，禁止把上一轮 defects 原句贴过来。
+3) strengths：1–2 条，只写这张图已经有的，并指出可见的像素依据；不写提示词里的目标。六维分数必须能从这些可见证据解释，不能用任务描述代替画面证据。
+4) next_fix：下一轮可执行叠加修正（已达标可写「已达标」）
+recompose：defects 第一句必须回答仰还是俯、人占画面大约多少、主光是窗火还是灯笼。提示词里的「重构机位」不算成图已经换了机位。
+high：必须写明相对原图多出来的那一处光影或叙事；写不出来就把构图当贴原打。
+
+   · 然后：`pyw -3 -u pmem_art.py converge judge --id gh-clone-scribe-1110 --round 1 --image c:\Users\ZhengLangPC\Desktop\Cursor-Pmem-Art\assets\skill_20261110_gh\draw_clone\r1.png --dims ...`
+
+--- JUDGE ---
+🔄 [Step 2B · 六维审图 · agent_absolute_5d] 第 1/4 轮得分 9.11 < 目标阈值 9.50（未达标继续下一轮第 2 轮）。
+   · 图像校验: 864x1152 (3:4, 1395.7KB, byteH=7.96) | 六维: 构图9.2/光影9.4/透视8.6/质感9.2/风格8.9/无瑕疵9.1
+   · 不合理处: 握笔的右手拇指和其余手指裹成一圈，分指不完整。视线落在画面左前方，没有落到信纸。裙子是饱和玫粉，浅藕粉不够。眼窝阴影偏深，脸比休闲光泽卡通更电影感。；点名锁未单独验收：三维光泽卡通；无硬描边；暖饱和；柔光；藕粉裙；信纸；笔；虹膜高光
+   · 下一轮先垫这张再出图：第 1 轮 `C:\Users\ZhengLangPC\Desktop\Cursor-Pmem-Art\assets\skill_20261110_gh\draw_clone\r1.png`
+   · 只改这一处：右手拇指与食指分开捏住笔杆，眼睛低下看信纸。裙子改成浅藕粉，眼窝阴影变浅。
+   · 生图参考图只用这一张。可先 `converge next --id gh-clone-scribe-1110` 核对路径，画完再 generate。
+   👉 先用上面这张垫图出第 2 轮，再 `converge generate`，然后 `converge judge`。
+📚 本轮可学（能力提升）:
+   1. [lighting] 本轮短板偏「lighting」：握笔的右手拇指和其余手指裹成一圈，分指不完整。视线落在画面左前方，没有落到信纸。裙子是饱和玫粉，浅藕粉不够。眼窝阴影偏深，脸比休闲光泽卡通更电影感。；点名锁未单
+      → 练习: 同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界
+   2. [anatomy] 本轮短板偏「anatomy」：握笔的右手拇指和其余手指裹成一圈，分指不完整。视线落在画面左前方，没有落到信纸。裙子是饱和玫粉，浅藕粉不够。眼窝阴影偏深，脸比休闲光泽卡通更电影感。；点名锁未单
+      → 练习: 手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离
+   3. [color_palette] 本轮短板偏「color_palette」：握笔的右手拇指和其余手指裹成一圈，分指不完整。视线落在画面左前方，没有落到信纸。裙子是饱和玫粉，浅藕粉不够。眼窝阴影偏深，脸比休闲光泽卡通更电影感。；点名锁未单
+      → 练习: 从模块 palette 抽 3 HEX 做限色练习，禁止引入霓虹辅色

@@ -20,6 +20,8 @@ verify: command -v pmemw；.cursor/hooks.json 含 pmemw hook；.cursor/mcp.json 
 applies: 已安装含 pmemw 入口的当前版 pmem 后
 aliases:
 - pmemw
+verified: '2026-11-11'
+verified_at: '2026-11-11T01:15:57.631+08:00'
 ---
 旧排除「禁止用 pmemw 接 Cursor hooks」只在本机 PATH 没有 pmemw、闸门因此失效时成立。
 当前已装到 GitHub master（commit 4d776a54c5ff，版本号仍标 0.6.1）：提供 pmemw 入口；pmem init / doctor 认 pmemw hook；Windows 用它少弹控制台。

@@ -1,0 +1,15 @@
+{
+  "saved_at": 1794298328.4440706,
+  "text": "原画主视觉：妖精花园黄昏，一个尖耳小妖精站在圆窗前写信，藕粉裙，暖灯，花园黄昏。竖幅 3:4。光泽卡通三维，圆润五官，暖饱和，柔光，干净高光。平视侧机位。这是原画主视觉。",
+  "banner": "【按点名锁定 draw.key】",
+  "route_ids": [
+    "draw.key"
+  ],
+  "mode": "skill",
+  "execute_ok": true,
+  "artist_say": "【按点名锁定 draw.key】",
+  "plan_conflict": false,
+  "confidence": "named",
+  "conversation_id": "gh1110-key",
+  "named_seed": true
+}

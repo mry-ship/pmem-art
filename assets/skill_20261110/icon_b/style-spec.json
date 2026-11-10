@@ -1,0 +1,30 @@
+{
+  "preset": "Soft",
+  "grid": 24,
+  "viewBox": "0 0 24 24",
+  "width": 24,
+  "height": 24,
+  "strokeWidth": 2,
+  "strokeLinecap": "round",
+  "strokeLinejoin": "round",
+  "cornerRadiusHint": 4,
+  "padding": 2,
+  "opticalBalance": true,
+  "color": "currentColor",
+  "fill": "none",
+  "theme": "妖精花园休闲导航 · 8 枚线性图标",
+  "commercial_benchmark": "休闲花园养成 HUD 导航：亲和圆角、统一线宽、24px 可认。只取气质，不抄竞品像素。",
+  "contentRule": "笔画中心落在 3–21，墨水外沿留在 2–22；封闭容器圆角约 3（Soft 的 4px 在 2px 线宽下的等效）；简单符号用底线或内环补视觉重量。",
+  "root": "xmlns + width/height/viewBox + fill=none + stroke=currentColor + stroke-width=2 + stroke-linecap=round + stroke-linejoin=round",
+  "forbidden": ["hardcoded color", "root transform", "id", "class", "per-node stroke override", "library trace"],
+  "icons": [
+    { "id": "home", "label": "家园", "group": "Navigation", "file": "home.svg", "read": "坡屋顶小屋加门" },
+    { "id": "bag", "label": "背包", "group": "Inventory", "file": "bag.svg", "read": "圆角提包与提手" },
+    { "id": "map", "label": "地图", "group": "Navigation", "file": "map.svg", "read": "圆角地图与路线终点" },
+    { "id": "shop", "label": "商店", "group": "Actions", "file": "shop.svg", "read": "檐篷摊位与门" },
+    { "id": "quest", "label": "任务", "group": "Actions", "file": "quest.svg", "read": "卷轴与两行字" },
+    { "id": "settings", "label": "设置", "group": "Actions", "file": "settings.svg", "read": "六齿齿轮" },
+    { "id": "sprout", "label": "种植", "group": "Crafting", "file": "sprout.svg", "read": "双叶苗与地面" },
+    { "id": "watering-can", "label": "浇水", "group": "Crafting", "file": "watering-can.svg", "read": "壶身、提手、莲蓬头" }
+  ]
+}

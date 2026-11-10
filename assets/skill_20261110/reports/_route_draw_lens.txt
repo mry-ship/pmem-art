@@ -1,0 +1,264 @@
+{
+  "banner": "【按 镜头包 走了】",
+  "confidence": "high",
+  "plan": {
+    "mode": "skill",
+    "would_execute": true,
+    "execute": false,
+    "reason": "lens",
+    "announce": "按 镜头包 走了",
+    "serial": false,
+    "parallel": false,
+    "route_ids": [
+      "draw.lens"
+    ],
+    "steps": [
+      {
+        "skill": "pmem-draw",
+        "section": "镜头包",
+        "heading": "## 合同 · 镜头包",
+        "file": ".cursor/skills/pmem-draw/SKILL.md",
+        "deliverable": "要几套机位给玩家挑；先不出成图；走镜头包。",
+        "pad": [
+          "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_character_fairy.png"
+        ],
+        "skip_pad": [],
+        "locks": "身份、画风和机位按这一节；普通图锁机位",
+        "done": "点选前不生图，机位句子写完即停",
+        "next_output": "这一步的成图或文字结论",
+        "note": ""
+      }
+    ]
+  },
+  "plan_canonical": {
+    "mode": "skill",
+    "would_execute": true,
+    "execute": false,
+    "reason": "lens",
+    "announce": "按 镜头包 走了",
+    "serial": false,
+    "parallel": false,
+    "route_ids": [
+      "draw.lens"
+    ],
+    "steps": [
+      {
+        "skill": "pmem-draw",
+        "section": "镜头包",
+        "heading": "## 合同 · 镜头包",
+        "file": ".cursor/skills/pmem-draw/SKILL.md",
+        "deliverable": "要几套机位给玩家挑；先不出成图；走镜头包",
+        "pad": [
+          "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_character_fairy.png"
+        ],
+        "skip_pad": [],
+        "locks": "身份、画风和机位按这一节；普通图锁机位",
+        "done": "点选前不生图，机位句子写完即停",
+        "next_output": "这一步的成图或文字结论",
+        "note": ""
+      }
+    ]
+  },
+  "canonical": "要几套机位给玩家挑；先不出成图；走镜头包",
+  "canonical_source": "agent",
+  "local_canonical": {
+    "canonical": "要几套机位或镜头包给玩家挑；先不出成图；走镜头包。原话要点：要几套机位给玩家挑；先不出成图；走镜头包。",
+    "guess_route_id": "draw.lens",
+    "template": "要几套机位或镜头包给玩家挑；先不出成图；走镜头包",
+    "template_key": "draw.lens",
+    "signals": {
+      "has_ref": true,
+      "new_subject": false,
+      "keep_subject": false,
+      "variant": false,
+      "multi": false,
+      "two_state": false,
+      "lens": true,
+      "ui": false,
+      "icon_a": false,
+      "icon_b": false,
+      "icon_c": false,
+      "merge": false,
+      "merge_overview": false,
+      "merge_per_cell": false,
+      "key": false,
+      "style": false,
+      "style_then_verify": false,
+      "critique": false,
+      "atlas": false,
+      "coach": false,
+      "prompt_only": false,
+      "hard": false,
+      "image_count": 1,
+      "roles": []
+    },
+    "source": "local_heuristic"
+  },
+  "plan_conflict": false,
+  "canonical_warnings": [],
+  "neighbor_conflict": false,
+  "multi_branch_ask": false,
+  "neighbors": [
+    {
+      "score": 0.8292,
+      "text": "四套镜头给自己挑，角色是第0个旅人",
+      "mode": "skill",
+      "route_ids": [
+        "draw.lens"
+      ],
+      "bucket": "lens",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 0.8292,
+      "text": "四套镜头给自己挑，角色是第3个旅人",
+      "mode": "skill",
+      "route_ids": [
+        "draw.lens"
+      ],
+      "bucket": "lens",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 0.8292,
+      "text": "四套镜头给自己挑，角色是第6个旅人",
+      "mode": "skill",
+      "route_ids": [
+        "draw.lens"
+      ],
+      "bucket": "lens",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 0.8292,
+      "text": "四套镜头给自己挑，角色是第9个旅人",
+      "mode": "skill",
+      "route_ids": [
+        "draw.lens"
+      ],
+      "bucket": "lens",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 0.7953,
+      "text": "给我三套机位我自己挑，角色是第0个旅人",
+      "mode": "skill",
+      "route_ids": [
+        "draw.lens"
+      ],
+      "bucket": "lens",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 0.7953,
+      "text": "给我三套机位我自己挑，角色是第12个旅人",
+      "mode": "skill",
+      "route_ids": [
+        "draw.lens"
+      ],
+      "bucket": "lens",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 0.7953,
+      "text": "给我三套机位我自己挑，角色是第15个旅人",
+      "mode": "skill",
+      "route_ids": [
+        "draw.lens"
+      ],
+      "bucket": "lens",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 0.7953,
+      "text": "给我三套机位我自己挑，角色是第18个旅人",
+      "mode": "skill",
+      "route_ids": [
+        "draw.lens"
+      ],
+      "bucket": "lens",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    }
+  ],
+  "confusion": [],
+  "announce": "按 镜头包 走了",
+  "would_execute": true,
+  "execute_ok": true,
+  "mode": "skill",
+  "route_ids": [
+    "draw.lens"
+  ],
+  "top_k": 8,
+  "bank_source": "advise",
+  "match_kind": "lexical_ngram+colloquial_expand+canonical",
+  "artist_ask": "",
+  "artist_detail": "按镜头包：先出几套机位给你挑，点选前不生图。",
+  "vague_reason": "",
+  "artist_say": "【按 镜头包 走了】\n按镜头包：先出几套机位给你挑，点选前不生图。",
+  "llm_hints": {
+    "neighbors": [
+      {
+        "text": "四套镜头给自己挑，角色是第0个旅人",
+        "mode": "skill",
+        "route_ids": [
+          "draw.lens"
+        ],
+        "score": 0.8292
+      },
+      {
+        "text": "四套镜头给自己挑，角色是第3个旅人",
+        "mode": "skill",
+        "route_ids": [
+          "draw.lens"
+        ],
+        "score": 0.8292
+      },
+      {
+        "text": "四套镜头给自己挑，角色是第6个旅人",
+        "mode": "skill",
+        "route_ids": [
+          "draw.lens"
+        ],
+        "score": 0.8292
+      },
+      {
+        "text": "四套镜头给自己挑，角色是第9个旅人",
+        "mode": "skill",
+        "route_ids": [
+          "draw.lens"
+        ],
+        "score": 0.8292
+      },
+      {
+        "text": "给我三套机位我自己挑，角色是第0个旅人",
+        "mode": "skill",
+        "route_ids": [
+          "draw.lens"
+        ],
+        "score": 0.7953
+      }
+    ],
+    "confusion": [],
+    "canonical": "要几套机位给玩家挑；先不出成图；走镜头包",
+    "canonical_source": "agent",
+    "plan_conflict": false,
+    "artist_say": "【按 镜头包 走了】\n按镜头包：先出几套机位给你挑，点选前不生图。",
+    "rule": "对美术只贴 artist_say（标签+一句人话），禁止刷 confidence/json。先写标准路由句再 route --canonical；execute_ok 才开画；plan_conflict / confidence=ask|low / vague 先问人。"
+  }
+}

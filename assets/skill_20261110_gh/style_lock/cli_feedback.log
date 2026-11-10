@@ -1,0 +1,9 @@
+﻿---- EXIT art_decision  ----
+---- EXIT recipe  ----
+---- EXIT recipe  ----
+---- EXIT style_redline  ----
+
+art_decision exit=0
+recipe exit=0
+recipe exit=0
+style_redline exit=0

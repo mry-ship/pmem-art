@@ -1,0 +1,25 @@
+# 庭院浇水八档 · 对标 MM Watering 真链压缩（禁书包）· 渲染钉 Gossip Harbor
+# 关系定稿见 relation.md。垫图只锁版式+GH光泽。竖屏 4×2。
+version: garden-water-gh-portrait-v2-r7-20261110
+pipeline: art-merge-two-phase
+delivery: overview_sheet
+
+tracks:
+  garden_water:
+    module: merge.GardenWater
+    chain_mode: shop_ladder
+    levels: 8
+    grid_rows: 4
+    grid_cols: 2
+    surface: "Gossip Harbor 货柜——光泽卡通3D、圆润厚实、无硬描边、暖饱和、柔光渐变、釉面发亮；青瓷青绿暖饱和；竖屏4×2白圆角卡纯黑隔离底；每格一件居中无等级字；道具无脸；禁止哑光塑料、禁止旧Merge Mansion软塑胶脸、禁止书包背带、禁止背负喷雾罐、禁止泵农药瓶、禁止壶焊轮架"
+    commercial_ref: "对标 Merge Mansion Watering 真链压缩：水滴/杯→小壶→中壶→大莲蓬壶→更大莲蓬壶→水管卷→摆动喷头→旋转喷灌。渲染只钉 Gossip Harbor 货柜气质，不跟 MM 旧软塑胶脸。"
+    process_type: shop_ladder_form_change
+    rows:
+      - { level: 1, name: 开口水杯, silhouette: 矮开口水杯盛水无嘴无莲蓬, scale_delta: 基档, scale_pct: 0.55, evolve_to: 开口水杯, merge_why: "—" }
+      - { level: 2, name: 尖嘴浇水壶, silhouette: 矮壶加短尖嘴无莲蓬, scale_delta: "+小", scale_pct: 0.58, evolve_to: 短尖嘴浇水壶, merge_why: 两杯水换成尖嘴壶嘴短无莲蓬 }
+      - { level: 3, name: 长嘴浇水壶, silhouette: 长嘴浇水壶开口长管仍无莲蓬, scale_delta: "+小", scale_pct: 0.62, evolve_to: 长嘴浇水壶, merge_why: 两只尖嘴壶合成更长开口嘴仍无莲蓬 }
+      - { level: 4, name: 莲蓬头浇水壶, silhouette: 壶加圆多孔莲蓬头首次出现, scale_delta: "+中", scale_pct: 0.66, evolve_to: 莲蓬头浇水壶, merge_why: 两只长嘴壶首次换成壶嘴莲蓬 }
+      - { level: 5, name: 更大莲蓬浇水壶, silhouette: 明显更大的壶加莲蓬仍是壶不是泵瓶不是书包, scale_delta: "+中", scale_pct: 0.70, evolve_to: 更大莲蓬浇水壶, merge_why: 两只莲蓬壶合成明显更大的一只仍是壶 }
+      - { level: 6, name: 水管卷盘, silhouette: 一整卷水管圆盘剪影无喷头无背带, scale_delta: "+中", scale_pct: 0.74, evolve_to: 水管卷盘, merge_why: 两只大壶换成一整卷水管圆盘禁止喷头禁止背带 }
+      - { level: 7, name: 摆动喷头水管, silhouette: 软管加摆动喷头一件货, scale_delta: "+大", scale_pct: 0.78, evolve_to: 摆动喷头水管, merge_why: 两卷水管合成软管加摆动喷头是一件货 }
+      - { level: 8, name: 旋转喷灌一体, silhouette: 更大旋转喷灌一体货可带底座全图最高最宽不是壶焊轮, scale_delta: "+大", scale_pct: 0.82, evolve_to: 旋转喷灌一体, merge_why: 两件摆动喷头合成更大旋转喷灌一体货不是壶焊轮架 }

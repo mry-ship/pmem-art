@@ -1,0 +1,40 @@
+# 妖精花园甜品店「露莓果酱」合成梯 · shop_ladder L1–L8（overview_sheet 2×4）
+# 第 1 稿。不写 base_body。
+# 过程类型：A 同族形变货柜（同店完整 SKU 换代）。不是原料车间，也不是同底座堆料。
+# 商业对标真链（摘录，可压缩；不把冰淇淋物件画进来）：
+#   Travel Town Ice Cream = Vanilla→Watermelon→Kiwi→RainbowPop→Cone→StrawberryCone→BigCone→Luxury→SimpleSundae→DeluxeSundae
+# 抽链型=同店形变换代；抽曲线=朴素完整小件→条形换代→盛器→包装→礼赠器皿→带用具的高级件→成套盘→顶档盛宴。
+# 本链 8 档压缩对应：单果→木签串→叶盏→小口瓶→宽肩礼瓶→木匙罐→双罐盘→叶缘盛宴。
+# 版式参考 ref_merge_birds_sheet.png：2 行 4 列白圆角卡、深灰底。垫图只锁版式。禁止抄鸟、蛋、羽毛。
+# 文字风格优先：软塑胶厚实圆润，棚柔光，短接触影，饱和但不油亮。
+# 五问：
+# 1 同店=妖精花园甜品店；家族=露莓洋红+叶绿+奶油酱色相，不是纹样盖章。对标是冰淇淋真档序，不是自拟果酱假名。
+# 2 无回退：球→横串→叶舟→细高瓶→宽肩礼瓶→敞口罐+横匙→椭圆盘→最宽盛宴。L8 仍是果酱盛宴，不是退回 L3 小叶盏。
+# 3 无跨店硬跳、无城堡。L3→L4 是两盏鲜莓熬成一瓶果酱，叶舟换成竖直瓶，64px 可分。
+# 4 L1 只是一颗完整小果，玻璃/丝带/木匙/礼盘/盛宴都晚出现。邻档剪影类不同。
+# 5 每档 merge_why 写两件同级合成后为何变成下一件，可倒推。L4→L5 是换瓶型（细颈消失、大结改外轮廓），不是同一瓶子贴一条细带。
+# 6 每档一件可单独上架的货。L2 是木签串不是两颗散果；L7 是一只礼盘不是两个 L6 贴在一起。
+# 7 合两下能倒推。末档是同店盛宴盘，对标冰淇淋链确有 Deluxe 盛宴段，不是另链地标。
+version: fairy-garden-dewberry-jam-20261110-v1
+pipeline: art-merge-two-phase
+delivery: overview_sheet
+
+tracks:
+  fairy_berry:
+    module: merge.FairyBerry
+    chain_mode: shop_ladder
+    levels: 8
+    grid_rows: 2
+    grid_cols: 4
+    surface: "软塑胶厚实圆润，棚柔光，短接触影，饱和但不油亮；瓶罐是厚实玩具感透明器皿，不是食物摄影、不是油亮折射。2×4白圆角卡深灰底，垫鸟表只锁版式。每格一件居中，无等级字，道具无脸。家族是妖精花园甜品店的露莓洋红、叶绿与奶油酱色相，不是八档贴同一纹样。不要鸟，不要羽毛，不要蛋，不要蛋糕，不要马卡龙，不要纸杯蛋糕。"
+    commercial_ref: "Travel Town Ice Cream (real): Vanilla→Watermelon→Kiwi→RainbowPop→Cone→StrawberryCone→BigCone→Luxury→SimpleSundae→DeluxeSundae; compress8=single SKU→stick form→served vessel→packaged jar→gift vessel→utensil crock→paired tray→deluxe feast"
+    process_type: "shop_ladder_same_shop_dessert_form_evolution"
+    rows:
+      - { level: 1, name: 单颗露莓, silhouette: "单颗圆润露莓，洋红果身一点叶蒂，完整小货，无签无瓶", scale_delta: 基档, scale_pct: 0.58, evolve_to: SingleDewberry, merge_why: "—", parts_add: "—" }
+      - { level: 2, name: 双莓串, silhouette: "短木签横穿两颗露莓，横向条形剪影，不再是单颗圆果", scale_delta: "+小", scale_pct: 0.61, evolve_to: TwinBerrySkewer, merge_why: "两颗单颗露莓穿上同一短木签，圆果变成横向双莓串", parts_add: "—" }
+      - { level: 3, name: 莓叶盏, silhouette: "绿叶舟托一盏露莓，叶缘是主轮廓，木签消失", scale_delta: "+小", scale_pct: 0.64, evolve_to: BerryLeafCup, merge_why: "两串双莓串合成托进一只绿叶舟的莓叶盏，木签不再出现", parts_add: "—" }
+      - { level: 4, name: 小口玻璃果酱瓶, silhouette: "细颈小口高瓶灌满奶油色果酱，瓶身竖直，无丝带无叶舟", scale_delta: "+中", scale_pct: 0.67, evolve_to: NarrowJamBottle, merge_why: "两盏莓叶盏熬成一只细颈小口玻璃果酱瓶，叶舟消失只剩竖直瓶", parts_add: "—" }
+      - { level: 5, name: 丝带果酱瓶, silhouette: "肩更宽的矮礼瓶，大蝴蝶结左右伸出改掉外轮廓，细颈小口瓶消失", scale_delta: "+中", scale_pct: 0.70, evolve_to: RibbonGiftJar, merge_why: "两只小口玻璃果酱瓶合成肩更宽的丝带果酱瓶，大蝴蝶结改掉细颈轮廓", parts_add: "—" }
+      - { level: 6, name: 木匙酱罐, silhouette: "敞口陶酱罐加一支横出木匙，罐口敞开，蝴蝶结不再是轮廓", scale_delta: "+中", scale_pct: 0.73, evolve_to: SpoonJamCrock, merge_why: "两只丝带果酱瓶合成敞口木匙酱罐，丝带消失改由横出木匙认档", parts_add: "—" }
+      - { level: 7, name: 双罐礼盘, silhouette: "椭圆浅礼盘托两只小酱罐，盘沿是主轮廓，木匙不再横出", scale_delta: "+大", scale_pct: 0.76, evolve_to: TwinJarGiftTray, merge_why: "两只木匙酱罐放上同一椭圆礼盘成为一件双罐礼盘，木匙收起，盘沿变成主轮廓", parts_add: "—" }
+      - { level: 8, name: 莓叶盛宴盘, silhouette: "最宽叶缘盛宴盘，中央果酱池加露莓铺满，仍是一件货并留卡边", scale_delta: "+大", scale_pct: 0.80, evolve_to: BerryLeafFeast, merge_why: "两件双罐礼盘合成最宽的莓叶盛宴盘，果酱池与露莓铺满叶缘，比礼盘更宽仍留边", parts_add: "—" }

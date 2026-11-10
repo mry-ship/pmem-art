@@ -1,0 +1,981 @@
+{
+  "session_id": "skill1110-variant",
+  "started_at": "2026-11-10 14:39:46 UTC+8",
+  "goal": "同一身份；换表情；机位已在图上；走变体。这个妖精换成惊讶睁大眼。",
+  "module": "character.Fairy",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "medium",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "medium",
+    "label": "中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.5)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 1,
+    "target_score_threshold": 9.5,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.1875,
+      "perspective_anatomy": 0.1125,
+      "texture_detail": 0.1875,
+      "spec_style": 0.1125,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "viewpoint_frame",
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图，只在提示词上补还没过的那一处（提示词改动仍 ≤40%）",
+    "max_prompt_delta_ratio": 0.4,
+    "allow_recompose": false,
+    "allow_viewpoint_change": false,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "viewpoint_angle (不改机位与镜头视角)",
+      "element_count (不增删主体元素清单)",
+      "no_full_recompose (不做整体 recompose / 换景别故事)",
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)"
+    ],
+    "min_round_leap": 0.15,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光",
+    "medium_family": "volume",
+    "best_direction_hint": "最优方向：光影·空气·介质；可小幅姿态/局部布局",
+    "goal": "同一身份；换表情；机位已在图上；走变体。这个妖精换成惊讶睁大眼。",
+    "module": "character.Fairy",
+    "ref_image": "assets/skill_20261109/_refs/ref_character_fairy.png",
+    "ref_analysis": "正方形半身，3/4朝向镜头，腰以上。观众左侧手握藤编果篮提梁，观众右侧手臂侧前伸呈松拳。金发双辫配粉红发结，绿眼带高光，尖耳，淡蓝半透明翅膀，粉裙，珍珠项链配一颗青绿圆坠。浅色无场景底。画风是圆润3D渲染软塑胶童话角色，棚拍柔光，奶油高光。原表情是张嘴露齿笑，上眼睑压着虹膜上缘。本次只把表情改成惊讶：上眼睑抬到虹膜上缘以上露出巩膜，眉毛上抬，嘴巴收成小圆。锁姿势、服装、配饰、机位和画风。不要继承露齿笑。"
+  },
+  "medium_family": "volume",
+  "contract": "",
+  "target_score_threshold": 9.5,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "assets/skill_20261109/_refs/ref_character_fairy.png",
+  "ref_analysis": "正方形半身，3/4朝向镜头，腰以上。观众左侧手握藤编果篮提梁，观众右侧手臂侧前伸呈松拳。金发双辫配粉红发结，绿眼带高光，尖耳，淡蓝半透明翅膀，粉裙，珍珠项链配一颗青绿圆坠。浅色无场景底。画风是圆润3D渲染软塑胶童话角色，棚拍柔光，奶油高光。原表情是张嘴露齿笑，上眼睑压着虹膜上缘。本次只把表情改成惊讶：上眼睑抬到虹膜上缘以上露出巩膜，眉毛上抬，嘴巴收成小圆。锁姿势、服装、配饰、机位和画风。不要继承露齿笑。",
+  "default_aspect_ratio": "1:1",
+  "default_reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_character_fairy.png"
+  ],
+  "aspect_ratio": "1:1",
+  "reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_character_fairy.png"
+  ],
+  "ref_physical_traits": {
+    "exists": true,
+    "size_bytes": 253167,
+    "size_kb": 247.2,
+    "width": 460,
+    "height": 460,
+    "aspect_ratio": "1:1",
+    "canonical_aspect_ratio": "1:1",
+    "color_entropy": 7.99
+  },
+  "param_validation": {
+    "valid": true,
+    "validation_passed": true,
+    "case_id": "skill1110-variant",
+    "scale": "medium",
+    "aspect_ratio": "1:1",
+    "ref_aspect_ratio": "1:1",
+    "ref_dimensions": "460x460",
+    "output_aspect_ratio": "",
+    "output_dimensions": "",
+    "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_character_fairy.png",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_character_fairy.png"
+    ],
+    "inherited_default_aspect_ratio": false,
+    "inherited_default_pad_image": true,
+    "matched_ref_aspect_ratio": true,
+    "matched_ref_pad_image": true,
+    "matched_output_aspect_ratio": true,
+    "three_step_stage": "step1_start",
+    "three_step_verified": false,
+    "warnings": []
+  },
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.5,
+  "accept_threshold": 9.5,
+  "max_rounds": 4,
+  "ready_to_finish": true,
+  "status": "finished",
+  "owner_conversation_id": "skill1110-variant",
+  "route_ids": [
+    "draw.variant"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "1:1",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_character_fairy.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "skill1110-variant",
+        "scale": "medium",
+        "aspect_ratio": "1:1",
+        "ref_aspect_ratio": "1:1",
+        "ref_dimensions": "460x460",
+        "output_aspect_ratio": "1:1",
+        "output_dimensions": "1024x1024",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_character_fairy.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_character_fairy.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "14:42:56",
+      "image": "assets/skill_20261110/draw_variant/r1.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 925103,
+        "size_kb": 903.4,
+        "width": 1024,
+        "height": 1024,
+        "aspect_ratio": "1:1",
+        "canonical_aspect_ratio": "1:1",
+        "color_entropy": 7.99
+      },
+      "raw_score": 8.05,
+      "score": 8.05,
+      "target_score_threshold": 9.5,
+      "dims": "构图7.6/光影8.7/透视8.3/质感8.2/风格7.4/无瑕疵8.0",
+      "dims_parsed": {
+        "composition": 7.6,
+        "lighting_color": 8.7,
+        "perspective_anatomy": 8.3,
+        "texture_detail": 8.2,
+        "spec_style": 7.4,
+        "flawlessness": 8.0
+      },
+      "weighted_score": 8.05,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）"
+      ],
+      "stagnated": false,
+      "strengths": "两侧上眼睑已经抬到绿虹膜上缘以上，虹膜上方能看见一圈白巩膜，眉毛也上抬；浅奶油底上没有花园景物。",
+      "defects": "脸和双肩几乎正对镜头，果篮从参考的左下挪到身前正中，双辫从胸前下垂变成向两侧横伸。持篮手腕多出一圈紫色腕带，裙身中线多了一排白边珍珠扣。嘴是偏高的深色竖椭圆，高度接近鼻底到下巴的一半，不是小圆。",
+      "next_fix": "轮廓回到参考：半身3/4、双辫垂在胸前、果篮留在画面左下、持篮腕不戴腕带、裙面不加中线扣排。嘴收成不超过鼻宽的小圆，两侧上眼睑仍停在虹膜上缘之上并露出巩膜。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.Fairy\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 必须避开红线:\n  · [CHAT20261109233156381REDLINE] [收敛踩坑红线] 同一身份金发粉裙小精灵持果篮；换表情为开心大笑+挥手；机位锁：避免「持篮手的握持结构略僵，篮把与拳头接触处缺少更明确的压握关系；皮肤、裙料和翅膀的表面处理偏同」\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [style-chibi] Q版头身: 2~3 头身，五官放大但识别锚点保留。\n  · [tech-watercolor] 水彩渲染: 边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。\n原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光 | Same identity and locked three-quarter waist-up camera as the reference fairy. Square 1:1 opaque image on a plain pale cream background, no garden and no scenery. Rendering stays the reference 3D soft-plastic storybook volume: round forms, soft studio light, cream highlights, clean edges. KEEP golden blonde twin braids with pink ties, green irises with catchlights, pointed ears, pale blue translucent wings, pink dress, pearl necklace with one turquoise pendant, and the woven fruit basket. The viewer-left hand keeps gripping the basket handle. The viewer-right arm stays extended in a loose fist. Same head tilt and shoulder line. ONLY the expression changes to surprise: both upper eyelids lift above the top edge of each green iris, so a clear band of white sclera shows above both irises and both eyes read wide open; both eyebrows are raised; the mouth is a small round O with no teeth and no smile. Hands keep a readable grip and five-digit structure. A soft contact shadow sits under the basket and along the dress. Element budget is one fairy plus the basket only. | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.3,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "narrative_camera",
+          "lesson": "本轮短板偏「narrative_camera」：脸和双肩几乎正对镜头，果篮从参考的左下挪到身前正中，双辫从胸前下垂变成向两侧横伸。持篮手腕多出一圈紫色腕带，裙身中线多了一排白边珍珠扣。嘴是偏高的深色竖椭圆，高",
+          "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+          "from_score": "8.05"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：两侧上眼睑已经抬到绿虹膜上缘以上，虹膜上方能看见一圈白巩膜，眉毛也上抬；浅奶油底上没有花园景物。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.05"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "14:44:03"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "1:1",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_character_fairy.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "skill1110-variant",
+        "scale": "medium",
+        "aspect_ratio": "1:1",
+        "ref_aspect_ratio": "1:1",
+        "ref_dimensions": "460x460",
+        "output_aspect_ratio": "1:1",
+        "output_dimensions": "1024x1024",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_character_fairy.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_character_fairy.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "14:47:12",
+      "image": "assets/skill_20261110/draw_variant/r2.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 1068531,
+        "size_kb": 1043.5,
+        "width": 1024,
+        "height": 1024,
+        "aspect_ratio": "1:1",
+        "canonical_aspect_ratio": "1:1",
+        "color_entropy": 7.99
+      },
+      "raw_score": 8.46,
+      "score": 8.46,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.7/光影8.6/透视8.4/质感8.5/风格8.3/无瑕疵8.3",
+      "dims_parsed": {
+        "composition": 8.7,
+        "lighting_color": 8.6,
+        "perspective_anatomy": 8.4,
+        "texture_detail": 8.5,
+        "spec_style": 8.3,
+        "flawlessness": 8.3
+      },
+      "weighted_score": 8.46,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "prompt 改动 48% 超过档位上限 40%"
+      ],
+      "stagnated": false,
+      "strengths": "双辫已经垂在胸前，粉结还在，果篮回到画面左下，持篮腕没有紫腕带；两侧虹膜上方仍有白巩膜，眉毛上抬。",
+      "defects": "嘴洞是竖向小椭圆，上唇中段收尖，宽度超过鼻翼，没有收成正圆。领口是一条加宽的白心形边，比参考粉裙的浅圆领更白。持篮手四指并成一条光滑弧，拇指和食指之间几乎没有分缝。；prompt 改动 48% 超过档位上限 40%",
+      "next_fix": "嘴收成正圆：唇缘宽度不超过鼻翼，高度与宽度相同。领口回到参考的浅粉圆领，持篮手补出拇指与食指的分缝；两侧上眼睑仍停在虹膜上缘之上。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.Fairy\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 必须避开红线:\n  · [CHAT20261109233156381REDLINE] [收敛踩坑红线] 同一身份金发粉裙小精灵持果篮；换表情为开心大笑+挥手；机位锁：避免「持篮手的握持结构略僵，篮把与拳头接触处缺少更明确的压握关系；皮肤、裙料和翅膀的表面处理偏同」\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [style-chibi] Q版头身: 2~3 头身，五官放大但识别锚点保留。\n  · [tech-watercolor] 水彩渲染: 边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。\n原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光 | Edit only the face of the attached reference fairy. Copy the reference body, costume, hair, wings, basket placement, and three-quarter waist-up camera exactly. Square 1:1 opaque image, plain pale cream background, no garden and no scenery. Rendering stays the reference 3D soft-plastic storybook volume with soft studio light and cream highlights. Golden twin braids hang down in front of the chest with pink ties, not sticking out sideways. Pointed ears, green irises, pale blue translucent wings, simple pink dress with no vertical pearl-button row and no wristband. Pearl necklace with one turquoise pendant. The viewer-left hand grips the basket handle at the lower left of the frame. The viewer-right arm extends sideways in a loose fist. Surprise expression only: both upper eyelids sit above the top edge of each green iris with a clear band of white sclera, both eyebrows raised, and the mouth is a small circle no wider than the nose, with no teeth and no smile. One fairy and one basket only. | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props | 轮廓回到参考：半身3/4、双辫垂在胸前、果篮留在画面左下、持篮腕不戴腕带、裙面不加中线扣排。嘴收成不超过鼻宽的小圆，两侧上眼睑仍停在虹膜上缘之上并露出巩膜。 | MUST_FIX (≤2): 轮廓回到参考：半身3/4、双辫垂在胸前、果篮留在画面左下、持篮腕不戴腕带、裙面不加中线扣排；嘴收成不超过鼻宽的小圆，两侧上眼睑仍停在虹膜上缘之上并露出巩膜",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.4,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：嘴洞是竖向小椭圆，上唇中段收尖，宽度超过鼻翼，没有收成正圆。领口是一条加宽的白心形边，比参考粉裙的浅圆领更白。持篮手四指并成一条光滑弧，拇指和食指之间几乎没有分",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.46"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：双辫已经垂在胸前，粉结还在，果篮回到画面左下，持篮腕没有紫腕带；两侧虹膜上方仍有白巩膜，眉毛上抬。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.46"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "14:47:49"
+    },
+    {
+      "round": 3,
+      "round_label": "第 3 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "1:1",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_character_fairy.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "skill1110-variant",
+        "scale": "medium",
+        "aspect_ratio": "1:1",
+        "ref_aspect_ratio": "1:1",
+        "ref_dimensions": "460x460",
+        "output_aspect_ratio": "1:1",
+        "output_dimensions": "1024x1024",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_character_fairy.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_character_fairy.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "14:50:29",
+      "image": "assets/skill_20261110/draw_variant/r3.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 1041434,
+        "size_kb": 1017.0,
+        "width": 1024,
+        "height": 1024,
+        "aspect_ratio": "1:1",
+        "canonical_aspect_ratio": "1:1",
+        "color_entropy": 7.99
+      },
+      "raw_score": 8.52,
+      "score": 8.52,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.8/光影8.7/透视8.5/质感8.6/风格8.5/无瑕疵8.2",
+      "dims_parsed": {
+        "composition": 8.8,
+        "lighting_color": 8.7,
+        "perspective_anatomy": 8.5,
+        "texture_detail": 8.6,
+        "spec_style": 8.5,
+        "flawlessness": 8.2
+      },
+      "weighted_score": 8.52,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.06 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "Agent Absolute-5D 已采纳（门槛 9.5）"
+      ],
+      "stagnated": true,
+      "strengths": "领口已回到浅粉圆领，白心形宽边不见了；双辫垂在胸前，果篮在左下。两侧上眼睑停在绿虹膜上缘之上，虹膜上方有白巩膜。",
+      "defects": "嘴洞仍是上宽下收的竖椭圆，高度大于宽度，上唇中点下压成尖角，没有收成与鼻翼同宽的正圆。画面右侧前伸的拳头里，食指和中指贴在一起，指节只有一条浅沟。",
+      "next_fix": "只把嘴洞收成正圆，高度等于宽度且都不超过鼻翼宽度，上唇不要下压成尖角。前伸拳的食指和中指分开一条缝。两侧上眼睑保持在虹膜上缘之上。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.Fairy\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 必须避开红线:\n  · [CHAT20261109233156381REDLINE] [收敛踩坑红线] 同一身份金发粉裙小精灵持果篮；换表情为开心大笑+挥手；机位锁：避免「持篮手的握持结构略僵，篮把与拳头接触处缺少更明确的压握关系；皮肤、裙料和翅膀的表面处理偏同」\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [style-chibi] Q版头身: 2~3 头身，五官放大但识别锚点保留。\n  · [tech-watercolor] 水彩渲染: 边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。\n原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光 | Edit only the face of the attached reference fairy. Copy the reference body, costume, hair, wings, basket placement, and three-quarter waist-up camera exactly. Square 1:1 opaque image, plain pale cream background, no garden and no scenery. Rendering stays the reference 3D soft-plastic storybook volume with soft studio light and cream highlights. Golden twin braids hang down in front of the chest with pink ties, not sticking out sideways. Pointed ears, green irises, pale blue translucent wings, simple pink dress with no vertical pearl-button row and no wristband. Pearl necklace with one turquoise pendant. The viewer-left hand grips the basket handle at the lower left of the frame. The viewer-right arm extends sideways in a loose fist. Surprise expression only: both upper eyelids sit above the top edge of each green iris with a clear band of white sclera, both eyebrows raised, and the mouth is a small circle no wider than the nose, with no teeth and no smile. One fairy and one basket only. The lip opening is a true circle: its height equals its width and both stay inside the nose width, not a tall oval. The dress neckline is the reference soft pink round neck with only a thin pale edge, not a wide white heart panel. The basket hand shows a separate thumb and a visible gap before the index finger. | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props | 嘴收成正圆：唇缘宽度不超过鼻翼，高度与宽度相同。领口回到参考的浅粉圆领，持篮手补出拇指与食指的分缝；两侧上眼睑仍停在虹膜上缘之上。 | MUST_FIX (≤2): 嘴收成正圆：唇缘宽度不超过鼻翼，高度与宽度相同；领口回到参考的浅粉圆领，持篮手补出拇指与食指的分缝",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.5,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：嘴洞仍是上宽下收的竖椭圆，高度大于宽度，上唇中点下压成尖角，没有收成与鼻翼同宽的正圆。画面右侧前伸的拳头里，食指和中指贴在一起，指节只有一条浅沟。",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.52"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：领口已回到浅粉圆领，白心形宽边不见了；双辫垂在胸前，果篮在左下。两侧上眼睑停在绿虹膜上缘之上，虹膜上方有白巩膜。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.52"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "14:50:51"
+    },
+    {
+      "round": 4,
+      "round_label": "第 4 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "1:1",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_character_fairy.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "skill1110-variant",
+        "scale": "medium",
+        "aspect_ratio": "1:1",
+        "ref_aspect_ratio": "1:1",
+        "ref_dimensions": "460x460",
+        "output_aspect_ratio": "1:1",
+        "output_dimensions": "1024x1024",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_character_fairy.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_character_fairy.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "14:52:31",
+      "image": "assets/skill_20261110/draw_variant/r4.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 1072554,
+        "size_kb": 1047.4,
+        "width": 1024,
+        "height": 1024,
+        "aspect_ratio": "1:1",
+        "canonical_aspect_ratio": "1:1",
+        "color_entropy": 7.99
+      },
+      "raw_score": 8.36,
+      "score": 8.36,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.7/光影8.6/透视8.4/质感8.5/风格8.6/无瑕疵7.8",
+      "dims_parsed": {
+        "composition": 8.7,
+        "lighting_color": 8.6,
+        "perspective_anatomy": 8.4,
+        "texture_detail": 8.5,
+        "spec_style": 8.6,
+        "flawlessness": 7.8
+      },
+      "weighted_score": 8.36,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +-0.16 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "Agent Absolute-5D 已采纳（门槛 9.5）"
+      ],
+      "stagnated": true,
+      "strengths": "两侧上眼睑仍在绿虹膜上缘之上，能看见白巩膜，眉毛上抬；双辫垂在胸前，浅粉圆领和左下果篮还在。",
+      "defects": "嘴洞上唇高拱，开口高度大约是宽度的一点五倍，并且宽过鼻翼，是竖向大口而不是正圆。前伸拳的食指和中指并成一块光滑拳面，指间没有分开的缝。",
+      "next_fix": "嘴洞收成高度等于宽度、且不超过鼻翼宽度的正圆。前伸拳的食指与中指留出一条缝。两侧上眼睑保持在虹膜上缘之上。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.Fairy\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 必须避开红线:\n  · [CHAT20261109233156381REDLINE] [收敛踩坑红线] 同一身份金发粉裙小精灵持果篮；换表情为开心大笑+挥手；机位锁：避免「持篮手的握持结构略僵，篮把与拳头接触处缺少更明确的压握关系；皮肤、裙料和翅膀的表面处理偏同」\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [style-chibi] Q版头身: 2~3 头身，五官放大但识别锚点保留。\n  · [tech-watercolor] 水彩渲染: 边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。\n原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光 | Edit only the face of the attached reference fairy. Copy the reference body, costume, hair, wings, basket placement, and three-quarter waist-up camera exactly. Square 1:1 opaque image, plain pale cream background, no garden and no scenery. Rendering stays the reference 3D soft-plastic storybook volume with soft studio light and cream highlights. Golden twin braids hang down in front of the chest with pink ties, not sticking out sideways. Pointed ears, green irises, pale blue translucent wings, simple pink dress with no vertical pearl-button row and no wristband. Pearl necklace with one turquoise pendant. The viewer-left hand grips the basket handle at the lower left of the frame. The viewer-right arm extends sideways in a loose fist. Surprise expression only: both upper eyelids sit above the top edge of each green iris with a clear band of white sclera, both eyebrows raised. The open mouth is a perfect circle the same diameter as the turquoise pendant, height equal to width, both edges inside the nose width, upper lip rounded not pointed, no teeth and no smile. The extended fist shows a small gap between the index finger and the middle finger. One fairy and one basket only. The dress neckline is the reference soft pink round neck. | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props | 只把嘴洞收成正圆，高度等于宽度且都不超过鼻翼宽度，上唇不要下压成尖角。前伸拳的食指和中指分开一条缝。两侧上眼睑保持在虹膜上缘之上。 | MUST_FIX (≤2): 只把嘴洞收成正圆，高度等于宽度且都不超过鼻翼宽度，上唇不要下压成尖角；前伸拳的食指和中指分开一条缝",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.4,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_MAX_ROUNDS",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：嘴洞上唇高拱，开口高度大约是宽度的一点五倍，并且宽过鼻翼，是竖向大口而不是正圆。前伸拳的食指和中指并成一块光滑拳面，指间没有分开的缝。",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.36"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：两侧上眼睑仍在绿虹膜上缘之上，能看见白巩膜，眉毛上抬；双辫垂在胸前，浅粉圆领和左下果篮还在。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.36"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "14:53:02"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-11-10 14:02:24 UTC+8"
+    },
+    "module": "character.Fairy",
+    "goal": "同一身份；换表情；机位已在图上；走变体。这个妖精换成惊讶睁大眼。",
+    "confidence": 0.45,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "个人口味/正向保留非空",
+      "注入红线可控（1 条，已按任务主题过滤）",
+      "挂载 2 张项目知识卡 + 0 张全局美术底层基础卡"
+    ],
+    "top_recipes": [],
+    "top_redlines": [
+      {
+        "id": "CHAT20261109233156381REDLINE",
+        "summary": "[收敛踩坑红线] 同一身份金发粉裙小精灵持果篮；换表情为开心大笑+挥手；机位锁：避免「持篮手的握持结构略僵，篮把与拳头接触处缺少更明确的压握关系；皮肤、裙料和翅膀的表面处理偏同」",
+        "module": "character.Fairy"
+      }
+    ],
+    "art_decisions": [],
+    "private_knowledge": [
+      {
+        "id": "style-chibi",
+        "title": "Q版头身",
+        "body": "2~3 头身，五官放大但识别锚点保留。",
+        "layer_scope": "private"
+      },
+      {
+        "id": "tech-watercolor",
+        "title": "水彩渲染",
+        "body": "边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。",
+        "layer_scope": "private"
+      }
+    ],
+    "shared_knowledge": [],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [
+        "冷光源",
+        "暖光",
+        "柔光"
+      ],
+      "preferred_composition": [
+        "半身",
+        "居中/对称构图"
+      ],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [
+        "避免过饱和"
+      ],
+      "banned_habits": [
+        "漏抠/黑底/毛边",
+        "廉价塑料感/油腻高光",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色"
+      ],
+      "keep_phrases": [
+        "确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色"
+      ],
+      "banned_habits_raw_tail": [
+        "禁止偏离样张画风：过度霓虹、脏暗阴影、油腻高光、写实皮肤毛孔、扁平UI描边",
+        "电池审稿：原画竖构图避免贴样张布局；边缘反光勿过曝",
+        "电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感",
+        "黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差",
+        "错误头身比/头过大",
+        "漏抠/黑底/毛边",
+        "廉价塑料感/油腻高光",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色"
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.Fairy\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 必须避开红线:\n  · [CHAT20261109233156381REDLINE] [收敛踩坑红线] 同一身份金发粉裙小精灵持果篮；换表情为开心大笑+挥手；机位锁：避免「持篮手的握持结构略僵，篮把与拳头接触处缺少更明确的压握关系；皮肤、裙料和翅膀的表面处理偏同」\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [style-chibi] Q版头身: 2~3 头身，五官放大但识别锚点保留。\n  · [tech-watercolor] 水彩渲染: 边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。",
+    "built_at": "2026-11-10 14:39:46 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：脸和双肩几乎正对镜头，果篮从参考的左下挪到身前正中，双辫从胸前下垂变成向两侧横伸。持篮手腕多出一圈紫色腕带，裙身中线多了一排白边珍珠扣。嘴是偏高的深色竖椭圆，高",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "8.05"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：两侧上眼睑已经抬到绿虹膜上缘以上，虹膜上方能看见一圈白巩膜，眉毛也上抬；浅奶油底上没有花园景物。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.05"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：嘴洞是竖向小椭圆，上唇中段收尖，宽度超过鼻翼，没有收成正圆。领口是一条加宽的白心形边，比参考粉裙的浅圆领更白。持篮手四指并成一条光滑弧，拇指和食指之间几乎没有分",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.46"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：双辫已经垂在胸前，粉结还在，果篮回到画面左下，持篮腕没有紫腕带；两侧虹膜上方仍有白巩膜，眉毛上抬。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.46"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：嘴洞仍是上宽下收的竖椭圆，高度大于宽度，上唇中点下压成尖角，没有收成与鼻翼同宽的正圆。画面右侧前伸的拳头里，食指和中指贴在一起，指节只有一条浅沟。",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.52"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：领口已回到浅粉圆领，白心形宽边不见了；双辫垂在胸前，果篮在左下。两侧上眼睑停在绿虹膜上缘之上，虹膜上方有白巩膜。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.52"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：嘴洞上唇高拱，开口高度大约是宽度的一点五倍，并且宽过鼻翼，是竖向大口而不是正圆。前伸拳的食指和中指并成一块光滑拳面，指间没有分开的缝。",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.36"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：两侧上眼睑仍在绿虹膜上缘之上，能看见白巩膜，眉毛上抬；双辫垂在胸前，浅粉圆领和左下果篮还在。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.36"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 2,
+  "regression_drop": 0.15,
+  "safe_early_stop": true,
+  "understanding_contract": {
+    "version": 1,
+    "raw_utterance": "同一身份；换表情；机位已在图上；走变体。这个妖精换成惊讶睁大眼。",
+    "l0": {
+      "route_ids": [
+        "draw.variant"
+      ],
+      "banner": "【按 变体 走了】",
+      "delivery": "draw.variant"
+    },
+    "l1": {
+      "locks": [
+        "金色双辫",
+        "粉红发结",
+        "绿眼",
+        "尖耳",
+        "淡蓝翅膀",
+        "粉裙",
+        "珍珠项链",
+        "果篮",
+        "半身3/4机位",
+        "持篮与前伸松拳的姿势",
+        "参考图的3D软塑胶画风"
+      ],
+      "unlocks": [
+        "表情：惊讶，双眼上眼睑抬高露出虹膜上缘巩膜，眉毛抬高，嘴巴小圆"
+      ],
+      "defaults_shown": [
+        "默认：单张惊讶表情差分",
+        "画幅1:1",
+        "不透明浅色纯底",
+        "不另加场景",
+        "每轮只垫最初角色原图",
+        "六维调和平均到9.5即停，最多4轮"
+      ],
+      "commercial_vibe": "跟参考表面：童话后院圆润3D软塑胶，棚拍柔光，奶油高光；垫图锁身份、机位和画风，只改表情"
+    },
+    "l2": {
+      "open": true,
+      "surface_fix": "轮廓回到参考的半身3/4、胸前垂辫、左下果篮、无腕带、裙面无中线扣；嘴收成不超过鼻宽的小圆，上眼睑仍停在虹膜上缘之上",
+      "last_feedback": "",
+      "feedback_layer": ""
+    },
+    "notes": ""
+  },
+  "reasonableness_history": [
+    {
+      "reviewed_at": 1794292837.1488206,
+      "passed": true,
+      "skill": "variant",
+      "issues": []
+    }
+  ],
+  "reasonableness": {
+    "passed": true,
+    "skill": "variant",
+    "draft_prompt": "Same pink-dress fairy holding a fruit basket, change the face to surprised, pale background.",
+    "revised_prompt": "Same identity and locked three-quarter waist-up camera as the reference fairy. Square 1:1 opaque image on a plain pale cream background, no garden and no scenery. Rendering stays the reference 3D soft-plastic storybook volume: round forms, soft studio light, cream highlights, clean edges. KEEP golden blonde twin braids with pink ties, green irises with catchlights, pointed ears, pale blue translucent wings, pink dress, pearl necklace with one turquoise pendant, and the woven fruit basket. The viewer-left hand keeps gripping the basket handle. The viewer-right arm stays extended in a loose fist. Same head tilt and shoulder line. ONLY the expression changes to surprise: both upper eyelids lift above the top edge of each green iris, so a clear band of white sclera shows above both irises and both eyes read wide open; both eyebrows are raised; the mouth is a small round O with no teeth and no smile. Hands keep a readable grip and five-digit structure. A soft contact shadow sits under the basket and along the dress. Element budget is one fairy plus the basket only.",
+    "checklist": {
+      "subject_action": {
+        "status": "ok",
+        "note": ""
+      },
+      "contact_scale": {
+        "status": "ok",
+        "note": ""
+      },
+      "element_budget": {
+        "status": "ok",
+        "note": ""
+      },
+      "hard_locks": {
+        "status": "ok",
+        "note": ""
+      },
+      "fail_at_glance": {
+        "status": "ok",
+        "note": ""
+      },
+      "only_named_delta": {
+        "status": "ok",
+        "note": ""
+      }
+    },
+    "issues": [],
+    "notes": "单张表情差分。一眼失败：任一侧上眼睑仍盖住虹膜上缘，或嘴巴仍是露齿笑。",
+    "reviewed_at": 1794292837.1488206,
+    "reviewed_at_iso": "2026-11-10 14:40:37",
+    "force_pass": false,
+    "skill_raw": "variant"
+  },
+  "discussions": [
+    {
+      "round": 0,
+      "kind": "reasonableness",
+      "prompt": "Same identity and locked three-quarter waist-up camera as the reference fairy. Square 1:1 opaque image on a plain pale cream background, no garden and no scenery. Rendering stays the reference 3D soft-plastic storybook volume: round forms, soft studio light, cream highlights, clean edges. KEEP golden blonde twin braids with pink ties, green irises with catchlights, pointed ears, pale blue translucent wings, pink dress, pearl necklace with one turquoise pendant, and the woven fruit basket. The viewer-left hand keeps gripping the basket handle. The viewer-right arm stays extended in a loose fist. Same head tilt and shoulder line. ONLY the expression changes to surprise: both upper eyelids lift above the top edge of each green iris, so a clear band of white sclera shows above both irises and both eyes read wide open; both eyebrows are raised; the mouth is a small round O with no teeth and no smile. Hands keep a readable grip and five-digit structure. A soft contact shadow sits under the basket and along the dress. Element budget is one fairy plus the basket only.",
+      "strengths": "合理性闸已过：subject_action=ok；contact_scale=ok；element_budget=ok；hard_locks=ok；fail_at_glance=ok；only_named_delta=ok",
+      "defects": "",
+      "next_fix": "首轮 generate 使用本修订提示词；审美迭代不得推翻硬锁与元素预算"
+    }
+  ],
+  "warm_start_merged": true,
+  "warm_start_merged_at": "2026-11-10 14:52:31",
+  "warm_start_block_sha1": "f0fa4dbbef8f",
+  "ActionRequired": "STOP_PICK_BEST",
+  "showcase_ready": true,
+  "winner": {
+    "round": 3,
+    "round_label": "第 3 轮精修",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "1:1",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_character_fairy.png"
+    ],
+    "param_validation": {
+      "valid": true,
+      "validation_passed": true,
+      "case_id": "skill1110-variant",
+      "scale": "medium",
+      "aspect_ratio": "1:1",
+      "ref_aspect_ratio": "1:1",
+      "ref_dimensions": "460x460",
+      "output_aspect_ratio": "1:1",
+      "output_dimensions": "1024x1024",
+      "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_character_fairy.png",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_character_fairy.png"
+      ],
+      "inherited_default_aspect_ratio": true,
+      "inherited_default_pad_image": true,
+      "matched_ref_aspect_ratio": true,
+      "matched_ref_pad_image": true,
+      "matched_output_aspect_ratio": true,
+      "three_step_stage": "step3_judge",
+      "three_step_verified": true,
+      "warnings": [],
+      "continuation_pad": false,
+      "pad_diverged": false
+    },
+    "generated_at": "14:50:29",
+    "image": "assets/skill_20261110/draw_variant/r3.png",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 1041434,
+      "size_kb": 1017.0,
+      "width": 1024,
+      "height": 1024,
+      "aspect_ratio": "1:1",
+      "canonical_aspect_ratio": "1:1",
+      "color_entropy": 7.99
+    },
+    "raw_score": 8.52,
+    "score": 8.52,
+    "target_score_threshold": 9.5,
+    "dims": "构图8.8/光影8.7/透视8.5/质感8.6/风格8.5/无瑕疵8.2",
+    "dims_parsed": {
+      "composition": 8.8,
+      "lighting_color": 8.7,
+      "perspective_anatomy": 8.5,
+      "texture_detail": 8.6,
+      "spec_style": 8.5,
+      "flawlessness": 8.2
+    },
+    "weighted_score": 8.52,
+    "audit_warnings": [
+      "收敛停滞预警：本轮净增 +0.06 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+      "Agent Absolute-5D 已采纳（门槛 9.5）"
+    ],
+    "stagnated": true,
+    "strengths": "领口已回到浅粉圆领，白心形宽边不见了；双辫垂在胸前，果篮在左下。两侧上眼睑停在绿虹膜上缘之上，虹膜上方有白巩膜。",
+    "defects": "嘴洞仍是上宽下收的竖椭圆，高度大于宽度，上唇中点下压成尖角，没有收成与鼻翼同宽的正圆。画面右侧前伸的拳头里，食指和中指贴在一起，指节只有一条浅沟。",
+    "next_fix": "只把嘴洞收成正圆，高度等于宽度且都不超过鼻翼宽度，上唇不要下压成尖角。前伸拳的食指和中指分开一条缝。两侧上眼睑保持在虹膜上缘之上。",
+    "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.Fairy\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 必须避开红线:\n  · [CHAT20261109233156381REDLINE] [收敛踩坑红线] 同一身份金发粉裙小精灵持果篮；换表情为开心大笑+挥手；机位锁：避免「持篮手的握持结构略僵，篮把与拳头接触处缺少更明确的压握关系；皮肤、裙料和翅膀的表面处理偏同」\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [style-chibi] Q版头身: 2~3 头身，五官放大但识别锚点保留。\n  · [tech-watercolor] 水彩渲染: 边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。\n原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光 | Edit only the face of the attached reference fairy. Copy the reference body, costume, hair, wings, basket placement, and three-quarter waist-up camera exactly. Square 1:1 opaque image, plain pale cream background, no garden and no scenery. Rendering stays the reference 3D soft-plastic storybook volume with soft studio light and cream highlights. Golden twin braids hang down in front of the chest with pink ties, not sticking out sideways. Pointed ears, green irises, pale blue translucent wings, simple pink dress with no vertical pearl-button row and no wristband. Pearl necklace with one turquoise pendant. The viewer-left hand grips the basket handle at the lower left of the frame. The viewer-right arm extends sideways in a loose fist. Surprise expression only: both upper eyelids sit above the top edge of each green iris with a clear band of white sclera, both eyebrows raised, and the mouth is a small circle no wider than the nose, with no teeth and no smile. One fairy and one basket only. The lip opening is a true circle: its height equals its width and both stay inside the nose width, not a tall oval. The dress neckline is the reference soft pink round neck with only a thin pale edge, not a wide white heart panel. The basket hand shows a separate thumb and a visible gap before the index finger. | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props | 嘴收成正圆：唇缘宽度不超过鼻翼，高度与宽度相同。领口回到参考的浅粉圆领，持篮手补出拇指与食指的分缝；两侧上眼睑仍停在虹膜上缘之上。 | MUST_FIX (≤2): 嘴收成正圆：唇缘宽度不超过鼻翼，高度与宽度相同；领口回到参考的浅粉圆领，持篮手补出拇指与食指的分缝",
+    "continuation": false,
+    "passed": false,
+    "gate_blocked": false,
+    "image_gate_blocked": false,
+    "anatomy_score": 8.5,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "humanoid",
+    "judge_source": "agent_absolute_5d",
+    "remote_vlm": {
+      "source": "agent_self_judge",
+      "provider": "",
+      "model": "",
+      "error": "",
+      "active": false,
+      "score_evidence": {},
+      "evidence_missing_dims": [],
+      "review": {
+        "pass_count": 0,
+        "rerated": false,
+        "reason": ""
+      }
+    },
+    "should_continue_next_round": true,
+    "decision": "CONTINUE_NEXT_ROUND",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "style_lock",
+        "lesson": "本轮短板偏「style_lock」：嘴洞仍是上宽下收的竖椭圆，高度大于宽度，上唇中点下压成尖角，没有收成与鼻翼同宽的正圆。画面右侧前伸的拳头里，食指和中指贴在一起，指节只有一条浅沟。",
+        "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+        "from_score": "8.52"
+      },
+      {
+        "category": "keep",
+        "lesson": "保留本轮已做对的：领口已回到浅粉圆领，白心形宽边不见了；双辫垂在胸前，果篮在左下。两侧上眼睑停在绿虹膜上缘之上，虹膜上方有白巩膜。",
+        "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+        "from_score": "8.52"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "14:50:51",
+    "asset_image": "assets/skill_20261110/draw_variant/r3.png"
+  },
+  "rounds_to_converge": 4,
+  "convergence_badge": "共 4 轮未达阈值，采用最高分",
+  "winner_image": "assets/skill_20261110/draw_variant/r3.png",
+  "best_image": "assets/skill_20261110/draw_variant/r3.png",
+  "final_image": "assets/skill_20261110/draw_variant/final.png",
+  "settle_pending": false,
+  "process_board": ".memory-art/converge/boards/skill1110-variant/index.html",
+  "settle_done_at": "2026-11-10 14:54:03 UTC+8",
+  "settle_saved_paths": [
+    ".memory-art\\entries\\character.Fairy\\CHAT20261110145346625RECIPE.md",
+    ".memory-art\\entries\\character.Fairy\\CHAT20261110145347556REDLINE.md",
+    ".memory-art\\_reflections\\20261110_145348_skill1110-variant.json"
+  ]
+}

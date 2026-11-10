@@ -1,0 +1,23 @@
+{
+  "ok": true,
+  "route_id": "icon.b",
+  "banner": "【按 Mode B 走了】",
+  "passed_threshold": true,
+  "best_score": 8.5,
+  "final_image": "assets/skill_20261110/icon_b/preview.html",
+  "images": [],
+  "svg_files": [
+    "assets/skill_20261110/icon_b/home.svg",
+    "assets/skill_20261110/icon_b/bag.svg",
+    "assets/skill_20261110/icon_b/map.svg",
+    "assets/skill_20261110/icon_b/shop.svg",
+    "assets/skill_20261110/icon_b/quest.svg",
+    "assets/skill_20261110/icon_b/settings.svg",
+    "assets/skill_20261110/icon_b/sprout.svg",
+    "assets/skill_20261110/icon_b/watering-can.svg"
+  ],
+  "wall_started_at": "2026-11-10T14:38:22",
+  "wall_ended_at": "2026-11-10T14:53:21",
+  "wall_sec": 899,
+  "notes": "路由 conversation=skill1110-icon-b，route_ids=[icon.b]，banner=【按 Mode B 走了】。先锁 Soft（2px、round/round、24 格、padding 2、currentColor），再写 8 枚。未开 converge，未逐枚闭环。一致性分 8.5 = 笔画一致 9.2、视觉重量 8.2、留白与光学居中 8.4、24px 功能识别 8.7，四项均值 8.625×0.75，加无瑕疵 8.3×0.25。清单过：同 viewBox/stroke/linecap/linejoin、只用 currentColor、外沿约 3.6–20.6、文件名 kebab-case、style-spec 与 preview 齐全。审查时背包曾像锁、地图曾像折线、齿轮曾像太阳，已改成提篮、折页地图、六齿齿轮后再打分。水壶略偏下，篮子比折页地图疏，齿轮圆端有轻微齿宽视差，所以不给 9 分以上。未把规格写进 brand.WorldStyle。未跑 ingest --apply，避免 preview.html 被移出 icon_b。"
+}

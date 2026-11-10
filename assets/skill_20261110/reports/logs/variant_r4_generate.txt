@@ -1,0 +1,40 @@
+🧠 [合理性闸门] 合理性闸已在本会话通过，沿用本轮 --prompt
+WARM_START_MERGED=1 sha1=f0fa4dbbef8f source=converge.generate (并以本字段为准；勿用 GenerateImage Hook 有无判断并入)
+🎨 [Step 2A · 仅生图阶段完成] 第 4/4 轮图像已生成: `assets/skill_20261110/draw_variant/r4.png` (1024x1024 (1:1, 1047.4KB))
+   · 策略建议垫图: assets/skill_20261109/_refs/ref_character_fairy.png（pad=auto→style_ref（每轮垫最初参考，修正只写进提示词））
+   · 本轮实际垫图: ['C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_character_fairy.png']
+   · 📚 pmem-art 记忆已并入：模块 character.Fairy （recipe 0 · 红线 1；WARM_START_MERGED=1）
+   · 结构底线: 结构底线：双肩双肘双腕关节自然连续，握持受力真实，双眼瞳孔同向同高；接触阴影与承托可读；禁止肢体融化进道具
+   · 置顶风格指令 Prompt: 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】
+- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)
+- 目标模块: character.Fairy
+- 置信度: 0.45（fast-track 资格: 否）
+- 正向保留（要怎样）:
+  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色
+- 必须避开红线:
+  · [CHAT20261109233156381REDLINE] [收敛踩坑红线] 同一身份金发粉裙小精灵持果篮；换表情为开心大笑+挥手；机位锁：避免「持篮手的握持结构略僵，篮把与拳头接触处缺少更明确的压握关系；皮肤、裙料和翅膀的表面处理偏同」
+- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和
+- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色
+- 项目私有知识卡 (Private Layer):
+  · [style-chibi] Q版头身: 2~3 头身，五官放大但识别锚点保留。
+  · [tech-watercolor] 水彩渲染: 边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。
+原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光 | Edit only the face of the attached reference fairy. Copy the reference body, costume, hair, wings, basket placement, and three-quarter waist-up camera exactly. Square 1:1 opaque image, plain pale cream background, no garden and no scenery. Rendering stays the reference 3D soft-plastic storybook volume with soft studio light and cream highlights. Golden twin braids hang down in front of the chest with pink ties, not sticking out sideways. Pointed ears, green irises, pale blue translucent wings, simple pink dress with no vertical pearl-button row and no wristband. Pearl necklace with one turquoise pendant. The viewer-left hand grips the basket handle at the lower left of the frame. The viewer-right arm extends sideways in a loose fist. Surprise expression only: both upper eyelids sit above the top edge of each green iris with a clear band of white sclera, both eyebrows raised. The open mouth is a perfect circle the same diameter as the turquoise pendant, height equal to width, both edges inside the nose width, upper lip rounded not pointed, no teeth and no smile. The extended fist shows a small gap between the index finger and the middle finger. One fairy and one basket only. The dress neckline is the reference soft pink round neck. | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props | 只把嘴洞收成正圆，高度等于宽度且都不超过鼻翼宽度，上唇不要下压成尖角。前伸拳的食指和中指分开一条缝。两侧上眼睑保持在虹膜上缘之上。 | MUST_FIX (≤2): 只把嘴洞收成正圆，高度等于宽度且都不超过鼻翼宽度，上唇不要下压成尖角；前伸拳的食指和中指分开一条缝
+   · 当前未执行任何自评或 VLM 裁判；请先看图再打六维，不要从 9.3 起跳：
+你是独立主美裁判。先只看附图，不要看生成提示词给自己加分。
+档位锚：3=失败 / 5=差 / 7=合格 / 8.5=近优 / 9.5=优（可到 10）
+普通完成图应在 7.0～8.5。9.3+ 只给明显优于合格线的画面。不要因为后面还要迭代就从 9.3 起跳，也不要把六维打成一串几乎相同的 9.3+。只写各维分数。正式分由程序按加权调和平均计算，门槛维低于线时改取该维。像素、Q版、平涂、水彩、剪纸、等轴按该媒介自己的尺子打偏低的那一维，断肢和塌缩仍按硬伤。
+六维（各 0–10，一位小数）：构图 composition / 光影 lighting_color / 透视解剖 perspective_anatomy / 质感 texture_detail / 风格规格 spec_style / 无瑕疵 flawlessness。无瑕疵与另外五维一样盲评，不另写扣分清单。看不清就保守给分并写进缺陷。
+六维有效权重：构图=15% 光影=19% 透视=11% 质感=19% 风格=11% 无瑕度=25%。 自动临界复评：先完成一遍六维；若按上述权重计算的调和分与停机线相差 ≤0.25，或透视解剖分与硬门槛 7.5 相差 ≤0.25，则重新只看图像作第二遍六维，不参考第一遍分数；最终 dims 各维取两遍均值（四舍五入到一位小数）。无需人工确认。
+合同只用来写 defects（画没画到），禁止因为 Prompt 写过就加分：同一身份；换表情；机位已在图上；走变体。这个妖精换成惊讶睁大眼。
+参考解构摘要（只作对照，像素优先）：正方形半身，3/4朝向镜头，腰以上。观众左侧手握藤编果篮提梁，观众右侧手臂侧前伸呈松拳。金发双辫配粉红发结，绿眼带高光，尖耳，淡蓝半透明翅膀，粉裙，珍珠项链配一颗青绿圆坠。浅色无场景底。画风是圆润3D渲染软塑胶童话角色，棚拍柔光，奶油高光。原表情是张嘴露齿笑，上眼睑压着虹膜上缘。本次只把表情改成惊讶：上眼睑抬到虹膜上缘以上露出巩膜，眉毛上抬，嘴巴收成小圆。锁姿势、服装、配饰、机位和画风。不要继承露齿笑。
+medium 档：姿态可动时仍须写清相对参考多出来的姿态/机位变化，禁空话。
+停机门槛 ≥9.50 是停机线，不是「合格=9.5」。本轮 4/4；满轮取最高分（best-of-N）。
+必须输出：
+1) dims 一行：`构图x.x/光影x.x/透视x.x/质感x.x/风格x.x/无瑕疵x.x`
+2) defects：至少一条可核验画面问题（禁「无明显硬伤」套话）。必须写本张图上看得见的部位、颜色、边缘或空间关系，禁止把上一轮 defects 原句贴过来。
+3) strengths：1–2 条，只写这张图已经有的，并指出可见的像素依据；不写提示词里的目标。六维分数必须能从这些可见证据解释，不能用任务描述代替画面证据。
+4) next_fix：下一轮可执行叠加修正（已达标可写「已达标」）
+recompose：defects 第一句必须回答仰还是俯、人占画面大约多少、主光是窗火还是灯笼。提示词里的「重构机位」不算成图已经换了机位。
+high：必须写明相对原图多出来的那一处光影或叙事；写不出来就把构图当贴原打。
+
+   · 然后：`pyw -3 -u pmem_art.py converge judge --id skill1110-variant --round 4 --image assets/skill_20261110/draw_variant/r4.png --dims ...`

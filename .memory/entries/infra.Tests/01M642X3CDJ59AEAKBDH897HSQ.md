@@ -3,7 +3,7 @@ id: 01M642X3CDJ59AEAKBDH897HSQ
 module: infra.Tests
 entity: NegationLock
 kind: exclusion
-status: seed
+status: active
 supersedes: []
 anchors:
 - skills_kit/prompt_scale.py#find_affirmative_lock_hits

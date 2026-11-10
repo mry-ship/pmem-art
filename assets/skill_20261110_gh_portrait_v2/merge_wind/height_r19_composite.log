@@ -1,0 +1,10 @@
+L1 72x122 target=0.38
+L2 72x147 target=0.46
+L3 72x173 target=0.54
+L4 93x198 target=0.62
+L5 229x224 target=0.7
+L6 140x250 target=0.78
+L7 232x275 target=0.86
+L8 338x307 target=0.96
+heights [0.381, 0.459, 0.541, 0.619, 0.7, 0.781, 0.856, 0.959]
+PASS

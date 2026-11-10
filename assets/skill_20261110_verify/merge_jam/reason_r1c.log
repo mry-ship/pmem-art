@@ -1,0 +1,12 @@
+﻿✅ [合理性闸 · merge] 通过
+  ✓ subject_action（主体在做什么/交付物是什么）
+  ✓ element_budget（元素预算（不堆景不过载））
+  ✓ hard_locks（硬锁（画幅/透明底/无字/机位等））
+  ✓ fail_at_glance（一眼失败条件已写明）
+  ✓ single_centered_item（每档单件居中）
+  ✓ chain_mode_declared（写清 same_object / shop_ladder / species_change / 轻门）
+  ✓ upgrade_reason_concrete（升级理由具体（same_object→parts_add；shop/species→evolve_to+merge_why；轻门写具体可读升级））
+  ✓ family_or_base_lock（锁住母体或家族（same_object→母体词；shop/species→家族色相/题材；轻门→同任务域））
+修订提示词（generate 将优先用这句）：
+chain_mode=shop_ladder. Family gene: dewberry magenta + leaf green + cream jam tones, fairy dessert shop SKU upgrades not costume swaps. evolve_to/merge_why: L1 whole dewberry; two berries cut into L2 halves on dish; two dishes mash into L3 bowl; two bowls juice into L4 tall glass; two juices blend into L5 taller cup with cream swirl addon; two cups cook into L6 jam jar; two jars become L7 same jar plus wood spoon addon; two jar-spoons plate into L8 smooth double mousse dessert. Gossip Harbor gl…
+已写入会话 `jam-verify-light-1110`。下一步用 revised 做 converge generate（可省略 --prompt，将自动注入）。

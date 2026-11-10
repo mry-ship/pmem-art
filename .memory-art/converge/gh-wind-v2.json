@@ -1,0 +1,1008 @@
+{
+  "session_id": "gh-wind-v2",
+  "started_at": "2026-11-10 17:50:24 UTC+8",
+  "goal": "花园管乐八档合成梯整表 4×2 竖屏。overview_sheet 八档，画幅 9:16。",
+  "module": "merge.GardenWind",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "merge_overview_checklist",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "medium",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "medium",
+    "label": "中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.5)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 1,
+    "target_score_threshold": 9.5,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.15,
+      "perspective_anatomy": 0.15,
+      "texture_detail": 0.15,
+      "spec_style": 0.15,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "viewpoint_frame",
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图，只在提示词上补还没过的那一处（提示词改动仍 ≤40%）",
+    "max_prompt_delta_ratio": 0.4,
+    "allow_recompose": false,
+    "allow_viewpoint_change": false,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "viewpoint_angle (不改机位与镜头视角)",
+      "element_count (不增删主体元素清单)",
+      "no_full_recompose (不做整体 recompose / 换景别故事)",
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)"
+    ],
+    "min_round_leap": 0.15,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光",
+    "medium_family": "generic",
+    "best_direction_hint": "最优方向：光影·空气·介质；可小幅姿态/局部布局",
+    "goal": "花园管乐八档合成梯整表 4×2 竖屏。overview_sheet 八档，画幅 9:16。",
+    "module": "merge.GardenWind",
+    "ref_image": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge.jpg",
+    "ref_analysis": "光泽卡通 3D、圆润厚实、无硬描边、暖饱和、柔光、竖屏、每格一件完整乐器。"
+  },
+  "medium_family": "generic",
+  "contract": "",
+  "target_score_threshold": 9.5,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png",
+  "ref_analysis": "光泽卡通 3D、圆润厚实、无硬描边、暖饱和、柔光、竖屏、每格一件完整乐器。",
+  "default_aspect_ratio": "9:16",
+  "default_reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png"
+  ],
+  "aspect_ratio": "9:16",
+  "reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png"
+  ],
+  "ref_physical_traits": {
+    "exists": true,
+    "size_bytes": 3474271,
+    "size_kb": 3392.8,
+    "width": 1512,
+    "height": 2688,
+    "aspect_ratio": "9:16",
+    "canonical_aspect_ratio": "9:16",
+    "color_entropy": 7.99
+  },
+  "param_validation": {
+    "valid": true,
+    "validation_passed": true,
+    "case_id": "gh-wind-v2",
+    "scale": "medium",
+    "aspect_ratio": "9:16",
+    "ref_aspect_ratio": "9:16",
+    "ref_dimensions": "1512x2688",
+    "output_aspect_ratio": "",
+    "output_dimensions": "",
+    "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png"
+    ],
+    "inherited_default_aspect_ratio": false,
+    "inherited_default_pad_image": false,
+    "matched_ref_aspect_ratio": true,
+    "matched_ref_pad_image": true,
+    "matched_output_aspect_ratio": true,
+    "three_step_stage": "step1_start",
+    "three_step_verified": false,
+    "warnings": [
+      "参考图已加边为同一张垫图 'gh_merge__ar_9x16.png'，会话和生图都用这一张，不要再垫原图。"
+    ]
+  },
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.5,
+  "accept_threshold": 9.5,
+  "max_rounds": 4,
+  "ready_to_finish": true,
+  "status": "finished",
+  "owner_conversation_id": "gh-wind-v2",
+  "route_ids": [
+    "merge.ladder"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "gh-wind-v2",
+        "scale": "medium",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "1512x2688",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "17:53:54",
+      "image": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh_portrait_v2\\merge_wind\\sheet_r1.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 186754,
+        "size_kb": 182.4,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.16
+      },
+      "raw_score": 8.19,
+      "score": 8.19,
+      "target_score_threshold": 9.5,
+      "dims": "构图7.6/光影9.0/透视8.9/质感9.0/风格8.6/无瑕疵7.2",
+      "dims_parsed": {
+        "composition": 7.6,
+        "lighting_color": 9.0,
+        "perspective_anatomy": 8.9,
+        "texture_detail": 9.0,
+        "spec_style": 8.6,
+        "flawlessness": 7.2
+      },
+      "weighted_score": 8.19,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "邻档体量几乎一样大：第 1 格高 0.96，第 2 格高 0.96（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 2 格高 0.96，第 3 格高 1.00（差 0.04 < 0.04）",
+        "邻档体量几乎一样大：第 3 格高 1.00，第 4 格高 1.00（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 4 格高 1.00，第 5 格高 1.00（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 5 格高 1.00，第 6 格高 1.00（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 6 格高 1.00，第 7 格高 0.97（差 -0.03 < 0.04）"
+      ],
+      "stagnated": false,
+      "strengths": "左上是奶油短哨，右上是一根直管，第二行左是一支带小圆喇叭口的笛，右是斜向圆键长笛，第三行左是一件排箫。没有号角，没有捆住的两根笛子，没有棕色手摇琴，没有大蝴蝶结，没有字母。",
+      "defects": "第8格是五根奶油音管立在绿色大叶片上，没有键盘，和第6格同是叶座音管，音管顶端没有高于第6格。八个浅蓝圆角块几乎顶满格子，量到的主体框高第1格0.96、第2格0.96、第3到第8格都是0.99，邻档差不到0.04。短哨四周应有的留白被圆角块占满。；邻档体量几乎一样大：第 1 格高 0.96，第 2 格高 0.96（差 0.00 < 0.04）；邻档体量几乎一样大：第 2 格高 0.96，第 3 格高 1.00（差 0.04 < 0.04）；邻档体量几乎一样大：第 3 格高 1.00，第 4 格高 1.00（差 0.00 < 0.04）；邻档体量几乎一样大：第 4 格高 1.00，第 5 格高 1.00（差 0.00 < 0.04）；邻档体量几乎一样大：第 5 格高 1.00，第 6 格高 1.00（差 0.00 < 0.04）；邻档体量几乎一样大：第 6 格高 1.00，第 7 格高 0.97（差 -0.03 < 0.04）",
+      "next_fix": "先改第8格：改成更宽的风琴，带一排键盘和一小块叶绿座，奶油音管必须是全图最高。圆角格与细缝改成同一种浅蓝，变高的只留乐器：短哨约占格高一半，之后逐档加高到末档0.94。去掉大叶片。；邻档主体框高必须明显递增，末档最大，禁止邻档一样大",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.GardenWind\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n  · 确认作为货柜正向锚点：合成宣传图里的道具是圆润厚实的糖釉卡通3D。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=居中/对称构图 / 半身；色温=避免过饱和 / 冷色调 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色；白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [composition-thirds-grid] 构图法则：九宫格三分法与呼吸留白安全区: 将核心视觉焦点布置在九宫格三分线交点（黄金分割点 0.618）上，利用引导线与前景暗角汇聚视线；独立资产四周必须预留 16px~24px 纯透明呼吸安全边距，严禁发冠、武器或特效贴死画布边缘被裁切。\n  · [icon-stroke-grid-spec] 图标工程规范：线宽统一、安全网格与剪影可读性: 成套技能/功能图标必须锁定统一的描边线宽（如全局统一 2px 描边，严禁 1px 与 6px 混杂）、统一圆角半径与 16px~24px 安全内边距网格，确保在 64x64px 极小缩略尺寸下主体几何剪影依然一眼可辨、不与背景杂光粘连。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光 | 竖屏9:16不透明实底整表。花园管乐八档合成梯整表，版式4×2，四行两列，八个同样大的浅蓝圆角格铺满整张，格内与细缝是同一种浅蓝，不要顶栏底栏标题。阅读从左到右再从上到下。Gossip Harbor货柜：光泽卡通3D，圆润厚实，无硬描边，暖饱和，柔光，竖屏，每格一件完整乐器。每格单件居中，不是场景。species_change换物种，仍是花园管乐。家族色相是奶油管与叶绿座。合成理由：两件上一档合成下一件。变高的是乐器，不是把圆角格拉高。主体框高相对本格：短哨0.48，直管笛0.55，喇叭口笛0.62，加键长笛0.69，排箫0.76，立式风管排0.83，小风琴0.89，宽风琴0.94。末档音管是全图最高的部分，仍留在格内细边里。左上短哨是横卧短粗奶油哨，一端叶绿哨口，四周留大片浅蓝。右上直管笛是一根竖直奶油直管，比短哨略高，末端不张开。第二行左是喇叭口笛，仍是这一支笛，下端轻轻张开成圆喇叭，叶绿哨口，不是号角。第二行右是加键长笛，管身更长并斜向放置，管身一排圆键盖。第三行左是一件排箫，一排长短不一的短管，比长笛更高，不是两根笛子捆在一起。第三行右是立式风管排，多根高低不同的奶油音管立在叶绿座上。第四行左是小风琴，叶绿座上一排键盘，键盘上方较短的奶油音管。第四行右是宽风琴，更宽，奶油音管立在叶绿座上，这些音管高于图中任何物件，不是棕色手摇琴，没有大蝴蝶结。无英文，无等级数字，无脸，无字。禁止龙虾，禁止手指，禁止厨房人物，禁止标志。不透明浅蓝实底。 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.9,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：第8格是五根奶油音管立在绿色大叶片上，没有键盘，和第6格同是叶座音管，音管顶端没有高于第6格。八个浅蓝圆角块几乎顶满格子，量到的主体框高第1格0.96、第2格0",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.19"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：左上是奶油短哨，右上是一根直管，第二行左是一支带小圆喇叭口的笛，右是斜向圆键长笛，第三行左是一件排箫。没有号角，没有捆住的两根笛子，没有棕色手摇琴，没有大蝴蝶结",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.19"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "17:54:50"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "gh-wind-v2",
+        "scale": "medium",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "1512x2688",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": false,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [
+          "参考图已加边为同一张垫图 'gh_merge__ar_9x16.png'，会话和生图都用这一张，不要再垫原图。"
+        ],
+        "continuation_pad": false,
+        "pad_diverged": true
+      },
+      "generated_at": "17:58:00",
+      "image": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh_portrait_v2\\merge_wind\\sheet_r2.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 166895,
+        "size_kb": 163.0,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.15
+      },
+      "raw_score": 8.1,
+      "score": 8.1,
+      "target_score_threshold": 9.5,
+      "dims": "构图7.4/光影9.0/透视8.9/质感9.0/风格8.7/无瑕疵7.0",
+      "dims_parsed": {
+        "composition": 7.4,
+        "lighting_color": 9.0,
+        "perspective_anatomy": 8.9,
+        "texture_detail": 9.0,
+        "spec_style": 8.7,
+        "flawlessness": 7.0
+      },
+      "weighted_score": 8.1,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +-0.09 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "邻档体量几乎一样大：第 1 格高 0.83，第 2 格高 0.83（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 3 格高 0.97，第 4 格高 0.97（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 4 格高 0.97，第 5 格高 0.97（差 -0.01 < 0.04）",
+        "邻档体量几乎一样大：第 5 格高 0.97，第 6 格高 0.97（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 6 格高 0.97，第 7 格高 0.82（差 -0.14 < 0.04）",
+        "邻档体量几乎一样大：第 7 格高 0.82，第 8 格高 0.82（差 -0.00 < 0.04）"
+      ],
+      "stagnated": true,
+      "strengths": "右下已经是一架带黑白键盘的宽风琴，右三是高低奶油管立在绿色小座上，没有大叶片。左上是短哨，右上是直管，第三行左是一件排箫。没有号角，没有棕色手摇琴，没有大蝴蝶结。",
+      "defects": "第二行左格仍是上下收口的直管长笛，下端没有张开的圆喇叭，直管之后又画回长笛。第四格斜管只有圆孔，看不见键盖。右下风琴音管比右三排管更矮，框高约0.83对0.96，末档不是最高。左上短哨框高约0.83，没有收到格高一半。；邻档体量几乎一样大：第 1 格高 0.83，第 2 格高 0.83（差 0.00 < 0.04）；邻档体量几乎一样大：第 3 格高 0.97，第 4 格高 0.97（差 0.00 < 0.04）；邻档体量几乎一样大：第 4 格高 0.97，第 5 格高 0.97（差 -0.01 < 0.04）；邻档体量几乎一样大：第 5 格高 0.97，第 6 格高 0.97（差 0.00 < 0.04）；邻档体量几乎一样大：第 6 格高 0.97，第 7 格高 0.82（差 -0.14 < 0.04）；邻档体量几乎一样大：第 7 格高 0.82，第 8 格高 0.82（差 -0.00 < 0.04）",
+      "next_fix": "下一轮先改第3格：下端加一个比管身更宽的奶油圆喇叭，仍是一支笛。第8格音管画得高于第6格。短哨缩小到约占格高一半。；邻档主体框高必须明显递增，末档最大，禁止邻档一样大",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.GardenWind\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n  · 确认作为货柜正向锚点：合成宣传图里的道具是圆润厚实的糖釉卡通3D。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=居中/对称构图 / 半身；色温=避免过饱和 / 冷色调 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色；白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [composition-thirds-grid] 构图法则：九宫格三分法与呼吸留白安全区: 将核心视觉焦点布置在九宫格三分线交点（黄金分割点 0.618）上，利用引导线与前景暗角汇聚视线；独立资产四周必须预留 16px~24px 纯透明呼吸安全边距，严禁发冠、武器或特效贴死画布边缘被裁切。\n  · [icon-stroke-grid-spec] 图标工程规范：线宽统一、安全网格与剪影可读性: 成套技能/功能图标必须锁定统一的描边线宽（如全局统一 2px 描边，严禁 1px 与 6px 混杂）、统一圆角半径与 16px~24px 安全内边距网格，确保在 64x64px 极小缩略尺寸下主体几何剪影依然一眼可辨、不与背景杂光粘连。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光 | 竖屏9:16不透明实底整表。花园管乐八档合成梯整表，版式4×2，四行两列，八个同样大的浅蓝圆角格铺满整张，格内与细缝是同一种浅蓝，不要顶栏底栏标题。阅读从左到右再从上到下。Gossip Harbor货柜：光泽卡通3D，圆润厚实，无硬描边，暖饱和，柔光，竖屏，每格一件完整乐器。每格单件居中，不是场景。species_change换物种，仍是花园管乐。家族色相是奶油管与叶绿座。合成理由：两件上一档合成下一件。变高的是乐器，不是把圆角格拉高。主体框高相对本格：短哨0.48，直管笛0.55，喇叭口笛0.62，加键长笛0.69，排箫0.76，立式风管排0.83，小风琴0.89，宽风琴0.94。末档音管是全图最高的部分，仍留在格内细边里。左上短哨是横卧短粗奶油哨，一端叶绿哨口，四周留大片浅蓝。右上直管笛是一根竖直奶油直管，比短哨略高，末端不张开。第二行左是喇叭口笛，仍是这一支笛，下端轻轻张开成圆喇叭，叶绿哨口，不是号角。第二行右是加键长笛，管身更长并斜向放置，管身一排圆键盖。第三行左是一件排箫，一排长短不一的短管，比长笛更高，不是两根笛子捆在一起。第三行右是立式风管排，多根高低不同的奶油音管立在叶绿座上。第四行左是小风琴，叶绿座上一排键盘，键盘上方较短的奶油音管。第四行右是宽风琴，更宽，奶油音管立在叶绿座上，这些音管高于图中任何物件，不是棕色手摇琴，没有大蝴蝶结。无英文，无等级数字，无脸，无字。禁止龙虾，禁止手指，禁止厨房人物，禁止标志。不透明浅蓝实底。 本轮只改第3格和第8格：第3格下端必须张开成圆喇叭，不要画回直管长笛；第8格音管高于第6格。 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | 先改第8格：改成更宽的风琴，带一排键盘和一小块叶绿座，奶油音管必须是全图最高。圆角格与细缝改成同一种浅蓝，变高的只留乐器：短哨约占格高一半，之后逐档加高到末档0.94。去掉大叶片。；邻档主体框高必须明显递增，末档最大，禁止邻档一样大 | MUST_FIX (≤2): 先改第8格：改成更宽的风琴，带一排键盘和一小块叶绿座，奶油音管必须是全图最高；圆角格与细缝改成同一种浅蓝，变高的只留乐器：短哨约占格高一半，之后逐档加高到末档0.94",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.9,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：第二行左格仍是上下收口的直管长笛，下端没有张开的圆喇叭，直管之后又画回长笛。第四格斜管只有圆孔，看不见键盖。右下风琴音管比右三排管更矮，框高约0.83对0.96",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.1"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：右下已经是一架带黑白键盘的宽风琴，右三是高低奶油管立在绿色小座上，没有大叶片。左上是短哨，右上是直管，第三行左是一件排箫。没有号角，没有棕色手摇琴，没有大蝴蝶结",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.1"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "17:58:39"
+    },
+    {
+      "round": 3,
+      "round_label": "第 3 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "gh-wind-v2",
+        "scale": "medium",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "1512x2688",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": false,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [
+          "参考图已加边为同一张垫图 'gh_merge__ar_9x16.png'，会话和生图都用这一张，不要再垫原图。"
+        ],
+        "continuation_pad": false,
+        "pad_diverged": true
+      },
+      "generated_at": "18:01:56",
+      "image": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh_portrait_v2\\merge_wind\\sheet_r3.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 135863,
+        "size_kb": 132.7,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.16
+      },
+      "raw_score": 8.38,
+      "score": 8.38,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.0/光影9.1/透视9.0/质感9.0/风格8.4/无瑕疵7.6",
+      "dims_parsed": {
+        "composition": 8.0,
+        "lighting_color": 9.1,
+        "perspective_anatomy": 9.0,
+        "texture_detail": 9.0,
+        "spec_style": 8.4,
+        "flawlessness": 7.6
+      },
+      "weighted_score": 8.38,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "邻档体量几乎一样大：第 1 格高 0.31，第 2 格高 0.17（差 -0.14 < 0.04）",
+        "邻档体量几乎一样大：第 3 格高 0.68，第 4 格高 0.66（差 -0.02 < 0.04）",
+        "邻档体量几乎一样大：第 4 格高 0.66，第 5 格高 0.58（差 -0.08 < 0.04）",
+        "邻档体量几乎一样大：第 6 格高 0.68，第 7 格高 0.64（差 -0.04 < 0.04）"
+      ],
+      "stagnated": false,
+      "strengths": "第二行左下端是张开的奶油圆喇叭，不是号角。右下是更宽的键盘风琴，音管是八格里最高的一簇。左上是短哨，第三行左是一件排箫。没有捆住的两根笛子，没有棕色手摇琴，没有大蝴蝶结。",
+      "defects": "右上直管横躺，框高只有0.16，比左上短哨0.31更矮。第二行右只有一排音孔，没有凸起的圆键盖。第三行左排箫框高0.57，矮于斜笛。左下小风琴矮于右三立管。八件直接浮在同一块浅蓝上，圆角格没有分开。；邻档体量几乎一样大：第 1 格高 0.31，第 2 格高 0.17（差 -0.14 < 0.04）；邻档体量几乎一样大：第 3 格高 0.68，第 4 格高 0.66（差 -0.02 < 0.04）；邻档体量几乎一样大：第 4 格高 0.66，第 5 格高 0.58（差 -0.08 < 0.04）；邻档体量几乎一样大：第 6 格高 0.68，第 7 格高 0.64（差 -0.04 < 0.04）",
+      "next_fix": "右上直管立起来并高于短哨。第四格加上凸起圆键盖。从左到右再从上到下每件都更高，右下音管仍是全图最高。圆角格只用比底色略浅的同一种浅蓝，不要深缝。；邻档主体框高必须明显递增，末档最大，禁止邻档一样大",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.GardenWind\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n  · 确认作为货柜正向锚点：合成宣传图里的道具是圆润厚实的糖釉卡通3D。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=居中/对称构图 / 半身；色温=避免过饱和 / 冷色调 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色；白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [composition-thirds-grid] 构图法则：九宫格三分法与呼吸留白安全区: 将核心视觉焦点布置在九宫格三分线交点（黄金分割点 0.618）上，利用引导线与前景暗角汇聚视线；独立资产四周必须预留 16px~24px 纯透明呼吸安全边距，严禁发冠、武器或特效贴死画布边缘被裁切。\n  · [icon-stroke-grid-spec] 图标工程规范：线宽统一、安全网格与剪影可读性: 成套技能/功能图标必须锁定统一的描边线宽（如全局统一 2px 描边，严禁 1px 与 6px 混杂）、统一圆角半径与 16px~24px 安全内边距网格，确保在 64x64px 极小缩略尺寸下主体几何剪影依然一眼可辨、不与背景杂光粘连。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光 | 竖屏9:16不透明实底整表。花园管乐八档合成梯整表，版式4×2，四行两列，八个同样大的浅蓝圆角格铺满整张，格内与细缝是同一种浅蓝，不要顶栏底栏标题。阅读从左到右再从上到下。Gossip Harbor货柜：光泽卡通3D，圆润厚实，无硬描边，暖饱和，柔光，竖屏，每格一件完整乐器。每格单件居中，不是场景。species_change换物种，仍是花园管乐。家族色相是奶油管与叶绿座。合成理由：两件上一档合成下一件。变高的是乐器，不是把圆角格拉高。主体框高相对本格：短哨0.48，直管笛0.55，喇叭口笛0.62，加键长笛0.69，排箫0.76，立式风管排0.83，小风琴0.89，宽风琴0.94。末档音管是全图最高的部分，仍留在格内细边里。左上短哨是横卧短粗奶油哨，一端叶绿哨口，四周留大片浅蓝。右上直管笛是一根竖直奶油直管，比短哨略高，末端不张开。第二行左是喇叭口笛，仍是这一支笛，下端轻轻张开成圆喇叭，叶绿哨口，不是号角。第二行右是加键长笛，管身更长并斜向放置，管身一排圆键盖。第三行左是一件排箫，一排长短不一的短管，比长笛更高，不是两根笛子捆在一起。第三行右是立式风管排，多根高低不同的奶油音管立在叶绿座上。第四行左是小风琴，叶绿座上一排键盘，键盘上方较短的奶油音管。第四行右是宽风琴，更宽，奶油音管立在叶绿座上，这些音管高于图中任何物件，不是棕色手摇琴，没有大蝴蝶结。无英文，无等级数字，无脸，无字。禁止龙虾，禁止手指，禁止厨房人物，禁止标志。不透明浅蓝实底。 本轮先把右上直管立起来，并给斜向长笛加上圆键盖；每件都要比上一件更高。 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | 先改第8格：改成更宽的风琴，带一排键盘和一小块叶绿座，奶油音管必须是全图最高。圆角格与细缝改成同一种浅蓝，变高的只留乐器：短哨约占格高一半，之后逐档加高到末档0.94。去掉大叶片。；邻档主体框高必须明显递增，末档最大，禁止邻档一样大 | MUST_FIX (≤2): 先改第8格：改成更宽的风琴，带一排键盘和一小块叶绿座，奶油音管必须是全图最高；圆角格与细缝改成同一种浅蓝，变高的只留乐器：短哨约占格高一半，之后逐档加高到末档0.94",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.0,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：右上直管横躺，框高只有0.16，比左上短哨0.31更矮。第二行右只有一排音孔，没有凸起的圆键盖。第三行左排箫框高0.57，矮于斜笛。左下小风琴矮于右三立管。八件",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.38"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：第二行左下端是张开的奶油圆喇叭，不是号角。右下是更宽的键盘风琴，音管是八格里最高的一簇。左上是短哨，第三行左是一件排箫。没有捆住的两根笛子，没有棕色手摇琴，没有",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.38"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "18:02:13"
+    },
+    {
+      "round": 4,
+      "round_label": "第 4 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "gh-wind-v2",
+        "scale": "medium",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "1512x2688",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": false,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [
+          "参考图已加边为同一张垫图 'gh_merge__ar_9x16.png'，会话和生图都用这一张，不要再垫原图。"
+        ],
+        "continuation_pad": false,
+        "pad_diverged": true
+      },
+      "generated_at": "18:04:18",
+      "image": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh_portrait_v2\\merge_wind\\sheet_r4.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 172171,
+        "size_kb": 168.1,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.15
+      },
+      "raw_score": 8.45,
+      "score": 8.45,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.3/光影9.1/透视9.0/质感9.1/风格8.9/无瑕疵7.4",
+      "dims_parsed": {
+        "composition": 8.3,
+        "lighting_color": 9.1,
+        "perspective_anatomy": 9.0,
+        "texture_detail": 9.1,
+        "spec_style": 8.9,
+        "flawlessness": 7.4
+      },
+      "weighted_score": 8.45,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.07 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "邻档体量几乎一样大：第 1 格高 0.78，第 2 格高 0.78（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 3 格高 1.00，第 4 格高 1.00（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 4 格高 1.00，第 5 格高 1.00（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 5 格高 1.00，第 6 格高 1.00（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 6 格高 1.00，第 7 格高 0.71（差 -0.29 < 0.04）",
+        "邻档体量几乎一样大：第 7 格高 0.71，第 8 格高 0.71（差 0.00 < 0.04）"
+      ],
+      "stagnated": true,
+      "strengths": "右上直管已经立起来，高于左上短哨。右下是更宽的键盘风琴，右三是高低音管立在绿色座上。浅蓝圆角格还在。没有号角，没有捆住的两根笛子，没有棕色手摇琴，没有大蝴蝶结。",
+      "defects": "右三立管的管口高于右下风琴的管口，末档音管不是全图最高。第二行左的喇叭只轻轻张开，第二行右的键盖只是小凸点。八个浅蓝圆角块都顶满格子，量到的框高八格都在1.00，乐器高矮被格子盖住。；邻档体量几乎一样大：第 1 格高 0.78，第 2 格高 0.78（差 0.00 < 0.04）；邻档体量几乎一样大：第 3 格高 1.00，第 4 格高 1.00（差 0.00 < 0.04）；邻档体量几乎一样大：第 4 格高 1.00，第 5 格高 1.00（差 0.00 < 0.04）；邻档体量几乎一样大：第 5 格高 1.00，第 6 格高 1.00（差 0.00 < 0.04）；邻档体量几乎一样大：第 6 格高 1.00，第 7 格高 0.71（差 -0.29 < 0.04）；邻档体量几乎一样大：第 7 格高 0.71，第 8 格高 0.71（差 0.00 < 0.04）",
+      "next_fix": "已是第4轮。若再画，先把右下音管加到高于右三，并让乐器本身按0.48到0.94增高，不要把圆角格量成主体。；邻档主体框高必须明显递增，末档最大，禁止邻档一样大",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.GardenWind\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n  · 确认作为货柜正向锚点：合成宣传图里的道具是圆润厚实的糖釉卡通3D。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=居中/对称构图 / 半身；色温=避免过饱和 / 冷色调 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色；白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [composition-thirds-grid] 构图法则：九宫格三分法与呼吸留白安全区: 将核心视觉焦点布置在九宫格三分线交点（黄金分割点 0.618）上，利用引导线与前景暗角汇聚视线；独立资产四周必须预留 16px~24px 纯透明呼吸安全边距，严禁发冠、武器或特效贴死画布边缘被裁切。\n  · [icon-stroke-grid-spec] 图标工程规范：线宽统一、安全网格与剪影可读性: 成套技能/功能图标必须锁定统一的描边线宽（如全局统一 2px 描边，严禁 1px 与 6px 混杂）、统一圆角半径与 16px~24px 安全内边距网格，确保在 64x64px 极小缩略尺寸下主体几何剪影依然一眼可辨、不与背景杂光粘连。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光 | 竖屏9:16不透明实底整表。花园管乐八档合成梯整表，版式4×2，四行两列，八个同样大的浅蓝圆角格铺满整张，格内与细缝是同一种浅蓝，不要顶栏底栏标题。阅读从左到右再从上到下。Gossip Harbor货柜：光泽卡通3D，圆润厚实，无硬描边，暖饱和，柔光，竖屏，每格一件完整乐器。每格单件居中，不是场景。species_change换物种，仍是花园管乐。家族色相是奶油管与叶绿座。合成理由：两件上一档合成下一件。变高的是乐器，不是把圆角格拉高。主体框高相对本格：短哨0.48，直管笛0.55，喇叭口笛0.62，加键长笛0.69，排箫0.76，立式风管排0.83，小风琴0.89，宽风琴0.94。末档音管是全图最高的部分，仍留在格内细边里。左上短哨是横卧短粗奶油哨，一端叶绿哨口，四周留大片浅蓝。右上直管笛是一根竖直奶油直管，比短哨略高，末端不张开。第二行左是喇叭口笛，仍是这一支笛，下端轻轻张开成圆喇叭，叶绿哨口，不是号角。第二行右是加键长笛，管身更长并斜向放置，管身一排圆键盖。第三行左是一件排箫，一排长短不一的短管，比长笛更高，不是两根笛子捆在一起。第三行右是立式风管排，多根高低不同的奶油音管立在叶绿座上。第四行左是小风琴，叶绿座上一排键盘，键盘上方较短的奶油音管。第四行右是宽风琴，更宽，奶油音管立在叶绿座上，这些音管高于图中任何物件，不是棕色手摇琴，没有大蝴蝶结。无英文，无等级数字，无脸，无字。禁止龙虾，禁止手指，禁止厨房人物，禁止标志。不透明浅蓝实底。 本轮右上直管立起，斜笛加圆键盖，右下音管仍须全图最高。 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | 右上直管立起来并高于短哨。第四格加上凸起圆键盖。从左到右再从上到下每件都更高，右下音管仍是全图最高。圆角格只用比底色略浅的同一种浅蓝，不要深缝。；邻档主体框高必须明显递增，末档最大，禁止邻档一样大 | MUST_FIX (≤2): 右上直管立起来并高于短哨；第四格加上凸起圆键盖",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.0,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_MAX_ROUNDS",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：右三立管的管口高于右下风琴的管口，末档音管不是全图最高。第二行左的喇叭只轻轻张开，第二行右的键盖只是小凸点。八个浅蓝圆角块都顶满格子，量到的框高八格都在1.00",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.45"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：右上直管已经立起来，高于左上短哨。右下是更宽的键盘风琴，右三是高低音管立在绿色座上。浅蓝圆角格还在。没有号角，没有捆住的两根笛子，没有棕色手摇琴，没有大蝴蝶结。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.45"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "18:04:33"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-11-10 14:02:24 UTC+8"
+    },
+    "module": "merge.GardenWind",
+    "goal": "花园管乐八档合成梯整表 4×2 竖屏。overview_sheet 八档，画幅 9:16。",
+    "confidence": 0.45,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "个人口味/正向保留非空",
+      "注入红线可控（0 条，已按任务主题过滤）",
+      "挂载 0 张项目知识卡 + 2 张全局美术底层基础卡"
+    ],
+    "top_recipes": [],
+    "top_redlines": [],
+    "art_decisions": [],
+    "private_knowledge": [],
+    "shared_knowledge": [
+      {
+        "id": "composition-thirds-grid",
+        "title": "构图法则：九宫格三分法与呼吸留白安全区",
+        "body": "将核心视觉焦点布置在九宫格三分线交点（黄金分割点 0.618）上，利用引导线与前景暗角汇聚视线；独立资产四周必须预留 16px~24px 纯透明呼吸安全边距，严禁发冠、武器或特效贴死画布边缘被裁切。",
+        "layer_scope": "shared"
+      },
+      {
+        "id": "icon-stroke-grid-spec",
+        "title": "图标工程规范：线宽统一、安全网格与剪影可读性",
+        "body": "成套技能/功能图标必须锁定统一的描边线宽（如全局统一 2px 描边，严禁 1px 与 6px 混杂）、统一圆角半径与 16px~24px 安全内边距网格，确保在 64x64px 极小缩略尺寸下主体几何剪影依然一眼可辨、不与背景杂光粘连。",
+        "layer_scope": "shared"
+      }
+    ],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [
+        "冷光源",
+        "暖光",
+        "柔光"
+      ],
+      "preferred_composition": [
+        "居中/对称构图",
+        "半身"
+      ],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [
+        "避免过饱和",
+        "冷色调",
+        "暖色调"
+      ],
+      "banned_habits": [
+        "廉价塑料感/油腻高光",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色",
+        "白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计"
+      ],
+      "keep_phrases": [
+        "确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色",
+        "确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶",
+        "确认作为货柜正向锚点：合成宣传图里的道具是圆润厚实的糖釉卡通3D。",
+        "确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。"
+      ],
+      "banned_habits_raw_tail": [
+        "禁止偏离样张画风：过度霓虹、脏暗阴影、油腻高光、写实皮肤毛孔、扁平UI描边",
+        "电池审稿：原画竖构图避免贴样张布局；边缘反光勿过曝",
+        "电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感",
+        "黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差",
+        "错误头身比/头过大",
+        "漏抠/黑底/毛边",
+        "廉价塑料感/油腻高光",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色"
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.GardenWind\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n  · 确认作为货柜正向锚点：合成宣传图里的道具是圆润厚实的糖釉卡通3D。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=居中/对称构图 / 半身；色温=避免过饱和 / 冷色调 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色；白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [composition-thirds-grid] 构图法则：九宫格三分法与呼吸留白安全区: 将核心视觉焦点布置在九宫格三分线交点（黄金分割点 0.618）上，利用引导线与前景暗角汇聚视线；独立资产四周必须预留 16px~24px 纯透明呼吸安全边距，严禁发冠、武器或特效贴死画布边缘被裁切。\n  · [icon-stroke-grid-spec] 图标工程规范：线宽统一、安全网格与剪影可读性: 成套技能/功能图标必须锁定统一的描边线宽（如全局统一 2px 描边，严禁 1px 与 6px 混杂）、统一圆角半径与 16px~24px 安全内边距网格，确保在 64x64px 极小缩略尺寸下主体几何剪影依然一眼可辨、不与背景杂光粘连。",
+    "built_at": "2026-11-10 17:50:24 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：第8格是五根奶油音管立在绿色大叶片上，没有键盘，和第6格同是叶座音管，音管顶端没有高于第6格。八个浅蓝圆角块几乎顶满格子，量到的主体框高第1格0.96、第2格0",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.19"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：左上是奶油短哨，右上是一根直管，第二行左是一支带小圆喇叭口的笛，右是斜向圆键长笛，第三行左是一件排箫。没有号角，没有捆住的两根笛子，没有棕色手摇琴，没有大蝴蝶结",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.19"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：第二行左格仍是上下收口的直管长笛，下端没有张开的圆喇叭，直管之后又画回长笛。第四格斜管只有圆孔，看不见键盖。右下风琴音管比右三排管更矮，框高约0.83对0.96",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.1"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：右下已经是一架带黑白键盘的宽风琴，右三是高低奶油管立在绿色小座上，没有大叶片。左上是短哨，右上是直管，第三行左是一件排箫。没有号角，没有棕色手摇琴，没有大蝴蝶结",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.1"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：右上直管横躺，框高只有0.16，比左上短哨0.31更矮。第二行右只有一排音孔，没有凸起的圆键盖。第三行左排箫框高0.57，矮于斜笛。左下小风琴矮于右三立管。八件",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.38"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：第二行左下端是张开的奶油圆喇叭，不是号角。右下是更宽的键盘风琴，音管是八格里最高的一簇。左上是短哨，第三行左是一件排箫。没有捆住的两根笛子，没有棕色手摇琴，没有",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.38"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：右三立管的管口高于右下风琴的管口，末档音管不是全图最高。第二行左的喇叭只轻轻张开，第二行右的键盖只是小凸点。八个浅蓝圆角块都顶满格子，量到的框高八格都在1.00",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.45"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：右上直管已经立起来，高于左上短哨。右下是更宽的键盘风琴，右三是高低音管立在绿色座上。浅蓝圆角格还在。没有号角，没有捆住的两根笛子，没有棕色手摇琴，没有大蝴蝶结。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.45"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 2,
+  "regression_drop": 0.15,
+  "safe_early_stop": false,
+  "merge_delivery": "overview_sheet",
+  "merge_sheet_cap": 4,
+  "merge_discuss_cap": 2,
+  "single_judge": false,
+  "understanding_contract": {
+    "version": 1,
+    "raw_utterance": "花园管乐八档合成梯整表 4×2 竖屏。overview_sheet 八档，画幅 9:16。",
+    "l0": {
+      "route_ids": [
+        "merge.ladder"
+      ],
+      "banner": "【按 同域合成梯：先定链型与关系，再按交付出图 走了】",
+      "delivery": "merge.ladder"
+    },
+    "l1": {
+      "locks": [],
+      "unlocks": [],
+      "defaults_shown": [],
+      "commercial_vibe": ""
+    },
+    "l2": {
+      "open": true,
+      "surface_fix": "",
+      "last_feedback": "",
+      "feedback_layer": ""
+    },
+    "notes": ""
+  },
+  "reasonableness_history": [
+    {
+      "reviewed_at": 1794304296.5104885,
+      "passed": true,
+      "skill": "merge",
+      "issues": []
+    }
+  ],
+  "reasonableness": {
+    "passed": true,
+    "skill": "merge",
+    "draft_prompt": "八档管乐整表，但没写单件居中，也没写每档合成理由。",
+    "revised_prompt": "竖屏9:16不透明实底整表。花园管乐八档合成梯整表，版式4×2，四行两列，八个同样大的浅蓝圆角格铺满整张，格内与细缝是同一种浅蓝，不要顶栏底栏标题。阅读从左到右再从上到下。Gossip Harbor货柜：光泽卡通3D，圆润厚实，无硬描边，暖饱和，柔光，竖屏，每格一件完整乐器。每格单件居中，不是场景。species_change换物种，仍是花园管乐。家族色相是奶油管与叶绿座。合成理由：两件上一档合成下一件。变高的是乐器，不是把圆角格拉高。主体框高相对本格：短哨0.48，直管笛0.55，喇叭口笛0.62，加键长笛0.69，排箫0.76，立式风管排0.83，小风琴0.89，宽风琴0.94。末档音管是全图最高的部分，仍留在格内细边里。左上短哨是横卧短粗奶油哨，一端叶绿哨口，四周留大片浅蓝。右上直管笛是一根竖直奶油直管，比短哨略高，末端不张开。第二行左是喇叭口笛，仍是这一支笛，下端轻轻张开成圆喇叭，叶绿哨口，不是号角。第二行右是加键长笛，管身更长并斜向放置，管身一排圆键盖。第三行左是一件排箫，一排长短不一的短管，比长笛更高，不是两根笛子捆在一起。第三行右是立式风管排，多根高低不同的奶油音管立在叶绿座上。第四行左是小风琴，叶绿座上一排键盘，键盘上方较短的奶油音管。第四行右是宽风琴，更宽，奶油音管立在叶绿座上，这些音管高于图中任何物件，不是棕色手摇琴，没有大蝴蝶结。无英文，无等级数字，无脸，无字。禁止龙虾，禁止手指，禁止厨房人物，禁止标志。不透明浅蓝实底。",
+    "checklist": {
+      "subject_action": {
+        "status": "ok",
+        "note": ""
+      },
+      "element_budget": {
+        "status": "ok",
+        "note": ""
+      },
+      "hard_locks": {
+        "status": "ok",
+        "note": ""
+      },
+      "fail_at_glance": {
+        "status": "ok",
+        "note": ""
+      },
+      "single_centered_item": {
+        "status": "ok",
+        "note": ""
+      },
+      "chain_mode_declared": {
+        "status": "ok",
+        "note": ""
+      },
+      "upgrade_reason_concrete": {
+        "status": "ok",
+        "note": ""
+      },
+      "family_or_base_lock": {
+        "status": "ok",
+        "note": ""
+      }
+    },
+    "issues": [],
+    "notes": "",
+    "reviewed_at": 1794304296.5104885,
+    "reviewed_at_iso": "2026-11-10 17:51:36",
+    "force_pass": false,
+    "skill_raw": "merge"
+  },
+  "discussions": [
+    {
+      "round": 0,
+      "kind": "reasonableness",
+      "prompt": "竖屏9:16不透明实底整表。花园管乐八档合成梯整表，版式4×2，四行两列，八个同样大的浅蓝圆角格铺满整张，格内与细缝是同一种浅蓝，不要顶栏底栏标题。阅读从左到右再从上到下。Gossip Harbor货柜：光泽卡通3D，圆润厚实，无硬描边，暖饱和，柔光，竖屏，每格一件完整乐器。每格单件居中，不是场景。species_change换物种，仍是花园管乐。家族色相是奶油管与叶绿座。合成理由：两件上一档合成下一件。变高的是乐器，不是把圆角格拉高。主体框高相对本格：短哨0.48，直管笛0.55，喇叭口笛0.62，加键长笛0.69，排箫0.76，立式风管排0.83，小风琴0.89，宽风琴0.94。末档音管是全图最高的部分，仍留在格内细边里。左上短哨是横卧短粗奶油哨，一端叶绿哨口，四周留大片浅蓝。右上直管笛是一根竖直奶油直管，比短哨略高，末端不张开。第二行左是喇叭口笛，仍是这一支笛，下端轻轻张开成圆喇叭，叶绿哨口，不是号角。第二行右是加键长笛，管身更长并斜向放置，管身一排圆键盖。第三行左是一件排箫，一排长短不一的短管，比长笛更高，不是两根笛子捆在一起。第三行右是立式风管排，多根高低不同的奶油音管立在叶绿座上。第四行左是小风琴，叶绿座上一排键盘，键盘上方较短的奶油音管。第四行右是宽风琴，更宽，奶油音管立在叶绿座上，这些音管高于图中任何物件，不是棕色手摇琴，没有大蝴蝶结。无英文，无等级数字，无脸，无字。禁止龙虾，禁止手指，禁止厨房人物，禁止标志。不透明浅蓝实底。",
+      "strengths": "合理性闸已过：subject_action=ok；element_budget=ok；hard_locks=ok；fail_at_glance=ok；single_centered_item=ok；chain_mode_declared=ok；upgrade_reason_concrete=ok；family_or_base_lock=ok",
+      "defects": "",
+      "next_fix": "首轮 generate 使用本修订提示词；审美迭代不得推翻硬锁与元素预算"
+    }
+  ],
+  "warm_start_merged": true,
+  "warm_start_merged_at": "2026-11-10 18:04:18",
+  "warm_start_block_sha1": "ab71fb405dc2",
+  "ActionRequired": "STOP_PICK_BEST",
+  "showcase_ready": true,
+  "winner": {
+    "round": 4,
+    "round_label": "第 4 轮精修",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "9:16",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png"
+    ],
+    "param_validation": {
+      "valid": true,
+      "validation_passed": true,
+      "case_id": "gh-wind-v2",
+      "scale": "medium",
+      "aspect_ratio": "9:16",
+      "ref_aspect_ratio": "9:16",
+      "ref_dimensions": "1512x2688",
+      "output_aspect_ratio": "9:16",
+      "output_dimensions": "720x1280",
+      "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png"
+      ],
+      "inherited_default_aspect_ratio": true,
+      "inherited_default_pad_image": false,
+      "matched_ref_aspect_ratio": true,
+      "matched_ref_pad_image": true,
+      "matched_output_aspect_ratio": true,
+      "three_step_stage": "step3_judge",
+      "three_step_verified": true,
+      "warnings": [
+        "参考图已加边为同一张垫图 'gh_merge__ar_9x16.png'，会话和生图都用这一张，不要再垫原图。"
+      ],
+      "continuation_pad": false,
+      "pad_diverged": true
+    },
+    "generated_at": "18:04:18",
+    "image": "assets/skill_20261110_gh_portrait_v2/merge_wind/sheet_r4.jpg",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 172171,
+      "size_kb": 168.1,
+      "width": 720,
+      "height": 1280,
+      "aspect_ratio": "9:16",
+      "canonical_aspect_ratio": "9:16",
+      "color_entropy": 7.15
+    },
+    "raw_score": 8.45,
+    "score": 8.45,
+    "target_score_threshold": 9.5,
+    "dims": "构图8.3/光影9.1/透视9.0/质感9.1/风格8.9/无瑕疵7.4",
+    "dims_parsed": {
+      "composition": 8.3,
+      "lighting_color": 9.1,
+      "perspective_anatomy": 9.0,
+      "texture_detail": 9.1,
+      "spec_style": 8.9,
+      "flawlessness": 7.4
+    },
+    "weighted_score": 8.45,
+    "audit_warnings": [
+      "收敛停滞预警：本轮净增 +0.07 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+      "Agent Absolute-5D 已采纳（门槛 9.5）",
+      "邻档体量几乎一样大：第 1 格高 0.78，第 2 格高 0.78（差 0.00 < 0.04）",
+      "邻档体量几乎一样大：第 3 格高 1.00，第 4 格高 1.00（差 0.00 < 0.04）",
+      "邻档体量几乎一样大：第 4 格高 1.00，第 5 格高 1.00（差 0.00 < 0.04）",
+      "邻档体量几乎一样大：第 5 格高 1.00，第 6 格高 1.00（差 0.00 < 0.04）",
+      "邻档体量几乎一样大：第 6 格高 1.00，第 7 格高 0.71（差 -0.29 < 0.04）",
+      "邻档体量几乎一样大：第 7 格高 0.71，第 8 格高 0.71（差 0.00 < 0.04）"
+    ],
+    "stagnated": true,
+    "strengths": "右上直管已经立起来，高于左上短哨。右下是更宽的键盘风琴，右三是高低音管立在绿色座上。浅蓝圆角格还在。没有号角，没有捆住的两根笛子，没有棕色手摇琴，没有大蝴蝶结。",
+    "defects": "右三立管的管口高于右下风琴的管口，末档音管不是全图最高。第二行左的喇叭只轻轻张开，第二行右的键盖只是小凸点。八个浅蓝圆角块都顶满格子，量到的框高八格都在1.00，乐器高矮被格子盖住。；邻档体量几乎一样大：第 1 格高 0.78，第 2 格高 0.78（差 0.00 < 0.04）；邻档体量几乎一样大：第 3 格高 1.00，第 4 格高 1.00（差 0.00 < 0.04）；邻档体量几乎一样大：第 4 格高 1.00，第 5 格高 1.00（差 0.00 < 0.04）；邻档体量几乎一样大：第 5 格高 1.00，第 6 格高 1.00（差 0.00 < 0.04）；邻档体量几乎一样大：第 6 格高 1.00，第 7 格高 0.71（差 -0.29 < 0.04）；邻档体量几乎一样大：第 7 格高 0.71，第 8 格高 0.71（差 0.00 < 0.04）",
+    "next_fix": "已是第4轮。若再画，先把右下音管加到高于右三，并让乐器本身按0.48到0.94增高，不要把圆角格量成主体。；邻档主体框高必须明显递增，末档最大，禁止邻档一样大",
+    "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.GardenWind\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n  · 确认作为货柜正向锚点：合成宣传图里的道具是圆润厚实的糖釉卡通3D。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=居中/对称构图 / 半身；色温=避免过饱和 / 冷色调 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色；白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [composition-thirds-grid] 构图法则：九宫格三分法与呼吸留白安全区: 将核心视觉焦点布置在九宫格三分线交点（黄金分割点 0.618）上，利用引导线与前景暗角汇聚视线；独立资产四周必须预留 16px~24px 纯透明呼吸安全边距，严禁发冠、武器或特效贴死画布边缘被裁切。\n  · [icon-stroke-grid-spec] 图标工程规范：线宽统一、安全网格与剪影可读性: 成套技能/功能图标必须锁定统一的描边线宽（如全局统一 2px 描边，严禁 1px 与 6px 混杂）、统一圆角半径与 16px~24px 安全内边距网格，确保在 64x64px 极小缩略尺寸下主体几何剪影依然一眼可辨、不与背景杂光粘连。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光 | 竖屏9:16不透明实底整表。花园管乐八档合成梯整表，版式4×2，四行两列，八个同样大的浅蓝圆角格铺满整张，格内与细缝是同一种浅蓝，不要顶栏底栏标题。阅读从左到右再从上到下。Gossip Harbor货柜：光泽卡通3D，圆润厚实，无硬描边，暖饱和，柔光，竖屏，每格一件完整乐器。每格单件居中，不是场景。species_change换物种，仍是花园管乐。家族色相是奶油管与叶绿座。合成理由：两件上一档合成下一件。变高的是乐器，不是把圆角格拉高。主体框高相对本格：短哨0.48，直管笛0.55，喇叭口笛0.62，加键长笛0.69，排箫0.76，立式风管排0.83，小风琴0.89，宽风琴0.94。末档音管是全图最高的部分，仍留在格内细边里。左上短哨是横卧短粗奶油哨，一端叶绿哨口，四周留大片浅蓝。右上直管笛是一根竖直奶油直管，比短哨略高，末端不张开。第二行左是喇叭口笛，仍是这一支笛，下端轻轻张开成圆喇叭，叶绿哨口，不是号角。第二行右是加键长笛，管身更长并斜向放置，管身一排圆键盖。第三行左是一件排箫，一排长短不一的短管，比长笛更高，不是两根笛子捆在一起。第三行右是立式风管排，多根高低不同的奶油音管立在叶绿座上。第四行左是小风琴，叶绿座上一排键盘，键盘上方较短的奶油音管。第四行右是宽风琴，更宽，奶油音管立在叶绿座上，这些音管高于图中任何物件，不是棕色手摇琴，没有大蝴蝶结。无英文，无等级数字，无脸，无字。禁止龙虾，禁止手指，禁止厨房人物，禁止标志。不透明浅蓝实底。 本轮右上直管立起，斜笛加圆键盖，右下音管仍须全图最高。 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | 右上直管立起来并高于短哨。第四格加上凸起圆键盖。从左到右再从上到下每件都更高，右下音管仍是全图最高。圆角格只用比底色略浅的同一种浅蓝，不要深缝。；邻档主体框高必须明显递增，末档最大，禁止邻档一样大 | MUST_FIX (≤2): 右上直管立起来并高于短哨；第四格加上凸起圆键盖",
+    "continuation": false,
+    "passed": false,
+    "gate_blocked": true,
+    "image_gate_blocked": false,
+    "anatomy_score": 9.0,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "unknown",
+    "judge_source": "agent_absolute_5d",
+    "remote_vlm": {
+      "source": "agent_self_judge",
+      "provider": "",
+      "model": "",
+      "error": "",
+      "active": false,
+      "score_evidence": {},
+      "evidence_missing_dims": [],
+      "review": {
+        "pass_count": 0,
+        "rerated": false,
+        "reason": ""
+      }
+    },
+    "should_continue_next_round": false,
+    "decision": "STOP_MAX_ROUNDS",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "style_lock",
+        "lesson": "本轮短板偏「style_lock」：右三立管的管口高于右下风琴的管口，末档音管不是全图最高。第二行左的喇叭只轻轻张开，第二行右的键盖只是小凸点。八个浅蓝圆角块都顶满格子，量到的框高八格都在1.00",
+        "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+        "from_score": "8.45"
+      },
+      {
+        "category": "keep",
+        "lesson": "保留本轮已做对的：右上直管已经立起来，高于左上短哨。右下是更宽的键盘风琴，右三是高低音管立在绿色座上。浅蓝圆角格还在。没有号角，没有捆住的两根笛子，没有棕色手摇琴，没有大蝴蝶结。",
+        "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+        "from_score": "8.45"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "18:04:33",
+    "asset_image": "assets/skill_20261110_gh_portrait_v2/merge_wind/sheet_r4.jpg"
+  },
+  "rounds_to_converge": 4,
+  "convergence_badge": "共 4 轮未达阈值，采用最高分",
+  "winner_image": "c:/Users/ZhengLangPC/Desktop/Cursor-Pmem-Art/assets/skill_20261110_gh_portrait_v2/merge_wind/sheet_r4.jpg",
+  "best_image": "c:/Users/ZhengLangPC/Desktop/Cursor-Pmem-Art/assets/skill_20261110_gh_portrait_v2/merge_wind/sheet_r4.jpg",
+  "final_image": "assets/skill_20261110_gh_portrait_v2/merge_wind/final.jpg",
+  "settle_pending": false,
+  "process_board": ".memory-art/converge/boards/gh-wind-v2/index.html",
+  "settle_done_at": "2026-11-10 18:05:25 UTC+8",
+  "settle_saved_paths": [
+    ".memory-art\\entries\\merge.GardenWind\\CHAT20261110180515303RECIPE.md",
+    ".memory-art\\entries\\merge.GardenWind\\CHAT20261110180515884REDLINE.md",
+    ".memory-art\\_reflections\\20261110_180516_gh-wind-v2.json"
+  ]
+}

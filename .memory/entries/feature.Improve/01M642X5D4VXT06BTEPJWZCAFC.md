@@ -3,7 +3,7 @@ id: 01M642X5D4VXT06BTEPJWZCAFC
 module: feature.Improve
 entity: SharedKnowledge
 kind: exclusion
-status: seed
+status: active
 supersedes: []
 anchors:
 - improve/knowledge.py#is_style_agnostic_universal_card

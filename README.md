@@ -16,7 +16,7 @@
 ![Skills](https://img.shields.io/badge/美术技能-10-8B5CF6)
 ![Threshold](https://img.shields.io/badge/合格线-≥9.50-blue)
 
-[📦 下载用户包 0.16.8-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.8-art) · [📖 使用手册](USER_MANUAL.md) · [认路白话流程图](docs/route_pipeline.html) · [进阶技能点选](docs/skills/flows.html) · [效果图墙](#效果长什么样) · [全页展陈](docs/showcase/skills-homepage/index.html) · [架构](ARCHITECTURE.md)
+[📦 下载用户包 0.16.9-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.9-art) · [📖 使用手册](USER_MANUAL.md) · [认路白话流程图](docs/route_pipeline.html) · [进阶技能点选](docs/skills/flows.html) · [效果图墙](#效果长什么样) · [全页展陈](docs/showcase/skills-homepage/index.html) · [架构](ARCHITECTURE.md)
 
 </div>
 
@@ -34,10 +34,10 @@
 
 ## 一分钟接入
 
-**推荐画师：下用户包**（不含研发用 pmem）→ [Releases · v0.16.8-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.8-art)
+**推荐画师：下用户包**（不含研发用 pmem）→ [Releases · v0.16.9-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.9-art)
 
 ```bash
-# 解压 pmem-art-0.16.8-art.zip 后
+# 解压 pmem-art-0.16.9-art.zip 后
 pip install -r requirements.txt
 pyw -3 -u pmem_art.py init --name "MyArtProject"
 pyw -3 -u pmem_art.py skills --install

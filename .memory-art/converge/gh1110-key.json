@@ -1,0 +1,1046 @@
+{
+  "session_id": "gh1110-key",
+  "started_at": "2026-11-10 16:12:09 UTC+8",
+  "goal": "原画主视觉：妖精花园黄昏，一个尖耳小妖精站在圆窗前写信，藕粉裙，暖灯，花园黄昏。竖幅 3:4。光泽卡通三维，圆润五官，暖饱和，柔光，干净高光。平视侧机位。这是原画主视觉。",
+  "module": "keyart.GlossDuskPoster",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "recompose",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "recompose",
+    "label": "定向改构图模式 · 按用户指定新构图动态达标闭环 (Directed Re-Composition Dynamic Threshold >=9.5)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 2,
+    "target_score_threshold": 9.5,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.1875,
+      "perspective_anatomy": 0.1125,
+      "texture_detail": 0.1875,
+      "spec_style": 0.1125,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "style_medium",
+      "identity",
+      "recompose_dir_target"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图；第 1 轮落到指定机位，之后只在提示词上补还没过的那一处（提示词改动仍 ≤85%）",
+    "max_prompt_delta_ratio": 0.85,
+    "allow_recompose": true,
+    "allow_viewpoint_change": true,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)",
+      "recompose_direction (不偏离指定构图方向)"
+    ],
+    "prompt_delta_baseline": "previous",
+    "min_round_leap": 0.2,
+    "prompt_directive": "原图画风优先：按「平视侧机位，中景，一个尖耳小妖精站在圆窗内侧写信，圆窗在身侧，油灯在窗台」换机位，材质和光的类型不动",
+    "medium_family": "volume",
+    "best_direction_hint": "最优方向：只写目标机位与布局",
+    "recompose_dir": "平视侧机位，中景，一个尖耳小妖精站在圆窗内侧写信，圆窗在身侧，油灯在窗台",
+    "goal": "原画主视觉：妖精花园黄昏，一个尖耳小妖精站在圆窗前写信，藕粉裙，暖灯，花园黄昏。竖幅 3:4。光泽卡通三维，圆润五官，暖饱和，柔光，干净高光。平视侧机位。这是原画主视觉。",
+    "module": "keyart.GlossDuskPoster",
+    "ref_image": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_loading.jpg",
+    "ref_analysis": "构图与视角：竖幅加载屏，略仰。顶中是标志，中部两个女孩叠在一起占大半，左上有小飞宠，右下巨大南瓜占前景，底部是说明和进度条。两人正对镜头。这不是本品机位。姿态落点：披风女孩一手靠近下巴；另一女孩双手抱着玩偶。色板与光影：冷蓝洞口为环境，暖黄从下方向上打光，皮肤和眼睛是干净的宽高光，饱和偏暖。笔触与材质：光泽卡通三维，圆润五官，无硬描边，柔光渐变。比例约三到四头身。只继承光泽卡通三维、圆润五官、无硬描边、暖饱和、柔光、干净高光。不继承两个女孩、南瓜、蝙蝠披风、宠物、标志、进度条、英文标题和正对镜头的堆叠分区。角色是花园妖精，不是画面里的人。"
+  },
+  "medium_family": "volume",
+  "contract": "",
+  "target_score_threshold": 9.5,
+  "recompose_dir": "平视侧机位，中景，一个尖耳小妖精站在圆窗内侧写信，圆窗在身侧，油灯在窗台",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_loading__ar_3x4.png",
+  "ref_analysis": "构图与视角：竖幅加载屏，略仰。顶中是标志，中部两个女孩叠在一起占大半，左上有小飞宠，右下巨大南瓜占前景，底部是说明和进度条。两人正对镜头。这不是本品机位。姿态落点：披风女孩一手靠近下巴；另一女孩双手抱着玩偶。色板与光影：冷蓝洞口为环境，暖黄从下方向上打光，皮肤和眼睛是干净的宽高光，饱和偏暖。笔触与材质：光泽卡通三维，圆润五官，无硬描边，柔光渐变。比例约三到四头身。只继承光泽卡通三维、圆润五官、无硬描边、暖饱和、柔光、干净高光。不继承两个女孩、南瓜、蝙蝠披风、宠物、标志、进度条、英文标题和正对镜头的堆叠分区。角色是花园妖精，不是画面里的人。",
+  "default_aspect_ratio": "3:4",
+  "default_reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_loading__ar_3x4.png"
+  ],
+  "aspect_ratio": "3:4",
+  "reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_loading__ar_3x4.png"
+  ],
+  "ref_physical_traits": {
+    "exists": true,
+    "size_bytes": 2914816,
+    "size_kb": 2846.5,
+    "width": 2016,
+    "height": 2688,
+    "aspect_ratio": "3:4",
+    "canonical_aspect_ratio": "3:4",
+    "color_entropy": 7.99
+  },
+  "param_validation": {
+    "valid": true,
+    "validation_passed": true,
+    "case_id": "gh1110-key",
+    "scale": "recompose",
+    "aspect_ratio": "3:4",
+    "ref_aspect_ratio": "3:4",
+    "ref_dimensions": "2016x2688",
+    "output_aspect_ratio": "",
+    "output_dimensions": "",
+    "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_loading__ar_3x4.png",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_loading__ar_3x4.png"
+    ],
+    "inherited_default_aspect_ratio": false,
+    "inherited_default_pad_image": false,
+    "matched_ref_aspect_ratio": true,
+    "matched_ref_pad_image": true,
+    "matched_output_aspect_ratio": true,
+    "three_step_stage": "step1_start",
+    "three_step_verified": false,
+    "warnings": [
+      "参考图已加边为同一张垫图 'gh_loading__ar_3x4.png'，会话和生图都用这一张，不要再垫原图。"
+    ]
+  },
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.5,
+  "accept_threshold": 9.5,
+  "max_rounds": 4,
+  "ready_to_finish": true,
+  "status": "finished",
+  "owner_conversation_id": "gh1110-key",
+  "route_ids": [
+    "draw.key"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "3:4",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_loading__ar_3x4.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "gh1110-key",
+        "scale": "recompose",
+        "aspect_ratio": "3:4",
+        "ref_aspect_ratio": "3:4",
+        "ref_dimensions": "2016x2688",
+        "output_aspect_ratio": "3:4",
+        "output_dimensions": "864x1152",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_loading__ar_3x4.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_loading__ar_3x4.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "16:17:05",
+      "image": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\draw_key\\r1.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 1869223,
+        "size_kb": 1825.4,
+        "width": 864,
+        "height": 1152,
+        "aspect_ratio": "3:4",
+        "canonical_aspect_ratio": "3:4",
+        "color_entropy": 7.97
+      },
+      "raw_score": 8.85,
+      "score": 8.85,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.8/光影9.3/透视8.6/质感9.0/风格9.0/无瑕疵8.5",
+      "dims_parsed": {
+        "composition": 8.8,
+        "lighting_color": 9.3,
+        "perspective_anatomy": 8.6,
+        "texture_detail": 9.0,
+        "spec_style": 9.0,
+        "flawlessness": 8.5
+      },
+      "weighted_score": 8.85,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "点名锁未单独验收：藕粉裙；写信；暖灯；花园黄昏；光泽卡通三维；暖饱和；柔光；干净高光；竖幅 3:4"
+      ],
+      "stagnated": false,
+      "strengths": "单人尖耳薄翅在圆窗旁，油灯暖光和窗外黄昏同框，光泽卡通无硬描边，构图不是样张的双人堆叠。",
+      "defects": "平视略俯，人约占画面六成，主光是窗台左侧油灯的暖黄。她双膝跪在木地板上，裙摆摊开。笔举在脸颊旁边，笔尖离开空白信纸，眼睛看向镜头。按纸的左手手指挤成一小团。；点名锁未单独验收：藕粉裙；写信；暖灯；花园黄昏；光泽卡通三维；暖饱和；柔光；干净高光；竖幅 3:4",
+      "next_fix": "双脚站在木地板上，膝盖伸直，裙摆垂到小腿。笔尖落到信纸上，拇指与食指分开夹住笔，目光看向纸面。",
+      "prompt": "点名锁每轮都要单独留住，不许整张漂掉：尖耳；藕粉裙；圆窗；写信；暖灯；花园黄昏；光泽卡通三维；无硬描边；暖饱和；柔光；干净高光；竖幅 3:4；单人 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: keyart.GlossDuskPoster\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：按「平视侧机位，中景，一个尖耳小妖精站在圆窗内侧写信，圆窗在身侧，油灯在窗台」换机位，材质和光的类型不动 | 一个尖耳小妖精独自站在圆窗内侧写信。平视侧机位的中景看见她膝以上：双脚踩在室内木地板上，右肘靠近窗台，右手拇指与食指分开捏着一支短木笔，其余手指分开弯在笔下，左手按住一张没有字也没有横线的奶油色信纸。肩、肘、腕连续，双眼同高，虹膜里有干净高光。耳朵尖而清楚，背上是一对小而透的薄翅，身上是藕粉色缎面裙。圆窗是小屋墙上的正圆木窗，窗框有厚度，窗外是黄昏花圃，紫橙天空和圆润花叶。窗台上只有一盏暖黄玻璃油灯，灯火照亮她的脸、手指和裙摆，窗外黄昏天光在另一侧托出轮廓。渲染是光泽卡通三维：圆润五官，色阶柔和，没有硬描边，暖而饱和，高光干净。色板是藕粉、暖金、黄昏紫和花园绿。竖幅 3:4 的原画海报，画面上只有这一个妖精。样张只借画风，这是新机位，不贴样张构图，layout_not_style_echo。一眼失败是出现第二个角色、南瓜、蝙蝠披风、宠物、标志或进度条，或者人又堆在画面正中对着镜头。 A vertical 3:4 key-art poster. Eye-level three-quarter medium shot of one petite garden fairy standing inside a cottage beside a circular wooden window, writing a letter. She has pointed ears, small translucent wings, chestnut hair, a rounded face, large iris eyes with clean catchlights, and a lotus-pink satin dress. Her right thumb and index finger pinch a short wooden pen as separate digits, the other fingers curl separately beneath it, and her left hand rests on blank cream paper with no lines and no writing. Both feet stand on the wooden floor. One warm glass oil lamp on the sill lights her face, hands, and dress with soft gold, while dusk light from the round window rims the far side. Through the window is a flower garden under a purple-orange dusk sky. Glossy cartoon 3D rendering, rounded features, soft gradients, no hard ink outlines, warm saturated color, clean broad highlights. The circular window is beside her. This is a painted poster. | 约束：保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观；不偏离指定构图方向 | Structure floor: the person's joints and grip stay clear and both pupils share a direction; the animal's limbs follow its species and are not converted into human elbows; contact shadows read; do not melt limbs into props",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.6,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "both",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：平视略俯，人约占画面六成，主光是窗台左侧油灯的暖黄。她双膝跪在木地板上，裙摆摊开。笔举在脸颊旁边，笔尖离开空白信纸，眼睛看向镜头。按纸的左手手指挤成一小团。；点",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.85"
+        },
+        {
+          "category": "anatomy",
+          "lesson": "本轮短板偏「anatomy」：平视略俯，人约占画面六成，主光是窗台左侧油灯的暖黄。她双膝跪在木地板上，裙摆摊开。笔举在脸颊旁边，笔尖离开空白信纸，眼睛看向镜头。按纸的左手手指挤成一小团。；点",
+          "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+          "from_score": "8.85"
+        },
+        {
+          "category": "color_palette",
+          "lesson": "本轮短板偏「color_palette」：平视略俯，人约占画面六成，主光是窗台左侧油灯的暖黄。她双膝跪在木地板上，裙摆摊开。笔举在脸颊旁边，笔尖离开空白信纸，眼睛看向镜头。按纸的左手手指挤成一小团。；点",
+          "drill": "从模块 palette 抽 3 HEX 做限色练习，禁止引入霓虹辅色",
+          "from_score": "8.85"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "16:17:32"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "3:4",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\draw_key\\r1.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "gh1110-key",
+        "scale": "recompose",
+        "aspect_ratio": "3:4",
+        "ref_aspect_ratio": "3:4",
+        "ref_dimensions": "864x1152",
+        "output_aspect_ratio": "3:4",
+        "output_dimensions": "864x1152",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\draw_key\\r1.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\draw_key\\r1.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": true,
+        "pad_diverged": false
+      },
+      "generated_at": "16:19:56",
+      "image": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\draw_key\\r2.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 1684976,
+        "size_kb": 1645.5,
+        "width": 864,
+        "height": 1152,
+        "aspect_ratio": "3:4",
+        "canonical_aspect_ratio": "3:4",
+        "color_entropy": 7.96
+      },
+      "raw_score": 8.91,
+      "score": 8.91,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.7/光影9.2/透视8.8/质感9.1/风格8.8/无瑕疵8.8",
+      "dims_parsed": {
+        "composition": 8.7,
+        "lighting_color": 9.2,
+        "perspective_anatomy": 8.8,
+        "texture_detail": 9.1,
+        "spec_style": 8.8,
+        "flawlessness": 8.8
+      },
+      "weighted_score": 8.91,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.06 低于当前档位 (recompose) 的最小跃升 +0.20。下一轮更贴近指定构图方向",
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "点名锁未单独验收：圆窗；光泽卡通三维；暖饱和；柔光；干净高光；竖幅 3:4；单人"
+      ],
+      "stagnated": true,
+      "strengths": "藕粉裙垂在腿上，暖灯在左侧发光，她低头在空白信纸上写信，窗外是花园黄昏。尖耳和薄翅清楚，光泽卡通无硬描边，双脚脚趾分开踩在木地板上。",
+      "defects": "平视，人约占画面七成，主光是左侧油灯的暖黄。她坐在窗台沿上，膝盖弯着，裙摆堆在小腿前面。笔尖碰着纸，人却不是站着。；点名锁未单独验收：圆窗；光泽卡通三维；暖饱和；柔光；干净高光；竖幅 3:4；单人",
+      "next_fix": "髋部离开窗台，两条腿伸直站在地板上，裙摆从腰垂到小腿。信纸平放在齐腰的窗台上，笔尖仍点在纸上，目光仍看向纸面。",
+      "prompt": "点名锁每轮都要单独留住，不许整张漂掉：尖耳；藕粉裙；圆窗；写信；暖灯；花园黄昏；光泽卡通三维；无硬描边；暖饱和；柔光；干净高光；竖幅 3:4；单人 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: keyart.GlossDuskPoster\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：按「平视侧机位，中景，一个尖耳小妖精站在圆窗内侧写信，圆窗在身侧，油灯在窗台」换机位，材质和光的类型不动 | 机位保持指定方向：平视侧机位，中景，一个尖耳小妖精站在圆窗内侧写信，圆窗在身侧，油灯在窗台。垫图是目前分数最高的那张成图。只改这一处：双脚站在木地板上，膝盖伸直，裙摆垂到小腿。笔尖落到信纸上，拇指与食指分开夹住笔，目光看向纸面。。没点名的地方保持垫图。 | MUST_FIX (≤2): 双脚站在木地板上，膝盖伸直，裙摆垂到小腿；笔尖落到信纸上，拇指与食指分开夹住笔，目光看向纸面",
+      "continuation": true,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.8,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "both",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：平视，人约占画面七成，主光是左侧油灯的暖黄。她坐在窗台沿上，膝盖弯着，裙摆堆在小腿前面。笔尖碰着纸，人却不是站着。；点名锁未单独验收：圆窗；光泽卡通三维；暖饱和",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.91"
+        },
+        {
+          "category": "color_palette",
+          "lesson": "本轮短板偏「color_palette」：平视，人约占画面七成，主光是左侧油灯的暖黄。她坐在窗台沿上，膝盖弯着，裙摆堆在小腿前面。笔尖碰着纸，人却不是站着。；点名锁未单独验收：圆窗；光泽卡通三维；暖饱和",
+          "drill": "从模块 palette 抽 3 HEX 做限色练习，禁止引入霓虹辅色",
+          "from_score": "8.91"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：藕粉裙垂在腿上，暖灯在左侧发光，她低头在空白信纸上写信，窗外是花园黄昏。尖耳和薄翅清楚，光泽卡通无硬描边，双脚脚趾分开踩在木地板上。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.91"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "16:20:24"
+    },
+    {
+      "round": 3,
+      "round_label": "第 3 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "3:4",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\draw_key\\r2.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "gh1110-key",
+        "scale": "recompose",
+        "aspect_ratio": "3:4",
+        "ref_aspect_ratio": "3:4",
+        "ref_dimensions": "864x1152",
+        "output_aspect_ratio": "3:4",
+        "output_dimensions": "864x1152",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\draw_key\\r2.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\draw_key\\r2.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": true,
+        "pad_diverged": false
+      },
+      "generated_at": "16:22:46",
+      "image": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\draw_key\\r3.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 1887999,
+        "size_kb": 1843.7,
+        "width": 864,
+        "height": 1152,
+        "aspect_ratio": "3:4",
+        "canonical_aspect_ratio": "3:4",
+        "color_entropy": 7.97
+      },
+      "raw_score": 9.07,
+      "score": 9.07,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.2/光影9.2/透视8.9/质感9.2/风格9.0/无瑕疵8.9",
+      "dims_parsed": {
+        "composition": 9.2,
+        "lighting_color": 9.2,
+        "perspective_anatomy": 8.9,
+        "texture_detail": 9.2,
+        "spec_style": 9.0,
+        "flawlessness": 8.9
+      },
+      "weighted_score": 9.07,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.16 低于当前档位 (recompose) 的最小跃升 +0.20。下一轮更贴近指定构图方向",
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "点名锁未单独验收：写信；光泽卡通三维；暖饱和；柔光；干净高光；竖幅 3:4；单人"
+      ],
+      "stagnated": true,
+      "strengths": "她站在圆窗前的桌边，两条腿伸直，双脚踩在地板上。藕粉裙从腰垂下，暖灯照着纸面，笔尖点在信纸上，目光看向纸。尖耳和薄翅在侧光里，光泽卡通无硬描边，窗外是花园黄昏。",
+      "defects": "平视略俯，人约占画面七成，主光是桌上油灯的暖黄。按纸的左手四指贴在一起，握笔的指节也偏圆。裙子比藕粉更亮，偏玫粉。灯后的搁板上还有一只蓝罐。；点名锁未单独验收：写信；光泽卡通三维；暖饱和；柔光；干净高光；竖幅 3:4；单人",
+      "next_fix": "按纸的左手五指分开，拇指和食指之间留出缝。裙子改成更灰更淡的藕粉。灯后的搁板保持空木板。",
+      "prompt": "点名锁每轮都要单独留住，不许整张漂掉：尖耳；藕粉裙；圆窗；写信；暖灯；花园黄昏；光泽卡通三维；无硬描边；暖饱和；柔光；干净高光；竖幅 3:4；单人 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: keyart.GlossDuskPoster\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：按「平视侧机位，中景，一个尖耳小妖精站在圆窗内侧写信，圆窗在身侧，油灯在窗台」换机位，材质和光的类型不动 | 机位保持指定方向：平视侧机位，中景，一个尖耳小妖精站在圆窗内侧写信，圆窗在身侧，油灯在窗台。垫图是目前分数最高的那张成图。只改这一处：髋部离开窗台，两条腿伸直站在地板上，裙摆从腰垂到小腿。信纸平放在齐腰的窗台上，笔尖仍点在纸上，目光仍看向纸面。。没点名的地方保持垫图。 | MUST_FIX (≤2): 髋部离开窗台，两条腿伸直站在地板上，裙摆从腰垂到小腿；信纸平放在齐腰的窗台上，笔尖仍点在纸上，目光仍看向纸面",
+      "continuation": true,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.9,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "both",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：平视略俯，人约占画面七成，主光是桌上油灯的暖黄。按纸的左手四指贴在一起，握笔的指节也偏圆。裙子比藕粉更亮，偏玫粉。灯后的搁板上还有一只蓝罐。；点名锁未单独验收：",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "9.07"
+        },
+        {
+          "category": "color_palette",
+          "lesson": "本轮短板偏「color_palette」：平视略俯，人约占画面七成，主光是桌上油灯的暖黄。按纸的左手四指贴在一起，握笔的指节也偏圆。裙子比藕粉更亮，偏玫粉。灯后的搁板上还有一只蓝罐。；点名锁未单独验收：",
+          "drill": "从模块 palette 抽 3 HEX 做限色练习，禁止引入霓虹辅色",
+          "from_score": "9.07"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：她站在圆窗前的桌边，两条腿伸直，双脚踩在地板上。藕粉裙从腰垂下，暖灯照着纸面，笔尖点在信纸上，目光看向纸。尖耳和薄翅在侧光里，光泽卡通无硬描边，窗外是花园黄昏。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "9.07"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "16:23:03"
+    },
+    {
+      "round": 4,
+      "round_label": "第 4 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "3:4",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\draw_key\\r3.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "gh1110-key",
+        "scale": "recompose",
+        "aspect_ratio": "3:4",
+        "ref_aspect_ratio": "3:4",
+        "ref_dimensions": "864x1152",
+        "output_aspect_ratio": "3:4",
+        "output_dimensions": "864x1152",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\draw_key\\r3.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\draw_key\\r3.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": true,
+        "pad_diverged": false
+      },
+      "generated_at": "16:24:38",
+      "image": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\draw_key\\r4.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 1756327,
+        "size_kb": 1715.2,
+        "width": 864,
+        "height": 1152,
+        "aspect_ratio": "3:4",
+        "canonical_aspect_ratio": "3:4",
+        "color_entropy": 7.98
+      },
+      "raw_score": 8.75,
+      "score": 8.75,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.9/光影9.1/透视8.8/质感9.0/风格8.4/无瑕疵8.4",
+      "dims_parsed": {
+        "composition": 8.9,
+        "lighting_color": 9.1,
+        "perspective_anatomy": 8.8,
+        "texture_detail": 9.0,
+        "spec_style": 8.4,
+        "flawlessness": 8.4
+      },
+      "weighted_score": 8.75,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +-0.32 低于当前档位 (recompose) 的最小跃升 +0.20。下一轮更贴近指定构图方向",
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "点名锁未单独验收：藕粉裙；写信；暖灯；花园黄昏；光泽卡通三维；暖饱和；柔光；干净高光；竖幅 3:4；单人"
+      ],
+      "stagnated": true,
+      "strengths": "她站在圆窗前，腿是直的，暖台灯照着桌面，尖耳和薄翅还在，光泽卡通无硬描边，窗外有花和黄昏紫。",
+      "defects": "平视，人约占画面六成半，主光是左侧台灯的暖白。裙子是银灰色缎面。信纸上有一排排浅色横线。灯后的搁板上堆着书。；点名锁未单独验收：藕粉裙；写信；暖灯；花园黄昏；光泽卡通三维；暖饱和；柔光；干净高光；竖幅 3:4；单人",
+      "next_fix": "裙子回到藕粉。信纸保持空白奶油色。",
+      "prompt": "点名锁每轮都要单独留住，不许整张漂掉：尖耳；藕粉裙；圆窗；写信；暖灯；花园黄昏；光泽卡通三维；无硬描边；暖饱和；柔光；干净高光；竖幅 3:4；单人 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: keyart.GlossDuskPoster\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：按「平视侧机位，中景，一个尖耳小妖精站在圆窗内侧写信，圆窗在身侧，油灯在窗台」换机位，材质和光的类型不动 | 机位保持指定方向：平视侧机位，中景，一个尖耳小妖精站在圆窗内侧写信，圆窗在身侧，油灯在窗台。垫图是目前分数最高的那张成图。只改这一处：按纸的左手五指分开，拇指和食指之间留出缝。裙子改成更灰更淡的藕粉。灯后的搁板保持空木板。。没点名的地方保持垫图。 | MUST_FIX (≤2): 按纸的左手五指分开，拇指和食指之间留出缝；裙子改成更灰更淡的藕粉",
+      "continuation": true,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.8,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "both",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_MAX_ROUNDS",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：平视，人约占画面六成半，主光是左侧台灯的暖白。裙子是银灰色缎面。信纸上有一排排浅色横线。灯后的搁板上堆着书。；点名锁未单独验收：藕粉裙；写信；暖灯；花园黄昏；光",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.75"
+        },
+        {
+          "category": "color_palette",
+          "lesson": "本轮短板偏「color_palette」：平视，人约占画面六成半，主光是左侧台灯的暖白。裙子是银灰色缎面。信纸上有一排排浅色横线。灯后的搁板上堆着书。；点名锁未单独验收：藕粉裙；写信；暖灯；花园黄昏；光",
+          "drill": "从模块 palette 抽 3 HEX 做限色练习，禁止引入霓虹辅色",
+          "from_score": "8.75"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：她站在圆窗前，腿是直的，暖台灯照着桌面，尖耳和薄翅还在，光泽卡通无硬描边，窗外有花和黄昏紫。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.75"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "16:24:54"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-11-10 14:02:24 UTC+8"
+    },
+    "module": "keyart.GlossDuskPoster",
+    "goal": "原画主视觉：妖精花园黄昏，一个尖耳小妖精站在圆窗前写信，藕粉裙，暖灯，花园黄昏。竖幅 3:4。光泽卡通三维，圆润五官，暖饱和，柔光，干净高光。平视侧机位。这是原画主视觉。",
+    "confidence": 0.45,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "个人口味/正向保留非空",
+      "注入红线可控（0 条，已按任务主题过滤）",
+      "挂载 0 张项目知识卡 + 1 张全局美术底层基础卡"
+    ],
+    "top_recipes": [],
+    "top_redlines": [],
+    "art_decisions": [],
+    "private_knowledge": [],
+    "shared_knowledge": [
+      {
+        "id": "palette-70-20-10",
+        "title": "色彩构成：70-20-10 色板比例黄金法则",
+        "body": "画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+        "layer_scope": "shared"
+      }
+    ],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [
+        "冷光源",
+        "暖光",
+        "柔光"
+      ],
+      "preferred_composition": [
+        "半身",
+        "居中/对称构图"
+      ],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [
+        "避免过饱和"
+      ],
+      "banned_habits": [
+        "漏抠/黑底/毛边",
+        "廉价塑料感/油腻高光",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色"
+      ],
+      "keep_phrases": [
+        "确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色",
+        "确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶"
+      ],
+      "banned_habits_raw_tail": [
+        "禁止偏离样张画风：过度霓虹、脏暗阴影、油腻高光、写实皮肤毛孔、扁平UI描边",
+        "电池审稿：原画竖构图避免贴样张布局；边缘反光勿过曝",
+        "电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感",
+        "黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差",
+        "错误头身比/头过大",
+        "漏抠/黑底/毛边",
+        "廉价塑料感/油腻高光",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色"
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: keyart.GlossDuskPoster\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+    "built_at": "2026-11-10 16:12:08 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：平视略俯，人约占画面六成，主光是窗台左侧油灯的暖黄。她双膝跪在木地板上，裙摆摊开。笔举在脸颊旁边，笔尖离开空白信纸，眼睛看向镜头。按纸的左手手指挤成一小团。；点",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.85"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：平视略俯，人约占画面六成，主光是窗台左侧油灯的暖黄。她双膝跪在木地板上，裙摆摊开。笔举在脸颊旁边，笔尖离开空白信纸，眼睛看向镜头。按纸的左手手指挤成一小团。；点",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "8.85"
+    },
+    {
+      "category": "color_palette",
+      "lesson": "本轮短板偏「color_palette」：平视略俯，人约占画面六成，主光是窗台左侧油灯的暖黄。她双膝跪在木地板上，裙摆摊开。笔举在脸颊旁边，笔尖离开空白信纸，眼睛看向镜头。按纸的左手手指挤成一小团。；点",
+      "drill": "从模块 palette 抽 3 HEX 做限色练习，禁止引入霓虹辅色",
+      "from_score": "8.85"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：平视，人约占画面七成，主光是左侧油灯的暖黄。她坐在窗台沿上，膝盖弯着，裙摆堆在小腿前面。笔尖碰着纸，人却不是站着。；点名锁未单独验收：圆窗；光泽卡通三维；暖饱和",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.91"
+    },
+    {
+      "category": "color_palette",
+      "lesson": "本轮短板偏「color_palette」：平视，人约占画面七成，主光是左侧油灯的暖黄。她坐在窗台沿上，膝盖弯着，裙摆堆在小腿前面。笔尖碰着纸，人却不是站着。；点名锁未单独验收：圆窗；光泽卡通三维；暖饱和",
+      "drill": "从模块 palette 抽 3 HEX 做限色练习，禁止引入霓虹辅色",
+      "from_score": "8.91"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：藕粉裙垂在腿上，暖灯在左侧发光，她低头在空白信纸上写信，窗外是花园黄昏。尖耳和薄翅清楚，光泽卡通无硬描边，双脚脚趾分开踩在木地板上。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.91"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：平视略俯，人约占画面七成，主光是桌上油灯的暖黄。按纸的左手四指贴在一起，握笔的指节也偏圆。裙子比藕粉更亮，偏玫粉。灯后的搁板上还有一只蓝罐。；点名锁未单独验收：",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.07"
+    },
+    {
+      "category": "color_palette",
+      "lesson": "本轮短板偏「color_palette」：平视略俯，人约占画面七成，主光是桌上油灯的暖黄。按纸的左手四指贴在一起，握笔的指节也偏圆。裙子比藕粉更亮，偏玫粉。灯后的搁板上还有一只蓝罐。；点名锁未单独验收：",
+      "drill": "从模块 palette 抽 3 HEX 做限色练习，禁止引入霓虹辅色",
+      "from_score": "9.07"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：她站在圆窗前的桌边，两条腿伸直，双脚踩在地板上。藕粉裙从腰垂下，暖灯照着纸面，笔尖点在信纸上，目光看向纸。尖耳和薄翅在侧光里，光泽卡通无硬描边，窗外是花园黄昏。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.07"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：平视，人约占画面六成半，主光是左侧台灯的暖白。裙子是银灰色缎面。信纸上有一排排浅色横线。灯后的搁板上堆着书。；点名锁未单独验收：藕粉裙；写信；暖灯；花园黄昏；光",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.75"
+    },
+    {
+      "category": "color_palette",
+      "lesson": "本轮短板偏「color_palette」：平视，人约占画面六成半，主光是左侧台灯的暖白。裙子是银灰色缎面。信纸上有一排排浅色横线。灯后的搁板上堆着书。；点名锁未单独验收：藕粉裙；写信；暖灯；花园黄昏；光",
+      "drill": "从模块 palette 抽 3 HEX 做限色练习，禁止引入霓虹辅色",
+      "from_score": "8.75"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：她站在圆窗前，腿是直的，暖台灯照着桌面，尖耳和薄翅还在，光泽卡通无硬描边，窗外有花和黄昏紫。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.75"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 2,
+  "regression_drop": 0.15,
+  "safe_early_stop": false,
+  "understanding_contract": {
+    "version": 1,
+    "raw_utterance": "原画主视觉：妖精花园黄昏，一个尖耳小妖精站在圆窗前写信，藕粉裙，暖灯，花园黄昏。竖幅 3:4。光泽卡通三维，圆润五官，暖饱和，柔光，干净高光。平视侧机位。这是原画主视觉。",
+    "l0": {
+      "route_ids": [
+        "draw.key"
+      ],
+      "banner": "【按点名锁定 draw.key】",
+      "delivery": "draw.key"
+    },
+    "l1": {
+      "locks": [
+        "尖耳",
+        "藕粉裙",
+        "圆窗",
+        "写信",
+        "暖灯",
+        "花园黄昏",
+        "光泽卡通三维",
+        "无硬描边",
+        "暖饱和",
+        "柔光",
+        "干净高光",
+        "竖幅 3:4",
+        "单人"
+      ],
+      "unlocks": [
+        "样张里的两个人",
+        "南瓜",
+        "蝙蝠披风",
+        "宠物",
+        "标志",
+        "进度条",
+        "英文标题",
+        "正对镜头的堆叠机位"
+      ],
+      "defaults_shown": [
+        "默认：竖幅 3:4 原画海报",
+        "单人尖耳妖精",
+        "平视侧机位中景",
+        "暖灯在窗台",
+        "样张只锁光泽卡通三维渲染"
+      ],
+      "commercial_vibe": "光泽卡通三维，圆润五官，无硬描边，暖饱和，柔光，干净高光"
+    },
+    "l2": {
+      "open": true,
+      "surface_fix": "",
+      "last_feedback": "",
+      "feedback_layer": ""
+    },
+    "notes": ""
+  },
+  "reasonableness_history": [
+    {
+      "reviewed_at": 1794298400.4071426,
+      "passed": true,
+      "skill": "keyart",
+      "issues": []
+    }
+  ],
+  "reasonableness": {
+    "passed": true,
+    "skill": "keyart",
+    "draft_prompt": "一个尖耳小妖精站在圆窗前写信，藕粉裙，暖灯，窗外是花园黄昏。竖幅 3:4 的原画海报，光泽卡通三维，圆润五官。",
+    "revised_prompt": "一个尖耳小妖精独自站在圆窗内侧写信。平视侧机位的中景看见她膝以上：双脚踩在室内木地板上，右肘靠近窗台，右手拇指与食指分开捏着一支短木笔，其余手指分开弯在笔下，左手按住一张没有字也没有横线的奶油色信纸。肩、肘、腕连续，双眼同高，虹膜里有干净高光。耳朵尖而清楚，背上是一对小而透的薄翅，身上是藕粉色缎面裙。圆窗是小屋墙上的正圆木窗，窗框有厚度，窗外是黄昏花圃，紫橙天空和圆润花叶。窗台上只有一盏暖黄玻璃油灯，灯火照亮她的脸、手指和裙摆，窗外黄昏天光在另一侧托出轮廓。渲染是光泽卡通三维：圆润五官，色阶柔和，没有硬描边，暖而饱和，高光干净。色板是藕粉、暖金、黄昏紫和花园绿。竖幅 3:4 的原画海报，画面上只有这一个妖精。样张只借画风，这是新机位，不贴样张构图，layout_not_style_echo。一眼失败是出现第二个角色、南瓜、蝙蝠披风、宠物、标志或进度条，或者人又堆在画面正中对着镜头。\nA vertical 3:4 key-art poster. Eye-level three-quarter medium shot of one petite garden fairy standing inside a cottage beside a circular wooden window, writing a letter. She has pointed ears, small translucent wings, chestnut hair, a rounded face, large iris eyes with clean catchlights, and a lotus-pink satin dress. Her right thumb and index finger pinch a short wooden pen as separate digits, the other fingers curl separately beneath it, and her left hand rests on blank cream paper with no lines and no writing. Both feet stand on the wooden floor. One warm glass oil lamp on the sill lights her face, hands, and dress with soft gold, while dusk light from the round window rims the far side. Through the window is a flower garden under a purple-orange dusk sky. Glossy cartoon 3D rendering, rounded features, soft gradients, no hard ink outlines, warm saturated color, clean broad highlights. The circular window is beside her. This is a painted poster.",
+    "checklist": {
+      "subject_action": {
+        "status": "ok",
+        "note": ""
+      },
+      "contact_scale": {
+        "status": "ok",
+        "note": ""
+      },
+      "element_budget": {
+        "status": "ok",
+        "note": ""
+      },
+      "hard_locks": {
+        "status": "ok",
+        "note": ""
+      },
+      "fail_at_glance": {
+        "status": "ok",
+        "note": ""
+      },
+      "hero_read": {
+        "status": "ok",
+        "note": ""
+      },
+      "layout_not_style_echo": {
+        "status": "ok",
+        "note": ""
+      },
+      "framing_lock": {
+        "status": "ok",
+        "note": ""
+      }
+    },
+    "issues": [],
+    "notes": "",
+    "reviewed_at": 1794298400.4071426,
+    "reviewed_at_iso": "2026-11-10 16:13:20",
+    "force_pass": false,
+    "skill_raw": "keyart"
+  },
+  "discussions": [
+    {
+      "round": 0,
+      "kind": "reasonableness",
+      "prompt": "一个尖耳小妖精独自站在圆窗内侧写信。平视侧机位的中景看见她膝以上：双脚踩在室内木地板上，右肘靠近窗台，右手拇指与食指分开捏着一支短木笔，其余手指分开弯在笔下，左手按住一张没有字也没有横线的奶油色信纸。肩、肘、腕连续，双眼同高，虹膜里有干净高光。耳朵尖而清楚，背上是一对小而透的薄翅，身上是藕粉色缎面裙。圆窗是小屋墙上的正圆木窗，窗框有厚度，窗外是黄昏花圃，紫橙天空和圆润花叶。窗台上只有一盏暖黄玻璃油灯，灯火照亮她的脸、手指和裙摆，窗外黄昏天光在另一侧托出轮廓。渲染是光泽卡通三维：圆润五官，色阶柔和，没有硬描边，暖而饱和，高光干净。色板是藕粉、暖金、黄昏紫和花园绿。竖幅 3:4 的原画海报，画面上只有这一个妖精。样张只借画风，这是新机位，不贴样张构图，layout_not_style_echo。一眼失败是出现第二个角色、南瓜、蝙蝠披风、宠物、标志或进度条，或者人又堆在画面正中对着镜头。\nA vertical 3:4 key-art poster. Eye-level three-quarter medium shot of one petite garden fairy standing inside a cottage beside a circular wooden window, writing a letter. She has pointed ears, small translucent wings, chestnut hair, a rounded face, large iris eyes with clean catchlights, and a lotus-pink satin dress. Her right thumb and index finger pinch a short wooden pen as separate digits, the other fingers curl separately beneath it, and her left hand rests on blank cream paper with no lines and no writing. Both feet stand on the wooden floor. One warm glass oil lamp on the sill lights her face, hands, and dress with soft gold, while dusk light from the round window rims the far side. Through the window is a flower garden under a purple-orange dusk sky. Glossy cartoon 3D rendering, rounded features, soft gradients, no hard ink outlines, warm saturated color, clean broad highlights. The circular window is beside her. This is a painted poster.",
+      "strengths": "合理性闸已过：subject_action=ok；contact_scale=ok；element_budget=ok；hard_locks=ok；fail_at_glance=ok；hero_read=ok；layout_not_style_echo=ok；framing_lock=ok",
+      "defects": "",
+      "next_fix": "首轮 generate 使用本修订提示词；审美迭代不得推翻硬锁与元素预算"
+    }
+  ],
+  "warm_start_merged": true,
+  "warm_start_merged_at": "2026-11-10 16:24:38",
+  "warm_start_block_sha1": "1d97ea74883c",
+  "ActionRequired": "STOP_PICK_BEST",
+  "showcase_ready": true,
+  "winner": {
+    "round": 3,
+    "round_label": "第 3 轮精修",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "3:4",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\draw_key\\r2.png"
+    ],
+    "param_validation": {
+      "valid": true,
+      "validation_passed": true,
+      "case_id": "gh1110-key",
+      "scale": "recompose",
+      "aspect_ratio": "3:4",
+      "ref_aspect_ratio": "3:4",
+      "ref_dimensions": "864x1152",
+      "output_aspect_ratio": "3:4",
+      "output_dimensions": "864x1152",
+      "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\draw_key\\r2.png",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\draw_key\\r2.png"
+      ],
+      "inherited_default_aspect_ratio": true,
+      "inherited_default_pad_image": true,
+      "matched_ref_aspect_ratio": true,
+      "matched_ref_pad_image": true,
+      "matched_output_aspect_ratio": true,
+      "three_step_stage": "step3_judge",
+      "three_step_verified": true,
+      "warnings": [],
+      "continuation_pad": true,
+      "pad_diverged": false
+    },
+    "generated_at": "16:22:46",
+    "image": "assets/skill_20261110_gh/draw_key/r3.png",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 1887999,
+      "size_kb": 1843.7,
+      "width": 864,
+      "height": 1152,
+      "aspect_ratio": "3:4",
+      "canonical_aspect_ratio": "3:4",
+      "color_entropy": 7.97
+    },
+    "raw_score": 9.07,
+    "score": 9.07,
+    "target_score_threshold": 9.5,
+    "dims": "构图9.2/光影9.2/透视8.9/质感9.2/风格9.0/无瑕疵8.9",
+    "dims_parsed": {
+      "composition": 9.2,
+      "lighting_color": 9.2,
+      "perspective_anatomy": 8.9,
+      "texture_detail": 9.2,
+      "spec_style": 9.0,
+      "flawlessness": 8.9
+    },
+    "weighted_score": 9.07,
+    "audit_warnings": [
+      "收敛停滞预警：本轮净增 +0.16 低于当前档位 (recompose) 的最小跃升 +0.20。下一轮更贴近指定构图方向",
+      "Agent Absolute-5D 已采纳（门槛 9.5）",
+      "点名锁未单独验收：写信；光泽卡通三维；暖饱和；柔光；干净高光；竖幅 3:4；单人"
+    ],
+    "stagnated": true,
+    "strengths": "她站在圆窗前的桌边，两条腿伸直，双脚踩在地板上。藕粉裙从腰垂下，暖灯照着纸面，笔尖点在信纸上，目光看向纸。尖耳和薄翅在侧光里，光泽卡通无硬描边，窗外是花园黄昏。",
+    "defects": "平视略俯，人约占画面七成，主光是桌上油灯的暖黄。按纸的左手四指贴在一起，握笔的指节也偏圆。裙子比藕粉更亮，偏玫粉。灯后的搁板上还有一只蓝罐。；点名锁未单独验收：写信；光泽卡通三维；暖饱和；柔光；干净高光；竖幅 3:4；单人",
+    "next_fix": "按纸的左手五指分开，拇指和食指之间留出缝。裙子改成更灰更淡的藕粉。灯后的搁板保持空木板。",
+    "prompt": "点名锁每轮都要单独留住，不许整张漂掉：尖耳；藕粉裙；圆窗；写信；暖灯；花园黄昏；光泽卡通三维；无硬描边；暖饱和；柔光；干净高光；竖幅 3:4；单人 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: keyart.GlossDuskPoster\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：按「平视侧机位，中景，一个尖耳小妖精站在圆窗内侧写信，圆窗在身侧，油灯在窗台」换机位，材质和光的类型不动 | 机位保持指定方向：平视侧机位，中景，一个尖耳小妖精站在圆窗内侧写信，圆窗在身侧，油灯在窗台。垫图是目前分数最高的那张成图。只改这一处：髋部离开窗台，两条腿伸直站在地板上，裙摆从腰垂到小腿。信纸平放在齐腰的窗台上，笔尖仍点在纸上，目光仍看向纸面。。没点名的地方保持垫图。 | MUST_FIX (≤2): 髋部离开窗台，两条腿伸直站在地板上，裙摆从腰垂到小腿；信纸平放在齐腰的窗台上，笔尖仍点在纸上，目光仍看向纸面",
+    "continuation": true,
+    "passed": false,
+    "gate_blocked": true,
+    "image_gate_blocked": false,
+    "anatomy_score": 8.9,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "both",
+    "judge_source": "agent_absolute_5d",
+    "remote_vlm": {
+      "source": "agent_self_judge",
+      "provider": "",
+      "model": "",
+      "error": "",
+      "active": false,
+      "score_evidence": {},
+      "evidence_missing_dims": [],
+      "review": {
+        "pass_count": 0,
+        "rerated": false,
+        "reason": ""
+      }
+    },
+    "should_continue_next_round": true,
+    "decision": "CONTINUE_NEXT_ROUND",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "lighting",
+        "lesson": "本轮短板偏「lighting」：平视略俯，人约占画面七成，主光是桌上油灯的暖黄。按纸的左手四指贴在一起，握笔的指节也偏圆。裙子比藕粉更亮，偏玫粉。灯后的搁板上还有一只蓝罐。；点名锁未单独验收：",
+        "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+        "from_score": "9.07"
+      },
+      {
+        "category": "color_palette",
+        "lesson": "本轮短板偏「color_palette」：平视略俯，人约占画面七成，主光是桌上油灯的暖黄。按纸的左手四指贴在一起，握笔的指节也偏圆。裙子比藕粉更亮，偏玫粉。灯后的搁板上还有一只蓝罐。；点名锁未单独验收：",
+        "drill": "从模块 palette 抽 3 HEX 做限色练习，禁止引入霓虹辅色",
+        "from_score": "9.07"
+      },
+      {
+        "category": "keep",
+        "lesson": "保留本轮已做对的：她站在圆窗前的桌边，两条腿伸直，双脚踩在地板上。藕粉裙从腰垂下，暖灯照着纸面，笔尖点在信纸上，目光看向纸。尖耳和薄翅在侧光里，光泽卡通无硬描边，窗外是花园黄昏。",
+        "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+        "from_score": "9.07"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "16:23:03",
+    "asset_image": "assets/skill_20261110_gh/draw_key/r3.png"
+  },
+  "rounds_to_converge": 4,
+  "convergence_badge": "共 4 轮未达阈值，采用最高分",
+  "winner_image": "c:/Users/ZhengLangPC/Desktop/Cursor-Pmem-Art/assets/skill_20261110_gh/draw_key/r3.png",
+  "best_image": "c:/Users/ZhengLangPC/Desktop/Cursor-Pmem-Art/assets/skill_20261110_gh/draw_key/r3.png",
+  "final_image": "assets/skill_20261110_gh/draw_key/final.png",
+  "settle_pending": false,
+  "process_board": ".memory-art/converge/boards/gh1110-key/index.html",
+  "settle_done_at": "2026-11-10 16:25:49 UTC+8",
+  "settle_saved_paths": [
+    ".memory-art\\entries\\keyart.GlossDuskPoster\\CHAT20261110162532972RECIPE.md",
+    ".memory-art\\entries\\keyart.GlossDuskPoster\\CHAT20261110162534244REDLINE.md",
+    ".memory-art\\_reflections\\20261110_162535_gh1110-key.json"
+  ]
+}

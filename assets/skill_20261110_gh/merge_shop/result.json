@@ -1,0 +1,49 @@
+{
+  "route_id": "merge.ladder",
+  "chain": "shop",
+  "chain_mode": "shop_ladder",
+  "delivery": "overview_sheet",
+  "levels": 8,
+  "grid": "2x4",
+  "background": "opaque_isolation",
+  "passed": false,
+  "threshold": 9.5,
+  "best_round": 3,
+  "best_score": 8.08,
+  "final_sheet": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\merge_shop\\final.jpg",
+  "relation": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\merge_shop\\relation.md",
+  "rounds": [
+    {
+      "round": 1,
+      "score": 4.41,
+      "passed": false,
+      "sheet": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\merge_shop\\sheet_r1.jpg",
+      "dims": "构图4.0/光影7.5/透视7.5/质感6.5/风格3.5/无瑕疵3.0",
+      "note": "八格画成绿色洒水壶，邻档框高一样，未过线"
+    },
+    {
+      "round": 2,
+      "score": 8.05,
+      "passed": false,
+      "sheet": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\merge_shop\\sheet_r2.jpg",
+      "dims": "构图7.5/光影8.6/透视8.8/质感8.4/风格8.3/无瑕疵7.4",
+      "note": "果酱链出现了，但邻档框高不平，双莓是交叉木签，末档不是最高"
+    },
+    {
+      "round": 3,
+      "score": 8.08,
+      "passed": false,
+      "sheet": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\merge_shop\\sheet_r3.jpg",
+      "dims": "构图7.8/光影8.7/透视8.8/质感8.5/风格8.4/无瑕疵7.2",
+      "note": "光泽和白卡对，第二格不是双莓，末档是螺旋奶油塔，八格框高都约0.99"
+    },
+    {
+      "round": 4,
+      "score": 7.88,
+      "passed": false,
+      "sheet": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\merge_shop\\sheet_r4.jpg",
+      "dims": "构图7.4/光影8.8/透视8.8/质感8.6/风格8.2/无瑕疵6.8",
+      "note": "第二格仍是一颗莓，第八格仍是奶油旋塔，上排框高0.75、下排0.73，末档不是最大"
+    }
+  ]
+}

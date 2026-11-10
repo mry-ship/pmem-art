@@ -26,7 +26,7 @@ synonyms:
 modules:
   infra.Cli:
     description: pmem-art 总入口、Hook、MCP serve、生命周期、分类与反馈命令
-    paths: [pmem_art.py, lifecycle.py, classify.py, feedback.py, build_atlas.py, atlas_index.py, atlas_reveal.py]
+    paths: [pmem_art.py, lifecycle.py, classify.py, feedback.py, build_atlas.py, atlas_index.py, atlas_reveal.py, art_cli.py, art_shell_hook.py]
     aliases: [CLI, 入口, pmem_art]
     entities: [Hook, MCP, Atlas, Feedback]
   feature.SkillsKit:
@@ -82,6 +82,8 @@ modules:
       - skills_kit/process_board.py
       - skills_kit/must_fix.py
       - skills_kit/image_gates.py
+      - skills_kit/delivery_gates.py
+      - skills_kit/local_locks.py
     aliases: [闭环, Converge]
     entities: [ConvergeGate, ReasonablenessGate, ConvergeWinnerMaxScore, ConvergeFinishEarlyStop, SkillSpeedCaps, MergeOverviewSpeedCaps, AnatomyVeto, LowPoseLockGate, LowPoseLock, SoftInflationCap, PadBestPlate, PadChangedCamera, RecomposeEvidence, AspectWhitelistStart, AutomatedScoreEvidence, FinishSettleBackground, ImageRoundCapShowcaseGate, FinishAndMergeFeedback, SkillRoundCap4, RecallGap, AutoRecall, SkillStablePolish, SkillHardening20261109, SkillPolish20261109]
     related: [{ module: infra.Judge, reason: 打分口径与 VLM judge 共用 }]

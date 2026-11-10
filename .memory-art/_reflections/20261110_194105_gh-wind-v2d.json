@@ -1,0 +1,111 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-11-10 19:41:05 UTC+8",
+  "session_id": "gh-wind-v2d",
+  "goal": "花园管乐八档合成梯整表 竖屏4x2 species_change Gossip Harbor光泽 L5抬高 L7去栏杆抬管 框高0.38-0.96",
+  "module": "merge.GardenWind",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 4,
+  "winner_score": 9.51,
+  "winner_image": "assets/skill_20261110_gh_portrait_v2/merge_wind/sheet_r19.jpg",
+  "winner_passed": true,
+  "outcome": "达标定稿 · 最高分第 4 轮",
+  "what_fixed": [
+    "压矮L1-L4留黑边；L5改竖直站立阶梯排箫最高管明显高于L4；L7去掉全部绿侧柱后栏且管顶高于L6；L8管簇为全图最高最宽；框高0.38/0.46/0.54/0.62/0.70/0.78/0.86/0.96；邻档主体框高必须明显递增，末档最大",
+    "体积校正合成钉框高0.38-0.96；L5抬高；L7去绿侧栏；L4更鼓凸键；邻档主体框高必须明显递增，末档最大，禁止邻档一样大",
+    "垫抛光稿回钉体积：L4更鼓实心封闭蘑菇键盖；L7再清残绿侧柱；保持框高阶梯"
+  ],
+  "what_still_weak": "残余可接受点：L4键盖中心仍可见极浅孔纹未完全实心封闭；前段笛管体积校正后略偏粗；L7奶油琴箱侧臂仍在但非绿栏",
+  "strengths": "机读框高PASS约0.38→0.96单调末档最大；L5框高明显高于L4；L7绿后栏/侧柱已去尽只留奶油琴箱；L4三颗更鼓凸起圆键盖可读；奶油叶绿GH糖釉光泽无哑光；纯黑无假卡；L8为全图最高",
+  "taste_deltas": {
+    "from_strengths": [
+      "机读框高PASS约0.38→0.96单调末档最大；L5框高明显高于L4；L7绿后栏/侧柱已去尽只留奶油琴箱；L4三颗更鼓凸起圆键盖可读；奶油叶绿GH糖釉光泽无哑光；纯黑无假卡；L8为全图最高"
+    ],
+    "from_defects": [
+      "硬闸：L5排箫竖直占高仍矮于L4(0.93<1.00)；L7仍有绿侧柱且框高0.75矮于L6的1.00；末档0.79非最大；L2→L3回退0.89→0.78；邻档体量几乎一样大：第 2 格高 0.89",
+      "机读框高仍崩：L2→L3回退；L4满格1.00、L5仅0.94；L6满格1.00、L7仅0.75；末档0.79非最大；L5仍偏矮；L7侧柱未去尽；邻档体量几乎一样大：第 2 格高 0.89，第 3 格",
+      "L4三颗键盖仍带中心小孔略扁不够实心蘑菇鼓；L7奶油侧臂仍占一点宽度；前段L2/L3笛身被体积校正略拉宽"
+    ]
+  },
+  "warm_start_confidence": 0.45,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 8.74,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 8.69,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 9.3,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 9.51,
+      "passed": true
+    }
+  ],
+  "lessons": [
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：硬闸：L5排箫竖直占高仍矮于L4(0.93<1.00)；L7仍有绿侧柱且框高0.75矮于L6的1.00；末档0.79非最大；L2→L3回退0.89→0.78；邻",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.74"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：纯黑无假卡；奶油叶绿GH光泽保留；L4三颗鼓起蘑菇圆键盖可读；链序身份大体保留",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.74"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：机读框高仍崩：L2→L3回退；L4满格1.00、L5仅0.94；L6满格1.00、L7仅0.75；末档0.79非最大；L5仍偏矮；L7侧柱未去尽；邻档体量几乎一",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.69"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：GH光泽奶油叶绿保留；L4凸键仍可读；纯黑无假卡",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.69"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：L4三颗键盖仍带中心小孔略扁不够实心蘑菇鼓；L7奶油侧臂仍占一点宽度；前段L2/L3笛身被体积校正略拉宽",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.3"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：机读框高约0.38/0.46/0.54/0.62/0.70/0.78/0.86/0.96单调末档最大；L5框高明显高于L4；L7绿后栏侧柱基本清除只留奶油琴箱臂",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.3"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：L4键盖中心仍可见极浅孔纹未完全实心封闭；前段笛管体积校正后略偏粗；L7奶油琴箱侧臂仍在但非绿栏",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.51"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：机读框高PASS约0.38→0.96单调末档最大；L5框高明显高于L4；L7绿后栏/侧柱已去尽只留奶油琴箱；L4三颗更鼓凸起圆键盖可读；奶油叶绿GH糖釉光泽无哑",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.51"
+    }
+  ]
+}

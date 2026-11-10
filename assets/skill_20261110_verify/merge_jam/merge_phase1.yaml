@@ -1,0 +1,28 @@
+# 露莓果酱八档 · 冲 9.5 主链改稿
+# 主链只走果酱加工：整莓→剖碟→酱碗→果酱罐→礼罐→单片涂酱吐司→托盘套装→果酱三明治
+# 果汁/冰沙移出主链（避免酱泥↔清汁、冰沙↔熬酱倒推不通）
+# L7/L8 对标 GH Bread：Toast with Butter and Jam → Jelly Sandwich
+# 竖屏 4×2；Gossip Harbor 玩具货柜卡通；浅色卡；不凑框高
+version: dewberry-jam-verify-lightcard-20261110-r2chain
+pipeline: art-merge-two-phase
+delivery: overview_sheet
+
+tracks:
+  dewberry_jam:
+    module: merge.DewberryJam
+    chain_mode: shop_ladder
+    levels: 8
+    grid_rows: 4
+    grid_cols: 2
+    surface: "Gossip Harbor 玩具货柜卡通——光泽卡通3D、圆润厚实、无硬描边、暖饱和、柔光渐变、糖釉玩具高光、棋盘缩略可认；材质锁死卡通玩具/糖釉道具不是实物；露莓洋红+叶绿+奶油酱色相；竖屏4×2浅奶油/浅蓝圆角卡（禁止纯黑整表底）；同一3/4俯视同一柔光左上；每格一件居中留边无等级字；道具无脸；禁止写实摄影、美食棚拍、产品静物、玻璃真实折射、木纹指纹、果汁乳浊摄影感、微距毛孔；禁止恐洞疱疹丘、油腻岩浆泡沫、脏粉稠浆、巨型莓瘤丘、紫色布丁断链、后抠"
+    commercial_ref: "GH Bread 末段 Toast with Butter and Jam→Jelly Sandwich；本链主线=整莓→剖碟→酱碗→果酱罐→丝带礼罐→单片涂酱吐司→托盘果酱吐司套装→果酱三明治；果汁/冰沙不进主链；抽剪影/件数/容器分档"
+    process_type: shop_ladder_same_shop_jam_process
+    rows:
+      - { level: 1, name: 一整颗露莓, silhouette: 单颗圆果加绿蒂无碟无罐, scale_delta: 基档, scale_pct: 0.72, evolve_to: WholeDewberry, merge_why: "—" }
+      - { level: 2, name: 一碟对开露莓, silhouette: 扁圆碟托两半果肉剖面可食无罐, scale_delta: 持平, scale_pct: 0.70, evolve_to: HalvedDewberryDish, merge_why: 两颗整莓切开摆进同一扁碟 }
+      - { level: 3, name: 一小碗捣碎酱, silhouette: 矮圆碗盛粒感克制酱泥无罐无面包, scale_delta: "+小", scale_pct: 0.74, evolve_to: MashedJamBowl, merge_why: 两碟捣成一碗可涂酱泥 }
+      - { level: 4, name: 一罐露莓果酱, silhouette: 矮胖密封果酱罐无丝带无吐司, scale_delta: "+小", scale_pct: 0.76, evolve_to: JamJar, merge_why: 两碗酱泥熬进一只矮胖密封果酱罐 }
+      - { level: 5, name: 丝带果酱礼罐, silhouette: 明显更宽矮的礼罐外轮廓左右伸出大蝴蝶结翼不再是细口圆柱罐, scale_delta: "+中", scale_pct: 0.78, evolve_to: RibbonGiftJamJar, merge_why: 两只普通果酱罐合成肩更宽并绑丝带的礼罐外轮廓已变 }
+      - { level: 6, name: 单片涂酱吐司, silhouette: 一片金黄吐司表面厚涂露莓酱无托盘无第二片无罐, scale_delta: 持平, scale_pct: 0.75, evolve_to: JamToastSlice, merge_why: 两只礼罐开罐后的酱做成一片可吃的涂酱吐司完成态从容器换成食物 }
+      - { level: 7, name: 托盘果酱吐司套装, silhouette: 椭圆浅托盘上新配一只小果酱罐加一片涂酱吐司件数容器都变, scale_delta: "+中", scale_pct: 0.80, evolve_to: JamToastTraySet, merge_why: 两片涂酱吐司合成托盘套装并新配一只小果酱罐不是凭空配回旧罐 }
+      - { level: 8, name: 露莓果酱三明治, silhouette: 两片吐司夹厚露莓酱的完整三明治无托盘散件, scale_delta: "+大", scale_pct: 0.82, evolve_to: DewberryJellySandwich, merge_why: 两件托盘套装合成一只果酱三明治两片面包装住酱馅 }

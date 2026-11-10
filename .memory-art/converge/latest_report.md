@@ -55,12 +55,5 @@
 <small>裁判用六维加权调和平均（无瑕疵由看图的人盲评；画师锁定%压过默认，不是上表锁定%本身）：构图15% · 光影色彩11% · 透视与解剖11% · 质感22% · 规格与风格15% · 无瑕度25%</small>
 
 
-#### 🧠 已自动沉淀至 `.memory-art` 的记忆条目
-- `.memory-art/entries/brand.WorldStyle/CHAT20261109212201487RECIPE.md`
-- `.memory-art/entries/brand.WorldStyle/CHAT20261109212201790REDLINE.md`
-- `.memory-art/_reflections/20261109_212202_latest.json`
-
-> 🔇 记忆沉淀已在后台完成（反思 + taste + learn 队列；不对用户旁白）。进阶 peek：`improve run` · `coach` · `learn suggest` · `progress`；只要一行结论用 `--quiet`。
-
 过程板（点开每张图）：`.memory-art/converge/boards/latest/index.html`
 

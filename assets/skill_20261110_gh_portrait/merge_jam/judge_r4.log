@@ -1,0 +1,8 @@
+🏁 第 4/4 轮得分 6.86 < 9.50，已满 4 轮上限！
+   · 全阶段最高分为第 2 轮 (8.64 分: c:\Users\ZhengLangPC\Desktop\Cursor-Pmem-Art\assets\skill_20261110_gh_portrait\merge_jam\sheet_r2.jpg)。
+   · 请立即运行 `pyw -3 -u pmem_art.py converge finish --id gh-jam-portrait` 结算（默认写记忆并打印评分履历；只要一行结论加 `--quiet`）。
+📚 本轮可学（能力提升）:
+   1. [style_lock] 本轮短板偏「style_lock」：整张图是一屏游戏界面：顶部有 99、58、136、100 和计时数字，底部有英文 Merge，左右还有售货柜和胶枪。第3格碗里又是一颗颗带叶的整果。第5格是一只
+      → 练习: 对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习
+   2. [keep] 保留本轮已做对的：中间棋盘是四行两列浅蓝色格。第1格是一颗聚合露莓，第7格只有一只挞，第8格是盘子上的一块蛋糕。
+      → 练习: 下一轮 Prompt 显式写入这些亮点作为正向锚点

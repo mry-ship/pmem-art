@@ -1,0 +1,17 @@
+﻿cell_l2_inpaint_r8.jpg: pale=0.000 dark=0.294 mag=0.554 sc=0.311
+cell_l2_gummy_solid_r8.jpg: pale=0.000 dark=0.281 mag=0.375 sc=0.375
+sheet_r18b.jpg: pale=0.000 dark=0.039 mag=0.883 sc=-0.364
+final.jpg: pale=0.000 dark=0.023 mag=0.889 sc=-0.398
+chosen=final.jpg
+L1 120x134
+L2 208x157
+L3 138x186
+L4 105x211
+L5 115x237
+L6 152x256
+L7 341x281
+L8 338x298
+heights [0.419, 0.491, 0.581, 0.659, 0.741, 0.8, 0.878, 0.931]
+PASS
+
+

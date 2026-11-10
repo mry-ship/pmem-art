@@ -1,0 +1,31 @@
+# 花园乐器合成梯 · species_change L1–L8（overview_sheet 2×4）
+# 过程类型：同域换物种（一组乐器，每档一种，禁止同一把笛子加零件）
+# 商业对标：Travel Town Sheet Music 生产者下的 Classical Instruments 链，fandom Items 记为 10 档。
+# 已核实碎片：古典链从 Clarinet 起（r/TravelTown 2023），钢琴可点出唱片；自动订单有 Music Record（类别 Classical Instrument）。
+# 未逐条核到全部 10 个英文档名，不把未核实的 Harmonica→Piano 列表写成真档序。
+# 只抽曲线：同店一档换一种乐器、体量缓增、末档仍是一件键盘类乐器。玩家点名八档落在这条曲线里。
+# 末档用桌上小管风琴，不焊唱片、音乐会票、城堡。
+# 不写 base_body。不垫鸟表。文字风格：软塑胶厚实圆润，棚柔光。色相只留木色与苔绿。
+version: garden-instruments-20261110-species-v1
+pipeline: art-merge-two-phase
+delivery: overview_sheet
+
+tracks:
+  garden_instruments:
+    module: merge.GardenInstruments
+    chain_mode: species_change
+    levels: 8
+    grid_rows: 2
+    grid_cols: 4
+    surface: 软塑胶厚实圆润哑光，棚柔光短接触影，饱和友好不油亮；色相只留木色与苔绿；2×4白圆角卡深炭灰底；每格一件居中无等级字无脸；家族基因=花园乐器任务域加木色苔绿色相，不是纹样盖章也不是同一把笛子加零件；禁金铠、禁彩虹金属管乐、禁鸟、禁船、禁写实木纹微雕
+    commercial_ref: "Travel Town Classical Instruments (10, under Sheet Music; fandom Items). Verified fragments: classical L1 Clarinet (r/TravelTown 2023), piano can tap Records, auto-order Music Record in Classical Instrument. Curve only: one new instrument per tier, slow volume climb, last tier still one keyboard instrument. Player 8 names follow that curve. Do not invent the missing competitor tier names."
+    process_type: species_change_garden_instruments
+    rows:
+      - { level: 1, name: 叶笛, silhouette: 短叶形木管横置苔绿叶尖, scale_delta: 基档, scale_pct: 0.58, evolve_to: LeafFlute, merge_why: "—", parts_add: "—" }
+      - { level: 2, name: 木哨, silhouette: 粗短木哨直立吹口带一个气窗, scale_delta: "+小", scale_pct: 0.61, evolve_to: WoodWhistle, merge_why: 两支叶笛并成一根更粗的短管，叶尖收成吹口缺口，合成带气窗的木哨, parts_add: "—" }
+      - { level: 3, name: 卵形沙锤, silhouette: 卵形封闭沙锤一端小柄, scale_delta: "+小", scale_pct: 0.64, evolve_to: EggShaker, merge_why: 两支木哨的空腔灌进苔籽并搓圆封口，管身消失，合成可摇的卵形沙锤, parts_add: "—" }
+      - { level: 4, name: 小手鼓, silhouette: 扁圆手鼓单面鼓皮侧握, scale_delta: "+中", scale_pct: 0.67, evolve_to: HandDrum, merge_why: 两枚卵形沙锤压成圆框，籽响片留在框边并蒙上鼓皮，合成可拍的小手鼓, parts_add: "—" }
+      - { level: 5, name: 八音木琴, silhouette: 八根渐长木条横排下方两槌, scale_delta: "+中", scale_pct: 0.70, evolve_to: Xylophone8, merge_why: 两面小手鼓的圆框剖成八根长短木条横排，鼓槌留下作双槌，合成八音木琴, parts_add: "—" }
+      - { level: 6, name: 小里拉, silhouette: 小U框里拉七根短弦可抱, scale_delta: "+中", scale_pct: 0.73, evolve_to: SmallLyre, merge_why: 两台八音木琴的木条立成短弦，共鸣箱收成小U框，合成可抱的小里拉, parts_add: "—" }
+      - { level: 7, name: 竖琴, silhouette: 高三角框竖琴多根长弦, scale_delta: "+大", scale_pct: 0.76, evolve_to: Harp, merge_why: 两把小里拉的U框接高为三角框并加密竖弦，合成更大的竖琴, parts_add: "—" }
+      - { level: 8, name: 桌上小管风琴, silhouette: 桌面木箱顶一排直立音管, scale_delta: "+大", scale_pct: 0.80, evolve_to: TablePipeOrgan, merge_why: 两架竖琴的竖弦换成一排直立音管并收入桌面木箱，合成桌上小管风琴, parts_add: "—" }

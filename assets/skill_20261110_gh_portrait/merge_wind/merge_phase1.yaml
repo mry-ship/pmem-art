@@ -1,0 +1,41 @@
+# 花园管乐器八档合成梯整表 · 第 1 稿
+# chain_mode=shop_ladder；delivery=overview_sheet；levels=8
+# 版式：4×2（四行两列）。阅读 L1 L2 / L3 L4 / L5 L6 / L7 L8。画幅 9:16。
+# 过程类型：原料→一份→盛器→套装。每一档仍是一件完整可合的管乐器，不是半成品车间。
+# 商业对标真链：Gossip Harbor 茶链：叶→杯→冰茶→柠檬冰茶→甜冰茶→茶壶→茶会套装
+# 本链八档展开：短哨=原料，开孔直管=一份，喇叭口笛子/加键长笛/双管笛=一份逐档换代，
+# 立式风管排→小键盘风琴=盛器，节庆风琴套装=套装。
+# 垫图只锁风格、构图、特征：光泽卡通 3D、圆润厚实、无硬描边、暖饱和、柔光、竖屏、每格一件完整乐器。
+# 浅色圆角格，接近棋盘浅蓝。画面主体框高大约 0.48、0.55、0.62、0.69、0.76、0.83、0.89、0.94，末档最大。
+# 机读 scale_pct 落在门禁内的最近单调列，出图仍按上面的框高画。
+# 五问：
+# 1 同店=花园管乐器；家族=叶绿与奶油色相，不是纹样盖章。过程类型是原料→一份→盛器→套装。对标是上面的茶链真档序。surface 是 Gossip Harbor 货柜气质。
+# 2 无回退：短哨→直管→喇叭口→键盖横笛→双管→立管排→键盘箱→节庆套装。后档不退回更短更素的前档物件类。
+# 3 无缺过渡硬跳，末档仍是同一管乐套装，不另焊地标。
+# 4 低档是完整小短哨，琴键、立管排、彩带与谱架晚出现。邻档剪影大类不同，64px 可分。
+# 5 每档 merge_why 写两件同级合成后为何变成下一件，可倒推。
+# 6 每档一件独立 SKU。双管是一件双管笛，风管排是一件立式管列，套装是一件节庆货。
+# 7 合两下能倒推。末档对标茶会套装，是同链犒赏，不是另一条链。
+version: garden-wind-portrait-20261110-v1
+pipeline: art-merge-two-phase
+delivery: overview_sheet
+
+tracks:
+  garden_wind:
+    module: merge.GardenWind
+    chain_mode: shop_ladder
+    levels: 8
+    grid_rows: 4
+    grid_cols: 2
+    surface: "Gossip Harbor 货柜：光泽卡通 3D，圆润厚实，无硬描边，暖饱和，柔光渐变。家族是花园管乐器的叶绿与奶油色相。4×2 浅色圆角格，接近棋盘浅蓝，不透明实底。每格一件完整管乐器，单件居中，无字无脸。竖屏。"
+    commercial_ref: "Gossip Harbor 茶链：叶→杯→冰茶→柠檬冰茶→甜冰茶→茶壶→茶会套装"
+    process_type: "原料→一份→盛器→套装"
+    rows:
+      - { level: 1, name: 短哨, silhouette: "短粗横卧的奶油色短哨，一端叶绿哨口，矮块剪影", scale_delta: 基档, scale_pct: 0.55, evolve_to: ShortWhistle, merge_why: "—", parts_add: "—" }
+      - { level: 2, name: 开孔直管, silhouette: "细长竖直的开孔直管，管身一列圆孔，没有张开的口", scale_delta: "+小", scale_pct: 0.59, evolve_to: OpenHolePipe, merge_why: "两支短哨接成一根开孔直管，矮短筒消失，变成细长竖直管", parts_add: "—" }
+      - { level: 3, name: 喇叭口笛子, silhouette: "斜向喇叭口笛子，末端张开的圆喇叭是主轮廓", scale_delta: "+小", scale_pct: 0.62, evolve_to: BellFlute, merge_why: "两根开孔直管合成一支喇叭口笛子，直管末端张开成圆喇叭", parts_add: "—" }
+      - { level: 4, name: 加键长笛, silhouette: "横置加键长笛，管身一排圆键盖，两端都不张开", scale_delta: "+中", scale_pct: 0.69, evolve_to: KeyedFlute, merge_why: "两支喇叭口笛子合成一支加键长笛，喇叭口收起，改由横置圆键盖认档", parts_add: "—" }
+      - { level: 5, name: 双管笛, silhouette: "两根并行管绑成一件双管笛，外轮廓比单管宽，没有琴键", scale_delta: "+中", scale_pct: 0.76, evolve_to: DoublePipe, merge_why: "两支加键长笛并成一件双管笛，键盖收进绑环，细横管变成更宽的双管", parts_add: "—" }
+      - { level: 6, name: 立式风管排, silhouette: "高低不一的圆风管立在矮座上，管口朝上排成一列", scale_delta: "+中", scale_pct: 0.78, evolve_to: UprightPipeRank, merge_why: "两件双管笛立起来排成一列竖直圆风管，并行横管变成高低立管", parts_add: "—" }
+      - { level: 7, name: 小键盘风琴, silhouette: "奶油色小箱加一排琴键，箱顶只露几根短管", scale_delta: "+大", scale_pct: 0.80, evolve_to: KeyboardOrgan, merge_why: "两排立式风管收进一只小键盘风琴，长管列变短，箱体与琴键成为主轮廓", parts_add: "—" }
+      - { level: 8, name: 节庆风琴套装, silhouette: "最高的一件节庆风琴套装，风琴箱、叶绿彩带与小谱架合成同一件货", scale_delta: "+大", scale_pct: 0.81, evolve_to: FestivalOrganSet, merge_why: "两架小键盘风琴合成一件节庆风琴套装，琴箱加高并带上叶绿彩带与小谱架，仍是一件货", parts_add: "—" }

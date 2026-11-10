@@ -1,0 +1,959 @@
+{
+  "session_id": "skill1110-ordinary",
+  "started_at": "2026-11-10 14:39:28 UTC+8",
+  "goal": "要画一张图；有参考；题材不变；走普通图。把这盘蘑菇甜点画得更干净，身份不变。",
+  "module": "prop.MushroomPlatter",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "medium",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "medium",
+    "label": "中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.5)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 1,
+    "target_score_threshold": 9.5,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.1875,
+      "perspective_anatomy": 0.1125,
+      "texture_detail": 0.1875,
+      "spec_style": 0.1125,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "viewpoint_frame",
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图，只在提示词上补还没过的那一处（提示词改动仍 ≤40%）",
+    "max_prompt_delta_ratio": 0.4,
+    "allow_recompose": false,
+    "allow_viewpoint_change": false,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "viewpoint_angle (不改机位与镜头视角)",
+      "element_count (不增删主体元素清单)",
+      "no_full_recompose (不做整体 recompose / 换景别故事)",
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)"
+    ],
+    "min_round_leap": 0.15,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光，表面那一句不动，只修没过的那一格",
+    "medium_family": "volume",
+    "best_direction_hint": "最优方向：光影·空气·介质；可小幅姿态/局部布局",
+    "goal": "要画一张图；有参考；题材不变；走普通图。把这盘蘑菇甜点画得更干净，身份不变。",
+    "module": "prop.MushroomPlatter",
+    "ref_image": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_prop_mushroom.png",
+    "ref_analysis": "构图：方形略俯三分之四棚拍，蘑菇托盘居中，短圆茎在下、红盖在上，食物堆在盖面，主体约占七成。色板：红盖白斑、奶油茎、暖黄带孔奶酪、橙樱桃、蓝果、苔绿叶；主光左上柔光，奶油高光。参考底是黄绿渐变，茎下有硬黑影，定稿不继承，改纯黑隔离底。材质：三维软塑胶，圆润厚实，边缘要更干净。身份锁：红盖白斑蘑菇托住一块带孔黄奶酪、橙樱桃、蓝果和绿叶。不锁绿底。不要霓虹，不要写实照片。"
+  },
+  "medium_family": "volume",
+  "contract": "",
+  "target_score_threshold": 9.5,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_prop_mushroom.png",
+  "ref_analysis": "构图：方形略俯三分之四棚拍，蘑菇托盘居中，短圆茎在下、红盖在上，食物堆在盖面，主体约占七成。色板：红盖白斑、奶油茎、暖黄带孔奶酪、橙樱桃、蓝果、苔绿叶；主光左上柔光，奶油高光。参考底是黄绿渐变，茎下有硬黑影，定稿不继承，改纯黑隔离底。材质：三维软塑胶，圆润厚实，边缘要更干净。身份锁：红盖白斑蘑菇托住一块带孔黄奶酪、橙樱桃、蓝果和绿叶。不锁绿底。不要霓虹，不要写实照片。",
+  "default_aspect_ratio": "1:1",
+  "default_reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_prop_mushroom.png"
+  ],
+  "aspect_ratio": "1:1",
+  "reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_prop_mushroom.png"
+  ],
+  "ref_physical_traits": {
+    "exists": true,
+    "size_bytes": 174078,
+    "size_kb": 170.0,
+    "width": 398,
+    "height": 358,
+    "aspect_ratio": "199:179",
+    "canonical_aspect_ratio": "1:1",
+    "color_entropy": 7.99
+  },
+  "param_validation": {
+    "valid": true,
+    "validation_passed": true,
+    "case_id": "skill1110-ordinary",
+    "scale": "medium",
+    "aspect_ratio": "1:1",
+    "ref_aspect_ratio": "1:1",
+    "ref_dimensions": "398x358",
+    "output_aspect_ratio": "",
+    "output_dimensions": "",
+    "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_prop_mushroom.png",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_prop_mushroom.png"
+    ],
+    "inherited_default_aspect_ratio": false,
+    "inherited_default_pad_image": false,
+    "matched_ref_aspect_ratio": true,
+    "matched_ref_pad_image": true,
+    "matched_output_aspect_ratio": true,
+    "three_step_stage": "step1_start",
+    "three_step_verified": false,
+    "warnings": []
+  },
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.5,
+  "accept_threshold": 9.5,
+  "max_rounds": 4,
+  "ready_to_finish": true,
+  "status": "finished",
+  "owner_conversation_id": "skill1110-ordinary",
+  "route_ids": [
+    "draw.ordinary"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "1:1",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_prop_mushroom.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "skill1110-ordinary",
+        "scale": "medium",
+        "aspect_ratio": "1:1",
+        "ref_aspect_ratio": "1:1",
+        "ref_dimensions": "398x358",
+        "output_aspect_ratio": "1:1",
+        "output_dimensions": "1024x1024",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_prop_mushroom.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_prop_mushroom.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "14:43:20",
+      "image": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110\\draw_ordinary\\r1.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 616997,
+        "size_kb": 602.5,
+        "width": 1024,
+        "height": 1024,
+        "aspect_ratio": "1:1",
+        "canonical_aspect_ratio": "1:1",
+        "color_entropy": 7.98
+      },
+      "raw_score": 8.75,
+      "score": 8.75,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.9/光影8.6/透视9.0/质感8.7/风格9.0/无瑕疵8.6",
+      "dims_parsed": {
+        "composition": 8.9,
+        "lighting_color": 8.6,
+        "perspective_anatomy": 9.0,
+        "texture_detail": 8.7,
+        "spec_style": 9.0,
+        "flawlessness": 8.6
+      },
+      "weighted_score": 8.75,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）"
+      ],
+      "stagnated": false,
+      "strengths": "纯黑底上红盖白斑和奶油茎边缘干净，白斑是整齐的椭圆，没有绿渐变渗进底。带孔暖黄奶酪压在浅黄奶酪上，左侧蓝果和三颗橙樱桃都贴着盖面，接触处有软影。",
+      "defects": "右上蓝果的左半被大片绿叶挡住，圆形轮廓没露全。三颗橙樱桃的亮斑都落在果实偏左上的同一侧，盖下沿暗部是暖灰红，看不出苔绿反光。",
+      "next_fix": "把右上蓝果从大叶后露出完整圆轮廓；三颗橙樱桃的亮斑分别放到左上、顶中、右上，盖下沿加一抹很淡的苔绿反光。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.MushroomPlatter\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光，表面那一句不动，只修没过的那一格 | 单张1:1产品图。主体动作：一只红盖白斑、短圆奶油茎的蘑菇甜点盘，稳稳托住同一叠食物。接触与尺度：浅黄奶酪托在盖面上，带圆孔的暖黄奶酪放在浅黄奶酪上，橙樱桃、蓝果和苔绿叶贴着盖面与奶酪，接触处有柔和接触影，不漂浮、不穿模，物件大小与参考一致。元素预算：只留这一盘，奶酪、樱桃、蓝果、叶子的件数与参考相同，不加人、不加第二只蘑菇、不加花园、不加文字。硬锁：略俯三分之四居中机位不动；纯黑隔离底#000000平整实色；童话后院软塑胶，圆润厚实，哑光缎面，棚拍柔光从左上，苔绿与暖金，奶油高光但不要油腻塑料高光；不锁参考的黄绿渐变底。本轮只改一处：把边缘、白斑和接触清理干净。一眼失败：出现绿底、霓虹、写实照片、缺白斑、缺奶酪孔、食物融化或漂起来、画面出现文字。 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.0,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：右上蓝果的左半被大片绿叶挡住，圆形轮廓没露全。三颗橙樱桃的亮斑都落在果实偏左上的同一侧，盖下沿暗部是暖灰红，看不出苔绿反光。",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.75"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：纯黑底上红盖白斑和奶油茎边缘干净，白斑是整齐的椭圆，没有绿渐变渗进底。带孔暖黄奶酪压在浅黄奶酪上，左侧蓝果和三颗橙樱桃都贴着盖面，接触处有软影。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.75"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "14:44:22"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "1:1",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_prop_mushroom.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "skill1110-ordinary",
+        "scale": "medium",
+        "aspect_ratio": "1:1",
+        "ref_aspect_ratio": "1:1",
+        "ref_dimensions": "398x358",
+        "output_aspect_ratio": "1:1",
+        "output_dimensions": "1024x1024",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_prop_mushroom.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_prop_mushroom.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "14:47:51",
+      "image": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110\\draw_ordinary\\r2.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 610219,
+        "size_kb": 595.9,
+        "width": 1024,
+        "height": 1024,
+        "aspect_ratio": "1:1",
+        "canonical_aspect_ratio": "1:1",
+        "color_entropy": 7.98
+      },
+      "raw_score": 8.83,
+      "score": 8.83,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.0/光影8.6/透视9.1/质感8.8/风格8.9/无瑕疵8.8",
+      "dims_parsed": {
+        "composition": 9.0,
+        "lighting_color": 8.6,
+        "perspective_anatomy": 9.1,
+        "texture_detail": 8.8,
+        "spec_style": 8.9,
+        "flawlessness": 8.8
+      },
+      "weighted_score": 8.83,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.08 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "Agent Absolute-5D 已采纳（门槛 9.5）"
+      ],
+      "stagnated": true,
+      "strengths": "右侧蓝果的圆肚大部分露在叶子前面，右轮廓是完整的圆。盖左下缘有一条细黄绿边，黑底四周没有彩色渗边。",
+      "defects": "右侧蓝果仍被最右橙樱桃挡住靠近果心的一块，圆只露出大约四分之三。三颗橙樱桃的奶油亮斑仍聚在各自球体的左上方，没有一颗亮在右侧。盖下沿只有左缘一条黄绿细边，暗部主体仍是暖红。",
+      "next_fix": "把最右橙樱桃向左让出一指，让右侧蓝果整圆露在叶子前面；前颗樱桃亮斑留在左上，后左樱桃亮斑改到正顶，最右樱桃亮斑改到右上。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.MushroomPlatter\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光，表面那一句不动，只修没过的那一格 | 单张1:1产品图。主体动作：一只红盖白斑、短圆奶油茎的蘑菇甜点盘，稳稳托住同一叠食物。接触与尺度：浅黄奶酪托在盖面上，带圆孔的暖黄奶酪放在浅黄奶酪上，橙樱桃、蓝果和苔绿叶贴着盖面与奶酪，接触处有柔和接触影，不漂浮、不穿模，物件大小与参考一致。元素预算：只留这一盘，奶酪、樱桃、蓝果、叶子的件数与参考相同，不加人、不加第二只蘑菇、不加花园、不加文字。硬锁：略俯三分之四居中机位不动；纯黑隔离底#000000平整实色；童话后院软塑胶，圆润厚实，哑光缎面，棚拍柔光从左上，苔绿与暖金，奶油高光但不要油腻塑料高光；不锁参考的黄绿渐变底。本轮只改两处：右上蓝果从大叶后面露出完整圆形轮廓；三颗橙樱桃的亮斑分别落在左上、顶中、右上，盖下沿加一抹很淡的苔绿反光。一眼失败：出现绿底、霓虹、写实照片、缺白斑、缺奶酪孔、食物融化或漂起来、画面出现文字。 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | 把右上蓝果从大叶后露出完整圆轮廓；三颗橙樱桃的亮斑分别放到左上、顶中、右上，盖下沿加一抹很淡的苔绿反光。",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.1,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：右侧蓝果仍被最右橙樱桃挡住靠近果心的一块，圆只露出大约四分之三。三颗橙樱桃的奶油亮斑仍聚在各自球体的左上方，没有一颗亮在右侧。盖下沿只有左缘一条黄绿细边，暗部主",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.83"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：右侧蓝果的圆肚大部分露在叶子前面，右轮廓是完整的圆。盖左下缘有一条细黄绿边，黑底四周没有彩色渗边。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.83"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "14:48:39"
+    },
+    {
+      "round": 3,
+      "round_label": "第 3 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "1:1",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_prop_mushroom.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "skill1110-ordinary",
+        "scale": "medium",
+        "aspect_ratio": "1:1",
+        "ref_aspect_ratio": "1:1",
+        "ref_dimensions": "398x358",
+        "output_aspect_ratio": "1:1",
+        "output_dimensions": "1024x1024",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_prop_mushroom.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_prop_mushroom.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "14:50:33",
+      "image": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110\\draw_ordinary\\r3.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 617033,
+        "size_kb": 602.6,
+        "width": 1024,
+        "height": 1024,
+        "aspect_ratio": "1:1",
+        "canonical_aspect_ratio": "1:1",
+        "color_entropy": 7.99
+      },
+      "raw_score": 9.03,
+      "score": 9.03,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.1/光影8.9/透视9.2/质感9.0/风格9.1/无瑕疵9.0",
+      "dims_parsed": {
+        "composition": 9.1,
+        "lighting_color": 8.9,
+        "perspective_anatomy": 9.2,
+        "texture_detail": 9.0,
+        "spec_style": 9.1,
+        "flawlessness": 9.0
+      },
+      "weighted_score": 9.03,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）"
+      ],
+      "stagnated": false,
+      "strengths": "右侧蓝果是完整的圆，叶子在它后方，最右樱桃没有切进果心。前颗樱桃的亮斑明显大于后左那颗靠近梗的小亮斑。",
+      "defects": "后排两颗橙樱桃的梗几乎并成一对，中间没有空隙。盖腹暗面仍是大片暖红，左下只有一条细的黄绿边。",
+      "next_fix": "把后排两根樱桃梗左右分开，中间留出一根梗的空隙；盖腹暗面在红里渗进一点点苔绿，仍保持左上同一盏光。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.MushroomPlatter\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光，表面那一句不动，只修没过的那一格 | 单张1:1产品图。主体动作：一只红盖白斑、短圆奶油茎的蘑菇甜点盘，稳稳托住同一叠食物。接触与尺度：浅黄奶酪托在盖面上，带圆孔的暖黄奶酪放在浅黄奶酪上，橙樱桃、蓝果和苔绿叶贴着盖面与奶酪，接触处有柔和接触影，不漂浮、不穿模，物件大小与参考一致。元素预算：只留这一盘，奶酪、樱桃、蓝果、叶子的件数与参考相同，不加人、不加第二只蘑菇、不加花园、不加文字。硬锁：略俯三分之四居中机位不动；纯黑隔离底#000000平整实色；童话后院软塑胶，圆润厚实，哑光缎面，棚拍柔光从左上，苔绿与暖金，奶油高光但不要油腻塑料高光；不锁参考的黄绿渐变底。本轮只改两处：最右橙樱桃向左让出空隙，右侧蓝果整圆露在叶子前面，不被樱桃切掉。三颗橙樱桃仍由左上同一盏棚光打亮，但亮斑大小分开：前颗大而偏低，后左颗小而靠近梗，最右颗是窄月牙，不要三颗一样大的左上圆斑。一眼失败：出现绿底、霓虹、写实照片、缺白斑、缺奶酪孔、食物融化或漂起来、画面出现文字。 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | 把最右橙樱桃向左让出一指，让右侧蓝果整圆露在叶子前面；前颗樱桃亮斑留在左上，后左樱桃亮斑改到正顶，最右樱桃亮斑改到右上。",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.2,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：后排两颗橙樱桃的梗几乎并成一对，中间没有空隙。盖腹暗面仍是大片暖红，左下只有一条细的黄绿边。",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "9.03"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：右侧蓝果是完整的圆，叶子在它后方，最右樱桃没有切进果心。前颗樱桃的亮斑明显大于后左那颗靠近梗的小亮斑。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "9.03"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "14:51:10"
+    },
+    {
+      "round": 4,
+      "round_label": "第 4 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "1:1",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_prop_mushroom.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "skill1110-ordinary",
+        "scale": "medium",
+        "aspect_ratio": "1:1",
+        "ref_aspect_ratio": "1:1",
+        "ref_dimensions": "398x358",
+        "output_aspect_ratio": "1:1",
+        "output_dimensions": "1024x1024",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_prop_mushroom.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_prop_mushroom.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "14:52:43",
+      "image": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110\\draw_ordinary\\r4.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 621238,
+        "size_kb": 606.7,
+        "width": 1024,
+        "height": 1024,
+        "aspect_ratio": "1:1",
+        "canonical_aspect_ratio": "1:1",
+        "color_entropy": 7.98
+      },
+      "raw_score": 9.02,
+      "score": 9.02,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.1/光影9.0/透视9.2/质感9.0/风格9.1/无瑕疵8.9",
+      "dims_parsed": {
+        "composition": 9.1,
+        "lighting_color": 9.0,
+        "perspective_anatomy": 9.2,
+        "texture_detail": 9.0,
+        "spec_style": 9.1,
+        "flawlessness": 8.9
+      },
+      "weighted_score": 9.02,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +-0.01 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "Agent Absolute-5D 已采纳（门槛 9.5）"
+      ],
+      "stagnated": true,
+      "strengths": "右侧蓝果仍是完整圆，没有被樱桃切进。前颗樱桃的大亮斑、后左小亮斑和最右窄亮斑大小能分开。",
+      "defects": "后排两根褐梗仍然贴着并排，缝比梗本身还窄。盖腹大面还是暖红，苔绿只沾在左下缘那一圈细边。",
+      "next_fix": "若再画，只把后排两根梗拉开一根梗的宽度，并让盖腹暗面多进一层苔绿，身份和机位不动。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.MushroomPlatter\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光，表面那一句不动，只修没过的那一格 | 单张1:1产品图。主体动作：一只红盖白斑、短圆奶油茎的蘑菇甜点盘，稳稳托住同一叠食物。接触与尺度：浅黄奶酪托在盖面上，带圆孔的暖黄奶酪放在浅黄奶酪上，橙樱桃、蓝果和苔绿叶贴着盖面与奶酪，接触处有柔和接触影，不漂浮、不穿模，物件大小与参考一致。元素预算：只留这一盘，奶酪、樱桃、蓝果、叶子的件数与参考相同，不加人、不加第二只蘑菇、不加花园、不加文字。硬锁：略俯三分之四居中机位不动；纯黑隔离底#000000平整实色；童话后院软塑胶，圆润厚实，哑光缎面，棚拍柔光从左上，苔绿与暖金，奶油高光但不要油腻塑料高光；不锁参考的黄绿渐变底。本轮只改两处：后排两根樱桃梗左右分开，中间留出一根梗宽的空隙。盖腹暗面在暖红里渗进一点点苔绿，仍是左上同一盏棚光。右侧蓝果保持完整的圆，三颗樱桃亮斑继续一大、一小、一窄月牙。一眼失败：出现绿底、霓虹、写实照片、缺白斑、缺奶酪孔、食物融化或漂起来、画面出现文字。 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | 把后排两根樱桃梗左右分开，中间留出一根梗的空隙；盖腹暗面在红里渗进一点点苔绿，仍保持左上同一盏光。",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.2,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_MAX_ROUNDS",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "narrative_camera",
+          "lesson": "本轮短板偏「narrative_camera」：后排两根褐梗仍然贴着并排，缝比梗本身还窄。盖腹大面还是暖红，苔绿只沾在左下缘那一圈细边。",
+          "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+          "from_score": "9.02"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：右侧蓝果仍是完整圆，没有被樱桃切进。前颗樱桃的大亮斑、后左小亮斑和最右窄亮斑大小能分开。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "9.02"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "14:53:02"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-11-10 14:02:24 UTC+8"
+    },
+    "module": "prop.MushroomPlatter",
+    "goal": "要画一张图；有参考；题材不变；走普通图。把这盘蘑菇甜点画得更干净，身份不变。",
+    "confidence": 0.45,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "个人口味/正向保留非空",
+      "注入红线可控（0 条，已按任务主题过滤）",
+      "挂载 0 张项目知识卡 + 1 张全局美术底层基础卡"
+    ],
+    "top_recipes": [],
+    "top_redlines": [],
+    "art_decisions": [],
+    "private_knowledge": [],
+    "shared_knowledge": [
+      {
+        "id": "palette-70-20-10",
+        "title": "色彩构成：70-20-10 色板比例黄金法则",
+        "body": "画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+        "layer_scope": "shared"
+      }
+    ],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [
+        "冷光源",
+        "暖光",
+        "柔光"
+      ],
+      "preferred_composition": [
+        "半身",
+        "居中/对称构图"
+      ],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [
+        "避免过饱和"
+      ],
+      "banned_habits": [
+        "漏抠/黑底/毛边",
+        "廉价塑料感/油腻高光",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色"
+      ],
+      "keep_phrases": [
+        "确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色"
+      ],
+      "banned_habits_raw_tail": [
+        "禁止偏离样张画风：过度霓虹、脏暗阴影、油腻高光、写实皮肤毛孔、扁平UI描边",
+        "电池审稿：原画竖构图避免贴样张布局；边缘反光勿过曝",
+        "电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感",
+        "黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差",
+        "错误头身比/头过大",
+        "漏抠/黑底/毛边",
+        "廉价塑料感/油腻高光",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色"
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.MushroomPlatter\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+    "built_at": "2026-11-10 14:39:28 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：右上蓝果的左半被大片绿叶挡住，圆形轮廓没露全。三颗橙樱桃的亮斑都落在果实偏左上的同一侧，盖下沿暗部是暖灰红，看不出苔绿反光。",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.75"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：纯黑底上红盖白斑和奶油茎边缘干净，白斑是整齐的椭圆，没有绿渐变渗进底。带孔暖黄奶酪压在浅黄奶酪上，左侧蓝果和三颗橙樱桃都贴着盖面，接触处有软影。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.75"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：右侧蓝果仍被最右橙樱桃挡住靠近果心的一块，圆只露出大约四分之三。三颗橙樱桃的奶油亮斑仍聚在各自球体的左上方，没有一颗亮在右侧。盖下沿只有左缘一条黄绿细边，暗部主",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.83"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：右侧蓝果的圆肚大部分露在叶子前面，右轮廓是完整的圆。盖左下缘有一条细黄绿边，黑底四周没有彩色渗边。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.83"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：后排两颗橙樱桃的梗几乎并成一对，中间没有空隙。盖腹暗面仍是大片暖红，左下只有一条细的黄绿边。",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.03"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：右侧蓝果是完整的圆，叶子在它后方，最右樱桃没有切进果心。前颗樱桃的亮斑明显大于后左那颗靠近梗的小亮斑。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.03"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：后排两根褐梗仍然贴着并排，缝比梗本身还窄。盖腹大面还是暖红，苔绿只沾在左下缘那一圈细边。",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "9.02"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：右侧蓝果仍是完整圆，没有被樱桃切进。前颗樱桃的大亮斑、后左小亮斑和最右窄亮斑大小能分开。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.02"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 2,
+  "regression_drop": 0.15,
+  "safe_early_stop": true,
+  "understanding_contract": {
+    "version": 1,
+    "raw_utterance": "要画一张图；有参考；题材不变；走普通图。把这盘蘑菇甜点画得更干净，身份不变。",
+    "l0": {
+      "route_ids": [
+        "draw.ordinary"
+      ],
+      "banner": "【走默认路径】按 普通图 走了",
+      "delivery": "draw.ordinary"
+    },
+    "l1": {
+      "locks": [
+        "红盖白斑蘑菇托住黄色带孔奶酪",
+        "橙樱桃",
+        "蓝果",
+        "绿叶",
+        "略俯三分之四居中机位",
+        "纯黑隔离底",
+        "1:1",
+        "童话后院软塑胶圆润厚实",
+        "棚拍柔光",
+        "苔绿与暖金",
+        "奶油高光"
+      ],
+      "unlocks": [
+        "参考图黄绿渐变底",
+        "茎下硬黑影",
+        "霓虹",
+        "写实照片"
+      ],
+      "defaults_shown": [
+        "默认：1:1居中单件",
+        "纯黑隔离底",
+        "scale=medium",
+        "每轮只垫最初蘑菇参考，不垫上一轮成图",
+        "题材与物件身份不变",
+        "Cursor不透明隔离底"
+      ],
+      "commercial_vibe": "童话后院软塑胶，圆润厚实，棚拍柔光，苔绿与暖金，奶油高光"
+    },
+    "l2": {
+      "open": true,
+      "surface_fix": "只把蘑菇甜点盘的边缘和接触清理干净",
+      "last_feedback": "",
+      "feedback_layer": ""
+    },
+    "notes": ""
+  },
+  "reasonableness_history": [
+    {
+      "reviewed_at": 1794292858.2836676,
+      "passed": true,
+      "skill": "ordinary",
+      "issues": []
+    }
+  ],
+  "reasonableness": {
+    "passed": true,
+    "skill": "ordinary",
+    "draft_prompt": "画一张更干净的蘑菇甜点盘，红盖白斑蘑菇托着带孔黄奶酪、橙樱桃、蓝果和绿叶，居中，软塑胶。",
+    "revised_prompt": "单张1:1产品图。主体动作：一只红盖白斑、短圆奶油茎的蘑菇甜点盘，稳稳托住同一叠食物。接触与尺度：浅黄奶酪托在盖面上，带圆孔的暖黄奶酪放在浅黄奶酪上，橙樱桃、蓝果和苔绿叶贴着盖面与奶酪，接触处有柔和接触影，不漂浮、不穿模，物件大小与参考一致。元素预算：只留这一盘，奶酪、樱桃、蓝果、叶子的件数与参考相同，不加人、不加第二只蘑菇、不加花园、不加文字。硬锁：略俯三分之四居中机位不动；纯黑隔离底#000000平整实色；童话后院软塑胶，圆润厚实，哑光缎面，棚拍柔光从左上，苔绿与暖金，奶油高光但不要油腻塑料高光；不锁参考的黄绿渐变底。本轮只改一处：把边缘、白斑和接触清理干净。一眼失败：出现绿底、霓虹、写实照片、缺白斑、缺奶酪孔、食物融化或漂起来、画面出现文字。",
+    "checklist": {
+      "subject_action": {
+        "status": "ok",
+        "note": ""
+      },
+      "contact_scale": {
+        "status": "ok",
+        "note": ""
+      },
+      "element_budget": {
+        "status": "ok",
+        "note": ""
+      },
+      "hard_locks": {
+        "status": "ok",
+        "note": ""
+      },
+      "fail_at_glance": {
+        "status": "ok",
+        "note": ""
+      }
+    },
+    "issues": [],
+    "notes": "纯黑是定稿要求的不透明隔离底，不是漏抠毛边。",
+    "reviewed_at": 1794292858.2836676,
+    "reviewed_at_iso": "2026-11-10 14:40:58",
+    "force_pass": false,
+    "skill_raw": "ordinary"
+  },
+  "discussions": [
+    {
+      "round": 0,
+      "kind": "reasonableness",
+      "prompt": "单张1:1产品图。主体动作：一只红盖白斑、短圆奶油茎的蘑菇甜点盘，稳稳托住同一叠食物。接触与尺度：浅黄奶酪托在盖面上，带圆孔的暖黄奶酪放在浅黄奶酪上，橙樱桃、蓝果和苔绿叶贴着盖面与奶酪，接触处有柔和接触影，不漂浮、不穿模，物件大小与参考一致。元素预算：只留这一盘，奶酪、樱桃、蓝果、叶子的件数与参考相同，不加人、不加第二只蘑菇、不加花园、不加文字。硬锁：略俯三分之四居中机位不动；纯黑隔离底#000000平整实色；童话后院软塑胶，圆润厚实，哑光缎面，棚拍柔光从左上，苔绿与暖金，奶油高光但不要油腻塑料高光；不锁参考的黄绿渐变底。本轮只改一处：把边缘、白斑和接触清理干净。一眼失败：出现绿底、霓虹、写实照片、缺白斑、缺奶酪孔、食物融化或漂起来、画面出现文字。",
+      "strengths": "合理性闸已过：subject_action=ok；contact_scale=ok；element_budget=ok；hard_locks=ok；fail_at_glance=ok",
+      "defects": "",
+      "next_fix": "首轮 generate 使用本修订提示词；审美迭代不得推翻硬锁与元素预算"
+    }
+  ],
+  "warm_start_merged": true,
+  "warm_start_merged_at": "2026-11-10 14:52:43",
+  "warm_start_block_sha1": "363a6262d14d",
+  "ActionRequired": "STOP_PICK_BEST",
+  "showcase_ready": true,
+  "winner": {
+    "round": 3,
+    "round_label": "第 3 轮精修",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "1:1",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_prop_mushroom.png"
+    ],
+    "param_validation": {
+      "valid": true,
+      "validation_passed": true,
+      "case_id": "skill1110-ordinary",
+      "scale": "medium",
+      "aspect_ratio": "1:1",
+      "ref_aspect_ratio": "1:1",
+      "ref_dimensions": "398x358",
+      "output_aspect_ratio": "1:1",
+      "output_dimensions": "1024x1024",
+      "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_prop_mushroom.png",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261109\\_refs\\ref_prop_mushroom.png"
+      ],
+      "inherited_default_aspect_ratio": true,
+      "inherited_default_pad_image": true,
+      "matched_ref_aspect_ratio": true,
+      "matched_ref_pad_image": true,
+      "matched_output_aspect_ratio": true,
+      "three_step_stage": "step3_judge",
+      "three_step_verified": true,
+      "warnings": [],
+      "continuation_pad": false,
+      "pad_diverged": false
+    },
+    "generated_at": "14:50:33",
+    "image": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110\\draw_ordinary\\r3.png",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 617033,
+      "size_kb": 602.6,
+      "width": 1024,
+      "height": 1024,
+      "aspect_ratio": "1:1",
+      "canonical_aspect_ratio": "1:1",
+      "color_entropy": 7.99
+    },
+    "raw_score": 9.03,
+    "score": 9.03,
+    "target_score_threshold": 9.5,
+    "dims": "构图9.1/光影8.9/透视9.2/质感9.0/风格9.1/无瑕疵9.0",
+    "dims_parsed": {
+      "composition": 9.1,
+      "lighting_color": 8.9,
+      "perspective_anatomy": 9.2,
+      "texture_detail": 9.0,
+      "spec_style": 9.1,
+      "flawlessness": 9.0
+    },
+    "weighted_score": 9.03,
+    "audit_warnings": [
+      "Agent Absolute-5D 已采纳（门槛 9.5）"
+    ],
+    "stagnated": false,
+    "strengths": "右侧蓝果是完整的圆，叶子在它后方，最右樱桃没有切进果心。前颗樱桃的亮斑明显大于后左那颗靠近梗的小亮斑。",
+    "defects": "后排两颗橙樱桃的梗几乎并成一对，中间没有空隙。盖腹暗面仍是大片暖红，左下只有一条细的黄绿边。",
+    "next_fix": "把后排两根樱桃梗左右分开，中间留出一根梗的空隙；盖腹暗面在红里渗进一点点苔绿，仍保持左上同一盏光。",
+    "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: prop.MushroomPlatter\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光，表面那一句不动，只修没过的那一格 | 单张1:1产品图。主体动作：一只红盖白斑、短圆奶油茎的蘑菇甜点盘，稳稳托住同一叠食物。接触与尺度：浅黄奶酪托在盖面上，带圆孔的暖黄奶酪放在浅黄奶酪上，橙樱桃、蓝果和苔绿叶贴着盖面与奶酪，接触处有柔和接触影，不漂浮、不穿模，物件大小与参考一致。元素预算：只留这一盘，奶酪、樱桃、蓝果、叶子的件数与参考相同，不加人、不加第二只蘑菇、不加花园、不加文字。硬锁：略俯三分之四居中机位不动；纯黑隔离底#000000平整实色；童话后院软塑胶，圆润厚实，哑光缎面，棚拍柔光从左上，苔绿与暖金，奶油高光但不要油腻塑料高光；不锁参考的黄绿渐变底。本轮只改两处：最右橙樱桃向左让出空隙，右侧蓝果整圆露在叶子前面，不被樱桃切掉。三颗橙樱桃仍由左上同一盏棚光打亮，但亮斑大小分开：前颗大而偏低，后左颗小而靠近梗，最右颗是窄月牙，不要三颗一样大的左上圆斑。一眼失败：出现绿底、霓虹、写实照片、缺白斑、缺奶酪孔、食物融化或漂起来、画面出现文字。 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | 把最右橙樱桃向左让出一指，让右侧蓝果整圆露在叶子前面；前颗樱桃亮斑留在左上，后左樱桃亮斑改到正顶，最右樱桃亮斑改到右上。",
+    "continuation": false,
+    "passed": false,
+    "gate_blocked": false,
+    "image_gate_blocked": false,
+    "anatomy_score": 9.2,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "unknown",
+    "judge_source": "agent_absolute_5d",
+    "remote_vlm": {
+      "source": "agent_self_judge",
+      "provider": "",
+      "model": "",
+      "error": "",
+      "active": false,
+      "score_evidence": {},
+      "evidence_missing_dims": [],
+      "review": {
+        "pass_count": 0,
+        "rerated": false,
+        "reason": ""
+      }
+    },
+    "should_continue_next_round": true,
+    "decision": "CONTINUE_NEXT_ROUND",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "style_lock",
+        "lesson": "本轮短板偏「style_lock」：后排两颗橙樱桃的梗几乎并成一对，中间没有空隙。盖腹暗面仍是大片暖红，左下只有一条细的黄绿边。",
+        "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+        "from_score": "9.03"
+      },
+      {
+        "category": "keep",
+        "lesson": "保留本轮已做对的：右侧蓝果是完整的圆，叶子在它后方，最右樱桃没有切进果心。前颗樱桃的亮斑明显大于后左那颗靠近梗的小亮斑。",
+        "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+        "from_score": "9.03"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "14:51:10"
+  },
+  "rounds_to_converge": 4,
+  "convergence_badge": "共 4 轮未达阈值，采用最高分",
+  "winner_image": "c:/Users/ZhengLangPC/Desktop/Cursor-Pmem-Art/assets/skill_20261110/draw_ordinary/r3.png",
+  "best_image": "c:/Users/ZhengLangPC/Desktop/Cursor-Pmem-Art/assets/skill_20261110/draw_ordinary/r3.png",
+  "final_image": "assets/skill_20261110/draw_ordinary/final.png",
+  "settle_pending": true,
+  "process_board": ".memory-art/converge/boards/skill1110-ordinary/index.html"
+}

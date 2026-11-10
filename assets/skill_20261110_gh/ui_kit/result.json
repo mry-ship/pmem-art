@@ -1,0 +1,81 @@
+{
+  "route_id": "ui.kit",
+  "category": "休闲合成花园主菜单",
+  "style_lock": "只锁界面气质：圆角厚按钮、暖饱和、柔光渐变、无硬描边、卡通光泽 HUD",
+  "isolation": "opaque_isolation",
+  "concept": {
+    "aspect_ratio": "16:9",
+    "passed_9_5": false,
+    "best_round": 2,
+    "best_score": 8.97,
+    "best_file": "assets/skill_20261110_gh/ui_kit/concept_r2.png",
+    "rounds": [
+      {
+        "round": 1,
+        "file": "assets/skill_20261110_gh/ui_kit/concept_r1.png",
+        "score": 7.2,
+        "gte_9_5": false,
+        "dims": "风格色板8.8/结构7.2/光影材质8.7/套件一致8.5/无瑕疵8.2/管线合规7.6"
+      },
+      {
+        "round": 2,
+        "file": "assets/skill_20261110_gh/ui_kit/concept_r2.png",
+        "score": 8.97,
+        "gte_9_5": false,
+        "dims": "风格色板9.2/结构9.1/光影材质9.0/套件一致8.7/无瑕疵8.8/管线合规9.2"
+      },
+      {
+        "round": 3,
+        "file": "assets/skill_20261110_gh/ui_kit/concept_r3.png",
+        "score": 8.93,
+        "gte_9_5": false,
+        "dims": "风格色板9.3/结构8.6/光影材质9.2/套件一致9.0/无瑕疵8.7/管线合规9.3"
+      },
+      {
+        "round": 4,
+        "file": "assets/skill_20261110_gh/ui_kit/concept_r4.png",
+        "score": 7.6,
+        "gte_9_5": false,
+        "dims": "风格色板9.4/结构8.7/光影材质9.3/套件一致9.1/无瑕疵8.4/管线合规7.6"
+      }
+    ]
+  },
+  "components": {
+    "aspect_ratio": "16:9",
+    "passed_9_5": true,
+    "best_round": 4,
+    "best_score": 9.5,
+    "best_file": "assets/skill_20261110_gh/ui_kit/components_r4.png",
+    "background": "深棕实底 #16120E",
+    "rounds": [
+      {
+        "round": 1,
+        "file": "assets/skill_20261110_gh/ui_kit/components_r1.png",
+        "score": 8.85,
+        "gte_9_5": false,
+        "dims": "风格色板9.2/结构8.6/光影材质8.9/套件一致8.4/无瑕疵9.0/管线合规9.4"
+      },
+      {
+        "round": 2,
+        "file": "assets/skill_20261110_gh/ui_kit/components_r2.png",
+        "score": 9.33,
+        "gte_9_5": false,
+        "dims": "风格色板9.4/结构9.3/光影材质9.3/套件一致9.2/无瑕疵9.4/管线合规9.5"
+      },
+      {
+        "round": 3,
+        "file": "assets/skill_20261110_gh/ui_kit/components_r3.png",
+        "score": 9.12,
+        "gte_9_5": false,
+        "dims": "风格色板9.4/结构9.2/光影材质8.8/套件一致8.7/无瑕疵9.3/管线合规9.4"
+      },
+      {
+        "round": 4,
+        "file": "assets/skill_20261110_gh/ui_kit/components_r4.png",
+        "score": 9.5,
+        "gte_9_5": true,
+        "dims": "风格色板9.6/结构9.5/光影材质9.4/套件一致9.5/无瑕疵9.5/管线合规9.6"
+      }
+    ]
+  }
+}

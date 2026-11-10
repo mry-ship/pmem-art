@@ -3,7 +3,7 @@ id: 01M642X1MVWSVPT5XPG1MBFHPQ
 module: infra.Judge
 entity: OfficialScore
 kind: conclusion
-status: seed
+status: active
 supersedes: []
 anchors:
 - skills_kit/scoring.py#weighted_harmonic

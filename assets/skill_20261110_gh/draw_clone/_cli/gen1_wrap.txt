@@ -1,0 +1,3 @@
+🧠 [合理性闸门] 已注入合理性修订提示词
+WARM_START_MERGED=1 sha1=ba1b9d03dc92 source=converge.generate (并以本字段为准；勿用 GenerateImage Hook 有无判断并入)
+❌ [生图闸门] 拒绝登记无效输出图：磁盘无有效生成图: <empty>

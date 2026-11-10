@@ -1,0 +1,1 @@
+﻿Pad final+r17. KEEP L3 long spout, L2/L3 no rose, L4 first rose, L6 reel no nozzle, L8 rotary, GH gloss, no backpack. ONLY expand mid-tier height ladder with empty margins: 0.40/0.48/0.56/0.64/0.72/0.80/0.86/0.96.

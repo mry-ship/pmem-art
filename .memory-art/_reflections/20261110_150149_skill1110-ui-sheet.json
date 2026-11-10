@@ -1,0 +1,112 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-11-10 15:01:49 UTC+8",
+  "session_id": "skill1110-ui-sheet",
+  "goal": "整套界面；走界面。妖精花园主菜单组件表，纯黑隔离底，九宫格与状态族，full kit。",
+  "module": "ui.FairyGardenMenu",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 4,
+  "winner_score": 9.4,
+  "winner_image": "assets/skill_20261110/ui_kit/sheets/sheet_r4.jpg",
+  "winner_passed": false,
+  "outcome": "共 4 轮未达阈值，采用最高分",
+  "what_fixed": [
+    "只把第二枚按钮改成明显按下：更暗、更矮、顶高光收成一条细线；第一枚保持亮而高。面板、进度条、页签、图标和文案不动。",
+    "只把第二枚按钮压成深橄榄金、高度约第一枚的七成、明显内凹；第一枚保持亮金高按钮。其余零件不动。",
+    "只把第二枚按钮再压矮到第一枚约七成高，并加上更清楚的内阴影；颜色保持深橄榄金。其它零件不动。",
+    "已满4轮，组件表交最高分，不再重生。"
+  ],
+  "what_still_weak": "第二枚按钮已是深橄榄金，上沿有内阴影，但高度仍接近第一枚亮金按钮，没有收到约七成。",
+  "strengths": "黑底干净。面板四角有暖金卷草、中心平涂。亮金高按钮和深橄榄按下按钮都只写「进入花园」。空槽、满槽、实心页签和描边页签都在。",
+  "taste_deltas": {
+    "from_strengths": [
+      "黑底干净。面板四角有暖金卷草、中心平涂。亮金高按钮和深橄榄按下按钮都只写「进入花园」。空槽、满槽、实心页签和描边页签都在。"
+    ],
+    "from_defects": [
+      "第二枚按钮顶高光比第一枚细一点，但高度和金色几乎没变，看起来仍是另一枚抬起的按钮，不是按下。",
+      "第二枚按钮已经变成深橄榄金，但高度仍接近第一枚，内凹只在上沿有一条暗线，按下的体量还不够矮。",
+      "第二枚按钮已是深橄榄金，上沿有内阴影，但高度仍接近第一枚亮金按钮，没有收到约七成。"
+    ]
+  },
+  "warm_start_confidence": 0.45,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 9.14,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 9.19,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 9.34,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 9.4,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：右侧两枚暖金按钮都写着「进入花园」，但第二枚只是略扁，颜色和顶高光几乎与第一枚相同，pressed 没有明显下陷。",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.14"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：纯黑底上有一块四角暖金、中心平涂苔绿的面板。进度条一空一满，页签一枚实心暖金、一枚只有苔绿描边。底排八个图标没有字，按钮上的字只有「进入花园」。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.14"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：第二枚按钮顶高光比第一枚细一点，但高度和金色几乎没变，看起来仍是另一枚抬起的按钮，不是按下。",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.19"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：黑底上的面板中心仍是平的苔绿，四角才有暖金卷草。空进度条是绿槽，满进度条是金槽。选中页签是实心金，未选中是绿描边。两枚按钮上的字都是「进入花园」。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.19"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：第二枚按钮已经变成深橄榄金，但高度仍接近第一枚，内凹只在上沿有一条暗线，按下的体量还不够矮。",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.34"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：第一枚按钮是亮金高按钮，第二枚是明显更暗的橄榄金，两枚都只写「进入花园」。面板中心平涂，四角有卷草。空槽、满槽、实心页签和描边页签都在黑底上分开。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.34"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：第二枚按钮已是深橄榄金，上沿有内阴影，但高度仍接近第一枚亮金按钮，没有收到约七成。",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.4"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：黑底干净。面板四角有暖金卷草、中心平涂。亮金高按钮和深橄榄按下按钮都只写「进入花园」。空槽、满槽、实心页签和描边页签都在。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.4"
+    }
+  ]
+}

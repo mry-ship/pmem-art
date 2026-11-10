@@ -1,0 +1,73 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-11-10 17:17:27 UTC+8",
+  "session_id": "gh-ui-portrait",
+  "goal": "妖精花园主菜单竖屏界面。对标品类=休闲合成主菜单。9:16 整屏概念，光泽卡通、暖饱和、柔光渐变、无硬描边。顶栏短资源胶囊带数字，中间妖精花园主玩法，底栏五枚圆钮，汉字为花园、合成、订单、好友、商店。",
+  "module": "ui.FairyGardenMenu",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 2,
+  "winner_round": 2,
+  "winner_score": 9.5,
+  "winner_image": "assets/skill_20261110_gh_portrait/ui_kit/concept_r2.png",
+  "winner_passed": true,
+  "outcome": "达标定稿 · 最高分第 2 轮",
+  "what_fixed": [
+    "只把合成圆钮里的礼盒和提包换成两朵小花向中间并成一朵，并加一个短合并箭头；其余四枚图标、五个汉字、顶栏数字和拱门妖精不要改。"
+  ],
+  "what_still_weak": "残余可接受点：顶栏最左边多了一枚蓝环白芯的72等级圆标，比旁边三枚奶油短胶囊更高，顶行因此多出一组等级标。",
+  "strengths": "合成圆钮里现在是两朵小花加向右的短箭头，花园拱门、订单纸、两个头像、购物袋仍和汉字对上；顶栏奶油胶囊里写着86、240、18，拱门中的妖精脸露在按钮上方。",
+  "taste_deltas": {
+    "from_strengths": [
+      "合成圆钮里现在是两朵小花加向右的短箭头，花园拱门、订单纸、两个头像、购物袋仍和汉字对上；顶栏奶油胶囊里写着86、240、18，拱门中的妖精脸露在按钮上方。"
+    ],
+    "from_defects": [
+      "左数第二枚写着合成的圆钮里面是粉礼盒加蓝提包，看不出两件并成一件。"
+    ]
+  },
+  "warm_start_confidence": 0.45,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 8.88,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 9.5,
+      "passed": true
+    }
+  ],
+  "lessons": [
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：左数第二枚写着合成的圆钮里面是粉礼盒加蓝提包，看不出两件并成一件。",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.88"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：竖屏花园铺到屏底，顶栏短胶囊里能读到86、240、18，底栏五个汉字是花园、合成、订单、好友、商店，圆钮有奶油顶高光并落在草地上，拱门里小妖精的脸没有被按钮挡住",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.88"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：顶栏最左边多了一枚蓝环白芯的72等级圆标，比旁边三枚奶油短胶囊更高，顶行因此多出一组等级标。",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.5"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：合成圆钮里现在是两朵小花加向右的短箭头，花园拱门、订单纸、两个头像、购物袋仍和汉字对上；顶栏奶油胶囊里写着86、240、18，拱门中的妖精脸露在按钮上方。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.5"
+    }
+  ]
+}

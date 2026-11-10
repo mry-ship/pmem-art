@@ -1,0 +1,14 @@
+{
+  "saved_at": 1794301917.9146056,
+  "text": "园艺浇水八档合成梯整表 4×2 竖屏",
+  "banner": "【按 同域合成梯：先定链型与关系，再按交付出图 走了】",
+  "route_ids": [
+    "merge.ladder"
+  ],
+  "mode": "skill",
+  "execute_ok": true,
+  "artist_say": "【按 同域合成梯：先定链型与关系，再按交付出图 走了】\n按合成梯：先说清升级关系，再默认整表一组出齐（通常 8 档）。",
+  "plan_conflict": false,
+  "confidence": "high",
+  "conversation_id": "gh-water-portrait"
+}

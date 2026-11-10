@@ -1,0 +1,69 @@
+{
+  "ok": true,
+  "route_id": "merge.ladder",
+  "variant": "shop_ladder",
+  "banner": "【按 同域合成梯：先定链型与关系，再按交付出图 走了】",
+  "passed_threshold": false,
+  "best_score": 8.61,
+  "final_image": "assets/skill_20261110/merge_shop/sheet_r1.jpg",
+  "relation_passed": true,
+  "images": [
+    {
+      "round": 1,
+      "path": "assets/skill_20261110/merge_shop/sheet_r1.jpg",
+      "started_at": "2026-11-10T14:49:08",
+      "ended_at": "2026-11-10T14:52:30",
+      "duration_sec": 202,
+      "score": 8.61,
+      "dims": {
+        "构图": 8.2,
+        "光影": 8.9,
+        "透视": 8.8,
+        "质感": 8.4,
+        "风格": 8.5,
+        "无瑕疵": 8.8
+      },
+      "defects": "格子和物件种类是对的，但体量曲线断了：L5大蝴蝶结比后面都抢，L7两只小罐明显比L6酱罐小，L8盛宴碗没有成为最大。L4到L7果酱几乎是纯白牛奶，露莓洋红色相中段断开。玻璃瓶壁偏细、偏写实，和厚实软塑胶莓叶不是一种玩具。",
+      "passed": false
+    },
+    {
+      "round": 2,
+      "path": "assets/skill_20261110/merge_shop/sheet_r2.jpg",
+      "started_at": "2026-11-10T14:52:30",
+      "ended_at": "2026-11-10T14:56:10",
+      "duration_sec": 220,
+      "score": 8.56,
+      "dims": {
+        "构图": 8.1,
+        "光影": 8.9,
+        "透视": 8.8,
+        "质感": 8.3,
+        "风格": 8.6,
+        "无瑕疵": 8.7
+      },
+      "defects": "体量曲线还是断的：L5大蝴蝶结仍然最抢，L7两只小罐和浅盘仍比L6酱罐小，L8盛宴碗没有成为最宽。L5到L8果酱改成了洋红，这一项好了。L4仍是细颈瓶装白奶油加洋红圆点，读成牛奶瓶，不是厚壁果酱瓶。",
+      "passed": false
+    },
+    {
+      "round": 3,
+      "path": "assets/skill_20261110/merge_shop/sheet_r3.jpg",
+      "started_at": "2026-11-10T14:56:10",
+      "ended_at": "2026-11-10T14:57:42",
+      "duration_sec": 92,
+      "score": 7.89,
+      "dims": {
+        "构图": 7.6,
+        "光影": 8.4,
+        "透视": 8.5,
+        "质感": 7.4,
+        "风格": 7.2,
+        "无瑕疵": 8.2
+      },
+      "defects": "关系硬伤：L2变成连把树莓，木签消失；L3变成花边挞皮，靠近禁止的蛋糕和纸杯；L4和L5都是细玻璃瓶，邻档几乎只差一根细绳。L1中心是空洞。画风离开厚实软塑胶，变成食物摄影。体量也不单调，L3比L2小。",
+      "passed": false
+    }
+  ],
+  "wall_started_at": "2026-11-10T14:40:37",
+  "wall_ended_at": "2026-11-10T14:59:30",
+  "notes": "关系第1稿 relation-judge 通过，未写第2稿。链型 shop_ladder，8档，整表 2×4，不写 base_body。对标真链是 Travel Town Ice Cream：Vanilla→Watermelon→Kiwi→RainbowPop→Cone→StrawberryCone→BigCone→Luxury→SimpleSundae→DeluxeSundae，只抽同店形变和犒赏曲线。文字风格优先：软塑胶厚实圆润、棚柔光、短接触影、饱和但不油亮。鸟表 1774×887 约 2:1，和任务画幅 4:3 差约 50%，参数闸不允许把该文件写入 converge --ref-image；每轮 GenerateImage 仍垫它的绝对路径，只锁白卡深灰底。成图是不透明白卡加深灰底，不是真透明。六维按体积渲染权重做加权调和平均，没有抬分。三轮都没到 9.5。第3轮掉到 7.89，触发安全早停，终稿用第1轮 8.61。终稿清单：白卡版式、无字、无脸、无鸟、邻档种类可分；未过的是体量不单调（L5 蝴蝶结抢戏，L7 比 L6 小，L8 不是最大），以及中段果酱偏白、玻璃偏薄。第4张 sheet_r4.jpg 在早停判定落下前已经画出，会话不再入账、不再打分。小提示：闭环把短板记成风格锁，这张实际差在体量曲线。"
+}

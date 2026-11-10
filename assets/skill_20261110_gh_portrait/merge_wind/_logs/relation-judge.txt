@@ -1,0 +1,11 @@
+
+=== 第一段关系审 · garden_wind ===
+✅ 机读检查通过（chain_mode=shop_ladder）→ 可标记「文字定稿」并进入出图
+  L01 短哨 | 短粗横卧的奶油色短哨，一端叶绿哨口，矮块剪影 | pct=0.55 | ShortWhistle
+  L02 开孔直管 | 细长竖直的开孔直管，管身一列圆孔，没有张开的口 | pct=0.59 | OpenHolePipe
+  L03 喇叭口笛子 | 斜向喇叭口笛子，末端张开的圆喇叭是主轮廓 | pct=0.62 | BellFlute
+  L04 加键长笛 | 横置加键长笛，管身一排圆键盖，两端都不张开 | pct=0.69 | KeyedFlute
+  L05 双管笛 | 两根并行管绑成一件双管笛，外轮廓比单管宽，没有琴键 | pct=0.76 | DoublePipe
+  L06 立式风管排 | 高低不一的圆风管立在矮座上，管口朝上排成一列 | pct=0.78 | UprightPipeRank
+  L07 小键盘风琴 | 奶油色小箱加一排琴键，箱顶只露几根短管 | pct=0.80 | KeyboardOrgan
+  L08 节庆风琴套装 | 最高的一件节庆风琴套装，风琴箱、叶绿彩带与小谱架合成同一件货 | pct=0.81 | FestivalOrganSet

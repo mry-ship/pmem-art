@@ -1,0 +1,26 @@
+── 给美术看（请只转述下面这块）──
+【按 同域合成梯：先定链型与关系，再按交付出图 走了】
+按合成梯：先说清升级关系，再默认整表一组出齐（通常 8 档）。
+── Agent 技术明细 ──
+【按 同域合成梯：先定链型与关系，再按交付出图 走了】
+confidence: high  execute_ok: True
+mode: skill  would_execute: True
+route_ids: ['merge.ladder']
+announce: 按 同域合成梯：先定链型与关系，再按交付出图 走了
+match: lexical_ngram+colloquial_expand+canonical
+canonical[agent]: 露莓果酱八档合成梯整表
+reason: merge
+steps:
+  1. pmem-merge-ladder/同域合成梯：先定链型与关系，再按交付出图 → 露莓果酱八档合成梯整表 4×2 竖屏
+top neighbors (k=8, calibrate only):
+  · 2.0564  skill ['merge.ladder'] | 合成梯整表一组出齐，overview_sheet，八档 2×4，第0条
+  · 2.0564  skill ['merge.ladder'] | 合成梯整表一组出齐，overview_sheet，八档 2×4，第12条
+  · 2.0564  skill ['merge.ladder'] | 合成梯整表一组出齐，overview_sheet，八档 2×4，第15条
+  · 2.0564  skill ['merge.ladder'] | 合成梯整表一组出齐，overview_sheet，八档 2×4，第18条
+  · 2.0564  skill ['merge.ladder'] | 合成梯整表一组出齐，overview_sheet，八档 2×4，第21条
+  · 2.0564  skill ['merge.ladder'] | 合成梯整表一组出齐，overview_sheet，八档 2×4，第24条
+  · 2.0564  skill ['merge.ladder'] | 合成梯整表一组出齐，overview_sheet，八档 2×4，第27条
+  · 2.0564  skill ['merge.ladder'] | 合成梯整表一组出齐，overview_sheet，八档 2×4，第30条
+confusion:
+  · 合成梯交付形态 → 默认整表 overview_sheet（一组出齐、常 L1–L8）；仅点名一档一张/逐格/per_cell 才走逐格。
+对美术只贴 artist_say（标签+一句人话），禁止刷 confidence/json。先写标准路由句再 route --canonical；execute_ok 才开画；plan_conflict / confidence=ask|low / vague 先问人。

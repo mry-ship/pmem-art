@@ -1,0 +1,260 @@
+{
+  "banner": "【按 【最多4轮·到线即停】SpriteCook式 UI Kit/HUD/九宫格整套 走了】",
+  "confidence": "high",
+  "plan": {
+    "mode": "skill",
+    "would_execute": true,
+    "execute": false,
+    "reason": "ui",
+    "announce": "按 【最多4轮·到线即停】SpriteCook式 UI Kit/HUD/九宫格整套 走了",
+    "serial": false,
+    "parallel": false,
+    "route_ids": [
+      "ui.kit"
+    ],
+    "steps": [
+      {
+        "skill": "pmem-ui",
+        "section": "【最多4轮·到线即停】SpriteCook式 UI Kit/HUD/九宫格整套",
+        "heading": "# `/pmem-ui` — SpriteCook 式 UI Kit / HUD / 九宫格整套生成",
+        "file": ".cursor/skills/pmem-ui/SKILL.md",
+        "deliverable": "整套界面；走界面。妖精花园主菜单 16:9，点名组件表、九宫格和状态族，full kit。",
+        "pad": [],
+        "skip_pad": [],
+        "locks": "整套界面，不用单张插画交差；未点名禁止拆全家桶",
+        "done": "默认概念最多4轮到线即停；仅点名 full kit 再加1张总表+切线清单",
+        "next_output": "这一步的成图或文字结论",
+        "note": "banner：最多4轮·≥9.5到线即停；默认 concept-only"
+      }
+    ]
+  },
+  "plan_canonical": {
+    "mode": "skill",
+    "would_execute": true,
+    "execute": false,
+    "reason": "ui",
+    "announce": "按 【最多4轮·到线即停】SpriteCook式 UI Kit/HUD/九宫格整套 走了",
+    "serial": false,
+    "parallel": false,
+    "route_ids": [
+      "ui.kit"
+    ],
+    "steps": [
+      {
+        "skill": "pmem-ui",
+        "section": "【最多4轮·到线即停】SpriteCook式 UI Kit/HUD/九宫格整套",
+        "heading": "# `/pmem-ui` — SpriteCook 式 UI Kit / HUD / 九宫格整套生成",
+        "file": ".cursor/skills/pmem-ui/SKILL.md",
+        "deliverable": "整套界面或 HUD 或九宫格与状态族；走界面",
+        "pad": [],
+        "skip_pad": [],
+        "locks": "整套界面，不用单张插画交差；未点名禁止拆全家桶",
+        "done": "默认概念最多4轮到线即停；仅点名 full kit 再加1张总表+切线清单",
+        "next_output": "这一步的成图或文字结论",
+        "note": "banner：最多4轮·≥9.5到线即停；默认 concept-only"
+      }
+    ]
+  },
+  "canonical": "整套界面或 HUD 或九宫格与状态族；走界面",
+  "canonical_source": "agent",
+  "local_canonical": {
+    "canonical": "整套界面或 HUD 或九宫格与状态族；走界面。原话要点：整套界面；走界面。妖精花园主菜单 16:9，点名组件表、九宫格和状态族，full",
+    "guess_route_id": "ui.kit",
+    "template": "整套界面或 HUD 或九宫格与状态族；走界面",
+    "template_key": "ui.kit",
+    "signals": {
+      "has_ref": false,
+      "new_subject": false,
+      "keep_subject": false,
+      "variant": false,
+      "multi": false,
+      "two_state": false,
+      "lens": false,
+      "ui": true,
+      "icon_a": false,
+      "icon_b": false,
+      "icon_c": false,
+      "merge": false,
+      "merge_overview": false,
+      "merge_per_cell": false,
+      "key": false,
+      "style": false,
+      "style_then_verify": false,
+      "critique": false,
+      "atlas": false,
+      "coach": false,
+      "prompt_only": false,
+      "hard": false,
+      "image_count": 0,
+      "roles": []
+    },
+    "source": "local_heuristic"
+  },
+  "plan_conflict": false,
+  "canonical_warnings": [],
+  "neighbor_conflict": false,
+  "multi_branch_ask": false,
+  "neighbors": [
+    {
+      "score": 1.1387,
+      "text": "做一整套界面，方案1",
+      "mode": "skill",
+      "route_ids": [
+        "ui.kit"
+      ],
+      "bucket": "ui",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 1.1387,
+      "text": "做一整套界面，方案13",
+      "mode": "skill",
+      "route_ids": [
+        "ui.kit"
+      ],
+      "bucket": "ui",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 1.1387,
+      "text": "做一整套界面，方案17",
+      "mode": "skill",
+      "route_ids": [
+        "ui.kit"
+      ],
+      "bucket": "ui",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 1.1387,
+      "text": "做一整套界面，方案5",
+      "mode": "skill",
+      "route_ids": [
+        "ui.kit"
+      ],
+      "bucket": "ui",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 1.1387,
+      "text": "做一整套界面，方案9",
+      "mode": "skill",
+      "route_ids": [
+        "ui.kit"
+      ],
+      "bucket": "ui",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 1.0068,
+      "text": "九宫格弹窗套件，带状态族，方案10",
+      "mode": "skill",
+      "route_ids": [
+        "ui.kit"
+      ],
+      "bucket": "ui",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 1.0068,
+      "text": "九宫格弹窗套件，带状态族，方案14",
+      "mode": "skill",
+      "route_ids": [
+        "ui.kit"
+      ],
+      "bucket": "ui",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 1.0068,
+      "text": "九宫格弹窗套件，带状态族，方案18",
+      "mode": "skill",
+      "route_ids": [
+        "ui.kit"
+      ],
+      "bucket": "ui",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    }
+  ],
+  "confusion": [],
+  "announce": "按 【最多4轮·到线即停】SpriteCook式 UI Kit/HUD/九宫格整套 走了",
+  "would_execute": true,
+  "execute_ok": true,
+  "mode": "skill",
+  "route_ids": [
+    "ui.kit"
+  ],
+  "top_k": 8,
+  "bank_source": "advise",
+  "match_kind": "lexical_ngram+colloquial_expand+canonical",
+  "artist_ask": "",
+  "artist_detail": "按整套界面（HUD/菜单/九宫格）来做，不是单张插画。",
+  "vague_reason": "",
+  "artist_say": "【按 【最多4轮·到线即停】SpriteCook式 UI Kit/HUD/九宫格整套 走了】\n按整套界面（HUD/菜单/九宫格）来做，不是单张插画。",
+  "llm_hints": {
+    "neighbors": [
+      {
+        "text": "做一整套界面，方案1",
+        "mode": "skill",
+        "route_ids": [
+          "ui.kit"
+        ],
+        "score": 1.1387
+      },
+      {
+        "text": "做一整套界面，方案13",
+        "mode": "skill",
+        "route_ids": [
+          "ui.kit"
+        ],
+        "score": 1.1387
+      },
+      {
+        "text": "做一整套界面，方案17",
+        "mode": "skill",
+        "route_ids": [
+          "ui.kit"
+        ],
+        "score": 1.1387
+      },
+      {
+        "text": "做一整套界面，方案5",
+        "mode": "skill",
+        "route_ids": [
+          "ui.kit"
+        ],
+        "score": 1.1387
+      },
+      {
+        "text": "做一整套界面，方案9",
+        "mode": "skill",
+        "route_ids": [
+          "ui.kit"
+        ],
+        "score": 1.1387
+      }
+    ],
+    "confusion": [],
+    "canonical": "整套界面或 HUD 或九宫格与状态族；走界面",
+    "canonical_source": "agent",
+    "plan_conflict": false,
+    "artist_say": "【按 【最多4轮·到线即停】SpriteCook式 UI Kit/HUD/九宫格整套 走了】\n按整套界面（HUD/菜单/九宫格）来做，不是单张插画。",
+    "rule": "对美术只贴 artist_say（标签+一句人话），禁止刷 confidence/json。先写标准路由句再 route --canonical；execute_ok 才开画；plan_conflict / confidence=ask|low / vague 先问人。"
+  }
+}

@@ -1,0 +1,26 @@
+﻿── 给美术看（请只转述下面这块）──
+【按 同域合成梯：先定链型与关系，再按交付出图 走了】
+按合成梯：先说清升级关系，再默认整表一组出齐（通常 8 档）。
+── Agent 技术明细 ──
+【按 同域合成梯：先定链型与关系，再按交付出图 走了】
+confidence: high  execute_ok: True
+mode: skill  would_execute: True
+route_ids: ['merge.ladder']
+announce: 按 同域合成梯：先定链型与关系，再按交付出图 走了
+match: lexical_ngram+colloquial_expand+canonical
+canonical[agent]: merge ladder overview_sheet dewberry jam 8 levels shop_ladder light cards
+reason: merge
+steps:
+  1. pmem-merge-ladder/同域合成梯：先定链型与关系，再按交付出图 → 露莓果酱八档合成梯整表验证浅色卡同机位中段加件禁拼贴
+top neighbors (k=8, calibrate only):
+  · 1.5748  skill ['merge.ladder'] | 这把剑一档比一档大，做成合成梯，第0条
+  · 1.5748  skill ['merge.ladder'] | 这把剑一档比一档大，做成合成梯，第12条
+  · 1.5748  skill ['merge.ladder'] | 这把剑一档比一档大，做成合成梯，第15条
+  · 1.5748  skill ['merge.ladder'] | 这把剑一档比一档大，做成合成梯，第18条
+  · 1.5748  skill ['merge.ladder'] | 这把剑一档比一档大，做成合成梯，第21条
+  · 1.5748  skill ['merge.ladder'] | 这把剑一档比一档大，做成合成梯，第24条
+  · 1.5748  skill ['merge.ladder'] | 这把剑一档比一档大，做成合成梯，第27条
+  · 1.5748  skill ['merge.ladder'] | 这把剑一档比一档大，做成合成梯，第30条
+confusion:
+  · 合成梯交付形态 → 默认整表 overview_sheet（一组出齐、常 L1–L8）；仅点名一档一张/逐格/per_cell 才走逐格。
+对美术只贴 artist_say（标签+一句人话），禁止刷 confidence/json。先写标准路由句再 route --canonical；execute_ok 才开画；plan_conflict / confidence=ask|low / vague 先问人。

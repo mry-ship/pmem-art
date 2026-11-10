@@ -1,0 +1,8 @@
+{
+  "route_id": "prompt.write",
+  "generated": false,
+  "banner": "【按 提示词生成器：按交付类型扩写可选方案 走了】",
+  "options_file": "assets/skill_20261110_gh/prompt/options.md",
+  "sets": ["窗边中景", "信纸特写", "窗框全景"],
+  "reason": "点选前不出图"
+}

@@ -1,0 +1,111 @@
+{
+  "ok": true,
+  "route_id": "ui.kit",
+  "banner": "【按 【最多4轮·到线即停】SpriteCook式 UI Kit/HUD/九宫格整套 走了】",
+  "passed_threshold": false,
+  "best_score": 9.32,
+  "final_image": "assets/skill_20261110/ui_kit/concept_r4.jpg",
+  "sheet_image": "assets/skill_20261110/ui_kit/sheets/sheet_r4.jpg",
+  "manifest": "assets/skill_20261110/ui_kit/manifest.json",
+  "images": [
+    {
+      "part": "concept",
+      "round": 1,
+      "path": "assets/skill_20261110/ui_kit/concept_r1.jpg",
+      "started_at": "2026-11-10T14:42:21",
+      "ended_at": "2026-11-10T14:43:01",
+      "duration_sec": 40,
+      "score": 8.64,
+      "dims": "风格色板9.0/结构7.9/光影材质8.8/管线合规9.3/套件一致9.1/无瑕疵8.7",
+      "defects": "底栏四枚等距排成一组，家的房子图标在左数第二格，图标中心落在主按钮中线左侧，没有落在画面水平中线。",
+      "passed": false
+    },
+    {
+      "part": "concept",
+      "round": 2,
+      "path": "assets/skill_20261110/ui_kit/concept_r2.jpg",
+      "started_at": "2026-11-10T14:44:53",
+      "ended_at": "2026-11-10T14:46:01",
+      "duration_sec": 68,
+      "score": 9.09,
+      "dims": "风格色板9.2/结构9.0/光影材质9.1/管线合规9.3/套件一致9.2/无瑕疵9.0",
+      "defects": "底栏商店图标离中线的空地明显宽于家与图鉴之间的缝，四枚图标不像同一条等节奏底栏；家已加大并落在主按钮下方。",
+      "passed": false
+    },
+    {
+      "part": "concept",
+      "round": 3,
+      "path": "assets/skill_20261110/ui_kit/concept_r3.jpg",
+      "started_at": "2026-11-10T14:49:19",
+      "ended_at": "2026-11-10T14:50:05",
+      "duration_sec": 46,
+      "score": 9.30,
+      "dims": "风格色板9.3/结构9.4/光影材质9.2/管线合规9.4/套件一致9.3/无瑕疵9.3",
+      "defects": "主按钮和底栏四枚已经贴在石径上，但脚下接触影偏淡，石板高光几乎盖过阴影，控件有一点浮在路面上。",
+      "passed": false
+    },
+    {
+      "part": "concept",
+      "round": 4,
+      "path": "assets/skill_20261110/ui_kit/concept_r4.jpg",
+      "started_at": "2026-11-10T14:51:44",
+      "ended_at": "2026-11-10T14:52:31",
+      "duration_sec": 47,
+      "score": 9.32,
+      "dims": "风格色板9.3/结构9.4/光影材质9.3/管线合规9.4/套件一致9.3/无瑕疵9.3",
+      "defects": "主按钮下沿仍是一条短的深绿边，接触影没有铺进石板缝，控件贴地只比上一张略清楚。",
+      "passed": false
+    },
+    {
+      "part": "sheet",
+      "round": 1,
+      "path": "assets/skill_20261110/ui_kit/sheets/sheet_r1.jpg",
+      "started_at": "2026-11-10T14:55:25",
+      "ended_at": "2026-11-10T14:56:13",
+      "duration_sec": 48,
+      "score": 9.14,
+      "dims": "风格色板9.3/结构9.2/光影材质9.2/管线合规9.4/套件一致8.6/无瑕疵9.2",
+      "defects": "右侧两枚暖金按钮都写着「进入花园」，但第二枚只是略扁，颜色和顶高光几乎与第一枚相同，pressed 没有明显下陷。",
+      "passed": false
+    },
+    {
+      "part": "sheet",
+      "round": 2,
+      "path": "assets/skill_20261110/ui_kit/sheets/sheet_r2.jpg",
+      "started_at": "2026-11-10T14:57:09",
+      "ended_at": "2026-11-10T14:57:45",
+      "duration_sec": 36,
+      "score": 9.19,
+      "dims": "风格色板9.3/结构9.3/光影材质9.2/管线合规9.4/套件一致8.8/无瑕疵9.2",
+      "defects": "第二枚按钮顶高光比第一枚细一点，但高度和金色几乎没变，看起来仍是另一枚抬起的按钮，不是按下。",
+      "passed": false
+    },
+    {
+      "part": "sheet",
+      "round": 3,
+      "path": "assets/skill_20261110/ui_kit/sheets/sheet_r3.jpg",
+      "started_at": "2026-11-10T14:58:34",
+      "ended_at": "2026-11-10T14:59:10",
+      "duration_sec": 36,
+      "score": 9.34,
+      "dims": "风格色板9.4/结构9.4/光影材质9.3/管线合规9.5/套件一致9.3/无瑕疵9.3",
+      "defects": "第二枚按钮已经变成深橄榄金，但高度仍接近第一枚，内凹只在上沿有一条暗线，按下的体量还不够矮。",
+      "passed": false
+    },
+    {
+      "part": "sheet",
+      "round": 4,
+      "path": "assets/skill_20261110/ui_kit/sheets/sheet_r4.jpg",
+      "started_at": "2026-11-10T14:59:59",
+      "ended_at": "2026-11-10T15:00:45",
+      "duration_sec": 46,
+      "score": 9.40,
+      "dims": "风格色板9.4/结构9.4/光影材质9.4/管线合规9.5/套件一致9.4/无瑕疵9.4",
+      "defects": "第二枚按钮已是深橄榄金，上沿有内阴影，但高度仍接近第一枚亮金按钮，没有收到约七成。",
+      "passed": false
+    }
+  ],
+  "wall_started_at": "2026-11-10T14:38:30",
+  "wall_ended_at": "2026-11-10T15:02:02",
+  "notes": "对标品类=休闲花园装修主菜单。未垫竞品截图，未画三消盘。概念会话 skill1110-ui-concept 满 4 轮，最高 9.32，未过 9.5，胜出图 concept_r4.jpg。组件表会话 skill1110-ui-sheet 满 4 轮，最高 9.40，未过 9.5，胜出图 sheets/sheet_r4.jpg，底为纯黑不透明隔离底。passed_threshold 为 false，因为概念与组件表都要 ≥9.5。切线只写在 manifest.json，按 1280×720 成图估切线，没有为切线再出图。小提示：记忆沉淀已后台排队。"
+}

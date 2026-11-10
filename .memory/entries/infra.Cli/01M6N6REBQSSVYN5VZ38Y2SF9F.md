@@ -17,6 +17,8 @@ summary: Windows art hooks 用 pyw；ensure_cursor_stubs 合并保留 pmemw
 verify: python -m unittest tests.test_cursor_hooks_stubs -q；.cursor/hooks.json 含 pyw
   -3 -u pmem_art.py 且含 pmemw
 applies: Windows Cursor 装 pmem-art；本仓库另挂 pmem 时
+verified: '2026-11-11'
+verified_at: '2026-11-11T01:15:57.631+08:00'
 ---
 需求来源：GenerateImage 前后黑框狂闪。必须保持：
   1) .cursor/hooks.json 与 .codex/hooks.json 的 pmem_art pre-gen/post-asset/stop 在 Windows 用 pyw -3 -u，禁止 python3/||/ .cmd。

@@ -1,0 +1,53 @@
+{
+  "route_id": "merge.ladder",
+  "chain": "species_change",
+  "chain_mode": "species_change",
+  "delivery": "overview_sheet",
+  "levels": 8,
+  "grid": "2x4",
+  "aspect_ratio": "4:3",
+  "background": "opaque_isolation",
+  "engine": "Cursor GenerateImage",
+  "passed": false,
+  "threshold": 9.5,
+  "rounds_run": 4,
+  "best_round": 4,
+  "best_score": 8.76,
+  "best_image": "assets/skill_20261110_gh/merge_species/sheet_r4.jpg",
+  "relation": "assets/skill_20261110_gh/merge_species/relation.md",
+  "blocked_by": "下排花弦提琴与花园大提琴几乎是同一把绿色小提琴，尾针读不出来，八档不是八种乐器；邻档体量也没有逐档变大。花笛喇叭口是奶油圆锥，花冠读不出来。",
+  "checklist": {
+    "超框": "过，主体落在白卡内",
+    "邻档可分": "未过，L6 与 L7 同高同形",
+    "无脸": "过，乐器没有脸",
+    "白卡版式": "过，深底 2×4 白圆角卡，无文字，一格一件",
+    "八种乐器": "未过",
+    "体量递增": "未过，第4轮各格主体高大约都在 0.76–0.77"
+  },
+  "rounds": [
+    {
+      "round": 1,
+      "score": 8.43,
+      "dims": "构图8.2/光影9.2/透视9.0/质感8.6/风格8.8/无瑕疵7.6",
+      "image": "assets/skill_20261110_gh/merge_species/sheet_r1.jpg"
+    },
+    {
+      "round": 2,
+      "score": 8.46,
+      "dims": "构图8.3/光影9.2/透视9.1/质感9.0/风格8.9/无瑕疵7.4",
+      "image": "assets/skill_20261110_gh/merge_species/sheet_r2.jpg"
+    },
+    {
+      "round": 3,
+      "score": 8.05,
+      "dims": "构图8.0/光影9.1/透视9.0/质感8.4/风格8.5/无瑕疵6.8",
+      "image": "assets/skill_20261110_gh/merge_species/sheet_r3.jpg"
+    },
+    {
+      "round": 4,
+      "score": 8.76,
+      "dims": "构图8.5/光影9.3/透视9.2/质感9.2/风格8.3/无瑕疵8.4",
+      "image": "assets/skill_20261110_gh/merge_species/sheet_r4.jpg"
+    }
+  ]
+}

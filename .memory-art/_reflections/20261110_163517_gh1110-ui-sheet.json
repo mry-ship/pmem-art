@@ -1,0 +1,111 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-11-10 16:35:17 UTC+8",
+  "session_id": "gh1110-ui-sheet",
+  "goal": "整套界面妖精花园组件表：主按钮默认按下禁用，加一个九宫格弹窗框，空内容",
+  "module": "ui.FairyGarden.MainMenu",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 4,
+  "winner_score": 9.5,
+  "winner_image": "assets/skill_20261110_gh/ui_kit/components_r4.png",
+  "winner_passed": true,
+  "outcome": "达标定稿 · 最高分第 4 轮",
+  "what_fixed": [
+    "禁用钮保留同一朵花只是变灰；弹窗只留四角的花；三枚钮一样大，按下只下沉。",
+    "按下钮改回和默认一样大的正圆，只下移并收窄高光，不要压成椭圆。",
+    "按下钮保持同样大的正圆，但改成更深的金色，高光收成一条细月牙，投影贴短。"
+  ],
+  "what_still_weak": "残余可接受点：按下钮几乎没有下移，高光仍贴在圆的上缘，主要靠变成更深的棕金来和默认区分。",
+  "strengths": "默认是奶油金正圆，按下是更深的棕金正圆，禁用是灰花正圆。弹窗只有四角小花，中心是空白奶油，底是一整块深棕。",
+  "taste_deltas": {
+    "from_strengths": [
+      "默认是奶油金正圆，按下是更深的棕金正圆，禁用是灰花正圆。弹窗只有四角小花，中心是空白奶油，底是一整块深棕。"
+    ],
+    "from_defects": [
+      "禁用钮是一块没有花的灰圆，外圈也没了，和左边两枚不是同一只钮。弹窗上边正中还有一朵花，四边不素。按下钮比默认钮小一圈。",
+      "按下钮被压成横椭圆，高度明显矮于上面的默认正圆，外轮廓不再是正圆。",
+      "按下钮和默认钮几乎一样亮，顶上高光同样宽，看不出被按下去。"
+    ]
+  },
+  "warm_start_confidence": 0.45,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 8.85,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 9.33,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 9.12,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 9.5,
+      "passed": true
+    }
+  ],
+  "lessons": [
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：禁用钮是一块没有花的灰圆，外圈也没了，和左边两枚不是同一只钮。弹窗上边正中还有一朵花，四边不素。按下钮比默认钮小一圈。",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.85"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：深棕实底上，默认和按下是同一套奶油正圆，圆内都有一朵花，圆下汉字是默认和按下。右侧弹窗中心是一块空白奶油。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.85"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：按下钮被压成横椭圆，高度明显矮于上面的默认正圆，外轮廓不再是正圆。",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.33"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：禁用钮仍是同一朵灰花，弹窗只有四角小花，中心是空白奶油。深棕实底没有棋盘格。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.33"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：按下钮和默认钮几乎一样亮，顶上高光同样宽，看不出被按下去。",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.12"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：三枚都是正圆，禁用是灰花，弹窗四角有花、中心空白，深棕实底。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.12"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：按下钮几乎没有下移，高光仍贴在圆的上缘，主要靠变成更深的棕金来和默认区分。",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.5"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：默认是奶油金正圆，按下是更深的棕金正圆，禁用是灰花正圆。弹窗只有四角小花，中心是空白奶油，底是一整块深棕。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.5"
+    }
+  ]
+}

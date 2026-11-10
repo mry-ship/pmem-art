@@ -1,0 +1,260 @@
+{
+  "banner": "【按 提示词生成器：按交付类型扩写可选方案 走了】",
+  "confidence": "high",
+  "plan": {
+    "mode": "skill",
+    "would_execute": true,
+    "execute": false,
+    "reason": "prompt",
+    "announce": "按 提示词生成器：按交付类型扩写可选方案 走了",
+    "serial": false,
+    "parallel": false,
+    "route_ids": [
+      "prompt.write"
+    ],
+    "steps": [
+      {
+        "skill": "pmem-prompt",
+        "section": "提示词生成器：按交付类型扩写可选方案",
+        "heading": "# `/pmem-prompt` — 提示词生成器（按类型分流）",
+        "file": ".cursor/skills/pmem-prompt/SKILL.md",
+        "deliverable": "要写提示词、先不出图。妖精花园窗边写信的小妖精，扩成几套可选说法。",
+        "pad": [],
+        "skip_pad": [],
+        "locks": "只写提示词",
+        "done": "交出提示词方案，不生图",
+        "next_output": "这一步的成图或文字结论",
+        "note": ""
+      }
+    ]
+  },
+  "plan_canonical": {
+    "mode": "skill",
+    "would_execute": true,
+    "execute": false,
+    "reason": "prompt",
+    "announce": "按 提示词生成器：按交付类型扩写可选方案 走了",
+    "serial": false,
+    "parallel": false,
+    "route_ids": [
+      "prompt.write"
+    ],
+    "steps": [
+      {
+        "skill": "pmem-prompt",
+        "section": "提示词生成器：按交付类型扩写可选方案",
+        "heading": "# `/pmem-prompt` — 提示词生成器（按类型分流）",
+        "file": ".cursor/skills/pmem-prompt/SKILL.md",
+        "deliverable": "要写提示词、先不出图",
+        "pad": [],
+        "skip_pad": [],
+        "locks": "只写提示词",
+        "done": "交出提示词方案，不生图",
+        "next_output": "这一步的成图或文字结论",
+        "note": ""
+      }
+    ]
+  },
+  "canonical": "要写提示词、先不出图",
+  "canonical_source": "agent",
+  "local_canonical": {
+    "canonical": "先写提示词；先不出图；走提示词。原话要点：要写提示词、先不出图。妖精花园窗边写信的小妖精，扩成几套可选说法。",
+    "guess_route_id": "prompt.write",
+    "template": "先写提示词；先不出图；走提示词",
+    "template_key": "prompt.write",
+    "signals": {
+      "has_ref": false,
+      "new_subject": false,
+      "keep_subject": false,
+      "variant": false,
+      "multi": false,
+      "two_state": false,
+      "lens": false,
+      "ui": false,
+      "icon_a": false,
+      "icon_b": false,
+      "icon_c": false,
+      "merge": false,
+      "merge_overview": false,
+      "merge_per_cell": false,
+      "key": false,
+      "style": false,
+      "style_then_verify": false,
+      "critique": false,
+      "atlas": false,
+      "coach": false,
+      "prompt_only": true,
+      "hard": false,
+      "image_count": 0,
+      "roles": []
+    },
+    "source": "local_heuristic"
+  },
+  "plan_conflict": false,
+  "canonical_warnings": [],
+  "neighbor_conflict": false,
+  "multi_branch_ask": false,
+  "neighbors": [
+    {
+      "score": 2.4836,
+      "text": "先写提示词，先不出图，第0套",
+      "mode": "skill",
+      "route_ids": [
+        "prompt.write"
+      ],
+      "bucket": "prompt",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 2.4836,
+      "text": "先写提示词，先不出图，第10套",
+      "mode": "skill",
+      "route_ids": [
+        "prompt.write"
+      ],
+      "bucket": "prompt",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 2.4836,
+      "text": "先写提示词，先不出图，第12套",
+      "mode": "skill",
+      "route_ids": [
+        "prompt.write"
+      ],
+      "bucket": "prompt",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 2.4836,
+      "text": "先写提示词，先不出图，第14套",
+      "mode": "skill",
+      "route_ids": [
+        "prompt.write"
+      ],
+      "bucket": "prompt",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 2.4836,
+      "text": "先写提示词，先不出图，第16套",
+      "mode": "skill",
+      "route_ids": [
+        "prompt.write"
+      ],
+      "bucket": "prompt",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 2.4836,
+      "text": "先写提示词，先不出图，第18套",
+      "mode": "skill",
+      "route_ids": [
+        "prompt.write"
+      ],
+      "bucket": "prompt",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 2.4836,
+      "text": "先写提示词，先不出图，第20套",
+      "mode": "skill",
+      "route_ids": [
+        "prompt.write"
+      ],
+      "bucket": "prompt",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 2.4836,
+      "text": "先写提示词，先不出图，第22套",
+      "mode": "skill",
+      "route_ids": [
+        "prompt.write"
+      ],
+      "bucket": "prompt",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    }
+  ],
+  "confusion": [],
+  "announce": "按 提示词生成器：按交付类型扩写可选方案 走了",
+  "would_execute": true,
+  "execute_ok": true,
+  "mode": "skill",
+  "route_ids": [
+    "prompt.write"
+  ],
+  "top_k": 8,
+  "bank_source": "advise",
+  "match_kind": "lexical_ngram+colloquial_expand+canonical",
+  "artist_ask": "",
+  "artist_detail": "先写提示词方案，这步不生图。",
+  "vague_reason": "",
+  "artist_say": "【按 提示词生成器：按交付类型扩写可选方案 走了】\n先写提示词方案，这步不生图。",
+  "llm_hints": {
+    "neighbors": [
+      {
+        "text": "先写提示词，先不出图，第0套",
+        "mode": "skill",
+        "route_ids": [
+          "prompt.write"
+        ],
+        "score": 2.4836
+      },
+      {
+        "text": "先写提示词，先不出图，第10套",
+        "mode": "skill",
+        "route_ids": [
+          "prompt.write"
+        ],
+        "score": 2.4836
+      },
+      {
+        "text": "先写提示词，先不出图，第12套",
+        "mode": "skill",
+        "route_ids": [
+          "prompt.write"
+        ],
+        "score": 2.4836
+      },
+      {
+        "text": "先写提示词，先不出图，第14套",
+        "mode": "skill",
+        "route_ids": [
+          "prompt.write"
+        ],
+        "score": 2.4836
+      },
+      {
+        "text": "先写提示词，先不出图，第16套",
+        "mode": "skill",
+        "route_ids": [
+          "prompt.write"
+        ],
+        "score": 2.4836
+      }
+    ],
+    "confusion": [],
+    "canonical": "要写提示词、先不出图",
+    "canonical_source": "agent",
+    "plan_conflict": false,
+    "artist_say": "【按 提示词生成器：按交付类型扩写可选方案 走了】\n先写提示词方案，这步不生图。",
+    "rule": "对美术只贴 artist_say（标签+一句人话），禁止刷 confidence/json。先写标准路由句再 route --canonical；execute_ok 才开画；plan_conflict / confidence=ask|low / vague 先问人。"
+  }
+}

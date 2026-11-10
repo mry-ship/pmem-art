@@ -4,7 +4,6 @@
     "converge_finish:rm-home-1030-sheets": "2026-10-30 16:24:50 UTC+8",
     "doctor:20261030": "2026-10-30 16:24:50 UTC+8",
     "converge_finish:pirate-cabin-opt-1030": "2026-10-30 18:00:40 UTC+8",
-    "converge_finish:latest": "2026-11-02 17:37:16 UTC+8",
     "doctor:20261102": "2026-11-02 18:44:26 UTC+8",
     "converge_finish:xmas-appicon": "2026-11-02 18:46:39 UTC+8",
     "feedback:fb-visual_correction": "2026-11-02 18:49:11 UTC+8",
@@ -17,14 +16,7 @@
     "converge_finish:xmas-appicon-v6-lockref": "2026-11-02 20:59:40 UTC+8",
     "feedback:fb-recipe": "2026-11-02 21:45:09 UTC+8",
     "feedback:fb-art_decision": "2026-11-03 16:11:35 UTC+8",
-    "converge_finish:instrument-5x3": "2026-11-03 17:49:45 UTC+8",
-    "converge_finish:instrument-5x3-cursor": "2026-11-03 18:04:20 UTC+8",
     "doctor:20261103": "2026-11-03 18:04:20 UTC+8",
-    "converge_finish:instrument-rebuild-5x3": "2026-11-03 19:46:42 UTC+8",
-    "converge_finish:casual1105_ordinary": "2026-11-05 01:33:24 UTC+8",
-    "converge_finish:casual1105_variant": "2026-11-05 01:49:41 UTC+8",
-    "converge_finish:casual1105_ui": "2026-11-05 01:49:53 UTC+8",
-    "converge_finish:cozy-deep-art-v1": "2026-11-06 03:55:44 UTC+8",
     "doctor:20261109": "2026-11-09 21:22:02 UTC+8",
     "converge_finish:skill1109-clone": "2026-11-09 23:25:48 UTC+8",
     "converge_finish:skill1109-ordinary": "2026-11-09 23:28:29 UTC+8",
@@ -38,8 +30,16 @@
     "converge_finish:skill1109-multi-on": "2026-11-10 00:17:39 UTC+8",
     "converge_finish:skill1109-merge-v2": "2026-11-10 01:45:25 UTC+8",
     "converge_finish:skill1109-merge-v3": "2026-11-10 02:10:25 UTC+8",
-    "converge_finish:merge_mushroom_dessert_v5": "2026-11-10 02:30:56 UTC+8",
-    "converge_finish:merge_mushroom_dessert_v5b": "2026-11-10 03:03:06 UTC+8"
+    "converge_finish:skill1110-key": "2026-11-10 14:52:38 UTC+8",
+    "converge_finish:skill1110-variant": "2026-11-10 14:53:51 UTC+8",
+    "converge_finish:skill1110-icon-a": "2026-11-10 14:54:53 UTC+8",
+    "converge_finish:skill1110-merge-species": "2026-11-10 14:55:19 UTC+8",
+    "converge_finish:skill1110-clone": "2026-11-10 14:58:30 UTC+8",
+    "converge_finish:skill1110-merge-shop": "2026-11-10 14:58:56 UTC+8",
+    "converge_finish:skill1110-ui-sheet": "2026-11-10 15:01:50 UTC+8",
+    "converge_finish:skill1110gh-icon-a": "2026-11-10 16:31:35 UTC+8",
+    "converge_finish:merge_water_gh_portrait_v2_r9": "2026-11-10 19:55:35 UTC+8",
+    "doctor:20261111": "2026-11-11 00:00:28 UTC+8"
   },
-  "updated_at": "2026-11-10 03:03:06 UTC+8"
+  "updated_at": "2026-11-11 00:00:28 UTC+8"
 }

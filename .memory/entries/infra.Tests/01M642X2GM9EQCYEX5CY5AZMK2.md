@@ -3,7 +3,7 @@ id: 01M642X2GM9EQCYEX5CY5AZMK2
 module: infra.Tests
 entity: Session
 kind: exclusion
-status: seed
+status: active
 supersedes: []
 anchors:
 - tests/test_p2_session_and_aspect.py#test_generate_without_session_fails_and_does_not_create

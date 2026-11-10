@@ -1,0 +1,56 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-11-11 00:23:36 UTC+8",
+  "session_id": "merge_harbor_orange_20261111_r1",
+  "goal": "merge overview_sheet：/pmem-merge-ladder 水果橙子合成梯整表一组出齐八档；合成梯整表一组出齐，overview_sheet，八档 4×2 竖屏，水果橙子甜品链，只跑一轮收敛",
+  "module": "merge.HarborOrange",
+  "converge_mode": "quality",
+  "guided_mode": "text_guided",
+  "threshold": 9.5,
+  "max_rounds": 1,
+  "rounds_used": 1,
+  "winner_round": 1,
+  "winner_score": 8.64,
+  "winner_image": "assets/skill_20261111_fruit/merge_orange/sheet_r1.jpg",
+  "winner_passed": false,
+  "outcome": "共 1 轮未达阈值，采用最高分",
+  "what_fixed": [
+    "玩家点名单轮：本轮即交；若续跑则加强糖釉玩具材质并修L2扁圆切片；末档不得明显矮于前档；有贴边残片/切顶须整张重出；邻档靠剪影/件数可分；禁止跨轮抠格拼表"
+  ],
+  "what_still_weak": "表面偏写实产品静物而非糖釉玩具货柜；L2更像半个整橙剖面而非扁圆切片；L3/L4卡边有贴边残片感；提示：邻档框高接近（第 1→2 为 0.72→0.52）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 5→6 为 0.94→0.66）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 6→7 为 0.66→0.64）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 7→8 为 0.64→0.68）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；未指定风格却偏写实，本轮不能过线；改回 Gossip Harbor 货柜气质；第 3 格有贴边残片（面积 0.024）：像抠格拼贴或切顶，整张重出，禁止拼贴；第 4 格有贴边残片（面积 0.028）：像抠格拼贴或切顶，整张重出，禁止拼贴；末档明显小于前档：末格 0.68，最大 0.94",
+  "strengths": "4x2浅色圆角卡完整；档序整橙→切→瓣→汁→冰沙→蛋糕→挞→盛宴可读",
+  "taste_deltas": {
+    "from_strengths": [
+      "4x2浅色圆角卡完整；档序整橙→切→瓣→汁→冰沙→蛋糕→挞→盛宴可读"
+    ],
+    "from_defects": [
+      "表面偏写实产品静物而非糖釉玩具货柜；L2更像半个整橙剖面而非扁圆切片；L3/L4卡边有贴边残片感；提示：邻档框高接近（第 1→2 为 0.72→0.52）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；"
+    ]
+  },
+  "warm_start_confidence": 0.45,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 8.64,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "material",
+      "lesson": "本轮短板偏「material」：表面偏写实产品静物而非糖釉玩具货柜；L2更像半个整橙剖面而非扁圆切片；L3/L4卡边有贴边残片感；提示：邻档框高接近（第 1→2 为 0.72→0.52）；分档",
+      "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+      "from_score": "8.64"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：4x2浅色圆角卡完整；档序整橙→切→瓣→汁→冰沙→蛋糕→挞→盛宴可读",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.64"
+    }
+  ]
+}

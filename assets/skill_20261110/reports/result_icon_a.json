@@ -1,0 +1,59 @@
+{
+  "ok": true,
+  "route_id": "icon.a",
+  "banner": "【按 Mode A 走了】",
+  "session": "skill1110-icon-a",
+  "passed_threshold": false,
+  "best_score": 9.03,
+  "best_round": 4,
+  "final_image": "assets/skill_20261110/icon_a/r4.png",
+  "wall_started_at": "2026-11-10T14:38:48",
+  "wall_ended_at": "2026-11-10T14:55:12",
+  "images": [
+    {
+      "round": 1,
+      "path": "assets/skill_20261110/icon_a/r1.png",
+      "started_at": "2026-11-10T14:40:36",
+      "ended_at": "2026-11-10T14:40:54",
+      "duration_sec": 18,
+      "score": 8.88,
+      "dims": "小尺寸识别9.0/安全区8.8/光影质感8.9/多尺寸合规8.8/色板纯粹8.8/无瑕疵8.9",
+      "defects": "整枚符号中心偏右，外接框中心约在画幅55%处。屋身奶油色和下半底板奶油渐变明度接近，底部投影又宽又淡，缩到60px时下半轮廓会粘进底板。高光铺在伞盖顶面，左上45度切角不够清楚。",
+      "passed": false
+    },
+    {
+      "round": 2,
+      "path": "assets/skill_20261110/icon_a/r2.png",
+      "started_at": "2026-11-10T14:44:01",
+      "ended_at": "2026-11-10T14:44:20",
+      "duration_sec": 19,
+      "score": 8.73,
+      "dims": "小尺寸识别9.1/安全区8.7/光影质感8.3/多尺寸合规8.9/色板纯粹8.9/无瑕疵8.6",
+      "defects": "软边和淡投影把外接框拉到宽81.2%高80.9%，右缘软边伸到画幅约95%。伞盖左上有一条发白的硬高光，和白斑抢，读起来像抛光塑料。",
+      "passed": false
+    },
+    {
+      "round": 3,
+      "path": "assets/skill_20261110/icon_a/r3.png",
+      "started_at": "2026-11-10T14:49:10",
+      "ended_at": "2026-11-10T14:49:31",
+      "duration_sec": 21,
+      "score": 7.6,
+      "dims": "小尺寸识别8.7/安全区7.6/光影质感9.0/多尺寸合规8.4/色板纯粹9.2/无瑕疵8.9",
+      "defects": "实心外接框只有宽61.3%高62.7%，低于72%安全区下限，脚下留了一大块空奶油。中心约在画幅56%处，整栋屋子偏右。",
+      "passed": false
+    },
+    {
+      "round": 4,
+      "path": "assets/skill_20261110/icon_a/r4.png",
+      "started_at": "2026-11-10T14:51:49",
+      "ended_at": "2026-11-10T14:52:05",
+      "duration_sec": 16,
+      "score": 9.03,
+      "dims": "小尺寸识别9.0/安全区9.4/光影质感8.8/多尺寸合规9.0/色板纯粹9.1/无瑕疵8.9",
+      "defects": "左上高光是一整片略浅的红，没有切出清楚的45度亮面。圆窗十字在伞盖下面偏小，缩到60px时窗格会先糊，门还在。底板渐变更偏左绿右奶油。",
+      "passed": false
+    }
+  ],
+  "notes": "只交 Light 母版。1024 满幅直角，无字，单枚蘑菇屋。未过 9.5。满 4 轮，最高第 4 轮 9.03。第 3 轮安全区 7.6，正式分取该维，不能停。预览由 r4 缩放到 1024/180/120/60，见 assets/skill_20261110/icon_a/preview.html，不是再生图。"
+}

@@ -1,0 +1,12 @@
+CRITICAL EDIT of the pad sheet. Keep Gossip Harbor glossy celadon 3D, 4x2 white cards on pure black, same eight SKUs, no backpack, no pump bottle.
+
+HARD FIX A — L3 spout length contrast (must be unmistakable at a glance):
+- L2: SHORT stub spout only, open tip, NO rose.
+- L3: LONG gooseneck/open tube spout that is about TWICE as long as L2's stub; the tube extends far past the can body; OPEN tip still NO rose holes.
+- L2 and L3 must NOT look like twins.
+
+HARD FIX B — monotone subject frame heights inside each card:
+L1 0.40 | L2 0.48 | L3 0.56 | L4 0.64 | L5 0.72 | L6 0.80 | L7 0.86 | L8 0.96 (largest).
+Low levels leave big empty card margin; high levels fill more. Neighbor cells must not be same size.
+
+KEEP: L1 cup; L4 first perforated rose; L5 bigger rose can; L6 hose reel disk NO nozzle; L7 oscillating sprinkler hose; L8 rotating multi-arm irrigation unit with base.

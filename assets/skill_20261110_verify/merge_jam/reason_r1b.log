@@ -1,0 +1,12 @@
+﻿❌ [合理性闸 · merge] 未通过
+  ✓ subject_action（主体在做什么/交付物是什么）
+  ✓ element_budget（元素预算（不堆景不过载））
+  ✓ hard_locks（硬锁（画幅/透明底/无字/机位等））
+  ✓ fail_at_glance（一眼失败条件已写明）
+  ✓ single_centered_item（每档单件居中）
+  ✓ chain_mode_declared（写清 same_object / shop_ladder / species_change / 轻门）
+  ✓ upgrade_reason_concrete（升级理由具体（same_object→parts_add；shop/species→evolve_to+merge_why；轻门写具体可读升级））
+  ✓ family_or_base_lock（锁住母体或家族（same_object→母体词；shop/species→家族色相/题材；轻门→同任务域））
+  · merge shop_ladder 缺形变理由：须写家族基因与 evolve/合成理由，禁止装饰换装断故事
+请按未过项改 revised / checklist 后重跑 review，禁止跳过直接 generate。
+已写入会话（passed=false）；generate 仍会被拦截，请按未过项改 revised/checklist 后重跑 review。

@@ -1,0 +1,21 @@
+Portrait 9:16 merge ladder overview sheet, exact 4 rows × 2 columns, read left-to-right then top-to-bottom. Opaque pure black #000000 isolation background everywhere including gaps. NO white grid lines, NO blue cards, NO HUD, NO text, NO faces. Gossip Harbor glossy cartoon 3D: round thick forms, no hard outlines, warm saturated magenta-to-wine, soft studio light, clean appetizing dessert glaze. One centered SKU per cell.
+
+Layout reference locks ONLY grid/arrangement/black isolation — DO NOT copy seafood, lobster, fingers, beach, or any reference SKUs. Fresh dewberry jam shop_ladder chain.
+
+VOLUME HEIGHT RATIOS (subject height / cell height) MUST be about 0.42 / 0.50 / 0.58 / 0.66 / 0.74 / 0.80 / 0.88 / 0.96. Each next item clearly taller. Cell 8 tallest AND widest.
+
+HARD APPETITE LOCKS (fail if broken):
+- Cell5 MUST be a fine smooth raspberry smoothie/smoothie drink: silky uniform texture, soft cream swirl OR flat frosty top. FORBIDDEN: thick greasy foam peak, dirty pink pustule top, lava/magma spout, trypophobic bumps.
+- Cell8 MUST be a smooth two-layer mini cake OR mousse slice on a plate, glossy frosting/light cream, optional 1–2 whole berries as garnish. FORBIDDEN: giant berry tumor hill, honeycomb bump mountain, dense pustule trypophobia texture.
+- Whole sheet FORBIDDEN: dense trypophobic dotted/pustule textures, greasy lava foam, gelatinous tumor blobs.
+
+Cell1 (0.42): one small whole dewberry with green calyx; large black margins.
+Cell2 (0.50): tiny dish with two halved dewberries; solid full magenta flesh and seeds; NO hollow center.
+Cell3 (0.58): deeper round bowl of mashed dewberry jam puree with restrained seeds; NO tomato wedges.
+Cell4 (0.66): slim tall glass of clear translucent magenta juice; flat liquid surface; leave black space above rim.
+Cell5 (0.74): taller wider smoothie glass than juice; silky smooth smoothie body; soft cream swirl or flat frost top — appetizing, NOT greasy foam.
+Cell6 (0.80): fatter jam jar taller than smoothie; smooth jam with few seeds; black gap above rim; NO cream pudding.
+Cell7 (0.88): wide round jam tart, golden scalloped crust, smooth glossy jam filling; NO honeycomb bumps; NO orange slices.
+Cell8 (0.96): plate with smooth two-layer mini cake or clean mousse block, glossy frosting, 1–2 whole berries only; tallest widest; NO berry tumor mound.
+
+shop_ladder dewberry jam family. Opaque isolation bottom.

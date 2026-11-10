@@ -1,0 +1,87 @@
+{
+  "ok": true,
+  "route_id": "draw.variant",
+  "banner": "【按 变体 走了】",
+  "session": "skill1110-variant",
+  "passed_threshold": false,
+  "best_score": 8.52,
+  "best_round": 3,
+  "final_image": "assets/skill_20261110/draw_variant/r3.png",
+  "wall_started_at": "2026-11-10T14:36:53",
+  "wall_ended_at": "2026-11-10T14:54:20",
+  "images": [
+    {
+      "round": 1,
+      "path": "assets/skill_20261110/draw_variant/r1.png",
+      "started_at": "2026-11-10T14:40:52",
+      "ended_at": "2026-11-10T14:41:30",
+      "duration_sec": 38,
+      "score": 8.05,
+      "dims": {
+        "构图": 7.6,
+        "光影": 8.7,
+        "透视": 8.3,
+        "质感": 8.2,
+        "风格": 7.4,
+        "无瑕疵": 8.0
+      },
+      "defects": "脸和双肩几乎正对镜头，果篮从参考的左下挪到身前正中，双辫从胸前下垂变成向两侧横伸。持篮手腕多出一圈紫色腕带，裙身中线多了一排白边珍珠扣。嘴是偏高的深色竖椭圆，高度接近鼻底到下巴的一半，不是小圆。",
+      "passed": false
+    },
+    {
+      "round": 2,
+      "path": "assets/skill_20261110/draw_variant/r2.png",
+      "started_at": "2026-11-10T14:44:59",
+      "ended_at": "2026-11-10T14:46:13",
+      "duration_sec": 74,
+      "score": 8.46,
+      "dims": {
+        "构图": 8.7,
+        "光影": 8.6,
+        "透视": 8.4,
+        "质感": 8.5,
+        "风格": 8.3,
+        "无瑕疵": 8.3
+      },
+      "defects": "嘴洞是竖向小椭圆，上唇中段收尖，宽度超过鼻翼，没有收成正圆。领口是一条加宽的白心形边，比参考粉裙的浅圆领更白。持篮手四指并成一条光滑弧，拇指和食指之间几乎没有分缝。prompt 改动 48% 超过档位上限 40%。",
+      "passed": false
+    },
+    {
+      "round": 3,
+      "path": "assets/skill_20261110/draw_variant/r3.png",
+      "started_at": "2026-11-10T14:48:52",
+      "ended_at": "2026-11-10T14:49:38",
+      "duration_sec": 46,
+      "score": 8.52,
+      "dims": {
+        "构图": 8.8,
+        "光影": 8.7,
+        "透视": 8.5,
+        "质感": 8.6,
+        "风格": 8.5,
+        "无瑕疵": 8.2
+      },
+      "defects": "嘴洞仍是上宽下收的竖椭圆，高度大于宽度，上唇中点下压成尖角，没有收成与鼻翼同宽的正圆。画面右侧前伸的拳头里，食指和中指贴在一起，指节只有一条浅沟。",
+      "passed": false
+    },
+    {
+      "round": 4,
+      "path": "assets/skill_20261110/draw_variant/r4.png",
+      "started_at": "2026-11-10T14:51:19",
+      "ended_at": "2026-11-10T14:51:58",
+      "duration_sec": 39,
+      "score": 8.36,
+      "dims": {
+        "构图": 8.7,
+        "光影": 8.6,
+        "透视": 8.4,
+        "质感": 8.5,
+        "风格": 8.6,
+        "无瑕疵": 7.8
+      },
+      "defects": "嘴洞上唇高拱，开口高度大约是宽度的一点五倍，并且宽过鼻翼，是竖向大口而不是正圆。前伸拳的食指和中指并成一块光滑拳面，指间没有分开的缝。",
+      "passed": false
+    }
+  ],
+  "notes": "未过线。四轮两侧上眼睑都在绿虹膜上缘之上，惊讶睁眼成立，所以没有因眼睑停机条款误停；嘴洞四轮都是竖椭圆，没有收成与鼻翼同宽的正圆。最高分是第3轮 8.52。每轮只垫 assets/skill_20261109/_refs/ref_character_fairy.png。底是不透明浅奶油。原句里的「换成」会让近邻撞上克隆且 execute_ok 为 false；正式 route 在原句后补了「同一张脸，换个表情」，banner 仍是【按 变体 走了】且 execute_ok 为 true。第2轮提示词改动 48%，记入缺陷，分数仍是调和平均 8.46。过程板：.memory-art/converge/boards/skill1110-variant/index.html。入库副本在 assets/character/fairy/r3_for_ingest.png，交付图仍是 r3.png。同目录 final.png 与 r3.png 字节相同。"
+}

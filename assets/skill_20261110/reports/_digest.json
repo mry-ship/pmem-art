@@ -1,0 +1,612 @@
+[
+  {
+    "file": "result_draw_clone.json",
+    "route_id": "draw.clone",
+    "variant": null,
+    "banner": "【按 克隆 走了】",
+    "ok": true,
+    "passed": false,
+    "best": 8.78,
+    "final": "assets/skill_20261110/draw_clone/r4.png",
+    "sheet": null,
+    "wall_start": "2026-11-10T14:37:42",
+    "wall_end": "2026-11-10T14:58:37",
+    "wall_sec": null,
+    "notes": "【按 克隆 走了】。锁媒介、饱和色、休闲立体高光和柔和接触影，不锁构图和主体。四轮都只把最初风格原图垫进生图，没有垫上一轮成图。原图 169×276 与 3:4 相差 18.4%，超过 15% 参数闸，会话登记垫图用了同图加边的 ref_style_fairy_garden_3x4.png 才能开画；GenerateImage 的 reference 仍是原图绝对路径，成图都是 864×1152。四轮都没有把树屋、池塘、小船、鼻鼠、巨叶框画回来，构图没有被压到 8.85 以下",
+    "relation": null,
+    "images": [
+      {
+        "part": "",
+        "round": 1,
+        "path": "assets/skill_20261110/draw_clone/r1.png",
+        "sec": 42,
+        "score": 8.4,
+        "passed": false
+      },
+      {
+        "part": "",
+        "round": 2,
+        "path": "assets/skill_20261110/draw_clone/r2.png",
+        "sec": 47,
+        "score": 8.48,
+        "passed": false
+      },
+      {
+        "part": "",
+        "round": 3,
+        "path": "assets/skill_20261110/draw_clone/r3.png",
+        "sec": 46,
+        "score": 8.67,
+        "passed": false
+      },
+      {
+        "part": "",
+        "round": 4,
+        "path": "assets/skill_20261110/draw_clone/r4.png",
+        "sec": 41,
+        "score": 8.78,
+        "passed": false
+      }
+    ]
+  },
+  {
+    "file": "result_draw_key.json",
+    "route_id": "draw.key",
+    "variant": null,
+    "banner": "【按 原画 走了】",
+    "ok": true,
+    "passed": false,
+    "best": 8.88,
+    "final": "assets/skill_20261110/draw_key/r4.png",
+    "sheet": null,
+    "wall_start": "2026-11-10T14:35:39",
+    "wall_end": "2026-11-10T14:52:40",
+    "wall_sec": null,
+    "notes": "【按 原画 走了】route_ids=draw.key，会话 skill1110-key，模块 keyart.FairyGarden，scale=high，16:9，媒介 impasto。样张只读色板、光影与厚涂媒介，没有传入 GenerateImage。合理性闸 layout_not_style_echo=ok。四张都不是样张机位：没有巨叶框住的中心树屋，没有左下池塘和船，没有右下蘑菇，所以没有因构图回声把构图压到 8.5 以下。对标上架 Key Art。四轮调和平均 8.",
+    "relation": null,
+    "images": [
+      {
+        "part": "",
+        "round": 1,
+        "path": "assets/skill_20261110/draw_key/r1.png",
+        "sec": 51,
+        "score": 8.52,
+        "passed": false
+      },
+      {
+        "part": "",
+        "round": 2,
+        "path": "assets/skill_20261110/draw_key/r2.png",
+        "sec": 31,
+        "score": 8.61,
+        "passed": false
+      },
+      {
+        "part": "",
+        "round": 3,
+        "path": "assets/skill_20261110/draw_key/r3.png",
+        "sec": 39,
+        "score": 8.86,
+        "passed": false
+      },
+      {
+        "part": "",
+        "round": 4,
+        "path": "assets/skill_20261110/draw_key/r4.png",
+        "sec": 29,
+        "score": 8.88,
+        "passed": false
+      }
+    ]
+  },
+  {
+    "file": "result_draw_lens.json",
+    "route_id": "draw.lens",
+    "variant": null,
+    "banner": "【按 镜头包 走了】",
+    "ok": true,
+    "passed": false,
+    "best": null,
+    "final": "",
+    "sheet": null,
+    "wall_start": "2026-11-10T14:36:16",
+    "wall_end": "2026-11-10T14:37:23",
+    "wall_sec": null,
+    "notes": "点选前不生图",
+    "relation": null,
+    "images": []
+  },
+  {
+    "file": "result_draw_multi.json",
+    "route_id": "draw.multi",
+    "variant": null,
+    "banner": "【按 多图分工 走了】",
+    "ok": false,
+    "passed": false,
+    "best": 8.58,
+    "final": "assets/skill_20261110/draw_multi/final.jpg",
+    "sheet": null,
+    "wall_start": "2026-11-10T14:38:24",
+    "wall_end": "2026-11-10T14:52:55",
+    "wall_sec": null,
+    "notes": "【按 多图分工 走了】route_ids=draw.multi，execute_ok=true。两张附图都进了 route，结构图在前、身份图在后。第一态会话 skill1110-multi-shut 用 --contract split，没有写 --scale。关门态满 4 轮，最高第 3 轮 8.58，未过线（≥9.5）。final.jpg 与 shut_r3.jpg 同为 314348 字节。点名落点没达到：双脚一直在石径旁的圆石上，没有踩上石板路，所以 9.50 也不",
+    "relation": null,
+    "images": [
+      {
+        "part": "shut",
+        "round": 1,
+        "path": "assets/skill_20261110/draw_multi/shut_r1.jpg",
+        "sec": 46,
+        "score": 8.46,
+        "passed": false
+      },
+      {
+        "part": "shut",
+        "round": 2,
+        "path": "assets/skill_20261110/draw_multi/shut_r2.jpg",
+        "sec": 36,
+        "score": 8.46,
+        "passed": false
+      },
+      {
+        "part": "shut",
+        "round": 3,
+        "path": "assets/skill_20261110/draw_multi/shut_r3.jpg",
+        "sec": 54,
+        "score": 8.58,
+        "passed": false
+      },
+      {
+        "part": "shut",
+        "round": 4,
+        "path": "assets/skill_20261110/draw_multi/shut_r4.jpg",
+        "sec": 39,
+        "score": 8.55,
+        "passed": false
+      }
+    ]
+  },
+  {
+    "file": "result_draw_ordinary.json",
+    "route_id": "draw.ordinary",
+    "variant": null,
+    "banner": "【走默认路径】按 普通图 走了",
+    "ok": true,
+    "passed": false,
+    "best": 9.03,
+    "final": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110\\draw_ordinary\\r3.png",
+    "sheet": null,
+    "wall_start": "2026-11-10T14:37:53",
+    "wall_end": "2026-11-10T14:53:42",
+    "wall_sec": null,
+    "notes": "路由缓存含 draw.ordinary，banner 为【走默认路径】按 普通图 走了。有参考、题材不变，每轮只垫最初的 ref_prop_mushroom.png，不垫上一轮成图。底是 Cursor 不透明纯黑隔离底，不是真透明。四轮调和平均都低于 9.5，未过线，最高是第 3 轮 9.03。商业对标是休闲软塑胶道具的完成度：身份和机位站得住，剩下的是光影层次（盖腹环境色、后排梗间距），不是理解错需求。若再画，只动这一层。",
+    "relation": null,
+    "images": [
+      {
+        "part": "",
+        "round": 1,
+        "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110\\draw_ordinary\\r1.png",
+        "sec": 59,
+        "score": 8.75,
+        "passed": false
+      },
+      {
+        "part": "",
+        "round": 2,
+        "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110\\draw_ordinary\\r2.png",
+        "sec": 82,
+        "score": 8.83,
+        "passed": false
+      },
+      {
+        "part": "",
+        "round": 3,
+        "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110\\draw_ordinary\\r3.png",
+        "sec": 64,
+        "score": 9.03,
+        "passed": false
+      },
+      {
+        "part": "",
+        "round": 4,
+        "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110\\draw_ordinary\\r4.png",
+        "sec": 69,
+        "score": 9.02,
+        "passed": false
+      }
+    ]
+  },
+  {
+    "file": "result_draw_variant.json",
+    "route_id": "draw.variant",
+    "variant": null,
+    "banner": "【按 变体 走了】",
+    "ok": true,
+    "passed": false,
+    "best": 8.52,
+    "final": "assets/skill_20261110/draw_variant/r3.png",
+    "sheet": null,
+    "wall_start": "2026-11-10T14:36:53",
+    "wall_end": "2026-11-10T14:54:20",
+    "wall_sec": null,
+    "notes": "未过线。四轮两侧上眼睑都在绿虹膜上缘之上，惊讶睁眼成立，所以没有因眼睑停机条款误停；嘴洞四轮都是竖椭圆，没有收成与鼻翼同宽的正圆。最高分是第3轮 8.52。每轮只垫 assets/skill_20261109/_refs/ref_character_fairy.png。底是不透明浅奶油。原句里的「换成」会让近邻撞上克隆且 execute_ok 为 false；正式 route 在原句后补了「同一张脸，换个表情」，banner 仍是【按 变体 走了】且 execute_ok 为",
+    "relation": null,
+    "images": [
+      {
+        "part": "",
+        "round": 1,
+        "path": "assets/skill_20261110/draw_variant/r1.png",
+        "sec": 38,
+        "score": 8.05,
+        "passed": false
+      },
+      {
+        "part": "",
+        "round": 2,
+        "path": "assets/skill_20261110/draw_variant/r2.png",
+        "sec": 74,
+        "score": 8.46,
+        "passed": false
+      },
+      {
+        "part": "",
+        "round": 3,
+        "path": "assets/skill_20261110/draw_variant/r3.png",
+        "sec": 46,
+        "score": 8.52,
+        "passed": false
+      },
+      {
+        "part": "",
+        "round": 4,
+        "path": "assets/skill_20261110/draw_variant/r4.png",
+        "sec": 39,
+        "score": 8.36,
+        "passed": false
+      }
+    ]
+  },
+  {
+    "file": "result_icon_a.json",
+    "route_id": "icon.a",
+    "variant": null,
+    "banner": "【按 Mode A 走了】",
+    "ok": true,
+    "passed": false,
+    "best": 9.03,
+    "final": "assets/skill_20261110/icon_a/r4.png",
+    "sheet": null,
+    "wall_start": "2026-11-10T14:38:48",
+    "wall_end": "2026-11-10T14:55:12",
+    "wall_sec": null,
+    "notes": "只交 Light 母版。1024 满幅直角，无字，单枚蘑菇屋。未过 9.5。满 4 轮，最高第 4 轮 9.03。第 3 轮安全区 7.6，正式分取该维，不能停。预览由 r4 缩放到 1024/180/120/60，见 assets/skill_20261110/icon_a/preview.html，不是再生图。",
+    "relation": null,
+    "images": [
+      {
+        "part": "",
+        "round": 1,
+        "path": "assets/skill_20261110/icon_a/r1.png",
+        "sec": 18,
+        "score": 8.88,
+        "passed": false
+      },
+      {
+        "part": "",
+        "round": 2,
+        "path": "assets/skill_20261110/icon_a/r2.png",
+        "sec": 19,
+        "score": 8.73,
+        "passed": false
+      },
+      {
+        "part": "",
+        "round": 3,
+        "path": "assets/skill_20261110/icon_a/r3.png",
+        "sec": 21,
+        "score": 7.6,
+        "passed": false
+      },
+      {
+        "part": "",
+        "round": 4,
+        "path": "assets/skill_20261110/icon_a/r4.png",
+        "sec": 16,
+        "score": 9.03,
+        "passed": false
+      }
+    ]
+  },
+  {
+    "file": "result_icon_b.json",
+    "route_id": "icon.b",
+    "variant": null,
+    "banner": "【按 Mode B 走了】",
+    "ok": true,
+    "passed": true,
+    "best": 8.5,
+    "final": "assets/skill_20261110/icon_b/preview.html",
+    "sheet": null,
+    "wall_start": "2026-11-10T14:38:22",
+    "wall_end": "2026-11-10T14:53:21",
+    "wall_sec": 899,
+    "notes": "路由 conversation=skill1110-icon-b，route_ids=[icon.b]，banner=【按 Mode B 走了】。先锁 Soft（2px、round/round、24 格、padding 2、currentColor），再写 8 枚。未开 converge，未逐枚闭环。一致性分 8.5 = 笔画一致 9.2、视觉重量 8.2、留白与光学居中 8.4、24px 功能识别 8.7，四项均值 8.625×0.75，加无瑕疵 8.3×0.25。清单过：",
+    "relation": null,
+    "images": []
+  },
+  {
+    "file": "result_icon_c.json",
+    "route_id": "icon.c",
+    "variant": null,
+    "banner": "【按 Mode C 走了】",
+    "ok": true,
+    "passed": true,
+    "best": 9.0,
+    "final": "assets/skill_20261110/icon_c/sheet.png",
+    "sheet": null,
+    "wall_start": "2026-11-10T14:36:35",
+    "wall_end": "2026-11-10T14:39:31",
+    "wall_sec": null,
+    "notes": "未开逐枚闭环",
+    "relation": null,
+    "images": [
+      {
+        "part": "",
+        "round": 1,
+        "path": "assets/skill_20261110/icon_c/sheet.png",
+        "sec": 30,
+        "score": 9.0,
+        "passed": null
+      }
+    ]
+  },
+  {
+    "file": "result_merge_same.json",
+    "route_id": "merge.ladder",
+    "variant": "same_object",
+    "banner": "【按 同域合成梯：先定链型与关系，再按交付出图 走了】",
+    "ok": true,
+    "passed": false,
+    "best": 8.94,
+    "final": "assets/skill_20261110/merge_same/sheet_r2.jpg",
+    "sheet": null,
+    "wall_start": "2026-11-10T14:42:12",
+    "wall_end": "2026-11-10T14:53:46",
+    "wall_sec": null,
+    "notes": "关系第1稿 relation-judge 通过，未写第2稿。chain_mode=same_object，8档，2×4整表，无格子参考，未垫鸟表，GenerateImage 未垫图。底是不透明白圆角卡加深灰实底。六维按加权调和平均，未抬分。第1轮下排丢提梁，构图未停。第2轮提梁、弯嘴、盖、箍、环、金托、晶冠累计可读，但 L5 左腹提前有小金环，中段壶腹增高弱，8.94 未到 9.5。第3轮卡内变成深灰描边且 L6 丢提梁，触发安全早停 STOP_REGRESSION，交付第2",
+    "relation": true,
+    "images": [
+      {
+        "part": "",
+        "round": 1,
+        "path": "assets/skill_20261110/merge_same/sheet_r1.jpg",
+        "sec": 68,
+        "score": 8.67,
+        "passed": false
+      },
+      {
+        "part": "",
+        "round": 2,
+        "path": "assets/skill_20261110/merge_same/sheet_r2.jpg",
+        "sec": 113,
+        "score": 8.94,
+        "passed": false
+      },
+      {
+        "part": "",
+        "round": 3,
+        "path": "assets/skill_20261110/merge_same/sheet_r3.jpg",
+        "sec": 69,
+        "score": 8.62,
+        "passed": false
+      }
+    ]
+  },
+  {
+    "file": "result_merge_shop.json",
+    "route_id": "merge.ladder",
+    "variant": "shop_ladder",
+    "banner": "【按 同域合成梯：先定链型与关系，再按交付出图 走了】",
+    "ok": true,
+    "passed": false,
+    "best": 8.61,
+    "final": "assets/skill_20261110/merge_shop/sheet_r1.jpg",
+    "sheet": null,
+    "wall_start": "2026-11-10T14:40:37",
+    "wall_end": "2026-11-10T14:59:30",
+    "wall_sec": null,
+    "notes": "关系第1稿 relation-judge 通过，未写第2稿。链型 shop_ladder，8档，整表 2×4，不写 base_body。对标真链是 Travel Town Ice Cream：Vanilla→Watermelon→Kiwi→RainbowPop→Cone→StrawberryCone→BigCone→Luxury→SimpleSundae→DeluxeSundae，只抽同店形变和犒赏曲线。文字风格优先：软塑胶厚实圆润、棚柔光、短接触影、饱和但不油亮。鸟表 17",
+    "relation": true,
+    "images": [
+      {
+        "part": "",
+        "round": 1,
+        "path": "assets/skill_20261110/merge_shop/sheet_r1.jpg",
+        "sec": 202,
+        "score": 8.61,
+        "passed": false
+      },
+      {
+        "part": "",
+        "round": 2,
+        "path": "assets/skill_20261110/merge_shop/sheet_r2.jpg",
+        "sec": 220,
+        "score": 8.56,
+        "passed": false
+      },
+      {
+        "part": "",
+        "round": 3,
+        "path": "assets/skill_20261110/merge_shop/sheet_r3.jpg",
+        "sec": 92,
+        "score": 7.89,
+        "passed": false
+      }
+    ]
+  },
+  {
+    "file": "result_merge_species.json",
+    "route_id": "merge.ladder",
+    "variant": "species_change",
+    "banner": "【按 同域合成梯：先定链型与关系，再按交付出图 走了】",
+    "ok": true,
+    "passed": false,
+    "best": 9.09,
+    "final": "assets/skill_20261110/merge_species/final.jpg",
+    "sheet": null,
+    "wall_start": "2026-11-10T14:41:06",
+    "wall_end": "2026-11-10T14:55:26",
+    "wall_sec": null,
+    "notes": "关系第1稿 relation-judge 通过，未写第2稿，未出逐格。chain_mode=species_change，levels=8，2×4 overview_sheet，不写 base_body，GenerateImage 未垫图、未垫鸟表。底是不透明整表：白圆角卡加深炭灰底。六维为加权调和平均。第3轮成图落盘 14:50:17，记账 _now 在 14:52:18；第4轮成图落盘 14:52:39，记账 _now 在 14:53:59。满4轮未到9.5，终稿取第4轮",
+    "relation": true,
+    "images": [
+      {
+        "part": "",
+        "round": 1,
+        "path": "assets/skill_20261110/merge_species/sheet_r1.jpg",
+        "sec": 79,
+        "score": 8.39,
+        "passed": false
+      },
+      {
+        "part": "",
+        "round": 2,
+        "path": "assets/skill_20261110/merge_species/sheet_r2.jpg",
+        "sec": 70,
+        "score": 8.83,
+        "passed": false
+      },
+      {
+        "part": "",
+        "round": 3,
+        "path": "assets/skill_20261110/merge_species/sheet_r3.jpg",
+        "sec": 17,
+        "score": 9.03,
+        "passed": false
+      },
+      {
+        "part": "",
+        "round": 4,
+        "path": "assets/skill_20261110/merge_species/sheet_r4.jpg",
+        "sec": 21,
+        "score": 9.09,
+        "passed": false
+      }
+    ]
+  },
+  {
+    "file": "result_prompt_write.json",
+    "route_id": "prompt.write",
+    "variant": null,
+    "banner": "【按 提示词生成器：按交付类型扩写可选方案 走了】",
+    "ok": true,
+    "passed": null,
+    "best": null,
+    "final": "",
+    "sheet": null,
+    "wall_start": "2026-11-10T14:37:11",
+    "wall_end": "2026-11-10T14:38:13",
+    "wall_sec": 62,
+    "notes": "conversation=skill1110-prompt。route_ids 只有 prompt.write，三套都标 route_id=draw.ordinary，题材是妖精花园窗边写信的小妖精。A 窗边中景 / 午后暖侧光 / 哑光水粉；B 信纸特写 / 清晨冷白光 / 水彩纸纹；C 窗框全景 / 黄昏逆光金边 / 齿纹纸色铅笔。无风格句，完成度句取 watercolor.portrait 绘本立绘，未套合成梯软塑胶。未生图，未跑 converge。点选前不出图。",
+    "relation": null,
+    "images": []
+  },
+  {
+    "file": "result_style_lock.json",
+    "route_id": "style.lock",
+    "variant": null,
+    "banner": "【按 参考图/样张一键提炼风格圣经与色板锁定 走了】",
+    "ok": true,
+    "passed": null,
+    "best": null,
+    "final": "",
+    "sheet": null,
+    "wall_start": "2026-11-10T14:37:39",
+    "wall_end": "2026-11-10T14:45:05",
+    "wall_sec": 446,
+    "notes": "路由 route_ids 只有 style.lock，没有 draw.clone，因此只锁定，未生图，也未出克隆验证图。色板 HEX 从样张像素取样。art_decision、recipe（已挂样张）、style_redline 都写在 brand.SkillRun20261110。feedback 附带的口味档案同步因文件被占用跳过，三条记忆正文已落盘。",
+    "relation": null,
+    "images": []
+  },
+  {
+    "file": "result_ui_kit.json",
+    "route_id": "ui.kit",
+    "variant": null,
+    "banner": "【按 【最多4轮·到线即停】SpriteCook式 UI Kit/HUD/九宫格整套 走了】",
+    "ok": true,
+    "passed": false,
+    "best": 9.32,
+    "final": "assets/skill_20261110/ui_kit/concept_r4.jpg",
+    "sheet": "assets/skill_20261110/ui_kit/sheets/sheet_r4.jpg",
+    "wall_start": "2026-11-10T14:38:30",
+    "wall_end": "2026-11-10T15:02:02",
+    "wall_sec": null,
+    "notes": "对标品类=休闲花园装修主菜单。未垫竞品截图，未画三消盘。概念会话 skill1110-ui-concept 满 4 轮，最高 9.32，未过 9.5，胜出图 concept_r4.jpg。组件表会话 skill1110-ui-sheet 满 4 轮，最高 9.40，未过 9.5，胜出图 sheets/sheet_r4.jpg，底为纯黑不透明隔离底。passed_threshold 为 false，因为概念与组件表都要 ≥9.5。切线只写在 manifest.json，按 12",
+    "relation": null,
+    "images": [
+      {
+        "part": "concept",
+        "round": 1,
+        "path": "assets/skill_20261110/ui_kit/concept_r1.jpg",
+        "sec": 40,
+        "score": 8.64,
+        "passed": false
+      },
+      {
+        "part": "concept",
+        "round": 2,
+        "path": "assets/skill_20261110/ui_kit/concept_r2.jpg",
+        "sec": 68,
+        "score": 9.09,
+        "passed": false
+      },
+      {
+        "part": "concept",
+        "round": 3,
+        "path": "assets/skill_20261110/ui_kit/concept_r3.jpg",
+        "sec": 46,
+        "score": 9.3,
+        "passed": false
+      },
+      {
+        "part": "concept",
+        "round": 4,
+        "path": "assets/skill_20261110/ui_kit/concept_r4.jpg",
+        "sec": 47,
+        "score": 9.32,
+        "passed": false
+      },
+      {
+        "part": "sheet",
+        "round": 1,
+        "path": "assets/skill_20261110/ui_kit/sheets/sheet_r1.jpg",
+        "sec": 48,
+        "score": 9.14,
+        "passed": false
+      },
+      {
+        "part": "sheet",
+        "round": 2,
+        "path": "assets/skill_20261110/ui_kit/sheets/sheet_r2.jpg",
+        "sec": 36,
+        "score": 9.19,
+        "passed": false
+      },
+      {
+        "part": "sheet",
+        "round": 3,
+        "path": "assets/skill_20261110/ui_kit/sheets/sheet_r3.jpg",
+        "sec": 36,
+        "score": 9.34,
+        "passed": false
+      },
+      {
+        "part": "sheet",
+        "round": 4,
+        "path": "assets/skill_20261110/ui_kit/sheets/sheet_r4.jpg",
+        "sec": 46,
+        "score": 9.4,
+        "passed": false
+      }
+    ]
+  }
+]

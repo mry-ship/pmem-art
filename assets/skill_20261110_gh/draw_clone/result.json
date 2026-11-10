@@ -1,0 +1,35 @@
+{
+  "route_id": "draw.clone",
+  "passed": false,
+  "line": "未过线",
+  "threshold": 9.5,
+  "best_score": 9.11,
+  "best_round": 1,
+  "final_path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\draw_clone\\r1.png",
+  "rounds": [
+    {
+      "round": 1,
+      "score": 9.11,
+      "dims": "构图9.2/光影9.4/透视8.6/质感9.2/风格8.9/无瑕疵9.1",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\draw_clone\\r1.png"
+    },
+    {
+      "round": 2,
+      "score": 9.09,
+      "dims": "构图9.2/光影9.4/透视8.5/质感9.2/风格9.1/无瑕疵9.0",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\draw_clone\\r2.png"
+    },
+    {
+      "round": 3,
+      "score": 9.09,
+      "dims": "构图9.1/光影9.4/透视8.6/质感9.2/风格9.1/无瑕疵9.0",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\draw_clone\\r3.png"
+    },
+    {
+      "round": 4,
+      "score": 8.96,
+      "dims": "构图8.9/光影9.3/透视8.6/质感9.1/风格9.0/无瑕疵8.8",
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\draw_clone\\r4.png"
+    }
+  ]
+}

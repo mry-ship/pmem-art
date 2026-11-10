@@ -1,0 +1,59 @@
+{
+  "ok": true,
+  "route_id": "draw.key",
+  "banner": "【按 原画 走了】",
+  "session": "skill1110-key",
+  "passed_threshold": false,
+  "best_score": 8.88,
+  "best_round": 4,
+  "final_image": "assets/skill_20261110/draw_key/r4.png",
+  "wall_started_at": "2026-11-10T14:35:39",
+  "wall_ended_at": "2026-11-10T14:52:40",
+  "images": [
+    {
+      "round": 1,
+      "path": "assets/skill_20261110/draw_key/r1.png",
+      "started_at": "2026-11-10T14:40:57",
+      "ended_at": "2026-11-10T14:41:48",
+      "duration_sec": 51,
+      "score": 8.52,
+      "dims": "构图8.6/光影8.8/透视8.4/质感8.7/风格8.3/无瑕疵8.3",
+      "defects": "圆窗几乎是正圆，窗台立面正对镜头，低机位仰拍只做到略低，没有看见窗台底面。室内裙子下摆和架子糊进同一块褐色，油灯暖光没有把藕粉裙从暗部里托出来。执笔的右手和深色笔杆粘成一条，信纸上有一团灰线像假字。",
+      "passed": false
+    },
+    {
+      "round": 2,
+      "path": "assets/skill_20261110/draw_key/r2.png",
+      "started_at": "2026-11-10T14:44:24",
+      "ended_at": "2026-11-10T14:44:55",
+      "duration_sec": 31,
+      "score": 8.61,
+      "dims": "构图8.5/光影8.9/透视8.5/质感8.8/风格8.6/无瑕疵8.4",
+      "defects": "窗洞仍接近正圆，近处下沿和远处上沿差不多粗，从下往上的近大远小没有出现。信纸上还有几道淡横线。右手握笔的指节糊成一小团肉色，笔杆从那团肉色里伸出来。",
+      "passed": false
+    },
+    {
+      "round": 3,
+      "path": "assets/skill_20261110/draw_key/r3.png",
+      "started_at": "2026-11-10T14:47:17",
+      "ended_at": "2026-11-10T14:47:56",
+      "duration_sec": 39,
+      "score": 8.86,
+      "dims": "构图8.9/光影9.1/透视8.8/质感8.9/风格8.8/无瑕疵8.7",
+      "defects": "窗台前景主要是顶面的小绿叶和立面木板，底面木纹只露了一条窄边。握笔的右手仍是一团圆润肉色，拇指和食指没有分开。发顶和翅膀边缘有一点糊进窗洞上方的亮晚霞。",
+      "passed": false
+    },
+    {
+      "round": 4,
+      "path": "assets/skill_20261110/draw_key/r4.png",
+      "started_at": "2026-11-10T14:50:14",
+      "ended_at": "2026-11-10T14:50:43",
+      "duration_sec": 29,
+      "score": 8.88,
+      "dims": "构图9.0/光影9.1/透视8.8/质感9.0/风格8.9/无瑕疵8.6",
+      "defects": "信纸上又有几道淡横线，不是空白奶油纸。右手仍是小而圆的一团，看不见分开的拇指和食指，笔从拳侧伸出来。纸和灯还放在窗台顶面上，底面木梁只占最下沿一条。",
+      "passed": false
+    }
+  ],
+  "notes": "【按 原画 走了】route_ids=draw.key，会话 skill1110-key，模块 keyart.FairyGarden，scale=high，16:9，媒介 impasto。样张只读色板、光影与厚涂媒介，没有传入 GenerateImage。合理性闸 layout_not_style_echo=ok。四张都不是样张机位：没有巨叶框住的中心树屋，没有左下池塘和船，没有右下蘑菇，所以没有因构图回声把构图压到 8.5 以下。对标上架 Key Art。四轮调和平均 8.52 / 8.61 / 8.86 / 8.88，均未到 9.5，满 4 轮交第 4 轮。未过线的原因是仰视还不够彻底，信纸反复出现淡横线，握笔的拇指和食指没有分开。converge 日志按策略记过垫图路径，实际生图调用没有 reference_image_paths。"
+}

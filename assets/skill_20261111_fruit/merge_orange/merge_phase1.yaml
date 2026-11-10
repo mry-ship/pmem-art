@@ -1,0 +1,37 @@
+# 水果店「橙子甜品」合成梯 · shop_ladder L1–L8（overview_sheet 4×2 竖屏）
+# 第 1 稿。不写 base_body。
+# 过程类型：A 同族形变货柜（同店完整 SKU 换代）。橙子果品→果汁→甜品完成态。
+# 商业对标真链（Gossip Harbor 橙子甜品 8，点名水果默认跟此真档序）：
+#   Orange → Slice → Wedge → Juice → Smoothie → Cake → Tart → Dessert
+# 抽链型=同店形变换代；抽曲线=整果→切片→瓣块→杯装汁→冰沙→蛋糕→挞→盛宴甜品。
+# 版式：无格子参考 → 默认 4 行 2 列竖屏、浅色圆角卡。
+# 风格未点名 → Gossip Harbor 玩具货柜卡通。
+# 五问：
+# 1 同店=水果甜品货柜；家族=暖橙+奶油黄+叶绿色相。对标是 GH 橙子真档序，不是自拟假名。
+# 2 无回退：整圆果→扁圆切片→三角瓣→细高杯汁→更高冰沙杯→圆蛋糕→宽圆挞→盘装盛宴。L8 仍是橙子甜品盛宴。
+# 3 无跨店硬跳、无城堡。邻档剪影类不同，64px 可分。
+# 4 L1 只是一颗完整橙，杯/蛋糕/挞/盛宴都晚出现。
+# 5 每档 merge_why 写两件同级合成后为何变成下一件，可倒推。
+version: harbor-orange-fruit-20261111-v1
+pipeline: art-merge-two-phase
+delivery: overview_sheet
+
+tracks:
+  harbor_orange:
+    module: merge.HarborOrange
+    chain_mode: shop_ladder
+    levels: 8
+    grid_rows: 4
+    grid_cols: 2
+    surface: "Gossip Harbor 玩具货柜卡通：光泽卡通 3D、圆润厚实、无硬描边、暖饱和、柔光渐变、糖釉玩具高光、棋盘缩略可认；材质是卡通玩具/糖釉道具，不是实物。禁止写实摄影、美食棚拍、产品静物、玻璃真实折射、木纹指纹、果汁乳浊摄影感、微距毛孔。4×2 浅奶油/浅蓝圆角卡竖屏；每格一件居中留边，无字无脸。家族是水果店暖橙+奶油黄+叶绿色相，不是八档贴同一纹样。不要草莓、西瓜、露莓、果酱瓶、马卡龙、纸杯蛋糕。"
+    commercial_ref: "Gossip Harbor Orange Dessert (real 8): Orange→Slice→Wedge→Juice→Smoothie→Cake→Tart→Dessert"
+    process_type: "shop_ladder_same_shop_fruit_form_evolution"
+    rows:
+      - { level: 1, name: 整橙, silhouette: "一颗完整圆橙，短绿蒂小叶，无刀口无杯", scale_delta: 基档, scale_pct: 0.55, evolve_to: WholeOrange, merge_why: "—", parts_add: "—" }
+      - { level: 2, name: 橙片, silhouette: "扁圆横切一片，可见放射瓣纹，整圆果消失", scale_delta: "+小", scale_pct: 0.58, evolve_to: OrangeSlice, merge_why: "两颗整橙合成一只扁圆橙片，整果外形换成切片平面", parts_add: "—" }
+      - { level: 3, name: 橙瓣, silhouette: "一只三角月牙橙瓣立放，扁圆片消失", scale_delta: "+小", scale_pct: 0.62, evolve_to: OrangeWedge, merge_why: "两片橙片合成一只三角月牙橙瓣，切片平面换成楔形剪影", parts_add: "—" }
+      - { level: 4, name: 橙汁杯, silhouette: "细高透明玩具杯装满橙汁，液面平，瓣块消失", scale_delta: "+中", scale_pct: 0.68, evolve_to: OrangeJuiceCup, merge_why: "两只橙瓣榨成一只细高橙汁杯，楔形换成竖直杯身", parts_add: "—" }
+      - { level: 5, name: 橙冰沙, silhouette: "更高冰沙杯，顶面干净霜旋，比果汁杯更高", scale_delta: "+中", scale_pct: 0.74, evolve_to: OrangeSmoothie, merge_why: "两杯橙汁打成更高橙冰沙杯，顶面出现霜旋完成态", parts_add: "—" }
+      - { level: 6, name: 橙蛋糕, silhouette: "一小块圆橙蛋糕，杯消失，层状蛋糕剪影", scale_delta: "+中", scale_pct: 0.80, evolve_to: OrangeCake, merge_why: "两杯橙冰沙烤成一小块圆橙蛋糕，杯身换成层状蛋糕", parts_add: "—" }
+      - { level: 7, name: 橙挞, silhouette: "更宽圆橙挞，浅挞皮托匀滑橙馅，蛋糕块消失", scale_delta: "+大", scale_pct: 0.86, evolve_to: OrangeTart, merge_why: "两块橙蛋糕合成一只更宽圆橙挞，层块换成浅盘挞皮", parts_add: "—" }
+      - { level: 8, name: 橙盛宴甜品, silhouette: "浅盘盛宴甜品，挞块+橙片点缀仍是一件货并留边", scale_delta: "+大", scale_pct: 0.92, evolve_to: OrangeDessertFeast, merge_why: "两只橙挞合成一盘橙盛宴甜品，盘沿成为主轮廓，仍同店橙子甜品", parts_add: "—" }

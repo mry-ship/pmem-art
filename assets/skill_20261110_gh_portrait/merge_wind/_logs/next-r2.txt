@@ -1,0 +1,4 @@
+下一轮第 2 轮，垫最初的参考图：C:\Users\ZhengLangPC\Desktop\Cursor-Pmem-Art\assets\refs\gossip_harbor\gh_merge__ar_9x16.png
+策略：pad=auto→style_ref（每轮垫最初参考，修正只写进提示词）
+上轮成图不链（8.74 分）：C:\Users\ZhengLangPC\Desktop\Cursor-Pmem-Art\assets\skill_20261110_gh_portrait\merge_wind\sheet_r1.jpg
+提示词仍带改点：邻档主体框高必须明显递增，末档最大。格内改成与外圈相同的浅蓝，禁止米色白卡，乐器框高按0.48到0.94拉开，去掉叶片只保留叶绿涂色。

@@ -1,0 +1,4 @@
+usage: pmem-art [-h] [--root ROOT] [--version]
+                {init,bootstrap,sync,candidates,accept,place,classify,ingest,classify-watch,list,search,validate,doctor,hygiene,atlas,reveal,feedback,note,ref-read,merge,skills,benchmark,route,showcase-gate,reasonableness,check-scale-gates,vlm-judge,converge,contract,improve,progress,taste,coach,learn,hook}
+                ...
+pmem-art: error: unrecognized arguments: 16:9，点名组件表、九宫格和状态族，full kit。

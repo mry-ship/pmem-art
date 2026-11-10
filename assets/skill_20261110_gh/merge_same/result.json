@@ -1,0 +1,82 @@
+{
+  "ok": true,
+  "route_id": "merge.ladder",
+  "chain": "same_object",
+  "banner": "【按 合成梯 走了】",
+  "passed_threshold": false,
+  "best_score": 8.84,
+  "final_image": "assets/skill_20261110_gh/merge_same/sheet_r4.jpg",
+  "relation_passed": true,
+  "delivery": "overview_sheet",
+  "levels": 8,
+  "grid": "2x4",
+  "background": "opaque_isolation",
+  "images": [
+    {
+      "round": 1,
+      "path": "assets/skill_20261110_gh/merge_same/sheet_r1.jpg",
+      "ended_at": "2026-11-10T16:14:02",
+      "score": 8.81,
+      "dims": {
+        "构图": 7.5,
+        "光影": 9.1,
+        "透视": 9.2,
+        "质感": 9.0,
+        "风格": 9.2,
+        "无瑕疵": 9.0
+      },
+      "defects": "L1到L6壶嘴都已是多孔淋头。L4没有领结。L5没有第二根壶嘴。L8没有节庆雕花。提梁都在。上排四格主体框高都约0.84，第5格反而更小，末档不是最大。",
+      "passed": false
+    },
+    {
+      "round": 2,
+      "path": "assets/skill_20261110_gh/merge_same/sheet_r2.jpg",
+      "ended_at": "2026-11-10T16:18:13",
+      "score": 8.42,
+      "dims": {
+        "构图": 7.0,
+        "光影": 9.0,
+        "透视": 9.0,
+        "质感": 8.8,
+        "风格": 8.7,
+        "无瑕疵": 8.4
+      },
+      "defects": "第6格铜泵顶替了提梁。L1到L6仍是多孔淋头。第5格没有领结也没有第二根壶嘴。第8格整壶变成纯金。邻档框高几乎一样。",
+      "passed": false
+    },
+    {
+      "round": 3,
+      "path": "assets/skill_20261110_gh/merge_same/sheet_r3.jpg",
+      "ended_at": "2026-11-10T16:21:32",
+      "score": 8.82,
+      "dims": {
+        "构图": 7.8,
+        "光影": 9.2,
+        "透视": 9.2,
+        "质感": 9.1,
+        "风格": 9.2,
+        "无瑕疵": 8.7
+      },
+      "defects": "第5格比第4格更小。第3格起又变成多孔淋头。五到八格都只有一根壶嘴。提梁和铜泵留到了末档，第8格仍是青瓷雕花。",
+      "passed": false
+    },
+    {
+      "round": 4,
+      "path": "assets/skill_20261110_gh/merge_same/sheet_r4.jpg",
+      "ended_at": "2026-11-10T16:23:44",
+      "score": 8.84,
+      "dims": {
+        "构图": 7.9,
+        "光影": 9.2,
+        "透视": 9.2,
+        "质感": 9.2,
+        "风格": 9.3,
+        "无瑕疵": 8.6
+      },
+      "defects": "第4格和第5格几乎一样大，第5格仍是一根开口壶嘴。铜泵只在第6格，后面两格没留住。第7格金纹提前。提梁八档都在，玫瑰淋头从第7格才出现，第8格仍是青瓷。",
+      "passed": false
+    }
+  ],
+  "wall_started_at": "2026-11-10T16:11:00",
+  "notes": "关系第1稿 relation-judge 通过，未写第2稿。chain_mode=same_object，8档，2×4整表。每轮垫 gh_merge.jpg 只锁光泽。底是不透明深灰加白圆角卡。六维按加权调和平均。四轮都未到9.5。最高分是第4轮8.84。未过线原因：没有双嘴，第4与第5档体量几乎一样，铜泵没有累计到末档。提梁没有丢。对标 Gossip Harbor 货柜光泽，画风在档，缺的是链上的零件和档差。"
+}

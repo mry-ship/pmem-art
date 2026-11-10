@@ -1,0 +1,15 @@
+﻿Pad assets/skill_20261110_gh_portrait_v2/merge_water/final.jpg for layout+identity only.
+chain_mode=shop_ladder; delivery=overview_sheet; levels=8; portrait 4x2 grid; aspect 9:16; opaque black isolation (#000); cream rounded cards; one single centered item per cell, not a scene; no grade numbers; props no face.
+
+KEEP locks: L3 long open spout clearly longer than L2 short stub spout; L2 and L3 NO rose/shower head; L4 first perforated rose; L6 hose reel disk with center ring NO spray nozzle gun; L8 rotary irrigation sprinkler unit; Gossip Harbor celadon gloss cartoon 3D round thick no hard outline warm soft light; NO backpack straps, NO pump bottle, NO backpack sprayer.
+
+ONLY FIX subject frame heights (card occupancy) monotone empty-margin ladder, neighbors must differ, L8 largest:
+L1 open water cup ~0.40 card height (large empty margin)
+L2 short open spout can ~0.48
+L3 long open spout can ~0.56
+L4 rose watering can ~0.64
+L5 bigger rose can ~0.72
+L6 hose reel disk ~0.80
+L7 hose+oscillating sprinkler ~0.86
+L8 rotary irrigation ~0.96 near card top, tallest widest
+Do not shorten L3 spout. Do not add rose before L4. Fail-at-glance if L1 fills card or L8 not largest or L3 spout not longer than L2.

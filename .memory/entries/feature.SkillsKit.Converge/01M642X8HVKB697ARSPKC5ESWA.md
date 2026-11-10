@@ -3,7 +3,7 @@ id: 01M642X8HVKB697ARSPKC5ESWA
 module: feature.SkillsKit.Converge
 entity: AnatomyVeto
 kind: exclusion
-status: seed
+status: active
 supersedes: []
 anchors:
 - skills_kit/converge_policy.py#anatomy_ok_for_stop

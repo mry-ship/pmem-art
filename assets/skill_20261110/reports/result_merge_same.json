@@ -1,0 +1,69 @@
+{
+  "ok": true,
+  "route_id": "merge.ladder",
+  "variant": "same_object",
+  "banner": "【按 同域合成梯：先定链型与关系，再按交付出图 走了】",
+  "passed_threshold": false,
+  "best_score": 8.94,
+  "final_image": "assets/skill_20261110/merge_same/sheet_r2.jpg",
+  "relation_passed": true,
+  "images": [
+    {
+      "round": 1,
+      "path": "assets/skill_20261110/merge_same/sheet_r1.jpg",
+      "started_at": "2026-11-10T14:46:29",
+      "ended_at": "2026-11-10T14:47:37",
+      "duration_sec": 68,
+      "score": 8.67,
+      "dims": {
+        "构图": 7.5,
+        "光影": 8.8,
+        "透视": 9.0,
+        "质感": 8.9,
+        "风格": 9.0,
+        "无瑕疵": 8.9
+      },
+      "defects": "L5到L8拱形提梁消失，零件没有累计；L6粗弯嘴被侧环挡住或消失；八档壶腹在卡里占比接近，体量递增弱。壶身仍是青瓷圆腹，没有换成别的容器。",
+      "passed": false
+    },
+    {
+      "round": 2,
+      "path": "assets/skill_20261110/merge_same/sheet_r2.jpg",
+      "started_at": "2026-11-10T14:48:33",
+      "ended_at": "2026-11-10T14:50:26",
+      "duration_sec": 113,
+      "score": 8.94,
+      "dims": {
+        "构图": 8.9,
+        "光影": 8.8,
+        "透视": 9.0,
+        "质感": 9.0,
+        "风格": 9.1,
+        "无瑕疵": 8.9
+      },
+      "defects": "下排左起第一只左腹多了一小枚金环，比左右大环那只更早；中间几只圆腹在白卡里的高度仍接近，只有第一只明显更小。",
+      "passed": false
+    },
+    {
+      "round": 3,
+      "path": "assets/skill_20261110/merge_same/sheet_r3.jpg",
+      "started_at": "2026-11-10T14:50:26",
+      "ended_at": "2026-11-10T14:51:35",
+      "duration_sec": 69,
+      "score": 8.62,
+      "dims": {
+        "构图": 7.8,
+        "光影": 8.6,
+        "透视": 8.9,
+        "质感": 8.9,
+        "风格": 8.7,
+        "无瑕疵": 8.8
+      },
+      "defects": "八张卡只剩白描边，卡内是深灰，壶坐在灰底上。下排第二只头顶没有拱形提梁，左右大环还在。后两只左侧大环看不清。",
+      "passed": false
+    }
+  ],
+  "wall_started_at": "2026-11-10T14:42:12",
+  "wall_ended_at": "2026-11-10T14:53:46",
+  "notes": "关系第1稿 relation-judge 通过，未写第2稿。chain_mode=same_object，8档，2×4整表，无格子参考，未垫鸟表，GenerateImage 未垫图。底是不透明白圆角卡加深灰实底。六维按加权调和平均，未抬分。第1轮下排丢提梁，构图未停。第2轮提梁、弯嘴、盖、箍、环、金托、晶冠累计可读，但 L5 左腹提前有小金环，中段壶腹增高弱，8.94 未到 9.5。第3轮卡内变成深灰描边且 L6 丢提梁，触发安全早停 STOP_REGRESSION，交付第2轮。未过线。"
+}

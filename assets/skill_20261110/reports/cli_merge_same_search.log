@@ -1,0 +1,35 @@
+{
+  "ok": true,
+  "server": "pmem-art",
+  "queried_module": "merge.GardenCan",
+  "parent_module_inherited": null,
+  "inherits_chain": [
+    "merge.GardenCan"
+  ],
+  "max_inherits_depth": 4,
+  "module_specs": {},
+  "module_palette": [],
+  "lessons": [],
+  "asset_records_and_plans": [],
+  "layered_knowledge": [
+    {
+      "id": "palette-70-20-10",
+      "title": "色彩构成：70-20-10 色板比例黄金法则",
+      "body": "画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+      "tags": [
+        "brand",
+        "color_palette",
+        "character",
+        "scene",
+        "ui"
+      ],
+      "source": "auto_promoted:learn_accept",
+      "layer_scope": "shared",
+      "project_id": "global_shared",
+      "project_name": "全局共享通用库 (Global Shared)",
+      "universal": true,
+      "promoted_from": "Cursor-Pmem-Art",
+      "updated_at": "2026-11-05 20:41:42 UTC+8"
+    }
+  ]
+}

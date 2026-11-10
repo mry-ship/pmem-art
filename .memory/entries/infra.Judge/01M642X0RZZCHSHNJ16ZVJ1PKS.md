@@ -3,7 +3,7 @@ id: 01M642X0RZZCHSHNJ16ZVJ1PKS
 module: infra.Judge
 entity: PixelJudge
 kind: exclusion
-status: seed
+status: active
 supersedes: []
 anchors:
 - vlm_judge.py#build_judge_system_prompt

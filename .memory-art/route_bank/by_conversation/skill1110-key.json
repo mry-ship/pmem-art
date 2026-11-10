@@ -1,0 +1,14 @@
+{
+  "saved_at": 1794292539.3892367,
+  "text": "主视觉、Key Art、妖精花园黄昏海报；走原画",
+  "banner": "【按 原画 走了】",
+  "route_ids": [
+    "draw.key"
+  ],
+  "mode": "skill",
+  "execute_ok": true,
+  "artist_say": "【按 原画 走了】\n按原画/主视觉来做。",
+  "plan_conflict": false,
+  "confidence": "high",
+  "conversation_id": "skill1110-key"
+}

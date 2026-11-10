@@ -1,0 +1,272 @@
+{
+  "banner": "【按 同域合成梯：先定链型与关系，再按交付出图 走了】",
+  "confidence": "high",
+  "plan": {
+    "mode": "skill",
+    "would_execute": true,
+    "execute": false,
+    "reason": "merge",
+    "announce": "按 同域合成梯：先定链型与关系，再按交付出图 走了",
+    "serial": false,
+    "parallel": false,
+    "route_ids": [
+      "merge.ladder"
+    ],
+    "steps": [
+      {
+        "skill": "pmem-merge-ladder",
+        "section": "同域合成梯：先定链型与关系，再按交付出图",
+        "heading": "# `/pmem-merge-ladder` — 同域合成梯",
+        "file": ".cursor/skills/pmem-merge-ladder/SKILL.md",
+        "deliverable": "同一套东西一档比一档大；走合成梯。一组花园乐器八档，chain_mode=species_change，整表一组。",
+        "pad": [],
+        "skip_pad": [],
+        "locks": "同一条升级链；未点名逐格禁止拆单张；到线即停不鼓励凑满4轮",
+        "done": "关系最多2稿（过了就停）→整表最多4轮到线即停（通常8、竞品合理可6）；点名逐格时各档并行独立 session、每档最多4轮；未点名必须整表",
+        "next_output": "这一步的成图或文字结论",
+        "note": "banner：最多4轮到线即停；关系≤2；逐格须并行；交件标明是否过线"
+      }
+    ]
+  },
+  "plan_canonical": {
+    "mode": "skill",
+    "would_execute": true,
+    "execute": false,
+    "reason": "merge",
+    "announce": "按 同域合成梯：先定链型与关系，再按交付出图 走了",
+    "serial": false,
+    "parallel": false,
+    "route_ids": [
+      "merge.ladder"
+    ],
+    "steps": [
+      {
+        "skill": "pmem-merge-ladder",
+        "section": "同域合成梯：先定链型与关系，再按交付出图",
+        "heading": "# `/pmem-merge-ladder` — 同域合成梯",
+        "file": ".cursor/skills/pmem-merge-ladder/SKILL.md",
+        "deliverable": "同一套东西一档比一档大；走合成梯",
+        "pad": [],
+        "skip_pad": [],
+        "locks": "同一条升级链；未点名逐格禁止拆单张；到线即停不鼓励凑满4轮",
+        "done": "关系最多2稿（过了就停）→整表最多4轮到线即停（通常8、竞品合理可6）；点名逐格时各档并行独立 session、每档最多4轮；未点名必须整表",
+        "next_output": "这一步的成图或文字结论",
+        "note": "banner：最多4轮到线即停；关系≤2；逐格须并行；交件标明是否过线"
+      }
+    ]
+  },
+  "canonical": "同一套东西一档比一档大；走合成梯",
+  "canonical_source": "agent",
+  "local_canonical": {
+    "canonical": "合成梯整表一组出齐；overview_sheet；走合成梯。原话要点：同一套东西一档比一档大；走合成梯。一组花园乐器八档，chain_mode=spe",
+    "guess_route_id": "merge.ladder",
+    "template": "合成梯整表一组出齐；overview_sheet；走合成梯",
+    "template_key": "merge.overview",
+    "signals": {
+      "has_ref": false,
+      "new_subject": false,
+      "keep_subject": false,
+      "variant": false,
+      "multi": false,
+      "two_state": false,
+      "lens": false,
+      "ui": false,
+      "icon_a": false,
+      "icon_b": false,
+      "icon_c": false,
+      "merge": true,
+      "merge_overview": true,
+      "merge_per_cell": false,
+      "key": false,
+      "style": false,
+      "style_then_verify": false,
+      "critique": false,
+      "atlas": false,
+      "coach": false,
+      "prompt_only": false,
+      "hard": false,
+      "image_count": 0,
+      "roles": []
+    },
+    "source": "local_heuristic"
+  },
+  "plan_conflict": false,
+  "canonical_warnings": [],
+  "neighbor_conflict": false,
+  "multi_branch_ask": false,
+  "neighbors": [
+    {
+      "score": 1.9288,
+      "text": "这把剑一档比一档大，做成合成梯，第0条",
+      "mode": "skill",
+      "route_ids": [
+        "merge.ladder"
+      ],
+      "bucket": "merge",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 1.9288,
+      "text": "这把剑一档比一档大，做成合成梯，第12条",
+      "mode": "skill",
+      "route_ids": [
+        "merge.ladder"
+      ],
+      "bucket": "merge",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 1.9288,
+      "text": "这把剑一档比一档大，做成合成梯，第15条",
+      "mode": "skill",
+      "route_ids": [
+        "merge.ladder"
+      ],
+      "bucket": "merge",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 1.9288,
+      "text": "这把剑一档比一档大，做成合成梯，第18条",
+      "mode": "skill",
+      "route_ids": [
+        "merge.ladder"
+      ],
+      "bucket": "merge",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 1.9288,
+      "text": "这把剑一档比一档大，做成合成梯，第21条",
+      "mode": "skill",
+      "route_ids": [
+        "merge.ladder"
+      ],
+      "bucket": "merge",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 1.9288,
+      "text": "这把剑一档比一档大，做成合成梯，第24条",
+      "mode": "skill",
+      "route_ids": [
+        "merge.ladder"
+      ],
+      "bucket": "merge",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 1.9288,
+      "text": "这把剑一档比一档大，做成合成梯，第27条",
+      "mode": "skill",
+      "route_ids": [
+        "merge.ladder"
+      ],
+      "bucket": "merge",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 1.9288,
+      "text": "这把剑一档比一档大，做成合成梯，第30条",
+      "mode": "skill",
+      "route_ids": [
+        "merge.ladder"
+      ],
+      "bucket": "merge",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    }
+  ],
+  "confusion": [
+    {
+      "id": "merge_delivery",
+      "when": "合成梯交付形态",
+      "tip": "默认整表 overview_sheet（一组出齐、常 L1–L8）；仅点名一档一张/逐格/per_cell 才走逐格。"
+    }
+  ],
+  "announce": "按 同域合成梯：先定链型与关系，再按交付出图 走了",
+  "would_execute": true,
+  "execute_ok": true,
+  "mode": "skill",
+  "route_ids": [
+    "merge.ladder"
+  ],
+  "top_k": 8,
+  "bank_source": "advise",
+  "match_kind": "lexical_ngram+colloquial_expand+canonical",
+  "artist_ask": "",
+  "artist_detail": "按合成梯：先说清升级关系，再默认整表一组出齐（通常 8 档）。",
+  "vague_reason": "",
+  "artist_say": "【按 同域合成梯：先定链型与关系，再按交付出图 走了】\n按合成梯：先说清升级关系，再默认整表一组出齐（通常 8 档）。",
+  "llm_hints": {
+    "neighbors": [
+      {
+        "text": "这把剑一档比一档大，做成合成梯，第0条",
+        "mode": "skill",
+        "route_ids": [
+          "merge.ladder"
+        ],
+        "score": 1.9288
+      },
+      {
+        "text": "这把剑一档比一档大，做成合成梯，第12条",
+        "mode": "skill",
+        "route_ids": [
+          "merge.ladder"
+        ],
+        "score": 1.9288
+      },
+      {
+        "text": "这把剑一档比一档大，做成合成梯，第15条",
+        "mode": "skill",
+        "route_ids": [
+          "merge.ladder"
+        ],
+        "score": 1.9288
+      },
+      {
+        "text": "这把剑一档比一档大，做成合成梯，第18条",
+        "mode": "skill",
+        "route_ids": [
+          "merge.ladder"
+        ],
+        "score": 1.9288
+      },
+      {
+        "text": "这把剑一档比一档大，做成合成梯，第21条",
+        "mode": "skill",
+        "route_ids": [
+          "merge.ladder"
+        ],
+        "score": 1.9288
+      }
+    ],
+    "confusion": [
+      {
+        "id": "merge_delivery",
+        "when": "合成梯交付形态",
+        "tip": "默认整表 overview_sheet（一组出齐、常 L1–L8）；仅点名一档一张/逐格/per_cell 才走逐格。"
+      }
+    ],
+    "canonical": "同一套东西一档比一档大；走合成梯",
+    "canonical_source": "agent",
+    "plan_conflict": false,
+    "artist_say": "【按 同域合成梯：先定链型与关系，再按交付出图 走了】\n按合成梯：先说清升级关系，再默认整表一组出齐（通常 8 档）。",
+    "rule": "对美术只贴 artist_say（标签+一句人话），禁止刷 confidence/json。先写标准路由句再 route --canonical；execute_ok 才开画；plan_conflict / confidence=ask|low / vague 先问人。"
+  }
+}

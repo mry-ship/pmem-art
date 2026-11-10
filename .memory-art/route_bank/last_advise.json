@@ -1,13 +1,13 @@
 {
-  "saved_at": 1794250426.1932302,
-  "text": "合成梯整表重跑：偏写实要改软塑胶；第5档必须双球大甜筒不能像第3档；八档一直进化上升",
-  "banner": "【按 同域合成梯：先定链型与关系，再按交付出图 走了】",
+  "saved_at": 1794333123.209465,
+  "text": "画一张窗边女孩",
+  "banner": "【走默认路径】按 普通图 走了",
   "route_ids": [
-    "merge.ladder"
+    "draw.ordinary"
   ],
-  "mode": "skill",
+  "mode": "default",
   "execute_ok": true,
-  "artist_say": "【按 同域合成梯：先定链型与关系，再按交付出图 走了】\n按合成梯：先说清升级关系，再默认整表一组出齐（通常 8 档）。",
+  "artist_say": "【走默认路径】按 普通图 走了\n按普通单张来画（不是整套界面/图标/合成梯）。",
   "plan_conflict": false,
   "confidence": "high",
   "conversation_id": ""

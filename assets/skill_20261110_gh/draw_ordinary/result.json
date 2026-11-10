@@ -1,0 +1,41 @@
+{
+  "route_id": "draw.ordinary",
+  "best_score": 9.41,
+  "passed": false,
+  "final_image": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\draw_ordinary\\r4.png",
+  "score_method": "立体渲染媒介加权调和平均：构图15 / 光影18.75 / 透视11.25 / 质感18.75 / 风格11.25 / 无瑕疵25",
+  "images": [
+    {
+      "round": 1,
+      "file": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\draw_ordinary\\r1.png",
+      "dims": {"构图": 9.0, "光影": 8.8, "透视": 9.0, "质感": 7.6, "风格": 8.5, "无瑕疵": 9.1},
+      "score": 8.63,
+      "flaws": "菌盖下有褐色菌褶，读成生蘑菇而不是奶油甜点；四只高低混排，果子绕柄根一圈，不够干净。",
+      "meets_9_5": false
+    },
+    {
+      "round": 2,
+      "file": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\draw_ordinary\\r2.png",
+      "dims": {"构图": 9.3, "光影": 9.0, "透视": 9.1, "质感": 8.2, "风格": 8.6, "无瑕疵": 9.0},
+      "score": 8.85,
+      "flaws": "三只白球扣在几乎等宽的蛋糕上，没有悬出的帽檐，轮廓是奶油包不是蘑菇；海绵孔偏写实。",
+      "meets_9_5": false
+    },
+    {
+      "round": 3,
+      "file": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\draw_ordinary\\r3.png",
+      "dims": {"构图": 9.2, "光影": 9.3, "透视": 9.2, "质感": 9.0, "风格": 9.1, "无瑕疵": 8.7},
+      "score": 9.04,
+      "flaws": "奶油盖左侧鼓出一块，圆顶不对称；海绵柄下端呈梨形；橙果、蓝果和叶子全堆在盘子右前方。",
+      "meets_9_5": false
+    },
+    {
+      "round": 4,
+      "file": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\draw_ordinary\\r4.png",
+      "dims": {"构图": 9.5, "光影": 9.5, "透视": 9.4, "质感": 9.3, "风格": 9.4, "无瑕疵": 9.4},
+      "score": 9.41,
+      "flaws": "柄底仍微微外鼓，不是直筒短柄；海绵表面还有细孔；果叶略偏柄的右前。",
+      "meets_9_5": false
+    }
+  ]
+}

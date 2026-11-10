@@ -1,0 +1,6 @@
+benchmark_id: watercolor.portrait
+category: watercolor
+surface: 水彩纸纹飞白、边缘松而结构仍连、湿画透气、绘本立绘完成度；禁霓虹赛博与油腻塑胶高光
+layout_notes: 半身/窗边常见；主体可读；留白与飞白服务形体，不是漏画
+forbid_pad: True
+规则: 只抽气质/档序写入 brief；禁止把本卡或竞品截图路径写入 --reference-image-paths。

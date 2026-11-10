@@ -1,0 +1,46 @@
+{
+  "ok": true,
+  "route_id": "icon.a",
+  "banner": "【按 Mode A 走了】",
+  "session": "skill1110gh-icon-a",
+  "delivery": "Light master only",
+  "passed_threshold": false,
+  "best_score": 9.28,
+  "best_round": 3,
+  "final_image": "assets/skill_20261110_gh/icon_a/r3.png",
+  "images": [
+    {
+      "round": 1,
+      "path": "assets/skill_20261110_gh/icon_a/r1.png",
+      "score": 8.99,
+      "dims": "小尺寸识别9.0/安全区9.1/光影质感8.7/多尺寸合规9.0/色板纯粹8.9/无瑕疵9.1",
+      "defects": "左右两扇窗洞是深褐色空腔，里面没有暖黄光。实心外接框宽 80.0%、高 77.5%，中心 x=0.502 y=0.491，右缘距边只有 9.8%。左上亮面有一条偏白的光带，和最大的那块奶油斑连在一起。",
+      "passed": false
+    },
+    {
+      "round": 2,
+      "path": "assets/skill_20261110_gh/icon_a/r2.png",
+      "score": 9.06,
+      "dims": "小尺寸识别9.1/安全区8.6/光影质感9.2/多尺寸合规9.1/色板纯粹9.3/无瑕疵9.2",
+      "defects": "红盖左右缘距边约 9.4% 和 9.6%，外接宽约 81%，高出上限。窗洞里有十字条，缩小时会先糊进暖黄块。左上仍有一条偏白光带贴在最大的奶油斑上。",
+      "passed": false
+    },
+    {
+      "round": 3,
+      "path": "assets/skill_20261110_gh/icon_a/r3.png",
+      "score": 9.28,
+      "dims": "小尺寸识别9.1/安全区9.6/光影质感9.2/多尺寸合规9.3/色板纯粹9.3/无瑕疵9.2",
+      "defects": "两扇窗是竖向椭圆暖黄块，和圆门排在一条线上，缩小时有点像眼睛。底边留白约 14.3%，外接高 74.1%、宽 74.5%，中心 x=0.502 y=0.486。",
+      "passed": false
+    },
+    {
+      "round": 4,
+      "path": "assets/skill_20261110_gh/icon_a/r4.png",
+      "score": 8.86,
+      "dims": "小尺寸识别8.9/安全区8.2/光影质感9.1/多尺寸合规8.8/色板纯粹9.2/无瑕疵9.1",
+      "defects": "外接宽 71.3%、高 67.1%，顶边留白约 15.4%，底边约 17.5%，左右各约 14.4%，主体比上一张更小。窗已改成矮横条暖黄。",
+      "passed": false
+    }
+  ],
+  "notes": "只交 Light 母版，未出 Dark/Tinted。1024 满幅直角，无字，单枚蘑菇屋。垫图只锁光泽卡通、大色块、缩略可认、暖饱和、无硬描边。满 4 轮，未过 9.5。最高第 3 轮 9.28。"
+}

@@ -1,0 +1,59 @@
+{
+  "ok": true,
+  "route_id": "draw.ordinary",
+  "banner": "【走默认路径】按 普通图 走了",
+  "session": "skill1110-ordinary",
+  "passed_threshold": false,
+  "best_score": 9.03,
+  "best_round": 3,
+  "final_image": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110\\draw_ordinary\\r3.png",
+  "wall_started_at": "2026-11-10T14:37:53",
+  "wall_ended_at": "2026-11-10T14:53:42",
+  "images": [
+    {
+      "round": 1,
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110\\draw_ordinary\\r1.png",
+      "started_at": "2026-11-10T14:41:12",
+      "ended_at": "2026-11-10T14:42:11",
+      "duration_sec": 59,
+      "score": 8.75,
+      "dims": {"构图": 8.9, "光影": 8.6, "透视": 9.0, "质感": 8.7, "风格": 9.0, "无瑕疵": 8.6},
+      "defects": "右上蓝果的左半被大片绿叶挡住，圆形轮廓没露全。三颗橙樱桃的亮斑都落在果实偏左上的同一侧，盖下沿暗部是暖灰红，看不出苔绿反光。",
+      "passed": false
+    },
+    {
+      "round": 2,
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110\\draw_ordinary\\r2.png",
+      "started_at": "2026-11-10T14:45:08",
+      "ended_at": "2026-11-10T14:46:30",
+      "duration_sec": 82,
+      "score": 8.83,
+      "dims": {"构图": 9.0, "光影": 8.6, "透视": 9.1, "质感": 8.8, "风格": 8.9, "无瑕疵": 8.8},
+      "defects": "右侧蓝果仍被最右橙樱桃挡住靠近果心的一块，圆只露出大约四分之三。三颗橙樱桃的奶油亮斑仍聚在各自球体的左上方，没有一颗亮在右侧。盖下沿只有左缘一条黄绿细边，暗部主体仍是暖红。",
+      "passed": false
+    },
+    {
+      "round": 3,
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110\\draw_ordinary\\r3.png",
+      "started_at": "2026-11-10T14:49:08",
+      "ended_at": "2026-11-10T14:50:12",
+      "duration_sec": 64,
+      "score": 9.03,
+      "dims": {"构图": 9.1, "光影": 8.9, "透视": 9.2, "质感": 9.0, "风格": 9.1, "无瑕疵": 9.0},
+      "defects": "后排两颗橙樱桃的梗几乎并成一对，中间没有空隙。盖腹暗面仍是大片暖红，左下只有一条细的黄绿边。",
+      "passed": false
+    },
+    {
+      "round": 4,
+      "path": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110\\draw_ordinary\\r4.png",
+      "started_at": "2026-11-10T14:51:21",
+      "ended_at": "2026-11-10T14:52:30",
+      "duration_sec": 69,
+      "score": 9.02,
+      "dims": {"构图": 9.1, "光影": 9.0, "透视": 9.2, "质感": 9.0, "风格": 9.1, "无瑕疵": 8.9},
+      "defects": "后排两根褐梗仍然贴着并排，缝比梗本身还窄。盖腹大面还是暖红，苔绿只沾在左下缘那一圈细边。",
+      "passed": false
+    }
+  ],
+  "notes": "路由缓存含 draw.ordinary，banner 为【走默认路径】按 普通图 走了。有参考、题材不变，每轮只垫最初的 ref_prop_mushroom.png，不垫上一轮成图。底是 Cursor 不透明纯黑隔离底，不是真透明。四轮调和平均都低于 9.5，未过线，最高是第 3 轮 9.03。商业对标是休闲软塑胶道具的完成度：身份和机位站得住，剩下的是光影层次（盖腹环境色、后排梗间距），不是理解错需求。若再画，只动这一层。"
+}

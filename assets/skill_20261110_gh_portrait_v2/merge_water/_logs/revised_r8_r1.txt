@@ -1,0 +1,15 @@
+IGNORE prior failed ladders with backpacks or pump bottles. Pad the provided final sheet as layout and style lock; only fix named defects.
+
+Portrait 9:16 overview sheet, STRICT 4 rows × 2 columns. Soft-white rounded cards on PURE BLACK isolation. Gossip Harbor glossy cartoon 3D celadon teal glaze, round thick, no hard outline, warm soft light.
+
+shop_ladder eight SKUs, one item per card, no level numbers, no faces:
+L1 tiny open water cup/bucket, frame height ~0.40
+L2 short-tip watering can, OPEN round tip, NO rose/shower head, taller than L1 ~0.48
+L3 long-spout watering can: spout CLEARLY MUCH LONGER than L2 (about 1.6–2× tip length), still OPEN tip, NO rose/shower head holes, ~0.56
+L4 FIRST rose/shower-head watering can with perforated rose, ~0.64
+L5 larger rose watering can still a can not pump bottle, ~0.72
+L6 hose reel coil ONLY, circular reel silhouette, NO spray nozzle gun, NO backpack straps, ~0.80
+L7 hose plus oscillating sprinkler as one SKU, ~0.86
+L8 largest rotating multi-arm irrigation unit with base, tallest widest ~0.96
+
+Monotone volume ladder 0.40→0.96, L8 biggest. Keep GH gloss. FORBID backpack, pump mister bottle, can welded on wheels, rose before L4, nozzle on L6.

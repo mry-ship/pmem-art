@@ -1,0 +1,20 @@
+Portrait 9:16 merge ladder sheet, exact 4 rows × 2 columns. Pure black #000000 isolation. NO white lines, NO cards, NO HUD, NO text, NO faces. Gossip Harbor glossy cartoon 3D, warm magenta-wine, soft light. One centered SKU per cell. Layout ref ONLY for 4×2 grid spacing — do NOT copy seafood/lobster.
+
+CRITICAL VOLUME LADDER — subject height ratios MUST be about 0.42 / 0.50 / 0.58 / 0.66 / 0.74 / 0.80 / 0.88 / 0.96. Each next item CLEARLY taller. Cell8 tallest AND widest.
+SHRINK early cells. Juice/smoothie/jar MUST leave clear black margin above rim — NEVER fill the cell to the top. Tart and cake MUST dominate lower rows.
+
+APPETITE HARD LOCKS:
+- Cell5: silky smooth raspberry smoothie, soft cream swirl OR flat frost top. FORBIDDEN greasy foam, pustule top, lava spout, trypophobia bumps.
+- Cell8: smooth two-layer mini cake OR mousse block on plate, glossy frosting, 1–2 whole berries. FORBIDDEN giant berry tumor hill / honeycomb bump mountain.
+- Whole sheet: no dense trypophobic pustule textures.
+
+Cell1 (0.42 TINY): small whole dewberry + green calyx; LARGE black margins.
+Cell2 (0.50): tiny dish, two halved dewberries, solid magenta flesh; still small.
+Cell3 (0.58): deeper bowl of mashed jam puree; taller than dish; NO tomato wedges.
+Cell4 (0.66): slim tall juice glass, clear magenta juice, flat surface; MUST leave black above rim; shorter than smoothie.
+Cell5 (0.74): taller/wider smoothie than juice; silky body; soft cream swirl top — appetizing; leave black above peak.
+Cell6 (0.80): fatter jam jar taller than smoothie; smooth jam; leave black above lid; NO cream pudding.
+Cell7 (0.88): MUCH taller wider jam tart than jar; golden scalloped crust; SMOOTH glossy jam filling (no honeycomb bumps); NO orange.
+Cell8 (0.96): tallest widest plate dessert — smooth two-layer mini cake/mousse with glossy frosting + 1–2 whole berries; nearly fills height with tiny top gap; NO berry tumor mound.
+
+shop_ladder dewberry jam. Opaque black isolation.

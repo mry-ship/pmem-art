@@ -1,0 +1,11 @@
+﻿Portrait 9:16 merge ladder sheet, exact 4x2. Pure black #000000. NO lines/cards/HUD/text/faces. Gossip Harbor glossy cartoon 3D, warm magenta-wine, soft light. Pad locks layout+SKU identities; ONLY rewrite Cell2 flesh.
+
+KEEP LOCKED (do not restyle):
+- Heights 0.42/0.50/0.58/0.66/0.74/0.80/0.88/0.96; Cell8 tallest+widest
+- Cell5 silky smooth raspberry smoothie, soft cream swirl/flat frost; NO greasy foam/pustules/lava
+- Cell8 smooth two-layer mousse/mini cake + 1-2 whole berries; NO berry tumor/honeycomb mound
+- Whole sheet: no trypophobia foam holes
+
+ONLY FIX Cell2 (0.50): tiny dish with two TRUE dewberry/raspberry halves cut open. Cross-section MUST be solid FULL MAGENTA/wine flesh packed with seeds end-to-end. FORBIDDEN strawberry white heart, pale pink pith, hollow cavity, scooped empty core. Keep same tiny dish scale.
+
+Keep Cell1 whole dewberry; Cell3 puree bowl; Cell4 slim juice; Cell6 jam jar; Cell7 golden jam tart. shop_ladder dewberry jam. Opaque black isolation.

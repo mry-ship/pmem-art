@@ -1,0 +1,9 @@
+canvas 720 1280
+r0c0 band=4 bg=[123.0, 183.0, 253.0] content=0.766 subject=0.765 y=42-319 ratio=0.869 slice=320x360
+r0c1 band=4 bg=[123.0, 183.0, 253.0] content=0.766 subject=0.749 y=42-319 ratio=0.869 slice=320x360
+r1c0 band=4 bg=[125.0, 185.0, 253.0] content=0.800 subject=0.800 y=0-319 ratio=1.000 slice=320x360
+r1c1 band=4 bg=[125.0, 184.0, 253.0] content=0.800 subject=0.784 y=0-319 ratio=1.000 slice=320x360
+r2c0 band=4 bg=[126.0, 186.0, 253.0] content=0.839 subject=0.832 y=0-319 ratio=1.000 slice=320x360
+r2c1 band=4 bg=[126.0, 185.0, 254.0] content=0.839 subject=0.822 y=0-319 ratio=1.000 slice=320x360
+r3c0 band=4 bg=[123.0, 183.0, 253.0] content=0.736 subject=0.736 y=0-266 ratio=0.834 slice=320x360
+r3c1 band=4 bg=[123.0, 183.0, 253.0] content=0.736 subject=0.720 y=0-266 ratio=0.834 slice=320x360

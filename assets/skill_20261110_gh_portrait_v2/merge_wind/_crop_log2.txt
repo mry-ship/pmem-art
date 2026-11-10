@@ -1,0 +1,4 @@
+﻿assets\skill_20261110_gh_portrait_v2\merge_wind\_crop_L4_sheet_r18.jpg
+assets\skill_20261110_gh_portrait_v2\merge_wind\_crop_L5_sheet_r18.jpg
+assets\skill_20261110_gh_portrait_v2\merge_wind\_crop_L4_sheet_r13.jpg
+assets\skill_20261110_gh_portrait_v2\merge_wind\_crop_L5_sheet_r13.jpg

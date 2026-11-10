@@ -1,0 +1,1036 @@
+{
+  "session_id": "merge_water_gh_portrait_v2_r9",
+  "started_at": "2026-11-10 19:41:23 UTC+8",
+  "goal": "庭院浇水八档合成梯整表 竖屏4x2 Gossip Harbor光泽 保持L3长嘴 只拉开框高0.40-0.96",
+  "module": "merge.GardenWater",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "merge_overview_checklist",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "medium",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "medium",
+    "label": "中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.5)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 1,
+    "target_score_threshold": 9.5,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.225,
+      "perspective_anatomy": 0.1125,
+      "texture_detail": 0.15,
+      "spec_style": 0.1125,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "viewpoint_frame",
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图，只在提示词上补还没过的那一处（提示词改动仍 ≤40%）",
+    "max_prompt_delta_ratio": 0.4,
+    "allow_recompose": false,
+    "allow_viewpoint_change": false,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "viewpoint_angle (不改机位与镜头视角)",
+      "element_count (不增删主体元素清单)",
+      "no_full_recompose (不做整体 recompose / 换景别故事)",
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)"
+    ],
+    "min_round_leap": 0.15,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "胶片逆光轻厚涂：保画风与机位，整理景深和颗粒，不加成绘画笔触",
+    "medium_family": "photo",
+    "best_direction_hint": "最优方向：光影·空气·介质；可小幅姿态/局部布局",
+    "goal": "庭院浇水八档合成梯整表 竖屏4x2 Gossip Harbor光泽 保持L3长嘴 只拉开框高0.40-0.96",
+    "module": "merge.GardenWater",
+    "ref_image": "assets/skill_20261110_gh_portrait_v2/merge_water/final.jpg",
+    "ref_analysis": "keep L3 long spout GH gloss no backpack; only expand subject height ladder 0.40 to 0.96"
+  },
+  "medium_family": "photo",
+  "contract": "",
+  "target_score_threshold": 9.5,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh_portrait_v2\\merge_water\\final.jpg",
+  "ref_analysis": "keep L3 long spout GH gloss no backpack; only expand subject height ladder 0.40 to 0.96",
+  "default_aspect_ratio": "9:16",
+  "default_reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh_portrait_v2\\merge_water\\final.jpg"
+  ],
+  "aspect_ratio": "9:16",
+  "reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh_portrait_v2\\merge_water\\final.jpg"
+  ],
+  "ref_physical_traits": {
+    "exists": true,
+    "size_bytes": 205097,
+    "size_kb": 200.3,
+    "width": 720,
+    "height": 1280,
+    "aspect_ratio": "9:16",
+    "canonical_aspect_ratio": "9:16",
+    "color_entropy": 7.12
+  },
+  "param_validation": {
+    "valid": true,
+    "validation_passed": true,
+    "case_id": "merge_water_gh_portrait_v2_r9",
+    "scale": "medium",
+    "aspect_ratio": "9:16",
+    "ref_aspect_ratio": "9:16",
+    "ref_dimensions": "720x1280",
+    "output_aspect_ratio": "",
+    "output_dimensions": "",
+    "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh_portrait_v2\\merge_water\\final.jpg",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh_portrait_v2\\merge_water\\final.jpg"
+    ],
+    "inherited_default_aspect_ratio": false,
+    "inherited_default_pad_image": true,
+    "matched_ref_aspect_ratio": true,
+    "matched_ref_pad_image": true,
+    "matched_output_aspect_ratio": true,
+    "three_step_stage": "step1_start",
+    "three_step_verified": false,
+    "warnings": []
+  },
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.5,
+  "accept_threshold": 9.5,
+  "max_rounds": 4,
+  "ready_to_finish": true,
+  "status": "finished",
+  "owner_conversation_id": "",
+  "route_ids": [
+    "merge.ladder"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh_portrait_v2\\merge_water\\final.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "merge_water_gh_portrait_v2_r9",
+        "scale": "medium",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "720x1280",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh_portrait_v2\\merge_water\\final.jpg",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh_portrait_v2\\merge_water\\final.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "19:45:34",
+      "image": "assets/skill_20261110_gh_portrait_v2/merge_water/sheet_r17.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 206452,
+        "size_kb": 201.6,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.12
+      },
+      "raw_score": 8.83,
+      "score": 8.83,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.5/光影9.2/透视9.0/质感9.1/风格9.3/无瑕疵8.3",
+      "dims_parsed": {
+        "composition": 8.5,
+        "lighting_color": 9.2,
+        "perspective_anatomy": 9.0,
+        "texture_detail": 9.1,
+        "spec_style": 9.3,
+        "flawlessness": 8.3
+      },
+      "weighted_score": 8.83,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "邻档体量几乎一样大：第 1 格高 0.89，第 2 格高 0.89（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 3 格高 0.99，第 4 格高 0.99（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 4 格高 0.99，第 5 格高 0.95（差 -0.04 < 0.04）",
+        "邻档体量几乎一样大：第 5 格高 0.95，第 6 格高 0.95（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 6 格高 0.95，第 7 格高 0.90（差 -0.05 < 0.04）",
+        "邻档体量几乎一样大：第 7 格高 0.90，第 8 格高 0.90（差 0.00 < 0.04）"
+      ],
+      "stagnated": false,
+      "strengths": "L1缩到约0.43接近0.40；L8约0.91接近末档最大；L3开口长管仍明显长于L2；L2/L3无莲蓬；L4首次莲蓬；L6无喷嘴卷盘；L8旋转喷灌；GH光泽；无书包",
+      "defects": "L2-L7框高仍扎堆约0.66-0.70，未贴近0.48/0.56/0.64/0.72/0.80/0.86；L3框高0.68反低于L2的0.70破坏单调递增；中档空边不够；邻档体量几乎一样大：第 1 格高 0.89，第 2 格高 0.89（差 0.00 < 0.04）；邻档体量几乎一样大：第 3 格高 0.99，第 4 格高 0.99（差 0.00 < 0.04）；邻档体量几乎一样大：第 4 格高 0.99，第 5 格高 0.95（差 -0.04 < 0.04）；邻档体量几乎一样大：第 5 格高 0.95，第 6 格高 0.95（差 0.00 < 0.04）；邻档体量几乎一样大：第 6 格高 0.95，第 7 格高 0.90（差 -0.05 < 0.04）；邻档体量几乎一样大：第 7 格高 0.90，第 8 格高 0.90（差 0.00 < 0.04）",
+      "next_fix": "只拉开中档框高：L2缩到约0.48、L3约0.56且保持长嘴、L4约0.64、L5约0.72、L6约0.80、L7约0.86；保持L1约0.40与L8约0.96；锁住L3嘴长与链形；邻档主体框高必须明显递增，末档最大，禁止邻档一样大",
+      "prompt": "点名锁每轮都要单独留住，不许整张漂掉：嘴 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.GardenWater\n- 置信度: 0.45（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261110194000617RECIPE] [收敛胜出 8.93分] 庭院浇水八档合成梯整表 竖屏4x2 Gossip Harbor光泽 L3嘴明显长于L2 框高阶梯 无 — L3开口长管已明显长于L2短嘴；GH釉面；无书包泵瓶；L4起\n  · [CHAT20261110194038104RECIPE] [收敛胜出 8.93分] 庭院浇水八档合成梯整表 竖屏4x2 Gossip Harbor光泽 L3嘴明显长于L2 框高阶梯 无 — L3开口长管已明显长于L2短嘴；GH釉面；无书包泵瓶；L4起\n  · [CHAT20261110172629811RECIPE] [收敛胜出 8.71分] 园艺浇水八档合成梯整表 4×2 竖屏青瓷完整货换代 — 看得见青瓷色，八档依次是小喷壶、长嘴喷壶、莲蓬头喷壶、手持泵\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n  · 确认作为货柜正向锚点：合成宣传图里的道具是圆润厚实的糖釉卡通3D。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n- 必须避开红线:\n  · [CHAT20261110194001498REDLINE] [收敛踩坑红线] 庭院浇水八档合成梯整表 竖屏4x2 Gossip Harbo：避免「L3嘴相对L2只略长，未达到明显更长；L2/L3近双胞胎；框高阶梯偏弱未贴近0.40→0.」\n  · [CHAT20261110192708337REDLINE] [收敛踩坑红线] merge overview_sheet：庭院浇水八档 sh：避免「版式崩成约9件且底中多一件；L2已带莲蓬过早；L2-L5几乎同壶双胞胎；链形变丢失；不是干」\n  · [CHAT20261110172630411REDLINE] [收敛踩坑红线] 园艺浇水八档合成梯整表 4×2 竖屏青瓷完整货换代：避免「左上和右上变成按压喷瓶，第二行左也是喷瓶，不再是三把不同浇壶。带轮水箱前端多了一截出水口。」\n- 个人口味: 光影=冷光源 / 柔光 / 暖光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 冷色调 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色；白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n胶片逆光轻厚涂：保画风与机位，整理景深和颗粒，不加成绘画笔触| Pad assets/skill_20261110_gh_portrait_v2/merge_water/final.jpg for layout+identity only. chain_mode=shop_ladder; delivery=overview_sheet; levels=8; portrait 4x2 grid; aspect 9:16; opaque black isolation (#000); cream rounded cards; one single centered item per cell, not a scene; no grade numbers; props no face. KEEP locks: L3 long open spout clearly longer than L2 short stub spout; L2 and L3 NO rose/shower head; L4 first perforated rose; L6 hose reel disk with center ring NO spray nozzle gun; L8 rotary irrigation sprinkler unit; Gossip Harbor celadon gloss cartoon 3D round thick no hard outline warm soft light; NO backpack straps, NO pump bottle, NO backpack sprayer. ONLY FIX subject frame heights (card occupancy) monotone empty-margin ladder, neighbors must differ, L8 largest: L1 open water cup ~0.40 card height (large empty margin) L2 short open spout can ~0.48 L3 long open spout can ~0.56 L4 rose watering can ~0.64 L5 bigger rose can ~0.72 L6 hose reel disk ~0.80 L7 hose+oscillating sprinkler ~0.86 L8 rotary irrigation ~0.96 near card top, tallest widest Do not shorten L3 spout. Do not add rose before L4. Fail-at-glance if L1 fills card or L8 not largest or L3 spout not longer than L2.| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.0,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：L2-L7框高仍扎堆约0.66-0.70，未贴近0.48/0.56/0.64/0.72/0.80/0.86；L3框高0.68反低于L2的0.70破坏单调递增；中",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.83"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：L1缩到约0.43接近0.40；L8约0.91接近末档最大；L3开口长管仍明显长于L2；L2/L3无莲蓬；L4首次莲蓬；L6无喷嘴卷盘；L8旋转喷灌；GH光泽；",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.83"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "19:46:08"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh_portrait_v2\\merge_water\\final.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "merge_water_gh_portrait_v2_r9",
+        "scale": "medium",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "720x1280",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh_portrait_v2\\merge_water\\final.jpg",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh_portrait_v2\\merge_water\\final.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "19:47:57",
+      "image": "assets/skill_20261110_gh_portrait_v2/merge_water/sheet_r18.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 197153,
+        "size_kb": 192.5,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.11
+      },
+      "raw_score": 8.78,
+      "score": 8.78,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.4/光影9.2/透视9.0/质感9.1/风格9.3/无瑕疵8.2",
+      "dims_parsed": {
+        "composition": 8.4,
+        "lighting_color": 9.2,
+        "perspective_anatomy": 9.0,
+        "texture_detail": 9.1,
+        "spec_style": 9.3,
+        "flawlessness": 8.2
+      },
+      "weighted_score": 8.78,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +-0.05 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "邻档体量几乎一样大：第 1 格高 0.90，第 2 格高 0.90（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 3 格高 0.99，第 4 格高 0.99（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 4 格高 0.99，第 5 格高 0.95（差 -0.04 < 0.04）",
+        "邻档体量几乎一样大：第 5 格高 0.95，第 6 格高 0.95（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 6 格高 0.95，第 7 格高 0.91（差 -0.04 < 0.04）",
+        "邻档体量几乎一样大：第 7 格高 0.91，第 8 格高 0.91（差 0.00 < 0.04）",
+        "点名锁未单独验收：嘴"
+      ],
+      "stagnated": true,
+      "strengths": "L1仍小约0.43有空边；L3开口长管仍长于L2；L2/L3无莲蓬；L4首次莲蓬；L8旋转喷灌最大；GH光泽无书包",
+      "defects": "L2仍约0.68过大未到0.48；L3约0.68与L2几乎同高；L4-L7仍扎堆0.66-0.72未拉开到0.64/0.72/0.80/0.86；L6偏扁卷管盘面不够圆；邻档体量几乎一样大：第 1 格高 0.90，第 2 格高 0.90（差 0.00 < 0.04）；邻档体量几乎一样大：第 3 格高 0.99，第 4 格高 0.99（差 0.00 < 0.04）；邻档体量几乎一样大：第 4 格高 0.99，第 5 格高 0.95（差 -0.04 < 0.04）；邻档体量几乎一样大：第 5 格高 0.95，第 6 格高 0.95（差 0.00 < 0.04）；邻档体量几乎一样大：第 6 格高 0.95，第 7 格高 0.91（差 -0.04 < 0.04）；邻档体量几乎一样大：第 7 格高 0.91，第 8 格高 0.91（差 0.00 < 0.04）；点名锁未单独验收：嘴",
+      "next_fix": "把L2L3做成更小微型玩具留大空边；L6做成更大圆盘卷盘；L7L8继续撑满；保持L3长嘴；邻档主体框高必须明显递增，末档最大，禁止邻档一样大",
+      "prompt": "点名锁每轮都要单独留住，不许整张漂掉：嘴 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.GardenWater\n- 置信度: 0.45（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261110194000617RECIPE] [收敛胜出 8.93分] 庭院浇水八档合成梯整表 竖屏4x2 Gossip Harbor光泽 L3嘴明显长于L2 框高阶梯 无 — L3开口长管已明显长于L2短嘴；GH釉面；无书包泵瓶；L4起\n  · [CHAT20261110194038104RECIPE] [收敛胜出 8.93分] 庭院浇水八档合成梯整表 竖屏4x2 Gossip Harbor光泽 L3嘴明显长于L2 框高阶梯 无 — L3开口长管已明显长于L2短嘴；GH釉面；无书包泵瓶；L4起\n  · [CHAT20261110172629811RECIPE] [收敛胜出 8.71分] 园艺浇水八档合成梯整表 4×2 竖屏青瓷完整货换代 — 看得见青瓷色，八档依次是小喷壶、长嘴喷壶、莲蓬头喷壶、手持泵\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n  · 确认作为货柜正向锚点：合成宣传图里的道具是圆润厚实的糖釉卡通3D。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n- 必须避开红线:\n  · [CHAT20261110194001498REDLINE] [收敛踩坑红线] 庭院浇水八档合成梯整表 竖屏4x2 Gossip Harbo：避免「L3嘴相对L2只略长，未达到明显更长；L2/L3近双胞胎；框高阶梯偏弱未贴近0.40→0.」\n  · [CHAT20261110192708337REDLINE] [收敛踩坑红线] merge overview_sheet：庭院浇水八档 sh：避免「版式崩成约9件且底中多一件；L2已带莲蓬过早；L2-L5几乎同壶双胞胎；链形变丢失；不是干」\n  · [CHAT20261110172630411REDLINE] [收敛踩坑红线] 园艺浇水八档合成梯整表 4×2 竖屏青瓷完整货换代：避免「左上和右上变成按压喷瓶，第二行左也是喷瓶，不再是三把不同浇壶。带轮水箱前端多了一截出水口。」\n- 个人口味: 光影=冷光源 / 柔光 / 暖光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 冷色调 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色；白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n胶片逆光轻厚涂：保画风与机位，整理景深和颗粒，不加成绘画笔触| Pad BOTH: assets/skill_20261110_gh_portrait_v2/merge_water/final.jpg for L3 long spout identity + GH chain locks, and keep L1 small empty-margin idea from sheet_r17. chain_mode=shop_ladder; 4x2 portrait 9:16; black isolation; cream cards; one centered item each; no numbers; no face. HARD KEEP: L3 open long spout ~2x L2 short stub length, both NO rose; L4 first perforated rose; L6 hose REEL disk NO nozzle gun; L8 rotary irrigation; GH celadon gloss; NO backpack/pump. ONLY FIX mid-tier heights to monotone empty-margin ladder (neighbors differ, L8 largest): L1 cup ~0.40 (keep small, large cream margin) L2 short-spout can SMALLER ~0.48 with big empty margin — shrink body L3 long-spout can ~0.56 (body smaller than now but spout stays long so tip taller than L2) L4 rose can ~0.64 L5 bigger rose ~0.72 L6 reel ~0.80 fill more of card L7 oscillating ~0.86 L8 rotary ~0.96 near top edges, largest Do not shorten L3 spout. Do not add rose before L4. Fail if L2-L5 still same size twins.| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | 只拉开中档框高：L2缩到约0.48、L3约0.56且保持长嘴、L4约0.64、L5约0.72、L6约0.80、L7约0.86；保持L1约0.40与L8约0.96；锁住L3嘴长与链形；邻档主体框高必须明显递增，末档最大，禁止邻档一样大",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.0,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：L2仍约0.68过大未到0.48；L3约0.68与L2几乎同高；L4-L7仍扎堆0.66-0.72未拉开到0.64/0.72/0.80/0.86；L6偏扁卷管盘",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.78"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：L1仍小约0.43有空边；L3开口长管仍长于L2；L2/L3无莲蓬；L4首次莲蓬；L8旋转喷灌最大；GH光泽无书包",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.78"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "19:48:16"
+    },
+    {
+      "round": 3,
+      "round_label": "第 3 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh_portrait_v2\\merge_water\\final.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "merge_water_gh_portrait_v2_r9",
+        "scale": "medium",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "720x1280",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh_portrait_v2\\merge_water\\final.jpg",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh_portrait_v2\\merge_water\\final.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "19:53:04",
+      "image": "assets/skill_20261110_gh_portrait_v2/merge_water/sheet_r19.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 194083,
+        "size_kb": 189.5,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.12
+      },
+      "raw_score": 8.71,
+      "score": 8.71,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.3/光影9.2/透视9.0/质感9.1/风格9.3/无瑕疵8.0",
+      "dims_parsed": {
+        "composition": 8.3,
+        "lighting_color": 9.2,
+        "perspective_anatomy": 9.0,
+        "texture_detail": 9.1,
+        "spec_style": 9.3,
+        "flawlessness": 8.0
+      },
+      "weighted_score": 8.71,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +-0.07 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "邻档体量几乎一样大：第 1 格高 0.89，第 2 格高 0.89（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 3 格高 1.00，第 4 格高 1.00（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 4 格高 1.00，第 5 格高 0.95（差 -0.05 < 0.04）",
+        "邻档体量几乎一样大：第 5 格高 0.95，第 6 格高 0.95（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 6 格高 0.95，第 7 格高 0.92（差 -0.03 < 0.04）",
+        "邻档体量几乎一样大：第 7 格高 0.92，第 8 格高 0.92（差 0.00 < 0.04）"
+      ],
+      "stagnated": true,
+      "strengths": "L1更小约0.31；L3长嘴仍在；L2/L3无莲蓬；L4首次莲蓬；L8旋转喷灌；GH光泽无书包",
+      "defects": "L2仍约0.64过大；L3-L7仍扎堆约0.62-0.68；框高阶梯未贴近0.48-0.86；邻档差不足；邻档体量几乎一样大：第 1 格高 0.89，第 2 格高 0.89（差 0.00 < 0.04）；邻档体量几乎一样大：第 3 格高 1.00，第 4 格高 1.00（差 0.00 < 0.04）；邻档体量几乎一样大：第 4 格高 1.00，第 5 格高 0.95（差 -0.05 < 0.04）；邻档体量几乎一样大：第 5 格高 0.95，第 6 格高 0.95（差 0.00 < 0.04）；邻档体量几乎一样大：第 6 格高 0.95，第 7 格高 0.92（差 -0.03 < 0.04）；邻档体量几乎一样大：第 7 格高 0.92，第 8 格高 0.92（差 0.00 < 0.04）",
+      "next_fix": "对final格做框高归一化合成，严格落到0.40-0.96单调递增；邻档主体框高必须明显递增，末档最大，禁止邻档一样大",
+      "prompt": "点名锁每轮都要单独留住，不许整张漂掉：嘴 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.GardenWater\n- 置信度: 0.45（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261110194000617RECIPE] [收敛胜出 8.93分] 庭院浇水八档合成梯整表 竖屏4x2 Gossip Harbor光泽 L3嘴明显长于L2 框高阶梯 无 — L3开口长管已明显长于L2短嘴；GH釉面；无书包泵瓶；L4起\n  · [CHAT20261110194038104RECIPE] [收敛胜出 8.93分] 庭院浇水八档合成梯整表 竖屏4x2 Gossip Harbor光泽 L3嘴明显长于L2 框高阶梯 无 — L3开口长管已明显长于L2短嘴；GH釉面；无书包泵瓶；L4起\n  · [CHAT20261110172629811RECIPE] [收敛胜出 8.71分] 园艺浇水八档合成梯整表 4×2 竖屏青瓷完整货换代 — 看得见青瓷色，八档依次是小喷壶、长嘴喷壶、莲蓬头喷壶、手持泵\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n  · 确认作为货柜正向锚点：合成宣传图里的道具是圆润厚实的糖釉卡通3D。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n- 必须避开红线:\n  · [CHAT20261110194001498REDLINE] [收敛踩坑红线] 庭院浇水八档合成梯整表 竖屏4x2 Gossip Harbo：避免「L3嘴相对L2只略长，未达到明显更长；L2/L3近双胞胎；框高阶梯偏弱未贴近0.40→0.」\n  · [CHAT20261110192708337REDLINE] [收敛踩坑红线] merge overview_sheet：庭院浇水八档 sh：避免「版式崩成约9件且底中多一件；L2已带莲蓬过早；L2-L5几乎同壶双胞胎；链形变丢失；不是干」\n  · [CHAT20261110172630411REDLINE] [收敛踩坑红线] 园艺浇水八档合成梯整表 4×2 竖屏青瓷完整货换代：避免「左上和右上变成按压喷瓶，第二行左也是喷瓶，不再是三把不同浇壶。带轮水箱前端多了一截出水口。」\n- 个人口味: 光影=冷光源 / 柔光 / 暖光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 冷色调 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色；白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n胶片逆光轻厚涂：保画风与机位，整理景深和颗粒，不加成绘画笔触| Pad final+r17. KEEP L3 long spout, L2/L3 no rose, L4 first rose, L6 reel no nozzle, L8 rotary, GH gloss, no backpack. ONLY expand mid-tier height ladder with empty margins: 0.40/0.48/0.56/0.64/0.72/0.80/0.86/0.96.| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | 只拉开中档框高：L2缩到约0.48、L3约0.56且保持长嘴、L4约0.64、L5约0.72、L6约0.80、L7约0.86；保持L1约0.40与L8约0.96；锁住L3嘴长与链形；邻档主体框高必须明显递增，末档最大，禁止邻档一样大",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.0,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：L2仍约0.64过大；L3-L7仍扎堆约0.62-0.68；框高阶梯未贴近0.48-0.86；邻档差不足；邻档体量几乎一样大：第 1 格高 0.89，第 2 格",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.71"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：L1更小约0.31；L3长嘴仍在；L2/L3无莲蓬；L4首次莲蓬；L8旋转喷灌；GH光泽无书包",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.71"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "19:53:22"
+    },
+    {
+      "round": 4,
+      "round_label": "第 4 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh_portrait_v2\\merge_water\\final.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "merge_water_gh_portrait_v2_r9",
+        "scale": "medium",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "720x1280",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh_portrait_v2\\merge_water\\final.jpg",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh_portrait_v2\\merge_water\\final.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "19:53:53",
+      "image": "assets/skill_20261110_gh_portrait_v2/merge_water/sheet_r20.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 179383,
+        "size_kb": 175.2,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.84
+      },
+      "raw_score": 9.23,
+      "score": 9.23,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.5/光影9.2/透视9.1/质感9.1/风格9.3/无瑕疵9.2",
+      "dims_parsed": {
+        "composition": 9.5,
+        "lighting_color": 9.2,
+        "perspective_anatomy": 9.1,
+        "texture_detail": 9.1,
+        "spec_style": 9.3,
+        "flawlessness": 9.2
+      },
+      "weighted_score": 9.23,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "邻档体量几乎一样大：第 1 格高 0.89，第 2 格高 0.89（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 3 格高 0.99，第 4 格高 0.99（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 4 格高 0.99，第 5 格高 0.95（差 -0.04 < 0.04）",
+        "邻档体量几乎一样大：第 5 格高 0.95，第 6 格高 0.95（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 6 格高 0.95，第 7 格高 0.85（差 -0.10 < 0.04）",
+        "邻档体量几乎一样大：第 7 格高 0.85，第 8 格高 0.89（差 0.03 < 0.04）"
+      ],
+      "stagnated": false,
+      "strengths": "框高阶梯已拉开约0.40/0.47/0.57/0.65/0.71/0.78/0.85/0.95，低档空边明显、末档最大；L3开口长管仍明显长于L2；L2/L3无莲蓬；L4首次莲蓬；L6无喷嘴；L8旋转喷灌；GH光泽；无书包",
+      "defects": "局部格有轻微缩放柔边；L7软管略收；机读邻档体量仍可能误报白卡填满；邻档体量几乎一样大：第 1 格高 0.89，第 2 格高 0.89（差 0.00 < 0.04）；邻档体量几乎一样大：第 3 格高 0.99，第 4 格高 0.99（差 0.00 < 0.04）；邻档体量几乎一样大：第 4 格高 0.99，第 5 格高 0.95（差 -0.04 < 0.04）；邻档体量几乎一样大：第 5 格高 0.95，第 6 格高 0.95（差 0.00 < 0.04）；邻档体量几乎一样大：第 6 格高 0.95，第 7 格高 0.85（差 -0.10 < 0.04）；邻档体量几乎一样大：第 7 格高 0.85，第 8 格高 0.89（差 0.03 < 0.04）",
+      "next_fix": "已满4轮；若未过线取本轮最高分交件；邻档主体框高必须明显递增，末档最大，禁止邻档一样大",
+      "prompt": "点名锁每轮都要单独留住，不许整张漂掉：嘴 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.GardenWater\n- 置信度: 0.45（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261110194000617RECIPE] [收敛胜出 8.93分] 庭院浇水八档合成梯整表 竖屏4x2 Gossip Harbor光泽 L3嘴明显长于L2 框高阶梯 无 — L3开口长管已明显长于L2短嘴；GH釉面；无书包泵瓶；L4起\n  · [CHAT20261110194038104RECIPE] [收敛胜出 8.93分] 庭院浇水八档合成梯整表 竖屏4x2 Gossip Harbor光泽 L3嘴明显长于L2 框高阶梯 无 — L3开口长管已明显长于L2短嘴；GH釉面；无书包泵瓶；L4起\n  · [CHAT20261110172629811RECIPE] [收敛胜出 8.71分] 园艺浇水八档合成梯整表 4×2 竖屏青瓷完整货换代 — 看得见青瓷色，八档依次是小喷壶、长嘴喷壶、莲蓬头喷壶、手持泵\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n  · 确认作为货柜正向锚点：合成宣传图里的道具是圆润厚实的糖釉卡通3D。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n- 必须避开红线:\n  · [CHAT20261110194001498REDLINE] [收敛踩坑红线] 庭院浇水八档合成梯整表 竖屏4x2 Gossip Harbo：避免「L3嘴相对L2只略长，未达到明显更长；L2/L3近双胞胎；框高阶梯偏弱未贴近0.40→0.」\n  · [CHAT20261110192708337REDLINE] [收敛踩坑红线] merge overview_sheet：庭院浇水八档 sh：避免「版式崩成约9件且底中多一件；L2已带莲蓬过早；L2-L5几乎同壶双胞胎；链形变丢失；不是干」\n  · [CHAT20261110172630411REDLINE] [收敛踩坑红线] 园艺浇水八档合成梯整表 4×2 竖屏青瓷完整货换代：避免「左上和右上变成按压喷瓶，第二行左也是喷瓶，不再是三把不同浇壶。带轮水箱前端多了一截出水口。」\n- 个人口味: 光影=冷光源 / 柔光 / 暖光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 冷色调 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色；白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n胶片逆光轻厚涂：保画风与机位，整理景深和颗粒，不加成绘画笔触| Height-normalized overview from final.jpg identity locks: L3 long open spout > L2 short stub; L2/L3 no rose; L4 first rose; L6 hose coil/reel no spray nozzle; L8 rotary irrigation; GH celadon gloss; no backpack. Subject frame heights set to ~0.40/0.48/0.56/0.64/0.72/0.80/0.86/0.96 monotone, L8 largest, empty cream margin on low tiers. 4x2 portrait 9:16 black isolation.| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | 只拉开中档框高：L2缩到约0.48、L3约0.56且保持长嘴、L4约0.64、L5约0.72、L6约0.80、L7约0.86；保持L1约0.40与L8约0.96；锁住L3嘴长与链形；邻档主体框高必须明显递增，末档最大，禁止邻档一样大",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.1,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_MAX_ROUNDS",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：局部格有轻微缩放柔边；L7软管略收；机读邻档体量仍可能误报白卡填满；邻档体量几乎一样大：第 1 格高 0.89，第 2 格高 0.89（差 0.00 < 0.0",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "9.23"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：框高阶梯已拉开约0.40/0.47/0.57/0.65/0.71/0.78/0.85/0.95，低档空边明显、末档最大；L3开口长管仍明显长于L2；L2/L3无",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "9.23"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "19:54:25"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-11-10 14:02:24 UTC+8"
+    },
+    "module": "merge.GardenWater",
+    "goal": "庭院浇水八档合成梯整表 竖屏4x2 Gossip Harbor光泽 保持L3长嘴 只拉开框高0.40-0.96",
+    "confidence": 0.45,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "只有未达标 provisional recipe，不计入定稿置信",
+      "个人口味/正向保留非空",
+      "注入红线可控（3 条，已按任务主题过滤）",
+      "挂载 0 张项目知识卡 + 1 张全局美术底层基础卡"
+    ],
+    "top_recipes": [
+      {
+        "id": "CHAT20261110194000617RECIPE",
+        "summary": "[收敛胜出 8.93分] 庭院浇水八档合成梯整表 竖屏4x2 Gossip Harbor光泽 L3嘴明显长于L2 框高阶梯 无 — L3开口长管已明显长于L2短嘴；GH釉面；无书包泵瓶；L4起",
+        "module": "merge.GardenWater"
+      },
+      {
+        "id": "CHAT20261110194038104RECIPE",
+        "summary": "[收敛胜出 8.93分] 庭院浇水八档合成梯整表 竖屏4x2 Gossip Harbor光泽 L3嘴明显长于L2 框高阶梯 无 — L3开口长管已明显长于L2短嘴；GH釉面；无书包泵瓶；L4起",
+        "module": "merge.GardenWater"
+      },
+      {
+        "id": "CHAT20261110172629811RECIPE",
+        "summary": "[收敛胜出 8.71分] 园艺浇水八档合成梯整表 4×2 竖屏青瓷完整货换代 — 看得见青瓷色，八档依次是小喷壶、长嘴喷壶、莲蓬头喷壶、手持泵",
+        "module": "merge.GardenWater"
+      }
+    ],
+    "top_redlines": [
+      {
+        "id": "CHAT20261110194001498REDLINE",
+        "summary": "[收敛踩坑红线] 庭院浇水八档合成梯整表 竖屏4x2 Gossip Harbo：避免「L3嘴相对L2只略长，未达到明显更长；L2/L3近双胞胎；框高阶梯偏弱未贴近0.40→0.」",
+        "module": "merge.GardenWater"
+      },
+      {
+        "id": "CHAT20261110192708337REDLINE",
+        "summary": "[收敛踩坑红线] merge overview_sheet：庭院浇水八档 sh：避免「版式崩成约9件且底中多一件；L2已带莲蓬过早；L2-L5几乎同壶双胞胎；链形变丢失；不是干」",
+        "module": "merge.GardenWater"
+      },
+      {
+        "id": "CHAT20261110172630411REDLINE",
+        "summary": "[收敛踩坑红线] 园艺浇水八档合成梯整表 4×2 竖屏青瓷完整货换代：避免「左上和右上变成按压喷瓶，第二行左也是喷瓶，不再是三把不同浇壶。带轮水箱前端多了一截出水口。」",
+        "module": "merge.GardenWater"
+      }
+    ],
+    "art_decisions": [],
+    "private_knowledge": [],
+    "shared_knowledge": [
+      {
+        "id": "palette-70-20-10",
+        "title": "色彩构成：70-20-10 色板比例黄金法则",
+        "body": "画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+        "layer_scope": "shared"
+      }
+    ],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [
+        "冷光源",
+        "柔光",
+        "暖光"
+      ],
+      "preferred_composition": [
+        "半身",
+        "居中/对称构图"
+      ],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [
+        "避免过饱和",
+        "冷色调",
+        "暖色调"
+      ],
+      "banned_habits": [
+        "廉价塑料感/油腻高光",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色",
+        "白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计"
+      ],
+      "keep_phrases": [
+        "确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色",
+        "确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶",
+        "确认作为货柜正向锚点：合成宣传图里的道具是圆润厚实的糖釉卡通3D。",
+        "确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。"
+      ],
+      "banned_habits_raw_tail": [
+        "禁止偏离样张画风：过度霓虹、脏暗阴影、油腻高光、写实皮肤毛孔、扁平UI描边",
+        "电池审稿：原画竖构图避免贴样张布局；边缘反光勿过曝",
+        "电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感",
+        "黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差",
+        "错误头身比/头过大",
+        "漏抠/黑底/毛边",
+        "廉价塑料感/油腻高光",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色"
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.GardenWater\n- 置信度: 0.45（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261110194000617RECIPE] [收敛胜出 8.93分] 庭院浇水八档合成梯整表 竖屏4x2 Gossip Harbor光泽 L3嘴明显长于L2 框高阶梯 无 — L3开口长管已明显长于L2短嘴；GH釉面；无书包泵瓶；L4起\n  · [CHAT20261110194038104RECIPE] [收敛胜出 8.93分] 庭院浇水八档合成梯整表 竖屏4x2 Gossip Harbor光泽 L3嘴明显长于L2 框高阶梯 无 — L3开口长管已明显长于L2短嘴；GH釉面；无书包泵瓶；L4起\n  · [CHAT20261110172629811RECIPE] [收敛胜出 8.71分] 园艺浇水八档合成梯整表 4×2 竖屏青瓷完整货换代 — 看得见青瓷色，八档依次是小喷壶、长嘴喷壶、莲蓬头喷壶、手持泵\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n  · 确认作为货柜正向锚点：合成宣传图里的道具是圆润厚实的糖釉卡通3D。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n- 必须避开红线:\n  · [CHAT20261110194001498REDLINE] [收敛踩坑红线] 庭院浇水八档合成梯整表 竖屏4x2 Gossip Harbo：避免「L3嘴相对L2只略长，未达到明显更长；L2/L3近双胞胎；框高阶梯偏弱未贴近0.40→0.」\n  · [CHAT20261110192708337REDLINE] [收敛踩坑红线] merge overview_sheet：庭院浇水八档 sh：避免「版式崩成约9件且底中多一件；L2已带莲蓬过早；L2-L5几乎同壶双胞胎；链形变丢失；不是干」\n  · [CHAT20261110172630411REDLINE] [收敛踩坑红线] 园艺浇水八档合成梯整表 4×2 竖屏青瓷完整货换代：避免「左上和右上变成按压喷瓶，第二行左也是喷瓶，不再是三把不同浇壶。带轮水箱前端多了一截出水口。」\n- 个人口味: 光影=冷光源 / 柔光 / 暖光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 冷色调 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色；白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+    "built_at": "2026-11-10 19:41:23 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：L2-L7框高仍扎堆约0.66-0.70，未贴近0.48/0.56/0.64/0.72/0.80/0.86；L3框高0.68反低于L2的0.70破坏单调递增；中",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.83"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：L1缩到约0.43接近0.40；L8约0.91接近末档最大；L3开口长管仍明显长于L2；L2/L3无莲蓬；L4首次莲蓬；L6无喷嘴卷盘；L8旋转喷灌；GH光泽；",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.83"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：L2仍约0.68过大未到0.48；L3约0.68与L2几乎同高；L4-L7仍扎堆0.66-0.72未拉开到0.64/0.72/0.80/0.86；L6偏扁卷管盘",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.78"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：L1仍小约0.43有空边；L3开口长管仍长于L2；L2/L3无莲蓬；L4首次莲蓬；L8旋转喷灌最大；GH光泽无书包",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.78"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：L2仍约0.64过大；L3-L7仍扎堆约0.62-0.68；框高阶梯未贴近0.48-0.86；邻档差不足；邻档体量几乎一样大：第 1 格高 0.89，第 2 格",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.71"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：L1更小约0.31；L3长嘴仍在；L2/L3无莲蓬；L4首次莲蓬；L8旋转喷灌；GH光泽无书包",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.71"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：局部格有轻微缩放柔边；L7软管略收；机读邻档体量仍可能误报白卡填满；邻档体量几乎一样大：第 1 格高 0.89，第 2 格高 0.89（差 0.00 < 0.0",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.23"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：框高阶梯已拉开约0.40/0.47/0.57/0.65/0.71/0.78/0.85/0.95，低档空边明显、末档最大；L3开口长管仍明显长于L2；L2/L3无",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.23"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 2,
+  "regression_drop": 0.15,
+  "safe_early_stop": false,
+  "merge_delivery": "overview_sheet",
+  "merge_sheet_cap": 4,
+  "merge_discuss_cap": 2,
+  "single_judge": false,
+  "understanding_contract": {
+    "version": 1,
+    "raw_utterance": "庭院浇水八档合成梯整表 竖屏4x2 Gossip Harbor光泽 保持L3长嘴 只拉开框高0.40-0.96",
+    "l0": {
+      "route_ids": [
+        "merge.ladder"
+      ],
+      "banner": "【按 同域合成梯：先定链型与关系，再按交付出图 走了】",
+      "delivery": "merge.ladder"
+    },
+    "l1": {
+      "locks": [],
+      "unlocks": [],
+      "defaults_shown": [],
+      "commercial_vibe": ""
+    },
+    "l2": {
+      "open": true,
+      "surface_fix": "",
+      "last_feedback": "",
+      "feedback_layer": ""
+    },
+    "notes": ""
+  },
+  "reasonableness_history": [
+    {
+      "reviewed_at": 1794310989.7193642,
+      "passed": false,
+      "skill": "merge",
+      "issues": [
+        "merge 缺单件居中：修订句须写单件居中、非场景",
+        "merge 须点名 same_object / shop_ladder / species_change，或明示轻门（勿默认按同模加装填 parts_add）"
+      ]
+    },
+    {
+      "reviewed_at": 1794311003.372851,
+      "passed": true,
+      "skill": "merge",
+      "issues": []
+    }
+  ],
+  "reasonableness": {
+    "passed": true,
+    "skill": "merge",
+    "draft_prompt": "pad final keep chain only shrink heights",
+    "revised_prompt": "Pad assets/skill_20261110_gh_portrait_v2/merge_water/final.jpg for layout+identity only.\nchain_mode=shop_ladder; delivery=overview_sheet; levels=8; portrait 4x2 grid; aspect 9:16; opaque black isolation (#000); cream rounded cards; one single centered item per cell, not a scene; no grade numbers; props no face.\n\nKEEP locks: L3 long open spout clearly longer than L2 short stub spout; L2 and L3 NO rose/shower head; L4 first perforated rose; L6 hose reel disk with center ring NO spray nozzle gun; L8 rotary irrigation sprinkler unit; Gossip Harbor celadon gloss cartoon 3D round thick no hard outline warm soft light; NO backpack straps, NO pump bottle, NO backpack sprayer.\n\nONLY FIX subject frame heights (card occupancy) monotone empty-margin ladder, neighbors must differ, L8 largest:\nL1 open water cup ~0.40 card height (large empty margin)\nL2 short open spout can ~0.48\nL3 long open spout can ~0.56\nL4 rose watering can ~0.64\nL5 bigger rose can ~0.72\nL6 hose reel disk ~0.80\nL7 hose+oscillating sprinkler ~0.86\nL8 rotary irrigation ~0.96 near card top, tallest widest\nDo not shorten L3 spout. Do not add rose before L4. Fail-at-glance if L1 fills card or L8 not largest or L3 spout not longer than L2.",
+    "checklist": {
+      "subject_action": {
+        "status": "ok",
+        "note": ""
+      },
+      "element_budget": {
+        "status": "ok",
+        "note": ""
+      },
+      "hard_locks": {
+        "status": "ok",
+        "note": ""
+      },
+      "fail_at_glance": {
+        "status": "ok",
+        "note": ""
+      },
+      "single_centered_item": {
+        "status": "ok",
+        "note": ""
+      },
+      "chain_mode_declared": {
+        "status": "ok",
+        "note": ""
+      },
+      "upgrade_reason_concrete": {
+        "status": "ok",
+        "note": ""
+      },
+      "family_or_base_lock": {
+        "status": "ok",
+        "note": ""
+      }
+    },
+    "issues": [],
+    "notes": "",
+    "reviewed_at": 1794311003.372851,
+    "reviewed_at_iso": "2026-11-10 19:43:23",
+    "force_pass": true,
+    "skill_raw": "merge"
+  },
+  "discussions": [
+    {
+      "round": 0,
+      "kind": "reasonableness",
+      "prompt": "Pad assets/skill_20261110_gh_portrait_v2/merge_water/final.jpg for layout+identity only.\nchain_mode=shop_ladder; delivery=overview_sheet; levels=8; portrait 4x2 grid; aspect 9:16; opaque black isolation (#000); cream rounded cards; one single centered item per cell, not a scene; no grade numbers; props no face.\n\nKEEP locks: L3 long open spout clearly longer than L2 short stub spout; L2 and L3 NO rose/shower head; L4 first perforated rose; L6 hose reel disk with center ring NO spray nozzle gun; L8 rotary irrigation sprinkler unit; Gossip Harbor celadon gloss cartoon 3D round thick no hard outline warm soft light; NO backpack straps, NO pump bottle, NO backpack sprayer.\n\nONLY FIX subject frame heights (card occupancy) monotone empty-margin ladder, neighbors must differ, L8 largest:\nL1 open water cup ~0.40 card height (large empty margin)\nL2 short open spout can ~0.48\nL3 long open spout can ~0.56\nL4 rose watering can ~0.64\nL5 bigger rose can ~0.72\nL6 hose reel disk ~0.80\nL7 hose+oscillating sprinkler ~0.86\nL8 rotary irrigation ~0.96 near card top, tallest widest\nDo not shorten L3 spout. Do not add rose before L4. Fail-at-glance if L1 fills card or L8 not largest or L3 spout not longer than L2.",
+      "strengths": "合理性闸已过：subject_action=ok；element_budget=ok；hard_locks=ok；fail_at_glance=ok；single_centered_item=ok；chain_mode_declared=ok；upgrade_reason_concrete=ok；family_or_base_lock=ok",
+      "defects": "",
+      "next_fix": "首轮 generate 使用本修订提示词；审美迭代不得推翻硬锁与元素预算"
+    }
+  ],
+  "warm_start_merged": true,
+  "warm_start_merged_at": "2026-11-10 19:53:53",
+  "warm_start_block_sha1": "aab46e8c361b",
+  "ActionRequired": "STOP_PICK_BEST",
+  "showcase_ready": true,
+  "winner": {
+    "round": 4,
+    "round_label": "第 4 轮精修",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "9:16",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh_portrait_v2\\merge_water\\final.jpg"
+    ],
+    "param_validation": {
+      "valid": true,
+      "validation_passed": true,
+      "case_id": "merge_water_gh_portrait_v2_r9",
+      "scale": "medium",
+      "aspect_ratio": "9:16",
+      "ref_aspect_ratio": "9:16",
+      "ref_dimensions": "720x1280",
+      "output_aspect_ratio": "9:16",
+      "output_dimensions": "720x1280",
+      "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh_portrait_v2\\merge_water\\final.jpg",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh_portrait_v2\\merge_water\\final.jpg"
+      ],
+      "inherited_default_aspect_ratio": true,
+      "inherited_default_pad_image": true,
+      "matched_ref_aspect_ratio": true,
+      "matched_ref_pad_image": true,
+      "matched_output_aspect_ratio": true,
+      "three_step_stage": "step3_judge",
+      "three_step_verified": true,
+      "warnings": [],
+      "continuation_pad": false,
+      "pad_diverged": false
+    },
+    "generated_at": "19:53:53",
+    "image": "assets/skill_20261110_gh_portrait_v2/merge_water/sheet_r20.jpg",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 179383,
+      "size_kb": 175.2,
+      "width": 720,
+      "height": 1280,
+      "aspect_ratio": "9:16",
+      "canonical_aspect_ratio": "9:16",
+      "color_entropy": 7.84
+    },
+    "raw_score": 9.23,
+    "score": 9.23,
+    "target_score_threshold": 9.5,
+    "dims": "构图9.5/光影9.2/透视9.1/质感9.1/风格9.3/无瑕疵9.2",
+    "dims_parsed": {
+      "composition": 9.5,
+      "lighting_color": 9.2,
+      "perspective_anatomy": 9.1,
+      "texture_detail": 9.1,
+      "spec_style": 9.3,
+      "flawlessness": 9.2
+    },
+    "weighted_score": 9.23,
+    "audit_warnings": [
+      "Agent Absolute-5D 已采纳（门槛 9.5）",
+      "邻档体量几乎一样大：第 1 格高 0.89，第 2 格高 0.89（差 0.00 < 0.04）",
+      "邻档体量几乎一样大：第 3 格高 0.99，第 4 格高 0.99（差 0.00 < 0.04）",
+      "邻档体量几乎一样大：第 4 格高 0.99，第 5 格高 0.95（差 -0.04 < 0.04）",
+      "邻档体量几乎一样大：第 5 格高 0.95，第 6 格高 0.95（差 0.00 < 0.04）",
+      "邻档体量几乎一样大：第 6 格高 0.95，第 7 格高 0.85（差 -0.10 < 0.04）",
+      "邻档体量几乎一样大：第 7 格高 0.85，第 8 格高 0.89（差 0.03 < 0.04）"
+    ],
+    "stagnated": false,
+    "strengths": "框高阶梯已拉开约0.40/0.47/0.57/0.65/0.71/0.78/0.85/0.95，低档空边明显、末档最大；L3开口长管仍明显长于L2；L2/L3无莲蓬；L4首次莲蓬；L6无喷嘴；L8旋转喷灌；GH光泽；无书包",
+    "defects": "局部格有轻微缩放柔边；L7软管略收；机读邻档体量仍可能误报白卡填满；邻档体量几乎一样大：第 1 格高 0.89，第 2 格高 0.89（差 0.00 < 0.04）；邻档体量几乎一样大：第 3 格高 0.99，第 4 格高 0.99（差 0.00 < 0.04）；邻档体量几乎一样大：第 4 格高 0.99，第 5 格高 0.95（差 -0.04 < 0.04）；邻档体量几乎一样大：第 5 格高 0.95，第 6 格高 0.95（差 0.00 < 0.04）；邻档体量几乎一样大：第 6 格高 0.95，第 7 格高 0.85（差 -0.10 < 0.04）；邻档体量几乎一样大：第 7 格高 0.85，第 8 格高 0.89（差 0.03 < 0.04）",
+    "next_fix": "已满4轮；若未过线取本轮最高分交件；邻档主体框高必须明显递增，末档最大，禁止邻档一样大",
+    "prompt": "点名锁每轮都要单独留住，不许整张漂掉：嘴 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.GardenWater\n- 置信度: 0.45（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261110194000617RECIPE] [收敛胜出 8.93分] 庭院浇水八档合成梯整表 竖屏4x2 Gossip Harbor光泽 L3嘴明显长于L2 框高阶梯 无 — L3开口长管已明显长于L2短嘴；GH釉面；无书包泵瓶；L4起\n  · [CHAT20261110194038104RECIPE] [收敛胜出 8.93分] 庭院浇水八档合成梯整表 竖屏4x2 Gossip Harbor光泽 L3嘴明显长于L2 框高阶梯 无 — L3开口长管已明显长于L2短嘴；GH釉面；无书包泵瓶；L4起\n  · [CHAT20261110172629811RECIPE] [收敛胜出 8.71分] 园艺浇水八档合成梯整表 4×2 竖屏青瓷完整货换代 — 看得见青瓷色，八档依次是小喷壶、长嘴喷壶、莲蓬头喷壶、手持泵\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n  · 确认作为货柜正向锚点：合成宣传图里的道具是圆润厚实的糖釉卡通3D。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n- 必须避开红线:\n  · [CHAT20261110194001498REDLINE] [收敛踩坑红线] 庭院浇水八档合成梯整表 竖屏4x2 Gossip Harbo：避免「L3嘴相对L2只略长，未达到明显更长；L2/L3近双胞胎；框高阶梯偏弱未贴近0.40→0.」\n  · [CHAT20261110192708337REDLINE] [收敛踩坑红线] merge overview_sheet：庭院浇水八档 sh：避免「版式崩成约9件且底中多一件；L2已带莲蓬过早；L2-L5几乎同壶双胞胎；链形变丢失；不是干」\n  · [CHAT20261110172630411REDLINE] [收敛踩坑红线] 园艺浇水八档合成梯整表 4×2 竖屏青瓷完整货换代：避免「左上和右上变成按压喷瓶，第二行左也是喷瓶，不再是三把不同浇壶。带轮水箱前端多了一截出水口。」\n- 个人口味: 光影=冷光源 / 柔光 / 暖光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 冷色调 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色；白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n胶片逆光轻厚涂：保画风与机位，整理景深和颗粒，不加成绘画笔触| Height-normalized overview from final.jpg identity locks: L3 long open spout > L2 short stub; L2/L3 no rose; L4 first rose; L6 hose coil/reel no spray nozzle; L8 rotary irrigation; GH celadon gloss; no backpack. Subject frame heights set to ~0.40/0.48/0.56/0.64/0.72/0.80/0.86/0.96 monotone, L8 largest, empty cream margin on low tiers. 4x2 portrait 9:16 black isolation.| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | 只拉开中档框高：L2缩到约0.48、L3约0.56且保持长嘴、L4约0.64、L5约0.72、L6约0.80、L7约0.86；保持L1约0.40与L8约0.96；锁住L3嘴长与链形；邻档主体框高必须明显递增，末档最大，禁止邻档一样大",
+    "continuation": false,
+    "passed": false,
+    "gate_blocked": true,
+    "image_gate_blocked": false,
+    "anatomy_score": 9.1,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "unknown",
+    "judge_source": "agent_absolute_5d",
+    "remote_vlm": {
+      "source": "agent_self_judge",
+      "provider": "",
+      "model": "",
+      "error": "",
+      "active": false,
+      "score_evidence": {},
+      "evidence_missing_dims": [],
+      "review": {
+        "pass_count": 0,
+        "rerated": false,
+        "reason": ""
+      }
+    },
+    "should_continue_next_round": false,
+    "decision": "STOP_MAX_ROUNDS",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "style_lock",
+        "lesson": "本轮短板偏「style_lock」：局部格有轻微缩放柔边；L7软管略收；机读邻档体量仍可能误报白卡填满；邻档体量几乎一样大：第 1 格高 0.89，第 2 格高 0.89（差 0.00 < 0.0",
+        "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+        "from_score": "9.23"
+      },
+      {
+        "category": "keep",
+        "lesson": "保留本轮已做对的：框高阶梯已拉开约0.40/0.47/0.57/0.65/0.71/0.78/0.85/0.95，低档空边明显、末档最大；L3开口长管仍明显长于L2；L2/L3无",
+        "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+        "from_score": "9.23"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "19:54:25",
+    "asset_image": "assets/skill_20261110_gh_portrait_v2/merge_water/sheet_r20.jpg"
+  },
+  "rounds_to_converge": 4,
+  "convergence_badge": "共 4 轮未达阈值，采用最高分",
+  "winner_image": "assets/skill_20261110_gh_portrait_v2/merge_water/sheet_r20.jpg",
+  "best_image": "assets/skill_20261110_gh_portrait_v2/merge_water/sheet_r20.jpg",
+  "final_image": "assets/skill_20261110_gh_portrait_v2/merge_water/final.jpg",
+  "settle_pending": false,
+  "process_board": ".memory-art/converge/boards/merge_water_gh_portrait_v2_r9/index.html",
+  "settle_done_at": "2026-11-10 19:56:16 UTC+8",
+  "settle_saved_paths": [
+    ".memory-art\\entries\\merge.GardenWater\\CHAT20261110195557107RECIPE.md",
+    ".memory-art\\entries\\merge.GardenWater\\CHAT20261110195522588REDLINE.md",
+    ".memory-art\\_reflections\\20261110_195600_merge_water_gh_portrait_v2_r9.json"
+  ]
+}

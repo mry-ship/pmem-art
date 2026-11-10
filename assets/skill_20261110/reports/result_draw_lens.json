@@ -1,0 +1,13 @@
+{
+  "ok": true,
+  "route_id": "draw.lens",
+  "banner": "【按 镜头包 走了】",
+  "passed_threshold": false,
+  "best_score": null,
+  "final_image": "",
+  "images": [],
+  "notes": "点选前不生图",
+  "shots_file": "assets/skill_20261110/draw_lens/shots.md",
+  "wall_started_at": "2026-11-10T14:36:16",
+  "wall_ended_at": "2026-11-10T14:37:23"
+}

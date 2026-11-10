@@ -1,0 +1,31 @@
+{
+  "banner": "全技能清点重跑",
+  "engine": "Cursor GenerateImage",
+  "refs": {
+    "items": "assets/refs/gossip_harbor/gh_merge.jpg",
+    "ui": "assets/refs/gossip_harbor/gh_ui.jpg",
+    "keyart": "assets/refs/gossip_harbor/gh_loading.jpg",
+    "icon": "assets/refs/gossip_harbor/gh_icon.jpg"
+  },
+  "lock": "光泽卡通 3D、圆润厚实、无硬描边、暖饱和、柔光渐变",
+  "do_not_copy": "截图角色、标志、英文标题、棋盘布局、厨房场景、按钮文案",
+  "jobs": [
+    "draw.ordinary",
+    "draw.key",
+    "draw.clone",
+    "draw.variant",
+    "draw.multi",
+    "draw.lens",
+    "ui.kit",
+    "icon.a",
+    "icon.b",
+    "icon.c",
+    "merge.shop",
+    "merge.same",
+    "merge.species",
+    "prompt.write",
+    "style.lock",
+    "critique.review"
+  ],
+  "later": ["atlas.file", "coach.report"]
+}

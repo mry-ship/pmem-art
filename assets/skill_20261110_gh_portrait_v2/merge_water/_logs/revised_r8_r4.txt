@@ -1,0 +1,9 @@
+Pad BOTH references: keep L3 LONG open spout vs L2 SHORT stub from the latest sheet; keep GH gloss and chain locks from final.
+
+KEEP already-good: L3 spout about 2× L2, both NO rose; L4 first perforated rose; no backpack/pump bottle; L8 rotating irrigation unit; Gossip Harbor celadon gloss 4×2 black isolation.
+
+ONLY remaining fixes:
+1) Frame heights monotone with empty margin on low tiers: L1=0.40 L2=0.48 L3=0.56 L4=0.64 L5=0.72 L6=0.80 L7=0.86 L8=0.96. Neighbors must differ; L8 largest.
+2) L2 OPEN short tip NO rose holes. L6 hose REEL disk with center hole ring, NO spray nozzle gun.
+
+Do not shorten L3 spout. Do not add rose before L4.

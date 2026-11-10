@@ -1,0 +1,13 @@
+{
+  "ok": true,
+  "route_id": "coach.report",
+  "banner": "【按 教练 走了】",
+  "generated": false,
+  "knowledge_cards_written": false,
+  "passed_threshold": null,
+  "best_score": null,
+  "final_image": "",
+  "images": [],
+  "report": "assets/skill_20261110_gh/coach/report.md",
+  "notes": "依据 assets/skill_20261110。未生图，未写知识卡，未改代码。近 7 次平均胜出分 8.96，达标率 0。商店合成梯玻璃偏写实，第 3 轮变成食物摄影。下一次只改表面为 Gossip Harbor 光泽卡通。"
+}

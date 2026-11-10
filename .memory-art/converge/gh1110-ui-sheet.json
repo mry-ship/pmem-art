@@ -1,0 +1,990 @@
+{
+  "session_id": "gh1110-ui-sheet",
+  "started_at": "2026-11-10 16:27:39 UTC+8",
+  "goal": "整套界面妖精花园组件表：主按钮默认按下禁用，加一个九宫格弹窗框，空内容",
+  "module": "ui.FairyGarden.MainMenu",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "medium",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "medium",
+    "label": "中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.5)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 1,
+    "target_score_threshold": 9.5,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.1875,
+      "perspective_anatomy": 0.1125,
+      "texture_detail": 0.1875,
+      "spec_style": 0.1125,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "viewpoint_frame",
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图，只在提示词上补还没过的那一处（提示词改动仍 ≤40%）",
+    "max_prompt_delta_ratio": 0.4,
+    "allow_recompose": false,
+    "allow_viewpoint_change": false,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "viewpoint_angle (不改机位与镜头视角)",
+      "element_count (不增删主体元素清单)",
+      "no_full_recompose (不做整体 recompose / 换景别故事)",
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)"
+    ],
+    "min_round_leap": 0.15,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光",
+    "medium_family": "volume",
+    "best_direction_hint": "最优方向：光影·空气·介质；可小幅姿态/局部布局",
+    "goal": "整套界面妖精花园组件表：主按钮默认按下禁用，加一个九宫格弹窗框，空内容",
+    "module": "ui.FairyGarden.MainMenu",
+    "ref_image": "",
+    "ref_analysis": "垫图只锁圆角厚按钮、暖饱和、柔光渐变、无硬描边、卡通光泽。组件表用深色实底。不抄厨房、人物、餐车和英文。"
+  },
+  "medium_family": "volume",
+  "contract": "",
+  "target_score_threshold": 9.5,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_ui__ar_16x9.png",
+  "ref_analysis": "垫图只锁圆角厚按钮、暖饱和、柔光渐变、无硬描边、卡通光泽。组件表用深色实底。不抄厨房、人物、餐车和英文。",
+  "default_aspect_ratio": "16:9",
+  "default_reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_ui__ar_16x9.png",
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge.jpg"
+  ],
+  "aspect_ratio": "16:9",
+  "reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_ui__ar_16x9.png",
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge.jpg"
+  ],
+  "ref_physical_traits": {
+    "exists": true,
+    "size_bytes": 4478936,
+    "size_kb": 4374.0,
+    "width": 4780,
+    "height": 2688,
+    "aspect_ratio": "1195:672",
+    "canonical_aspect_ratio": "16:9",
+    "color_entropy": 7.97
+  },
+  "param_validation": {
+    "valid": true,
+    "validation_passed": true,
+    "case_id": "gh1110-ui-sheet",
+    "scale": "medium",
+    "aspect_ratio": "16:9",
+    "ref_aspect_ratio": "16:9",
+    "ref_dimensions": "4780x2688",
+    "output_aspect_ratio": "",
+    "output_dimensions": "",
+    "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_ui__ar_16x9.png",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_ui__ar_16x9.png",
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge.jpg"
+    ],
+    "inherited_default_aspect_ratio": false,
+    "inherited_default_pad_image": false,
+    "matched_ref_aspect_ratio": true,
+    "matched_ref_pad_image": true,
+    "matched_output_aspect_ratio": true,
+    "three_step_stage": "step1_start",
+    "three_step_verified": false,
+    "warnings": [
+      "参考图已加边为同一张垫图 'gh_ui__ar_16x9.png'，会话和生图都用这一张，不要再垫原图。"
+    ]
+  },
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.5,
+  "accept_threshold": 9.5,
+  "max_rounds": 4,
+  "ready_to_finish": true,
+  "status": "finished",
+  "owner_conversation_id": "gh1110-ui-sheet",
+  "route_ids": [
+    "ui.kit"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "16:9",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_ui__ar_16x9.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "gh1110-ui-sheet",
+        "scale": "medium",
+        "aspect_ratio": "16:9",
+        "ref_aspect_ratio": "16:9",
+        "ref_dimensions": "4780x2688",
+        "output_aspect_ratio": "16:9",
+        "output_dimensions": "1280x720",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_ui__ar_16x9.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_ui__ar_16x9.png"
+        ],
+        "inherited_default_aspect_ratio": false,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "16:29:28",
+      "image": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\ui_kit\\components_r1.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 392777,
+        "size_kb": 383.6,
+        "width": 1280,
+        "height": 720,
+        "aspect_ratio": "16:9",
+        "canonical_aspect_ratio": "16:9",
+        "color_entropy": 7.98
+      },
+      "raw_score": 8.85,
+      "score": 8.85,
+      "target_score_threshold": 9.5,
+      "dims": "风格色板9.2/结构8.6/光影材质8.9/套件一致8.4/无瑕疵9.0/管线合规9.4",
+      "dims_parsed": {
+        "style_palette": 9.2,
+        "nine_slice_structure": 8.6,
+        "lighting_material": 8.9,
+        "rgba_pipeline_compliance": 9.4,
+        "state_suite_cohesion": 8.4,
+        "flawlessness": 9.0
+      },
+      "weighted_score": 8.85,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）"
+      ],
+      "stagnated": false,
+      "strengths": "深棕实底上，默认和按下是同一套奶油正圆，圆内都有一朵花，圆下汉字是默认和按下。右侧弹窗中心是一块空白奶油。",
+      "defects": "禁用钮是一块没有花的灰圆，外圈也没了，和左边两枚不是同一只钮。弹窗上边正中还有一朵花，四边不素。按下钮比默认钮小一圈。",
+      "next_fix": "禁用钮保留同一朵花只是变灰；弹窗只留四角的花；三枚钮一样大，按下只下沉。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: ui.FairyGarden.MainMenu\n- 置信度: 0.45（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261110162647729RECIPE] [收敛胜出 8.97分] 整套界面妖精花园主菜单16比9概念总览：顶栏资源、中间花园入口、底栏五个圆按钮 — 五个正圆厚钮落在石径上，汉字花园合成订单好友商店清楚；花拱门\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n  · 确认作为货柜正向锚点：合成宣传图里的道具是圆润厚实的糖釉卡通3D。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n- 必须避开红线:\n  · [CHAT20261110162648770REDLINE] [收敛踩坑红线] 整套界面妖精花园主菜单16比9概念总览：顶栏资源、中间花园入：避免「画面左右站着绿发白衣女子、黄外套女子和背带裤女孩，三人位置和服装回声参考图。底栏是横向胶囊」\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=居中/对称构图 / 半身；色温=避免过饱和 / 冷色调 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [tech-9slice] 九宫格切图: 四角固定、中心可拉伸；中心禁止复杂装饰。\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光 | 对标品类是休闲合成花园界面零件表。16:9横屏，整张落在一块平坦的深棕色实底上，颜色接近#16120E，不透明，不要棋盘格，不要白底，不要房间。垫图只锁圆角厚按钮、暖饱和、柔光渐变、无硬描边、卡通光泽。不抄厨房，不抄人物，不抄餐车。 分区：左半边三枚主按钮横排，状态是默认、按下、禁用。右半边一块九宫格弹窗框，内容区空。主按钮不遮脸，画面里没有人脸。 控件工艺：三枚都是同一只正圆厚钮。默认钮奶油到暖金上下渐变，顶高光一条，底部软投影，无黑描边，圆内一朵花，圆下写默认，字重圆润。按下钮同一只钮向下沉一点，顶高光变窄，投影变短。禁用钮同一只钮褪成灰米色，没有高光。圆下分别写按下、禁用。 弹窗框四角是固定的小花角，四边是素净可拉伸的奶油边，中心是一块干净的暖奶油，没有道具，没有字，没有花纹。顶饰最多一朵小花。 画面汉字只有：默认、按下、禁用。不要拉丁字母。一眼失败：透明底、棋盘格、只画一种按钮、弹窗中心画了花园或餐车、英文、人物。 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: 9-slice popup shell — large empty stretchable plain content zone, NO gift box or prop illustration inside the content area; corner chrome only plus at most one top badge motif; bottom symbol buttons only, NO readable text",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": null,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "ui",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：禁用钮是一块没有花的灰圆，外圈也没了，和左边两枚不是同一只钮。弹窗上边正中还有一朵花，四边不素。按下钮比默认钮小一圈。",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.85"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：深棕实底上，默认和按下是同一套奶油正圆，圆内都有一朵花，圆下汉字是默认和按下。右侧弹窗中心是一块空白奶油。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.85"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "16:30:18"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "16:9",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_ui__ar_16x9.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "gh1110-ui-sheet",
+        "scale": "medium",
+        "aspect_ratio": "16:9",
+        "ref_aspect_ratio": "16:9",
+        "ref_dimensions": "4780x2688",
+        "output_aspect_ratio": "16:9",
+        "output_dimensions": "1280x720",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_ui__ar_16x9.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_ui__ar_16x9.png"
+        ],
+        "inherited_default_aspect_ratio": false,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "16:30:59",
+      "image": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\ui_kit\\components_r2.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 373754,
+        "size_kb": 365.0,
+        "width": 1280,
+        "height": 720,
+        "aspect_ratio": "16:9",
+        "canonical_aspect_ratio": "16:9",
+        "color_entropy": 7.99
+      },
+      "raw_score": 9.33,
+      "score": 9.33,
+      "target_score_threshold": 9.5,
+      "dims": "风格色板9.4/结构9.3/光影材质9.3/套件一致9.2/无瑕疵9.4/管线合规9.5",
+      "dims_parsed": {
+        "style_palette": 9.4,
+        "nine_slice_structure": 9.3,
+        "lighting_material": 9.3,
+        "rgba_pipeline_compliance": 9.5,
+        "state_suite_cohesion": 9.2,
+        "flawlessness": 9.4
+      },
+      "weighted_score": 9.33,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）"
+      ],
+      "stagnated": false,
+      "strengths": "禁用钮仍是同一朵灰花，弹窗只有四角小花，中心是空白奶油。深棕实底没有棋盘格。",
+      "defects": "按下钮被压成横椭圆，高度明显矮于上面的默认正圆，外轮廓不再是正圆。",
+      "next_fix": "按下钮改回和默认一样大的正圆，只下移并收窄高光，不要压成椭圆。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: ui.FairyGarden.MainMenu\n- 置信度: 0.45（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261110162647729RECIPE] [收敛胜出 8.97分] 整套界面妖精花园主菜单16比9概念总览：顶栏资源、中间花园入口、底栏五个圆按钮 — 五个正圆厚钮落在石径上，汉字花园合成订单好友商店清楚；花拱门\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n  · 确认作为货柜正向锚点：合成宣传图里的道具是圆润厚实的糖釉卡通3D。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n- 必须避开红线:\n  · [CHAT20261110162648770REDLINE] [收敛踩坑红线] 整套界面妖精花园主菜单16比9概念总览：顶栏资源、中间花园入：避免「画面左右站着绿发白衣女子、黄外套女子和背带裤女孩，三人位置和服装回声参考图。底栏是横向胶囊」\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=居中/对称构图 / 半身；色温=避免过饱和 / 冷色调 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [tech-9slice] 九宫格切图: 四角固定、中心可拉伸；中心禁止复杂装饰。\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光 | 对标品类是休闲合成花园界面零件表。16:9横屏，整张落在一块平坦的深棕色实底上，颜色接近#16120E，不透明，不要棋盘格，不要白底，不要房间。垫图只锁圆角厚按钮、暖饱和、柔光渐变、无硬描边、卡通光泽。不抄厨房，不抄人物，不抄餐车。 分区：左半边三枚主按钮横排，状态是默认、按下、禁用。右半边一块九宫格弹窗框，内容区空。主按钮不遮脸，画面里没有人脸。 控件工艺：三枚都是同一只正圆厚钮。默认钮奶油到暖金上下渐变，顶高光一条，底部软投影，无黑描边，圆内一朵花，圆下写默认，字重圆润。按下钮同一只钮向下沉一点，顶高光变窄，投影变短。禁用钮同一只钮褪成灰米色，没有高光。圆下分别写按下、禁用。 弹窗框四角是固定的小花角，四边是素净可拉伸的奶油边，中心是一块干净的暖奶油，没有道具，没有字，没有花纹。顶饰最多一朵小花。 画面汉字只有：默认、按下、禁用。不要拉丁字母。一眼失败：透明底、棋盘格、只画一种按钮、弹窗中心画了花园或餐车、英文、人物。 只改这一处：禁用钮保留同一朵花只是变灰；弹窗只留四角的花；三枚钮一样大。 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: 9-slice popup shell — large empty stretchable plain content zone, NO gift box or prop illustration inside the content area; corner chrome only plus at most one top badge motif; bottom symbol buttons only, NO readable text | 禁用钮保留同一朵花只是变灰；弹窗只留四角的花；三枚钮一样大，按下只下沉。",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": null,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "ui",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：按下钮被压成横椭圆，高度明显矮于上面的默认正圆，外轮廓不再是正圆。",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "9.33"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：禁用钮仍是同一朵灰花，弹窗只有四角小花，中心是空白奶油。深棕实底没有棋盘格。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "9.33"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "16:31:41"
+    },
+    {
+      "round": 3,
+      "round_label": "第 3 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "16:9",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_ui__ar_16x9.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "gh1110-ui-sheet",
+        "scale": "medium",
+        "aspect_ratio": "16:9",
+        "ref_aspect_ratio": "16:9",
+        "ref_dimensions": "4780x2688",
+        "output_aspect_ratio": "16:9",
+        "output_dimensions": "1280x720",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_ui__ar_16x9.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_ui__ar_16x9.png"
+        ],
+        "inherited_default_aspect_ratio": false,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "16:32:16",
+      "image": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\ui_kit\\components_r3.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 359231,
+        "size_kb": 350.8,
+        "width": 1280,
+        "height": 720,
+        "aspect_ratio": "16:9",
+        "canonical_aspect_ratio": "16:9",
+        "color_entropy": 7.97
+      },
+      "raw_score": 9.12,
+      "score": 9.12,
+      "target_score_threshold": 9.5,
+      "dims": "风格色板9.4/结构9.2/光影材质8.8/套件一致8.7/无瑕疵9.3/管线合规9.4",
+      "dims_parsed": {
+        "style_palette": 9.4,
+        "nine_slice_structure": 9.2,
+        "lighting_material": 8.8,
+        "rgba_pipeline_compliance": 9.4,
+        "state_suite_cohesion": 8.7,
+        "flawlessness": 9.3
+      },
+      "weighted_score": 9.12,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +-0.21 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "Agent Absolute-5D 已采纳（门槛 9.5）"
+      ],
+      "stagnated": true,
+      "strengths": "三枚都是正圆，禁用是灰花，弹窗四角有花、中心空白，深棕实底。",
+      "defects": "按下钮和默认钮几乎一样亮，顶上高光同样宽，看不出被按下去。",
+      "next_fix": "按下钮保持同样大的正圆，但改成更深的金色，高光收成一条细月牙，投影贴短。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: ui.FairyGarden.MainMenu\n- 置信度: 0.45（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261110162647729RECIPE] [收敛胜出 8.97分] 整套界面妖精花园主菜单16比9概念总览：顶栏资源、中间花园入口、底栏五个圆按钮 — 五个正圆厚钮落在石径上，汉字花园合成订单好友商店清楚；花拱门\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n  · 确认作为货柜正向锚点：合成宣传图里的道具是圆润厚实的糖釉卡通3D。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n- 必须避开红线:\n  · [CHAT20261110162648770REDLINE] [收敛踩坑红线] 整套界面妖精花园主菜单16比9概念总览：顶栏资源、中间花园入：避免「画面左右站着绿发白衣女子、黄外套女子和背带裤女孩，三人位置和服装回声参考图。底栏是横向胶囊」\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=居中/对称构图 / 半身；色温=避免过饱和 / 冷色调 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [tech-9slice] 九宫格切图: 四角固定、中心可拉伸；中心禁止复杂装饰。\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光 | 对标品类是休闲合成花园界面零件表。16:9横屏，整张落在一块平坦的深棕色实底上，颜色接近#16120E，不透明，不要棋盘格，不要白底，不要房间。垫图只锁圆角厚按钮、暖饱和、柔光渐变、无硬描边、卡通光泽。不抄厨房，不抄人物，不抄餐车。 分区：左半边三枚主按钮横排，状态是默认、按下、禁用。右半边一块九宫格弹窗框，内容区空。主按钮不遮脸，画面里没有人脸。 控件工艺：三枚都是同一只正圆厚钮。默认钮奶油到暖金上下渐变，顶高光一条，底部软投影，无黑描边，圆内一朵花，圆下写默认，字重圆润。按下钮同一只钮向下沉一点，顶高光变窄，投影变短。禁用钮同一只钮褪成灰米色，没有高光。圆下分别写按下、禁用。 弹窗框四角是固定的小花角，四边是素净可拉伸的奶油边，中心是一块干净的暖奶油，没有道具，没有字，没有花纹。顶饰最多一朵小花。 画面汉字只有：默认、按下、禁用。不要拉丁字母。一眼失败：透明底、棋盘格、只画一种按钮、弹窗中心画了花园或餐车、英文、人物。 只改这一处：禁用钮保留同一朵花只是变灰；弹窗只留四角的花；三枚钮一样大。按下保持正圆，不要压成椭圆。 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: 9-slice popup shell — large empty stretchable plain content zone, NO gift box or prop illustration inside the content area; corner chrome only plus at most one top badge motif; bottom symbol buttons only, NO readable text | 按下钮改回和默认一样大的正圆，只下移并收窄高光，不要压成椭圆。",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": null,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "ui",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：按下钮和默认钮几乎一样亮，顶上高光同样宽，看不出被按下去。",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "9.12"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：三枚都是正圆，禁用是灰花，弹窗四角有花、中心空白，深棕实底。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "9.12"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "16:32:55"
+    },
+    {
+      "round": 4,
+      "round_label": "经过 4 轮达标定稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "16:9",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_ui__ar_16x9.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "gh1110-ui-sheet",
+        "scale": "medium",
+        "aspect_ratio": "16:9",
+        "ref_aspect_ratio": "16:9",
+        "ref_dimensions": "4780x2688",
+        "output_aspect_ratio": "16:9",
+        "output_dimensions": "1280x720",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_ui__ar_16x9.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_ui__ar_16x9.png"
+        ],
+        "inherited_default_aspect_ratio": false,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "16:34:03",
+      "image": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\ui_kit\\components_r4.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 286859,
+        "size_kb": 280.1,
+        "width": 1280,
+        "height": 720,
+        "aspect_ratio": "16:9",
+        "canonical_aspect_ratio": "16:9",
+        "color_entropy": 7.98
+      },
+      "raw_score": 9.5,
+      "score": 9.5,
+      "target_score_threshold": 9.5,
+      "dims": "风格色板9.6/结构9.5/光影材质9.4/套件一致9.5/无瑕疵9.5/管线合规9.6",
+      "dims_parsed": {
+        "style_palette": 9.6,
+        "nine_slice_structure": 9.5,
+        "lighting_material": 9.4,
+        "rgba_pipeline_compliance": 9.6,
+        "state_suite_cohesion": 9.5,
+        "flawlessness": 9.5
+      },
+      "weighted_score": 9.5,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）"
+      ],
+      "stagnated": false,
+      "strengths": "默认是奶油金正圆，按下是更深的棕金正圆，禁用是灰花正圆。弹窗只有四角小花，中心是空白奶油，底是一整块深棕。",
+      "defects": "按下钮几乎没有下移，高光仍贴在圆的上缘，主要靠变成更深的棕金来和默认区分。",
+      "next_fix": "已达标，无需继续叠加",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: ui.FairyGarden.MainMenu\n- 置信度: 0.45（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261110162647729RECIPE] [收敛胜出 8.97分] 整套界面妖精花园主菜单16比9概念总览：顶栏资源、中间花园入口、底栏五个圆按钮 — 五个正圆厚钮落在石径上，汉字花园合成订单好友商店清楚；花拱门\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n  · 确认作为货柜正向锚点：合成宣传图里的道具是圆润厚实的糖釉卡通3D。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n- 必须避开红线:\n  · [CHAT20261110162648770REDLINE] [收敛踩坑红线] 整套界面妖精花园主菜单16比9概念总览：顶栏资源、中间花园入：避免「画面左右站着绿发白衣女子、黄外套女子和背带裤女孩，三人位置和服装回声参考图。底栏是横向胶囊」\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=居中/对称构图 / 半身；色温=避免过饱和 / 冷色调 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [tech-9slice] 九宫格切图: 四角固定、中心可拉伸；中心禁止复杂装饰。\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光 | 对标品类是休闲合成花园界面零件表。16:9横屏，整张落在一块平坦的深棕色实底上，颜色接近#16120E，不透明，不要棋盘格，不要白底，不要房间。垫图只锁圆角厚按钮、暖饱和、柔光渐变、无硬描边、卡通光泽。不抄厨房，不抄人物，不抄餐车。 分区：左半边三枚主按钮横排，状态是默认、按下、禁用。右半边一块九宫格弹窗框，内容区空。主按钮不遮脸，画面里没有人脸。 控件工艺：三枚都是同一只正圆厚钮。默认钮奶油到暖金上下渐变，顶高光一条，底部软投影，无黑描边，圆内一朵花，圆下写默认，字重圆润。按下钮同一只钮向下沉一点，顶高光变窄，投影变短。禁用钮同一只钮褪成灰米色，没有高光。圆下分别写按下、禁用。 弹窗框四角是固定的小花角，四边是素净可拉伸的奶油边，中心是一块干净的暖奶油，没有道具，没有字，没有花纹。顶饰最多一朵小花。 画面汉字只有：默认、按下、禁用。不要拉丁字母。一眼失败：透明底、棋盘格、只画一种按钮、弹窗中心画了花园或餐车、英文、人物。 只改这一处：禁用钮保留同一朵花只是变灰；弹窗只留四角的花；三枚钮一样大。按下保持正圆，不要压成椭圆。按下钮改成更深的金棕色，高光收成细月牙。 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: 9-slice popup shell — large empty stretchable plain content zone, NO gift box or prop illustration inside the content area; corner chrome only plus at most one top badge motif; bottom symbol buttons only, NO readable text | 按下钮改回和默认一样大的正圆，只下移并收窄高光，不要压成椭圆。",
+      "continuation": false,
+      "passed": true,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": null,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "ui",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_TARGET_REACHED",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：按下钮几乎没有下移，高光仍贴在圆的上缘，主要靠变成更深的棕金来和默认区分。",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "9.5"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：默认是奶油金正圆，按下是更深的棕金正圆，禁用是灰花正圆。弹窗只有四角小花，中心是空白奶油，底是一整块深棕。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "9.5"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "16:34:28"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-11-10 14:02:24 UTC+8"
+    },
+    "module": "ui.FairyGarden.MainMenu",
+    "goal": "整套界面妖精花园组件表：主按钮默认按下禁用，加一个九宫格弹窗框，空内容",
+    "confidence": 0.45,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "只有未达标 provisional recipe，不计入定稿置信",
+      "个人口味/正向保留非空",
+      "注入红线可控（1 条，已按任务主题过滤）",
+      "挂载 2 张项目知识卡 + 0 张全局美术底层基础卡"
+    ],
+    "top_recipes": [
+      {
+        "id": "CHAT20261110162647729RECIPE",
+        "summary": "[收敛胜出 8.97分] 整套界面妖精花园主菜单16比9概念总览：顶栏资源、中间花园入口、底栏五个圆按钮 — 五个正圆厚钮落在石径上，汉字花园合成订单好友商店清楚；花拱门",
+        "module": "ui.FairyGarden.MainMenu"
+      }
+    ],
+    "top_redlines": [
+      {
+        "id": "CHAT20261110162648770REDLINE",
+        "summary": "[收敛踩坑红线] 整套界面妖精花园主菜单16比9概念总览：顶栏资源、中间花园入：避免「画面左右站着绿发白衣女子、黄外套女子和背带裤女孩，三人位置和服装回声参考图。底栏是横向胶囊」",
+        "module": "ui.FairyGarden.MainMenu"
+      }
+    ],
+    "art_decisions": [],
+    "private_knowledge": [
+      {
+        "id": "tech-9slice",
+        "title": "九宫格切图",
+        "body": "四角固定、中心可拉伸；中心禁止复杂装饰。",
+        "layer_scope": "private"
+      },
+      {
+        "id": "tech-painterly",
+        "title": "厚涂笔触",
+        "body": "可见笔触方向跟随形体，暗部透气勿脏。",
+        "layer_scope": "private"
+      }
+    ],
+    "shared_knowledge": [],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [
+        "冷光源",
+        "暖光",
+        "柔光"
+      ],
+      "preferred_composition": [
+        "居中/对称构图",
+        "半身"
+      ],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [
+        "避免过饱和",
+        "冷色调",
+        "暖色调"
+      ],
+      "banned_habits": [
+        "漏抠/黑底/毛边",
+        "廉价塑料感/油腻高光",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色"
+      ],
+      "keep_phrases": [
+        "确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色",
+        "确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶",
+        "确认作为货柜正向锚点：合成宣传图里的道具是圆润厚实的糖釉卡通3D。",
+        "确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。"
+      ],
+      "banned_habits_raw_tail": [
+        "禁止偏离样张画风：过度霓虹、脏暗阴影、油腻高光、写实皮肤毛孔、扁平UI描边",
+        "电池审稿：原画竖构图避免贴样张布局；边缘反光勿过曝",
+        "电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感",
+        "黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差",
+        "错误头身比/头过大",
+        "漏抠/黑底/毛边",
+        "廉价塑料感/油腻高光",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色"
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: ui.FairyGarden.MainMenu\n- 置信度: 0.45（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261110162647729RECIPE] [收敛胜出 8.97分] 整套界面妖精花园主菜单16比9概念总览：顶栏资源、中间花园入口、底栏五个圆按钮 — 五个正圆厚钮落在石径上，汉字花园合成订单好友商店清楚；花拱门\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n  · 确认作为货柜正向锚点：合成宣传图里的道具是圆润厚实的糖釉卡通3D。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n- 必须避开红线:\n  · [CHAT20261110162648770REDLINE] [收敛踩坑红线] 整套界面妖精花园主菜单16比9概念总览：顶栏资源、中间花园入：避免「画面左右站着绿发白衣女子、黄外套女子和背带裤女孩，三人位置和服装回声参考图。底栏是横向胶囊」\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=居中/对称构图 / 半身；色温=避免过饱和 / 冷色调 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [tech-9slice] 九宫格切图: 四角固定、中心可拉伸；中心禁止复杂装饰。\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。",
+    "built_at": "2026-11-10 16:27:38 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：禁用钮是一块没有花的灰圆，外圈也没了，和左边两枚不是同一只钮。弹窗上边正中还有一朵花，四边不素。按下钮比默认钮小一圈。",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.85"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：深棕实底上，默认和按下是同一套奶油正圆，圆内都有一朵花，圆下汉字是默认和按下。右侧弹窗中心是一块空白奶油。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.85"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：按下钮被压成横椭圆，高度明显矮于上面的默认正圆，外轮廓不再是正圆。",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.33"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：禁用钮仍是同一朵灰花，弹窗只有四角小花，中心是空白奶油。深棕实底没有棋盘格。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.33"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：按下钮和默认钮几乎一样亮，顶上高光同样宽，看不出被按下去。",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.12"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：三枚都是正圆，禁用是灰花，弹窗四角有花、中心空白，深棕实底。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.12"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：按下钮几乎没有下移，高光仍贴在圆的上缘，主要靠变成更深的棕金来和默认区分。",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.5"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：默认是奶油金正圆，按下是更深的棕金正圆，禁用是灰花正圆。弹窗只有四角小花，中心是空白奶油，底是一整块深棕。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.5"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 2,
+  "regression_drop": 0.15,
+  "safe_early_stop": false,
+  "ui_delivery": "sheet",
+  "ui_round_cap": 4,
+  "single_judge": false,
+  "understanding_contract": {
+    "version": 1,
+    "raw_utterance": "整套界面妖精花园组件表：主按钮默认按下禁用，加一个九宫格弹窗框，空内容",
+    "l0": {
+      "route_ids": [
+        "ui.kit"
+      ],
+      "banner": "【按 【最多4轮·到线即停】SpriteCook式 UI Kit/HUD/九宫格整套 走了】",
+      "delivery": "ui.kit"
+    },
+    "l1": {
+      "locks": [],
+      "unlocks": [],
+      "defaults_shown": [],
+      "commercial_vibe": ""
+    },
+    "l2": {
+      "open": true,
+      "surface_fix": "",
+      "last_feedback": "",
+      "feedback_layer": ""
+    },
+    "notes": ""
+  },
+  "reasonableness_history": [
+    {
+      "reviewed_at": 1794299285.5313032,
+      "passed": true,
+      "skill": "ui",
+      "issues": []
+    }
+  ],
+  "reasonableness": {
+    "passed": true,
+    "skill": "ui",
+    "draft_prompt": "组件表草稿：深色实底上画主按钮默认按下禁用，再加一个空心九宫格弹窗。",
+    "revised_prompt": "对标品类是休闲合成花园界面零件表。16:9横屏，整张落在一块平坦的深棕色实底上，颜色接近#16120E，不透明，不要棋盘格，不要白底，不要房间。垫图只锁圆角厚按钮、暖饱和、柔光渐变、无硬描边、卡通光泽。不抄厨房，不抄人物，不抄餐车。\r\n\r\n分区：左半边三枚主按钮横排，状态是默认、按下、禁用。右半边一块九宫格弹窗框，内容区空。主按钮不遮脸，画面里没有人脸。\r\n\r\n控件工艺：三枚都是同一只正圆厚钮。默认钮奶油到暖金上下渐变，顶高光一条，底部软投影，无黑描边，圆内一朵花，圆下写默认，字重圆润。按下钮同一只钮向下沉一点，顶高光变窄，投影变短。禁用钮同一只钮褪成灰米色，没有高光。圆下分别写按下、禁用。\r\n\r\n弹窗框四角是固定的小花角，四边是素净可拉伸的奶油边，中心是一块干净的暖奶油，没有道具，没有字，没有花纹。顶饰最多一朵小花。\r\n\r\n画面汉字只有：默认、按下、禁用。不要拉丁字母。一眼失败：透明底、棋盘格、只画一种按钮、弹窗中心画了花园或餐车、英文、人物。",
+    "checklist": {
+      "subject_action": {
+        "status": "ok",
+        "note": ""
+      },
+      "element_budget": {
+        "status": "ok",
+        "note": ""
+      },
+      "hard_locks": {
+        "status": "ok",
+        "note": ""
+      },
+      "fail_at_glance": {
+        "status": "ok",
+        "note": ""
+      },
+      "layout_zones": {
+        "status": "ok",
+        "note": ""
+      },
+      "no_content_clutter": {
+        "status": "ok",
+        "note": ""
+      },
+      "chrome_not_illustration": {
+        "status": "ok",
+        "note": ""
+      },
+      "cta_clear_of_faces": {
+        "status": "ok",
+        "note": ""
+      },
+      "control_craft": {
+        "status": "ok",
+        "note": ""
+      }
+    },
+    "issues": [],
+    "notes": "对标品类=休闲合成花园零件表。Cursor深色实底，不后抠。",
+    "reviewed_at": 1794299285.5313032,
+    "reviewed_at_iso": "2026-11-10 16:28:05",
+    "force_pass": false,
+    "skill_raw": "ui"
+  },
+  "discussions": [
+    {
+      "round": 0,
+      "kind": "reasonableness",
+      "prompt": "对标品类是休闲合成花园界面零件表。16:9横屏，整张落在一块平坦的深棕色实底上，颜色接近#16120E，不透明，不要棋盘格，不要白底，不要房间。垫图只锁圆角厚按钮、暖饱和、柔光渐变、无硬描边、卡通光泽。不抄厨房，不抄人物，不抄餐车。\r\n\r\n分区：左半边三枚主按钮横排，状态是默认、按下、禁用。右半边一块九宫格弹窗框，内容区空。主按钮不遮脸，画面里没有人脸。\r\n\r\n控件工艺：三枚都是同一只正圆厚钮。默认钮奶油到暖金上下渐变，顶高光一条，底部软投影，无黑描边，圆内一朵花，圆下写默认，字重圆润。按下钮同一只钮向下沉一点，顶高光变窄，投影变短。禁用钮同一只钮褪成灰米色，没有高光。圆下分别写按下、禁用。\r\n\r\n弹窗框四角是固定的小花角，四边是素净可拉伸的奶油边，中心是一块干净的暖奶油，没有道具，没有字，没有花纹。顶饰最多一朵小花。\r\n\r\n画面汉字只有：默认、按下、禁用。不要拉丁字母。一眼失败：透明底、棋盘格、只画一种按钮、弹窗中心画了花园或餐车、英文、人物。",
+      "strengths": "合理性闸已过：subject_action=ok；element_budget=ok；hard_locks=ok；fail_at_glance=ok；layout_zones=ok；no_content_clutter=ok；chrome_not_illustration=ok；cta_clear_of_faces=ok；control_craft=ok",
+      "defects": "",
+      "next_fix": "首轮 generate 使用本修订提示词；审美迭代不得推翻硬锁与元素预算"
+    }
+  ],
+  "warm_start_merged": true,
+  "warm_start_merged_at": "2026-11-10 16:34:03",
+  "warm_start_block_sha1": "62debb17ee01",
+  "ActionRequired": "STOP_AND_FINISH",
+  "converged_at_round": 4,
+  "rounds_to_converge": 4,
+  "showcase_ready": true,
+  "winner": {
+    "round": 4,
+    "round_label": "经过 4 轮达标定稿",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "16:9",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_ui__ar_16x9.png"
+    ],
+    "param_validation": {
+      "valid": true,
+      "validation_passed": true,
+      "case_id": "gh1110-ui-sheet",
+      "scale": "medium",
+      "aspect_ratio": "16:9",
+      "ref_aspect_ratio": "16:9",
+      "ref_dimensions": "4780x2688",
+      "output_aspect_ratio": "16:9",
+      "output_dimensions": "1280x720",
+      "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_ui__ar_16x9.png",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_ui__ar_16x9.png"
+      ],
+      "inherited_default_aspect_ratio": false,
+      "inherited_default_pad_image": true,
+      "matched_ref_aspect_ratio": true,
+      "matched_ref_pad_image": true,
+      "matched_output_aspect_ratio": true,
+      "three_step_stage": "step3_judge",
+      "three_step_verified": true,
+      "warnings": [],
+      "continuation_pad": false,
+      "pad_diverged": false
+    },
+    "generated_at": "16:34:03",
+    "image": "assets/skill_20261110_gh/ui_kit/components_r4.png",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 286859,
+      "size_kb": 280.1,
+      "width": 1280,
+      "height": 720,
+      "aspect_ratio": "16:9",
+      "canonical_aspect_ratio": "16:9",
+      "color_entropy": 7.98
+    },
+    "raw_score": 9.5,
+    "score": 9.5,
+    "target_score_threshold": 9.5,
+    "dims": "风格色板9.6/结构9.5/光影材质9.4/套件一致9.5/无瑕疵9.5/管线合规9.6",
+    "dims_parsed": {
+      "style_palette": 9.6,
+      "nine_slice_structure": 9.5,
+      "lighting_material": 9.4,
+      "rgba_pipeline_compliance": 9.6,
+      "state_suite_cohesion": 9.5,
+      "flawlessness": 9.5
+    },
+    "weighted_score": 9.5,
+    "audit_warnings": [
+      "Agent Absolute-5D 已采纳（门槛 9.5）"
+    ],
+    "stagnated": false,
+    "strengths": "默认是奶油金正圆，按下是更深的棕金正圆，禁用是灰花正圆。弹窗只有四角小花，中心是空白奶油，底是一整块深棕。",
+    "defects": "按下钮几乎没有下移，高光仍贴在圆的上缘，主要靠变成更深的棕金来和默认区分。",
+    "next_fix": "已达标，无需继续叠加",
+    "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: ui.FairyGarden.MainMenu\n- 置信度: 0.45（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261110162647729RECIPE] [收敛胜出 8.97分] 整套界面妖精花园主菜单16比9概念总览：顶栏资源、中间花园入口、底栏五个圆按钮 — 五个正圆厚钮落在石径上，汉字花园合成订单好友商店清楚；花拱门\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n  · 确认作为货柜正向锚点：合成宣传图里的道具是圆润厚实的糖釉卡通3D。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n- 必须避开红线:\n  · [CHAT20261110162648770REDLINE] [收敛踩坑红线] 整套界面妖精花园主菜单16比9概念总览：顶栏资源、中间花园入：避免「画面左右站着绿发白衣女子、黄外套女子和背带裤女孩，三人位置和服装回声参考图。底栏是横向胶囊」\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=居中/对称构图 / 半身；色温=避免过饱和 / 冷色调 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [tech-9slice] 九宫格切图: 四角固定、中心可拉伸；中心禁止复杂装饰。\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光 | 对标品类是休闲合成花园界面零件表。16:9横屏，整张落在一块平坦的深棕色实底上，颜色接近#16120E，不透明，不要棋盘格，不要白底，不要房间。垫图只锁圆角厚按钮、暖饱和、柔光渐变、无硬描边、卡通光泽。不抄厨房，不抄人物，不抄餐车。 分区：左半边三枚主按钮横排，状态是默认、按下、禁用。右半边一块九宫格弹窗框，内容区空。主按钮不遮脸，画面里没有人脸。 控件工艺：三枚都是同一只正圆厚钮。默认钮奶油到暖金上下渐变，顶高光一条，底部软投影，无黑描边，圆内一朵花，圆下写默认，字重圆润。按下钮同一只钮向下沉一点，顶高光变窄，投影变短。禁用钮同一只钮褪成灰米色，没有高光。圆下分别写按下、禁用。 弹窗框四角是固定的小花角，四边是素净可拉伸的奶油边，中心是一块干净的暖奶油，没有道具，没有字，没有花纹。顶饰最多一朵小花。 画面汉字只有：默认、按下、禁用。不要拉丁字母。一眼失败：透明底、棋盘格、只画一种按钮、弹窗中心画了花园或餐车、英文、人物。 只改这一处：禁用钮保留同一朵花只是变灰；弹窗只留四角的花；三枚钮一样大。按下保持正圆，不要压成椭圆。按下钮改成更深的金棕色，高光收成细月牙。 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: 9-slice popup shell — large empty stretchable plain content zone, NO gift box or prop illustration inside the content area; corner chrome only plus at most one top badge motif; bottom symbol buttons only, NO readable text | 按下钮改回和默认一样大的正圆，只下移并收窄高光，不要压成椭圆。",
+    "continuation": false,
+    "passed": true,
+    "gate_blocked": false,
+    "image_gate_blocked": false,
+    "anatomy_score": null,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "ui",
+    "judge_source": "agent_absolute_5d",
+    "remote_vlm": {
+      "source": "agent_self_judge",
+      "provider": "",
+      "model": "",
+      "error": "",
+      "active": false,
+      "score_evidence": {},
+      "evidence_missing_dims": [],
+      "review": {
+        "pass_count": 0,
+        "rerated": false,
+        "reason": ""
+      }
+    },
+    "should_continue_next_round": false,
+    "decision": "STOP_TARGET_REACHED",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "lighting",
+        "lesson": "本轮短板偏「lighting」：按下钮几乎没有下移，高光仍贴在圆的上缘，主要靠变成更深的棕金来和默认区分。",
+        "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+        "from_score": "9.5"
+      },
+      {
+        "category": "keep",
+        "lesson": "保留本轮已做对的：默认是奶油金正圆，按下是更深的棕金正圆，禁用是灰花正圆。弹窗只有四角小花，中心是空白奶油，底是一整块深棕。",
+        "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+        "from_score": "9.5"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "16:34:28",
+    "asset_image": "assets/skill_20261110_gh/ui_kit/components_r4.png"
+  },
+  "convergence_badge": "达标定稿 · 最高分第 4 轮",
+  "winner_image": "c:/Users/ZhengLangPC/Desktop/Cursor-Pmem-Art/assets/skill_20261110_gh/ui_kit/components_r4.png",
+  "best_image": "c:/Users/ZhengLangPC/Desktop/Cursor-Pmem-Art/assets/skill_20261110_gh/ui_kit/components_r4.png",
+  "final_image": "assets/skill_20261110_gh/ui_kit/final.png",
+  "settle_pending": false,
+  "process_board": ".memory-art/converge/boards/gh1110-ui-sheet/index.html",
+  "settle_done_at": "2026-11-10 16:35:26 UTC+8",
+  "settle_saved_paths": [
+    ".memory-art\\entries\\ui.FairyGarden.MainMenu\\CHAT20261110163515839RECIPE.md",
+    ".memory-art\\entries\\ui.FairyGarden.MainMenu\\CHAT20261110163516458REDLINE.md",
+    ".memory-art\\_reflections\\20261110_163517_gh1110-ui-sheet.json"
+  ]
+}

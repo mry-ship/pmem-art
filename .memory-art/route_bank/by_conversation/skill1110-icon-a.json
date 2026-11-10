@@ -1,0 +1,14 @@
+{
+  "saved_at": 1794292728.6779144,
+  "text": "1024 桌面启动图标；走图标A。妖精花园应用，单枚蘑菇屋符号，只要 Light 母版。",
+  "banner": "【按 Mode A 走了】",
+  "route_ids": [
+    "icon.a"
+  ],
+  "mode": "skill",
+  "execute_ok": true,
+  "artist_say": "【按 Mode A 走了】\n按桌面启动图标（1024 母版）来做。",
+  "plan_conflict": false,
+  "confidence": "high",
+  "conversation_id": "skill1110-icon-a"
+}

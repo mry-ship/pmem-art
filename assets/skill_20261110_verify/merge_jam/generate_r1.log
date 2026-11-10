@@ -1,0 +1,46 @@
+﻿🧠 [合理性闸门] 已注入合理性修订提示词
+WARM_START_MERGED=1 sha1=f974e043883e source=converge.generate (并以本字段为准；勿用 GenerateImage Hook 有无判断并入)
+🎨 [Step 2A · 仅生图阶段完成] 第 1/4 轮图像已生成: `assets/skill_20261110_verify/merge_jam/sheet_r1.jpg` (720x1280 (9:16, 233.3KB))
+   · 策略建议垫图: （无）（no_prior_plate）
+   · 本轮实际垫图: （无）
+   · 📚 pmem-art 记忆已并入：模块 merge.DewberryJam （recipe 2 · 红线 3；WARM_START_MERGED=1）
+   · 置顶风格指令 Prompt: 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】
+- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)
+- 目标模块: merge.DewberryJam
+- 置信度: 0.45（fast-track 资格: 否）
+- 优先复用定稿方向:
+  · [CHAT20261110194510540RECIPE] [收敛胜出 9.45分] 露莓果酱八档合成梯整表 竖屏4x2 shop_ladder Gossip Harbor光泽 可食欲冰 — 构图与基础色调符合要求
+  · [CHAT20261110172526548RECIPE] [收敛胜出 8.64分] 露莓果酱八档合成梯整表 4×2 竖屏 — 第3格小盏里是没有梗的水滴形果肉瓣。第8格圆盘上是一块奶油蛋
+- 正向保留（要怎样）:
+  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色
+  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶
+  · 确认作为货柜正向锚点：合成宣传图里的道具是圆润厚实的糖釉卡通3D。
+  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。
+- 必须避开红线:
+  · [CHAT20261110180049936REDLINE] [收敛踩坑红线] 露莓果酱八档合成梯整表 4×2 竖屏：避免「第1格是一颗光滑圆球，不是露莓。第2格是两半草莓。第3格是三片带绿皮的西瓜。第5格冰沙杯比」
+  · [CHAT20261110172527259REDLINE] [收敛踩坑红线] 露莓果酱八档合成梯整表 4×2 竖屏：避免「整张图是一屏游戏界面：顶部有 99、58、136、100 和计时数字，底部有英文 Merg」
+  · [CHAT20261110162432641REDLINE] [收敛踩坑红线] 露莓果酱八档同族形变合成梯整表，深灰底两行四列白圆角卡，Go：避免「八格全是绿色洒水壶，不是露莓果酱。没有单颗露莓、双莓串、莓叶盏、小口果酱瓶、丝带果酱瓶、木」
+- 个人口味: 光影=冷光源 / 柔光 / 暖光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 冷色调 / 暖色调
+- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色；白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计
+- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):
+  · [composition-thirds-grid] 构图法则：九宫格三分法与呼吸留白安全区: 将核心视觉焦点布置在九宫格三分线交点（黄金分割点 0.618）上，利用引导线与前景暗角汇聚视线；独立资产四周必须预留 16px~24px 纯透明呼吸安全边距，严禁发冠、武器或特效贴死画布边缘被裁切。
+  · [icon-stroke-grid-spec] 图标工程规范：线宽统一、安全网格与剪影可读性: 成套技能/功能图标必须锁定统一的描边线宽（如全局统一 2px 描边，严禁 1px 与 6px 混杂）、统一圆角半径与 16px~24px 安全内边距网格，确保在 64x64px 极小缩略尺寸下主体几何剪影依然一眼可辨、不与背景杂光粘连。
+原图画风优先：保画风与机位，整理每层的边和短投影| chain_mode=shop_ladder. Family gene: dewberry magenta + leaf green + cream jam tones, fairy dessert shop SKU upgrades not costume swaps. evolve_to/merge_why: L1 whole dewberry; two berries cut into L2 halves on dish; two dishes mash into L3 bowl; two bowls juice into L4 tall glass; two juices blend into L5 taller cup with cream swirl addon; two cups cook into L6 jam jar; two jars become L7 same jar plus wood spoon addon; two jar-spoons plate into L8 smooth double mousse dessert. Gossip Harbor glossy cartoon 3D. Vertical 4x2 overview_sheet. Same 3/4 top-down soft upper-left light. Cream/pale-blue rounded cards NOT pure black. One centered item per cell no text no faces. No collage fragments cutoffs.| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观
+   · 当前未执行任何自评或 VLM 裁判；请先看图再打六维，不要从 9.3 起跳：
+你是独立主美裁判。先只看附图，不要看生成提示词给自己加分。
+档位锚：3=失败 / 5=差 / 7=合格 / 8.5=近优 / 9.5=优（可到 10）
+普通完成图应在 7.0～8.5。9.3+ 只给明显优于合格线的画面。不要因为后面还要迭代就从 9.3 起跳，也不要把六维打成一串几乎相同的 9.3+。只写各维分数。正式分由程序按加权调和平均计算，门槛维低于线时改取该维。像素、Q版、平涂、水彩、剪纸、等轴按该媒介自己的尺子打偏低的那一维，断肢和塌缩仍按硬伤。
+六维（各 0–10，一位小数）：构图 composition / 光影 lighting_color / 透视解剖 perspective_anatomy / 质感 texture_detail / 风格规格 spec_style / 无瑕疵 flawlessness。无瑕疵与另外五维一样盲评，不另写扣分清单。看不清就保守给分并写进缺陷。
+六维有效权重：构图=19% 光影=11% 透视=11% 质感=19% 风格=15% 无瑕度=25%。 自动临界复评：先完成一遍六维；若按上述权重计算的调和分与停机线相差 ≤0.25，或透视解剖分与硬门槛 7.5 相差 ≤0.25，则重新只看图像作第二遍六维，不参考第一遍分数；最终 dims 各维取两遍均值（四舍五入到一位小数）。无需人工确认。
+合同只用来写 defects（画没画到），禁止因为 Prompt 写过就加分：merge overview_sheet：露莓果酱八档合成梯整表验证浅色卡同机位中段加件禁拼贴；按 同域合成梯：先定链型与关系，再按交付出图 走了；4x2 9:16 shop_ladder merge.DewberryJam
+medium 档：姿态可动时仍须写清相对参考多出来的姿态/机位变化，禁空话。
+停机门槛 ≥9.50 是停机线，不是「合格=9.5」。本轮 1/4；满轮取最高分（best-of-N）。
+必须输出：
+1) dims 一行：`构图x.x/光影x.x/透视x.x/质感x.x/风格x.x/无瑕疵x.x`
+2) defects：至少一条可核验画面问题（禁「无明显硬伤」套话）。必须写本张图上看得见的部位、颜色、边缘或空间关系，禁止把上一轮 defects 原句贴过来。
+3) strengths：1–2 条，只写这张图已经有的，并指出可见的像素依据；不写提示词里的目标。六维分数必须能从这些可见证据解释，不能用任务描述代替画面证据。
+4) next_fix：下一轮可执行叠加修正（已达标可写「已达标」）
+recompose：defects 第一句必须回答仰还是俯、人占画面大约多少、主光是窗火还是灯笼。提示词里的「重构机位」不算成图已经换了机位。
+high：必须写明相对原图多出来的那一处光影或叙事；写不出来就把构图当贴原打。
+
+   · 然后：`pyw -3 -u pmem_art.py converge judge --id jam-verify-light-1110 --round 1 --image assets/skill_20261110_verify/merge_jam/sheet_r1.jpg --dims ...`

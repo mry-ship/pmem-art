@@ -1,0 +1,272 @@
+{
+  "banner": "【按 Mode A 走了】",
+  "confidence": "high",
+  "plan": {
+    "mode": "skill",
+    "would_execute": true,
+    "execute": false,
+    "reason": "icon",
+    "announce": "按 Mode A 走了",
+    "serial": false,
+    "parallel": false,
+    "route_ids": [
+      "icon.a"
+    ],
+    "steps": [
+      {
+        "skill": "pmem-icon",
+        "section": "Mode A",
+        "heading": "## 二、Mode A：App Icon 1024×1024 母版专项（iOS App Store / Android Adaptive 桌面启动图标）",
+        "file": ".cursor/skills/pmem-icon/SKILL.md",
+        "deliverable": "1024 桌面启动图标；走图标A。妖精花园应用，单枚蘑菇屋符号，只要 Light 母版。",
+        "pad": [],
+        "skip_pad": [],
+        "locks": "桌面图标、1024 母版",
+        "done": "批量预览齐；关键枚默认不开；翻车才开最多4轮闭环；A 默认只交 Light",
+        "next_output": "这一步的成图或文字结论",
+        "note": "banner：B/C 只批量；关键枚默认禁；A 未点名勿假齐套三态"
+      }
+    ]
+  },
+  "plan_canonical": {
+    "mode": "skill",
+    "would_execute": true,
+    "execute": false,
+    "reason": "icon",
+    "announce": "按 Mode A 走了",
+    "serial": false,
+    "parallel": false,
+    "route_ids": [
+      "icon.a"
+    ],
+    "steps": [
+      {
+        "skill": "pmem-icon",
+        "section": "Mode A",
+        "heading": "## 二、Mode A：App Icon 1024×1024 母版专项（iOS App Store / Android Adaptive 桌面启动图标）",
+        "file": ".cursor/skills/pmem-icon/SKILL.md",
+        "deliverable": "1024 桌面启动图标；走图标A",
+        "pad": [],
+        "skip_pad": [],
+        "locks": "桌面图标、1024 母版",
+        "done": "批量预览齐；关键枚默认不开；翻车才开最多4轮闭环；A 默认只交 Light",
+        "next_output": "这一步的成图或文字结论",
+        "note": "banner：B/C 只批量；关键枚默认禁；A 未点名勿假齐套三态"
+      }
+    ]
+  },
+  "canonical": "1024 桌面启动图标；走图标A",
+  "canonical_source": "agent",
+  "local_canonical": {
+    "canonical": "1024 桌面启动图标母版；走图标A。原话要点：1024 桌面启动图标；走图标A。妖精花园应用，单枚蘑菇屋符号，只要 Light",
+    "guess_route_id": "icon.a",
+    "template": "1024 桌面启动图标母版；走图标A",
+    "template_key": "icon.a",
+    "signals": {
+      "has_ref": false,
+      "new_subject": false,
+      "keep_subject": false,
+      "variant": false,
+      "multi": false,
+      "two_state": false,
+      "lens": false,
+      "ui": false,
+      "icon_a": true,
+      "icon_b": false,
+      "icon_c": false,
+      "merge": false,
+      "merge_overview": false,
+      "merge_per_cell": false,
+      "key": false,
+      "style": false,
+      "style_then_verify": false,
+      "critique": false,
+      "atlas": false,
+      "coach": false,
+      "prompt_only": false,
+      "hard": false,
+      "image_count": 0,
+      "roles": []
+    },
+    "source": "local_heuristic"
+  },
+  "plan_conflict": false,
+  "canonical_warnings": [],
+  "neighbor_conflict": false,
+  "multi_branch_ask": false,
+  "neighbors": [
+    {
+      "score": 1.8783,
+      "text": "做一枚 1024 桌面图标，第0版",
+      "mode": "skill",
+      "route_ids": [
+        "icon.a"
+      ],
+      "bucket": "icon_a",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 1.8783,
+      "text": "做一枚 1024 桌面图标，第10版",
+      "mode": "skill",
+      "route_ids": [
+        "icon.a"
+      ],
+      "bucket": "icon_a",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 1.8783,
+      "text": "做一枚 1024 桌面图标，第12版",
+      "mode": "skill",
+      "route_ids": [
+        "icon.a"
+      ],
+      "bucket": "icon_a",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 1.8783,
+      "text": "做一枚 1024 桌面图标，第14版",
+      "mode": "skill",
+      "route_ids": [
+        "icon.a"
+      ],
+      "bucket": "icon_a",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 1.8783,
+      "text": "做一枚 1024 桌面图标，第16版",
+      "mode": "skill",
+      "route_ids": [
+        "icon.a"
+      ],
+      "bucket": "icon_a",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 1.8783,
+      "text": "做一枚 1024 桌面图标，第18版",
+      "mode": "skill",
+      "route_ids": [
+        "icon.a"
+      ],
+      "bucket": "icon_a",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 1.8783,
+      "text": "做一枚 1024 桌面图标，第20版",
+      "mode": "skill",
+      "route_ids": [
+        "icon.a"
+      ],
+      "bucket": "icon_a",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 1.8783,
+      "text": "做一枚 1024 桌面图标，第22版",
+      "mode": "skill",
+      "route_ids": [
+        "icon.a"
+      ],
+      "bucket": "icon_a",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    }
+  ],
+  "confusion": [
+    {
+      "id": "icon_abc",
+      "when": "图标 A/B/C 同时命中或只说「图标」",
+      "tip": "停下来只问这一处，不替玩家挑。"
+    }
+  ],
+  "announce": "按 Mode A 走了",
+  "would_execute": true,
+  "execute_ok": true,
+  "mode": "skill",
+  "route_ids": [
+    "icon.a"
+  ],
+  "top_k": 8,
+  "bank_source": "advise",
+  "match_kind": "lexical_ngram+colloquial_expand+canonical",
+  "artist_ask": "",
+  "artist_detail": "按桌面启动图标（1024 母版）来做。",
+  "vague_reason": "",
+  "artist_say": "【按 Mode A 走了】\n按桌面启动图标（1024 母版）来做。",
+  "llm_hints": {
+    "neighbors": [
+      {
+        "text": "做一枚 1024 桌面图标，第0版",
+        "mode": "skill",
+        "route_ids": [
+          "icon.a"
+        ],
+        "score": 1.8783
+      },
+      {
+        "text": "做一枚 1024 桌面图标，第10版",
+        "mode": "skill",
+        "route_ids": [
+          "icon.a"
+        ],
+        "score": 1.8783
+      },
+      {
+        "text": "做一枚 1024 桌面图标，第12版",
+        "mode": "skill",
+        "route_ids": [
+          "icon.a"
+        ],
+        "score": 1.8783
+      },
+      {
+        "text": "做一枚 1024 桌面图标，第14版",
+        "mode": "skill",
+        "route_ids": [
+          "icon.a"
+        ],
+        "score": 1.8783
+      },
+      {
+        "text": "做一枚 1024 桌面图标，第16版",
+        "mode": "skill",
+        "route_ids": [
+          "icon.a"
+        ],
+        "score": 1.8783
+      }
+    ],
+    "confusion": [
+      {
+        "id": "icon_abc",
+        "when": "图标 A/B/C 同时命中或只说「图标」",
+        "tip": "停下来只问这一处，不替玩家挑。"
+      }
+    ],
+    "canonical": "1024 桌面启动图标；走图标A",
+    "canonical_source": "agent",
+    "plan_conflict": false,
+    "artist_say": "【按 Mode A 走了】\n按桌面启动图标（1024 母版）来做。",
+    "rule": "对美术只贴 artist_say（标签+一句人话），禁止刷 confidence/json。先写标准路由句再 route --canonical；execute_ok 才开画；plan_conflict / confidence=ask|low / vague 先问人。"
+  }
+}

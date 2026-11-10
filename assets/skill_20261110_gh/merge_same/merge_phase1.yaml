@@ -1,0 +1,26 @@
+# 青瓷园艺喷壶同模加装 · same_object L1–L8（overview_sheet 2×4）
+# 垫图只锁光泽，不锁棋盘。过程类型：同模加装。提梁与长壶嘴每档都在。
+version: garden-can-same-object-gh-20261110-v1
+pipeline: art-merge-two-phase
+delivery: overview_sheet
+
+tracks:
+  garden_can:
+    module: merge.GardenCan
+    chain_mode: same_object
+    levels: 8
+    grid_rows: 2
+    grid_cols: 4
+    base_body: 青瓷园艺喷壶
+    surface: 光泽卡通3D、圆润厚实、无硬描边、暖饱和、柔光渐变；青瓷釉面发亮；2×4白圆角卡深灰底；每格一件居中无等级字；道具无脸；每档仍是同一把带提梁和长壶嘴的青瓷园艺喷壶，禁止画成圆茶壶；零件累计可见
+    commercial_ref: "过程对标同模加装药瓶：空瓶→塞→环→托（母体不换，MERGE_MULTI_LENS §8.B）。完成度对标 Merge Mansion 货柜：低档已是完整素件，铜与节庆犒赏只在后段。园艺工具手套→铲→剪是换物种，不拿来当本链档序。本链档序跟玩家点名的八个零件，不自编假竞品名。"
+    process_type: same_object_cumulative_fit
+    rows:
+      - { level: 1, name: 素身青瓷园艺喷壶, silhouette: 青瓷园艺喷壶拱形提梁加一根长壶嘴，拉长椭圆壶腹，没有圆茶壶肚, scale_delta: 基档, scale_pct: 0.58, parts_add: "—" }
+      - { level: 2, name: 嘴环青瓷园艺喷壶, silhouette: 青瓷园艺喷壶仍有拱形提梁和长壶嘴，壶嘴中段多一枚粗环, scale_delta: "+小", scale_pct: 0.61, parts_add: 壶嘴环 }
+      - { level: 3, name: 叶贴青瓷园艺喷壶, silhouette: 青瓷园艺喷壶保留提梁长壶嘴与壶嘴环，腹侧再贴一大片叶子, scale_delta: "+小", scale_pct: 0.64, parts_add: 壶嘴环与叶贴 }
+      - { level: 4, name: 领结青瓷园艺喷壶, silhouette: 青瓷园艺喷壶保留提梁壶嘴环与叶贴，颈间再系一枚布领结, scale_delta: "+中", scale_pct: 0.67, parts_add: 壶嘴环叶贴与领结 }
+      - { level: 5, name: 双嘴青瓷园艺喷壶, silhouette: 青瓷园艺喷壶保留提梁叶贴领结与带环的第一壶嘴，再加第二根壶嘴, scale_delta: "+中", scale_pct: 0.70, parts_add: 壶嘴环叶贴领结与第二壶嘴 }
+      - { level: 6, name: 铜泵青瓷园艺喷壶, silhouette: 青瓷园艺喷壶保留提梁双嘴环叶贴领结，肩上再装一台厚铜泵, scale_delta: "+中", scale_pct: 0.73, parts_add: 壶嘴环叶贴领结双嘴与铜泵 }
+      - { level: 7, name: 淋头青瓷园艺喷壶, silhouette: 青瓷园艺喷壶保留提梁双嘴环叶贴领结与铜泵，主壶嘴末端再加圆形多孔玫瑰淋头, scale_delta: "+大", scale_pct: 0.76, parts_add: 壶嘴环叶贴领结双嘴铜泵与玫瑰淋头 }
+      - { level: 8, name: 雕花青瓷园艺喷壶, silhouette: 青瓷园艺喷壶保留提梁双嘴环叶贴领结铜泵与玫瑰淋头，壶身再加节庆浮雕雕花, scale_delta: "+大", scale_pct: 0.80, parts_add: 壶嘴环叶贴领结双嘴铜泵玫瑰淋头与节庆雕花 }

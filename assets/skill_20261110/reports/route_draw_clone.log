@@ -1,0 +1,288 @@
+{
+  "banner": "【按 克隆 走了】",
+  "confidence": "high",
+  "plan": {
+    "mode": "skill",
+    "would_execute": true,
+    "execute": false,
+    "reason": "clone",
+    "announce": "按 克隆 走了",
+    "serial": false,
+    "parallel": false,
+    "route_ids": [
+      "draw.clone"
+    ],
+    "steps": [
+      {
+        "skill": "pmem-draw",
+        "section": "克隆",
+        "heading": "## 合同 · 克隆",
+        "file": ".cursor/skills/pmem-draw/SKILL.md",
+        "deliverable": "参考这张的画风，别画原来的人，换成窗边写信的小妖精。有参考图；换新题材；锁画风；走克隆。窗边写信的小妖精，不要沿用参考里的主体。",
+        "pad": [
+          "assets/skill_20261109/_refs/ref_style_fairy_garden.png"
+        ],
+        "skip_pad": [],
+        "locks": "身份、画风和机位按这一节；普通图锁机位",
+        "done": "六维调和平均 ≥ 9.50，最多 4 轮",
+        "next_output": "这一步的成图或文字结论",
+        "note": ""
+      }
+    ]
+  },
+  "plan_canonical": {
+    "mode": "skill",
+    "would_execute": true,
+    "execute": false,
+    "reason": "clone",
+    "announce": "按 克隆 走了",
+    "serial": false,
+    "parallel": false,
+    "route_ids": [
+      "draw.clone"
+    ],
+    "steps": [
+      {
+        "skill": "pmem-draw",
+        "section": "克隆",
+        "heading": "## 合同 · 克隆",
+        "file": ".cursor/skills/pmem-draw/SKILL.md",
+        "deliverable": "有参考图；换新题材；锁画风；走克隆",
+        "pad": [
+          "assets/skill_20261109/_refs/ref_style_fairy_garden.png"
+        ],
+        "skip_pad": [],
+        "locks": "身份、画风和机位按这一节；普通图锁机位",
+        "done": "六维调和平均 ≥ 9.50，最多 4 轮",
+        "next_output": "这一步的成图或文字结论",
+        "note": ""
+      }
+    ]
+  },
+  "canonical": "有参考图；换新题材；锁画风；走克隆",
+  "canonical_source": "agent",
+  "local_canonical": {
+    "canonical": "有参考图；换新题材；锁画风；走克隆。原话要点：参考这张的画风，别画原来的人，换成窗边写信的小妖精。有参考图；换新题材；锁画风；",
+    "guess_route_id": "draw.clone",
+    "template": "有参考图；换新题材；锁画风；走克隆",
+    "template_key": "draw.clone",
+    "signals": {
+      "has_ref": true,
+      "new_subject": true,
+      "keep_subject": false,
+      "variant": false,
+      "multi": false,
+      "two_state": false,
+      "lens": false,
+      "ui": false,
+      "icon_a": false,
+      "icon_b": false,
+      "icon_c": false,
+      "merge": false,
+      "merge_overview": false,
+      "merge_per_cell": false,
+      "key": false,
+      "style": false,
+      "style_then_verify": false,
+      "critique": false,
+      "atlas": false,
+      "coach": false,
+      "prompt_only": false,
+      "hard": false,
+      "image_count": 1,
+      "roles": [
+        "style"
+      ]
+    },
+    "source": "local_heuristic"
+  },
+  "plan_conflict": false,
+  "canonical_warnings": [],
+  "neighbor_conflict": false,
+  "multi_branch_ask": false,
+  "neighbors": [
+    {
+      "score": 1.9596,
+      "text": "参考这张的画风，别画原来的人，换成渡船",
+      "mode": "skill",
+      "route_ids": [
+        "draw.clone"
+      ],
+      "bucket": "clone",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 1.9596,
+      "text": "参考这张的画风，别画原来的人，换成邮局",
+      "mode": "skill",
+      "route_ids": [
+        "draw.clone"
+      ],
+      "bucket": "clone",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 1.9596,
+      "text": "参考这张的画风，别画原来的人，换成钟楼",
+      "mode": "skill",
+      "route_ids": [
+        "draw.clone"
+      ],
+      "bucket": "clone",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 1.9596,
+      "text": "参考这张的画风，别画原来的人，换成陶罐",
+      "mode": "skill",
+      "route_ids": [
+        "draw.clone"
+      ],
+      "bucket": "clone",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 1.9596,
+      "text": "参考这张的画风，别画原来的人，换成雪狐",
+      "mode": "skill",
+      "route_ids": [
+        "draw.clone"
+      ],
+      "bucket": "clone",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 1.9223,
+      "text": "参考这张的画风，别画原来的人，换成一只猫",
+      "mode": "skill",
+      "route_ids": [
+        "draw.clone"
+      ],
+      "bucket": "clone",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 1.9223,
+      "text": "参考这张的画风，别画原来的人，换成一盏灯",
+      "mode": "skill",
+      "route_ids": [
+        "draw.clone"
+      ],
+      "bucket": "clone",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 1.857,
+      "text": "参考这张的画风，别画原来的人，换成修车的男孩",
+      "mode": "skill",
+      "route_ids": [
+        "draw.clone"
+      ],
+      "bucket": "clone",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    }
+  ],
+  "confusion": [
+    {
+      "id": "ref_no_new_subject",
+      "when": "有参考但没说新题材、新物件、新角色",
+      "tip": "普通图，不进克隆。"
+    },
+    {
+      "id": "clone_needs_new",
+      "when": "有参考并且要换新题材",
+      "tip": "锁画风，走克隆。"
+    }
+  ],
+  "announce": "按 克隆 走了",
+  "would_execute": true,
+  "execute_ok": true,
+  "mode": "skill",
+  "route_ids": [
+    "draw.clone"
+  ],
+  "top_k": 8,
+  "bank_source": "advise",
+  "match_kind": "lexical_ngram+colloquial_expand+canonical",
+  "artist_ask": "",
+  "artist_detail": "按克隆：锁参考画风，换成新题材。",
+  "vague_reason": "",
+  "artist_say": "【按 克隆 走了】\n按克隆：锁参考画风，换成新题材。",
+  "llm_hints": {
+    "neighbors": [
+      {
+        "text": "参考这张的画风，别画原来的人，换成渡船",
+        "mode": "skill",
+        "route_ids": [
+          "draw.clone"
+        ],
+        "score": 1.9596
+      },
+      {
+        "text": "参考这张的画风，别画原来的人，换成邮局",
+        "mode": "skill",
+        "route_ids": [
+          "draw.clone"
+        ],
+        "score": 1.9596
+      },
+      {
+        "text": "参考这张的画风，别画原来的人，换成钟楼",
+        "mode": "skill",
+        "route_ids": [
+          "draw.clone"
+        ],
+        "score": 1.9596
+      },
+      {
+        "text": "参考这张的画风，别画原来的人，换成陶罐",
+        "mode": "skill",
+        "route_ids": [
+          "draw.clone"
+        ],
+        "score": 1.9596
+      },
+      {
+        "text": "参考这张的画风，别画原来的人，换成雪狐",
+        "mode": "skill",
+        "route_ids": [
+          "draw.clone"
+        ],
+        "score": 1.9596
+      }
+    ],
+    "confusion": [
+      {
+        "id": "ref_no_new_subject",
+        "when": "有参考但没说新题材、新物件、新角色",
+        "tip": "普通图，不进克隆。"
+      },
+      {
+        "id": "clone_needs_new",
+        "when": "有参考并且要换新题材",
+        "tip": "锁画风，走克隆。"
+      }
+    ],
+    "canonical": "有参考图；换新题材；锁画风；走克隆",
+    "canonical_source": "agent",
+    "plan_conflict": false,
+    "artist_say": "【按 克隆 走了】\n按克隆：锁参考画风，换成新题材。",
+    "rule": "对美术只贴 artist_say（标签+一句人话），禁止刷 confidence/json。先写标准路由句再 route --canonical；execute_ok 才开画；plan_conflict / confidence=ask|low / vague 先问人。"
+  }
+}

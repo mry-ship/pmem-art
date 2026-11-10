@@ -1,0 +1,1032 @@
+{
+  "session_id": "gh-water-portrait",
+  "started_at": "2026-11-10 17:12:34 UTC+8",
+  "goal": "园艺浇水八档合成梯整表 4×2 竖屏青瓷完整货换代",
+  "module": "merge.GardenWater",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "merge_overview_checklist",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "medium",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "medium",
+    "label": "中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.5)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 1,
+    "target_score_threshold": 9.5,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.15,
+      "perspective_anatomy": 0.15,
+      "texture_detail": 0.15,
+      "spec_style": 0.15,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "viewpoint_frame",
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图，只在提示词上补还没过的那一处（提示词改动仍 ≤40%）",
+    "max_prompt_delta_ratio": 0.4,
+    "allow_recompose": false,
+    "allow_viewpoint_change": false,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "viewpoint_angle (不改机位与镜头视角)",
+      "element_count (不增删主体元素清单)",
+      "no_full_recompose (不做整体 recompose / 换景别故事)",
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)"
+    ],
+    "min_round_leap": 0.15,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光",
+    "medium_family": "generic",
+    "best_direction_hint": "最优方向：光影·空气·介质；可小幅姿态/局部布局",
+    "goal": "园艺浇水八档合成梯整表 4×2 竖屏青瓷完整货换代",
+    "module": "merge.GardenWater",
+    "ref_image": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge.jpg",
+    "ref_analysis": "光泽卡通 3D，圆润厚实，无硬描边，暖饱和，柔光，竖屏，每格一件完整工具。浅色圆角格接近棋盘浅蓝。"
+  },
+  "medium_family": "generic",
+  "contract": "",
+  "target_score_threshold": 9.5,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png",
+  "ref_analysis": "光泽卡通 3D，圆润厚实，无硬描边，暖饱和，柔光，竖屏，每格一件完整工具。浅色圆角格接近棋盘浅蓝。",
+  "default_aspect_ratio": "9:16",
+  "default_reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png"
+  ],
+  "aspect_ratio": "9:16",
+  "reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png"
+  ],
+  "ref_physical_traits": {
+    "exists": true,
+    "size_bytes": 3474271,
+    "size_kb": 3392.8,
+    "width": 1512,
+    "height": 2688,
+    "aspect_ratio": "9:16",
+    "canonical_aspect_ratio": "9:16",
+    "color_entropy": 7.99
+  },
+  "param_validation": {
+    "valid": true,
+    "validation_passed": true,
+    "case_id": "gh-water-portrait",
+    "scale": "medium",
+    "aspect_ratio": "9:16",
+    "ref_aspect_ratio": "9:16",
+    "ref_dimensions": "1512x2688",
+    "output_aspect_ratio": "",
+    "output_dimensions": "",
+    "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png"
+    ],
+    "inherited_default_aspect_ratio": false,
+    "inherited_default_pad_image": false,
+    "matched_ref_aspect_ratio": true,
+    "matched_ref_pad_image": true,
+    "matched_output_aspect_ratio": true,
+    "three_step_stage": "step1_start",
+    "three_step_verified": false,
+    "warnings": [
+      "参考图已加边为同一张垫图 'gh_merge__ar_9x16.png'，会话和生图都用这一张，不要再垫原图。"
+    ]
+  },
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.5,
+  "accept_threshold": 9.5,
+  "max_rounds": 4,
+  "ready_to_finish": true,
+  "status": "finished",
+  "owner_conversation_id": "gh-water-portrait",
+  "route_ids": [
+    "merge.ladder"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "gh-water-portrait",
+        "scale": "medium",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "1512x2688",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png"
+        ],
+        "inherited_default_aspect_ratio": false,
+        "inherited_default_pad_image": false,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [
+          "参考图已加边为同一张垫图 'gh_merge__ar_9x16.png'，会话和生图都用这一张，不要再垫原图。"
+        ],
+        "continuation_pad": false,
+        "pad_diverged": true
+      },
+      "generated_at": "17:16:50",
+      "image": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh_portrait\\merge_water\\sheet_r1.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 185731,
+        "size_kb": 181.4,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.17
+      },
+      "raw_score": 8.6,
+      "score": 8.6,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.2/光影9.0/透视9.0/质感8.8/风格9.2/无瑕疵8.0",
+      "dims_parsed": {
+        "composition": 8.2,
+        "lighting_color": 9.0,
+        "perspective_anatomy": 9.0,
+        "texture_detail": 8.8,
+        "spec_style": 9.2,
+        "flawlessness": 8.0
+      },
+      "weighted_score": 8.6,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "邻档体量几乎一样大：第 1 格高 0.82，第 2 格高 0.82（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 3 格高 1.00，第 4 格高 1.00（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 4 格高 1.00，第 5 格高 1.00（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 5 格高 1.00，第 6 格高 1.00（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 6 格高 1.00，第 7 格高 0.79（差 -0.21 < 0.04）",
+        "邻档体量几乎一样大：第 7 格高 0.79，第 8 格高 0.79（差 0.00 < 0.04）",
+        "点名锁未单独验收：青瓷色；八档依次是小喷壶；长嘴喷壶；莲蓬头喷壶；手持泵壶；背负喷雾器；水管卷盘；带轮水箱；温室浇水套装"
+      ],
+      "stagnated": false,
+      "strengths": "四行两列浅天蓝圆角格，八件青瓷器具已分成喷壶、泵壶、卷盘和水箱，无文字无脸。",
+      "defects": "阅读顺序主体框高没有递增。圆角格板被量成主体，八格高约0.82、0.82、1.00、1.00、1.00、1.00、0.79、0.79，末档不是最大。青瓷器具本身约0.63、0.58、0.66、0.72、0.94、0.87、0.66、0.71，第五档最高。莲蓬头喷壶顶上多了一截泵杆。；邻档体量几乎一样大：第 1 格高 0.82，第 2 格高 0.82（差 0.00 < 0.04）；邻档体量几乎一样大：第 3 格高 1.00，第 4 格高 1.00（差 0.00 < 0.04）；邻档体量几乎一样大：第 4 格高 1.00，第 5 格高 1.00（差 0.00 < 0.04）；邻档体量几乎一样大：第 5 格高 1.00，第 6 格高 1.00（差 0.00 < 0.04）；邻档体量几乎一样大：第 6 格高 1.00，第 7 格高 0.79（差 -0.21 < 0.04）；邻档体量几乎一样大：第 7 格高 0.79，第 8 格高 0.79（差 0.00 < 0.04）；点名锁未单独验收：青瓷色；八档依次是小喷壶；长嘴喷壶；莲蓬头喷壶；手持泵壶；背负喷雾器；水管卷盘；带轮水箱；温室浇水套装",
+      "next_fix": "格心与格缝改成几乎同一浅天蓝，圆角只浅一点点，让量到的是青瓷器具。阅读顺序主体框高大约0.48、0.55、0.62、0.69、0.76、0.83、0.89、0.94，末档最大且留边。；邻档主体框高必须明显递增，末档最大，禁止邻档一样大",
+      "prompt": "点名锁每轮都要单独留住，不许整张漂掉：青瓷色；八档依次是小喷壶；长嘴喷壶；莲蓬头喷壶；手持泵壶；背负喷雾器；水管卷盘；带轮水箱；温室浇水套装；无文字无脸 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.GardenWater\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n  · 确认作为货柜正向锚点：合成宣传图里的道具是圆润厚实的糖釉卡通3D。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=居中/对称构图 / 半身；色温=避免过饱和 / 冷色调 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色；白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光 | 竖屏整表，四行两列，阅读顺序左上到右下依次是八件不同的青瓷园艺浇水器具。每格只放一件、居中，整件落在浅色圆角格内并留边。链型是 shop_ladder 同族形变：家族是园艺浇水店域和青瓷色相，升级靠整件换成下一类器具，合成理由是两件同级合成后变成下一件完整货。不要在同一把壶上加环、加叶或加花纹。 左上是矮圆肚小喷壶，短弯嘴，小提梁，主体框高大约占格 0.48。右上是细长长嘴喷壶，长直嘴前伸，后侧把手，框高大约 0.55。第二行左是莲蓬头喷壶，朝前的宽圆莲蓬喷头，框高大约 0.62。第二行右是手持泵壶，立式泵筒加侧向扳机喷杆，框高大约 0.69。第三行左是背负喷雾器，一件货含立着的背罐、肩带和软管喷枪，框高大约 0.76。第三行右是水管卷盘，圆盘、侧面摇把和露出的喷嘴，框高大约 0.83。第四行左是带轮水箱，卧式水箱压在两个圆轮上，框高大约 0.89。第四行右是一件温室浇水套装，水箱、卷管和莲蓬喷杆收在同一辆小车上，框高大约 0.94，全表最大，仍留在格内。 光泽卡通 3D，圆润厚实，无硬描边，暖饱和，柔光渐变，青瓷色干净发亮。整幅是不透明浅天蓝实底，圆角格和格缝都接近同一浅蓝，只留很淡的圆角分格，不要深灰底，不要白卡。无脸。画面里不出现任何文字、数字、字母。只留这八件浇水货，元素预算到此为止。一眼失败：八格还是同一把壶，或邻档几乎一样大，或出现人物、手、食物、徽记。 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.0,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：阅读顺序主体框高没有递增。圆角格板被量成主体，八格高约0.82、0.82、1.00、1.00、1.00、1.00、0.79、0.79，末档不是最大。青瓷器具本身",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.6"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：四行两列浅天蓝圆角格，八件青瓷器具已分成喷壶、泵壶、卷盘和水箱，无文字无脸。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.6"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "17:17:08"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "gh-water-portrait",
+        "scale": "medium",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "1512x2688",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png"
+        ],
+        "inherited_default_aspect_ratio": false,
+        "inherited_default_pad_image": false,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [
+          "参考图已加边为同一张垫图 'gh_merge__ar_9x16.png'，会话和生图都用这一张，不要再垫原图。"
+        ],
+        "continuation_pad": false,
+        "pad_diverged": true
+      },
+      "generated_at": "17:21:02",
+      "image": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh_portrait\\merge_water\\sheet_r2.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 185257,
+        "size_kb": 180.9,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.17
+      },
+      "raw_score": 8.25,
+      "score": 8.25,
+      "target_score_threshold": 9.5,
+      "dims": "构图7.6/光影9.0/透视9.0/质感8.4/风格8.6/无瑕疵7.6",
+      "dims_parsed": {
+        "composition": 7.6,
+        "lighting_color": 9.0,
+        "perspective_anatomy": 9.0,
+        "texture_detail": 8.4,
+        "spec_style": 8.6,
+        "flawlessness": 7.6
+      },
+      "weighted_score": 8.25,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +-0.35 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "邻档体量几乎一样大：第 1 格高 0.93，第 2 格高 0.93（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 3 格高 0.99，第 4 格高 0.99（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 4 格高 0.99，第 5 格高 0.99（差 0.01 < 0.04）",
+        "邻档体量几乎一样大：第 5 格高 0.99，第 6 格高 0.99（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 6 格高 0.99，第 7 格高 0.91（差 -0.08 < 0.04）",
+        "邻档体量几乎一样大：第 7 格高 0.91，第 8 格高 0.91（差 0.00 < 0.04）"
+      ],
+      "stagnated": true,
+      "strengths": "看得见青瓷色，八档依次是小喷壶、长嘴喷壶、莲蓬头喷壶、手持泵壶、背负喷雾器、水管卷盘、带轮水箱、温室浇水套装，无文字无脸。",
+      "defects": "圆角格仍然深于格缝，被量成主体，末档不是最大。青瓷器具框高约0.49、0.61、0.58、0.75、0.70、0.85、0.63、0.82，第三档低于第二档，第七档低于第六档。每件釉面都有叶子浮雕。左上小喷壶出口做成一圈小孔。；邻档体量几乎一样大：第 1 格高 0.93，第 2 格高 0.93（差 0.00 < 0.04）；邻档体量几乎一样大：第 3 格高 0.99，第 4 格高 0.99（差 0.00 < 0.04）；邻档体量几乎一样大：第 4 格高 0.99，第 5 格高 0.99（差 0.01 < 0.04）；邻档体量几乎一样大：第 5 格高 0.99，第 6 格高 0.99（差 0.00 < 0.04）；邻档体量几乎一样大：第 6 格高 0.99，第 7 格高 0.91（差 -0.08 < 0.04）；邻档体量几乎一样大：第 7 格高 0.91，第 8 格高 0.91（差 0.00 < 0.04）",
+      "next_fix": "去掉全部叶子浮雕，釉面光滑；格缝与圆角格改成同一块极浅冰蓝，邻档框高大约0.48、0.55、0.62、0.69、0.76、0.83、0.89、0.94递增，末档最大",
+      "prompt": "点名锁每轮都要单独留住，不许整张漂掉：青瓷色；八档依次是小喷壶；长嘴喷壶；莲蓬头喷壶；手持泵壶；背负喷雾器；水管卷盘；带轮水箱；温室浇水套装；无文字无脸 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.GardenWater\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n  · 确认作为货柜正向锚点：合成宣传图里的道具是圆润厚实的糖釉卡通3D。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=居中/对称构图 / 半身；色温=避免过饱和 / 冷色调 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色；白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光 | 竖屏整表，四行两列，阅读顺序左上到右下依次是八件不同的青瓷园艺浇水器具。每格只放一件、居中，整件落在浅色圆角格内并留边。链型是 shop_ladder 同族形变：家族是园艺浇水店域和青瓷色相，升级靠整件换成下一类器具，合成理由是两件同级合成后变成下一件完整货。不要在同一把壶上加环、加叶或加花纹。 左上是矮圆肚小喷壶，短弯嘴，小提梁，主体框高大约占格 0.48。右上是细长长嘴喷壶，长直嘴前伸，后侧把手，框高大约 0.55。第二行左是莲蓬头喷壶，朝前的宽圆莲蓬喷头，框高大约 0.62。第二行右是手持泵壶，立式泵筒加侧向扳机喷杆，框高大约 0.69。第三行左是背负喷雾器，一件货含立着的背罐、肩带和软管喷枪，框高大约 0.76。第三行右是水管卷盘，圆盘、侧面摇把和露出的喷嘴，框高大约 0.83。第四行左是带轮水箱，卧式水箱压在两个圆轮上，框高大约 0.89。第四行右是一件温室浇水套装，水箱、卷管和莲蓬喷杆收在同一辆小车上，框高大约 0.94，全表最大，仍留在格内。 光泽卡通 3D，圆润厚实，无硬描边，暖饱和，柔光渐变，青瓷色干净发亮。整幅是不透明浅天蓝实底，圆角格和格缝都接近同一浅蓝，只留很淡的圆角分格，不要深灰底，不要白卡。无脸。画面里不出现任何文字、数字、字母。只留这八件浇水货，元素预算到此为止。一眼失败：八格还是同一把壶，或邻档几乎一样大，或出现人物、手、食物、徽记。 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | 格心与格缝改成几乎同一浅天蓝，圆角只浅一点点，让量到的是青瓷器具。阅读顺序主体框高大约0.48、0.55、0.62、0.69、0.76、0.83、0.89、0.94，末档最大且留边。；邻档主体框高必须明显递增，末档最大，禁止邻档一样大 | MUST_FIX (≤2): 格心与格缝改成几乎同一浅天蓝，圆角只浅一点点，让量到的是青瓷器具；阅读顺序主体框高大约0.48、0.55、0.62、0.69、0.76、0.83、0.89、0.94，末档最大且留边",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.0,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：圆角格仍然深于格缝，被量成主体，末档不是最大。青瓷器具框高约0.49、0.61、0.58、0.75、0.70、0.85、0.63、0.82，第三档低于第二档，第",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.25"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：看得见青瓷色，八档依次是小喷壶、长嘴喷壶、莲蓬头喷壶、手持泵壶、背负喷雾器、水管卷盘、带轮水箱、温室浇水套装，无文字无脸。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.25"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "17:21:18"
+    },
+    {
+      "round": 3,
+      "round_label": "第 3 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "gh-water-portrait",
+        "scale": "medium",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "1512x2688",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png"
+        ],
+        "inherited_default_aspect_ratio": false,
+        "inherited_default_pad_image": false,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [
+          "参考图已加边为同一张垫图 'gh_merge__ar_9x16.png'，会话和生图都用这一张，不要再垫原图。"
+        ],
+        "continuation_pad": false,
+        "pad_diverged": true
+      },
+      "generated_at": "17:24:24",
+      "image": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh_portrait\\merge_water\\sheet_r3.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 192326,
+        "size_kb": 187.8,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.13
+      },
+      "raw_score": 8.71,
+      "score": 8.71,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.0/光影9.1/透视9.1/质感9.0/风格9.2/无瑕疵8.3",
+      "dims_parsed": {
+        "composition": 8.0,
+        "lighting_color": 9.1,
+        "perspective_anatomy": 9.1,
+        "texture_detail": 9.0,
+        "spec_style": 9.2,
+        "flawlessness": 8.3
+      },
+      "weighted_score": 8.71,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "邻档体量几乎一样大：第 1 格高 0.97，第 2 格高 0.97（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 2 格高 0.97，第 3 格高 1.00（差 0.03 < 0.04）",
+        "邻档体量几乎一样大：第 3 格高 1.00，第 4 格高 1.00（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 4 格高 1.00，第 5 格高 0.98（差 -0.02 < 0.04）",
+        "邻档体量几乎一样大：第 5 格高 0.98，第 6 格高 0.98（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 6 格高 0.98，第 7 格高 0.96（差 -0.02 < 0.04）"
+      ],
+      "stagnated": false,
+      "strengths": "看得见青瓷色，八档依次是小喷壶、长嘴喷壶、莲蓬头喷壶、手持泵壶、背负喷雾器、水管卷盘、带轮水箱、温室浇水套装，无文字无脸。",
+      "defects": "八个圆角格仍是中等浅蓝面板，框高约0.97、0.97、1.00、1.00、0.98、0.98、0.96、0.96，末格不是最大。八件器具体量接近，右下套装没有拉开成全表最大。；邻档体量几乎一样大：第 1 格高 0.97，第 2 格高 0.97（差 0.00 < 0.04）；邻档体量几乎一样大：第 2 格高 0.97，第 3 格高 1.00（差 0.03 < 0.04）；邻档体量几乎一样大：第 3 格高 1.00，第 4 格高 1.00（差 0.00 < 0.04）；邻档体量几乎一样大：第 4 格高 1.00，第 5 格高 0.98（差 -0.02 < 0.04）；邻档体量几乎一样大：第 5 格高 0.98，第 6 格高 0.98（差 0.00 < 0.04）；邻档体量几乎一样大：第 6 格高 0.98，第 7 格高 0.96（差 -0.02 < 0.04）",
+      "next_fix": "圆角格改成发白的极浅冰蓝，格缝保持天蓝，让量到的是青瓷器具；邻档框高按0.48、0.55、0.62、0.69、0.76、0.83、0.89、0.94递增，末档最大",
+      "prompt": "点名锁每轮都要单独留住，不许整张漂掉：青瓷色；八档依次是小喷壶；长嘴喷壶；莲蓬头喷壶；手持泵壶；背负喷雾器；水管卷盘；带轮水箱；温室浇水套装；无文字无脸 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.GardenWater\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n  · 确认作为货柜正向锚点：合成宣传图里的道具是圆润厚实的糖釉卡通3D。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=居中/对称构图 / 半身；色温=避免过饱和 / 冷色调 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色；白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光 | 竖屏整表，四行两列，阅读顺序左上到右下依次是八件不同的青瓷园艺浇水器具。每格只放一件、居中，整件落在浅色圆角格内并留边。链型是 shop_ladder 同族形变：家族是园艺浇水店域和青瓷色相，升级靠整件换成下一类器具，合成理由是两件同级合成后变成下一件完整货。不要在同一把壶上加环、加叶或加花纹。 左上是矮圆肚小喷壶，短弯嘴，小提梁，主体框高大约占格 0.48。右上是细长长嘴喷壶，长直嘴前伸，后侧把手，框高大约 0.55。第二行左是莲蓬头喷壶，朝前的宽圆莲蓬喷头，框高大约 0.62。第二行右是手持泵壶，立式泵筒加侧向扳机喷杆，框高大约 0.69。第三行左是背负喷雾器，一件货含立着的背罐、肩带和软管喷枪，框高大约 0.76。第三行右是水管卷盘，圆盘、侧面摇把和露出的喷嘴，框高大约 0.83。第四行左是带轮水箱，卧式水箱压在两个圆轮上，框高大约 0.89。第四行右是一件温室浇水套装，水箱、卷管和莲蓬喷杆收在同一辆小车上，框高大约 0.94，全表最大，仍留在格内。 光泽卡通 3D，圆润厚实，无硬描边，暖饱和，柔光渐变，青瓷色干净发亮。整幅是不透明浅天蓝实底，圆角格和格缝都接近同一浅蓝，只留很淡的圆角分格，不要深灰底，不要白卡。无脸。画面里不出现任何文字、数字、字母。只留这八件浇水货，元素预算到此为止。一眼失败：八格还是同一把壶，或邻档几乎一样大，或出现人物、手、食物、徽记。 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | 格心与格缝改成几乎同一浅天蓝，圆角只浅一点点，让量到的是青瓷器具。阅读顺序主体框高大约0.48、0.55、0.62、0.69、0.76、0.83、0.89、0.94，末档最大且留边。；邻档主体框高必须明显递增，末档最大，禁止邻档一样大 | MUST_FIX (≤2): 格心与格缝改成几乎同一浅天蓝，圆角只浅一点点，让量到的是青瓷器具；阅读顺序主体框高大约0.48、0.55、0.62、0.69、0.76、0.83、0.89、0.94，末档最大且留边",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.1,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：八个圆角格仍是中等浅蓝面板，框高约0.97、0.97、1.00、1.00、0.98、0.98、0.96、0.96，末格不是最大。八件器具体量接近，右下套装没有拉",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.71"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：看得见青瓷色，八档依次是小喷壶、长嘴喷壶、莲蓬头喷壶、手持泵壶、背负喷雾器、水管卷盘、带轮水箱、温室浇水套装，无文字无脸。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.71"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "17:24:43"
+    },
+    {
+      "round": 4,
+      "round_label": "第 4 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "gh-water-portrait",
+        "scale": "medium",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "1512x2688",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png"
+        ],
+        "inherited_default_aspect_ratio": false,
+        "inherited_default_pad_image": false,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [
+          "参考图已加边为同一张垫图 'gh_merge__ar_9x16.png'，会话和生图都用这一张，不要再垫原图。"
+        ],
+        "continuation_pad": false,
+        "pad_diverged": true
+      },
+      "generated_at": "17:25:08",
+      "image": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh_portrait\\merge_water\\sheet_r4.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 203881,
+        "size_kb": 199.1,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.14
+      },
+      "raw_score": 8.14,
+      "score": 8.14,
+      "target_score_threshold": 9.5,
+      "dims": "构图7.2/光影9.0/透视9.0/质感8.8/风格8.4/无瑕疵7.4",
+      "dims_parsed": {
+        "composition": 7.2,
+        "lighting_color": 9.0,
+        "perspective_anatomy": 9.0,
+        "texture_detail": 8.8,
+        "spec_style": 8.4,
+        "flawlessness": 7.4
+      },
+      "weighted_score": 8.14,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +-0.57 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "邻档体量几乎一样大：第 1 格高 0.96，第 2 格高 0.96（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 2 格高 0.96，第 3 格高 0.98（差 0.02 < 0.04）",
+        "邻档体量几乎一样大：第 3 格高 0.98，第 4 格高 0.98（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 4 格高 0.98，第 5 格高 1.00（差 0.02 < 0.04）",
+        "邻档体量几乎一样大：第 5 格高 1.00，第 6 格高 1.00（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 6 格高 1.00，第 7 格高 0.95（差 -0.05 < 0.04）",
+        "点名锁未单独验收：带轮水箱"
+      ],
+      "stagnated": true,
+      "strengths": "看得见青瓷色，八档依次是小喷壶、长嘴喷壶、莲蓬头喷壶、手持泵壶、背负喷雾器、水管卷盘、带轮水箱、温室浇水套装，无文字无脸。",
+      "defects": "左上和右上变成按压喷瓶，第二行左也是喷瓶，不再是三把不同浇壶。带轮水箱前端多了一截出水口。圆角格仍是中蓝面板，末格不是最大。；邻档体量几乎一样大：第 1 格高 0.96，第 2 格高 0.96（差 0.00 < 0.04）；邻档体量几乎一样大：第 2 格高 0.96，第 3 格高 0.98（差 0.02 < 0.04）；邻档体量几乎一样大：第 3 格高 0.98，第 4 格高 0.98（差 0.00 < 0.04）；邻档体量几乎一样大：第 4 格高 0.98，第 5 格高 1.00（差 0.02 < 0.04）；邻档体量几乎一样大：第 5 格高 1.00，第 6 格高 1.00（差 0.00 < 0.04）；邻档体量几乎一样大：第 6 格高 1.00，第 7 格高 0.95（差 -0.05 < 0.04）；点名锁未单独验收：带轮水箱",
+      "next_fix": "前三格回到小喷壶、细长浇壶和莲蓬头浇壶；邻档框高仍被圆角格板吃掉，末档要最大",
+      "prompt": "点名锁每轮都要单独留住，不许整张漂掉：青瓷色；八档依次是小喷壶；长嘴喷壶；莲蓬头喷壶；手持泵壶；背负喷雾器；水管卷盘；带轮水箱；温室浇水套装；无文字无脸 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.GardenWater\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n  · 确认作为货柜正向锚点：合成宣传图里的道具是圆润厚实的糖釉卡通3D。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=居中/对称构图 / 半身；色温=避免过饱和 / 冷色调 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色；白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光 | 竖屏整表，四行两列，阅读顺序左上到右下依次是八件不同的青瓷园艺浇水器具。每格只放一件、居中，整件落在浅色圆角格内并留边。链型是 shop_ladder 同族形变：家族是园艺浇水店域和青瓷色相，升级靠整件换成下一类器具，合成理由是两件同级合成后变成下一件完整货。不要在同一把壶上加环、加叶或加花纹。 左上是矮圆肚小喷壶，短弯嘴，小提梁，主体框高大约占格 0.48。右上是细长长嘴喷壶，长直嘴前伸，后侧把手，框高大约 0.55。第二行左是莲蓬头喷壶，朝前的宽圆莲蓬喷头，框高大约 0.62。第二行右是手持泵壶，立式泵筒加侧向扳机喷杆，框高大约 0.69。第三行左是背负喷雾器，一件货含立着的背罐、肩带和软管喷枪，框高大约 0.76。第三行右是水管卷盘，圆盘、侧面摇把和露出的喷嘴，框高大约 0.83。第四行左是带轮水箱，卧式水箱压在两个圆轮上，框高大约 0.89。第四行右是一件温室浇水套装，水箱、卷管和莲蓬喷杆收在同一辆小车上，框高大约 0.94，全表最大，仍留在格内。 光泽卡通 3D，圆润厚实，无硬描边，暖饱和，柔光渐变，青瓷色干净发亮。整幅是不透明浅天蓝实底，圆角格和格缝都接近同一浅蓝，只留很淡的圆角分格，不要深灰底，不要白卡。无脸。画面里不出现任何文字、数字、字母。只留这八件浇水货，元素预算到此为止。一眼失败：八格还是同一把壶，或邻档几乎一样大，或出现人物、手、食物、徽记。 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | 圆角格改成发白的极浅冰蓝，格缝保持天蓝，让量到的是青瓷器具；邻档框高按0.48、0.55、0.62、0.69、0.76、0.83、0.89、0.94递增，末档最大",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.0,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_MAX_ROUNDS",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：左上和右上变成按压喷瓶，第二行左也是喷瓶，不再是三把不同浇壶。带轮水箱前端多了一截出水口。圆角格仍是中蓝面板，末格不是最大。；邻档体量几乎一样大：第 1 格高 ",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.14"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：看得见青瓷色，八档依次是小喷壶、长嘴喷壶、莲蓬头喷壶、手持泵壶、背负喷雾器、水管卷盘、带轮水箱、温室浇水套装，无文字无脸。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.14"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "17:25:27"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-11-10 14:02:24 UTC+8"
+    },
+    "module": "merge.GardenWater",
+    "goal": "园艺浇水八档合成梯整表 4×2 竖屏青瓷完整货换代",
+    "confidence": 0.45,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "个人口味/正向保留非空",
+      "注入红线可控（0 条，已按任务主题过滤）",
+      "挂载 0 张项目知识卡 + 1 张全局美术底层基础卡"
+    ],
+    "top_recipes": [],
+    "top_redlines": [],
+    "art_decisions": [],
+    "private_knowledge": [],
+    "shared_knowledge": [
+      {
+        "id": "palette-70-20-10",
+        "title": "色彩构成：70-20-10 色板比例黄金法则",
+        "body": "画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+        "layer_scope": "shared"
+      }
+    ],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [
+        "冷光源",
+        "暖光",
+        "柔光"
+      ],
+      "preferred_composition": [
+        "居中/对称构图",
+        "半身"
+      ],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [
+        "避免过饱和",
+        "冷色调",
+        "暖色调"
+      ],
+      "banned_habits": [
+        "廉价塑料感/油腻高光",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色",
+        "白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计"
+      ],
+      "keep_phrases": [
+        "确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色",
+        "确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶",
+        "确认作为货柜正向锚点：合成宣传图里的道具是圆润厚实的糖釉卡通3D。",
+        "确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。"
+      ],
+      "banned_habits_raw_tail": [
+        "禁止偏离样张画风：过度霓虹、脏暗阴影、油腻高光、写实皮肤毛孔、扁平UI描边",
+        "电池审稿：原画竖构图避免贴样张布局；边缘反光勿过曝",
+        "电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感",
+        "黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差",
+        "错误头身比/头过大",
+        "漏抠/黑底/毛边",
+        "廉价塑料感/油腻高光",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色"
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.GardenWater\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n  · 确认作为货柜正向锚点：合成宣传图里的道具是圆润厚实的糖釉卡通3D。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=居中/对称构图 / 半身；色温=避免过饱和 / 冷色调 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色；白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+    "built_at": "2026-11-10 17:12:34 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：阅读顺序主体框高没有递增。圆角格板被量成主体，八格高约0.82、0.82、1.00、1.00、1.00、1.00、0.79、0.79，末档不是最大。青瓷器具本身",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.6"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：四行两列浅天蓝圆角格，八件青瓷器具已分成喷壶、泵壶、卷盘和水箱，无文字无脸。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.6"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：圆角格仍然深于格缝，被量成主体，末档不是最大。青瓷器具框高约0.49、0.61、0.58、0.75、0.70、0.85、0.63、0.82，第三档低于第二档，第",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.25"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：看得见青瓷色，八档依次是小喷壶、长嘴喷壶、莲蓬头喷壶、手持泵壶、背负喷雾器、水管卷盘、带轮水箱、温室浇水套装，无文字无脸。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.25"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：八个圆角格仍是中等浅蓝面板，框高约0.97、0.97、1.00、1.00、0.98、0.98、0.96、0.96，末格不是最大。八件器具体量接近，右下套装没有拉",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.71"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：看得见青瓷色，八档依次是小喷壶、长嘴喷壶、莲蓬头喷壶、手持泵壶、背负喷雾器、水管卷盘、带轮水箱、温室浇水套装，无文字无脸。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.71"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：左上和右上变成按压喷瓶，第二行左也是喷瓶，不再是三把不同浇壶。带轮水箱前端多了一截出水口。圆角格仍是中蓝面板，末格不是最大。；邻档体量几乎一样大：第 1 格高 ",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.14"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：看得见青瓷色，八档依次是小喷壶、长嘴喷壶、莲蓬头喷壶、手持泵壶、背负喷雾器、水管卷盘、带轮水箱、温室浇水套装，无文字无脸。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.14"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 2,
+  "regression_drop": 0.15,
+  "safe_early_stop": false,
+  "merge_delivery": "overview_sheet",
+  "merge_sheet_cap": 4,
+  "merge_discuss_cap": 2,
+  "single_judge": false,
+  "understanding_contract": {
+    "version": 1,
+    "raw_utterance": "园艺浇水八档合成梯整表 4×2 竖屏青瓷完整货换代",
+    "l0": {
+      "route_ids": [
+        "merge.ladder"
+      ],
+      "banner": "【按 同域合成梯：先定链型与关系，再按交付出图 走了】",
+      "delivery": "merge.ladder"
+    },
+    "l1": {
+      "locks": [
+        "青瓷色",
+        "八档依次是小喷壶",
+        "长嘴喷壶",
+        "莲蓬头喷壶",
+        "手持泵壶",
+        "背负喷雾器",
+        "水管卷盘",
+        "带轮水箱",
+        "温室浇水套装",
+        "无文字无脸"
+      ],
+      "unlocks": [
+        "不锁同一把壶",
+        "不锁领结",
+        "叶贴",
+        "金色花纹"
+      ],
+      "defaults_shown": [
+        "默认：整表一组，八档，竖屏 4×2，画幅 9:16，浅色圆角格，不透明实底，shop_ladder 完整货换代"
+      ],
+      "commercial_vibe": "光泽卡通 3D，圆润厚实，无硬描边，暖饱和，柔光渐变"
+    },
+    "l2": {
+      "open": true,
+      "surface_fix": "",
+      "last_feedback": "",
+      "feedback_layer": ""
+    },
+    "notes": ""
+  },
+  "discussions": [
+    {
+      "round": 0,
+      "kind": "reasonableness",
+      "prompt": "竖屏整表，四行两列，阅读顺序左上到右下依次是八件不同的青瓷园艺浇水器具。每格只放一件、居中，整件落在浅色圆角格内并留边。链型是 shop_ladder 同族形变：家族是园艺浇水店域和青瓷色相，升级靠整件换成下一类器具，合成理由是两件同级合成后变成下一件完整货。不要在同一把壶上加环、加叶或加花纹。\r\n\r\n左上是矮圆肚小喷壶，短弯嘴，小提梁，主体框高大约占格 0.48。右上是细长长嘴喷壶，长直嘴前伸，后侧把手，框高大约 0.55。第二行左是莲蓬头喷壶，朝前的宽圆莲蓬喷头，框高大约 0.62。第二行右是手持泵壶，立式泵筒加侧向扳机喷杆，框高大约 0.69。第三行左是背负喷雾器，一件货含立着的背罐、肩带和软管喷枪，框高大约 0.76。第三行右是水管卷盘，圆盘、侧面摇把和露出的喷嘴，框高大约 0.83。第四行左是带轮水箱，卧式水箱压在两个圆轮上，框高大约 0.89。第四行右是一件温室浇水套装，水箱、卷管和莲蓬喷杆收在同一辆小车上，框高大约 0.94，全表最大，仍留在格内。\r\n\r\n光泽卡通 3D，圆润厚实，无硬描边，暖饱和，柔光渐变，青瓷色干净发亮。整幅是不透明浅天蓝实底，圆角格和格缝都接近同一浅蓝，只留很淡的圆角分格，不要深灰底，不要白卡。无脸。画面里不出现任何文字、数字、字母。只留这八件浇水货，元素预算到此为止。一眼失败：八格还是同一把壶，或邻档几乎一样大，或出现人物、手、食物、徽记。",
+      "strengths": "合理性闸已过：subject_action=ok；element_budget=ok；hard_locks=ok；fail_at_glance=ok；single_centered_item=ok；chain_mode_declared=ok；upgrade_reason_concrete=ok；family_or_base_lock=ok",
+      "defects": "",
+      "next_fix": "首轮 generate 使用本修订提示词；审美迭代不得推翻硬锁与元素预算"
+    },
+    {
+      "round": 1,
+      "prompt": "链型 shop_ladder，过程类型是同族形变货柜的完整货换代，不是同模加装。levels=8，delivery=overview_sheet，竖屏四行两列。家族基因是园艺浇水店域加青瓷色相，不是同一把壶上的环、叶或花纹。对标 Gossip Harbor 橙子八档 Orange、Slice、Wedge、Juice、Smoothie、Cake、Tart、Dessert：每一档都换成下一件完整货。茶链末段从 Teapot 收到 Tea Party Set，对应本链末档从单件水箱收到一件温室浇水套装。只抽换代曲线和犒赏收套。surface：光泽卡通 3D，圆润厚实，无硬描边，暖饱和，柔光渐变，青瓷色相，缩略可认。垫图只取风格、构图和特征：光泽卡通 3D、圆润厚实、无硬描边、暖饱和、柔光、竖屏、每格一件完整工具，浅色圆角格接近棋盘浅蓝。\r\n\r\n五问：同店同域，浇水器具青瓷色相，过程类型认成完整货换代。无回退。邻档都有形态过渡，末档是一件套装不是地标。缩略可分，因为剪影大类逐档更换，低档仍是完整小喷壶，套装只在末档出现。合成理由写的是整件换成下一类器具。每一档都是独立 SKU。合两下可以倒推成下一件浇水货。\r\n\r\n档序：1 小喷壶，矮圆肚短弯嘴。2 长嘴喷壶，细长壶身长直嘴。3 莲蓬头喷壶，朝前宽圆莲蓬喷头。4 手持泵壶，立式泵筒加扳机喷杆。5 背负喷雾器，背罐肩带软管喷枪。6 水管卷盘，圆盘摇把。7 带轮水箱，卧箱两轮。8 一件温室浇水套装，水箱卷管莲蓬喷杆收在同一小车上。禁止把领结、叶贴、金色花纹当成升级点。画面主体框高大约 0.48、0.55、0.62、0.69、0.76、0.83、0.89、0.94，末档最大且留在格内。机读 scale_pct 用 0.56 到 0.81，保证低档不至于空、高档不顶破关系闸。",
+      "strengths": "",
+      "defects": "第1稿五问、橙子茶链对标、青瓷货换代和画风句已写齐",
+      "next_fix": "过了就出图，不写第2稿"
+    }
+  ],
+  "reasonableness_history": [
+    {
+      "reviewed_at": 1794302029.1705978,
+      "passed": true,
+      "skill": "merge",
+      "issues": []
+    }
+  ],
+  "reasonableness": {
+    "passed": true,
+    "skill": "merge",
+    "draft_prompt": "竖屏四行两列整表，八件青瓷浇水货从左上到右下换代：小喷壶、长嘴喷壶、莲蓬头喷壶、手持泵壶、背负喷雾器、水管卷盘、带轮水箱、一件温室浇水套装。shop_ladder 同族形变，每格一件居中。",
+    "revised_prompt": "竖屏整表，四行两列，阅读顺序左上到右下依次是八件不同的青瓷园艺浇水器具。每格只放一件、居中，整件落在浅色圆角格内并留边。链型是 shop_ladder 同族形变：家族是园艺浇水店域和青瓷色相，升级靠整件换成下一类器具，合成理由是两件同级合成后变成下一件完整货。不要在同一把壶上加环、加叶或加花纹。\r\n\r\n左上是矮圆肚小喷壶，短弯嘴，小提梁，主体框高大约占格 0.48。右上是细长长嘴喷壶，长直嘴前伸，后侧把手，框高大约 0.55。第二行左是莲蓬头喷壶，朝前的宽圆莲蓬喷头，框高大约 0.62。第二行右是手持泵壶，立式泵筒加侧向扳机喷杆，框高大约 0.69。第三行左是背负喷雾器，一件货含立着的背罐、肩带和软管喷枪，框高大约 0.76。第三行右是水管卷盘，圆盘、侧面摇把和露出的喷嘴，框高大约 0.83。第四行左是带轮水箱，卧式水箱压在两个圆轮上，框高大约 0.89。第四行右是一件温室浇水套装，水箱、卷管和莲蓬喷杆收在同一辆小车上，框高大约 0.94，全表最大，仍留在格内。\r\n\r\n光泽卡通 3D，圆润厚实，无硬描边，暖饱和，柔光渐变，青瓷色干净发亮。整幅是不透明浅天蓝实底，圆角格和格缝都接近同一浅蓝，只留很淡的圆角分格，不要深灰底，不要白卡。无脸。画面里不出现任何文字、数字、字母。只留这八件浇水货，元素预算到此为止。一眼失败：八格还是同一把壶，或邻档几乎一样大，或出现人物、手、食物、徽记。",
+    "checklist": {
+      "subject_action": {
+        "status": "ok",
+        "note": ""
+      },
+      "element_budget": {
+        "status": "ok",
+        "note": ""
+      },
+      "hard_locks": {
+        "status": "ok",
+        "note": ""
+      },
+      "fail_at_glance": {
+        "status": "ok",
+        "note": ""
+      },
+      "single_centered_item": {
+        "status": "ok",
+        "note": ""
+      },
+      "chain_mode_declared": {
+        "status": "ok",
+        "note": ""
+      },
+      "upgrade_reason_concrete": {
+        "status": "ok",
+        "note": ""
+      },
+      "family_or_base_lock": {
+        "status": "ok",
+        "note": ""
+      }
+    },
+    "issues": [],
+    "notes": "第1稿关系已过，整表用修订句出图",
+    "reviewed_at": 1794302029.1705978,
+    "reviewed_at_iso": "2026-11-10 17:13:49",
+    "force_pass": false,
+    "skill_raw": "merge"
+  },
+  "warm_start_merged": true,
+  "warm_start_merged_at": "2026-11-10 17:25:08",
+  "warm_start_block_sha1": "9303f8760656",
+  "ActionRequired": "STOP_PICK_BEST",
+  "showcase_ready": true,
+  "winner": {
+    "round": 3,
+    "round_label": "第 3 轮精修",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "9:16",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png"
+    ],
+    "param_validation": {
+      "valid": true,
+      "validation_passed": true,
+      "case_id": "gh-water-portrait",
+      "scale": "medium",
+      "aspect_ratio": "9:16",
+      "ref_aspect_ratio": "9:16",
+      "ref_dimensions": "1512x2688",
+      "output_aspect_ratio": "9:16",
+      "output_dimensions": "720x1280",
+      "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png"
+      ],
+      "inherited_default_aspect_ratio": false,
+      "inherited_default_pad_image": false,
+      "matched_ref_aspect_ratio": true,
+      "matched_ref_pad_image": true,
+      "matched_output_aspect_ratio": true,
+      "three_step_stage": "step3_judge",
+      "three_step_verified": true,
+      "warnings": [
+        "参考图已加边为同一张垫图 'gh_merge__ar_9x16.png'，会话和生图都用这一张，不要再垫原图。"
+      ],
+      "continuation_pad": false,
+      "pad_diverged": true
+    },
+    "generated_at": "17:24:24",
+    "image": "assets/skill_20261110_gh_portrait/merge_water/sheet_r3.jpg",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 192326,
+      "size_kb": 187.8,
+      "width": 720,
+      "height": 1280,
+      "aspect_ratio": "9:16",
+      "canonical_aspect_ratio": "9:16",
+      "color_entropy": 7.13
+    },
+    "raw_score": 8.71,
+    "score": 8.71,
+    "target_score_threshold": 9.5,
+    "dims": "构图8.0/光影9.1/透视9.1/质感9.0/风格9.2/无瑕疵8.3",
+    "dims_parsed": {
+      "composition": 8.0,
+      "lighting_color": 9.1,
+      "perspective_anatomy": 9.1,
+      "texture_detail": 9.0,
+      "spec_style": 9.2,
+      "flawlessness": 8.3
+    },
+    "weighted_score": 8.71,
+    "audit_warnings": [
+      "Agent Absolute-5D 已采纳（门槛 9.5）",
+      "邻档体量几乎一样大：第 1 格高 0.97，第 2 格高 0.97（差 0.00 < 0.04）",
+      "邻档体量几乎一样大：第 2 格高 0.97，第 3 格高 1.00（差 0.03 < 0.04）",
+      "邻档体量几乎一样大：第 3 格高 1.00，第 4 格高 1.00（差 0.00 < 0.04）",
+      "邻档体量几乎一样大：第 4 格高 1.00，第 5 格高 0.98（差 -0.02 < 0.04）",
+      "邻档体量几乎一样大：第 5 格高 0.98，第 6 格高 0.98（差 0.00 < 0.04）",
+      "邻档体量几乎一样大：第 6 格高 0.98，第 7 格高 0.96（差 -0.02 < 0.04）"
+    ],
+    "stagnated": false,
+    "strengths": "看得见青瓷色，八档依次是小喷壶、长嘴喷壶、莲蓬头喷壶、手持泵壶、背负喷雾器、水管卷盘、带轮水箱、温室浇水套装，无文字无脸。",
+    "defects": "八个圆角格仍是中等浅蓝面板，框高约0.97、0.97、1.00、1.00、0.98、0.98、0.96、0.96，末格不是最大。八件器具体量接近，右下套装没有拉开成全表最大。；邻档体量几乎一样大：第 1 格高 0.97，第 2 格高 0.97（差 0.00 < 0.04）；邻档体量几乎一样大：第 2 格高 0.97，第 3 格高 1.00（差 0.03 < 0.04）；邻档体量几乎一样大：第 3 格高 1.00，第 4 格高 1.00（差 0.00 < 0.04）；邻档体量几乎一样大：第 4 格高 1.00，第 5 格高 0.98（差 -0.02 < 0.04）；邻档体量几乎一样大：第 5 格高 0.98，第 6 格高 0.98（差 0.00 < 0.04）；邻档体量几乎一样大：第 6 格高 0.98，第 7 格高 0.96（差 -0.02 < 0.04）",
+    "next_fix": "圆角格改成发白的极浅冰蓝，格缝保持天蓝，让量到的是青瓷器具；邻档框高按0.48、0.55、0.62、0.69、0.76、0.83、0.89、0.94递增，末档最大",
+    "prompt": "点名锁每轮都要单独留住，不许整张漂掉：青瓷色；八档依次是小喷壶；长嘴喷壶；莲蓬头喷壶；手持泵壶；背负喷雾器；水管卷盘；带轮水箱；温室浇水套装；无文字无脸 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.GardenWater\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n  · 确认作为货柜正向锚点：合成宣传图里的道具是圆润厚实的糖釉卡通3D。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=居中/对称构图 / 半身；色温=避免过饱和 / 冷色调 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色；白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光 | 竖屏整表，四行两列，阅读顺序左上到右下依次是八件不同的青瓷园艺浇水器具。每格只放一件、居中，整件落在浅色圆角格内并留边。链型是 shop_ladder 同族形变：家族是园艺浇水店域和青瓷色相，升级靠整件换成下一类器具，合成理由是两件同级合成后变成下一件完整货。不要在同一把壶上加环、加叶或加花纹。 左上是矮圆肚小喷壶，短弯嘴，小提梁，主体框高大约占格 0.48。右上是细长长嘴喷壶，长直嘴前伸，后侧把手，框高大约 0.55。第二行左是莲蓬头喷壶，朝前的宽圆莲蓬喷头，框高大约 0.62。第二行右是手持泵壶，立式泵筒加侧向扳机喷杆，框高大约 0.69。第三行左是背负喷雾器，一件货含立着的背罐、肩带和软管喷枪，框高大约 0.76。第三行右是水管卷盘，圆盘、侧面摇把和露出的喷嘴，框高大约 0.83。第四行左是带轮水箱，卧式水箱压在两个圆轮上，框高大约 0.89。第四行右是一件温室浇水套装，水箱、卷管和莲蓬喷杆收在同一辆小车上，框高大约 0.94，全表最大，仍留在格内。 光泽卡通 3D，圆润厚实，无硬描边，暖饱和，柔光渐变，青瓷色干净发亮。整幅是不透明浅天蓝实底，圆角格和格缝都接近同一浅蓝，只留很淡的圆角分格，不要深灰底，不要白卡。无脸。画面里不出现任何文字、数字、字母。只留这八件浇水货，元素预算到此为止。一眼失败：八格还是同一把壶，或邻档几乎一样大，或出现人物、手、食物、徽记。 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | 格心与格缝改成几乎同一浅天蓝，圆角只浅一点点，让量到的是青瓷器具。阅读顺序主体框高大约0.48、0.55、0.62、0.69、0.76、0.83、0.89、0.94，末档最大且留边。；邻档主体框高必须明显递增，末档最大，禁止邻档一样大 | MUST_FIX (≤2): 格心与格缝改成几乎同一浅天蓝，圆角只浅一点点，让量到的是青瓷器具；阅读顺序主体框高大约0.48、0.55、0.62、0.69、0.76、0.83、0.89、0.94，末档最大且留边",
+    "continuation": false,
+    "passed": false,
+    "gate_blocked": true,
+    "image_gate_blocked": false,
+    "anatomy_score": 9.1,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "unknown",
+    "judge_source": "agent_absolute_5d",
+    "remote_vlm": {
+      "source": "agent_self_judge",
+      "provider": "",
+      "model": "",
+      "error": "",
+      "active": false,
+      "score_evidence": {},
+      "evidence_missing_dims": [],
+      "review": {
+        "pass_count": 0,
+        "rerated": false,
+        "reason": ""
+      }
+    },
+    "should_continue_next_round": true,
+    "decision": "CONTINUE_NEXT_ROUND",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "style_lock",
+        "lesson": "本轮短板偏「style_lock」：八个圆角格仍是中等浅蓝面板，框高约0.97、0.97、1.00、1.00、0.98、0.98、0.96、0.96，末格不是最大。八件器具体量接近，右下套装没有拉",
+        "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+        "from_score": "8.71"
+      },
+      {
+        "category": "keep",
+        "lesson": "保留本轮已做对的：看得见青瓷色，八档依次是小喷壶、长嘴喷壶、莲蓬头喷壶、手持泵壶、背负喷雾器、水管卷盘、带轮水箱、温室浇水套装，无文字无脸。",
+        "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+        "from_score": "8.71"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "17:24:43",
+    "asset_image": "assets/skill_20261110_gh_portrait/merge_water/sheet_r3.jpg"
+  },
+  "rounds_to_converge": 4,
+  "convergence_badge": "共 4 轮未达阈值，采用最高分",
+  "winner_image": "c:/Users/ZhengLangPC/Desktop/Cursor-Pmem-Art/assets/skill_20261110_gh_portrait/merge_water/sheet_r3.jpg",
+  "best_image": "c:/Users/ZhengLangPC/Desktop/Cursor-Pmem-Art/assets/skill_20261110_gh_portrait/merge_water/sheet_r3.jpg",
+  "final_image": "assets/skill_20261110_gh_portrait/merge_water/final.jpg",
+  "settle_pending": false,
+  "process_board": ".memory-art/converge/boards/gh-water-portrait/index.html",
+  "settle_done_at": "2026-11-10 17:26:42 UTC+8",
+  "settle_saved_paths": [
+    ".memory-art\\entries\\merge.GardenWater\\CHAT20261110172629811RECIPE.md",
+    ".memory-art\\entries\\merge.GardenWater\\CHAT20261110172630411REDLINE.md",
+    ".memory-art\\_reflections\\20261110_172631_gh-water-portrait.json"
+  ]
+}

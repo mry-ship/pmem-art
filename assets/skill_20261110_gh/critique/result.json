@@ -1,0 +1,22 @@
+{
+  "route_id": "critique.review",
+  "generated": false,
+  "asset": "assets/refs/gossip_harbor/gh_merge.jpg",
+  "role": "style_ruler",
+  "not_deliverable": true,
+  "review": "assets/skill_20261110_gh/critique/review.md",
+  "scale": "external",
+  "delivery_gate_applies": false,
+  "scores": {
+    "构图": 8.6,
+    "光影": 9.0,
+    "透视": 8.5,
+    "质感": 9.2,
+    "风格": 9.3,
+    "无瑕疵": 8.8
+  },
+  "harmonic_score": 8.87,
+  "rubric_mode": "general_6d",
+  "borrow": ["光泽", "圆润", "暖色", "缩略可认"],
+  "do_not_copy": ["棋盘", "角色", "标志", "文案", "手指"]
+}

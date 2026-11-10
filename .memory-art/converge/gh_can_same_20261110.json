@@ -1,0 +1,1010 @@
+{
+  "session_id": "gh_can_same_20261110",
+  "started_at": "2026-11-10 16:11:00 UTC+8",
+  "goal": "青瓷园艺喷壶八档合成梯整表，同一把壶只加装，chain_mode=same_object，白圆角卡深灰底",
+  "module": "merge.GardenCan",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "merge_overview_checklist",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "medium",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "medium",
+    "label": "中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.5)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 1,
+    "target_score_threshold": 9.5,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.15,
+      "perspective_anatomy": 0.15,
+      "texture_detail": 0.15,
+      "spec_style": 0.15,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "viewpoint_frame",
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图，只在提示词上补还没过的那一处（提示词改动仍 ≤40%）",
+    "max_prompt_delta_ratio": 0.4,
+    "allow_recompose": false,
+    "allow_viewpoint_change": false,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "viewpoint_angle (不改机位与镜头视角)",
+      "element_count (不增删主体元素清单)",
+      "no_full_recompose (不做整体 recompose / 换景别故事)",
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)"
+    ],
+    "min_round_leap": 0.15,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光",
+    "medium_family": "generic",
+    "best_direction_hint": "最优方向：光影·空气·介质；可小幅姿态/局部布局",
+    "goal": "青瓷园艺喷壶八档合成梯整表，同一把壶只加装，chain_mode=same_object，白圆角卡深灰底",
+    "module": "merge.GardenCan",
+    "ref_image": "assets/refs/gossip_harbor/gh_merge.jpg",
+    "ref_analysis": ""
+  },
+  "medium_family": "generic",
+  "contract": "",
+  "target_score_threshold": 9.5,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_4x3.png",
+  "ref_analysis": "",
+  "default_aspect_ratio": "4:3",
+  "default_reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_4x3.png"
+  ],
+  "aspect_ratio": "4:3",
+  "reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_4x3.png"
+  ],
+  "ref_physical_traits": {
+    "exists": true,
+    "size_bytes": 3620151,
+    "size_kb": 3535.3,
+    "width": 3584,
+    "height": 2688,
+    "aspect_ratio": "4:3",
+    "canonical_aspect_ratio": "4:3",
+    "color_entropy": 7.98
+  },
+  "param_validation": {
+    "valid": true,
+    "validation_passed": true,
+    "case_id": "gh_can_same_20261110",
+    "scale": "medium",
+    "aspect_ratio": "4:3",
+    "ref_aspect_ratio": "4:3",
+    "ref_dimensions": "3584x2688",
+    "output_aspect_ratio": "",
+    "output_dimensions": "",
+    "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_4x3.png",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_4x3.png"
+    ],
+    "inherited_default_aspect_ratio": false,
+    "inherited_default_pad_image": true,
+    "matched_ref_aspect_ratio": true,
+    "matched_ref_pad_image": true,
+    "matched_output_aspect_ratio": true,
+    "three_step_stage": "step1_start",
+    "three_step_verified": false,
+    "warnings": [
+      "参考图已加边为同一张垫图 'gh_merge__ar_4x3.png'，会话和生图都用这一张，不要再垫原图。"
+    ]
+  },
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.5,
+  "accept_threshold": 9.5,
+  "max_rounds": 4,
+  "ready_to_finish": true,
+  "status": "finished",
+  "owner_conversation_id": "",
+  "route_ids": [
+    "merge.ladder"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "4:3",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_4x3.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "gh_can_same_20261110",
+        "scale": "medium",
+        "aspect_ratio": "4:3",
+        "ref_aspect_ratio": "4:3",
+        "ref_dimensions": "3584x2688",
+        "output_aspect_ratio": "4:3",
+        "output_dimensions": "1152x864",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_4x3.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_4x3.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "16:17:05",
+      "image": "assets/skill_20261110_gh/merge_same/sheet_r1.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 203011,
+        "size_kb": 198.3,
+        "width": 1152,
+        "height": 864,
+        "aspect_ratio": "4:3",
+        "canonical_aspect_ratio": "4:3",
+        "color_entropy": 7.13
+      },
+      "raw_score": 8.81,
+      "score": 8.81,
+      "target_score_threshold": 9.5,
+      "dims": "构图7.5/光影9.1/透视9.2/质感9.0/风格9.2/无瑕疵9.0",
+      "dims_parsed": {
+        "composition": 7.5,
+        "lighting_color": 9.1,
+        "perspective_anatomy": 9.2,
+        "texture_detail": 9.0,
+        "spec_style": 9.2,
+        "flawlessness": 9.0
+      },
+      "weighted_score": 8.81,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "邻档体量几乎一样大：第 1 格高 0.84，第 2 格高 0.84（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 2 格高 0.84，第 3 格高 0.84（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 3 格高 0.84，第 4 格高 0.84（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 4 格高 0.84，第 5 格高 0.66（差 -0.18 < 0.04）",
+        "邻档体量几乎一样大：第 6 格高 0.82，第 7 格高 0.82（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 7 格高 0.82，第 8 格高 0.82（差 -0.00 < 0.04）"
+      ],
+      "stagnated": false,
+      "strengths": "2x4白圆角卡深灰底，光泽卡通青瓷，八档都有提梁和长壶嘴，无字无脸，没有抄棋盘龙虾英文。",
+      "defects": "L1到L6壶嘴都已是多孔淋头，玫瑰淋头提前出现。L4没有领结。L5没有第二根壶嘴，也没有领结。L8没有节庆雕花。提梁都在，不是圆茶壶。像素上第1到4格主体框高都约0.84，第5格0.66反而更小，第6到8格约0.82，邻档一样大，末档不是最大。；邻档体量几乎一样大：第 1 格高 0.84，第 2 格高 0.84（差 0.00 < 0.04）；邻档体量几乎一样大：第 2 格高 0.84，第 3 格高 0.84（差 0.00 < 0.04）；邻档体量几乎一样大：第 3 格高 0.84，第 4 格高 0.84（差 0.00 < 0.04）；邻档体量几乎一样大：第 4 格高 0.84，第 5 格高 0.66（差 -0.18 < 0.04）；邻档体量几乎一样大：第 6 格高 0.82，第 7 格高 0.82（差 0.00 < 0.04）；邻档体量几乎一样大：第 7 格高 0.82，第 8 格高 0.82（差 -0.00 < 0.04）",
+      "next_fix": "邻档主体框高必须明显递增，第5格高于第4格，末档最大。L1到L6壶嘴禁止开孔。L4起必须有大领结。L5起必须两根壶嘴。玫瑰淋头只在L7和L8。L8壶身必须有节庆浮雕。八档都留提梁。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.GardenCan\n- 置信度: 0.45（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261110145331454RECIPE] [收敛胜出 8.94分] 同一套东西一档比一档大；走合成梯。青瓷园艺喷壶同模加装八档，chain_mode=same_obje — 从第三只起拱形提梁一直留到末只，末两只有浅金托，末只有三尖晶\n- 正向保留（要怎样）:\n  · 五链合成：不必每档保留L1原件/母体锁死；同域合理升级、档差明显即可\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n- 必须避开红线:\n  · [CHAT20261110145332852REDLINE] [收敛踩坑红线] 同一套东西一档比一档大；走合成梯。青瓷园艺喷壶同模加装八档，：避免「八张卡只剩白描边，卡内是深灰，壶坐在灰底上。下排第二只头顶没有拱形提梁，左右大环还在。后两」\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色；白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光| same_object 同模加装。4:3 整表，2行4列白圆角卡，深灰实底，不透明。每格一件居中，无字，无等级字，道具无脸。每档仍是同一把青瓷园艺喷壶，base_body 保留母体词，拱形提梁和长壶嘴每档都在，零件累计：素壶、壶嘴环、叶贴、领结、第二壶嘴、铜泵、圆形多孔玫瑰淋头、节庆雕花。体量逐档变大，主体留在卡内并留边，不超框。禁止画成圆茶壶。垫图只锁光泽卡通3D、圆润厚实、无硬描边、暖饱和、柔光渐变。一眼失败：任一档提梁丢了，或相邻两档一样大。| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.2,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：L1到L6壶嘴都已是多孔淋头，玫瑰淋头提前出现。L4没有领结。L5没有第二根壶嘴，也没有领结。L8没有节庆雕花。提梁都在，不是圆茶壶。像素上第1到4格主体框高都",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.81"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：2x4白圆角卡深灰底，光泽卡通青瓷，八档都有提梁和长壶嘴，无字无脸，没有抄棋盘龙虾英文。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.81"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "16:17:20"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "4:3",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_4x3.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "gh_can_same_20261110",
+        "scale": "medium",
+        "aspect_ratio": "4:3",
+        "ref_aspect_ratio": "4:3",
+        "ref_dimensions": "3584x2688",
+        "output_aspect_ratio": "4:3",
+        "output_dimensions": "1152x864",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_4x3.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_4x3.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "16:21:11",
+      "image": "assets/skill_20261110_gh/merge_same/sheet_r2.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 208466,
+        "size_kb": 203.6,
+        "width": 1152,
+        "height": 864,
+        "aspect_ratio": "4:3",
+        "canonical_aspect_ratio": "4:3",
+        "color_entropy": 7.1
+      },
+      "raw_score": 8.42,
+      "score": 8.42,
+      "target_score_threshold": 9.5,
+      "dims": "构图7.0/光影9.0/透视9.0/质感8.8/风格8.7/无瑕疵8.4",
+      "dims_parsed": {
+        "composition": 7.0,
+        "lighting_color": 9.0,
+        "perspective_anatomy": 9.0,
+        "texture_detail": 8.8,
+        "spec_style": 8.7,
+        "flawlessness": 8.4
+      },
+      "weighted_score": 8.42,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +-0.39 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "prompt 改动 60% 超过档位上限 40%",
+        "邻档体量几乎一样大：第 1 格高 0.88，第 2 格高 0.88（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 2 格高 0.88，第 3 格高 0.88（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 3 格高 0.88，第 4 格高 0.88（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 4 格高 0.88，第 5 格高 0.86（差 -0.02 < 0.04）",
+        "邻档体量几乎一样大：第 5 格高 0.86，第 6 格高 0.86（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 6 格高 0.86，第 7 格高 0.86（差 0.00 < 0.04）"
+      ],
+      "stagnated": true,
+      "strengths": "白圆角卡和深灰底还在，青瓷光泽卡通，第4格有奶油领结和叶贴，第6格有铜泵，第8格雕花清楚，无字无脸。",
+      "defects": "第6格铜泵顶替了拱形提梁，提梁丢了。第1到6格壶嘴仍是多孔淋头。第5格没有领结也没有第二根壶嘴。第7格泵不见了。第8格整壶变成纯金，青瓷母体没了，也没有第二根壶嘴。邻档框高仍几乎一样，末档不是最大。；prompt 改动 60% 超过档位上限 40%；邻档体量几乎一样大：第 1 格高 0.88，第 2 格高 0.88（差 0.00 < 0.04）；邻档体量几乎一样大：第 2 格高 0.88，第 3 格高 0.88（差 0.00 < 0.04）；邻档体量几乎一样大：第 3 格高 0.88，第 4 格高 0.88（差 0.00 < 0.04）；邻档体量几乎一样大：第 4 格高 0.88，第 5 格高 0.86（差 -0.02 < 0.04）；邻档体量几乎一样大：第 5 格高 0.86，第 6 格高 0.86（差 0.00 < 0.04）；邻档体量几乎一样大：第 6 格高 0.86，第 7 格高 0.86（差 0.00 < 0.04）",
+      "next_fix": "邻档主体必须逐格变高且末档最大。八档拱形提梁都留着，铜泵放在提梁前面不能顶替提梁。L1到L6壶嘴只有一个开口不许开孔。L5起两根壶嘴。L4起领结一直留到L8。L8仍是青瓷，只在青瓷上加金雕花，不要整壶变金。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.GardenCan\n- 置信度: 0.45（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261110145331454RECIPE] [收敛胜出 8.94分] 同一套东西一档比一档大；走合成梯。青瓷园艺喷壶同模加装八档，chain_mode=same_obje — 从第三只起拱形提梁一直留到末只，末两只有浅金托，末只有三尖晶\n- 正向保留（要怎样）:\n  · 五链合成：不必每档保留L1原件/母体锁死；同域合理升级、档差明显即可\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n- 必须避开红线:\n  · [CHAT20261110145332852REDLINE] [收敛踩坑红线] 同一套东西一档比一档大；走合成梯。青瓷园艺喷壶同模加装八档，：避免「八张卡只剩白描边，卡内是深灰，壶坐在灰底上。下排第二只头顶没有拱形提梁，左右大环还在。后两」\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色；白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光| A 4:3 product catalog sheet on a solid dark gray background. Exactly eight equal white rounded-rectangle cards in a strict 2 rows by 4 columns grid that fills the frame evenly. Same card size, even gutters, no title, no text, no numbers, no logo, no UI, no finger, no checkerboard, no food, no lobster. One object per card, centered, fully inside the card with a white margin. Opaque image. Style only: glossy cartoon 3D, chunky rounded forms, no hard ink outlines, warm saturated color, soft gradient light, clean game-prop shine. Do not copy the reference picture's board, seafood, beach, coins, or the word Merge. Every card is the SAME celadon garden watering can, three-quarter view, spout pointing right. Elongated oval body, not a round teapot, not a kettle, not a sphere. Every can has a tall overhead arched bail handle and at least one long spout. No face, no eyes, no smile. The ceramic body plus the overhead handle grows obviously taller at every next card. Bottom row is taller than top row. The last can is the tallest and still inside its card. Cards stay the same size; only the cans grow. Top row left to right: 1 smallest plain can: handle plus one long spout only. 2 taller: same can plus one thick copper ring around the spout. 3 taller: keep ring, add one large green leaf on the body. 4 taller: keep ring and leaf, add a fabric bow at the neck. Bottom row left to right: 5 taller: keep handle, ring, leaf, bow, and add a second spout. 6 taller: keep both spouts and earlier parts, add a chunky copper pump on the shoulder. 7 taller: keep everything, add a round perforated metal sprinkler rose on the main spout tip, not a flower bouquet. 8 largest: same can with bold festive raised carving on the body. Handle, both spouts, ring, leaf, bow, copper pump, and sprinkler rose all still visible and not clipped. Correction, these overrides win: object heights inside the eight equal cards must be about 40, 48, 56, 64, 72, 78, 84, and 90 percent of the card. Card 1 is a small can surrounded by a large white margin. Card 5 is taller than card 4. Card 8 is the tallest and still has a white margin. Cards 1 through 6 have smooth open spouts with zero holes and no sprinkler rose. A large cream ribbon bow is obvious on cards 4, 5, 6, 7, and 8. Card 5 and every card after it have two separate spouts. The round perforated sprinkler rose appears only on cards 7 and 8. Card 8 body is covered in bold gold festive relief carving, not a plain green can. Keep the overhead handle on all eight.| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | 邻档主体框高必须明显递增，第5格高于第4格，末档最大。L1到L6壶嘴禁止开孔。L4起必须有大领结。L5起必须两根壶嘴。玫瑰淋头只在L7和L8。L8壶身必须有节庆浮雕。八档都留提梁。 | MUST_FIX (≤2): 邻档主体框高必须明显递增，第5格高于第4格，末档最大；L1到L6壶嘴禁止开孔",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.0,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：第6格铜泵顶替了拱形提梁，提梁丢了。第1到6格壶嘴仍是多孔淋头。第5格没有领结也没有第二根壶嘴。第7格泵不见了。第8格整壶变成纯金，青瓷母体没了，也没有第二根壶",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.42"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：白圆角卡和深灰底还在，青瓷光泽卡通，第4格有奶油领结和叶贴，第6格有铜泵，第8格雕花清楚，无字无脸。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.42"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "16:21:36"
+    },
+    {
+      "round": 3,
+      "round_label": "第 3 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "4:3",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_4x3.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "gh_can_same_20261110",
+        "scale": "medium",
+        "aspect_ratio": "4:3",
+        "ref_aspect_ratio": "4:3",
+        "ref_dimensions": "3584x2688",
+        "output_aspect_ratio": "4:3",
+        "output_dimensions": "1152x864",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_4x3.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_4x3.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "16:25:19",
+      "image": "assets/skill_20261110_gh/merge_same/sheet_r3.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 221182,
+        "size_kb": 216.0,
+        "width": 1152,
+        "height": 864,
+        "aspect_ratio": "4:3",
+        "canonical_aspect_ratio": "4:3",
+        "color_entropy": 7.11
+      },
+      "raw_score": 8.82,
+      "score": 8.82,
+      "target_score_threshold": 9.5,
+      "dims": "构图7.8/光影9.2/透视9.2/质感9.1/风格9.2/无瑕疵8.7",
+      "dims_parsed": {
+        "composition": 7.8,
+        "lighting_color": 9.2,
+        "perspective_anatomy": 9.2,
+        "texture_detail": 9.1,
+        "spec_style": 9.2,
+        "flawlessness": 8.7
+      },
+      "weighted_score": 8.82,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "prompt 改动 44% 超过档位上限 40%",
+        "邻档体量几乎一样大：第 1 格高 0.95，第 2 格高 0.95（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 2 格高 0.95，第 3 格高 0.95（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 3 格高 0.95，第 4 格高 0.95（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 4 格高 0.95，第 5 格高 0.91（差 -0.03 < 0.04）",
+        "邻档体量几乎一样大：第 5 格高 0.91，第 6 格高 0.91（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 6 格高 0.91，第 7 格高 0.91（差 0.00 < 0.04）"
+      ],
+      "stagnated": false,
+      "strengths": "第1格是开口素壶且有提梁。第6格铜泵和提梁同时在。第8格青瓷上有金花，无字无脸，深灰底白卡。",
+      "defects": "第5格比第4格更小。第3格起壶嘴又变成多孔淋头。五到八格都只有一根壶嘴，没有双嘴。第6格提梁还在，铜泵留到了第8格。第8格仍是青瓷雕花，不是纯金。像素审计仍把白卡边量成一样高。；prompt 改动 44% 超过档位上限 40%；邻档体量几乎一样大：第 1 格高 0.95，第 2 格高 0.95（差 0.00 < 0.04）；邻档体量几乎一样大：第 2 格高 0.95，第 3 格高 0.95（差 0.00 < 0.04）；邻档体量几乎一样大：第 3 格高 0.95，第 4 格高 0.95（差 0.00 < 0.04）；邻档体量几乎一样大：第 4 格高 0.95，第 5 格高 0.91（差 -0.03 < 0.04）；邻档体量几乎一样大：第 5 格高 0.91，第 6 格高 0.91（差 0.00 < 0.04）；邻档体量几乎一样大：第 6 格高 0.91，第 7 格高 0.91（差 0.00 < 0.04）",
+      "next_fix": "邻档必须逐格变高，第5格要高于第4格，末档最大。L5起要有左右两根壶嘴。L1到L6保持开口不许开孔。提梁全程保留。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.GardenCan\n- 置信度: 0.45（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261110145331454RECIPE] [收敛胜出 8.94分] 同一套东西一档比一档大；走合成梯。青瓷园艺喷壶同模加装八档，chain_mode=same_obje — 从第三只起拱形提梁一直留到末只，末两只有浅金托，末只有三尖晶\n- 正向保留（要怎样）:\n  · 五链合成：不必每档保留L1原件/母体锁死；同域合理升级、档差明显即可\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n- 必须避开红线:\n  · [CHAT20261110145332852REDLINE] [收敛踩坑红线] 同一套东西一档比一档大；走合成梯。青瓷园艺喷壶同模加装八档，：避免「八张卡只剩白描边，卡内是深灰，壶坐在灰底上。下排第二只头顶没有拱形提梁，左右大环还在。后两」\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色；白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光| A 4:3 product catalog sheet on a solid dark gray background. Exactly eight equal white rounded-rectangle cards in a strict 2 rows by 4 columns grid that fills the frame evenly. Same card size, even gutters, no title, no text, no numbers, no logo, no UI, no finger, no checkerboard, no food, no lobster. One object per card, centered, fully inside the card with a white margin. Opaque image. Style only: glossy cartoon 3D, chunky rounded forms, no hard ink outlines, warm saturated color, soft gradient light, clean game-prop shine. Do not copy the reference picture's board, seafood, beach, coins, or the word Merge. Every card is the SAME pale celadon garden watering can, three-quarter view. Elongated oval body, not a round teapot and not a solid gold can. Every can, including the pumped one, has a tall empty arched bail handle above the opening. The handle is never replaced by a pump. No face, no eyes. Object heights inside the equal cards are about 36, 46, 54, 62, 70, 78, 84, and 90 percent. Each can is obviously taller than the can before it. The fifth can is taller than the fourth. The eighth is the tallest and still has a white margin. Cards 1 to 6: the spout is a smooth open tube ending in ONE oval mouth. No flat sieve, no black dots, no shower head. If the first six spouts have holes, the image is wrong. 1 pure celadon, no copper band, one spout, handle only. Smallest. 2 taller, add one thick copper ring around the middle of that open spout. 3 taller, keep the ring, add one large green leaf on the body. 4 taller, keep ring and leaf, add a large cream ribbon bow. 5 taller than 4, keep bow, leaf, ring, and add a second spout pointing the opposite way so two tubes are visible. 6 taller, keep both spouts, bow, leaf, and ring, and add a small copper pump in front of the still-empty arched handle. 7 taller, now put a round perforated sprinkler rose on the right spout only. Left spout stays an open tube. Handle, bow, leaf, ring, and pump remain. 8 largest, the body stays pale celadon green with bold gold engraved flowers on the green surface. Not a solid gold can. Handle, two spouts, ring, leaf, bow, pump, and sprinkler rose all remain and are not clipped.| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | 邻档主体框高必须明显递增，第5格高于第4格，末档最大。L1到L6壶嘴禁止开孔。L4起必须有大领结。L5起必须两根壶嘴。玫瑰淋头只在L7和L8。L8壶身必须有节庆浮雕。八档都留提梁。 | MUST_FIX (≤2): 邻档主体框高必须明显递增，第5格高于第4格，末档最大；L1到L6壶嘴禁止开孔",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.2,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：第5格比第4格更小。第3格起壶嘴又变成多孔淋头。五到八格都只有一根壶嘴，没有双嘴。第6格提梁还在，铜泵留到了第8格。第8格仍是青瓷雕花，不是纯金。像素审计仍把白",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.82"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：第1格是开口素壶且有提梁。第6格铜泵和提梁同时在。第8格青瓷上有金花，无字无脸，深灰底白卡。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.82"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "16:25:49"
+    },
+    {
+      "round": 4,
+      "round_label": "第 4 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "4:3",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_4x3.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "gh_can_same_20261110",
+        "scale": "medium",
+        "aspect_ratio": "4:3",
+        "ref_aspect_ratio": "4:3",
+        "ref_dimensions": "3584x2688",
+        "output_aspect_ratio": "4:3",
+        "output_dimensions": "1152x864",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_4x3.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_4x3.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "16:26:11",
+      "image": "assets/skill_20261110_gh/merge_same/sheet_r4.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 218487,
+        "size_kb": 213.4,
+        "width": 1152,
+        "height": 864,
+        "aspect_ratio": "4:3",
+        "canonical_aspect_ratio": "4:3",
+        "color_entropy": 7.13
+      },
+      "raw_score": 8.84,
+      "score": 8.84,
+      "target_score_threshold": 9.5,
+      "dims": "构图7.9/光影9.2/透视9.2/质感9.2/风格9.3/无瑕疵8.6",
+      "dims_parsed": {
+        "composition": 7.9,
+        "lighting_color": 9.2,
+        "perspective_anatomy": 9.2,
+        "texture_detail": 9.2,
+        "spec_style": 9.3,
+        "flawlessness": 8.6
+      },
+      "weighted_score": 8.84,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.02 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "prompt 改动 57% 超过档位上限 40%",
+        "邻档体量几乎一样大：第 1 格高 0.89，第 2 格高 0.89（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 2 格高 0.89，第 3 格高 0.89（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 3 格高 0.89，第 4 格高 0.89（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 4 格高 0.89，第 5 格高 0.84（差 -0.05 < 0.04）",
+        "邻档体量几乎一样大：第 5 格高 0.84，第 6 格高 0.84（差 0.00 < 0.04）",
+        "邻档体量几乎一样大：第 6 格高 0.84，第 7 格高 0.84（差 0.00 < 0.04）"
+      ],
+      "stagnated": true,
+      "strengths": "L1开口素壶、L2铜环、L4领结、L7才出现多孔淋头，八档提梁都在，第8格青瓷金纹，无字无脸。",
+      "defects": "第4格和第5格几乎一样大，第5格仍是一根开口壶嘴，没有第二根嘴。铜泵只出现在第6格，第7和第8格泵没了。第7格已经有金纹，节庆雕花提前。提梁八档都在，L1到L6是开口，玫瑰淋头从第7格才出现。第8格仍是青瓷不是纯金。白卡边像素审计未过。；prompt 改动 57% 超过档位上限 40%；邻档体量几乎一样大：第 1 格高 0.89，第 2 格高 0.89（差 0.00 < 0.04）；邻档体量几乎一样大：第 2 格高 0.89，第 3 格高 0.89（差 0.00 < 0.04）；邻档体量几乎一样大：第 3 格高 0.89，第 4 格高 0.89（差 0.00 < 0.04）；邻档体量几乎一样大：第 4 格高 0.89，第 5 格高 0.84（差 -0.05 < 0.04）；邻档体量几乎一样大：第 5 格高 0.84，第 6 格高 0.84（差 0.00 < 0.04）；邻档体量几乎一样大：第 6 格高 0.84，第 7 格高 0.84（差 0.00 < 0.04）",
+      "next_fix": "已满4轮。双嘴和邻档体量仍没过线。",
+      "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.GardenCan\n- 置信度: 0.45（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261110145331454RECIPE] [收敛胜出 8.94分] 同一套东西一档比一档大；走合成梯。青瓷园艺喷壶同模加装八档，chain_mode=same_obje — 从第三只起拱形提梁一直留到末只，末两只有浅金托，末只有三尖晶\n- 正向保留（要怎样）:\n  · 五链合成：不必每档保留L1原件/母体锁死；同域合理升级、档差明显即可\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n- 必须避开红线:\n  · [CHAT20261110145332852REDLINE] [收敛踩坑红线] 同一套东西一档比一档大；走合成梯。青瓷园艺喷壶同模加装八档，：避免「八张卡只剩白描边，卡内是深灰，壶坐在灰底上。下排第二只头顶没有拱形提梁，左右大环还在。后两」\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色；白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光| A 4:3 product catalog sheet on a solid dark gray background. Exactly eight equal white rounded-rectangle cards in a strict 2 rows by 4 columns grid that fills the frame evenly. Same card size, even gutters, no title, no text, no numbers, no logo, no UI, no finger, no food, no lobster. One pale celadon watering can per card, centered, inside the card. Opaque image. Glossy cartoon 3D, chunky, no hard outlines, warm saturated, soft light. Do not copy the reference board. Every can has a tall empty arched bail handle. Not a round teapot. Not a solid gold can. No face. SIZE is mandatory: heights about 34, 44, 54, 64, 74, 80, 86, 92 percent of each card. The bottom-left can is taller than the top-right can. Never shrink a later can. SPOUT RULE: cards 1, 2, 3, 4, 5, and 6 end in a smooth open oval mouth like a hose. Zero holes, zero dots, zero sieve. Cards 7 and 8 are the only ones allowed a round sprinkler with holes. TWO SPOUTS: cards 5, 6, 7, and 8 each have one spout pointing left and one spout pointing right, both long and separate. Cards 1 to 4 have only the right spout. 1 smallest plain open spout and handle only. 2 taller, copper ring around the open spout. 3 taller, keep ring, add a big green leaf. Open mouth, no holes. 4 taller, keep ring and leaf, add a large cream bow. Open mouth. 5 taller than card 4, keep bow leaf ring, ADD a left spout so two open tubes show. 6 taller, keep two open spouts, bow, leaf, ring, and add a copper pump in front of the empty handle. 7 taller, right spout gains a perforated sprinkler rose, left spout stays open. Handle, bow, leaf, ring, pump remain. 8 largest celadon green body with gold engraved flowers on the green, not solid gold. Two spouts, rose on the right one, handle, bow, leaf, ring, pump all visible.| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | 邻档必须逐格变高，第5格要高于第4格，末档最大。L5起要有左右两根壶嘴。L1到L6保持开口不许开孔。提梁全程保留。 | MUST_FIX (≤2): 邻档必须逐格变高，第5格要高于第4格，末档最大；L5起要有左右两根壶嘴",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.2,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_MAX_ROUNDS",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：第4格和第5格几乎一样大，第5格仍是一根开口壶嘴，没有第二根嘴。铜泵只出现在第6格，第7和第8格泵没了。第7格已经有金纹，节庆雕花提前。提梁八档都在，L1到L6",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.84"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：L1开口素壶、L2铜环、L4领结、L7才出现多孔淋头，八档提梁都在，第8格青瓷金纹，无字无脸。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.84"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "16:26:34"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-11-10 14:02:24 UTC+8"
+    },
+    "module": "merge.GardenCan",
+    "goal": "青瓷园艺喷壶八档合成梯整表，同一把壶只加装，chain_mode=same_object，白圆角卡深灰底",
+    "confidence": 0.45,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "只有未达标 provisional recipe，不计入定稿置信",
+      "个人口味/正向保留非空",
+      "注入红线可控（1 条，已按任务主题过滤）",
+      "挂载 0 张项目知识卡 + 1 张全局美术底层基础卡"
+    ],
+    "top_recipes": [
+      {
+        "id": "CHAT20261110145331454RECIPE",
+        "summary": "[收敛胜出 8.94分] 同一套东西一档比一档大；走合成梯。青瓷园艺喷壶同模加装八档，chain_mode=same_obje — 从第三只起拱形提梁一直留到末只，末两只有浅金托，末只有三尖晶",
+        "module": "merge.GardenCan"
+      }
+    ],
+    "top_redlines": [
+      {
+        "id": "CHAT20261110145332852REDLINE",
+        "summary": "[收敛踩坑红线] 同一套东西一档比一档大；走合成梯。青瓷园艺喷壶同模加装八档，：避免「八张卡只剩白描边，卡内是深灰，壶坐在灰底上。下排第二只头顶没有拱形提梁，左右大环还在。后两」",
+        "module": "merge.GardenCan"
+      }
+    ],
+    "art_decisions": [],
+    "private_knowledge": [],
+    "shared_knowledge": [
+      {
+        "id": "palette-70-20-10",
+        "title": "色彩构成：70-20-10 色板比例黄金法则",
+        "body": "画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+        "layer_scope": "shared"
+      }
+    ],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [
+        "冷光源",
+        "暖光",
+        "柔光"
+      ],
+      "preferred_composition": [
+        "半身",
+        "居中/对称构图"
+      ],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [
+        "避免过饱和"
+      ],
+      "banned_habits": [
+        "廉价塑料感/油腻高光",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色",
+        "白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计"
+      ],
+      "keep_phrases": [
+        "五链合成：不必每档保留L1原件/母体锁死；同域合理升级、档差明显即可",
+        "确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色",
+        "确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶"
+      ],
+      "banned_habits_raw_tail": [
+        "禁止偏离样张画风：过度霓虹、脏暗阴影、油腻高光、写实皮肤毛孔、扁平UI描边",
+        "电池审稿：原画竖构图避免贴样张布局；边缘反光勿过曝",
+        "电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感",
+        "黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差",
+        "错误头身比/头过大",
+        "漏抠/黑底/毛边",
+        "廉价塑料感/油腻高光",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色"
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.GardenCan\n- 置信度: 0.45（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261110145331454RECIPE] [收敛胜出 8.94分] 同一套东西一档比一档大；走合成梯。青瓷园艺喷壶同模加装八档，chain_mode=same_obje — 从第三只起拱形提梁一直留到末只，末两只有浅金托，末只有三尖晶\n- 正向保留（要怎样）:\n  · 五链合成：不必每档保留L1原件/母体锁死；同域合理升级、档差明显即可\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n- 必须避开红线:\n  · [CHAT20261110145332852REDLINE] [收敛踩坑红线] 同一套东西一档比一档大；走合成梯。青瓷园艺喷壶同模加装八档，：避免「八张卡只剩白描边，卡内是深灰，壶坐在灰底上。下排第二只头顶没有拱形提梁，左右大环还在。后两」\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色；白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+    "built_at": "2026-11-10 16:10:59 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：L1到L6壶嘴都已是多孔淋头，玫瑰淋头提前出现。L4没有领结。L5没有第二根壶嘴，也没有领结。L8没有节庆雕花。提梁都在，不是圆茶壶。像素上第1到4格主体框高都",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.81"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：2x4白圆角卡深灰底，光泽卡通青瓷，八档都有提梁和长壶嘴，无字无脸，没有抄棋盘龙虾英文。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.81"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：第6格铜泵顶替了拱形提梁，提梁丢了。第1到6格壶嘴仍是多孔淋头。第5格没有领结也没有第二根壶嘴。第7格泵不见了。第8格整壶变成纯金，青瓷母体没了，也没有第二根壶",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.42"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：白圆角卡和深灰底还在，青瓷光泽卡通，第4格有奶油领结和叶贴，第6格有铜泵，第8格雕花清楚，无字无脸。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.42"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：第5格比第4格更小。第3格起壶嘴又变成多孔淋头。五到八格都只有一根壶嘴，没有双嘴。第6格提梁还在，铜泵留到了第8格。第8格仍是青瓷雕花，不是纯金。像素审计仍把白",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.82"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：第1格是开口素壶且有提梁。第6格铜泵和提梁同时在。第8格青瓷上有金花，无字无脸，深灰底白卡。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.82"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：第4格和第5格几乎一样大，第5格仍是一根开口壶嘴，没有第二根嘴。铜泵只出现在第6格，第7和第8格泵没了。第7格已经有金纹，节庆雕花提前。提梁八档都在，L1到L6",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.84"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：L1开口素壶、L2铜环、L4领结、L7才出现多孔淋头，八档提梁都在，第8格青瓷金纹，无字无脸。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.84"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 2,
+  "regression_drop": 0.15,
+  "safe_early_stop": false,
+  "merge_delivery": "overview_sheet",
+  "merge_sheet_cap": 4,
+  "merge_discuss_cap": 2,
+  "single_judge": false,
+  "understanding_contract": {
+    "version": 1,
+    "raw_utterance": "青瓷园艺喷壶八档合成梯整表，同一把壶只加装，chain_mode=same_object，白圆角卡深灰底",
+    "l0": {
+      "route_ids": [
+        "merge.ladder"
+      ],
+      "banner": "【按 同域合成梯：先定链型与关系，再按交付出图 走了】",
+      "delivery": "merge.ladder"
+    },
+    "l1": {
+      "locks": [],
+      "unlocks": [],
+      "defaults_shown": [],
+      "commercial_vibe": ""
+    },
+    "l2": {
+      "open": true,
+      "surface_fix": "",
+      "last_feedback": "",
+      "feedback_layer": ""
+    },
+    "notes": ""
+  },
+  "discussions": [
+    {
+      "round": 0,
+      "kind": "reasonableness",
+      "prompt": "same_object 同模加装。4:3 整表，2行4列白圆角卡，深灰实底，不透明。每格一件居中，无字，无等级字，道具无脸。每档仍是同一把青瓷园艺喷壶，base_body 保留母体词，拱形提梁和长壶嘴每档都在，零件累计：素壶、壶嘴环、叶贴、领结、第二壶嘴、铜泵、圆形多孔玫瑰淋头、节庆雕花。体量逐档变大，主体留在卡内并留边，不超框。禁止画成圆茶壶。垫图只锁光泽卡通3D、圆润厚实、无硬描边、暖饱和、柔光渐变。一眼失败：任一档提梁丢了，或相邻两档一样大。",
+      "strengths": "合理性闸已过：subject_action=ok；element_budget=ok；hard_locks=ok；fail_at_glance=ok；single_centered_item=ok；chain_mode_declared=ok；upgrade_reason_concrete=ok；family_or_base_lock=ok",
+      "defects": "",
+      "next_fix": "首轮 generate 使用本修订提示词；审美迭代不得推翻硬锁与元素预算"
+    },
+    {
+      "round": 1,
+      "prompt": "第1稿。chain_mode=same_object，过程类型=同模加装，levels=8，delivery=overview_sheet，grid=2x4。base_body=青瓷园艺喷壶。提梁和长壶嘴每档都在，禁止画成圆茶壶。parts_add累计：L1素壶；L2壶嘴环；L3壶嘴环与叶贴；L4再加领结；L5再加第二壶嘴；L6再加铜泵；L7再加圆形多孔玫瑰淋头；L8再加节庆雕花。后档仍看得见前面的零件。对标：过程对标药瓶空瓶到塞到环到托，母体不换；完成度对标 Merge Mansion 货柜，低档已是完整素件，铜与节庆只在后段。不采用手套到铲到剪的换物种档序，也不自编假竞品名。surface：光泽卡通3D、圆润厚实、无硬描边、暖饱和、柔光渐变。垫图只锁光泽。五问：同域同母体；无回退；无大跳且末档仍是这把喷壶；邻档剪影可分且体量逐档变大；升级理由是具体零件累计。机读 relation-judge exit 0。",
+      "strengths": "",
+      "defects": "无。五问与 relation-judge 已过",
+      "next_fix": "不写第2稿，进入整表出图"
+    }
+  ],
+  "reasonableness_history": [
+    {
+      "reviewed_at": 1794298307.4754846,
+      "passed": true,
+      "skill": "merge",
+      "issues": []
+    }
+  ],
+  "reasonableness": {
+    "passed": true,
+    "skill": "merge",
+    "draft_prompt": "一组青瓷园艺喷壶合成梯整表，八档同模加装，深灰底白圆角卡。",
+    "revised_prompt": "same_object 同模加装。4:3 整表，2行4列白圆角卡，深灰实底，不透明。每格一件居中，无字，无等级字，道具无脸。每档仍是同一把青瓷园艺喷壶，base_body 保留母体词，拱形提梁和长壶嘴每档都在，零件累计：素壶、壶嘴环、叶贴、领结、第二壶嘴、铜泵、圆形多孔玫瑰淋头、节庆雕花。体量逐档变大，主体留在卡内并留边，不超框。禁止画成圆茶壶。垫图只锁光泽卡通3D、圆润厚实、无硬描边、暖饱和、柔光渐变。一眼失败：任一档提梁丢了，或相邻两档一样大。",
+    "checklist": {
+      "subject_action": {
+        "status": "ok",
+        "note": ""
+      },
+      "element_budget": {
+        "status": "ok",
+        "note": ""
+      },
+      "hard_locks": {
+        "status": "ok",
+        "note": ""
+      },
+      "fail_at_glance": {
+        "status": "ok",
+        "note": ""
+      },
+      "single_centered_item": {
+        "status": "ok",
+        "note": ""
+      },
+      "chain_mode_declared": {
+        "status": "ok",
+        "note": ""
+      },
+      "upgrade_reason_concrete": {
+        "status": "ok",
+        "note": ""
+      },
+      "family_or_base_lock": {
+        "status": "ok",
+        "note": ""
+      }
+    },
+    "issues": [],
+    "notes": "",
+    "reviewed_at": 1794298307.4754846,
+    "reviewed_at_iso": "2026-11-10 16:11:47",
+    "force_pass": false,
+    "skill_raw": "merge"
+  },
+  "warm_start_merged": true,
+  "warm_start_merged_at": "2026-11-10 16:26:11",
+  "warm_start_block_sha1": "51c445312566",
+  "ActionRequired": "STOP_PICK_BEST",
+  "showcase_ready": true,
+  "winner": {
+    "round": 4,
+    "round_label": "第 4 轮精修",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "4:3",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_4x3.png"
+    ],
+    "param_validation": {
+      "valid": true,
+      "validation_passed": true,
+      "case_id": "gh_can_same_20261110",
+      "scale": "medium",
+      "aspect_ratio": "4:3",
+      "ref_aspect_ratio": "4:3",
+      "ref_dimensions": "3584x2688",
+      "output_aspect_ratio": "4:3",
+      "output_dimensions": "1152x864",
+      "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_4x3.png",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_4x3.png"
+      ],
+      "inherited_default_aspect_ratio": true,
+      "inherited_default_pad_image": true,
+      "matched_ref_aspect_ratio": true,
+      "matched_ref_pad_image": true,
+      "matched_output_aspect_ratio": true,
+      "three_step_stage": "step3_judge",
+      "three_step_verified": true,
+      "warnings": [],
+      "continuation_pad": false,
+      "pad_diverged": false
+    },
+    "generated_at": "16:26:11",
+    "image": "assets/skill_20261110_gh/merge_same/sheet_r4.jpg",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 218487,
+      "size_kb": 213.4,
+      "width": 1152,
+      "height": 864,
+      "aspect_ratio": "4:3",
+      "canonical_aspect_ratio": "4:3",
+      "color_entropy": 7.13
+    },
+    "raw_score": 8.84,
+    "score": 8.84,
+    "target_score_threshold": 9.5,
+    "dims": "构图7.9/光影9.2/透视9.2/质感9.2/风格9.3/无瑕疵8.6",
+    "dims_parsed": {
+      "composition": 7.9,
+      "lighting_color": 9.2,
+      "perspective_anatomy": 9.2,
+      "texture_detail": 9.2,
+      "spec_style": 9.3,
+      "flawlessness": 8.6
+    },
+    "weighted_score": 8.84,
+    "audit_warnings": [
+      "收敛停滞预警：本轮净增 +0.02 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+      "Agent Absolute-5D 已采纳（门槛 9.5）",
+      "prompt 改动 57% 超过档位上限 40%",
+      "邻档体量几乎一样大：第 1 格高 0.89，第 2 格高 0.89（差 0.00 < 0.04）",
+      "邻档体量几乎一样大：第 2 格高 0.89，第 3 格高 0.89（差 0.00 < 0.04）",
+      "邻档体量几乎一样大：第 3 格高 0.89，第 4 格高 0.89（差 0.00 < 0.04）",
+      "邻档体量几乎一样大：第 4 格高 0.89，第 5 格高 0.84（差 -0.05 < 0.04）",
+      "邻档体量几乎一样大：第 5 格高 0.84，第 6 格高 0.84（差 0.00 < 0.04）",
+      "邻档体量几乎一样大：第 6 格高 0.84，第 7 格高 0.84（差 0.00 < 0.04）"
+    ],
+    "stagnated": true,
+    "strengths": "L1开口素壶、L2铜环、L4领结、L7才出现多孔淋头，八档提梁都在，第8格青瓷金纹，无字无脸。",
+    "defects": "第4格和第5格几乎一样大，第5格仍是一根开口壶嘴，没有第二根嘴。铜泵只出现在第6格，第7和第8格泵没了。第7格已经有金纹，节庆雕花提前。提梁八档都在，L1到L6是开口，玫瑰淋头从第7格才出现。第8格仍是青瓷不是纯金。白卡边像素审计未过。；prompt 改动 57% 超过档位上限 40%；邻档体量几乎一样大：第 1 格高 0.89，第 2 格高 0.89（差 0.00 < 0.04）；邻档体量几乎一样大：第 2 格高 0.89，第 3 格高 0.89（差 0.00 < 0.04）；邻档体量几乎一样大：第 3 格高 0.89，第 4 格高 0.89（差 0.00 < 0.04）；邻档体量几乎一样大：第 4 格高 0.89，第 5 格高 0.84（差 -0.05 < 0.04）；邻档体量几乎一样大：第 5 格高 0.84，第 6 格高 0.84（差 0.00 < 0.04）；邻档体量几乎一样大：第 6 格高 0.84，第 7 格高 0.84（差 0.00 < 0.04）",
+    "next_fix": "已满4轮。双嘴和邻档体量仍没过线。",
+    "prompt": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.GardenCan\n- 置信度: 0.45（fast-track 资格: 否）\n- 优先复用定稿方向:\n  · [CHAT20261110145331454RECIPE] [收敛胜出 8.94分] 同一套东西一档比一档大；走合成梯。青瓷园艺喷壶同模加装八档，chain_mode=same_obje — 从第三只起拱形提梁一直留到末只，末两只有浅金托，末只有三尖晶\n- 正向保留（要怎样）:\n  · 五链合成：不必每档保留L1原件/母体锁死；同域合理升级、档差明显即可\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n- 必须避开红线:\n  · [CHAT20261110145332852REDLINE] [收敛踩坑红线] 同一套东西一档比一档大；走合成梯。青瓷园艺喷壶同模加装八档，：避免「八张卡只剩白描边，卡内是深灰，壶坐在灰底上。下排第二只头顶没有拱形提梁，左右大环还在。后两」\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色；白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光| A 4:3 product catalog sheet on a solid dark gray background. Exactly eight equal white rounded-rectangle cards in a strict 2 rows by 4 columns grid that fills the frame evenly. Same card size, even gutters, no title, no text, no numbers, no logo, no UI, no finger, no food, no lobster. One pale celadon watering can per card, centered, inside the card. Opaque image. Glossy cartoon 3D, chunky, no hard outlines, warm saturated, soft light. Do not copy the reference board. Every can has a tall empty arched bail handle. Not a round teapot. Not a solid gold can. No face. SIZE is mandatory: heights about 34, 44, 54, 64, 74, 80, 86, 92 percent of each card. The bottom-left can is taller than the top-right can. Never shrink a later can. SPOUT RULE: cards 1, 2, 3, 4, 5, and 6 end in a smooth open oval mouth like a hose. Zero holes, zero dots, zero sieve. Cards 7 and 8 are the only ones allowed a round sprinkler with holes. TWO SPOUTS: cards 5, 6, 7, and 8 each have one spout pointing left and one spout pointing right, both long and separate. Cards 1 to 4 have only the right spout. 1 smallest plain open spout and handle only. 2 taller, copper ring around the open spout. 3 taller, keep ring, add a big green leaf. Open mouth, no holes. 4 taller, keep ring and leaf, add a large cream bow. Open mouth. 5 taller than card 4, keep bow leaf ring, ADD a left spout so two open tubes show. 6 taller, keep two open spouts, bow, leaf, ring, and add a copper pump in front of the empty handle. 7 taller, right spout gains a perforated sprinkler rose, left spout stays open. Handle, bow, leaf, ring, pump remain. 8 largest celadon green body with gold engraved flowers on the green, not solid gold. Two spouts, rose on the right one, handle, bow, leaf, ring, pump all visible.| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | 邻档必须逐格变高，第5格要高于第4格，末档最大。L5起要有左右两根壶嘴。L1到L6保持开口不许开孔。提梁全程保留。 | MUST_FIX (≤2): 邻档必须逐格变高，第5格要高于第4格，末档最大；L5起要有左右两根壶嘴",
+    "continuation": false,
+    "passed": false,
+    "gate_blocked": true,
+    "image_gate_blocked": false,
+    "anatomy_score": 9.2,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "unknown",
+    "judge_source": "agent_absolute_5d",
+    "remote_vlm": {
+      "source": "agent_self_judge",
+      "provider": "",
+      "model": "",
+      "error": "",
+      "active": false,
+      "score_evidence": {},
+      "evidence_missing_dims": [],
+      "review": {
+        "pass_count": 0,
+        "rerated": false,
+        "reason": ""
+      }
+    },
+    "should_continue_next_round": false,
+    "decision": "STOP_MAX_ROUNDS",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "style_lock",
+        "lesson": "本轮短板偏「style_lock」：第4格和第5格几乎一样大，第5格仍是一根开口壶嘴，没有第二根嘴。铜泵只出现在第6格，第7和第8格泵没了。第7格已经有金纹，节庆雕花提前。提梁八档都在，L1到L6",
+        "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+        "from_score": "8.84"
+      },
+      {
+        "category": "keep",
+        "lesson": "保留本轮已做对的：L1开口素壶、L2铜环、L4领结、L7才出现多孔淋头，八档提梁都在，第8格青瓷金纹，无字无脸。",
+        "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+        "from_score": "8.84"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "16:26:34"
+  },
+  "rounds_to_converge": 4,
+  "convergence_badge": "共 4 轮未达阈值，采用最高分",
+  "winner_image": "assets/skill_20261110_gh/merge_same/sheet_r4.jpg",
+  "best_image": "assets/skill_20261110_gh/merge_same/sheet_r4.jpg",
+  "final_image": "assets/skill_20261110_gh/merge_same/final.jpg",
+  "settle_pending": true,
+  "process_board": ".memory-art/converge/boards/gh_can_same_20261110/index.html"
+}

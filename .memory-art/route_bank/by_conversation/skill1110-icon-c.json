@@ -1,0 +1,14 @@
+{
+  "saved_at": 1794292595.4532418,
+  "text": "背包道具格；走图标C。蘑菇、喷壶、种子袋、蜂蜜罐，纯黑隔离底，批量预览。",
+  "banner": "【按 Mode C 走了】",
+  "route_ids": [
+    "icon.c"
+  ],
+  "mode": "skill",
+  "execute_ok": true,
+  "artist_say": "【按 Mode C 走了】\n按背包道具格隔离底图标来做（Cursor 纯黑；透明引擎才真 alpha）。",
+  "plan_conflict": false,
+  "confidence": "high",
+  "conversation_id": "skill1110-icon-c"
+}

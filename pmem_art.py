@@ -29,7 +29,7 @@ from lifecycle import ensure_stdio_survives_locale
 
 ensure_stdio_survives_locale()
 
-VERSION = "0.16.8-art"
+VERSION = "0.16.9-art"
 MEMORY_DIR = ".memory-art"
 
 KIND_META = {
@@ -1068,8 +1068,12 @@ def load_project(root: Path, *, embed_images: bool = False) -> dict[str, Any]:
                 continue
             # 记忆条目常带 Windows 反斜杠；必须归一成 POSIX，否则画廊同一张出两张卡
             norm = _norm_project_rel(root, str(a.get("path") or ""))
-            if norm:
-                asset_Set.add(norm)
+            if not norm:
+                continue
+            # preview.html 等非图 sidecar 可挂在条目上，但不进图片 QA / 分辨率合同
+            if Path(norm).suffix.lower() not in asset_exts:
+                continue
+            asset_Set.add(norm)
 
     assets_info: dict[str, dict[str, Any]] = {}
     for rel_path in sorted(asset_Set):

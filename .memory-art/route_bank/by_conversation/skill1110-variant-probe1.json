@@ -1,0 +1,14 @@
+{
+  "saved_at": 1794292741.6348233,
+  "text": "同一身份；换表情；机位已在图上；走变体。这个妖精换成惊讶睁大眼。同一个女孩，身份和机位不动，再来一张惊讶的表情",
+  "banner": "【按 变体 走了】",
+  "route_ids": [
+    "draw.variant"
+  ],
+  "mode": "skill",
+  "execute_ok": true,
+  "artist_say": "【按 变体 走了】\n按变体：同一身份，换表情/动作/画风。",
+  "plan_conflict": false,
+  "confidence": "high",
+  "conversation_id": "skill1110-variant-probe1"
+}

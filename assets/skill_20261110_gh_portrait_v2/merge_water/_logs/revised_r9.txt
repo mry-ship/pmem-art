@@ -1,0 +1,15 @@
+Portrait 9:16 merge overview sheet, strict 4 rows by 2 columns. Eight equal rounded soft-white cards on PURE BLACK opaque isolation (#000000). chain_mode=same_object. base_body=garden watering tool family. 每档单件居中、非场景; one single centered complete SKU per cell, not a scene, no people, no environment props. Gossip Harbor glossy cartoon 3D teal celadon, soft light, no hard outlines, no level numbers, no text, no faces.
+
+Strict subject-box heights: L1=0.40 L2=0.48 L3=0.56 L4=0.64 L5=0.72 L6=0.80 L7=0.86 L8=0.96 of card height. L7 hose-reel occupied height must be clearly taller than or at least equal to L6 backpack; L8 must be taller than both L6 and L7 and widest.
+
+Identity replacement ladder (parts_add / replace modules):
+1 open water cup only
+2 short pointed spout can NO rose
+3 long open-tube spout can NO rose
+4 first rose/shower disc can
+5 hand pump mister bottle taller
+6 backpack spray tank with straps
+7 hose reel disk ONLY no nozzle no wand
+8 ONE-PIECE irrigation cart: rectangular tank body IS the vehicle chassis, fixed horizontal spray boom arm welded to tank, four wheels under tank; FORBID a watering-can silhouette welded onto a wheel frame; FORBID separate can stuck on cart.
+
+Keep teal family. Soft oval contact shadow. Margin inside cards; no clipping. sheet_safe_zone ok.

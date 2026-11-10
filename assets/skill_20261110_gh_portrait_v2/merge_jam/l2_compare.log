@@ -1,0 +1,18 @@
+﻿pyw : Traceback (most recent call last):
+所在位置 行:8 字符: 1
++ pyw -3 -u "assets\skill_20261110_gh_portrait_v2\merge_jam\_compare_l2 ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Traceback (most recent call last)::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  File "C:\Users\ZhengLangPC\Desktop\Cursor-Pmem-Art\assets\skill_20261110_gh_portrait_v2\merge_jam\_compare_l2.py", li
+ne 29, in <module>
+    (ROOT / "l2_compare.log").write_text("\n".join(lines) + "\n", encoding="utf-8")
+  File "C:\Users\ZhengLangPC\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ZhengLangPC\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_2026111
+0_gh_portrait_v2\\merge_jam\\l2_compare.log'

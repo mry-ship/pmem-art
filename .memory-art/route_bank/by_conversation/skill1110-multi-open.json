@@ -1,0 +1,14 @@
+{
+  "saved_at": 1794292707.2348304,
+  "text": "多张附图各管一件事；走多图分工。身份图管脸，结构图管关着的花园木门机位，下一张只改成打开。",
+  "banner": "【按 多图分工 走了】",
+  "route_ids": [
+    "draw.multi"
+  ],
+  "mode": "skill",
+  "execute_ok": true,
+  "artist_say": "【按 多图分工 走了】\n按多图分工：几张参考各管一件事。",
+  "plan_conflict": false,
+  "confidence": "high",
+  "conversation_id": "skill1110-multi-open"
+}

@@ -1,0 +1,54 @@
+size=169x276
+QUANTIZED
+#A1B041 n=  980 pct= 15.3 h=  68.1 s=0.63 v=0.69
+#E2EAD1 n=  723 pct= 11.3 h=  79.2 s=0.11 v=0.92
+#A04E45 n=  486 pct=  7.6 h=   5.9 s=0.57 v=0.63
+#658C55 n=  425 pct=  6.6 h= 102.5 s=0.39 v=0.55
+#D4DE58 n=  400 pct=  6.2 h=  64.5 s=0.60 v=0.87
+#D6B17F n=  395 pct=  6.2 h=  34.5 s=0.41 v=0.84
+#498651 n=  392 pct=  6.1 h= 127.9 s=0.46 v=0.53
+#4A6246 n=  373 pct=  5.8 h= 111.4 s=0.29 v=0.38
+#4D342B n=  358 pct=  5.6 h=  15.9 s=0.44 v=0.30
+#DA8A74 n=  353 pct=  5.5 h=  12.9 s=0.47 v=0.85
+#7ECA96 n=  353 pct=  5.5 h= 138.9 s=0.38 v=0.79
+#B4695F n=  285 pct=  4.5 h=   7.1 s=0.47 v=0.71
+#A5895F n=  260 pct=  4.1 h=  36.0 s=0.42 v=0.65
+#74A95F n=  228 pct=  3.6 h= 103.0 s=0.44 v=0.66
+#ADCA65 n=  223 pct=  3.5 h=  77.2 s=0.50 v=0.79
+#CFCA69 n=  166 pct=  2.6 h=  57.1 s=0.49 v=0.81
+REGIONS
+grass_center       median=#C4CA3D mean=#B7B64E n=1870
+leaf_left          median=#56884C mean=#628E56 n=1776
+leaf_right         median=#57663F mean=#6B723E n=1728
+sky_gap            median=#ED9194 mean=#E99897 n=868
+wood_roof_left     median=#9F663B mean=#976B47 n=756
+door_brown         median=#B3A642 mean=#A2926B n=612
+wall_cream         median=#AD6433 mean=#A16C49 n=374
+purple_cap         median=#76775D mean=#8A836B n=680
+tower_purple       median=#9E8776 mean=#97897D n=858
+pink_bloom_top     median=#BEA05C mean=#AE9B68 n=810
+water              median=#A1A74D mean=#8FA76F n=1550
+stone_path         median=#CFC746 mean=#D1C15C n=1716
+mushroom_red       median=#D5BA69 mean=#BEB072 n=1026
+boat_gold          median=#C2A050 mean=#AF9D68 n=792
+window_glow        median=#C46C37 mean=#AC7250 n=308
+GRID
+r0 #ADCD4B #7AA236 #BA9B7F #D19B94 #B8CF8D #A1B995 #90AA8C #ABD9B0
+r1 #89955D #B0C58A #AAB97F #97A476 #878884 #AF9E73 #966E4C #7C9259
+r2 #648C4E #7EA161 #75836B #B599A2 #837978 #A97E5F #6B4736 #718339
+r3 #828159 #8E997E #A08356 #B99B67 #905C2A #785A34 #81674D #60833C
+r4 #8AAE80 #99A468 #A0A771 #A6B072 #CCD043 #D6C675 #B89662 #AE9754
+r5 #77A358 #96A06A #A2A93D #A7B533 #B6B433 #C49367 #C08B5E #B4A658
+FAMILIES
+yellow_green       n=  7308 pct= 15.7 median=#80AC38
+leaf_green         n=  2863 pct=  6.1 median=#528759
+deep_green         n=  1322 pct=  2.8 median=#2E5529
+pale_highlight     n=  2462 pct=  5.3 median=#ECF4DF
+wood_tan           n=   550 pct=  1.2 median=#A99571
+bark               n=   142 pct=  0.3 median=#523A20
+terracotta         n=  2175 pct=  4.7 median=#713B1A
+salmon_pink        n=  2766 pct=  5.9 median=#C27438
+purple             n=  1918 pct=  4.1 median=#AC63DC
+blue_water         n=  1496 pct=  3.2 median=#388FAF
+gold               n=  2710 pct=  5.8 median=#D79740
+red                n=  2389 pct=  5.1 median=#CF5C50

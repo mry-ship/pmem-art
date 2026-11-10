@@ -1,0 +1,84 @@
+tracks:
+  garden_water:
+    chain_mode: shop_ladder
+    levels: 8
+    delivery: overview_sheet
+    grid_rows: 4
+    grid_cols: 2
+    process_type: 同族形变货柜完整货换代
+    commercial_ref: "Gossip Harbor 橙子八档 Orange→Slice→Wedge→Juice→Smoothie→Cake→Tart→Dessert：每一档都换成下一件完整货。茶链末段 Teapot→Tea Party Set 对应末档收成一件套装。本链只抽换代曲线与犒赏收套，不把水果或茶具画进来。"
+    surface: "光泽卡通 3D，圆润厚实，无硬描边，暖饱和，柔光渐变，青瓷色相，道具干净发亮，缩略可认。浅色圆角格接近棋盘浅蓝。不透明实底。竖屏整表。"
+    family: "园艺浇水店域加青瓷色相。家族基因不是同一把壶上的环、叶或花纹。"
+    rows:
+      - level: 1
+        name: 小喷壶
+        silhouette: "矮圆肚小喷壶，短弯嘴，顶上小提梁"
+        scale_delta: "基档完整小件"
+        scale_pct: 0.56
+        visual_frame_h: 0.48
+        parts_add: "—"
+        evolve_to: "小喷壶"
+        merge_why: "—"
+      - level: 2
+        name: 长嘴喷壶
+        silhouette: "细长壶身，长直嘴向前伸出，后侧把手"
+        scale_delta: "体量再大一圈"
+        scale_pct: 0.60
+        visual_frame_h: 0.55
+        parts_add: "—"
+        evolve_to: "长嘴喷壶"
+        merge_why: "两把小喷壶合成后整件换成细长壶身的长嘴喷壶，出水距离变长，是另一把完整壶。"
+      - level: 3
+        name: 莲蓬头喷壶
+        silhouette: "圆壶配朝前的宽圆莲蓬喷头，喷孔面清楚"
+        scale_delta: "体量再大一圈"
+        scale_pct: 0.64
+        visual_frame_h: 0.62
+        parts_add: "—"
+        evolve_to: "莲蓬头喷壶"
+        merge_why: "两把长嘴喷壶合成后整件换成莲蓬头喷壶，单孔长嘴换成整面莲蓬喷头。"
+      - level: 4
+        name: 手持泵壶
+        silhouette: "立式泵筒加侧向扳机喷杆，不再是浇壶"
+        scale_delta: "体量再大一圈"
+        scale_pct: 0.68
+        visual_frame_h: 0.69
+        parts_add: "—"
+        evolve_to: "手持泵壶"
+        merge_why: "两把莲蓬头喷壶合成后换成手持泵壶，重力浇壶换成按压喷雾，剪影改成泵筒加喷杆。"
+      - level: 5
+        name: 背负喷雾器
+        silhouette: "立着的背罐、肩带和软管喷枪组成一件货"
+        scale_delta: "体量再大一圈"
+        scale_pct: 0.72
+        visual_frame_h: 0.76
+        parts_add: "—"
+        evolve_to: "背负喷雾器"
+        merge_why: "两只手持泵壶合成后换成背负喷雾器，水量从手持筒挪到背后罐，软管喷枪属于这一件货。"
+      - level: 6
+        name: 水管卷盘
+        silhouette: "圆盘卷管，侧面摇把，管头喷嘴露出"
+        scale_delta: "体量再大一圈"
+        scale_pct: 0.76
+        visual_frame_h: 0.83
+        parts_add: "—"
+        evolve_to: "水管卷盘"
+        merge_why: "两台背负喷雾器合成后换成水管卷盘，随身罐换成可展开的成卷水管，剪影变成圆盘。"
+      - level: 7
+        name: 带轮水箱
+        silhouette: "卧式水箱压在两个圆轮上，顶部注水口"
+        scale_delta: "体量再大一圈"
+        scale_pct: 0.79
+        visual_frame_h: 0.89
+        parts_add: "—"
+        evolve_to: "带轮水箱"
+        merge_why: "两只水管卷盘合成后换成带轮水箱，零散软管收成可推行的储水箱，轮子成为剪影。"
+      - level: 8
+        name: 温室浇水套装
+        silhouette: "一件小车套装，水箱、卷管和莲蓬喷杆收在同一架上"
+        scale_delta: "末档最大"
+        scale_pct: 0.81
+        visual_frame_h: 0.94
+        parts_add: "—"
+        evolve_to: "温室浇水套装"
+        merge_why: "两只带轮水箱合成后收成一件温室浇水套装，水箱、卷管和莲蓬喷杆装成同一件可售套装。"

@@ -1,0 +1,8 @@
+🏁 第 4/4 轮得分 8.91 < 9.50，已满 4 轮上限！
+   · 全阶段最高分为第 4 轮 (8.91 分: c:\Users\ZhengLangPC\Desktop\Cursor-Pmem-Art\assets\skill_20261110_gh_portrait\merge_wind\sheet_r4.jpg)。
+   · 请立即运行 `pyw -3 -u pmem_art.py converge finish --id gh-wind-portrait` 结算（默认写记忆并打印评分履历；只要一行结论加 `--quiet`）。
+📚 本轮可学（能力提升）:
+   1. [style_lock] 本轮短板偏「style_lock」：八个浅蓝圆角块仍然几乎一样高，第1块和第2块同高，第8块没有高于第6块的立管排。第8档仍是偏横的棕色手摇风琴，不是竖高的奶油节庆风琴箱。；邻档体量几乎一样大：第
+      → 练习: 对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习
+   2. [keep] 保留本轮已做对的：短哨嘴是叶绿、没有叶片。第4格是斜向长笛，第6格是高低立管排，第7格是小键盘。浅蓝圆角格，没有字母和提琴。
+      → 练习: 下一轮 Prompt 显式写入这些亮点作为正向锚点

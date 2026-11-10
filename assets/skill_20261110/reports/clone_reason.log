@@ -1,0 +1,10 @@
+✅ [合理性闸 · clone] 通过
+  ✓ subject_action（主体在做什么/交付物是什么） · 小妖精坐在窗边写信
+  ✓ contact_scale（接触关系与相对尺度） · 人坐椅上，信纸和灯落在桌面并有接触影
+  ✓ element_budget（元素预算（不堆景不过载）） · 只留妖精窗桌信纸暖灯
+  ✓ hard_locks（硬锁（画幅/透明底/无字/机位等）） · 3:4，锁媒介饱和色立体高光柔和接触影，不锁构图主体
+  ✓ fail_at_glance（一眼失败条件已写明） · 树屋池塘木船鼻鼠或巨叶框出现即失败
+  ✓ new_subject_not_ref_echo（新题材，不回声参考主体） · 室内雨夜写信，不是花园树屋
+修订提示词（generate 将优先用这句）：
+Vertical 3:4 interior, new camera, not the reference layout. One small rounded fairy with two small wings sits on a chair at a wooden desk beside a tall window, writing a letter on a rainy night. On the desk keep only one sheet of letter paper with unreadable ink squiggles and one warm lamp. The fairy has a large head, soft cheeks, two eyes with colored irises and white catchlights, one pen in one hand, the other hand resting on the paper, both hands touching the page. Cool blue rain on the wind…
+已写入会话 `skill1110-clone`。下一步用 revised 做 converge generate（可省略 --prompt，将自动注入）。

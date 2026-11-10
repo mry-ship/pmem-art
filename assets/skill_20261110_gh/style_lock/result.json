@@ -1,0 +1,8 @@
+{
+  "route_id": "style.lock",
+  "generated": false,
+  "reason": "本趟只锁货柜气质，不出验证图",
+  "module": "brand.SkillRun20261110Gh",
+  "primary_hex": ["#FCF8D6", "#D1342C", "#D98F34"],
+  "lock": "assets/skill_20261110_gh/style_lock/lock.md"
+}

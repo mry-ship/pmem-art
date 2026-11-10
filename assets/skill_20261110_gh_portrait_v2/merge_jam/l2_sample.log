@@ -1,0 +1,4 @@
+cell_l2_fullflesh_r8.jpg: whiteish=0.023 pale_pink=0.034 magenta=0.322 dark=0.151 meanRGB=[163.8000030517578, 49.70000076293945, 62.900001525878906] -> l2_zoom_cell_l2_fullflesh_r8.jpg
+cell_l2_fullflesh_r8b.jpg: whiteish=0.023 pale_pink=0.025 magenta=0.307 dark=0.169 meanRGB=[160.10000610351562, 49.0, 61.400001525878906] -> l2_zoom_cell_l2_fullflesh_r8b.jpg
+l2_crop_r18.jpg: whiteish=0.016 pale_pink=0.028 magenta=0.359 dark=0.054 meanRGB=[178.10000610351562, 47.599998474121094, 67.80000305175781] -> l2_zoom_l2_crop_r18.jpg
+final.jpg: whiteish=0.042 pale_pink=0.098 magenta=0.474 dark=0.036 meanRGB=[194.8000030517578, 76.80000305175781, 86.19999694824219] -> l2_zoom_final.jpg

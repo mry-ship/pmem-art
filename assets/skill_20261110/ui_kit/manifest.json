@@ -1,0 +1,22 @@
+{
+  "source": "assets/skill_20261110/ui_kit/sheets/sheet_r4.jpg",
+  "canvas": {"width": 1280, "height": 720},
+  "isolation": "opaque_isolation",
+  "parts": [
+    {"name": "panel_main", "group": "panel", "state": "normal", "nine_slice": {"left": 96, "right": 96, "top": 96, "bottom": 96}, "scalable": true},
+    {"name": "button_enter", "group": "button", "state": "normal", "nine_slice": {"left": 40, "right": 40, "top": 36, "bottom": 36}, "scalable": true},
+    {"name": "button_enter", "group": "button", "state": "pressed", "nine_slice": {"left": 40, "right": 40, "top": 32, "bottom": 32}, "scalable": true},
+    {"name": "progress_track", "group": "progress", "state": "empty", "nine_slice": {"left": 28, "right": 28, "top": 16, "bottom": 16}, "scalable": true},
+    {"name": "progress_track", "group": "progress", "state": "full", "nine_slice": {"left": 28, "right": 28, "top": 16, "bottom": 16}, "scalable": true},
+    {"name": "tab", "group": "tab", "state": "selected", "nine_slice": {"left": 24, "right": 24, "top": 18, "bottom": 18}, "scalable": true},
+    {"name": "tab", "group": "tab", "state": "unselected", "nine_slice": {"left": 24, "right": 24, "top": 18, "bottom": 18}, "scalable": true},
+    {"name": "icon_avatar", "group": "icon", "state": "normal", "nine_slice": {"left": 0, "right": 0, "top": 0, "bottom": 0}, "scalable": false},
+    {"name": "icon_coin", "group": "icon", "state": "normal", "nine_slice": {"left": 0, "right": 0, "top": 0, "bottom": 0}, "scalable": false},
+    {"name": "icon_star", "group": "icon", "state": "normal", "nine_slice": {"left": 0, "right": 0, "top": 0, "bottom": 0}, "scalable": false},
+    {"name": "icon_settings", "group": "icon", "state": "normal", "nine_slice": {"left": 0, "right": 0, "top": 0, "bottom": 0}, "scalable": false},
+    {"name": "icon_shop", "group": "icon", "state": "normal", "nine_slice": {"left": 0, "right": 0, "top": 0, "bottom": 0}, "scalable": false},
+    {"name": "icon_home", "group": "icon", "state": "normal", "nine_slice": {"left": 0, "right": 0, "top": 0, "bottom": 0}, "scalable": false},
+    {"name": "icon_codex", "group": "icon", "state": "normal", "nine_slice": {"left": 0, "right": 0, "top": 0, "bottom": 0}, "scalable": false},
+    {"name": "icon_quest", "group": "icon", "state": "normal", "nine_slice": {"left": 0, "right": 0, "top": 0, "bottom": 0}, "scalable": false}
+  ]
+}

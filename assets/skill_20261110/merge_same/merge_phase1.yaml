@@ -1,0 +1,29 @@
+# 青瓷园艺喷壶同模加装 · same_object L1–L8（overview_sheet 2×4）
+# 无格子参考，不垫鸟表。过程类型：同模加装（母体不换，零件累计）。
+# 商业对标：过程对标 MERGE_MULTI_LENS §8.B 药瓶空瓶→塞→环→托（母体不换）。
+# 完成度对标 Merge Mansion 货柜：低档已是完整素件，金/晶犒赏只在末段。
+# 园艺工具「手套→铲→剪」是换物种，不拿来当本链档序。不自编假竞品名。
+version: garden-can-same-object-20261110-v1
+pipeline: art-merge-two-phase
+delivery: overview_sheet
+
+tracks:
+  garden_can:
+    module: merge.GardenCan
+    chain_mode: same_object
+    levels: 8
+    grid_rows: 2
+    grid_cols: 4
+    base_body: 青瓷圆腹喷壶
+    surface: 软陶瓷加黄铜，棚柔光，厚实圆润，不油亮；青瓷哑光釉与暖黄铜缎面；2×4白圆角卡深灰底；每格一件居中无等级字；道具无脸；每档仍是同一青瓷圆腹喷壶，零件累计可见；禁止换成别的容器
+    commercial_ref: "过程对标同模加装药瓶：空瓶→塞→环→托（母体不换，MERGE_MULTI_LENS §8.B）。完成度对标 Merge Mansion 货柜：低档已是完整素件，金与水晶犒赏只在末段。园艺工具手套→铲→剪是换物种，不拿来当本链档序。本链档序跟玩家点名的八个零件，不自编假竞品名。"
+    process_type: same_object_cumulative_fit
+    rows:
+      - { level: 1, name: 空身青瓷圆腹喷壶, silhouette: 无附件的青瓷圆腹喷壶空壶身圆肚敞口居中, scale_delta: 基档, scale_pct: 0.58, parts_add: "—" }
+      - { level: 2, name: 弯嘴青瓷圆腹喷壶, silhouette: 青瓷圆腹喷壶一侧伸出一根粗弯嘴, scale_delta: "+小", scale_pct: 0.61, parts_add: 弯嘴 }
+      - { level: 3, name: 提梁青瓷圆腹喷壶, silhouette: 青瓷圆腹喷壶保留粗弯嘴并在肩上架起拱形提梁, scale_delta: "+小", scale_pct: 0.64, parts_add: 弯嘴与提梁 }
+      - { level: 4, name: 钮盖青瓷圆腹喷壶, silhouette: 青瓷圆腹喷壶带弯嘴与提梁再扣一枚厚圆顶钮盖, scale_delta: "+中", scale_pct: 0.67, parts_add: 弯嘴提梁与顶钮盖 }
+      - { level: 5, name: 铜箍青瓷圆腹喷壶, silhouette: 青瓷圆腹喷壶在弯嘴提梁钮盖之外腹上加两道宽黄铜箍, scale_delta: "+中", scale_pct: 0.70, parts_add: 弯嘴提梁顶钮盖与两道黄铜箍 }
+      - { level: 6, name: 侧环青瓷圆腹喷壶, silhouette: 青瓷圆腹喷壶保留弯嘴提梁钮盖黄铜箍并在腹侧加两枚粗侧环, scale_delta: "+中", scale_pct: 0.73, parts_add: 弯嘴提梁顶钮盖黄铜箍与两侧粗环 }
+      - { level: 7, name: 金托青瓷圆腹喷壶, silhouette: 青瓷圆腹喷壶连同前述零件坐在一块比腹更宽的金托上, scale_delta: "+大", scale_pct: 0.76, parts_add: 弯嘴提梁顶钮盖黄铜箍侧环与金托 }
+      - { level: 8, name: 晶冠青瓷圆腹喷壶, silhouette: 青瓷圆腹喷壶全套零件与金托之上钮盖顶再立一枚尖角小晶冠, scale_delta: "+大", scale_pct: 0.80, parts_add: 弯嘴提梁顶钮盖黄铜箍侧环金托与小晶冠 }

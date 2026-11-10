@@ -1,0 +1,12 @@
+﻿✅ [合理性闸 · merge] 通过
+  ✓ subject_action（主体在做什么/交付物是什么）
+  ✓ element_budget（元素预算（不堆景不过载））
+  ✓ hard_locks（硬锁（画幅/透明底/无字/机位等））
+  ✓ fail_at_glance（一眼失败条件已写明）
+  ✓ single_centered_item（每档单件居中）
+  ✓ chain_mode_declared（写清 same_object / shop_ladder / species_change / 轻门）
+  ✓ upgrade_reason_concrete（升级理由具体（same_object→parts_add；shop/species→evolve_to+merge_why；轻门写具体可读升级））
+  ✓ family_or_base_lock（锁住母体或家族（same_object→母体词；shop/species→家族色相/题材；轻门→同任务域））
+修订提示词（generate 将优先用这句）：
+delivery=overview_sheet chain_mode=shop_ladder levels=8；竖屏9:16 正好4行2列纯黑隔离底；每格单件居中非场景无字无脸；家族=露莓果酱甜品店域洋红酒红；形变档序 evolve:整莓→对开碟→捣酱碗→果汁杯→匀滑冰沙杯→果酱罐→果酱挞→光滑双层蛋糕/慕斯盘；各档 merge_why 按 relation.md；框高0.42/0.50/0.58/0.66/0.74/0.80/0.88/0.96末档最大；L5细腻匀滑冰沙轻奶油旋或平整霜面禁厚油泡沫脏粉疱疹岩浆；L8光滑双层小蛋糕或慕斯块可点缀1-2整莓禁巨型莓瘤丘蜂窝凸点；全链禁恐洞密点；垫图只锁版式不抄海鲜；Gossip Harbor光泽卡通3D
+已写入会话 `gh-jam-v2-r7`。下一步用 revised 做 converge generate（可省略 --prompt，将自动注入）。

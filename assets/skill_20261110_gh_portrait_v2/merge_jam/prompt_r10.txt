@@ -1,0 +1,15 @@
+Match the EXACT object sizes and vertical ladder of the first reference (volume layout). Second reference is ONLY for Gossip Harbor gloss and magenta materials — do NOT copy its short tart or short feast or juice/jar filling cells.
+
+Portrait 9:16, exact 4 rows x 2 columns, pure black #000000 gaps, NO white grid lines, NO HUD, NO text, NO faces. One centered complete SKU per cell, fully visible, not cropped.
+
+Subject height ratios MUST stay about 0.42 / 0.50 / 0.58 / 0.66 / 0.74 / 0.80 / 0.88 / 0.96:
+1 small whole dewberry with green calyx
+2 tiny peach dish with two halved dewberries, solid full flesh seeds, no hollow
+3 deeper mashed jam bowl taller than dish, no tomato wedges
+4 slim juice glass — leave clear black above rim, NOT filling cell, about 66%
+5 smoothie clearly taller than juice with thick froth peak, about 74%
+6 jam jar taller than smoothie but with black gap above rim, NOT filling cell, about 80%
+7 tall jam tart with HIGH jam dome and pastry only, clearly taller than jar, about 88%, no orange
+8 feast plate tallest and widest magenta mound of whole image, about 96%, tiny top gap, no cake no almonds
+
+Redraw clean full objects. Keep glossy cartoon 3D GH store look, warm magenta. Opaque black isolation.

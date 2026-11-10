@@ -55,8 +55,8 @@ converge:
   stop_policy: dynamic_threshold
   default_scale: medium
   max_rounds: 4
-  # 掉分/平台安全早停（默认开）：连续平台或掉≥0.15 即交付历史最高，禁止空烧轮次
-  safe_early_stop: true
+  # 掉分/平台安全早停默认关。要开再写 true；打开后仍是掉≥0.15、从第 2 轮起。
+  safe_early_stop: false
   target_thresholds:
     low: 9.5
     medium: 9.5

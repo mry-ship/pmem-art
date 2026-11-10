@@ -1,0 +1,15 @@
+{
+  "ok": true,
+  "route_id": "style.lock",
+  "banner": "【按 参考图/样张一键提炼风格圣经与色板锁定 走了】",
+  "passed_threshold": null,
+  "best_score": null,
+  "final_image": "",
+  "images": [],
+  "card": "assets/skill_20261110/style_lock/style_card.md",
+  "module": "brand.SkillRun20261110",
+  "wall_started_at": "2026-11-10T14:37:39",
+  "wall_ended_at": "2026-11-10T14:45:05",
+  "wall_sec": 446,
+  "notes": "路由 route_ids 只有 style.lock，没有 draw.clone，因此只锁定，未生图，也未出克隆验证图。色板 HEX 从样张像素取样。art_decision、recipe（已挂样张）、style_redline 都写在 brand.SkillRun20261110。feedback 附带的口味档案同步因文件被占用跳过，三条记忆正文已落盘。"
+}

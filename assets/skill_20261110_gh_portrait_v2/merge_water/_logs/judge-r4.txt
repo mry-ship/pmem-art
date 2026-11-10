@@ -1,0 +1,8 @@
+🏁 第 4/4 轮得分 8.33 < 9.50，已满 4 轮上限！
+   · 全阶段最高分为第 3 轮 (8.83 分: c:\Users\ZhengLangPC\Desktop\Cursor-Pmem-Art\assets\skill_20261110_gh_portrait_v2\merge_water\sheet_r3.jpg)。
+   · 请立即运行 `pyw -3 -u pmem_art.py converge finish --id gh-water-v2` 结算（默认写记忆并打印评分履历；只要一行结论加 `--quiet`）。
+📚 本轮可学（能力提升）:
+   1. [style_lock] 本轮短板偏「style_lock」：第3格长管尽头又变成带孔圆莲蓬头，第4格几乎是同一把莲蓬壶放大。第8格车头另外摆着一把浇壶，不是罐身一体的单喷臂。第1格杯子变小了，但第3格和第4格不能过。；邻
+      → 练习: 对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习
+   2. [keep] 保留本轮已做对的：第1格是较小的敞口杯，第2格是短尖嘴茶壶且没有莲蓬头。外底仍是不透明浅蓝。第8格喷臂升得较高。
+      → 练习: 下一轮 Prompt 显式写入这些亮点作为正向锚点

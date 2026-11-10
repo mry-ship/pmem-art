@@ -1,0 +1,64 @@
+{
+  "ok": true,
+  "action": "ingest",
+  "apply": true,
+  "classification": {
+    "ok": true,
+    "path": "assets/skill_20261110/draw_variant/r3_for_ingest.png",
+    "prompt": "character.Fairy 金发双辫粉裙小妖精，3D软塑胶童话半身，惊讶表情差分：双眼上眼睑抬过绿虹膜，眉毛抬高，嘴仍是小竖椭圆。浅奶油底。",
+    "domain": "character",
+    "entity": "Fairy",
+    "style_fork": null,
+    "suggested_module": "character.Fairy",
+    "parent": null,
+    "confidence": 0.92,
+    "decision": "auto_add_active",
+    "reason": "new_module_from_signals",
+    "traits": {
+      "exists": true,
+      "width": 1024,
+      "height": 1024,
+      "has_alpha": false,
+      "aspect": 1.0,
+      "likely_sequence_sheet": false,
+      "likely_ui_icon": false,
+      "likely_portrait": false,
+      "likely_fullbody": false,
+      "likely_keyart": true,
+      "frame_guess": 1,
+      "mode": "RGB",
+      "resolution": "1024x1024"
+    },
+    "signals": {
+      "prompt_domain_scores": {
+        "character": 1.0
+      },
+      "path_domain_scores": {},
+      "image_trait_votes": {
+        "scene": 0.45,
+        "brand": 0.25
+      },
+      "style_scores": {},
+      "existing_match": null,
+      "weights": {
+        "prompt": 0.35,
+        "path": 0.25,
+        "image": 0.25,
+        "module": 0.15
+      }
+    },
+    "canonical_rel": "assets\\character\\fairy\\r3_for_ingest.png",
+    "module_status": "active",
+    "module_id": "character.Fairy"
+  },
+  "place": {
+    "from": "assets/skill_20261110/draw_variant/r3_for_ingest.png",
+    "to": "assets\\character\\fairy\\r3_for_ingest.png",
+    "will_move": true,
+    "moved": true
+  },
+  "asset_record": ".memory-art\\entries\\character.Fairy\\INGEST20261110065430.md",
+  "module_status": "active",
+  "atlas_refreshed": "art-atlas.html",
+  "message": "已入库 → 模块 character.Fairy (active) · assets\\character\\fairy\\r3_for_ingest.png（已自动同步至 art-atlas.html）"
+}

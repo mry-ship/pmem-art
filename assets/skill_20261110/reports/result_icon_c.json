@@ -1,0 +1,26 @@
+{
+  "ok": true,
+  "route_id": "icon.c",
+  "banner": "【按 Mode C 走了】",
+  "passed_threshold": true,
+  "best_score": 9.0,
+  "final_image": "assets/skill_20261110/icon_c/sheet.png",
+  "images": [
+    {
+      "round": 1,
+      "path": "assets/skill_20261110/icon_c/sheet.png",
+      "started_at": "2026-11-10T14:37:06",
+      "ended_at": "2026-11-10T14:37:36",
+      "duration_sec": 30,
+      "score": 9.0,
+      "defects": [
+        "喷壶轮廓更接近圆茶壶，壶嘴短，没有莲蓬头",
+        "蜂蜜罐玻璃边比另外三件软塑胶更薄",
+        "接触影短，棚拍有，但不厚"
+      ]
+    }
+  ],
+  "wall_started_at": "2026-11-10T14:36:35",
+  "wall_ended_at": "2026-11-10T14:39:31",
+  "notes": "未开逐枚闭环"
+}

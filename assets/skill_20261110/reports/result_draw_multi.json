@@ -1,0 +1,61 @@
+{
+  "ok": false,
+  "route_id": "draw.multi",
+  "banner": "【按 多图分工 走了】",
+  "passed_threshold": false,
+  "best_score": 8.58,
+  "final_image": "assets/skill_20261110/draw_multi/final.jpg",
+  "wall_started_at": "2026-11-10T14:38:24",
+  "wall_ended_at": "2026-11-10T14:52:55",
+  "images": [
+    {
+      "state": "shut",
+      "round": 1,
+      "path": "assets/skill_20261110/draw_multi/shut_r1.jpg",
+      "started_at": "2026-11-10T14:40:16",
+      "ended_at": "2026-11-10T14:41:02",
+      "duration_sec": 46,
+      "score": 8.46,
+      "dims": "构图8.2/光影8.7/透视8.0/质感8.6/风格8.8/无瑕疵8.4",
+      "defects": "妖精双脚踩在石径旁的草皮上，鞋底没有压住石板。木门左缘只见一根横向金属闩，沿门轴排列的合页没有分开露出来。",
+      "passed": false
+    },
+    {
+      "state": "shut",
+      "round": 2,
+      "path": "assets/skill_20261110/draw_multi/shut_r2.jpg",
+      "started_at": "2026-11-10T14:43:50",
+      "ended_at": "2026-11-10T14:44:26",
+      "duration_sec": 36,
+      "score": 8.46,
+      "dims": "构图8.4/光影8.7/透视8.0/质感8.6/风格8.8/无瑕疵8.3",
+      "defects": "双脚落在石径旁边一块单独的圆石上，主石板路仍在她右侧，鞋底没有压在那条石径的石缝上。门扇左侧仍是一整块横向门闩，右门框没有扣上的门闩，左缘也分不出上下两枚合页。",
+      "passed": false
+    },
+    {
+      "state": "shut",
+      "round": 3,
+      "path": "assets/skill_20261110/draw_multi/shut_r3.jpg",
+      "started_at": "2026-11-10T14:46:24",
+      "ended_at": "2026-11-10T14:47:18",
+      "duration_sec": 54,
+      "score": 8.58,
+      "dims": "构图8.4/光影8.7/透视8.1/质感8.7/风格8.9/无瑕疵8.6",
+      "defects": "双脚仍踩在草地里那块圆形浅石上，右侧蜿蜒的石板路没有被鞋底压住，圆石和石径之间还隔着一圈草。",
+      "passed": false
+    },
+    {
+      "state": "shut",
+      "round": 4,
+      "path": "assets/skill_20261110/draw_multi/shut_r4.jpg",
+      "started_at": "2026-11-10T14:49:53",
+      "ended_at": "2026-11-10T14:50:32",
+      "duration_sec": 39,
+      "score": 8.55,
+      "dims": "构图8.4/光影8.7/透视8.1/质感8.7/风格8.9/无瑕疵8.5",
+      "defects": "粉鞋仍然整只落在草地上的圆石里，右侧石板路是空的，圆石没有被删掉。",
+      "passed": false
+    }
+  ],
+  "notes": "【按 多图分工 走了】route_ids=draw.multi，execute_ok=true。两张附图都进了 route，结构图在前、身份图在后。第一态会话 skill1110-multi-shut 用 --contract split，没有写 --scale。关门态满 4 轮，最高第 3 轮 8.58，未过线（≥9.5）。final.jpg 与 shut_r3.jpg 同为 314348 字节。点名落点没达到：双脚一直在石径旁的圆石上，没有踩上石板路，所以 9.50 也不能停。第 3 轮起木门左缘能看见合页、右缘横闩扣进门框，门保持关闭。没有鼻鼠、礼物盒、小提琴老人。身份图半身机位作废。垫图：第一轮 GenerateImage 的 reference_image_paths 写了两张，第一张是结构图、第二张是身份图；身份也写进了提示词。converge generate 登记的实际垫图只有结构图这一张。第 2 到第 4 轮 GenerateImage 只垫上一轮成图，CLI 仍把结构图记成默认垫图。第二态 skill1110-multi-open 没有开画：合同要求只垫已经通过的上一张，关门态没有 ≥9.5 的成图。过程板：.memory-art/converge/boards/skill1110-multi-shut/index.html"
+}

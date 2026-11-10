@@ -1,0 +1,12 @@
+﻿✅ [合理性闸 · merge] 通过
+  ✓ subject_action（主体在做什么/交付物是什么）
+  ✓ element_budget（元素预算（不堆景不过载））
+  ✓ hard_locks（硬锁（画幅/透明底/无字/机位等））
+  ✓ fail_at_glance（一眼失败条件已写明）
+  ✓ single_centered_item（每档单件居中）
+  ✓ chain_mode_declared（写清 same_object / shop_ladder / species_change / 轻门）
+  ✓ upgrade_reason_concrete（升级理由具体（same_object→parts_add；shop/species→evolve_to+merge_why；轻门写具体可读升级））
+  ✓ family_or_base_lock（锁住母体或家族（same_object→母体词；shop/species→家族色相/题材；轻门→同任务域））
+修订提示词（generate 将优先用这句）：
+chain_mode=shop_ladder. Family: dewberry magenta + leaf green + cream jam. Gossip Harbor TOY CABINET CARTOON only: chunky glossy cartoon 3D sugar-glaze toy props, NOT photoreal food photo, NO glass refraction, NO wood grain. evolve_to/merge_why: L1 whole berry; L2 halves on dish; L3 mash bowl; L4 plain chubby jam jar; L5 WIDER shorter gift jar with LARGE bow wings silhouette change; L6 single jam toast food item; L7 tray set with NEW small jar plus toast as one SKU; L8 jelly sandwich. Vertical 4…
+已写入会话 `jam-verify-r2-1110`。下一步用 revised 做 converge generate（可省略 --prompt，将自动注入）。

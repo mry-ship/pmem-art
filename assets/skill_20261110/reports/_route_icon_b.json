@@ -1,0 +1,260 @@
+{
+  "banner": "【按 Mode B 走了】",
+  "confidence": "high",
+  "plan": {
+    "mode": "skill",
+    "would_execute": true,
+    "execute": false,
+    "reason": "icon",
+    "announce": "按 Mode B 走了",
+    "serial": false,
+    "parallel": false,
+    "route_ids": [
+      "icon.b"
+    ],
+    "steps": [
+      {
+        "skill": "pmem-icon",
+        "section": "Mode B",
+        "heading": "## 三、Mode B：一致化 SVG 矢量图标集流程（Brief → Spec → Batch → Review → Converge）",
+        "file": ".cursor/skills/pmem-icon/SKILL.md",
+        "deliverable": "线性 SVG；走图标B。妖精花园一套 8 枚导航图标。",
+        "pad": [],
+        "skip_pad": [],
+        "locks": "一套线性 SVG",
+        "done": "批量预览齐；关键枚默认不开；翻车才开最多4轮闭环；A 默认只交 Light",
+        "next_output": "这一步的成图或文字结论",
+        "note": "banner：B/C 只批量；关键枚默认禁；A 未点名勿假齐套三态"
+      }
+    ]
+  },
+  "plan_canonical": {
+    "mode": "skill",
+    "would_execute": true,
+    "execute": false,
+    "reason": "icon",
+    "announce": "按 Mode B 走了",
+    "serial": false,
+    "parallel": false,
+    "route_ids": [
+      "icon.b"
+    ],
+    "steps": [
+      {
+        "skill": "pmem-icon",
+        "section": "Mode B",
+        "heading": "## 三、Mode B：一致化 SVG 矢量图标集流程（Brief → Spec → Batch → Review → Converge）",
+        "file": ".cursor/skills/pmem-icon/SKILL.md",
+        "deliverable": "线性 SVG；走图标B",
+        "pad": [],
+        "skip_pad": [],
+        "locks": "一套线性 SVG",
+        "done": "批量预览齐；关键枚默认不开；翻车才开最多4轮闭环；A 默认只交 Light",
+        "next_output": "这一步的成图或文字结论",
+        "note": "banner：B/C 只批量；关键枚默认禁；A 未点名勿假齐套三态"
+      }
+    ]
+  },
+  "canonical": "线性 SVG；走图标B",
+  "canonical_source": "agent",
+  "local_canonical": {
+    "canonical": "要画一张图；有参考；题材不变；走普通图。原话要点：线性 SVG；走图标B。妖精花园一套 8 枚导航图标。",
+    "guess_route_id": "draw.ordinary",
+    "template": "要画一张图；有参考；题材不变；走普通图",
+    "template_key": "draw.ordinary",
+    "signals": {
+      "has_ref": false,
+      "new_subject": false,
+      "keep_subject": false,
+      "variant": false,
+      "multi": false,
+      "two_state": false,
+      "lens": false,
+      "ui": false,
+      "icon_a": false,
+      "icon_b": false,
+      "icon_c": false,
+      "merge": false,
+      "merge_overview": false,
+      "merge_per_cell": false,
+      "key": false,
+      "style": false,
+      "style_then_verify": false,
+      "critique": false,
+      "atlas": false,
+      "coach": false,
+      "prompt_only": false,
+      "hard": false,
+      "image_count": 0,
+      "roles": []
+    },
+    "source": "local_heuristic"
+  },
+  "plan_conflict": false,
+  "canonical_warnings": [],
+  "neighbor_conflict": false,
+  "multi_branch_ask": false,
+  "neighbors": [
+    {
+      "score": 1.1381,
+      "text": "做一套线性 svg 图标，第8套",
+      "mode": "skill",
+      "route_ids": [
+        "icon.b"
+      ],
+      "bucket": "icon_b",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 1.1142,
+      "text": "做一套线性 svg 图标，第0套",
+      "mode": "skill",
+      "route_ids": [
+        "icon.b"
+      ],
+      "bucket": "icon_b",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 1.1142,
+      "text": "做一套线性 svg 图标，第10套",
+      "mode": "skill",
+      "route_ids": [
+        "icon.b"
+      ],
+      "bucket": "icon_b",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 1.1142,
+      "text": "做一套线性 svg 图标，第12套",
+      "mode": "skill",
+      "route_ids": [
+        "icon.b"
+      ],
+      "bucket": "icon_b",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 1.1142,
+      "text": "做一套线性 svg 图标，第14套",
+      "mode": "skill",
+      "route_ids": [
+        "icon.b"
+      ],
+      "bucket": "icon_b",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 1.1142,
+      "text": "做一套线性 svg 图标，第16套",
+      "mode": "skill",
+      "route_ids": [
+        "icon.b"
+      ],
+      "bucket": "icon_b",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 1.1142,
+      "text": "做一套线性 svg 图标，第18套",
+      "mode": "skill",
+      "route_ids": [
+        "icon.b"
+      ],
+      "bucket": "icon_b",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 1.1142,
+      "text": "做一套线性 svg 图标，第20套",
+      "mode": "skill",
+      "route_ids": [
+        "icon.b"
+      ],
+      "bucket": "icon_b",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    }
+  ],
+  "confusion": [],
+  "announce": "按 Mode B 走了",
+  "would_execute": true,
+  "execute_ok": true,
+  "mode": "skill",
+  "route_ids": [
+    "icon.b"
+  ],
+  "top_k": 8,
+  "bank_source": "advise",
+  "match_kind": "lexical_ngram+colloquial_expand+canonical",
+  "artist_ask": "",
+  "artist_detail": "按线性 SVG 图标套装来做。",
+  "vague_reason": "",
+  "artist_say": "【按 Mode B 走了】\n按线性 SVG 图标套装来做。",
+  "llm_hints": {
+    "neighbors": [
+      {
+        "text": "做一套线性 svg 图标，第8套",
+        "mode": "skill",
+        "route_ids": [
+          "icon.b"
+        ],
+        "score": 1.1381
+      },
+      {
+        "text": "做一套线性 svg 图标，第0套",
+        "mode": "skill",
+        "route_ids": [
+          "icon.b"
+        ],
+        "score": 1.1142
+      },
+      {
+        "text": "做一套线性 svg 图标，第10套",
+        "mode": "skill",
+        "route_ids": [
+          "icon.b"
+        ],
+        "score": 1.1142
+      },
+      {
+        "text": "做一套线性 svg 图标，第12套",
+        "mode": "skill",
+        "route_ids": [
+          "icon.b"
+        ],
+        "score": 1.1142
+      },
+      {
+        "text": "做一套线性 svg 图标，第14套",
+        "mode": "skill",
+        "route_ids": [
+          "icon.b"
+        ],
+        "score": 1.1142
+      }
+    ],
+    "confusion": [],
+    "canonical": "线性 SVG；走图标B",
+    "canonical_source": "agent",
+    "plan_conflict": false,
+    "artist_say": "【按 Mode B 走了】\n按线性 SVG 图标套装来做。",
+    "rule": "对美术只贴 artist_say（标签+一句人话），禁止刷 confidence/json。先写标准路由句再 route --canonical；execute_ok 才开画；plan_conflict / confidence=ask|low / vague 先问人。"
+  }
+}

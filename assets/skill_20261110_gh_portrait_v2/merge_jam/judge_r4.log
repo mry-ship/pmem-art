@@ -1,0 +1,8 @@
+🏁 第 4/4 轮得分 7.42 < 9.50，已满 4 轮上限！
+   · 全阶段最高分为第 3 轮 (8.44 分: c:\Users\ZhengLangPC\Desktop\Cursor-Pmem-Art\assets\skill_20261110_gh_portrait_v2\merge_jam\sheet_r3.jpg)。
+   · 请立即运行 `pyw -3 -u pmem_art.py converge finish --id gh-jam-v2` 结算（默认写记忆并打印评分履历；只要一行结论加 `--quiet`）。
+📚 本轮可学（能力提升）:
+   1. [style_lock] 本轮短板偏「style_lock」：第1格是一颗光滑圆球，不是露莓。第2格是两半草莓。第3格是三片带绿皮的西瓜。第5格冰沙杯比第4格果汁杯更矮。第8格果冻不是八格里最大的。；邻档体量几乎一样大：第
+      → 练习: 对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习
+   2. [keep] 保留本轮已做对的：第6格是洋红果酱，不是白奶油。第8格是果冻圆顶，不是蛋糕，没有杏仁。杯沿没有挂莓。没有英文、数字、脸、龙虾和手指。
+      → 练习: 下一轮 Prompt 显式写入这些亮点作为正向锚点

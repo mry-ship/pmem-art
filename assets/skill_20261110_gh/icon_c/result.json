@@ -1,0 +1,47 @@
+{
+  "ok": true,
+  "route_id": "icon.c",
+  "banner": "【按 Mode C 走了】",
+  "mode": "C",
+  "delivery": "batch_preview_sheet",
+  "engine": "Cursor GenerateImage",
+  "aspect_ratio": "1:1",
+  "isolation_mode": "opaque_isolation",
+  "post_cutout": false,
+  "single_icon_converge": false,
+  "count": 4,
+  "items": ["蘑菇", "喷壶", "种子袋", "蜂蜜罐"],
+  "surface": "光泽卡通 3D、暖饱和、无硬描边、厚实圆润、缩略可认",
+  "reference": "assets/refs/gossip_harbor/gh_merge.jpg",
+  "reference_lock": "只锁道具光泽，不抄棋盘、龙虾、手指、英文、标志",
+  "passed_threshold": true,
+  "line_status": "已到线",
+  "best_score": 9.5,
+  "best_round": 1,
+  "rounds_run": 1,
+  "max_rounds": 4,
+  "final_image": "assets/skill_20261110_gh/icon_c/sheet_r1.png",
+  "images": [
+    {
+      "round": 1,
+      "path": "assets/skill_20261110_gh/icon_c/sheet_r1.png",
+      "size": "1024x1024",
+      "score": 9.5,
+      "dims": "剪影识别9.5/描边色板9.5/棚拍光9.6/透明底9.7/无字9.8/无瑕疵9.4",
+      "scores": {
+        "剪影识别": 9.5,
+        "描边色板": 9.5,
+        "棚拍光": 9.6,
+        "透明底": 9.7,
+        "无字": 9.8,
+        "无瑕疵": 9.4
+      },
+      "defects": [
+        "喷壶同时有顶提梁和侧把，缩略仍一眼是喷壶，不是茶壶",
+        "种子袋开口偏坚果，袋身有几粒色斑",
+        "蜂蜜罐玻璃边比另外三件略薄，高光更亮"
+      ]
+    }
+  ],
+  "notes": "批量预览一张四格。纯黑不透明隔离底，未后抠。正式分 9.5，已到线，停。"
+}

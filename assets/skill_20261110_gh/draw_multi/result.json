@@ -1,0 +1,97 @@
+{
+  "ok": false,
+  "route_id": "draw.multi",
+  "banner": "【按 多图分工 走了】",
+  "passed_threshold": false,
+  "background": "opaque_isolation",
+  "aspect_ratio": "1:1",
+  "items": [
+    {
+      "role": "identity",
+      "subject": "花园小妖精正面半身",
+      "best_round": 4,
+      "best_score": 8.99,
+      "passed": false,
+      "path": "assets/skill_20261110_gh/draw_multi/face_r4.png",
+      "session": "gh-face-20261110",
+      "board": ".memory-art/converge/boards/gh-face-20261110/index.html"
+    },
+    {
+      "role": "structure",
+      "subject": "关着的花园木盒",
+      "best_round": 4,
+      "best_score": 9.00,
+      "passed": false,
+      "path": "assets/skill_20261110_gh/draw_multi/box_r4.png",
+      "session": "gh-box-20261110",
+      "board": ".memory-art/converge/boards/gh-box-20261110/index.html"
+    }
+  ],
+  "images": [
+    {
+      "role": "identity",
+      "round": 1,
+      "path": "assets/skill_20261110_gh/draw_multi/face_r1.png",
+      "score": 8.72,
+      "dims": "构图8.2/光影9.0/透视8.4/质感8.8/风格8.6/无瑕疵9.0",
+      "passed": false
+    },
+    {
+      "role": "identity",
+      "round": 2,
+      "path": "assets/skill_20261110_gh/draw_multi/face_r2.png",
+      "score": 8.90,
+      "dims": "构图9.3/光影8.6/透视9.2/质感8.5/风格9.1/无瑕疵9.0",
+      "passed": false
+    },
+    {
+      "role": "identity",
+      "round": 3,
+      "path": "assets/skill_20261110_gh/draw_multi/face_r3.png",
+      "score": 8.92,
+      "dims": "构图9.3/光影8.6/透视9.2/质感8.6/风格9.1/无瑕疵9.0",
+      "passed": false
+    },
+    {
+      "role": "identity",
+      "round": 4,
+      "path": "assets/skill_20261110_gh/draw_multi/face_r4.png",
+      "score": 8.99,
+      "dims": "构图9.3/光影9.0/透视9.2/质感8.5/风格9.2/无瑕疵9.0",
+      "passed": false
+    },
+    {
+      "role": "structure",
+      "round": 1,
+      "path": "assets/skill_20261110_gh/draw_multi/box_r1.png",
+      "score": 8.60,
+      "dims": "构图8.3/光影8.6/透视8.8/质感8.3/风格8.5/无瑕疵9.0",
+      "passed": false
+    },
+    {
+      "role": "structure",
+      "round": 2,
+      "path": "assets/skill_20261110_gh/draw_multi/box_r2.png",
+      "score": 8.60,
+      "dims": "构图8.3/光影8.6/透视8.8/质感8.3/风格8.5/无瑕疵9.0",
+      "passed": false
+    },
+    {
+      "role": "structure",
+      "round": 3,
+      "path": "assets/skill_20261110_gh/draw_multi/box_r3.png",
+      "score": 8.78,
+      "dims": "构图8.3/光影8.9/透视8.9/质感8.7/风格8.8/无瑕疵9.0",
+      "passed": false
+    },
+    {
+      "role": "structure",
+      "round": 4,
+      "path": "assets/skill_20261110_gh/draw_multi/box_r4.png",
+      "score": 9.00,
+      "dims": "构图9.2/光影8.9/透视9.2/质感8.7/风格9.0/无瑕疵9.1",
+      "passed": false
+    }
+  ],
+  "notes": "【按 多图分工 走了】route_id=draw.multi。两张各管一件事，都是 1:1 纯黑不透明隔离底，渲染锁光泽卡通三维、圆润、无硬描边、暖饱和。身份图垫 gh_icon 只锁头像渲染，没有巫帽和南瓜。满 4 轮最高第 4 轮 8.99，未过线。尖耳、短麦绿发、藕粉领、闭合微笑、正面半身都在；发顶梳槽还在，左右颊明暗差不够。结构图即使用未过线的最高分脸 face_r4 再加 gh_icon 垫出，货柜图 gh_merge 只借道具光泽，没有把未过线标成通过。木盒满 4 轮最高第 4 轮 9.00，未过线。盒盖合拢，搭扣扣着，正面只剩盖沿细唇，没有人物、龙虾、棋盘和英文；木纹偏平，高光偏窄。对标 Gossip Harbor：两张都是完成度没到货柜道具/角色头像的湿润光泽，不是题材理解错。过程板：.memory-art/converge/boards/gh-face-20261110/index.html 与 .memory-art/converge/boards/gh-box-20261110/index.html"
+}

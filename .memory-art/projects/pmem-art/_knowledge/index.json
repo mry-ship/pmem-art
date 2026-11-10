@@ -17,7 +17,7 @@
       "project_name": "pmem-art",
       "universal": true,
       "promoted_to_shared": false,
-      "updated_at": "2026-10-30 16:24:49 UTC+8"
+      "updated_at": "2026-11-10 17:23:33 UTC+8"
     },
     "tech-painterly": {
       "id": "tech-painterly",
@@ -27,13 +27,13 @@
         "style",
         "material"
       ],
-      "source": "feedback",
+      "source": "converge_finish",
       "layer_scope": "private",
       "project_id": "pmem-art",
       "project_name": "pmem-art",
       "universal": false,
       "promoted_to_shared": false,
-      "updated_at": "2026-11-03 16:12:01 UTC+8"
+      "updated_at": "2026-11-10 14:52:29 UTC+8"
     },
     "tech-pixel": {
       "id": "tech-pixel",
@@ -48,7 +48,7 @@
       "project_name": "pmem-art",
       "universal": false,
       "promoted_to_shared": false,
-      "updated_at": "2026-11-10 00:09:42 UTC+8"
+      "updated_at": "2026-11-10 16:27:43 UTC+8"
     },
     "cam-cinematic": {
       "id": "cam-cinematic",
@@ -63,7 +63,7 @@
       "project_name": "pmem-art",
       "universal": true,
       "promoted_to_shared": false,
-      "updated_at": "2026-11-02 19:14:44 UTC+8"
+      "updated_at": "2026-11-10 16:27:03 UTC+8"
     },
     "tech-celshade": {
       "id": "tech-celshade",
@@ -112,7 +112,22 @@
       "universal": false,
       "promoted_to_shared": false,
       "updated_at": "2026-11-09 23:27:49 UTC+8"
+    },
+    "light-rim": {
+      "id": "light-rim",
+      "title": "侧逆光",
+      "body": "轮廓分离主体与背景，高光条沿边缘走。",
+      "tags": [
+        "lighting"
+      ],
+      "source": "converge_finish",
+      "layer_scope": "private",
+      "project_id": "pmem-art",
+      "project_name": "pmem-art",
+      "universal": true,
+      "promoted_to_shared": false,
+      "updated_at": "2026-11-10 14:52:31 UTC+8"
     }
   },
-  "updated_at": "2026-11-10 00:09:42 UTC+8"
+  "updated_at": "2026-11-10 17:23:33 UTC+8"
 }

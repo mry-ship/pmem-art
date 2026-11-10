@@ -1,0 +1,25 @@
+﻿Portrait 9:16 merge overview sheet, strict 4 rows by 2 columns grid (NOT 2x4 landscape). Eight equal rounded soft-white cards floating on PURE BLACK opaque isolation background (#000000). NO beach, NO palm trees, NO sand, NO game UI chrome, NO fingers, NO logos, NO level numbers, NO English text, NO faces, NO people. Gossip Harbor shop-shelf style: glossy cartoon 3D, chunky rounded forms, no hard outlines, warm saturated teal celadon glaze, soft studio lighting, clean shiny props readable at thumbnail size.
+
+chain_mode=same_object. base_body stays the same garden watering tool family (庭院浇水器具) in every cell. This is a replacement-style upgrade of the watering delivery module on that same functional tool: each level replaces the previous delivery part with a stronger watering module while keeping celadon teal body language. parts_add / replacement ladder (cumulative readable story):
+L1 parts_add=— open water cup module only.
+L2 replaces with short pointed spout can module (no rose).
+L3 replaces spout with longer open-tube spout module (still no rose).
+L4 adds first rose/sprinkler disc module on the spout.
+L5 replaces can with hand-pump mister bottle module.
+L6 replaces bottle with backpack tank + straps module.
+L7 replaces tank with hose-reel coil module (no nozzle).
+L8 replaces reel with integrated wheeled irrigation-cart module (tank+arm+wheels as one SKU).
+
+One complete SKU centered per cell, soft oval contact shadow only. Subject frame heights MUST step clearly: cell1=40%, cell2=48%, cell3=56%, cell4=64%, cell5=72%, cell6=80%, cell7=86%, cell8=96% of card height. L8 must be tallest AND widest. Leave margin; no clipping.
+
+HARD silhouette ladder (left-to-right, top-to-bottom):
+1) Small open cup holding water — short cylinder, open rim, NO spout, NO rose/sprinkler head.
+2) Tiny watering can with SHORT pointed solid spout — spout tip is a closed point, NO holes, NO disc, NO rose. No rose allowed on levels 1-3.
+3) Longer-spout watering can — long open tube spout ending in a small oval OPEN mouth only; absolutely NO rose, NO perforated disc, NO sprinkler head.
+4) FIRST rose appears: watering can whose spout ends in a round shower rose with tiny holes. Rose forbidden on 1-3.
+5) Hand pump spray bottle — upright mister with top plunger pump, taller than can.
+6) Backpack spray tank — wider taller tank with shoulder straps; hose stays on tank; NO wheels.
+7) Hose reel only — a coiled garden hose on a round reel/disk silhouette; NO spray nozzle, NO wand, NO wheels, NO can.
+8) Integrated wheeled irrigation cart as ONE piece — tank body IS the cart, fixed spray arm plus wheels; tallest and widest of all eight; NO loose spare watering can, NO loose hose coil parts scattered in the cell.
+
+Do not copy seafood, lobsters, beach gear, or board layout from any reference. Reference only locks multi-cell shelf spacing idea; replace every item with the watering ladder above. Celadon teal family shared across all eight.

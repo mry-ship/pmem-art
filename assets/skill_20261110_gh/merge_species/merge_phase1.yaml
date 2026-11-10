@@ -1,0 +1,29 @@
+# 花园乐器合成梯 · species_change L1–L8（overview_sheet 2×4）
+# 过程类型：同域换物种。每档一种乐器。禁止同一件乐器加零件。
+# 商业对标：Travel Town Classical Instruments（Sheet Music 下，fandom Items 记 10 档）。
+# 已核实碎片：古典链从 Clarinet 起；钢琴可点出唱片；自动订单 Music Record。
+# 未核到全部英文档名，不自编假档序。只抽：一档换一种乐器、体量缓增、末档仍是一件键盘乐器。
+# 玩家点名八档。末档节庆管风琴。不焊唱片、门票、城堡。不写 base_body。
+version: garden-instruments-gh-20261110-species-v1
+pipeline: art-merge-two-phase
+delivery: overview_sheet
+
+tracks:
+  garden_instruments:
+    module: merge.GardenInstruments
+    chain_mode: species_change
+    levels: 8
+    grid_rows: 2
+    grid_cols: 4
+    surface: 光泽卡通3D、圆润厚实、无硬描边、暖饱和、柔光渐变；家族色只留叶绿与奶油；深灰底2×4白圆角卡；无文字无等级字；每格一件居中；乐器无脸；垫图只锁光泽，不抄棋盘龙虾英文标志；家族基因是花园乐器任务域加叶绿奶油色相，不是纹样盖章也不是同一件乐器加零件
+    commercial_ref: "Travel Town Classical Instruments (10, under Sheet Music). Verified fragments only: classical chain starts at Clarinet; piano can tap Records; auto-order Music Record. Curve only: one new instrument per tier, slow volume climb, last tier still one keyboard instrument. Player named these 8. Do not invent the missing competitor tier names."
+    process_type: species_change_garden_instruments
+    rows:
+      - { level: 1, name: 种子沙锤, silhouette: 小卵形封闭沙锤短柄朝下, scale_delta: 基档, scale_pct: 0.58, evolve_to: SeedMaraca, merge_why: "—", parts_add: "—" }
+      - { level: 2, name: 叶哨, silhouette: 扁叶横哨一端吹口, scale_delta: "+小", scale_pct: 0.61, evolve_to: LeafWhistle, merge_why: 两枚种子沙锤的卵壳拍扁成一片叶绿哨叶，籽腔收成吹口气窗，短柄消失，合成可吹的叶哨, parts_add: "—" }
+      - { level: 3, name: 花笛, silhouette: 直管花笛花冠喇叭加指孔, scale_delta: "+小", scale_pct: 0.64, evolve_to: FlowerFlute, merge_why: 两支叶哨的叶身卷成直管，叶尖张开成花冠喇叭，气窗排成指孔，合成花笛, parts_add: "—" }
+      - { level: 4, name: 藤竖琴, silhouette: 小三角藤框竖向短弦, scale_delta: "+中", scale_pct: 0.67, evolve_to: VineHarp, merge_why: 两支花笛的管身弯成三角藤框，指孔拉成竖向短弦，花冠收成小共鸣箱，合成可抱的藤竖琴, parts_add: "—" }
+      - { level: 5, name: 蘑菇鼓, silhouette: 圆蘑菇帽鼓面加两根短槌, scale_delta: "+中", scale_pct: 0.71, evolve_to: MushroomDrum, merge_why: 两架藤竖琴的藤框卷成鼓圈，竖弦收成鼓面张力，共鸣箱长成蘑菇帽鼓腔并留下两根短槌，合成比竖琴更宽的蘑菇鼓, parts_add: "—" }
+      - { level: 6, name: 花弦提琴, silhouette: 沙漏花瓣琴身加一把弓, scale_delta: "+中", scale_pct: 0.74, evolve_to: FlowerViolin, merge_why: 两面蘑菇鼓的鼓腔捏成沙漏花瓣琴身，短槌留成一把琴弓，鼓面张力变成琴弦，合成花弦提琴, parts_add: "—" }
+      - { level: 7, name: 花园大提琴, silhouette: 立式高共鸣箱加长弓, scale_delta: "+大", scale_pct: 0.77, evolve_to: GardenCello, merge_why: 两把花弦提琴的琴身上下接长成立式高共鸣箱，弓加长，琴颈升高，合成花园大提琴, parts_add: "—" }
+      - { level: 8, name: 节庆管风琴, silhouette: 宽键盘座顶一排高低音管, scale_delta: "+大", scale_pct: 0.80, evolve_to: FestivalOrgan, merge_why: 两把花园大提琴的弦列立成一排高低音管，琴箱收成宽键盘底座，合成仍是一件的节庆管风琴, parts_add: "—" }

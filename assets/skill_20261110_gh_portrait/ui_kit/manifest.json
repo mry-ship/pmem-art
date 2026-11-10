@@ -1,0 +1,49 @@
+{
+  "name": "ui.FairyGardenMenu",
+  "canvas": { "width": 720, "height": 1280, "aspect_ratio": "9:16" },
+  "isolation": "opaque_isolation",
+  "background": "#3A2718",
+  "source": "components_r2.png",
+  "elements": [
+    {
+      "name": "flower_button",
+      "group": "button",
+      "state": "normal",
+      "file": "components_r2.png",
+      "rect": { "x": 280, "y": 48, "w": 156, "h": 156 },
+      "label": "默认",
+      "nine_slice": { "left": 0, "right": 0, "top": 0, "bottom": 0 },
+      "scalable": false
+    },
+    {
+      "name": "flower_button",
+      "group": "button",
+      "state": "pressed",
+      "file": "components_r2.png",
+      "rect": { "x": 284, "y": 280, "w": 152, "h": 152 },
+      "label": "按下",
+      "nine_slice": { "left": 0, "right": 0, "top": 0, "bottom": 0 },
+      "scalable": false
+    },
+    {
+      "name": "flower_button",
+      "group": "button",
+      "state": "disabled",
+      "file": "components_r2.png",
+      "rect": { "x": 284, "y": 512, "w": 152, "h": 152 },
+      "label": "禁用",
+      "nine_slice": { "left": 0, "right": 0, "top": 0, "bottom": 0 },
+      "scalable": false
+    },
+    {
+      "name": "popup_panel",
+      "group": "panel",
+      "state": "idle",
+      "file": "components_r2.png",
+      "rect": { "x": 56, "y": 736, "w": 604, "h": 496 },
+      "nine_slice": { "left": 56, "right": 56, "top": 56, "bottom": 56 },
+      "scalable": true,
+      "notes": "四角小花固定，四边细框单向拉伸，中心奶油纯色双向拉伸"
+    }
+  ]
+}

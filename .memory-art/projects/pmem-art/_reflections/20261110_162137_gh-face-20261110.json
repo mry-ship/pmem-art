@@ -1,0 +1,62 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-11-10 16:21:37 UTC+8",
+  "session_id": "gh-face-20261110",
+  "goal": "两张图各管一件事。第一张只交身份：花园小妖精正面半身，尖耳、短麦绿发、藕粉领、微笑，纯黑底。第二张只交结构：关着的花园木盒，同一个正面机位，盒盖合拢。渲染锁光泽卡通三维。走多图分工。本会话只画第一张身份：正面平视半身，短麦绿发，尖耳，藕粉领，微笑，纯黑隔离底，光泽卡通三维产品渲染，圆润，无硬描边，暖饱和。垫图只锁头像渲染，不继承巫帽和南瓜。",
+  "module": "character.GardenFairy",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 4,
+  "winner_score": 8.99,
+  "winner_image": "assets/skill_20261110_gh/draw_multi/face_r4.png",
+  "winner_passed": false,
+  "outcome": "共 4 轮未达阈值，采用最高分",
+  "what_fixed": [
+    "头完全摆正，鼻尖落在画面中线，瞳孔居中直视镜头。发色改成偏黄的短麦绿，锁骨上改成一圈窄藕粉领，衣服其余用暖米色。",
+    "头发收成几团软块，去掉平行细线。主光从左上方打来，右颊留一截暖影，鼻梁左侧留一条高光。",
+    "发顶改成三团光滑软块，表面不要梳槽。左额和左颊更亮，右颊明显更暗。",
+    "已满4轮，不再改。"
+  ],
+  "what_still_weak": "头顶中央仍有一条条梳槽，三团软块没有盖平这些槽。右颊暗部很浅，和左颊的亮度差不大，交界没有切过鼻梁。",
+  "strengths": "正面半身、短麦绿发、左右尖耳、闭合微笑、藕粉领、纯黑底都还在。无硬描边，光泽卡通三维，不继承巫帽和南瓜。左额比右颊亮，鼻梁左侧有高光。",
+  "taste_deltas": {
+    "from_strengths": [
+      "正面半身、短麦绿发、左右尖耳、闭合微笑、藕粉领、纯黑底都还在。无硬描边，光泽卡通三维，不继承巫帽和南瓜。左额比右颊亮，鼻梁左侧有高光。"
+    ],
+    "from_defects": [
+      "头顶发束排成一根根平行细线，没有收成软团块。左右脸颊的暖色一样平，主光分不出从哪一侧来，鼻梁上没有一条偏侧的高光。",
+      "发顶仍能数出平行的细槽，软团没有盖住这些槽。两颊高光对称，右颊没有比左颊更暗的一截，左上方来光没有落在脸上。",
+      "头顶中央仍有一条条梳槽，三团软块没有盖平这些槽。右颊暗部很浅，和左颊的亮度差不大，交界没有切过鼻梁。"
+    ]
+  },
+  "warm_start_confidence": 0.45,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 8.72,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 8.9,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 8.92,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 8.99,
+      "passed": false
+    }
+  ]
+}

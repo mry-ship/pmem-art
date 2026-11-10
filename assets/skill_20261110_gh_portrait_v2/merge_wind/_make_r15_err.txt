@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "C:\Users\ZhengLangPC\Desktop\Cursor-Pmem-Art\assets\skill_20261110_gh_portrait_v2\merge_wind\_make_volume_r15.py", line 137, in <module>
+    rgba = extract(src_pick[i][y0:y1, x0:x1], strip_side_rails=(i == 6))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ZhengLangPC\Desktop\Cursor-Pmem-Art\assets\skill_20261110_gh_portrait_v2\merge_wind\_make_volume_r15.py", line 60, in extract
+    if col_green[x] > 0.35 and (x < w * 0.22 or x > w * 0.78):
+       ~~~~~~~~~^^^
+IndexError: index 352 is out of bounds for axis 0 with size 352

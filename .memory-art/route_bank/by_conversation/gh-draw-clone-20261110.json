@@ -1,0 +1,14 @@
+{
+  "saved_at": 1794298139.8198075,
+  "text": "参考这张的画风，别画原来的人，换成窗边写信的小妖精",
+  "banner": "【按 克隆 走了】",
+  "route_ids": [
+    "draw.clone"
+  ],
+  "mode": "skill",
+  "execute_ok": true,
+  "artist_say": "【按 克隆 走了】\n按克隆：锁参考画风，换成新题材。",
+  "plan_conflict": false,
+  "confidence": "high",
+  "conversation_id": "gh-draw-clone-20261110"
+}

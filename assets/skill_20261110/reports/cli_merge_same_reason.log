@@ -1,0 +1,12 @@
+✅ [合理性闸 · merge] 通过
+  ✓ subject_action（主体在做什么/交付物是什么）
+  ✓ element_budget（元素预算（不堆景不过载））
+  ✓ hard_locks（硬锁（画幅/透明底/无字/机位等））
+  ✓ fail_at_glance（一眼失败条件已写明）
+  ✓ single_centered_item（每档单件居中）
+  ✓ chain_mode_declared（写清 same_object / shop_ladder / species_change / 轻门）
+  ✓ upgrade_reason_concrete（升级理由具体（same_object→parts_add；shop/species→evolve_to+merge_why；轻门写具体可读升级））
+  ✓ family_or_base_lock（锁住母体或家族（same_object→母体词；shop/species→家族色相/题材；轻门→同任务域））
+修订提示词（generate 将优先用这句）：
+4:3横幅，休闲游戏合成整表。正好2行4列共8张白圆角卡，卡一样大、间距均匀，深灰实底。无字、无等级数字、无水印、无logo。每格只有一件居中的物件，不是场景。同一四分之三机位，棚柔光，短接触影。画风锁死：软陶瓷加黄铜，厚实圆润，青瓷哑光釉，黄铜缎面，不油亮，不是镜面金属。chain_mode=same_object，base_body=青瓷圆腹喷壶，每档仍是同一青瓷圆腹喷壶，零件累计，后档必须看得见前面已经加上的零件。青瓷约占七成，黄铜约两成，金与晶只在高档少量点缀。主体含嘴、梁、盖、箍、环、托、冠全部落在白卡内并留边，禁止超框切边。禁止换成别的容器。禁止礼盒奖杯换货。道具无脸。上排左到右体量逐档只大一圈：L1较小的空壶身，只有圆肚敞口的青瓷圆腹喷壶，没有嘴、没有提梁、没有盖、没有箍、没有环、没有托、没有冠。L2略大，同一青瓷圆腹喷壶只新增一根又粗又弯的侧嘴。L3再略大，保留粗弯嘴，肩上新增一根清楚的拱形提梁。L4再略大，保留弯嘴和提梁，壶口新增一枚又厚又圆的顶钮盖，圆钮大到缩略图能看见。下排左到右：L5再略大，保留弯嘴、提梁、顶钮盖，腹上新增两道很宽的黄铜箍。L6再略大，保留上述全…
+已写入会话 `skill1110-merge-same`。下一步用 revised 做 converge generate（可省略 --prompt，将自动注入）。

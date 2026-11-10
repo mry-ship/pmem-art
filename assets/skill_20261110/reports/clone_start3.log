@@ -1,0 +1,39 @@
+✅ [路由闸门] 【按 克隆 走了】
+🔥 Warm-Start 包已写入会话；`converge generate` 会自动并入提示词，不必手贴
+   · 置信度: 0.45 | fast-track 资格: ❌
+   · 个人口味/正向保留非空
+   · 注入红线可控（0 条，已按任务主题过滤）
+   · 挂载 2 张项目知识卡 + 0 张全局美术底层基础卡
+
+【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】
+- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)
+- 目标模块: character.FairyLetter
+- 置信度: 0.45（fast-track 资格: 否）
+- 正向保留（要怎样）:
+  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色
+  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶
+- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和
+- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；过曝高光；脏暗阴影/脏色；赛博霓虹/霓虹紫
+- 项目私有知识卡 (Private Layer):
+  · [style-chibi] Q版头身: 2~3 头身，五官放大但识别锚点保留。
+  · [tech-watercolor] 水彩渲染: 边缘扩散、纸本纹理、低饱和层染；避免厚涂油腻高光。
+🎯 [收敛会话已启动] 模块: character.FairyLetter | 模式: quality | 强度(scale): medium (中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.5)) | 动态达标线: >= 9.5 分即停 | 最大兜底轮次: 4 | 最早停机轮次: 1 | 媒介: volume
+📋 理解合同 v1
+   原话/目标：有参考图；换新题材；锁画风；走克隆。窗边写信的小妖精，不要沿用参考里的主体。
+   L0 交付：draw.clone | route_ids=draw.clone
+   banner：【按 克隆 走了】
+   L1 锁：（未写，可后补）
+   L1 不锁：（未写）
+   本趟默认：（尚未写入「默认：…」——建议补上让美术看见）
+   L2 当轮可改：（看图后单点写）
+   ⚠️ 未写「默认：…」。糊需求时请补 defaults，避免美术看不见系统听成了啥。
+   👉 补默认/锁点：`pyw -3 -u pmem_art.py contract set --id skill1110-clone --defaults "默认：…" [--locks "…" --unlocks "…" --vibe "…" --surface-fix "只改一处…"]`；每轮最小包：`pyw -3 -u pmem_art.py contract working-set --id skill1110-clone`
+🎚️  Scale 内部权重与约束: weights={'composition': 0.15, 'lighting_color': 0.1875, 'perspective_anatomy': 0.1125, 'texture_detail': 0.1875, 'spec_style': 0.1125, 'flawlessness': 0.25} | budget=每轮都垫最初的参考图，只在提示词上补还没过的那一处（提示词改动仍 ≤40%）
+🧭 Scale 指令: 原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光
+✨ 最优方向（按档加法，勿当第二份DNA锁）: 最优方向：光影·空气·介质；可小幅姿态/局部布局
+🧷 本档保留集: ('viewpoint_frame', 'style_medium', 'identity')
+📌 约束写在生成词末尾: 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观
+🖼️  垫图/参考图模式: assets/skill_20261109/_refs/ref_style_fairy_garden.png
+🔍 参考图解构基准: 风格参考是饱和休闲三维立体插画，卡通完成度：圆润厚实体块、宽奶油高光、柔和接触影，苔绿暖金与紫青粉高饱和。只锁媒介、饱和色、立体高光和接触影。不锁构图，不锁主体。新题材是室内雨夜，小妖精坐在窗边写信，桌上有信纸和一盏暖灯。禁止树屋、池塘、木船、鼻鼠、巨叶框。原图宽169高276，与3:4相差18.4%，参数闸用同图加边的3:4文件过闸，生图仍垫原图。
+
+👉 Agent：首轮出图前先过合理性闸 `pyw -3 -u pmem_art.py reasonableness review --id <session> --skill <…> --draft "…" --revised "…" --checklist "…"`（必须同时交出更合理的提示词）；再 `converge generate`（仅生图，不打分），然后 `converge judge`。

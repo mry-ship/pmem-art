@@ -1,0 +1,15 @@
+﻿Pad BOTH: assets/skill_20261110_gh_portrait_v2/merge_water/final.jpg for L3 long spout identity + GH chain locks, and keep L1 small empty-margin idea from sheet_r17.
+chain_mode=shop_ladder; 4x2 portrait 9:16; black isolation; cream cards; one centered item each; no numbers; no face.
+
+HARD KEEP: L3 open long spout ~2x L2 short stub length, both NO rose; L4 first perforated rose; L6 hose REEL disk NO nozzle gun; L8 rotary irrigation; GH celadon gloss; NO backpack/pump.
+
+ONLY FIX mid-tier heights to monotone empty-margin ladder (neighbors differ, L8 largest):
+L1 cup ~0.40 (keep small, large cream margin)
+L2 short-spout can SMALLER ~0.48 with big empty margin — shrink body
+L3 long-spout can ~0.56 (body smaller than now but spout stays long so tip taller than L2)
+L4 rose can ~0.64
+L5 bigger rose ~0.72
+L6 reel ~0.80 fill more of card
+L7 oscillating ~0.86
+L8 rotary ~0.96 near top edges, largest
+Do not shorten L3 spout. Do not add rose before L4. Fail if L2-L5 still same size twins.

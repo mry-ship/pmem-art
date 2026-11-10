@@ -1,0 +1,4 @@
+﻿saved assets\skill_20261110_gh_portrait_v2\merge_wind\_crop_L7_sheet_r18.jpg (360, 320)
+saved assets\skill_20261110_gh_portrait_v2\merge_wind\_crop_L7_sheet_r18b.jpg (360, 320)
+saved assets\skill_20261110_gh_portrait_v2\merge_wind\_crop_L7_final.jpg (360, 320)
+saved assets\skill_20261110_gh_portrait_v2\merge_wind\_crop_L7_sheet_r15.jpg (360, 320)

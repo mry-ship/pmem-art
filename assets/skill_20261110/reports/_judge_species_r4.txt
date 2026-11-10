@@ -1,0 +1,6 @@
+🏁 第 4/4 轮得分 9.09 < 9.50，已满 4 轮上限！
+   · 全阶段最高分为第 4 轮 (9.09 分: assets\skill_20261110\merge_species\sheet_r4.jpg)。
+   · 请立即运行 `pyw -3 -u pmem_art.py converge finish --id skill1110-merge-species` 结算（默认写记忆并打印评分履历；只要一行结论加 `--quiet`）。
+📚 本轮可学（能力提升）:
+   1. [style_lock] 本轮短板偏「style_lock」：上排木哨和沙锤的占位仍接近，体量台阶不够陡；小手鼓仍偏俯视；桌上管风琴的拱门和立柱带一点建筑立面感。
+      → 练习: 对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习

@@ -1,0 +1,4 @@
+﻿== sheet_r18.jpg ok True
+no issues
+== sheet_r18b.jpg ok True
+no issues

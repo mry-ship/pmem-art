@@ -1,0 +1,1002 @@
+{
+  "session_id": "gh-face-20261110",
+  "started_at": "2026-11-10 16:10:59 UTC+8",
+  "goal": "两张图各管一件事。第一张只交身份：花园小妖精正面半身，尖耳、短麦绿发、藕粉领、微笑，纯黑底。第二张只交结构：关着的花园木盒，同一个正面机位，盒盖合拢。渲染锁光泽卡通三维。走多图分工。本会话只画第一张身份：正面平视半身，短麦绿发，尖耳，藕粉领，微笑，纯黑隔离底，光泽卡通三维产品渲染，圆润，无硬描边，暖饱和。垫图只锁头像渲染，不继承巫帽和南瓜。",
+  "module": "character.GardenFairy",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "medium",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "medium",
+    "label": "多图分工 · 不走四档",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 1,
+    "target_score_threshold": 9.5,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.1875,
+      "perspective_anatomy": 0.1125,
+      "texture_detail": 0.1875,
+      "spec_style": 0.1125,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "viewpoint_frame",
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "不使用四档的提示词预算，也不锁机位",
+    "max_prompt_delta_ratio": 1.0,
+    "allow_recompose": false,
+    "allow_viewpoint_change": true,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)"
+    ],
+    "min_round_leap": 0.15,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "原图画风优先：身份图和结构图各管一件事，机位以结构图为准",
+    "medium_family": "volume",
+    "best_direction_hint": "最优方向：光影·空气·介质；可小幅姿态/局部布局",
+    "contract": "split",
+    "goal": "两张图各管一件事。第一张只交身份：花园小妖精正面半身，尖耳、短麦绿发、藕粉领、微笑，纯黑底。第二张只交结构：关着的花园木盒，同一个正面机位，盒盖合拢。渲染锁光泽卡通三维。走多图分工。本会话只画第一张身份：正面平视半身，短麦绿发，尖耳，藕粉领，微笑，纯黑隔离底，光泽卡通三维产品渲染，圆润，无硬描边，暖饱和。垫图只锁头像渲染，不继承巫帽和南瓜。",
+    "module": "character.GardenFairy",
+    "ref_image": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_icon.jpg",
+    "ref_analysis": "gh_icon 是女巫头像特写，四分之三侧面，深蓝尖帽与金扣占上半，左下南瓜灯，肩部橙荷叶边。只继承光泽卡通三维、圆润体积、无硬描边、暖饱和肤色、虹膜与高光、柔边。不继承女巫身份、尖帽、金扣、南瓜、橙荷叶边、夜空、耳环和美人痣。本张改为正面半身、短麦绿发、尖耳、藕粉领、纯黑底。"
+  },
+  "medium_family": "volume",
+  "contract": "split",
+  "target_score_threshold": 9.5,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_icon.jpg",
+  "ref_analysis": "gh_icon 是女巫头像特写，四分之三侧面，深蓝尖帽与金扣占上半，左下南瓜灯，肩部橙荷叶边。只继承光泽卡通三维、圆润体积、无硬描边、暖饱和肤色、虹膜与高光、柔边。不继承女巫身份、尖帽、金扣、南瓜、橙荷叶边、夜空、耳环和美人痣。本张改为正面半身、短麦绿发、尖耳、藕粉领、纯黑底。",
+  "default_aspect_ratio": "1:1",
+  "default_reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_icon.jpg"
+  ],
+  "aspect_ratio": "1:1",
+  "reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_icon.jpg"
+  ],
+  "ref_physical_traits": {
+    "exists": true,
+    "size_bytes": 125309,
+    "size_kb": 122.4,
+    "width": 1024,
+    "height": 1024,
+    "aspect_ratio": "1:1",
+    "canonical_aspect_ratio": "1:1",
+    "color_entropy": 7.96
+  },
+  "param_validation": {
+    "valid": true,
+    "validation_passed": true,
+    "case_id": "gh-face-20261110",
+    "scale": "medium",
+    "aspect_ratio": "1:1",
+    "ref_aspect_ratio": "1:1",
+    "ref_dimensions": "1024x1024",
+    "output_aspect_ratio": "",
+    "output_dimensions": "",
+    "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_icon.jpg",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_icon.jpg"
+    ],
+    "inherited_default_aspect_ratio": false,
+    "inherited_default_pad_image": false,
+    "matched_ref_aspect_ratio": true,
+    "matched_ref_pad_image": true,
+    "matched_output_aspect_ratio": true,
+    "three_step_stage": "step1_start",
+    "three_step_verified": false,
+    "warnings": []
+  },
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.5,
+  "accept_threshold": 9.5,
+  "max_rounds": 4,
+  "ready_to_finish": true,
+  "status": "finished",
+  "owner_conversation_id": "gh-multi-20261110",
+  "route_ids": [
+    "draw.multi"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "1:1",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_icon.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "gh-face-20261110",
+        "scale": "medium",
+        "aspect_ratio": "1:1",
+        "ref_aspect_ratio": "1:1",
+        "ref_dimensions": "1024x1024",
+        "output_aspect_ratio": "1:1",
+        "output_dimensions": "1024x1024",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_icon.jpg",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_icon.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "16:14:41",
+      "image": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\draw_multi\\face_r1.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 706598,
+        "size_kb": 690.0,
+        "width": 1024,
+        "height": 1024,
+        "aspect_ratio": "1:1",
+        "canonical_aspect_ratio": "1:1",
+        "color_entropy": 7.98
+      },
+      "raw_score": 8.72,
+      "score": 8.72,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.2/光影9.0/透视8.4/质感8.8/风格8.6/无瑕疵9.0",
+      "dims_parsed": {
+        "composition": 8.2,
+        "lighting_color": 9.0,
+        "perspective_anatomy": 8.4,
+        "texture_detail": 8.8,
+        "spec_style": 8.6,
+        "flawlessness": 9.0
+      },
+      "weighted_score": 8.72,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "点名锁未单独验收：短麦绿发；藕粉领；正面半身；无硬描边；光泽卡通三维；不继承巫帽和南瓜"
+      ],
+      "stagnated": false,
+      "strengths": "纯黑底上没有尖帽和南瓜，左右尖耳都从短发里伸出来，嘴闭合微笑，肩颈连着，光泽圆润没有硬描边。",
+      "defects": "头向她的右侧微转，鼻梁不在画面中线，瞳孔偏到观者左侧，没有正对镜头。头发是偏亮的叶绿而不是黄橄榄麦绿，领口是整件亮粉圆领衫，锁骨上没有单独的藕粉色窄领。；点名锁未单独验收：短麦绿发；藕粉领；正面半身；无硬描边；光泽卡通三维；不继承巫帽和南瓜",
+      "next_fix": "头完全摆正，鼻尖落在画面中线，瞳孔居中直视镜头。发色改成偏黄的短麦绿，锁骨上改成一圈窄藕粉领，衣服其余用暖米色。",
+      "prompt": "点名锁每轮都要单独留住，不许整张漂掉：尖耳；短麦绿发；藕粉领；微笑；正面半身；纯黑底；无硬描边；光泽卡通三维；不继承巫帽和南瓜 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.GardenFairy\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [style-chibi] Q版头身: 2~3 头身，五官放大但识别锚点保留。\n  · [light-rim] 侧逆光: 轮廓分离主体与背景，高光条沿边缘走。\n原图画风优先：身份图和结构图各管一件事，机位以结构图为准 | 主体是一位花园小妖精的正面平视半身，正对镜头，居中，双手不入画，裁到锁骨以下。她在微笑，嘴角轻轻上扬，嘴闭合。左右尖耳从短发两侧对称伸出。头发是短麦绿色波波头，发尾停在下颌，黄绿像嫩麦，整头露在外面。藕粉色圆领贴在锁骨上，领口与脖子相接，肩颈连续。双眼同高，都看向镜头，暖琥珀色虹膜，有眼白和两点柔高光。只留这一个人物，没有帽子，没有道具，没有植物背景。硬锁：1:1，纯黑隔离底，光泽卡通三维产品渲染，圆润体积，无硬描边，暖饱和，柔光。垫图只借光泽、圆润和眼睛的柔高光，不继承尖帽、金扣、南瓜、耳环、美人痣和橙荷叶边。一眼失败：出现尖帽或南瓜，不是正面，没有尖耳，头发不是短麦绿，没有藕粉领，底不是纯黑，或出现文字。分工：这张只交身份半身，木盒不画在这张里，盒盖状态留给另一张。 | 约束：保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: Mode B style ref locks medium/chrome only — the NEW subject silhouette must dominate the frame; do NOT photocopy the reference prop shape (e.g. gift box); name the new subject explicitly in the brief",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.4,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "line_edge",
+          "lesson": "本轮短板偏「line_edge」：头向她的右侧微转，鼻梁不在画面中线，瞳孔偏到观者左侧，没有正对镜头。头发是偏亮的叶绿而不是黄橄榄麦绿，领口是整件亮粉圆领衫，锁骨上没有单独的藕粉色窄领。；点名锁",
+          "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+          "from_score": "8.72"
+        },
+        {
+          "category": "narrative_camera",
+          "lesson": "本轮短板偏「narrative_camera」：头向她的右侧微转，鼻梁不在画面中线，瞳孔偏到观者左侧，没有正对镜头。头发是偏亮的叶绿而不是黄橄榄麦绿，领口是整件亮粉圆领衫，锁骨上没有单独的藕粉色窄领。；点名锁",
+          "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+          "from_score": "8.72"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：纯黑底上没有尖帽和南瓜，左右尖耳都从短发里伸出来，嘴闭合微笑，肩颈连着，光泽圆润没有硬描边。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.72"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "16:14:48"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "1:1",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_icon.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "gh-face-20261110",
+        "scale": "medium",
+        "aspect_ratio": "1:1",
+        "ref_aspect_ratio": "1:1",
+        "ref_dimensions": "1024x1024",
+        "output_aspect_ratio": "1:1",
+        "output_dimensions": "1024x1024",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_icon.jpg",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_icon.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "16:17:05",
+      "image": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\draw_multi\\face_r2.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 727410,
+        "size_kb": 710.4,
+        "width": 1024,
+        "height": 1024,
+        "aspect_ratio": "1:1",
+        "canonical_aspect_ratio": "1:1",
+        "color_entropy": 7.99
+      },
+      "raw_score": 8.9,
+      "score": 8.9,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.3/光影8.6/透视9.2/质感8.5/风格9.1/无瑕疵9.0",
+      "dims_parsed": {
+        "composition": 9.3,
+        "lighting_color": 8.6,
+        "perspective_anatomy": 9.2,
+        "texture_detail": 8.5,
+        "spec_style": 9.1,
+        "flawlessness": 9.0
+      },
+      "weighted_score": 8.9,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）"
+      ],
+      "stagnated": false,
+      "strengths": "正面半身已经摆正，鼻尖在中线上，瞳孔直视镜头。短麦绿发、左右尖耳、闭合微笑、藕粉领都在。纯黑底，无硬描边，光泽卡通三维，不继承巫帽和南瓜。",
+      "defects": "头顶发束排成一根根平行细线，没有收成软团块。左右脸颊的暖色一样平，主光分不出从哪一侧来，鼻梁上没有一条偏侧的高光。",
+      "next_fix": "头发收成几团软块，去掉平行细线。主光从左上方打来，右颊留一截暖影，鼻梁左侧留一条高光。",
+      "prompt": "点名锁每轮都要单独留住，不许整张漂掉：尖耳；短麦绿发；藕粉领；微笑；正面半身；纯黑底；无硬描边；光泽卡通三维；不继承巫帽和南瓜 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.GardenFairy\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [style-chibi] Q版头身: 2~3 头身，五官放大但识别锚点保留。\n  · [light-rim] 侧逆光: 轮廓分离主体与背景，高光条沿边缘走。\n原图画风优先：身份图和结构图各管一件事，机位以结构图为准 | 同一位花园小妖精的正面半身，头完全摆正，鼻尖、人中和下巴落在画面垂直中线上，两只尖耳到镜头的距离一样，瞳孔居中直视镜头。发色改成偏黄橄榄的短麦绿，发尾停在下颌。锁骨上是一圈窄的藕粉色衣领，衣服其余是暖米色。嘴闭合微笑，双眼同高，暖琥珀色虹膜，有眼白和两点柔高光。双手不入画，裁到锁骨以下。纯黑底，1:1，光泽卡通三维，圆润，无硬描边，暖饱和。不出现巫帽、南瓜、耳环、美人痣和文字。只留这一个人。 | 约束：保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: Mode B style ref locks medium/chrome only — the NEW subject silhouette must dominate the frame; do NOT photocopy the reference prop shape (e.g. gift box); name the new subject explicitly in the brief | 头完全摆正，鼻尖落在画面中线，瞳孔居中直视镜头。发色改成偏黄的短麦绿，锁骨上改成一圈窄藕粉领，衣服其余用暖米色。 | MUST_FIX (≤2): 头完全摆正，鼻尖落在画面中线，瞳孔居中直视镜头；发色改成偏黄的短麦绿，锁骨上改成一圈窄藕粉领，衣服其余用暖米色",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.2,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：头顶发束排成一根根平行细线，没有收成软团块。左右脸颊的暖色一样平，主光分不出从哪一侧来，鼻梁上没有一条偏侧的高光。",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.9"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：正面半身已经摆正，鼻尖在中线上，瞳孔直视镜头。短麦绿发、左右尖耳、闭合微笑、藕粉领都在。纯黑底，无硬描边，光泽卡通三维，不继承巫帽和南瓜。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.9"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "16:17:12"
+    },
+    {
+      "round": 3,
+      "round_label": "第 3 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "1:1",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_icon.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "gh-face-20261110",
+        "scale": "medium",
+        "aspect_ratio": "1:1",
+        "ref_aspect_ratio": "1:1",
+        "ref_dimensions": "1024x1024",
+        "output_aspect_ratio": "1:1",
+        "output_dimensions": "1024x1024",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_icon.jpg",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_icon.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "16:18:42",
+      "image": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\draw_multi\\face_r3.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 740987,
+        "size_kb": 723.6,
+        "width": 1024,
+        "height": 1024,
+        "aspect_ratio": "1:1",
+        "canonical_aspect_ratio": "1:1",
+        "color_entropy": 7.98
+      },
+      "raw_score": 8.92,
+      "score": 8.92,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.3/光影8.6/透视9.2/质感8.6/风格9.1/无瑕疵9.0",
+      "dims_parsed": {
+        "composition": 9.3,
+        "lighting_color": 8.6,
+        "perspective_anatomy": 9.2,
+        "texture_detail": 8.6,
+        "spec_style": 9.1,
+        "flawlessness": 9.0
+      },
+      "weighted_score": 8.92,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.02 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "Agent Absolute-5D 已采纳（门槛 9.5）"
+      ],
+      "stagnated": true,
+      "strengths": "正面半身仍摆正，瞳孔直视镜头。短麦绿发、左右尖耳、闭合微笑、藕粉领都还在。纯黑底，无硬描边，光泽卡通三维，不继承巫帽和南瓜。",
+      "defects": "发顶仍能数出平行的细槽，软团没有盖住这些槽。两颊高光对称，右颊没有比左颊更暗的一截，左上方来光没有落在脸上。",
+      "next_fix": "发顶改成三团光滑软块，表面不要梳槽。左额和左颊更亮，右颊明显更暗。",
+      "prompt": "点名锁每轮都要单独留住，不许整张漂掉：尖耳；短麦绿发；藕粉领；微笑；正面半身；纯黑底；无硬描边；光泽卡通三维；不继承巫帽和南瓜 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.GardenFairy\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [style-chibi] Q版头身: 2~3 头身，五官放大但识别锚点保留。\n  · [light-rim] 侧逆光: 轮廓分离主体与背景，高光条沿边缘走。\n原图画风优先：身份图和结构图各管一件事，机位以结构图为准 | 同一位花园小妖精正面半身，保持头正、鼻尖在中线、瞳孔直视镜头、左右尖耳、短麦绿发、闭合微笑、锁骨上的窄藕粉领、暖米色衣服、纯黑底。头发收成几团柔软的大块，发丝糊进团块里。主光从左上方打来，鼻梁左侧有一条暖高光，右颊留一截暖影。光泽卡通三维，圆润，无硬描边，暖饱和。双手不入画。不出现巫帽、南瓜和文字。 | 约束：保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: Mode B style ref locks medium/chrome only — the NEW subject silhouette must dominate the frame; do NOT photocopy the reference prop shape (e.g. gift box); name the new subject explicitly in the brief | 头发收成几团软块，去掉平行细线。主光从左上方打来，右颊留一截暖影，鼻梁左侧留一条高光。 | MUST_FIX (≤2): 头发收成几团软块，去掉平行细线；主光从左上方打来，右颊留一截暖影，鼻梁左侧留一条高光",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.2,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "composition",
+          "lesson": "本轮短板偏「composition」：发顶仍能数出平行的细槽，软团没有盖住这些槽。两颊高光对称，右颊没有比左颊更暗的一截，左上方来光没有落在脸上。",
+          "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+          "from_score": "8.92"
+        },
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：发顶仍能数出平行的细槽，软团没有盖住这些槽。两颊高光对称，右颊没有比左颊更暗的一截，左上方来光没有落在脸上。",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.92"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：正面半身仍摆正，瞳孔直视镜头。短麦绿发、左右尖耳、闭合微笑、藕粉领都还在。纯黑底，无硬描边，光泽卡通三维，不继承巫帽和南瓜。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.92"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "16:18:49"
+    },
+    {
+      "round": 4,
+      "round_label": "第 4 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "1:1",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_icon.jpg"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "gh-face-20261110",
+        "scale": "medium",
+        "aspect_ratio": "1:1",
+        "ref_aspect_ratio": "1:1",
+        "ref_dimensions": "1024x1024",
+        "output_aspect_ratio": "1:1",
+        "output_dimensions": "1024x1024",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_icon.jpg",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_icon.jpg"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "16:20:24",
+      "image": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\draw_multi\\face_r4.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 763325,
+        "size_kb": 745.4,
+        "width": 1024,
+        "height": 1024,
+        "aspect_ratio": "1:1",
+        "canonical_aspect_ratio": "1:1",
+        "color_entropy": 7.98
+      },
+      "raw_score": 8.99,
+      "score": 8.99,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.3/光影9.0/透视9.2/质感8.5/风格9.2/无瑕疵9.0",
+      "dims_parsed": {
+        "composition": 9.3,
+        "lighting_color": 9.0,
+        "perspective_anatomy": 9.2,
+        "texture_detail": 8.5,
+        "spec_style": 9.2,
+        "flawlessness": 9.0
+      },
+      "weighted_score": 8.99,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.07 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "Agent Absolute-5D 已采纳（门槛 9.5）"
+      ],
+      "stagnated": true,
+      "strengths": "正面半身、短麦绿发、左右尖耳、闭合微笑、藕粉领、纯黑底都还在。无硬描边，光泽卡通三维，不继承巫帽和南瓜。左额比右颊亮，鼻梁左侧有高光。",
+      "defects": "头顶中央仍有一条条梳槽，三团软块没有盖平这些槽。右颊暗部很浅，和左颊的亮度差不大，交界没有切过鼻梁。",
+      "next_fix": "已满4轮，不再改。",
+      "prompt": "点名锁每轮都要单独留住，不许整张漂掉：尖耳；短麦绿发；藕粉领；微笑；正面半身；纯黑底；无硬描边；光泽卡通三维；不继承巫帽和南瓜 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.GardenFairy\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [style-chibi] Q版头身: 2~3 头身，五官放大但识别锚点保留。\n  · [light-rim] 侧逆光: 轮廓分离主体与背景，高光条沿边缘走。\n原图画风优先：身份图和结构图各管一件事，机位以结构图为准 | 同一位花园小妖精，正面半身，头正，鼻尖在中线，瞳孔直视镜头，左右尖耳，短麦绿发，闭合微笑，窄藕粉领，暖米色衣服，纯黑底，双手不入画。头发重画成三团光滑软块，表面像软陶，没有梳槽。暖光从画面左上方打下来：左额和左颊明显更亮，右颊有一块清楚的暖色暗部，明暗交界经过鼻梁。光泽卡通三维，圆润，无硬描边，暖饱和。不出现巫帽、南瓜和文字。 | 约束：保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: Mode B style ref locks medium/chrome only — the NEW subject silhouette must dominate the frame; do NOT photocopy the reference prop shape (e.g. gift box); name the new subject explicitly in the brief | 发顶改成三团光滑软块，表面不要梳槽。左额和左颊更亮，右颊明显更暗。 | MUST_FIX (≤2): 发顶改成三团光滑软块，表面不要梳槽；左额和左颊更亮，右颊明显更暗",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.2,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_MAX_ROUNDS",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：头顶中央仍有一条条梳槽，三团软块没有盖平这些槽。右颊暗部很浅，和左颊的亮度差不大，交界没有切过鼻梁。",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.99"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：正面半身、短麦绿发、左右尖耳、闭合微笑、藕粉领、纯黑底都还在。无硬描边，光泽卡通三维，不继承巫帽和南瓜。左额比右颊亮，鼻梁左侧有高光。",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.99"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "16:20:36"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-11-10 14:02:24 UTC+8"
+    },
+    "module": "character.GardenFairy",
+    "goal": "两张图各管一件事。第一张只交身份：花园小妖精正面半身，尖耳、短麦绿发、藕粉领、微笑，纯黑底。第二张只交结构：关着的花园木盒，同一个正面机位，盒盖合拢。渲染锁光泽卡通三维。走多图分工。本会话只画第一张身份：正面平视半身，短麦绿发，尖耳，藕粉领，微笑，纯黑隔离底，光泽卡通三维产品渲染，圆润，无硬描边，暖饱和。垫图只锁头像渲染，不继承巫帽和南瓜。",
+    "confidence": 0.45,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "个人口味/正向保留非空",
+      "注入红线可控（0 条，已按任务主题过滤）",
+      "挂载 2 张项目知识卡 + 0 张全局美术底层基础卡"
+    ],
+    "top_recipes": [],
+    "top_redlines": [],
+    "art_decisions": [],
+    "private_knowledge": [
+      {
+        "id": "style-chibi",
+        "title": "Q版头身",
+        "body": "2~3 头身，五官放大但识别锚点保留。",
+        "layer_scope": "private"
+      },
+      {
+        "id": "light-rim",
+        "title": "侧逆光",
+        "body": "轮廓分离主体与背景，高光条沿边缘走。",
+        "layer_scope": "private"
+      }
+    ],
+    "shared_knowledge": [],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [
+        "冷光源",
+        "暖光",
+        "柔光"
+      ],
+      "preferred_composition": [
+        "半身",
+        "居中/对称构图"
+      ],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [
+        "避免过饱和"
+      ],
+      "banned_habits": [
+        "漏抠/黑底/毛边",
+        "廉价塑料感/油腻高光",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色"
+      ],
+      "keep_phrases": [
+        "确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色",
+        "确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶"
+      ],
+      "banned_habits_raw_tail": [
+        "禁止偏离样张画风：过度霓虹、脏暗阴影、油腻高光、写实皮肤毛孔、扁平UI描边",
+        "电池审稿：原画竖构图避免贴样张布局；边缘反光勿过曝",
+        "电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感",
+        "黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差",
+        "错误头身比/头过大",
+        "漏抠/黑底/毛边",
+        "廉价塑料感/油腻高光",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色"
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.GardenFairy\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [style-chibi] Q版头身: 2~3 头身，五官放大但识别锚点保留。\n  · [light-rim] 侧逆光: 轮廓分离主体与背景，高光条沿边缘走。",
+    "built_at": "2026-11-10 16:10:59 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：头向她的右侧微转，鼻梁不在画面中线，瞳孔偏到观者左侧，没有正对镜头。头发是偏亮的叶绿而不是黄橄榄麦绿，领口是整件亮粉圆领衫，锁骨上没有单独的藕粉色窄领。；点名锁",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "8.72"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：头向她的右侧微转，鼻梁不在画面中线，瞳孔偏到观者左侧，没有正对镜头。头发是偏亮的叶绿而不是黄橄榄麦绿，领口是整件亮粉圆领衫，锁骨上没有单独的藕粉色窄领。；点名锁",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "8.72"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：纯黑底上没有尖帽和南瓜，左右尖耳都从短发里伸出来，嘴闭合微笑，肩颈连着，光泽圆润没有硬描边。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.72"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：头顶发束排成一根根平行细线，没有收成软团块。左右脸颊的暖色一样平，主光分不出从哪一侧来，鼻梁上没有一条偏侧的高光。",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.9"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：正面半身已经摆正，鼻尖在中线上，瞳孔直视镜头。短麦绿发、左右尖耳、闭合微笑、藕粉领都在。纯黑底，无硬描边，光泽卡通三维，不继承巫帽和南瓜。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.9"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：发顶仍能数出平行的细槽，软团没有盖住这些槽。两颊高光对称，右颊没有比左颊更暗的一截，左上方来光没有落在脸上。",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "8.92"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：发顶仍能数出平行的细槽，软团没有盖住这些槽。两颊高光对称，右颊没有比左颊更暗的一截，左上方来光没有落在脸上。",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.92"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：正面半身仍摆正，瞳孔直视镜头。短麦绿发、左右尖耳、闭合微笑、藕粉领都还在。纯黑底，无硬描边，光泽卡通三维，不继承巫帽和南瓜。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.92"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：头顶中央仍有一条条梳槽，三团软块没有盖平这些槽。右颊暗部很浅，和左颊的亮度差不大，交界没有切过鼻梁。",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.99"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：正面半身、短麦绿发、左右尖耳、闭合微笑、藕粉领、纯黑底都还在。无硬描边，光泽卡通三维，不继承巫帽和南瓜。左额比右颊亮，鼻梁左侧有高光。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.99"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 2,
+  "regression_drop": 0.15,
+  "safe_early_stop": false,
+  "split_round_cap": 4,
+  "single_judge": false,
+  "understanding_contract": {
+    "version": 1,
+    "raw_utterance": "两张图各管一件事。第一张只交身份：花园小妖精正面半身，尖耳、短麦绿发、藕粉领、微笑，纯黑底。第二张只交结构：关着的花园木盒，同一个正面机位，盒盖合拢。渲染锁光泽卡通三维。走多图分工。本会话只画第一张身份：正面平视半身，短麦绿发，尖耳，藕粉领，微笑，纯黑隔离底，光泽卡通三维产品渲染，圆润，无硬描边，暖饱和。垫图只锁头像渲染，不继承巫帽和南瓜。",
+    "l0": {
+      "route_ids": [
+        "draw.multi"
+      ],
+      "banner": "【按 多图分工 走了】",
+      "delivery": "draw.multi"
+    },
+    "l1": {
+      "locks": [
+        "尖耳",
+        "短麦绿发",
+        "藕粉领",
+        "微笑",
+        "正面半身",
+        "纯黑底",
+        "无硬描边",
+        "光泽卡通三维",
+        "不继承巫帽和南瓜"
+      ],
+      "unlocks": [
+        "女巫身份",
+        "尖帽",
+        "金扣",
+        "南瓜",
+        "夜空",
+        "耳环",
+        "美人痣",
+        "棋盘",
+        "龙虾",
+        "英文"
+      ],
+      "defaults_shown": [
+        "默认：1:1",
+        "纯黑隔离底",
+        "正面平视半身",
+        "最多4轮，大于等于9.5到线即停"
+      ],
+      "commercial_vibe": "光泽卡通三维，圆润厚实，无硬描边，暖饱和，柔光渐变，休闲合成角色头像的完成度"
+    },
+    "l2": {
+      "open": true,
+      "surface_fix": "只画身份半身，这张不画木盒",
+      "last_feedback": "",
+      "feedback_layer": ""
+    },
+    "notes": ""
+  },
+  "reasonableness_history": [
+    {
+      "reviewed_at": 1794298367.241214,
+      "passed": true,
+      "skill": "split",
+      "issues": []
+    }
+  ],
+  "reasonableness": {
+    "passed": true,
+    "skill": "split",
+    "draft_prompt": "画一个花园小妖精正面半身，微笑，纯黑底，光泽卡通三维。",
+    "revised_prompt": "主体是一位花园小妖精的正面平视半身，正对镜头，居中，双手不入画，裁到锁骨以下。她在微笑，嘴角轻轻上扬，嘴闭合。左右尖耳从短发两侧对称伸出。头发是短麦绿色波波头，发尾停在下颌，黄绿像嫩麦，整头露在外面。藕粉色圆领贴在锁骨上，领口与脖子相接，肩颈连续。双眼同高，都看向镜头，暖琥珀色虹膜，有眼白和两点柔高光。只留这一个人物，没有帽子，没有道具，没有植物背景。硬锁：1:1，纯黑隔离底，光泽卡通三维产品渲染，圆润体积，无硬描边，暖饱和，柔光。垫图只借光泽、圆润和眼睛的柔高光，不继承尖帽、金扣、南瓜、耳环、美人痣和橙荷叶边。一眼失败：出现尖帽或南瓜，不是正面，没有尖耳，头发不是短麦绿，没有藕粉领，底不是纯黑，或出现文字。分工：这张只交身份半身，木盒不画在这张里，盒盖状态留给另一张。",
+    "checklist": {
+      "subject_action": {
+        "status": "ok",
+        "note": ""
+      },
+      "contact_scale": {
+        "status": "ok",
+        "note": ""
+      },
+      "element_budget": {
+        "status": "ok",
+        "note": ""
+      },
+      "hard_locks": {
+        "status": "ok",
+        "note": ""
+      },
+      "fail_at_glance": {
+        "status": "ok",
+        "note": ""
+      },
+      "role_separation": {
+        "status": "ok",
+        "note": ""
+      },
+      "state_machine": {
+        "status": "ok",
+        "note": ""
+      }
+    },
+    "issues": [],
+    "notes": "",
+    "reviewed_at": 1794298367.241214,
+    "reviewed_at_iso": "2026-11-10 16:12:47",
+    "force_pass": false,
+    "skill_raw": "split"
+  },
+  "discussions": [
+    {
+      "round": 0,
+      "kind": "reasonableness",
+      "prompt": "主体是一位花园小妖精的正面平视半身，正对镜头，居中，双手不入画，裁到锁骨以下。她在微笑，嘴角轻轻上扬，嘴闭合。左右尖耳从短发两侧对称伸出。头发是短麦绿色波波头，发尾停在下颌，黄绿像嫩麦，整头露在外面。藕粉色圆领贴在锁骨上，领口与脖子相接，肩颈连续。双眼同高，都看向镜头，暖琥珀色虹膜，有眼白和两点柔高光。只留这一个人物，没有帽子，没有道具，没有植物背景。硬锁：1:1，纯黑隔离底，光泽卡通三维产品渲染，圆润体积，无硬描边，暖饱和，柔光。垫图只借光泽、圆润和眼睛的柔高光，不继承尖帽、金扣、南瓜、耳环、美人痣和橙荷叶边。一眼失败：出现尖帽或南瓜，不是正面，没有尖耳，头发不是短麦绿，没有藕粉领，底不是纯黑，或出现文字。分工：这张只交身份半身，木盒不画在这张里，盒盖状态留给另一张。",
+      "strengths": "合理性闸已过：subject_action=ok；contact_scale=ok；element_budget=ok；hard_locks=ok；fail_at_glance=ok；role_separation=ok；state_machine=ok",
+      "defects": "",
+      "next_fix": "首轮 generate 使用本修订提示词；审美迭代不得推翻硬锁与元素预算"
+    }
+  ],
+  "warm_start_merged": true,
+  "warm_start_merged_at": "2026-11-10 16:20:24",
+  "warm_start_block_sha1": "af2a14ad710d",
+  "ActionRequired": "STOP_PICK_BEST",
+  "showcase_ready": true,
+  "winner": {
+    "round": 4,
+    "round_label": "第 4 轮精修",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "1:1",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_icon.jpg"
+    ],
+    "param_validation": {
+      "valid": true,
+      "validation_passed": true,
+      "case_id": "gh-face-20261110",
+      "scale": "medium",
+      "aspect_ratio": "1:1",
+      "ref_aspect_ratio": "1:1",
+      "ref_dimensions": "1024x1024",
+      "output_aspect_ratio": "1:1",
+      "output_dimensions": "1024x1024",
+      "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_icon.jpg",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_icon.jpg"
+      ],
+      "inherited_default_aspect_ratio": true,
+      "inherited_default_pad_image": true,
+      "matched_ref_aspect_ratio": true,
+      "matched_ref_pad_image": true,
+      "matched_output_aspect_ratio": true,
+      "three_step_stage": "step3_judge",
+      "three_step_verified": true,
+      "warnings": [],
+      "continuation_pad": false,
+      "pad_diverged": false
+    },
+    "generated_at": "16:20:24",
+    "image": "c:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261110_gh\\draw_multi\\face_r4.png",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 763325,
+      "size_kb": 745.4,
+      "width": 1024,
+      "height": 1024,
+      "aspect_ratio": "1:1",
+      "canonical_aspect_ratio": "1:1",
+      "color_entropy": 7.98
+    },
+    "raw_score": 8.99,
+    "score": 8.99,
+    "target_score_threshold": 9.5,
+    "dims": "构图9.3/光影9.0/透视9.2/质感8.5/风格9.2/无瑕疵9.0",
+    "dims_parsed": {
+      "composition": 9.3,
+      "lighting_color": 9.0,
+      "perspective_anatomy": 9.2,
+      "texture_detail": 8.5,
+      "spec_style": 9.2,
+      "flawlessness": 9.0
+    },
+    "weighted_score": 8.99,
+    "audit_warnings": [
+      "收敛停滞预警：本轮净增 +0.07 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+      "Agent Absolute-5D 已采纳（门槛 9.5）"
+    ],
+    "stagnated": true,
+    "strengths": "正面半身、短麦绿发、左右尖耳、闭合微笑、藕粉领、纯黑底都还在。无硬描边，光泽卡通三维，不继承巫帽和南瓜。左额比右颊亮，鼻梁左侧有高光。",
+    "defects": "头顶中央仍有一条条梳槽，三团软块没有盖平这些槽。右颊暗部很浅，和左颊的亮度差不大，交界没有切过鼻梁。",
+    "next_fix": "已满4轮，不再改。",
+    "prompt": "点名锁每轮都要单独留住，不许整张漂掉：尖耳；短麦绿发；藕粉领；微笑；正面半身；纯黑底；无硬描边；光泽卡通三维；不继承巫帽和南瓜 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.GardenFairy\n- 置信度: 0.45（fast-track 资格: 否）\n- 正向保留（要怎样）:\n  · 确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色\n  · 确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶\n- 个人口味: 光影=冷光源 / 暖光 / 柔光；构图=半身 / 居中/对称构图；色温=避免过饱和\n- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；廉价塑料感/油腻高光；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [style-chibi] Q版头身: 2~3 头身，五官放大但识别锚点保留。\n  · [light-rim] 侧逆光: 轮廓分离主体与背景，高光条沿边缘走。\n原图画风优先：身份图和结构图各管一件事，机位以结构图为准 | 同一位花园小妖精，正面半身，头正，鼻尖在中线，瞳孔直视镜头，左右尖耳，短麦绿发，闭合微笑，窄藕粉领，暖米色衣服，纯黑底，双手不入画。头发重画成三团光滑软块，表面像软陶，没有梳槽。暖光从画面左上方打下来：左额和左颊明显更亮，右颊有一块清楚的暖色暗部，明暗交界经过鼻梁。光泽卡通三维，圆润，无硬描边，暖饱和。不出现巫帽、南瓜和文字。 | 约束：保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: Mode B style ref locks medium/chrome only — the NEW subject silhouette must dominate the frame; do NOT photocopy the reference prop shape (e.g. gift box); name the new subject explicitly in the brief | 发顶改成三团光滑软块，表面不要梳槽。左额和左颊更亮，右颊明显更暗。 | MUST_FIX (≤2): 发顶改成三团光滑软块，表面不要梳槽；左额和左颊更亮，右颊明显更暗",
+    "continuation": false,
+    "passed": false,
+    "gate_blocked": false,
+    "image_gate_blocked": false,
+    "anatomy_score": 9.2,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "humanoid",
+    "judge_source": "agent_absolute_5d",
+    "remote_vlm": {
+      "source": "agent_self_judge",
+      "provider": "",
+      "model": "",
+      "error": "",
+      "active": false,
+      "score_evidence": {},
+      "evidence_missing_dims": [],
+      "review": {
+        "pass_count": 0,
+        "rerated": false,
+        "reason": ""
+      }
+    },
+    "should_continue_next_round": false,
+    "decision": "STOP_MAX_ROUNDS",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "style_lock",
+        "lesson": "本轮短板偏「style_lock」：头顶中央仍有一条条梳槽，三团软块没有盖平这些槽。右颊暗部很浅，和左颊的亮度差不大，交界没有切过鼻梁。",
+        "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+        "from_score": "8.99"
+      },
+      {
+        "category": "keep",
+        "lesson": "保留本轮已做对的：正面半身、短麦绿发、左右尖耳、闭合微笑、藕粉领、纯黑底都还在。无硬描边，光泽卡通三维，不继承巫帽和南瓜。左额比右颊亮，鼻梁左侧有高光。",
+        "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+        "from_score": "8.99"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "16:20:36"
+  },
+  "rounds_to_converge": 4,
+  "convergence_badge": "共 4 轮未达阈值，采用最高分",
+  "winner_image": "c:/Users/ZhengLangPC/Desktop/Cursor-Pmem-Art/assets/skill_20261110_gh/draw_multi/face_r4.png",
+  "best_image": "c:/Users/ZhengLangPC/Desktop/Cursor-Pmem-Art/assets/skill_20261110_gh/draw_multi/face_r4.png",
+  "final_image": "assets/skill_20261110_gh/draw_multi/final.png",
+  "settle_pending": true,
+  "process_board": ".memory-art/converge/boards/gh-face-20261110/index.html"
+}

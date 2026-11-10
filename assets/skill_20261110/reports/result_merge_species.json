@@ -1,0 +1,59 @@
+{
+  "ok": true,
+  "route_id": "merge.ladder",
+  "variant": "species_change",
+  "banner": "【按 同域合成梯：先定链型与关系，再按交付出图 走了】",
+  "passed_threshold": false,
+  "best_score": 9.09,
+  "final_image": "assets/skill_20261110/merge_species/final.jpg",
+  "relation_passed": true,
+  "images": [
+    {
+      "round": 1,
+      "path": "assets/skill_20261110/merge_species/sheet_r1.jpg",
+      "started_at": "2026-11-10T14:43:08",
+      "ended_at": "2026-11-10T14:44:27",
+      "duration_sec": 79,
+      "score": 8.39,
+      "dims": "构图8.2/光影8.7/透视8.4/质感8.4/风格7.8/无瑕疵8.7",
+      "defects": "L1到L4在白卡里的占位几乎一样大，看不出一档比一档大；表面是细密木点的木玩具，不是厚实圆润软塑胶；小手鼓是正上方俯视，其余档是斜侧；八音木琴横条看起来不足八根。",
+      "passed": false
+    },
+    {
+      "round": 2,
+      "path": "assets/skill_20261110/merge_species/sheet_r2.jpg",
+      "started_at": "2026-11-10T14:48:50",
+      "ended_at": "2026-11-10T14:50:00",
+      "duration_sec": 70,
+      "score": 8.83,
+      "dims": "构图8.4/光影9.0/透视8.8/质感9.2/风格9.0/无瑕疵8.7",
+      "defects": "上排叶笛、木哨、沙锤、手鼓在白卡中的占比接近，没有一档比一档明显变大；八音木琴琴条约七根，不是八根。",
+      "passed": false
+    },
+    {
+      "round": 3,
+      "path": "assets/skill_20261110/merge_species/sheet_r3.jpg",
+      "started_at": "2026-11-10T14:50:00",
+      "ended_at": "2026-11-10T14:50:17",
+      "duration_sec": 17,
+      "score": 9.03,
+      "dims": "构图8.6/光影9.2/透视9.1/质感9.3/风格9.2/无瑕疵8.9",
+      "defects": "邻档占卡比例仍接近，叶笛到竖琴没有一圈一圈拉开体量；卵形沙锤没有小柄，缩略更像一颗蛋。",
+      "passed": false
+    },
+    {
+      "round": 4,
+      "path": "assets/skill_20261110/merge_species/sheet_r4.jpg",
+      "started_at": "2026-11-10T14:52:18",
+      "ended_at": "2026-11-10T14:52:39",
+      "duration_sec": 21,
+      "score": 9.09,
+      "dims": "构图9.1/光影9.2/透视8.9/质感9.3/风格9.1/无瑕疵9.0",
+      "defects": "上排木哨和沙锤的占位仍接近，体量台阶不够陡；小手鼓仍偏俯视；桌上管风琴的拱门和立柱带一点建筑立面感。",
+      "passed": false
+    }
+  ],
+  "wall_started_at": "2026-11-10T14:41:06",
+  "wall_ended_at": "2026-11-10T14:55:26",
+  "notes": "关系第1稿 relation-judge 通过，未写第2稿，未出逐格。chain_mode=species_change，levels=8，2×4 overview_sheet，不写 base_body，GenerateImage 未垫图、未垫鸟表。底是不透明整表：白圆角卡加深炭灰底。六维为加权调和平均。第3轮成图落盘 14:50:17，记账 _now 在 14:52:18；第4轮成图落盘 14:52:39，记账 _now 在 14:53:59。满4轮未到9.5，终稿取第4轮 9.09，final.jpg 与 sheet_r4.jpg 同文件。商业对标 Travel Town Classical Instruments（换乐器、体量缓增、末档仍是一件键盘乐器）与 Merge Mansion 软塑胶货柜气质。诊断：链型与软塑胶已站得住，未过线在体量台阶不够陡，以及管风琴略带立面。若再开，只动体量。"
+}

@@ -19,6 +19,8 @@ aliases:
 - art-atlas.html
 - worktrees
 - 用户包
+verified: '2026-11-11'
+verified_at: '2026-11-11T01:15:57.631+08:00'
 source:
   conversation: d0bd94be-2445-43db-99f2-fed53b9d8564
 ---

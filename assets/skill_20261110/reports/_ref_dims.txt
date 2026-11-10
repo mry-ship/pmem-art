@@ -1,0 +1,2 @@
+assets/skill_20261109/_refs/ref_structure_board.png 848x488
+assets/skill_20261109/_refs/ref_character_fairy.png 460x460

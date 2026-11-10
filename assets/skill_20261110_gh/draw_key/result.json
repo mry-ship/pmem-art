@@ -1,0 +1,47 @@
+{
+  "ok": true,
+  "route_id": "draw.key",
+  "banner": "【按 原画 走了】",
+  "session": "gh1110-key",
+  "passed_threshold": false,
+  "best_score": 9.07,
+  "best_round": 3,
+  "final_image": "assets/skill_20261110_gh/draw_key/r3.png",
+  "wall_started_at": "2026-11-10T16:12:09",
+  "wall_ended_at": "2026-11-10T16:26:04",
+  "images": [
+    {
+      "round": 1,
+      "path": "assets/skill_20261110_gh/draw_key/r1.png",
+      "score": 8.85,
+      "dims": "构图8.8/光影9.3/透视8.6/质感9.0/风格9.0/无瑕疵8.5",
+      "defects": "平视略俯，人约占画面六成，主光是窗台左侧油灯的暖黄。她双膝跪在木地板上，裙摆摊开。笔举在脸颊旁边，笔尖离开空白信纸，眼睛看向镜头。按纸的左手手指挤成一小团。",
+      "passed": false
+    },
+    {
+      "round": 2,
+      "path": "assets/skill_20261110_gh/draw_key/r2.png",
+      "score": 8.91,
+      "dims": "构图8.7/光影9.2/透视8.8/质感9.1/风格8.8/无瑕疵8.8",
+      "defects": "平视，人约占画面七成，主光是左侧油灯的暖黄。她坐在窗台沿上，膝盖弯着，裙摆堆在小腿前面。笔尖碰着纸，人却不是站着。",
+      "passed": false
+    },
+    {
+      "round": 3,
+      "path": "assets/skill_20261110_gh/draw_key/r3.png",
+      "score": 9.07,
+      "dims": "构图9.2/光影9.2/透视8.9/质感9.2/风格9.0/无瑕疵8.9",
+      "defects": "平视略俯，人约占画面七成，主光是桌上油灯的暖黄。按纸的左手四指贴在一起，握笔的指节也偏圆。裙子比藕粉更亮，偏玫粉。灯后的搁板上还有一只蓝罐。",
+      "passed": false
+    },
+    {
+      "round": 4,
+      "path": "assets/skill_20261110_gh/draw_key/r4.png",
+      "score": 8.75,
+      "dims": "构图8.9/光影9.1/透视8.8/质感9.0/风格8.4/无瑕疵8.4",
+      "defects": "平视，人约占画面六成半，主光是左侧台灯的暖白。裙子是银灰色缎面。信纸上有一排排浅色横线。灯后的搁板上堆着书。",
+      "passed": false
+    }
+  ],
+  "notes": "【按 原画 走了】route_id=draw.key，会话 gh1110-key，模块 keyart.GlossDuskPoster，scale=recompose，竖幅 3:4，媒介 volume。样张只锁光泽卡通三维渲染，layout_not_style_echo=ok。四轮都没有双人堆叠、南瓜、蝙蝠披风、宠物、标志或进度条。调和平均 8.85 / 8.91 / 9.07 / 8.75，均未到 9.5。满 4 轮交第 3 轮。未过线是因为按纸的左手四指贴在一起，裙色偏玫粉。对标休闲游戏上架主视觉的光泽卡通完成度，诊断属完成度，下一步动手和裙色。过程板 .memory-art/converge/boards/gh1110-key/index.html"
+}

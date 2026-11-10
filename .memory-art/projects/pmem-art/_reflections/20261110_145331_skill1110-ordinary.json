@@ -1,0 +1,62 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-11-10 14:53:31 UTC+8",
+  "session_id": "skill1110-ordinary",
+  "goal": "要画一张图；有参考；题材不变；走普通图。把这盘蘑菇甜点画得更干净，身份不变。",
+  "module": "prop.MushroomPlatter",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 3,
+  "winner_score": 9.03,
+  "winner_image": "assets/skill_20261110/draw_ordinary/r3.png",
+  "winner_passed": false,
+  "outcome": "共 4 轮未达阈值，采用最高分",
+  "what_fixed": [
+    "把右上蓝果从大叶后露出完整圆轮廓；三颗橙樱桃的亮斑分别放到左上、顶中、右上，盖下沿加一抹很淡的苔绿反光。",
+    "把最右橙樱桃向左让出一指，让右侧蓝果整圆露在叶子前面；前颗樱桃亮斑留在左上，后左樱桃亮斑改到正顶，最右樱桃亮斑改到右上。",
+    "把后排两根樱桃梗左右分开，中间留出一根梗的空隙；盖腹暗面在红里渗进一点点苔绿，仍保持左上同一盏光。",
+    "若再画，只把后排两根梗拉开一根梗的宽度，并让盖腹暗面多进一层苔绿，身份和机位不动。"
+  ],
+  "what_still_weak": "后排两颗橙樱桃的梗几乎并成一对，中间没有空隙。盖腹暗面仍是大片暖红，左下只有一条细的黄绿边。",
+  "strengths": "右侧蓝果是完整的圆，叶子在它后方，最右樱桃没有切进果心。前颗樱桃的亮斑明显大于后左那颗靠近梗的小亮斑。",
+  "taste_deltas": {
+    "from_strengths": [
+      "右侧蓝果是完整的圆，叶子在它后方，最右樱桃没有切进果心。前颗樱桃的亮斑明显大于后左那颗靠近梗的小亮斑。"
+    ],
+    "from_defects": [
+      "右侧蓝果仍被最右橙樱桃挡住靠近果心的一块，圆只露出大约四分之三。三颗橙樱桃的奶油亮斑仍聚在各自球体的左上方，没有一颗亮在右侧。盖下沿只有左缘一条黄绿细边，暗部主体仍是暖红。",
+      "后排两颗橙樱桃的梗几乎并成一对，中间没有空隙。盖腹暗面仍是大片暖红，左下只有一条细的黄绿边。",
+      "后排两根褐梗仍然贴着并排，缝比梗本身还窄。盖腹大面还是暖红，苔绿只沾在左下缘那一圈细边。"
+    ]
+  },
+  "warm_start_confidence": 0.45,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 8.75,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 8.83,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 9.03,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 9.02,
+      "passed": false
+    }
+  ]
+}

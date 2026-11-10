@@ -1,0 +1,14 @@
+{
+  "saved_at": 1794292631.699539,
+  "text": "要写提示词、先不出图。妖精花园窗边写信的小妖精，扩成几套可选说法。",
+  "banner": "【按 提示词生成器：按交付类型扩写可选方案 走了】",
+  "route_ids": [
+    "prompt.write"
+  ],
+  "mode": "skill",
+  "execute_ok": true,
+  "artist_say": "【按 提示词生成器：按交付类型扩写可选方案 走了】\n先写提示词方案，这步不生图。",
+  "plan_conflict": false,
+  "confidence": "high",
+  "conversation_id": "skill1110-prompt"
+}

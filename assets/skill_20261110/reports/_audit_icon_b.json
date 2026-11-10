@@ -1,0 +1,117 @@
+{
+  "same_root": true,
+  "icons": [
+    {
+      "file": "home.svg",
+      "issues": [],
+      "ink_box": {
+        "min_x": 3.8,
+        "min_y": 3.6,
+        "max_x": 20.2,
+        "max_y": 20.2
+      },
+      "ink_w": 16.4,
+      "ink_h": 16.6,
+      "paths": 3,
+      "shapes": 3
+    },
+    {
+      "file": "bag.svg",
+      "issues": [],
+      "ink_box": {
+        "min_x": 4.0,
+        "min_y": 10.2,
+        "max_x": 20.0,
+        "max_y": 20.2
+      },
+      "ink_w": 16.0,
+      "ink_h": 10.0,
+      "paths": 3,
+      "shapes": 3
+    },
+    {
+      "file": "map.svg",
+      "issues": [],
+      "ink_box": {
+        "min_x": 3.8,
+        "min_y": 3.8,
+        "max_x": 20.2,
+        "max_y": 19.8
+      },
+      "ink_w": 16.4,
+      "ink_h": 16.0,
+      "paths": 3,
+      "shapes": 3
+    },
+    {
+      "file": "shop.svg",
+      "issues": [],
+      "ink_box": {
+        "min_x": 3.6,
+        "min_y": 3.8,
+        "max_x": 20.3,
+        "max_y": 20.2
+      },
+      "ink_w": 16.7,
+      "ink_h": 16.4,
+      "paths": 6,
+      "shapes": 6
+    },
+    {
+      "file": "quest.svg",
+      "issues": [],
+      "ink_box": {
+        "min_x": 4.4,
+        "min_y": 4.2,
+        "max_x": 20.0,
+        "max_y": 20.2
+      },
+      "ink_w": 15.6,
+      "ink_h": 16.0,
+      "paths": 6,
+      "shapes": 6
+    },
+    {
+      "file": "settings.svg",
+      "issues": [],
+      "ink_box": {
+        "min_x": 3.7,
+        "min_y": 3.6,
+        "max_x": 20.3,
+        "max_y": 20.4
+      },
+      "ink_w": 16.6,
+      "ink_h": 16.8,
+      "paths": 1,
+      "shapes": 2
+    },
+    {
+      "file": "sprout.svg",
+      "issues": [],
+      "ink_box": {
+        "min_x": 3.8,
+        "min_y": 3.6,
+        "max_x": 20.2,
+        "max_y": 20.4
+      },
+      "ink_w": 16.4,
+      "ink_h": 16.8,
+      "paths": 4,
+      "shapes": 4
+    },
+    {
+      "file": "watering-can.svg",
+      "issues": [],
+      "ink_box": {
+        "min_x": 3.4,
+        "min_y": 5.5,
+        "max_x": 20.9,
+        "max_y": 20.6
+      },
+      "ink_w": 17.5,
+      "ink_h": 15.1,
+      "paths": 5,
+      "shapes": 5
+    }
+  ]
+}

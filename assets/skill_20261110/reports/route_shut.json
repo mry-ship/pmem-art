@@ -1,0 +1,281 @@
+{
+  "banner": "【按 多图分工 走了】",
+  "confidence": "high",
+  "plan": {
+    "mode": "skill",
+    "would_execute": true,
+    "execute": false,
+    "reason": "multi",
+    "announce": "按 多图分工 走了",
+    "serial": false,
+    "parallel": false,
+    "route_ids": [
+      "draw.multi"
+    ],
+    "steps": [
+      {
+        "skill": "pmem-draw",
+        "section": "多图分工",
+        "heading": "## 合同 · 多图分工",
+        "file": ".cursor/skills/pmem-draw/SKILL.md",
+        "deliverable": "多张附图各管一件事；走多图分工。身份图管脸，结构图管关着的花园木门机位，下一张只改成打开。",
+        "pad": [
+          "assets/skill_20261109/_refs/ref_structure_board.png",
+          "assets/skill_20261109/_refs/ref_character_fairy.png"
+        ],
+        "skip_pad": [],
+        "locks": "身份、画风和机位按这一节；普通图锁机位",
+        "done": "每交付物最多4轮到线即停，标明过线/未过线",
+        "next_output": "这一步的成图或文字结论",
+        "note": "banner：每交付物最多4轮、≥9.5到线即停（标明是否≥9.5）"
+      }
+    ]
+  },
+  "plan_canonical": {
+    "mode": "skill",
+    "would_execute": true,
+    "execute": false,
+    "reason": "multi",
+    "announce": "按 多图分工 走了",
+    "serial": false,
+    "parallel": false,
+    "route_ids": [
+      "draw.multi"
+    ],
+    "steps": [
+      {
+        "skill": "pmem-draw",
+        "section": "多图分工",
+        "heading": "## 合同 · 多图分工",
+        "file": ".cursor/skills/pmem-draw/SKILL.md",
+        "deliverable": "多张附图各管一件事；走多图分工",
+        "pad": [
+          "assets/skill_20261109/_refs/ref_structure_board.png",
+          "assets/skill_20261109/_refs/ref_character_fairy.png"
+        ],
+        "skip_pad": [],
+        "locks": "身份、画风和机位按这一节；普通图锁机位",
+        "done": "每交付物最多4轮到线即停，标明过线/未过线",
+        "next_output": "这一步的成图或文字结论",
+        "note": "banner：每交付物最多4轮、≥9.5到线即停（标明是否≥9.5）"
+      }
+    ]
+  },
+  "canonical": "多张附图各管一件事；走多图分工",
+  "canonical_source": "agent",
+  "local_canonical": {
+    "canonical": "多张附图各管一件事；或关开态要锁同一机位；走多图分工。原话要点：多张附图各管一件事；走多图分工。身份图管脸，结构图管关着的花园木门机位，下一张只",
+    "guess_route_id": "draw.multi",
+    "template": "多张附图各管一件事；或关开态要锁同一机位；走多图分工",
+    "template_key": "draw.multi",
+    "signals": {
+      "has_ref": true,
+      "new_subject": false,
+      "keep_subject": false,
+      "variant": false,
+      "multi": true,
+      "two_state": true,
+      "lens": false,
+      "ui": false,
+      "icon_a": false,
+      "icon_b": false,
+      "icon_c": false,
+      "merge": false,
+      "merge_overview": false,
+      "merge_per_cell": false,
+      "key": false,
+      "style": false,
+      "style_then_verify": false,
+      "critique": false,
+      "atlas": false,
+      "coach": false,
+      "prompt_only": false,
+      "hard": false,
+      "image_count": 2,
+      "roles": [
+        "structure",
+        "identity"
+      ]
+    },
+    "source": "local_heuristic"
+  },
+  "plan_conflict": false,
+  "canonical_warnings": [],
+  "neighbor_conflict": false,
+  "multi_branch_ask": false,
+  "neighbors": [
+    {
+      "score": 1.1085,
+      "text": "第一张是脸，第二张是坐姿，两张各管一件事",
+      "mode": "skill",
+      "route_ids": [
+        "draw.multi"
+      ],
+      "bucket": "multi",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 0.5601,
+      "text": "用附图的颜色，别画原来的人，画一艘船",
+      "mode": "skill",
+      "route_ids": [
+        "draw.clone"
+      ],
+      "bucket": "heldout",
+      "reason": "",
+      "hard": true,
+      "source": "packaged"
+    },
+    {
+      "score": 0.5079,
+      "text": "参考这张的画风，别画原来的人，换成渡船",
+      "mode": "skill",
+      "route_ids": [
+        "draw.clone"
+      ],
+      "bucket": "clone",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 0.5079,
+      "text": "参考这张的画风，别画原来的人，换成邮局",
+      "mode": "skill",
+      "route_ids": [
+        "draw.clone"
+      ],
+      "bucket": "clone",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 0.5079,
+      "text": "参考这张的画风，别画原来的人，换成钟楼",
+      "mode": "skill",
+      "route_ids": [
+        "draw.clone"
+      ],
+      "bucket": "clone",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 0.5079,
+      "text": "参考这张的画风，别画原来的人，换成陶罐",
+      "mode": "skill",
+      "route_ids": [
+        "draw.clone"
+      ],
+      "bucket": "clone",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 0.5079,
+      "text": "参考这张的画风，别画原来的人，换成雪狐",
+      "mode": "skill",
+      "route_ids": [
+        "draw.clone"
+      ],
+      "bucket": "clone",
+      "reason": "",
+      "hard": false,
+      "source": "packaged"
+    },
+    {
+      "score": 0.504,
+      "text": "两张附图都留着，画一张信使，没说哪张管什么",
+      "mode": "default",
+      "route_ids": [
+        "draw.ordinary"
+      ],
+      "bucket": "ordinary_two_refs",
+      "reason": "",
+      "hard": true,
+      "source": "packaged"
+    }
+  ],
+  "confusion": [
+    {
+      "id": "multi_split_roles",
+      "when": "两张图各管一件事，或关开态机位与身份不在同一张",
+      "tip": "走多图分工；关开写成前后两行。"
+    }
+  ],
+  "announce": "按 多图分工 走了",
+  "would_execute": true,
+  "execute_ok": true,
+  "mode": "skill",
+  "route_ids": [
+    "draw.multi"
+  ],
+  "top_k": 8,
+  "bank_source": "advise",
+  "match_kind": "lexical_ngram+colloquial_expand+canonical",
+  "artist_ask": "",
+  "artist_detail": "按多图分工：几张参考各管一件事。",
+  "vague_reason": "",
+  "artist_say": "【按 多图分工 走了】\n按多图分工：几张参考各管一件事。",
+  "llm_hints": {
+    "neighbors": [
+      {
+        "text": "第一张是脸，第二张是坐姿，两张各管一件事",
+        "mode": "skill",
+        "route_ids": [
+          "draw.multi"
+        ],
+        "score": 1.1085
+      },
+      {
+        "text": "用附图的颜色，别画原来的人，画一艘船",
+        "mode": "skill",
+        "route_ids": [
+          "draw.clone"
+        ],
+        "score": 0.5601
+      },
+      {
+        "text": "参考这张的画风，别画原来的人，换成渡船",
+        "mode": "skill",
+        "route_ids": [
+          "draw.clone"
+        ],
+        "score": 0.5079
+      },
+      {
+        "text": "参考这张的画风，别画原来的人，换成邮局",
+        "mode": "skill",
+        "route_ids": [
+          "draw.clone"
+        ],
+        "score": 0.5079
+      },
+      {
+        "text": "参考这张的画风，别画原来的人，换成钟楼",
+        "mode": "skill",
+        "route_ids": [
+          "draw.clone"
+        ],
+        "score": 0.5079
+      }
+    ],
+    "confusion": [
+      {
+        "id": "multi_split_roles",
+        "when": "两张图各管一件事，或关开态机位与身份不在同一张",
+        "tip": "走多图分工；关开写成前后两行。"
+      }
+    ],
+    "canonical": "多张附图各管一件事；走多图分工",
+    "canonical_source": "agent",
+    "plan_conflict": false,
+    "artist_say": "【按 多图分工 走了】\n按多图分工：几张参考各管一件事。",
+    "rule": "对美术只贴 artist_say（标签+一句人话），禁止刷 confidence/json。先写标准路由句再 route --canonical；execute_ok 才开画；plan_conflict / confidence=ask|low / vague 先问人。"
+  }
+}
