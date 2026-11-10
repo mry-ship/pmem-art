@@ -29,7 +29,7 @@ from lifecycle import ensure_stdio_survives_locale
 
 ensure_stdio_survives_locale()
 
-VERSION = "0.16.7-art"
+VERSION = "0.16.8-art"
 MEMORY_DIR = ".memory-art"
 
 KIND_META = {
@@ -1938,17 +1938,42 @@ def cmd_hook(root: Path, data: dict[str, Any], event: str) -> int:
             block = "\n".join(
                 f"- [{e.get('kind')}] {e.get('summary')}" for e in matched if e.get("summary")
             )
+        kind, view = image_gen_arg_view(tool, args_obj)
+        # pre-gen 默认不灌 Warm-Start 进 GenerateImage（对照试验后定为默认）。
+        # 显式 PMEM_ART_PRE_GEN_INJECT=1 才并入；converge generate 仍并入已过滤 pack。
+        # merge.* 额外硬跳过，避免误开环境变量时再污染 GH 表面锁。
+        inject_opt_in = str(os.environ.get("PMEM_ART_PRE_GEN_INJECT") or "").strip().lower() in (
+            "1",
+            "true",
+            "yes",
+            "on",
+        )
+        skip_merge_inject = str(module or "").startswith("merge.") and is_generate_image_tool(
+            tool, args_obj
+        )
+        will_inject = bool(
+            kind and block and not deny_gen and inject_opt_in and not skip_merge_inject
+        )
         if matched or layered_k or block:
             advice.append(
                 f"【pmem-art记忆】模块 {module or '?'} · 私有 {len(matched)} 条 · 知识卡 {len(layered_k)} 张"
-                + (" · 已并入 GenerateImage" if block else "")
+                + (" · 已并入 GenerateImage" if will_inject else "")
             )
+            if kind and block and not deny_gen and not will_inject:
+                if not inject_opt_in:
+                    advice.append(
+                        "【pmem-art记忆】pre-gen 默认不灌入 GenerateImage"
+                        "（设 PMEM_ART_PRE_GEN_INJECT=1 才并入）"
+                    )
+                elif skip_merge_inject:
+                    advice.append(
+                        "【pmem-art记忆】merge 模块：跳过 Warm-Start 灌入 GenerateImage"
+                    )
             for e in matched:
                 advice.append(f"  · [private:{e.get('kind')}] {e.get('summary', '')[:100]}")
             for kc in layered_k:
                 advice.append(f"  · [{kc.get('layer_scope', 'shared')}:knowledge] {kc.get('title')}: {kc.get('body', '')[:80]}")
-            kind, view = image_gen_arg_view(tool, args_obj)
-            if kind and block and not deny_gen:
+            if will_inject:
                 patched = merge_block_into_image_args(view, block)
                 if kind == "nested":
                     new_outer = dict(args_obj)

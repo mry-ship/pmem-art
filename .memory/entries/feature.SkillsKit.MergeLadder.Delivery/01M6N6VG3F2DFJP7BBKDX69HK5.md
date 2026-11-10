@@ -18,6 +18,8 @@ verify: SKILL 与 AGENTS.md 写默认整表一组；unittest tests.test_skill_ro
 applies: 玩家要合成梯/merge/一组升级链且未点名逐格
 aliases:
 - merge默认整表
+verified: '2026-11-10'
+verified_at: '2026-11-10T14:24:43.192+08:00'
 ---
 需求来源：画师反馈一组merge就是整表一组，默认8个；
 除非给参考或点名固定数量。必须保持：

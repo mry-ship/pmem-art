@@ -10,6 +10,8 @@ from improve.warm_start import (
     filter_habits_for_task,
     filter_keeps_for_task,
     habit_relevant_for_task,
+    merge_conflict_taste_phrase,
+    stale_merge_inject_summary,
     _soft_goal_overlap_ok,
 )
 
@@ -62,6 +64,55 @@ class TestTasteDomainFilter(unittest.TestCase):
         self.assertLessEqual(len(out), 5)
         # Tail-prefer: newest universal bans survive; candy domain ban is dropped.
         self.assertTrue(any("过曝" in h or "油腻" in h or "头身" in h for h in out))
+
+
+class TestMergeConflictTaste(unittest.TestCase):
+    def test_conflict_phrase_detector(self) -> None:
+        self.assertTrue(merge_conflict_taste_phrase("廉价塑料感/油腻高光"))
+        self.assertTrue(merge_conflict_taste_phrase("档差要一眼可辨且体量递增"))
+        self.assertTrue(merge_conflict_taste_phrase("白底不可接受，要和L1一样透明/黑空底"))
+        self.assertTrue(merge_conflict_taste_phrase("不要油腻镜面"))
+        self.assertFalse(merge_conflict_taste_phrase("赛博霓虹/霓虹紫"))
+        self.assertFalse(merge_conflict_taste_phrase("脏暗阴影/脏色"))
+
+    def test_merge_module_drops_anti_gh_bans(self) -> None:
+        habits = [
+            "白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计",
+            "廉价塑料感/油腻高光",
+            "赛博霓虹/霓虹紫",
+            "过曝高光",
+            "脏暗阴影/脏色",
+        ]
+        packed = filter_habits_for_task(
+            habits, "merge.GardenWater", "庭院浇水合成梯整表", limit=5
+        )
+        blob = "｜".join(packed)
+        self.assertNotIn("体量递增", blob)
+        self.assertNotIn("黑空底", blob)
+        self.assertNotIn("廉价塑料", blob)
+        self.assertNotIn("油腻高光", blob)
+        self.assertTrue(any("赛博" in h or "过曝" in h or "脏暗" in h for h in packed))
+
+    def test_non_merge_keeps_oil_ban(self) -> None:
+        packed = filter_habits_for_task(
+            ["廉价塑料感/油腻高光", "赛博霓虹/霓虹紫"],
+            "ui.MainMenu",
+            "主菜单",
+            limit=5,
+        )
+        self.assertTrue(any("油腻" in h for h in packed))
+
+    def test_merge_keeps_drop_matte_satin_and_oil_mirror(self) -> None:
+        keeps = [
+            "软塑胶干净分层：宽柔高光+边缘散射，不要油腻镜面",
+            "哑光缎面；Q版小动物角色",
+            "圆润厚实糖釉玩具高光可读",
+        ]
+        out = filter_keeps_for_task(keeps, "merge.HarborOrange", "Gossip Harbor 货柜")
+        blob = "｜".join(out)
+        self.assertNotIn("油腻镜面", blob)
+        self.assertNotIn("哑光缎面", blob)
+        self.assertTrue(any("糖釉" in k for k in out))
 
 
 class TestKeepPhrases(unittest.TestCase):
@@ -125,6 +176,34 @@ class TestOffTopicEntries(unittest.TestCase):
             entry_on_topic_for_task(entry, "brand.WorldStyle", "窗边水彩半身女孩")
         )
 
+    def test_stale_merge_volume_summary_flagged(self) -> None:
+        stale = {
+            "module": "merge.GardenWater",
+            "summary": "[收敛胜出 9.23分] 庭院浇水…保持L3长嘴 只拉开框高0.40 框高阶梯末档最大 纯黑隔离底",
+        }
+        # 旧闸数字/回退句：原先词表只拦「框高阶梯」整词，漏掉「机读框高约…」「框高L4→」
+        measured = {
+            "module": "merge.DewberryJam",
+            "summary": "[收敛踩坑红线] 避免「机读框高约0.30/0.69/0.81/1.00」",
+        }
+        regress = {
+            "module": "merge.GardenWind",
+            "summary": "[收敛踩坑红线] 避免「框高L4→L5回退」",
+        }
+        keep = {
+            "module": "merge.GardenWater",
+            "summary": "[收敛胜出 8.9分] 庭院浇水 L3长嘴可读 无书包 浅色圆角卡",
+        }
+        other = {
+            "module": "ui.MainMenu",
+            "summary": "主菜单 框高阶梯末档最大 纯黑隔离底",
+        }
+        self.assertTrue(stale_merge_inject_summary(stale))
+        self.assertTrue(stale_merge_inject_summary(measured))
+        self.assertTrue(stale_merge_inject_summary(regress))
+        self.assertFalse(stale_merge_inject_summary(keep))
+        self.assertFalse(stale_merge_inject_summary(other))
+
     def test_soft_overlap_keeps_generic_redline(self) -> None:
         entry = {
             "summary": "禁止偏离样张画风：霓虹赛博、脏暗阴影",
@@ -144,6 +223,64 @@ class TestOffTopicEntries(unittest.TestCase):
 
 
 class TestBuildPackIntegration(unittest.TestCase):
+    def test_stale_merge_volume_recipe_not_injected(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        data = {
+            "modules": {"merge.GardenWater": {}},
+            "entries": [
+                {
+                    "id": "R_STALE_VOL",
+                    "kind": "recipe",
+                    "module": "merge.GardenWater",
+                    "status": "active",
+                    "summary": "[收敛胜出 9.23分] 庭院浇水 纯黑隔离底 框高阶梯末档最大",
+                    "score": 9.23,
+                },
+                {
+                    "id": "R_KEEP",
+                    "kind": "recipe",
+                    "module": "merge.GardenWater",
+                    "status": "active",
+                    "summary": "[收敛胜出 8.9分] 庭院浇水 L3长嘴可读 无书包 浅色圆角卡",
+                    "score": 8.9,
+                },
+                {
+                    "id": "RL_STALE",
+                    "kind": "style_redline",
+                    "module": "merge.GardenWater",
+                    "status": "active",
+                    "summary": "[收敛踩坑红线] 避免「邻档主体框高没有递增」",
+                },
+                {
+                    "id": "RL_STALE_MEASURED",
+                    "kind": "style_redline",
+                    "module": "merge.GardenWater",
+                    "status": "active",
+                    "summary": "[收敛踩坑红线] 避免「机读框高约0.30/0.69/0.81/1.00」",
+                },
+                {
+                    "id": "RL_KEEP",
+                    "kind": "style_redline",
+                    "module": "merge.GardenWater",
+                    "status": "active",
+                    "summary": "[收敛踩坑红线] 避免「左上变成按压喷瓶」",
+                },
+            ],
+        }
+        pack = build_warm_start_pack(
+            root,
+            data,
+            module="merge.GardenWater",
+            goal="庭院浇水合成梯整表",
+        )
+        recipe_ids = {r["id"] for r in pack["top_recipes"]}
+        redline_ids = {r["id"] for r in pack["top_redlines"]}
+        self.assertNotIn("R_STALE_VOL", recipe_ids)
+        self.assertIn("R_KEEP", recipe_ids)
+        self.assertNotIn("RL_STALE", redline_ids)
+        self.assertNotIn("RL_STALE_MEASURED", redline_ids)
+        self.assertIn("RL_KEEP", redline_ids)
+
     def test_pack_filters_bleed_and_caps_redlines(self) -> None:
         root = Path(__file__).resolve().parents[1]
         data = {

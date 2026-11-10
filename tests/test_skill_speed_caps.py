@@ -215,9 +215,10 @@ class SkillSpeedCapsTests(unittest.TestCase):
         self.assertIn("未点名勿写已齐套", icon)
         self.assertIn("Dark/Tinted 已派生齐", icon)
         merge = _body("pmem-merge-ladder")
-        self.assertIn("最多 2 稿", merge)
+        self.assertIn("最多 2", merge)
         self.assertIn("并行", merge)
-        self.assertIn("禁止串行", merge)
+        self.assertIn("串行", merge)
+        self.assertIn("拼贴 / 残片 / 切顶", merge)
         draw = _body("pmem-draw")
         self.assertNotIn("绝不能只生一张图就草草交差", draw)
 

@@ -44,6 +44,7 @@ from .warm_start import (
     filter_habits_for_task,
     filter_keeps_for_task,
     habit_relevant_for_task,
+    merge_conflict_taste_phrase,
     merge_warm_start_prompt,
     print_warm_start,
     rank_memory_entry,

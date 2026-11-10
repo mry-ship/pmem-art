@@ -686,13 +686,10 @@ def ensure_cursor_stubs(root: Path) -> None:
     # stop 必须保留：出图后 followup_message 才能把闭环审图拉回对话。
     # 已有 pmemw/pmem/.memory/bin/pmem-hook 闸门时合并保留，禁止整文件覆盖。
     py = _hook_python_prefix()
-    pre_tool_items: list[dict[str, Any]] = [
-        {
-            "command": f"{py} pmem_art.py hook pre-gen",
-            "matcher": "GenerateImage",
-            "failClosed": False,
-        }
-    ]
+    # GenerateImage pre-gen 默认关闭：不再把 Warm-Start 灌进 description。
+    # 记忆并入改由 converge generate；若要恢复 hook 灌入，手工加回 pre-gen 条目
+    # 并设环境变量 PMEM_ART_PRE_GEN_INJECT=1。
+    pre_tool_items: list[dict[str, Any]] = []
     # Windows：强制把 Shell 里的 python/python3 改成 pyw，否则 Agent 照抄旧习惯仍疯狂弹窗。
     # 用独立 art_shell_hook.py（只依赖 art_cli），禁止走 pmem_art.py（冷启动太慢）。
     if sys.platform == "win32":

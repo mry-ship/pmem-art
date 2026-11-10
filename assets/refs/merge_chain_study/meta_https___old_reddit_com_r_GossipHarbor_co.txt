@@ -1,0 +1,32 @@
+﻿
+    <!DOCTYPE html>
+    <html lang="en-US" class="theme-beta" dir="ltr" device="desktop">
+      <head prefix="og: https://ogp.me/ns#">
+        <title>Welcome to Reddit</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="msapplication-navbutton-color" content="#000000">
+    <meta name="theme-color" content="#000000">
+        
+        
+        <meta name="description" content="Log in or sign up to personalize your feed, join conversations, vote, and explore communities.">
+        
+        
+      <link rel="preconnect" href="https://www.redditstatic.com/" crossorigin="anonymous">
+      <link rel="dns-prefetch" href="https://www.redditstatic.com/">
+    
+        <link rel="dns-prefetch" href="https://v.redd.it/">
+        
+        
+    <link rel="preload" href="https://www.reddit.com/svc/events/preload-head?renderId=0ec738d3-721c-4f03-b7bd-15eafc8bbac3&amp;pageType=login" as="fetch">
+    
+    <script nonce="-pck4xRN2bwB3_2v8fkh5EQO">(() => {
+window.addEventListener('load',function(){fetch("https://www.reddit.com/svc/events/preload-head?renderId=0ec738d3-721c-4f03-b7bd-15eafc8bbac3&pageType=login").catch(function(){});});
+})();</script>
+  
+  
+        
+    <script nonce="-pck4xRN2bwB3_2v8fkh5EQO">(() => {
+
+      window.CLIENT_EXPERIMENTS = {"shreddit_ad_engagement_metadata":"enabled","shreddit_ad_event_migration_cutoff_m1":"enabled","shreddit_ad_event_migration_cutoff_m3":"enabled","shreddit_ad_event_migration_m3":"enabled","ads_in_related_posts_m1":"enabled","shreddit_age_settings":"enabled","web_bermuda_remove_pm_ui":"enabled","shreddit_cuj_pdp_new_timestamps":"enabled","shreddit_record_version_skew":"enabled","shreddit_seo_referred_initiated_gv":"enabled","shreddit_server_navigation_session_telemetry":"enabled","shreddit_service_worker_registration":"enabled","shreddit_sy

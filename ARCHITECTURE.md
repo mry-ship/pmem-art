@@ -81,7 +81,7 @@
        ▼
 ┌─────────────────────────────────────────────────────────────────────────┐
 │ Step 3: 资产质检 (validate / doctor)                                    │
-│ 手动或 CI：`python3 pmem_art.py validate` 或 `doctor`（含 validate）   │
+│ 手动或 CI：`pyw -3 -u pmem_art.py validate` 或 `doctor`（含 validate）   │
 │ ↳ 检查分辨率是否等于模块契约 (如 1024x1024 / 512x512)                   │
 │ ↳ 检查底隔离：透明引擎查 RGBA；Cursor 查实色空底（无 alpha_strict 不硬拒） │
 │ Hook post-tool/post-asset 仅提示 ingest/feedback，不自动跑 validate 阻断 │
@@ -98,7 +98,7 @@
 
 ### 4.1 开画路由闸门与 Absolute-5D 分数
 
-- **Route gate**：`converge start` 前必须有近期本地 `route` 结果（`.memory-art/route_bank/last_advise.json`，默认 2 小时内有效）。美术零门槛；Agent 先跑 `python3 pmem_art.py route --text "…"`。调试跳闸须 `PMEM_ART_ALLOW_GATE_SKIP=1` + `--skip-reason`（可另加 `--skip-route-gate` / env）；仅设 `PMEM_ART_SKIP_ROUTE_GATE` 不够。缺缓存时优先 `converge start --route-id …` 点名种闸。
+- **Route gate**：`converge start` 前必须有近期本地 `route` 结果（`.memory-art/route_bank/last_advise.json`，默认 2 小时内有效）。美术零门槛；Agent 先跑 `pyw -3 -u pmem_art.py route --text "…"`。调试跳闸须 `PMEM_ART_ALLOW_GATE_SKIP=1` + `--skip-reason`（可另加 `--skip-route-gate` / env）；仅设 `PMEM_ART_SKIP_ROUTE_GATE` 不够。缺缓存时优先 `converge start --route-id …` 点名种闸。
 - **评分**：收敛以 Absolute-5D（构图/光影/透视解剖/质感/风格）为主闸；`recompose`/`high` 档贴原停机前需在 **strengths/defects** 中检出机位变化证据（`_recompose_change_evidence`），提示词里的「重构机位」不算。
 - **垫图策略**：`pad=auto` 默认每轮垫最初 style_ref；仅在机位已换证据成立时才链最高分换机位成图。
 
@@ -160,10 +160,10 @@ Cursor 生图额外走：`classify` / `ingest` / `classify-watch`。
 
 ```bash
 # Agent 刚 GenerateImage 落到 .cursor/generated/xxx.png
-python3 pmem_art.py classify .cursor/generated/xxx.png -p "$PROMPT"
-python3 pmem_art.py ingest  .cursor/generated/xxx.png -p "$PROMPT" --apply   # 年轻项目可开 auto_place
-python3 pmem_art.py classify-watch          # 扫未映射图，低置信进 misc/candidate
-python3 pmem_art.py atlas
+pyw -3 -u pmem_art.py classify .cursor/generated/xxx.png -p "$PROMPT"
+pyw -3 -u pmem_art.py ingest  .cursor/generated/xxx.png -p "$PROMPT" --apply   # 年轻项目可开 auto_place
+pyw -3 -u pmem_art.py classify-watch          # 扫未映射图，低置信进 misc/candidate
+pyw -3 -u pmem_art.py atlas
 ```
 
 `classify.auto_add_modules: true` 时，**只追加**新模块键，绝不清空已有 `modules.yaml`。

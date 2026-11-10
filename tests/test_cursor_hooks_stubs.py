@@ -21,7 +21,8 @@ class TestCursorHooksStubs(unittest.TestCase):
 
         data = json.loads((td / ".cursor" / "hooks.json").read_text(encoding="utf-8"))
         hooks = data["hooks"]
-        self.assertEqual(hooks["preToolUse"][0]["matcher"], "GenerateImage")
+        pre_cmds = [h.get("command", "") for h in hooks.get("preToolUse") or []]
+        self.assertFalse(any("hook pre-gen" in c for c in pre_cmds))
         self.assertEqual(hooks["postToolUse"][0]["matcher"], "GenerateImage")
         stop = hooks["stop"]
         self.assertEqual(len(stop), 1)
@@ -66,7 +67,7 @@ class TestCursorHooksStubs(unittest.TestCase):
 
         hooks = json.loads((cursor / "hooks.json").read_text(encoding="utf-8"))["hooks"]
         pre_cmds = [h["command"] for h in hooks["preToolUse"]]
-        self.assertTrue(any(c.endswith("pmem_art.py hook pre-gen") for c in pre_cmds))
+        self.assertFalse(any("hook pre-gen" in c for c in pre_cmds))
         self.assertIn("pmemw hook pre-tool", pre_cmds)
         self.assertEqual(hooks["sessionStart"][0]["command"], ".memory/bin/pmem-hook session")
         stop_cmds = [h["command"] for h in hooks["stop"]]
@@ -181,7 +182,11 @@ class TestCursorHooksStubs(unittest.TestCase):
             with mock.patch.dict(sys.modules, {"skills_kit": mock.MagicMock()}):
                 ensure_cursor_stubs(td)
         hooks = json.loads((cursor / "hooks.json").read_text(encoding="utf-8"))["hooks"]
-        for section in ("preToolUse", "postToolUse", "stop"):
+        # 旧 pre-gen 条目应被默认关掉，不再改写留存
+        self.assertFalse(
+            any("pre-gen" in h.get("command", "") for h in hooks.get("preToolUse") or [])
+        )
+        for section in ("postToolUse", "stop"):
             for item in hooks[section]:
                 cmd = item["command"]
                 if "pmem_art.py" in cmd:

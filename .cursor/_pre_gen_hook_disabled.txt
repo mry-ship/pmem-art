@@ -1,0 +1,9 @@
+GenerateImage pre-gen hook is OFF by default (2026-11-11).
+
+ensure_cursor_stubs / skills --install will NOT re-add:
+  pyw -3 -u pmem_art.py hook pre-gen
+
+Warm-Start still merges in `converge generate` (filtered pack).
+To force hook inject again (debug only):
+  1) Add preToolUse entry matcher=GenerateImage command=… hook pre-gen
+  2) Set env PMEM_ART_PRE_GEN_INJECT=1

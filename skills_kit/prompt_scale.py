@@ -313,20 +313,34 @@ def _infer_case_style_and_subject(
 
     blob = f"{goal or ''} {ref_analysis or ''} {ref_image or ''} {module or ''}".lower()
     has_char = not (str(module or "").startswith("scene.") and not any(k in blob for k in ("人物", "少女", "女侠", "男侠", "角色")))
-    style_head = "原图画风优先"
-    case_redlines = (
-        [
-            "viewpoint_angle (严禁改变机位视角)",
-            "character_action_and_pose (严禁改变角色核心动作与姿态)",
-            "style_medium (严禁背离原图画风笔触与色板)",
+    has_ref = bool(str(ref_image or "").strip())
+    mod = str(module or "")
+    # 无垫图时禁止写「原图画风优先」：模型会落到写实默认（食物=棚拍）。
+    if has_ref:
+        style_head = "原图画风优先"
+    elif mod.startswith("merge.") or "merge" in blob or "合成梯" in blob:
+        style_head = "品类默认画风优先"
+    else:
+        style_head = "题材画风优先"
+    if has_ref:
+        case_redlines = (
+            [
+                "viewpoint_angle (严禁改变机位视角)",
+                "character_action_and_pose (严禁改变角色核心动作与姿态)",
+                "style_medium (严禁背离原图画风笔触与色板)",
+            ]
+            if has_char
+            else [
+                "viewpoint_angle (严禁改变机位视角)",
+                "scene_layout_and_elements (严禁改变场景布局与主体元素数量)",
+                "style_medium (严禁背离原图画风笔触与色板)",
+            ]
+        )
+    else:
+        case_redlines = [
+            "viewpoint_angle (不改机位与镜头视角)",
+            "style_surface (跟提示词品类默认画风，禁止回落写实棚拍)",
         ]
-        if has_char
-        else [
-            "viewpoint_angle (严禁改变机位视角)",
-            "scene_layout_and_elements (严禁改变场景布局与主体元素数量)",
-            "style_medium (严禁背离原图画风笔触与色板)",
-        ]
-    )
     return style_head, has_char, case_redlines
 
 
@@ -1191,6 +1205,21 @@ def get_converge_scale_profile(
     merged_limits = list(CONVERGE_SCALE_PROFILES[s].get("forbidden_changes", []))
     if s == "low" and case_redlines:
         merged_limits = _merge_low_forbidden(merged_limits, case_redlines)
+    # 无垫图：去掉角色改图「保原图画风 / 性别物种」约束，避免 jam/merge 整表落到写实默认。
+    if not str(ref_image or "").strip():
+        cleaned_limits: list[str] = []
+        for item in merged_limits:
+            text = str(item)
+            if "保持原图画风" in text or "原图核心艺术媒介" in text:
+                continue
+            if "性别、物种、年龄段" in text:
+                continue
+            cleaned_limits.append(item)
+        if not any("禁止回落写实" in str(x) or "style_surface" in str(x) for x in cleaned_limits):
+            cleaned_limits.append(
+                "style_surface (跟提示词品类默认画风，禁止回落写实棚拍)"
+            )
+        merged_limits = cleaned_limits
     prof["forbidden_changes"] = merged_limits
     from .medium_family import apply_family_to_profile, infer_medium_family
 

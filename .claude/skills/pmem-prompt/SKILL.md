@@ -6,7 +6,7 @@ description: 玩家要写提示词、扩写 brief、要几套可选说法时使�
 # `/pmem-prompt` — 提示词生成器（按类型分流）
 
 ## 底与透明度（按生图引擎 · Agent 必读）
-- **Cursor `GenerateImage` 不支持真透明**。口语要「透明底」时，改写为**不透明隔离底**（默认纯黑 `#000000`，或定稿写死的实色空底）；交不透明 PNG/JPG 即可。**禁止**成图后再抠色、抠角、本地挖洞冒充 alpha。
+- **Cursor `GenerateImage` 不支持真透明**。口语要「透明底」时，改写为**不透明隔离底**（默认纯黑 `#000000`，或定稿写死的实色空底）；交不透明 PNG/JPG 即可。**禁止**成图后再抠色、抠角、本地挖洞冒充 alpha。**例外：合成梯整表（overview_sheet）用浅色圆角卡，纯黑只给 per_cell。**
 - **第三方支持透明的引擎**（如 `gpt-image` / 明确带 alpha 的 API）：可**直接**生成真 alpha PNG；白底/品红底不算透明底。
 - 结算时写清用的是哪类底：`true_alpha` 或 `opaque_isolation`。默认出图路径是 Cursor 时，不要为了凑 alpha 去跑 `export_mode_c_icon` 抠图。
 
@@ -18,7 +18,7 @@ description: 玩家要写提示词、扩写 brief、要几套可选说法时使�
 
 1. **不生图、不跑 converge**。先 route 定类型，方案旁标 `route_id=`。
 2. 2～4 套须同属已判定类型；UI/图标/合成梯禁止用普通插画句式交差。
-3. 风格优先级：①有文字跟文字（有构图/整表参考时参考只锁版式，不锁画风）；②有参考无文字跟参考表面；③无参考仅题材/链型文字按文字推出；④都无才 `benchmark lookup` / `COMMERCIAL_BENCHMARK.md`（**按已判定品类**填一句；仅判成 merge 时钉 Merge Mansion，禁止非 merge 套软塑胶）。
+3. 风格优先级：①有文字跟文字（有构图/整表参考时参考只锁版式，不锁画风）；②有参考无文字跟参考表面；③无参考仅题材/链型文字按文字推出；④都无才 `benchmark lookup` / `COMMERCIAL_BENCHMARK.md`（**按已判定品类**填一句；仅判成 merge 时钉 Gossip Harbor，禁止非 merge 套 Gossip Harbor 货柜）。
 4. 玩家点选后若要出图：再跑 route，进对应 `/pmem-…`；禁止本技能直接 `converge start`。
 
 ## 输入
@@ -34,7 +34,7 @@ description: 玩家要写提示词、扩写 brief、要几套可选说法时使�
 1. 用一行写出草稿：**判定类型：`…` · 依据：… · 将交给：`/pmem-…`**
 2. **立刻**把原话收成标准路由句并跑（与总控同闸，禁止只靠本表盲猜定案）：
 ```bash
-python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>"
+pyw -3 -u pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>"
 ```
 3. 以 CLI `route_ids` / `banner` 校正类型行；冲突时改类型行并注明「以 route 为准」。后续每套方案旁标注 **`route_id=…`**（通常与校正后类型一致）。
 
@@ -52,7 +52,7 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 | **合成梯** | 同域升级链（默认整表一组 8 档；点名数量或参考跟格数）、一档比一档大 | `/pmem-merge-ladder` | `merge.ladder` |
 | **锁风格 brief** | 只要色板/光影/禁用词文字规格，不求出图 | `/pmem-style-lock`（或先出文字再锁） | `style.lock` |
 
-认成 UI / 图标 / 合成梯时：**禁止**用普通插画句式交差。类型在「原画 vs 普通图」「图标 A vs C」之间晃，先问玩家，不要猜完就出 4 套混类方案。风格按优先级：有文字/参考跟已有；都无才查 `docs/COMMERCIAL_BENCHMARK.md`（按类型品类；仅合成梯钉 Merge Mansion）。
+认成 UI / 图标 / 合成梯时：**禁止**用普通插画句式交差。类型在「原画 vs 普通图」「图标 A vs C」之间晃，先问玩家，不要猜完就出 4 套混类方案。风格按优先级：有文字/参考跟已有；都无才查 `docs/COMMERCIAL_BENCHMARK.md`（按类型品类；仅合成梯钉 Gossip Harbor）。
 
 ---
 
@@ -119,13 +119,13 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 
 ### 图标 C（道具格）
 - 1:1、厚剪影 64px 可认、底隔离（Cursor 实色空底 / 透明引擎真 alpha）；棚拍主光；无字无场景
-- **缺画风**：写同品类顶级道具格气质（按题材品类，禁非休闲硬套软塑胶）；若同任务有合成梯/`surface`，方案必须复用同一表面句
+- **缺画风**：写同品类顶级道具格气质（按题材品类，禁非休闲硬套 Gossip Harbor 货柜）；若同任务有合成梯/`surface`，方案必须复用同一表面句
 - 方案差异：同道具的装饰多寡 / 稀有度感——不要画成场景插画
 
 ### 合成梯
 - 扩写须对照 `docs/MERGE_MULTI_LENS.md`；**第一段是关系稿不是出图句**
 - 写清 `chain_mode`；每档 `parts_add` 或 `evolve_to`+`merge_why`；体量只大一圈；64px 邻档可分
-- **风格优先级**：①有文字跟文字（有整表/构图参考时只锁版式）；②有参考无文字跟参考表面；③无参考仅题材/链型文字按文字推出；④都无时每套画风句必须与商业档序**同一对标系**货柜气质（默认钉 Merge Mansion），禁止无关泛卡通
+- **风格优先级**：①有文字跟文字（有整表/构图参考时只锁版式）；②有参考无文字跟参考表面；③无参考仅题材/链型文字按文字推出；④都无时每套画风句必须与商业档序**同一对标系**货柜气质（默认钉 Gossip Harbor），禁止无关泛卡通
 - 方案差异：升级叙事分叉或画风一句分叉——不要直接交八张插画 prompt 冒充关系定稿
 - 写明：说通后再交给 `/pmem-merge-ladder`
 
@@ -145,7 +145,7 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
    - 变体/锁死 brief 等极确定时只出 **1 套**，并写：「只有一套：因为……再拆会和原话冲突。」
 4. 问玩家：选字母，或补充/改口（含「其实我要的是 UI 不是原画」这类改类型）。**点选前禁止开生图。**
 5. 玩家选定某套后交给出图技能时：该套中文/英文目标句可作为 `reasonableness review` 的 `--draft`；出图支路仍须再跑一次闸门并产出 `--revised`（可在选定句上补硬锁与元素预算）。
-6. **若之后要出图**：再跑一次 `python3 pmem_art.py route --text "<原话或选定方案>" --canonical "<标准路由句>"`（可用方案旁已标的 `route_id` 种闸），再进对应 `/pmem-…`；禁止只凭本技能自判类型直接 `converge start`。
+6. **若之后要出图**：再跑一次 `pyw -3 -u pmem_art.py route --text "<原话或选定方案>" --canonical "<标准路由句>"`（可用方案旁已标的 `route_id` 种闸），再进对应 `/pmem-…`；禁止只凭本技能自判类型直接 `converge start`。
 
 ## 怎么用（复制即用）
 ```text

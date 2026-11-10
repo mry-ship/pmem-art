@@ -45,9 +45,9 @@ DEFAULT_PLATEAU_ROUNDS = 2
 DEFAULT_REGRESSION_DROP = 0.15
 DEFAULT_AUTO_PAD_DROP = 0.2
 DEFAULT_EARLY_STOP_MIN_ROUND = 2
-# Project config can set converge.safe_early_stop: false to skip STOP_REGRESSION/PLATEAU
-# while keeping the 0.15/R2 defaults intact for when it is re-enabled.
-DEFAULT_SAFE_EARLY_STOP = True
+# 安全早停默认关。要开时在 config 写 converge.safe_early_stop: true。
+# 打开之后仍用 0.15 / 第 2 轮，不要改回 0.5 / 第 4 轮。
+DEFAULT_SAFE_EARLY_STOP = False
 PROMPT_CHAR_BUDGET = 3500
 
 

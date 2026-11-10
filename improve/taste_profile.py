@@ -73,11 +73,20 @@ def save_taste(root: Path, taste: dict[str, Any]) -> Path:
     taste["project_id"] = meta.get("project_id") or slugify_project_id(root.name)
     taste["project_name"] = meta.get("project_name") or root.name
     taste["layer_scope"] = "private"
+    import time
+
     taste["updated_at"] = _now_cst().strftime("%Y-%m-%d %H:%M:%S UTC+8")
     p = taste_path(root)
-    p.write_text(json.dumps(taste, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    sync_active_project_to_library(root)
-    return p
+    last_err: Exception | None = None
+    for attempt in range(6):
+        try:
+            p.write_text(json.dumps(taste, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+            sync_active_project_to_library(root)
+            return p
+        except OSError as ex:
+            last_err = ex
+            time.sleep(0.2 * (attempt + 1))
+    raise TimeoutError(f"口味档案写入被占用，已重试仍失败: {p}") from last_err
 
 
 def _uniq_append(lst: list[Any], item: str, limit: int = 40) -> list[Any]:

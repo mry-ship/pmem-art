@@ -203,6 +203,21 @@ def _showcase_page(text: str) -> bool:
     return _any(text, _PAGE_WORDS)
 
 
+def _skill_suite_request(text: str) -> bool:
+    """「所有技能 / 技能变体全部跑一遍」是全清单，不是查代码。"""
+    if not text:
+        return False
+    if _any(text, ("不要所有", "别跑所有", "不要全部技能", "不要全部跑", "别把所有技能")):
+        return False
+    if _any(text, ("检查", "审计", "是否有问题", "有没有问题", "漏洞", "代码")):
+        return False
+    if _any(text, ("所有技能", "全部技能", "技能变体", "每个技能")):
+        return True
+    if ("全部跑一遍" in text or "全部跑一次" in text) and "技能" in text:
+        return True
+    return False
+
+
 def _bare_rerun(text: str) -> bool:
     if _hit(text, "再跑一遍") or _hit(text, "重跑一遍"):
         return True
@@ -546,6 +561,42 @@ def _wants_lens(text: str) -> bool:
     return _any(text, ("远中近", "机位包", "几套镜头", "镜头包", "几套机位"))
 
 
+_IDENTITY_LOCK = (
+    "同一身份",
+    "同一张脸",
+    "换表情",
+    "走变体",
+    "这个妖精",
+    "机位已在",
+    "同一人",
+)
+_EXPR_SPAN = re.compile(
+    r"(变成|改成|换成)(一个|一下|个|张)?(微笑|生气|闭眼|侧目|眨眼|惊讶|叹气|表情|差分|姿势|动作)"
+)
+_HARD_NEW_SUBJECT = (
+    "新题材",
+    "新角色",
+    "新物件",
+    "别画原来",
+    "换个东西",
+    "换个主题",
+    "主体改成",
+    "主体换成",
+    "换成一只",
+    "改成一只",
+    "变成一只",
+)
+
+
+def _expression_swap_locked(text: str) -> bool:
+    """同一身份上的「换成惊讶」是表情，不是换题材。"""
+    if _any(text, _HARD_NEW_SUBJECT):
+        return False
+    if _EXPR_AFTER_SWAP.search(text):
+        return True
+    return bool(_any(text, _IDENTITY_LOCK) and _EXPR_SPAN.search(text))
+
+
 # 句末「变成微笑/改成姿势」= 变体；允许「再画/的她」；「变成微笑的猫」仍算换题材
 _EXPR_AFTER_SWAP = re.compile(
     r"(变成|改成|换成)(一个|一下|个|张)?(微笑|生气|闭眼|侧目|眨眼|惊讶|叹气|表情|差分|姿势|动作)"
@@ -596,22 +647,7 @@ def _swap_subject_signal(text: str) -> bool:
     for phrase in sorted(_KEEP_SUBJECT, key=len, reverse=True):
         cleaned = cleaned.replace(phrase, "")
     text = cleaned
-    if _EXPR_AFTER_SWAP.search(text) and not _any(
-        text,
-        (
-            "新题材",
-            "新角色",
-            "新物件",
-            "别画原来",
-            "换个东西",
-            "换个主题",
-            "主体改成",
-            "主体换成",
-            "换成一只",
-            "改成一只",
-            "变成一只",
-        ),
-    ):
+    if _expression_swap_locked(text):
         return False
     if _SWAP_TOPIC.search(text):
         return True
@@ -1016,6 +1052,8 @@ def _showcase_bare_icon(text: str) -> bool:
 
 def _dev_ops_ask(text: str) -> bool:
     """纯研发/排查口语。代码场景尾巴优先于画面名词框。"""
+    if _skill_suite_request(text):
+        return False
     low = (text or "").lower()
     anchored = (
         _pattern_hit(_DEV_OPS_PHRASE, low)
@@ -1135,7 +1173,10 @@ def plan_route(
     reason = ""
     remap_note = ""
     remap_label = ""
-    if remap:
+    if _skill_suite_request(raw) or _skill_suite_request(spoken):
+        chosen = [r["id"] for r in reg["routes"] if r.get("routable")]
+        reason = "skill_suite"
+    elif remap:
         rid, reason, remap_label, remap_note = remap
         chosen = [rid]
     draw_only = named == "pmem-draw"
@@ -1282,7 +1323,7 @@ def plan_route(
                     images=pics,
                     locks="身份图的身份；机位以结构图为准，身份图原来的机位作废",
                     done="关上这一态：最多4轮、≥9.5到线即停（标明是否≥9.5）",
-                    next_output="通过的关上这一张",
+                    next_output="上一态交件（≥9.5 或满 4 轮最高分；没过线不要标通过）",
                     note="converge start --contract split；最多4轮到线即停；不要写 --scale medium",
                 )
             )
@@ -1291,12 +1332,12 @@ def plan_route(
                 _handoff(
                     route,
                     deliverable="只改成打开这一态",
-                    images=["上一步通过的那张"],
+                    images=["上一态交件（过线那张，或满4轮最高分）"],
                     locks="机位不变，只改开合",
                     done="打开这一态：最多4轮、≥9.5到线即停（标明是否≥9.5）",
                     next_output="打开这一张",
                     skip=pics,
-                    note="只垫已经通过的那张；最多4轮到线即停",
+                    note="只垫上一态交件这一张；没到 9.5 也要开下一态，但不得把未过线标成通过",
                 )
             )
             continue

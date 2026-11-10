@@ -490,6 +490,26 @@ class RouteFalseFireTests(unittest.TestCase):
         plan = plan_route("帮我归档这些散图")
         self.assertEqual(plan.route_ids, ["atlas.file"])
 
+    def test_all_skills_sentence_is_full_inventory(self) -> None:
+        text = "把所有技能以及技能变体全部跑一遍"
+        plan = plan_route(text)
+        self.assertEqual(plan.reason, "skill_suite")
+        self.assertIn("draw.ordinary", plan.route_ids)
+        self.assertIn("icon.b", plan.route_ids)
+        self.assertIn("merge.ladder", plan.route_ids)
+        self.assertGreaterEqual(len(plan.route_ids), 8)
+        advised = advise_route(text)
+        self.assertTrue(advised["execute_ok"], advised.get("artist_say"))
+
+    def test_variant_huancheng_stays_variant(self) -> None:
+        text = "同一身份；换表情；机位已在图上；走变体。这个妖精换成惊讶睁大眼。"
+        plan = plan_route(text, images=["a.png"])
+        self.assertEqual(plan.route_ids, ["draw.variant"])
+        advised = advise_route(text, images=["a.png"])
+        self.assertTrue(advised["execute_ok"], advised.get("confidence"))
+        clone = plan_route("参考这张，变成微笑的猫", images=["a.png"])
+        self.assertEqual(clone.route_ids, ["draw.clone"])
+
 
 if __name__ == "__main__":
     unittest.main()

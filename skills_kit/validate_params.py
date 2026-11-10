@@ -20,6 +20,40 @@ from .image_gates import (
     resolve_case_config,
 )
 
+def ensure_aspect_matched_ref(src: Path, aspect: str) -> Path:
+    """同方向加边成一张垫图。竖图不能填成横画布，横图也不能填成竖画布。"""
+    from PIL import Image
+
+    traits = _inspect_image_physical_traits(src)
+    w, h = int(traits.get("width") or 0), int(traits.get("height") or 0)
+    rel = _aspect_relation(w, h, aspect) if w > 0 and h > 0 else {"hard_fail": False}
+    if not rel.get("hard_fail"):
+        return src
+    tw_s, th_s = aspect.split(":")
+    target = int(tw_s) / int(th_s)
+    im = Image.open(src).convert("RGB")
+    w, h = im.size
+    if (w / h > 1.08) != (target > 1.08):
+        raise ValueError(
+            f"垫图是 {w}x{h}，不能加边填成 {aspect}。交付画幅跟垫图方向："
+            "竖屏用 9:16 或 3:4，横屏用 16:9 或 4:3。"
+        )
+    if (w / h) > target:
+        new_w, new_h = w, max(h, int(round(w / target)))
+    else:
+        new_h, new_w = h, max(w, int(round(h * target)))
+    if new_w % 2:
+        new_w += 1
+    if new_h % 2:
+        new_h += 1
+    fill = im.getpixel((0, 0))
+    canvas = Image.new("RGB", (new_w, new_h), fill)
+    canvas.paste(im, ((new_w - w) // 2, (new_h - h) // 2))
+    out = src.with_name(f"{src.stem}__ar_{aspect.replace(':', 'x')}.png")
+    canvas.save(out)
+    return out
+
+
 def validate_case_generation_params(
     case_id_or_session: str,
     aspect_ratio: str = "",
@@ -186,6 +220,16 @@ def validate_case_generation_params(
             )
         w, h = int(primary_traits.get("width") or 0), int(primary_traits.get("height") or 0)
         ref_rel = _aspect_relation(w, h, actual_ar) if w > 0 and h > 0 else {"hard_fail": False}
+        if ref_rel.get("hard_fail") and resolved_refs:
+            padded = ensure_aspect_matched_ref(resolved_refs[0], actual_ar)
+            if padded != resolved_refs[0] and padded.is_file():
+                resolved_refs[0] = padded
+                primary_traits = _inspect_image_physical_traits(padded)
+                w, h = int(primary_traits.get("width") or 0), int(primary_traits.get("height") or 0)
+                ref_rel = _aspect_relation(w, h, actual_ar) if w > 0 and h > 0 else {"hard_fail": False}
+                warnings.append(
+                    f"参考图已加边为同一张垫图 '{padded.name}'，会话和生图都用这一张，不要再垫原图。"
+                )
         if ref_rel.get("hard_fail"):
             raise ValueError(
                 f"[{case_label}] Parameter 'aspect_ratio' mismatch against reference image '{resolved_refs[0].name}': "

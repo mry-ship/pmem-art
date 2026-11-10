@@ -2,16 +2,6 @@
   "hooks": {
     "PreToolUse": [
       {
-        "matcher": "GenerateImage",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "pyw -3 -u pmem_art.py hook pre-gen",
-            "timeout": 30
-          }
-        ]
-      },
-      {
         "matcher": "^(Bash|apply_patch|mcp__pmem__.*)$",
         "hooks": [
           {

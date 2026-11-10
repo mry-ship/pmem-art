@@ -18,9 +18,9 @@ description: 当用户输入 /pmem-style-lock 并附带样张/参考图时触发
    - **光影与氛围（Lighting）**：主光源角度、环境光色温、高光材质表现（金属/丝绸/青瓷/发光体）。
    - **严禁偏离项（Anti-Style Redlines）**：明确列出哪类常见 AI 坏习惯会破坏该画风（如过度霓虹、脏暗阴影、油腻高光、错误头身比）。
 2. **自动写入记忆库**：
-    - 写一条风格决策：`python3 pmem_art.py feedback "以后统一按此样张画风：<核心色板+光影+笔触摘要>" --module <目标模块> --kind art_decision`。
-    - 对每一张满意样张写一条正向配方并关联图片：`python3 pmem_art.py feedback "确认作为风格正向锚点：<该样张可复用的风格摘要>" --module <目标模块> --asset <样张路径> --kind recipe`。用户提交为满意样张即视为同意将其作为 approved 正向锚点。
-    - 写一条禁用红线：`python3 pmem_art.py feedback "禁止偏离样张画风：<反例禁用词汇总>" --module <目标模块> --kind style_redline`。
+    - 写一条风格决策：`pyw -3 -u pmem_art.py feedback "以后统一按此样张画风：<核心色板+光影+笔触摘要>" --module <目标模块> --kind art_decision`。
+    - 对每一张满意样张写一条正向配方并关联图片：`pyw -3 -u pmem_art.py feedback "确认作为风格正向锚点：<该样张可复用的风格摘要>" --module <目标模块> --asset <样张路径> --kind recipe`。用户提交为满意样张即视为同意将其作为 approved 正向锚点。
+    - 写一条禁用红线：`pyw -3 -u pmem_art.py feedback "禁止偏离样张画风：<反例禁用词汇总>" --module <目标模块> --kind style_redline`。
     - 三类记录都必须写入步骤 0 确定的同一模块；不得省略 `--module`，因为省略会进入待确认收件箱。
 3. **输出《风格锁定卡片》**：用清晰的表格展示色板 HEX、正向风格词、负向禁用词，以及 `art_decision`、每条 `recipe`、`style_redline` 的实际写入路径。卡片外再附一段可以直接拿去生图的完整句子。同模块下一张开场必须带上已锁的 HEX 和禁用词。记忆仍只在这一支里写入。
 4. **锁完要验证成图时**：路由若是 `style.lock` → `draw.clone` 串行（口语含「验证图 / 锁完出图 / 为了出图」等），本技能只交卡片；第二步按克隆合同换新题材出验证图，禁止用卡片或样张本身交差。纯「以后都按这张」仍只锁不画。

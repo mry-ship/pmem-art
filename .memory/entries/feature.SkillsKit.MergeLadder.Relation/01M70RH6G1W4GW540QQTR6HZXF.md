@@ -17,6 +17,8 @@ verify: rg 家族基因口径 .cursor/skills/pmem-merge-ladder/SKILL.md；python
   relation-judge --file assets/skill_20261109/merge_overview/merge_phase1_v5.yaml
   --all
 applies: 任意 /pmem-merge-ladder 定链与商业审
+verified: '2026-11-10'
+verified_at: '2026-11-10T16:07:00.985+08:00'
 ---
 对照 Travel Town Ice Cream/Bread 与画师反馈：合理性翻车根因是把家族基因做成红菇盖贯穿八档，并用自拟烘焙假档序冒充对标。
 更正：shop_ladder 家族=同店品类/色相域，允许同店类型跳；

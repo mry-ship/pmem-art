@@ -1,15 +1,16 @@
 id: merge.cabinet
 category: merge
-title: 休闲 merge 货柜（默认钉 Merge Mansion）
+title: 休闲 merge 货柜（默认钉 Gossip Harbor）
 aliases:
   - merge
   - 合成梯
   - 货柜
+  - gossip harbor
   - merge mansion
   - evermerge
   - travel town
-surface: 默认钉 Merge Mansion 货柜软塑胶：厚实圆润哑光、棚柔光短接触影、饱和友好、棋盘缩略可读、上架货柜完成度（Travel Town / EverMerge 仅同系旁证，不另换默认名）
-layout_notes: 每格一件居中；相邻档体量缓增；家族=店域/色相（非纹样贯穿）
+surface: 默认钉 Gossip Harbor 货柜：光泽卡通 3D、圆润厚实、无硬描边、暖饱和、柔光渐变、道具干净发亮、棋盘缩略可认（Travel Town 只作链型档序旁证，不改这套渲染）
+layout_notes: 每格一件居中；邻档靠剪影/件数/容器/完成态可分（体量可持平）；浅色圆角卡；家族=店域/色相（非纹样贯穿）
 ladder_levels:
   - L1 朴素完整小件 SKU
   - L2 换代完整件

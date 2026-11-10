@@ -175,15 +175,42 @@ def entry_on_topic_for_task(entry: dict[str, Any], module: str, goal: str = "") 
     return True
 
 
+def _is_merge_module(module: str) -> bool:
+    return str(module or "").strip().lower().startswith("merge.")
+
+
+# merge.* 注入时与现行 GH/浅色卡合同相反的 taste 短语（含「通用禁油腻」误伤糖釉）。
+_MERGE_CONFLICT_TASTE = (
+    "体量递增",
+    "黑空底",
+    "黑底整表",
+    "纯黑隔离",
+    "廉价塑料感",
+    "油腻高光",
+    "油腻镜面",
+    "哑光缎面",
+    "哑光发灰",
+)
+
+
+def merge_conflict_taste_phrase(text: str) -> bool:
+    """True when a taste ban/keep would push merge away from GH soft-gloss / light cards."""
+    blob = str(text or "")
+    return any(k in blob for k in _MERGE_CONFLICT_TASTE)
+
+
 def filter_habits_for_task(habits: list[Any], module: str, goal: str = "", *, limit: int = _INJECT_BAN_CAP) -> list[str]:
     """Prefer domain-matching bans, then fill with universal; newest first within each bucket."""
     ctx = _context_scopes(module, goal)
+    merge_mod = _is_merge_module(module)
     domain: list[str] = []
     universal: list[str] = []
     seen: set[str] = set()
     for h in reversed(list(habits or [])):
         text = str(h or "").strip()
         if not text or not habit_relevant_for_task(text, module, goal):
+            continue
+        if merge_mod and merge_conflict_taste_phrase(text):
             continue
         key = text.lower()
         if key in seen:
@@ -204,11 +231,14 @@ def filter_habits_for_task(habits: list[Any], module: str, goal: str = "", *, li
 
 def filter_keeps_for_task(keeps: list[Any], module: str, goal: str = "", *, limit: int = _INJECT_KEEP_CAP) -> list[str]:
     """Prefer constructive keep phrases; still drop hard off-topic keeps."""
+    merge_mod = _is_merge_module(module)
     out: list[str] = []
     seen: set[str] = set()
     for k in reversed(list(keeps or [])):
         text = str(k or "").strip()
         if not text:
+            continue
+        if merge_mod and merge_conflict_taste_phrase(text):
             continue
         topics = _scopes_in(text) & _STRONG_TOPICS
         if topics and not (topics & _context_scopes(module, goal)):
@@ -284,6 +314,33 @@ def rank_memory_entry(
     return (kind_prio, private_prio, settled, exact_mod, extract_entry_score(e), overlap, date_str)
 
 
+_STALE_MERGE_VOLUME = (
+    "框高阶梯",
+    "框高递增",
+    "末档最大",
+    "末档不是最大",
+    "邻档主体框高",
+    "只拉开框高",
+    # 旧闸量出的数字/回退句：注入会逼 agent 凑框高
+    "机读框高",
+    "框高约",
+    "框高L",
+    "体量递增",
+)
+_STALE_MERGE_BLACK = ("纯黑隔离底", "黑空底", "黑底整表")
+
+
+def stale_merge_inject_summary(entry: dict[str, Any]) -> bool:
+    """merge.* 条目的 summary 若仍推销旧体量闸/纯黑整表底，不进暖启注入。
+
+    只看 summary（注入包实际用的字段），不改记忆文件正文。
+    """
+    if not str(entry.get("module") or "").startswith("merge."):
+        return False
+    summary = str(entry.get("summary") or "")
+    return any(k in summary for k in _STALE_MERGE_VOLUME + _STALE_MERGE_BLACK)
+
+
 def build_warm_start_pack(
     root: Path,
     data: dict[str, Any],
@@ -305,6 +362,10 @@ def build_warm_start_pack(
     def _entry_live(e: dict) -> bool:
         return str(e.get("status") or "active").lower() not in ("archived", "superseded", "inactive", "pending")
 
+    def _stale_merge_phrase(e: dict) -> bool:
+        """merge 旧闸 summary 不进注入：框高阶梯 / 纯黑整表底与现行合同相反。"""
+        return stale_merge_inject_summary(e)
+
     from skills_kit.subject_lexicon import ui_shell_clone_task
 
     def _recipe_ok_for_shell_goal(e: dict) -> bool:
@@ -323,6 +384,7 @@ def build_warm_start_pack(
         if e.get("kind") == "recipe"
         and _mod_ok(e.get("module", ""))
         and _entry_live(e)
+        and not _stale_merge_phrase(e)
         and _recipe_ok_for_shell_goal(e)
         and entry_on_topic_for_task(e, module, goal)
     ]
@@ -331,6 +393,7 @@ def build_warm_start_pack(
         if e.get("kind") == "style_redline"
         and _mod_ok(e.get("module", ""))
         and _entry_live(e)
+        and not _stale_merge_phrase(e)
         and entry_on_topic_for_task(e, module, goal)
     ]
     decisions = [

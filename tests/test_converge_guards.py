@@ -69,8 +69,29 @@ class TestPolicyDefaults(unittest.TestCase):
                 no_improve_streak=0,
                 regression_drop=0.15,
                 early_stop_min_round=2,
+                safe_early_stop=True,
             ),
             "STOP_REGRESSION",
+        )
+
+    def test_safe_early_stop_default_off(self) -> None:
+        from skills_kit.converge_policy import DEFAULT_SAFE_EARLY_STOP
+
+        self.assertFalse(DEFAULT_SAFE_EARLY_STOP)
+        self.assertIsNone(
+            decide_round_stop(
+                score_ok=True,
+                total=8.0,
+                dims={"perspective_anatomy": 9.0},
+                round_num=3,
+                min_rounds=1,
+                threshold=9.5,
+                anatomy_floor=7.5,
+                best_total=9.0,
+                no_improve_streak=5,
+                regression_drop=0.15,
+                early_stop_min_round=2,
+            )
         )
 
     def test_safe_early_stop_disabled_skips_regression(self) -> None:

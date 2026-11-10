@@ -1405,7 +1405,10 @@ def cmd_converge(
                 default_ar = start_param_val["aspect_ratio"]
                 default_ref_paths = start_param_val["reference_image_paths"]
                 if default_ref_paths:
+                    ref_image = default_ref_paths[0]
                     ref_traits = _inspect_image_physical_traits(Path(default_ref_paths[0]))
+                for w_msg in start_param_val.get("warnings") or []:
+                    print(f"⚠️ [参数校验提示] {w_msg}")
             except (FileNotFoundError, ValueError) as exc:
                 print(f"❌ [Step 1 · 会话启动参数校验拦截] {exc}")
                 return 1
@@ -1556,7 +1559,7 @@ def cmd_converge(
             f" | 最早停机轮次: {int(scale_prof.get('min_rounds_before_stop') or 1)}"
             f" | 媒介: {sess.get('medium_family')}"
             f"{' | 合同: split' if sess.get('contract') == 'split' else ''}"
-            f"{' | 安全早停: 已屏蔽' if not sess.get('safe_early_stop', True) else ''}"
+            f" | 安全早停: {'开' if sess.get('safe_early_stop') else '关'}"
         )
         print("📋 " + format_contract_summary(understanding).replace("\n", "\n   "))
         _def_ok, _def_msg = defaults_visibility_ok(understanding)
@@ -2079,6 +2082,10 @@ def cmd_converge(
                 f" (并以本字段为准；勿用 GenerateImage Hook 有无判断并入)"
             )
 
+        from .delivery_gates import generate_prefix
+
+        composed_prompt = generate_prefix(sess, composed_prompt)
+
         if generate_cmd:
             proc = subprocess.run(
                 generate_cmd,
@@ -2357,6 +2364,40 @@ def cmd_converge(
             limit = float(s_prof.get("max_prompt_delta_ratio") or 1.0)
             if str(sess.get("contract") or "") != "split" and change > limit:
                 gate_notes.append(f"prompt 改动 {change:.0%} 超过档位上限 {limit:.0%}")
+        from .delivery_gates import judge_gate_notes, overview_sheet_hints
+
+        gate_notes.extend(
+            judge_gate_notes(
+                sess,
+                image=str(eff_image or ""),
+                defects=str(judge_res.get("defects") or defects or ""),
+                strengths=str(judge_res.get("strengths") or strengths or ""),
+                root=root,
+            )
+        )
+        soft_hints = overview_sheet_hints(
+            sess,
+            image=str(eff_image or ""),
+            root=root,
+        )
+        if soft_hints:
+            judge_res["audit_warnings"] = list(judge_res.get("audit_warnings") or []) + soft_hints
+            tip = "；".join(soft_hints)
+            if tip not in (judge_res.get("defects") or ""):
+                judge_res["defects"] = f"{judge_res.get('defects') or ''}；{tip}".strip("；")
+        if any(
+            ("末档明显小于" in note)
+            or ("没有量到主体" in note)
+            or ("贴边残片" in note)
+            for note in gate_notes
+        ):
+            if "末档" not in (next_fix or "") and "拼贴" not in (next_fix or ""):
+                next_fix = (
+                    (next_fix + "；") if next_fix else ""
+                ) + (
+                    "末档不得明显矮于前档；有贴边残片/切顶须整张重出；"
+                    "邻档靠剪影/件数可分；禁止跨轮抠格拼表"
+                )
         if cli_score > 0 and judge_res.get("weighted_score") is None:
             gate_notes.append(f"已忽略命令行 --score {cli_score:.2f}，六维未解析成功")
         early_safe_stop: str | None = None

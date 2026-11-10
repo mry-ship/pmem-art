@@ -3,11 +3,6 @@
   "hooks": {
     "preToolUse": [
       {
-        "command": "pyw -3 -u pmem_art.py hook pre-gen",
-        "matcher": "GenerateImage",
-        "failClosed": true
-      },
-      {
         "command": "pyw -3 -u art_shell_hook.py",
         "matcher": "Shell",
         "failClosed": false

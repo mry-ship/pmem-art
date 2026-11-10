@@ -539,8 +539,24 @@ def advise_route(
     # 近邻不同意：high/medium 一律降 low，堵住 medium+conflict 仍 execute_ok
     if neighbor_conflict and conf in {"high", "medium"}:
         conf = "low"
-    if multi_branch_ask:
+    if multi_branch_ask and plan.reason != "skill_suite":
         conf = "ask"
+    if plan.reason == "skill_suite" and plan.would_execute and not vague and not conflict:
+        multi_branch_ask = False
+        neighbor_conflict = False
+        conf = "high"
+    from .agent_router import _expression_swap_locked
+
+    if (
+        plan.reason == "variant"
+        and list(plan.route_ids) == ["draw.variant"]
+        and _expression_swap_locked(raw)
+        and not conflict
+        and not vague
+    ):
+        neighbor_conflict = False
+        if conf == "low":
+            conf = "medium"
     if vague:
         conf = "ask"
     if canon_warnings and conf in {"high", "medium"}:

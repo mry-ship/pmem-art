@@ -1,6 +1,6 @@
 # 技能注册表
 
-来源：`skills_kit/skill_specs.py`。生成：`python3 pmem_art.py skills --install`。
+来源：`skills_kit/skill_specs.py`。生成：`pyw -3 -u pmem_art.py skills --install`。
 
 ## tighten
 
@@ -13,7 +13,7 @@
 
 ## 路由
 
-执行以 `python3 pmem_art.py route` 的 `route_ids` 为准。这张表核对 heading；**交给执行侧用 `pack_headings` + `slice_route_body`**（出图合同=零点五+第二节+合同；图标=Mode+§五清单+记忆静默）。phase 是查阅顺序，不要用它改判。普通图 phase 最大，只作兜底。
+执行以 `pyw -3 -u pmem_art.py route` 的 `route_ids` 为准。这张表核对 heading；**交给执行侧用 `pack_headings` + `slice_route_body`**（出图合同=零点五+第二节+合同；图标=Mode+§五清单+记忆静默）。phase 是查阅顺序，不要用它改判。普通图 phase 最大，只作兜底。
 
 | id | phase | when | skill | heading | pack | routable |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -21,7 +21,7 @@
 | `icon.a` | 20 | 桌面图标、1024 母版 | `pmem-icon` | ## 二、Mode A：App Icon 1024×1024 母版专项（iOS App Store / Android Adaptive 桌面启动图标） | ## 二、Mode A：App Icon 1… + ### Mode A + ## 记忆静默 / 履历可见（Agent 必… | true |
 | `icon.b` | 21 | 一套线性 SVG | `pmem-icon` | ## 三、Mode B：一致化 SVG 矢量图标集流程（Brief → Spec → Batch → Review → Converge） | ## 三、Mode B：一致化 SVG 矢量… + ### Mode B + ## 记忆静默 / 履历可见（Agent 必… | true |
 | `icon.c` | 22 | 背包道具格 | `pmem-icon` | ## 四、Mode C：游戏道具隔离底栅格图标（64/128/256px PNG，非 SVG） | ## 四、Mode C：游戏道具隔离底栅格图… + ### Mode C + ## 记忆静默 / 履历可见（Agent 必… | true |
-| `merge.ladder` | 30 | 同域升级梯（默认整表一组、L1–L8；有参考跟格数，点名数量跟点名；仅点名逐格才 per_cell）；糖果/甜品默认 shop_ladder；工具瓶罐可 same_object；未点名非糖果可轻门 | `pmem-merge-ladder` | # `/pmem-merge-ladder` — 同域合成梯 | ## 执行卡 · 合成梯（Agent 必读；… + ## 禁止 | true |
+| `merge.ladder` | 30 | 同域升级梯（默认整表一组、L1–L8；有参考跟格数，点名数量跟点名；仅点名逐格才 per_cell）；糖果/甜品默认 shop_ladder；工具瓶罐可 same_object；未点名非糖果可轻门 | `pmem-merge-ladder` | # `/pmem-merge-ladder` — 同域合成梯 | ## 执行卡 + ## 禁止 | true |
 | `draw.lens` | 40 | 玩家明确要几套机位 / 镜头 / 光给自己挑 | `pmem-draw` | ## 合同 · 镜头包 | ## 零点五、开画前强制 route（与总控… + ## 合同 · 镜头包 | true |
 | `draw.clone` | 50 | 有参考，并且要换一个新题材，锁的是画风 | `pmem-draw` | ## 合同 · 克隆 | ## 零点五、开画前强制 route（与总控… + ## 执行卡 · 出图闭环（Agent 必读… + ## 合同 · 克隆 + ## 记忆静默 / 履历可见（Agent 必… | true |
 | `draw.variant` | 60 | 已有角色要换画风，或做表情 / 动作差分。身份和机位已经在同一张图上 | `pmem-draw` | ## 合同 · 变体 | ## 零点五、开画前强制 route（与总控… + ## 执行卡 · 出图闭环（Agent 必读… + ## 合同 · 变体 + ## 记忆静默 / 履历可见（Agent 必… | true |

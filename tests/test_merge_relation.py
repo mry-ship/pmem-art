@@ -34,17 +34,25 @@ class MergeRelationTests(unittest.TestCase):
             ok, issues = judge_relation_rows(rows, track=track)
             self.assertTrue(ok, f"{tid}: {issues}")
 
-    def test_monotonic_pct_required(self) -> None:
+    def test_non_monotonic_pct_allowed(self) -> None:
+        """对标 GH 咖啡：体量可不单调；邻档剪影仍须可分。"""
+        pcts = [0.83, 0.87, 0.87, 1.00, 0.83, 0.87, 0.92, 0.94]
         rows = parse_rows(
             {
                 "rows": [
-                    {"level": i, "name": f"x{i}", "silhouette": f"s{i}", "scale_pct": 0.55 + i * 0.03, "parts_add": "p" if i > 1 else "—"}
+                    {
+                        "level": i,
+                        "name": f"x{i}",
+                        "silhouette": f"s{i}",
+                        "scale_pct": pcts[i - 1],
+                        "parts_add": "p" if i > 1 else "—",
+                    }
                     for i in range(1, 9)
                 ]
             }
         )
-        ok, _ = judge_relation_rows(rows)
-        self.assertTrue(ok)
+        ok, issues = judge_relation_rows(rows)
+        self.assertTrue(ok, issues)
 
     def test_effect_only_parts_fail(self) -> None:
         rows = parse_rows(
@@ -324,13 +332,14 @@ class MergeRelationTests(unittest.TestCase):
                         "level": i,
                         "name": f"x{i}",
                         "silhouette": f"s{i}",
-                        "scale_pct": 0.58 + i * 0.04,
+                        "scale_pct": 0.70 + (i - 1) * 0.05,
                         "parts_add": "p" if i > 1 else "—",
                     }
                     for i in range(1, 9)
                 ]
             }
         )
+        # L8 = 0.70 + 0.35 = 1.05 → 超框硬伤（阈值 0.98）
         ok, issues = judge_relation_rows(rows)
         self.assertFalse(ok)
         self.assertTrue(any("L8" in it and "过高" in it for it in issues))

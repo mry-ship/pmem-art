@@ -1,0 +1,28 @@
+---
+id: 01M726NV72JK8DX7F10ACBGE7A
+module: feature.SkillsKit.Converge
+entity: DeliveryPass
+kind: feature
+status: active
+supersedes:
+- 01M726NGBY69B7C8TX3TVEQ384
+anchors:
+- skills_kit/delivery_gates.py#is_delivery_pass
+revision: git:a898187
+author: 1002378395@qq.com
+note_date: '2026-11-10'
+summary: 通过只认≥9.5；满轮最高分可垫下一态但不算通过
+verify: python -m unittest tests.test_delivery_gates -q
+applies: 所有出图交件。外审挑刺仍用外审尺，不能把外审分写成过线
+aliases:
+- 过线
+- 通过
+- '9.5'
+source:
+  conversation: 198400ce-a2af-48b4-8bfd-5c6eabf5c2c3
+---
+需求：全技能过线只认正式分 ≥9.5。图标 B 一致性 8.5、图标 C 一张 9.0 不能写成通过。喷壶画成别的容器不能通过。
+必须保持：多图下一态垫上一态交件。交件是已经 ≥9.5 的那张，或满 4 轮里分最高的那张。没过线不得标成通过，但不能因为没过线就不画下一态。
+点名锁（嘴、眼、手、提梁、信纸）每轮都要写进生成词。优点没单独写明守住，或缺陷仍点到它，本轮不能过线。
+画幅差超过闸时只生成一张加边垫图，会话和生图都用这一张。口味档案被占用要重试，不要直接跳过。
+入口：converge generate / judge；多图分工合同；图标 B/C 交件文案。

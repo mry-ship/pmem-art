@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import io
 import json
+import os
 import shutil
 import sys
 import tempfile
@@ -135,7 +136,9 @@ class TestHookPayload(unittest.TestCase):
 class TestHookInjectsGenerateImage(unittest.TestCase):
     def test_updated_input_prepends_session_warm_start(self) -> None:
         td = Path(tempfile.mkdtemp(prefix="pmem_recall_hook_"))
+        old_env = os.environ.get("PMEM_ART_PRE_GEN_INJECT")
         try:
+            os.environ["PMEM_ART_PRE_GEN_INJECT"] = "1"
             data = _project(td)
             conv = td / ".memory-art" / "converge"
             conv.mkdir(parents=True)
@@ -190,6 +193,67 @@ class TestHookInjectsGenerateImage(unittest.TestCase):
             self.assertIn("【pmem-art记忆】", msg)
             self.assertIn("prop.Candy", msg)
         finally:
+            if old_env is None:
+                os.environ.pop("PMEM_ART_PRE_GEN_INJECT", None)
+            else:
+                os.environ["PMEM_ART_PRE_GEN_INJECT"] = old_env
+            shutil.rmtree(td, ignore_errors=True)
+
+
+    def test_pre_gen_inject_off_by_default(self) -> None:
+        td = Path(tempfile.mkdtemp(prefix="pmem_recall_hook_off_"))
+        old_env = os.environ.pop("PMEM_ART_PRE_GEN_INJECT", None)
+        try:
+            data = _project(td)
+            conv = td / ".memory-art" / "converge"
+            conv.mkdir(parents=True)
+            block = f"{WARM_START_MARK}】\n- 必须避开红线:\n  · 禁止把蜜桃糖焊进蛋糕"
+            sess = {
+                "session_id": "auto_recall_hook_off",
+                "module": "prop.Candy",
+                "goal": "合成梯糖果",
+                "warm_start": {"prompt_block": block, "module": "prop.Candy"},
+            }
+            (conv / "auto_recall_hook_off.json").write_text(
+                json.dumps(sess, ensure_ascii=False), encoding="utf-8"
+            )
+            mark_active_session(td, "auto_recall_hook_off")
+            from skills_kit.route_gate import save_route_advise
+
+            save_route_advise(
+                td,
+                {
+                    "banner": "route ok (test)",
+                    "execute_ok": True,
+                    "mode": "skill",
+                    "route_ids": ["icon.c"],
+                    "plan": {"steps": [{"deliverable": "peach candy"}]},
+                },
+                text="peach candy bottle",
+            )
+            payload = {
+                "tool_name": "GenerateImage",
+                "tool_input": {
+                    "description": "peach candy bottle game icon square",
+                    "aspect_ratio": "1:1",
+                },
+            }
+            old_stdin = sys.stdin
+            sys.stdin = io.StringIO(json.dumps(payload, ensure_ascii=False))
+            buf = io.StringIO()
+            try:
+                with redirect_stdout(buf):
+                    rc = cmd_hook(td, data, "pre-gen")
+            finally:
+                sys.stdin = old_stdin
+            self.assertEqual(rc, 0)
+            out = json.loads(buf.getvalue())
+            self.assertNotIn("updated_input", out)
+            msg = str(out.get("agent_message") or out.get("agentMessage") or "")
+            self.assertIn("pre-gen 默认不灌入 GenerateImage", msg)
+        finally:
+            if old_env is not None:
+                os.environ["PMEM_ART_PRE_GEN_INJECT"] = old_env
             shutil.rmtree(td, ignore_errors=True)
 
     def test_write_does_not_get_updated_input(self) -> None:
@@ -211,6 +275,72 @@ class TestHookInjectsGenerateImage(unittest.TestCase):
             out = json.loads(buf.getvalue())
             self.assertNotIn("updated_input", out)
         finally:
+            shutil.rmtree(td, ignore_errors=True)
+
+    def test_merge_module_skips_warm_start_inject_into_generate_image(self) -> None:
+        td = Path(tempfile.mkdtemp(prefix="pmem_recall_merge_skip_"))
+        old_env = os.environ.get("PMEM_ART_PRE_GEN_INJECT")
+        try:
+            os.environ["PMEM_ART_PRE_GEN_INJECT"] = "1"
+            data = _project(td)
+            conv = td / ".memory-art" / "converge"
+            conv.mkdir(parents=True)
+            block = f"{WARM_START_MARK}】\n- 个人禁用习惯:\n  · 廉价塑料感/油腻高光"
+            sess = {
+                "session_id": "merge_skip_hook",
+                "module": "merge.HarborOrange",
+                "goal": "Gossip Harbor 果酱合成梯整表",
+                "warm_start": {
+                    "prompt_block": block,
+                    "module": "merge.HarborOrange",
+                },
+            }
+            (conv / "merge_skip_hook.json").write_text(
+                json.dumps(sess, ensure_ascii=False), encoding="utf-8"
+            )
+            mark_active_session(td, "merge_skip_hook")
+            from skills_kit.route_gate import save_route_advise
+
+            save_route_advise(
+                td,
+                {
+                    "banner": "route ok (test)",
+                    "execute_ok": True,
+                    "mode": "skill",
+                    "route_ids": ["merge.ladder"],
+                    "plan": {"steps": [{"deliverable": "jam ladder"}]},
+                },
+                text="Gossip Harbor jam merge ladder",
+            )
+            payload = {
+                "tool_name": "GenerateImage",
+                "tool_input": {
+                    "description": "hand-painted soft jam merge ladder sheet",
+                    "aspect_ratio": "16:9",
+                },
+            }
+            old_stdin = sys.stdin
+            sys.stdin = io.StringIO(json.dumps(payload, ensure_ascii=False))
+            buf = io.StringIO()
+            try:
+                with redirect_stdout(buf):
+                    rc = cmd_hook(td, data, "pre-gen")
+            finally:
+                sys.stdin = old_stdin
+            self.assertEqual(rc, 0)
+            out = json.loads(buf.getvalue())
+            # 跳过注入时不改 description，故无 updated_input；也不强制写 permission=allow
+            self.assertNotEqual(out.get("permission"), "deny")
+            self.assertTrue(out.get("continue", True))
+            self.assertNotIn("updated_input", out)
+            msg = str(out.get("agent_message") or out.get("agentMessage") or "")
+            self.assertIn("跳过 Warm-Start 灌入 GenerateImage", msg)
+            self.assertNotIn("已并入 GenerateImage", msg)
+        finally:
+            if old_env is None:
+                os.environ.pop("PMEM_ART_PRE_GEN_INJECT", None)
+            else:
+                os.environ["PMEM_ART_PRE_GEN_INJECT"] = old_env
             shutil.rmtree(td, ignore_errors=True)
 
 

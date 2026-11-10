@@ -21,6 +21,8 @@ applies: pmem-merge-ladder 交付默认；玩家未点名逐格时
 aliases:
 - 合成梯默认整表
 - merge默认一组
+verified: '2026-11-10'
+verified_at: '2026-11-10T16:07:00.985+08:00'
 ---
 旧结论「无整表信号时默认 per_cell」作废。
 新默认：delivery=overview_sheet、levels=8（常见2x4）；

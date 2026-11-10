@@ -115,7 +115,7 @@ class BenchmarkTests(unittest.TestCase):
         card = result["card"]
         self.assertEqual(card["id"], "merge.cabinet")
         surface = str(card.get("surface") or "")
-        self.assertIn("Merge Mansion", surface)
+        self.assertIn("Gossip Harbor", surface)
         levels = card.get("ladder_levels") or []
         self.assertTrue(levels, levels)
         joined = " ".join(str(x) for x in levels)

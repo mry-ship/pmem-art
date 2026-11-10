@@ -14,6 +14,8 @@ note_date: '2026-11-10'
 summary: 主流merge档序是完整SKU换代；半成品仅建造/修复
 verify: grep 朴素完整小件 skills_kit/skill_specs.py；grep 半成品/骨架句式仅限 docs/MERGE_MULTI_LENS.md
 applies: /pmem-merge-ladder 定链
+verified: '2026-11-10'
+verified_at: '2026-11-10T16:07:00.985+08:00'
 ---
 画师质疑默认「原料→半成型→完整件」。
 对照 Merge Mansion/Travel Town：清洁工具、洗涤剂、植物等主流链每档已是完整货柜件，只是形态换代；

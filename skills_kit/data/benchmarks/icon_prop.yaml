@@ -6,5 +6,5 @@ aliases:
   - 背包图标
   - 透明底图标
 surface: 厚剪影 64px 可认、底隔离（Cursor 实色空底 / 透明引擎真 alpha）、品类棚光；与同店 surface 一致
-layout_notes: 非休闲勿硬套软塑胶；禁白底冒充透明；Cursor 禁止后抠冒充 alpha
+layout_notes: 非休闲勿硬套 Gossip Harbor 货柜；禁白底冒充透明；Cursor 禁止后抠冒充 alpha
 forbid_pad: true

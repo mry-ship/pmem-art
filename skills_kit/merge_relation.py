@@ -179,17 +179,18 @@ def judge_relation_rows(
             "软糖/糖纸类省略 chain_mode 不允许：须显式 shop_ladder（同族形变）；轻门仅用于非糖果链"
         )
 
-    # 件数已在 parse 保证。合成是否说得通仍由讨论稿判定；这里拦空零件/弱光效/体量/剪影复读。
+    # 件数已在 parse 保证。合成是否说得通仍由讨论稿判定。
+    # 体量：竞品常不单调放大；只硬拦末档明显矮、剪影复读；scale 极端才拦。
     pcts = [r.scale_pct for r in rows]
-    if pcts[0] < 0.55:
-        issues.append(f"L1 scale_pct={pcts[0]:.2f} 过低（低档应占格大半，建议 ≥0.58）")
-    if pcts[-1] > 0.82:
-        issues.append(f"L{n} scale_pct={pcts[-1]:.2f} 过高（应留边不顶格，建议 ≤0.80）")
+    if pcts[0] < 0.45:
+        issues.append(f"L1 scale_pct={pcts[0]:.2f} 过低（缩略难认，建议 ≥0.50）")
+    if pcts[-1] > 0.98:
+        issues.append(f"L{n} scale_pct={pcts[-1]:.2f} 过高（易超框切顶，建议 ≤0.95）")
+    if pcts[-1] + 0.08 < max(pcts):
+        issues.append(
+            f"L{n} scale_pct={pcts[-1]:.2f} 明显小于前档最大 {max(pcts):.2f}"
+        )
     for i in range(1, n):
-        if pcts[i] <= pcts[i - 1]:
-            issues.append(
-                f"L{rows[i].level:02d} scale_pct {pcts[i]:.2f} 未大于 L{rows[i-1].level:02d} {pcts[i-1]:.2f}"
-            )
         if rows[i].silhouette.lower() == rows[i - 1].silhouette.lower():
             issues.append(
                 f"L{rows[i].level:02d} 剪影家族与 L{rows[i-1].level:02d} 相同：{rows[i].silhouette!r}"
@@ -200,8 +201,6 @@ def judge_relation_rows(
             issues.append(
                 f"L{rows[i].level:02d} 新增零件说不通：{rows[i].parts_add!r}（要具体零件，不能是空、破折号或只加光效）"
             )
-    if pcts[-1] < max(pcts[:-1]) + 0.01:
-        issues.append(f"L{n} 未严格为最大 scale_pct")
     for r in rows:
         if not r.name or not r.silhouette:
             issues.append(f"L{r.level:02d} 物件名或剪影家族为空")
@@ -406,6 +405,383 @@ def audit_ladder_dir(
     if hs[-1] < max(hs[:-1]) - 0.01:
         issues.append(f"L{n:02d} 框高 {hs[-1]:.2f} 不是全梯最大（max={max(hs):.2f}）")
     return (len(issues) == 0, issues)
+
+
+_STYLE_OPT_OUT = (
+    "写实",
+    "照片",
+    "摄影",
+    "水彩",
+    "赛博",
+    "像素",
+    "厚涂",
+    "扁平",
+    "矢量",
+    "油画",
+    "黏土",
+    "石膏",
+    "皮克斯",
+)
+_MERGE_SURFACE = (
+    "休闲 merge 货柜默认气质：Gossip Harbor 玩具货柜卡通——"
+    "光泽卡通 3D、圆润厚实、无硬描边、暖饱和、柔光渐变、糖釉玩具高光、棋盘缩略一眼可认。"
+    "材质锁死为卡通玩具/糖釉道具，不是实物。"
+    "禁止：写实摄影、美食棚拍、产品静物、玻璃真实折射、木纹指纹、果汁乳浊摄影感、"
+    "微距毛孔、油光金属、暗沉旧塑料。"
+    "整表参考只锁格子版式，不跟参考写实表面。"
+)
+# 邻档框高差小于此值时只出提示（竞品本身常不单调放大）。
+OVERVIEW_MIN_STEP = 0.04
+# 末档比全表最高矮过此值，才算「明显小于前档」硬伤。
+OVERVIEW_LAST_SHRINK = 0.08
+
+
+def player_named_style(*texts: str) -> bool:
+    blob = "\n".join(texts)
+    return any(word in blob for word in _STYLE_OPT_OUT)
+
+
+def _has_full_merge_surface_lock(blob: str) -> bool:
+    """完整默认锁已在文中：须含材质锁死 + 禁写实硬句，不能只靠「棋盘缩略」等零散词。"""
+    text = str(blob or "")
+    if "材质锁死" not in text:
+        return False
+    if "写实摄影" not in text and "美食棚拍" not in text:
+        return False
+    return "卡通玩具" in text or "糖釉" in text or "玻璃真实折射" in text
+
+
+def merge_surface_lock_line(goal: str = "", prompt: str = "") -> str:
+    """没写风格时钉 Gossip Harbor 玩具货柜。
+
+    点名风格只看 goal（玩家原话），不看含 Warm-Start 的 prompt——
+    taste「避开赛博霓虹」曾因词表命中「赛博」被当成玩家点名赛博，整段锁留空。
+    完整硬句是否已在，才看 prompt；零散「棋盘缩略 / Gossip Harbor」不够跳过。
+    """
+    if player_named_style(goal):
+        return ""
+    if _has_full_merge_surface_lock(prompt):
+        return ""
+    return _MERGE_SURFACE
+
+
+def _erode_mask_once(mask):
+    """去掉 1px AA 毛边，避免奶油卡边缘被当成主体。"""
+    import numpy as np
+
+    if mask.shape[0] < 3 or mask.shape[1] < 3:
+        return mask
+    out = mask.copy()
+    out[1:-1, 1:-1] = (
+        mask[1:-1, 1:-1]
+        & mask[:-2, 1:-1]
+        & mask[2:, 1:-1]
+        & mask[1:-1, :-2]
+        & mask[1:-1, 2:]
+    )
+    return out
+
+
+def _largest_blob_stats(mask) -> tuple[int, int, int] | None:
+    """最大连通域：(面积, y0, y1)。"""
+    import numpy as np
+    from collections import deque
+
+    h, w = mask.shape
+    seen = np.zeros_like(mask, dtype=bool)
+    best: tuple[int, int, int] | None = None  # area, y0, y1
+    for y in range(h):
+        xs = np.where(mask[y] & ~seen[y])[0]
+        for x in xs:
+            if seen[y, x]:
+                continue
+            q: deque[tuple[int, int]] = deque([(y, x)])
+            seen[y, x] = True
+            y0 = y1 = y
+            area = 0
+            while q:
+                cy, cx = q.popleft()
+                area += 1
+                if cy < y0:
+                    y0 = cy
+                if cy > y1:
+                    y1 = cy
+                for ny, nx in ((cy - 1, cx), (cy + 1, cx), (cy, cx - 1), (cy, cx + 1)):
+                    if 0 <= ny < h and 0 <= nx < w and mask[ny, nx] and not seen[ny, nx]:
+                        seen[ny, nx] = True
+                        q.append((ny, nx))
+            if best is None or area > best[0]:
+                best = (area, y0, y1)
+    return best
+
+
+def _largest_blob_yrange(mask) -> tuple[int, int] | None:
+    """最大连通域的纵向范围。浅色卡上的物件框高必须取最大块，不能用全 mask bbox。"""
+    best = _largest_blob_stats(mask)
+    if best is None:
+        return None
+    return best[1], best[2]
+
+
+def _largest_row_run_yrange(mask) -> tuple[int, int] | None:
+    """mask 行占用的最长连续纵向带（柔影切碎连通域时的回退）。"""
+    occ = mask.mean(axis=1) > 0.01
+    best: list[int] | None = None
+    cur: list[int] | None = None
+    for y, on in enumerate(occ):
+        if on:
+            if cur is None:
+                cur = [y, y]
+            else:
+                cur[1] = y
+        elif cur is not None:
+            if best is None or (cur[1] - cur[0]) > (best[1] - best[0]):
+                best = cur
+            cur = None
+    if cur is not None and (best is None or (cur[1] - cur[0]) > (best[1] - best[0])):
+        best = cur
+    if best is None:
+        return None
+    return best[0], best[1]
+
+
+def _cell_subject_mask(cell):
+    """格内物件 mask。有浅色圆角卡时先按卡内色剥卡，再量物件；无卡则相对格缝底。
+
+    旧逻辑只用格边缘中位色，奶油/浅灰卡会被当成主体，框高≈1.0，残片闸也半盲。
+    """
+    import numpy as np
+
+    h, w = cell.shape[:2]
+    if h < 8 or w < 8:
+        return np.zeros((max(h, 1), max(w, 1)), dtype=bool)
+    rgb = cell.astype(np.float32)
+    band = max(1, min(4, h // 10, w // 10))
+    seam = _border_median(cell, band=band)
+    dist_seam = np.linalg.norm(rgb - seam, axis=2)
+    lum = 0.299 * rgb[:, :, 0] + 0.587 * rgb[:, :, 1] + 0.114 * rgb[:, :, 2]
+    chroma = rgb.max(axis=2) - rgb.min(axis=2)
+    # 卡心取样：格内缩进后的高亮低彩区域 ≈ 奶油/浅灰/粉卡纸色
+    inset = max(3, int(0.12 * min(h, w)))
+    interior = np.zeros((h, w), dtype=bool)
+    if h > 2 * inset and w > 2 * inset:
+        interior[inset : h - inset, inset : w - inset] = True
+    paper_sel = interior & (lum > 215) & (chroma < 50)
+    if float(paper_sel.mean()) < 0.02:
+        paper_sel = interior & (lum > 200) & (chroma < 70)
+    if float(paper_sel.mean()) < 0.01:
+        # 无内嵌浅色卡：相对格缝底，再去掉近白平涂
+        content = dist_seam > 28
+        white = (rgb.min(axis=2) > 214) & (chroma < 28)
+        subject = content & ~white
+        if float(subject.mean()) < 0.008:
+            subject = content
+        return subject
+
+    paper = np.median(rgb[paper_sel], axis=0)
+    dist_paper = np.linalg.norm(rgb - paper, axis=2)
+    paper_l = float(0.299 * paper[0] + 0.587 * paper[1] + 0.114 * paper[2])
+    paper_c = float(paper.max() - paper.min())
+    # 柔影：同色相、比卡纸更暗（可更饱和一点）。暖桃色投影 chroma>30，旧「chroma<30」去不掉。
+    soft_shadow = _soft_card_shadow_mask(rgb, lum, chroma, paper, paper_l, paper_c, dist_paper)
+    subject = (
+        (dist_paper > 34)
+        & (dist_seam > 12)
+        & ~soft_shadow
+        & ~((lum > 230) & (chroma < 35))
+    )
+    if float(subject.mean()) < 0.004:
+        # 剥卡过狠时回退：相对卡纸色、保留缝外抑制
+        subject = (dist_paper > 28) & (dist_seam > 10)
+    return subject
+
+
+def _soft_card_shadow_mask(rgb, lum, chroma, paper, paper_l: float, paper_c: float, dist_paper):
+    """卡上投影：与卡纸同色相、更暗；允许比卡纸更饱和。"""
+    import numpy as np
+
+    darker = lum < (paper_l - 4)
+    near = dist_paper < 72
+    if paper_c < 10:
+        # 近灰卡纸：色相不稳，退回低彩暗区
+        return darker & near & (chroma < 36)
+    # 色度方向与卡纸接近（忽略亮度）
+    paper_vec = paper.astype(np.float32) - float(np.mean(paper))
+    pix_vec = rgb - lum[..., None]
+    p_norm = float(np.linalg.norm(paper_vec)) + 1e-6
+    pix_norm = np.linalg.norm(pix_vec, axis=2) + 1e-6
+    cos = (pix_vec * paper_vec).sum(axis=2) / (pix_norm * p_norm)
+    same_hue = cos > 0.55
+    return darker & near & same_hue
+
+
+def _seam_subject_mask(cell):
+    """相对格缝底的旧物件 mask。剥卡后切边变钝时，残片平切仍靠它召回。"""
+    import numpy as np
+
+    h, w = cell.shape[:2]
+    if h < 8 or w < 8:
+        return np.zeros((max(h, 1), max(w, 1)), dtype=bool)
+    rgb = cell.astype(np.float32)
+    bg = _border_median(cell, band=max(1, min(4, h // 10, w // 10)))
+    content = np.linalg.norm(rgb - bg, axis=2) > 28
+    white = (rgb.min(axis=2) > 214) & ((rgb.max(axis=2) - rgb.min(axis=2)) < 28)
+    subject = content & ~white
+    if float(subject.mean()) < 0.008:
+        subject = content
+    return subject
+
+
+def _cell_subject_height_ratio(cell) -> float:
+    """格内物件框高 / 格高。浅色圆角卡与卡上暖色投影不算主体。"""
+    h = int(cell.shape[0])
+    if h < 8:
+        return 0.0
+    subject = _cell_subject_mask(cell)
+    eroded = _erode_mask_once(subject)
+    use = eroded if eroded.any() else subject
+    if not use.any():
+        return 0.0
+    stats = _largest_blob_stats(use)
+    if stats is None:
+        return 0.0
+    area, y0, y1 = stats
+    total = int(use.sum())
+    # 柔影若把果酱碗等实心物件切成多块，最大连通域会偏矮；改用行占用最长带。
+    if total > 0 and area < 0.55 * total:
+        yrange = _largest_row_run_yrange(use)
+        if yrange is not None:
+            y0, y1 = yrange
+    return float(y1 - y0 + 1) / float(h)
+
+
+def _fragment_score_on_mask(content, h: int, w: int) -> float:
+    """在给定物件 mask 上找贴边/切平残片面积占比。"""
+    import numpy as np
+
+    if content is None or not content.any():
+        return 0.0
+    occ = content.mean(axis=1) > 0.01
+    bands: list[list[int]] = []
+    gap = max(2, h // 25)
+    for y, on in enumerate(occ):
+        if not on:
+            continue
+        if not bands or y - bands[-1][1] > gap:
+            bands.append([y, y])
+        else:
+            bands[-1][1] = y
+    if len(bands) < 2:
+        return 0.0
+    # 只忽略「很薄」的外圈碎带（卡边 AA）。有面积的贴边残片必须保留——拼贴残片本就贴边。
+    edge = max(2, h // 40)
+    thin = max(2, h // 35)
+    areas = [float(content[a : b + 1].sum()) / float(h * w) for a, b in bands]
+    main = max(range(len(bands)), key=lambda i: areas[i])
+    worst = 0.0
+    for i, (y0, y1) in enumerate(bands):
+        if i == main or areas[i] < 0.01:
+            continue
+        band_h = y1 - y0 + 1
+        wholly_edge = y1 < edge or y0 > h - 1 - edge
+        if wholly_edge and band_h <= thin and areas[i] < 0.02:
+            continue
+        cols = np.where(content[y0 : y1 + 1].any(axis=0))[0]
+        if cols.size == 0:
+            continue
+        span = int(cols.max() - cols.min() + 1)
+        if span < 1:
+            continue
+        top = content[y0 : y0 + 2, cols.min() : cols.max() + 1].any(axis=0).sum() / span
+        bot = content[y1 - 1 : y1 + 1, cols.min() : cols.max() + 1].any(axis=0).sum() / span
+        if max(top, bot) >= 0.9:
+            worst = max(worst, areas[i])
+    return worst
+
+
+def _cell_fragment_rows(cell) -> float:
+    """格内与主体分离、顶或底被一刀切平的残片面积占比。抠格拼贴常留这种半截物件。
+
+    剥卡 mask 负责浅色卡场景；格缝 mask 负责召回平切残片（剥卡后切边常变钝）。
+    取两者较大值。
+    """
+    h, w = cell.shape[:2]
+    if h < 16 or w < 8:
+        return 0.0
+    peeled = _cell_subject_mask(cell)
+    # 残片不腐蚀：腐蚀会把平切边啃钝，管乐 L6 一类 0.04 残片会漏掉。
+    peel_score = _fragment_score_on_mask(peeled, h, w)
+    seam_score = _fragment_score_on_mask(_seam_subject_mask(cell), h, w)
+    return max(peel_score, seam_score)
+
+
+def audit_overview_sheet(
+    image_path: Path,
+    *,
+    rows: int = 2,
+    cols: int = 4,
+    min_step: float = OVERVIEW_MIN_STEP,
+    last_shrink: float = OVERVIEW_LAST_SHRINK,
+) -> tuple[bool, list[str]]:
+    """整表像素审阅。
+
+    硬伤（ok=False）：缺主体；贴边残片/切顶拼贴；末档明显矮于全表最高。
+    提示（以「提示：」开头，不单独让 ok=False）：邻档框高接近、末档略非最大。
+    分档应靠剪影/件数/容器/完成态；禁止为过闸跨轮抠格拼表。
+    """
+    hard: list[str] = []
+    soft: list[str] = []
+    if Image is None:
+        return False, ["需要 Pillow 才能审整表体量"]
+    if rows < 1 or cols < 1 or rows * cols < 2:
+        return False, ["整表行列至少 2 格"]
+    path = Path(image_path)
+    if not path.is_file():
+        return False, [f"整表不存在：{path}"]
+    im = Image.open(path).convert("RGB")
+    import numpy as np
+
+    arr = np.array(im)
+    h, w = arr.shape[:2]
+    heights: list[float] = []
+    for r in range(rows):
+        y0, y1 = (h * r) // rows, (h * (r + 1)) // rows
+        for c in range(cols):
+            x0, x1 = (w * c) // cols, (w * (c + 1)) // cols
+            cell = arr[y0:y1, x0:x1]
+            ratio = _cell_subject_height_ratio(cell)
+            heights.append(ratio)
+            if ratio < 0.08:
+                hard.append(f"第 {len(heights)} 格没有量到主体")
+            frag = _cell_fragment_rows(cell)
+            if frag > 0:
+                hard.append(
+                    f"第 {len(heights)} 格有贴边残片（面积 {frag:.3f}）："
+                    "像抠格拼贴或切顶，整张重出，禁止拼贴"
+                )
+    for i in range(1, len(heights)):
+        delta = heights[i] - heights[i - 1]
+        if delta < min_step:
+            soft.append(
+                f"提示：邻档框高接近（第 {i}→{i + 1} 为 "
+                f"{heights[i - 1]:.2f}→{heights[i]:.2f}）；"
+                "分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯"
+            )
+    if heights:
+        peak = max(heights)
+        last = heights[-1]
+        # 用两位小数比「明显矮」，避免 0.081 vs 0.08 的浮点擦边误杀干净浅色卡整表。
+        shrink = round(peak - last, 2)
+        if shrink > round(last_shrink, 2):
+            hard.append(
+                f"末档明显小于前档：末格 {last:.2f}，最大 {peak:.2f}"
+            )
+        elif shrink >= 0.01:
+            soft.append(
+                f"提示：末档不是最大（末格 {last:.2f}，最大 {peak:.2f}）；"
+                "可接受，只要剪影/件数可分且无拼贴残片"
+            )
+    return (len(hard) == 0, hard + soft)
 
 
 def cell_to_square_contain(im: Image.Image, size: int = 1024) -> Image.Image:

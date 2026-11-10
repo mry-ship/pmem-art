@@ -48,8 +48,8 @@ def _check(case: Case) -> str:
             return "关开应该是前后两行"
         if "--contract split" not in plan.steps[0].note:
             return "第一行没有 --contract split"
-        if plan.steps[1].pad != ["上一步通过的那张"]:
-            return "第二行没有只垫通过的那张"
+        if plan.steps[1].pad != ["上一态交件（过线那张，或满4轮最高分）"]:
+            return "第二行没有垫上一态交件"
     if case.route_ids == ["draw.ordinary"]:
         note = plan.steps[0].note
         if "9.50" not in note or "多图分工" not in note:

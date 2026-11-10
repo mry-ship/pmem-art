@@ -135,6 +135,7 @@ class TestPadAndStop(unittest.TestCase):
                 best_total=9.0,
                 no_improve_streak=2,
                 regression_drop=0.5,
+                safe_early_stop=True,
             ),
             "STOP_PLATEAU",
         )
@@ -150,6 +151,7 @@ class TestPadAndStop(unittest.TestCase):
                 best_total=9.0,
                 no_improve_streak=0,
                 regression_drop=0.3,
+                safe_early_stop=True,
             ),
             "STOP_REGRESSION",
         )
@@ -182,6 +184,7 @@ class TestPadAndStop(unittest.TestCase):
                 anatomy_floor=8.5,
                 best_total=9.7,
                 no_improve_streak=2,
+                safe_early_stop=True,
             ),
             "STOP_PLATEAU",
         )
@@ -254,6 +257,7 @@ class TestPadAndStop(unittest.TestCase):
                 best_total=9.7,
                 no_improve_streak=0,
                 regression_drop=0.3,
+                safe_early_stop=True,
             ),
             "STOP_REGRESSION",
         )

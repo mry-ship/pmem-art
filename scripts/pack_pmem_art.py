@@ -147,6 +147,9 @@ def should_skip(path: Path, root: Path) -> bool:
         return True
     if len(parts) == 1 and path.name.startswith("_"):
         return True
+    # 本地 skill_YYYYMMDD_* 验证散图不进用户包（体积大、非运行时依赖）。
+    if len(parts) >= 2 and parts[0] == "assets" and parts[1].startswith("skill_"):
+        return True
     if path.name.endswith(".local.yaml"):
         return True
     return False

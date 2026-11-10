@@ -81,7 +81,7 @@
       "file": ".cursor/skills/pmem-merge-ladder/SKILL.md",
       "heading": "# `/pmem-merge-ladder` — 同域合成梯",
       "pack_headings": [
-        "## 执行卡 · 合成梯（Agent 必读；细则见后文）",
+        "## 执行卡",
         "## 禁止"
       ],
       "routable": true,
