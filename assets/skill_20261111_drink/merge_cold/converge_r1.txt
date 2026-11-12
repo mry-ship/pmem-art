@@ -1,0 +1,11 @@
+❌ [合理性闸门] 首轮 --prompt 与合理性 revised 不一致，已拒绝静默替换。请重跑 reasonableness review（把新提示词写入 --revised），或本轮 generate 省略 --prompt / 使用与 revised 相同的句子。
+
+>>> converge generate --session merge_cold_drink_20261111 --round 1…
+
+EXIT=1
+❌ [生成与评分隔离拦截] 第 1 轮尚无 `converge generate` 记录，禁止直接 `judge`/`round`。
+   👉 请先：`pyw -3 -u pmem_art.py converge generate --id merge_cold_drink_20261111 --round 1 --image <path> --prompt <prompt>`
+
+>>> converge judge --session merge_cold_drink_20261111 --round 1…
+
+EXIT=1

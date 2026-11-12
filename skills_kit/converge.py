@@ -845,6 +845,14 @@ def _defect_text_copied(prev: str, curr: str) -> bool:
     return (a in b or b in a) and min(len(a), len(b)) >= 24
 
 
+def _merge_no_ref_forbid_prev_plate(module: str = "", style_ref: str = "") -> bool:
+    """merge.* with no player style/grid ref must not chain prior generated plates."""
+    mod = str(module or "").strip().lower()
+    if not mod.startswith("merge."):
+        return False
+    return not str(style_ref or "").strip()
+
+
 def _style_jump_requested(scale: str = "", goal: str = "", flagged: bool = False) -> bool:
     if flagged:
         return True
@@ -876,10 +884,20 @@ def _resolve_pad_auto(
     high/recompose may pad best plate only after round text proves camera changed.
     Returns (pad_image, fix, pad_round, continuation, reason).
     """
-    del anatomy_floor, subject_kind, module, ref_analysis
+    del anatomy_floor, subject_kind, ref_analysis
     mode = (pad_mode or DEFAULT_PAD_MODE).lower().strip()
     carry_image, carry_fix, carry_round = _best_plate(rounds, round_num, root)
     style = (style_ref or "").strip()
+    from .prior_reuse_gate import prior_rounds_show_style_drift
+
+    # merge 无玩家参考：禁止垫上轮成图；若上轮已点名写实/产品静物漂，强制 style_jump
+    if _merge_no_ref_forbid_prev_plate(module, style):
+        if prior_rounds_show_style_drift(rounds, round_num) or style_jump or _style_jump_requested(
+            scale, goal, False
+        ):
+            return "", carry_fix, 0, False, "merge无参考·风格漂→纯文重开（不垫上轮成图）"
+        if mode == "previous":
+            return "", carry_fix, 0, False, "merge无参考：禁止 pad=previous 链上轮成图"
     if _style_jump_requested(scale, goal, style_jump):
         return "", carry_fix, 0, False, "style_jump：不垫风格参考，也不链成图"
     if (scale or "").strip().lower() in {"high", "recompose"}:
@@ -1333,11 +1351,22 @@ def cmd_converge(
         else:
             from .route_gate import check_route_gate
 
+            # 并发多技能：未显式 --conversation 时，用 session 当分槽，避免抢全局 last_advise
+            gate_cid = (conversation_id or "").strip()
+            if not gate_cid and (expect_route or "").strip() and (session_id or "").strip():
+                gate_cid = f"session:{session_id.strip()}"
+                print(
+                    f"ℹ️ [路由闸门] 未传 --conversation，按 session 分槽隔离："
+                    f"{gate_cid}（并发开画勿抢全局 last_advise）"
+                )
+            # 供会话落盘与后续 generate 复用同一分槽
+            conversation_id = gate_cid
+
             ok_gate, gate_msg = check_route_gate(
                 root,
                 goal=goal or "",
                 expect_route=expect_route or "",
-                conversation_id=conversation_id or "",
+                conversation_id=gate_cid,
             )
             if not ok_gate:
                 print(f"❌ [路由闸门] {gate_msg}")
@@ -1356,6 +1385,12 @@ def cmd_converge(
         pad_ok, pad_why = assert_refs_not_benchmark_pads(_ref_list)
         if not pad_ok:
             print(f"❌ [商业对标] {pad_why}")
+            return 1
+        from .prior_reuse_gate import assert_no_silent_prior_asset_reuse
+
+        reuse_ok, reuse_why = assert_no_silent_prior_asset_reuse(goal or "", _ref_list)
+        if not reuse_ok:
+            print(f"❌ [接旧轨闸] {reuse_why}")
             return 1
         if eff_scale == "recompose" and not str(recompose_dir or "").strip():
             print("❌ [档位合同] recompose 必须提供 --recompose-dir，写明新机位或景别。")
@@ -1805,10 +1840,19 @@ def cmd_converge(
         if not skip_route_ok:
             from .route_gate import check_route_gate
 
+            # 与 start 对齐：优先 CLI --conversation，否则会话落盘分槽，再退 session:ID
+            gate_cid_gen = (conversation_id or "").strip()
+            if not gate_cid_gen:
+                gate_cid_gen = str(sess.get("owner_conversation_id") or "").strip()
+            if not gate_cid_gen and (expect_route or "").strip() and (session_id or "").strip():
+                gate_cid_gen = f"session:{session_id.strip()}"
+            if gate_cid_gen and not str(sess.get("owner_conversation_id") or "").strip():
+                sess["owner_conversation_id"] = gate_cid_gen
+
             ok_gen_route, gen_route_msg = check_route_gate(
                 root,
                 expect_route=expect_route or "",
-                conversation_id=conversation_id or "",
+                conversation_id=gate_cid_gen,
                 match_goal=False,
             )
             if not ok_gen_route:
@@ -1816,7 +1860,7 @@ def cmd_converge(
                 return 1
             from .route_gate import load_route_advise
 
-            advise_gen = load_route_advise(root, conversation_id or "") or {}
+            advise_gen = load_route_advise(root, gate_cid_gen) or {}
             if not advise_gen.get("_foreign"):
                 fresh_ids = [str(x) for x in (advise_gen.get("route_ids") or []) if str(x)]
                 if fresh_ids:
@@ -1935,7 +1979,22 @@ def cmd_converge(
             scale=str(sess.get("scale") or scale or ""),
             style_jump=bool(sess.get("style_jump")),
         )
-        style_jump = str(pad_reason).startswith("style_jump")
+        style_jump = (
+            str(pad_reason).startswith("style_jump")
+            or "纯文重开" in str(pad_reason)
+            or "禁止 pad=previous" in str(pad_reason)
+        )
+        if (
+            _merge_no_ref_forbid_prev_plate(
+                str(sess.get("module") or module or ""),
+                eff_ref_img,
+            )
+            and r_no > 1
+        ):
+            print(
+                "⚠️ [merge 垫图] 无玩家风格/格子参考：禁止把上轮成图垫进 GenerateImage；"
+                "风格漂了只改提示词整张重开。"
+            )
         if policy_continuation and carry_image:
             suggested_paths: list[str] = [carry_image]
         elif eff_ref_img and not style_jump:
@@ -1970,6 +2029,15 @@ def cmd_converge(
         pad_ok_gen, pad_why_gen = assert_refs_not_benchmark_pads(_gen_refs)
         if not pad_ok_gen:
             print(f"❌ [商业对标] {pad_why_gen}")
+            return 1
+        from .prior_reuse_gate import assert_no_silent_prior_asset_reuse
+
+        reuse_ok_gen, reuse_why_gen = assert_no_silent_prior_asset_reuse(
+            str(sess.get("goal") or goal or ""),
+            _gen_refs,
+        )
+        if not reuse_ok_gen:
+            print(f"❌ [旧交付复用] {reuse_why_gen}")
             return 1
         matched_case_cfg = resolve_case_config(session_id, eff_ref_img)
         val_res: dict[str, Any] = {}
@@ -2018,7 +2086,14 @@ def cmd_converge(
         stub_notes: list[str] = []
         floor_zh = ""
         if continuation:
-            composed_prompt = compose_continuation_prompt(carry_fix or prompt, s_prof, stub_notes=stub_notes)
+            from .local_locks import locks_from_session as _locks_from_session
+
+            composed_prompt = compose_continuation_prompt(
+                carry_fix or prompt,
+                s_prof,
+                stub_notes=stub_notes,
+                locks=_locks_from_session(sess),
+            )
         else:
             composed_prompt = compose_style_first_prompt(prompt, s_prof, stub_notes=stub_notes)
             # R1 (and any non-continuation round) inject the English structure floor.
@@ -2051,9 +2126,12 @@ def cmd_converge(
         from improve import build_warm_start_pack, merge_warm_start_prompt
         import hashlib as _hashlib
 
+        # 对账用：Warm-Start 并入前的装配句（已含档位/改点/floor，不含记忆包）
+        prompt_before_warm = composed_prompt
         warm = sess.get("warm_start") if isinstance(sess.get("warm_start"), dict) else {}
         warm_merged = False
         warm_hash = ""
+        warm_block = ""
         if apply_memory:
             if not str(warm.get("prompt_block") or "").strip():
                 warm = build_warm_start_pack(
@@ -2063,14 +2141,16 @@ def cmd_converge(
                     goal=str(sess.get("goal") or goal or ""),
                 )
                 sess["warm_start"] = warm
-            block = str(warm.get("prompt_block") or "").strip()
+            warm_block = str(warm.get("prompt_block") or "").strip()
             before = composed_prompt
             composed_prompt = merge_warm_start_prompt(composed_prompt, warm)
-            warm_merged = bool(block) and (
-                block in composed_prompt or composed_prompt != before or "【Warm-Start" in composed_prompt
+            warm_merged = bool(warm_block) and (
+                warm_block in composed_prompt
+                or composed_prompt != before
+                or "【Warm-Start" in composed_prompt
             )
-            if block:
-                warm_hash = _hashlib.sha1(block.encode("utf-8")).hexdigest()[:12]
+            if warm_block:
+                warm_hash = _hashlib.sha1(warm_block.encode("utf-8")).hexdigest()[:12]
             sess["warm_start_merged"] = warm_merged
             sess["warm_start_merged_at"] = _now_cst().strftime("%Y-%m-%d %H:%M:%S")
             sess["warm_start_block_sha1"] = warm_hash
@@ -2135,6 +2215,8 @@ def cmd_converge(
             print(f"❌ [生图闸门] 拒绝登记无效输出图：{why}")
             return 1
 
+        from .final_prompt_gate import final_prompt_sha1 as _final_prompt_sha1
+
         gen_entry = {
             "round": r_no,
             "round_label": f"第 {r_no} 轮候选图（待独立审图）",
@@ -2147,6 +2229,8 @@ def cmd_converge(
             "param_validation": val_res,
             "step_trace": ["step1_start", "step2_generate"],
             "prompt": composed_prompt,
+            "final_prompt_sha1": _final_prompt_sha1(composed_prompt),
+            "prompt_before_warm": prompt_before_warm,
             "continuation": continuation,
             "policy_continuation": policy_continuation,
             "suggested_pad_paths": suggested_paths,
@@ -2184,12 +2268,19 @@ def cmd_converge(
         warm_n_red = len((warm or {}).get("top_redlines") or [])
         warm_n_rec = len((warm or {}).get("top_recipes") or [])
         memory_line = ""
-        if apply_memory and str((warm or {}).get("prompt_block") or "").strip():
+        warm_seg_line = ""
+        assembly_line = f"   · 装配句（未并记忆）: {prompt_before_warm}\n"
+        if apply_memory and warm_block:
             merged_bit = "已并入" if sess.get("warm_start_merged") else "未并入"
             memory_line = (
                 f"   · 📚 pmem-art 记忆{merged_bit}：模块 {warm.get('module') or sess.get('module') or '?'} "
                 f"（recipe {warm_n_rec} · 红线 {warm_n_red}；"
                 f"WARM_START_MERGED={'1' if sess.get('warm_start_merged') else '0'}）\n"
+            )
+            warm_preview = warm_block if len(warm_block) <= 400 else warm_block[:400] + "…"
+            warm_seg_line = (
+                f"   · Warm-Start 段（{len(warm_block)}字"
+                f"{'' if not warm_hash else ' · sha1=' + warm_hash}）:\n{warm_preview}\n"
             )
         stub_line = ""
         if stub_notes:
@@ -2207,6 +2298,9 @@ def cmd_converge(
             dim_weights=s_prof.get("dim_weights"),
             anatomy_floor=float(sess.get("anatomy_floor") or 7.5),
         )
+        from .final_prompt_gate import format_final_prompt_lines
+
+        final_lines = "\n".join(format_final_prompt_lines(composed_prompt))
         print(
             f"🎨 [Step 2A · 仅生图阶段完成] 第 {r_no}/{mr} 轮图像已生成: `{image}` ({v_badge})\n"
             f"{pad_line}"
@@ -2214,7 +2308,9 @@ def cmd_converge(
             f"{floor_line}"
             f"{fix_line}"
             f"{stub_line}"
-            f"   · 置顶风格指令 Prompt: {composed_prompt}\n"
+            f"{assembly_line}"
+            f"{warm_seg_line}"
+            f"{final_lines}\n"
             f"   · 当前未执行任何自评或 VLM 裁判；请先看图再打六维，不要从 9.3 起跳：\n"
             f"{fallback_judge_prompt}\n"
             f"   · 然后：`{pmem_art_cli()} converge judge --id {session_id} --round {r_no} --image {image} --dims ...`"

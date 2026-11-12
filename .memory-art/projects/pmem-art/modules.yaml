@@ -4032,7 +4032,7 @@ modules:
     paths:
       - "assets/scene/off/**"
     aliases:
-      - Off
+      - false
     entities: []
     palette: []
     specs:
@@ -4048,7 +4048,7 @@ modules:
     paths:
       - "assets/scene/on/**"
     aliases:
-      - On
+      - true
     entities: []
     palette: []
     specs:
@@ -4524,3 +4524,688 @@ modules:
         - 512x307
       alpha_required: false
       max_size_kb: 4096
+  misc.Seafood:
+    title: 待归类资产·Seafood
+    category: misc
+    status: candidate
+    description: 自动归类至 待归类资产 (misc.Seafood) · 置信度 0.4
+    paths:
+      - "assets/misc/seafood/**"
+    aliases:
+      - Seafood
+    entities: []
+    palette: []
+    specs:
+      resolution: 1330x405
+      alpha_required: false
+      max_size_kb: 2048
+  character.Volume:
+    title: 角色与立绘·Volume
+    category: character
+    status: active
+    description: 自动归类至 角色与立绘 (character.Volume) · 置信度 0.78
+    paths:
+      - "assets/character/volume/**"
+    aliases:
+      - Volume
+    entities: []
+    palette: []
+    specs:
+      resolution: 720x1280
+      allowed_resolutions:
+        - 720x1280
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  character.Cmp:
+    title: 角色与立绘·Cmp
+    category: character
+    status: active
+    description: 自动归类至 角色与立绘 (character.Cmp) · 置信度 0.78
+    paths:
+      - "assets/character/cmp/**"
+    aliases:
+      - Cmp
+    entities: []
+    palette: []
+    specs:
+      resolution: 311x298
+      allowed_resolutions:
+        - 311x298
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  ui.Powerbank:
+    title: 界面与九宫格·Powerbank
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.Powerbank) · 置信度 0.78
+    paths:
+      - "assets/ui/powerbank/**"
+    aliases:
+      - Powerbank
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      allowed_resolutions:
+        - 1024x1024
+      alpha_required: false
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512
+  ui.Match3:
+    title: 界面与九宫格·Match3
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.Match3) · 置信度 0.78
+    paths:
+      - "assets/ui/match3/**"
+    aliases:
+      - Match3
+    entities: []
+    palette: []
+    specs:
+      resolution: 1280x720
+      allowed_resolutions:
+        - 1280x720
+      alpha_required: false
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512
+  anim.MergeJam:
+    title: 骨骼与动画·MergeJam
+    category: anim
+    status: active
+    description: 自动归类至 骨骼与动画 (anim.MergeJam) · 置信度 0.78
+    paths:
+      - "assets/anim/mergejam/**"
+    aliases:
+      - MergeJam
+    entities: []
+    palette: []
+    specs:
+      resolution: 720x1280
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  anim.MergeCocoa:
+    title: 骨骼与动画·MergeCocoa
+    category: anim
+    status: active
+    description: 自动归类至 骨骼与动画 (anim.MergeCocoa) · 置信度 0.78
+    paths:
+      - "assets/anim/mergecocoa/**"
+    aliases:
+      - MergeCocoa
+    entities: []
+    palette: []
+    specs:
+      resolution: 720x1280
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  anim.MergeCocoaV2:
+    title: 骨骼与动画·MergeCocoaV2
+    category: anim
+    status: active
+    description: 自动归类至 骨骼与动画 (anim.MergeCocoaV2) · 置信度 0.78
+    paths:
+      - "assets/anim/mergecocoav2/**"
+    aliases:
+      - MergeCocoaV2
+    entities: []
+    palette: []
+    specs:
+      resolution: 720x1280
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  anim.MergeCold:
+    title: 骨骼与动画·MergeCold
+    category: anim
+    status: active
+    description: 自动归类至 骨骼与动画 (anim.MergeCold) · 置信度 0.78
+    paths:
+      - "assets/anim/mergecold/**"
+    aliases:
+      - MergeCold
+    entities: []
+    palette: []
+    specs:
+      resolution: 720x1280
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  ui.MergeOrange:
+    title: 界面与九宫格·MergeOrange
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.MergeOrange) · 置信度 0.78
+    paths:
+      - "assets/ui/mergeorange/**"
+    aliases:
+      - MergeOrange
+    entities: []
+    palette: []
+    specs:
+      resolution: 720x1280
+      allowed_resolutions:
+        - 720x1280
+      alpha_required: false
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512
+  anim.MergeHard:
+    title: 骨骼与动画·MergeHard
+    category: anim
+    status: active
+    description: 自动归类至 骨骼与动画 (anim.MergeHard) · 置信度 0.78
+    paths:
+      - "assets/anim/mergehard/**"
+    aliases:
+      - MergeHard
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1536
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  anim.MergeHardV2:
+    title: 骨骼与动画·MergeHardV2
+    category: anim
+    status: active
+    description: 自动归类至 骨骼与动画 (anim.MergeHardV2) · 置信度 0.78
+    paths:
+      - "assets/anim/mergehardv2/**"
+    aliases:
+      - MergeHardV2
+    entities: []
+    palette: []
+    specs:
+      resolution: 720x1280
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  scene.MergeHardV3:
+    title: 场景与原画·MergeHardV3
+    category: scene
+    status: candidate
+    description: 自动归类至 场景与原画 (scene.MergeHardV3) · 置信度 0.562
+    paths:
+      - "assets/scene/mergehardv3/**"
+    aliases:
+      - MergeHardV3
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1536
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  anim.MergeHardV3:
+    title: 骨骼与动画·MergeHardV3
+    category: anim
+    status: active
+    description: 自动归类至 骨骼与动画 (anim.MergeHardV3) · 置信度 0.78
+    paths:
+      - "assets/anim/mergehardv3/**"
+    aliases:
+      - MergeHardV3
+    entities: []
+    palette: []
+    specs:
+      resolution: 1080x1920
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  ui.draw.clone:
+    title: 界面与九宫格·draw.clone
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.draw.clone) · 置信度 0.78
+    paths:
+      - "assets/ui/draw.clone/**"
+    aliases:
+      - draw.clone
+    entities: []
+    palette: []
+    specs:
+      resolution: 720x1280
+      allowed_resolutions:
+        - 720x1280
+      alpha_required: false
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512
+  ui.draw.key:
+    title: 界面与九宫格·draw.key
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.draw.key) · 置信度 0.78
+    paths:
+      - "assets/ui/draw.key/**"
+    aliases:
+      - draw.key
+    entities: []
+    palette: []
+    specs:
+      resolution: 720x1280
+      allowed_resolutions:
+        - 720x1280
+      alpha_required: false
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512
+  ui.Closed:
+    title: 界面与九宫格·Closed
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.Closed) · 置信度 0.78
+    paths:
+      - "assets/ui/closed/**"
+    aliases:
+      - Closed
+    entities: []
+    palette: []
+    specs:
+      resolution: 720x1280
+      allowed_resolutions:
+        - 720x1280
+      alpha_required: false
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512
+  ui.draw.multi:
+    title: 界面与九宫格·draw.multi
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.draw.multi) · 置信度 0.78
+    paths:
+      - "assets/ui/draw.multi/**"
+    aliases:
+      - draw.multi
+    entities: []
+    palette: []
+    specs:
+      resolution: 720x1280
+      allowed_resolutions:
+        - 720x1280
+      alpha_required: false
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512
+  ui.Open:
+    title: 界面与九宫格·Open
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.Open) · 置信度 0.78
+    paths:
+      - "assets/ui/open/**"
+    aliases:
+      - Open
+    entities: []
+    palette: []
+    specs:
+      resolution: 720x1280
+      allowed_resolutions:
+        - 720x1280
+      alpha_required: false
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512
+  ui.draw.ordinary:
+    title: 界面与九宫格·draw.ordinary
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.draw.ordinary) · 置信度 0.78
+    paths:
+      - "assets/ui/draw.ordinary/**"
+    aliases:
+      - draw.ordinary
+    entities: []
+    palette: []
+    specs:
+      resolution: 864x1152
+      allowed_resolutions:
+        - 864x1152
+      alpha_required: false
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512
+  ui.draw.variant:
+    title: 界面与九宫格·draw.variant
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.draw.variant) · 置信度 0.78
+    paths:
+      - "assets/ui/draw.variant/**"
+    aliases:
+      - draw.variant
+    entities: []
+    palette: []
+    specs:
+      resolution: 720x1280
+      allowed_resolutions:
+        - 720x1280
+      alpha_required: false
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512
+  ui.icon.a:
+    title: 界面与九宫格·icon.a
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.icon.a) · 置信度 0.9
+    paths:
+      - "assets/ui/icon.a/**"
+    aliases:
+      - icon.a
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      allowed_resolutions:
+        - 1024x1024
+      alpha_required: false
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512
+  ui.1024:
+    title: 界面与九宫格·1024
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.1024) · 置信度 0.9
+    paths:
+      - "assets/ui/1024/**"
+    aliases:
+      - 1024
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      allowed_resolutions:
+        - 1024x1024
+      alpha_required: false
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512
+  ui.120:
+    title: 界面与九宫格·120
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.120) · 置信度 0.9
+    paths:
+      - "assets/ui/120/**"
+    aliases:
+      - 120
+    entities: []
+    palette: []
+    specs:
+      resolution: 120x120
+      allowed_resolutions:
+        - 120x120
+      alpha_required: false
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512
+  ui.167:
+    title: 界面与九宫格·167
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.167) · 置信度 0.9
+    paths:
+      - "assets/ui/167/**"
+    aliases:
+      - 167
+    entities: []
+    palette: []
+    specs:
+      resolution: 167x167
+      allowed_resolutions:
+        - 167x167
+      alpha_required: false
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512
+  ui.180:
+    title: 界面与九宫格·180
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.180) · 置信度 0.9
+    paths:
+      - "assets/ui/180/**"
+    aliases:
+      - 180
+    entities: []
+    palette: []
+    specs:
+      resolution: 180x180
+      allowed_resolutions:
+        - 180x180
+      alpha_required: false
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512
+  ui.192:
+    title: 界面与九宫格·192
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.192) · 置信度 0.9
+    paths:
+      - "assets/ui/192/**"
+    aliases:
+      - 192
+    entities: []
+    palette: []
+    specs:
+      resolution: 192x192
+      allowed_resolutions:
+        - 192x192
+      alpha_required: false
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512
+  ui.29:
+    title: 界面与九宫格·29
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.29) · 置信度 0.9
+    paths:
+      - "assets/ui/29/**"
+    aliases:
+      - 29
+    entities: []
+    palette: []
+    specs:
+      resolution: 29x29
+      allowed_resolutions:
+        - 29x29
+      alpha_required: false
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512
+  ui.512:
+    title: 界面与九宫格·512
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.512) · 置信度 0.92
+    paths:
+      - "assets/ui/512/**"
+    aliases:
+      - 512
+    entities: []
+    palette: []
+    specs:
+      resolution: 512x512
+      allowed_resolutions:
+        - 512x512
+      alpha_required: false
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512
+  ui.60:
+    title: 界面与九宫格·60
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.60) · 置信度 0.9
+    paths:
+      - "assets/ui/60/**"
+    aliases:
+      - 60
+    entities: []
+    palette: []
+    specs:
+      resolution: 60x60
+      allowed_resolutions:
+        - 60x60
+      alpha_required: false
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512
+  ui.icon.c:
+    title: 界面与九宫格·icon.c
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.icon.c) · 置信度 0.9
+    paths:
+      - "assets/ui/icon.c/**"
+    aliases:
+      - icon.c
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      allowed_resolutions:
+        - 1024x1024
+      alpha_required: false
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512
+  ui.merge.ladder:
+    title: 界面与九宫格·merge.ladder
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.merge.ladder) · 置信度 0.78
+    paths:
+      - "assets/ui/merge.ladder/**"
+    aliases:
+      - merge.ladder
+    entities: []
+    palette: []
+    specs:
+      resolution: 720x1280
+      allowed_resolutions:
+        - 720x1280
+      alpha_required: false
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512
+  ui.ui.kit:
+    title: 界面与九宫格·ui.kit
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.ui.kit) · 置信度 0.78
+    paths:
+      - "assets/ui/ui.kit/**"
+    aliases:
+      - ui.kit
+    entities: []
+    palette: []
+    specs:
+      resolution: 720x1280
+      allowed_resolutions:
+        - 720x1280
+      alpha_required: false
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512

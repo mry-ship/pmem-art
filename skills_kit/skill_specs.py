@@ -119,8 +119,10 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 
 | 种类 | 怎么处理 | 例子 |
 | :--- | :--- | :--- |
-| **可默认** | **必须写入分析**，用「默认：…」标出；**禁止**标成「还不确定」来打回 | 新 HTML 路径/文件名、对比页版式、整页展陈或对比页里说再跑/同范围且没点名技能时默认全清单、旧案已有 ref 且本趟仍是同类任务时默认垫同款 ref、输出目录用并列新文件夹、**风格优先级**（有文字跟文字；有文字且有构图/整表参考→参考只锁版式/机位；无文字有风格参考→跟参考表面；无参考仅题材/链型文字→按文字推出；都无才写同品类顶级商业气质进 brief/`surface`/`--vibe`，仅 merge 钉 Gossip Harbor；仍禁垫竞品像素） |
+| **可默认** | **必须写入分析**，用「默认：…」标出；**禁止**标成「还不确定」来打回 | 新 HTML 路径/文件名、对比页版式、整页展陈或对比页里说再跑/同范围且没点名技能时默认全清单、**本趟玩家已附的 ref** 且仍是同类任务时默认垫同款 ref、输出目录用并列新文件夹、**风格优先级**（有文字跟文字；有文字且有构图/整表参考→参考只锁版式/机位；无文字有风格参考→跟参考表面；无参考仅题材/链型文字→按文字推出；都无才写同品类顶级商业气质进 brief/`surface`/`--vibe`，仅 merge 钉 Gossip Harbor；仍禁垫竞品像素）、**未点名接续→新开**（见下条，不当成硬不确定） |
 | **硬不确定** | 这才是多种情况，列出来等确认 | 交付物类型互斥（到底是 UI 套件还是单张插画）、身份/题材对错会做成另一张图、话与附图直接矛盾且无法从原话改回、多套互斥题材里必须玩家挑一个、图标 A/B/C 同时命中、`route` 的 confidence=low、**触发路由冲突闸**（近邻不同意 / ≥3 互斥支 / 再跑一遍被扩成九支）、**品类都认不出故无法选商业对标系**（这时才问，不要把「没写风格」本身当成硬不确定） |
+
+**未点名接续 → 禁止接旧轨（全技能通用，可默认）**：玩家没说「接着上次 / 继续这张 / 用这份 yaml·关系稿·目录 / 复用旧成图」时，**禁止**把仓库里旧任务的 relation、phase1、session 成图、同题旧模块名当成本次交付底稿。允许只借**格式样例**（字段怎么写）；题材、档序、`surface`、模块与输出目录必须按**本句原话**新开。Warm-Start / 旧 recipe 只吸通用教训与红线，**禁止**把旧整表像素身份或旧链档序默认为本趟选题。扫到 `assets/**` 旧案 ≠ 获准复用。
 
 能默认的当场写进分析。不要把「玩家没写成绝对路径」当成多种情况。
 
@@ -288,7 +290,7 @@ route 锁定后只读注册表该行的 **`pack_headings` 执行包**；不要�
 3. 每轮续跑前先读最小工作集：`python3 pmem_art.py contract working-set --id <session>`——只用合同+本图+单点改嘱，**禁止**靠长聊天重谈 L0/L1。
 4. 画师新反馈先归层：`python3 pmem_art.py contract classify --text "…"`；再 `contract patch --id <session> --feedback "…"`。L0=可能换交付/重开；L1=升锁点；L2=只改一处。
 5. 首轮 generate 前：`reasonableness review`（`--draft` + `--revised` + checklist）过闸。
-6. `converge generate` **自动并入** Warm-Start `prompt_block`；会话写 `warm_start_merged=true` 并打印 `WARM_START_MERGED=1|0`。外部生图以 generate 吐出的 prompt 为准，**不要**用「GenerateImage Hook 有没有跑」判断是否并入。
+6. `converge generate` **自动并入** Warm-Start `prompt_block`；会话写 `warm_start_merged=true` 并打印 `WARM_START_MERGED=1|0`，以及「装配句 / Warm-Start 段 / 最终 Prompt」。**调用 GenerateImage（或外部生图）必须用「最终 Prompt（出图须用这句）」**，禁止另写一份、禁止手贴 Warm-Start；不要用「GenerateImage Hook 有没有跑」判断是否并入。
 7. 看图打六维 → `converge judge`；≥9.5 到线即 `finish`；不到线最多 4 轮；交件标明是否过线。
 8. 风格优先级同第 2 条；都无才查 `benchmark lookup` / `COMMERCIAL_BENCHMARK.md`（**按品类**；仅 merge 钉 Gossip Harbor）；**禁止**把 benchmarks 目录图当垫图（start/generate 双闸）。
 9. 禁止裸 `--skip-route-gate`（须 `PMEM_ART_ALLOW_GATE_SKIP=1` + `--skip-reason`）。
@@ -323,7 +325,7 @@ route 锁定后只读注册表该行的 **`pack_headings` 执行包**；不要�
 ## 二、标准执行流程（Step 1 ~ Step 3）
 
 ### Step 1：Warm-Start 召回 & 初始化收敛会话（首轮就要接近 9 分）
-1. 记忆召回是自动的，禁止再靠手贴：`converge start` 写入 Warm-Start；`converge generate` 并入提示词；Cursor `preToolUse` 在 GenerateImage 时用 `updated_input` 再灌一次。`search --module` 只在要给画师看召回结果时可选跑：
+1. 记忆召回是自动的，禁止再靠手贴：`converge start` 写入 Warm-Start；`converge generate` 并入提示词并以 `WARM_START_MERGED=1|0` 为准。默认不挂 GenerateImage pre-gen，Hook 也永不 `updated_input` 灌记忆。`search --module` 只在要给画师看召回结果时可选跑，不是并入本身：
    ```bash
    python3 pmem_art.py search --module <目标模块>
    ```
@@ -334,8 +336,8 @@ route 锁定后只读注册表该行的 **`pack_headings` 执行包**；不要�
    - 默认 `--mode quality` = 合格线 ≥9.5 **到线即停**；最多 4 轮兜底，不鼓励跑满。
    - `--scale`：`low` 贴原修瑕 · `medium` 小优化锁机位（默认）· `high` 大胆跃升+可叙事 · `recompose` 须配 `--recompose-dir`。
    - `--mode fast`：warm-start 置信度高时可走 **fast track**（仍须每张打分；最终采纳默认仍要 ≥9.5，除非用户明确说「草稿/fast/先看看」）。
-   - `converge generate` **自动把 Warm-Start `prompt_block` 并入提示词**。Cursor **GenerateImage** 路径上，`preToolUse` Hook 再用 `updated_input` 灌一次。对话里回显「pmem-art 已自动并入记忆」。禁止再靠手贴。
-   - **外部生图**（Shell / apikey-image 等、不经 Cursor GenerateImage）：Hook 可能整段不触发——以 `converge generate` 并入的 prompt 为准，开画前确认会话里已有 warm-start / revised；不要把「没跑到 GenerateImage Hook」误报成「没并入就是 bug」。
+   - `converge generate` **自动把 Warm-Start `prompt_block` 并入提示词**。对话里回显「装配句 / Warm-Start 段 / 最终 Prompt」与 `WARM_START_MERGED=1`。禁止再靠手贴，也禁止用「GenerateImage Hook 有没有跑」判断是否并入。
+   - **出图硬规**：`GenerateImage` / Shell / apikey-image 的 description（或等价字段）**必须**填 generate 打印的「最终 Prompt（出图须用这句）」；同屏会打印 `FINAL_PROMPT_SHA1=`，可用 `skills_kit.final_prompt_gate.assert_used_final_prompt` 对账。禁止另写第二份 brief、禁止手贴 Warm-Start。
    - **档位只规定能动多少，出图句用开会话打印的那一家**：
      - `low`：写成一处可改，并点名邻区保持原样。
      - `medium`：只留一处看得见的打磨，机位锁死。
@@ -375,7 +377,7 @@ route 锁定后只读注册表该行的 **`pack_headings` 执行包**；不要�
   - 没有参考图的纯文本任务：不垫成图，只在提示词上追加改点。
   - 定稿写死底：实色、场景，或「透明意图」。**Cursor GenerateImage 无 alpha**：透明意图改写成不透明隔离底（默认纯黑），禁止后抠。**gpt-image 等支持透明时**可直接交真 alpha PNG。品红块和品红底 JPG 不能当交付。
   - **风格跳跃（`recompose_bold` / `style_jump`）**：不垫旧风格参考，也不垫上一轮成图。剪影和画幅留在提示词里。
-- 调用生图工具（如 `GenerateImage` 或项目配置的生图脚本）**生成 1 张图**。
+- 调用生图工具（如 `GenerateImage` 或项目配置的生图脚本）**生成 1 张图**。description / prompt **必须**用本轮 `converge generate` 打印的「最终 Prompt（出图须用这句）」；禁止另写、禁止手贴记忆包。
 
 {{ALPHA_BG_POLICY}}
 
@@ -1045,11 +1047,13 @@ python3 pmem_art.py learn list
 
 ## 执行卡
 1. 定 `chain_mode` / `levels` / `delivery`（默认 overview_sheet、常 8；有格子参考跟格数；仅点名逐格才 per_cell）。
-2. 关系稿最多 2：五问 + `relation-judge` + 对标档序 + `surface` 一句；说不通不出图。
-3. 风格：有文字跟文字；没写风格钉 Gossip Harbor 货柜（整表参考只锁格子）；点名写实/水彩等才离开。禁止垫竞品图。
-4. 整表最多 4 轮、≥9.5 到线即停；逐格各档并行。会话 id 显式，禁默写 `latest`。
+2. **未点名接续 → 新开关系稿**：禁止把仓库旧 merge 的 yaml/relation/成图/同题旧模块直接当底稿；只可借字段格式。新目录 + 新 session；题材与档序按本句原话写。
+3. 关系稿最多 2：五问 + `relation-judge` + 对标档序 + `surface` 一句；说不通不出图。
+4. 风格：有文字跟文字；没写风格钉 Gossip Harbor 货柜（整表参考只锁格子）；点名写实/水彩等才离开。玩家点名垫 GH/竞品**真机图锁画风**时：跟截图货面，**勿再灌缺省软糖釉长句**；宜垫 `assets/refs/gossip_harbor` 货条/单格，勿默垫 `assets/skill_*` 旧交付。禁止未点名就垫竞品抄构图。**无玩家风格/格子参考时禁止把上轮成图垫进 GenerateImage**；首轮若偏写实/产品静物，下一轮纯文整张重开并强调糖釉玩具硬句（converge 遇写实病会自动不链上轮板）。
+5. 整表最多 4 轮、≥9.5 到线即停；逐格各档并行。会话 id 显式，禁默写 `latest`。
 
 ## 开场
+- **先认接续**：只有玩家点名旧稿/旧目录/接着上次，才打开旧 relation；否则新写 phase1，输出到并列新文件夹。
 - 整表格子参考 → 数行列、`delivery=overview_sheet`、垫参考锁版式；无文字风格时画风钉 Gossip Harbor。
 - 无格子、垫图是竖屏商店图 → 整表 **4×2**、`--aspect-ratio 9:16`；横表垫图才用 2×4。
 - 无格子参考也不回落逐格；默认仍 overview_sheet + levels=8。
@@ -1079,8 +1083,10 @@ python3 pmem_art.py learn list
 ## 风格与底（只写一处）
 1. 有文字风格 → 跟文字（整表参考仍可垫锁版式）。
 2. 有参考无文字 → `ref-read` 取样式写 `surface`；整表参考无文字时仍钉 Gossip Harbor，参考只锁格子。
-3. 都无 → Gossip Harbor **玩具货柜卡通**写入 `surface`（光泽卡通 3D、圆润厚实、糖釉玩具高光、棋盘缩略可认）。
-- **surface 必禁**：写实摄影、美食棚拍、产品静物、玻璃真实折射、木纹指纹、果汁乳浊摄影感、微距毛孔。只写「Gossip Harbor」四字不够，必须带玩具货柜+禁写实硬句。
+3. 都无 → Gossip Harbor **玩具货柜**写入 `surface`（软立体糖釉玩具货柜、圆润厚实、柔光釉面高光、棋盘缩略可认；禁硬镜面CGI/皮克斯硬塑/哑光黏土软塑胶UI，不只禁硬镜面）。
+- **surface 必禁**：写实摄影、美食棚拍、产品静物、玻璃真实折射、木纹指纹、果汁乳浊摄影感、微距毛孔、硬镜面 3D、硬镜面CGI、皮克斯硬塑、哑光黏土拟态、软塑胶 UI。只写「Gossip Harbor」四字不够，必须带玩具货柜+禁写实硬句+禁 3D。
+- **档位句必禁摄影质感**：`silhouette` / 出图 L 行只写糖釉玩具剪影/件数/容器/完成态；禁止焦斑、烤痕、鳞片微距、湿润汤面感、分区摆放、摄影级摆盘。这些词会盖过 surface「不是实物」，首轮就漂写实。`relation-judge` 机读拦截（点名写实除外）。柠檬片等配菜：纯文默认拦；**垫 GH 真机锁画风**时可跟截图。
+- **垫真机锁画风**：goal/refs 含 `assets/refs/gossip_harbor` 或「垫真机/截图锁画风」→ `generate_prefix` 改灌「垫图锁画风」短句，**不再灌**缺省 `_MERGE_SURFACE`；审图也不要因缺陷里出现「木纹」等词误报「未指定风格却偏写实」。
 - **overview_sheet 默认浅色圆角卡**（浅蓝/奶油浅底），禁止默用纯黑整表底（黑底留给 per_cell 隔离）。
 - per_cell：Cursor 纯黑/实色隔离；透明引擎可真 alpha。禁止后抠。
 
@@ -1103,12 +1109,12 @@ exit 0 才能出图。`scale_pct` 可不单调；邻档 `silhouette` 整句禁�
 ## 出图提示词模板（GenerateImage 必用）
 统一前缀（整表锁死）+ 每格一句短描述：
 ```text
-<surface 一句：Gossip Harbor 玩具货柜卡通，糖釉卡通道具，禁写实/棚拍/折射/木纹>。整表统一：同一 3/4 俯视、同一柔光左上、浅色圆角卡、同色相家族；每格一件居中留边；无字无脸。
-L1 <短名>：<剪影/容器/完成态一句，用玩具材质词，勿写摄影级质感>
+<surface 一句：Gossip Harbor 玩具货柜，软立体糖釉玩具货柜，禁写实/棚拍/折射/木纹/硬镜面CGI/哑光黏土软塑胶UI>。整表统一：同一 3/4 俯视、同一柔光左上、浅色圆角卡、同色相家族；每格一件居中留边；无字无脸。
+L1 <短名>：<糖釉玩具剪影/容器/完成态一句；整块色可读；禁焦斑鳞片湿润柠檬片香菜末>
 L2 …
 （按 levels 列完）
 禁止跨格拼贴、残片、切顶；邻档靠剪影或件数可分，不靠放大。
-禁止美食棚拍、产品静物、玻璃真实折射、木纹指纹、果汁乳浊摄影感。
+禁止美食棚拍、产品静物、玻璃真实折射、木纹指纹、果汁乳浊摄影感、档位摄影质感词。
 ```
 有格子参考：垫参考锁行列与卡底，格内换题材。无参考竖屏：4×2 + 9:16。
 
@@ -1132,6 +1138,7 @@ per_cell：各档并行独立 session；`merge audit` 验收。
 
 ## 禁止
 - 没过 relation-judge / 五问就出图；未点名逐格却 per_cell 狂刷。
+- **未点名却复用**旧 `assets/**` merge 关系稿/成图/同题旧模块当本趟底稿（扫到旧案 ≠ 获准复用）。
 - 跨轮抠格拼表；用体量阶梯脚本硬凑框高。
 - 把「禁止只靠堆料撑满」误读成中段不许加件。
 - 整表默用纯黑底；糖果轨默认焊蛋糕/马卡龙/纸杯蛋糕。

@@ -1,0 +1,24 @@
+── 给美术看（请只转述下面这块）──
+【按 【最多4轮·到线即停】SpriteCook式 UI Kit/HUD/九宫格整套 走了】
+按整套界面（HUD/菜单/九宫格）来做，不是单张插画。
+── Agent 技术明细 ──
+【按 【最多4轮·到线即停】SpriteCook式 UI Kit/HUD/九宫格整套 走了】
+confidence: high  execute_ok: True
+mode: skill  would_execute: True
+route_ids: ['ui.kit']
+announce: 按 【最多4轮·到线即停】SpriteCook式 UI Kit/HUD/九宫格整套 走了
+match: lexical_ngram+colloquial_expand+canonical
+canonical[agent]: 整套界面或 HUD 或九宫格与状态族；走界面
+reason: named
+steps:
+  1. pmem-ui/【最多4轮·到线即停】SpriteCook式 UI Kit/HUD/九宫格整套 → /pmem-ui Brimwave Cafe casual merge main-menu HUD concept, warm harbor cafe, sof
+top neighbors (k=8, calibrate only):
+  · 1.1387  skill ['ui.kit'] | 做一整套界面，方案1
+  · 1.1387  skill ['ui.kit'] | 做一整套界面，方案13
+  · 1.1387  skill ['ui.kit'] | 做一整套界面，方案17
+  · 1.1387  skill ['ui.kit'] | 做一整套界面，方案5
+  · 1.1387  skill ['ui.kit'] | 做一整套界面，方案9
+  · 1.0068  skill ['ui.kit'] | 九宫格弹窗套件，带状态族，方案10
+  · 1.0068  skill ['ui.kit'] | 九宫格弹窗套件，带状态族，方案14
+  · 1.0068  skill ['ui.kit'] | 九宫格弹窗套件，带状态族，方案18
+对美术只贴 artist_say（标签+一句人话），禁止刷 confidence/json。先写标准路由句再 route --canonical；execute_ok 才开画；plan_conflict / confidence=ask|low / vague 先问人。

@@ -1,0 +1,8 @@
+﻿skill=icon.c
+subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;silhouette_read=ok;transparent_friendly=ok
+  - subject_action: 主体在做什么/交付物是什么
+  - element_budget: 元素预算（不堆景不过载）
+  - hard_locks: 硬锁（画幅/透明底/无字/机位等）
+  - fail_at_glance: 一眼失败条件已写明
+  - silhouette_read: 厚剪影可读
+  - transparent_friendly: 底隔离友好（透明引擎真alpha / Cursor实色空底）

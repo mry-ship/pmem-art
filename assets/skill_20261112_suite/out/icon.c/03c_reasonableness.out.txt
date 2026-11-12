@@ -1,0 +1,10 @@
+✅ [合理性闸 · icon.c] 通过
+  ✓ subject_action（主体在做什么/交付物是什么）
+  ✓ element_budget（元素预算（不堆景不过载））
+  ✓ hard_locks（硬锁（画幅/透明底/无字/机位等））
+  ✓ fail_at_glance（一眼失败条件已写明）
+  ✓ silhouette_read（厚剪影可读）
+  ✓ transparent_friendly（底隔离友好（透明引擎真alpha / Cursor实色空底））
+修订提示词（首轮 generate 须用这句；不一致会拒绝，不会静默盖掉）：
+交付：海鲜咖啡馆道具图标拼板（Mode C 批量预览）。Brimwave Cafe 八枚海鲜咖啡道具厚剪影图标，2x4 拼成一张 1:1 图标拼板。纯黑 #000000 不透明隔离底（opaque_isolation / Cursor实色空底），禁止后抠 alpha。货面：软立体糖釉玩具感，半透明糖釉SSS、宽柔高光、次表面散射，圆润厚实无硬描边，暖饱和块面高光；棚拍主光+接触影；无字无场景无UI棋盘。八枚：虾仁杯、贝壳汤、咖啡豆袋、冰拿铁杯、柠檬牡蛎盘、龙虾钳串、海苔脆片碗、港湾奶油泡芙。垫图只锁货面不抄整表。
+已写入会话 `suite_icon_c`。下一步用 revised 做 converge generate（可省略 --prompt，将自动注入）。

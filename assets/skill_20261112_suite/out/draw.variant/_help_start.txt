@@ -1,0 +1,91 @@
+usage: pmem-art converge [-h] [--session SESSION] [--goal GOAL]
+                         [--generate-cmd GENERATE_CMD] [--module MODULE]
+                         [--ref-image REF_IMAGE] [--aspect-ratio ASPECT_RATIO]
+                         [--reference-image-paths REFERENCE_IMAGE_PATHS]
+                         [--ref-analysis REF_ANALYSIS] [--threshold THRESHOLD]
+                         [--max-rounds MAX_ROUNDS] [--mode {quality,fast}]
+                         [--scale {low,medium,high,recompose}]
+                         [--medium-family MEDIUM_FAMILY] [--contract {,split}]
+                         [--recompose-dir RECOMPOSE_DIR] [--draft]
+                         [--round ROUND_NUM] [--image IMAGE] [--score SCORE]
+                         [--dims DIMS] [--strengths STRENGTHS]
+                         [--defects DEFECTS] [--next-fix NEXT_FIX]
+                         [--lock-text LOCK_TEXT] [--prompt PROMPT] [--apply]
+                         [--no-apply] [--settle-sync] [--verbose] [--quiet]
+                         [--silent] [--no-silent] [--skip-route-gate]
+                         [--skip-reasonableness-gate]
+                         [--skip-reason SKIP_REASON] [--route-id ROUTE_ID]
+                         [--conversation CONVERSATION]
+                         {start,generate,judge,next,step,round,finish,settle,table,status,warm,lock,discuss}
+
+positional arguments:
+  {start,generate,judge,next,step,round,finish,settle,table,status,warm,lock,discuss}
+                        子操作（next=出图前打印最高分垫图；generate=仅登记生图；judge=独立审图；settle=f
+                        inish 后后台记忆/atlas）
+
+options:
+  -h, --help            show this help message and exit
+  --session SESSION, --id SESSION
+                        会话 ID（默认 latest，支持 --id 或 --session）
+  --goal GOAL, --brief GOAL, -g GOAL
+                        本次生图目标描述（支持 --goal 或 --brief）
+  --generate-cmd GENERATE_CMD
+                        仅 converge generate 可带的生图命令；judge 阶段传入会被拒绝
+  --module MODULE, -m MODULE
+                        目标模块 ID
+  --ref-image REF_IMAGE
+                        垫图/参考图路径（若有）
+  --aspect-ratio ASPECT_RATIO
+                        目标画幅比例（如 9:16, 4:3, 3:4；默认跟随参考图比例）
+  --reference-image-paths REFERENCE_IMAGE_PATHS
+                        垫图路径列表（逗号分隔；默认跟随 --ref-image）
+  --ref-analysis REF_ANALYSIS
+                        参考图视觉解构结论摘要
+  --threshold THRESHOLD
+                        合格分数线（默认 9.5）
+  --max-rounds MAX_ROUNDS
+                        最大收敛轮次（默认 4：≥9.5 停，满 4 轮取最高分）
+  --mode {quality,fast}
+                        quality=最多4轮×≥9.5（默认）；fast=warm-start 置信高时可 fast-track
+  --scale {low,medium,high,recompose}
+                        收敛强度：low=只修缺陷，medium=补足加小优化（默认），high=允许重构构图和重做光影，recom
+                        pose=按用户指定方向改构图
+  --medium-family MEDIUM_FAMILY
+                        开局媒介家族，四轮不再改。空则从目标句归类，对不上走 generic
+  --contract {,split}   split=多图分工，不借用 medium 的不改机位和 40% 提示词预算
+  --recompose-dir RECOMPOSE_DIR
+                        当用户明确要求改变构图时指定新构图方向（如：从特写改为全景 / 把主体移到画面左侧三分点）
+  --draft               用户明确要草稿/fast 时允许软合格线（仅 fast 模式）
+  --round ROUND_NUM     当前轮次序号 (1..4)
+  --image IMAGE, -i IMAGE
+                        本轮生成图片路径
+  --score SCORE, -s SCORE
+                        本轮综合评分（满分 10.0）
+  --dims DIMS           六维细分得分说明（构图/光影/透视/质感/风格/无瑕疵）
+  --strengths STRENGTHS
+                        本轮合理/亮点之处
+  --defects DEFECTS     本轮不合理/缺陷之处
+  --next-fix NEXT_FIX   下一轮叠加修正策略
+  --lock-text LOCK_TEXT
+                        画师锁定微调原话，如「构图松一点」「光影锁定降到 40%」（档位仍是 low，表上显示 95%→75%）
+  --prompt PROMPT, -p PROMPT
+                        本轮使用的 Prompt
+  --apply               兼容旧用法：finish 默认已写入记忆，可省略；与 --no-apply 同时出现时以 --no-
+                        apply 为准
+  --no-apply            finish 时仅结算/出报告，不写入记忆（默认会写）
+  --settle-sync         finish 时同步写记忆/atlas（默认后台 settle，不挡返回；也可用
+                        PMEM_FINISH_SETTLE_BG=0）
+  --verbose, -v         打印完整 Markdown 报告（默认已打印评分履历表；记忆默认后台 settle）
+  --quiet, -q           仅一行结论+小提示，不打印每轮评分履历（旧静默展示）
+  --silent              同 --quiet（兼容旧参数）
+  --no-silent           兼容旧参数：强制打印评分履历（现为默认）
+  --skip-route-gate     跳过开画前 route 闸门（须 PMEM_ART_ALLOW_GATE_SKIP=1 + --skip-
+                        reason；默认必须先 route）
+  --skip-reasonableness-gate
+                        跳过出图前合理性闸（须 ALLOW + --skip-reason；默认必须先 reasonableness
+                        review）
+  --skip-reason SKIP_REASON
+                        跳闸审计原因（与 --skip-*-gate 或 ALLOW 联用；无原因则拒）
+  --route-id ROUTE_ID   本次要开的 route id，须在上次 route 的 route_ids 里
+  --conversation CONVERSATION
+                        当前对话 id。与另一对话未结束的同一 session 冲突时拒绝开画

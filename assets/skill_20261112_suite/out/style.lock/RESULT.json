@@ -1,0 +1,13 @@
+{
+  "route_id": "style.lock",
+  "banner": "【按 锁风格 走了】",
+  "status": "text_only",
+  "passed_line": null,
+  "rounds": 0,
+  "scores": [],
+  "final_image": null,
+  "text_deliverable": "assets/skill_20261112_suite/out/style.lock/STYLE_CARD.md",
+  "pad_used": ["assets/skill_20261112_suite/refs/ref_merge.png"],
+  "bg": "n/a",
+  "notes": "已抽色板/光影/禁用词并写入 brand.WorldStyle（decision+recipe+redline）；本步不生图。"
+}

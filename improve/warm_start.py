@@ -41,6 +41,10 @@ _TOPIC_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
     ("ui_shell", re.compile(r"主菜单|HUD|九宫格|顶栏|底栏|米黄纸板|Clash底栏|设置同排|侧栏|资源栏", re.I)),
     ("app_icon", re.compile(r"App Icon|1024\s*x\s*1024|满幅直角|商店图标|桌面图标|启动图标", re.I)),
     ("keyart", re.compile(r"Key Art|原画主视觉|竖构图主视觉|海报主视觉", re.I)),
+    ("fairy_garden", re.compile(
+        r"妖精花园|日晒草绿|叶面绿|巨型花草|花瓣屋顶|微型花园|铃兰紫|花园拱门|巨叶",
+        re.I,
+    )),
     ("clone_style", re.compile(r"锁风验证|风格克隆|禁止回声|只借画风", re.I)),
     ("watercolor", re.compile(r"水彩|watercolor|wash\b|纸纹飞白|绘本立绘|湿画", re.I)),
 ]
@@ -86,8 +90,10 @@ def _context_scopes(module: str, goal: str = "") -> set[str]:
         scopes.add("softcandy")
     if any(k in low for k in ("xmas", "christmas", "festival")) and "merge" not in low:
         scopes.add("xmas")
-    if "keyart" in low or "fairy" in low:
+    if "keyart" in low:
         scopes.add("keyart")
+    if "fairy" in low or ("garden" in low and "merge" not in low):
+        scopes.add("fairy_garden")
     if "clone" in low or "stylelock" in low.replace(".", "") or "worldstyle" in low.replace(".", ""):
         scopes.add("clone_style")
     if any(k in (goal or "") for k in ("水彩", "watercolor", "绘本", "wash")):
@@ -99,6 +105,54 @@ def _context_scopes(module: str, goal: str = "") -> set[str]:
     return scopes
 
 
+_FOREIGN_ARTIFACT = re.compile(
+    r"App Icon|1024\s*x\s*1024|overview_sheet|合成梯|主菜单|HUD|九宫格|"
+    r"platter|prop\s*icon|currentColor|SVG 图标|桌面图标|启动图标|"
+    r"整表多格|per_cell|overview\s*sheet",
+    re.I,
+)
+
+
+def _foreign_artifact_bleed(text: str, module: str, goal: str = "") -> bool:
+    """True when text is clearly another deliverable family the current task is not.
+
+    Same-family tokens implied by module/goal scopes are stripped first, so a merge
+    redline that only says「合成梯…」is not treated as foreign to merge.*.
+    """
+    blob = text or ""
+    if not _FOREIGN_ARTIFACT.search(blob):
+        return False
+    task_blob = f"{module or ''} {goal or ''}"
+    if _FOREIGN_ARTIFACT.search(task_blob):
+        return False
+    ctx = _context_scopes(module, goal)
+    stripped = blob
+    if "merge_ladder" in ctx or "candy_merge" in ctx or str(module or "").lower().startswith("merge."):
+        stripped = re.sub(
+            r"overview_sheet|合成梯|整表多格|per_cell|overview\s*sheet",
+            " ",
+            stripped,
+            flags=re.I,
+        )
+    if "ui_shell" in ctx or str(module or "").lower().startswith("ui."):
+        stripped = re.sub(r"主菜单|HUD|九宫格", " ", stripped, flags=re.I)
+    if "app_icon" in ctx:
+        stripped = re.sub(
+            r"App Icon|1024\s*x\s*1024|桌面图标|启动图标",
+            " ",
+            stripped,
+            flags=re.I,
+        )
+    if "prop_icon" in ctx:
+        stripped = re.sub(
+            r"platter|prop\s*icon|currentColor|SVG 图标",
+            " ",
+            stripped,
+            flags=re.I,
+        )
+    return bool(_FOREIGN_ARTIFACT.search(stripped))
+
+
 def habit_relevant_for_task(habit: str, module: str, goal: str = "") -> bool:
     """Universal bans always apply; domain-specific bans only when task shares that topic."""
     text = (habit or "").strip()
@@ -106,18 +160,14 @@ def habit_relevant_for_task(habit: str, module: str, goal: str = "") -> bool:
         return False
     if _UNIVERSAL_BAN.search(text):
         return True
+    # Unmarked habits that still name another deliverable family → drop.
+    if _foreign_artifact_bleed(text, module, goal):
+        return False
     habit_topics = _scopes_in(text) & _STRONG_TOPICS
     if not habit_topics:
         # No strong domain marker → treat as generic short guardrail.
         return True
     return bool(habit_topics & _context_scopes(module, goal))
-
-
-_FOREIGN_ARTIFACT = re.compile(
-    r"App Icon|1024\s*x\s*1024|overview_sheet|合成梯|主菜单|HUD|九宫格|"
-    r"platter|prop\s*icon|currentColor|SVG 图标|桌面图标|启动图标",
-    re.I,
-)
 
 
 def _goal_tokens(goal: str) -> list[str]:
@@ -139,10 +189,10 @@ def _goal_tokens(goal: str) -> list[str]:
     return out
 
 
-def _soft_goal_overlap_ok(entry: dict[str, Any], goal: str) -> bool:
-    """When entry has no strong topic tags: drop scored foreign-artifact recipes with 0 goal overlap.
+def _soft_goal_overlap_ok(entry: dict[str, Any], goal: str, module: str = "") -> bool:
+    """When entry has no strong topic tags: drop foreign-artifact bleed with 0 goal overlap.
 
-    Conservative: vague goals / generic short redlines always keep (stability first).
+    Vague goals / generic short redlines (no foreign artifact) still keep.
     """
     g_toks = _goal_tokens(goal)
     if len(g_toks) < 2:
@@ -151,15 +201,10 @@ def _soft_goal_overlap_ok(entry: dict[str, Any], goal: str) -> bool:
     hay = blob.lower()
     if any(t in hay for t in g_toks):
         return True
-    # Only drop concrete high-score recipes that clearly belong to another artifact family.
-    if not re.search(r"\d+\.\d+\s*分|收敛胜出", blob):
-        return True
-    if not _FOREIGN_ARTIFACT.search(blob):
-        return True
-    # Goal itself is that artifact → keep.
-    if _FOREIGN_ARTIFACT.search(goal or ""):
-        return True
-    return False
+    # Another deliverable family + no goal overlap → off-topic (score optional).
+    if _foreign_artifact_bleed(blob, module, goal):
+        return False
+    return True
 
 
 def entry_on_topic_for_task(entry: dict[str, Any], module: str, goal: str = "") -> bool:
@@ -167,7 +212,7 @@ def entry_on_topic_for_task(entry: dict[str, Any], module: str, goal: str = "") 
     blob = f"{entry.get('summary') or ''} {entry.get('body') or ''}"
     entry_topics = _scopes_in(blob) & _STRONG_TOPICS
     if not entry_topics:
-        return _soft_goal_overlap_ok(entry, goal)
+        return _soft_goal_overlap_ok(entry, goal, module=module)
     ctx = _context_scopes(module, goal)
     # Exclusive strong topics on the entry that the task does not carry → off-topic bleed.
     if entry_topics - ctx:
@@ -179,7 +224,8 @@ def _is_merge_module(module: str) -> bool:
     return str(module or "").strip().lower().startswith("merge.")
 
 
-# merge.* 注入时与现行 GH/浅色卡合同相反的 taste 短语（含「通用禁油腻」误伤糖釉）。
+# merge.* 注入时与现行 GH 软立体糖釉合同相反的 taste 短语
+# （含「通用禁油腻」误伤糖釉；以及「平面货柜/黏土/旧光泽硬卡通」把真 GH 带歪）。
 _MERGE_CONFLICT_TASTE = (
     "体量递增",
     "黑空底",
@@ -190,6 +236,30 @@ _MERGE_CONFLICT_TASTE = (
     "油腻镜面",
     "哑光缎面",
     "哑光发灰",
+    # 矫枉过正：平面绘本贴纸 ≠ GH；哑光黏土 UI ≠ GH 柔光糖釉
+    "平面货柜",
+    "平面绘本",
+    "平涂贴纸",
+    "3D黏土",
+    "3D 黏土",
+    "黏土渲染",
+    "黏土拟态",
+    "claymorphism",
+    # 旧缺省/旧资产文案：硬光泽卡通 3D 会把软立体糖釉带回 CGI/硬塑
+    "光泽卡通 3D",
+    "光泽卡通3D",
+    "glossy cartoon 3D",
+    "硬卡通 3D",
+    "硬卡通3D",
+    "硬镜面 CGI",
+)
+
+# keep 里点名他趟具体 SKU/档序身份（goal 无重叠）→ 串题材
+_PRIOR_SKU_IDENTITY = re.compile(
+    r"(?:HarborHotCocoa|HarborOrange|露莓果酱|冷饮店|热可可|"
+    r"L1\s*(?:empty|空杯|薄纸杯)|L8\s*(?:tray|托盘)|"
+    r"西瓜冰|草莓软糖SSS)",
+    re.I,
 )
 
 
@@ -229,9 +299,20 @@ def filter_habits_for_task(habits: list[Any], module: str, goal: str = "", *, li
     return picked
 
 
+def _prior_sku_bleed(text: str, goal: str) -> bool:
+    """True when keep names another run's concrete SKU and goal does not share that token."""
+    blob = str(text or "")
+    m = _PRIOR_SKU_IDENTITY.search(blob)
+    if not m:
+        return False
+    token = m.group(0)
+    return token.lower() not in str(goal or "").lower()
+
+
 def filter_keeps_for_task(keeps: list[Any], module: str, goal: str = "", *, limit: int = _INJECT_KEEP_CAP) -> list[str]:
     """Prefer constructive keep phrases; still drop hard off-topic keeps."""
     merge_mod = _is_merge_module(module)
+    ctx = _context_scopes(module, goal)
     out: list[str] = []
     seen: set[str] = set()
     for k in reversed(list(keeps or [])):
@@ -240,8 +321,18 @@ def filter_keeps_for_task(keeps: list[Any], module: str, goal: str = "", *, limi
             continue
         if merge_mod and merge_conflict_taste_phrase(text):
             continue
+        # merge 货柜任务：花园/UI 场景 keep 不得灌进道具整表
+        if merge_mod and ("fairy_garden" in (_scopes_in(text) & _STRONG_TOPICS)):
+            if "merge_ladder" not in (_scopes_in(text) & _STRONG_TOPICS) and not re.search(
+                r"货柜|糖釉|Gossip\s*Harbor|玩具货柜", text, re.I
+            ):
+                continue
+        if _foreign_artifact_bleed(text, module, goal):
+            continue
+        if _prior_sku_bleed(text, goal):
+            continue
         topics = _scopes_in(text) & _STRONG_TOPICS
-        if topics and not (topics & _context_scopes(module, goal)):
+        if topics and not (topics & ctx):
             continue
         key = text.lower()
         if key in seen:
@@ -252,6 +343,33 @@ def filter_keeps_for_task(keeps: list[Any], module: str, goal: str = "", *, limi
             break
     out.reverse()
     return out
+
+
+_COLD_MARK = re.compile(r"冷光|冷色|冷光源|冷色调")
+_WARM_MARK = re.compile(r"暖光|暖色|暖色调|暖光源")
+
+
+def collapse_opposed_prefs(vals: list[Any], *, limit: int = 3) -> list[str]:
+    """Drop simultaneous cold+warm taste lists that cancel each other in the prompt.
+
+    Keep the newest polarity only when both cold and warm appear in the recent tail.
+    """
+    cleaned = [str(v or "").strip() for v in (vals or []) if str(v or "").strip()]
+    if not cleaned:
+        return []
+    tail = cleaned[-max(limit, 3) :]
+    has_cold = any(_COLD_MARK.search(v) for v in tail)
+    has_warm = any(_WARM_MARK.search(v) for v in tail)
+    if not (has_cold and has_warm):
+        return cleaned[-limit:]
+    last = tail[-1]
+    if _COLD_MARK.search(last) and not _WARM_MARK.search(last):
+        picked = [v for v in cleaned if not _WARM_MARK.search(v)]
+    elif _WARM_MARK.search(last) and not _COLD_MARK.search(last):
+        picked = [v for v in cleaned if not _COLD_MARK.search(v)]
+    else:
+        picked = [last]
+    return picked[-limit:]
 
 
 # ---------------------------------------------------------------------------
@@ -466,13 +584,18 @@ def build_warm_start_pack(
     # Two-layer knowledge recall: Project-Private (_knowledge) > Cross-Project Shared (~/.pmem-art/shared)
     from .knowledge import recall_layered_knowledge_cards
     recalled_cards = recall_layered_knowledge_cards(root, target_module=module, query=goal, limit=2)
-    # Drop hard medium clashes (e.g. cel-shade card into watercolor portrait goals).
+    # Drop hard medium clashes + strong-topic / foreign-artifact bleed into prompts.
     ctx_scopes = _context_scopes(module, goal)
     def _knowledge_ok(card: dict[str, Any]) -> bool:
         blob = f"{card.get('title') or ''} {card.get('body') or ''}"
         if "watercolor" in ctx_scopes and re.search(r"赛璐珞|cel.?shade|硬边色块分层", blob, re.I):
             return False
         if "prop_icon" not in ctx_scopes and re.search(r"prop\s*icon|真alpha|cheese\s*platter", blob, re.I):
+            return False
+        card_topics = _scopes_in(blob) & _STRONG_TOPICS
+        if card_topics - ctx_scopes:
+            return False
+        if _foreign_artifact_bleed(blob, module, goal):
             return False
         return True
 
@@ -494,11 +617,9 @@ def build_warm_start_pack(
         f"- 所属专项记忆库: {proj_name} (.memory-art/projects/{proj_id}/)",
         f"- 目标模块: {module or '未指定'}",
         f"- 置信度: {conf:.2f}（fast-track 资格: {'是' if fast_track_eligible else '否'}）",
+        "- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。",
     ]
-    if recipe_summaries:
-        prompt_block_lines.append("- 优先复用定稿方向:")
-        for r in recipe_summaries:
-            prompt_block_lines.append(f"  · [{r.get('id')}] {r.get('summary')}")
+    # recipe_summaries intentionally omitted from prompt_block (kept on pack for UI/confidence).
     if keeps:
         prompt_block_lines.append("- 正向保留（要怎样）:")
         for k in keeps:
@@ -521,9 +642,14 @@ def build_warm_start_pack(
         ("preferred_line_weight", "线宽"),
         ("preferred_color_temperature", "色温"),
     ):
-        vals = taste.get(key) or []
+        raw_vals = taste.get(key) or []
+        vals = (
+            collapse_opposed_prefs(raw_vals, limit=3)
+            if key in ("preferred_lighting", "preferred_color_temperature")
+            else [str(v).strip() for v in raw_vals if str(v).strip()][-3:]
+        )
         if vals:
-            taste_bits.append(f"{label}={' / '.join(vals[-3:])}")
+            taste_bits.append(f"{label}={' / '.join(vals)}")
     if taste_bits:
         prompt_block_lines.append("- 个人口味: " + "；".join(taste_bits))
     if banned:
@@ -557,10 +683,14 @@ def build_warm_start_pack(
         "shared_knowledge": [{"id": c.get("id"), "title": c.get("title"), "body": c.get("body"), "layer_scope": "shared"} for c in shared_kcards],
         "palette": palette,
         "taste_snapshot": {
-            "preferred_lighting": taste.get("preferred_lighting", [])[-5:],
-            "preferred_composition": taste.get("preferred_composition", [])[-5:],
-            "preferred_line_weight": taste.get("preferred_line_weight", [])[-5:],
-            "preferred_color_temperature": taste.get("preferred_color_temperature", [])[-5:],
+            "preferred_lighting": collapse_opposed_prefs(
+                taste.get("preferred_lighting", []), limit=5
+            ),
+            "preferred_composition": (taste.get("preferred_composition", []) or [])[-5:],
+            "preferred_line_weight": (taste.get("preferred_line_weight", []) or [])[-5:],
+            "preferred_color_temperature": collapse_opposed_prefs(
+                taste.get("preferred_color_temperature", []), limit=5
+            ),
             "banned_habits": banned,
             "keep_phrases": keeps,
             "banned_habits_raw_tail": (taste.get("banned_habits") or [])[-10:],

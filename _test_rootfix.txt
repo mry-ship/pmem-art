@@ -1,0 +1,21 @@
+﻿pyw : test_merge_without_style_is_gossip_harbor (tests.test_delivery_gates.DeliveryGateTests.test_merge_without_style_i
+s_gossip_harbor) ... ok
+所在位置 行:8 字符: 1
++ pyw -3 -u -m unittest tests.test_delivery_gates.DeliveryGateTests.tes ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (test_merge_with..._harbor) ... ok:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+test_conflict_phrase_detector (tests.test_warm_start_guardrails.TestMergeConflictTaste.test_conflict_phrase_detector) .
+.. ok
+test_merge_keeps_drop_matte_satin_and_oil_mirror (tests.test_warm_start_guardrails.TestMergeConflictTaste.test_merge_ke
+eps_drop_matte_satin_and_oil_mirror) ... ok
+test_merge_module_drops_anti_gh_bans (tests.test_warm_start_guardrails.TestMergeConflictTaste.test_merge_module_drops_a
+nti_gh_bans) ... ok
+test_non_merge_keeps_oil_ban (tests.test_warm_start_guardrails.TestMergeConflictTaste.test_non_merge_keeps_oil_ban) ...
+ ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.001s
+
+OK

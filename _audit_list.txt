@@ -1,0 +1,16 @@
+﻿🎨 pmem-art · 美术模块与资产总览
+
+模块 ID                        模块名称                   记忆数      图片资产     红线数      状态
+--------------------------------------------------------------------------------------------
+brand.WorldStyle             全局世界观色彩圣经（脚手架）         39       2        14       ✅ 健康
+icon.AppIcon                 icon·AppIcon           23       0        8        ✅ 健康
+item.MergeLadder             item·MergeLadder       6        0        1        ✅ 健康
+ui.MainMenu                  界面与九宫格·MainMenu (Cyb   13       4        5        ✅ 健康
+scene.PirateCabin            场景与原画·PirateCabin (C   2        0        1        ✅ 健康
+ui.Offer.BlackFriday         界面与九宫格·Offer           2        0        1        ✅ 健康
+icon.BirdBatch               icon·BirdBatch         2        0        1        ✅ 健康
+icon.cozy_clues_items        icon·cozy_clues_item   2        1        1        ✅ 健康
+ui.Soft                      界面与九宫格·Soft            2        1        0        ⚠️ 需复核/修复
+character.Fairy              角色与立绘·Fairy            7        1        2        ✅ 健康
+
+显示 10 个有内容/有资产模块；已隐藏空壳 193 个（scaffold/空 active）。

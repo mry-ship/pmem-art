@@ -494,5 +494,37 @@
     "source": "classify_auto_add",
     "created_at": "2026-11-11T01:31:00+0800",
     "status": "candidate"
+  },
+  {
+    "module_id": "misc.Seafood",
+    "category": "misc",
+    "folder": "assets\\misc\\seafood",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/refs/gossip_harbor/gh_seafood_food_strip.png"
+    ],
+    "paths_glob": [
+      "assets/misc/seafood/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-12T22:47:06+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "scene.MergeHardV3",
+    "category": "scene",
+    "folder": "assets\\scene\\mergehardv3",
+    "file_count": 1,
+    "confidence": 0.562,
+    "sample_files": [
+      "assets/skill_20261112_seafood/merge_hard_v3/final.png"
+    ],
+    "paths_glob": [
+      "assets/scene/mergehardv3/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-12T23:12:43+0800",
+    "status": "candidate"
   }
 ]

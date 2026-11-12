@@ -1,0 +1,29 @@
+# 硬料/海鲜店「同店货柜升级」合成梯 · shop_ladder L1–L8（overview_sheet 4×2 竖屏）
+# 第 2 稿：档位句去美食摄影质感词，改糖釉玩具剪影（根治首轮写实吸力）。
+# 过程类型：A 同族形变货柜。小鱼→鱼盘→熟鱼→海鲜碗→拼盘→龙虾菜→大餐→盛宴套装。
+# 商业对标真链（Gossip Harbor Seafood 7 扩到 8）：
+#   Small Fish → Fish Plate → Prepared Fish → Seafood Bowl → Platter → Lobster Dish → Feast
+# 风格未点名 → Gossip Harbor 软立体糖釉玩具货柜。
+version: harbor-seafood-hard-20261112-v2
+pipeline: art-merge-two-phase
+delivery: overview_sheet
+
+tracks:
+  harbor_seafood_hard:
+    module: merge.HarborSeafoodHard
+    chain_mode: shop_ladder
+    levels: 8
+    grid_rows: 4
+    grid_cols: 2
+    surface: "Gossip Harbor 玩具货柜：软立体糖釉道具、圆润厚实、无硬描边、暖饱和、柔光釉面高光、棋盘缩略可认；材质是有体积的糖釉玩具货柜道具，不是实物，也不是哑光黏土/软塑胶 UI，更不是平面绘本贴纸。禁止写实摄影、美食棚拍、产品静物、玻璃真实折射、木纹指纹、微距毛孔、硬镜面 CGI、皮克斯硬塑胶高光、哑光黏土拟态、软塑胶 UI。档位句只写糖釉玩具剪影/件数/容器/完成态；禁焦斑烤痕鳞片湿润柠檬片香菜末摄影级摆盘。4×2 浅奶油圆角卡竖屏；每格一件居中留边，无字无脸。家族色：珊瑚红+奶油白+海沫青+暖金。"
+    commercial_ref: "Gossip Harbor Seafood7 expand8: SmallFish→FishPlate→PreparedFish→SeafoodBowl→Platter→LobsterDish→FeastPlate→FeastTraySet"
+    process_type: "shop_ladder_same_shop_seafood_evolution"
+    rows:
+      - { level: 1, name: 小鱼, silhouette: "一条完整小银鱼糖釉玩具侧卧，整块色无盘无配菜", scale_delta: 基档, scale_pct: 0.55, evolve_to: SmallFish, merge_why: "—", parts_add: "—" }
+      - { level: 2, name: 双鱼盘, silhouette: "浅圆盘糖釉玩具上两尾小鱼并排，盘沿成新轮廓", scale_delta: "+小", scale_pct: 0.60, evolve_to: FishPlate, merge_why: "两尾小鱼放上同一浅圆盘成为一件双鱼盘，盘沿变成主轮廓", parts_add: "—" }
+      - { level: 3, name: 熟制鱼, silhouette: "盘上一条熟制整鱼糖釉玩具，金棕整块色，双鱼并排消失", scale_delta: "+小", scale_pct: 0.66, evolve_to: PreparedFish, merge_why: "两盘双鱼合成一条熟制整鱼，生鱼并排换成烤熟整鱼剪影", parts_add: "—" }
+      - { level: 4, name: 海鲜碗, silhouette: "深圆碗糖釉玩具，碗口剪影内可见简化虾与鱼块色块", scale_delta: "+中", scale_pct: 0.72, evolve_to: SeafoodBowl, merge_why: "两份熟制鱼合成一只海鲜碗，整鱼换成碗装件数可读的虾鱼块", parts_add: "—" }
+      - { level: 5, name: 海鲜拼盘, silhouette: "椭圆大盘糖釉玩具，蟹虾贝三大色块并置可读", scale_delta: "+中", scale_pct: 0.78, evolve_to: SeafoodPlatter, merge_why: "两只海鲜碗合成一件海鲜拼盘，碗换成椭圆大盘件数可分", parts_add: "—" }
+      - { level: 6, name: 龙虾菜, silhouette: "整只龙虾糖釉玩具为主轮廓，钳子块面可读，拼盘分区消失", scale_delta: "+中", scale_pct: 0.84, evolve_to: LobsterDish, merge_why: "两盘海鲜拼盘浓缩成一只龙虾菜，主轮廓换成整只龙虾", parts_add: "—" }
+      - { level: 7, name: 海鲜大餐, silhouette: "更大圆盘糖釉玩具，龙虾加简化配菜堆成单件大餐", scale_delta: "+大", scale_pct: 0.90, evolve_to: SeafoodFeastPlate, merge_why: "两只龙虾菜合成一件更大海鲜大餐盘，体量与配菜更满但仍单件", parts_add: "—" }
+      - { level: 8, name: 盛宴托盘, silhouette: "浅托盘糖釉玩具上两小份菜与一小酱杯，一件货留边", scale_delta: "+大", scale_pct: 0.94, evolve_to: SeafoodFeastTray, merge_why: "两份海鲜大餐放上同一浅托盘成为一件盛宴托盘，仍同店硬料海鲜", parts_add: "—" }

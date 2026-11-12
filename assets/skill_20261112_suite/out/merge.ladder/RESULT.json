@@ -1,0 +1,25 @@
+{
+  "route_id": "merge.ladder",
+  "banner": "【按 同域合成梯：先定链型与关系，再按交付出图 走了】",
+  "status": "partial",
+  "passed_line": false,
+  "rounds": 4,
+  "scores": [
+    {"round": 1, "total": 8.24},
+    {"round": 2, "total": 8.58},
+    {"round": 3, "total": 8.61},
+    {"round": 4, "total": 9.0}
+  ],
+  "final_image": "assets/skill_20261112_suite/out/merge.ladder/final.jpg",
+  "text_deliverable": "assets/skill_20261112_suite/out/merge.ladder/merge_phase1.yaml",
+  "pad_used": [
+    "assets/skill_20261112_suite/refs/ref_merge.png",
+    "assets/skill_20261112_suite/refs/ref_merge_strip.png"
+  ],
+  "bg": "opaque_isolation",
+  "session": "suite_merge_ladder",
+  "chain_mode": "shop_ladder",
+  "delivery": "overview_sheet",
+  "levels": 8,
+  "notes": "关系1稿过闸；整表4轮最高9.00未过线；L8托盘已对齐，鱼眼与L5贝壳仍弱。"
+}

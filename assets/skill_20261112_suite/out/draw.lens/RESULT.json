@@ -1,0 +1,13 @@
+{
+  "route_id": "draw.lens",
+  "banner": "【按 镜头包 走了】",
+  "status": "text_only",
+  "passed_line": null,
+  "rounds": 0,
+  "scores": [],
+  "final_image": null,
+  "text_deliverable": "assets/skill_20261112_suite/out/draw.lens/LENS_PACK.md",
+  "pad_used": ["assets/skill_20261112_suite/refs/ref_life.jpg"],
+  "bg": "n/a",
+  "notes": "已交 5 套黄昏店面机位句供点选；点选前不生图。"
+}

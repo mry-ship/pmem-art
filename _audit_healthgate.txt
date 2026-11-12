@@ -1,0 +1,35 @@
+﻿======== CHECK ROUND 1 ========
+DOCTOR FAIL: coverage
+pmem 自检：C:\Users\ZhengLangPC\Desktop\Cursor-Pmem-Art
+  ✔ 配置可读；版本控制 git；作者 1002378395@qq.com；闸门 block
+  ✔ 模块 22 个、候选 1 个、大类 feature / infra
+  i 有 16 个子模块（如 feature.SkillsKit.Router）：团队成员需升级到支持父子模块的 pmem，旧版能读写已登记的子模块，但没有上级教训继承
+  ✔ 模块覆盖率 97.5%（代码文件 239，第三方/忽略 82）
+      未覆盖：（根目录）（2 个文件）
+      未覆盖：skills_kit/delivery_gates.py（1 个文件）
+      未覆盖：skills_kit/local_locks.py（1 个文件）
+  ! 空壳模块（路径匹配不到任何代码文件）：feature.SkillsKit.Draw, feature.SkillsKit.UI, feature.SkillsKit.MergeLadder.Relation, feature.SkillsKit.
+DOCTOR FAIL: compact needed
+VALIDATE FAIL exit=1 fails=1
+PYTEST OK (500 passed)
+ROUTE OK
+SCALE OK
+==== CHECK ROUND 1 HAS ISSUES ====
+======== CHECK ROUND 2 ========
+DOCTOR FAIL: coverage
+pmem 自检：C:\Users\ZhengLangPC\Desktop\Cursor-Pmem-Art
+  ✔ 配置可读；版本控制 git；作者 1002378395@qq.com；闸门 block
+  ✔ 模块 22 个、候选 1 个、大类 feature / infra
+  i 有 16 个子模块（如 feature.SkillsKit.Router）：团队成员需升级到支持父子模块的 pmem，旧版能读写已登记的子模块，但没有上级教训继承
+  ✔ 模块覆盖率 97.5%（代码文件 239，第三方/忽略 82）
+      未覆盖：（根目录）（2 个文件）
+      未覆盖：skills_kit/delivery_gates.py（1 个文件）
+      未覆盖：skills_kit/local_locks.py（1 个文件）
+  ! 空壳模块（路径匹配不到任何代码文件）：feature.SkillsKit.Draw, feature.SkillsKit.UI, feature.SkillsKit.MergeLadder.Relation, feature.SkillsKit.
+DOCTOR FAIL: compact needed
+VALIDATE FAIL exit=1 fails=1
+PYTEST OK (500 passed)
+ROUTE OK
+SCALE OK
+==== CHECK ROUND 2 HAS ISSUES ====
+NOT CLEAN YET

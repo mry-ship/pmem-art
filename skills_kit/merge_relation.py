@@ -286,6 +286,25 @@ def judge_relation_rows(
                 issues.append(
                     f"L{r.level:02d} merge_why 说不通：{r.merge_why!r}（要具体合成理由）"
                 )
+
+    # 档位清单美食摄影质感词：会盖过 surface「不是实物」禁令，成图首轮就漂写实
+    if not _photo_inventory_allowed(track):
+        allow_garnish = _gh_pad_allows_garnish(track)
+        for r in rows:
+            for field_name, text in (
+                ("silhouette", r.silhouette),
+                ("name", r.name),
+                ("parts_add", r.parts_add),
+                ("merge_why", r.merge_why),
+            ):
+                hits = photo_microdetail_hits(text, allow_garnish=allow_garnish)
+                if hits:
+                    issues.append(
+                        f"L{r.level:02d} {field_name} 含美食摄影质感词 {hits}："
+                        f"只写糖釉玩具剪影/件数/容器/完成态；"
+                        f"禁止焦斑鳞片湿润汤面感摄影级摆盘（点名写实或垫真机锁画风除外）"
+                    )
+                    break
     return (len(issues) == 0, issues)
 
 
@@ -423,12 +442,39 @@ _STYLE_OPT_OUT = (
     "皮克斯",
 )
 _MERGE_SURFACE = (
-    "休闲 merge 货柜默认气质：Gossip Harbor 玩具货柜卡通——"
-    "光泽卡通 3D、圆润厚实、无硬描边、暖饱和、柔光渐变、糖釉玩具高光、棋盘缩略一眼可认。"
-    "材质锁死为卡通玩具/糖釉道具，不是实物。"
+    "休闲 merge 货柜默认气质：Gossip Harbor 玩具货柜——"
+    "软立体糖釉道具、圆润厚实、无硬描边、暖饱和、块面高光可读、棋盘缩略一眼可认"
+    "（对标真机棋盘货的休闲图标完成度，不是美食棚拍）。"
+    "材质锁死为有体积的糖釉玩具货柜道具（柔光高光可读），不是实物，也不是哑光黏土/软塑胶 UI 图标。"
     "禁止：写实摄影、美食棚拍、产品静物、玻璃真实折射、木纹指纹、果汁乳浊摄影感、"
-    "微距毛孔、油光金属、暗沉旧塑料。"
-    "整表参考只锁格子版式，不跟参考写实表面。"
+    "微距毛孔、油光金属、暗沉旧塑料、硬镜面 CGI、硬卡通 CGI、皮克斯硬塑胶高光、"
+    "哑光黏土拟态、软塑胶 UI 图标、平面绘本贴纸风冒充货柜。"
+    "档位句只写糖釉玩具剪影/件数/容器/完成态与整块色；"
+    "禁止焦斑/烤痕/鳞片微距/湿润汤面感/柠檬片香菜末/摄影级摆盘质感词（点名写实或垫真机截图锁画风除外）。"
+    "仅格子/版式参考：只锁格子，不跟参考写实表面；玩家垫 GH 真机锁画风时跟截图货面，勿再灌本缺省句。"
+)
+
+# 档位清单里会盖过「不是实物」的美食摄影质感词（身份词如「柠檬茶」不在此列）
+_PHOTO_MICRODETAIL_HARD_RE = re.compile(
+    r"可见焦斑|焦斑|烤痕|炭烤|grill\s*marks?|"
+    r"鳞片|鱼鳞|虾须|微距|毛孔|"
+    r"湿润|汁水|汤面感|油花|乳浊感|真实表皮|"
+    r"摄影级|开胃|棚拍摆盘|精致摆盘|分区摆放|美食细节|食物摄影|"
+    r"appetizing|photoreal|food[\s-]?photo",
+    re.I,
+)
+# 真机 GH 海鲜/茶档常见配菜词：无真机垫图时仍拦，避免纯文漂美食棚拍
+_PHOTO_MICRODETAIL_GARNISH_RE = re.compile(
+    r"柠檬片|柠檬角|香菜末|欧芹",
+    re.I,
+)
+_PHOTO_MICRODETAIL_RE = re.compile(
+    _PHOTO_MICRODETAIL_HARD_RE.pattern + r"|" + _PHOTO_MICRODETAIL_GARNISH_RE.pattern,
+    re.I,
+)
+_GH_PAD_SURFACE_RE = re.compile(
+    r"真机|截图锁|垫GH|垫Gossip|跟参考棋盘货|assets/refs/gossip_harbor|锁画风",
+    re.I,
 )
 # 邻档框高差小于此值时只出提示（竞品本身常不单调放大）。
 OVERVIEW_MIN_STEP = 0.04
@@ -441,14 +487,63 @@ def player_named_style(*texts: str) -> bool:
     return any(word in blob for word in _STYLE_OPT_OUT)
 
 
+def photo_microdetail_hits(text: str, *, allow_garnish: bool = False) -> list[str]:
+    """返回档位句里命中的美食摄影质感词（去重保序）。
+
+    allow_garnish=True（垫 GH 真机锁画风）时不拦柠檬片等真机常见配菜词，仍拦焦斑鳞片微距。
+    """
+    found: list[str] = []
+    for m in _PHOTO_MICRODETAIL_HARD_RE.finditer(str(text or "")):
+        tok = m.group(0)
+        if tok not in found:
+            found.append(tok)
+    if not allow_garnish:
+        for m in _PHOTO_MICRODETAIL_GARNISH_RE.finditer(str(text or "")):
+            tok = m.group(0)
+            if tok not in found:
+                found.append(tok)
+    return found
+
+
+def _photo_inventory_allowed(track: dict[str, Any] | None) -> bool:
+    """仅当关系稿 surface 点名写实/摄影且未写禁写实时，才放行摄影质感档位词。"""
+    track = track or {}
+    if track.get("allow_photo_detail") in (True, "true", "True", 1, "1"):
+        return True
+    blob = " ".join(
+        str(track.get(k) or "")
+        for k in ("surface", "style", "named_style", "commercial_vibe")
+    )
+    if re.search(r"禁.{0,8}写实|禁止写实|勿写实|禁美食棚拍|禁止美食棚拍", blob):
+        return False
+    return any(w in blob for w in ("写实", "照片", "摄影", "产品静物"))
+
+
+def _gh_pad_allows_garnish(track: dict[str, Any] | None) -> bool:
+    """垫 GH 真机/截图锁画风时，柠檬等配菜词跟真机货面，不按纯文美食吸力拦。"""
+    track = track or {}
+    blob = " ".join(
+        str(track.get(k) or "")
+        for k in ("surface", "style", "named_style", "commercial_vibe", "commercial_ref")
+    )
+    return bool(_GH_PAD_SURFACE_RE.search(blob))
+
+
 def _has_full_merge_surface_lock(blob: str) -> bool:
-    """完整默认锁已在文中：须含材质锁死 + 禁写实硬句，不能只靠「棋盘缩略」等零散词。"""
+    """完整默认锁已在文中：须含材质锁死 + 禁写实硬句 + 档位句禁摄影质感，不能只靠零散词。"""
     text = str(blob or "")
     if "材质锁死" not in text:
         return False
     if "写实摄影" not in text and "美食棚拍" not in text:
         return False
-    return "卡通玩具" in text or "糖釉" in text or "玻璃真实折射" in text
+    if "档位句" not in text and "焦斑" not in text:
+        return False
+    return (
+        "手绘糖釉" in text
+        or "卡通玩具" in text
+        or "糖釉" in text
+        or "玻璃真实折射" in text
+    )
 
 
 def merge_surface_lock_line(goal: str = "", prompt: str = "") -> str:

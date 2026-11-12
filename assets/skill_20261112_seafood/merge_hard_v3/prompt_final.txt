@@ -1,0 +1,10 @@
+chain_mode=shop_ladder。垫图锁画风：跟 Gossip Harbor 真机棋盘货（龙虾冰碗/生蚝盘）同一套高饱和圆润块面高光休闲图标；每格单件居中非场景。家族=海边硬料海鲜店，珊瑚红+奶油白+海沫青。
+L1 小银鱼货柜件 evolve=SmallFish
+L2 双鱼盘 evolve=FishPlate merge_why=两尾小鱼放上同一浅盘成一件
+L3 熟制鱼盘 evolve=PreparedFish merge_why=双鱼合成一条熟制整鱼剪影
+L4 海鲜碗 evolve=SeafoodBowl merge_why=熟鱼换成碗装虾鱼块件数
+L5 海鲜拼盘 evolve=Platter merge_why=碗换成椭圆盘蟹虾贝三大色块
+L6 龙虾菜 evolve=LobsterDish merge_why=拼盘浓缩成整只龙虾盘
+L7 龙虾大餐 evolve=Feast merge_why=更大盘龙虾大餐可加冰块色块
+L8 盛宴托盘 evolve=TraySet merge_why=两份菜放上同一浅托盘一件货
+一眼失败：抄HUD全棋盘、大角色眼、木纹托盘、写实棚拍。浅奶油4x2竖屏无字无脸。

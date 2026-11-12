@@ -1,0 +1,14 @@
+❌ [合理性闸 · ui] 未通过
+  ✓ subject_action（主体在做什么/交付物是什么）
+  ✓ element_budget（元素预算（不堆景不过载））
+  ✓ hard_locks（硬锁（画幅/透明底/无字/机位等））
+  ✓ fail_at_glance（一眼失败条件已写明）
+  ✓ layout_zones（界面分区清楚）
+  ✓ no_content_clutter（内容区不塞插画杂物）
+  ✓ chrome_not_illustration（控件壳来自 UI 规格，禁止叙事插画当垫图母版）
+  ✓ cta_clear_of_faces（主 CTA 不遮脸/不压主角五官）
+  ✓ control_craft（按钮/顶栏工艺（描边、体积、投影、字重））
+  · ui 缺控件工艺：修订句须写顶栏/主按钮等分区，并写清描边/体积/投影/字重（对标商业休闲 HUD，不是插画海报）
+  · ui 缺 CTA 避脸：修订句须写主按钮不遮脸/不压主角五官
+请按未过项改 revised / checklist 后重跑 review，禁止跳过直接 generate。
+已写入会话（passed=false）；generate 仍会被拦截，请按未过项改 revised/checklist 后重跑 review。

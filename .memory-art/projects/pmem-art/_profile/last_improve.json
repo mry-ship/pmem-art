@@ -1,8 +1,8 @@
 {
-  "ran_at": "2026-11-11 00:23:40 UTC+8",
+  "ran_at": "2026-11-12 22:47:27 UTC+8",
   "reflections_scanned": 20,
-  "avg_winner_score": 8.96,
-  "avg_rounds": 3.85,
+  "avg_winner_score": 9.17,
+  "avg_rounds": 3.7,
   "top_recurring_defects": [
     {
       "text": "L2仍约0.68过大未到0.48；L3约0.68与L2几乎同高；L4-L7仍扎堆0.66-0.72未拉开到0.64/0.",
@@ -17,24 +17,24 @@
       "count": 2
     },
     {
-      "text": "L3嘴仍与L2几乎同长，未见1.7-2倍长管；L1到L8框高仍贴满白卡，阶梯0.40→0.96未拉开；L2/L3剪影双胞",
-      "count": 2
+      "text": "平视半身，人约占画面六成，主光左侧黄昏暖金。店招仍有清晰可读 Brimwave Café 美术字；皮肤与围裙高光仍偏皮克",
+      "count": 1
     },
     {
-      "text": "框高阶梯仍偏贴满，L1未缩到约0.40、邻档体量差不足；L6偏扁卷管缺少清晰卷盘盘面；需确认L2尖嘴仍无多孔莲蓬；邻档体",
-      "count": 2
+      "text": "平视半身，人约占画面六成，主光左侧黄昏。前景桌面多出龙虾与蚝盘，货柜海鲜道具闯进 Key Art；地面棋盘格与样张/货柜",
+      "count": 1
     },
     {
-      "text": "L3嘴相对L2仅略长回退，不如第3轮；框高仍贴满白卡，0.40→0.96阶梯未拉开；邻档体量差不足；邻档体量几乎一样大：",
-      "count": 2
+      "text": "平视半身，人约占画面六成，主光左侧黄昏。皮肤与围裙高光仍略偏皮克斯硬塑；店招若仍有细字可读性偏高；指节分界一般。；点名锁",
+      "count": 1
     },
     {
-      "text": "版式崩成约9件且底中多一件；L2已带莲蓬过早；L2-L5几乎同壶双胞胎；链形变丢失；不是干净4x2八格合同；prompt",
-      "count": 2
+      "text": "开态状态机未完成：左上屋顶仍破露木架缺瓦，尚未完全完工；需完整屋顶墙面无破洞无雨桶；点名锁未单独验收：开关态状态机合理",
+      "count": 1
     },
     {
-      "text": "L8仍是立式卷盘加轮并顶上喷头，不是干净的旋转喷灌一体机；L2与L3嘴长差偏弱；邻档主体框高仍偏平；L7与L8体量未拉开",
-      "count": 2
+      "text": "屋顶破洞与雨丝略密，桶影可再清晰，但不挡关态半装修可读；点名锁未单独验收：锁：结构图3/4高角度卧室机位；床左壁炉右转角",
+      "count": 1
     }
   ],
   "recipe_strengthen": [
@@ -42,6 +42,18 @@
       "module": "icon.AppIcon",
       "id": "CHAT20261102191444751RECIPE",
       "summary": "[收敛胜出 9.64分] STUNNING 1024 Christmas App Icon remake: same ging — 惊艳点到位：冰晶碎玻璃+体积暴雪+冷暖硬切+呵气泪光；窗台无",
+      "hint": "下次 warm-start 优先注入本条 recipe"
+    },
+    {
+      "module": "brand.WorldStyle",
+      "id": "CHAT20261112223931857RECIPE",
+      "summary": "[收敛胜出 9.61分] 用这份参考做多图分工：identity=ref_life.jpg structure=ref_ui_ — 结构图3/4高角度卧室机位已守住；床左壁炉右转角侧壁宽度已守",
+      "hint": "下次 warm-start 优先注入本条 recipe"
+    },
+    {
+      "module": "brand.WorldStyle",
+      "id": "CHAT20261112224418481RECIPE",
+      "summary": "[收敛胜出 9.61分] 用这份参考接着做多图分工开态/完工：只改装修完成度，锁机位身份与转角侧壁；垫上一态关态交件 clos — 结构图3/4高角度卧室机位已守住；床左壁炉右转角侧壁宽度已守",
       "hint": "下次 warm-start 优先注入本条 recipe"
     },
     {
@@ -72,18 +84,6 @@
       "module": "prop.BuildingsMerge.Cute",
       "id": "CHAT20261105142754728RECIPE",
       "summary": "[收敛胜出 9.56分] 建筑同店合成梯 shop_ladder L1-L8 per_cell：木棚屋→木屋→砖瓦小屋→双层小 — 家族色统一；邻档剪影可读；黑底单件；城堡吊桥角楼辨识强",
-      "hint": "下次 warm-start 优先注入本条 recipe"
-    },
-    {
-      "module": "art.BatteryRerun",
-      "id": "CHAT20261103201554553RECIPE",
-      "summary": "[收敛胜出 9.54分] 锁风验证：01_style画风克隆成全新木桥溪流茶会小景，禁止贴样张构图 — 新题材锁风验证成立；未贴样张屋船构图",
-      "hint": "下次 warm-start 优先注入本条 recipe"
-    },
-    {
-      "module": "art.BatteryRerun",
-      "id": "CHAT20261103202204338RECIPE",
-      "summary": "[收敛胜出 9.54分] 普通图：04蘑菇奶酪道具黑底 — 黑底静物机位锁；黏土统一",
       "hint": "下次 warm-start 优先注入本条 recipe"
     }
   ],

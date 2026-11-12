@@ -20,6 +20,18 @@ from .image_gates import (
     resolve_case_config,
 )
 
+def _is_style_surface_strip(path: Path, *, width: int = 0, height: int = 0) -> bool:
+    """横条货条/风格条：只锁画风，不锁交付画幅。"""
+    name = (path.name or "").lower()
+    if "_strip" in name or "food_strip" in name or "seafood_food_strip" in name:
+        return True
+    w, h = int(width or 0), int(height or 0)
+    if w > 0 and h > 0 and (w / max(h, 1)) >= 2.4:
+        # 极宽货条（如 1330×405）即无 strip 后缀也只当画风垫
+        return True
+    return False
+
+
 def ensure_aspect_matched_ref(src: Path, aspect: str) -> Path:
     """同方向加边成一张垫图。竖图不能填成横画布，横图也不能填成竖画布。"""
     from PIL import Image
@@ -37,6 +49,7 @@ def ensure_aspect_matched_ref(src: Path, aspect: str) -> Path:
         raise ValueError(
             f"垫图是 {w}x{h}，不能加边填成 {aspect}。交付画幅跟垫图方向："
             "竖屏用 9:16 或 3:4，横屏用 16:9 或 4:3。"
+            "横条货条只锁画风时请保留交付 aspect，校验会自动跳过几何加边。"
         )
     if (w / h) > target:
         new_w, new_h = w, max(h, int(round(w / target)))
@@ -143,6 +156,7 @@ def validate_case_generation_params(
         resolved_refs.append(p_cand.resolve())
 
     warnings: list[str] = []
+    style_surface_only = False
     primary_traits = _inspect_image_physical_traits(resolved_refs[0])
 
     if case_cfg is not None:
@@ -220,17 +234,46 @@ def validate_case_generation_params(
             )
         w, h = int(primary_traits.get("width") or 0), int(primary_traits.get("height") or 0)
         ref_rel = _aspect_relation(w, h, actual_ar) if w > 0 and h > 0 else {"hard_fail": False}
+        style_surface_only = False
         if ref_rel.get("hard_fail") and resolved_refs:
-            padded = ensure_aspect_matched_ref(resolved_refs[0], actual_ar)
-            if padded != resolved_refs[0] and padded.is_file():
-                resolved_refs[0] = padded
-                primary_traits = _inspect_image_physical_traits(padded)
-                w, h = int(primary_traits.get("width") or 0), int(primary_traits.get("height") or 0)
-                ref_rel = _aspect_relation(w, h, actual_ar) if w > 0 and h > 0 else {"hard_fail": False}
+            # 多垫图时优先把方向匹配的提到主垫，横条货条留给画风
+            promoted = False
+            for i in range(1, len(resolved_refs)):
+                alt = resolved_refs[i]
+                alt_t = _inspect_image_physical_traits(alt)
+                aw, ah = int(alt_t.get("width") or 0), int(alt_t.get("height") or 0)
+                alt_rel = _aspect_relation(aw, ah, actual_ar) if aw > 0 and ah > 0 else {"hard_fail": True}
+                if not alt_rel.get("hard_fail"):
+                    resolved_refs[0], resolved_refs[i] = resolved_refs[i], resolved_refs[0]
+                    primary_traits = alt_t
+                    w, h = aw, ah
+                    ref_rel = alt_rel
+                    promoted = True
+                    warnings.append(
+                        f"主垫改为方向匹配的 '{alt.name}'；原主垫改作画风参考。"
+                    )
+                    break
+            if not promoted and _is_style_surface_strip(resolved_refs[0], width=w, height=h):
+                style_surface_only = True
                 warnings.append(
-                    f"参考图已加边为同一张垫图 '{padded.name}'，会话和生图都用这一张，不要再垫原图。"
+                    f"'{resolved_refs[0].name}' 是横条货条/风格条，只锁画风不锁画幅；"
+                    f"本趟按 aspect_ratio={actual_ar} 出图，不强制几何加边。"
                 )
-        if ref_rel.get("hard_fail"):
+                ref_rel = {"hard_fail": False, "rel_diff": float(ref_rel.get("rel_diff") or 0), "simplified": ref_rel.get("simplified")}
+            elif not promoted:
+                try:
+                    padded = ensure_aspect_matched_ref(resolved_refs[0], actual_ar)
+                except ValueError:
+                    raise
+                if padded != resolved_refs[0] and padded.is_file():
+                    resolved_refs[0] = padded
+                    primary_traits = _inspect_image_physical_traits(padded)
+                    w, h = int(primary_traits.get("width") or 0), int(primary_traits.get("height") or 0)
+                    ref_rel = _aspect_relation(w, h, actual_ar) if w > 0 and h > 0 else {"hard_fail": False}
+                    warnings.append(
+                        f"参考图已加边为同一张垫图 '{padded.name}'，会话和生图都用这一张，不要再垫原图。"
+                    )
+        if ref_rel.get("hard_fail") and not style_surface_only:
             raise ValueError(
                 f"[{case_label}] Parameter 'aspect_ratio' mismatch against reference image '{resolved_refs[0].name}': "
                 f"expected '{actual_ar}', got {w}x{h} ({ref_rel.get('simplified')}, {ref_rel.get('rel_diff', 0) * 100:.1f}%). "
@@ -263,8 +306,9 @@ def validate_case_generation_params(
         "ref_aspect_ratio": case_cfg["aspect_ratio"] if case_cfg else (primary_traits.get("canonical_aspect_ratio") or resolved_ar),
         "reference_image": str(resolved_refs[0]),
         "reference_image_paths": [str(p) for p in resolved_refs],
-        "matched_ref_aspect_ratio": True,
-        "matched_ref_pad_image": True,
+        "matched_ref_aspect_ratio": (not style_surface_only),
+        "matched_ref_pad_image": (not style_surface_only),
+        "style_surface_only": bool(style_surface_only),
         "reference_traits": primary_traits,
         "warnings": warnings,
     }

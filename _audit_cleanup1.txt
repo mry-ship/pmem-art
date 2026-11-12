@@ -1,0 +1,19 @@
+﻿{
+  "ok": true,
+  "module": "feature.SkillsKit.MergeLadder.Relation",
+  "items": [
+    {
+      "module": "feature.SkillsKit.MergeLadder.Relation",
+      "id": "01M6M01N6M840GGPT28C5P6SDV",
+      "entity": "MergeChainMode",
+      "kind": "feature",
+      "date": "2026-11-05",
+      "author": "yanghu",
+      "stale": false,
+      "summary": "糖果链默认 shop_ladder 同族形变；same_object 仅同模加装",
+      "content": "需求来源：用户判定 same_object 叠零件不像商业 merge。必须保持：\n  1)糖果/甜品包装升级默认 shop_ladder（家族基因+evolve_to+merge_why）；\n  2)same_object 仅焊零件且禁礼盒奖杯换货主语；\n  3)skill_specs 写清商业验点；\n  4)1105c merge/phase1.yaml 固定 shop_ladder。\n入口：skill_specs/pmem-merge-ladder/assets/skill_full_run_1105c/merge/phase1.yaml",
+      "verify": "python3 -m pytest tests/test_merge_relation.py tests/test_reasonableness_gate.py -q",
+      "applies": "跑 /pmem-merge-ladder 或糖果合成梯电池时"
+    }
+  ]
+}

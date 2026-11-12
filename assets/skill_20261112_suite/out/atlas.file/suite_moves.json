@@ -1,0 +1,417 @@
+﻿[
+    {
+        "from":  "assets/skill_20261112_suite/refs/ref_appicon.jpg",
+        "to":  "assets//ui//ref//ref_appicon.jpg",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/refs/ref_appicon_dl.jpg",
+        "to":  "assets//ui//ref//ref_appicon_dl.jpg",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/refs/ref_life.jpg",
+        "to":  "assets//ui//ref//ref_life.jpg",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/refs/ref_life__ar_3x4.png",
+        "to":  "assets//ui//ref//ref_life__ar_3x4.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/refs/ref_life__ar_9x16.png",
+        "to":  "assets//ui//ref//ref_life__ar_9x16.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/refs/ref_merge.png",
+        "to":  "assets//ui//ref//ref_merge.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/refs/ref_merge_dl.jpg",
+        "to":  "assets//ui//ref//ref_merge_dl.jpg",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/refs/ref_merge_strip.png",
+        "to":  "assets//ui//ref//ref_merge_strip.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/refs/ref_merge_strip__ar_16x9.png",
+        "to":  "assets//ui//ref//ref_merge_strip__ar_16x9.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/refs/ref_story.jpg",
+        "to":  "assets//ui//ref//ref_story.jpg",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/refs/ref_story__ar_9x16.png",
+        "to":  "assets//ui//ref//ref_story__ar_9x16.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/refs/ref_ui.png",
+        "to":  "assets//ui//ref//ref_ui.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/refs/ref_ui_dl.jpg",
+        "to":  "assets//ui//ref//ref_ui_dl.jpg",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/refs/ref_ui_renovate_dl.jpg",
+        "to":  "assets//ui//ref//ref_ui_renovate_dl.jpg",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/draw.clone/final.jpg",
+        "to":  "assets//ui//draw.clone//final.jpg",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/draw.clone/r1.jpg",
+        "to":  "assets//ui//r1//r1.jpg",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/draw.clone/r2.jpg",
+        "to":  "assets//ui//r2//r2.jpg",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/draw.clone/r3.jpg",
+        "to":  "assets//ui//r3//r3.jpg",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/draw.clone/r4.jpg",
+        "to":  "assets//ui//r4//r4.jpg",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/draw.key/final.png",
+        "to":  "assets//ui//draw.key//final.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/draw.key/r1.jpg",
+        "to":  "assets//ui//r1//r1.jpg",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/draw.key/r1.png",
+        "to":  "assets//ui//r1//r1.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/draw.key/r2.jpg",
+        "to":  "assets//ui//r2//r2.jpg",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/draw.key/r2.png",
+        "to":  "assets//ui//r2//r2.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/draw.key/r3.jpg",
+        "to":  "assets//ui//r3//r3.jpg",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/draw.key/r3.png",
+        "to":  "assets//ui//r3//r3.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/draw.key/r4.jpg",
+        "to":  "assets//ui//r4//r4.jpg",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/draw.key/r4.png",
+        "to":  "assets//ui//r4//r4.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/draw.multi/closed_final.png",
+        "to":  "assets//ui//closed//closed_final.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/draw.multi/closed_r1.png",
+        "to":  "assets//ui//closed//closed_r1.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/draw.multi/closed_r2.png",
+        "to":  "assets//ui//closed//closed_r2.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/draw.multi/closed_r3.png",
+        "to":  "assets//ui//closed//closed_r3.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/draw.multi/final.png",
+        "to":  "assets//ui//draw.multi//final.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/draw.multi/open_final.png",
+        "to":  "assets//ui//open//open_final.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/draw.multi/open_r1.png",
+        "to":  "assets//ui//open//open_r1.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/draw.multi/open_r2.png",
+        "to":  "assets//ui//open//open_r2.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/draw.ordinary/final.png",
+        "to":  "assets//ui//draw.ordinary//final.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/draw.ordinary/r1.jpg",
+        "to":  "assets//ui//r1//r1.jpg",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/draw.ordinary/r1.png",
+        "to":  "assets//ui//r1//r1.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/draw.ordinary/r2.jpg",
+        "to":  "assets//ui//r2//r2.jpg",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/draw.ordinary/r2.png",
+        "to":  "assets//ui//r2//r2.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/draw.ordinary/r3.jpg",
+        "to":  "assets//ui//r3//r3.jpg",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/draw.ordinary/r3.png",
+        "to":  "assets//ui//r3//r3.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/draw.ordinary/r4.jpg",
+        "to":  "assets//ui//r4//r4.jpg",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/draw.ordinary/r4.png",
+        "to":  "assets//ui//r4//r4.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/draw.variant/final.png",
+        "to":  "assets//ui//draw.variant//final.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/draw.variant/r1.png",
+        "to":  "assets//ui//r1//r1.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/draw.variant/r2.png",
+        "to":  "assets//ui//r2//r2.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/draw.variant/r3.png",
+        "to":  "assets//ui//r3//r3.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/draw.variant/r4.png",
+        "to":  "assets//ui//r4//r4.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/icon.a/final.jpg",
+        "to":  "assets//ui//icon.a//final.jpg",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/icon.a/icon_1024.png",
+        "to":  "assets//ui//1024//icon_1024.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/icon.a/icon_120.png",
+        "to":  "assets//ui//120//icon_120.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/icon.a/icon_167.png",
+        "to":  "assets//ui//167//icon_167.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/icon.a/icon_180.png",
+        "to":  "assets//ui//180//icon_180.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/icon.a/icon_192.png",
+        "to":  "assets//ui//192//icon_192.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/icon.a/icon_29.png",
+        "to":  "assets//ui//29//icon_29.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/icon.a/icon_512.png",
+        "to":  "assets//ui//512//icon_512.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/icon.a/icon_60.png",
+        "to":  "assets//ui//60//icon_60.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/icon.a/r1.jpg",
+        "to":  "assets//ui//r1//r1.jpg",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/icon.a/r2.jpg",
+        "to":  "assets//ui//r2//r2.jpg",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/icon.a/r3.jpg",
+        "to":  "assets//ui//r3//r3.jpg",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/icon.a/r4.jpg",
+        "to":  "assets//ui//r4//r4.jpg",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/icon.b/preview-sheet.jpg",
+        "to":  "assets//ui//preview//preview-sheet.jpg",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/icon.c/final.jpg",
+        "to":  "assets//ui//icon.c//final.jpg",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/icon.c/r1.jpg",
+        "to":  "assets//ui//r1//r1.jpg",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/icon.c/r2.jpg",
+        "to":  "assets//ui//r2//r2.jpg",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/icon.c/r3.jpg",
+        "to":  "assets//ui//r3//r3.jpg",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/icon.c/r4.jpg",
+        "to":  "assets//ui//r4//r4.jpg",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/merge.ladder/final.jpg",
+        "to":  "assets//ui//merge.ladder//final.jpg",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/merge.ladder/r1.jpg",
+        "to":  "assets//ui//r1//r1.jpg",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/merge.ladder/r2.jpg",
+        "to":  "assets//ui//r2//r2.jpg",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/merge.ladder/r3.jpg",
+        "to":  "assets//ui//r3//r3.jpg",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/merge.ladder/r4.jpg",
+        "to":  "assets//ui//r4//r4.jpg",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/ui.kit/final.png",
+        "to":  "assets//ui//ui.kit//final.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/ui.kit/r1.jpg",
+        "to":  "assets//ui//r1//r1.jpg",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/ui.kit/r1.png",
+        "to":  "assets//ui//r1//r1.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/ui.kit/r2.jpg",
+        "to":  "assets//ui//r2//r2.jpg",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/ui.kit/r2.png",
+        "to":  "assets//ui//r2//r2.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/ui.kit/r3.jpg",
+        "to":  "assets//ui//r3//r3.jpg",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/ui.kit/r3.png",
+        "to":  "assets//ui//r3//r3.png",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/ui.kit/r4.jpg",
+        "to":  "assets//ui//r4//r4.jpg",
+        "module":  null
+    },
+    {
+        "from":  "assets/skill_20261112_suite/out/ui.kit/r4.png",
+        "to":  "assets//ui//r4//r4.png",
+        "module":  null
+    }
+]

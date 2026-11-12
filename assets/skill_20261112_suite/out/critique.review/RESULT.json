@@ -1,0 +1,33 @@
+{
+  "route_id": "critique.review",
+  "banner": "【按 只审图 走了】",
+  "status": "text_only",
+  "passed_line": null,
+  "rounds": 0,
+  "scores": [],
+  "final_image": null,
+  "text_deliverable": "assets/skill_20261112_suite/out/critique.review/CRITIQUE.md",
+  "pad_used": [
+    "assets/skill_20261112_suite/out/merge.ladder/final.jpg",
+    "assets/skill_20261112_suite/refs/ref_merge.png"
+  ],
+  "bg": "n/a",
+  "notes": "外审 merge.ladder final.jpg：六维调和 8.52；交付门闭环 9.00 未过线；未新写红线。",
+  "asset": "assets/skill_20261112_suite/out/merge.ladder/final.jpg",
+  "scale": "external",
+  "delivery_gate_applies": true,
+  "delivery_gate_score": 9.0,
+  "delivery_gate_passed": false,
+  "critique_scores": {
+    "构图": 8.9,
+    "光影": 8.7,
+    "透视": 8.8,
+    "质感": 8.4,
+    "风格": 8.5,
+    "无瑕疵": 7.9
+  },
+  "harmonic_score": 8.52,
+  "rubric_mode": "general_6d",
+  "redline_written": false,
+  "module": "merge.BrimwaveSeafoodPlatter"
+}

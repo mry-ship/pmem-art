@@ -1,0 +1,19 @@
+﻿{
+  "route_id": "icon.a",
+  "banner": "【按 Mode A 走了】",
+  "status": "partial",
+  "passed_line": false,
+  "rounds": 4,
+  "scores": [
+    {"round": 1, "total": 7.8},
+    {"round": 2, "total": 9.35},
+    {"round": 3, "total": 9.45},
+    {"round": 4, "total": 9.45}
+  ],
+  "final_image": "assets/skill_20261112_suite/out/icon.a/r4.jpg",
+  "text_deliverable": null,
+  "pad_used": ["assets/skill_20261112_suite/refs/ref_appicon_dl.jpg"],
+  "bg": "n/a",
+  "session": "suite_icon_a",
+  "notes": "Light 母版满4轮最高9.45未过线；浪形锐度压分；Dark/Tinted未做。"
+}

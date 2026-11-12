@@ -9,7 +9,7 @@ aliases:
   - merge mansion
   - evermerge
   - travel town
-surface: 默认钉 Gossip Harbor 货柜：光泽卡通 3D、圆润厚实、无硬描边、暖饱和、柔光渐变、道具干净发亮、棋盘缩略可认（Travel Town 只作链型档序旁证，不改这套渲染）
+surface: 默认钉 Gossip Harbor 玩具货柜：软立体糖釉玩具货柜、圆润厚实、无硬描边、暖饱和、柔光糖釉、棋盘缩略可认；禁硬镜面CGI/皮克斯硬塑/哑光黏土软塑胶UI（Travel Town 只作链型档序旁证，不改这套渲染）
 layout_notes: 每格一件居中；邻档靠剪影/件数/容器/完成态可分（体量可持平）；浅色圆角卡；家族=店域/色相（非纹样贯穿）
 ladder_levels:
   - L1 朴素完整小件 SKU

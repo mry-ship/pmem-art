@@ -1,0 +1,14 @@
+{
+  "saved_at": 1794492695.583326,
+  "text": "/pmem-draw 克隆：锁参考画风换新题材港湾肉桂卷面包塔静物 9:16",
+  "banner": "【按 克隆 走了】",
+  "route_ids": [
+    "draw.clone"
+  ],
+  "mode": "skill",
+  "execute_ok": true,
+  "artist_say": "【按 克隆 走了】\n按克隆：锁参考画风，换成新题材。",
+  "plan_conflict": false,
+  "confidence": "high",
+  "conversation_id": "suite_clone"
+}

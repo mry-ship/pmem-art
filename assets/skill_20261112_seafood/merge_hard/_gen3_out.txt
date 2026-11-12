@@ -1,0 +1,13 @@
+﻿py : usage: pmem-art [-h] [--root ROOT] [--version]
+所在位置 行:8 字符: 1
++ py -3 -u pmem_art.py converge generate --id merge_seafood_hard_202611 ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (usage: pmem-art...OT] [--version]:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+                {init,bootstrap,sync,candidates,accept,place,classify,ingest,classify-watch,list,search,validate,doctor
+,hygiene,atlas,reveal,feedback,note,ref-read,merge,skills,benchmark,route,showcase-gate,reasonableness,check-scale-gate
+s,vlm-judge,converge,contract,improve,progress,taste,coach,learn,hook}
+                ...
+pmem-art: error: unrecognized arguments: --asset assets/skill_20261112_seafood/merge_hard/sheet_r3.jpg --prompt-file as
+sets/skill_20261112_seafood/merge_hard/prompt_r3.txt

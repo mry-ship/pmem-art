@@ -1,0 +1,147 @@
+﻿{
+  "ok": true,
+  "module": null,
+  "items": [
+    {
+      "module": "infra.Cli",
+      "id": "01M7345BFWQYKHWFAZKMYMHHFN",
+      "entity": "GenerateHook",
+      "kind": "feature",
+      "date": "2026-11-11",
+      "author": "1002378395@qq.com",
+      "stale": false,
+      "summary": "GenerateImage pre-gen 默认关闭；install 不再装回",
+      "content": "需求来源：对照试验确认 pre-gen 灌 Warm-Start 会污染 GenerateImage 提示词；玩家要求默认关掉且 install 不得装回。\n必须保持：ensure_cursor_stubs 的 art preToolUse 默认不含 pmem_art.py hook pre-gen；\n刷新 hooks 会去掉旧 pre-gen 条目。\ncmd_hook(pre-gen) 即使被手工挂上，默认也不写 updated_input，除非环境变量 PMEM_ART_PRE_GEN_INJECT=1；\nmerge.* 额外硬跳过。\nconverge generate 仍并入已过滤 Warm-Start pack。\npost-asset / stop / art_shell 照常。\n入口：lifecycle.ensure_cursor_stubs；pmem_art.py hook pre-gen。",
+      "verify": "unittest tests.test_cursor_hooks_stubs tests.test_auto_recall.TestHookInjectsGenerateImage.test_pre_gen_inject_off_by_default；.cursor/hooks.json preToolUse 无 hook pre-gen",
+      "applies": "Cursor GenerateImage 出图；skills --install / ensure_cursor_stubs 刷新 hooks 时"
+    },
+    {
+      "module": "infra.Cli",
+      "id": "01M735H9Z3MT3M2RXC9V2B9C5D",
+      "entity": "GenerateHook",
+      "kind": "correction",
+      "date": "2026-11-11",
+      "author": "1002378395@qq.com",
+      "stale": false,
+      "summary": "pre-gen 默认不灌 Warm-Start；显式开关才并入",
+      "content": "旧结论要求 pre-gen 必须用 updated_input 灌 Warm-Start。\n对照试验后改为：hooks 默认不挂 pre-gen；即使手工挂上，cmd_hook 也默认不写 updated_input，除非 PMEM_ART_PRE_GEN_INJECT=1。\n记忆并入改走 converge generate（已过滤 pack）。failClosed=false 若恢复挂载时仍成立。",
+      "verify": "未设 PMEM_ART_PRE_GEN_INJECT 时 unittest test_pre_gen_inject_off_by_default 通过",
+      "applies": "Cursor preToolUse 触发 pmem_art.py hook pre-gen 时"
+    },
+    {
+      "module": "infra.Scripts",
+      "id": "01M6RF4T5BA6ZG3TW1DXYQNKYC",
+      "entity": "PackUserZip",
+      "kind": "correction",
+      "date": "2026-11-06",
+      "author": "1002378395@qq.com",
+      "stale": true,
+      "summary": "用户包不带 art-atlas.html，无瑕度写在 build_atlas.py",
+      "content": "旧结论认为用户 zip 里要有一份 art-atlas.html，且其中第六维为无瑕度。\n这条对 HTML 文件不成立。art-atlas.html 是各项目 atlas 现生成的，仓库 gitignore；pack 若照单打包磁盘已有文件，干净树会漏，本机有画廊又会泄。\n现必须跳过该文件。无瑕度标签仍在 build_atlas.py，解压后跑 pmem_art.py atlas 才会得到工作台页。\n0.16.2 的「完成度」误标仍只针对生成器源码，不靠预置 HTML。",
+      "verify": "python -m unittest tests.test_pack_pmem_art -v 的 zip 无 art-atlas.html，且 build_atlas.py 含 flawlessness 无瑕度",
+      "applies": "给新项目分发用户 zip 并打开工作台",
+      "check": [
+        "scripts/pack_pmem_art.py 中 should_skip 在 2026-11-06 之后改过"
+      ]
+    },
+    {
+      "module": "infra.Scripts",
+      "id": "01M6RG0256SXFM1QHE4Z4HCKRW",
+      "entity": "PackUserZip",
+      "kind": "feature",
+      "date": "2026-11-06",
+      "author": "1002378395@qq.com",
+      "stale": true,
+      "summary": "用户包不带画廊、工作树和根目录探针",
+      "content": "需求来源：画廊 HTML 是各项目 atlas 现生成的；Claude 工作树是整仓副本；仓库根上划线开头的是本地探针。这三类都不能进用户包。\n必须保持：scripts/pack_pmem_art.py 的 should_skip 跳过 art-atlas.html、路径中的 worktrees、以及仓库根上以划线开头的文件。\ntests/test_pack_pmem_art 断言 zip 内没有这些。\n第六维「无瑕度」仍只查 build_atlas.py。\n安装后由 pmem_art.py atlas 现生成工作台。\n适用条件：给美术用户打 zip 时。\n入口：python scripts/pack_pmem_art.py。",
+      "verify": "python -m unittest tests.test_pack_pmem_art -v",
+      "applies": "给美术用户分发 pmem-art 时",
+      "check": [
+        "scripts/pack_pmem_art.py 中 should_skip 在 2026-11-06 之后改过"
+      ]
+    },
+    {
+      "module": "infra.Cli",
+      "id": "01M6K4NWZBRSDXD9Q9GEFNBCPF",
+      "entity": "CursorHooks",
+      "kind": "exclusion",
+      "date": "2026-11-04",
+      "author": "1002378395@qq.com",
+      "stale": true,
+      "summary": "消黑框禁止删 stop hook，改用 pyw",
+      "content": "现象：用户包装到别的项目后，GenerateImage 出图了但对话不会自动续跑审图（「图不会自动进控制台」）。\n根因：为消 Windows 黑框，把 hooks.json 的 stop 整段删掉；技能依赖 stop 的 followup_message 把闭环拉回对话。\n排除：消黑框时删掉 stop；或用会弹框的 || / .cmd 回退链。\n正确做法：pre/post 仍只绑 GenerateImage；stop 必须保留；Windows 用 pyw -3 -u（无黑框、系统路径稳）。",
+      "verify": "python -m unittest tests.test_cursor_hooks_stubs -q；.cursor/hooks.json 含 stop 且无 ||",
+      "applies": "Windows Cursor 装 pmem-art 用户包后出图闭环",
+      "scope": "project",
+      "check": [
+        ".cursor/hooks.json 于 2026-11-11 改过",
+        "lifecycle.py 中 ensure_cursor_stubs 在 2026-11-05 之后改过",
+        "lifecycle.py 中 _hook_python_prefix 在 2026-11-05 之后改过"
+      ],
+      "verified": "2026-11-05"
+    },
+    {
+      "module": "infra.Cli",
+      "id": "01M6N6REBQSSVYN5VZ38Y2SF9F",
+      "entity": "CursorHooks",
+      "kind": "feature",
+      "date": "2026-11-05",
+      "author": "1002378395@qq.com",
+      "stale": true,
+      "summary": "Windows art hooks 用 pyw；ensure_cursor_stubs 合并保留 pmemw",
+      "content": "需求来源：GenerateImage 前后黑框狂闪。必须保持：\n  1) .cursor/hooks.json 与 .codex/hooks.json 的 pmem_art pre-gen/post-asset/stop 在 Windows 用 pyw -3 -u，禁止 python3/||/ .cmd。\n  2) ensure_cursor_stubs 刷新时合并保留 pmemw/pmem/.memory/bin/pmem-hook；\n并把已有 python3 art 启动器改写成当前平台前缀。\n  3) stop 必须保留（闭环 followup）。\n适用条件：Windows Cursor 本仓（同时挂 pmem）与用户包。\n入口：lifecycle.py#ensure_cursor_stubs；\n.cursor/hooks.json。",
+      "verify": "python -m unittest tests.test_cursor_hooks_stubs -q；.cursor/hooks.json 含 pyw -3 -u pmem_art.py 且含 pmemw",
+      "applies": "Windows Cursor 装 pmem-art；本仓库另挂 pmem 时",
+      "check": [
+        ".cursor/hooks.json 于 2026-11-11 改过",
+        "lifecycle.py 中 ensure_cursor_stubs 在 2026-11-05 之后改过"
+      ]
+    },
+    {
+      "module": "infra.Cli",
+      "id": "01M6KVTNHKS3N1KS7889JTMW0M",
+      "entity": "CursorHooks",
+      "kind": "correction",
+      "date": "2026-11-05",
+      "author": "yanghu",
+      "stale": true,
+      "summary": "升级后 Hook 官方入口是 pmemw；MCP 仍用 pmem",
+      "content": "旧排除「禁止用 pmemw 接 Cursor hooks」只在本机 PATH 没有 pmemw、闸门因此失效时成立。\n当前已装到 GitHub master（commit 4d776a54c5ff，版本号仍标 0.6.1）：提供 pmemw 入口；pmem init / doctor 认 pmemw hook；Windows 用它少弹控制台。\nMCP 仍必须 command=pmem（禁止 pmemw），避免 stdio 被掐断。\n本仓库 ensure_cursor_stubs 刷新时须合并保留 pmemw hook / pmem hook / .memory/bin/pmem-hook。",
+      "verify": "command -v pmemw；.cursor/hooks.json 含 pmemw hook；.cursor/mcp.json 的 pmem.command 为 pmem；pmem doctor Hooks 已接入",
+      "applies": "已安装含 pmemw 入口的当前版 pmem 后",
+      "scope": "project",
+      "check": [
+        ".cursor/hooks.json 于 2026-11-11 改过",
+        "lifecycle.py 中 _is_pmem_rd_hook_command 在 2026-11-05 之后改过",
+        ".cursor/mcp.json 于 2026-11-05 改过"
+      ]
+    },
+    {
+      "module": "infra.Cli",
+      "id": "01M642F3Z0393A2TWT5WRSS1XV",
+      "entity": "Install",
+      "kind": "exclusion",
+      "date": "2026-10-29",
+      "author": "1002378395@qq.com",
+      "stale": false,
+      "summary": "有 pmem serve 占用时不要 uv tool install --force，改用 uv pip 就地升级",
+      "content": "Windows 上 pmem serve 占用 uv tools 的 Scripts 目录时，uv tool install --force \"pmem[embed] @ git+https://github.com/mry-ship/pmem.git\" 会在删除 Scripts 时报拒绝访问，并可能把已装的 pmem 包拆掉，随后 pmem 命令出现 ModuleNotFoundError: No module named pmem。\n正确做法是对现有工具环境就地升级：uv pip install --python %APPDATA%\\uv\\tools\\pmem\\Scripts\\python.exe --upgrade \"pmem[embed] @ git+https://github.com/mry-ship/pmem.git\"。\n其他项目正在跑的 pmem serve 不要杀。",
+      "verify": "pmem --version 能打印版本",
+      "scope": "project"
+    },
+    {
+      "module": "infra.Cli",
+      "id": "01M72YJ3SX9G2DBK52X6NA2008",
+      "entity": "Install",
+      "kind": "feature",
+      "date": "2026-11-10",
+      "author": "1002378395@qq.com",
+      "stale": false,
+      "summary": "本机 pmem 已升到 0.6.6（GitHub 84554516）",
+      "content": "需求来源：用户要求跟上 GitHub 最新 pmem 并 init。\n必须保持：有 pmem serve 占用时，禁止 uv tool install --force；\n就地升级用 uv pip install，解释器指向 %APPDATA%\\uv\\tools\\pmem\\Scripts\\python.exe，包地址为 git+https://github.com/mry-ship/pmem.git 的 pmem[embed]。\n注意：Cursor/本机 shell 若把命令里的 python 改写成 pyw，会把 --python 误伤成 --pyw；改用环境变量 UV_PYTHON 指向上述解释器再 uv pip install。\n升级后必须在项目根执行 pmem init --agents auto --hooks auto（禁止对本仓跑 pmem_art.py init）。\nMCP 仍用 command=pmem，Hook 用 pmemw。\n当前：源为 GitHub HEAD/tag v0.6.6 commit 84554516f7ad36c24a6fdffb67b44149465333af，命令版号 0.6.6；pmem doctor 通过。\n入口：uv tools 环境 + 项目 pmem init。",
+      "verify": "pmem --version 为 0.6.6；pmem doctor Hooks 已接入；.cursor/rules/pmem.mdc 存在",
+      "applies": "本机用 uv tool 安装的 pmem 升级时"
+    }
+  ],
+  "verify_hint": "stale=true 的记忆写下（或上次核对）之后，关联代码又改过或已不存在，见各条 check。依赖它之前先打开关联代码核对：仍然成立就调用 confirm_memory(ids=[...]) 刷新核对日期；已不成立就写一条 correction，supersedes 填它的 id。"
+}

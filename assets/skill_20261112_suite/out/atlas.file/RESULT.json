@@ -1,0 +1,37 @@
+{
+  "route_id": "atlas.file",
+  "banner": "【按 归档 走了】",
+  "status": "text_only",
+  "passed_line": null,
+  "rounds": 0,
+  "scores": [],
+  "final_image": null,
+  "text_deliverable": "assets/skill_20261112_suite/out/atlas.file/ATLAS.md",
+  "pad_used": [],
+  "bg": "n/a",
+  "notes": "classify-watch --apply：314 未映射，suite 高置信入库 83 张；list 96 模块；atlas 刷新 art-atlas.html（索引 824）→ http://127.0.0.1:27913/art-atlas.html",
+  "commands": [
+    "pyw -3 -u pmem_art.py classify-watch --apply",
+    "pyw -3 -u pmem_art.py list",
+    "pyw -3 -u pmem_art.py atlas"
+  ],
+  "classify_watch": {
+    "unmapped": 314,
+    "suite_ingested": 83,
+    "suite_low_conf_kept": 0,
+    "log": "assets/skill_20261112_suite/out/atlas.file/classify-watch.txt",
+    "suite_moves": "assets/skill_20261112_suite/out/atlas.file/suite_moves.json"
+  },
+  "list": {
+    "modules_with_content": 96,
+    "empty_hidden": 197,
+    "log": "assets/skill_20261112_suite/out/atlas.file/list.txt"
+  },
+  "atlas": {
+    "html": "art-atlas.html",
+    "size_kb": 11318.2,
+    "indexed_images": 824,
+    "url": "http://127.0.0.1:27913/art-atlas.html",
+    "log": "assets/skill_20261112_suite/out/atlas.file/atlas.txt"
+  }
+}

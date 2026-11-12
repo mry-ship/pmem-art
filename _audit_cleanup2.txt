@@ -1,0 +1,23 @@
+﻿{
+  "ok": true,
+  "module": "infra.Scripts",
+  "items": [
+    {
+      "module": "infra.Scripts",
+      "id": "01M6ED8WQ0WGQAXCYRBJ3VT59C",
+      "entity": "LayerSplitPlanBoxes",
+      "kind": "exclusion",
+      "date": "2026-11-02",
+      "author": "1002378395@qq.com",
+      "stale": true,
+      "summary": "禁止整表凭感觉微调 split_plan；只改被点名的边",
+      "content": "排除：Agent 看图后对整张 split_plan 做「全面微调」。\n归一化框无像素尺，整表重写常把已合格框拧坏、松框互相吞并，准度不如旧紧脚印。\n应先紧（pad≤0.02）→setup 看 guide→用户点名哪条边→只改该边 0.02～0.04。",
+      "verify": "改完只动一个 id 的一条边并重出 _crops_guide",
+      "applies": "定块/改脚印时",
+      "check": [
+        ".cursor/skills/pmem-layer-split/SKILL.md 已不存在"
+      ]
+    }
+  ],
+  "verify_hint": "stale=true 的记忆写下（或上次核对）之后，关联代码又改过或已不存在，见各条 check。依赖它之前先打开关联代码核对：仍然成立就调用 confirm_memory(ids=[...]) 刷新核对日期；已不成立就写一条 correction，supersedes 填它的 id。"
+}

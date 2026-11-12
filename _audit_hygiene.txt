@@ -1,0 +1,8 @@
+﻿🧹 pmem-art memory hygiene
+   · 时间: 2026-11-11 00:57:20 UTC+8  apply=True
+   · candidates: 14 → 14（丢弃噪声 0）
+   · detach: 改写条目 0 · 断链 0
+   · specs: 新建 0 → （无）
+   · taste 去重: reject 18→18 · style 20→20 · banned 11→11
+   · converge reports: 保留 40 · 归档 0 → .memory-art/converge/archive
+   · learn：未收下提案（默认；显式 --accept-learn 才 learn accept --all，且仅消费队列）

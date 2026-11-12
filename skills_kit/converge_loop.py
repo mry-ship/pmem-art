@@ -94,7 +94,8 @@ def followup_allowed_for_conversation(root: Path, conversation_id: str) -> bool:
     Only the owning composer may receive stop followup_message.
 
     - No conversation_id in hook payload → allow (CLI / older hosts).
-    - Owner empty → deny for Cursor chats (must claim via GenerateImage pre-gen first).
+    - Owner empty → deny for Cursor chats (must claim via GenerateImage post-asset only;
+      pre-gen never claims, even if manually mounted).
     - Owner mismatch → deny (do not hijack unrelated chats).
     """
     cid = (conversation_id or "").strip()

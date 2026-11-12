@@ -1,0 +1,17 @@
+﻿ID CHAT20261110001738304RECIPE MOD character.FairyPink
+  关联图片 assets/skill_20261109/draw_multi/on_r4.png 哈希已变更（记录 4c93e526… → 当前 213330c2…）
+---
+ID CHAT20261110002815430RECIPE MOD character.FairyPink
+  关联图片 assets/skill_20261109/draw_multi/on_r4.png 哈希已变更（记录 4c93e526… → 当前 213330c2…）
+---
+ID CHAT20261110192917194FIX MOD merge.DewberryJam
+  关联图片 assets/skill_20261110_gh_portrait_v2/merge_jam/final.jpg 哈希已变更（记录 b800a4b1… → 当前 a5f370cb…）
+---
+ID CHAT20261105164459405FIX MOD prop.BirdsMerge.Cute
+  关联图片 docs/birds_merge_fresh/overview_sheet_final.png 哈希已变更（记录 eef0dedd… → 当前 02e957ae…）
+---
+ID CHAT20261105145206459FIX MOD prop.BuildingsMerge.Cute
+  关联图片 docs/buildings_merge/overview_sheet_final.png 哈希已变更（记录 ff2515e8… → 当前 6c461c84…）
+---
+qa 0
+gaps 3

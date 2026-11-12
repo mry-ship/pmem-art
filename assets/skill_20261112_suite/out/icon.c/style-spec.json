@@ -1,0 +1,32 @@
+{
+  "mode": "C",
+  "route_id": "icon.c",
+  "session": "suite_icon_c",
+  "delivery": "batch_preview_sheet",
+  "aspect": "1:1",
+  "bg": "opaque_isolation",
+  "bg_color": "#000000",
+  "engine": "Cursor GenerateImage",
+  "post_cutout": false,
+  "key_item_converge": false,
+  "pad": "assets/skill_20261112_suite/refs/ref_merge_strip.png",
+  "pad_locks": "casual merge inventory surface quality only",
+  "pad_unlocks": "strip grid layout, HUD, finger, merge FX, full shelf composition",
+  "surface": "soft candy-glaze 3D casual-merge inventory; SSS/wide soft specular; round thick forms; warm saturated; soft block highlights; no hard outline; studio UL key + soft contact shadow",
+  "silhouette": "thick readable at 64px",
+  "no_text": true,
+  "no_scene": true,
+  "winner": "final.jpg",
+  "best_score": 9.45,
+  "passed_line": false,
+  "icons": [
+    {"id": "shrimp_cup", "zh": "虾仁杯"},
+    {"id": "shell_soup", "zh": "贝壳汤"},
+    {"id": "coffee_bean_bag", "zh": "咖啡豆袋"},
+    {"id": "iced_latte", "zh": "冰拿铁杯"},
+    {"id": "lemon_oyster_plate", "zh": "柠檬牡蛎盘"},
+    {"id": "lobster_claw_skewer", "zh": "龙虾钳串"},
+    {"id": "seaweed_snack_bowl", "zh": "海苔脆片碗"},
+    {"id": "harbor_cream_puff", "zh": "港湾奶油泡芙"}
+  ]
+}

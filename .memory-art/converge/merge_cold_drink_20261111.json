@@ -1,0 +1,869 @@
+{
+  "session_id": "merge_cold_drink_20261111",
+  "started_at": "2026-11-11 22:10:58 UTC+8",
+  "goal": "合成梯整表一组通用冷饮杯装饮料；merge overview_sheet L1-L8 4x2；Gossip Harbor 玩具货柜卡通；浅奶油浅蓝圆角卡；无字无脸",
+  "module": "merge.HarborColdDrink",
+  "mode": "text_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "merge_overview_checklist",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "medium",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "medium",
+    "label": "中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.5)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 1,
+    "target_score_threshold": 9.5,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.15,
+      "perspective_anatomy": 0.15,
+      "texture_detail": 0.15,
+      "spec_style": 0.15,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "viewpoint_frame",
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图，只在提示词上补还没过的那一处（提示词改动仍 ≤40%）",
+    "max_prompt_delta_ratio": 0.4,
+    "allow_recompose": false,
+    "allow_viewpoint_change": false,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "viewpoint_angle (不改机位与镜头视角)",
+      "element_count (不增删主体元素清单)",
+      "no_full_recompose (不做整体 recompose / 换景别故事)",
+      "style_surface (跟提示词品类默认画风，禁止回落写实棚拍)"
+    ],
+    "min_round_leap": 0.15,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "品类默认画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光",
+    "medium_family": "generic",
+    "best_direction_hint": "最优方向：光影·空气·介质；可小幅姿态/局部布局",
+    "goal": "合成梯整表一组通用冷饮杯装饮料；merge overview_sheet L1-L8 4x2；Gossip Harbor 玩具货柜卡通；浅奶油浅蓝圆角卡；无字无脸",
+    "module": "merge.HarborColdDrink",
+    "ref_image": "",
+    "ref_analysis": ""
+  },
+  "medium_family": "generic",
+  "contract": "",
+  "target_score_threshold": 9.5,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "",
+  "ref_analysis": "",
+  "default_aspect_ratio": "9:16",
+  "default_reference_image_paths": [],
+  "aspect_ratio": "9:16",
+  "reference_image_paths": [],
+  "ref_physical_traits": {},
+  "param_validation": {},
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.5,
+  "accept_threshold": 9.5,
+  "max_rounds": 4,
+  "ready_to_finish": true,
+  "status": "finished",
+  "owner_conversation_id": "",
+  "route_ids": [
+    "merge.ladder"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [],
+      "param_validation": {
+        "three_step_verified": true,
+        "three_step_stage": "step3_judge",
+        "validation_passed": true
+      },
+      "generated_at": "22:15:05",
+      "image": "assets\\\\skill_20261111_drink\\\\merge_cold\\\\sheet_r1.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 188735,
+        "size_kb": 184.3,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.2
+      },
+      "raw_score": 8.95,
+      "score": 8.95,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.3/光影9.0/透视9.2/质感8.7/风格8.5/无瑕疵9.0",
+      "dims_parsed": {
+        "composition": 9.3,
+        "lighting_color": 9.0,
+        "perspective_anatomy": 9.2,
+        "texture_detail": 8.7,
+        "spec_style": 8.5,
+        "flawlessness": 9.0
+      },
+      "weighted_score": 8.95,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "提示：邻档框高接近（第 1→2 为 0.53→0.54）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "提示：邻档框高接近（第 4→5 为 0.87→0.76）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "提示：邻档框高接近（第 5→6 为 0.76→0.74）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "提示：邻档框高接近（第 6→7 为 0.74→0.73）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "未指定风格却偏写实，本轮不能过线；改回 Gossip Harbor 货柜气质",
+        "末档明显小于前档：末格 0.62，最大 0.87",
+        "点名锁未单独验收：同一3/4俯视柔光左上；每格一件居中留边；无字无脸；邻档剪影/容器/完成态可分；L1空杯朴素后段才犒赏"
+      ],
+      "stagnated": false,
+      "strengths": "构图与基础色调符合要求",
+      "defects": "L4-L6玻璃与冰块偏产品静物写实；糖釉玩具高光不足；整体偏干净产品3D而非Gossip Harbor货柜卡通；提示：邻档框高接近（第 1→2 为 0.53→0.54）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 4→5 为 0.87→0.76）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 5→6 为 0.76→0.74）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 6→7 为 0.74→0.73）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；未指定风格却偏写实，本轮不能过线；改回 Gossip Harbor 货柜气质；末档明显小于前档：末格 0.62，最大 0.87；点名锁未单独验收：同一3/4俯视柔光左上；每格一件居中留边；无字无脸；邻档剪影/容器/完成态可分；L1空杯朴素后段才犒赏",
+      "next_fix": "整张重开：所有容器改厚实糖釉玩具材质，禁止真实玻璃折射与写实冰块；液面用卡通色块；保持L1-L8剪影与4x2版式；末档不得明显矮于前档；有贴边残片/切顶须整张重出；邻档靠剪影/件数可分；禁止跨轮抠格拼表",
+      "prompt": "休闲 merge 货柜默认气质：Gossip Harbor 玩具货柜——手绘软渐变糖釉道具、圆润厚实、无硬描边、暖饱和、柔光釉面高光、棋盘缩略一眼可认。材质锁死为卡通玩具/糖釉货柜道具，不是实物，也不是硬镜面 CGI / 硬卡通 3D 图标。禁止：写实摄影、美食棚拍、产品静物、玻璃真实折射、木纹指纹、果汁乳浊摄影感、微距毛孔、油光金属、暗沉旧塑料、硬镜面 3D、皮克斯硬塑胶高光。整表参考只锁格子版式，不跟参考写实表面。 | 点名锁每轮都要单独留住，不许整张漂掉：锁：同店冷饮色相冰蓝+柠黄+奶油白；同一3/4俯视柔光左上；每格一件居中留边；无字无脸；邻档剪影/容器/完成态可分；L1空杯朴素后段才犒赏 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.HarborColdDrink\n- 置信度: 0.45（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 五链合成：不必每档保留L1原件/母体锁死；同域合理升级、档差明显即可\n  · 确认作为货柜正向锚点：合成宣传图里的道具是圆润厚实的糖釉卡通3D。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n- 个人口味: 光影=柔光 / 暖光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 错误头身比/头过大；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n品类默认画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光 | chain_mode=shop_ladder。Gossip Harbor 玩具货柜卡通：光泽卡通3D、圆润厚实、无硬描边、暖饱和、柔光渐变、糖釉玩具高光；材质是卡通玩具不是实物。禁止写实摄影、美食棚拍、产品静物、玻璃真实折射、木纹指纹、果汁乳浊摄影感。整表统一：同一3/4俯视、同一柔光左上、浅奶油浅蓝圆角卡、冰蓝+柠黄+奶油白色相家族；每格一件居中留边；无字无脸。L1 空纸杯：一只空的矮圆纸杯，无液无盖无吸管，杯口朝上可见内壁。L2 敞口冰饮：同形矮圆杯装满冰蓝饮料，可见平整液面，仍无盖无吸管。L3 加盖外带杯：矮圆外带杯加上圆盖，盖顶小口可见，液面被盖住，无吸管。L4 高杯吸管：细高透明玩具杯加一根斜出吸管，比矮圆杯更高，盖消失。L5 柠檬梅森罐：宽口梅森罐装满冰茶，罐侧可见柠檬片，吸管消失，罐肩更宽。L6 冰茶大壶：带把手与壶嘴的宽肩大壶装满冰茶，梅森螺纹罐口消失。L7 奶油犒赏杯：高杯特饮顶着厚奶油旋顶与柠黄装饰，壶嘴把手消失，单杯犒赏。L8 冷饮派对盘：浅托盘上两只小冷饮杯并柠檬片，盘沿是主轮廓，仍是一件货并留边。禁止跨格拼贴、残片、切顶；邻档靠剪影或容器可分，不靠放大。一眼失败：写实棚拍、邻档同剪影、切顶残片、黑整表底、有字有脸。约束：不改机位；不增删主体清单；禁止回落写实棚拍。 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；跟提示词品类默认画风，禁止回落写实棚拍",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.2,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：L4-L6玻璃与冰块偏产品静物写实；糖釉玩具高光不足；整体偏干净产品3D而非Gossip Harbor货柜卡通；提示：邻档框高接近（第 1→2 为 0.53→0",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.95"
+        },
+        {
+          "category": "material",
+          "lesson": "本轮短板偏「material」：L4-L6玻璃与冰块偏产品静物写实；糖釉玩具高光不足；整体偏干净产品3D而非Gossip Harbor货柜卡通；提示：邻档框高接近（第 1→2 为 0.53→0",
+          "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+          "from_score": "8.95"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "22:15:28"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [],
+      "param_validation": {
+        "three_step_verified": true,
+        "three_step_stage": "step3_judge",
+        "validation_passed": true
+      },
+      "generated_at": "22:16:24",
+      "image": "assets\\skill_20261111_drink\\merge_cold\\sheet_r2.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 178882,
+        "size_kb": 174.7,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.21
+      },
+      "raw_score": 9.14,
+      "score": 9.14,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.4/光影9.2/透视9.3/质感8.9/风格9.0/无瑕疵9.1",
+      "dims_parsed": {
+        "composition": 9.4,
+        "lighting_color": 9.2,
+        "perspective_anatomy": 9.3,
+        "texture_detail": 8.9,
+        "spec_style": 9.0,
+        "flawlessness": 9.1
+      },
+      "weighted_score": 9.14,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "提示：邻档框高接近（第 4→5 为 0.77→0.72）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "提示：邻档框高接近（第 6→7 为 0.77→0.77）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "提示：邻档框高接近（第 7→8 为 0.77→0.47）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "未指定风格却偏写实，本轮不能过线；改回 Gossip Harbor 货柜气质",
+        "末档明显小于前档：末格 0.47，最大 0.77",
+        "点名锁未单独验收：同一3/4俯视柔光左上；每格一件居中留边；无字无脸；邻档剪影/容器/完成态可分；L1空杯朴素后段才犒赏"
+      ],
+      "stagnated": false,
+      "strengths": "构图与基础色调符合要求",
+      "defects": "L5梅森罐与L6大壶仍是透明真玻璃感并带写实冰块；L4液色偏奶油偏离冰蓝家族；L8托盘占格仍偏小；提示：邻档框高接近（第 4→5 为 0.77→0.72）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 6→7 为 0.77→0.77）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 7→8 为 0.77→0.47）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；未指定风格却偏写实，本轮不能过线；改回 Gossip Harbor 货柜气质；末档明显小于前档：末格 0.47，最大 0.77；点名锁未单独验收：同一3/4俯视柔光左上；每格一件居中留边；无字无脸；邻档剪影/容器/完成态可分；L1空杯朴素后段才犒赏",
+      "next_fix": "纯文重开不垫上轮：L5L6改成厚实不透明糖釉玩具罐壶，去掉真玻璃与冰块；L4液面改冰蓝；L8托盘加大占格与前档齐平；末档不得明显矮于前档；有贴边残片/切顶须整张重出；邻档靠剪影/件数可分；禁止跨轮抠格拼表",
+      "prompt": "点名锁每轮都要单独留住，不许整张漂掉：锁：同店冷饮色相冰蓝+柠黄+奶油白；同一3/4俯视柔光左上；每格一件居中留边；无字无脸；邻档剪影/容器/完成态可分；L1空杯朴素后段才犒赏 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.HarborColdDrink\n- 置信度: 0.45（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 五链合成：不必每档保留L1原件/母体锁死；同域合理升级、档差明显即可\n  · 确认作为货柜正向锚点：合成宣传图里的道具是圆润厚实的糖釉卡通3D。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n- 个人口味: 光影=柔光 / 暖光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 错误头身比/头过大；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n品类默认画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光 | chain_mode=shop_ladder。Gossip Harbor 玩具货柜卡通：手绘软渐变糖釉道具、圆润厚实、无硬描边、暖饱和、柔光釉面高光#FEFDFB、棋盘缩略可认；材质锁死卡通玩具/糖釉货柜道具，不是实物，也不是硬镜面CGI。禁止写实摄影、美食棚拍、产品静物、玻璃真实折射、写实冰块、木纹指纹、果汁乳浊摄影感、微距毛孔、油光金属、硬镜面3D。整表统一：同一3/4俯视、同一柔光左上、浅奶油浅蓝圆角卡、冰蓝+柠黄+奶油白色相；每格一件居中留边；无字无脸。L1空纸杯矮圆玩具杯无液无盖无吸管。L2同形矮圆杯装平整冰蓝卡通液面无盖无吸管。L3矮圆奶油色加盖外带玩具杯盖顶小口无吸管。L4细高厚实半透明糖釉玩具杯斜出粗玩具吸管，禁止真玻璃。L5宽口厚实不透明糖釉玩具梅森罐装琥珀色卡通冰茶加一片玩具柠檬，禁止透明玻璃与写实冰。L6带把手壶嘴的厚实糖釉玩具大壶装同色卡通冰茶，禁止真玻璃。L7高杯厚奶油旋顶加柠黄装饰单杯犒赏。L8浅托盘两只小冷饮杯加柠檬片，盘沿主轮廓，末档占格不矮于前档。邻档靠剪影或容器可分。一眼失败：真玻璃折射、写实冰块、切顶残片、有字有脸。 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；跟提示词品类默认画风，禁止回落写实棚拍 | 整张重开：所有容器改厚实糖釉玩具材质，禁止真实玻璃折射与写实冰块；液面用卡通色块；保持L1-L8剪影与4x2版式；末档不得明显矮于前档；有贴边残片/切顶须整张重出；邻档靠剪影/件数可分；禁止跨轮抠格拼表",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.3,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：L5梅森罐与L6大壶仍是透明真玻璃感并带写实冰块；L4液色偏奶油偏离冰蓝家族；L8托盘占格仍偏小；提示：邻档框高接近（第 4→5 为 0.77→0.72）；分档",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "9.14"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "22:16:45"
+    },
+    {
+      "round": 3,
+      "round_label": "第 3 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [],
+      "param_validation": {
+        "three_step_verified": true,
+        "three_step_stage": "step3_judge",
+        "validation_passed": true
+      },
+      "generated_at": "22:19:19",
+      "image": "assets\\skill_20261111_drink\\merge_cold\\sheet_r3.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 194771,
+        "size_kb": 190.2,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.2
+      },
+      "raw_score": 9.04,
+      "score": 9.04,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.3/光影9.1/透视9.2/质感8.8/风格8.9/无瑕疵9.0",
+      "dims_parsed": {
+        "composition": 9.3,
+        "lighting_color": 9.1,
+        "perspective_anatomy": 9.2,
+        "texture_detail": 8.8,
+        "spec_style": 8.9,
+        "flawlessness": 9.0
+      },
+      "weighted_score": 9.04,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +-0.10 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "提示：邻档框高接近（第 1→2 为 0.44→0.45）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "提示：邻档框高接近（第 3→4 为 0.53→0.42）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "提示：邻档框高接近（第 5→6 为 0.75→0.72）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "提示：邻档框高接近（第 6→7 为 0.72→0.70）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "末档明显小于前档：末格 0.51，最大 0.75",
+        "点名锁未单独验收：同一3/4俯视柔光左上；每格一件居中留边；无字无脸；邻档剪影/容器/完成态可分；L1空杯朴素后段才犒赏"
+      ],
+      "stagnated": true,
+      "strengths": "构图与基础色调符合要求",
+      "defects": "L5仍透明玻璃梅森罐带冰块；L8变成两只高吸管杯而非矮杯托盘；卡底几乎全浅蓝；提示：邻档框高接近（第 1→2 为 0.44→0.45）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 3→4 为 0.53→0.42）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 5→6 为 0.75→0.72）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 6→7 为 0.72→0.70）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；末档明显小于前档：末格 0.51，最大 0.75；点名锁未单独验收：同一3/4俯视柔光左上；每格一件居中留边；无字无脸；邻档剪影/容器/完成态可分；L1空杯朴素后段才犒赏",
+      "next_fix": "L5L6改实心不透明糖釉；L8矮杯托盘；奶油浅蓝卡交替；末档不得明显矮于前档；有贴边残片/切顶须整张重出；邻档靠剪影/件数可分；禁止跨轮抠格拼表",
+      "prompt": "休闲 merge 货柜默认气质：Gossip Harbor 玩具货柜——手绘软渐变糖釉道具、圆润厚实、无硬描边、暖饱和、柔光釉面高光、棋盘缩略一眼可认。材质锁死为卡通玩具/糖釉货柜道具，不是实物，也不是硬镜面 CGI / 硬卡通 3D 图标。禁止：写实摄影、美食棚拍、产品静物、玻璃真实折射、木纹指纹、果汁乳浊摄影感、微距毛孔、油光金属、暗沉旧塑料、硬镜面 3D、皮克斯硬塑胶高光。整表参考只锁格子版式，不跟参考写实表面。 | 点名锁每轮都要单独留住，不许整张漂掉：锁：同店冷饮色相冰蓝+柠黄+奶油白；同一3/4俯视柔光左上；每格一件居中留边；无字无脸；邻档剪影/容器/完成态可分；L1空杯朴素后段才犒赏 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.HarborColdDrink\n- 置信度: 0.45（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 五链合成：不必每档保留L1原件/母体锁死；同域合理升级、档差明显即可\n  · 确认作为货柜正向锚点：合成宣传图里的道具是圆润厚实的糖釉卡通3D。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n- 个人口味: 光影=柔光 / 暖光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 错误头身比/头过大；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n品类默认画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光 | chain_mode=shop_ladder。家族基因=冷饮店冰蓝+柠黄+奶油白容器升级链。evolve路径：EmptyPaperCup→OpenIcedCup→LiddedToGoCup→TallStrawCup→LemonMasonJar→IcedTeaPitcher→RewardCreamCup→ColdDrinkPartyTray。合成理由：两空杯成敞口冰饮；两敞口成加盖外带；两加盖成高杯吸管；两高杯成柠檬梅森罐；两梅森成冰茶大壶；两大壶浓缩成奶油犒赏杯；两犒赏杯上托盘成派对盘。Gossip Harbor 玩具货柜卡通：手绘软渐变糖釉、圆润厚实、无硬描边、暖饱和、柔光釉面高光；卡通玩具材质非实物。禁止真玻璃折射、写实冰块、产品静物、硬镜面CGI。4x2竖屏浅奶油浅蓝圆角卡；同一3/4俯视柔光左上；每格一件居中留边；无字无脸。L1空矮圆奶油玩具杯。L2同杯平整冰蓝液。L3奶油加盖外带杯。L4细高糖釉玩具杯+粗斜吸管。L5厚实不透明糖釉玩具罐+玩具柠檬，禁止透明玻璃。L6厚实不透明玩具大壶带把手壶嘴。L7高杯厚奶油旋顶。L8浅盘两只矮杯+柠檬，盘沿主轮廓。 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；跟提示词品类默认画风，禁止回落写实棚拍 | 纯文重开不垫上轮：L5L6改成厚实不透明糖釉玩具罐壶，去掉真玻璃与冰块；L4液面改冰蓝；L8托盘加大占格与前档齐平；末档不得明显矮于前档；有贴边残片/切顶须整张重出；邻档靠剪影/件数可分；禁止跨轮抠格拼表",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.2,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：L5仍透明玻璃梅森罐带冰块；L8变成两只高吸管杯而非矮杯托盘；卡底几乎全浅蓝；提示：邻档框高接近（第 1→2 为 0.44→0.45）；分档靠剪影/件数，勿跨轮",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "9.04"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "22:19:39"
+    },
+    {
+      "round": 4,
+      "round_label": "第 4 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [],
+      "param_validation": {
+        "three_step_verified": true,
+        "three_step_stage": "step3_judge",
+        "validation_passed": true
+      },
+      "generated_at": "22:20:07",
+      "image": "assets\\skill_20261111_drink\\merge_cold\\sheet_r4.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 177456,
+        "size_kb": 173.3,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.2
+      },
+      "raw_score": 9.4,
+      "score": 9.4,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.5/光影9.4/透视9.5/质感9.3/风格9.3/无瑕疵9.4",
+      "dims_parsed": {
+        "composition": 9.5,
+        "lighting_color": 9.4,
+        "perspective_anatomy": 9.5,
+        "texture_detail": 9.3,
+        "spec_style": 9.3,
+        "flawlessness": 9.4
+      },
+      "weighted_score": 9.4,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "提示：邻档框高接近（第 4→5 为 0.86→0.69）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "提示：邻档框高接近（第 6→7 为 0.81→0.85）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "提示：邻档框高接近（第 7→8 为 0.85→0.73）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "第 1 格有贴边残片（面积 0.022）：像抠格拼贴或切顶，整张重出，禁止拼贴",
+        "第 5 格有贴边残片（面积 0.031）：像抠格拼贴或切顶，整张重出，禁止拼贴",
+        "末档明显小于前档：末格 0.73，最大 0.86",
+        "点名锁未单独验收：同一3/4俯视柔光左上；每格一件居中留边；无字无脸；邻档剪影/容器/完成态可分；L1空杯朴素后段才犒赏"
+      ],
+      "stagnated": false,
+      "strengths": "构图与基础色调符合要求",
+      "defects": "L4仍带半透明杯身与圆冰球，略偏产品透亮；糖釉手绘软渐变还可再软一点；提示：邻档框高接近（第 4→5 为 0.86→0.69）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 6→7 为 0.81→0.85）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 7→8 为 0.85→0.73）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；第 1 格有贴边残片（面积 0.022）：像抠格拼贴或切顶，整张重出，禁止拼贴；第 5 格有贴边残片（面积 0.031）：像抠格拼贴或切顶，整张重出，禁止拼贴；末档明显小于前档：末格 0.73，最大 0.86；点名锁未单独验收：同一3/4俯视柔光左上；每格一件居中留边；无字无脸；邻档剪影/容器/完成态可分；L1空杯朴素后段才犒赏",
+      "next_fix": "已到满轮；若过线则收束，否则取最高分交件；末档不得明显矮于前档；有贴边残片/切顶须整张重出；邻档靠剪影/件数可分；禁止跨轮抠格拼表",
+      "prompt": "休闲 merge 货柜默认气质：Gossip Harbor 玩具货柜——手绘软渐变糖釉道具、圆润厚实、无硬描边、暖饱和、柔光釉面高光、棋盘缩略一眼可认。材质锁死为卡通玩具/糖釉货柜道具，不是实物，也不是硬镜面 CGI / 硬卡通 3D 图标。禁止：写实摄影、美食棚拍、产品静物、玻璃真实折射、木纹指纹、果汁乳浊摄影感、微距毛孔、油光金属、暗沉旧塑料、硬镜面 3D、皮克斯硬塑胶高光。整表参考只锁格子版式，不跟参考写实表面。 | 点名锁每轮都要单独留住，不许整张漂掉：锁：同店冷饮色相冰蓝+柠黄+奶油白；同一3/4俯视柔光左上；每格一件居中留边；无字无脸；邻档剪影/容器/完成态可分；L1空杯朴素后段才犒赏 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.HarborColdDrink\n- 置信度: 0.45（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 五链合成：不必每档保留L1原件/母体锁死；同域合理升级、档差明显即可\n  · 确认作为货柜正向锚点：合成宣传图里的道具是圆润厚实的糖釉卡通3D。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n- 个人口味: 光影=柔光 / 暖光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 错误头身比/头过大；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n品类默认画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光 | chain_mode=shop_ladder。家族基因=冷饮店冰蓝+柠黄+奶油白容器升级链。evolve路径：EmptyPaperCup→OpenIcedCup→LiddedToGoCup→TallStrawCup→LemonMasonJar→IcedTeaPitcher→RewardCreamCup→ColdDrinkPartyTray。合成理由：空杯→敞口冰饮→加盖外带→高杯吸管→不透明糖釉柠檬罐→不透明糖釉大壶→奶油犒赏杯→双杯派对盘；邻档靠剪影/容器换代。Gossip Harbor 玩具货柜卡通糖釉道具，圆润厚实无硬描边，柔光釉面高光#FEFDFB。禁止真玻璃、写实冰块棱角折射、产品静物。4x2奶油/浅蓝圆角卡交替；同一3/4俯视；每格一件留边；无字无脸。L1空奶油玩具杯。L2冰蓝平整液面。L3加盖外带。L4霜面糖釉高杯+黄粗吸管+软圆糖冰可选。L5实心不透明奶油糖釉宽口罐装琥珀卡通液，柠檬在外沿，罐壁不透视。L6实心不透明糖釉壶带把手壶嘴。L7奶油旋顶犒赏杯。L8浅盘两只矮小冷饮杯+柠檬片，末档占格够大。 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；跟提示词品类默认画风，禁止回落写实棚拍 | 纯文重开不垫上轮：L5L6改成厚实不透明糖釉玩具罐壶，去掉真玻璃与冰块；L4液面改冰蓝；L8托盘加大占格与前档齐平；末档不得明显矮于前档；有贴边残片/切顶须整张重出；邻档靠剪影/件数可分；禁止跨轮抠格拼表",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.5,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_MAX_ROUNDS",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：L4仍带半透明杯身与圆冰球，略偏产品透亮；糖釉手绘软渐变还可再软一点；提示：邻档框高接近（第 4→5 为 0.86→0.69）；分档靠剪影/件数，勿跨轮抠格拼表",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "9.4"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "22:20:31"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-11-10 14:02:24 UTC+8"
+    },
+    "module": "merge.HarborColdDrink",
+    "goal": "合成梯整表一组通用冷饮杯装饮料；merge overview_sheet L1-L8 4x2；Gossip Harbor 玩具货柜卡通；浅奶油浅蓝圆角卡；无字无脸",
+    "confidence": 0.45,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "个人口味/正向保留非空",
+      "注入红线可控（0 条，已按任务主题过滤）",
+      "挂载 0 张项目知识卡 + 1 张全局美术底层基础卡"
+    ],
+    "top_recipes": [],
+    "top_redlines": [],
+    "art_decisions": [],
+    "private_knowledge": [],
+    "shared_knowledge": [
+      {
+        "id": "palette-70-20-10",
+        "title": "色彩构成：70-20-10 色板比例黄金法则",
+        "body": "画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+        "layer_scope": "shared"
+      }
+    ],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [
+        "柔光",
+        "暖光"
+      ],
+      "preferred_composition": [
+        "半身",
+        "居中/对称构图"
+      ],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [
+        "避免过饱和",
+        "暖色调"
+      ],
+      "banned_habits": [
+        "错误头身比/头过大",
+        "漏抠/黑底/毛边",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色"
+      ],
+      "keep_phrases": [
+        "五链合成：不必每档保留L1原件/母体锁死；同域合理升级、档差明显即可",
+        "确认作为货柜正向锚点：合成宣传图里的道具是圆润厚实的糖釉卡通3D。",
+        "确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。"
+      ],
+      "banned_habits_raw_tail": [
+        "禁止偏离样张画风：过度霓虹、脏暗阴影、油腻高光、写实皮肤毛孔、扁平UI描边",
+        "电池审稿：原画竖构图避免贴样张布局；边缘反光勿过曝",
+        "电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感",
+        "黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差",
+        "错误头身比/头过大",
+        "漏抠/黑底/毛边",
+        "廉价塑料感/油腻高光",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色"
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.HarborColdDrink\n- 置信度: 0.45（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 五链合成：不必每档保留L1原件/母体锁死；同域合理升级、档差明显即可\n  · 确认作为货柜正向锚点：合成宣传图里的道具是圆润厚实的糖釉卡通3D。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n- 个人口味: 光影=柔光 / 暖光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 错误头身比/头过大；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+    "built_at": "2026-11-11 22:10:58 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：L4-L6玻璃与冰块偏产品静物写实；糖釉玩具高光不足；整体偏干净产品3D而非Gossip Harbor货柜卡通；提示：邻档框高接近（第 1→2 为 0.53→0",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.95"
+    },
+    {
+      "category": "material",
+      "lesson": "本轮短板偏「material」：L4-L6玻璃与冰块偏产品静物写实；糖釉玩具高光不足；整体偏干净产品3D而非Gossip Harbor货柜卡通；提示：邻档框高接近（第 1→2 为 0.53→0",
+      "drill": "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+      "from_score": "8.95"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：L5梅森罐与L6大壶仍是透明真玻璃感并带写实冰块；L4液色偏奶油偏离冰蓝家族；L8托盘占格仍偏小；提示：邻档框高接近（第 4→5 为 0.77→0.72）；分档",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.14"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：L5仍透明玻璃梅森罐带冰块；L8变成两只高吸管杯而非矮杯托盘；卡底几乎全浅蓝；提示：邻档框高接近（第 1→2 为 0.44→0.45）；分档靠剪影/件数，勿跨轮",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.04"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：L4仍带半透明杯身与圆冰球，略偏产品透亮；糖釉手绘软渐变还可再软一点；提示：邻档框高接近（第 4→5 为 0.86→0.69）；分档靠剪影/件数，勿跨轮抠格拼表",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.4"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 2,
+  "regression_drop": 0.15,
+  "safe_early_stop": false,
+  "merge_delivery": "overview_sheet",
+  "merge_sheet_cap": 4,
+  "merge_discuss_cap": 2,
+  "single_judge": false,
+  "understanding_contract": {
+    "version": 1,
+    "raw_utterance": "合成梯整表一组通用冷饮杯装饮料；merge overview_sheet L1-L8 4x2；Gossip Harbor 玩具货柜卡通；浅奶油浅蓝圆角卡；无字无脸",
+    "l0": {
+      "route_ids": [
+        "merge.ladder"
+      ],
+      "banner": "【按 同域合成梯：先定链型与关系，再按交付出图 走了】",
+      "delivery": "merge.ladder"
+    },
+    "l1": {
+      "locks": [
+        "锁：同店冷饮色相冰蓝+柠黄+奶油白",
+        "同一3/4俯视柔光左上",
+        "每格一件居中留边",
+        "无字无脸",
+        "邻档剪影/容器/完成态可分",
+        "L1空杯朴素后段才犒赏"
+      ],
+      "unlocks": [
+        "不锁：写实摄影",
+        "美食棚拍",
+        "玻璃真实折射",
+        "跨轮抠格拼表",
+        "黑整表底",
+        "蛋糕马卡龙"
+      ],
+      "defaults_shown": [
+        "默认：delivery=overview_sheet",
+        "levels=8",
+        "4x2竖屏9:16",
+        "浅奶油/浅蓝圆角卡",
+        "chain_mode=shop_ladder",
+        "品类=通用冷饮杯装",
+        "无格子参考",
+        "新开目录不接旧案",
+        "风格未点名钉Gossip Harbor玩具货柜"
+      ],
+      "commercial_vibe": "Gossip Harbor 光泽卡通3D糖釉玩具货柜，圆润厚实无硬描边暖饱和柔光渐变"
+    },
+    "l2": {
+      "open": true,
+      "surface_fix": "",
+      "last_feedback": "",
+      "feedback_layer": ""
+    },
+    "notes": ""
+  },
+  "reasonableness_history": [
+    {
+      "reviewed_at": 1794406299.7638962,
+      "passed": false,
+      "skill": "merge",
+      "issues": [
+        "清单未齐：subject_action（主体在做什么/交付物是什么）、element_budget（元素预算（不堆景不过载））、hard_locks（硬锁（画幅/透明底/无字/机位等））、fail_at_glance（一眼失败条件已写明）、single_centered_item（每档单件居中）、chain_mode_declared（写清 same_object / shop_ladder / species_change / 轻门）、upgrade_reason_concrete（升级理由具体（same_object→parts_add；shop/species→evolve_to+merge_why；轻门写具体可读升级））、family_or_base_lock（锁住母体或家族（same_object→母体词；shop/species→家族色相/题材；轻门→同任务域））",
+        "merge 须点名 same_object / shop_ladder / species_change，或明示轻门（勿默认按同模加装填 parts_add）"
+      ]
+    },
+    {
+      "reviewed_at": 1794406350.9047568,
+      "passed": true,
+      "skill": "merge",
+      "issues": []
+    },
+    {
+      "reviewed_at": 1794406354.5838706,
+      "passed": true,
+      "skill": "merge",
+      "issues": []
+    },
+    {
+      "reviewed_at": 1794406575.7244904,
+      "passed": true,
+      "skill": "merge",
+      "issues": []
+    },
+    {
+      "reviewed_at": 1794406657.4294424,
+      "passed": false,
+      "skill": "merge",
+      "issues": [
+        "merge shop_ladder 缺形变理由：须写家族基因与 evolve/合成理由，禁止装饰换装断故事"
+      ]
+    },
+    {
+      "reviewed_at": 1794406751.1741576,
+      "passed": true,
+      "skill": "merge",
+      "issues": []
+    },
+    {
+      "reviewed_at": 1794406798.063984,
+      "passed": true,
+      "skill": "merge",
+      "issues": []
+    }
+  ],
+  "reasonableness": {
+    "passed": true,
+    "skill": "merge",
+    "draft_prompt": "r4 solid candy jars",
+    "revised_prompt": "chain_mode=shop_ladder。家族基因=冷饮店冰蓝+柠黄+奶油白容器升级链。evolve路径：EmptyPaperCup→OpenIcedCup→LiddedToGoCup→TallStrawCup→LemonMasonJar→IcedTeaPitcher→RewardCreamCup→ColdDrinkPartyTray。合成理由：空杯→敞口冰饮→加盖外带→高杯吸管→不透明糖釉柠檬罐→不透明糖釉大壶→奶油犒赏杯→双杯派对盘；邻档靠剪影/容器换代。Gossip Harbor 玩具货柜卡通糖釉道具，圆润厚实无硬描边，柔光釉面高光#FEFDFB。禁止真玻璃、写实冰块棱角折射、产品静物。4x2奶油/浅蓝圆角卡交替；同一3/4俯视；每格一件留边；无字无脸。L1空奶油玩具杯。L2冰蓝平整液面。L3加盖外带。L4霜面糖釉高杯+黄粗吸管+软圆糖冰可选。L5实心不透明奶油糖釉宽口罐装琥珀卡通液，柠檬在外沿，罐壁不透视。L6实心不透明糖釉壶带把手壶嘴。L7奶油旋顶犒赏杯。L8浅盘两只矮小冷饮杯+柠檬片，末档占格够大。",
+    "checklist": {
+      "subject_action": {
+        "status": "ok",
+        "note": ""
+      },
+      "element_budget": {
+        "status": "ok",
+        "note": ""
+      },
+      "hard_locks": {
+        "status": "ok",
+        "note": ""
+      },
+      "fail_at_glance": {
+        "status": "ok",
+        "note": ""
+      },
+      "single_centered_item": {
+        "status": "ok",
+        "note": ""
+      },
+      "chain_mode_declared": {
+        "status": "ok",
+        "note": ""
+      },
+      "upgrade_reason_concrete": {
+        "status": "ok",
+        "note": ""
+      },
+      "family_or_base_lock": {
+        "status": "ok",
+        "note": ""
+      }
+    },
+    "issues": [],
+    "notes": "",
+    "reviewed_at": 1794406798.063984,
+    "reviewed_at_iso": "2026-11-11 22:19:58",
+    "force_pass": false,
+    "skill_raw": "merge"
+  },
+  "discussions": [
+    {
+      "round": 0,
+      "kind": "reasonableness",
+      "prompt": "chain_mode=shop_ladder。家族基因=冷饮店冰蓝+柠黄+奶油白容器升级链。evolve路径：EmptyPaperCup→OpenIcedCup→LiddedToGoCup→TallStrawCup→LemonMasonJar→IcedTeaPitcher→RewardCreamCup→ColdDrinkPartyTray。合成理由：空杯→敞口冰饮→加盖外带→高杯吸管→不透明糖釉柠檬罐→不透明糖釉大壶→奶油犒赏杯→双杯派对盘；邻档靠剪影/容器换代。Gossip Harbor 玩具货柜卡通糖釉道具，圆润厚实无硬描边，柔光釉面高光#FEFDFB。禁止真玻璃、写实冰块棱角折射、产品静物。4x2奶油/浅蓝圆角卡交替；同一3/4俯视；每格一件留边；无字无脸。L1空奶油玩具杯。L2冰蓝平整液面。L3加盖外带。L4霜面糖釉高杯+黄粗吸管+软圆糖冰可选。L5实心不透明奶油糖釉宽口罐装琥珀卡通液，柠檬在外沿，罐壁不透视。L6实心不透明糖釉壶带把手壶嘴。L7奶油旋顶犒赏杯。L8浅盘两只矮小冷饮杯+柠檬片，末档占格够大。",
+      "strengths": "合理性闸已过：subject_action=ok；element_budget=ok；hard_locks=ok；fail_at_glance=ok；single_centered_item=ok；chain_mode_declared=ok；upgrade_reason_concrete=ok；family_or_base_lock=ok",
+      "defects": "",
+      "next_fix": "首轮 generate 使用本修订提示词；审美迭代不得推翻硬锁与元素预算"
+    }
+  ],
+  "warm_start_merged": true,
+  "warm_start_merged_at": "2026-11-11 22:20:07",
+  "warm_start_block_sha1": "6029d56ebe15",
+  "ActionRequired": "STOP_PICK_BEST",
+  "showcase_ready": true,
+  "winner": {
+    "round": 4,
+    "round_label": "第 4 轮精修",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "9:16",
+    "reference_image_paths": [],
+    "param_validation": {
+      "three_step_verified": true,
+      "three_step_stage": "step3_judge",
+      "validation_passed": true
+    },
+    "generated_at": "22:20:07",
+    "image": "assets/skill_20261111_drink/merge_cold/sheet_r4.jpg",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 177456,
+      "size_kb": 173.3,
+      "width": 720,
+      "height": 1280,
+      "aspect_ratio": "9:16",
+      "canonical_aspect_ratio": "9:16",
+      "color_entropy": 7.2
+    },
+    "raw_score": 9.4,
+    "score": 9.4,
+    "target_score_threshold": 9.5,
+    "dims": "构图9.5/光影9.4/透视9.5/质感9.3/风格9.3/无瑕疵9.4",
+    "dims_parsed": {
+      "composition": 9.5,
+      "lighting_color": 9.4,
+      "perspective_anatomy": 9.5,
+      "texture_detail": 9.3,
+      "spec_style": 9.3,
+      "flawlessness": 9.4
+    },
+    "weighted_score": 9.4,
+    "audit_warnings": [
+      "Agent Absolute-5D 已采纳（门槛 9.5）",
+      "提示：邻档框高接近（第 4→5 为 0.86→0.69）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+      "提示：邻档框高接近（第 6→7 为 0.81→0.85）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+      "提示：邻档框高接近（第 7→8 为 0.85→0.73）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+      "第 1 格有贴边残片（面积 0.022）：像抠格拼贴或切顶，整张重出，禁止拼贴",
+      "第 5 格有贴边残片（面积 0.031）：像抠格拼贴或切顶，整张重出，禁止拼贴",
+      "末档明显小于前档：末格 0.73，最大 0.86",
+      "点名锁未单独验收：同一3/4俯视柔光左上；每格一件居中留边；无字无脸；邻档剪影/容器/完成态可分；L1空杯朴素后段才犒赏"
+    ],
+    "stagnated": false,
+    "strengths": "构图与基础色调符合要求",
+    "defects": "L4仍带半透明杯身与圆冰球，略偏产品透亮；糖釉手绘软渐变还可再软一点；提示：邻档框高接近（第 4→5 为 0.86→0.69）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 6→7 为 0.81→0.85）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 7→8 为 0.85→0.73）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；第 1 格有贴边残片（面积 0.022）：像抠格拼贴或切顶，整张重出，禁止拼贴；第 5 格有贴边残片（面积 0.031）：像抠格拼贴或切顶，整张重出，禁止拼贴；末档明显小于前档：末格 0.73，最大 0.86；点名锁未单独验收：同一3/4俯视柔光左上；每格一件居中留边；无字无脸；邻档剪影/容器/完成态可分；L1空杯朴素后段才犒赏",
+    "next_fix": "已到满轮；若过线则收束，否则取最高分交件；末档不得明显矮于前档；有贴边残片/切顶须整张重出；邻档靠剪影/件数可分；禁止跨轮抠格拼表",
+    "prompt": "休闲 merge 货柜默认气质：Gossip Harbor 玩具货柜——手绘软渐变糖釉道具、圆润厚实、无硬描边、暖饱和、柔光釉面高光、棋盘缩略一眼可认。材质锁死为卡通玩具/糖釉货柜道具，不是实物，也不是硬镜面 CGI / 硬卡通 3D 图标。禁止：写实摄影、美食棚拍、产品静物、玻璃真实折射、木纹指纹、果汁乳浊摄影感、微距毛孔、油光金属、暗沉旧塑料、硬镜面 3D、皮克斯硬塑胶高光。整表参考只锁格子版式，不跟参考写实表面。 | 点名锁每轮都要单独留住，不许整张漂掉：锁：同店冷饮色相冰蓝+柠黄+奶油白；同一3/4俯视柔光左上；每格一件居中留边；无字无脸；邻档剪影/容器/完成态可分；L1空杯朴素后段才犒赏 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.HarborColdDrink\n- 置信度: 0.45（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 五链合成：不必每档保留L1原件/母体锁死；同域合理升级、档差明显即可\n  · 确认作为货柜正向锚点：合成宣传图里的道具是圆润厚实的糖釉卡通3D。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n- 个人口味: 光影=柔光 / 暖光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 错误头身比/头过大；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n品类默认画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光 | chain_mode=shop_ladder。家族基因=冷饮店冰蓝+柠黄+奶油白容器升级链。evolve路径：EmptyPaperCup→OpenIcedCup→LiddedToGoCup→TallStrawCup→LemonMasonJar→IcedTeaPitcher→RewardCreamCup→ColdDrinkPartyTray。合成理由：空杯→敞口冰饮→加盖外带→高杯吸管→不透明糖釉柠檬罐→不透明糖釉大壶→奶油犒赏杯→双杯派对盘；邻档靠剪影/容器换代。Gossip Harbor 玩具货柜卡通糖釉道具，圆润厚实无硬描边，柔光釉面高光#FEFDFB。禁止真玻璃、写实冰块棱角折射、产品静物。4x2奶油/浅蓝圆角卡交替；同一3/4俯视；每格一件留边；无字无脸。L1空奶油玩具杯。L2冰蓝平整液面。L3加盖外带。L4霜面糖釉高杯+黄粗吸管+软圆糖冰可选。L5实心不透明奶油糖釉宽口罐装琥珀卡通液，柠檬在外沿，罐壁不透视。L6实心不透明糖釉壶带把手壶嘴。L7奶油旋顶犒赏杯。L8浅盘两只矮小冷饮杯+柠檬片，末档占格够大。 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；跟提示词品类默认画风，禁止回落写实棚拍 | 纯文重开不垫上轮：L5L6改成厚实不透明糖釉玩具罐壶，去掉真玻璃与冰块；L4液面改冰蓝；L8托盘加大占格与前档齐平；末档不得明显矮于前档；有贴边残片/切顶须整张重出；邻档靠剪影/件数可分；禁止跨轮抠格拼表",
+    "continuation": false,
+    "passed": false,
+    "gate_blocked": true,
+    "image_gate_blocked": false,
+    "anatomy_score": 9.5,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "unknown",
+    "judge_source": "agent_absolute_5d",
+    "remote_vlm": {
+      "source": "agent_self_judge",
+      "provider": "",
+      "model": "",
+      "error": "",
+      "active": false,
+      "score_evidence": {},
+      "evidence_missing_dims": [],
+      "review": {
+        "pass_count": 0,
+        "rerated": false,
+        "reason": ""
+      }
+    },
+    "should_continue_next_round": false,
+    "decision": "STOP_MAX_ROUNDS",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "style_lock",
+        "lesson": "本轮短板偏「style_lock」：L4仍带半透明杯身与圆冰球，略偏产品透亮；糖釉手绘软渐变还可再软一点；提示：邻档框高接近（第 4→5 为 0.86→0.69）；分档靠剪影/件数，勿跨轮抠格拼表",
+        "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+        "from_score": "9.4"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "22:20:31",
+    "asset_image": "assets/skill_20261111_drink/merge_cold/sheet_r4.jpg"
+  },
+  "rounds_to_converge": 4,
+  "convergence_badge": "共 4 轮未达阈值，采用最高分",
+  "winner_image": "assets/skill_20261111_drink/merge_cold/sheet_r4.jpg",
+  "best_image": "assets/skill_20261111_drink/merge_cold/sheet_r4.jpg",
+  "final_image": "assets/skill_20261111_drink/merge_cold/final.jpg",
+  "settle_pending": false,
+  "process_board": ".memory-art/converge/boards/merge_cold_drink_20261111/index.html",
+  "settle_done_at": "2026-11-11 22:21:47 UTC+8",
+  "settle_saved_paths": [
+    ".memory-art\\entries\\merge.HarborColdDrink\\CHAT20261111222125674RECIPE.md",
+    ".memory-art\\entries\\merge.HarborColdDrink\\CHAT20261111222127811REDLINE.md",
+    ".memory-art\\_reflections\\20261111_222128_merge_cold_drink_20261111.json"
+  ]
+}

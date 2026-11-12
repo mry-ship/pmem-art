@@ -1,0 +1,73 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-11-12 22:44:21 UTC+8",
+  "session_id": "suite_multi_open",
+  "goal": "用这份参考接着做多图分工开态/完工：只改装修完成度，锁机位身份与转角侧壁；垫上一态关态交件 closed_final；suite_multi 第二态",
+  "module": "brand.WorldStyle",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 2,
+  "winner_round": 2,
+  "winner_score": 9.61,
+  "winner_image": "assets/skill_20261112_suite/out/draw.multi/open_r2.png",
+  "winner_passed": true,
+  "outcome": "达标定稿 · 最高分第 2 轮",
+  "what_fixed": [
+    "只修屋顶墙面至完全完好，其余机位身份床炉人物全不动"
+  ],
+  "what_still_weak": "残余可接受点：开态完工成立，点名锁四项均已单独写明守住",
+  "strengths": "结构图3/4高角度卧室机位已守住；床左壁炉右转角侧壁宽度已守住；绿发女+红发女童身份发色服装气质已守住；开关态状态机合理已守住（开态完工：完整屋顶燃壁炉粉床暖地板无漏雨）",
+  "taste_deltas": {
+    "from_strengths": [
+      "结构图3/4高角度卧室机位已守住；床左壁炉右转角侧壁宽度已守住；绿发女+红发女童身份发色服装气质已守住；开关态状态机合理已守住（开态完工：完整屋顶燃壁炉粉床暖地板无漏雨）"
+    ],
+    "from_defects": [
+      "开态状态机未完成：左上屋顶仍破露木架缺瓦，尚未完全完工；需完整屋顶墙面无破洞无雨桶；点名锁未单独验收：开关态状态机合理"
+    ]
+  },
+  "warm_start_confidence": 1.0,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 9.11,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 9.61,
+      "passed": true
+    }
+  ],
+  "lessons": [
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：开态状态机未完成：左上屋顶仍破露木架缺瓦，尚未完全完工；需完整屋顶墙面无破洞无雨桶；点名锁未单独验收：开关态状态机合理",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "9.11"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：结构图3/4高角度卧室机位已守住；床左壁炉右转角侧壁宽度已守住；绿发女+红发女童身份发色服装气质已守住；壁炉已燃、粉床暖地板方向对",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.11"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：开态完工成立，点名锁四项均已单独写明守住",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.61"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：结构图3/4高角度卧室机位已守住；床左壁炉右转角侧壁宽度已守住；绿发女+红发女童身份发色服装气质已守住；开关态状态机合理已守住（开态完工：完整屋顶燃壁炉粉床暖地",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.61"
+    }
+  ]
+}

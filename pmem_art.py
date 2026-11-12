@@ -29,7 +29,7 @@ from lifecycle import ensure_stdio_survives_locale
 
 ensure_stdio_survives_locale()
 
-VERSION = "0.16.9-art"
+VERSION = "0.16.10-art"
 MEMORY_DIR = ".memory-art"
 
 KIND_META = {
@@ -1783,20 +1783,6 @@ def image_gen_arg_view(tool: str, args: dict[str, Any]) -> tuple[str, dict[str, 
     return "", {}
 
 
-def merge_block_into_image_args(args: dict[str, Any], block: str) -> dict[str, Any]:
-    """Prepend Warm-Start into prompt/description without duplicating."""
-    from improve import merge_warm_start_prompt
-
-    out = dict(args)
-    pack = {"prompt_block": block}
-    for key in ("prompt", "description"):
-        if str(out.get(key) or "").strip():
-            out[key] = merge_warm_start_prompt(str(out[key]), pack)
-            return out
-    out["description"] = block
-    return out
-
-
 def cmd_hook(root: Path, data: dict[str, Any], event: str) -> int:
     """Cursor / Claude Code hooks：生图前召回记忆；落盘后轻量提示；不阻断对话。"""
     payload: dict[str, Any] = {}
@@ -1849,6 +1835,21 @@ def cmd_hook(root: Path, data: dict[str, Any], event: str) -> int:
         print(json.dumps(out, ensure_ascii=False))
         return 0
 
+    # 认领出图窗：只走 post-asset（GenerateImage 成功后）。
+    # pre-gen 即使手工挂上也不认领，避免双路径把归属绑乱后难纠正。
+    # Write/Edit/MCP/pre-tool 不认领。须已有活跃 converge session。
+    if event == "post-asset" and conv_id and is_generate_image_tool(tool, args_obj):
+        try:
+            from skills_kit.converge_loop import (
+                active_session_id,
+                claim_active_conversation,
+            )
+
+            if active_session_id(root):
+                claim_active_conversation(root, conv_id)
+        except Exception:
+            pass
+
     # 生图前 / 写资产前：自动 search 相关记忆（有活跃 converge 会话时用会话模块，不靠猜）
     if event in ("pre-tool", "pre-gen"):
 
@@ -1859,7 +1860,6 @@ def cmd_hook(root: Path, data: dict[str, Any], event: str) -> int:
         try:
             from skills_kit.converge_loop import (
                 active_session_id,
-                claim_active_conversation,
                 load_session,
             )
             sid = active_session_id(root)
@@ -1869,14 +1869,6 @@ def cmd_hook(root: Path, data: dict[str, Any], event: str) -> int:
                 warm = sess.get("warm_start") if isinstance(sess.get("warm_start"), dict) else {}
                 if not q:
                     q = str(sess.get("goal") or "")
-            # 仅 pre-gen + 真 GenerateImage 认领；_active 有 sid 即可（不要求会话 JSON 已可读）
-            if (
-                event == "pre-gen"
-                and conv_id
-                and sid
-                and is_generate_image_tool(tool, args_obj)
-            ):
-                claim_active_conversation(root, conv_id)
         except Exception:
             sess = {}
         # 真生图且路由未放行：拦住 GenerateImage。stop followup 仍按对话归属，这里不改。
@@ -1942,49 +1934,22 @@ def cmd_hook(root: Path, data: dict[str, Any], event: str) -> int:
             block = "\n".join(
                 f"- [{e.get('kind')}] {e.get('summary')}" for e in matched if e.get("summary")
             )
-        kind, view = image_gen_arg_view(tool, args_obj)
-        # pre-gen 默认不灌 Warm-Start 进 GenerateImage（对照试验后定为默认）。
-        # 显式 PMEM_ART_PRE_GEN_INJECT=1 才并入；converge generate 仍并入已过滤 pack。
-        # merge.* 额外硬跳过，避免误开环境变量时再污染 GH 表面锁。
-        inject_opt_in = str(os.environ.get("PMEM_ART_PRE_GEN_INJECT") or "").strip().lower() in (
-            "1",
-            "true",
-            "yes",
-            "on",
-        )
-        skip_merge_inject = str(module or "").startswith("merge.") and is_generate_image_tool(
-            tool, args_obj
-        )
-        will_inject = bool(
-            kind and block and not deny_gen and inject_opt_in and not skip_merge_inject
-        )
+        kind, _view = image_gen_arg_view(tool, args_obj)
+        # pre-gen 永不灌 Warm-Start 进 GenerateImage（无环境变量后门）。
+        # 记忆并入只走 converge generate 已过滤 pack。
         if matched or layered_k or block:
             advice.append(
                 f"【pmem-art记忆】模块 {module or '?'} · 私有 {len(matched)} 条 · 知识卡 {len(layered_k)} 张"
-                + (" · 已并入 GenerateImage" if will_inject else "")
             )
-            if kind and block and not deny_gen and not will_inject:
-                if not inject_opt_in:
-                    advice.append(
-                        "【pmem-art记忆】pre-gen 默认不灌入 GenerateImage"
-                        "（设 PMEM_ART_PRE_GEN_INJECT=1 才并入）"
-                    )
-                elif skip_merge_inject:
-                    advice.append(
-                        "【pmem-art记忆】merge 模块：跳过 Warm-Start 灌入 GenerateImage"
-                    )
+            if kind and block and not deny_gen:
+                advice.append(
+                    "【pmem-art记忆】pre-gen 永不灌入 GenerateImage；"
+                    "并入以 converge generate 的 WARM_START_MERGED 为准"
+                )
             for e in matched:
                 advice.append(f"  · [private:{e.get('kind')}] {e.get('summary', '')[:100]}")
             for kc in layered_k:
                 advice.append(f"  · [{kc.get('layer_scope', 'shared')}:knowledge] {kc.get('title')}: {kc.get('body', '')[:80]}")
-            if will_inject:
-                patched = merge_block_into_image_args(view, block)
-                if kind == "nested":
-                    new_outer = dict(args_obj)
-                    new_outer["arguments"] = patched
-                    updated_input = new_outer
-                else:
-                    updated_input = patched
         elif q:
             advice.append(f"【pmem-art记忆】模块 {module or '未识别'} 暂无私有记忆。生图后请说「太赛博 / 这版留着」沉淀。")
 

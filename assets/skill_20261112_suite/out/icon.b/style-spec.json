@@ -1,0 +1,58 @@
+{
+  "project": "Brimwave Café",
+  "route_id": "icon.b",
+  "preset": "Soft",
+  "grid": 24,
+  "viewBox": "0 0 24 24",
+  "strokeWidth": 2,
+  "strokeLinecap": "round",
+  "strokeLinejoin": "round",
+  "cornerRadiusHint": 4,
+  "color": "currentColor",
+  "fill": "none",
+  "padding": 2,
+  "opticalBalance": true,
+  "pad_used": [],
+  "icons": [
+    {
+      "name": "home",
+      "group": "Navigation",
+      "label": "Home"
+    },
+    {
+      "name": "shop",
+      "group": "Navigation",
+      "label": "Shop"
+    },
+    {
+      "name": "merge",
+      "group": "Actions",
+      "label": "Merge"
+    },
+    {
+      "name": "bag",
+      "group": "Inventory",
+      "label": "Bag"
+    },
+    {
+      "name": "star",
+      "group": "Trust",
+      "label": "Star"
+    },
+    {
+      "name": "settings",
+      "group": "Navigation",
+      "label": "Settings"
+    },
+    {
+      "name": "mail",
+      "group": "Communication",
+      "label": "Mail"
+    },
+    {
+      "name": "heart",
+      "group": "Trust",
+      "label": "Heart"
+    }
+  ]
+}

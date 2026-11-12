@@ -1,0 +1,19 @@
+﻿待确认的种子记忆 9 条：
+  feature.Improve（2 条）
+    [01M642X6FRM31CR13JD8RQZQZN] AutoAccept · exclusion：禁止自动accept全部知识卡，教练收下必须用户点名
+    [01M642X5D4VXT06BTEPJWZCAFC] SharedKnowledge · exclusion：项目专属色值和画风禁止上浮到跨项目共享知识层
+  feature.SkillsKit.Converge（1 条）
+    [01M642X8HVKB697ARSPKC5ESWA] AnatomyVeto · exclusion：角色透视解剖低于7.5不能停，缺维fail-closed
+  infra.Cli（1 条）
+    [01M642X7NN3FYC3YHX3TH2GKQ6] WindowsCli · conclusion：Windows CLI要防编码崩溃，技能文档必须和已安装技能一致
+  infra.Judge（2 条）
+    [01M642X1MVWSVPT5XPG1MBFHPQ] OfficialScore · conclusion：官方停机分是六维加权调和平均，解析失败不能手填
+    [01M642X0RZZCHSHNJ16ZVJ1PKS] PixelJudge · exclusion：VLM只按像素打六维，禁止把提示词当作成图证据
+  infra.Scripts（1 条）
+    [01M642X4H1C0ZVG4B4N8EBYF5W] NotContract · exclusion：批跑脚本不是skill合同，合同只在skills_kit
+  infra.Tests（2 条）
+    [01M642X3CDJ59AEAKBDH897HSQ] NegationLock · exclusion：否定句不能当成构图或垫图的肯定锁
+    [01M642X2GM9EQCYEX5CY5AZMK2] Session · exclusion：没有converge start时generate必须失败，不能悄悄建会话
+
+全部确认：pmem seed --accept --module <模块>（或 --all）；逐条：pmem seed --accept <id> ...
+退回不要的：pmem seed --reject <id> ...（标为归档，不再出现在检索里）

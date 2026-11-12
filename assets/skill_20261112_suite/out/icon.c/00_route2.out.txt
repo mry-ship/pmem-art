@@ -1,0 +1,24 @@
+﻿── 给美术看（请只转述下面这块）──
+【按 Mode C 走了】
+按背包道具格隔离底图标来做（Cursor 纯黑；透明引擎才真 alpha）。
+── Agent 技术明细 ──
+【按 Mode C 走了】
+confidence: high  execute_ok: True
+mode: skill  would_execute: True
+route_ids: ['icon.c']
+announce: 按 Mode C 走了
+match: lexical_ngram+colloquial_expand+canonical
+canonical[agent]: 游戏道具格图标隔离底 PNG 批量预览；走图标 C
+reason: icon
+steps:
+  1. pmem-icon/Mode C → /pmem-icon Mode C：Brimwave Cafe 海鲜咖啡馆八枚道具格批量预览拼板，纯黑隔离底
+top neighbors (k=8, calibrate only):
+  · 1.1448  skill ['icon.c'] | 背包道具图标，256 透明底，第0个
+  · 1.1448  skill ['icon.c'] | 背包道具图标，256 透明底，第10个
+  · 1.1448  skill ['icon.c'] | 背包道具图标，256 透明底，第12个
+  · 1.1448  skill ['icon.c'] | 背包道具图标，256 透明底，第14个
+  · 1.1448  skill ['icon.c'] | 背包道具图标，256 透明底，第16个
+  · 1.1448  skill ['icon.c'] | 背包道具图标，256 透明底，第18个
+  · 1.1448  skill ['icon.c'] | 背包道具图标，256 透明底，第20个
+  · 1.1448  skill ['icon.c'] | 背包道具图标，256 透明底，第22个
+对美术只贴 artist_say（标签+一句人话），禁止刷 confidence/json。先写标准路由句再 route --canonical；execute_ok 才开画；plan_conflict / confidence=ask|low / vague 先问人。

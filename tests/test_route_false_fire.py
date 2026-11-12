@@ -175,6 +175,10 @@ class RouteFalseFireTests(unittest.TestCase):
             "审计一下整个项目",
             "review the code",
             "code review this module",
+            "检查一遍项目中是否有哪些环节或者问题会造成提示词方向变化造成问题",
+            "检查项目里提示词方向漂移风险",
+            "审计管线里会造成 brief 方向变化的问题",
+            "提示词方向变化会造成哪些问题",
         ):
             plan = plan_route(text)
             self.assertEqual(plan.mode, "stop", text)

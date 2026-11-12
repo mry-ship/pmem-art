@@ -1,0 +1,37 @@
+{
+  "route_id": "draw.variant",
+  "banner": "【按点名锁定 draw.variant】",
+  "status": "partial",
+  "passed_line": false,
+  "rounds": 4,
+  "scores": [
+    {
+      "round": 1,
+      "total": 8.39,
+      "dims": "构图8.9/光影8.7/透视8.6/质感8.8/风格8.5/无瑕疵7.6"
+    },
+    {
+      "round": 2,
+      "total": 8.29,
+      "dims": "构图8.8/光影8.6/透视8.5/质感8.7/风格8.4/无瑕疵7.5"
+    },
+    {
+      "round": 3,
+      "total": 8.61,
+      "dims": "构图8.9/光影8.8/透视8.7/质感8.8/风格8.6/无瑕疵8.2"
+    },
+    {
+      "round": 4,
+      "total": 8.83,
+      "dims": "构图9.0/光影8.9/透视8.8/质感8.9/风格8.8/无瑕疵8.7"
+    }
+  ],
+  "final_image": "assets/skill_20261112_suite/out/draw.variant/r4.png",
+  "text_deliverable": null,
+  "pad_used": [
+    "assets/skill_20261112_suite/refs/ref_story.jpg",
+    "assets/skill_20261112_suite/refs/ref_story__ar_9x16.png"
+  ],
+  "bg": "opaque_isolation",
+  "notes": "满4轮未过线；最高R4=8.83。身份机位锁住，惊讶仍偏惊恐未成干净惊讶。"
+}

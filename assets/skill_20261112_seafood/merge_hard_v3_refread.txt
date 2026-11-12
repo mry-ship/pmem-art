@@ -1,0 +1,12 @@
+﻿py : usage: pmem-art [-h] [--root ROOT] [--version]
+所在位置 行:8 字符: 1
++ py -3 -u pmem_art.py ref-read --image "assets/refs/gossip_harbor/gh_m ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (usage: pmem-art...OT] [--version]:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+                {init,bootstrap,sync,candidates,accept,place,classify,ingest,classify-watch,list,search,validate,doctor
+,hygiene,atlas,reveal,feedback,note,ref-read,merge,skills,benchmark,route,showcase-gate,reasonableness,check-scale-gate
+s,vlm-judge,converge,contract,improve,progress,taste,coach,learn,hook}
+                ...
+pmem-art: error: unrecognized arguments: --image

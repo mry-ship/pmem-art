@@ -1,0 +1,13 @@
+✅ [合理性闸 · ui] 通过
+  ✓ subject_action（主体在做什么/交付物是什么）
+  ✓ element_budget（元素预算（不堆景不过载））
+  ✓ hard_locks（硬锁（画幅/透明底/无字/机位等））
+  ✓ fail_at_glance（一眼失败条件已写明）
+  ✓ layout_zones（界面分区清楚）
+  ✓ no_content_clutter（内容区不塞插画杂物）
+  ✓ chrome_not_illustration（控件壳来自 UI 规格，禁止叙事插画当垫图母版）
+  ✓ cta_clear_of_faces（主 CTA 不遮脸/不压主角五官）
+  ✓ control_craft（按钮/顶栏工艺（描边、体积、投影、字重））
+修订提示词（首轮 generate 须用这句；不一致会拒绝，不会静默盖掉）：
+Mobile 9:16 casual-merge MAIN MENU HUD concept for Brimwave Cafe (NOT a Design renovation picker screen). Full-bleed warm harbor cafe interior scene under soft afternoon window light: creamy wood counters, teal accents, pastry trays, coffee steam, distant harbor boats through big windows. Soft glossy toy-plastic casual UI chrome matching pad craft — do not copy pad pixel layout. 顶栏单行资源条：等级珠/体力/金币/宝石，白底圆角胶囊，厚描边（蓝白描边），轻体积挤出，软接触投影，粗白数字深描边字重；右上小设置齿轮不抢主任务。中景港湾咖啡馆场景铺满，吧台师/吉祥物情绪锚，主按钮不遮脸、不压主角五官，脸周留空。中下主…
+已写入会话 `suite_ui_kit`。下一步用 revised 做 converge generate（可省略 --prompt，将自动注入）。

@@ -1,0 +1,1 @@
+❌ 还不能 finish：最高 9.43 < 9.50，且只审了 3/4 轮。继续 converge generate / judge。 未满硬顶 4 轮且不到线时不能结算终稿，也不能复制成 final.jpg。

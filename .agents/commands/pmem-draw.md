@@ -72,7 +72,7 @@ route 锁定后只读注册表该行的 **`pack_headings` 执行包**；不要�
 3. 每轮续跑前先读最小工作集：`pyw -3 -u pmem_art.py contract working-set --id <session>`——只用合同+本图+单点改嘱，**禁止**靠长聊天重谈 L0/L1。
 4. 画师新反馈先归层：`pyw -3 -u pmem_art.py contract classify --text "…"`；再 `contract patch --id <session> --feedback "…"`。L0=可能换交付/重开；L1=升锁点；L2=只改一处。
 5. 首轮 generate 前：`reasonableness review`（`--draft` + `--revised` + checklist）过闸。
-6. `converge generate` **自动并入** Warm-Start `prompt_block`；会话写 `warm_start_merged=true` 并打印 `WARM_START_MERGED=1|0`。外部生图以 generate 吐出的 prompt 为准，**不要**用「GenerateImage Hook 有没有跑」判断是否并入。
+6. `converge generate` **自动并入** Warm-Start `prompt_block`；会话写 `warm_start_merged=true` 并打印 `WARM_START_MERGED=1|0`，以及「装配句 / Warm-Start 段 / 最终 Prompt」。**调用 GenerateImage（或外部生图）必须用「最终 Prompt（出图须用这句）」**，禁止另写一份、禁止手贴 Warm-Start；不要用「GenerateImage Hook 有没有跑」判断是否并入。
 7. 看图打六维 → `converge judge`；≥9.5 到线即 `finish`；不到线最多 4 轮；交件标明是否过线。
 8. 风格优先级同第 2 条；都无才查 `benchmark lookup` / `COMMERCIAL_BENCHMARK.md`（**按品类**；仅 merge 钉 Gossip Harbor）；**禁止**把 benchmarks 目录图当垫图（start/generate 双闸）。
 9. 禁止裸 `--skip-route-gate`（须 `PMEM_ART_ALLOW_GATE_SKIP=1` + `--skip-reason`）。
@@ -107,7 +107,7 @@ route 锁定后只读注册表该行的 **`pack_headings` 执行包**；不要�
 ## 二、标准执行流程（Step 1 ~ Step 3）
 
 ### Step 1：Warm-Start 召回 & 初始化收敛会话（首轮就要接近 9 分）
-1. 记忆召回是自动的，禁止再靠手贴：`converge start` 写入 Warm-Start；`converge generate` 并入提示词；Cursor `preToolUse` 在 GenerateImage 时用 `updated_input` 再灌一次。`search --module` 只在要给画师看召回结果时可选跑：
+1. 记忆召回是自动的，禁止再靠手贴：`converge start` 写入 Warm-Start；`converge generate` 并入提示词并以 `WARM_START_MERGED=1|0` 为准。默认不挂 GenerateImage pre-gen，Hook 也永不 `updated_input` 灌记忆。`search --module` 只在要给画师看召回结果时可选跑，不是并入本身：
    ```bash
    pyw -3 -u pmem_art.py search --module <目标模块>
    ```
@@ -118,8 +118,8 @@ route 锁定后只读注册表该行的 **`pack_headings` 执行包**；不要�
    - 默认 `--mode quality` = 合格线 ≥9.5 **到线即停**；最多 4 轮兜底，不鼓励跑满。
    - `--scale`：`low` 贴原修瑕 · `medium` 小优化锁机位（默认）· `high` 大胆跃升+可叙事 · `recompose` 须配 `--recompose-dir`。
    - `--mode fast`：warm-start 置信度高时可走 **fast track**（仍须每张打分；最终采纳默认仍要 ≥9.5，除非用户明确说「草稿/fast/先看看」）。
-   - `converge generate` **自动把 Warm-Start `prompt_block` 并入提示词**。Cursor **GenerateImage** 路径上，`preToolUse` Hook 再用 `updated_input` 灌一次。对话里回显「pmem-art 已自动并入记忆」。禁止再靠手贴。
-   - **外部生图**（Shell / apikey-image 等、不经 Cursor GenerateImage）：Hook 可能整段不触发——以 `converge generate` 并入的 prompt 为准，开画前确认会话里已有 warm-start / revised；不要把「没跑到 GenerateImage Hook」误报成「没并入就是 bug」。
+   - `converge generate` **自动把 Warm-Start `prompt_block` 并入提示词**。对话里回显「装配句 / Warm-Start 段 / 最终 Prompt」与 `WARM_START_MERGED=1`。禁止再靠手贴，也禁止用「GenerateImage Hook 有没有跑」判断是否并入。
+   - **出图硬规**：`GenerateImage` / Shell / apikey-image 的 description（或等价字段）**必须**填 generate 打印的「最终 Prompt（出图须用这句）」；禁止另写第二份 brief、禁止手贴 Warm-Start。
    - **档位只规定能动多少，出图句用开会话打印的那一家**：
      - `low`：写成一处可改，并点名邻区保持原样。
      - `medium`：只留一处看得见的打磨，机位锁死。
@@ -159,7 +159,7 @@ route 锁定后只读注册表该行的 **`pack_headings` 执行包**；不要�
   - 没有参考图的纯文本任务：不垫成图，只在提示词上追加改点。
   - 定稿写死底：实色、场景，或「透明意图」。**Cursor GenerateImage 无 alpha**：透明意图改写成不透明隔离底（默认纯黑），禁止后抠。**gpt-image 等支持透明时**可直接交真 alpha PNG。品红块和品红底 JPG 不能当交付。
   - **风格跳跃（`recompose_bold` / `style_jump`）**：不垫旧风格参考，也不垫上一轮成图。剪影和画幅留在提示词里。
-- 调用生图工具（如 `GenerateImage` 或项目配置的生图脚本）**生成 1 张图**。
+- 调用生图工具（如 `GenerateImage` 或项目配置的生图脚本）**生成 1 张图**。description / prompt **必须**用本轮 `converge generate` 打印的「最终 Prompt（出图须用这句）」；禁止另写、禁止手贴记忆包。
 
 ## 底与透明度（按生图引擎 · Agent 必读）
 - **Cursor `GenerateImage` 不支持真透明**。口语要「透明底」时，改写为**不透明隔离底**（默认纯黑 `#000000`，或定稿写死的实色空底）；交不透明 PNG/JPG 即可。**禁止**成图后再抠色、抠角、本地挖洞冒充 alpha。**例外：合成梯整表（overview_sheet）用浅色圆角卡，纯黑只给 per_cell。**

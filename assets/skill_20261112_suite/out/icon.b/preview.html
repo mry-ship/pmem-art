@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<title>Brimwave Café · Mode B Soft Icons</title>
+<style>
+  :root { color-scheme: light; }
+  body {
+    margin: 0; font-family: "Segoe UI", system-ui, sans-serif;
+    background: linear-gradient(160deg, #f7f0e6, #e8d7c3 55%, #d9c4a8);
+    color: #2a221c; min-height: 100vh; padding: 32px;
+  }
+  h1 { font-size: 1.25rem; font-weight: 650; margin: 0 0 6px; }
+  .meta { opacity: .75; margin-bottom: 24px; font-size: .9rem; }
+  .grid {
+    display: grid; grid-template-columns: repeat(4, minmax(120px, 1fr));
+    gap: 16px; max-width: 720px;
+  }
+  .cell {
+    background: #fffaf3; border-radius: 16px; padding: 20px 12px 14px;
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    box-shadow: 0 8px 20px rgba(42,34,28,.08);
+  }
+  .glyph {
+    width: 48px; height: 48px; color: #3b2f26;
+    display: grid; place-items: center;
+  }
+  .glyph svg { width: 32px; height: 32px; }
+  .name { font-size: .8rem; letter-spacing: .02em; }
+  .tiny {
+    margin-top: 28px; display: flex; gap: 18px; flex-wrap: wrap; align-items: center;
+  }
+  .tiny .glyph { width: 24px; height: 24px; }
+  .tiny .glyph svg { width: 24px; height: 24px; }
+</style>
+</head>
+<body>
+  <h1>Brimwave Café — Mode B Soft (2px round)</h1>
+  <p class="meta">viewBox 0 0 24 24 · currentColor · stroke-linecap/linejoin=round · no GH pad</p>
+  <div class="grid" id="grid"></div>
+  <div class="tiny" id="tiny"></div>
+<script>
+const names = ["home","shop","merge","bag","star","settings","mail","heart"];
+async function load() {
+  const grid = document.getElementById("grid");
+  const tiny = document.getElementById("tiny");
+  for (const name of names) {
+    const res = await fetch(name + ".svg");
+    const text = await res.text();
+    const cell = document.createElement("div");
+    cell.className = "cell";
+    cell.innerHTML = `<div class="glyph">${text}</div><div class="name">${name}</div>`;
+    grid.appendChild(cell);
+    const t = document.createElement("div");
+    t.className = "glyph";
+    t.title = name + " @24px";
+    t.innerHTML = text;
+    tiny.appendChild(t);
+  }
+}
+load();
+</script>
+</body>
+</html>

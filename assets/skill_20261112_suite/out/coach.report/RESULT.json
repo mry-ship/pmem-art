@@ -1,0 +1,13 @@
+{
+  "route_id": "coach.report",
+  "banner": "【按 【进阶/可选】进步、短板与知识卡（日常已静默写过） 走了】",
+  "status": "text_only",
+  "passed_line": null,
+  "rounds": 0,
+  "scores": [],
+  "final_image": null,
+  "text_deliverable": "assets/skill_20261112_suite/out/coach.report/COACH.md",
+  "pad_used": [],
+  "bg": "n/a",
+  "notes": "已出进步+短板报告；知识卡仅列表未写入。"
+}

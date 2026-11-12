@@ -33,6 +33,22 @@ class TestJunkSidecarSkip(unittest.TestCase):
         found = [p.name for p in list_image_files(td, ["assets"])]
         self.assertEqual(found, ["hero.jpg"])
 
+    def test_list_image_files_skips_skill_staging_suite(self) -> None:
+        from lifecycle import is_skill_staging_dirname, list_image_files
+
+        self.assertTrue(is_skill_staging_dirname("skill_20261112_suite"))
+        self.assertFalse(is_skill_staging_dirname("ui"))
+        td = Path(tempfile.mkdtemp())
+        keep = td / "assets" / "ui"
+        keep.mkdir(parents=True)
+        (keep / "btn.png").write_bytes(b"\x89PNG\r\n\x1a\n")
+        suite = td / "assets" / "skill_20261112_suite" / "out"
+        suite.mkdir(parents=True)
+        (suite / "final.png").write_bytes(b"\x89PNG\r\n\x1a\n")
+        found = [p.as_posix().replace("\\", "/") for p in list_image_files(td, ["assets"])]
+        self.assertTrue(any(p.endswith("ui/btn.png") for p in found))
+        self.assertFalse(any("skill_20261112_suite" in p for p in found))
+
     def test_load_project_survives_appledouble_in_specs(self) -> None:
         import pmem_art
 

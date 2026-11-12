@@ -1,0 +1,112 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-11-11 23:50:40 UTC+8",
+  "session_id": "merge_cocoa_flat_20261111",
+  "goal": "按新口径重开热可可饮料合成梯整表；merge overview_sheet shop_ladder L1-L8；手绘软渐变平面货柜感，禁任何3D黏土软塑胶",
+  "module": "merge.HarborHotCocoa",
+  "converge_mode": "quality",
+  "guided_mode": "text_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 4,
+  "winner_score": 9.07,
+  "winner_image": "assets/skill_20261111_drink/merge_cocoa_v2/sheet_r4.jpg",
+  "winner_passed": false,
+  "outcome": "共 4 轮未达阈值，采用最高分",
+  "what_fixed": [
+    "整张重开：强制2D手绘插画/gouache flat，禁止体积AO、黏土、软塑胶、立体投影；强调flat painted candy sticker on card；末档不得明显矮于前档；有贴边残片/切顶须整张重出；邻档靠剪影/件数可分；禁止跨轮抠格拼表",
+    "纯文重开：2D flat gouache sticker；强制4行2列竖屏圆角卡；禁止体积阴影与黏土",
+    "浅奶油4x2 flat gouache；末档不得明显矮于前档；有贴边残片/切顶须整张重出；邻档靠剪影/件数可分；禁止跨轮抠格拼表",
+    "已满轮：交最高分；若续跑减前段装饰、拉开L6/L7剪影"
+  ],
+  "what_still_weak": "L1腰线略早；部分杯柄装饰纹样贯穿略强；L6/L7纹样偏近；提示：邻档框高接近（第 1→2 为 0.22→0.22）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 2→3 为 0.22→0.17）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 3→4 为 0.17→0.18）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 4→5 为 0.18→0.17）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；点名锁未单独验收：锁：平面糖釉货柜感；禁任何3D黏土软塑胶；同链档序；无字无脸；邻档剪影可分",
+  "strengths": "手绘平面糖釉立住，浅奶油卡4x2；无明显黏土软塑胶立体；笔触可读",
+  "taste_deltas": {
+    "from_strengths": [
+      "手绘平面糖釉立住，浅奶油卡4x2；无明显黏土软塑胶立体；笔触可读"
+    ],
+    "from_defects": [
+      "仍是黏土立体图标；版式漂成偏横两排而非稳定4x2竖卡；平面手绘未立住；提示：邻档框高接近（第 1→2 为 0.23→0.10）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 3→",
+      "软立体+黑底+版式偏横；提示：邻档框高接近（第 1→2 为 0.72→0.75）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 2→3 为 0.75→0.78）；分档靠剪影/件数",
+      "L1腰线略早；部分杯柄装饰纹样贯穿略强；L6/L7纹样偏近；提示：邻档框高接近（第 1→2 为 0.22→0.22）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 2→3 为 0"
+    ]
+  },
+  "warm_start_confidence": 0.45,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 8.19,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 7.79,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 7.6,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 9.07,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：整体仍是软体积立体图标，不是手绘平面糖釉插画；有立体AO与塑感；平面货柜感未立住；提示：邻档框高接近（第 2→3 为 0.32→0.21）；分档靠剪影/件数，勿",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.19"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：4x2浅卡与档序仍可读；L5无糖浆；L7棉花糖可分",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.19"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：仍是黏土立体图标；版式漂成偏横两排而非稳定4x2竖卡；平面手绘未立住；提示：邻档框高接近（第 1→2 为 0.23→0.10）；分档靠剪影/件数，勿跨轮抠格拼表",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "7.79"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：档序物件仍在；奶油与棉花糖可分",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "7.79"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：软立体+黑底+版式偏横；提示：邻档框高接近（第 1→2 为 0.72→0.75）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 2→3 为",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "7.6"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：档序物件齐全",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "7.6"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：L1腰线略早；部分杯柄装饰纹样贯穿略强；L6/L7纹样偏近；提示：邻档框高接近（第 1→2 为 0.22→0.22）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.07"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：手绘平面糖釉立住，浅奶油卡4x2；无明显黏土软塑胶立体；笔触可读",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.07"
+    }
+  ]
+}

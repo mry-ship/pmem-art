@@ -1,0 +1,4 @@
+usage: pmem-art [-h] [--root ROOT] [--version]
+                {init,bootstrap,sync,candidates,accept,place,classify,ingest,classify-watch,list,search,validate,doctor,hygiene,atlas,reveal,feedback,note,ref-read,merge,skills,benchmark,route,showcase-gate,reasonableness,check-scale-gates,vlm-judge,converge,contract,improve,progress,taste,coach,learn,hook}
+                ...
+pmem-art: error: unrecognized arguments: Cafe casual merge main-menu HUD concept, warm harbor cafe, soft glossy casual UI soft glossy casual merge HUD chrome; no pixel copy Design bar

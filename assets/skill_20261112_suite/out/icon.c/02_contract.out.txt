@@ -1,0 +1,10 @@
+理解合同 v1
+原话/目标：/pmem-icon Mode C：Brimwave Cafe 海鲜咖啡馆八枚道具格批量预览拼板，纯黑隔离底。用这份稿：assets/skill_20261112_suite/refs/ref_merge_strip.png 只锁货面气质不抄整表（生图时已垫；会话不绑横条画幅）。Mode C batch preview
+L0 交付：icon.c | route_ids=icon.c
+banner：【按 Mode C 走了】
+L1 锁：route=icon.c；8枚海鲜咖啡馆道具；纯黑不透明隔离底；厚剪影棚拍光接触影；无字无场景无UI棋盘；只锁垫图货面不抄整表；交付1:1
+L1 不锁：不抄 strip 格子版式/HUD/手指；不做 Mode A/B；不做合成梯；不后抠 alpha；会话不绑横条16:9
+本趟默认：默认：Mode C 批量预览一张 1:1 八格道具拼板｜关键枚 converge 关闭｜Cursor GenerateImage 纯黑 opaque_isolation｜跟垫图货面气质
+商业气质：休闲 merge 道具格：软立体糖釉、圆润厚实、无硬描边、暖饱和、块面高光
+L2 当轮可改：（看图后单点写）
+✅ 已写默认：默认：Mode C 批量预览一张 1:1 八格道具拼板｜关键枚 converge 关闭｜Cursor GenerateImage 纯黑 opaque_isolation｜跟垫图货面气质

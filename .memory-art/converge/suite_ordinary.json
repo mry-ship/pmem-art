@@ -1,0 +1,983 @@
+{
+  "session_id": "suite_ordinary",
+  "started_at": "2026-11-12 22:22:23 UTC+8",
+  "goal": "普通图：单张午后窗边咖啡静物，medium；用这份稿作风格参考，跟垫图光泽卡通三维与暖色方向；Brimwave Café 午后窗边一杯咖啡与一块点心特写",
+  "module": "brand.WorldStyle",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "medium",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "medium",
+    "label": "中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.5)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 1,
+    "target_score_threshold": 9.5,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.1875,
+      "perspective_anatomy": 0.1125,
+      "texture_detail": 0.1875,
+      "spec_style": 0.1125,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "viewpoint_frame",
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图，只在提示词上补还没过的那一处（提示词改动仍 ≤40%）",
+    "max_prompt_delta_ratio": 0.4,
+    "allow_recompose": false,
+    "allow_viewpoint_change": false,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "viewpoint_angle (不改机位与镜头视角)",
+      "element_count (不增删主体元素清单)",
+      "no_full_recompose (不做整体 recompose / 换景别故事)",
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)"
+    ],
+    "min_round_leap": 0.15,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光",
+    "medium_family": "volume",
+    "best_direction_hint": "最优方向：光影·空气·介质；可小幅姿态/局部布局",
+    "goal": "普通图：单张午后窗边咖啡静物，medium；用这份稿作风格参考，跟垫图光泽卡通三维与暖色方向；Brimwave Café 午后窗边一杯咖啡与一块点心特写",
+    "module": "brand.WorldStyle",
+    "ref_image": "assets/skill_20261112_suite/refs/ref_life.jpg",
+    "ref_analysis": "【参考图视觉解构·只借表面】色板#F4C84A/#3CB371/#E85A4F/#5BA3D9；光泽卡通三维柔散射；静物跟同表面。禁止继承三格拼板。"
+  },
+  "medium_family": "volume",
+  "contract": "",
+  "target_score_threshold": 9.5,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_life__ar_3x4.png",
+  "ref_analysis": "【参考图视觉解构·只借表面】色板#F4C84A/#3CB371/#E85A4F/#5BA3D9；光泽卡通三维柔散射；静物跟同表面。禁止继承三格拼板。",
+  "default_aspect_ratio": "3:4",
+  "default_reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_life__ar_3x4.png"
+  ],
+  "aspect_ratio": "3:4",
+  "reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_life__ar_3x4.png"
+  ],
+  "ref_physical_traits": {
+    "exists": true,
+    "size_bytes": 3812043,
+    "size_kb": 3722.7,
+    "width": 2016,
+    "height": 2688,
+    "aspect_ratio": "3:4",
+    "canonical_aspect_ratio": "3:4",
+    "color_entropy": 7.98
+  },
+  "param_validation": {
+    "valid": true,
+    "validation_passed": true,
+    "case_id": "suite_ordinary",
+    "scale": "medium",
+    "aspect_ratio": "3:4",
+    "ref_aspect_ratio": "3:4",
+    "ref_dimensions": "2016x2688",
+    "output_aspect_ratio": "",
+    "output_dimensions": "",
+    "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_life__ar_3x4.png",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_life__ar_3x4.png"
+    ],
+    "inherited_default_aspect_ratio": false,
+    "inherited_default_pad_image": false,
+    "matched_ref_aspect_ratio": true,
+    "matched_ref_pad_image": true,
+    "matched_output_aspect_ratio": true,
+    "three_step_stage": "step1_start",
+    "three_step_verified": false,
+    "warnings": [
+      "参考图已加边为同一张垫图 'ref_life__ar_3x4.png'，会话和生图都用这一张，不要再垫原图。"
+    ]
+  },
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.5,
+  "accept_threshold": 9.5,
+  "max_rounds": 4,
+  "ready_to_finish": true,
+  "status": "finished",
+  "owner_conversation_id": "suite_ordinary",
+  "route_ids": [
+    "draw.ordinary"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "3:4",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_life__ar_3x4.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "suite_ordinary",
+        "scale": "medium",
+        "aspect_ratio": "3:4",
+        "ref_aspect_ratio": "3:4",
+        "ref_dimensions": "2016x2688",
+        "output_aspect_ratio": "3:4",
+        "output_dimensions": "864x1152",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_life__ar_3x4.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_life__ar_3x4.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "22:30:11",
+      "image": "assets/skill_20261112_suite/out/draw.ordinary/r1.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 1022546,
+        "size_kb": 998.6,
+        "width": 864,
+        "height": 1152,
+        "aspect_ratio": "3:4",
+        "canonical_aspect_ratio": "3:4",
+        "color_entropy": 7.99
+      },
+      "raw_score": 8.42,
+      "score": 8.42,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.4/光影8.8/透视9.0/质感8.2/风格8.0/无瑕疵8.3",
+      "dims_parsed": {
+        "composition": 8.4,
+        "lighting_color": 8.8,
+        "perspective_anatomy": 9.0,
+        "texture_detail": 8.2,
+        "spec_style": 8.0,
+        "flawlessness": 8.3
+      },
+      "weighted_score": 8.42,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "点名锁未单独验收：锁：窗边咖啡静物题材；光泽卡通三维；暖午后窗光；单张非拼板"
+      ],
+      "stagnated": false,
+      "strengths": "窗边咖啡+点心静物成立；杯底接触影可见；港湾虚化背景有休闲气质",
+      "defects": "平视窗台特写，杯约占画面三分之一，主光从右侧打入。窗台左侧多出一盆绿植，破了只许杯+点心+窗台的元素预算；杯面与木纹偏写实摄影；糖霜樱桃小环读成甜品棚拍而非光泽卡通道具。；点名锁未单独验收：锁：窗边咖啡静物题材；光泽卡通三维；暖午后窗光；单张非拼板",
+      "next_fix": "删掉绿植只留杯与点心；主光改到左侧窗光；杯与点心改成圆润光泽卡通三维块面高光，去掉写实木纹毛孔",
+      "prompt": "点名锁每轮都要单独留住，不许整张漂掉：锁：窗边咖啡静物题材；光泽卡通三维；暖午后窗光；单张非拼板 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: brand.WorldStyle\n- 置信度: 0.60（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n  · 确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；\n- 必须避开红线:\n  · [CHAT20261109232829194REDLINE] [收敛踩坑红线] 有参考题材不变——把蘑菇甜点拼盘画成更干净的道具特写；身份不：避免「左上奶酪体量过大，压缩了果实与叶片的展示空间；中右部枝梗、果实和叶片叠压密集，局部切线较多」\n  · [CHAT20261112220939400REDLINE] 禁止偏离样张画风：硬镜面CGI、皮克斯硬塑、哑光黏土软塑胶UI、厚黑描边、写实摄影摆盘、脏暗泥污阴影、赛博霓虹紫雾、灰雾废土、扁平矢量贴纸、油腻金属、指纹…\n  · [CHAT20261109225616629REDLINE] 禁止偏离样张画风：写实皮肤毛孔/照片级木纹毛皮；赛博霓虹与荧光边光；油腻镜面高光与硬金属机械；脏暗泥污阴影与高对比明暗法；扁平2D厚黑描边；真人头身比；城…\n- 审美拍板:\n  · 以后统一按此样张画风：Gossip Harbor 真机海鲜货柜软立体；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1F…\n  · 以后统一按此样张画风：Gossip Harbor真机海鲜货柜；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1FF约20…\n- 个人口味: 光影=柔光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光 | A single medium still-life shot of Brimwave Café afternoon window coffee: one ceramic coffee cup with latte foam and one small pastry sit on a sunlit wooden windowsill; soft afternoon window light from the left casts gentle contact shadows on the wood; beyond the glass a soft harbor blur stays out of focus. Soft glossy cartoon 3D rendering matching lifestyle-game prop polish: rounded forms, creamy block highlights near #FEFDFB, warm saturated palette (#F4C84A amber light, creamy ceramic, coral berry accent on the pastry), no hard black outlines, no photoreal pores or oily chrome. Camera locked as a medium still-life tabletop view, not a full cafe exterior, not a character portrait, not a multi-panel poster. Hard locks: only cup plus pastry plus windowsill; no people, no UI, no title text, no triptych. Fail at a glance if the cup floats without contact shadow or if the scene becomes a street exterior. Opaque scene background. | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.0,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：平视窗台特写，杯约占画面三分之一，主光从右侧打入。窗台左侧多出一盆绿植，破了只许杯+点心+窗台的元素预算；杯面与木纹偏写实摄影；糖霜樱桃小环读成甜品棚拍而非光泽",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.42"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：窗边咖啡+点心静物成立；杯底接触影可见；港湾虚化背景有休闲气质",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.42"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "22:31:54"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "3:4",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_life__ar_3x4.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "suite_ordinary",
+        "scale": "medium",
+        "aspect_ratio": "3:4",
+        "ref_aspect_ratio": "3:4",
+        "ref_dimensions": "2016x2688",
+        "output_aspect_ratio": "3:4",
+        "output_dimensions": "768x1024",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_life__ar_3x4.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_life__ar_3x4.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "22:33:35",
+      "image": "assets/skill_20261112_suite/out/draw.ordinary/r2.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 929021,
+        "size_kb": 907.2,
+        "width": 864,
+        "height": 1152,
+        "aspect_ratio": "3:4",
+        "canonical_aspect_ratio": "3:4",
+        "color_entropy": 7.99
+      },
+      "raw_score": 8.68,
+      "score": 8.68,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.1/光影8.6/透视9.1/质感8.4/风格8.3/无瑕疵8.7",
+      "dims_parsed": {
+        "composition": 9.1,
+        "lighting_color": 8.6,
+        "perspective_anatomy": 9.1,
+        "texture_detail": 8.4,
+        "spec_style": 8.3,
+        "flawlessness": 8.7
+      },
+      "weighted_score": 8.68,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "点名锁未单独验收：锁：窗边咖啡静物题材；光泽卡通三维；暖午后窗光；单张非拼板"
+      ],
+      "stagnated": false,
+      "strengths": "绿植已删；只剩杯与点心加窗台；港湾虚化仍在",
+      "defects": "平视窗台特写，杯约占画面三分之一，主光仍从右上打入。杯面拉花与木纹仍偏写实摄影棚拍；点心糖霜樱桃高光油亮，缺少光泽卡通块面。；点名锁未单独验收：锁：窗边咖啡静物题材；光泽卡通三维；暖午后窗光；单张非拼板",
+      "next_fix": "主光改到左侧窗；杯与点心做成圆润卡通三维块面高光近#FEFDFB；木台简化去写实毛孔木纹",
+      "prompt": "点名锁每轮都要单独留住，不许整张漂掉：锁：窗边咖啡静物题材；光泽卡通三维；暖午后窗光；单张非拼板 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: brand.WorldStyle\n- 置信度: 0.60（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n  · 确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；\n- 必须避开红线:\n  · [CHAT20261109232829194REDLINE] [收敛踩坑红线] 有参考题材不变——把蘑菇甜点拼盘画成更干净的道具特写；身份不：避免「左上奶酪体量过大，压缩了果实与叶片的展示空间；中右部枝梗、果实和叶片叠压密集，局部切线较多」\n  · [CHAT20261112220939400REDLINE] 禁止偏离样张画风：硬镜面CGI、皮克斯硬塑、哑光黏土软塑胶UI、厚黑描边、写实摄影摆盘、脏暗泥污阴影、赛博霓虹紫雾、灰雾废土、扁平矢量贴纸、油腻金属、指纹…\n  · [CHAT20261109225616629REDLINE] 禁止偏离样张画风：写实皮肤毛孔/照片级木纹毛皮；赛博霓虹与荧光边光；油腻镜面高光与硬金属机械；脏暗泥污阴影与高对比明暗法；扁平2D厚黑描边；真人头身比；城…\n- 审美拍板:\n  · 以后统一按此样张画风：Gossip Harbor 真机海鲜货柜软立体；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1F…\n  · 以后统一按此样张画风：Gossip Harbor真机海鲜货柜；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1FF约20…\n- 个人口味: 光影=柔光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光 | A single medium still-life shot of Brimwave Café afternoon window coffee: one ceramic coffee cup with latte foam and one small pastry sit on a sunlit wooden windowsill; soft afternoon window light from the left casts gentle contact shadows on the wood; beyond the glass a soft harbor blur stays out of focus. Soft glossy cartoon 3D rendering matching lifestyle-game prop polish: rounded forms, creamy block highlights near #FEFDFB, warm saturated palette (#F4C84A amber light, creamy ceramic, coral berry accent on the pastry), no hard black outlines, no photoreal pores or oily chrome. Camera locked as a medium still-life tabletop view, not a full cafe exterior, not a character portrait, not a multi-panel poster. Hard locks: only cup plus pastry plus windowsill; no people, no UI, no title text, no triptych. Fail at a glance if the cup floats without contact shadow or if the scene becomes a street exterior. Opaque scene background. | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | 删掉绿植只留杯与点心；主光改到左侧窗光；杯与点心改成圆润光泽卡通三维块面高光，去掉写实木纹毛孔",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.1,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：平视窗台特写，杯约占画面三分之一，主光仍从右上打入。杯面拉花与木纹仍偏写实摄影棚拍；点心糖霜樱桃高光油亮，缺少光泽卡通块面。；点名锁未单独验收：锁：窗边咖啡静物",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.68"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：绿植已删；只剩杯与点心加窗台；港湾虚化仍在",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.68"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "22:36:13"
+    },
+    {
+      "round": 3,
+      "round_label": "第 3 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "3:4",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_life__ar_3x4.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "suite_ordinary",
+        "scale": "medium",
+        "aspect_ratio": "3:4",
+        "ref_aspect_ratio": "3:4",
+        "ref_dimensions": "2016x2688",
+        "output_aspect_ratio": "3:4",
+        "output_dimensions": "864x1152",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_life__ar_3x4.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_life__ar_3x4.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "22:39:07",
+      "image": "assets/skill_20261112_suite/out/draw.ordinary/r3.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 952816,
+        "size_kb": 930.5,
+        "width": 864,
+        "height": 1152,
+        "aspect_ratio": "3:4",
+        "canonical_aspect_ratio": "3:4",
+        "color_entropy": 7.99
+      },
+      "raw_score": 8.74,
+      "score": 8.74,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.2/光影8.5/透视9.2/质感8.5/风格8.4/无瑕疵8.8",
+      "dims_parsed": {
+        "composition": 9.2,
+        "lighting_color": 8.5,
+        "perspective_anatomy": 9.2,
+        "texture_detail": 8.5,
+        "spec_style": 8.4,
+        "flawlessness": 8.8
+      },
+      "weighted_score": 8.74,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.06 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "点名锁未单独验收：锁：窗边咖啡静物题材；光泽卡通三维；暖午后窗光；单张非拼板"
+      ],
+      "stagnated": true,
+      "strengths": "仍只有杯与点心；无绿植；港湾虚化干净",
+      "defects": "平视窗台，杯约占三分之一，主光仍从右侧打入。拉花与木纹仍偏写实摄影；点心糖霜油亮缺卡通块面釉光。；点名锁未单独验收：锁：窗边咖啡静物题材；光泽卡通三维；暖午后窗光；单张非拼板",
+      "next_fix": "左侧窗光必须可见；杯点心改玩具级圆润块面釉光#FEFDFB；简化木台去写实木纹",
+      "prompt": "点名锁每轮都要单独留住，不许整张漂掉：锁：窗边咖啡静物题材；光泽卡通三维；暖午后窗光；单张非拼板 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: brand.WorldStyle\n- 置信度: 0.60（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n  · 确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；\n- 必须避开红线:\n  · [CHAT20261109232829194REDLINE] [收敛踩坑红线] 有参考题材不变——把蘑菇甜点拼盘画成更干净的道具特写；身份不：避免「左上奶酪体量过大，压缩了果实与叶片的展示空间；中右部枝梗、果实和叶片叠压密集，局部切线较多」\n  · [CHAT20261112220939400REDLINE] 禁止偏离样张画风：硬镜面CGI、皮克斯硬塑、哑光黏土软塑胶UI、厚黑描边、写实摄影摆盘、脏暗泥污阴影、赛博霓虹紫雾、灰雾废土、扁平矢量贴纸、油腻金属、指纹…\n  · [CHAT20261109225616629REDLINE] 禁止偏离样张画风：写实皮肤毛孔/照片级木纹毛皮；赛博霓虹与荧光边光；油腻镜面高光与硬金属机械；脏暗泥污阴影与高对比明暗法；扁平2D厚黑描边；真人头身比；城…\n- 审美拍板:\n  · 以后统一按此样张画风：Gossip Harbor 真机海鲜货柜软立体；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1F…\n  · 以后统一按此样张画风：Gossip Harbor真机海鲜货柜；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1FF约20…\n- 个人口味: 光影=柔光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光 | A single medium still-life shot of Brimwave Café afternoon window coffee: one ceramic coffee cup with latte foam and one small pastry sit on a sunlit wooden windowsill; soft afternoon window light from the left casts gentle contact shadows on the wood; beyond the glass a soft harbor blur stays out of focus. Soft glossy cartoon 3D rendering matching lifestyle-game prop polish: rounded forms, creamy block highlights near #FEFDFB, warm saturated palette (#F4C84A amber light, creamy ceramic, coral berry accent on the pastry), no hard black outlines, no photoreal pores or oily chrome. Camera locked as a medium still-life tabletop view, not a full cafe exterior, not a character portrait, not a multi-panel poster. Hard locks: only cup plus pastry plus windowsill; no people, no UI, no title text, no triptych. Fail at a glance if the cup floats without contact shadow or if the scene becomes a street exterior. Opaque scene background. | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | 主光改到左侧窗；杯与点心做成圆润卡通三维块面高光近#FEFDFB；木台简化去写实毛孔木纹",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.2,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：平视窗台，杯约占三分之一，主光仍从右侧打入。拉花与木纹仍偏写实摄影；点心糖霜油亮缺卡通块面釉光。；点名锁未单独验收：锁：窗边咖啡静物题材；光泽卡通三维；暖午后窗",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.74"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：仍只有杯与点心；无绿植；港湾虚化干净",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.74"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "22:40:13"
+    },
+    {
+      "round": 4,
+      "round_label": "第 4 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "3:4",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_life__ar_3x4.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "suite_ordinary",
+        "scale": "medium",
+        "aspect_ratio": "3:4",
+        "ref_aspect_ratio": "3:4",
+        "ref_dimensions": "2016x2688",
+        "output_aspect_ratio": "3:4",
+        "output_dimensions": "864x1152",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_life__ar_3x4.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_life__ar_3x4.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "22:45:19",
+      "image": "assets/skill_20261112_suite/out/draw.ordinary/r4.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 884499,
+        "size_kb": 863.8,
+        "width": 864,
+        "height": 1152,
+        "aspect_ratio": "3:4",
+        "canonical_aspect_ratio": "3:4",
+        "color_entropy": 7.99
+      },
+      "raw_score": 8.96,
+      "score": 8.96,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.3/光影8.8/透视9.3/质感8.8/风格8.7/无瑕疵9.0",
+      "dims_parsed": {
+        "composition": 9.3,
+        "lighting_color": 8.8,
+        "perspective_anatomy": 9.3,
+        "texture_detail": 8.8,
+        "spec_style": 8.7,
+        "flawlessness": 9.0
+      },
+      "weighted_score": 8.96,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "点名锁未单独验收：锁：窗边咖啡静物题材；光泽卡通三维；暖午后窗光；单张非拼板"
+      ],
+      "stagnated": false,
+      "strengths": "仍只有杯与点心；杯形更圆润；港湾虚化干净",
+      "defects": "平视窗台，杯约占三分之一，主光仍偏右上（影投向左）。拉花细节仍偏写实；木台仍有细木纹，卡通块面釉光未完全到位。；点名锁未单独验收：锁：窗边咖啡静物题材；光泽卡通三维；暖午后窗光；单张非拼板",
+      "next_fix": "若再开一轮：强制左侧窗光与玩具级块面釉光",
+      "prompt": "原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光 | 点名锁每轮都要单独留住，不许整张漂掉：锁：窗边咖啡静物题材；光泽卡通三维；暖午后窗光；单张非拼板 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】 - 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/) - 目标模块: brand.WorldStyle - 置信度: 0.60（fast-track 资格: 否） - 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。 - 正向保留（要怎样）: · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。 · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。 · 确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读； - 必须避开红线: · [CHAT20261109232829194REDLINE] [收敛踩坑红线] 有参考题材不变——把蘑菇甜点拼盘画成更干净的道具特写；身份不：避免「左上奶酪体量过大，压缩了果实与叶片的展示空间；中右部枝梗、果实和叶片叠压密集，局部切线较多」 · [CHAT20261112220939400REDLINE] 禁止偏离样张画风：硬镜面CGI、皮克斯硬塑、哑光黏土软塑胶UI、厚黑描边、写实摄影摆盘、脏暗泥污阴影、赛博霓虹紫雾、灰雾废土、扁平矢量贴纸、油腻金属、指纹… · [CHAT20261109225616629REDLINE] 禁止偏离样张画风：写实皮肤毛孔/照片级木纹毛皮；赛博霓虹与荧光边光；油腻镜面高光与硬金属机械；脏暗泥污阴影与高对比明暗法；扁平2D厚黑描边；真人头身比；城… - 审美拍板: · 以后统一按此样张画风：Gossip Harbor 真机海鲜货柜软立体；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1F… · 以后统一按此样张画风：Gossip Harbor真机海鲜货柜；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1FF约20… - 个人口味: 光影=柔光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 暖色调 - 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色 - 项目私有知识卡 (Private Layer): · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。 | A single medium still-life shot of Brimwave Café afternoon window coffee: one ceramic coffee cup with latte foam and one small pastry sit on a sunlit wooden windowsill; soft afternoon window light from the left casts gentle contact shadows on the wood; beyond the glass a soft harbor blur stays out of focus. Soft glossy cartoon 3D rendering matching lifestyle-game prop polish: rounded forms, creamy block highlights near #FEFDFB, warm saturated palette (#F4C84A amber light, creamy ceramic, coral berry accent on the pastry), no hard black outlines, no photoreal pores or oily chrome. Camera locked as a medium still-life tabletop view, not a full cafe exterior, not a character portrait, not a multi-panel poster. Hard locks: only cup plus pastry plus windowsill; no people, no UI, no title text, no triptych. Fail at a glance if the cup floats without contact shadow or if the scene becomes a street exterior. Opaque scene background. | 左侧窗光必须可见；杯点心改玩具级圆润块面釉光#FEFDFB；简化木台去写实木纹 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.3,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_MAX_ROUNDS",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：平视窗台，杯约占三分之一，主光仍偏右上（影投向左）。拉花细节仍偏写实；木台仍有细木纹，卡通块面釉光未完全到位。；点名锁未单独验收：锁：窗边咖啡静物题材；光泽卡通",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.96"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：仍只有杯与点心；杯形更圆润；港湾虚化干净",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.96"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "22:46:29"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-11-10 14:02:24 UTC+8"
+    },
+    "module": "brand.WorldStyle",
+    "goal": "普通图：单张午后窗边咖啡静物，medium；用这份稿作风格参考，跟垫图光泽卡通三维与暖色方向；Brimwave Café 午后窗边一杯咖啡与一块点心特写",
+    "confidence": 0.6,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "命中 2 条审美拍板",
+      "个人口味/正向保留非空",
+      "注入红线可控（3 条，已按任务主题过滤）",
+      "挂载 1 张项目知识卡 + 0 张全局美术底层基础卡"
+    ],
+    "top_recipes": [],
+    "top_redlines": [
+      {
+        "id": "CHAT20261109232829194REDLINE",
+        "summary": "[收敛踩坑红线] 有参考题材不变——把蘑菇甜点拼盘画成更干净的道具特写；身份不：避免「左上奶酪体量过大，压缩了果实与叶片的展示空间；中右部枝梗、果实和叶片叠压密集，局部切线较多」",
+        "module": "brand.WorldStyle"
+      },
+      {
+        "id": "CHAT20261112220939400REDLINE",
+        "summary": "禁止偏离样张画风：硬镜面CGI、皮克斯硬塑、哑光黏土软塑胶UI、厚黑描边、写实摄影摆盘、脏暗泥污阴影、赛博霓虹紫雾、灰雾废土、扁平矢量贴纸、油腻金属、指纹…",
+        "module": "brand.WorldStyle"
+      },
+      {
+        "id": "CHAT20261109225616629REDLINE",
+        "summary": "禁止偏离样张画风：写实皮肤毛孔/照片级木纹毛皮；赛博霓虹与荧光边光；油腻镜面高光与硬金属机械；脏暗泥污阴影与高对比明暗法；扁平2D厚黑描边；真人头身比；城…",
+        "module": "brand.WorldStyle"
+      }
+    ],
+    "art_decisions": [
+      {
+        "id": "CHAT20261112220940541DECISION",
+        "summary": "以后统一按此样张画风：Gossip Harbor 真机海鲜货柜软立体；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1F…",
+        "layer_scope": "private"
+      },
+      {
+        "id": "CHAT20261112221030537DECISION",
+        "summary": "以后统一按此样张画风：Gossip Harbor真机海鲜货柜；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1FF约20…",
+        "layer_scope": "private"
+      }
+    ],
+    "private_knowledge": [
+      {
+        "id": "tech-painterly",
+        "title": "厚涂笔触",
+        "body": "可见笔触方向跟随形体，暗部透气勿脏。",
+        "layer_scope": "private"
+      }
+    ],
+    "shared_knowledge": [],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [
+        "柔光"
+      ],
+      "preferred_composition": [
+        "半身",
+        "居中/对称构图"
+      ],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [
+        "避免过饱和",
+        "暖色调"
+      ],
+      "banned_habits": [
+        "廉价塑料感/油腻高光",
+        "漏抠/黑底/毛边",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色"
+      ],
+      "keep_phrases": [
+        "确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。",
+        "确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。",
+        "确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；"
+      ],
+      "banned_habits_raw_tail": [
+        "禁止偏离样张画风：过度霓虹、脏暗阴影、油腻高光、写实皮肤毛孔、扁平UI描边",
+        "电池审稿：原画竖构图避免贴样张布局；边缘反光勿过曝",
+        "电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感",
+        "黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差",
+        "错误头身比/头过大",
+        "廉价塑料感/油腻高光",
+        "漏抠/黑底/毛边",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色"
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: brand.WorldStyle\n- 置信度: 0.60（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n  · 确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；\n- 必须避开红线:\n  · [CHAT20261109232829194REDLINE] [收敛踩坑红线] 有参考题材不变——把蘑菇甜点拼盘画成更干净的道具特写；身份不：避免「左上奶酪体量过大，压缩了果实与叶片的展示空间；中右部枝梗、果实和叶片叠压密集，局部切线较多」\n  · [CHAT20261112220939400REDLINE] 禁止偏离样张画风：硬镜面CGI、皮克斯硬塑、哑光黏土软塑胶UI、厚黑描边、写实摄影摆盘、脏暗泥污阴影、赛博霓虹紫雾、灰雾废土、扁平矢量贴纸、油腻金属、指纹…\n  · [CHAT20261109225616629REDLINE] 禁止偏离样张画风：写实皮肤毛孔/照片级木纹毛皮；赛博霓虹与荧光边光；油腻镜面高光与硬金属机械；脏暗泥污阴影与高对比明暗法；扁平2D厚黑描边；真人头身比；城…\n- 审美拍板:\n  · 以后统一按此样张画风：Gossip Harbor 真机海鲜货柜软立体；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1F…\n  · 以后统一按此样张画风：Gossip Harbor真机海鲜货柜；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1FF约20…\n- 个人口味: 光影=柔光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。",
+    "built_at": "2026-11-12 22:22:23 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：平视窗台特写，杯约占画面三分之一，主光从右侧打入。窗台左侧多出一盆绿植，破了只许杯+点心+窗台的元素预算；杯面与木纹偏写实摄影；糖霜樱桃小环读成甜品棚拍而非光泽",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.42"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：窗边咖啡+点心静物成立；杯底接触影可见；港湾虚化背景有休闲气质",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.42"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：平视窗台特写，杯约占画面三分之一，主光仍从右上打入。杯面拉花与木纹仍偏写实摄影棚拍；点心糖霜樱桃高光油亮，缺少光泽卡通块面。；点名锁未单独验收：锁：窗边咖啡静物",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.68"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：绿植已删；只剩杯与点心加窗台；港湾虚化仍在",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.68"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：平视窗台，杯约占三分之一，主光仍从右侧打入。拉花与木纹仍偏写实摄影；点心糖霜油亮缺卡通块面釉光。；点名锁未单独验收：锁：窗边咖啡静物题材；光泽卡通三维；暖午后窗",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.74"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：仍只有杯与点心；无绿植；港湾虚化干净",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.74"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：平视窗台，杯约占三分之一，主光仍偏右上（影投向左）。拉花细节仍偏写实；木台仍有细木纹，卡通块面釉光未完全到位。；点名锁未单独验收：锁：窗边咖啡静物题材；光泽卡通",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.96"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：仍只有杯与点心；杯形更圆润；港湾虚化干净",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.96"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 2,
+  "regression_drop": 0.15,
+  "safe_early_stop": false,
+  "understanding_contract": {
+    "version": 1,
+    "raw_utterance": "普通图：单张午后窗边咖啡静物，medium；用这份稿作风格参考，跟垫图光泽卡通三维与暖色方向；Brimwave Café 午后窗边一杯咖啡与一块点心特写",
+    "l0": {
+      "route_ids": [
+        "draw.ordinary"
+      ],
+      "banner": "【走默认路径】按 普通图 走了",
+      "delivery": "draw.ordinary"
+    },
+    "l1": {
+      "locks": [
+        "锁：窗边咖啡静物题材",
+        "光泽卡通三维",
+        "暖午后窗光",
+        "单张非拼板"
+      ],
+      "unlocks": [
+        "不锁：杯型点心具体造型"
+      ],
+      "defaults_shown": [
+        "默认：单张午后窗边咖啡静物特写",
+        "一杯咖啡+一块点心",
+        "medium 锁机位",
+        "跟 ref_life 光泽卡通三维暖色",
+        "不透明场景底"
+      ],
+      "commercial_vibe": "跟垫图表面：干净光泽卡通三维、柔散射块面高光、圆润厚实、暖饱和，非写实摄影摆盘"
+    },
+    "l2": {
+      "open": true,
+      "surface_fix": "只改一处：先把午后窗边静物机位读清",
+      "last_feedback": "",
+      "feedback_layer": ""
+    },
+    "notes": ""
+  },
+  "reasonableness_history": [
+    {
+      "reviewed_at": 1794493425.402197,
+      "passed": true,
+      "skill": "ordinary",
+      "issues": []
+    }
+  ],
+  "reasonableness": {
+    "passed": true,
+    "skill": "ordinary",
+    "draft_prompt": "Afternoon coffee by a window, cute 3D still life",
+    "revised_prompt": "A single medium still-life shot of Brimwave Café afternoon window coffee: one ceramic coffee cup with latte foam and one small pastry sit on a sunlit wooden windowsill; soft afternoon window light from the left casts gentle contact shadows on the wood; beyond the glass a soft harbor blur stays out of focus. Soft glossy cartoon 3D rendering matching lifestyle-game prop polish: rounded forms, creamy block highlights near #FEFDFB, warm saturated palette (#F4C84A amber light, creamy ceramic, coral berry accent on the pastry), no hard black outlines, no photoreal pores or oily chrome. Camera locked as a medium still-life tabletop view, not a full cafe exterior, not a character portrait, not a multi-panel poster. Hard locks: only cup plus pastry plus windowsill; no people, no UI, no title text, no triptych. Fail at a glance if the cup floats without contact shadow or if the scene becomes a street exterior. Opaque scene background.",
+    "checklist": {
+      "subject_action": {
+        "status": "ok",
+        "note": ""
+      },
+      "contact_scale": {
+        "status": "ok",
+        "note": ""
+      },
+      "element_budget": {
+        "status": "ok",
+        "note": ""
+      },
+      "hard_locks": {
+        "status": "ok",
+        "note": ""
+      },
+      "fail_at_glance": {
+        "status": "ok",
+        "note": ""
+      }
+    },
+    "issues": [],
+    "notes": "",
+    "reviewed_at": 1794493425.402197,
+    "reviewed_at_iso": "2026-11-12 22:23:45",
+    "force_pass": false,
+    "skill_raw": "ordinary"
+  },
+  "discussions": [
+    {
+      "round": 0,
+      "kind": "reasonableness",
+      "prompt": "A single medium still-life shot of Brimwave Café afternoon window coffee: one ceramic coffee cup with latte foam and one small pastry sit on a sunlit wooden windowsill; soft afternoon window light from the left casts gentle contact shadows on the wood; beyond the glass a soft harbor blur stays out of focus. Soft glossy cartoon 3D rendering matching lifestyle-game prop polish: rounded forms, creamy block highlights near #FEFDFB, warm saturated palette (#F4C84A amber light, creamy ceramic, coral berry accent on the pastry), no hard black outlines, no photoreal pores or oily chrome. Camera locked as a medium still-life tabletop view, not a full cafe exterior, not a character portrait, not a multi-panel poster. Hard locks: only cup plus pastry plus windowsill; no people, no UI, no title text, no triptych. Fail at a glance if the cup floats without contact shadow or if the scene becomes a street exterior. Opaque scene background.",
+      "strengths": "合理性闸已过：subject_action=ok；contact_scale=ok；element_budget=ok；hard_locks=ok；fail_at_glance=ok",
+      "defects": "",
+      "next_fix": "首轮 generate 使用本修订提示词；审美迭代不得推翻硬锁与元素预算"
+    }
+  ],
+  "warm_start_merged": true,
+  "warm_start_merged_at": "2026-11-12 22:45:19",
+  "warm_start_block_sha1": "4d3fb98a654b",
+  "ActionRequired": "STOP_PICK_BEST",
+  "showcase_ready": true,
+  "winner": {
+    "round": 4,
+    "round_label": "第 4 轮精修",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "3:4",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_life__ar_3x4.png"
+    ],
+    "param_validation": {
+      "valid": true,
+      "validation_passed": true,
+      "case_id": "suite_ordinary",
+      "scale": "medium",
+      "aspect_ratio": "3:4",
+      "ref_aspect_ratio": "3:4",
+      "ref_dimensions": "2016x2688",
+      "output_aspect_ratio": "3:4",
+      "output_dimensions": "864x1152",
+      "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_life__ar_3x4.png",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_life__ar_3x4.png"
+      ],
+      "inherited_default_aspect_ratio": true,
+      "inherited_default_pad_image": true,
+      "matched_ref_aspect_ratio": true,
+      "matched_ref_pad_image": true,
+      "matched_output_aspect_ratio": true,
+      "three_step_stage": "step3_judge",
+      "three_step_verified": true,
+      "warnings": [],
+      "continuation_pad": false,
+      "pad_diverged": false
+    },
+    "generated_at": "22:45:19",
+    "image": "assets/skill_20261112_suite/out/draw.ordinary/r4.png",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 884499,
+      "size_kb": 863.8,
+      "width": 864,
+      "height": 1152,
+      "aspect_ratio": "3:4",
+      "canonical_aspect_ratio": "3:4",
+      "color_entropy": 7.99
+    },
+    "raw_score": 8.96,
+    "score": 8.96,
+    "target_score_threshold": 9.5,
+    "dims": "构图9.3/光影8.8/透视9.3/质感8.8/风格8.7/无瑕疵9.0",
+    "dims_parsed": {
+      "composition": 9.3,
+      "lighting_color": 8.8,
+      "perspective_anatomy": 9.3,
+      "texture_detail": 8.8,
+      "spec_style": 8.7,
+      "flawlessness": 9.0
+    },
+    "weighted_score": 8.96,
+    "audit_warnings": [
+      "Agent Absolute-5D 已采纳（门槛 9.5）",
+      "点名锁未单独验收：锁：窗边咖啡静物题材；光泽卡通三维；暖午后窗光；单张非拼板"
+    ],
+    "stagnated": false,
+    "strengths": "仍只有杯与点心；杯形更圆润；港湾虚化干净",
+    "defects": "平视窗台，杯约占三分之一，主光仍偏右上（影投向左）。拉花细节仍偏写实；木台仍有细木纹，卡通块面釉光未完全到位。；点名锁未单独验收：锁：窗边咖啡静物题材；光泽卡通三维；暖午后窗光；单张非拼板",
+    "next_fix": "若再开一轮：强制左侧窗光与玩具级块面釉光",
+    "prompt": "原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光 | 点名锁每轮都要单独留住，不许整张漂掉：锁：窗边咖啡静物题材；光泽卡通三维；暖午后窗光；单张非拼板 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】 - 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/) - 目标模块: brand.WorldStyle - 置信度: 0.60（fast-track 资格: 否） - 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。 - 正向保留（要怎样）: · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。 · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。 · 确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读； - 必须避开红线: · [CHAT20261109232829194REDLINE] [收敛踩坑红线] 有参考题材不变——把蘑菇甜点拼盘画成更干净的道具特写；身份不：避免「左上奶酪体量过大，压缩了果实与叶片的展示空间；中右部枝梗、果实和叶片叠压密集，局部切线较多」 · [CHAT20261112220939400REDLINE] 禁止偏离样张画风：硬镜面CGI、皮克斯硬塑、哑光黏土软塑胶UI、厚黑描边、写实摄影摆盘、脏暗泥污阴影、赛博霓虹紫雾、灰雾废土、扁平矢量贴纸、油腻金属、指纹… · [CHAT20261109225616629REDLINE] 禁止偏离样张画风：写实皮肤毛孔/照片级木纹毛皮；赛博霓虹与荧光边光；油腻镜面高光与硬金属机械；脏暗泥污阴影与高对比明暗法；扁平2D厚黑描边；真人头身比；城… - 审美拍板: · 以后统一按此样张画风：Gossip Harbor 真机海鲜货柜软立体；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1F… · 以后统一按此样张画风：Gossip Harbor真机海鲜货柜；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1FF约20… - 个人口味: 光影=柔光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 暖色调 - 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色 - 项目私有知识卡 (Private Layer): · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。 | A single medium still-life shot of Brimwave Café afternoon window coffee: one ceramic coffee cup with latte foam and one small pastry sit on a sunlit wooden windowsill; soft afternoon window light from the left casts gentle contact shadows on the wood; beyond the glass a soft harbor blur stays out of focus. Soft glossy cartoon 3D rendering matching lifestyle-game prop polish: rounded forms, creamy block highlights near #FEFDFB, warm saturated palette (#F4C84A amber light, creamy ceramic, coral berry accent on the pastry), no hard black outlines, no photoreal pores or oily chrome. Camera locked as a medium still-life tabletop view, not a full cafe exterior, not a character portrait, not a multi-panel poster. Hard locks: only cup plus pastry plus windowsill; no people, no UI, no title text, no triptych. Fail at a glance if the cup floats without contact shadow or if the scene becomes a street exterior. Opaque scene background. | 左侧窗光必须可见；杯点心改玩具级圆润块面釉光#FEFDFB；简化木台去写实木纹 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观",
+    "continuation": false,
+    "passed": false,
+    "gate_blocked": true,
+    "image_gate_blocked": false,
+    "anatomy_score": 9.3,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "unknown",
+    "judge_source": "agent_absolute_5d",
+    "remote_vlm": {
+      "source": "agent_self_judge",
+      "provider": "",
+      "model": "",
+      "error": "",
+      "active": false,
+      "score_evidence": {},
+      "evidence_missing_dims": [],
+      "review": {
+        "pass_count": 0,
+        "rerated": false,
+        "reason": ""
+      }
+    },
+    "should_continue_next_round": false,
+    "decision": "STOP_MAX_ROUNDS",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "style_lock",
+        "lesson": "本轮短板偏「style_lock」：平视窗台，杯约占三分之一，主光仍偏右上（影投向左）。拉花细节仍偏写实；木台仍有细木纹，卡通块面釉光未完全到位。；点名锁未单独验收：锁：窗边咖啡静物题材；光泽卡通",
+        "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+        "from_score": "8.96"
+      },
+      {
+        "category": "keep",
+        "lesson": "保留本轮已做对的：仍只有杯与点心；杯形更圆润；港湾虚化干净",
+        "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+        "from_score": "8.96"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "22:46:29"
+  },
+  "rounds_to_converge": 4,
+  "convergence_badge": "共 4 轮未达阈值，采用最高分",
+  "winner_image": "assets/skill_20261112_suite/out/draw.ordinary/r4.png",
+  "best_image": "assets/skill_20261112_suite/out/draw.ordinary/r4.png",
+  "final_image": "assets/skill_20261112_suite/out/draw.ordinary/final.png",
+  "settle_pending": true,
+  "process_board": ".memory-art/converge/boards/suite_ordinary/index.html"
+}

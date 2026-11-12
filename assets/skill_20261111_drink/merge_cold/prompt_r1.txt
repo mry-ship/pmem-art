@@ -1,0 +1,12 @@
+chain_mode=shop_ladder. Gossip Harbor toy-cabinet cartoon: glossy cartoon 3D, round thick forms, no hard outlines, warm saturated colors, soft gradient light, candy-glaze toy highlights; toy/sugar-glaze props not real food. Forbid photoreal photography, food studio shot, product still life, real glass refraction, wood grain fingerprints, milky juice photo look, micro pores. Whole sheet unified: same 3/4 top-down view, same soft light from upper-left, soft cream / light-blue rounded cards, ice-blue + lemon-yellow + cream-white family; one item per cell centered with margin; no text no faces.
+Layout: vertical 4 rows x 2 columns portrait merge overview sheet.
+L1 empty paper cup: short round empty paper cup, no liquid no lid no straw, open rim shows inner wall
+L2 open iced drink: same short round cup filled with ice-blue drink, flat liquid surface, still no lid no straw
+L3 lidded to-go cup: short round to-go cup with round lid, small lid hole visible, liquid covered, no straw
+L4 tall straw cup: taller clear toy cup with one diagonal straw, taller than short cups, lid gone
+L5 lemon mason jar: wide-mouth mason jar filled with iced tea, lemon slice visible on side, straw gone, wider shoulders
+L6 iced tea pitcher: wide-shoulder pitcher with handle and spout filled with iced tea, mason thread mouth gone
+L7 cream reward cup: tall specialty cup topped with thick cream swirl and lemon garnish, pitcher parts gone, single reward cup
+L8 cold drink party tray: shallow tray with two small cold drink cups and lemon slices, tray rim is main silhouette, one SKU with margin
+Forbid cross-cell collage, fragments, top cropping; neighbor levels differ by silhouette or vessel, not by mere scale-up. Forbid food studio, product still life, real glass refraction.
+Constraint: keep camera angle; do not add/remove the subject list; no full recompose; stay on category default style, no fallback to photoreal studio.

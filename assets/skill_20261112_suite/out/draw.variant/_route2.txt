@@ -1,0 +1,27 @@
+── 给美术看（请只转述下面这块）──
+【按 变体 走了】
+按变体：同一身份，换表情/动作/画风。
+── Agent 技术明细 ──
+【按 变体 走了】
+confidence: low  execute_ok: False
+mode: skill  would_execute: True
+route_ids: ['draw.variant']
+announce: 按 变体 走了
+match: lexical_ngram+colloquial_expand+canonical
+canonical[agent]: 变体 表情差分 惊讶
+⚠ neighbor_conflict: 近邻 top1 route_ids 与本判不一致 → confidence 已降
+reason: variant
+steps:
+  1. pmem-draw/变体 → 点名变体表情差分 suite_variant
+top neighbors (k=8, calibrate only):
+  · 1.134  default ['draw.ordinary'] | 画这个角色的立绘，第0版，不要表情差分
+  · 1.134  default ['draw.ordinary'] | 画这个角色的立绘，第10版，不要表情差分
+  · 1.134  default ['draw.ordinary'] | 画这个角色的立绘，第11版，不要表情差分
+  · 1.134  default ['draw.ordinary'] | 画这个角色的立绘，第12版，不要表情差分
+  · 1.134  default ['draw.ordinary'] | 画这个角色的立绘，第13版，不要表情差分
+  · 1.134  default ['draw.ordinary'] | 画这个角色的立绘，第14版，不要表情差分
+  · 1.134  default ['draw.ordinary'] | 画这个角色的立绘，第15版，不要表情差分
+  · 1.134  default ['draw.ordinary'] | 画这个角色的立绘，第16版，不要表情差分
+confusion:
+  · 同一身份换表情/动作/画风，机位已在图上 → 走变体，不走多图分工。
+对美术只贴 artist_say（标签+一句人话），禁止刷 confidence/json。先写标准路由句再 route --canonical；execute_ok 才开画；plan_conflict / confidence=ask|low / vague 先问人。

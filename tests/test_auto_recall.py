@@ -134,7 +134,8 @@ class TestHookPayload(unittest.TestCase):
 
 
 class TestHookInjectsGenerateImage(unittest.TestCase):
-    def test_updated_input_prepends_session_warm_start(self) -> None:
+    def test_pre_gen_never_writes_updated_input(self) -> None:
+        """Even with legacy inject env set, pre-gen must not mutate GenerateImage."""
         td = Path(tempfile.mkdtemp(prefix="pmem_recall_hook_"))
         old_env = os.environ.get("PMEM_ART_PRE_GEN_INJECT")
         try:
@@ -183,15 +184,11 @@ class TestHookInjectsGenerateImage(unittest.TestCase):
                 sys.stdin = old_stdin
             self.assertEqual(rc, 0)
             out = json.loads(buf.getvalue())
-            self.assertEqual(out.get("permission"), "allow")
-            updated = out.get("updated_input") or {}
-            desc = str(updated.get("description") or "")
-            self.assertTrue(desc.startswith(WARM_START_MARK), desc[:80])
-            self.assertIn("peach candy bottle game icon square", desc)
-            self.assertIn("蜜桃糖焊进蛋糕", desc)
+            self.assertNotIn("updated_input", out)
             msg = str(out.get("agent_message") or out.get("agentMessage") or "")
             self.assertIn("【pmem-art记忆】", msg)
             self.assertIn("prop.Candy", msg)
+            self.assertIn("永不灌入", msg)
         finally:
             if old_env is None:
                 os.environ.pop("PMEM_ART_PRE_GEN_INJECT", None)
@@ -250,7 +247,7 @@ class TestHookInjectsGenerateImage(unittest.TestCase):
             out = json.loads(buf.getvalue())
             self.assertNotIn("updated_input", out)
             msg = str(out.get("agent_message") or out.get("agentMessage") or "")
-            self.assertIn("pre-gen 默认不灌入 GenerateImage", msg)
+            self.assertIn("永不灌入", msg)
         finally:
             if old_env is not None:
                 os.environ["PMEM_ART_PRE_GEN_INJECT"] = old_env
@@ -277,7 +274,7 @@ class TestHookInjectsGenerateImage(unittest.TestCase):
         finally:
             shutil.rmtree(td, ignore_errors=True)
 
-    def test_merge_module_skips_warm_start_inject_into_generate_image(self) -> None:
+    def test_merge_module_pre_gen_also_never_injects(self) -> None:
         td = Path(tempfile.mkdtemp(prefix="pmem_recall_merge_skip_"))
         old_env = os.environ.get("PMEM_ART_PRE_GEN_INJECT")
         try:
@@ -329,12 +326,11 @@ class TestHookInjectsGenerateImage(unittest.TestCase):
                 sys.stdin = old_stdin
             self.assertEqual(rc, 0)
             out = json.loads(buf.getvalue())
-            # 跳过注入时不改 description，故无 updated_input；也不强制写 permission=allow
             self.assertNotEqual(out.get("permission"), "deny")
             self.assertTrue(out.get("continue", True))
             self.assertNotIn("updated_input", out)
             msg = str(out.get("agent_message") or out.get("agentMessage") or "")
-            self.assertIn("跳过 Warm-Start 灌入 GenerateImage", msg)
+            self.assertIn("永不灌入", msg)
             self.assertNotIn("已并入 GenerateImage", msg)
         finally:
             if old_env is None:
@@ -422,12 +418,19 @@ class TestGenerateMergesMemory(unittest.TestCase):
                 or ("记忆已并入" in gen_out and "WARM_START_MERGED=1" in gen_out),
                 gen_out,
             )
+            self.assertIn("装配句（未并记忆）", gen_out)
+            self.assertIn("Warm-Start 段", gen_out)
+            self.assertIn("最终 Prompt（出图须用这句）", gen_out)
             sess = json.loads(
                 (td / ".memory-art" / "converge" / f"{sid}.json").read_text(encoding="utf-8")
             )
-            prompt = str((sess.get("rounds") or [{}])[0].get("prompt") or "")
+            round0 = (sess.get("rounds") or [{}])[0]
+            prompt = str(round0.get("prompt") or "")
             self.assertIn(WARM_START_MARK, prompt)
             self.assertIn("蜜桃糖焊进蛋糕", prompt)
+            before = str(round0.get("prompt_before_warm") or "")
+            self.assertTrue(before)
+            self.assertNotIn(WARM_START_MARK, before)
         finally:
             shutil.rmtree(td, ignore_errors=True)
 
@@ -436,8 +439,12 @@ class TestSkillSpecForbidsHandPaste(unittest.TestCase):
     def test_draw_spec_says_auto_inject(self) -> None:
         body = next(s["body"] for s in SKILL_SPECS if s["name"] == "pmem-draw")
         self.assertIn("自动把 Warm-Start", body)
-        self.assertIn("updated_input", body)
+        self.assertIn("WARM_START_MERGED", body)
+        self.assertIn("最终 Prompt（出图须用这句）", body)
+        self.assertIn("禁止另写", body)
         self.assertNotIn("完整并入第 1 轮 Prompt", body)
+        self.assertNotIn("再用 `updated_input` 灌一次", body)
+        self.assertNotIn("PMEM_ART_PRE_GEN_INJECT", body)
 
 
 if __name__ == "__main__":

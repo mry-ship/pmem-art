@@ -1,0 +1,12 @@
+🔄 [Step 2B · 六维审图 · agent_absolute_5d] 第 1/4 轮得分 8.27 < 目标阈值 9.50（未达标继续下一轮第 2 轮）。
+   · 图像校验: 720x1280 (9:16, 1150.4KB, byteH=7.99) | 六维: 构图8.4/光影8.6/透视8.2/质感8.4/风格8.2/无瑕疵7.9
+   · 不合理处: 顶栏数字72/85/233/1870与垫图资源值几乎同款回声；底栏只剩居中home落在大片米黄空带，导航壳偏空像未完成；PLAY下无Level副文案层次略薄；点名锁未单独验收：full-bleed scene；no gibberish
+   · 下一轮先垫这张再出图：第 1 轮 `C:\Users\ZhengLangPC\Desktop\Cursor-Pmem-Art\assets\skill_20261112_suite\out\ui.kit\r1.png`
+   · 只改这一处：改掉垫图同款资源数字与图标排版回声；底栏补2～4枚轻量同系圆角入口且Home仍居中勿套RM五Tab；PLAY下加细Level条；保留港湾窗与吧台师脸周留空
+   · 生图参考图只用这一张。可先 `converge next --id suite_ui_kit` 核对路径，画完再 generate。
+   👉 先用上面这张垫图出第 2 轮，再 `converge generate`，然后 `converge judge`。
+📚 本轮可学（能力提升）:
+   1. [style_lock] 本轮短板偏「style_lock」：顶栏数字72/85/233/1870与垫图资源值几乎同款回声；底栏只剩居中home落在大片米黄空带，导航壳偏空像未完成；PLAY下无Level副文案层次略薄；点
+      → 练习: 对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习
+   2. [keep] 保留本轮已做对的：已是主菜单而非Design三选一：中下黄PLAY一眼最大；顶栏圆角白胶囊厚蓝描边与场景同系软光泽；港湾窗景+吧台师脸在PLAY上方留空
+      → 练习: 下一轮 Prompt 显式写入这些亮点作为正向锚点

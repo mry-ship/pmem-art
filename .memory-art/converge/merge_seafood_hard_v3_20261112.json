@@ -1,0 +1,1031 @@
+{
+  "session_id": "merge_seafood_hard_v3_20261112",
+  "started_at": "2026-11-12 21:21:03 UTC+8",
+  "goal": "拿 Gossip Harbor 真机 merge 图垫风格，再跑硬料海鲜合成梯整表；用 assets/refs/gossip_harbor 垫画风",
+  "module": "merge.HarborSeafoodHardV3",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "merge_overview_checklist",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "medium",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "medium",
+    "label": "中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.5)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 1,
+    "target_score_threshold": 9.5,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.15,
+      "perspective_anatomy": 0.15,
+      "texture_detail": 0.15,
+      "spec_style": 0.15,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "viewpoint_frame",
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图，只在提示词上补还没过的那一处（提示词改动仍 ≤40%）",
+    "max_prompt_delta_ratio": 0.4,
+    "allow_recompose": false,
+    "allow_viewpoint_change": false,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "viewpoint_angle (不改机位与镜头视角)",
+      "element_count (不增删主体元素清单)",
+      "no_full_recompose (不做整体 recompose / 换景别故事)",
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)"
+    ],
+    "min_round_leap": 0.15,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光",
+    "medium_family": "generic",
+    "best_direction_hint": "最优方向：光影·空气·介质；可小幅姿态/局部布局",
+    "goal": "拿 Gossip Harbor 真机 merge 图垫风格，再跑硬料海鲜合成梯整表；用 assets/refs/gossip_harbor 垫画风",
+    "module": "merge.HarborSeafoodHardV3",
+    "ref_image": "assets/refs/gossip_harbor/gh_merge__ar_9x16.png",
+    "ref_analysis": ""
+  },
+  "medium_family": "generic",
+  "contract": "",
+  "target_score_threshold": 9.5,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png",
+  "ref_analysis": "",
+  "default_aspect_ratio": "9:16",
+  "default_reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png",
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_seafood_food_strip.png",
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\merge_chain_study\\orange_cookies.png"
+  ],
+  "aspect_ratio": "9:16",
+  "reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png",
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_seafood_food_strip.png",
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\merge_chain_study\\orange_cookies.png"
+  ],
+  "ref_physical_traits": {
+    "exists": true,
+    "size_bytes": 3474271,
+    "size_kb": 3392.8,
+    "width": 1512,
+    "height": 2688,
+    "aspect_ratio": "9:16",
+    "canonical_aspect_ratio": "9:16",
+    "color_entropy": 7.99
+  },
+  "param_validation": {
+    "valid": true,
+    "validation_passed": true,
+    "case_id": "merge_seafood_hard_v3_20261112",
+    "scale": "medium",
+    "aspect_ratio": "9:16",
+    "ref_aspect_ratio": "9:16",
+    "ref_dimensions": "1512x2688",
+    "output_aspect_ratio": "",
+    "output_dimensions": "",
+    "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png",
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_seafood_food_strip.png",
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\merge_chain_study\\orange_cookies.png"
+    ],
+    "inherited_default_aspect_ratio": false,
+    "inherited_default_pad_image": false,
+    "matched_ref_aspect_ratio": true,
+    "matched_ref_pad_image": true,
+    "matched_output_aspect_ratio": true,
+    "three_step_stage": "step1_start",
+    "three_step_verified": false,
+    "warnings": []
+  },
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.5,
+  "accept_threshold": 9.5,
+  "max_rounds": 4,
+  "ready_to_finish": true,
+  "status": "finished",
+  "owner_conversation_id": "",
+  "route_ids": [
+    "merge.ladder"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "merge_seafood_hard_v3_20261112",
+        "scale": "medium",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "1512x2688",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "1080x1920",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "21:28:06",
+      "image": "assets/skill_20261112_seafood/merge_hard_v3/sheet_r1.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 309389,
+        "size_kb": 302.1,
+        "width": 1080,
+        "height": 1920,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.89
+      },
+      "raw_score": 9.09,
+      "score": 9.09,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.8/光影9.3/透视9.1/质感9.2/风格9.4/无瑕疵8.9",
+      "dims_parsed": {
+        "composition": 8.8,
+        "lighting_color": 9.3,
+        "perspective_anatomy": 9.1,
+        "texture_detail": 9.2,
+        "spec_style": 9.4,
+        "flawlessness": 8.9
+      },
+      "weighted_score": 9.09,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "提示：邻档框高接近（第 2→3 为 0.29→0.30）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "提示：邻档框高接近（第 3→4 为 0.30→0.28）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "提示：邻档框高接近（第 5→6 为 0.37→0.40）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "提示：邻档框高接近（第 6→7 为 0.40→0.31）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "未指定风格却偏写实，本轮不能过线；改回 Gossip Harbor 货柜气质",
+        "末档明显小于前档：末格 0.28，最大 0.40",
+        "点名锁未单独验收：锁：跟GH真机棋盘货渲染；同链档序；浅奶油卡；无字无脸"
+      ],
+      "stagnated": false,
+      "strengths": "垫GH真机货条后高饱和块面高光更接近棋盘货；龙虾蟹虾可读；非软黏土",
+      "defects": "为凑9:16上下加了奶油条；L2/L3柠檬配菜；L8木纹托盘；鳞片仍偏细；提示：邻档框高接近（第 2→3 为 0.29→0.30）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 3→4 为 0.30→0.28）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 5→6 为 0.37→0.40）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 6→7 为 0.40→0.31）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；未指定风格却偏写实，本轮不能过线；改回 Gossip Harbor 货柜气质；末档明显小于前档：末格 0.28，最大 0.40；点名锁未单独验收：锁：跟GH真机棋盘货渲染；同链档序；浅奶油卡；无字无脸",
+      "next_fix": "若续：真出9:16勿加边；去柠檬去木纹；继续垫GH货条；末档不得明显矮于前档；有贴边残片/切顶须整张重出；邻档靠剪影/件数可分；禁止跨轮抠格拼表",
+      "prompt": "休闲 merge 货柜默认气质：Gossip Harbor 玩具货柜——软立体糖釉道具、圆润厚实、无硬描边、暖饱和、柔光釉面高光、棋盘缩略一眼可认。材质锁死为有体积的糖釉玩具货柜道具（柔光高光可读），不是实物，也不是哑光黏土/软塑胶 UI 图标。禁止：写实摄影、美食棚拍、产品静物、玻璃真实折射、木纹指纹、果汁乳浊摄影感、微距毛孔、油光金属、暗沉旧塑料、硬镜面 CGI、硬卡通 CGI、皮克斯硬塑胶高光、哑光黏土拟态、软塑胶 UI 图标、平面绘本贴纸风冒充货柜。档位句只写糖釉玩具剪影/件数/容器/完成态与整块色；禁止焦斑/烤痕/鳞片微距/湿润汤面感/柠檬片香菜末/摄影级摆盘质感词（点名写实除外）。整表参考只锁格子版式，不跟参考写实表面。 | 点名锁每轮都要单独留住，不许整张漂掉：锁：跟GH真机棋盘货渲染；同链档序；浅奶油卡；无字无脸 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.HarborSeafoodHardV3\n- 置信度: 0.45（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 五链合成：不必每档保留L1原件/母体锁死；同域合理升级、档差明显即可\n  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n- 个人口味: 光影=柔光 / 暖光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 错误头身比/头过大；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光| chain_mode=shop_ladder。垫图锁画风：跟 Gossip Harbor 真机棋盘货（龙虾冰碗/生蚝盘）同一套高饱和圆润块面高光休闲图标；每格单件居中非场景。家族=海边硬料海鲜店，珊瑚红+奶油白+海沫青。 L1 小银鱼货柜件 evolve=SmallFish L2 双鱼盘 evolve=FishPlate merge_why=两尾小鱼放上同一浅盘成一件 L3 熟制鱼盘 evolve=PreparedFish merge_why=双鱼合成一条熟制整鱼剪影 L4 海鲜碗 evolve=SeafoodBowl merge_why=熟鱼换成碗装虾鱼块件数 L5 海鲜拼盘 evolve=Platter merge_why=碗换成椭圆盘蟹虾贝三大色块 L6 龙虾菜 evolve=LobsterDish merge_why=拼盘浓缩成整只龙虾盘 L7 龙虾大餐 evolve=Feast merge_why=更大盘龙虾大餐可加冰块色块 L8 盛宴托盘 evolve=TraySet merge_why=两份菜放上同一浅托盘一件货 一眼失败：抄HUD全棋盘、大角色眼、木纹托盘、写实棚拍。浅奶油4x2竖屏无字无脸。| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.1,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：为凑9:16上下加了奶油条；L2/L3柠檬配菜；L8木纹托盘；鳞片仍偏细；提示：邻档框高接近（第 2→3 为 0.29→0.30）；分档靠剪影/件数，勿跨轮抠格",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "9.09"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：垫GH真机货条后高饱和块面高光更接近棋盘货；龙虾蟹虾可读；非软黏土",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "9.09"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "21:28:49"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "merge_seafood_hard_v3_20261112",
+        "scale": "medium",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "1512x2688",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "1080x1920",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "21:31:09",
+      "image": "assets/skill_20261112_seafood/merge_hard_v3/sheet_r2.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 363123,
+        "size_kb": 354.6,
+        "width": 1080,
+        "height": 1920,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.95
+      },
+      "raw_score": 9.21,
+      "score": 9.21,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.3/光影9.3/透视9.1/质感9.2/风格9.5/无瑕疵9.0",
+      "dims_parsed": {
+        "composition": 9.3,
+        "lighting_color": 9.3,
+        "perspective_anatomy": 9.1,
+        "texture_detail": 9.2,
+        "spec_style": 9.5,
+        "flawlessness": 9.0
+      },
+      "weighted_score": 9.21,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.12 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "提示：邻档框高接近（第 2→3 为 0.34→0.36）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "提示：邻档框高接近（第 3→4 为 0.36→0.36）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "提示：邻档框高接近（第 5→6 为 0.47→0.43）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "提示：邻档框高接近（第 6→7 为 0.43→0.36）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "未指定风格却偏写实，本轮不能过线；改回 Gossip Harbor 货柜气质",
+        "末档明显小于前档：末格 0.33，最大 0.47",
+        "点名锁未单独验收：锁：跟GH真机棋盘货渲染；同链档序；浅奶油卡；无字无脸"
+      ],
+      "stagnated": true,
+      "strengths": "垫GH货条+gpt-image后高饱和块面高光更贴棋盘货；竖屏铺满无加边条；龙虾蟹可读",
+      "defects": "L2/L3仍有柠檬配菜；L8偏木纹；鳞片仍可再简化；提示：邻档框高接近（第 2→3 为 0.34→0.36）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 3→4 为 0.36→0.36）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 5→6 为 0.47→0.43）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 6→7 为 0.43→0.36）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；未指定风格却偏写实，本轮不能过线；改回 Gossip Harbor 货柜气质；末档明显小于前档：末格 0.33，最大 0.47；点名锁未单独验收：锁：跟GH真机棋盘货渲染；同链档序；浅奶油卡；无字无脸",
+      "next_fix": "去柠檬；L8奶油浅托盘；鳞片更块面；末档不得明显矮于前档；有贴边残片/切顶须整张重出；邻档靠剪影/件数可分；禁止跨轮抠格拼表",
+      "prompt": "休闲 merge 货柜默认气质：Gossip Harbor 玩具货柜——软立体糖釉道具、圆润厚实、无硬描边、暖饱和、柔光釉面高光、棋盘缩略一眼可认。材质锁死为有体积的糖釉玩具货柜道具（柔光高光可读），不是实物，也不是哑光黏土/软塑胶 UI 图标。禁止：写实摄影、美食棚拍、产品静物、玻璃真实折射、木纹指纹、果汁乳浊摄影感、微距毛孔、油光金属、暗沉旧塑料、硬镜面 CGI、硬卡通 CGI、皮克斯硬塑胶高光、哑光黏土拟态、软塑胶 UI 图标、平面绘本贴纸风冒充货柜。档位句只写糖釉玩具剪影/件数/容器/完成态与整块色；禁止焦斑/烤痕/鳞片微距/湿润汤面感/柠檬片香菜末/摄影级摆盘质感词（点名写实除外）。整表参考只锁格子版式，不跟参考写实表面。 | 点名锁每轮都要单独留住，不许整张漂掉：锁：跟GH真机棋盘货渲染；同链档序；浅奶油卡；无字无脸 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.HarborSeafoodHardV3\n- 置信度: 0.45（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 五链合成：不必每档保留L1原件/母体锁死；同域合理升级、档差明显即可\n  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n- 个人口味: 光影=柔光 / 暖光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 错误头身比/头过大；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光| chain_mode=shop_ladder。垫图锁画风：跟 Gossip Harbor 真机棋盘货（龙虾冰碗/生蚝盘）同一套高饱和圆润块面高光休闲图标；每格单件居中非场景。家族=海边硬料海鲜店，珊瑚红+奶油白+海沫青。 L1 小银鱼货柜件 evolve=SmallFish L2 双鱼盘 evolve=FishPlate merge_why=两尾小鱼放上同一浅盘成一件 L3 熟制鱼盘 evolve=PreparedFish merge_why=双鱼合成一条熟制整鱼剪影 L4 海鲜碗 evolve=SeafoodBowl merge_why=熟鱼换成碗装虾鱼块件数 L5 海鲜拼盘 evolve=Platter merge_why=碗换成椭圆盘蟹虾贝三大色块 L6 龙虾菜 evolve=LobsterDish merge_why=拼盘浓缩成整只龙虾盘 L7 龙虾大餐 evolve=Feast merge_why=更大盘龙虾大餐可加冰块色块 L8 盛宴托盘 evolve=TraySet merge_why=两份菜放上同一浅托盘一件货 一眼失败：抄HUD全棋盘、大角色眼、木纹托盘、写实棚拍。浅奶油4x2竖屏无字无脸。| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | 若续：真出9:16勿加边；去柠檬去木纹；继续垫GH货条；末档不得明显矮于前档；有贴边残片/切顶须整张重出；邻档靠剪影/件数可分；禁止跨轮抠格拼表",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.1,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：L2/L3仍有柠檬配菜；L8偏木纹；鳞片仍可再简化；提示：邻档框高接近（第 2→3 为 0.34→0.36）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "9.21"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：垫GH货条+gpt-image后高饱和块面高光更贴棋盘货；竖屏铺满无加边条；龙虾蟹可读",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "9.21"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "21:31:55"
+    },
+    {
+      "round": 3,
+      "round_label": "第 3 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "merge_seafood_hard_v3_20261112",
+        "scale": "medium",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "1512x2688",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "1080x1920",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "21:33:34",
+      "image": "assets/skill_20261112_seafood/merge_hard_v3/sheet_r3.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 352102,
+        "size_kb": 343.8,
+        "width": 1080,
+        "height": 1920,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.96
+      },
+      "raw_score": 9.28,
+      "score": 9.28,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.3/光影9.4/透视9.2/质感9.3/风格9.5/无瑕疵9.1",
+      "dims_parsed": {
+        "composition": 9.3,
+        "lighting_color": 9.4,
+        "perspective_anatomy": 9.2,
+        "texture_detail": 9.3,
+        "spec_style": 9.5,
+        "flawlessness": 9.1
+      },
+      "weighted_score": 9.28,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.07 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "提示：邻档框高接近（第 1→2 为 0.33→0.33）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "提示：邻档框高接近（第 3→4 为 0.41→0.42）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "提示：邻档框高接近（第 5→6 为 0.48→0.44）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "提示：邻档框高接近（第 6→7 为 0.44→0.38）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "末档明显小于前档：末格 0.37，最大 0.48",
+        "点名锁未单独验收：锁：跟GH真机棋盘货渲染；同链档序；浅奶油卡；无字无脸"
+      ],
+      "stagnated": true,
+      "strengths": "继续垫GH货条；块面高光贴棋盘货；竖屏铺满；龙虾大餐可读",
+      "defects": "个别配菜仍偏满；末档托盘剪影可再清楚；提示：邻档框高接近（第 1→2 为 0.33→0.33）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 3→4 为 0.41→0.42）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 5→6 为 0.48→0.44）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 6→7 为 0.44→0.38）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；末档明显小于前档：末格 0.37，最大 0.48；点名锁未单独验收：锁：跟GH真机棋盘货渲染；同链档序；浅奶油卡；无字无脸",
+      "next_fix": "锁托盘剪影；其余保持；末档不得明显矮于前档；有贴边残片/切顶须整张重出；邻档靠剪影/件数可分；禁止跨轮抠格拼表",
+      "prompt": "休闲 merge 货柜默认气质：Gossip Harbor 玩具货柜——软立体糖釉道具、圆润厚实、无硬描边、暖饱和、柔光釉面高光、棋盘缩略一眼可认。材质锁死为有体积的糖釉玩具货柜道具（柔光高光可读），不是实物，也不是哑光黏土/软塑胶 UI 图标。禁止：写实摄影、美食棚拍、产品静物、玻璃真实折射、木纹指纹、果汁乳浊摄影感、微距毛孔、油光金属、暗沉旧塑料、硬镜面 CGI、硬卡通 CGI、皮克斯硬塑胶高光、哑光黏土拟态、软塑胶 UI 图标、平面绘本贴纸风冒充货柜。档位句只写糖釉玩具剪影/件数/容器/完成态与整块色；禁止焦斑/烤痕/鳞片微距/湿润汤面感/柠檬片香菜末/摄影级摆盘质感词（点名写实除外）。整表参考只锁格子版式，不跟参考写实表面。 | 点名锁每轮都要单独留住，不许整张漂掉：锁：跟GH真机棋盘货渲染；同链档序；浅奶油卡；无字无脸 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.HarborSeafoodHardV3\n- 置信度: 0.45（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 五链合成：不必每档保留L1原件/母体锁死；同域合理升级、档差明显即可\n  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n- 个人口味: 光影=柔光 / 暖光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 错误头身比/头过大；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光| chain_mode=shop_ladder。垫GH真机货条锁画风：高饱和圆润块面高光休闲棋盘货。4x2浅奶油圆角卡铺满竖屏9:16勿加边条。每格单件居中。家族海边硬料海鲜。 L1 小银鱼 evolve=SmallFish L2 双鱼盘无柠檬 merge_why=两尾上盘 L3 熟制鱼盘无柠檬 merge_why=合成熟鱼剪影 L4 海鲜碗 merge_why=换成碗装件数 L5 蟹虾贝拼盘 merge_why=换成椭圆盘三大色块 L6 龙虾盘 merge_why=浓缩整只龙虾 L7 龙虾大餐可冰块 merge_why=更大龙虾大餐 L8 奶油浅托盘两小份加酱杯禁木纹 merge_why=托盘一件货 无字无脸无大眼无HUD。| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | 去柠檬；L8奶油浅托盘；鳞片更块面；末档不得明显矮于前档；有贴边残片/切顶须整张重出；邻档靠剪影/件数可分；禁止跨轮抠格拼表",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.2,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：个别配菜仍偏满；末档托盘剪影可再清楚；提示：邻档框高接近（第 1→2 为 0.33→0.33）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "9.28"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：继续垫GH货条；块面高光贴棋盘货；竖屏铺满；龙虾大餐可读",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "9.28"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "21:34:11"
+    },
+    {
+      "round": 4,
+      "round_label": "第 4 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "merge_seafood_hard_v3_20261112",
+        "scale": "medium",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "1512x2688",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "1080x1920",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "21:34:59",
+      "image": "assets/skill_20261112_seafood/merge_hard_v3/sheet_r4.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 363123,
+        "size_kb": 354.6,
+        "width": 1080,
+        "height": 1920,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.95
+      },
+      "raw_score": 9.21,
+      "score": 9.21,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.3/光影9.3/透视9.1/质感9.2/风格9.5/无瑕疵9.0",
+      "dims_parsed": {
+        "composition": 9.3,
+        "lighting_color": 9.3,
+        "perspective_anatomy": 9.1,
+        "texture_detail": 9.2,
+        "spec_style": 9.5,
+        "flawlessness": 9.0
+      },
+      "weighted_score": 9.21,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +-0.07 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "提示：邻档框高接近（第 2→3 为 0.34→0.36）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "提示：邻档框高接近（第 3→4 为 0.36→0.36）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "提示：邻档框高接近（第 5→6 为 0.47→0.43）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "提示：邻档框高接近（第 6→7 为 0.43→0.36）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "末档明显小于前档：末格 0.33，最大 0.47",
+        "点名锁未单独验收：锁：跟GH真机棋盘货渲染；同链档序；浅奶油卡；无字无脸"
+      ],
+      "stagnated": true,
+      "strengths": "垫GH真机货条后最接近棋盘货高饱和块面高光；竖屏铺满；链序可读",
+      "defects": "个别配菜仍偏满；托盘剪影可再清楚；提示：邻档框高接近（第 2→3 为 0.34→0.36）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 3→4 为 0.36→0.36）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 5→6 为 0.47→0.43）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 6→7 为 0.43→0.36）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；末档明显小于前档：末格 0.33，最大 0.47；点名锁未单独验收：锁：跟GH真机棋盘货渲染；同链档序；浅奶油卡；无字无脸",
+      "next_fix": "解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁止糊边融边；个别配菜仍偏满；托盘剪影可再清楚；末档不得明显矮于前档；有贴边残片/切顶须整张重出；邻档靠剪影/件数可分；禁止跨轮抠格拼表",
+      "prompt": "休闲 merge 货柜默认气质：Gossip Harbor 玩具货柜——软立体糖釉道具、圆润厚实、无硬描边、暖饱和、柔光釉面高光、棋盘缩略一眼可认。材质锁死为有体积的糖釉玩具货柜道具（柔光高光可读），不是实物，也不是哑光黏土/软塑胶 UI 图标。禁止：写实摄影、美食棚拍、产品静物、玻璃真实折射、木纹指纹、果汁乳浊摄影感、微距毛孔、油光金属、暗沉旧塑料、硬镜面 CGI、硬卡通 CGI、皮克斯硬塑胶高光、哑光黏土拟态、软塑胶 UI 图标、平面绘本贴纸风冒充货柜。档位句只写糖釉玩具剪影/件数/容器/完成态与整块色；禁止焦斑/烤痕/鳞片微距/湿润汤面感/柠檬片香菜末/摄影级摆盘质感词（点名写实除外）。整表参考只锁格子版式，不跟参考写实表面。 | 点名锁每轮都要单独留住，不许整张漂掉：锁：跟GH真机棋盘货渲染；同链档序；浅奶油卡；无字无脸 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.HarborSeafoodHardV3\n- 置信度: 0.45（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 五链合成：不必每档保留L1原件/母体锁死；同域合理升级、档差明显即可\n  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n- 个人口味: 光影=柔光 / 暖光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 错误头身比/头过大；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光| chain_mode=shop_ladder。垫图锁画风：跟 Gossip Harbor 真机棋盘货（龙虾冰碗/生蚝盘）同一套高饱和圆润块面高光休闲图标；每格单件居中非场景。家族=海边硬料海鲜店，珊瑚红+奶油白+海沫青。 L1 小银鱼货柜件 evolve=SmallFish L2 双鱼盘 evolve=FishPlate merge_why=两尾小鱼放上同一浅盘成一件 L3 熟制鱼盘 evolve=PreparedFish merge_why=双鱼合成一条熟制整鱼剪影 L4 海鲜碗 evolve=SeafoodBowl merge_why=熟鱼换成碗装虾鱼块件数 L5 海鲜拼盘 evolve=Platter merge_why=碗换成椭圆盘蟹虾贝三大色块 L6 龙虾菜 evolve=LobsterDish merge_why=拼盘浓缩成整只龙虾盘 L7 龙虾大餐 evolve=Feast merge_why=更大盘龙虾大餐可加冰块色块 L8 盛宴托盘 evolve=TraySet merge_why=两份菜放上同一浅托盘一件货 一眼失败：抄HUD全棋盘、大角色眼、木纹托盘、写实棚拍。浅奶油4x2竖屏无字无脸。| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | 锁托盘剪影；其余保持；末档不得明显矮于前档；有贴边残片/切顶须整张重出；邻档靠剪影/件数可分；禁止跨轮抠格拼表",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.1,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "unknown",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_MAX_ROUNDS",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "composition",
+          "lesson": "本轮短板偏「composition」：个别配菜仍偏满；托盘剪影可再清楚；提示：邻档框高接近（第 2→3 为 0.34→0.36）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 ",
+          "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+          "from_score": "9.21"
+        },
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：个别配菜仍偏满；托盘剪影可再清楚；提示：邻档框高接近（第 2→3 为 0.34→0.36）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 ",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "9.21"
+        },
+        {
+          "category": "anatomy",
+          "lesson": "本轮短板偏「anatomy」：个别配菜仍偏满；托盘剪影可再清楚；提示：邻档框高接近（第 2→3 为 0.34→0.36）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 ",
+          "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+          "from_score": "9.21"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "21:35:36"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-11-10 14:02:24 UTC+8"
+    },
+    "module": "merge.HarborSeafoodHardV3",
+    "goal": "拿 Gossip Harbor 真机 merge 图垫风格，再跑硬料海鲜合成梯整表；用 assets/refs/gossip_harbor 垫画风",
+    "confidence": 0.45,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "个人口味/正向保留非空",
+      "注入红线可控（0 条，已按任务主题过滤）",
+      "挂载 0 张项目知识卡 + 1 张全局美术底层基础卡"
+    ],
+    "top_recipes": [],
+    "top_redlines": [],
+    "art_decisions": [],
+    "private_knowledge": [],
+    "shared_knowledge": [
+      {
+        "id": "palette-70-20-10",
+        "title": "色彩构成：70-20-10 色板比例黄金法则",
+        "body": "画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+        "layer_scope": "shared"
+      }
+    ],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [
+        "柔光",
+        "暖光"
+      ],
+      "preferred_composition": [
+        "半身",
+        "居中/对称构图"
+      ],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [
+        "避免过饱和",
+        "暖色调"
+      ],
+      "banned_habits": [
+        "错误头身比/头过大",
+        "漏抠/黑底/毛边",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色"
+      ],
+      "keep_phrases": [
+        "五链合成：不必每档保留L1原件/母体锁死；同域合理升级、档差明显即可",
+        "确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。",
+        "确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。"
+      ],
+      "banned_habits_raw_tail": [
+        "禁止偏离样张画风：过度霓虹、脏暗阴影、油腻高光、写实皮肤毛孔、扁平UI描边",
+        "电池审稿：原画竖构图避免贴样张布局；边缘反光勿过曝",
+        "电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感",
+        "黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差",
+        "错误头身比/头过大",
+        "廉价塑料感/油腻高光",
+        "漏抠/黑底/毛边",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色"
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.HarborSeafoodHardV3\n- 置信度: 0.45（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 五链合成：不必每档保留L1原件/母体锁死；同域合理升级、档差明显即可\n  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n- 个人口味: 光影=柔光 / 暖光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 错误头身比/头过大；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+    "built_at": "2026-11-12 21:21:03 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：为凑9:16上下加了奶油条；L2/L3柠檬配菜；L8木纹托盘；鳞片仍偏细；提示：邻档框高接近（第 2→3 为 0.29→0.30）；分档靠剪影/件数，勿跨轮抠格",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.09"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：垫GH真机货条后高饱和块面高光更接近棋盘货；龙虾蟹虾可读；非软黏土",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.09"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：L2/L3仍有柠檬配菜；L8偏木纹；鳞片仍可再简化；提示：邻档框高接近（第 2→3 为 0.34→0.36）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.21"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：垫GH货条+gpt-image后高饱和块面高光更贴棋盘货；竖屏铺满无加边条；龙虾蟹可读",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.21"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：个别配菜仍偏满；末档托盘剪影可再清楚；提示：邻档框高接近（第 1→2 为 0.33→0.33）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.28"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：继续垫GH货条；块面高光贴棋盘货；竖屏铺满；龙虾大餐可读",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.28"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：个别配菜仍偏满；托盘剪影可再清楚；提示：邻档框高接近（第 2→3 为 0.34→0.36）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 ",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "9.21"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：个别配菜仍偏满；托盘剪影可再清楚；提示：邻档框高接近（第 2→3 为 0.34→0.36）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 ",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.21"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：个别配菜仍偏满；托盘剪影可再清楚；提示：邻档框高接近（第 2→3 为 0.34→0.36）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 ",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "9.21"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 2,
+  "regression_drop": 0.15,
+  "safe_early_stop": false,
+  "merge_delivery": "overview_sheet",
+  "merge_sheet_cap": 4,
+  "merge_discuss_cap": 2,
+  "single_judge": false,
+  "understanding_contract": {
+    "version": 1,
+    "raw_utterance": "拿 Gossip Harbor 真机 merge 图垫风格，再跑硬料海鲜合成梯整表；用 assets/refs/gossip_harbor 垫画风",
+    "l0": {
+      "route_ids": [
+        "merge.ladder"
+      ],
+      "banner": "【按 同域合成梯：先定链型与关系，再按交付出图 走了】",
+      "delivery": "merge.ladder"
+    },
+    "l1": {
+      "locks": [
+        "锁：跟GH真机棋盘货渲染",
+        "同链档序",
+        "浅奶油卡",
+        "无字无脸"
+      ],
+      "unlocks": [
+        "不锁：抄HUD全棋盘",
+        "软黏土UI"
+      ],
+      "defaults_shown": [
+        "默认：硬料海鲜八档 overview｜垫GH真机货条锁画风｜4x2浅卡"
+      ],
+      "commercial_vibe": "跟GH真机截图棋盘货同一套休闲高饱和块面高光"
+    },
+    "l2": {
+      "open": true,
+      "surface_fix": "",
+      "last_feedback": "",
+      "feedback_layer": ""
+    },
+    "notes": ""
+  },
+  "reasonableness_history": [
+    {
+      "reviewed_at": 1794489888.7918396,
+      "passed": false,
+      "skill": "merge",
+      "issues": [
+        "merge 缺单件居中：修订句须写单件居中、非场景",
+        "merge shop_ladder 缺形变理由：须写家族基因与 evolve/合成理由，禁止装饰换装断故事"
+      ]
+    },
+    {
+      "reviewed_at": 1794489999.2885847,
+      "passed": true,
+      "skill": "merge",
+      "issues": []
+    }
+  ],
+  "reasonableness": {
+    "passed": true,
+    "skill": "merge",
+    "draft_prompt": "chain_mode=shop_ladder。垫图锁画风：跟 Gossip Harbor 真机棋盘货（龙虾冰碗/生蚝盘）同一套高饱和圆润块面高光休闲图标；每格单件居中非场景。家族=海边硬料海鲜店，珊瑚红+奶油白+海沫青。\r\nL1 小银鱼货柜件 evolve=SmallFish\r\nL2 双鱼盘 evolve=FishPlate merge_why=两尾小鱼放上同一浅盘成一件\r\nL3 熟制鱼盘 evolve=PreparedFish merge_why=双鱼合成一条熟制整鱼剪影\r\nL4 海鲜碗 evolve=SeafoodBowl merge_why=熟鱼换成碗装虾鱼块件数\r\nL5 海鲜拼盘 evolve=Platter merge_why=碗换成椭圆盘蟹虾贝三大色块\r\nL6 龙虾菜 evolve=LobsterDish merge_why=拼盘浓缩成整只龙虾盘\r\nL7 龙虾大餐 evolve=Feast merge_why=更大盘龙虾大餐可加冰块色块\r\nL8 盛宴托盘 evolve=TraySet merge_why=两份菜放上同一浅托盘一件货\r\n一眼失败：抄HUD全棋盘、大角色眼、木纹托盘、写实棚拍。浅奶油4x2竖屏无字无脸。",
+    "revised_prompt": "chain_mode=shop_ladder。垫图锁画风：跟 Gossip Harbor 真机棋盘货（龙虾冰碗/生蚝盘）同一套高饱和圆润块面高光休闲图标；每格单件居中非场景。家族=海边硬料海鲜店，珊瑚红+奶油白+海沫青。\r\nL1 小银鱼货柜件 evolve=SmallFish\r\nL2 双鱼盘 evolve=FishPlate merge_why=两尾小鱼放上同一浅盘成一件\r\nL3 熟制鱼盘 evolve=PreparedFish merge_why=双鱼合成一条熟制整鱼剪影\r\nL4 海鲜碗 evolve=SeafoodBowl merge_why=熟鱼换成碗装虾鱼块件数\r\nL5 海鲜拼盘 evolve=Platter merge_why=碗换成椭圆盘蟹虾贝三大色块\r\nL6 龙虾菜 evolve=LobsterDish merge_why=拼盘浓缩成整只龙虾盘\r\nL7 龙虾大餐 evolve=Feast merge_why=更大盘龙虾大餐可加冰块色块\r\nL8 盛宴托盘 evolve=TraySet merge_why=两份菜放上同一浅托盘一件货\r\n一眼失败：抄HUD全棋盘、大角色眼、木纹托盘、写实棚拍。浅奶油4x2竖屏无字无脸。",
+    "checklist": {
+      "subject_action": {
+        "status": "ok",
+        "note": ""
+      },
+      "element_budget": {
+        "status": "ok",
+        "note": ""
+      },
+      "hard_locks": {
+        "status": "ok",
+        "note": ""
+      },
+      "fail_at_glance": {
+        "status": "ok",
+        "note": ""
+      },
+      "single_centered_item": {
+        "status": "ok",
+        "note": ""
+      },
+      "chain_mode_declared": {
+        "status": "ok",
+        "note": ""
+      },
+      "upgrade_reason_concrete": {
+        "status": "ok",
+        "note": ""
+      },
+      "family_or_base_lock": {
+        "status": "ok",
+        "note": ""
+      }
+    },
+    "issues": [],
+    "notes": "",
+    "reviewed_at": 1794489999.2885847,
+    "reviewed_at_iso": "2026-11-12 21:26:39",
+    "force_pass": false,
+    "skill_raw": "merge"
+  },
+  "discussions": [
+    {
+      "round": 0,
+      "kind": "reasonableness",
+      "prompt": "chain_mode=shop_ladder。垫图锁画风：跟 Gossip Harbor 真机棋盘货（龙虾冰碗/生蚝盘）同一套高饱和圆润块面高光休闲图标；每格单件居中非场景。家族=海边硬料海鲜店，珊瑚红+奶油白+海沫青。\r\nL1 小银鱼货柜件 evolve=SmallFish\r\nL2 双鱼盘 evolve=FishPlate merge_why=两尾小鱼放上同一浅盘成一件\r\nL3 熟制鱼盘 evolve=PreparedFish merge_why=双鱼合成一条熟制整鱼剪影\r\nL4 海鲜碗 evolve=SeafoodBowl merge_why=熟鱼换成碗装虾鱼块件数\r\nL5 海鲜拼盘 evolve=Platter merge_why=碗换成椭圆盘蟹虾贝三大色块\r\nL6 龙虾菜 evolve=LobsterDish merge_why=拼盘浓缩成整只龙虾盘\r\nL7 龙虾大餐 evolve=Feast merge_why=更大盘龙虾大餐可加冰块色块\r\nL8 盛宴托盘 evolve=TraySet merge_why=两份菜放上同一浅托盘一件货\r\n一眼失败：抄HUD全棋盘、大角色眼、木纹托盘、写实棚拍。浅奶油4x2竖屏无字无脸。",
+      "strengths": "合理性闸已过：subject_action=ok；element_budget=ok；hard_locks=ok；fail_at_glance=ok；single_centered_item=ok；chain_mode_declared=ok；upgrade_reason_concrete=ok；family_or_base_lock=ok",
+      "defects": "",
+      "next_fix": "首轮 generate 使用本修订提示词；审美迭代不得推翻硬锁与元素预算"
+    }
+  ],
+  "warm_start_merged": true,
+  "warm_start_merged_at": "2026-11-12 21:34:59",
+  "warm_start_block_sha1": "37ef965b8108",
+  "ActionRequired": "STOP_PICK_BEST",
+  "showcase_ready": true,
+  "winner": {
+    "round": 3,
+    "round_label": "第 3 轮精修",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "9:16",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png"
+    ],
+    "param_validation": {
+      "valid": true,
+      "validation_passed": true,
+      "case_id": "merge_seafood_hard_v3_20261112",
+      "scale": "medium",
+      "aspect_ratio": "9:16",
+      "ref_aspect_ratio": "9:16",
+      "ref_dimensions": "1512x2688",
+      "output_aspect_ratio": "9:16",
+      "output_dimensions": "1080x1920",
+      "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\refs\\gossip_harbor\\gh_merge__ar_9x16.png"
+      ],
+      "inherited_default_aspect_ratio": true,
+      "inherited_default_pad_image": true,
+      "matched_ref_aspect_ratio": true,
+      "matched_ref_pad_image": true,
+      "matched_output_aspect_ratio": true,
+      "three_step_stage": "step3_judge",
+      "three_step_verified": true,
+      "warnings": [],
+      "continuation_pad": false,
+      "pad_diverged": false
+    },
+    "generated_at": "21:33:34",
+    "image": "assets/skill_20261112_seafood/merge_hard_v3/sheet_r3.jpg",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 352102,
+      "size_kb": 343.8,
+      "width": 1080,
+      "height": 1920,
+      "aspect_ratio": "9:16",
+      "canonical_aspect_ratio": "9:16",
+      "color_entropy": 7.96
+    },
+    "raw_score": 9.28,
+    "score": 9.28,
+    "target_score_threshold": 9.5,
+    "dims": "构图9.3/光影9.4/透视9.2/质感9.3/风格9.5/无瑕疵9.1",
+    "dims_parsed": {
+      "composition": 9.3,
+      "lighting_color": 9.4,
+      "perspective_anatomy": 9.2,
+      "texture_detail": 9.3,
+      "spec_style": 9.5,
+      "flawlessness": 9.1
+    },
+    "weighted_score": 9.28,
+    "audit_warnings": [
+      "收敛停滞预警：本轮净增 +0.07 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+      "Agent Absolute-5D 已采纳（门槛 9.5）",
+      "提示：邻档框高接近（第 1→2 为 0.33→0.33）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+      "提示：邻档框高接近（第 3→4 为 0.41→0.42）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+      "提示：邻档框高接近（第 5→6 为 0.48→0.44）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+      "提示：邻档框高接近（第 6→7 为 0.44→0.38）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+      "末档明显小于前档：末格 0.37，最大 0.48",
+      "点名锁未单独验收：锁：跟GH真机棋盘货渲染；同链档序；浅奶油卡；无字无脸"
+    ],
+    "stagnated": true,
+    "strengths": "继续垫GH货条；块面高光贴棋盘货；竖屏铺满；龙虾大餐可读",
+    "defects": "个别配菜仍偏满；末档托盘剪影可再清楚；提示：邻档框高接近（第 1→2 为 0.33→0.33）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 3→4 为 0.41→0.42）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 5→6 为 0.48→0.44）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 6→7 为 0.44→0.38）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；末档明显小于前档：末格 0.37，最大 0.48；点名锁未单独验收：锁：跟GH真机棋盘货渲染；同链档序；浅奶油卡；无字无脸",
+    "next_fix": "锁托盘剪影；其余保持；末档不得明显矮于前档；有贴边残片/切顶须整张重出；邻档靠剪影/件数可分；禁止跨轮抠格拼表",
+    "prompt": "休闲 merge 货柜默认气质：Gossip Harbor 玩具货柜——软立体糖釉道具、圆润厚实、无硬描边、暖饱和、柔光釉面高光、棋盘缩略一眼可认。材质锁死为有体积的糖釉玩具货柜道具（柔光高光可读），不是实物，也不是哑光黏土/软塑胶 UI 图标。禁止：写实摄影、美食棚拍、产品静物、玻璃真实折射、木纹指纹、果汁乳浊摄影感、微距毛孔、油光金属、暗沉旧塑料、硬镜面 CGI、硬卡通 CGI、皮克斯硬塑胶高光、哑光黏土拟态、软塑胶 UI 图标、平面绘本贴纸风冒充货柜。档位句只写糖釉玩具剪影/件数/容器/完成态与整块色；禁止焦斑/烤痕/鳞片微距/湿润汤面感/柠檬片香菜末/摄影级摆盘质感词（点名写实除外）。整表参考只锁格子版式，不跟参考写实表面。 | 点名锁每轮都要单独留住，不许整张漂掉：锁：跟GH真机棋盘货渲染；同链档序；浅奶油卡；无字无脸 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.HarborSeafoodHardV3\n- 置信度: 0.45（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 五链合成：不必每档保留L1原件/母体锁死；同域合理升级、档差明显即可\n  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n- 个人口味: 光影=柔光 / 暖光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 错误头身比/头过大；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光| chain_mode=shop_ladder。垫GH真机货条锁画风：高饱和圆润块面高光休闲棋盘货。4x2浅奶油圆角卡铺满竖屏9:16勿加边条。每格单件居中。家族海边硬料海鲜。 L1 小银鱼 evolve=SmallFish L2 双鱼盘无柠檬 merge_why=两尾上盘 L3 熟制鱼盘无柠檬 merge_why=合成熟鱼剪影 L4 海鲜碗 merge_why=换成碗装件数 L5 蟹虾贝拼盘 merge_why=换成椭圆盘三大色块 L6 龙虾盘 merge_why=浓缩整只龙虾 L7 龙虾大餐可冰块 merge_why=更大龙虾大餐 L8 奶油浅托盘两小份加酱杯禁木纹 merge_why=托盘一件货 无字无脸无大眼无HUD。| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | 去柠檬；L8奶油浅托盘；鳞片更块面；末档不得明显矮于前档；有贴边残片/切顶须整张重出；邻档靠剪影/件数可分；禁止跨轮抠格拼表",
+    "continuation": false,
+    "passed": false,
+    "gate_blocked": true,
+    "image_gate_blocked": false,
+    "anatomy_score": 9.2,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "unknown",
+    "judge_source": "agent_absolute_5d",
+    "remote_vlm": {
+      "source": "agent_self_judge",
+      "provider": "",
+      "model": "",
+      "error": "",
+      "active": false,
+      "score_evidence": {},
+      "evidence_missing_dims": [],
+      "review": {
+        "pass_count": 0,
+        "rerated": false,
+        "reason": ""
+      }
+    },
+    "should_continue_next_round": true,
+    "decision": "CONTINUE_NEXT_ROUND",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "style_lock",
+        "lesson": "本轮短板偏「style_lock」：个别配菜仍偏满；末档托盘剪影可再清楚；提示：邻档框高接近（第 1→2 为 0.33→0.33）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（",
+        "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+        "from_score": "9.28"
+      },
+      {
+        "category": "keep",
+        "lesson": "保留本轮已做对的：继续垫GH货条；块面高光贴棋盘货；竖屏铺满；龙虾大餐可读",
+        "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+        "from_score": "9.28"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "21:34:11",
+    "asset_image": "assets/skill_20261112_seafood/merge_hard_v3/sheet_r3.jpg"
+  },
+  "rounds_to_converge": 4,
+  "convergence_badge": "共 4 轮未达阈值，采用最高分",
+  "winner_image": "assets/skill_20261112_seafood/merge_hard_v3/sheet_r3.jpg",
+  "best_image": "assets/skill_20261112_seafood/merge_hard_v3/sheet_r3.jpg",
+  "final_image": "assets/skill_20261112_seafood/merge_hard_v3/final.jpg",
+  "settle_pending": false,
+  "process_board": ".memory-art/converge/boards/merge_seafood_hard_v3_20261112/index.html",
+  "settle_done_at": "2026-11-12 21:36:50 UTC+8",
+  "settle_saved_paths": [
+    ".memory-art\\entries\\merge.HarborSeafoodHardV3\\CHAT20261112213623723RECIPE.md",
+    ".memory-art\\entries\\merge.HarborSeafoodHardV3\\CHAT20261112213625922REDLINE.md",
+    ".memory-art\\_reflections\\20261112_213627_merge_seafood_hard_v3_20261112.json"
+  ]
+}

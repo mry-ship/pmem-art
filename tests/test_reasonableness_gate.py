@@ -440,7 +440,7 @@ class TestSessionGate(unittest.TestCase):
         self.assertFalse(out["passed"])
         self.assertTrue(any("无字" in x for x in out["issues"]))
 
-    def test_first_generate_forces_revised(self) -> None:
+    def test_first_generate_rejects_unreviewed_prompt(self) -> None:
         rev = "青瓷小猫蹲坐捧茶盏，爪与盏接触清楚；背景最多一扇窗；竖构图无字；一眼失败是多爪。"
         sess = {
             "rounds": [],
@@ -453,9 +453,10 @@ class TestSessionGate(unittest.TestCase):
         ok, msg, prompt_use = check_reasonableness_gate(
             sess, round_num=1, prompt="totally different unreviewed prompt"
         )
-        self.assertTrue(ok)
-        self.assertEqual(prompt_use, rev)
-        self.assertIn("强制", msg)
+        self.assertFalse(ok)
+        self.assertEqual(prompt_use, "")
+        self.assertIn("拒绝静默替换", msg)
+        self.assertIn("reasonableness review", msg)
 
     def test_later_round_empty_prompt_falls_back_to_revised(self) -> None:
         rev = "青瓷小猫蹲坐捧茶盏，爪与盏接触清楚；背景最多一扇窗；竖构图无字；一眼失败是多爪。"

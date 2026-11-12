@@ -1,0 +1,1059 @@
+{
+  "session_id": "suite_variant",
+  "started_at": "2026-11-12 22:14:08 UTC+8",
+  "goal": "用这份参考做变体：同一角色换成惊讶表情；机位已在图上；锁身份与机位；单张表情差分；suite_variant 新开",
+  "module": "brand.WorldStyle",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "medium",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "medium",
+    "label": "中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.5)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 1,
+    "target_score_threshold": 9.5,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.15,
+      "perspective_anatomy": 0.15,
+      "texture_detail": 0.15,
+      "spec_style": 0.15,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "viewpoint_frame",
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图，只在提示词上补还没过的那一处（提示词改动仍 ≤40%）",
+    "max_prompt_delta_ratio": 0.4,
+    "allow_recompose": false,
+    "allow_viewpoint_change": false,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "viewpoint_angle (不改机位与镜头视角)",
+      "element_count (不增删主体元素清单)",
+      "no_full_recompose (不做整体 recompose / 换景别故事)",
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)"
+    ],
+    "min_round_leap": 0.15,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光",
+    "medium_family": "generic",
+    "best_direction_hint": "最优方向：光影·空气·介质；可小幅姿态/局部布局",
+    "goal": "用这份参考做变体：同一角色换成惊讶表情；机位已在图上；锁身份与机位；单张表情差分；suite_variant 新开",
+    "module": "brand.WorldStyle",
+    "ref_image": "assets/skill_20261112_suite/refs/ref_story.jpg",
+    "ref_analysis": "竖屏Story双格叙事。上格暗巷：绿发短发成年女紫衣破牛仔裤靠墙，红棕长发女童黄衣蓝背带裤扶住；下格同女童紫裙赤脚侧躺破败地砖。机位锁死。色：绿发#3DB86A 红发#C45A3A 紫衣#6B4A8A。3D软塑休闲叙事。只改惊讶：睁大眼张嘴。"
+  },
+  "medium_family": "generic",
+  "contract": "",
+  "target_score_threshold": 9.5,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_story__ar_9x16.png",
+  "ref_analysis": "竖屏Story双格叙事。上格暗巷：绿发短发成年女紫衣破牛仔裤靠墙，红棕长发女童黄衣蓝背带裤扶住；下格同女童紫裙赤脚侧躺破败地砖。机位锁死。色：绿发#3DB86A 红发#C45A3A 紫衣#6B4A8A。3D软塑休闲叙事。只改惊讶：睁大眼张嘴。",
+  "default_aspect_ratio": "9:16",
+  "default_reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_story__ar_9x16.png"
+  ],
+  "aspect_ratio": "9:16",
+  "reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_story__ar_9x16.png"
+  ],
+  "ref_physical_traits": {
+    "exists": true,
+    "size_bytes": 2910311,
+    "size_kb": 2842.1,
+    "width": 1512,
+    "height": 2688,
+    "aspect_ratio": "9:16",
+    "canonical_aspect_ratio": "9:16",
+    "color_entropy": 7.99
+  },
+  "param_validation": {
+    "valid": true,
+    "validation_passed": true,
+    "case_id": "suite_variant",
+    "scale": "medium",
+    "aspect_ratio": "9:16",
+    "ref_aspect_ratio": "9:16",
+    "ref_dimensions": "1512x2688",
+    "output_aspect_ratio": "",
+    "output_dimensions": "",
+    "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_story__ar_9x16.png",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_story__ar_9x16.png"
+    ],
+    "inherited_default_aspect_ratio": false,
+    "inherited_default_pad_image": false,
+    "matched_ref_aspect_ratio": true,
+    "matched_ref_pad_image": true,
+    "matched_output_aspect_ratio": true,
+    "three_step_stage": "step1_start",
+    "three_step_verified": false,
+    "warnings": [
+      "参考图已加边为同一张垫图 'ref_story__ar_9x16.png'，会话和生图都用这一张，不要再垫原图。"
+    ]
+  },
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.5,
+  "accept_threshold": 9.5,
+  "max_rounds": 4,
+  "ready_to_finish": true,
+  "status": "finished",
+  "owner_conversation_id": "",
+  "route_ids": [
+    "draw.key",
+    "draw.variant"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_story__ar_9x16.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "suite_variant",
+        "scale": "medium",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "1512x2688",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_story__ar_9x16.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_story__ar_9x16.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "22:21:28",
+      "image": "assets/skill_20261112_suite/out/draw.variant/r1.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 289810,
+        "size_kb": 283.0,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.2
+      },
+      "raw_score": 8.39,
+      "score": 8.39,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.9/光影8.7/透视8.6/质感8.8/风格8.5/无瑕疵7.6",
+      "dims_parsed": {
+        "composition": 8.9,
+        "lighting_color": 8.7,
+        "perspective_anatomy": 8.6,
+        "texture_detail": 8.8,
+        "spec_style": 8.5,
+        "flawlessness": 7.6
+      },
+      "weighted_score": 8.39,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "点名锁未单独验收：发色瞳色服装；上格暗巷机位景别构图；砖墙垃圾袋纸箱接触关系；3D软塑休闲叙事画风"
+      ],
+      "stagnated": false,
+      "strengths": "上格双人暗巷机位与砖墙垃圾袋接触大体锁住；绿发紫衣与红发背带裤身份可读",
+      "defects": "点名惊讶差分未兑现：绿发女仍偏痛苦/担忧闭眼或半垂眼，未达睁大眼+眉上扬+嘴微张；红发女童张嘴偏惊恐但仍不够明确双眼圆睁虹膜高光。表情硬验收失败不能停。；点名锁未单独验收：发色瞳色服装；上格暗巷机位景别构图；砖墙垃圾袋纸箱接触关系；3D软塑休闲叙事画风",
+      "next_fix": "只改表情：绿发女双眼圆睁可见虹膜高光、眉上扬、嘴明显微张呈惊讶；红发女童同步圆睁+眉扬+张嘴；机位服装发色接触全不动",
+      "prompt": "点名锁每轮都要单独留住，不许整张漂掉：锁：绿发短发成年女+红棕长发女童身份；发色瞳色服装；上格暗巷机位景别构图；砖墙垃圾袋纸箱接触关系；3D软塑休闲叙事画风 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: brand.WorldStyle\n- 置信度: 0.60（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n  · 确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；\n- 必须避开红线:\n  · [CHAT20261109232829194REDLINE] [收敛踩坑红线] 有参考题材不变——把蘑菇甜点拼盘画成更干净的道具特写；身份不：避免「左上奶酪体量过大，压缩了果实与叶片的展示空间；中右部枝梗、果实和叶片叠压密集，局部切线较多」\n  · [CHAT20261112220939400REDLINE] 禁止偏离样张画风：硬镜面CGI、皮克斯硬塑、哑光黏土软塑胶UI、厚黑描边、写实摄影摆盘、脏暗泥污阴影、赛博霓虹紫雾、灰雾废土、扁平矢量贴纸、油腻金属、指纹…\n  · [CHAT20261109225616629REDLINE] 禁止偏离样张画风：写实皮肤毛孔/照片级木纹毛皮；赛博霓虹与荧光边光；油腻镜面高光与硬金属机械；脏暗泥污阴影与高对比明暗法；扁平2D厚黑描边；真人头身比；城…\n- 审美拍板:\n  · 以后统一按此样张画风：Gossip Harbor 真机海鲜货柜软立体；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1F…\n  · 以后统一按此样张画风：Gossip Harbor真机海鲜货柜；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1FF约20…\n- 个人口味: 光影=柔光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光 | 绿发女和红发女孩在暗巷：同一身份Story上格双人机位不变。绿发短发成年女紫衣破牛仔裤靠湿砖墙，红棕长发女童黄衣蓝背带裤扶住她；只改点名差分——两人都换成惊讶表情（睁大眼、眉上扬、嘴微张），其余发色瞳色服装比例机位砖墙纸箱垃圾袋湿地面接触全锁。休闲叙事3D软塑柔光。一眼失败：仍是闭眼痛苦/悲伤，或机位漂移，或改了服装身份。 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.6,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "composition",
+          "lesson": "本轮短板偏「composition」：点名惊讶差分未兑现：绿发女仍偏痛苦/担忧闭眼或半垂眼，未达睁大眼+眉上扬+嘴微张；红发女童张嘴偏惊恐但仍不够明确双眼圆睁虹膜高光。表情硬验收失败不能停。；点名锁",
+          "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+          "from_score": "8.39"
+        },
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：点名惊讶差分未兑现：绿发女仍偏痛苦/担忧闭眼或半垂眼，未达睁大眼+眉上扬+嘴微张；红发女童张嘴偏惊恐但仍不够明确双眼圆睁虹膜高光。表情硬验收失败不能停。；点名锁",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.39"
+        },
+        {
+          "category": "narrative_camera",
+          "lesson": "本轮短板偏「narrative_camera」：点名惊讶差分未兑现：绿发女仍偏痛苦/担忧闭眼或半垂眼，未达睁大眼+眉上扬+嘴微张；红发女童张嘴偏惊恐但仍不够明确双眼圆睁虹膜高光。表情硬验收失败不能停。；点名锁",
+          "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+          "from_score": "8.39"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "22:22:26"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_story__ar_9x16.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "suite_variant",
+        "scale": "medium",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "1512x2688",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_story__ar_9x16.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_story__ar_9x16.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "22:24:36",
+      "image": "assets/skill_20261112_suite/out/draw.variant/r2.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 293254,
+        "size_kb": 286.4,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.2
+      },
+      "raw_score": 8.29,
+      "score": 8.29,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.8/光影8.6/透视8.5/质感8.7/风格8.4/无瑕疵7.5",
+      "dims_parsed": {
+        "composition": 8.8,
+        "lighting_color": 8.6,
+        "perspective_anatomy": 8.5,
+        "texture_detail": 8.7,
+        "spec_style": 8.4,
+        "flawlessness": 7.5
+      },
+      "weighted_score": 8.29,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +-0.10 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "点名锁未单独验收：发色瞳色服装；上格暗巷机位景别构图；砖墙垃圾袋纸箱接触关系；3D软塑休闲叙事画风"
+      ],
+      "stagnated": true,
+      "strengths": "双人暗巷机位与身份发色服装仍可读；UI外框雪檐Story页结构保持",
+      "defects": "惊讶硬验收仍未过：绿发女仍是恐惧/痛苦半垂眼非圆睁惊讶；红发女童偏担忧未同步眉扬张嘴惊讶。点名表情差分未兑现。；点名锁未单独验收：发色瞳色服装；上格暗巷机位景别构图；砖墙垃圾袋纸箱接触关系；3D软塑休闲叙事画风",
+      "next_fix": "绿发女与红发女童面部改为明确惊讶：双眼圆睁露虹膜高光、双眉上扬、嘴巴明显张开呈O型；禁止悲伤闭眼或半垂眼；机位身份服装场景不动",
+      "prompt": "点名锁每轮都要单独留住，不许整张漂掉：锁：绿发短发成年女+红棕长发女童身份；发色瞳色服装；上格暗巷机位景别构图；砖墙垃圾袋纸箱接触关系；3D软塑休闲叙事画风 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: brand.WorldStyle\n- 置信度: 0.60（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n  · 确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；\n- 必须避开红线:\n  · [CHAT20261109232829194REDLINE] [收敛踩坑红线] 有参考题材不变——把蘑菇甜点拼盘画成更干净的道具特写；身份不：避免「左上奶酪体量过大，压缩了果实与叶片的展示空间；中右部枝梗、果实和叶片叠压密集，局部切线较多」\n  · [CHAT20261112220939400REDLINE] 禁止偏离样张画风：硬镜面CGI、皮克斯硬塑、哑光黏土软塑胶UI、厚黑描边、写实摄影摆盘、脏暗泥污阴影、赛博霓虹紫雾、灰雾废土、扁平矢量贴纸、油腻金属、指纹…\n  · [CHAT20261109225616629REDLINE] 禁止偏离样张画风：写实皮肤毛孔/照片级木纹毛皮；赛博霓虹与荧光边光；油腻镜面高光与硬金属机械；脏暗泥污阴影与高对比明暗法；扁平2D厚黑描边；真人头身比；城…\n- 审美拍板:\n  · 以后统一按此样张画风：Gossip Harbor 真机海鲜货柜软立体；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1F…\n  · 以后统一按此样张画风：Gossip Harbor真机海鲜货柜；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1FF约20…\n- 个人口味: 光影=柔光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光 | 绿发女和红发女孩在暗巷：同一身份Story上格双人机位不变。绿发短发成年女紫衣破牛仔裤靠湿砖墙，红棕长发女童黄衣蓝背带裤扶住她；只改点名差分——两人都换成惊讶表情（睁大眼、眉上扬、嘴微张），其余发色瞳色服装比例机位砖墙纸箱垃圾袋湿地面接触全锁。休闲叙事3D软塑柔光。一眼失败：仍是闭眼痛苦/悲伤，或机位漂移，或改了服装身份。 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props | 只改表情：绿发女双眼圆睁可见虹膜高光、眉上扬、嘴明显微张呈惊讶；红发女童同步圆睁+眉扬+张嘴；机位服装发色接触全不动",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.5,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "composition",
+          "lesson": "本轮短板偏「composition」：惊讶硬验收仍未过：绿发女仍是恐惧/痛苦半垂眼非圆睁惊讶；红发女童偏担忧未同步眉扬张嘴惊讶。点名表情差分未兑现。；点名锁未单独验收：发色瞳色服装；上格暗巷机位景别",
+          "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+          "from_score": "8.29"
+        },
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：惊讶硬验收仍未过：绿发女仍是恐惧/痛苦半垂眼非圆睁惊讶；红发女童偏担忧未同步眉扬张嘴惊讶。点名表情差分未兑现。；点名锁未单独验收：发色瞳色服装；上格暗巷机位景别",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.29"
+        },
+        {
+          "category": "narrative_camera",
+          "lesson": "本轮短板偏「narrative_camera」：惊讶硬验收仍未过：绿发女仍是恐惧/痛苦半垂眼非圆睁惊讶；红发女童偏担忧未同步眉扬张嘴惊讶。点名表情差分未兑现。；点名锁未单独验收：发色瞳色服装；上格暗巷机位景别",
+          "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+          "from_score": "8.29"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "22:25:09"
+    },
+    {
+      "round": 3,
+      "round_label": "第 3 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_story__ar_9x16.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "suite_variant",
+        "scale": "medium",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "1512x2688",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_story__ar_9x16.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_story__ar_9x16.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "22:26:57",
+      "image": "assets/skill_20261112_suite/out/draw.variant/r3.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 293746,
+        "size_kb": 286.9,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.2
+      },
+      "raw_score": 8.61,
+      "score": 8.61,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.9/光影8.8/透视8.7/质感8.8/风格8.6/无瑕疵8.2",
+      "dims_parsed": {
+        "composition": 8.9,
+        "lighting_color": 8.8,
+        "perspective_anatomy": 8.7,
+        "texture_detail": 8.8,
+        "spec_style": 8.6,
+        "flawlessness": 8.2
+      },
+      "weighted_score": 8.61,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "点名锁未单独验收：发色瞳色服装；上格暗巷机位景别构图；砖墙垃圾袋纸箱接触关系；3D软塑休闲叙事画风"
+      ],
+      "stagnated": false,
+      "strengths": "绿发女嘴已张开、红发女童双眼偏圆睁，惊讶方向有进展；暗巷机位身份仍锁",
+      "defects": "惊讶仍夹杂痛苦/疲惫：绿发女半垂眼与虚弱靠墙姿态偏生病非干净惊讶；红发女童仍偏担忧。需纯惊讶：双眉上扬、双眼圆睁虹膜高光、嘴张O型，去掉痛苦皱眉。；点名锁未单独验收：发色瞳色服装；上格暗巷机位景别构图；砖墙垃圾袋纸箱接触关系；3D软塑休闲叙事画风",
+      "next_fix": "两张脸改成干净惊讶：双眉上扬、双眼圆睁有虹膜高光、嘴张成O型；去掉痛苦皱眉半垂眼与生病虚弱感；机位服装场景全不动",
+      "prompt": "点名锁每轮都要单独留住，不许整张漂掉：锁：绿发短发成年女+红棕长发女童身份；发色瞳色服装；上格暗巷机位景别构图；砖墙垃圾袋纸箱接触关系；3D软塑休闲叙事画风 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: brand.WorldStyle\n- 置信度: 0.60（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n  · 确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；\n- 必须避开红线:\n  · [CHAT20261109232829194REDLINE] [收敛踩坑红线] 有参考题材不变——把蘑菇甜点拼盘画成更干净的道具特写；身份不：避免「左上奶酪体量过大，压缩了果实与叶片的展示空间；中右部枝梗、果实和叶片叠压密集，局部切线较多」\n  · [CHAT20261112220939400REDLINE] 禁止偏离样张画风：硬镜面CGI、皮克斯硬塑、哑光黏土软塑胶UI、厚黑描边、写实摄影摆盘、脏暗泥污阴影、赛博霓虹紫雾、灰雾废土、扁平矢量贴纸、油腻金属、指纹…\n  · [CHAT20261109225616629REDLINE] 禁止偏离样张画风：写实皮肤毛孔/照片级木纹毛皮；赛博霓虹与荧光边光；油腻镜面高光与硬金属机械；脏暗泥污阴影与高对比明暗法；扁平2D厚黑描边；真人头身比；城…\n- 审美拍板:\n  · 以后统一按此样张画风：Gossip Harbor 真机海鲜货柜软立体；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1F…\n  · 以后统一按此样张画风：Gossip Harbor真机海鲜货柜；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1FF约20…\n- 个人口味: 光影=柔光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光 | 绿发女和红发女孩在暗巷：同一身份Story上格双人机位不变。绿发短发成年女紫衣破牛仔裤靠湿砖墙，红棕长发女童黄衣蓝背带裤扶住她；只改点名差分——两人都换成惊讶表情（睁大眼、眉上扬、嘴微张），其余发色瞳色服装比例机位砖墙纸箱垃圾袋湿地面接触全锁。休闲叙事3D软塑柔光。一眼失败：仍是闭眼痛苦/悲伤，或机位漂移，或改了服装身份。 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props | 只改表情：绿发女双眼圆睁可见虹膜高光、眉上扬、嘴明显微张呈惊讶；红发女童同步圆睁+眉扬+张嘴；机位服装发色接触全不动",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.7,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "composition",
+          "lesson": "本轮短板偏「composition」：惊讶仍夹杂痛苦/疲惫：绿发女半垂眼与虚弱靠墙姿态偏生病非干净惊讶；红发女童仍偏担忧。需纯惊讶：双眉上扬、双眼圆睁虹膜高光、嘴张O型，去掉痛苦皱眉。；点名锁未单独",
+          "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+          "from_score": "8.61"
+        },
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：惊讶仍夹杂痛苦/疲惫：绿发女半垂眼与虚弱靠墙姿态偏生病非干净惊讶；红发女童仍偏担忧。需纯惊讶：双眉上扬、双眼圆睁虹膜高光、嘴张O型，去掉痛苦皱眉。；点名锁未单独",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.61"
+        },
+        {
+          "category": "narrative_camera",
+          "lesson": "本轮短板偏「narrative_camera」：惊讶仍夹杂痛苦/疲惫：绿发女半垂眼与虚弱靠墙姿态偏生病非干净惊讶；红发女童仍偏担忧。需纯惊讶：双眉上扬、双眼圆睁虹膜高光、嘴张O型，去掉痛苦皱眉。；点名锁未单独",
+          "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+          "from_score": "8.61"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "22:27:31"
+    },
+    {
+      "round": 4,
+      "round_label": "第 4 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_story__ar_9x16.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "suite_variant",
+        "scale": "medium",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "1512x2688",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_story__ar_9x16.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_story__ar_9x16.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "22:29:10",
+      "image": "assets/skill_20261112_suite/out/draw.variant/r4.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 295431,
+        "size_kb": 288.5,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.2
+      },
+      "raw_score": 8.83,
+      "score": 8.83,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.0/光影8.9/透视8.8/质感8.9/风格8.8/无瑕疵8.7",
+      "dims_parsed": {
+        "composition": 9.0,
+        "lighting_color": 8.9,
+        "perspective_anatomy": 8.8,
+        "texture_detail": 8.9,
+        "spec_style": 8.8,
+        "flawlessness": 8.7
+      },
+      "weighted_score": 8.83,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "点名锁未单独验收：发色瞳色服装；上格暗巷机位景别构图；砖墙垃圾袋纸箱接触关系；3D软塑休闲叙事画风"
+      ],
+      "stagnated": false,
+      "strengths": "绿发女双眼圆睁嘴大张、红发女童同步受惊张嘴，惊讶方向明显强于原图闭眼痛苦；暗巷机位身份服装锁住",
+      "defects": "惊讶仍偏惊恐：绿发女张嘴偏恐惧尖叫而非干净惊讶；眉弓与眼睑仍有痛苦残留。满4轮取最高。；点名锁未单独验收：发色瞳色服装；上格暗巷机位景别构图；砖墙垃圾袋纸箱接触关系；3D软塑休闲叙事画风",
+      "next_fix": "解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁止糊边融边；惊讶仍偏惊恐：绿发女张嘴偏恐惧尖叫而非干净惊讶；眉弓与眼睑仍有痛苦残留。满4轮取最高。",
+      "prompt": "点名锁每轮都要单独留住，不许整张漂掉：锁：绿发短发成年女+红棕长发女童身份；发色瞳色服装；上格暗巷机位景别构图；砖墙垃圾袋纸箱接触关系；3D软塑休闲叙事画风 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: brand.WorldStyle\n- 置信度: 0.60（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n  · 确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；\n- 必须避开红线:\n  · [CHAT20261109232829194REDLINE] [收敛踩坑红线] 有参考题材不变——把蘑菇甜点拼盘画成更干净的道具特写；身份不：避免「左上奶酪体量过大，压缩了果实与叶片的展示空间；中右部枝梗、果实和叶片叠压密集，局部切线较多」\n  · [CHAT20261112220939400REDLINE] 禁止偏离样张画风：硬镜面CGI、皮克斯硬塑、哑光黏土软塑胶UI、厚黑描边、写实摄影摆盘、脏暗泥污阴影、赛博霓虹紫雾、灰雾废土、扁平矢量贴纸、油腻金属、指纹…\n  · [CHAT20261109225616629REDLINE] 禁止偏离样张画风：写实皮肤毛孔/照片级木纹毛皮；赛博霓虹与荧光边光；油腻镜面高光与硬金属机械；脏暗泥污阴影与高对比明暗法；扁平2D厚黑描边；真人头身比；城…\n- 审美拍板:\n  · 以后统一按此样张画风：Gossip Harbor 真机海鲜货柜软立体；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1F…\n  · 以后统一按此样张画风：Gossip Harbor真机海鲜货柜；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1FF约20…\n- 个人口味: 光影=柔光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光 | 绿发女和红发女孩在暗巷：同一身份Story上格双人机位不变。绿发短发成年女紫衣破牛仔裤靠湿砖墙，红棕长发女童黄衣蓝背带裤扶住她；只改点名差分——两人都换成惊讶表情（睁大眼、眉上扬、嘴微张），其余发色瞳色服装比例机位砖墙纸箱垃圾袋湿地面接触全锁。休闲叙事3D软塑柔光。一眼失败：仍是闭眼痛苦/悲伤，或机位漂移，或改了服装身份。 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props | 两张脸改成干净惊讶：双眉上扬、双眼圆睁有虹膜高光、嘴张成O型；去掉痛苦皱眉半垂眼与生病虚弱感；机位服装场景全不动",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.8,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_MAX_ROUNDS",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "composition",
+          "lesson": "本轮短板偏「composition」：惊讶仍偏惊恐：绿发女张嘴偏恐惧尖叫而非干净惊讶；眉弓与眼睑仍有痛苦残留。满4轮取最高。；点名锁未单独验收：发色瞳色服装；上格暗巷机位景别构图；砖墙垃圾袋纸箱接触",
+          "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+          "from_score": "8.83"
+        },
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：惊讶仍偏惊恐：绿发女张嘴偏恐惧尖叫而非干净惊讶；眉弓与眼睑仍有痛苦残留。满4轮取最高。；点名锁未单独验收：发色瞳色服装；上格暗巷机位景别构图；砖墙垃圾袋纸箱接触",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.83"
+        },
+        {
+          "category": "anatomy",
+          "lesson": "本轮短板偏「anatomy」：惊讶仍偏惊恐：绿发女张嘴偏恐惧尖叫而非干净惊讶；眉弓与眼睑仍有痛苦残留。满4轮取最高。；点名锁未单独验收：发色瞳色服装；上格暗巷机位景别构图；砖墙垃圾袋纸箱接触",
+          "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+          "from_score": "8.83"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "22:29:56"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-11-10 14:02:24 UTC+8"
+    },
+    "module": "brand.WorldStyle",
+    "goal": "用这份参考做变体：同一角色换成惊讶表情；机位已在图上；锁身份与机位；单张表情差分；suite_variant 新开",
+    "confidence": 0.6,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "命中 2 条审美拍板",
+      "个人口味/正向保留非空",
+      "注入红线可控（3 条，已按任务主题过滤）",
+      "挂载 1 张项目知识卡 + 0 张全局美术底层基础卡"
+    ],
+    "top_recipes": [],
+    "top_redlines": [
+      {
+        "id": "CHAT20261109232829194REDLINE",
+        "summary": "[收敛踩坑红线] 有参考题材不变——把蘑菇甜点拼盘画成更干净的道具特写；身份不：避免「左上奶酪体量过大，压缩了果实与叶片的展示空间；中右部枝梗、果实和叶片叠压密集，局部切线较多」",
+        "module": "brand.WorldStyle"
+      },
+      {
+        "id": "CHAT20261112220939400REDLINE",
+        "summary": "禁止偏离样张画风：硬镜面CGI、皮克斯硬塑、哑光黏土软塑胶UI、厚黑描边、写实摄影摆盘、脏暗泥污阴影、赛博霓虹紫雾、灰雾废土、扁平矢量贴纸、油腻金属、指纹…",
+        "module": "brand.WorldStyle"
+      },
+      {
+        "id": "CHAT20261109225616629REDLINE",
+        "summary": "禁止偏离样张画风：写实皮肤毛孔/照片级木纹毛皮；赛博霓虹与荧光边光；油腻镜面高光与硬金属机械；脏暗泥污阴影与高对比明暗法；扁平2D厚黑描边；真人头身比；城…",
+        "module": "brand.WorldStyle"
+      }
+    ],
+    "art_decisions": [
+      {
+        "id": "CHAT20261112220940541DECISION",
+        "summary": "以后统一按此样张画风：Gossip Harbor 真机海鲜货柜软立体；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1F…",
+        "layer_scope": "private"
+      },
+      {
+        "id": "CHAT20261112221030537DECISION",
+        "summary": "以后统一按此样张画风：Gossip Harbor真机海鲜货柜；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1FF约20…",
+        "layer_scope": "private"
+      }
+    ],
+    "private_knowledge": [
+      {
+        "id": "tech-painterly",
+        "title": "厚涂笔触",
+        "body": "可见笔触方向跟随形体，暗部透气勿脏。",
+        "layer_scope": "private"
+      }
+    ],
+    "shared_knowledge": [],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [
+        "柔光"
+      ],
+      "preferred_composition": [
+        "半身",
+        "居中/对称构图"
+      ],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [
+        "避免过饱和",
+        "暖色调"
+      ],
+      "banned_habits": [
+        "廉价塑料感/油腻高光",
+        "漏抠/黑底/毛边",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色"
+      ],
+      "keep_phrases": [
+        "确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。",
+        "确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。",
+        "确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；"
+      ],
+      "banned_habits_raw_tail": [
+        "禁止偏离样张画风：过度霓虹、脏暗阴影、油腻高光、写实皮肤毛孔、扁平UI描边",
+        "电池审稿：原画竖构图避免贴样张布局；边缘反光勿过曝",
+        "电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感",
+        "黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差",
+        "错误头身比/头过大",
+        "廉价塑料感/油腻高光",
+        "漏抠/黑底/毛边",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色"
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: brand.WorldStyle\n- 置信度: 0.60（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n  · 确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；\n- 必须避开红线:\n  · [CHAT20261109232829194REDLINE] [收敛踩坑红线] 有参考题材不变——把蘑菇甜点拼盘画成更干净的道具特写；身份不：避免「左上奶酪体量过大，压缩了果实与叶片的展示空间；中右部枝梗、果实和叶片叠压密集，局部切线较多」\n  · [CHAT20261112220939400REDLINE] 禁止偏离样张画风：硬镜面CGI、皮克斯硬塑、哑光黏土软塑胶UI、厚黑描边、写实摄影摆盘、脏暗泥污阴影、赛博霓虹紫雾、灰雾废土、扁平矢量贴纸、油腻金属、指纹…\n  · [CHAT20261109225616629REDLINE] 禁止偏离样张画风：写实皮肤毛孔/照片级木纹毛皮；赛博霓虹与荧光边光；油腻镜面高光与硬金属机械；脏暗泥污阴影与高对比明暗法；扁平2D厚黑描边；真人头身比；城…\n- 审美拍板:\n  · 以后统一按此样张画风：Gossip Harbor 真机海鲜货柜软立体；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1F…\n  · 以后统一按此样张画风：Gossip Harbor真机海鲜货柜；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1FF约20…\n- 个人口味: 光影=柔光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。",
+    "built_at": "2026-11-12 22:14:07 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：点名惊讶差分未兑现：绿发女仍偏痛苦/担忧闭眼或半垂眼，未达睁大眼+眉上扬+嘴微张；红发女童张嘴偏惊恐但仍不够明确双眼圆睁虹膜高光。表情硬验收失败不能停。；点名锁",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "8.39"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：点名惊讶差分未兑现：绿发女仍偏痛苦/担忧闭眼或半垂眼，未达睁大眼+眉上扬+嘴微张；红发女童张嘴偏惊恐但仍不够明确双眼圆睁虹膜高光。表情硬验收失败不能停。；点名锁",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.39"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：点名惊讶差分未兑现：绿发女仍偏痛苦/担忧闭眼或半垂眼，未达睁大眼+眉上扬+嘴微张；红发女童张嘴偏惊恐但仍不够明确双眼圆睁虹膜高光。表情硬验收失败不能停。；点名锁",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "8.39"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：惊讶硬验收仍未过：绿发女仍是恐惧/痛苦半垂眼非圆睁惊讶；红发女童偏担忧未同步眉扬张嘴惊讶。点名表情差分未兑现。；点名锁未单独验收：发色瞳色服装；上格暗巷机位景别",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "8.29"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：惊讶硬验收仍未过：绿发女仍是恐惧/痛苦半垂眼非圆睁惊讶；红发女童偏担忧未同步眉扬张嘴惊讶。点名表情差分未兑现。；点名锁未单独验收：发色瞳色服装；上格暗巷机位景别",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.29"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：惊讶硬验收仍未过：绿发女仍是恐惧/痛苦半垂眼非圆睁惊讶；红发女童偏担忧未同步眉扬张嘴惊讶。点名表情差分未兑现。；点名锁未单独验收：发色瞳色服装；上格暗巷机位景别",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "8.29"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：惊讶仍夹杂痛苦/疲惫：绿发女半垂眼与虚弱靠墙姿态偏生病非干净惊讶；红发女童仍偏担忧。需纯惊讶：双眉上扬、双眼圆睁虹膜高光、嘴张O型，去掉痛苦皱眉。；点名锁未单独",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "8.61"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：惊讶仍夹杂痛苦/疲惫：绿发女半垂眼与虚弱靠墙姿态偏生病非干净惊讶；红发女童仍偏担忧。需纯惊讶：双眉上扬、双眼圆睁虹膜高光、嘴张O型，去掉痛苦皱眉。；点名锁未单独",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.61"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：惊讶仍夹杂痛苦/疲惫：绿发女半垂眼与虚弱靠墙姿态偏生病非干净惊讶；红发女童仍偏担忧。需纯惊讶：双眉上扬、双眼圆睁虹膜高光、嘴张O型，去掉痛苦皱眉。；点名锁未单独",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "8.61"
+    },
+    {
+      "category": "composition",
+      "lesson": "本轮短板偏「composition」：惊讶仍偏惊恐：绿发女张嘴偏恐惧尖叫而非干净惊讶；眉弓与眼睑仍有痛苦残留。满4轮取最高。；点名锁未单独验收：发色瞳色服装；上格暗巷机位景别构图；砖墙垃圾袋纸箱接触",
+      "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+      "from_score": "8.83"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：惊讶仍偏惊恐：绿发女张嘴偏恐惧尖叫而非干净惊讶；眉弓与眼睑仍有痛苦残留。满4轮取最高。；点名锁未单独验收：发色瞳色服装；上格暗巷机位景别构图；砖墙垃圾袋纸箱接触",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.83"
+    },
+    {
+      "category": "anatomy",
+      "lesson": "本轮短板偏「anatomy」：惊讶仍偏惊恐：绿发女张嘴偏恐惧尖叫而非干净惊讶；眉弓与眼睑仍有痛苦残留。满4轮取最高。；点名锁未单独验收：发色瞳色服装；上格暗巷机位景别构图；砖墙垃圾袋纸箱接触",
+      "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+      "from_score": "8.83"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 2,
+  "regression_drop": 0.15,
+  "safe_early_stop": false,
+  "understanding_contract": {
+    "version": 1,
+    "raw_utterance": "用这份参考做变体：同一角色换成惊讶表情；机位已在图上；锁身份与机位；单张表情差分；suite_variant 新开",
+    "l0": {
+      "route_ids": [
+        "draw.key",
+        "draw.variant"
+      ],
+      "banner": "【按 原画 走了】",
+      "delivery": "draw.key"
+    },
+    "l1": {
+      "locks": [
+        "锁：绿发短发成年女+红棕长发女童身份",
+        "发色瞳色服装",
+        "上格暗巷机位景别构图",
+        "砖墙垃圾袋纸箱接触关系",
+        "3D软塑休闲叙事画风"
+      ],
+      "unlocks": [
+        "不锁：表情（改为惊讶睁大眼张嘴）"
+      ],
+      "defaults_shown": [
+        "默认：单张表情变体",
+        "交付竖屏叙事成图（对齐身份图上格双人暗巷机位）",
+        "到线即停最多4轮",
+        "底=场景实色"
+      ],
+      "commercial_vibe": "休闲叙事3D软塑角色立绘气质，圆润皮肤柔光，非硬CGI非写实摄影"
+    },
+    "l2": {
+      "open": true,
+      "surface_fix": "只改表情为惊讶，机位身份不动",
+      "last_feedback": "",
+      "feedback_layer": ""
+    },
+    "notes": ""
+  },
+  "reasonableness_history": [
+    {
+      "reviewed_at": 1794492932.511384,
+      "passed": false,
+      "skill": "variant",
+      "issues": [
+        "清单未齐：only_named_delta（只改点名的差分项）",
+        "revised 疑似丢掉 draft 主体锚点（绿发女和红发、女孩在暗巷、惊讶表情）；合理性修订不得换题材"
+      ]
+    },
+    {
+      "reviewed_at": 1794492960.5596328,
+      "passed": true,
+      "skill": "variant",
+      "issues": []
+    }
+  ],
+  "reasonableness": {
+    "passed": true,
+    "skill": "variant",
+    "draft_prompt": "绿发女和红发女孩在暗巷，惊讶表情",
+    "revised_prompt": "绿发女和红发女孩在暗巷：同一身份Story上格双人机位不变。绿发短发成年女紫衣破牛仔裤靠湿砖墙，红棕长发女童黄衣蓝背带裤扶住她；只改点名差分——两人都换成惊讶表情（睁大眼、眉上扬、嘴微张），其余发色瞳色服装比例机位砖墙纸箱垃圾袋湿地面接触全锁。休闲叙事3D软塑柔光。一眼失败：仍是闭眼痛苦/悲伤，或机位漂移，或改了服装身份。",
+    "checklist": {
+      "subject_action": {
+        "status": "ok",
+        "note": ""
+      },
+      "contact_scale": {
+        "status": "ok",
+        "note": ""
+      },
+      "element_budget": {
+        "status": "ok",
+        "note": ""
+      },
+      "hard_locks": {
+        "status": "ok",
+        "note": ""
+      },
+      "fail_at_glance": {
+        "status": "ok",
+        "note": ""
+      },
+      "only_named_delta": {
+        "status": "ok",
+        "note": ""
+      }
+    },
+    "issues": [],
+    "notes": "",
+    "reviewed_at": 1794492960.5596328,
+    "reviewed_at_iso": "2026-11-12 22:16:00",
+    "force_pass": false,
+    "skill_raw": "variant"
+  },
+  "discussions": [
+    {
+      "round": 0,
+      "kind": "reasonableness",
+      "prompt": "绿发女和红发女孩在暗巷：同一身份Story上格双人机位不变。绿发短发成年女紫衣破牛仔裤靠湿砖墙，红棕长发女童黄衣蓝背带裤扶住她；只改点名差分——两人都换成惊讶表情（睁大眼、眉上扬、嘴微张），其余发色瞳色服装比例机位砖墙纸箱垃圾袋湿地面接触全锁。休闲叙事3D软塑柔光。一眼失败：仍是闭眼痛苦/悲伤，或机位漂移，或改了服装身份。",
+      "strengths": "合理性闸已过：subject_action=ok；contact_scale=ok；element_budget=ok；hard_locks=ok；fail_at_glance=ok；only_named_delta=ok",
+      "defects": "",
+      "next_fix": "首轮 generate 使用本修订提示词；审美迭代不得推翻硬锁与元素预算"
+    }
+  ],
+  "warm_start_merged": true,
+  "warm_start_merged_at": "2026-11-12 22:29:10",
+  "warm_start_block_sha1": "4d3fb98a654b",
+  "ActionRequired": "STOP_PICK_BEST",
+  "showcase_ready": true,
+  "winner": {
+    "round": 4,
+    "round_label": "第 4 轮精修",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "9:16",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_story__ar_9x16.png"
+    ],
+    "param_validation": {
+      "valid": true,
+      "validation_passed": true,
+      "case_id": "suite_variant",
+      "scale": "medium",
+      "aspect_ratio": "9:16",
+      "ref_aspect_ratio": "9:16",
+      "ref_dimensions": "1512x2688",
+      "output_aspect_ratio": "9:16",
+      "output_dimensions": "720x1280",
+      "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_story__ar_9x16.png",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_story__ar_9x16.png"
+      ],
+      "inherited_default_aspect_ratio": true,
+      "inherited_default_pad_image": true,
+      "matched_ref_aspect_ratio": true,
+      "matched_ref_pad_image": true,
+      "matched_output_aspect_ratio": true,
+      "three_step_stage": "step3_judge",
+      "three_step_verified": true,
+      "warnings": [],
+      "continuation_pad": false,
+      "pad_diverged": false
+    },
+    "generated_at": "22:29:10",
+    "image": "assets/skill_20261112_suite/out/draw.variant/r4.png",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 295431,
+      "size_kb": 288.5,
+      "width": 720,
+      "height": 1280,
+      "aspect_ratio": "9:16",
+      "canonical_aspect_ratio": "9:16",
+      "color_entropy": 7.2
+    },
+    "raw_score": 8.83,
+    "score": 8.83,
+    "target_score_threshold": 9.5,
+    "dims": "构图9.0/光影8.9/透视8.8/质感8.9/风格8.8/无瑕疵8.7",
+    "dims_parsed": {
+      "composition": 9.0,
+      "lighting_color": 8.9,
+      "perspective_anatomy": 8.8,
+      "texture_detail": 8.9,
+      "spec_style": 8.8,
+      "flawlessness": 8.7
+    },
+    "weighted_score": 8.83,
+    "audit_warnings": [
+      "Agent Absolute-5D 已采纳（门槛 9.5）",
+      "点名锁未单独验收：发色瞳色服装；上格暗巷机位景别构图；砖墙垃圾袋纸箱接触关系；3D软塑休闲叙事画风"
+    ],
+    "stagnated": false,
+    "strengths": "绿发女双眼圆睁嘴大张、红发女童同步受惊张嘴，惊讶方向明显强于原图闭眼痛苦；暗巷机位身份服装锁住",
+    "defects": "惊讶仍偏惊恐：绿发女张嘴偏恐惧尖叫而非干净惊讶；眉弓与眼睑仍有痛苦残留。满4轮取最高。；点名锁未单独验收：发色瞳色服装；上格暗巷机位景别构图；砖墙垃圾袋纸箱接触关系；3D软塑休闲叙事画风",
+    "next_fix": "解剖/透视：修正关节连接、持械/手足结构与接触阴影，禁止糊边融边；惊讶仍偏惊恐：绿发女张嘴偏恐惧尖叫而非干净惊讶；眉弓与眼睑仍有痛苦残留。满4轮取最高。",
+    "prompt": "点名锁每轮都要单独留住，不许整张漂掉：锁：绿发短发成年女+红棕长发女童身份；发色瞳色服装；上格暗巷机位景别构图；砖墙垃圾袋纸箱接触关系；3D软塑休闲叙事画风 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: brand.WorldStyle\n- 置信度: 0.60（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n  · 确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；\n- 必须避开红线:\n  · [CHAT20261109232829194REDLINE] [收敛踩坑红线] 有参考题材不变——把蘑菇甜点拼盘画成更干净的道具特写；身份不：避免「左上奶酪体量过大，压缩了果实与叶片的展示空间；中右部枝梗、果实和叶片叠压密集，局部切线较多」\n  · [CHAT20261112220939400REDLINE] 禁止偏离样张画风：硬镜面CGI、皮克斯硬塑、哑光黏土软塑胶UI、厚黑描边、写实摄影摆盘、脏暗泥污阴影、赛博霓虹紫雾、灰雾废土、扁平矢量贴纸、油腻金属、指纹…\n  · [CHAT20261109225616629REDLINE] 禁止偏离样张画风：写实皮肤毛孔/照片级木纹毛皮；赛博霓虹与荧光边光；油腻镜面高光与硬金属机械；脏暗泥污阴影与高对比明暗法；扁平2D厚黑描边；真人头身比；城…\n- 审美拍板:\n  · 以后统一按此样张画风：Gossip Harbor 真机海鲜货柜软立体；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1F…\n  · 以后统一按此样张画风：Gossip Harbor真机海鲜货柜；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1FF约20…\n- 个人口味: 光影=柔光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n原图画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光 | 绿发女和红发女孩在暗巷：同一身份Story上格双人机位不变。绿发短发成年女紫衣破牛仔裤靠湿砖墙，红棕长发女童黄衣蓝背带裤扶住她；只改点名差分——两人都换成惊讶表情（睁大眼、眉上扬、嘴微张），其余发色瞳色服装比例机位砖墙纸箱垃圾袋湿地面接触全锁。休闲叙事3D软塑柔光。一眼失败：仍是闭眼痛苦/悲伤，或机位漂移，或改了服装身份。 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props | 两张脸改成干净惊讶：双眉上扬、双眼圆睁有虹膜高光、嘴张成O型；去掉痛苦皱眉半垂眼与生病虚弱感；机位服装场景全不动",
+    "continuation": false,
+    "passed": false,
+    "gate_blocked": true,
+    "image_gate_blocked": false,
+    "anatomy_score": 8.8,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "humanoid",
+    "judge_source": "agent_absolute_5d",
+    "remote_vlm": {
+      "source": "agent_self_judge",
+      "provider": "",
+      "model": "",
+      "error": "",
+      "active": false,
+      "score_evidence": {},
+      "evidence_missing_dims": [],
+      "review": {
+        "pass_count": 0,
+        "rerated": false,
+        "reason": ""
+      }
+    },
+    "should_continue_next_round": false,
+    "decision": "STOP_MAX_ROUNDS",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "composition",
+        "lesson": "本轮短板偏「composition」：惊讶仍偏惊恐：绿发女张嘴偏恐惧尖叫而非干净惊讶；眉弓与眼睑仍有痛苦残留。满4轮取最高。；点名锁未单独验收：发色瞳色服装；上格暗巷机位景别构图；砖墙垃圾袋纸箱接触",
+        "drill": "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
+        "from_score": "8.83"
+      },
+      {
+        "category": "lighting",
+        "lesson": "本轮短板偏「lighting」：惊讶仍偏惊恐：绿发女张嘴偏恐惧尖叫而非干净惊讶；眉弓与眼睑仍有痛苦残留。满4轮取最高。；点名锁未单独验收：发色瞳色服装；上格暗巷机位景别构图；砖墙垃圾袋纸箱接触",
+        "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+        "from_score": "8.83"
+      },
+      {
+        "category": "anatomy",
+        "lesson": "本轮短板偏「anatomy」：惊讶仍偏惊恐：绿发女张嘴偏恐惧尖叫而非干净惊讶；眉弓与眼睑仍有痛苦残留。满4轮取最高。；点名锁未单独验收：发色瞳色服装；上格暗巷机位景别构图；砖墙垃圾袋纸箱接触",
+        "drill": "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
+        "from_score": "8.83"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "22:29:56",
+    "asset_image": "assets/skill_20261112_suite/out/draw.variant/r4.png"
+  },
+  "rounds_to_converge": 4,
+  "convergence_badge": "共 4 轮未达阈值，采用最高分",
+  "winner_image": "assets/skill_20261112_suite/out/draw.variant/r4.png",
+  "best_image": "assets/skill_20261112_suite/out/draw.variant/r4.png",
+  "final_image": "assets/skill_20261112_suite/out/draw.variant/final.png",
+  "settle_pending": false,
+  "process_board": ".memory-art/converge/boards/suite_variant/index.html",
+  "settle_done_at": "2026-11-12 22:31:07 UTC+8",
+  "settle_saved_paths": [
+    ".memory-art\\entries\\brand.WorldStyle\\CHAT20261112223046093RECIPE.md",
+    ".memory-art\\entries\\brand.WorldStyle\\CHAT20261112223047982REDLINE.md",
+    ".memory-art\\_reflections\\20261112_223049_suite_variant.json"
+  ]
+}

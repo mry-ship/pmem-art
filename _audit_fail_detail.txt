@@ -1,0 +1,35 @@
+﻿fails 42
+assets/anim/overview/overview_sheet_r1.png -> anim.Overview 1774x887 True ['文件体积超标：当前 2323.2 KB > 上限 1024 KB']
+assets/anim/ref/ref_merge_birds_sheet.png -> anim.Ref 1774x887 True ['分辨率不符：当前 1774x887，模块要求 409x1024', '文件体积超标：当前 1776.5 KB > 上限 1024 KB']
+assets/brand/ref/ref_style_fairy_garden_3x4.png -> brand.Ref 207x276 True ['分辨率不符：当前 207x276，模块要求 169x276']
+assets/character/ref/ref_character_fairy.png -> character.Ref 460x460 True ['分辨率不符：当前 460x460，模块要求 409x1024']
+assets/scene/board/gh_board_crop.png -> scene.Board 1117x1613 True ['文件体积超标：当前 2075.4 KB > 上限 2048 KB']
+assets/scene/drawkeyart/final.jpg -> scene.DrawKeyart 864x1152 True ['分辨率不符：当前 864x1152，模块要求 1080x1920', '画幅比例不符：模块要求 aspect_ratio=16:9，实测为 3:4 (864x1152)']
+assets/scene/drawkeyart/final.png -> scene.DrawKeyart 1080x1920 True ['文件体积超标：当前 2782.0 KB > 上限 2048 KB']
+assets/scene/orange/orange_cake2_wiki.png -> scene.Orange 94x105 True ['分辨率不符：当前 94x105，模块要求 90x100', '画幅比例不符：模块要求 aspect_ratio=16:9，实测为 94:105 (94x105)']
+assets/scene/orange/orange_cookies_wiki.png -> scene.Orange 93x77 True ['分辨率不符：当前 93x77，模块要求 90x100', '画幅比例不符：模块要求 aspect_ratio=16:9，实测为 93:77 (93x77)']
+assets/scene/orange/orange_cupcake_wiki.png -> scene.Orange 84x93 True ['分辨率不符：当前 84x93，模块要求 90x100', '画幅比例不符：模块要求 aspect_ratio=16:9，实测为 28:31 (84x93)']
+assets/scene/overview/overview_sheet_commercial_r1.png -> scene.Overview 1774x887 True ['分辨率不符：当前 1774x887，模块要求 1280x720']
+assets/scene/overview/overview_sheet_commercial_r2.png -> scene.Overview 1774x887 True ['分辨率不符：当前 1774x887，模块要求 1280x720']
+assets/scene/overview/overview_sheet_r2.png -> scene.Overview 1774x887 True ['分辨率不符：当前 1774x887，模块要求 1280x720']
+assets/scene/overview/overview_sheet_r3.png -> scene.Overview 1774x887 True ['分辨率不符：当前 1774x887，模块要求 1280x720']
+assets/scene/overview/overview_sheet_r4.png -> scene.Overview 1774x887 True ['分辨率不符：当前 1774x887，模块要求 1280x720']
+assets/scene/overview/overview_sheet_r5.png -> scene.Overview 1774x887 True ['分辨率不符：当前 1774x887，模块要求 1280x720']
+assets/scene/prop/prop_1024.png -> scene.Prop 1024x1024 True ['分辨率不符：当前 1024x1024，模块要求 398x358', '画幅比例不符：模块要求 aspect_ratio=16:9，实测为 1:1 (1024x1024)']
+assets/scene/prop/prop_mushroom_platter_1024.png -> scene.Prop 1024x1024 True ['分辨率不符：当前 1024x1024，模块要求 398x358', '画幅比例不符：模块要求 aspect_ratio=16:9，实测为 1:1 (1024x1024)']
+assets/scene/ref/ref_04_prop.png -> scene.Ref 398x358 True ['分辨率不符：当前 398x358，模块要求 1024x624', '画幅比例不符：模块要求 aspect_ratio=16:9，实测为 199:179 (398x358)']
+assets/scene/ref/ref_prop_mushroom.png -> scene.Ref 398x358 True ['分辨率不符：当前 398x358，模块要求 1024x624', '画幅比例不符：模块要求 aspect_ratio=16:9，实测为 199:179 (398x358)']
+assets/skill_20261103/01_style.png -> unassigned None False ['文件缺失 (File Missing)']
+assets/skill_20261105/draw_keyart/r2.png -> unassigned None False ['文件缺失 (File Missing)']
+assets/skill_20261109/_refs/ref_style_fairy_garden.png -> unassigned None False ['文件缺失 (File Missing)']
+assets/skill_20261109/draw_keyart/r4_fairy_garden_keyart.jpg -> unassigned None False ['文件缺失 (File Missing)']
+assets/skill_20261109/draw_ordinary/r2_mushroom_prop.jpg -> unassigned None False ['文件缺失 (File Missing)']
+---gaps 22
+{'id': 'CHAT20261103193929403DECISION', 'module': 'art.BatteryRerun', 'paths': ['assets/skill_20261103/01_style.png']}
+{'id': 'CHAT20261110144320526RECIPE', 'module': 'brand.SkillRun20261110', 'paths': ['assets/skill_20261109/_refs/ref_style_fairy_garden.png']}
+{'id': 'CHAT20261105222349400RECIPE', 'module': 'brand.WorldStyle', 'paths': ['assets/skill_20261105/icon_a/app_icon_light_1024.png']}
+{'id': 'CHAT20261105222930948RECIPE', 'module': 'brand.WorldStyle', 'paths': ['assets/skill_20261105/icon_a/app_icon_light_1024.png']}
+{'id': 'CHAT20261105223134010RECIPE', 'module': 'brand.WorldStyle', 'paths': ['assets/skill_20261105/icon_c/prop_mushroom_platter_1024.png']}
+{'id': 'CHAT20261109225423885RECIPE', 'module': 'brand.WorldStyle', 'paths': ['assets/skill_20261109/_refs/ref_style_fairy_garden.png']}
+{'id': 'CHAT20261109232828935RECIPE', 'module': 'brand.WorldStyle', 'paths': ['assets/skill_20261109/draw_ordinary/r2_mushroom_prop.jpg']}
+{'id': 'CHAT20261109233024065RECIPE', 'module': 'brand.WorldStyle', 'paths': ['assets/skill_20261109/draw_ordinary/r2_mushroom_prop.jpg']}

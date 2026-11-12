@@ -1,0 +1,13 @@
+{
+  "route_id": "prompt.write",
+  "banner": "【按 同域合成梯：先定链型与关系，再按交付出图 走了】（提示词支；类型=merge.ladder）",
+  "status": "text_only",
+  "passed_line": null,
+  "rounds": 0,
+  "scores": [],
+  "final_image": null,
+  "text_deliverable": "assets/skill_20261112_suite/out/prompt.write/PROMPTS.md",
+  "pad_used": [],
+  "bg": "n/a",
+  "notes": "已交 4 套 Brimwave Café 海鲜合成梯整表提示词；不生图；点选后再进 merge-ladder。"
+}

@@ -1,0 +1,10 @@
+理解合同 v1
+原话/目标：/pmem-ui Brimwave Cafe casual merge main-menu HUD concept, warm harbor cafe, soft glossy casual UI; 用这份稿 as style/layout pads only
+L0 交付：ui.kit | route_ids=ui.kit
+banner：【按 【最多4轮·到线即停】SpriteCook式 UI Kit/HUD/九宫格整套 走了】
+L1 锁：subject=Brimwave Cafe harbor casual-merge cafe main menu；style=pad soft-gloss casual HUD chrome；top single-row resources；lower-mid largest PLAY CTA；full-bleed scene；chrome over scene；warm harbor cafe mood；readable Brimwave Cafe + PLAY；no gibberish
+L1 不锁：no pixel-copy pad kitchen / Design 3-choice bar / character portraits；unlock RM five-tab default；unlock component sheets
+本趟默认：default: concept-only｜9:16 portrait｜main-menu concept only｜no component sheet/9-slice/state family｜Cursor GenerateImage｜full-bleed scene
+商业气质：benchmark category=casual merge main-menu HUD (ui.casual_hud): store-screenshot density, clear top resources, largest primary CTA, chrome same soft-gloss family as harbor cafe scene
+L2 当轮可改：（看图后单点写）
+✅ 已写默认：default: concept-only｜9:16 portrait｜main-menu concept only｜no component sheet/9-slice/state family｜Cursor GenerateImage｜full-bleed scene

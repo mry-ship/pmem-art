@@ -1,0 +1,22 @@
+﻿usage: pmem-art reasonableness [-h] [--id SESSION] [--skill SKILL]
+                               [--draft DRAFT] [--revised REVISED]
+                               [--checklist CHECKLIST] [--notes NOTES]
+                               [--force]
+                               [{review,show,template}]
+
+positional arguments:
+  {review,show,template}
+                        review=审核写入会话 | show=查看 | template=打印该技能清单模板
+
+options:
+  -h, --help            show this help message and exit
+  --id SESSION, --session SESSION
+                        收敛会话 id
+  --skill SKILL         ordinary|keyart|clone|variant|split|shotpack|ui|icon.a
+                        |icon.b|icon.c|merge
+  --draft DRAFT         草稿提示词（必填）
+  --revised REVISED     更合理的修订提示词（必填；审核产物）
+  --checklist CHECKLIST
+                        清单 key=ok 或 key=fail:原因，分号分隔；缺键则不过闸
+  --notes NOTES         补充说明
+  --force               跳过启发式词法硬拦（仍要求清单齐全且 revised 非空；慎用）

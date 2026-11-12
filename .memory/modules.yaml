@@ -84,8 +84,9 @@ modules:
       - skills_kit/image_gates.py
       - skills_kit/delivery_gates.py
       - skills_kit/local_locks.py
+      - skills_kit/prior_reuse_gate.py
     aliases: [闭环, Converge]
-    entities: [ConvergeGate, ReasonablenessGate, ConvergeWinnerMaxScore, ConvergeFinishEarlyStop, SkillSpeedCaps, MergeOverviewSpeedCaps, AnatomyVeto, LowPoseLockGate, LowPoseLock, SoftInflationCap, PadBestPlate, PadChangedCamera, RecomposeEvidence, AspectWhitelistStart, AutomatedScoreEvidence, FinishSettleBackground, ImageRoundCapShowcaseGate, FinishAndMergeFeedback, SkillRoundCap4, RecallGap, AutoRecall, SkillStablePolish, SkillHardening20261109, SkillPolish20261109]
+    entities: [ConvergeGate, ReasonablenessGate, ConvergeWinnerMaxScore, ConvergeFinishEarlyStop, SkillSpeedCaps, MergeOverviewSpeedCaps, AnatomyVeto, LowPoseLockGate, LowPoseLock, SoftInflationCap, PadBestPlate, PadChangedCamera, RecomposeEvidence, AspectWhitelistStart, AutomatedScoreEvidence, FinishSettleBackground, ImageRoundCapShowcaseGate, FinishAndMergeFeedback, SkillRoundCap4, RecallGap, AutoRecall, SkillStablePolish, SkillHardening20261109, SkillPolish20261109, PriorReusePadGate]
     related: [{ module: infra.Judge, reason: 打分口径与 VLM judge 共用 }]
   feature.SkillsKit.Registry:
     description: 技能注册表、执行包切片、导航与技能文档审计、技能安装

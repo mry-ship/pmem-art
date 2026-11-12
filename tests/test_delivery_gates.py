@@ -15,6 +15,7 @@ from skills_kit.delivery_gates import (  # noqa: E402
     generate_prefix,
     is_delivery_pass,
     judge_gate_notes,
+    merge_follows_style_ref,
     overview_sheet_hints,
 )
 from skills_kit.local_locks import unresolved_named_locks  # noqa: E402
@@ -69,13 +70,24 @@ class DeliveryGateTests(unittest.TestCase):
         self.assertIn("写实摄影", diluted)
         # 完整硬句已在文中才跳过
         full = (
-            "休闲 merge 货柜默认气质：Gossip Harbor 玩具货柜卡通——"
-            "光泽卡通 3D、圆润厚实、无硬描边、暖饱和、柔光渐变、糖釉玩具高光、棋盘缩略一眼可认。"
-            "材质锁死为卡通玩具/糖釉道具，不是实物。"
+            "休闲 merge 货柜默认气质：Gossip Harbor 玩具货柜——"
+            "软立体糖釉道具、圆润厚实、无硬描边、暖饱和、柔光釉面高光、棋盘缩略一眼可认。"
+            "材质锁死为有体积的糖釉玩具货柜道具（柔光高光可读），不是实物，也不是哑光黏土/软塑胶 UI 图标。"
             "禁止：写实摄影、美食棚拍、产品静物、玻璃真实折射、木纹指纹、果汁乳浊摄影感、"
-            "微距毛孔、油光金属、暗沉旧塑料。"
+            "微距毛孔、油光金属、暗沉旧塑料、硬镜面 CGI、硬卡通 CGI、皮克斯硬塑胶高光、"
+            "哑光黏土拟态、软塑胶 UI 图标、平面绘本贴纸风冒充货柜。"
+            "档位句只写糖釉玩具剪影/件数/容器/完成态与整块色；"
+            "禁止焦斑/烤痕/鳞片微距/湿润汤面感/柠檬片香菜末/摄影级摆盘质感词（点名写实除外）。"
         )
         self.assertEqual(merge_surface_lock_line("merge.Jam", full), "")
+        default_lock = merge_surface_lock_line("甜品八档合成梯", "")
+        self.assertIn("软立体糖釉", default_lock)
+        self.assertIn("哑光黏土", default_lock)
+        self.assertIn("平面绘本贴纸", default_lock)
+        self.assertIn("档位句", default_lock)
+        self.assertIn("焦斑", default_lock)
+        self.assertNotIn("平面货柜感", default_lock)
+        self.assertNotIn("禁任何 3D", default_lock)
         # taste「避开赛博霓虹」在 prompt 里不得误关锁；goal 真点名水彩/写实仍留空
         cyber_taste = (
             "个人禁用习惯：廉价塑料感/油腻高光；赛博霓虹/霓虹紫；白底不可接受"
@@ -107,6 +119,30 @@ class DeliveryGateTests(unittest.TestCase):
             strengths="构图整齐",
         )
         self.assertTrue(any("偏写实" in n for n in notes), notes)
+        # 垫 GH 真机锁画风：跟截图货面，勿灌缺省软糖釉；缺陷含「木纹」不误报偏写实
+        pad_sess = {
+            "route_ids": ["merge.ladder"],
+            "goal": "拿 Gossip Harbor 真机 merge 图垫风格，再跑硬料海鲜合成梯整表",
+            "ref_image": "assets/refs/gossip_harbor/gh_merge__ar_9x16.png",
+            "default_reference_image_paths": [
+                "assets/refs/gossip_harbor/gh_seafood_food_strip.png",
+            ],
+        }
+        self.assertTrue(merge_follows_style_ref(pad_sess))
+        pad_prompt = generate_prefix(pad_sess, "chain_mode=shop_ladder 海鲜八档")
+        self.assertIn("垫图锁画风", pad_prompt)
+        self.assertNotIn("材质锁死", pad_prompt)
+        self.assertFalse(
+            any(
+                "偏写实" in n
+                for n in judge_gate_notes(
+                    pad_sess,
+                    defects="L8托盘偏木纹；鳞片仍偏细",
+                    strengths="更贴棋盘货",
+                )
+            )
+        )
+        self.assertIn("块面高光", merge_surface_lock_line("甜品八档合成梯", ""))
 
     def test_no_ref_strips_keep_original_style_identity(self) -> None:
         from skills_kit.prompt_scale import compose_style_first_prompt, get_converge_scale_profile
@@ -322,6 +358,20 @@ class DeliveryGateTests(unittest.TestCase):
                     root=Path(tmp),
                 )
             self.assertIn("不能加边填成", str(caught.exception))
+
+    def test_style_strip_pad_allows_square_delivery(self) -> None:
+        """横条货条只锁画风：显式 1:1 交付时不因方向翻车拦截。"""
+        with tempfile.TemporaryDirectory() as tmp:
+            src = Path(tmp) / "gh_seafood_food_strip.png"
+            Image.new("RGB", (266, 81), (240, 180, 90)).save(src)
+            res = validate_converge_params(
+                session_id="icon-c-strip",
+                aspect_ratio="1:1",
+                reference_image_paths=[str(src)],
+                root=Path(tmp),
+            )
+            self.assertEqual(res["aspect_ratio"], "1:1")
+            self.assertTrue(any("只锁画风" in w for w in (res.get("warnings") or [])))
 
 
 if __name__ == "__main__":

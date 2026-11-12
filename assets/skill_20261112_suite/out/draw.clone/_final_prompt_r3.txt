@@ -1,0 +1,21 @@
+点名锁每轮都要单独留住，不许整张漂掉：锁画风：软立体糖釉货面；色板奶油沙岸#F4C584珊瑚红#FF4D30港湾青#48D1FF；块面釉面高光#FEFDFB；无硬描边；圆润厚实体积；禁硬镜面CGI皮克斯硬塑哑光黏土软塑胶UI厚黑描边写实摄影摆盘 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】
+- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)
+- 目标模块: brand.WorldStyle
+- 置信度: 1.00（fast-track 资格: 是）
+- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。
+- 正向保留（要怎样）:
+  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。
+  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。
+  · 确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；
+- 必须避开红线:
+  · [CHAT20261109232829194REDLINE] [收敛踩坑红线] 有参考题材不变——把蘑菇甜点拼盘画成更干净的道具特写；身份不：避免「左上奶酪体量过大，压缩了果实与叶片的展示空间；中右部枝梗、果实和叶片叠压密集，局部切线较多」
+  · [CHAT20261112220939400REDLINE] 禁止偏离样张画风：硬镜面CGI、皮克斯硬塑、哑光黏土软塑胶UI、厚黑描边、写实摄影摆盘、脏暗泥污阴影、赛博霓虹紫雾、灰雾废土、扁平矢量贴纸、油腻金属、指纹…
+  · [CHAT20261109225616629REDLINE] 禁止偏离样张画风：写实皮肤毛孔/照片级木纹毛皮；赛博霓虹与荧光边光；油腻镜面高光与硬金属机械；脏暗泥污阴影与高对比明暗法；扁平2D厚黑描边；真人头身比；城…
+- 审美拍板:
+  · 以后统一按此样张画风：Gossip Harbor 真机海鲜货柜软立体；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1F…
+  · 以后统一按此样张画风：Gossip Harbor真机海鲜货柜；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1FF约20…
+- 个人口味: 光影=柔光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 暖色调
+- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色
+- 项目私有知识卡 (Private Layer):
+  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。
+Vertical 9:16 soft-sculpted casual mobile-game still life of a harbor cinnamon-roll bread tower for Brimwave Café. Center a tall stack of plump spiral cinnamon rolls with glossy caramel sugar glaze, soft cream icing drips, a light dusting of powdered sugar and a few glossy berries on the top roll; beside the tower place one small round cocoa mug and a tiny sea-salt dish on a warm sandy cafe ledge. Soft morning harbor bokeh behind: cream sand #F4C584, coral warm accents #FF4D30, harbor cyan water sparkle #48D1FF, distant soft yacht silhouette only as color wash. Lock style from the merge-game reference surface only: round thick soft-candy glaze volumes, warm saturated toy-cabinet food look, chunky block highlights near #FEFDFB, no hard black outlines, gentle rim light, juicy appetizing bakery materials. Brand-new still-life composition: single hero tower slightly below center, three-quarter view, intimate product close-up, large subject fill. Hard bans: no 7x7 board, no HUD bars, no pointing finger, no merge starburst, no icon grid array, no copying the reference layout zones, no lobster platter or beach-gear icons from the reference. Opaque scenic background, not transparent. | MUST_FIX (≤2): MUST FIX: keep the 5-roll vertical cinnamon tower；rewrite surfaces to soft-candy glaze toy-cabinet look with chunky #FEFDFB block highlights and no hard outlines

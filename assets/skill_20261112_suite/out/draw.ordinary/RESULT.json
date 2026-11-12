@@ -1,0 +1,37 @@
+{
+  "route_id": "draw.ordinary",
+  "banner": "【走默认路径】按 普通图 走了",
+  "status": "partial",
+  "passed_line": false,
+  "rounds": 4,
+  "scores": [
+    {
+      "round": 1,
+      "total": 8.42,
+      "dims": "构图8.4/光影8.8/透视9.0/质感8.2/风格8.0/无瑕疵8.3"
+    },
+    {
+      "round": 2,
+      "total": 8.68,
+      "dims": "构图9.1/光影8.6/透视9.1/质感8.4/风格8.3/无瑕疵8.7"
+    },
+    {
+      "round": 3,
+      "total": 8.74,
+      "dims": "构图9.2/光影8.5/透视9.2/质感8.5/风格8.4/无瑕疵8.8"
+    },
+    {
+      "round": 4,
+      "total": 8.96,
+      "dims": "构图9.3/光影8.8/透视9.3/质感8.8/风格8.7/无瑕疵9.0"
+    }
+  ],
+  "final_image": "assets/skill_20261112_suite/out/draw.ordinary/r4.png",
+  "text_deliverable": null,
+  "pad_used": [
+    "assets/skill_20261112_suite/refs/ref_life.jpg",
+    "assets/skill_20261112_suite/refs/ref_life__ar_3x4.png"
+  ],
+  "bg": "n/a",
+  "notes": "未过线：满4轮最高第4轮8.96；主光始终偏右、拉花/木纹偏写实，卡通块面釉光未完全到位。"
+}

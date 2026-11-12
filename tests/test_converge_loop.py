@@ -140,7 +140,8 @@ class TestConvergeLoop(unittest.TestCase):
         out = json.loads(buf.getvalue())
         self.assertIn("还没审图", str(out.get("followup_message") or ""))
 
-    def test_pre_gen_generate_image_claims_owner(self) -> None:
+    def test_pre_gen_generate_image_does_not_claim_owner(self) -> None:
+        """pre-gen must never claim — even if someone remounts the hook."""
         td = Path(tempfile.mkdtemp())
         self._write(td, "cell", {
             "status": "running",
@@ -157,7 +158,53 @@ class TestConvergeLoop(unittest.TestCase):
         with mock.patch("sys.stdin", io.StringIO(payload)), redirect_stdout(buf):
             rc = pa.cmd_hook(td, {"entries": []}, "pre-gen")
         self.assertEqual(rc, 0)
+        self.assertEqual(active_owner_conversation_id(td), "")
+
+    def test_post_asset_generate_image_claims_owner(self) -> None:
+        """Default path: pre-gen unmounted; post-asset claims after GenerateImage."""
+        td = Path(tempfile.mkdtemp())
+        self._write(td, "cell", {
+            "status": "running",
+            "module": "character.SunlitGirl",
+            "goal": "变体",
+            "rounds": [],
+        })
+        self.assertEqual(active_owner_conversation_id(td), "")
+        payload = json.dumps({
+            "conversation_id": "conv-draw",
+            "tool_name": "GenerateImage",
+            "tool_input": {"description": "girl smile", "filename": "r1.jpg"},
+        })
+        buf = io.StringIO()
+        with mock.patch("sys.stdin", io.StringIO(payload)), redirect_stdout(buf):
+            rc = pa.cmd_hook(td, {"entries": []}, "post-asset")
+        self.assertEqual(rc, 0)
         self.assertEqual(active_owner_conversation_id(td), "conv-draw")
+        # Keep owner; only flip session to pending judge so stop can follow up.
+        sess_path = td / ".memory-art" / "converge" / "cell.json"
+        sess_path.write_text(
+            json.dumps(
+                {
+                    "status": "generated_pending_judge",
+                    "accept_threshold": 9.5,
+                    "max_rounds": 4,
+                    "rounds": [{"round": 1, "image": "r1.jpg", "judged": False}],
+                },
+                ensure_ascii=False,
+            ),
+            encoding="utf-8",
+        )
+        stop_payload = json.dumps({
+            "conversation_id": "conv-draw",
+            "status": "completed",
+            "loop_count": 0,
+        })
+        buf2 = io.StringIO()
+        with mock.patch("sys.stdin", io.StringIO(stop_payload)), redirect_stdout(buf2):
+            rc2 = pa.cmd_hook(td, {"entries": []}, "stop")
+        self.assertEqual(rc2, 0)
+        out2 = json.loads(buf2.getvalue())
+        self.assertIn("还没审图", str(out2.get("followup_message") or ""))
 
     def test_pre_gen_edit_heuristic_does_not_claim(self) -> None:
         td = Path(tempfile.mkdtemp())
@@ -255,7 +302,7 @@ class TestConvergeLoop(unittest.TestCase):
         self.assertEqual(rc, 0)
         self.assertEqual(active_owner_conversation_id(td), "")
         out = json.loads(buf.getvalue())
-        # owner 空：Cursor 窗不催办、不写入归属（等 GenerateImage 认领）
+        # owner 空：Cursor 窗不催办、不写入归属（等 GenerateImage post-asset 认领）
         self.assertFalse(out.get("followup_message"))
         self.assertNotIn("还没审图", str(out.get("agentMessage") or ""))
 

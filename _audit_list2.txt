@@ -1,0 +1,70 @@
+﻿🎨 pmem-art · 美术模块与资产总览
+
+模块 ID                        模块名称                   记忆数      图片资产     红线数      状态
+--------------------------------------------------------------------------------------------
+brand.WorldStyle             全局世界观色彩圣经（脚手架）         39       2        14       📎 文字有效·缺图2
+icon.AppIcon                 icon·AppIcon           23       0        8        ✅ 健康
+item.MergeLadder             item·MergeLadder       6        0        1        ✅ 健康
+ui.MainMenu                  界面与九宫格·MainMenu (Cyb   13       4        5        ✅ 健康
+scene.PirateCabin            场景与原画·PirateCabin (C   2        0        1        ✅ 健康
+ui.Offer.BlackFriday         界面与九宫格·Offer           2        0        1        ✅ 健康
+icon.BirdBatch               icon·BirdBatch         2        0        1        ✅ 健康
+character.Ref                角色与立绘·Ref              1        1        0        ✅ 健康
+scene.Overview               场景与原画·Overview         7        6        0        ✅ 健康
+brand.Style                  风格圣经·Style             3        3        0        ✅ 健康
+character.02                 角色与立绘·02               1        1        0        ✅ 健康
+scene.Prop                   场景与原画·Prop             3        3        0        ✅ 健康
+ui.05                        界面与九宫格·05              1        1        0        ✅ 健康
+scene.R1                     场景与原画·R1               5        3        0        ✅ 健康
+scene.R2                     场景与原画·R2               4        3        0        ✅ 健康
+scene.R3                     场景与原画·R3               4        3        0        ✅ 健康
+scene.R4                     场景与原画·R4               3        3        0        ✅ 健康
+anim.Ref                     骨骼与动画·Ref              1        1        0        ✅ 健康
+ui.Ref                       界面与九宫格·Ref             4        4        0        ✅ 健康
+scene.Ref                    场景与原画·Ref              2        2        0        ✅ 健康
+character.R1                 角色与立绘·R1               1        1        0        ✅ 健康
+character.R2                 角色与立绘·R2               1        1        0        ✅ 健康
+ui.R1                        界面与九宫格·R1              2        1        0        ✅ 健康
+ui.R2                        界面与九宫格·R2              2        1        0        ✅ 健康
+character.Crop               角色与立绘·Crop             2        2        0        ✅ 健康
+icon.cozy_clues_items        icon·cozy_clues_item   2        1        1        ✅ 健康
+ui.Soft                      界面与九宫格·Soft            2        0        0        ✅ 健康
+character.Fairy              角色与立绘·Fairy            7        1        2        ✅ 健康
+anim.Overview                骨骼与动画·Overview         1        1        0        ✅ 健康
+ui.Gh                        界面与九宫格·Gh              2        2        0        ✅ 健康
+ui.16x9                      界面与九宫格·16x9            1        1        0        ✅ 健康
+ui.9x16                      界面与九宫格·9x16            1        1        0        ✅ 健康
+ui.Gal                       界面与九宫格·Gal             1        1        0        ✅ 健康
+ui.Reddit                    界面与九宫格·Reddit          1        1        0        ✅ 健康
+scene.Cell                   场景与原画·Cell             4        4        0        ✅ 健康
+scene.Deluxe                 场景与原画·Deluxe           1        1        0        ✅ 健康
+scene.Board                  场景与原画·Board            1        1        0        ✅ 健康
+brand.Orange                 风格圣经·Orange            1        1        0        ✅ 健康
+scene.Orange                 场景与原画·Orange           4        4        0        ✅ 健康
+scene.DrawKeyart             场景与原画·DrawKeyart       2        2        0        ✅ 健康
+ui.App                       界面与九宫格·App             1        1        0        ✅ 健康
+ui.IconC                     界面与九宫格·IconC           2        2        0        ✅ 健康
+scene.UiConcept              场景与原画·UiConcept        2        1        0        ✅ 健康
+scene.Fairy                  场景与原画·Fairy            4        4        0        ✅ 健康
+scene.Mushroom               场景与原画·Mushroom         4        4        0        ✅ 健康
+ui.IconA                     界面与九宫格·IconA           1        1        0        ✅ 健康
+ui.A                         界面与九宫格·A               4        4        0        ✅ 健康
+scene.Ref.Watercolor         场景与原画·Ref (Watercolo   1        1        0        ✅ 健康
+brand.Ref                    风格圣经·Ref               2        2        0        ✅ 健康
+ui.R3                        界面与九宫格·R3              2        1        0        ✅ 健康
+ui.R4                        界面与九宫格·R4              2        1        0        ✅ 健康
+anim.MergeSame               骨骼与动画·MergeSame        6        3        0        ✅ 健康
+anim.MergeShop               骨骼与动画·MergeShop        8        4        0        ✅ 健康
+anim.MergeSpecies            骨骼与动画·MergeSpecies     8        4        0        ✅ 健康
+ui.Sheets                    界面与九宫格·Sheets          4        4        0        ✅ 健康
+character.Face               角色与立绘·Face             4        4        0        ✅ 健康
+ui.IconB                     界面与九宫格·IconB           2        2        0        ✅ 健康
+ui.Components                界面与九宫格·Components      3        3        0        ✅ 健康
+character.MergeJam           角色与立绘·MergeJam         27       22       0        ✅ 健康
+character.MergeWater         角色与立绘·MergeWater       4        4        0        ✅ 健康
+character.MergeWind          角色与立绘·MergeWind        4        4        0        ✅ 健康
+character.Components         角色与立绘·Components       1        1        0        ✅ 健康
+character.Cell               角色与立绘·Cell             3        3        0        ✅ 健康
+character.Zoom               角色与立绘·Zoom             2        2        0        ✅ 健康
+
+显示 64 个有内容/有资产模块；已隐藏空壳 196 个（scaffold/空 active）。

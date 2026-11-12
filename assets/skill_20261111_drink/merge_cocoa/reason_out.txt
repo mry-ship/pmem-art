@@ -1,0 +1,18 @@
+✅ [合理性闸 · merge] 通过
+  ✓ subject_action（主体在做什么/交付物是什么）
+  ✓ element_budget（元素预算（不堆景不过载））
+  ✓ hard_locks（硬锁（画幅/透明底/无字/机位等））
+  ✓ fail_at_glance（一眼失败条件已写明）
+  ✓ single_centered_item（每档单件居中）
+  ✓ chain_mode_declared（写清 same_object / shop_ladder / species_change / 轻门）
+  ✓ upgrade_reason_concrete（升级理由具体（same_object→parts_add；shop/species→evolve_to+merge_why；轻门写具体可读升级））
+  ✓ family_or_base_lock（锁住母体或家族（same_object→母体词；shop/species→家族色相/题材；轻门→同任务域））
+修订提示词（首轮 generate 须用这句；不一致会拒绝，不会静默盖掉）：
+chain_mode=shop_ladder（同店杯装升级）。Gossip Harbor 玩具货柜：手绘软渐变糖釉道具，圆润厚实，无硬描边，暖饱和，柔光釉面高光，棋盘缩略可认；材质是卡通玩具/糖釉货柜道具，不是实物。禁止写实摄影、美食棚拍、产品静物、玻璃真实折射、木纹指纹、果汁乳浊摄影感、微距毛孔、硬镜面 CGI、硬卡通 3D。整表统一 overview_sheet：同一 3/4 俯视、同一柔光左上、浅奶油圆角卡 4 行 2 列竖屏；每格一件居中留边；无字无脸。家族色相：可可棕+奶油白+焦糖金+浅珊瑚。evolve_to/merge_why：空杯合成装液、装液合成加盖、加盖合成瓷杯带碟、瓷杯合成奶油搅棒杯、奶油杯合成可可壶、壶合成棉花糖犒赏、犒赏合成派对盘。
+L1 空纸杯：一只空的矮圆纸杯，无液无盖，杯口朝上可见内壁
+L2 敞口热可可：同形矮圆杯装满棕色热可可，平整液面，仍无盖无奶油
+L3 加盖外带杯：矮圆外带杯加圆盖，盖顶小口，液面被盖住
+L4 瓷杯带碟：圆润瓷杯坐在浅碟上，无盖，杯口可见可可液面，碟沿是新轮廓
+L5 奶油搅棒杯：高杯顶着厚奶油旋顶加一根搅棒，瓷碟消失
+L6 可可大壶…
+已写入会话 `merge_cocoa_20261111`。下一步用 revised 做 converge generate（可省略 --prompt，将自动注入）。

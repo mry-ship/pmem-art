@@ -1,0 +1,52 @@
+{
+  "route_id": "draw.multi",
+  "banner": "【按点名锁定 draw.multi】",
+  "status": "pass",
+  "passed_line": true,
+  "rounds": 5,
+  "scores": [
+    {
+      "state": "closed",
+      "round": 1,
+      "total": 9.45,
+      "dims": "构图9.6/光影9.4/透视9.5/质感9.4/风格9.5/无瑕疵9.4"
+    },
+    {
+      "state": "closed",
+      "round": 2,
+      "total": 9.45,
+      "dims": "构图9.7/光影9.5/透视9.6/质感9.5/风格9.6/无瑕疵9.5"
+    },
+    {
+      "state": "closed",
+      "round": 3,
+      "total": 9.61,
+      "dims": "构图9.7/光影9.6/透视9.6/质感9.6/风格9.6/无瑕疵9.6",
+      "passed": true
+    },
+    {
+      "state": "open",
+      "round": 1,
+      "total": 9.11,
+      "dims": "构图9.5/光影9.3/透视9.4/质感9.3/风格9.4/无瑕疵8.4"
+    },
+    {
+      "state": "open",
+      "round": 2,
+      "total": 9.61,
+      "dims": "构图9.7/光影9.6/透视9.6/质感9.6/风格9.6/无瑕疵9.6",
+      "passed": true
+    }
+  ],
+  "final_image": "assets/skill_20261112_suite/out/draw.multi/open_final.png",
+  "text_deliverable": null,
+  "pad_used": [
+    "assets/skill_20261112_suite/refs/ref_life.jpg",
+    "assets/skill_20261112_suite/refs/ref_ui_renovate_dl.jpg",
+    "assets/skill_20261112_suite/out/draw.multi/closed_final.png"
+  ],
+  "bg": "opaque_isolation",
+  "notes": "关态R3=9.61过线；开态R2=9.61过线。结构机位+life身份锁住，只改装修完成度。",
+  "closed_final": "assets/skill_20261112_suite/out/draw.multi/closed_final.png",
+  "open_final": "assets/skill_20261112_suite/out/draw.multi/open_final.png"
+}

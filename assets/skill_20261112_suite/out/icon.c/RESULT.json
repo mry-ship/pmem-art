@@ -1,0 +1,21 @@
+{
+  "route_id": "icon.c",
+  "banner": "【按 Mode C / icon.c 走了】",
+  "status": "partial",
+  "passed_line": false,
+  "rounds": 4,
+  "scores": [
+    {"round": 1, "total": 9.2},
+    {"round": 2, "total": 9.3},
+    {"round": 3, "total": 9.43},
+    {"round": 4, "total": 9.45}
+  ],
+  "final_image": "assets/skill_20261112_suite/out/icon.c/r4.jpg",
+  "text_deliverable": "assets/skill_20261112_suite/out/icon.c/style-spec.json",
+  "pad_used": ["assets/refs/gossip_harbor/gh_seafood_food_strip.png"],
+  "bg": "opaque_isolation",
+  "session": "suite_icon_c",
+  "key_item_converge": false,
+  "delivery": "batch_preview_sheet",
+  "notes": "僵尸重开后正式 finish：满4轮最高9.45未过线；终稿r4。早前自报9.6作废，以 converge finish 为准。"
+}

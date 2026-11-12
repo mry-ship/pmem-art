@@ -805,15 +805,23 @@ def cmd_watch_sync_classify(root: Path, data: dict[str, Any], apply: bool = Fals
     watch = cfg.get("watch_dirs") or ["assets", ".cursor/generated", "generated"]
     from lifecycle import list_image_files
 
+    from lifecycle import is_skill_staging_dirname
+
     modules = data.get("modules") or {}
     queued = []
+    skipped_staging = 0
     for p in list_image_files(root, list(watch)):
         rel = p.relative_to(root).as_posix()
+        # 双保险：list_image_files 已跳过 skill_YYYYMMDD_*；这里再挡一次相对路径
+        if any(is_skill_staging_dirname(part) for part in rel.split("/")):
+            skipped_staging += 1
+            continue
         if path_mapped_to_module(rel, {k: v for k, v in modules.items() if v.get("status") == "active"}):
             continue
         queued.append(rel)
 
-    print(f"👀 classify-watch: {len(queued)} unmapped images under {watch}")
+    extra = f"（已跳过 {skipped_staging} 张 skill_* 清点目录）" if skipped_staging else ""
+    print(f"👀 classify-watch: {len(queued)} unmapped images under {watch}{extra}")
     for rel in queued:
         c = classify_asset(root, data, path=rel, prompt="")
         mid, status = ensure_module_from_classification(root, data, c, force_active=False)

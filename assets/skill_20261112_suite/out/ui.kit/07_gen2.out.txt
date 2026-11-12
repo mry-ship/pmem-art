@@ -1,0 +1,53 @@
+🧠 [合理性闸门] 非首轮未给 --prompt，回退到合理性修订提示词
+WARM_START_MERGED=1 sha1=38cf200ba602 source=converge.generate (并以本字段为准；勿用 GenerateImage Hook 有无判断并入)
+🎨 [Step 2A · 仅生图阶段完成] 第 2/4 轮图像已生成: `assets/skill_20261112_suite/out/ui.kit/r2.png` (720x1280 (9:16, 1198.0KB))
+   · 策略建议垫图: C:\Users\ZhengLangPC\Desktop\Cursor-Pmem-Art\assets\skill_20261112_suite\refs\ref_ui.png（pad=auto→style_ref（每轮垫最初参考，修正只写进提示词））
+   · 本轮实际垫图: ['C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_ui.png']
+   · 📚 pmem-art 记忆已并入：模块 ui.BrimwaveCafe （recipe 0 · 红线 0；WARM_START_MERGED=1）
+   · 装配句（未并记忆）: 胶片逆光轻厚涂：抬光比、空气和镜头层次，质感仍是颗粒| Mobile 9:16 casual-merge MAIN MENU HUD concept for Brimwave Cafe (NOT a Design renovation picker screen). Full-bleed warm harbor cafe interior scene under soft afternoon window light: creamy wood counters, teal accents, pastry trays, coffee steam, distant harbor boats through big windows. Soft glossy toy-plastic casual UI chrome matching pad craft — do not copy pad pixel layout. 顶栏单行资源条：等级珠/体力/金币/宝石，白底圆角胶囊，厚描边（蓝白描边），轻体积挤出，软接触投影，粗白数字深描边字重；右上小设置齿轮不抢主任务。中景港湾咖啡馆场景铺满，吧台师/吉祥物情绪锚，主按钮不遮脸、不压主角五官，脸周留空。中下主 CTA：超大软光泽 PLAY（或 Level）按钮，圆角厚描边、顶高光、底部接触影、字重最粗最大，一眼最大可点。可选轻量底栏 Home 居中（休闲 merge，非 PVP 大厅，非三消 RM 默认五 Tab）。可读标题 Brimwave Cafe。无乱码、无手机外框、无 Design 三选一条、无三消盘面。对标品类=休闲merge主菜单HUD（ui.casual_hud）：上架截图密度，chrome 与场景同系软光泽。| 约束：保持原图核心艺术媒介与画风基因；保持原图性别、物种、年龄段与核心外观；可加风格内叙事点缀，不换主体身份 | 改掉垫图同款资源数字与图标排版回声；底栏补2～4枚轻量同系圆角入口且Home仍居中勿套RM五Tab；PLAY下加细Level条；保留港湾窗与吧台师脸周留空
+   · Warm-Start 段（627字 · sha1=38cf200ba602）:
+【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】
+- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)
+- 目标模块: ui.BrimwaveCafe
+- 置信度: 0.45（fast-track 资格: 否）
+- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。
+- 正向保留（要怎样）:
+  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。
+  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。
+  · 确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘…
+FINAL_PROMPT_SHA1=60347d843fad
+   · 最终 Prompt（出图须用这句）: 点名锁每轮都要单独留住，不许整张漂掉：subject=Brimwave Cafe harbor casual-merge cafe main menu；style=pad soft-gloss casual HUD chrome；top single-row resources；lower-mid largest PLAY CTA；full-bleed scene；chrome over scene；warm harbor cafe mood；readable Brimwave Cafe + PLAY；no gibberish | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】
+- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)
+- 目标模块: ui.BrimwaveCafe
+- 置信度: 0.45（fast-track 资格: 否）
+- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。
+- 正向保留（要怎样）:
+  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。
+  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。
+  · 确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；
+- 个人口味: 光影=柔光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 暖色调
+- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色
+- 项目私有知识卡 (Private Layer):
+  · [tech-9slice] 九宫格切图: 四角固定、中心可拉伸；中心禁止复杂装饰。
+  · [tech-pixel] 像素艺术: 锁调色板与像素网格，禁止糊边抗锯齿乱入。
+胶片逆光轻厚涂：抬光比、空气和镜头层次，质感仍是颗粒| Mobile 9:16 casual-merge MAIN MENU HUD concept for Brimwave Cafe (NOT a Design renovation picker screen). Full-bleed warm harbor cafe interior scene under soft afternoon window light: creamy wood counters, teal accents, pastry trays, coffee steam, distant harbor boats through big windows. Soft glossy toy-plastic casual UI chrome matching pad craft — do not copy pad pixel layout. 顶栏单行资源条：等级珠/体力/金币/宝石，白底圆角胶囊，厚描边（蓝白描边），轻体积挤出，软接触投影，粗白数字深描边字重；右上小设置齿轮不抢主任务。中景港湾咖啡馆场景铺满，吧台师/吉祥物情绪锚，主按钮不遮脸、不压主角五官，脸周留空。中下主 CTA：超大软光泽 PLAY（或 Level）按钮，圆角厚描边、顶高光、底部接触影、字重最粗最大，一眼最大可点。可选轻量底栏 Home 居中（休闲 merge，非 PVP 大厅，非三消 RM 默认五 Tab）。可读标题 Brimwave Cafe。无乱码、无手机外框、无 Design 三选一条、无三消盘面。对标品类=休闲merge主菜单HUD（ui.casual_hud）：上架截图密度，chrome 与场景同系软光泽。| 约束：保持原图核心艺术媒介与画风基因；保持原图性别、物种、年龄段与核心外观；可加风格内叙事点缀，不换主体身份 | 改掉垫图同款资源数字与图标排版回声；底栏补2～4枚轻量同系圆角入口且Home仍居中勿套RM五Tab；PLAY下加细Level条；保留港湾窗与吧台师脸周留空
+   · 出图硬规：GenerateImage/外部 API 的 description 必须逐字用上面这句；禁止另写 brief、禁止手贴 Warm-Start、禁止只贴装配句。
+   · 当前未执行任何自评或 VLM 裁判；请先看图再打六维，不要从 9.3 起跳：
+你是独立主美裁判。先只看附图，不要看生成提示词给自己加分。
+档位锚：3=失败 / 5=差 / 7=合格 / 8.5=近优 / 9.5=优（可到 10）
+普通完成图应在 7.0～8.5。9.3+ 只给明显优于合格线的画面。不要因为后面还要迭代就从 9.3 起跳，也不要把六维打成一串几乎相同的 9.3+。只写各维分数。正式分由程序按加权调和平均计算，门槛维低于线时改取该维。像素、Q版、平涂、水彩、剪纸、等轴按该媒介自己的尺子打偏低的那一维，断肢和塌缩仍按硬伤。
+六维（各 0–10，一位小数）：构图 composition / 光影 lighting_color / 透视解剖 perspective_anatomy / 质感 texture_detail / 风格规格 spec_style / 无瑕疵 flawlessness。无瑕疵与另外五维一样盲评，不另写扣分清单。看不清就保守给分并写进缺陷。
+六维有效权重：构图=15% 光影=22% 透视=11% 质感=15% 风格=11% 无瑕度=25%。 自动临界复评：先完成一遍六维；若按上述权重计算的调和分与停机线相差 ≤0.25，或透视解剖分与硬门槛 7.5 相差 ≤0.25，则重新只看图像作第二遍六维，不参考第一遍分数；最终 dims 各维取两遍均值（四舍五入到一位小数）。无需人工确认。
+合同只用来写 defects（画没画到），禁止因为 Prompt 写过就加分：/pmem-ui Brimwave Cafe casual merge main-menu HUD concept, warm harbor cafe, soft glossy casual UI; 用这份稿 as style/layout pads only
+参考解构摘要（只作对照，像素优先）：Pad images are casual-merge renovation HUD: soft glossy rounded chrome top resource pills, thick readable numerals, scene fills screen, controls overlay isometric interior. Lock chrome craft and soft-gloss casual UI vibe. Do NOT pixel-copy Design three-choice bar, kitchen layout,
+high 档：姿态可动时仍须写清相对参考多出来的姿态/机位变化，禁空话。
+停机门槛 ≥9.50 是停机线，不是「合格=9.5」。本轮 2/4；满轮取最高分（best-of-N）。
+必须输出：
+1) dims 一行：`构图x.x/光影x.x/透视x.x/质感x.x/风格x.x/无瑕疵x.x`
+2) defects：至少一条可核验画面问题（禁「无明显硬伤」套话）。必须写本张图上看得见的部位、颜色、边缘或空间关系，禁止把上一轮 defects 原句贴过来。
+3) strengths：1–2 条，只写这张图已经有的，并指出可见的像素依据；不写提示词里的目标。六维分数必须能从这些可见证据解释，不能用任务描述代替画面证据。
+4) next_fix：下一轮可执行叠加修正（已达标可写「已达标」）
+recompose：defects 第一句必须回答仰还是俯、人占画面大约多少、主光是窗火还是灯笼。提示词里的「重构机位」不算成图已经换了机位。
+high：必须写明相对原图多出来的那一处光影或叙事；写不出来就把构图当贴原打。
+
+   · 然后：`pyw -3 -u pmem_art.py converge judge --id suite_ui_kit --round 2 --image assets/skill_20261112_suite/out/ui.kit/r2.png --dims ...`

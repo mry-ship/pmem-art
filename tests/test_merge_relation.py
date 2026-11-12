@@ -13,6 +13,7 @@ from skills_kit.merge_relation import (
     judge_relation_rows,
     load_phase1,
     parse_rows,
+    photo_microdetail_hits,
     place_subject_on_square,
     split_sheet_grid,
     square_grid_boxes,
@@ -362,6 +363,84 @@ class MergeRelationTests(unittest.TestCase):
         ok, issues = judge_relation_rows(rows)
         self.assertFalse(ok)
         self.assertTrue(any(("过低" in it) or ("过高" in it) for it in issues))
+
+    def test_photo_microdetail_in_silhouette_blocked(self) -> None:
+        hits0 = photo_microdetail_hits("盘上烤鱼可见焦斑与柠檬片")
+        self.assertTrue(any(h in hits0 for h in ("焦斑", "可见焦斑")), hits0)
+        self.assertIn("柠檬片", hits0)
+        track = {
+            "chain_mode": "shop_ladder",
+            "levels": 8,
+            "surface": "Gossip Harbor 玩具货柜，禁写实摄影与美食棚拍",
+            "rows": [
+                {
+                    "level": i,
+                    "name": f"海鲜{i}",
+                    "silhouette": (
+                        "盘上一条烤熟整鱼，可见焦斑与柠檬片"
+                        if i == 3
+                        else f"糖釉玩具海鲜剪影{i}"
+                    ),
+                    "scale_pct": 0.55 + (i - 1) * 0.05,
+                    "parts_add": "—",
+                    "evolve_to": f"Tier{i}",
+                    "merge_why": "两件合成下一档完整货" if i > 1 else "—",
+                }
+                for i in range(1, 9)
+            ],
+        }
+        ok, issues = judge_relation_rows(parse_rows(track), track=track)
+        self.assertFalse(ok)
+        self.assertTrue(any("美食摄影质感词" in it and "L03" in it for it in issues), issues)
+
+        clean = dict(track)
+        clean["rows"] = [
+            {
+                **row,
+                "silhouette": f"糖釉玩具海鲜剪影{row['level']}，整块色可读",
+            }
+            for row in track["rows"]
+        ]
+        ok2, issues2 = judge_relation_rows(parse_rows(clean), track=clean)
+        self.assertTrue(ok2, issues2)
+
+        photo_ok = dict(clean)
+        photo_ok["surface"] = "写实美食摄影棚拍静物"
+        photo_ok["rows"] = list(track["rows"])  # 带焦斑
+        ok3, issues3 = judge_relation_rows(parse_rows(photo_ok), track=photo_ok)
+        self.assertTrue(ok3, issues3)
+
+        # 垫 GH 真机：柠檬配菜可跟截图；焦斑仍拦
+        gh = dict(clean)
+        gh["surface"] = "垫 GH 真机截图锁画风；跟参考棋盘货"
+        gh["rows"] = [
+            {
+                **row,
+                "silhouette": (
+                    "盘上熟鱼糖釉玩具加柠檬片"
+                    if row["level"] == 3
+                    else row["silhouette"]
+                ),
+            }
+            for row in clean["rows"]
+        ]
+        ok4, issues4 = judge_relation_rows(parse_rows(gh), track=gh)
+        self.assertTrue(ok4, issues4)
+        gh_burn = dict(gh)
+        gh_burn["rows"] = [
+            {
+                **row,
+                "silhouette": (
+                    "盘上熟鱼可见焦斑"
+                    if row["level"] == 3
+                    else row["silhouette"]
+                ),
+            }
+            for row in gh["rows"]
+        ]
+        ok5, issues5 = judge_relation_rows(parse_rows(gh_burn), track=gh_burn)
+        self.assertFalse(ok5)
+        self.assertTrue(any("焦斑" in it for it in issues5), issues5)
 
     def test_place_subject_drops_inset_card(self) -> None:
         canvas = Image.new("RGB", (400, 400), (246, 239, 228))

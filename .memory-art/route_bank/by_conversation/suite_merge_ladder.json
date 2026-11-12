@@ -1,0 +1,14 @@
+{
+  "saved_at": 1794493607.6385748,
+  "text": "新开 Brimwave Café 港湾海鲜拼盘合成梯；chain_mode=shop_ladder；delivery=overview_sheet；levels=8；垫真机锁画风",
+  "banner": "【按 同域合成梯：先定链型与关系，再按交付出图 走了】",
+  "route_ids": [
+    "merge.ladder"
+  ],
+  "mode": "skill",
+  "execute_ok": true,
+  "artist_say": "【按 同域合成梯：先定链型与关系，再按交付出图 走了】\n按合成梯：先说清升级关系，再默认整表一组出齐（通常 8 档）。",
+  "plan_conflict": false,
+  "confidence": "high",
+  "conversation_id": "suite_merge_ladder"
+}

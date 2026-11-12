@@ -1,0 +1,50 @@
+{
+  "route_id": "icon.b",
+  "banner": "【按 Mode B / icon.b 走了】",
+  "status": "partial",
+  "passed_line": false,
+  "rounds": 0,
+  "scores": [
+    {
+      "round": 0,
+      "kind": "batch_consistency_review",
+      "total": 9.28,
+      "dims": {
+        "笔画一致": 9.7,
+        "视觉重量": 9.0,
+        "留白与光学居中": 9.3,
+        "功能识别": 9.2,
+        "无瑕疵": 9.3
+      },
+      "note": "未开关键枚闭环；批量清单正式分 9.28 < 9.5，未过线"
+    }
+  ],
+  "final_image": "assets/skill_20261112_suite/out/icon.b/preview-sheet.svg",
+  "text_deliverable": "assets/skill_20261112_suite/out/icon.b/style-spec.json",
+  "pad_used": [],
+  "bg": "n/a",
+  "style_spec": {
+    "preset": "Soft",
+    "grid": 24,
+    "strokeWidth": 2,
+    "strokeLinecap": "round",
+    "strokeLinejoin": "round",
+    "color": "currentColor"
+  },
+  "files": [
+    "style-spec.json",
+    "preview.html",
+    "preview-sheet.svg",
+    "preview-sheet.jpg",
+    "home.svg",
+    "shop.svg",
+    "merge.svg",
+    "bag.svg",
+    "star.svg",
+    "settings.svg",
+    "mail.svg",
+    "heart.svg",
+    "RESULT.json"
+  ],
+  "notes": "Brimwave Café Mode B Soft 8 枚真 SVG 已交；无 GH 垫图；merge=双杯+上合箭头；一致性良好但批量未到 9.5。"
+}

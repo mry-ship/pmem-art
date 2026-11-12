@@ -1,0 +1,112 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-11-12 21:12:39 UTC+8",
+  "session_id": "merge_seafood_hard_v2_20261112",
+  "goal": "merge合成梯一组硬料海鲜整表八档；overview_sheet shop_ladder L1-L8；Gossip Harbor软立体糖釉玩具货柜；档位句禁摄影质感",
+  "module": "merge.HarborSeafoodHardV2",
+  "converge_mode": "quality",
+  "guided_mode": "text_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 3,
+  "winner_score": 9.27,
+  "winner_image": "assets/skill_20261112_seafood/merge_hard_v2/sheet_r3.jpg",
+  "winner_passed": false,
+  "outcome": "共 4 轮未达阈值，采用最高分",
+  "what_fixed": [
+    "纯文重开勿垫上轮；L1整块色禁鳞片；L7锁龙虾大餐糖釉玩具；统一盘装节奏",
+    "纯文；L7禁柠檬角改小绿块；L3彻底光滑；L8托盘沿更清楚",
+    "纯文；L1彻底无盘直接落卡；其余锁住；末档不得明显矮于前档；有贴边残片/切顶须整张重出；邻档靠剪影/件数可分；禁止跨轮抠格拼表",
+    "满4轮取最高；定稿用r3；末档不得明显矮于前档；有贴边残片/切顶须整张重出；邻档靠剪影/件数可分；禁止跨轮抠格拼表"
+  ],
+  "what_still_weak": "L1仍带浅盘略违无盘；个别虾尾略细；提示：邻档框高接近（第 2→3 为 0.34→0.37）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 3→4 为 0.37→0.37）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 4→5 为 0.37→0.34）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 5→6 为 0.34→0.35）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；第 7 格有贴边残片（面积 0.151）：像抠格拼贴或切顶，整张重出，禁止拼贴；点名锁未单独验收：锁：软立体糖釉玩具货柜；同链档序；无字无脸；邻档剪影可分；浅奶油卡；档位禁摄影质感",
+  "strengths": "糖釉玩具货柜立住；L7绿方块配菜无柠檬；L8托盘沿清楚；链序龙虾大餐正确",
+  "taste_deltas": {
+    "from_strengths": [
+      "糖釉玩具货柜立住；L7绿方块配菜无柠檬；L8托盘沿清楚；链序龙虾大餐正确"
+    ],
+    "from_defects": [
+      "L7仍有柠檬角配菜；L3偶有细鳞暗示；L8托盘外轮廓略弱；提示：邻档框高接近（第 3→4 为 0.40→0.39）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 4→5 为 0.",
+      "L1仍带浅盘略违无盘；个别虾尾略细；提示：邻档框高接近（第 2→3 为 0.34→0.37）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 3→4 为 0.37→0.37）；分档",
+      "版式漂成横向货架槽+侧栏按钮非4x2浅卡整表；L1鳞片回潮；非合同竖屏卡网；提示：邻档框高接近（第 2→3 为 0.23→0.19）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第"
+    ]
+  },
+  "warm_start_confidence": 0.45,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 9.02,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 9.2,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 9.27,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 8.58,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：L1鳞片偏细仍偏实物；L7漂成鱼排鱼子非龙虾大餐剪影；L6无盘与邻档容器节奏略跳；提示：邻档框高接近（第 1→2 为 0.33→0.33）；分档靠剪影/件数，勿",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.02"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：软立体糖釉玩具感明显好于v1美食棚拍；浅奶油4x2竖屏；链序大体可读",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.02"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：L7仍有柠檬角配菜；L3偶有细鳞暗示；L8托盘外轮廓略弱；提示：邻档框高接近（第 3→4 为 0.40→0.39）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.2"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：糖釉玩具货柜更稳；L1光滑整块；L6有盘；L7回到龙虾大餐；竖屏浅卡",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.2"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：L1仍带浅盘略违无盘；个别虾尾略细；提示：邻档框高接近（第 2→3 为 0.34→0.37）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.27"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：糖釉玩具货柜立住；L7绿方块配菜无柠檬；L8托盘沿清楚；链序龙虾大餐正确",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.27"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：版式漂成横向货架槽+侧栏按钮非4x2浅卡整表；L1鳞片回潮；非合同竖屏卡网；提示：邻档框高接近（第 2→3 为 0.23→0.19）；分档靠剪影/件数，勿跨轮抠",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.58"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：仍有糖釉玩具感；L7绿块无柠檬",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.58"
+    }
+  ]
+}

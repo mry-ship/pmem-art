@@ -1,0 +1,1030 @@
+{
+  "session_id": "suite_ui_kit",
+  "started_at": "2026-11-12 22:16:31 UTC+8",
+  "goal": "/pmem-ui Brimwave Cafe casual merge main-menu HUD concept, warm harbor cafe, soft glossy casual UI; 用这份稿 as style/layout pads only",
+  "module": "ui.BrimwaveCafe",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "high",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "high",
+    "label": "高强度 · 大胆跃升+可叙事动态达标闭环 (Showcase Overhaul Dynamic Threshold >=9.5)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 2,
+    "target_score_threshold": 9.5,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.225,
+      "perspective_anatomy": 0.1125,
+      "texture_detail": 0.15,
+      "spec_style": 0.1125,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图；第 1 轮可以拉开光影，之后只在提示词上补还没过的那一处（提示词改动仍 ≤80%）",
+    "max_prompt_delta_ratio": 0.8,
+    "allow_recompose": true,
+    "allow_viewpoint_change": true,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": true,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "no_identity_swap (可加风格内叙事点缀，不换主体身份)",
+      "style_surface (跟提示词品类默认画风，禁止回落写实棚拍)"
+    ],
+    "min_round_leap": 0.2,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "胶片逆光轻厚涂：抬光比、空气和镜头层次，质感仍是颗粒",
+    "medium_family": "photo",
+    "best_direction_hint": "最优方向：只抬这一媒介已经有的长处",
+    "goal": "/pmem-ui Brimwave Cafe casual merge main-menu HUD concept, warm harbor cafe, soft glossy casual UI; 用这份稿 as style/layout pads only",
+    "module": "ui.BrimwaveCafe",
+    "ref_image": "",
+    "ref_analysis": "Pad images are casual-merge renovation HUD: soft glossy rounded chrome top resource pills, thick readable numerals, scene fills screen, controls overlay isometric interior. Lock chrome craft and soft-gloss casual UI vibe. Do NOT pixel-copy Design three-choice bar, kitchen layout, or character portraits."
+  },
+  "medium_family": "photo",
+  "contract": "",
+  "target_score_threshold": 9.5,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_ui.png",
+  "ref_analysis": "Pad images are casual-merge renovation HUD: soft glossy rounded chrome top resource pills, thick readable numerals, scene fills screen, controls overlay isometric interior. Lock chrome craft and soft-gloss casual UI vibe. Do NOT pixel-copy Design three-choice bar, kitchen layout, or character portraits.",
+  "default_aspect_ratio": "9:16",
+  "default_reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_ui.png",
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_ui_dl.jpg"
+  ],
+  "aspect_ratio": "9:16",
+  "reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_ui.png",
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_ui_dl.jpg"
+  ],
+  "ref_physical_traits": {
+    "exists": true,
+    "size_bytes": 4254324,
+    "size_kb": 4154.6,
+    "width": 1512,
+    "height": 2688,
+    "aspect_ratio": "9:16",
+    "canonical_aspect_ratio": "9:16",
+    "color_entropy": 7.99
+  },
+  "param_validation": {
+    "valid": true,
+    "validation_passed": true,
+    "case_id": "suite_ui_kit",
+    "scale": "high",
+    "aspect_ratio": "9:16",
+    "ref_aspect_ratio": "9:16",
+    "ref_dimensions": "1512x2688",
+    "output_aspect_ratio": "",
+    "output_dimensions": "",
+    "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_ui.png",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_ui.png",
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_ui_dl.jpg"
+    ],
+    "inherited_default_aspect_ratio": false,
+    "inherited_default_pad_image": false,
+    "matched_ref_aspect_ratio": true,
+    "matched_ref_pad_image": true,
+    "matched_output_aspect_ratio": true,
+    "three_step_stage": "step1_start",
+    "three_step_verified": false,
+    "warnings": []
+  },
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.5,
+  "accept_threshold": 9.5,
+  "max_rounds": 4,
+  "ready_to_finish": true,
+  "status": "finished",
+  "owner_conversation_id": "suite_ui_kit",
+  "route_ids": [
+    "ui.kit"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_ui.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "suite_ui_kit",
+        "scale": "high",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "1512x2688",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_ui.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_ui.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "22:20:51",
+      "image": "assets/skill_20261112_suite/out/ui.kit/r1.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 1177989,
+        "size_kb": 1150.4,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.99
+      },
+      "raw_score": 8.27,
+      "score": 8.27,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.4/光影8.6/透视8.2/质感8.4/风格8.2/无瑕疵7.9",
+      "dims_parsed": {
+        "composition": 8.4,
+        "lighting_color": 8.6,
+        "perspective_anatomy": 8.2,
+        "texture_detail": 8.4,
+        "spec_style": 8.2,
+        "flawlessness": 7.9
+      },
+      "weighted_score": 8.27,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "点名锁未单独验收：full-bleed scene；no gibberish"
+      ],
+      "stagnated": false,
+      "strengths": "已是主菜单而非Design三选一：中下黄PLAY一眼最大；顶栏圆角白胶囊厚蓝描边与场景同系软光泽；港湾窗景+吧台师脸在PLAY上方留空",
+      "defects": "顶栏数字72/85/233/1870与垫图资源值几乎同款回声；底栏只剩居中home落在大片米黄空带，导航壳偏空像未完成；PLAY下无Level副文案层次略薄；点名锁未单独验收：full-bleed scene；no gibberish",
+      "next_fix": "改掉垫图同款资源数字与图标排版回声；底栏补2～4枚轻量同系圆角入口且Home仍居中勿套RM五Tab；PLAY下加细Level条；保留港湾窗与吧台师脸周留空",
+      "prompt": "点名锁每轮都要单独留住，不许整张漂掉：subject=Brimwave Cafe harbor casual-merge cafe main menu；style=pad soft-gloss casual HUD chrome；top single-row resources；lower-mid largest PLAY CTA；full-bleed scene；chrome over scene；warm harbor cafe mood；readable Brimwave Cafe + PLAY；no gibberish | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: ui.BrimwaveCafe\n- 置信度: 0.45（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n  · 确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；\n- 个人口味: 光影=柔光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [tech-9slice] 九宫格切图: 四角固定、中心可拉伸；中心禁止复杂装饰。\n  · [tech-pixel] 像素艺术: 锁调色板与像素网格，禁止糊边抗锯齿乱入。\n胶片逆光轻厚涂：抬光比、空气和镜头层次，质感仍是颗粒| Mobile 9:16 casual-merge MAIN MENU HUD concept for Brimwave Cafe (NOT a Design renovation picker screen). Full-bleed warm harbor cafe interior scene under soft afternoon window light: creamy wood counters, teal accents, pastry trays, coffee steam, distant harbor boats through big windows. Soft glossy toy-plastic casual UI chrome matching pad craft — do not copy pad pixel layout. 顶栏单行资源条：等级珠/体力/金币/宝石，白底圆角胶囊，厚描边（蓝白描边），轻体积挤出，软接触投影，粗白数字深描边字重；右上小设置齿轮不抢主任务。中景港湾咖啡馆场景铺满，吧台师/吉祥物情绪锚，主按钮不遮脸、不压主角五官，脸周留空。中下主 CTA：超大软光泽 PLAY（或 Level）按钮，圆角厚描边、顶高光、底部接触影、字重最粗最大，一眼最大可点。可选轻量底栏 Home 居中（休闲 merge，非 PVP 大厅，非三消 RM 默认五 Tab）。可读标题 Brimwave Cafe。无乱码、无手机外框、无 Design 三选一条、无三消盘面。对标品类=休闲merge主菜单HUD（ui.casual_hud）：上架截图密度，chrome 与场景同系软光泽。| 约束：保持原图核心艺术媒介与画风基因；保持原图性别、物种、年龄段与核心外观；可加风格内叙事点缀，不换主体身份",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.2,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "ui",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "style_lock",
+          "lesson": "本轮短板偏「style_lock」：顶栏数字72/85/233/1870与垫图资源值几乎同款回声；底栏只剩居中home落在大片米黄空带，导航壳偏空像未完成；PLAY下无Level副文案层次略薄；点",
+          "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+          "from_score": "8.27"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：已是主菜单而非Design三选一：中下黄PLAY一眼最大；顶栏圆角白胶囊厚蓝描边与场景同系软光泽；港湾窗景+吧台师脸在PLAY上方留空",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.27"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "22:22:23"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_ui.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "suite_ui_kit",
+        "scale": "high",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "1512x2688",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_ui.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_ui.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "22:24:07",
+      "image": "assets/skill_20261112_suite/out/ui.kit/r2.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 1226792,
+        "size_kb": 1198.0,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 8.0
+      },
+      "raw_score": 8.65,
+      "score": 8.65,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.8/光影8.8/透视8.5/质感8.7/风格8.8/无瑕疵8.4",
+      "dims_parsed": {
+        "composition": 8.8,
+        "lighting_color": 8.8,
+        "perspective_anatomy": 8.5,
+        "texture_detail": 8.7,
+        "spec_style": 8.8,
+        "flawlessness": 8.4
+      },
+      "weighted_score": 8.65,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "点名锁未单独验收：full-bleed scene；no gibberish"
+      ],
+      "stagnated": false,
+      "strengths": "资源值已换成18/42/1560/328摆脱垫图同款；PLAY下出现Level 12细进度条；底栏补齐Shop/Events/Home/Friends同系圆角格；港湾窗光与黄PLAY体积仍清楚",
+      "defects": "平视中景吧台师约占半身到腰，主光来自后方大窗而非灯笼；底栏四枚导致Home偏左非真正居中；顶栏最左变成星标18缺少等级圆环进度珠，等级语义被星标吞掉；底栏字重与顶栏厚描边体积略不齐；点名锁未单独验收：full-bleed scene；no gibberish",
+      "next_fix": "底栏改成奇数枚且Home绝对居中（推荐五槽或三槽）；顶栏恢复等级圆环进度珠并与星/币/宝石语义分开；底栏描边体积字重对齐顶栏胶囊；保留新资源数字与Level 12条与脸周留空",
+      "prompt": "点名锁每轮都要单独留住，不许整张漂掉：subject=Brimwave Cafe harbor casual-merge cafe main menu；style=pad soft-gloss casual HUD chrome；top single-row resources；lower-mid largest PLAY CTA；full-bleed scene；chrome over scene；warm harbor cafe mood；readable Brimwave Cafe + PLAY；no gibberish | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: ui.BrimwaveCafe\n- 置信度: 0.45（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n  · 确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；\n- 个人口味: 光影=柔光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [tech-9slice] 九宫格切图: 四角固定、中心可拉伸；中心禁止复杂装饰。\n  · [tech-pixel] 像素艺术: 锁调色板与像素网格，禁止糊边抗锯齿乱入。\n胶片逆光轻厚涂：抬光比、空气和镜头层次，质感仍是颗粒| Mobile 9:16 casual-merge MAIN MENU HUD concept for Brimwave Cafe (NOT a Design renovation picker screen). Full-bleed warm harbor cafe interior scene under soft afternoon window light: creamy wood counters, teal accents, pastry trays, coffee steam, distant harbor boats through big windows. Soft glossy toy-plastic casual UI chrome matching pad craft — do not copy pad pixel layout. 顶栏单行资源条：等级珠/体力/金币/宝石，白底圆角胶囊，厚描边（蓝白描边），轻体积挤出，软接触投影，粗白数字深描边字重；右上小设置齿轮不抢主任务。中景港湾咖啡馆场景铺满，吧台师/吉祥物情绪锚，主按钮不遮脸、不压主角五官，脸周留空。中下主 CTA：超大软光泽 PLAY（或 Level）按钮，圆角厚描边、顶高光、底部接触影、字重最粗最大，一眼最大可点。可选轻量底栏 Home 居中（休闲 merge，非 PVP 大厅，非三消 RM 默认五 Tab）。可读标题 Brimwave Cafe。无乱码、无手机外框、无 Design 三选一条、无三消盘面。对标品类=休闲merge主菜单HUD（ui.casual_hud）：上架截图密度，chrome 与场景同系软光泽。| 约束：保持原图核心艺术媒介与画风基因；保持原图性别、物种、年龄段与核心外观；可加风格内叙事点缀，不换主体身份 | 改掉垫图同款资源数字与图标排版回声；底栏补2～4枚轻量同系圆角入口且Home仍居中勿套RM五Tab；PLAY下加细Level条；保留港湾窗与吧台师脸周留空",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.5,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "ui",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "line_edge",
+          "lesson": "本轮短板偏「line_edge」：平视中景吧台师约占半身到腰，主光来自后方大窗而非灯笼；底栏四枚导致Home偏左非真正居中；顶栏最左变成星标18缺少等级圆环进度珠，等级语义被星标吞掉；底栏字重与",
+          "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+          "from_score": "8.65"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：资源值已换成18/42/1560/328摆脱垫图同款；PLAY下出现Level 12细进度条；底栏补齐Shop/Events/Home/Friends同系圆角格",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.65"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "22:25:20"
+    },
+    {
+      "round": 3,
+      "round_label": "第 3 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\out\\ui.kit\\r2.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "suite_ui_kit",
+        "scale": "high",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "720x1280",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\out\\ui.kit\\r2.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\out\\ui.kit\\r2.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": true,
+        "pad_diverged": false
+      },
+      "generated_at": "22:26:57",
+      "image": "assets/skill_20261112_suite/out/ui.kit/r3.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 1290327,
+        "size_kb": 1260.1,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 8.0
+      },
+      "raw_score": 9.03,
+      "score": 9.03,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.2/光影9.1/透视8.9/质感9.1/风格9.2/无瑕疵8.8",
+      "dims_parsed": {
+        "composition": 9.2,
+        "lighting_color": 9.1,
+        "perspective_anatomy": 8.9,
+        "texture_detail": 9.1,
+        "spec_style": 9.2,
+        "flawlessness": 8.8
+      },
+      "weighted_score": 9.03,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "点名锁未单独验收：full-bleed scene；no gibberish"
+      ],
+      "stagnated": false,
+      "strengths": "顶栏已恢复圆环等级珠LEVEL 18并与42/1560/328资源分家；底栏五槽Home居中；PLAY+Level12条层次清楚；港湾窗光与吧台师脸周仍留空",
+      "defects": "平视中景，吧台师约半身，主光仍是后方大窗；等级圆环内LEVEL字与18挤在一起字重发糊；底栏五槽标签偏小且描边体积仍略薄于顶栏胶囊；Brimwave与Cafe两行色差略跳；点名锁未单独验收：full-bleed scene；no gibberish",
+      "next_fix": "等级珠只放大号18+细进度环，LEVEL小字移到环外或去掉；底栏标签加粗并加同系厚描边体积投影对齐顶栏；统一标题Brimwave Cafe为同一套描边高光；其余锁定不动",
+      "prompt": "点名锁每轮都要单独留住，不许整张漂掉：subject=Brimwave Cafe harbor casual-merge cafe main menu；style=pad soft-gloss casual HUD chrome；top single-row resources；lower-mid largest PLAY CTA；full-bleed scene；chrome over scene；warm harbor cafe mood；readable Brimwave Cafe + PLAY；no gibberish | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: ui.BrimwaveCafe\n- 置信度: 0.45（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n  · 确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；\n- 个人口味: 光影=柔光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [tech-9slice] 九宫格切图: 四角固定、中心可拉伸；中心禁止复杂装饰。\n  · [tech-pixel] 像素艺术: 锁调色板与像素网格，禁止糊边抗锯齿乱入。\n胶片逆光轻厚涂：抬光比、空气和镜头层次，质感仍是颗粒| L1锁必须保住：subject=Brimwave Cafe harbor casual-merge cafe main menu；style=pad soft-gloss casual HUD chrome；top single-row resources；lower-mid largest PLAY CTA；full-bleed scene；chrome over scene；warm harbor cafe mood；readable Brimwave Cafe + PLAY。垫图是目前分数最高的那张成图。只改这一处：底栏改成奇数枚且Home绝对居中（推荐五槽或三槽）；顶栏恢复等级圆环进度珠并与星/币/宝石语义分开；底栏描边体积字重对齐顶栏胶囊；保留新资源数字与Level 12条与脸周留空。没点名的地方保持垫图。禁止借改点换题材/换品类/换技能。",
+      "continuation": true,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.9,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "ui",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：平视中景，吧台师约半身，主光仍是后方大窗；等级圆环内LEVEL字与18挤在一起字重发糊；底栏五槽标签偏小且描边体积仍略薄于顶栏胶囊；Brimwave与Cafe两",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "9.03"
+        },
+        {
+          "category": "line_edge",
+          "lesson": "本轮短板偏「line_edge」：平视中景，吧台师约半身，主光仍是后方大窗；等级圆环内LEVEL字与18挤在一起字重发糊；底栏五槽标签偏小且描边体积仍略薄于顶栏胶囊；Brimwave与Cafe两",
+          "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+          "from_score": "9.03"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：顶栏已恢复圆环等级珠LEVEL 18并与42/1560/328资源分家；底栏五槽Home居中；PLAY+Level12条层次清楚；港湾窗光与吧台师脸周仍留空",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "9.03"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "22:28:16"
+    },
+    {
+      "round": 4,
+      "round_label": "第 4 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\out\\ui.kit\\r3.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "suite_ui_kit",
+        "scale": "high",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "720x1280",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\out\\ui.kit\\r3.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\out\\ui.kit\\r3.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": true,
+        "pad_diverged": false
+      },
+      "generated_at": "22:29:54",
+      "image": "assets/skill_20261112_suite/out/ui.kit/r4.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 1307545,
+        "size_kb": 1276.9,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 8.0
+      },
+      "raw_score": 9.23,
+      "score": 9.23,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.4/光影9.3/透视9.1/质感9.3/风格9.4/无瑕疵9.0",
+      "dims_parsed": {
+        "composition": 9.4,
+        "lighting_color": 9.3,
+        "perspective_anatomy": 9.1,
+        "texture_detail": 9.3,
+        "spec_style": 9.4,
+        "flawlessness": 9.0
+      },
+      "weighted_score": 9.23,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "点名锁未单独验收：full-bleed scene；no gibberish"
+      ],
+      "stagnated": false,
+      "strengths": "相对r3：等级珠大号18更清楚、五槽Home仍居中、PLAY+Level12与港湾窗光/吧台师脸周留空保持；顶栏资源42/1560/328与软光泽蓝描边胶囊齐套",
+      "defects": "平视中景半身吧台师，主光仍是后方大窗；等级环内仍塞着LEVEL小字未完全外移；Cafe一行色比Brimwave偏奶油跳色；底栏槽描边体积仍略薄于顶栏胶囊；点名锁未单独验收：full-bleed scene；no gibberish",
+      "next_fix": "已满4轮取最高分；若续跑只外移LEVEL字并统一标题描边高光、加厚底栏体积",
+      "prompt": "点名锁每轮都要单独留住，不许整张漂掉：subject=Brimwave Cafe harbor casual-merge cafe main menu；style=pad soft-gloss casual HUD chrome；top single-row resources；lower-mid largest PLAY CTA；full-bleed scene；chrome over scene；warm harbor cafe mood；readable Brimwave Cafe + PLAY；no gibberish | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: ui.BrimwaveCafe\n- 置信度: 0.45（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n  · 确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；\n- 个人口味: 光影=柔光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [tech-9slice] 九宫格切图: 四角固定、中心可拉伸；中心禁止复杂装饰。\n  · [tech-pixel] 像素艺术: 锁调色板与像素网格，禁止糊边抗锯齿乱入。\n胶片逆光轻厚涂：抬光比、空气和镜头层次，质感仍是颗粒| L1锁必须保住：subject=Brimwave Cafe harbor casual-merge cafe main menu；style=pad soft-gloss casual HUD chrome；top single-row resources；lower-mid largest PLAY CTA；full-bleed scene；chrome over scene；warm harbor cafe mood；readable Brimwave Cafe + PLAY。垫图是目前分数最高的那张成图。只改这一处：等级珠只放大号18+细进度环，LEVEL小字移到环外或去掉；底栏标签加粗并加同系厚描边体积投影对齐顶栏；统一标题Brimwave Cafe为同一套描边高光；其余锁定不动。没点名的地方保持垫图。禁止借改点换题材/换品类/换技能。",
+      "continuation": true,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.1,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "ui",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_MAX_ROUNDS",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：平视中景半身吧台师，主光仍是后方大窗；等级环内仍塞着LEVEL小字未完全外移；Cafe一行色比Brimwave偏奶油跳色；底栏槽描边体积仍略薄于顶栏胶囊；点名锁",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "9.23"
+        },
+        {
+          "category": "line_edge",
+          "lesson": "本轮短板偏「line_edge」：平视中景半身吧台师，主光仍是后方大窗；等级环内仍塞着LEVEL小字未完全外移；Cafe一行色比Brimwave偏奶油跳色；底栏槽描边体积仍略薄于顶栏胶囊；点名锁",
+          "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+          "from_score": "9.23"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：相对r3：等级珠大号18更清楚、五槽Home仍居中、PLAY+Level12与港湾窗光/吧台师脸周留空保持；顶栏资源42/1560/328与软光泽蓝描边胶囊齐套",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "9.23"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "22:31:02"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-11-10 14:02:24 UTC+8"
+    },
+    "module": "ui.BrimwaveCafe",
+    "goal": "/pmem-ui Brimwave Cafe casual merge main-menu HUD concept, warm harbor cafe, soft glossy casual UI; 用这份稿 as style/layout pads only",
+    "confidence": 0.45,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "个人口味/正向保留非空",
+      "注入红线可控（0 条，已按任务主题过滤）",
+      "挂载 2 张项目知识卡 + 0 张全局美术底层基础卡"
+    ],
+    "top_recipes": [],
+    "top_redlines": [],
+    "art_decisions": [],
+    "private_knowledge": [
+      {
+        "id": "tech-9slice",
+        "title": "九宫格切图",
+        "body": "四角固定、中心可拉伸；中心禁止复杂装饰。",
+        "layer_scope": "private"
+      },
+      {
+        "id": "tech-pixel",
+        "title": "像素艺术",
+        "body": "锁调色板与像素网格，禁止糊边抗锯齿乱入。",
+        "layer_scope": "private"
+      }
+    ],
+    "shared_knowledge": [],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [
+        "柔光"
+      ],
+      "preferred_composition": [
+        "半身",
+        "居中/对称构图"
+      ],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [
+        "避免过饱和",
+        "暖色调"
+      ],
+      "banned_habits": [
+        "廉价塑料感/油腻高光",
+        "漏抠/黑底/毛边",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色"
+      ],
+      "keep_phrases": [
+        "确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。",
+        "确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。",
+        "确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；"
+      ],
+      "banned_habits_raw_tail": [
+        "禁止偏离样张画风：过度霓虹、脏暗阴影、油腻高光、写实皮肤毛孔、扁平UI描边",
+        "电池审稿：原画竖构图避免贴样张布局；边缘反光勿过曝",
+        "电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感",
+        "黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差",
+        "错误头身比/头过大",
+        "廉价塑料感/油腻高光",
+        "漏抠/黑底/毛边",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色"
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: ui.BrimwaveCafe\n- 置信度: 0.45（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n  · 确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；\n- 个人口味: 光影=柔光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [tech-9slice] 九宫格切图: 四角固定、中心可拉伸；中心禁止复杂装饰。\n  · [tech-pixel] 像素艺术: 锁调色板与像素网格，禁止糊边抗锯齿乱入。",
+    "built_at": "2026-11-12 22:16:31 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：顶栏数字72/85/233/1870与垫图资源值几乎同款回声；底栏只剩居中home落在大片米黄空带，导航壳偏空像未完成；PLAY下无Level副文案层次略薄；点",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.27"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：已是主菜单而非Design三选一：中下黄PLAY一眼最大；顶栏圆角白胶囊厚蓝描边与场景同系软光泽；港湾窗景+吧台师脸在PLAY上方留空",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.27"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：平视中景吧台师约占半身到腰，主光来自后方大窗而非灯笼；底栏四枚导致Home偏左非真正居中；顶栏最左变成星标18缺少等级圆环进度珠，等级语义被星标吞掉；底栏字重与",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "8.65"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：资源值已换成18/42/1560/328摆脱垫图同款；PLAY下出现Level 12细进度条；底栏补齐Shop/Events/Home/Friends同系圆角格",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.65"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：平视中景，吧台师约半身，主光仍是后方大窗；等级圆环内LEVEL字与18挤在一起字重发糊；底栏五槽标签偏小且描边体积仍略薄于顶栏胶囊；Brimwave与Cafe两",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.03"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：平视中景，吧台师约半身，主光仍是后方大窗；等级圆环内LEVEL字与18挤在一起字重发糊；底栏五槽标签偏小且描边体积仍略薄于顶栏胶囊；Brimwave与Cafe两",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "9.03"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：顶栏已恢复圆环等级珠LEVEL 18并与42/1560/328资源分家；底栏五槽Home居中；PLAY+Level12条层次清楚；港湾窗光与吧台师脸周仍留空",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.03"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：平视中景半身吧台师，主光仍是后方大窗；等级环内仍塞着LEVEL小字未完全外移；Cafe一行色比Brimwave偏奶油跳色；底栏槽描边体积仍略薄于顶栏胶囊；点名锁",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.23"
+    },
+    {
+      "category": "line_edge",
+      "lesson": "本轮短板偏「line_edge」：平视中景半身吧台师，主光仍是后方大窗；等级环内仍塞着LEVEL小字未完全外移；Cafe一行色比Brimwave偏奶油跳色；底栏槽描边体积仍略薄于顶栏胶囊；点名锁",
+      "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+      "from_score": "9.23"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：相对r3：等级珠大号18更清楚、五槽Home仍居中、PLAY+Level12与港湾窗光/吧台师脸周留空保持；顶栏资源42/1560/328与软光泽蓝描边胶囊齐套",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.23"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 2,
+  "regression_drop": 0.15,
+  "safe_early_stop": false,
+  "ui_delivery": "concept",
+  "ui_round_cap": 4,
+  "single_judge": false,
+  "understanding_contract": {
+    "version": 1,
+    "raw_utterance": "/pmem-ui Brimwave Cafe casual merge main-menu HUD concept, warm harbor cafe, soft glossy casual UI; 用这份稿 as style/layout pads only",
+    "l0": {
+      "route_ids": [
+        "ui.kit"
+      ],
+      "banner": "【按 【最多4轮·到线即停】SpriteCook式 UI Kit/HUD/九宫格整套 走了】",
+      "delivery": "ui.kit"
+    },
+    "l1": {
+      "locks": [
+        "subject=Brimwave Cafe harbor casual-merge cafe main menu",
+        "style=pad soft-gloss casual HUD chrome",
+        "top single-row resources",
+        "lower-mid largest PLAY CTA",
+        "full-bleed scene",
+        "chrome over scene",
+        "warm harbor cafe mood",
+        "readable Brimwave Cafe + PLAY",
+        "no gibberish"
+      ],
+      "unlocks": [
+        "no pixel-copy pad kitchen / Design 3-choice bar / character portraits",
+        "unlock RM five-tab default",
+        "unlock component sheets"
+      ],
+      "defaults_shown": [
+        "default: concept-only",
+        "9:16 portrait",
+        "main-menu concept only",
+        "no component sheet/9-slice/state family",
+        "Cursor GenerateImage",
+        "full-bleed scene"
+      ],
+      "commercial_vibe": "benchmark category=casual merge main-menu HUD (ui.casual_hud): store-screenshot density, clear top resources, largest primary CTA, chrome same soft-gloss family as harbor cafe scene"
+    },
+    "l2": {
+      "open": true,
+      "surface_fix": "",
+      "last_feedback": "",
+      "feedback_layer": ""
+    },
+    "notes": ""
+  },
+  "discussions": [
+    {
+      "round": 0,
+      "kind": "reasonableness",
+      "prompt": "Mobile 9:16 casual-merge MAIN MENU HUD concept for Brimwave Cafe (NOT a Design renovation picker screen). Full-bleed warm harbor cafe interior scene under soft afternoon window light: creamy wood counters, teal accents, pastry trays, coffee steam, distant harbor boats through big windows. Soft glossy toy-plastic casual UI chrome matching pad craft — do not copy pad pixel layout. 顶栏单行资源条：等级珠/体力/金币/宝石，白底圆角胶囊，厚描边（蓝白描边），轻体积挤出，软接触投影，粗白数字深描边字重；右上小设置齿轮不抢主任务。中景港湾咖啡馆场景铺满，吧台师/吉祥物情绪锚，主按钮不遮脸、不压主角五官，脸周留空。中下主 CTA：超大软光泽 PLAY（或 Level）按钮，圆角厚描边、顶高光、底部接触影、字重最粗最大，一眼最大可点。可选轻量底栏 Home 居中（休闲 merge，非 PVP 大厅，非三消 RM 默认五 Tab）。可读标题 Brimwave Cafe。无乱码、无手机外框、无 Design 三选一条、无三消盘面。对标品类=休闲merge主菜单HUD（ui.casual_hud）：上架截图密度，chrome 与场景同系软光泽。",
+      "strengths": "合理性闸已过：subject_action=ok；element_budget=ok；hard_locks=ok；fail_at_glance=ok；layout_zones=ok；no_content_clutter=ok；chrome_not_illustration=ok；cta_clear_of_faces=ok；control_craft=ok",
+      "defects": "",
+      "next_fix": "首轮 generate 使用本修订提示词；审美迭代不得推翻硬锁与元素预算"
+    },
+    {
+      "round": 1,
+      "prompt": "concept-only main menu 9:16. Warm harbor cafe scene fills screen (afternoon harbor light, pastry counter, coffee steam). NOT a Design renovation picker. Top single-row: level + energy + coins + gems, soft rounded white chrome thick borders. Lower-mid largest PLAY CTA. Tiny settings gear corner. Optional light Home-centered bottom nav (not PvP lobby). Face clear of chrome. No gibberish, no fake phone bezel.",
+      "strengths": "",
+      "defects": "",
+      "next_fix": ""
+    }
+  ],
+  "reasonableness_history": [
+    {
+      "reviewed_at": 1794493113.3651907,
+      "passed": false,
+      "skill": "ui",
+      "issues": [
+        "ui 缺控件工艺：修订句须写顶栏/主按钮等分区，并写清描边/体积/投影/字重（对标商业休闲 HUD，不是插画海报）",
+        "ui 缺 CTA 避脸：修订句须写主按钮不遮脸/不压主角五官"
+      ]
+    },
+    {
+      "reviewed_at": 1794493160.0087192,
+      "passed": true,
+      "skill": "ui",
+      "issues": []
+    }
+  ],
+  "reasonableness": {
+    "passed": true,
+    "skill": "ui",
+    "draft_prompt": "Brimwave Cafe main menu HUD soft glossy casual UI 9:16",
+    "revised_prompt": "Mobile 9:16 casual-merge MAIN MENU HUD concept for Brimwave Cafe (NOT a Design renovation picker screen). Full-bleed warm harbor cafe interior scene under soft afternoon window light: creamy wood counters, teal accents, pastry trays, coffee steam, distant harbor boats through big windows. Soft glossy toy-plastic casual UI chrome matching pad craft — do not copy pad pixel layout. 顶栏单行资源条：等级珠/体力/金币/宝石，白底圆角胶囊，厚描边（蓝白描边），轻体积挤出，软接触投影，粗白数字深描边字重；右上小设置齿轮不抢主任务。中景港湾咖啡馆场景铺满，吧台师/吉祥物情绪锚，主按钮不遮脸、不压主角五官，脸周留空。中下主 CTA：超大软光泽 PLAY（或 Level）按钮，圆角厚描边、顶高光、底部接触影、字重最粗最大，一眼最大可点。可选轻量底栏 Home 居中（休闲 merge，非 PVP 大厅，非三消 RM 默认五 Tab）。可读标题 Brimwave Cafe。无乱码、无手机外框、无 Design 三选一条、无三消盘面。对标品类=休闲merge主菜单HUD（ui.casual_hud）：上架截图密度，chrome 与场景同系软光泽。",
+    "checklist": {
+      "subject_action": {
+        "status": "ok",
+        "note": ""
+      },
+      "element_budget": {
+        "status": "ok",
+        "note": ""
+      },
+      "hard_locks": {
+        "status": "ok",
+        "note": ""
+      },
+      "fail_at_glance": {
+        "status": "ok",
+        "note": ""
+      },
+      "layout_zones": {
+        "status": "ok",
+        "note": ""
+      },
+      "no_content_clutter": {
+        "status": "ok",
+        "note": ""
+      },
+      "chrome_not_illustration": {
+        "status": "ok",
+        "note": ""
+      },
+      "cta_clear_of_faces": {
+        "status": "ok",
+        "note": ""
+      },
+      "control_craft": {
+        "status": "ok",
+        "note": ""
+      }
+    },
+    "issues": [],
+    "notes": "concept-only; 对标品类=休闲merge主菜单HUD；垫图只锁chrome气质禁止像素抄构图；主按钮不遮脸；顶栏主钮写清描边体积投影字重",
+    "reviewed_at": 1794493160.0087192,
+    "reviewed_at_iso": "2026-11-12 22:19:20",
+    "force_pass": false,
+    "skill_raw": "ui"
+  },
+  "warm_start_merged": true,
+  "warm_start_merged_at": "2026-11-12 22:29:54",
+  "warm_start_block_sha1": "38cf200ba602",
+  "ActionRequired": "STOP_PICK_BEST",
+  "showcase_ready": true,
+  "winner": {
+    "round": 4,
+    "round_label": "第 4 轮精修",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "9:16",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\out\\ui.kit\\r3.png"
+    ],
+    "param_validation": {
+      "valid": true,
+      "validation_passed": true,
+      "case_id": "suite_ui_kit",
+      "scale": "high",
+      "aspect_ratio": "9:16",
+      "ref_aspect_ratio": "9:16",
+      "ref_dimensions": "720x1280",
+      "output_aspect_ratio": "9:16",
+      "output_dimensions": "720x1280",
+      "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\out\\ui.kit\\r3.png",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\out\\ui.kit\\r3.png"
+      ],
+      "inherited_default_aspect_ratio": true,
+      "inherited_default_pad_image": true,
+      "matched_ref_aspect_ratio": true,
+      "matched_ref_pad_image": true,
+      "matched_output_aspect_ratio": true,
+      "three_step_stage": "step3_judge",
+      "three_step_verified": true,
+      "warnings": [],
+      "continuation_pad": true,
+      "pad_diverged": false
+    },
+    "generated_at": "22:29:54",
+    "image": "assets/skill_20261112_suite/out/ui.kit/r4.png",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 1307545,
+      "size_kb": 1276.9,
+      "width": 720,
+      "height": 1280,
+      "aspect_ratio": "9:16",
+      "canonical_aspect_ratio": "9:16",
+      "color_entropy": 8.0
+    },
+    "raw_score": 9.23,
+    "score": 9.23,
+    "target_score_threshold": 9.5,
+    "dims": "构图9.4/光影9.3/透视9.1/质感9.3/风格9.4/无瑕疵9.0",
+    "dims_parsed": {
+      "composition": 9.4,
+      "lighting_color": 9.3,
+      "perspective_anatomy": 9.1,
+      "texture_detail": 9.3,
+      "spec_style": 9.4,
+      "flawlessness": 9.0
+    },
+    "weighted_score": 9.23,
+    "audit_warnings": [
+      "Agent Absolute-5D 已采纳（门槛 9.5）",
+      "点名锁未单独验收：full-bleed scene；no gibberish"
+    ],
+    "stagnated": false,
+    "strengths": "相对r3：等级珠大号18更清楚、五槽Home仍居中、PLAY+Level12与港湾窗光/吧台师脸周留空保持；顶栏资源42/1560/328与软光泽蓝描边胶囊齐套",
+    "defects": "平视中景半身吧台师，主光仍是后方大窗；等级环内仍塞着LEVEL小字未完全外移；Cafe一行色比Brimwave偏奶油跳色；底栏槽描边体积仍略薄于顶栏胶囊；点名锁未单独验收：full-bleed scene；no gibberish",
+    "next_fix": "已满4轮取最高分；若续跑只外移LEVEL字并统一标题描边高光、加厚底栏体积",
+    "prompt": "点名锁每轮都要单独留住，不许整张漂掉：subject=Brimwave Cafe harbor casual-merge cafe main menu；style=pad soft-gloss casual HUD chrome；top single-row resources；lower-mid largest PLAY CTA；full-bleed scene；chrome over scene；warm harbor cafe mood；readable Brimwave Cafe + PLAY；no gibberish | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: ui.BrimwaveCafe\n- 置信度: 0.45（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n  · 确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；\n- 个人口味: 光影=柔光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [tech-9slice] 九宫格切图: 四角固定、中心可拉伸；中心禁止复杂装饰。\n  · [tech-pixel] 像素艺术: 锁调色板与像素网格，禁止糊边抗锯齿乱入。\n胶片逆光轻厚涂：抬光比、空气和镜头层次，质感仍是颗粒| L1锁必须保住：subject=Brimwave Cafe harbor casual-merge cafe main menu；style=pad soft-gloss casual HUD chrome；top single-row resources；lower-mid largest PLAY CTA；full-bleed scene；chrome over scene；warm harbor cafe mood；readable Brimwave Cafe + PLAY。垫图是目前分数最高的那张成图。只改这一处：等级珠只放大号18+细进度环，LEVEL小字移到环外或去掉；底栏标签加粗并加同系厚描边体积投影对齐顶栏；统一标题Brimwave Cafe为同一套描边高光；其余锁定不动。没点名的地方保持垫图。禁止借改点换题材/换品类/换技能。",
+    "continuation": true,
+    "passed": false,
+    "gate_blocked": true,
+    "image_gate_blocked": false,
+    "anatomy_score": 9.1,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "ui",
+    "judge_source": "agent_absolute_5d",
+    "remote_vlm": {
+      "source": "agent_self_judge",
+      "provider": "",
+      "model": "",
+      "error": "",
+      "active": false,
+      "score_evidence": {},
+      "evidence_missing_dims": [],
+      "review": {
+        "pass_count": 0,
+        "rerated": false,
+        "reason": ""
+      }
+    },
+    "should_continue_next_round": false,
+    "decision": "STOP_MAX_ROUNDS",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "lighting",
+        "lesson": "本轮短板偏「lighting」：平视中景半身吧台师，主光仍是后方大窗；等级环内仍塞着LEVEL小字未完全外移；Cafe一行色比Brimwave偏奶油跳色；底栏槽描边体积仍略薄于顶栏胶囊；点名锁",
+        "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+        "from_score": "9.23"
+      },
+      {
+        "category": "line_edge",
+        "lesson": "本轮短板偏「line_edge」：平视中景半身吧台师，主光仍是后方大窗；等级环内仍塞着LEVEL小字未完全外移；Cafe一行色比Brimwave偏奶油跳色；底栏槽描边体积仍略薄于顶栏胶囊；点名锁",
+        "drill": "透明底边缘检查：放大 200% 查毛边与漏抠",
+        "from_score": "9.23"
+      },
+      {
+        "category": "keep",
+        "lesson": "保留本轮已做对的：相对r3：等级珠大号18更清楚、五槽Home仍居中、PLAY+Level12与港湾窗光/吧台师脸周留空保持；顶栏资源42/1560/328与软光泽蓝描边胶囊齐套",
+        "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+        "from_score": "9.23"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "22:31:02"
+  },
+  "rounds_to_converge": 4,
+  "convergence_badge": "共 4 轮未达阈值，采用最高分",
+  "winner_image": "assets/skill_20261112_suite/out/ui.kit/r4.png",
+  "best_image": "assets/skill_20261112_suite/out/ui.kit/r4.png",
+  "final_image": "assets/skill_20261112_suite/out/ui.kit/final.png",
+  "settle_pending": true,
+  "process_board": ".memory-art/converge/boards/suite_ui_kit/index.html"
+}

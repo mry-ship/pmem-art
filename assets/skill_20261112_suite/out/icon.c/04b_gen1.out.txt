@@ -1,0 +1,1 @@
+﻿❌ [路由闸门] 拒绝跳过闸门：未授权调试环境。设置 PMEM_ART_ALLOW_GATE_SKIP=1 后重试（reason='suite并行子agent已锁icon.c'）。日常请先 route / reasonableness，或 converge start --route-id 点名种闸。

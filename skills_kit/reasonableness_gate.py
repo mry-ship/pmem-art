@@ -361,6 +361,56 @@ def parse_checklist(text: str) -> dict[str, dict[str, str]]:
     return out
 
 
+_L0_DIRECTION_SWAP = re.compile(
+    r"(?:换成|改成|换做).{0,12}(?:题材|画风|风格|品类)|推倒重来|另起炉灶|"
+    r"(?:改走|改成).{0,8}(?:合成梯|界面|图标|克隆)",
+    re.I,
+)
+_L0_SKIP_CHUNKS = frozenset(
+    {
+        "必须写出",
+        "禁止出现",
+        "不要写成",
+        "修订提示",
+        "硬锁写进",
+        "元素预算",
+        "一眼失败",
+        "安全区在",
+        "满幅直角",
+    }
+)
+
+
+def _l0_subject_drift(draft: str, revised: str) -> str:
+    """If draft names clear subject chunks that revised drops, flag drift."""
+    d = (draft or "").strip()
+    r = (revised or "").strip()
+    # CJK 一句约 8～10 字也够当主体锚；勿用英文词长门槛误放行
+    if len(d) < 8 or len(r) < 8:
+        return ""
+    cjk_chunks = re.findall(r"[\u4e00-\u9fff]{3,6}", d)
+    anchors: list[str] = []
+    seen: set[str] = set()
+    for ch in cjk_chunks:
+        if ch in seen or ch in _L0_SKIP_CHUNKS:
+            continue
+        seen.add(ch)
+        anchors.append(ch)
+        if len(anchors) >= 3:
+            break
+    if anchors:
+        missing = [a for a in anchors if a not in r]
+        if len(missing) >= 2:
+            return (
+                "revised 疑似丢掉 draft 主体锚点（"
+                + "、".join(missing[:3])
+                + "）；合理性修订不得换题材"
+            )
+    if _L0_DIRECTION_SWAP.search(r) and not _L0_DIRECTION_SWAP.search(d):
+        return "revised 新增换题材/换画风/换技能句；请回到原交付重审，勿借合理性闸换轨"
+    return ""
+
+
 def _heuristic_issues(skill: str, draft: str, revised: str, notes: str = "") -> list[str]:
     issues: list[str] = []
     d = (draft or "").strip()
@@ -371,6 +421,9 @@ def _heuristic_issues(skill: str, draft: str, revised: str, notes: str = "") -> 
         issues.append("revised 太短：修订提示词须写清主体、动作/布局与硬锁（至少约一句完整出图句）")
     if d and r and d == r and len(r) < 80:
         issues.append("revised 与 draft 完全相同且过短：请至少补上硬锁或元素预算，或把已合理处写完整")
+    l0_msg = _l0_subject_drift(d, r)
+    if l0_msg:
+        issues.append(l0_msg)
     crowd_hits = _CROWD_RE.findall(r)
     if len(crowd_hits) >= 4 and not re.search(r"(只留|弱化|最多|减到|不要叠|预算)", r):
         issues.append(
@@ -724,8 +777,8 @@ def check_reasonableness_gate(
             return True, "非首轮未给 --prompt，回退到合理性修订提示词", revised
         return True, "合理性闸已在本会话通过（无 revised 可回退）", incoming
 
-    # First generate: always ship the reviewed revised text.
-    # Prevents rubber-stamp review then swapping in an unreviewed prompt.
+    # First generate: ship reviewed revised only when caller agrees (or omits / repeats draft).
+    # Never silently replace a different --prompt — that felt like irrational prompt mutation.
     if not revised:
         return (
             False,
@@ -733,9 +786,15 @@ def check_reasonableness_gate(
             "",
         )
     if not incoming or incoming == draft or incoming == revised:
-        msg = "已注入合理性修订提示词" if incoming != revised else "合理性闸已过，使用 revised"
+        msg = "合理性闸已过，使用 revised" if incoming == revised else "已注入合理性修订提示词"
         return True, msg, revised
-    return True, "首轮强制使用合理性 revised（已忽略未再审的 --prompt；若要改提示词请重跑 review）", revised
+    return (
+        False,
+        "首轮 --prompt 与合理性 revised 不一致，已拒绝静默替换。"
+        "请重跑 reasonableness review（把新提示词写入 --revised），"
+        "或本轮 generate 省略 --prompt / 使用与 revised 相同的句子。",
+        "",
+    )
 
 
 def format_review_print(review: dict[str, Any]) -> str:
@@ -754,7 +813,7 @@ def format_review_print(review: dict[str, Any]) -> str:
         lines.append(f"  · {issue}")
     if review.get("passed"):
         rev = str(review.get("revised_prompt") or "")
-        lines.append("修订提示词（generate 将优先用这句）：")
+        lines.append("修订提示词（首轮 generate 须用这句；不一致会拒绝，不会静默盖掉）：")
         lines.append(rev if len(rev) <= 500 else rev[:500] + "…")
     else:
         lines.append("请按未过项改 revised / checklist 后重跑 review，禁止跳过直接 generate。")

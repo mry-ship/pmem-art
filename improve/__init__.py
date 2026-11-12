@@ -39,6 +39,7 @@ from .taste_profile import (
 from .warm_start import (
     WARM_START_MARK,
     build_warm_start_pack,
+    collapse_opposed_prefs,
     entry_on_topic_for_task,
     extract_entry_score,
     filter_habits_for_task,

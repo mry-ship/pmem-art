@@ -1,0 +1,48 @@
+✅ [路由闸门] 【按 Mode C 走了】
+🔥 Warm-Start 包已写入会话；`converge generate` 会自动并入提示词，不必手贴
+   · 置信度: 0.60 | fast-track 资格: ❌
+   · 只有未达标 provisional recipe，不计入定稿置信
+   · 命中 2 条审美拍板
+   · 个人口味/正向保留非空
+   · 注入红线可控（3 条，已按任务主题过滤）
+   · 挂载 1 张项目知识卡 + 0 张全局美术底层基础卡
+
+【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】
+- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)
+- 目标模块: brand.WorldStyle
+- 置信度: 0.60（fast-track 资格: 否）
+- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。
+- 正向保留（要怎样）:
+  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。
+  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。
+  · 确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；
+- 必须避开红线:
+  · [CHAT20261105223135332REDLINE] [收敛踩坑红线] prop icon transparent mushroom：避免「角隅半透明毛边仍可见；接触影偏轻」
+  · [CHAT20261109232829194REDLINE] [收敛踩坑红线] 有参考题材不变——把蘑菇甜点拼盘画成更干净的道具特写；身份不：避免「左上奶酪体量过大，压缩了果实与叶片的展示空间；中右部枝梗、果实和叶片叠压密集，局部切线较多」
+  · [CHAT20261112220939400REDLINE] 禁止偏离样张画风：硬镜面CGI、皮克斯硬塑、哑光黏土软塑胶UI、厚黑描边、写实摄影摆盘、脏暗泥污阴影、赛博霓虹紫雾、灰雾废土、扁平矢量贴纸、油腻金属、指纹…
+- 审美拍板:
+  · 以后统一按此样张画风：Gossip Harbor 真机海鲜货柜软立体；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1F…
+  · 以后统一按此样张画风：Gossip Harbor真机海鲜货柜；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1FF约20…
+- 个人口味: 光影=柔光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 暖色调
+- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色
+- 项目私有知识卡 (Private Layer):
+  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。
+🧩 [icon] 关键枚若开闭环：≥9.5到线即停，最多 4 轮；批量默认不逐枚开闭环。
+🎯 [收敛会话已启动] 模块: brand.WorldStyle | 模式: quality | 强度(scale): medium (中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.5)) | 动态达标线: >= 9.5 分即停 | 最大兜底轮次: 4 | 最早停机轮次: 1 | 媒介: generic | 安全早停: 关
+📋 理解合同 v1
+   原话/目标：/pmem-icon Mode C：Brimwave Cafe 海鲜咖啡馆八枚道具格批量预览拼板，纯黑隔离底。用这份稿：assets/skill_20261112_suite/refs/ref_merge_strip.png 只锁货面气质不抄整表（生图时已垫；会话不绑横条画幅）。Mode C batch preview
+   L0 交付：icon.c | route_ids=icon.c
+   banner：【按 Mode C 走了】
+   L1 锁：（未写，可后补）
+   L1 不锁：（未写）
+   本趟默认：（尚未写入「默认：…」——建议补上让美术看见）
+   L2 当轮可改：（看图后单点写）
+   ⚠️ 未写「默认：…」。糊需求时请补 defaults，避免美术看不见系统听成了啥。
+   👉 补默认/锁点：`pyw -3 -u pmem_art.py contract set --id suite_icon_c --defaults "默认：…" [--locks "…" --unlocks "…" --vibe "…" --surface-fix "只改一处…"]`；每轮最小包：`pyw -3 -u pmem_art.py contract working-set --id suite_icon_c`
+🎚️  Scale 内部权重与约束: weights={'composition': 0.15, 'lighting_color': 0.15, 'perspective_anatomy': 0.15, 'texture_detail': 0.15, 'spec_style': 0.15, 'flawlessness': 0.25} | budget=每轮都垫最初的参考图，只在提示词上补还没过的那一处（提示词改动仍 ≤40%）
+🧭 Scale 指令: 品类默认画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光
+✨ 最优方向（按档加法，勿当第二份DNA锁）: 最优方向：光影·空气·介质；可小幅姿态/局部布局
+🧷 本档保留集: ('viewpoint_frame', 'style_medium', 'identity')
+📌 约束写在生成词末尾: 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；跟提示词品类默认画风，禁止回落写实棚拍
+
+👉 Agent：首轮出图前先过合理性闸 `pyw -3 -u pmem_art.py reasonableness review --id <session> --skill <…> --draft "…" --revised "…" --checklist "…"`（必须同时交出更合理的提示词）；再 `converge generate`（仅生图，不打分），然后 `converge judge`。

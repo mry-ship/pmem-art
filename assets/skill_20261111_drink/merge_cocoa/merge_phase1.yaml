@@ -1,0 +1,37 @@
+# 热可可店「同店杯装升级」合成梯 · shop_ladder L1–L8（overview_sheet 4×2 竖屏）
+# 第 1 稿。不写 base_body。新开，不复用 merge_cold。
+# 过程类型：A 同族形变货柜（同店完整 SKU 换代）。空杯→装液→加盖→瓷杯→奶油搅棒→壶→棉花糖犒赏→派对套装。
+# 商业对标真链（Gossip Harbor Decaf Coffee 研究链压缩到 8）：
+#   空纸杯 → 装咖啡 → 加盖外带杯 → 瓷杯 → 加碟/搅棒糖 → … → 圣代犒赏 → 茶壶套装
+# 抽链型=同店容器/完成态换代；抽曲线=空杯→敞口热可可→加盖外带→瓷杯碟→奶油搅棒杯→可可壶→棉花糖犒赏→派对盘。
+# 版式：无格子参考 → 默认 4 行 2 列竖屏、浅色圆角卡。
+# 风格未点名 → Gossip Harbor 玩具货柜。
+# 五问：
+# 1 同店=热可可外带货柜；家族=可可棕+奶油白+焦糖金+浅珊瑚色相。对标是 GH Decaf Coffee 真档序压缩，不是自拟假名。
+# 2 无回退：空杯→矮圆敞口→矮圆加盖→瓷杯带碟→高杯奶油搅棒→宽肩壶→棉花糖犒赏杯→托盘双杯。L8 仍是热可可派对套装。
+# 3 无跨店硬跳、无城堡。邻档剪影类不同，64px 可分。
+# 4 L1 只是空纸杯，液面/盖/碟/奶油/壶嘴/棉花糖/托盘都晚出现。
+# 5 每档 merge_why 写两件同级合成后为何变成下一件，可倒推。
+version: harbor-hot-cocoa-20261111-v1
+pipeline: art-merge-two-phase
+delivery: overview_sheet
+
+tracks:
+  harbor_hot_cocoa:
+    module: merge.HarborHotCocoa
+    chain_mode: shop_ladder
+    levels: 8
+    grid_rows: 4
+    grid_cols: 2
+    surface: "Gossip Harbor 玩具货柜：手绘软渐变糖釉道具、圆润厚实、无硬描边、暖饱和、柔光釉面高光、棋盘缩略可认；材质是卡通玩具/糖釉货柜道具，不是实物。禁止写实摄影、美食棚拍、产品静物、玻璃真实折射、木纹指纹、果汁乳浊摄影感、微距毛孔、硬镜面 CGI、硬卡通 3D、皮克斯硬塑胶高光。4×2 浅奶油/浅蓝圆角卡竖屏；每格一件居中留边，无字无脸。家族是热可可店可可棕+奶油白+焦糖金+浅珊瑚色相，不是八档贴同一纹样。不要冰饮柠檬、不要蛋糕马卡龙纸杯蛋糕、不要酒瓶烈酒。"
+    commercial_ref: "Gossip Harbor Decaf Coffee research compress8: EmptyCup→FilledCocoa→LiddedToGo→PorcelainSaucer→CreamStirCup→CocoaPot→MarshmallowReward→PartyTraySet"
+    process_type: "shop_ladder_same_shop_drink_vessel_evolution"
+    rows:
+      - { level: 1, name: 空纸杯, silhouette: "一只空的矮圆纸杯，无液无盖无吸管，杯口朝上可见内壁", scale_delta: 基档, scale_pct: 0.55, evolve_to: EmptyPaperCup, merge_why: "—", parts_add: "—" }
+      - { level: 2, name: 敞口热可可, silhouette: "同形矮圆杯装满棕色热可可，可见平整液面，仍无盖无奶油", scale_delta: "+小", scale_pct: 0.58, evolve_to: OpenCocoaCup, merge_why: "两只空纸杯合成一只装满棕色热可可的敞口杯，内壁换成平整可可液面", parts_add: "—" }
+      - { level: 3, name: 加盖外带杯, silhouette: "矮圆外带杯加上圆盖，盖顶小口可见，液面被盖住，无奶油无碟", scale_delta: "+小", scale_pct: 0.62, evolve_to: LiddedToGoCup, merge_why: "两杯敞口热可可合成一只加盖外带杯，敞口换成圆盖剪影", parts_add: "—" }
+      - { level: 4, name: 瓷杯带碟, silhouette: "圆润瓷杯坐在浅碟上，无盖，杯口可见可可液面，碟沿是新轮廓", scale_delta: "+中", scale_pct: 0.68, evolve_to: PorcelainSaucerCup, merge_why: "两只加盖外带杯合成一只瓷杯带碟，圆盖纸杯换成瓷杯加浅碟剪影", parts_add: "—" }
+      - { level: 5, name: 奶油搅棒杯, silhouette: "高杯顶着厚奶油旋顶加一根搅棒，瓷碟消失，单杯更高", scale_delta: "+中", scale_pct: 0.74, evolve_to: CreamStirCup, merge_why: "两只瓷杯带碟合成一只奶油搅棒杯，碟沿换成高杯奶油旋顶加搅棒", parts_add: "—" }
+      - { level: 6, name: 可可大壶, silhouette: "带把手与壶嘴的宽肩大壶装满热可可，奶油搅棒消失", scale_delta: "+中", scale_pct: 0.80, evolve_to: CocoaPitcher, merge_why: "两只奶油搅棒杯合成一只可可大壶，高杯换成壶嘴加把手的大壶剪影", parts_add: "—" }
+      - { level: 7, name: 棉花糖犒赏杯, silhouette: "高杯特饮顶着厚奶油与两三颗棉花糖，壶嘴把手消失，单杯犒赏", scale_delta: "+大", scale_pct: 0.86, evolve_to: MarshmallowRewardCup, merge_why: "两只可可大壶浓缩成一只棉花糖犒赏杯，壶身换成高杯加奶油与可读棉花糖", parts_add: "—" }
+      - { level: 8, name: 可可派对盘, silhouette: "浅托盘上两只小热可可杯并一壶嘴小壶，盘沿是主轮廓，仍是一件货并留边", scale_delta: "+大", scale_pct: 0.92, evolve_to: CocoaPartyTray, merge_why: "两只棉花糖犒赏杯放上同一浅托盘成为一件可可派对盘，盘沿变成主轮廓仍同店热可可", parts_add: "—" }

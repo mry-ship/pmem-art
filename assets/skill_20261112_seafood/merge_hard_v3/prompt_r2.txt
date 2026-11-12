@@ -1,0 +1,10 @@
+chain_mode=shop_ladder。垫GH真机货条锁画风：高饱和圆润块面高光休闲棋盘货。4x2浅奶油圆角卡铺满竖屏9:16勿加边条。每格单件居中。家族海边硬料海鲜。
+L1 小银鱼 evolve=SmallFish
+L2 双鱼盘无柠檬 merge_why=两尾上盘
+L3 熟制鱼盘无柠檬 merge_why=合成熟鱼剪影
+L4 海鲜碗 merge_why=换成碗装件数
+L5 蟹虾贝拼盘 merge_why=换成椭圆盘三大色块
+L6 龙虾盘 merge_why=浓缩整只龙虾
+L7 龙虾大餐可冰块 merge_why=更大龙虾大餐
+L8 奶油浅托盘两小份加酱杯禁木纹 merge_why=托盘一件货
+无字无脸无大眼无HUD。

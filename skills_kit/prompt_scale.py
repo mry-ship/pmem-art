@@ -746,24 +746,35 @@ def compose_continuation_prompt(
     scale_prof: dict[str, Any],
     *,
     stub_notes: list[str] | None = None,
+    locks: list[str] | None = None,
 ) -> str:
     """Round 2+: the pad is the previous plate. Name one repair; do not restate the scene."""
+    from .must_fix import sanitize_continuation_fix
+
     scale = str(scale_prof.get("scale") or "")
     directive = strip_affirmative_locks_from_prompt(
         str(scale_prof.get("prompt_directive") or "").strip(),
         scale=scale,
     )
-    one = strip_affirmative_locks_from_prompt(
-        strip_redline_tags_from_generation_text(fix or "").strip(),
-        scale=scale,
+    safe_fix = sanitize_continuation_fix(
+        strip_redline_tags_from_generation_text(fix or "").strip()
     )
+    one = strip_affirmative_locks_from_prompt(safe_fix, scale=scale)
     if not one:
         one = "只补这一张里还没到位的那一处"
     direction = str(scale_prof.get("recompose_dir") or "").strip()
     keep_camera = ""
     if scale == "recompose" and direction:
         keep_camera = f"机位保持指定方向：{direction}。"
-    edit = f"{keep_camera}垫图是目前分数最高的那张成图。只改这一处：{one}。没点名的地方保持垫图。"
+    lock_bits = [str(x).strip() for x in (locks or []) if str(x).strip()]
+    lock_pin = ""
+    if lock_bits:
+        lock_pin = "L1锁必须保住：" + "；".join(lock_bits[:8]) + "。"
+    edit = (
+        f"{keep_camera}{lock_pin}"
+        f"垫图是目前分数最高的那张成图。只改这一处：{one}。没点名的地方保持垫图。"
+        "禁止借改点换题材/换品类/换技能。"
+    )
     ordered: list[str] = []
     for part in (directive, edit):
         if part and part not in ordered:

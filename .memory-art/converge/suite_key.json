@@ -1,0 +1,1057 @@
+{
+  "session_id": "suite_key",
+  "started_at": "2026-11-12 22:19:50 UTC+8",
+  "goal": "原画 Key Art：Brimwave Café 黄昏海港咖啡馆上架主视觉，暖光人物与店面同框，暖金黄昏店招灯光，海面码头空气透视，休闲游戏上架主视觉商业完成度，画幅 9:16；用这份稿作风格参考（只借光泽卡通三维表面与暖饱和色板），禁止抄三格拼板构图与标题字",
+  "module": "brand.WorldStyle",
+  "mode": "ref_image_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "medium",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "medium",
+    "label": "中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.5)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 1,
+    "target_score_threshold": 9.5,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.1875,
+      "perspective_anatomy": 0.1125,
+      "texture_detail": 0.1875,
+      "spec_style": 0.1125,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "viewpoint_frame",
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图，只在提示词上补还没过的那一处（提示词改动仍 ≤40%）",
+    "max_prompt_delta_ratio": 0.4,
+    "allow_recompose": false,
+    "allow_viewpoint_change": false,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "viewpoint_angle (不改机位与镜头视角)",
+      "element_count (不增删主体元素清单)",
+      "no_full_recompose (不做整体 recompose / 换景别故事)",
+      "style_medium (保持原图画风笔触与色板)",
+      "identity_lock (保持原图性别、物种、年龄段与核心外观)"
+    ],
+    "min_round_leap": 0.15,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光",
+    "medium_family": "volume",
+    "best_direction_hint": "最优方向：光影·空气·介质；可小幅姿态/局部布局",
+    "goal": "原画 Key Art：Brimwave Café 黄昏海港咖啡馆上架主视觉，暖光人物与店面同框，暖金黄昏店招灯光，海面码头空气透视，休闲游戏上架主视觉商业完成度，画幅 9:16；用这份稿作风格参考（只借光泽卡通三维表面与暖饱和色板），禁止抄三格拼板构图与标题字",
+    "module": "brand.WorldStyle",
+    "ref_image": "assets/skill_20261112_suite/refs/ref_life.jpg",
+    "ref_analysis": "【参考图视觉解构·只借表面不借构图】三格拼板海报；色板#F4C84A/#3CB371/#E85A4F/#5BA3D9；光泽卡通三维柔散射块面高光；禁止继承三格拼板、进度条、标题字与母女分区。"
+  },
+  "medium_family": "volume",
+  "contract": "",
+  "target_score_threshold": 9.5,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_life__ar_9x16.png",
+  "ref_analysis": "【参考图视觉解构·只借表面不借构图】三格拼板海报；色板#F4C84A/#3CB371/#E85A4F/#5BA3D9；光泽卡通三维柔散射块面高光；禁止继承三格拼板、进度条、标题字与母女分区。",
+  "default_aspect_ratio": "9:16",
+  "default_reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_life__ar_9x16.png"
+  ],
+  "aspect_ratio": "9:16",
+  "reference_image_paths": [
+    "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_life__ar_9x16.png"
+  ],
+  "ref_physical_traits": {
+    "exists": true,
+    "size_bytes": 3748547,
+    "size_kb": 3660.7,
+    "width": 1512,
+    "height": 2688,
+    "aspect_ratio": "9:16",
+    "canonical_aspect_ratio": "9:16",
+    "color_entropy": 7.99
+  },
+  "param_validation": {
+    "valid": true,
+    "validation_passed": true,
+    "case_id": "suite_key",
+    "scale": "medium",
+    "aspect_ratio": "9:16",
+    "ref_aspect_ratio": "9:16",
+    "ref_dimensions": "1512x2688",
+    "output_aspect_ratio": "",
+    "output_dimensions": "",
+    "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_life__ar_9x16.png",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_life__ar_9x16.png"
+    ],
+    "inherited_default_aspect_ratio": false,
+    "inherited_default_pad_image": false,
+    "matched_ref_aspect_ratio": true,
+    "matched_ref_pad_image": true,
+    "matched_output_aspect_ratio": true,
+    "three_step_stage": "step1_start",
+    "three_step_verified": false,
+    "warnings": [
+      "参考图已加边为同一张垫图 'ref_life__ar_9x16.png'，会话和生图都用这一张，不要再垫原图。"
+    ]
+  },
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.5,
+  "accept_threshold": 9.5,
+  "max_rounds": 4,
+  "ready_to_finish": true,
+  "status": "finished",
+  "owner_conversation_id": "suite_key",
+  "route_ids": [
+    "draw.key"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_life__ar_9x16.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "suite_key",
+        "scale": "medium",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "1512x2688",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_life__ar_9x16.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_life__ar_9x16.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "22:29:40",
+      "image": "assets/skill_20261112_suite/out/draw.key/r1.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 1326650,
+        "size_kb": 1295.6,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.99
+      },
+      "raw_score": 8.71,
+      "score": 8.71,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.0/光影9.2/透视8.7/质感8.6/风格8.3/无瑕疵8.5",
+      "dims_parsed": {
+        "composition": 9.0,
+        "lighting_color": 9.2,
+        "perspective_anatomy": 8.7,
+        "texture_detail": 8.6,
+        "spec_style": 8.3,
+        "flawlessness": 8.5
+      },
+      "weighted_score": 8.71,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "点名锁未单独验收：画幅 9:16；光泽卡通三维媒介；暖饱和色板"
+      ],
+      "stagnated": false,
+      "strengths": "单幅黄昏店面人物同框成立；杯握持可读；海港空气透视与店内暖光有主视觉记忆点；非三格拼板",
+      "defects": "平视略偏胸像，人约占画面六成半，主光左侧黄昏暖金。翠绿发顶髻与样张母女绿发角色回声；店招有大段可读店名美术字；皮肤与围裙偏皮克斯硬塑油滑，块面釉光不够。；点名锁未单独验收：画幅 9:16；光泽卡通三维媒介；暖饱和色板",
+      "next_fix": "半身腰线以上露出更多围裙与店面入口；发色改为暖棕或蜜金避免样张绿发回声；削弱皮克斯硬塑、加强软块面釉光；店招字形简化到不可读符号级",
+      "prompt": "点名锁每轮都要单独留住，不许整张漂掉：锁：题材 Brimwave Café 黄昏店面人物同框；画幅 9:16；光泽卡通三维媒介；暖饱和色板；layout_not_style_echo（禁止三格拼板/进度条/标题字回声） | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: brand.WorldStyle\n- 置信度: 0.60（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n  · 确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；\n- 必须避开红线:\n  · [CHAT20261109232829194REDLINE] [收敛踩坑红线] 有参考题材不变——把蘑菇甜点拼盘画成更干净的道具特写；身份不：避免「左上奶酪体量过大，压缩了果实与叶片的展示空间；中右部枝梗、果实和叶片叠压密集，局部切线较多」\n  · [CHAT20261112220939400REDLINE] 禁止偏离样张画风：硬镜面CGI、皮克斯硬塑、哑光黏土软塑胶UI、厚黑描边、写实摄影摆盘、脏暗泥污阴影、赛博霓虹紫雾、灰雾废土、扁平矢量贴纸、油腻金属、指纹…\n  · [CHAT20261109225616629REDLINE] 禁止偏离样张画风：写实皮肤毛孔/照片级木纹毛皮；赛博霓虹与荧光边光；油腻镜面高光与硬金属机械；脏暗泥污阴影与高对比明暗法；扁平2D厚黑描边；真人头身比；城…\n- 审美拍板:\n  · 以后统一按此样张画风：Gossip Harbor 真机海鲜货柜软立体；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1F…\n  · 以后统一按此样张画风：Gossip Harbor真机海鲜货柜；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1FF约20…\n- 个人口味: 光影=柔光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光 | A single-frame mobile game store Key Art, vertical 9:16, 半身 framing (waist-up hero shot, not 胸像 close-up, not tiny 全身 distant): Brimwave Café dusk harbor storefront fills the midground with a glowing wooden cafe sign and large windows spilling amber interior light; in the foreground a friendly stylized cafe staff stands 半身 near the entrance holding a coffee cup with a clear readable grip, soft cartoon 3D proportions and large expressive eyes. Hero memory point at a glance: warm dusk cafe glow plus the cup-holding figure silhouette against harbor sunset. Behind the cafe, calm harbor water and distant boats sit in cool blue-violet air perspective under a golden-orange sunset sky. Soft glossy cartoon 3D rendering like casual lifestyle game posters: rounded forms, soft block highlights, warm saturated palette (#F4C84A amber, #E85A4F coral accents, #5BA3D9 dusk sky, creamy skin highlights), no hard black outlines. Commercial store-listing Key Art clarity. Hard locks: one continuous scene only; 景别硬锁=半身人物+店面；not extreme close-up and not tiny distant figures; not a comic strip or multi-panel poster; no UI bars, no currency icons, no title logo text, no divorce papers, no pink beetle car, no renovation yard. Fail at a glance if framing is not 半身, if triptych panels appear, if the person has no cup grip, or if the cafe light is flat noon. layout_not_style_echo: invent a new cafe-harbor composition; do not echo any triptych panel layout. Opaque full scene background. | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.7,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "color_palette",
+          "lesson": "本轮短板偏「color_palette」：平视略偏胸像，人约占画面六成半，主光左侧黄昏暖金。翠绿发顶髻与样张母女绿发角色回声；店招有大段可读店名美术字；皮肤与围裙偏皮克斯硬塑油滑，块面釉光不够。；点名锁",
+          "drill": "从模块 palette 抽 3 HEX 做限色练习，禁止引入霓虹辅色",
+          "from_score": "8.71"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：单幅黄昏店面人物同框成立；杯握持可读；海港空气透视与店内暖光有主视觉记忆点；非三格拼板",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.71"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "22:31:25"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_life__ar_9x16.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "suite_key",
+        "scale": "medium",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "1512x2688",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "576x1024",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_life__ar_9x16.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_life__ar_9x16.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "22:32:59",
+      "image": "assets/skill_20261112_suite/out/draw.key/r2.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 1137976,
+        "size_kb": 1111.3,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.99
+      },
+      "raw_score": 8.95,
+      "score": 8.95,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.2/光影9.3/透视8.9/质感8.8/风格8.7/无瑕疵8.8",
+      "dims_parsed": {
+        "composition": 9.2,
+        "lighting_color": 9.3,
+        "perspective_anatomy": 8.9,
+        "texture_detail": 8.8,
+        "spec_style": 8.7,
+        "flawlessness": 8.8
+      },
+      "weighted_score": 8.95,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "点名锁未单独验收：画幅 9:16；光泽卡通三维媒介；暖饱和色板"
+      ],
+      "stagnated": false,
+      "strengths": "发色已改蜜金摆脱绿发回声；半身腰线围裙与店面入口更完整；黄昏海港主视觉记忆点仍在",
+      "defects": "平视半身，人约占画面六成，主光左侧黄昏暖金。店招仍有清晰可读 Brimwave Café 美术字；皮肤与围裙高光仍偏皮克斯硬塑油滑，块面釉光不够软；双手捧杯指节略圆糊。；点名锁未单独验收：画幅 9:16；光泽卡通三维媒介；暖饱和色板",
+      "next_fix": "店招改成无字木牌或模糊符号；皮肤围裙改软块面釉光#FEFDFB宽柔高光禁皮克斯硬塑；双手握杯五指分界更清楚",
+      "prompt": "点名锁每轮都要单独留住，不许整张漂掉：锁：题材 Brimwave Café 黄昏店面人物同框；画幅 9:16；光泽卡通三维媒介；暖饱和色板；layout_not_style_echo（禁止三格拼板/进度条/标题字回声） | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: brand.WorldStyle\n- 置信度: 0.60（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n  · 确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；\n- 必须避开红线:\n  · [CHAT20261109232829194REDLINE] [收敛踩坑红线] 有参考题材不变——把蘑菇甜点拼盘画成更干净的道具特写；身份不：避免「左上奶酪体量过大，压缩了果实与叶片的展示空间；中右部枝梗、果实和叶片叠压密集，局部切线较多」\n  · [CHAT20261112220939400REDLINE] 禁止偏离样张画风：硬镜面CGI、皮克斯硬塑、哑光黏土软塑胶UI、厚黑描边、写实摄影摆盘、脏暗泥污阴影、赛博霓虹紫雾、灰雾废土、扁平矢量贴纸、油腻金属、指纹…\n  · [CHAT20261109225616629REDLINE] 禁止偏离样张画风：写实皮肤毛孔/照片级木纹毛皮；赛博霓虹与荧光边光；油腻镜面高光与硬金属机械；脏暗泥污阴影与高对比明暗法；扁平2D厚黑描边；真人头身比；城…\n- 审美拍板:\n  · 以后统一按此样张画风：Gossip Harbor 真机海鲜货柜软立体；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1F…\n  · 以后统一按此样张画风：Gossip Harbor真机海鲜货柜；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1FF约20…\n- 个人口味: 光影=柔光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光 | A single-frame mobile game store Key Art, vertical 9:16, 半身 framing (waist-up hero shot, not 胸像 close-up, not tiny 全身 distant): Brimwave Café dusk harbor storefront fills the midground with a glowing wooden cafe sign and large windows spilling amber interior light; in the foreground a friendly stylized cafe staff stands 半身 near the entrance holding a coffee cup with a clear readable grip, soft cartoon 3D proportions and large expressive eyes. Hero memory point at a glance: warm dusk cafe glow plus the cup-holding figure silhouette against harbor sunset. Behind the cafe, calm harbor water and distant boats sit in cool blue-violet air perspective under a golden-orange sunset sky. Soft glossy cartoon 3D rendering like casual lifestyle game posters: rounded forms, soft block highlights, warm saturated palette (#F4C84A amber, #E85A4F coral accents, #5BA3D9 dusk sky, creamy skin highlights), no hard black outlines. Commercial store-listing Key Art clarity. Hard locks: one continuous scene only; 景别硬锁=半身人物+店面；not extreme close-up and not tiny distant figures; not a comic strip or multi-panel poster; no UI bars, no currency icons, no title logo text, no divorce papers, no pink beetle car, no renovation yard. Fail at a glance if framing is not 半身, if triptych panels appear, if the person has no cup grip, or if the cafe light is flat noon. layout_not_style_echo: invent a new cafe-harbor composition; do not echo any triptych panel layout. Opaque full scene background. | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props | 半身腰线以上露出更多围裙与店面入口；发色改为暖棕或蜜金避免样张绿发回声；削弱皮克斯硬塑、加强软块面釉光；店招字形简化到不可读符号级",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.9,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：平视半身，人约占画面六成，主光左侧黄昏暖金。店招仍有清晰可读 Brimwave Café 美术字；皮肤与围裙高光仍偏皮克斯硬塑油滑，块面釉光不够软；双手捧杯指节",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.95"
+        },
+        {
+          "category": "color_palette",
+          "lesson": "本轮短板偏「color_palette」：平视半身，人约占画面六成，主光左侧黄昏暖金。店招仍有清晰可读 Brimwave Café 美术字；皮肤与围裙高光仍偏皮克斯硬塑油滑，块面釉光不够软；双手捧杯指节",
+          "drill": "从模块 palette 抽 3 HEX 做限色练习，禁止引入霓虹辅色",
+          "from_score": "8.95"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：发色已改蜜金摆脱绿发回声；半身腰线围裙与店面入口更完整；黄昏海港主视觉记忆点仍在",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.95"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "22:35:50"
+    },
+    {
+      "round": 3,
+      "round_label": "第 3 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_life__ar_9x16.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "suite_key",
+        "scale": "medium",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "1512x2688",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_life__ar_9x16.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_life__ar_9x16.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "22:38:45",
+      "image": "assets/skill_20261112_suite/out/draw.key/r3.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 1145653,
+        "size_kb": 1118.8,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.99
+      },
+      "raw_score": 8.6,
+      "score": 8.6,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.6/光影9.1/透视8.8/质感8.7/风格8.2/无瑕疵8.3",
+      "dims_parsed": {
+        "composition": 8.6,
+        "lighting_color": 9.1,
+        "perspective_anatomy": 8.8,
+        "texture_detail": 8.7,
+        "spec_style": 8.2,
+        "flawlessness": 8.3
+      },
+      "weighted_score": 8.6,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +-0.35 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "点名锁未单独验收：画幅 9:16；光泽卡通三维媒介；暖饱和色板"
+      ],
+      "stagnated": true,
+      "strengths": "蜜金发与半身店面同框仍在；黄昏海港气氛保留",
+      "defects": "平视半身，人约占画面六成，主光左侧黄昏。前景桌面多出龙虾与蚝盘，货柜海鲜道具闯进 Key Art；地面棋盘格与样张/货柜记忆串味；皮肤围裙仍偏皮克斯硬塑。；点名锁未单独验收：画幅 9:16；光泽卡通三维媒介；暖饱和色板",
+      "next_fix": "删掉龙虾蚝盘与棋盘地砖；只留人物杯店面海港；软块面釉光禁硬塑；店招保持无字木牌",
+      "prompt": "点名锁每轮都要单独留住，不许整张漂掉：锁：题材 Brimwave Café 黄昏店面人物同框；画幅 9:16；光泽卡通三维媒介；暖饱和色板；layout_not_style_echo（禁止三格拼板/进度条/标题字回声） | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: brand.WorldStyle\n- 置信度: 0.60（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n  · 确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；\n- 必须避开红线:\n  · [CHAT20261109232829194REDLINE] [收敛踩坑红线] 有参考题材不变——把蘑菇甜点拼盘画成更干净的道具特写；身份不：避免「左上奶酪体量过大，压缩了果实与叶片的展示空间；中右部枝梗、果实和叶片叠压密集，局部切线较多」\n  · [CHAT20261112220939400REDLINE] 禁止偏离样张画风：硬镜面CGI、皮克斯硬塑、哑光黏土软塑胶UI、厚黑描边、写实摄影摆盘、脏暗泥污阴影、赛博霓虹紫雾、灰雾废土、扁平矢量贴纸、油腻金属、指纹…\n  · [CHAT20261109225616629REDLINE] 禁止偏离样张画风：写实皮肤毛孔/照片级木纹毛皮；赛博霓虹与荧光边光；油腻镜面高光与硬金属机械；脏暗泥污阴影与高对比明暗法；扁平2D厚黑描边；真人头身比；城…\n- 审美拍板:\n  · 以后统一按此样张画风：Gossip Harbor 真机海鲜货柜软立体；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1F…\n  · 以后统一按此样张画风：Gossip Harbor真机海鲜货柜；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1FF约20…\n- 个人口味: 光影=柔光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。\n原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光 | A single-frame mobile game store Key Art, vertical 9:16, 半身 framing (waist-up hero shot, not 胸像 close-up, not tiny 全身 distant): Brimwave Café dusk harbor storefront fills the midground with a glowing wooden cafe sign and large windows spilling amber interior light; in the foreground a friendly stylized cafe staff stands 半身 near the entrance holding a coffee cup with a clear readable grip, soft cartoon 3D proportions and large expressive eyes. Hero memory point at a glance: warm dusk cafe glow plus the cup-holding figure silhouette against harbor sunset. Behind the cafe, calm harbor water and distant boats sit in cool blue-violet air perspective under a golden-orange sunset sky. Soft glossy cartoon 3D rendering like casual lifestyle game posters: rounded forms, soft block highlights, warm saturated palette (#F4C84A amber, #E85A4F coral accents, #5BA3D9 dusk sky, creamy skin highlights), no hard black outlines. Commercial store-listing Key Art clarity. Hard locks: one continuous scene only; 景别硬锁=半身人物+店面；not extreme close-up and not tiny distant figures; not a comic strip or multi-panel poster; no UI bars, no currency icons, no title logo text, no divorce papers, no pink beetle car, no renovation yard. Fail at a glance if framing is not 半身, if triptych panels appear, if the person has no cup grip, or if the cafe light is flat noon. layout_not_style_echo: invent a new cafe-harbor composition; do not echo any triptych panel layout. Opaque full scene background. | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观 | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props | 店招改成无字木牌或模糊符号；皮肤围裙改软块面釉光#FEFDFB宽柔高光禁皮克斯硬塑；双手握杯五指分界更清楚",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.8,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "color_palette",
+          "lesson": "本轮短板偏「color_palette」：平视半身，人约占画面六成，主光左侧黄昏。前景桌面多出龙虾与蚝盘，货柜海鲜道具闯进 Key Art；地面棋盘格与样张/货柜记忆串味；皮肤围裙仍偏皮克斯硬塑。；点名",
+          "drill": "从模块 palette 抽 3 HEX 做限色练习，禁止引入霓虹辅色",
+          "from_score": "8.6"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：蜜金发与半身店面同框仍在；黄昏海港气氛保留",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.6"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "22:39:51"
+    },
+    {
+      "round": 4,
+      "round_label": "第 4 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "9:16",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_life__ar_9x16.png"
+      ],
+      "param_validation": {
+        "valid": true,
+        "validation_passed": true,
+        "case_id": "suite_key",
+        "scale": "medium",
+        "aspect_ratio": "9:16",
+        "ref_aspect_ratio": "9:16",
+        "ref_dimensions": "1512x2688",
+        "output_aspect_ratio": "9:16",
+        "output_dimensions": "720x1280",
+        "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_life__ar_9x16.png",
+        "reference_image_paths": [
+          "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_life__ar_9x16.png"
+        ],
+        "inherited_default_aspect_ratio": true,
+        "inherited_default_pad_image": true,
+        "matched_ref_aspect_ratio": true,
+        "matched_ref_pad_image": true,
+        "matched_output_aspect_ratio": true,
+        "three_step_stage": "step3_judge",
+        "three_step_verified": true,
+        "warnings": [],
+        "continuation_pad": false,
+        "pad_diverged": false
+      },
+      "generated_at": "22:44:53",
+      "image": "assets/skill_20261112_suite/out/draw.key/r4.png",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 1116243,
+        "size_kb": 1090.1,
+        "width": 720,
+        "height": 1280,
+        "aspect_ratio": "9:16",
+        "canonical_aspect_ratio": "9:16",
+        "color_entropy": 7.99
+      },
+      "raw_score": 9.11,
+      "score": 9.11,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.3/光影9.4/透视9.0/质感9.0/风格8.9/无瑕疵9.0",
+      "dims_parsed": {
+        "composition": 9.3,
+        "lighting_color": 9.4,
+        "perspective_anatomy": 9.0,
+        "texture_detail": 9.0,
+        "spec_style": 8.9,
+        "flawlessness": 9.0
+      },
+      "weighted_score": 9.11,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "点名锁未单独验收：画幅 9:16；光泽卡通三维媒介；暖饱和色板"
+      ],
+      "stagnated": false,
+      "strengths": "龙虾蚝盘与棋盘地砖已去掉；蜜金发半身店面海港同框；杯握持清楚；黄昏主视觉记忆点清楚",
+      "defects": "平视半身，人约占画面六成，主光左侧黄昏。皮肤与围裙高光仍略偏皮克斯硬塑；店招若仍有细字可读性偏高；指节分界一般。；点名锁未单独验收：画幅 9:16；光泽卡通三维媒介；暖饱和色板",
+      "next_fix": "若再开一轮：再软化块面釉光并彻底无字店招",
+      "prompt": "原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光 | 点名锁每轮都要单独留住，不许整张漂掉：锁：题材 Brimwave Café 黄昏店面人物同框；画幅 9:16；光泽卡通三维媒介；暖饱和色板；layout_not_style_echo（禁止三格拼板/进度条/标题字回声） | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】 - 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/) - 目标模块: brand.WorldStyle - 置信度: 0.60（fast-track 资格: 否） - 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。 - 正向保留（要怎样）: · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。 · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。 · 确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读； - 必须避开红线: · [CHAT20261109232829194REDLINE] [收敛踩坑红线] 有参考题材不变——把蘑菇甜点拼盘画成更干净的道具特写；身份不：避免「左上奶酪体量过大，压缩了果实与叶片的展示空间；中右部枝梗、果实和叶片叠压密集，局部切线较多」 · [CHAT20261112220939400REDLINE] 禁止偏离样张画风：硬镜面CGI、皮克斯硬塑、哑光黏土软塑胶UI、厚黑描边、写实摄影摆盘、脏暗泥污阴影、赛博霓虹紫雾、灰雾废土、扁平矢量贴纸、油腻金属、指纹… · [CHAT20261109225616629REDLINE] 禁止偏离样张画风：写实皮肤毛孔/照片级木纹毛皮；赛博霓虹与荧光边光；油腻镜面高光与硬金属机械；脏暗泥污阴影与高对比明暗法；扁平2D厚黑描边；真人头身比；城… - 审美拍板: · 以后统一按此样张画风：Gossip Harbor 真机海鲜货柜软立体；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1F… · 以后统一按此样张画风：Gossip Harbor真机海鲜货柜；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1FF约20… - 个人口味: 光影=柔光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 暖色调 - 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色 - 项目私有知识卡 (Private Layer): · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。 | A single-frame mobile game store Key Art, vertical 9:16, 半身 framing (waist-up hero shot, not 胸像 close-up, not tiny 全身 distant): Brimwave Café dusk harbor storefront fills the midground with a glowing wooden cafe sign and large windows spilling amber interior light; in the foreground a friendly stylized cafe staff stands 半身 near the entrance holding a coffee cup with a clear readable grip, soft cartoon 3D proportions and large expressive eyes. Hero memory point at a glance: warm dusk cafe glow plus the cup-holding figure silhouette against harbor sunset. Behind the cafe, calm harbor water and distant boats sit in cool blue-violet air perspective under a golden-orange sunset sky. Soft glossy cartoon 3D rendering like casual lifestyle game posters: rounded forms, soft block highlights, warm saturated palette (#F4C84A amber, #E85A4F coral accents, #5BA3D9 dusk sky, creamy skin highlights), no hard black outlines. Commercial store-listing Key Art clarity. Hard locks: one continuous scene only; 景别硬锁=半身人物+店面；not extreme close-up and not tiny distant figures; not a comic strip or multi-panel poster; no UI bars, no currency icons, no title logo text, no divorce papers, no pink beetle car, no renovation yard. Fail at a glance if framing is not 半身, if triptych panels appear, if the person has no cup grip, or if the cafe light is flat noon. layout_not_style_echo: invent a new cafe-harbor composition; do not echo any triptych panel layout. Opaque full scene background. | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props | 删掉龙虾蚝盘与棋盘地砖；只留人物杯店面海港；软块面釉光禁硬塑；店招保持无字木牌 | 店招改成无字木牌或模糊符号；皮肤围裙改软块面釉光#FEFDFB宽柔高光禁皮克斯硬塑；双手握杯五指分界更清楚 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.0,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "humanoid",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_MAX_ROUNDS",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：平视半身，人约占画面六成，主光左侧黄昏。皮肤与围裙高光仍略偏皮克斯硬塑；店招若仍有细字可读性偏高；指节分界一般。；点名锁未单独验收：画幅 9:16；光泽卡通三维",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "9.11"
+        },
+        {
+          "category": "color_palette",
+          "lesson": "本轮短板偏「color_palette」：平视半身，人约占画面六成，主光左侧黄昏。皮肤与围裙高光仍略偏皮克斯硬塑；店招若仍有细字可读性偏高；指节分界一般。；点名锁未单独验收：画幅 9:16；光泽卡通三维",
+          "drill": "从模块 palette 抽 3 HEX 做限色练习，禁止引入霓虹辅色",
+          "from_score": "9.11"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：龙虾蚝盘与棋盘地砖已去掉；蜜金发半身店面海港同框；杯握持清楚；黄昏主视觉记忆点清楚",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "9.11"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "22:46:05"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-11-10 14:02:24 UTC+8"
+    },
+    "module": "brand.WorldStyle",
+    "goal": "原画 Key Art：Brimwave Café 黄昏海港咖啡馆上架主视觉，暖光人物与店面同框，暖金黄昏店招灯光，海面码头空气透视，休闲游戏上架主视觉商业完成度，画幅 9:16；用这份稿作风格参考（只借光泽卡通三维表面与暖饱和色板），禁止抄三格拼板构图与标题字",
+    "confidence": 0.6,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "命中 2 条审美拍板",
+      "个人口味/正向保留非空",
+      "注入红线可控（3 条，已按任务主题过滤）",
+      "挂载 1 张项目知识卡 + 0 张全局美术底层基础卡"
+    ],
+    "top_recipes": [],
+    "top_redlines": [
+      {
+        "id": "CHAT20261109232829194REDLINE",
+        "summary": "[收敛踩坑红线] 有参考题材不变——把蘑菇甜点拼盘画成更干净的道具特写；身份不：避免「左上奶酪体量过大，压缩了果实与叶片的展示空间；中右部枝梗、果实和叶片叠压密集，局部切线较多」",
+        "module": "brand.WorldStyle"
+      },
+      {
+        "id": "CHAT20261112220939400REDLINE",
+        "summary": "禁止偏离样张画风：硬镜面CGI、皮克斯硬塑、哑光黏土软塑胶UI、厚黑描边、写实摄影摆盘、脏暗泥污阴影、赛博霓虹紫雾、灰雾废土、扁平矢量贴纸、油腻金属、指纹…",
+        "module": "brand.WorldStyle"
+      },
+      {
+        "id": "CHAT20261109225616629REDLINE",
+        "summary": "禁止偏离样张画风：写实皮肤毛孔/照片级木纹毛皮；赛博霓虹与荧光边光；油腻镜面高光与硬金属机械；脏暗泥污阴影与高对比明暗法；扁平2D厚黑描边；真人头身比；城…",
+        "module": "brand.WorldStyle"
+      }
+    ],
+    "art_decisions": [
+      {
+        "id": "CHAT20261112220940541DECISION",
+        "summary": "以后统一按此样张画风：Gossip Harbor 真机海鲜货柜软立体；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1F…",
+        "layer_scope": "private"
+      },
+      {
+        "id": "CHAT20261112221030537DECISION",
+        "summary": "以后统一按此样张画风：Gossip Harbor真机海鲜货柜；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1FF约20…",
+        "layer_scope": "private"
+      }
+    ],
+    "private_knowledge": [
+      {
+        "id": "tech-painterly",
+        "title": "厚涂笔触",
+        "body": "可见笔触方向跟随形体，暗部透气勿脏。",
+        "layer_scope": "private"
+      }
+    ],
+    "shared_knowledge": [],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [
+        "柔光"
+      ],
+      "preferred_composition": [
+        "半身",
+        "居中/对称构图"
+      ],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [
+        "避免过饱和",
+        "暖色调"
+      ],
+      "banned_habits": [
+        "廉价塑料感/油腻高光",
+        "漏抠/黑底/毛边",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色"
+      ],
+      "keep_phrases": [
+        "确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。",
+        "确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。",
+        "确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；"
+      ],
+      "banned_habits_raw_tail": [
+        "禁止偏离样张画风：过度霓虹、脏暗阴影、油腻高光、写实皮肤毛孔、扁平UI描边",
+        "电池审稿：原画竖构图避免贴样张布局；边缘反光勿过曝",
+        "电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感",
+        "黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差",
+        "错误头身比/头过大",
+        "廉价塑料感/油腻高光",
+        "漏抠/黑底/毛边",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色"
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: brand.WorldStyle\n- 置信度: 0.60（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n  · 确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；\n- 必须避开红线:\n  · [CHAT20261109232829194REDLINE] [收敛踩坑红线] 有参考题材不变——把蘑菇甜点拼盘画成更干净的道具特写；身份不：避免「左上奶酪体量过大，压缩了果实与叶片的展示空间；中右部枝梗、果实和叶片叠压密集，局部切线较多」\n  · [CHAT20261112220939400REDLINE] 禁止偏离样张画风：硬镜面CGI、皮克斯硬塑、哑光黏土软塑胶UI、厚黑描边、写实摄影摆盘、脏暗泥污阴影、赛博霓虹紫雾、灰雾废土、扁平矢量贴纸、油腻金属、指纹…\n  · [CHAT20261109225616629REDLINE] 禁止偏离样张画风：写实皮肤毛孔/照片级木纹毛皮；赛博霓虹与荧光边光；油腻镜面高光与硬金属机械；脏暗泥污阴影与高对比明暗法；扁平2D厚黑描边；真人头身比；城…\n- 审美拍板:\n  · 以后统一按此样张画风：Gossip Harbor 真机海鲜货柜软立体；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1F…\n  · 以后统一按此样张画风：Gossip Harbor真机海鲜货柜；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1FF约20…\n- 个人口味: 光影=柔光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。",
+    "built_at": "2026-11-12 22:19:49 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "color_palette",
+      "lesson": "本轮短板偏「color_palette」：平视略偏胸像，人约占画面六成半，主光左侧黄昏暖金。翠绿发顶髻与样张母女绿发角色回声；店招有大段可读店名美术字；皮肤与围裙偏皮克斯硬塑油滑，块面釉光不够。；点名锁",
+      "drill": "从模块 palette 抽 3 HEX 做限色练习，禁止引入霓虹辅色",
+      "from_score": "8.71"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：单幅黄昏店面人物同框成立；杯握持可读；海港空气透视与店内暖光有主视觉记忆点；非三格拼板",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.71"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：平视半身，人约占画面六成，主光左侧黄昏暖金。店招仍有清晰可读 Brimwave Café 美术字；皮肤与围裙高光仍偏皮克斯硬塑油滑，块面釉光不够软；双手捧杯指节",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.95"
+    },
+    {
+      "category": "color_palette",
+      "lesson": "本轮短板偏「color_palette」：平视半身，人约占画面六成，主光左侧黄昏暖金。店招仍有清晰可读 Brimwave Café 美术字；皮肤与围裙高光仍偏皮克斯硬塑油滑，块面釉光不够软；双手捧杯指节",
+      "drill": "从模块 palette 抽 3 HEX 做限色练习，禁止引入霓虹辅色",
+      "from_score": "8.95"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：发色已改蜜金摆脱绿发回声；半身腰线围裙与店面入口更完整；黄昏海港主视觉记忆点仍在",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.95"
+    },
+    {
+      "category": "color_palette",
+      "lesson": "本轮短板偏「color_palette」：平视半身，人约占画面六成，主光左侧黄昏。前景桌面多出龙虾与蚝盘，货柜海鲜道具闯进 Key Art；地面棋盘格与样张/货柜记忆串味；皮肤围裙仍偏皮克斯硬塑。；点名",
+      "drill": "从模块 palette 抽 3 HEX 做限色练习，禁止引入霓虹辅色",
+      "from_score": "8.6"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：蜜金发与半身店面同框仍在；黄昏海港气氛保留",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.6"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：平视半身，人约占画面六成，主光左侧黄昏。皮肤与围裙高光仍略偏皮克斯硬塑；店招若仍有细字可读性偏高；指节分界一般。；点名锁未单独验收：画幅 9:16；光泽卡通三维",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.11"
+    },
+    {
+      "category": "color_palette",
+      "lesson": "本轮短板偏「color_palette」：平视半身，人约占画面六成，主光左侧黄昏。皮肤与围裙高光仍略偏皮克斯硬塑；店招若仍有细字可读性偏高；指节分界一般。；点名锁未单独验收：画幅 9:16；光泽卡通三维",
+      "drill": "从模块 palette 抽 3 HEX 做限色练习，禁止引入霓虹辅色",
+      "from_score": "9.11"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：龙虾蚝盘与棋盘地砖已去掉；蜜金发半身店面海港同框；杯握持清楚；黄昏主视觉记忆点清楚",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.11"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 2,
+  "regression_drop": 0.15,
+  "safe_early_stop": false,
+  "understanding_contract": {
+    "version": 1,
+    "raw_utterance": "原画 Key Art：Brimwave Café 黄昏海港咖啡馆上架主视觉，暖光人物与店面同框，暖金黄昏店招灯光，海面码头空气透视，休闲游戏上架主视觉商业完成度，画幅 9:16；用这份稿作风格参考（只借光泽卡通三维表面与暖饱和色板），禁止抄三格拼板构图与标题字",
+    "l0": {
+      "route_ids": [
+        "draw.key"
+      ],
+      "banner": "【按 原画 走了】",
+      "delivery": "draw.key"
+    },
+    "l1": {
+      "locks": [
+        "锁：题材 Brimwave Café 黄昏店面人物同框",
+        "画幅 9:16",
+        "光泽卡通三维媒介",
+        "暖饱和色板",
+        "layout_not_style_echo（禁止三格拼板/进度条/标题字回声）"
+      ],
+      "unlocks": [
+        "不锁：具体人物发色服装细节可自定",
+        "店面立面造型可自定"
+      ],
+      "defaults_shown": [
+        "默认：9:16 上架 Key Art",
+        "黄昏海港咖啡馆店面+一位人物",
+        "暖金店招光",
+        "空气透视远景海面",
+        "Cursor 不透明场景底"
+      ],
+      "commercial_vibe": "跟 ref_life 表面：干净光泽卡通三维、柔散射块面高光、圆润形体、暖饱和；上架主视觉商业完成度与空气透视记忆点"
+    },
+    "l2": {
+      "open": true,
+      "surface_fix": "只改一处：先定单幅黄昏店面人物主视觉，勿拼板",
+      "last_feedback": "",
+      "feedback_layer": ""
+    },
+    "notes": ""
+  },
+  "reasonableness_history": [
+    {
+      "reviewed_at": 1794493267.8577807,
+      "passed": false,
+      "skill": "keyart",
+      "issues": [
+        "清单未齐：hero_read（主视觉记忆点一眼可读）、framing_lock（景别硬锁写进修订句）",
+        "keyart 缺景别硬锁：修订句须写半身/胸像/全身等可验收景别，并写一眼失败条件"
+      ]
+    },
+    {
+      "reviewed_at": 1794493299.7987647,
+      "passed": true,
+      "skill": "keyart",
+      "issues": []
+    },
+    {
+      "reviewed_at": 1794493402.8747852,
+      "passed": false,
+      "skill": "keyart",
+      "issues": [
+        "keyart 缺景别硬锁：修订句须写半身/胸像/全身等可验收景别，并写一眼失败条件"
+      ]
+    },
+    {
+      "reviewed_at": 1794493452.6701617,
+      "passed": true,
+      "skill": "keyart",
+      "issues": []
+    }
+  ],
+  "reasonableness": {
+    "passed": true,
+    "skill": "keyart",
+    "draft_prompt": "A cozy harbor cafe at dusk with a person outside, warm lights, cartoon 3D, 9:16",
+    "revised_prompt": "A single-frame mobile game store Key Art, vertical 9:16, 半身 framing (waist-up hero shot, not 胸像 close-up, not tiny 全身 distant): Brimwave Café dusk harbor storefront fills the midground with a glowing wooden cafe sign and large windows spilling amber interior light; in the foreground a friendly stylized cafe staff stands 半身 near the entrance holding a coffee cup with a clear readable grip, soft cartoon 3D proportions and large expressive eyes. Hero memory point at a glance: warm dusk cafe glow plus the cup-holding figure silhouette against harbor sunset. Behind the cafe, calm harbor water and distant boats sit in cool blue-violet air perspective under a golden-orange sunset sky. Soft glossy cartoon 3D rendering like casual lifestyle game posters: rounded forms, soft block highlights, warm saturated palette (#F4C84A amber, #E85A4F coral accents, #5BA3D9 dusk sky, creamy skin highlights), no hard black outlines. Commercial store-listing Key Art clarity. Hard locks: one continuous scene only; 景别硬锁=半身人物+店面；not extreme close-up and not tiny distant figures; not a comic strip or multi-panel poster; no UI bars, no currency icons, no title logo text, no divorce papers, no pink beetle car, no renovation yard. Fail at a glance if framing is not 半身, if triptych panels appear, if the person has no cup grip, or if the cafe light is flat noon. layout_not_style_echo: invent a new cafe-harbor composition; do not echo any triptych panel layout. Opaque full scene background.",
+    "checklist": {
+      "subject_action": {
+        "status": "ok",
+        "note": ""
+      },
+      "contact_scale": {
+        "status": "ok",
+        "note": ""
+      },
+      "element_budget": {
+        "status": "ok",
+        "note": ""
+      },
+      "hard_locks": {
+        "status": "ok",
+        "note": ""
+      },
+      "fail_at_glance": {
+        "status": "ok",
+        "note": ""
+      },
+      "hero_read": {
+        "status": "ok",
+        "note": ""
+      },
+      "layout_not_style_echo": {
+        "status": "ok",
+        "note": ""
+      },
+      "framing_lock": {
+        "status": "ok",
+        "note": ""
+      }
+    },
+    "issues": [],
+    "notes": "",
+    "reviewed_at": 1794493452.6701617,
+    "reviewed_at_iso": "2026-11-12 22:24:12",
+    "force_pass": false,
+    "skill_raw": "keyart"
+  },
+  "discussions": [
+    {
+      "round": 0,
+      "kind": "reasonableness",
+      "prompt": "A single-frame mobile game store Key Art, vertical 9:16, 半身 framing (waist-up hero shot, not 胸像 close-up, not tiny 全身 distant): Brimwave Café dusk harbor storefront fills the midground with a glowing wooden cafe sign and large windows spilling amber interior light; in the foreground a friendly stylized cafe staff stands 半身 near the entrance holding a coffee cup with a clear readable grip, soft cartoon 3D proportions and large expressive eyes. Hero memory point at a glance: warm dusk cafe glow plus the cup-holding figure silhouette against harbor sunset. Behind the cafe, calm harbor water and distant boats sit in cool blue-violet air perspective under a golden-orange sunset sky. Soft glossy cartoon 3D rendering like casual lifestyle game posters: rounded forms, soft block highlights, warm saturated palette (#F4C84A amber, #E85A4F coral accents, #5BA3D9 dusk sky, creamy skin highlights), no hard black outlines. Commercial store-listing Key Art clarity. Hard locks: one continuous scene only; 景别硬锁=半身人物+店面；not extreme close-up and not tiny distant figures; not a comic strip or multi-panel poster; no UI bars, no currency icons, no title logo text, no divorce papers, no pink beetle car, no renovation yard. Fail at a glance if framing is not 半身, if triptych panels appear, if the person has no cup grip, or if the cafe light is flat noon. layout_not_style_echo: invent a new cafe-harbor composition; do not echo any triptych panel layout. Opaque full scene background.",
+      "strengths": "合理性闸已过：subject_action=ok；contact_scale=ok；element_budget=ok；hard_locks=ok；fail_at_glance=ok；hero_read=ok；layout_not_style_echo=ok；framing_lock=ok",
+      "defects": "",
+      "next_fix": "首轮 generate 使用本修订提示词；审美迭代不得推翻硬锁与元素预算"
+    }
+  ],
+  "warm_start_merged": true,
+  "warm_start_merged_at": "2026-11-12 22:44:53",
+  "warm_start_block_sha1": "4d3fb98a654b",
+  "ActionRequired": "STOP_PICK_BEST",
+  "showcase_ready": true,
+  "winner": {
+    "round": 4,
+    "round_label": "第 4 轮精修",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "9:16",
+    "reference_image_paths": [
+      "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_life__ar_9x16.png"
+    ],
+    "param_validation": {
+      "valid": true,
+      "validation_passed": true,
+      "case_id": "suite_key",
+      "scale": "medium",
+      "aspect_ratio": "9:16",
+      "ref_aspect_ratio": "9:16",
+      "ref_dimensions": "1512x2688",
+      "output_aspect_ratio": "9:16",
+      "output_dimensions": "720x1280",
+      "reference_image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_life__ar_9x16.png",
+      "reference_image_paths": [
+        "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\skill_20261112_suite\\refs\\ref_life__ar_9x16.png"
+      ],
+      "inherited_default_aspect_ratio": true,
+      "inherited_default_pad_image": true,
+      "matched_ref_aspect_ratio": true,
+      "matched_ref_pad_image": true,
+      "matched_output_aspect_ratio": true,
+      "three_step_stage": "step3_judge",
+      "three_step_verified": true,
+      "warnings": [],
+      "continuation_pad": false,
+      "pad_diverged": false
+    },
+    "generated_at": "22:44:53",
+    "image": "assets/skill_20261112_suite/out/draw.key/r4.png",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 1116243,
+      "size_kb": 1090.1,
+      "width": 720,
+      "height": 1280,
+      "aspect_ratio": "9:16",
+      "canonical_aspect_ratio": "9:16",
+      "color_entropy": 7.99
+    },
+    "raw_score": 9.11,
+    "score": 9.11,
+    "target_score_threshold": 9.5,
+    "dims": "构图9.3/光影9.4/透视9.0/质感9.0/风格8.9/无瑕疵9.0",
+    "dims_parsed": {
+      "composition": 9.3,
+      "lighting_color": 9.4,
+      "perspective_anatomy": 9.0,
+      "texture_detail": 9.0,
+      "spec_style": 8.9,
+      "flawlessness": 9.0
+    },
+    "weighted_score": 9.11,
+    "audit_warnings": [
+      "Agent Absolute-5D 已采纳（门槛 9.5）",
+      "点名锁未单独验收：画幅 9:16；光泽卡通三维媒介；暖饱和色板"
+    ],
+    "stagnated": false,
+    "strengths": "龙虾蚝盘与棋盘地砖已去掉；蜜金发半身店面海港同框；杯握持清楚；黄昏主视觉记忆点清楚",
+    "defects": "平视半身，人约占画面六成，主光左侧黄昏。皮肤与围裙高光仍略偏皮克斯硬塑；店招若仍有细字可读性偏高；指节分界一般。；点名锁未单独验收：画幅 9:16；光泽卡通三维媒介；暖饱和色板",
+    "next_fix": "若再开一轮：再软化块面釉光并彻底无字店招",
+    "prompt": "原图画风优先：保画风与机位，加强材质分界和接触影，保持软棚光 | 点名锁每轮都要单独留住，不许整张漂掉：锁：题材 Brimwave Café 黄昏店面人物同框；画幅 9:16；光泽卡通三维媒介；暖饱和色板；layout_not_style_echo（禁止三格拼板/进度条/标题字回声） | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】 - 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/) - 目标模块: brand.WorldStyle - 置信度: 0.60（fast-track 资格: 否） - 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。 - 正向保留（要怎样）: · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。 · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。 · 确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读； - 必须避开红线: · [CHAT20261109232829194REDLINE] [收敛踩坑红线] 有参考题材不变——把蘑菇甜点拼盘画成更干净的道具特写；身份不：避免「左上奶酪体量过大，压缩了果实与叶片的展示空间；中右部枝梗、果实和叶片叠压密集，局部切线较多」 · [CHAT20261112220939400REDLINE] 禁止偏离样张画风：硬镜面CGI、皮克斯硬塑、哑光黏土软塑胶UI、厚黑描边、写实摄影摆盘、脏暗泥污阴影、赛博霓虹紫雾、灰雾废土、扁平矢量贴纸、油腻金属、指纹… · [CHAT20261109225616629REDLINE] 禁止偏离样张画风：写实皮肤毛孔/照片级木纹毛皮；赛博霓虹与荧光边光；油腻镜面高光与硬金属机械；脏暗泥污阴影与高对比明暗法；扁平2D厚黑描边；真人头身比；城… - 审美拍板: · 以后统一按此样张画风：Gossip Harbor 真机海鲜货柜软立体；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1F… · 以后统一按此样张画风：Gossip Harbor真机海鲜货柜；主色奶油沙岸#F4C584约70%、辅色珊瑚龙虾红#FF4D30与港湾青#48D1FF约20… - 个人口味: 光影=柔光；构图=半身 / 居中/对称构图；色温=避免过饱和 / 暖色调 - 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色 - 项目私有知识卡 (Private Layer): · [tech-painterly] 厚涂笔触: 可见笔触方向跟随形体，暗部透气勿脏。 | A single-frame mobile game store Key Art, vertical 9:16, 半身 framing (waist-up hero shot, not 胸像 close-up, not tiny 全身 distant): Brimwave Café dusk harbor storefront fills the midground with a glowing wooden cafe sign and large windows spilling amber interior light; in the foreground a friendly stylized cafe staff stands 半身 near the entrance holding a coffee cup with a clear readable grip, soft cartoon 3D proportions and large expressive eyes. Hero memory point at a glance: warm dusk cafe glow plus the cup-holding figure silhouette against harbor sunset. Behind the cafe, calm harbor water and distant boats sit in cool blue-violet air perspective under a golden-orange sunset sky. Soft glossy cartoon 3D rendering like casual lifestyle game posters: rounded forms, soft block highlights, warm saturated palette (#F4C84A amber, #E85A4F coral accents, #5BA3D9 dusk sky, creamy skin highlights), no hard black outlines. Commercial store-listing Key Art clarity. Hard locks: one continuous scene only; 景别硬锁=半身人物+店面；not extreme close-up and not tiny distant figures; not a comic strip or multi-panel poster; no UI bars, no currency icons, no title logo text, no divorce papers, no pink beetle car, no renovation yard. Fail at a glance if framing is not 半身, if triptych panels appear, if the person has no cup grip, or if the cafe light is flat noon. layout_not_style_echo: invent a new cafe-harbor composition; do not echo any triptych panel layout. Opaque full scene background. | Structure floor: shoulder, elbow, and wrist joints stay continuous, grips take real weight, both pupils share direction and height; contact shadows read; do not melt limbs into props | 删掉龙虾蚝盘与棋盘地砖；只留人物杯店面海港；软块面釉光禁硬塑；店招保持无字木牌 | 店招改成无字木牌或模糊符号；皮肤围裙改软块面釉光#FEFDFB宽柔高光禁皮克斯硬塑；双手握杯五指分界更清楚 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；保持原图画风笔触与色板；保持原图性别、物种、年龄段与核心外观",
+    "continuation": false,
+    "passed": false,
+    "gate_blocked": true,
+    "image_gate_blocked": false,
+    "anatomy_score": 9.0,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "humanoid",
+    "judge_source": "agent_absolute_5d",
+    "remote_vlm": {
+      "source": "agent_self_judge",
+      "provider": "",
+      "model": "",
+      "error": "",
+      "active": false,
+      "score_evidence": {},
+      "evidence_missing_dims": [],
+      "review": {
+        "pass_count": 0,
+        "rerated": false,
+        "reason": ""
+      }
+    },
+    "should_continue_next_round": false,
+    "decision": "STOP_MAX_ROUNDS",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "lighting",
+        "lesson": "本轮短板偏「lighting」：平视半身，人约占画面六成，主光左侧黄昏。皮肤与围裙高光仍略偏皮克斯硬塑；店招若仍有细字可读性偏高；指节分界一般。；点名锁未单独验收：画幅 9:16；光泽卡通三维",
+        "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+        "from_score": "9.11"
+      },
+      {
+        "category": "color_palette",
+        "lesson": "本轮短板偏「color_palette」：平视半身，人约占画面六成，主光左侧黄昏。皮肤与围裙高光仍略偏皮克斯硬塑；店招若仍有细字可读性偏高；指节分界一般。；点名锁未单独验收：画幅 9:16；光泽卡通三维",
+        "drill": "从模块 palette 抽 3 HEX 做限色练习，禁止引入霓虹辅色",
+        "from_score": "9.11"
+      },
+      {
+        "category": "keep",
+        "lesson": "保留本轮已做对的：龙虾蚝盘与棋盘地砖已去掉；蜜金发半身店面海港同框；杯握持清楚；黄昏主视觉记忆点清楚",
+        "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+        "from_score": "9.11"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "22:46:05",
+    "asset_image": "assets/skill_20261112_suite/out/draw.key/r4.png"
+  },
+  "rounds_to_converge": 4,
+  "convergence_badge": "共 4 轮未达阈值，采用最高分",
+  "winner_image": "assets/skill_20261112_suite/out/draw.key/r4.png",
+  "best_image": "assets/skill_20261112_suite/out/draw.key/r4.png",
+  "final_image": "assets/skill_20261112_suite/out/draw.key/final.png",
+  "settle_pending": false,
+  "process_board": ".memory-art/converge/boards/suite_key/index.html",
+  "settle_done_at": "2026-11-12 22:47:43 UTC+8",
+  "settle_saved_paths": [
+    ".memory-art\\entries\\brand.WorldStyle\\CHAT20261112224719121RECIPE.md",
+    ".memory-art\\entries\\brand.WorldStyle\\CHAT20261112224721447REDLINE.md",
+    ".memory-art\\_reflections\\20261112_224722_suite_key.json"
+  ]
+}

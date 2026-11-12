@@ -46,6 +46,8 @@ SKIP_DIR_NAMES = {
     "downloads",       # 外网/店面下载对标图，不进画廊
     "下载",            # downloads 的中文目录名同效
 }
+# assets/skill_YYYYMMDD_* 清点/任务交付根，不进工作台索引（防 classify-watch 同路径误扫）
+_SKILL_STAGING_DIR = re.compile(r"^skill_\d{8}", re.I)
 INDEX_REL = ".memory-art/atlas_index.json"
 DATA_REL = ".memory-art/atlas_data.json"
 THUMB_DIR_REL = ".memory-art/_thumbs"
@@ -59,6 +61,7 @@ def _is_junk_name(name: str) -> bool:
     return (
         n.startswith("._")
         or n in SKIP_DIR_NAMES
+        or bool(_SKILL_STAGING_DIR.match(name))
         or n.endswith(".pyc")
     )
 

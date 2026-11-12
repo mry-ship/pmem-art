@@ -1,0 +1,37 @@
+{
+  "route_id": "draw.key",
+  "banner": "【按 原画 走了】",
+  "status": "partial",
+  "passed_line": false,
+  "rounds": 4,
+  "scores": [
+    {
+      "round": 1,
+      "total": 8.71,
+      "dims": "构图9.0/光影9.2/透视8.7/质感8.6/风格8.3/无瑕疵8.5"
+    },
+    {
+      "round": 2,
+      "total": 8.95,
+      "dims": "构图9.2/光影9.3/透视8.9/质感8.8/风格8.7/无瑕疵8.8"
+    },
+    {
+      "round": 3,
+      "total": 8.6,
+      "dims": "构图8.6/光影9.1/透视8.8/质感8.7/风格8.2/无瑕疵8.3"
+    },
+    {
+      "round": 4,
+      "total": 9.11,
+      "dims": "构图9.3/光影9.4/透视9.0/质感9.0/风格8.9/无瑕疵9.0"
+    }
+  ],
+  "final_image": "assets/skill_20261112_suite/out/draw.key/r4.png",
+  "text_deliverable": null,
+  "pad_used": [
+    "assets/skill_20261112_suite/refs/ref_life.jpg",
+    "assets/skill_20261112_suite/refs/ref_life__ar_9x16.png"
+  ],
+  "bg": "n/a",
+  "notes": "未过线：满4轮最高第4轮9.11；主因皮克斯硬塑残留与店招细字，R3曾被Warm-Start海鲜货柜串味。"
+}

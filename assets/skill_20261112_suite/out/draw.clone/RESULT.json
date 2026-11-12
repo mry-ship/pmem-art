@@ -1,0 +1,36 @@
+{
+  "route_id": "draw.clone",
+  "banner": "【按 克隆 走了】",
+  "status": "partial",
+  "passed_line": false,
+  "rounds": 4,
+  "scores": [
+    {
+      "round": 1,
+      "total": 8.23,
+      "dims": "构图7.6/光影8.6/透视8.5/质感8.0/风格7.8/无瑕疵8.7"
+    },
+    {
+      "round": 2,
+      "total": 8.37,
+      "dims": "构图9.0/光影8.4/透视8.8/质感7.8/风格7.4/无瑕疵8.8"
+    },
+    {
+      "round": 3,
+      "total": 8.58,
+      "dims": "构图8.6/光影8.8/透视8.7/质感8.5/风格8.6/无瑕疵8.4"
+    },
+    {
+      "round": 4,
+      "total": 9.04,
+      "dims": "构图9.3/光影9.0/透视9.2/质感8.7/风格8.6/无瑕疵9.3"
+    }
+  ],
+  "final_image": "assets/skill_20261112_suite/out/draw.clone/r4.jpg",
+  "text_deliverable": null,
+  "pad_used": [
+    "assets/skill_20261112_suite/refs/ref_merge.png"
+  ],
+  "bg": "opaque_scenic",
+  "notes": "满4轮未过线；胜出R4=9.04。题材塔形与禁棋盘HUD已守住，终稿偏哑光黏土、糖釉块面高光#FEFDFB不够脆。"
+}

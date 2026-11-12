@@ -245,6 +245,14 @@ IGNORE_DIR_NAMES = {
     "downloads", "下载",  # 外网/店面下载对标图，不进资产扫描与工作台
 }
 
+# assets/skill_YYYYMMDD_* 清点/任务交付根（含 *_suite），不进 classify-watch 自动搬家
+_SKILL_STAGING_DIR = re.compile(r"^skill_\d{8}", re.I)
+
+
+def is_skill_staging_dirname(name: str) -> bool:
+    """True when dirname is a dated skill staging root (skill_20261112_suite 等)."""
+    return bool(_SKILL_STAGING_DIR.match(str(name or "").strip()))
+
 # Starter taxonomy: inactive scaffolds after `init` / `bootstrap --mode young`
 STARTER_CATEGORIES = {
     "brand": {"label": "全局风格圣经 (Brand & Style Bible)", "icon": "🎨"},
@@ -686,9 +694,8 @@ def ensure_cursor_stubs(root: Path) -> None:
     # stop 必须保留：出图后 followup_message 才能把闭环审图拉回对话。
     # 已有 pmemw/pmem/.memory/bin/pmem-hook 闸门时合并保留，禁止整文件覆盖。
     py = _hook_python_prefix()
-    # GenerateImage pre-gen 默认关闭：不再把 Warm-Start 灌进 description。
-    # 记忆并入改由 converge generate；若要恢复 hook 灌入，手工加回 pre-gen 条目
-    # 并设环境变量 PMEM_ART_PRE_GEN_INJECT=1。
+    # GenerateImage pre-gen 默认关闭，且 cmd_hook 永不 updated_input 灌 Warm-Start。
+    # 记忆并入只走 converge generate；不要再挂 pre-gen 灌词后门。
     pre_tool_items: list[dict[str, Any]] = []
     # Windows：强制把 Shell 里的 python/python3 改成 pyw，否则 Agent 照抄旧习惯仍疯狂弹窗。
     # 用独立 art_shell_hook.py（只依赖 art_cli），禁止走 pmem_art.py（冷启动太慢）。
@@ -874,7 +881,7 @@ def list_image_files(root: Path, asset_roots: list[str]) -> list[Path]:
             rel_parts = p.relative_to(base).parts
             if is_junk_sidecar_name(p.name) or any(is_junk_sidecar_name(part) for part in rel_parts):
                 continue
-            if any(part in IGNORE_DIR_NAMES for part in rel_parts):
+            if any(part in IGNORE_DIR_NAMES or is_skill_staging_dirname(part) for part in rel_parts):
                 continue
             if p.suffix.lower() in IMAGE_EXTS:
                 files.append(p)

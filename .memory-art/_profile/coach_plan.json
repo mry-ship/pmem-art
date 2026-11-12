@@ -1,11 +1,27 @@
 {
   "schema": "pmem-art.coach.v1",
-  "built_at": "2026-11-10 01:51:44 UTC+8",
-  "reflections_scanned": 10,
+  "built_at": "2026-11-12 22:07:57 UTC+8",
+  "reflections_scanned": 20,
   "weak_spots": [
     {
+      "category": "style_lock",
+      "hits": 48,
+      "drills": [
+        "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+        "打开上次混风反例，列出 3 条禁止混入的风格词"
+      ]
+    },
+    {
+      "category": "lighting",
+      "hits": 47,
+      "drills": [
+        "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+        "只改光源方向重绘一轮，强制统一高光材质"
+      ]
+    },
+    {
       "category": "material",
-      "hits": 25,
+      "hits": 40,
       "drills": [
         "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
         "去掉油腻高光：改用硬边分层或青瓷釉面高光"
@@ -13,63 +29,40 @@
     },
     {
       "category": "line_edge",
-      "hits": 24,
+      "hits": 32,
       "drills": [
         "透明底边缘检查：放大 200% 查毛边与漏抠",
         "统一描边宽度预设（如 1.5px round）整套重描"
       ]
     },
     {
-      "category": "composition",
-      "hits": 22,
-      "drills": [
-        "练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
-        "用简单色块缩略图先定重心，再进细节"
-      ]
-    },
-    {
-      "category": "anatomy",
-      "hits": 22,
-      "drills": [
-        "手部特写 4 连：张开/握拳/持刀/比耶，锁死五指分离",
-        "头身比尺规：在草图上标 7.5 头身刻度再细化"
-      ]
-    },
-    {
-      "category": "lighting",
+      "category": "narrative_camera",
       "hits": 21,
       "drills": [
-        "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
-        "只改光源方向重绘一轮，强制统一高光材质"
+        "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+        "Key Art：先写一句叙事再构图，主体动作靠前"
       ]
     }
   ],
   "next_draw_goals": [
     {
+      "draw_goal": "下一张专门练「style_lock」：对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "category": "style_lock"
+    },
+    {
+      "draw_goal": "下一张专门练「lighting」：同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "category": "lighting"
+    },
+    {
       "draw_goal": "下一张专门练「material」：同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
       "category": "material"
-    },
-    {
-      "draw_goal": "下一张专门练「line_edge」：透明底边缘检查：放大 200% 查毛边与漏抠",
-      "category": "line_edge"
-    },
-    {
-      "draw_goal": "下一张专门练「composition」：练 3 张同一主体的三分法 / 居中 / 对角线构图对比，只改构图不改色板",
-      "category": "composition"
     }
   ],
   "capability_trend": {
     "declining_weaknesses": [
-      "lighting",
-      "material",
-      "icon_consistency"
+      "line_edge"
     ],
-    "rising_weaknesses": [
-      "line_edge",
-      "anatomy",
-      "composition",
-      "color_palette"
-    ],
+    "rising_weaknesses": [],
     "note": "newer vs older half of reflections"
   },
   "encouragement": "短板在下降，保持 warm-start + 每轮「本轮可学」闭环。"

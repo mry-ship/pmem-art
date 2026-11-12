@@ -1,0 +1,32 @@
+# `/pmem-coach` — 进步 / 短板 / 知识（三条偷看合成一条）
+
+日常 `converge finish` 已经在后台写过反思、口味和知识队列。只有玩家来要报告时才跑。一次只出一份，不要把三份一起倒出来。
+
+看玩家这句话里要哪一份。没点明就只出短板。
+
+| 玩家在说 | 跑 |
+| :--- | :--- |
+| 总结、进步、口味 | 进步 |
+| 知识、技法、广度 | 知识 |
+| 短板、练习、练什么，或没点明 | 短板 |
+
+## 进步
+```bash
+pyw -3 -u pmem_art.py improve run
+pyw -3 -u pmem_art.py progress
+pyw -3 -u pmem_art.py taste show
+```
+
+## 短板
+```bash
+pyw -3 -u pmem_art.py coach
+pyw -3 -u pmem_art.py progress
+```
+红线加会话反思，收成构图、光影、解剖、九宫格等短板，给下一张该练什么。
+
+## 知识
+```bash
+pyw -3 -u pmem_art.py learn suggest
+pyw -3 -u pmem_art.py learn list
+```
+只列出建议。玩家明确说「收下」或「写入」之后，才运行 `pyw -3 -u pmem_art.py learn accept`。禁止自动 `accept --all`。

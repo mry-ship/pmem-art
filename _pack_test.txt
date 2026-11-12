@@ -1,0 +1,10 @@
+﻿python.exe : ----------------------------------------------------------------------
+所在位置 行:8 字符: 187
++ ... h,FullName; python.exe -m unittest tests.test_pack_pmem_art -q 2>&1 | ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (---------------...---------------:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+Ran 1 test in 9.746s
+
+OK

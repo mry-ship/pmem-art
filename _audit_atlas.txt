@@ -1,0 +1,3 @@
+﻿✨ 已生成可视化美术记忆图谱工作台: C:\Users\ZhengLangPC\Desktop\Cursor-Pmem-Art\art-atlas.html (9946.7 KB · 相对路径懒加载 · 索引 691 张)
+👉 请用浏览器打开: http://127.0.0.1:27913/art-atlas.html  （删除/垃圾桶才稳定）
+   或双击「打开工作台.cmd」；若只打开了 HTML，可点横幅「重试连通」下载启动脚本。
