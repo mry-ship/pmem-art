@@ -20,7 +20,6 @@
     "converge_finish:skill1109-multi": "2026-11-09 23:46:20 UTC+8",
     "doctor:20261110": "2026-11-10 00:06:01 UTC+8",
     "converge_finish:skill1109-ui": "2026-11-10 00:09:13 UTC+8",
-    "converge_finish:skill1109-key": "2026-11-10 00:14:29 UTC+8",
     "converge_finish:skill1109-merge": "2026-11-10 00:16:38 UTC+8",
     "converge_finish:skill1109-multi-on": "2026-11-10 00:17:39 UTC+8",
     "converge_finish:skill1109-merge-v2": "2026-11-10 01:45:25 UTC+8",
@@ -39,7 +38,8 @@
     "converge_finish:suite_clone": "2026-11-12 22:34:32 UTC+8",
     "converge_finish:suite_multi": "2026-11-12 22:39:36 UTC+8",
     "converge_finish:suite_multi_open": "2026-11-12 22:44:23 UTC+8",
-    "converge_finish:suite_key": "2026-11-12 22:47:27 UTC+8"
+    "converge_finish:suite_key": "2026-11-12 22:47:27 UTC+8",
+    "doctor:20261117": "2026-11-17 17:16:27 UTC+8"
   },
-  "updated_at": "2026-11-12 22:47:27 UTC+8"
+  "updated_at": "2026-11-17 17:16:27 UTC+8"
 }

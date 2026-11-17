@@ -1,4 +1,4 @@
-"""merge overview：最多4轮·到线即停 + 关系稿上限 2。"""
+"""merge overview：最多3轮·到线即停 + 关系稿上限 2。"""
 from __future__ import annotations
 
 import json
@@ -41,13 +41,13 @@ class MergeOverviewCapsTests(unittest.TestCase):
             )
         )
 
-    def test_apply_caps_sets_max_rounds_4(self) -> None:
-        sess: dict = {"route_ids": ["merge.ladder"], "max_rounds": 4}
+    def test_apply_caps_sets_max_rounds_3(self) -> None:
+        sess: dict = {"route_ids": ["merge.ladder"], "max_rounds": 3}
         got = _apply_merge_overview_caps(
-            sess, goal="整表一组合成梯", expect_route="merge.ladder", max_rounds=4
+            sess, goal="整表一组合成梯", expect_route="merge.ladder", max_rounds=3
         )
         self.assertEqual(got, MERGE_OVERVIEW_MAX_ROUNDS)
-        self.assertEqual(sess["max_rounds"], 4)
+        self.assertEqual(sess["max_rounds"], 3)
         self.assertEqual(sess["merge_delivery"], "overview_sheet")
         self.assertEqual(sess["merge_discuss_cap"], 2)
         self.assertEqual(MERGE_OVERVIEW_MAX_DISCUSS, 2)
@@ -87,7 +87,7 @@ class MergeOverviewCapsTests(unittest.TestCase):
                 "status": "running",
                 "threshold": 9.5,
                 "accept_threshold": 9.5,
-                "max_rounds": 4,
+                "max_rounds": 3,
                 "merge_delivery": "overview_sheet",
                 "merge_sheet_cap": 4,
                 "merge_discuss_cap": 2,

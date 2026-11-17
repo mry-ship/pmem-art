@@ -1,0 +1,745 @@
+{
+  "session_id": "dog_ordinary_20261117_170033",
+  "started_at": "2026-11-17 17:00:46 UTC+8",
+  "goal": "一张可爱狗狗普通图，单主体胸像级正面或3/4，可爱休闲游戏吉祥物立绘气质",
+  "module": "character.Dog",
+  "mode": "text_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "dynamic_threshold",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "medium",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "medium",
+    "label": "中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.5)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 1,
+    "target_score_threshold": 9.5,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.15,
+      "perspective_anatomy": 0.15,
+      "texture_detail": 0.15,
+      "spec_style": 0.15,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "viewpoint_frame",
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图，只在提示词上补还没过的那一处（提示词改动仍 ≤40%）",
+    "max_prompt_delta_ratio": 0.4,
+    "allow_recompose": false,
+    "allow_viewpoint_change": false,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "viewpoint_angle (不改机位与镜头视角)",
+      "element_count (不增删主体元素清单)",
+      "no_full_recompose (不做整体 recompose / 换景别故事)",
+      "style_surface (跟提示词品类默认画风，禁止回落写实棚拍)"
+    ],
+    "min_round_leap": 0.15,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "题材画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光",
+    "medium_family": "generic",
+    "best_direction_hint": "最优方向：光影·空气·介质；可小幅姿态/局部布局",
+    "goal": "一张可爱狗狗普通图，单主体胸像级正面或3/4，可爱休闲游戏吉祥物立绘气质",
+    "module": "character.Dog",
+    "ref_image": "",
+    "ref_analysis": ""
+  },
+  "medium_family": "generic",
+  "contract": "",
+  "target_score_threshold": 9.5,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "",
+  "ref_analysis": "",
+  "default_aspect_ratio": "1:1",
+  "default_reference_image_paths": [],
+  "aspect_ratio": "1:1",
+  "reference_image_paths": [],
+  "ref_physical_traits": {},
+  "param_validation": {},
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.5,
+  "accept_threshold": 9.5,
+  "max_rounds": 4,
+  "ready_to_finish": true,
+  "status": "finished",
+  "owner_conversation_id": "session:dog_ordinary_20261117_170033",
+  "route_ids": [
+    "draw.ordinary"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "1:1",
+      "reference_image_paths": [],
+      "param_validation": {
+        "three_step_verified": true,
+        "three_step_stage": "step3_judge",
+        "validation_passed": true
+      },
+      "generated_at": "17:07:38",
+      "image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\character\\dog_ordinary_20261117\\r1.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 199332,
+        "size_kb": 194.7,
+        "width": 1024,
+        "height": 1024,
+        "aspect_ratio": "1:1",
+        "canonical_aspect_ratio": "1:1",
+        "color_entropy": 7.21
+      },
+      "raw_score": 9.12,
+      "score": 9.12,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.3/光影9.1/透视9.4/质感8.8/风格9.2/无瑕疵9.0",
+      "dims_parsed": {
+        "composition": 9.3,
+        "lighting_color": 9.1,
+        "perspective_anatomy": 9.4,
+        "texture_detail": 8.8,
+        "spec_style": 9.2,
+        "flawlessness": 9.0
+      },
+      "weighted_score": 9.12,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "点名锁未单独验收：锁单只狗狗身份与清晰机位"
+      ],
+      "stagnated": false,
+      "strengths": "正面胸像居中，奶油犬脸与粉项圈清晰可读；浅奶油不透明底干净，无整表货柜杂物",
+      "defects": "双眼高光偏湿亮镜面，接近硬CGI油光；口鼻与额头绒面过匀滑，毛簇转折偏少；点名锁未单独验收：锁单只狗狗身份与清晰机位",
+      "next_fix": "压低双眼镜面高光与油光感；嘴鼻额头加柔和毛簇明暗层次，保持圆润吉祥物立绘",
+      "prompt": "点名锁每轮都要单独留住，不许整张漂掉：锁单只狗狗身份与清晰机位 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.Dog\n- 置信度: 0.45（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n  · 确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；\n- 个人口味: 光影=柔光；构图=居中/对称构图 / 半身；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [style-chibi] Q版头身: 2~3 头身，五官放大但识别锚点保留。\n  · [light-rim] 侧逆光: 轮廓分离主体与背景，高光条沿边缘走。\n题材画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光| 一只可爱狗狗，正面胸像或轻微3/4胸像，脸与耳朵清晰可读，居中构图。休闲游戏吉祥物立绘完成度：圆润可爱体量、友好大眼、干净柔和棚光、暖而不过饱和、上架级抛光。干净浅奶油或淡粉浅色柔和环境底，不透明。无文字、无UI、无合成梯整表、无多格、无货柜货架、不套Gossip Harbor棋盘格，禁止硬镜面CGI与油腻塑料高光。画幅1:1。| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；跟提示词品类默认画风，禁止回落写实棚拍 | Structure floor: limb count and joints match this species, and legs, wings, or the tail connect clearly; contact shadows read; do not melt extra limbs. Do not convert this into a human elbow pair or force two eyes",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.4,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "creature",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：双眼高光偏湿亮镜面，接近硬CGI油光；口鼻与额头绒面过匀滑，毛簇转折偏少；点名锁未单独验收：锁单只狗狗身份与清晰机位",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "9.12"
+        },
+        {
+          "category": "narrative_camera",
+          "lesson": "本轮短板偏「narrative_camera」：双眼高光偏湿亮镜面，接近硬CGI油光；口鼻与额头绒面过匀滑，毛簇转折偏少；点名锁未单独验收：锁单只狗狗身份与清晰机位",
+          "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+          "from_score": "9.12"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：正面胸像居中，奶油犬脸与粉项圈清晰可读；浅奶油不透明底干净，无整表货柜杂物",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "9.12"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "17:08:41"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "1:1",
+      "reference_image_paths": [],
+      "param_validation": {
+        "three_step_verified": true,
+        "three_step_stage": "step3_judge",
+        "validation_passed": true
+      },
+      "generated_at": "17:11:50",
+      "image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\character\\dog_ordinary_20261117\\r2.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 223597,
+        "size_kb": 218.4,
+        "width": 1024,
+        "height": 1024,
+        "aspect_ratio": "1:1",
+        "canonical_aspect_ratio": "1:1",
+        "color_entropy": 7.22
+      },
+      "raw_score": 9.42,
+      "score": 9.42,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.5/光影9.4/透视9.6/质感9.3/风格9.5/无瑕疵9.3",
+      "dims_parsed": {
+        "composition": 9.5,
+        "lighting_color": 9.4,
+        "perspective_anatomy": 9.6,
+        "texture_detail": 9.3,
+        "spec_style": 9.5,
+        "flawlessness": 9.3
+      },
+      "weighted_score": 9.42,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "点名锁未单独验收：锁单只狗狗身份与清晰机位"
+      ],
+      "stagnated": false,
+      "strengths": "点名锁验收：单只奶油犬正面胸像机位稳定可读；头顶毛簇与耳缘层次比上轮更软立体；浅奶油底干净无整表",
+      "defects": "双眼仍有偏亮白点高光，镜面感未完全压平；口鼻下方与粉项圈交界仍偏匀滑；点名锁未单独验收：锁单只狗狗身份与清晰机位",
+      "next_fix": "再压低双眼白点高光至柔哑珠光；口鼻与项圈交界补一点毛绒明暗",
+      "prompt": "点名锁每轮都要单独留住，不许整张漂掉：锁单只狗狗身份与清晰机位 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.Dog\n- 置信度: 0.45（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n  · 确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；\n- 个人口味: 光影=柔光；构图=居中/对称构图 / 半身；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [style-chibi] Q版头身: 2~3 头身，五官放大但识别锚点保留。\n  · [light-rim] 侧逆光: 轮廓分离主体与背景，高光条沿边缘走。\n题材画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光| 一只可爱狗狗，正面胸像或轻微3/4胸像，脸与耳朵清晰可读，居中构图。休闲游戏吉祥物立绘完成度：圆润可爱体量、友好大眼、干净柔和棚光、暖而不过饱和、上架级抛光。干净浅奶油或淡粉浅色柔和环境底，不透明。无文字、无UI、无合成梯整表、无多格、无货柜货架、不套Gossip Harbor棋盘格，禁止硬镜面CGI与油腻塑料高光。画幅1:1。| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；跟提示词品类默认画风，禁止回落写实棚拍 | Structure floor: limb count and joints match this species, and legs, wings, or the tail connect clearly; contact shadows read; do not melt extra limbs. Do not convert this into a human elbow pair or force two eyes | 压低双眼镜面高光与油光感；嘴鼻额头加柔和毛簇明暗层次，保持圆润吉祥物立绘",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.6,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "creature",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：双眼仍有偏亮白点高光，镜面感未完全压平；口鼻下方与粉项圈交界仍偏匀滑；点名锁未单独验收：锁单只狗狗身份与清晰机位",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "9.42"
+        },
+        {
+          "category": "narrative_camera",
+          "lesson": "本轮短板偏「narrative_camera」：双眼仍有偏亮白点高光，镜面感未完全压平；口鼻下方与粉项圈交界仍偏匀滑；点名锁未单独验收：锁单只狗狗身份与清晰机位",
+          "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+          "from_score": "9.42"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：点名锁验收：单只奶油犬正面胸像机位稳定可读；头顶毛簇与耳缘层次比上轮更软立体；浅奶油底干净无整表",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "9.42"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "17:12:54"
+    },
+    {
+      "round": 3,
+      "round_label": "经过 3 轮达标定稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "1:1",
+      "reference_image_paths": [],
+      "param_validation": {
+        "three_step_verified": true,
+        "three_step_stage": "step3_judge",
+        "validation_passed": true
+      },
+      "generated_at": "17:14:33",
+      "image": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art\\assets\\character\\dog_ordinary_20261117\\r3.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 224119,
+        "size_kb": 218.9,
+        "width": 1024,
+        "height": 1024,
+        "aspect_ratio": "1:1",
+        "canonical_aspect_ratio": "1:1",
+        "color_entropy": 7.21
+      },
+      "raw_score": 9.52,
+      "score": 9.52,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.6/光影9.5/透视9.6/质感9.5/风格9.6/无瑕疵9.4",
+      "dims_parsed": {
+        "composition": 9.6,
+        "lighting_color": 9.5,
+        "perspective_anatomy": 9.6,
+        "texture_detail": 9.5,
+        "spec_style": 9.6,
+        "flawlessness": 9.4
+      },
+      "weighted_score": 9.52,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）"
+      ],
+      "stagnated": false,
+      "strengths": "锁单只狗狗身份与清晰机位已守住：单只奶油犬正面胸像清晰可读；口鼻与桃粉项圈交界毛绒层次可读；浅奶油不透明底干净无整表",
+      "defects": "双眼白点高光仍略亮，珠光感偏硬一点；耳内阴影略平",
+      "next_fix": "已达标，无需继续叠加",
+      "prompt": "点名锁每轮都要单独留住，不许整张漂掉：锁单只狗狗身份与清晰机位 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.Dog\n- 置信度: 0.45（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n  · 确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；\n- 个人口味: 光影=柔光；构图=居中/对称构图 / 半身；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [style-chibi] Q版头身: 2~3 头身，五官放大但识别锚点保留。\n  · [light-rim] 侧逆光: 轮廓分离主体与背景，高光条沿边缘走。\n题材画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光| 一只可爱狗狗，正面胸像或轻微3/4胸像，脸与耳朵清晰可读，居中构图。休闲游戏吉祥物立绘完成度：圆润可爱体量、友好大眼、干净柔和棚光、暖而不过饱和、上架级抛光。干净浅奶油或淡粉浅色柔和环境底，不透明。无文字、无UI、无合成梯整表、无多格、无货柜货架、不套Gossip Harbor棋盘格，禁止硬镜面CGI与油腻塑料高光。画幅1:1。| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；跟提示词品类默认画风，禁止回落写实棚拍 | Structure floor: limb count and joints match this species, and legs, wings, or the tail connect clearly; contact shadows read; do not melt extra limbs. Do not convert this into a human elbow pair or force two eyes | 再压低双眼白点高光至柔哑珠光；口鼻与项圈交界补一点毛绒明暗",
+      "continuation": false,
+      "passed": true,
+      "gate_blocked": false,
+      "image_gate_blocked": false,
+      "anatomy_score": 9.6,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "creature",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_TARGET_REACHED",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：双眼白点高光仍略亮，珠光感偏硬一点；耳内阴影略平",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "9.52"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：锁单只狗狗身份与清晰机位已守住：单只奶油犬正面胸像清晰可读；口鼻与桃粉项圈交界毛绒层次可读；浅奶油不透明底干净无整表",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "9.52"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "17:15:38"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-11-10 14:02:24 UTC+8"
+    },
+    "module": "character.Dog",
+    "goal": "一张可爱狗狗普通图，单主体胸像级正面或3/4，可爱休闲游戏吉祥物立绘气质",
+    "confidence": 0.45,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "个人口味/正向保留非空",
+      "注入红线可控（0 条，已按任务主题过滤）",
+      "挂载 2 张项目知识卡 + 0 张全局美术底层基础卡"
+    ],
+    "top_recipes": [],
+    "top_redlines": [],
+    "art_decisions": [],
+    "private_knowledge": [
+      {
+        "id": "style-chibi",
+        "title": "Q版头身",
+        "body": "2~3 头身，五官放大但识别锚点保留。",
+        "layer_scope": "private"
+      },
+      {
+        "id": "light-rim",
+        "title": "侧逆光",
+        "body": "轮廓分离主体与背景，高光条沿边缘走。",
+        "layer_scope": "private"
+      }
+    ],
+    "shared_knowledge": [],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [
+        "柔光"
+      ],
+      "preferred_composition": [
+        "居中/对称构图",
+        "半身"
+      ],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [
+        "避免过饱和",
+        "暖色调"
+      ],
+      "banned_habits": [
+        "廉价塑料感/油腻高光",
+        "漏抠/黑底/毛边",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色"
+      ],
+      "keep_phrases": [
+        "确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。",
+        "确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。",
+        "确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；"
+      ],
+      "banned_habits_raw_tail": [
+        "禁止偏离样张画风：过度霓虹、脏暗阴影、油腻高光、写实皮肤毛孔、扁平UI描边",
+        "电池审稿：原画竖构图避免贴样张布局；边缘反光勿过曝",
+        "电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感",
+        "黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差",
+        "错误头身比/头过大",
+        "廉价塑料感/油腻高光",
+        "漏抠/黑底/毛边",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色"
+      ]
+    },
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.Dog\n- 置信度: 0.45（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n  · 确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；\n- 个人口味: 光影=柔光；构图=居中/对称构图 / 半身；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [style-chibi] Q版头身: 2~3 头身，五官放大但识别锚点保留。\n  · [light-rim] 侧逆光: 轮廓分离主体与背景，高光条沿边缘走。",
+    "built_at": "2026-11-17 17:00:46 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：双眼高光偏湿亮镜面，接近硬CGI油光；口鼻与额头绒面过匀滑，毛簇转折偏少；点名锁未单独验收：锁单只狗狗身份与清晰机位",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.12"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：双眼高光偏湿亮镜面，接近硬CGI油光；口鼻与额头绒面过匀滑，毛簇转折偏少；点名锁未单独验收：锁单只狗狗身份与清晰机位",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "9.12"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：正面胸像居中，奶油犬脸与粉项圈清晰可读；浅奶油不透明底干净，无整表货柜杂物",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.12"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：双眼仍有偏亮白点高光，镜面感未完全压平；口鼻下方与粉项圈交界仍偏匀滑；点名锁未单独验收：锁单只狗狗身份与清晰机位",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.42"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：双眼仍有偏亮白点高光，镜面感未完全压平；口鼻下方与粉项圈交界仍偏匀滑；点名锁未单独验收：锁单只狗狗身份与清晰机位",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "9.42"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：点名锁验收：单只奶油犬正面胸像机位稳定可读；头顶毛簇与耳缘层次比上轮更软立体；浅奶油底干净无整表",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.42"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：双眼白点高光仍略亮，珠光感偏硬一点；耳内阴影略平",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.52"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：锁单只狗狗身份与清晰机位已守住：单只奶油犬正面胸像清晰可读；口鼻与桃粉项圈交界毛绒层次可读；浅奶油不透明底干净无整表",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.52"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 2,
+  "regression_drop": 0.15,
+  "safe_early_stop": false,
+  "understanding_contract": {
+    "version": 1,
+    "raw_utterance": "一张可爱狗狗普通图，单主体胸像级正面或3/4，可爱休闲游戏吉祥物立绘气质",
+    "l0": {
+      "route_ids": [
+        "draw.ordinary"
+      ],
+      "banner": "【按点名锁定 draw.ordinary】",
+      "delivery": "draw.ordinary"
+    },
+    "l1": {
+      "locks": [
+        "锁单只狗狗身份与清晰机位"
+      ],
+      "unlocks": [
+        "不锁合成梯/整表"
+      ],
+      "defaults_shown": [
+        "默认：单张狗狗普通图1:1",
+        "可爱休闲吉祥物立绘气质",
+        "无垫图",
+        "新开目录"
+      ],
+      "commercial_vibe": "可爱休闲游戏吉祥物立绘完成度，圆润干净棚光"
+    },
+    "l2": {
+      "open": true,
+      "surface_fix": "再压低双眼白点高光至柔哑珠光；口鼻与项圈交界补一点毛绒明暗",
+      "last_feedback": "",
+      "feedback_layer": ""
+    },
+    "notes": ""
+  },
+  "discussions": [
+    {
+      "round": 0,
+      "kind": "reasonableness",
+      "prompt": "一只可爱狗狗，正面胸像或轻微3/4胸像，脸与耳朵清晰可读，居中构图。休闲游戏吉祥物立绘完成度：圆润可爱体量、友好大眼、干净柔和棚光、暖而不过饱和、上架级抛光。干净浅奶油或淡粉浅色柔和环境底，不透明。无文字、无UI、无合成梯整表、无多格、无货柜货架、不套Gossip Harbor棋盘格，禁止硬镜面CGI与油腻塑料高光。画幅1:1。",
+      "strengths": "合理性闸已过：subject_action=ok；contact_scale=ok；element_budget=ok；hard_locks=ok；fail_at_glance=ok",
+      "defects": "",
+      "next_fix": "首轮 generate 使用本修订提示词；审美迭代不得推翻硬锁与元素预算"
+    },
+    {
+      "round": 1,
+      "prompt": "【本趟分析】交付：一张狗狗普通图（单主体）。默认1:1；medium；最多4轮；≥9.5到线即停；新开输出目录；无参考不垫图；未点名接续→禁止复用旧merge案。锁：机位与身份（一只可爱狗狗，正面或3/4胸像级清晰可读）。不锁：合成梯/整表/逐格；禁止按merge整表交付。风格：可爱休闲游戏吉祥物立绘（圆润可爱、干净棚光、上架完成度）；禁止套Gossip Harbor货柜合成梯整表句；禁止硬镜面CGI。底：干净浅色或柔和环境底（opaque）。",
+      "strengths": "",
+      "defects": "",
+      "next_fix": ""
+    }
+  ],
+  "reasonableness_history": [
+    {
+      "reviewed_at": 1794906133.710426,
+      "passed": false,
+      "skill": "ordinary",
+      "issues": [
+        "revised 疑似丢掉 draft 主体锚点（一只可爱狗狗、正面胸像、休闲游戏吉祥）；合理性修订不得换题材"
+      ]
+    },
+    {
+      "reviewed_at": 1794906154.7944608,
+      "passed": true,
+      "skill": "ordinary",
+      "issues": []
+    }
+  ],
+  "reasonableness": {
+    "passed": true,
+    "skill": "ordinary",
+    "draft_prompt": "一只可爱狗狗，正面胸像，休闲游戏吉祥物立绘，圆润干净棚光，浅色背景，1:1",
+    "revised_prompt": "一只可爱狗狗，正面胸像或轻微3/4胸像，脸与耳朵清晰可读，居中构图。休闲游戏吉祥物立绘完成度：圆润可爱体量、友好大眼、干净柔和棚光、暖而不过饱和、上架级抛光。干净浅奶油或淡粉浅色柔和环境底，不透明。无文字、无UI、无合成梯整表、无多格、无货柜货架、不套Gossip Harbor棋盘格，禁止硬镜面CGI与油腻塑料高光。画幅1:1。",
+    "checklist": {
+      "subject_action": {
+        "status": "ok",
+        "note": ""
+      },
+      "contact_scale": {
+        "status": "ok",
+        "note": ""
+      },
+      "element_budget": {
+        "status": "ok",
+        "note": ""
+      },
+      "hard_locks": {
+        "status": "ok",
+        "note": ""
+      },
+      "fail_at_glance": {
+        "status": "ok",
+        "note": ""
+      }
+    },
+    "issues": [],
+    "notes": "普通单张狗狗；禁merge整表/GH货柜句；opaque浅底",
+    "reviewed_at": 1794906154.7944608,
+    "reviewed_at_iso": "2026-11-17 17:02:34",
+    "force_pass": false,
+    "skill_raw": "ordinary"
+  },
+  "warm_start_merged": true,
+  "warm_start_merged_at": "2026-11-17 17:14:32",
+  "warm_start_block_sha1": "2d802c6d8b04",
+  "ActionRequired": "STOP_AND_FINISH",
+  "converged_at_round": 3,
+  "rounds_to_converge": 3,
+  "showcase_ready": true,
+  "winner": {
+    "round": 3,
+    "round_label": "经过 3 轮达标定稿",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "1:1",
+    "reference_image_paths": [],
+    "param_validation": {
+      "three_step_verified": true,
+      "three_step_stage": "step3_judge",
+      "validation_passed": true
+    },
+    "generated_at": "17:14:33",
+    "image": "assets/character/dog_ordinary_20261117/r3.jpg",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 224119,
+      "size_kb": 218.9,
+      "width": 1024,
+      "height": 1024,
+      "aspect_ratio": "1:1",
+      "canonical_aspect_ratio": "1:1",
+      "color_entropy": 7.21
+    },
+    "raw_score": 9.52,
+    "score": 9.52,
+    "target_score_threshold": 9.5,
+    "dims": "构图9.6/光影9.5/透视9.6/质感9.5/风格9.6/无瑕疵9.4",
+    "dims_parsed": {
+      "composition": 9.6,
+      "lighting_color": 9.5,
+      "perspective_anatomy": 9.6,
+      "texture_detail": 9.5,
+      "spec_style": 9.6,
+      "flawlessness": 9.4
+    },
+    "weighted_score": 9.52,
+    "audit_warnings": [
+      "Agent Absolute-5D 已采纳（门槛 9.5）"
+    ],
+    "stagnated": false,
+    "strengths": "锁单只狗狗身份与清晰机位已守住：单只奶油犬正面胸像清晰可读；口鼻与桃粉项圈交界毛绒层次可读；浅奶油不透明底干净无整表",
+    "defects": "双眼白点高光仍略亮，珠光感偏硬一点；耳内阴影略平",
+    "next_fix": "已达标，无需继续叠加",
+    "prompt": "点名锁每轮都要单独留住，不许整张漂掉：锁单只狗狗身份与清晰机位 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: character.Dog\n- 置信度: 0.45（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n  · 确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；\n- 个人口味: 光影=柔光；构图=居中/对称构图 / 半身；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 廉价塑料感/油腻高光；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 项目私有知识卡 (Private Layer):\n  · [style-chibi] Q版头身: 2~3 头身，五官放大但识别锚点保留。\n  · [light-rim] 侧逆光: 轮廓分离主体与背景，高光条沿边缘走。\n题材画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光| 一只可爱狗狗，正面胸像或轻微3/4胸像，脸与耳朵清晰可读，居中构图。休闲游戏吉祥物立绘完成度：圆润可爱体量、友好大眼、干净柔和棚光、暖而不过饱和、上架级抛光。干净浅奶油或淡粉浅色柔和环境底，不透明。无文字、无UI、无合成梯整表、无多格、无货柜货架、不套Gossip Harbor棋盘格，禁止硬镜面CGI与油腻塑料高光。画幅1:1。| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；跟提示词品类默认画风，禁止回落写实棚拍 | Structure floor: limb count and joints match this species, and legs, wings, or the tail connect clearly; contact shadows read; do not melt extra limbs. Do not convert this into a human elbow pair or force two eyes | 再压低双眼白点高光至柔哑珠光；口鼻与项圈交界补一点毛绒明暗",
+    "continuation": false,
+    "passed": true,
+    "gate_blocked": false,
+    "image_gate_blocked": false,
+    "anatomy_score": 9.6,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "creature",
+    "judge_source": "agent_absolute_5d",
+    "remote_vlm": {
+      "source": "agent_self_judge",
+      "provider": "",
+      "model": "",
+      "error": "",
+      "active": false,
+      "score_evidence": {},
+      "evidence_missing_dims": [],
+      "review": {
+        "pass_count": 0,
+        "rerated": false,
+        "reason": ""
+      }
+    },
+    "should_continue_next_round": false,
+    "decision": "STOP_TARGET_REACHED",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "lighting",
+        "lesson": "本轮短板偏「lighting」：双眼白点高光仍略亮，珠光感偏硬一点；耳内阴影略平",
+        "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+        "from_score": "9.52"
+      },
+      {
+        "category": "keep",
+        "lesson": "保留本轮已做对的：锁单只狗狗身份与清晰机位已守住：单只奶油犬正面胸像清晰可读；口鼻与桃粉项圈交界毛绒层次可读；浅奶油不透明底干净无整表",
+        "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+        "from_score": "9.52"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "17:15:38",
+    "asset_image": "assets/character/dog_ordinary_20261117/r3.jpg"
+  },
+  "convergence_badge": "达标定稿 · 最高分第 3 轮",
+  "winner_image": "C:/Users/ZhengLangPC/Desktop/Cursor-Pmem-Art/assets/character/dog_ordinary_20261117/r3.jpg",
+  "best_image": "C:/Users/ZhengLangPC/Desktop/Cursor-Pmem-Art/assets/character/dog_ordinary_20261117/r3.jpg",
+  "final_image": "assets/character/dog_ordinary_20261117/final.jpg",
+  "settle_pending": false,
+  "process_board": ".memory-art/converge/boards/dog_ordinary_20261117_170033/index.html",
+  "settle_done_at": "2026-11-17 17:17:20 UTC+8",
+  "settle_saved_paths": [
+    ".memory-art\\entries\\character.Dog\\CHAT20261117171653988RECIPE.md",
+    ".memory-art\\entries\\character.Dog\\CHAT20261117171655717REDLINE.md",
+    ".memory-art\\_reflections\\20261117_171656_dog_ordinary_20261117_170033.json"
+  ]
+}

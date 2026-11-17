@@ -1,0 +1,929 @@
+{
+  "session_id": "merge_dog_shop_20261117",
+  "started_at": "2026-11-17 22:04:19 UTC+8",
+  "goal": "merge overview_sheet：港湾宠物店糖釉小狗 shop_ladder L1-L8，2x4浅奶油圆角卡，Gossip Harbor玩具货柜",
+  "module": "merge.HarborPetBoutiqueDogs",
+  "mode": "text_guided",
+  "converge_mode": "quality",
+  "quality_mode": "quality",
+  "stop_policy": "merge_overview_checklist",
+  "merged_generate_and_judge": false,
+  "three_step_separation": true,
+  "pipeline_mode": "strict_three_step_start_generate_judge",
+  "scale": "medium",
+  "style_jump": false,
+  "scale_profile": {
+    "scale": "medium",
+    "label": "中强度 · 小优化（锁机位）动态达标闭环 (Balance & Polish Dynamic Threshold >=9.5)",
+    "stop_policy": "dynamic_threshold",
+    "max_rounds": 4,
+    "min_rounds_before_stop": 1,
+    "target_score_threshold": 9.5,
+    "dim_weights": {
+      "composition": 0.15,
+      "lighting_color": 0.15,
+      "perspective_anatomy": 0.15,
+      "texture_detail": 0.15,
+      "spec_style": 0.15,
+      "flawlessness": 0.25
+    },
+    "retention_set": [
+      "viewpoint_frame",
+      "style_medium",
+      "identity"
+    ],
+    "next_fix_budget": "每轮都垫最初的参考图，只在提示词上补还没过的那一处（提示词改动仍 ≤40%）",
+    "max_prompt_delta_ratio": 0.4,
+    "allow_recompose": false,
+    "allow_viewpoint_change": false,
+    "allow_action_pose_change": true,
+    "allow_element_count_change": false,
+    "allow_layout_change": true,
+    "allow_lighting_overhaul": true,
+    "forbidden_changes": [
+      "viewpoint_angle (不改机位与镜头视角)",
+      "element_count (不增删主体元素清单)",
+      "no_full_recompose (不做整体 recompose / 换景别故事)",
+      "style_surface (跟提示词品类默认画风，禁止回落写实棚拍)"
+    ],
+    "min_round_leap": 0.15,
+    "prompt_delta_baseline": "previous",
+    "prompt_directive": "品类默认画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光",
+    "medium_family": "generic",
+    "best_direction_hint": "最优方向：光影·空气·介质；可小幅姿态/局部布局",
+    "goal": "merge overview_sheet：港湾宠物店糖釉小狗 shop_ladder L1-L8，2x4浅奶油圆角卡，Gossip Harbor玩具货柜",
+    "module": "merge.HarborPetBoutiqueDogs",
+    "ref_image": "",
+    "ref_analysis": ""
+  },
+  "medium_family": "generic",
+  "contract": "",
+  "target_score_threshold": 9.5,
+  "recompose_dir": "",
+  "fast_track": false,
+  "draft_ok": false,
+  "ref_image": "",
+  "ref_analysis": "",
+  "default_aspect_ratio": "",
+  "default_reference_image_paths": [],
+  "aspect_ratio": "",
+  "reference_image_paths": [],
+  "ref_physical_traits": {},
+  "param_validation": {},
+  "step_trace": [
+    "step1_start"
+  ],
+  "threshold": 9.5,
+  "accept_threshold": 9.5,
+  "max_rounds": 4,
+  "ready_to_finish": true,
+  "status": "finished",
+  "owner_conversation_id": "session:merge_dog_shop_20261117",
+  "route_ids": [
+    "merge.ladder"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "round_label": "第 1 轮初稿",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "16:9",
+      "reference_image_paths": [],
+      "param_validation": {
+        "three_step_verified": true,
+        "three_step_stage": "step3_judge",
+        "validation_passed": true
+      },
+      "generated_at": "22:09:28",
+      "image": "assets/skill_20261117_dog_merge/merge_shop/sheet_r1.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 228489,
+        "size_kb": 223.1,
+        "width": 1280,
+        "height": 720,
+        "aspect_ratio": "16:9",
+        "canonical_aspect_ratio": "16:9",
+        "color_entropy": 7.2
+      },
+      "raw_score": 8.37,
+      "score": 8.37,
+      "target_score_threshold": 9.5,
+      "dims": "构图8.8/光影8.2/透视8.8/质感7.8/风格8.0/无瑕疵8.6",
+      "dims_parsed": {
+        "composition": 8.8,
+        "lighting_color": 8.2,
+        "perspective_anatomy": 8.8,
+        "texture_detail": 7.8,
+        "spec_style": 8.0,
+        "flawlessness": 8.6
+      },
+      "weighted_score": 8.37,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "提示：邻档框高接近（第 1→2 为 0.58→0.59）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "提示：邻档框高接近（第 2→3 为 0.59→0.60）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "提示：邻档框高接近（第 3→4 为 0.60→0.59）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "提示：邻档框高接近（第 4→5 为 0.59→0.61）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "第 6 格有贴边残片（面积 0.094）：像抠格拼贴或切顶，整张重出，禁止拼贴",
+        "第 7 格有贴边残片（面积 0.093）：像抠格拼贴或切顶，整张重出，禁止拼贴",
+        "点名锁未单独验收：机位=统一3/4俯视柔光左上；题材=港湾宠物店糖釉小狗八档；底=浅奶油圆角卡；链型=shop_ladder"
+      ],
+      "stagnated": false,
+      "strengths": "2x4浅奶油圆角卡齐全且每格一件居中；L1无配件到L8花车的剪影升级链肉眼可跟",
+      "defects": "俯视偏正前方坐姿整表，主光偏均匀棚柔而非左上块面釉光；犬身偏哑光黏土/软塑胶，缺糖釉块面高光可读；L4围巾侧向尖角外飘不够更像贴颈三角巾；L6-L8礼帽礼盒花车同样偏哑；提示：邻档框高接近（第 1→2 为 0.58→0.59）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 2→3 为 0.59→0.60）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 3→4 为 0.60→0.59）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 4→5 为 0.59→0.61）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；第 6 格有贴边残片（面积 0.094）：像抠格拼贴或切顶，整张重出，禁止拼贴；第 7 格有贴边残片（面积 0.093）：像抠格拼贴或切顶，整张重出，禁止拼贴；点名锁未单独验收：机位=统一3/4俯视柔光左上；题材=港湾宠物店糖釉小狗八档；底=浅奶油圆角卡；链型=shop_ladder",
+      "next_fix": "强化软立体糖釉块面高光（非硬镜面），压哑光黏土与软塑胶UI；L4三角围巾左右尖角外飘更明显；保持2x4档序与奶油焦糖犬色；末档不得明显矮于前档；有贴边残片/切顶须整张重出；邻档靠剪影/件数可分；禁止跨轮抠格拼表",
+      "prompt": "休闲 merge 货柜默认气质：Gossip Harbor 玩具货柜——软立体糖釉道具、圆润厚实、无硬描边、暖饱和、块面高光可读、棋盘缩略一眼可认（对标真机棋盘货的休闲图标完成度，不是美食棚拍）。材质锁死为有体积的糖釉玩具货柜道具（柔光高光可读），不是实物，也不是哑光黏土/软塑胶 UI 图标。禁止：写实摄影、美食棚拍、产品静物、玻璃真实折射、木纹指纹、果汁乳浊摄影感、微距毛孔、油光金属、暗沉旧塑料、硬镜面 CGI、硬卡通 CGI、皮克斯硬塑胶高光、哑光黏土拟态、软塑胶 UI 图标、平面绘本贴纸风冒充货柜。档位句只写糖釉玩具剪影/件数/容器/完成态与整块色；禁止焦斑/烤痕/鳞片微距/湿润汤面感/柠檬片香菜末/摄影级摆盘质感词（点名写实或垫真机截图锁画风除外）。仅格子/版式参考：只锁格子，不跟参考写实表面；玩家垫 GH 真机锁画风时跟截图货面，勿再灌本缺省句。 | 点名锁每轮都要单独留住，不许整张漂掉：机位=统一3/4俯视柔光左上；题材=港湾宠物店糖釉小狗八档；底=浅奶油圆角卡；链型=shop_ladder | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.HarborPetBoutiqueDogs\n- 置信度: 0.45（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 五链合成：不必每档保留L1原件/母体锁死；同域合理升级、档差明显即可\n  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n  · 确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；\n- 个人口味: 光影=柔光；构图=居中/对称构图 / 半身；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 错误头身比/头过大；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n品类默认画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光 | Gossip Harbor 玩具货柜狗狗合成梯整表；chain_mode=shop_ladder 同族形变货柜。软立体糖釉玩具货柜，圆润厚实，无硬描边，暖饱和，柔光釉面高光，棋盘缩略可认；禁止写实摄影、美食棚拍、产品静物、玻璃真实折射、木纹指纹、微距毛孔、硬镜面CGI、皮克斯硬塑、哑光黏土拟态、软塑胶UI。整表统一：同一 3/4 俯视、同一柔光左上、浅奶油圆角卡 2×4、奶油焦糖犬色+软粉天蓝配饰同色相家族；每格一件居中留边；无字无等级字；生物眼睛可读。 L1 坐姿小狗：奶油焦糖坐姿糖釉小狗，圆耳短尾无配件，整块犬色可读 L2 颈圈小狗：同坐姿加天蓝圆颈圈，颈下圆环改掉裸颈剪影 L3 蝴蝶结小狗：头顶软粉大蝴蝶结左右伸出，顶轮廓明显高于颈圈档 L4 围巾小狗：三角围巾左右尖角外飘，侧向宽度明显大于蝴蝶结档 L5 毛衣小狗：厚毛衣鼓成桶形身躯，围巾尖角消失，身宽成主轮廓 L6 礼帽小狗：高礼帽竖直顶出，帽檐圆盘改掉毛衣桶形顶轮廓 L7 礼盒小狗：打开礼盒内坐一只戴小礼帽的小狗，盒沿方框成新外轮廓 L8 花车小狗：双轮花车上坐礼装小狗，车轮加车箱剪影最宽仍留卡边 禁止跨格拼贴、残片、切顶；邻档靠剪影或件数可分，不靠放大。 禁止美食棚拍、产品静物、玻璃真实折射、木纹指纹、果汁乳浊摄影感、档位摄影质感词。 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；跟提示词品类默认画风，禁止回落写实棚拍 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；跟提示词品类默认画风，禁止回落写实棚拍 | Structure floor: limb count and joints match this species, and legs, wings, or the tail connect clearly; contact shadows read; do not melt extra limbs. Do not convert this into a human elbow pair or force two eyes",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.8,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "creature",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：俯视偏正前方坐姿整表，主光偏均匀棚柔而非左上块面釉光；犬身偏哑光黏土/软塑胶，缺糖釉块面高光可读；L4围巾侧向尖角外飘不够更像贴颈三角巾；L6-L8礼帽礼盒花车",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.37"
+        },
+        {
+          "category": "narrative_camera",
+          "lesson": "本轮短板偏「narrative_camera」：俯视偏正前方坐姿整表，主光偏均匀棚柔而非左上块面釉光；犬身偏哑光黏土/软塑胶，缺糖釉块面高光可读；L4围巾侧向尖角外飘不够更像贴颈三角巾；L6-L8礼帽礼盒花车",
+          "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+          "from_score": "8.37"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：2x4浅奶油圆角卡齐全且每格一件居中；L1无配件到L8花车的剪影升级链肉眼可跟",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.37"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "22:10:42"
+    },
+    {
+      "round": 2,
+      "round_label": "第 2 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "16:9",
+      "reference_image_paths": [],
+      "param_validation": {
+        "three_step_verified": true,
+        "three_step_stage": "step3_judge",
+        "validation_passed": true
+      },
+      "generated_at": "22:12:32",
+      "image": "assets/skill_20261117_dog_merge/merge_shop/sheet_r2.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 212176,
+        "size_kb": 207.2,
+        "width": 1280,
+        "height": 720,
+        "aspect_ratio": "16:9",
+        "canonical_aspect_ratio": "16:9",
+        "color_entropy": 7.21
+      },
+      "raw_score": 8.56,
+      "score": 8.56,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.0/光影8.4/透视8.9/质感8.0/风格8.2/无瑕疵8.8",
+      "dims_parsed": {
+        "composition": 9.0,
+        "lighting_color": 8.4,
+        "perspective_anatomy": 8.9,
+        "texture_detail": 8.0,
+        "spec_style": 8.2,
+        "flawlessness": 8.8
+      },
+      "weighted_score": 8.56,
+      "audit_warnings": [
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "提示：邻档框高接近（第 1→2 为 0.64→0.66）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "提示：邻档框高接近（第 2→3 为 0.66→0.68）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "提示：邻档框高接近（第 3→4 为 0.68→0.66）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "提示：邻档框高接近（第 4→5 为 0.66→0.69）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "点名锁未单独验收：机位=统一3/4俯视柔光左上；题材=港湾宠物店糖釉小狗八档；底=浅奶油圆角卡；链型=shop_ladder"
+      ],
+      "stagnated": false,
+      "strengths": "2x4浅奶油卡与八档升级链仍清楚；L7礼盒开盖与L5桶形毛衣剪影可读",
+      "defects": "俯视正前坐姿整表，主光仍偏均匀棚柔；犬身偏哑光乙烯玩具/黏土，釉面块面高光#FEFDFB仍弱；L4粉围巾体积更好但左右尖角外飘仍不够尖；L8花车偏童车马车而非双轮花车箱剪影；提示：邻档框高接近（第 1→2 为 0.64→0.66）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 2→3 为 0.66→0.68）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 3→4 为 0.68→0.66）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 4→5 为 0.66→0.69）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；点名锁未单独验收：机位=统一3/4俯视柔光左上；题材=港湾宠物店糖釉小狗八档；底=浅奶油圆角卡；链型=shop_ladder",
+      "next_fix": "整表重开强化糖釉块面高光与暖冷补光，严禁哑光黏土乙烯玩具面；L4三角围巾左右尖角外飘；L8双轮花车箱+轮清晰；保持2x4档序",
+      "prompt": "休闲 merge 货柜默认气质：Gossip Harbor 玩具货柜——软立体糖釉道具、圆润厚实、无硬描边、暖饱和、块面高光可读、棋盘缩略一眼可认（对标真机棋盘货的休闲图标完成度，不是美食棚拍）。材质锁死为有体积的糖釉玩具货柜道具（柔光高光可读），不是实物，也不是哑光黏土/软塑胶 UI 图标。禁止：写实摄影、美食棚拍、产品静物、玻璃真实折射、木纹指纹、果汁乳浊摄影感、微距毛孔、油光金属、暗沉旧塑料、硬镜面 CGI、硬卡通 CGI、皮克斯硬塑胶高光、哑光黏土拟态、软塑胶 UI 图标、平面绘本贴纸风冒充货柜。档位句只写糖釉玩具剪影/件数/容器/完成态与整块色；禁止焦斑/烤痕/鳞片微距/湿润汤面感/柠檬片香菜末/摄影级摆盘质感词（点名写实或垫真机截图锁画风除外）。仅格子/版式参考：只锁格子，不跟参考写实表面；玩家垫 GH 真机锁画风时跟截图货面，勿再灌本缺省句。 | 点名锁每轮都要单独留住，不许整张漂掉：机位=统一3/4俯视柔光左上；题材=港湾宠物店糖釉小狗八档；底=浅奶油圆角卡；链型=shop_ladder | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.HarborPetBoutiqueDogs\n- 置信度: 0.45（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 五链合成：不必每档保留L1原件/母体锁死；同域合理升级、档差明显即可\n  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n  · 确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；\n- 个人口味: 光影=柔光；构图=居中/对称构图 / 半身；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 错误头身比/头过大；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n品类默认画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光 | Gossip Harbor 玩具货柜狗狗合成梯整表；chain_mode=shop_ladder 同族形变货柜。软立体糖釉玩具货柜，圆润厚实，无硬描边，暖饱和，柔光釉面高光，棋盘缩略可认；禁止写实摄影、美食棚拍、产品静物、玻璃真实折射、木纹指纹、微距毛孔、硬镜面CGI、皮克斯硬塑、哑光黏土拟态、软塑胶UI。整表统一：同一 3/4 俯视、同一柔光左上、浅奶油圆角卡 2×4、奶油焦糖犬色+软粉天蓝配饰同色相家族；每格一件居中留边；无字无等级字；生物眼睛可读。 L1 坐姿小狗：奶油焦糖坐姿糖釉小狗，圆耳短尾无配件，整块犬色可读 L2 颈圈小狗：同坐姿加天蓝圆颈圈，颈下圆环改掉裸颈剪影 L3 蝴蝶结小狗：头顶软粉大蝴蝶结左右伸出，顶轮廓明显高于颈圈档 L4 围巾小狗：三角围巾左右尖角外飘，侧向宽度明显大于蝴蝶结档 L5 毛衣小狗：厚毛衣鼓成桶形身躯，围巾尖角消失，身宽成主轮廓 L6 礼帽小狗：高礼帽竖直顶出，帽檐圆盘改掉毛衣桶形顶轮廓 L7 礼盒小狗：打开礼盒内坐一只戴小礼帽的小狗，盒沿方框成新外轮廓 L8 花车小狗：双轮花车上坐礼装小狗，车轮加车箱剪影最宽仍留卡边 禁止跨格拼贴、残片、切顶；邻档靠剪影或件数可分，不靠放大。 禁止美食棚拍、产品静物、玻璃真实折射、木纹指纹、果汁乳浊摄影感、档位摄影质感词。 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；跟提示词品类默认画风，禁止回落写实棚拍 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；跟提示词品类默认画风，禁止回落写实棚拍 | Structure floor: limb count and joints match this species, and legs, wings, or the tail connect clearly; contact shadows read; do not melt extra limbs. Do not convert this into a human elbow pair or force two eyes | 强化软立体糖釉块面高光（非硬镜面），压哑光黏土与软塑胶UI；L4三角围巾左右尖角外飘更明显；保持2x4档序与奶油焦糖犬色；末档不得明显矮于前档；有贴边残片/切顶须整张重出；邻档靠剪影/件数可分；禁止跨轮抠格拼表",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.9,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "creature",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：俯视正前坐姿整表，主光仍偏均匀棚柔；犬身偏哑光乙烯玩具/黏土，釉面块面高光#FEFDFB仍弱；L4粉围巾体积更好但左右尖角外飘仍不够尖；L8花车偏童车马车而非双",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.56"
+        },
+        {
+          "category": "narrative_camera",
+          "lesson": "本轮短板偏「narrative_camera」：俯视正前坐姿整表，主光仍偏均匀棚柔；犬身偏哑光乙烯玩具/黏土，釉面块面高光#FEFDFB仍弱；L4粉围巾体积更好但左右尖角外飘仍不够尖；L8花车偏童车马车而非双",
+          "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+          "from_score": "8.56"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：2x4浅奶油卡与八档升级链仍清楚；L7礼盒开盖与L5桶形毛衣剪影可读",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.56"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "22:13:17"
+    },
+    {
+      "round": 3,
+      "round_label": "第 3 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "16:9",
+      "reference_image_paths": [],
+      "param_validation": {
+        "three_step_verified": true,
+        "three_step_stage": "step3_judge",
+        "validation_passed": true
+      },
+      "generated_at": "22:14:53",
+      "image": "assets/skill_20261117_dog_merge/merge_shop/sheet_r3.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 205366,
+        "size_kb": 200.6,
+        "width": 1280,
+        "height": 720,
+        "aspect_ratio": "16:9",
+        "canonical_aspect_ratio": "16:9",
+        "color_entropy": 7.21
+      },
+      "raw_score": 8.44,
+      "score": 8.44,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.0/光影8.3/透视8.9/质感7.9/风格8.1/无瑕疵8.5",
+      "dims_parsed": {
+        "composition": 9.0,
+        "lighting_color": 8.3,
+        "perspective_anatomy": 8.9,
+        "texture_detail": 7.9,
+        "spec_style": 8.1,
+        "flawlessness": 8.5
+      },
+      "weighted_score": 8.44,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +-0.12 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "提示：邻档框高接近（第 1→2 为 0.67→0.68）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "提示：邻档框高接近（第 2→3 为 0.68→0.70）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "提示：邻档框高接近（第 3→4 为 0.70→0.67）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "提示：邻档框高接近（第 5→6 为 0.72→0.72）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "第 7 格有贴边残片（面积 0.012）：像抠格拼贴或切顶，整张重出，禁止拼贴",
+        "点名锁未单独验收：机位=统一3/4俯视柔光左上；题材=港湾宠物店糖釉小狗八档；底=浅奶油圆角卡；链型=shop_ladder"
+      ],
+      "stagnated": true,
+      "strengths": "2x4卡面与L1到L8升级意图仍可读；L7开盖礼盒轮廓清楚",
+      "defects": "俯视正前坐姿整表，表面仍偏光滑塑胶玩具而非糖釉块面高光；L5毛衣改成棕褐针织偏离软粉天蓝配饰家族；L4仍偏贴颈三角巾尖角外飘不足；L8偏粉金马车而非双轮花车箱；提示：邻档框高接近（第 1→2 为 0.67→0.68）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 2→3 为 0.68→0.70）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 3→4 为 0.70→0.67）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 5→6 为 0.72→0.72）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；第 7 格有贴边残片（面积 0.012）：像抠格拼贴或切顶，整张重出，禁止拼贴；点名锁未单独验收：机位=统一3/4俯视柔光左上；题材=港湾宠物店糖釉小狗八档；底=浅奶油圆角卡；链型=shop_ladder",
+      "next_fix": "若续跑：压塑胶面拉糖釉块面高光；L5毛衣回天蓝桶形；L4尖角外飘；L8双轮花车箱；末档不得明显矮于前档；有贴边残片/切顶须整张重出；邻档靠剪影/件数可分；禁止跨轮抠格拼表",
+      "prompt": "休闲 merge 货柜默认气质：Gossip Harbor 玩具货柜——软立体糖釉道具、圆润厚实、无硬描边、暖饱和、块面高光可读、棋盘缩略一眼可认（对标真机棋盘货的休闲图标完成度，不是美食棚拍）。材质锁死为有体积的糖釉玩具货柜道具（柔光高光可读），不是实物，也不是哑光黏土/软塑胶 UI 图标。禁止：写实摄影、美食棚拍、产品静物、玻璃真实折射、木纹指纹、果汁乳浊摄影感、微距毛孔、油光金属、暗沉旧塑料、硬镜面 CGI、硬卡通 CGI、皮克斯硬塑胶高光、哑光黏土拟态、软塑胶 UI 图标、平面绘本贴纸风冒充货柜。档位句只写糖釉玩具剪影/件数/容器/完成态与整块色；禁止焦斑/烤痕/鳞片微距/湿润汤面感/柠檬片香菜末/摄影级摆盘质感词（点名写实或垫真机截图锁画风除外）。仅格子/版式参考：只锁格子，不跟参考写实表面；玩家垫 GH 真机锁画风时跟截图货面，勿再灌本缺省句。 | 点名锁每轮都要单独留住，不许整张漂掉：机位=统一3/4俯视柔光左上；题材=港湾宠物店糖釉小狗八档；底=浅奶油圆角卡；链型=shop_ladder | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.HarborPetBoutiqueDogs\n- 置信度: 0.45（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 五链合成：不必每档保留L1原件/母体锁死；同域合理升级、档差明显即可\n  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n  · 确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；\n- 个人口味: 光影=柔光；构图=居中/对称构图 / 半身；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 错误头身比/头过大；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n品类默认画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光 | Gossip Harbor 玩具货柜狗狗合成梯整表；chain_mode=shop_ladder 同族形变货柜。软立体糖釉玩具货柜，圆润厚实，无硬描边，暖饱和，柔光釉面高光，棋盘缩略可认；禁止写实摄影、美食棚拍、产品静物、玻璃真实折射、木纹指纹、微距毛孔、硬镜面CGI、皮克斯硬塑、哑光黏土拟态、软塑胶UI。整表统一：同一 3/4 俯视、同一柔光左上、浅奶油圆角卡 2×4、奶油焦糖犬色+软粉天蓝配饰同色相家族；每格一件居中留边；无字无等级字；生物眼睛可读。 L1 坐姿小狗：奶油焦糖坐姿糖釉小狗，圆耳短尾无配件，整块犬色可读 L2 颈圈小狗：同坐姿加天蓝圆颈圈，颈下圆环改掉裸颈剪影 L3 蝴蝶结小狗：头顶软粉大蝴蝶结左右伸出，顶轮廓明显高于颈圈档 L4 围巾小狗：三角围巾左右尖角外飘，侧向宽度明显大于蝴蝶结档 L5 毛衣小狗：厚毛衣鼓成桶形身躯，围巾尖角消失，身宽成主轮廓 L6 礼帽小狗：高礼帽竖直顶出，帽檐圆盘改掉毛衣桶形顶轮廓 L7 礼盒小狗：打开礼盒内坐一只戴小礼帽的小狗，盒沿方框成新外轮廓 L8 花车小狗：双轮花车上坐礼装小狗，车轮加车箱剪影最宽仍留卡边 禁止跨格拼贴、残片、切顶；邻档靠剪影或件数可分，不靠放大。 禁止美食棚拍、产品静物、玻璃真实折射、木纹指纹、果汁乳浊摄影感、档位摄影质感词。 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；跟提示词品类默认画风，禁止回落写实棚拍 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；跟提示词品类默认画风，禁止回落写实棚拍 | Structure floor: limb count and joints match this species, and legs, wings, or the tail connect clearly; contact shadows read; do not melt extra limbs. Do not convert this into a human elbow pair or force two eyes | 整表重开强化糖釉块面高光与暖冷补光，严禁哑光黏土乙烯玩具面；L4三角围巾左右尖角外飘；L8双轮花车箱+轮清晰；保持2x4档序",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.9,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "creature",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": true,
+      "decision": "CONTINUE_NEXT_ROUND",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：俯视正前坐姿整表，表面仍偏光滑塑胶玩具而非糖釉块面高光；L5毛衣改成棕褐针织偏离软粉天蓝配饰家族；L4仍偏贴颈三角巾尖角外飘不足；L8偏粉金马车而非双轮花车箱；",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.44"
+        },
+        {
+          "category": "narrative_camera",
+          "lesson": "本轮短板偏「narrative_camera」：俯视正前坐姿整表，表面仍偏光滑塑胶玩具而非糖釉块面高光；L5毛衣改成棕褐针织偏离软粉天蓝配饰家族；L4仍偏贴颈三角巾尖角外飘不足；L8偏粉金马车而非双轮花车箱；",
+          "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+          "from_score": "8.44"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：2x4卡面与L1到L8升级意图仍可读；L7开盖礼盒轮廓清楚",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.44"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "22:15:38"
+    },
+    {
+      "round": 4,
+      "round_label": "第 4 轮精修",
+      "stage": "judged",
+      "judged": true,
+      "atomic_step": false,
+      "three_step_verified": true,
+      "step_trace": [
+        "step1_start",
+        "step2_generate",
+        "step3_judge"
+      ],
+      "aspect_ratio": "16:9",
+      "reference_image_paths": [],
+      "param_validation": {
+        "three_step_verified": true,
+        "three_step_stage": "step3_judge",
+        "validation_passed": true
+      },
+      "generated_at": "22:18:00",
+      "image": "assets/skill_20261117_dog_merge/merge_shop/sheet_r4.jpg",
+      "image_verification": {
+        "exists": true,
+        "size_bytes": 223243,
+        "size_kb": 218.0,
+        "width": 1280,
+        "height": 720,
+        "aspect_ratio": "16:9",
+        "canonical_aspect_ratio": "16:9",
+        "color_entropy": 7.22
+      },
+      "raw_score": 8.55,
+      "score": 8.55,
+      "target_score_threshold": 9.5,
+      "dims": "构图9.0/光影8.4/透视8.9/质感8.0/风格8.3/无瑕疵8.7",
+      "dims_parsed": {
+        "composition": 9.0,
+        "lighting_color": 8.4,
+        "perspective_anatomy": 8.9,
+        "texture_detail": 8.0,
+        "spec_style": 8.3,
+        "flawlessness": 8.7
+      },
+      "weighted_score": 8.55,
+      "audit_warnings": [
+        "收敛停滞预警：本轮净增 +0.11 低于当前档位 (medium) 的最小跃升 +0.15。下一轮在原构图内加强光影与材质，不要改机位或增删主体",
+        "Agent Absolute-5D 已采纳（门槛 9.5）",
+        "提示：邻档框高接近（第 1→2 为 0.62→0.64）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "提示：邻档框高接近（第 3→4 为 0.68→0.64）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "提示：邻档框高接近（第 4→5 为 0.64→0.63）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "提示：邻档框高接近（第 5→6 为 0.63→0.64）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+        "第 2 格有贴边残片（面积 0.012）：像抠格拼贴或切顶，整张重出，禁止拼贴",
+        "第 6 格有贴边残片（面积 0.084）：像抠格拼贴或切顶，整张重出，禁止拼贴",
+        "第 7 格有贴边残片（面积 0.085）：像抠格拼贴或切顶，整张重出，禁止拼贴",
+        "点名锁未单独验收：机位=统一3/4俯视柔光左上；题材=港湾宠物店糖釉小狗八档；底=浅奶油圆角卡；链型=shop_ladder"
+      ],
+      "stagnated": true,
+      "strengths": "2x4浅奶油卡齐全；L5天蓝毛衣与L7开盖礼盒剪影清楚；八档升级链可读",
+      "defects": "俯视正前坐姿整表，表面仍偏哑光黏土/塑胶玩具，糖釉块面高光不足；L4粉巾侧向尖角外飘仍弱；L8仍偏粉蓝马车而非双轮花车箱主剪影；提示：邻档框高接近（第 1→2 为 0.62→0.64）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 3→4 为 0.68→0.64）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 4→5 为 0.64→0.63）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 5→6 为 0.63→0.64）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；第 2 格有贴边残片（面积 0.012）：像抠格拼贴或切顶，整张重出，禁止拼贴；第 6 格有贴边残片（面积 0.084）：像抠格拼贴或切顶，整张重出，禁止拼贴；第 7 格有贴边残片（面积 0.085）：像抠格拼贴或切顶，整张重出，禁止拼贴；点名锁未单独验收：机位=统一3/4俯视柔光左上；题材=港湾宠物店糖釉小狗八档；底=浅奶油圆角卡；链型=shop_ladder",
+      "next_fix": "已满4轮：交最高分；若续作另开session专攻糖釉高光与L8花车箱；末档不得明显矮于前档；有贴边残片/切顶须整张重出；邻档靠剪影/件数可分；禁止跨轮抠格拼表",
+      "prompt": "休闲 merge 货柜默认气质：Gossip Harbor 玩具货柜——软立体糖釉道具、圆润厚实、无硬描边、暖饱和、块面高光可读、棋盘缩略一眼可认（对标真机棋盘货的休闲图标完成度，不是美食棚拍）。材质锁死为有体积的糖釉玩具货柜道具（柔光高光可读），不是实物，也不是哑光黏土/软塑胶 UI 图标。禁止：写实摄影、美食棚拍、产品静物、玻璃真实折射、木纹指纹、果汁乳浊摄影感、微距毛孔、油光金属、暗沉旧塑料、硬镜面 CGI、硬卡通 CGI、皮克斯硬塑胶高光、哑光黏土拟态、软塑胶 UI 图标、平面绘本贴纸风冒充货柜。档位句只写糖釉玩具剪影/件数/容器/完成态与整块色；禁止焦斑/烤痕/鳞片微距/湿润汤面感/柠檬片香菜末/摄影级摆盘质感词（点名写实或垫真机截图锁画风除外）。仅格子/版式参考：只锁格子，不跟参考写实表面；玩家垫 GH 真机锁画风时跟截图货面，勿再灌本缺省句。 | 点名锁每轮都要单独留住，不许整张漂掉：机位=统一3/4俯视柔光左上；题材=港湾宠物店糖釉小狗八档；底=浅奶油圆角卡；链型=shop_ladder | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.HarborPetBoutiqueDogs\n- 置信度: 0.45（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 五链合成：不必每档保留L1原件/母体锁死；同域合理升级、档差明显即可\n  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n  · 确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；\n- 个人口味: 光影=柔光；构图=居中/对称构图 / 半身；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 错误头身比/头过大；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n品类默认画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光 | Gossip Harbor 玩具货柜狗狗合成梯整表；chain_mode=shop_ladder 同族形变货柜。软立体糖釉玩具货柜，圆润厚实，无硬描边，暖饱和，柔光釉面高光，棋盘缩略可认；禁止写实摄影、美食棚拍、产品静物、玻璃真实折射、木纹指纹、微距毛孔、硬镜面CGI、皮克斯硬塑、哑光黏土拟态、软塑胶UI。整表统一：同一 3/4 俯视、同一柔光左上、浅奶油圆角卡 2×4、奶油焦糖犬色+软粉天蓝配饰同色相家族；每格一件居中留边；无字无等级字；生物眼睛可读。 L1 坐姿小狗：奶油焦糖坐姿糖釉小狗，圆耳短尾无配件，整块犬色可读 L2 颈圈小狗：同坐姿加天蓝圆颈圈，颈下圆环改掉裸颈剪影 L3 蝴蝶结小狗：头顶软粉大蝴蝶结左右伸出，顶轮廓明显高于颈圈档 L4 围巾小狗：三角围巾左右尖角外飘，侧向宽度明显大于蝴蝶结档 L5 毛衣小狗：厚毛衣鼓成桶形身躯，围巾尖角消失，身宽成主轮廓 L6 礼帽小狗：高礼帽竖直顶出，帽檐圆盘改掉毛衣桶形顶轮廓 L7 礼盒小狗：打开礼盒内坐一只戴小礼帽的小狗，盒沿方框成新外轮廓 L8 花车小狗：双轮花车上坐礼装小狗，车轮加车箱剪影最宽仍留卡边 禁止跨格拼贴、残片、切顶；邻档靠剪影或件数可分，不靠放大。 禁止美食棚拍、产品静物、玻璃真实折射、木纹指纹、果汁乳浊摄影感、档位摄影质感词。 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；跟提示词品类默认画风，禁止回落写实棚拍 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；跟提示词品类默认画风，禁止回落写实棚拍 | Structure floor: limb count and joints match this species, and legs, wings, or the tail connect clearly; contact shadows read; do not melt extra limbs. Do not convert this into a human elbow pair or force two eyes | 整表重开强化糖釉块面高光与暖冷补光，严禁哑光黏土乙烯玩具面；L4三角围巾左右尖角外飘；L8双轮花车箱+轮清晰；保持2x4档序",
+      "continuation": false,
+      "passed": false,
+      "gate_blocked": true,
+      "image_gate_blocked": false,
+      "anatomy_score": 8.9,
+      "anatomy_floor": 7.5,
+      "anatomy_veto_blocked": false,
+      "subject_kind": "creature",
+      "judge_source": "agent_absolute_5d",
+      "remote_vlm": {
+        "source": "agent_self_judge",
+        "provider": "",
+        "model": "",
+        "error": "",
+        "active": false,
+        "score_evidence": {},
+        "evidence_missing_dims": [],
+        "review": {
+          "pass_count": 0,
+          "rerated": false,
+          "reason": ""
+        }
+      },
+      "should_continue_next_round": false,
+      "decision": "STOP_MAX_ROUNDS",
+      "early_safe_stop": null,
+      "lessons": [
+        {
+          "category": "lighting",
+          "lesson": "本轮短板偏「lighting」：俯视正前坐姿整表，表面仍偏哑光黏土/塑胶玩具，糖釉块面高光不足；L4粉巾侧向尖角外飘仍弱；L8仍偏粉蓝马车而非双轮花车箱主剪影；提示：邻档框高接近（第 1→2 ",
+          "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+          "from_score": "8.55"
+        },
+        {
+          "category": "narrative_camera",
+          "lesson": "本轮短板偏「narrative_camera」：俯视正前坐姿整表，表面仍偏哑光黏土/塑胶玩具，糖釉块面高光不足；L4粉巾侧向尖角外飘仍弱；L8仍偏粉蓝马车而非双轮花车箱主剪影；提示：邻档框高接近（第 1→2 ",
+          "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+          "from_score": "8.55"
+        },
+        {
+          "category": "keep",
+          "lesson": "保留本轮已做对的：2x4浅奶油卡齐全；L5天蓝毛衣与L7开盖礼盒剪影清楚；八档升级链可读",
+          "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+          "from_score": "8.55"
+        }
+      ],
+      "skip_ahead_hint": false,
+      "recorded_at": "22:18:41"
+    }
+  ],
+  "warm_start": {
+    "project_id": "pmem-art",
+    "project_name": "pmem-art",
+    "active_project": {
+      "project_id": "pmem-art",
+      "project_slug": "pmem-art",
+      "project_name": "pmem-art",
+      "layer_scope": "private",
+      "bound_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "origin_root": "/Users/yanghu/Desktop/pmem-art",
+      "root_name": "pmem-art",
+      "library_dir": ".memory-art/projects/pmem-art",
+      "copied_from_project": "cursor-pmem-art",
+      "copied_from_root": "C:\\Users\\ZhengLangPC\\Desktop\\Cursor-Pmem-Art",
+      "auto_isolated_on_copy": true,
+      "created_at": "2026-10-28 01:28:36 UTC+8",
+      "updated_at": "2026-11-10 14:02:24 UTC+8"
+    },
+    "module": "merge.HarborPetBoutiqueDogs",
+    "goal": "merge overview_sheet：港湾宠物店糖釉小狗 shop_ladder L1-L8，2x4浅奶油圆角卡，Gossip Harbor玩具货柜",
+    "confidence": 0.45,
+    "fast_track_eligible": false,
+    "confidence_reasons": [
+      "个人口味/正向保留非空",
+      "注入红线可控（0 条，已按任务主题过滤）",
+      "挂载 0 张项目知识卡 + 1 张全局美术底层基础卡"
+    ],
+    "top_recipes": [],
+    "top_redlines": [],
+    "art_decisions": [],
+    "private_knowledge": [],
+    "shared_knowledge": [
+      {
+        "id": "palette-70-20-10",
+        "title": "色彩构成：70-20-10 色板比例黄金法则",
+        "body": "画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+        "layer_scope": "shared"
+      }
+    ],
+    "palette": [],
+    "taste_snapshot": {
+      "preferred_lighting": [
+        "柔光"
+      ],
+      "preferred_composition": [
+        "居中/对称构图",
+        "半身"
+      ],
+      "preferred_line_weight": [],
+      "preferred_color_temperature": [
+        "避免过饱和",
+        "暖色调"
+      ],
+      "banned_habits": [
+        "错误头身比/头过大",
+        "漏抠/黑底/毛边",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色"
+      ],
+      "keep_phrases": [
+        "五链合成：不必每档保留L1原件/母体锁死；同域合理升级、档差明显即可",
+        "确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。",
+        "确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。",
+        "确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；"
+      ],
+      "banned_habits_raw_tail": [
+        "禁止偏离样张画风：过度霓虹、脏暗阴影、油腻高光、写实皮肤毛孔、扁平UI描边",
+        "电池审稿：原画竖构图避免贴样张布局；边缘反光勿过曝",
+        "电池审稿：软糖表面勿过硬塑胶、籽粒凹槽勿模板化、蒂叶勿粘连、底部需极弱接触感",
+        "黑底整表OK；糖果勿焊蛋糕；加强L1锁与气球档差",
+        "错误头身比/头过大",
+        "廉价塑料感/油腻高光",
+        "漏抠/黑底/毛边",
+        "赛博霓虹/霓虹紫",
+        "过曝高光",
+        "脏暗阴影/脏色"
+      ]
+    },
+    "dropped_keeps": [
+      "确认作为风格正向锚点：软立体圆角玩具感微型花园；巨型花草尺度差；花瓣屋顶与暖陶木结构；柔漫左上日光；饱和友好pastel；哑光缎面；Q版小动物角色",
+      "确认作为风格正向锚点：妖精花园样张可复用日晒草绿#A1B041与叶面绿#658C55铺满草地和巨叶"
+    ],
+    "inject_summary": "记忆注入摘要（不拦截）：注入 keep 4 · 丢弃域外/未标 keep 2 · 红线 0 · 知识卡 1",
+    "prompt_block": "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.HarborPetBoutiqueDogs\n- 置信度: 0.45（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 五链合成：不必每档保留L1原件/母体锁死；同域合理升级、档差明显即可\n  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n  · 确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；\n- 个人口味: 光影=柔光；构图=居中/对称构图 / 半身；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 错误头身比/头过大；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。",
+    "built_at": "2026-11-17 22:04:19 UTC+8"
+  },
+  "lessons_all": [
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：俯视偏正前方坐姿整表，主光偏均匀棚柔而非左上块面釉光；犬身偏哑光黏土/软塑胶，缺糖釉块面高光可读；L4围巾侧向尖角外飘不够更像贴颈三角巾；L6-L8礼帽礼盒花车",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.37"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：俯视偏正前方坐姿整表，主光偏均匀棚柔而非左上块面釉光；犬身偏哑光黏土/软塑胶，缺糖釉块面高光可读；L4围巾侧向尖角外飘不够更像贴颈三角巾；L6-L8礼帽礼盒花车",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "8.37"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：2x4浅奶油圆角卡齐全且每格一件居中；L1无配件到L8花车的剪影升级链肉眼可跟",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.37"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：俯视正前坐姿整表，主光仍偏均匀棚柔；犬身偏哑光乙烯玩具/黏土，釉面块面高光#FEFDFB仍弱；L4粉围巾体积更好但左右尖角外飘仍不够尖；L8花车偏童车马车而非双",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.56"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：俯视正前坐姿整表，主光仍偏均匀棚柔；犬身偏哑光乙烯玩具/黏土，釉面块面高光#FEFDFB仍弱；L4粉围巾体积更好但左右尖角外飘仍不够尖；L8花车偏童车马车而非双",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "8.56"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：2x4浅奶油卡与八档升级链仍清楚；L7礼盒开盖与L5桶形毛衣剪影可读",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.56"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：俯视正前坐姿整表，表面仍偏光滑塑胶玩具而非糖釉块面高光；L5毛衣改成棕褐针织偏离软粉天蓝配饰家族；L4仍偏贴颈三角巾尖角外飘不足；L8偏粉金马车而非双轮花车箱；",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.44"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：俯视正前坐姿整表，表面仍偏光滑塑胶玩具而非糖釉块面高光；L5毛衣改成棕褐针织偏离软粉天蓝配饰家族；L4仍偏贴颈三角巾尖角外飘不足；L8偏粉金马车而非双轮花车箱；",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "8.44"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：2x4卡面与L1到L8升级意图仍可读；L7开盖礼盒轮廓清楚",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.44"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：俯视正前坐姿整表，表面仍偏哑光黏土/塑胶玩具，糖釉块面高光不足；L4粉巾侧向尖角外飘仍弱；L8仍偏粉蓝马车而非双轮花车箱主剪影；提示：邻档框高接近（第 1→2 ",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "8.55"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：俯视正前坐姿整表，表面仍偏哑光黏土/塑胶玩具，糖釉块面高光不足；L4粉巾侧向尖角外飘仍弱；L8仍偏粉蓝马车而非双轮花车箱主剪影；提示：邻档框高接近（第 1→2 ",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "8.55"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：2x4浅奶油卡齐全；L5天蓝毛衣与L7开盖礼盒剪影清楚；八档升级链可读",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.55"
+    }
+  ],
+  "dim_lock_overrides": {},
+  "dim_lock_history": [],
+  "pad_mode": "auto",
+  "anatomy_floor": 7.5,
+  "early_stop_min_round": 2,
+  "regression_drop": 0.15,
+  "safe_early_stop": false,
+  "merge_delivery": "overview_sheet",
+  "merge_sheet_cap": 4,
+  "merge_discuss_cap": 2,
+  "single_judge": false,
+  "understanding_contract": {
+    "version": 1,
+    "raw_utterance": "merge overview_sheet：港湾宠物店糖釉小狗 shop_ladder L1-L8，2x4浅奶油圆角卡，Gossip Harbor玩具货柜",
+    "l0": {
+      "route_ids": [
+        "merge.ladder"
+      ],
+      "banner": "【按点名锁定 merge.ladder】",
+      "delivery": "merge.ladder"
+    },
+    "l1": {
+      "locks": [
+        "机位=统一3/4俯视柔光左上",
+        "题材=港湾宠物店糖釉小狗八档",
+        "底=浅奶油圆角卡",
+        "链型=shop_ladder"
+      ],
+      "unlocks": [
+        "品种花色微调",
+        "配饰饱和微调"
+      ],
+      "defaults_shown": [
+        "默认：overview_sheet 2x4 浅奶油圆角卡",
+        "shop_ladder 糖釉小狗 L1坐姿→L2颈圈→L3蝴蝶结→L4围巾→L5毛衣→L6礼帽→L7礼盒→L8花车",
+        "Gossip Harbor玩具货柜",
+        "生物眼睛可读",
+        "无字无等级"
+      ],
+      "commercial_vibe": "软立体糖釉玩具货柜、暖奶油焦糖犬、软粉天蓝点缀"
+    },
+    "l2": {
+      "open": true,
+      "surface_fix": "",
+      "last_feedback": "",
+      "feedback_layer": ""
+    },
+    "notes": ""
+  },
+  "reasonableness_history": [
+    {
+      "reviewed_at": 1794924335.8346157,
+      "passed": false,
+      "skill": "merge",
+      "issues": [
+        "revised 疑似丢掉 draft 主体锚点（玩具货柜狗狗、合成梯整表）；合理性修订不得换题材",
+        "merge 须点名 same_object / shop_ladder / species_change，或明示轻门（勿默认按同模加装填 parts_add）"
+      ]
+    },
+    {
+      "reviewed_at": 1794924365.6982467,
+      "passed": true,
+      "skill": "merge",
+      "issues": []
+    }
+  ],
+  "reasonableness": {
+    "passed": true,
+    "skill": "merge",
+    "draft_prompt": "Gossip Harbor 玩具货柜狗狗合成梯整表。2x4格子，浅奶油圆角卡，八只小狗升级。",
+    "revised_prompt": "Gossip Harbor 玩具货柜狗狗合成梯整表；chain_mode=shop_ladder 同族形变货柜。软立体糖釉玩具货柜，圆润厚实，无硬描边，暖饱和，柔光釉面高光，棋盘缩略可认；禁止写实摄影、美食棚拍、产品静物、玻璃真实折射、木纹指纹、微距毛孔、硬镜面CGI、皮克斯硬塑、哑光黏土拟态、软塑胶UI。整表统一：同一 3/4 俯视、同一柔光左上、浅奶油圆角卡 2×4、奶油焦糖犬色+软粉天蓝配饰同色相家族；每格一件居中留边；无字无等级字；生物眼睛可读。\nL1 坐姿小狗：奶油焦糖坐姿糖釉小狗，圆耳短尾无配件，整块犬色可读\nL2 颈圈小狗：同坐姿加天蓝圆颈圈，颈下圆环改掉裸颈剪影\nL3 蝴蝶结小狗：头顶软粉大蝴蝶结左右伸出，顶轮廓明显高于颈圈档\nL4 围巾小狗：三角围巾左右尖角外飘，侧向宽度明显大于蝴蝶结档\nL5 毛衣小狗：厚毛衣鼓成桶形身躯，围巾尖角消失，身宽成主轮廓\nL6 礼帽小狗：高礼帽竖直顶出，帽檐圆盘改掉毛衣桶形顶轮廓\nL7 礼盒小狗：打开礼盒内坐一只戴小礼帽的小狗，盒沿方框成新外轮廓\nL8 花车小狗：双轮花车上坐礼装小狗，车轮加车箱剪影最宽仍留卡边\n禁止跨格拼贴、残片、切顶；邻档靠剪影或件数可分，不靠放大。\n禁止美食棚拍、产品静物、玻璃真实折射、木纹指纹、果汁乳浊摄影感、档位摄影质感词。\n约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；跟提示词品类默认画风，禁止回落写实棚拍",
+    "checklist": {
+      "subject_action": {
+        "status": "ok",
+        "note": ""
+      },
+      "element_budget": {
+        "status": "ok",
+        "note": ""
+      },
+      "hard_locks": {
+        "status": "ok",
+        "note": ""
+      },
+      "fail_at_glance": {
+        "status": "ok",
+        "note": ""
+      },
+      "single_centered_item": {
+        "status": "ok",
+        "note": ""
+      },
+      "chain_mode_declared": {
+        "status": "ok",
+        "note": ""
+      },
+      "upgrade_reason_concrete": {
+        "status": "ok",
+        "note": ""
+      },
+      "family_or_base_lock": {
+        "status": "ok",
+        "note": ""
+      }
+    },
+    "issues": [],
+    "notes": "",
+    "reviewed_at": 1794924365.6982467,
+    "reviewed_at_iso": "2026-11-17 22:06:05",
+    "force_pass": false,
+    "skill_raw": "merge"
+  },
+  "discussions": [
+    {
+      "round": 0,
+      "kind": "reasonableness",
+      "prompt": "Gossip Harbor 玩具货柜狗狗合成梯整表；chain_mode=shop_ladder 同族形变货柜。软立体糖釉玩具货柜，圆润厚实，无硬描边，暖饱和，柔光釉面高光，棋盘缩略可认；禁止写实摄影、美食棚拍、产品静物、玻璃真实折射、木纹指纹、微距毛孔、硬镜面CGI、皮克斯硬塑、哑光黏土拟态、软塑胶UI。整表统一：同一 3/4 俯视、同一柔光左上、浅奶油圆角卡 2×4、奶油焦糖犬色+软粉天蓝配饰同色相家族；每格一件居中留边；无字无等级字；生物眼睛可读。\nL1 坐姿小狗：奶油焦糖坐姿糖釉小狗，圆耳短尾无配件，整块犬色可读\nL2 颈圈小狗：同坐姿加天蓝圆颈圈，颈下圆环改掉裸颈剪影\nL3 蝴蝶结小狗：头顶软粉大蝴蝶结左右伸出，顶轮廓明显高于颈圈档\nL4 围巾小狗：三角围巾左右尖角外飘，侧向宽度明显大于蝴蝶结档\nL5 毛衣小狗：厚毛衣鼓成桶形身躯，围巾尖角消失，身宽成主轮廓\nL6 礼帽小狗：高礼帽竖直顶出，帽檐圆盘改掉毛衣桶形顶轮廓\nL7 礼盒小狗：打开礼盒内坐一只戴小礼帽的小狗，盒沿方框成新外轮廓\nL8 花车小狗：双轮花车上坐礼装小狗，车轮加车箱剪影最宽仍留卡边\n禁止跨格拼贴、残片、切顶；邻档靠剪影或件数可分，不靠放大。\n禁止美食棚拍、产品静物、玻璃真实折射、木纹指纹、果汁乳浊摄影感、档位摄影质感词。\n约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；跟提示词品类默认画风，禁止回落写实棚拍",
+      "strengths": "合理性闸已过：subject_action=ok；element_budget=ok；hard_locks=ok；fail_at_glance=ok；single_centered_item=ok；chain_mode_declared=ok；upgrade_reason_concrete=ok；family_or_base_lock=ok",
+      "defects": "",
+      "next_fix": "首轮 generate 使用本修订提示词；审美迭代不得推翻硬锁与元素预算"
+    }
+  ],
+  "warm_start_merged": true,
+  "warm_start_merged_at": "2026-11-17 22:18:00",
+  "warm_start_block_sha1": "8a2e5662fc93",
+  "ActionRequired": "STOP_PICK_BEST",
+  "showcase_ready": true,
+  "winner": {
+    "round": 2,
+    "round_label": "第 2 轮精修",
+    "stage": "judged",
+    "judged": true,
+    "atomic_step": false,
+    "three_step_verified": true,
+    "step_trace": [
+      "step1_start",
+      "step2_generate",
+      "step3_judge"
+    ],
+    "aspect_ratio": "16:9",
+    "reference_image_paths": [],
+    "param_validation": {
+      "three_step_verified": true,
+      "three_step_stage": "step3_judge",
+      "validation_passed": true
+    },
+    "generated_at": "22:12:32",
+    "image": "assets/skill_20261117_dog_merge/merge_shop/sheet_r2.jpg",
+    "image_verification": {
+      "exists": true,
+      "size_bytes": 212176,
+      "size_kb": 207.2,
+      "width": 1280,
+      "height": 720,
+      "aspect_ratio": "16:9",
+      "canonical_aspect_ratio": "16:9",
+      "color_entropy": 7.21
+    },
+    "raw_score": 8.56,
+    "score": 8.56,
+    "target_score_threshold": 9.5,
+    "dims": "构图9.0/光影8.4/透视8.9/质感8.0/风格8.2/无瑕疵8.8",
+    "dims_parsed": {
+      "composition": 9.0,
+      "lighting_color": 8.4,
+      "perspective_anatomy": 8.9,
+      "texture_detail": 8.0,
+      "spec_style": 8.2,
+      "flawlessness": 8.8
+    },
+    "weighted_score": 8.56,
+    "audit_warnings": [
+      "Agent Absolute-5D 已采纳（门槛 9.5）",
+      "提示：邻档框高接近（第 1→2 为 0.64→0.66）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+      "提示：邻档框高接近（第 2→3 为 0.66→0.68）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+      "提示：邻档框高接近（第 3→4 为 0.68→0.66）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+      "提示：邻档框高接近（第 4→5 为 0.66→0.69）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯",
+      "点名锁未单独验收：机位=统一3/4俯视柔光左上；题材=港湾宠物店糖釉小狗八档；底=浅奶油圆角卡；链型=shop_ladder"
+    ],
+    "stagnated": false,
+    "strengths": "2x4浅奶油卡与八档升级链仍清楚；L7礼盒开盖与L5桶形毛衣剪影可读",
+    "defects": "俯视正前坐姿整表，主光仍偏均匀棚柔；犬身偏哑光乙烯玩具/黏土，釉面块面高光#FEFDFB仍弱；L4粉围巾体积更好但左右尖角外飘仍不够尖；L8花车偏童车马车而非双轮花车箱剪影；提示：邻档框高接近（第 1→2 为 0.64→0.66）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 2→3 为 0.66→0.68）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 3→4 为 0.68→0.66）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；提示：邻档框高接近（第 4→5 为 0.66→0.69）；分档靠剪影/件数，勿跨轮抠格拼表凑体量阶梯；点名锁未单独验收：机位=统一3/4俯视柔光左上；题材=港湾宠物店糖釉小狗八档；底=浅奶油圆角卡；链型=shop_ladder",
+    "next_fix": "整表重开强化糖釉块面高光与暖冷补光，严禁哑光黏土乙烯玩具面；L4三角围巾左右尖角外飘；L8双轮花车箱+轮清晰；保持2x4档序",
+    "prompt": "休闲 merge 货柜默认气质：Gossip Harbor 玩具货柜——软立体糖釉道具、圆润厚实、无硬描边、暖饱和、块面高光可读、棋盘缩略一眼可认（对标真机棋盘货的休闲图标完成度，不是美食棚拍）。材质锁死为有体积的糖釉玩具货柜道具（柔光高光可读），不是实物，也不是哑光黏土/软塑胶 UI 图标。禁止：写实摄影、美食棚拍、产品静物、玻璃真实折射、木纹指纹、果汁乳浊摄影感、微距毛孔、油光金属、暗沉旧塑料、硬镜面 CGI、硬卡通 CGI、皮克斯硬塑胶高光、哑光黏土拟态、软塑胶 UI 图标、平面绘本贴纸风冒充货柜。档位句只写糖釉玩具剪影/件数/容器/完成态与整块色；禁止焦斑/烤痕/鳞片微距/湿润汤面感/柠檬片香菜末/摄影级摆盘质感词（点名写实或垫真机截图锁画风除外）。仅格子/版式参考：只锁格子，不跟参考写实表面；玩家垫 GH 真机锁画风时跟截图货面，勿再灌本缺省句。 | 点名锁每轮都要单独留住，不许整张漂掉：机位=统一3/4俯视柔光左上；题材=港湾宠物店糖釉小狗八档；底=浅奶油圆角卡；链型=shop_ladder | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)\n- 目标模块: merge.HarborPetBoutiqueDogs\n- 置信度: 0.45（fast-track 资格: 否）\n- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。\n- 正向保留（要怎样）:\n  · 五链合成：不必每档保留L1原件/母体锁死；同域合理升级、档差明显即可\n  · 确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。\n  · 确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。\n  · 确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；\n- 个人口味: 光影=柔光；构图=居中/对称构图 / 半身；色温=避免过饱和 / 暖色调\n- 个人禁用习惯（已按任务域过滤）: 错误头身比/头过大；漏抠/黑底/毛边；赛博霓虹/霓虹紫；过曝高光；脏暗阴影/脏色\n- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):\n  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。\n品类默认画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光 | Gossip Harbor 玩具货柜狗狗合成梯整表；chain_mode=shop_ladder 同族形变货柜。软立体糖釉玩具货柜，圆润厚实，无硬描边，暖饱和，柔光釉面高光，棋盘缩略可认；禁止写实摄影、美食棚拍、产品静物、玻璃真实折射、木纹指纹、微距毛孔、硬镜面CGI、皮克斯硬塑、哑光黏土拟态、软塑胶UI。整表统一：同一 3/4 俯视、同一柔光左上、浅奶油圆角卡 2×4、奶油焦糖犬色+软粉天蓝配饰同色相家族；每格一件居中留边；无字无等级字；生物眼睛可读。 L1 坐姿小狗：奶油焦糖坐姿糖釉小狗，圆耳短尾无配件，整块犬色可读 L2 颈圈小狗：同坐姿加天蓝圆颈圈，颈下圆环改掉裸颈剪影 L3 蝴蝶结小狗：头顶软粉大蝴蝶结左右伸出，顶轮廓明显高于颈圈档 L4 围巾小狗：三角围巾左右尖角外飘，侧向宽度明显大于蝴蝶结档 L5 毛衣小狗：厚毛衣鼓成桶形身躯，围巾尖角消失，身宽成主轮廓 L6 礼帽小狗：高礼帽竖直顶出，帽檐圆盘改掉毛衣桶形顶轮廓 L7 礼盒小狗：打开礼盒内坐一只戴小礼帽的小狗，盒沿方框成新外轮廓 L8 花车小狗：双轮花车上坐礼装小狗，车轮加车箱剪影最宽仍留卡边 禁止跨格拼贴、残片、切顶；邻档靠剪影或件数可分，不靠放大。 禁止美食棚拍、产品静物、玻璃真实折射、木纹指纹、果汁乳浊摄影感、档位摄影质感词。 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；跟提示词品类默认画风，禁止回落写实棚拍 | 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；跟提示词品类默认画风，禁止回落写实棚拍 | Structure floor: limb count and joints match this species, and legs, wings, or the tail connect clearly; contact shadows read; do not melt extra limbs. Do not convert this into a human elbow pair or force two eyes | 强化软立体糖釉块面高光（非硬镜面），压哑光黏土与软塑胶UI；L4三角围巾左右尖角外飘更明显；保持2x4档序与奶油焦糖犬色；末档不得明显矮于前档；有贴边残片/切顶须整张重出；邻档靠剪影/件数可分；禁止跨轮抠格拼表",
+    "continuation": false,
+    "passed": false,
+    "gate_blocked": true,
+    "image_gate_blocked": false,
+    "anatomy_score": 8.9,
+    "anatomy_floor": 7.5,
+    "anatomy_veto_blocked": false,
+    "subject_kind": "creature",
+    "judge_source": "agent_absolute_5d",
+    "remote_vlm": {
+      "source": "agent_self_judge",
+      "provider": "",
+      "model": "",
+      "error": "",
+      "active": false,
+      "score_evidence": {},
+      "evidence_missing_dims": [],
+      "review": {
+        "pass_count": 0,
+        "rerated": false,
+        "reason": ""
+      }
+    },
+    "should_continue_next_round": true,
+    "decision": "CONTINUE_NEXT_ROUND",
+    "early_safe_stop": null,
+    "lessons": [
+      {
+        "category": "lighting",
+        "lesson": "本轮短板偏「lighting」：俯视正前坐姿整表，主光仍偏均匀棚柔；犬身偏哑光乙烯玩具/黏土，釉面块面高光#FEFDFB仍弱；L4粉围巾体积更好但左右尖角外飘仍不够尖；L8花车偏童车马车而非双",
+        "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+        "from_score": "8.56"
+      },
+      {
+        "category": "narrative_camera",
+        "lesson": "本轮短板偏「narrative_camera」：俯视正前坐姿整表，主光仍偏均匀棚柔；犬身偏哑光乙烯玩具/黏土，釉面块面高光#FEFDFB仍弱；L4粉围巾体积更好但左右尖角外飘仍不够尖；L8花车偏童车马车而非双",
+        "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+        "from_score": "8.56"
+      },
+      {
+        "category": "keep",
+        "lesson": "保留本轮已做对的：2x4浅奶油卡与八档升级链仍清楚；L7礼盒开盖与L5桶形毛衣剪影可读",
+        "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+        "from_score": "8.56"
+      }
+    ],
+    "skip_ahead_hint": false,
+    "recorded_at": "22:13:17",
+    "asset_image": "assets/skill_20261117_dog_merge/merge_shop/sheet_r2.jpg"
+  },
+  "rounds_to_converge": 4,
+  "convergence_badge": "共 4 轮未达阈值，采用最高分",
+  "winner_image": "assets/skill_20261117_dog_merge/merge_shop/sheet_r2.jpg",
+  "best_image": "assets/skill_20261117_dog_merge/merge_shop/sheet_r2.jpg",
+  "final_image": "assets/skill_20261117_dog_merge/merge_shop/final.jpg",
+  "settle_pending": false,
+  "process_sheet": ".memory-art/converge/boards/merge_dog_shop_20261117/process_sheet.jpg",
+  "process_board": ".memory-art/converge/boards/merge_dog_shop_20261117/index.html",
+  "process_rounds": ".memory-art/converge/boards/merge_dog_shop_20261117/rounds.md",
+  "settle_done_at": "2026-11-17 22:19:37 UTC+8",
+  "settle_saved_paths": [
+    ".memory-art\\entries\\merge.HarborPetBoutiqueDogs\\CHAT20261117221920172RECIPE.md",
+    ".memory-art\\entries\\merge.HarborPetBoutiqueDogs\\CHAT20261117221921535REDLINE.md",
+    ".memory-art\\_reflections\\20261117_221922_merge_dog_shop_20261117.json"
+  ]
+}

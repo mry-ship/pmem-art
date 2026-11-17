@@ -187,7 +187,7 @@ class TestDoctorQuietAndTip(unittest.TestCase):
         from lifecycle import maybe_lazy_doctor_on_hook, load_doctor_state
 
         with mock.patch("lifecycle.spawn_lazy_doctor", return_value=True) as sp:
-            tip = maybe_lazy_doctor_on_hook(self.td, "pre-gen")
+            tip = maybe_lazy_doctor_on_hook(self.td, "converge_finish")
         self.assertIsNone(tip)
         sp.assert_called_once()
         state = load_doctor_state(self.td)
@@ -198,17 +198,27 @@ class TestDoctorQuietAndTip(unittest.TestCase):
 
         save_doctor_state(self.td, {"last_run_at": _doctor_now_str(), "status": "ok"})
         with mock.patch("lifecycle.spawn_lazy_doctor") as sp:
-            maybe_lazy_doctor_on_hook(self.td, "pre-gen")
+            maybe_lazy_doctor_on_hook(self.td, "converge_finish")
         sp.assert_not_called()
 
-    def test_spawn_events_include_post_session_and_finish(self) -> None:
+    def test_spawn_events_include_boundary_and_finish_only(self) -> None:
         from lifecycle import maybe_lazy_doctor_on_hook
 
-        for event in ("post-asset", "post-tool", "session", "converge_finish"):
+        for event in ("session", "stop", "converge_finish"):
             with mock.patch("lifecycle.spawn_lazy_doctor", return_value=True) as sp:
                 with mock.patch("lifecycle.try_claim_lazy_doctor", return_value=True):
                     maybe_lazy_doctor_on_hook(self.td, event)
             sp.assert_called_once()
+
+    def test_mid_art_events_do_not_spawn_doctor(self) -> None:
+        from lifecycle import maybe_lazy_doctor_on_hook
+
+        for event in ("pre-gen", "post-asset", "pre-tool", "post-tool"):
+            with mock.patch("lifecycle.spawn_lazy_doctor") as sp:
+                with mock.patch("lifecycle.try_claim_lazy_doctor") as claim:
+                    maybe_lazy_doctor_on_hook(self.td, event)
+            sp.assert_not_called()
+            claim.assert_not_called()
 
     def test_unknown_event_only_consumes_tip(self) -> None:
         from lifecycle import maybe_lazy_doctor_on_hook

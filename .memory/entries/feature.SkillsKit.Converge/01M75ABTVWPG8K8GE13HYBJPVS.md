@@ -17,8 +17,8 @@ verify: unittest tests.test_auto_recall.TestSkillSpecForbidsHandPaste -q；技�
 applies: 跑 /pmem-draw 等生图技能或 converge generate 后出图时
 aliases:
 - 必须用最终 Prompt
-verified: '2026-11-11'
-verified_at: '2026-11-11T21:41:56.506+08:00'
+verified: '2026-11-17'
+verified_at: '2026-11-17T21:56:04.092+08:00'
 source:
   conversation: 22139001-636b-4095-b659-bf173c2ed4f2
 ---

@@ -248,7 +248,7 @@ def audit_showcase_file(path: str | Path) -> list[dict[str, Any]]:
 
 def format_report(issues: list[dict[str, Any]]) -> str:
     if not issues:
-        return "showcase-gate OK：没有 <9.5 且未满 4 轮的终稿格。"
+        return "showcase-gate OK：没有 <9.5 且未满 3 轮的终稿格。"
     lines = [f"showcase-gate FAIL：{len(issues)} 格还不能当终稿"]
     for item in issues:
         lines.append(

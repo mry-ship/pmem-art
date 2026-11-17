@@ -1,0 +1,104 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-11-17 17:16:56 UTC+8",
+  "session_id": "dog_ordinary_20261117_170033",
+  "goal": "一张可爱狗狗普通图，单主体胸像级正面或3/4，可爱休闲游戏吉祥物立绘气质",
+  "module": "character.Dog",
+  "converge_mode": "quality",
+  "guided_mode": "text_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 3,
+  "winner_round": 3,
+  "winner_score": 9.52,
+  "winner_image": "assets/character/dog_ordinary_20261117/r3.jpg",
+  "winner_passed": true,
+  "outcome": "达标定稿 · 最高分第 3 轮",
+  "what_fixed": [
+    "压低双眼镜面高光与油光感；嘴鼻额头加柔和毛簇明暗层次，保持圆润吉祥物立绘",
+    "再压低双眼白点高光至柔哑珠光；口鼻与项圈交界补一点毛绒明暗"
+  ],
+  "what_still_weak": "残余可接受点：双眼白点高光仍略亮，珠光感偏硬一点；耳内阴影略平",
+  "strengths": "锁单只狗狗身份与清晰机位已守住：单只奶油犬正面胸像清晰可读；口鼻与桃粉项圈交界毛绒层次可读；浅奶油不透明底干净无整表",
+  "taste_deltas": {
+    "from_strengths": [
+      "锁单只狗狗身份与清晰机位已守住：单只奶油犬正面胸像清晰可读；口鼻与桃粉项圈交界毛绒层次可读；浅奶油不透明底干净无整表"
+    ],
+    "from_defects": [
+      "双眼高光偏湿亮镜面，接近硬CGI油光；口鼻与额头绒面过匀滑，毛簇转折偏少；点名锁未单独验收：锁单只狗狗身份与清晰机位",
+      "双眼仍有偏亮白点高光，镜面感未完全压平；口鼻下方与粉项圈交界仍偏匀滑；点名锁未单独验收：锁单只狗狗身份与清晰机位"
+    ]
+  },
+  "warm_start_confidence": 0.45,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 9.12,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 9.42,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 9.52,
+      "passed": true
+    }
+  ],
+  "lessons": [
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：双眼高光偏湿亮镜面，接近硬CGI油光；口鼻与额头绒面过匀滑，毛簇转折偏少；点名锁未单独验收：锁单只狗狗身份与清晰机位",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.12"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：双眼高光偏湿亮镜面，接近硬CGI油光；口鼻与额头绒面过匀滑，毛簇转折偏少；点名锁未单独验收：锁单只狗狗身份与清晰机位",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "9.12"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：正面胸像居中，奶油犬脸与粉项圈清晰可读；浅奶油不透明底干净，无整表货柜杂物",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.12"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：双眼仍有偏亮白点高光，镜面感未完全压平；口鼻下方与粉项圈交界仍偏匀滑；点名锁未单独验收：锁单只狗狗身份与清晰机位",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.42"
+    },
+    {
+      "category": "narrative_camera",
+      "lesson": "本轮短板偏「narrative_camera」：双眼仍有偏亮白点高光，镜面感未完全压平；口鼻下方与粉项圈交界仍偏匀滑；点名锁未单独验收：锁单只狗狗身份与清晰机位",
+      "drill": "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "from_score": "9.42"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：点名锁验收：单只奶油犬正面胸像机位稳定可读；头顶毛簇与耳缘层次比上轮更软立体；浅奶油底干净无整表",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.42"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：双眼白点高光仍略亮，珠光感偏硬一点；耳内阴影略平",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.52"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：锁单只狗狗身份与清晰机位已守住：单只奶油犬正面胸像清晰可读；口鼻与桃粉项圈交界毛绒层次可读；浅奶油不透明底干净无整表",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.52"
+    }
+  ]
+}

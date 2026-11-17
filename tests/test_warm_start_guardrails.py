@@ -10,11 +10,21 @@ from improve.warm_start import (
     entry_on_topic_for_task,
     filter_habits_for_task,
     filter_keeps_for_task,
+    filter_keeps_with_audit,
     habit_relevant_for_task,
+    infer_keep_scopes,
     merge_conflict_taste_phrase,
+    normalize_keep_item,
     stale_merge_inject_summary,
+    tag_keep_phrase,
     _soft_goal_overlap_ok,
 )
+
+_GH_DOG_BLEED_KEEPS = [
+    "确认作为货柜正向锚点：合成宣传图里的道具是软立体糖釉玩具货柜，圆润厚实柔光釉面；不要哑光黏土/软塑胶UI。",
+    "确认作为渲染正向锚点：加载宣传图证明同一套圆润厚实、无硬描边、暖色辉光加冷色补光。釉面高光接近#FEFDFB。",
+    "确认作为风格正向锚点：休闲merge海鲜货柜真机表面——圆润厚实软立体、暖饱和、块面釉面高光、无硬描边；龙虾/蟹/蚝等同店玩具货面；棋盘格可读；",
+]
 
 
 class TestTasteDomainFilter(unittest.TestCase):
@@ -163,6 +173,105 @@ class TestKeepPhrases(unittest.TestCase):
         self.assertNotIn("HarborHotCocoa", blob)
         self.assertNotIn("光泽卡通 3D", blob)
         self.assertTrue(any("五链合成" in k or "软立体糖釉" in k for k in out))
+
+    def test_gh_cabinet_keeps_do_not_bleed_into_dog_collage(self) -> None:
+        out = filter_keeps_for_task(
+            _GH_DOG_BLEED_KEEPS,
+            "character.DogCollage",
+            "一张2x2多品种狗狗拼板；可爱休闲吉祥物立绘",
+        )
+        blob = "｜".join(out)
+        self.assertEqual(out, [])
+        self.assertNotIn("货柜", blob)
+        self.assertNotIn("海鲜", blob)
+        self.assertNotIn("龙虾", blob)
+        self.assertNotIn("糖釉", blob)
+
+    def test_gh_cabinet_keeps_still_ok_for_merge(self) -> None:
+        out = filter_keeps_for_task(
+            _GH_DOG_BLEED_KEEPS,
+            "merge.HarborOrange",
+            "Gossip Harbor 货柜合成梯",
+        )
+        self.assertTrue(any("软立体糖釉" in k or "货柜" in k or "釉面" in k for k in out))
+
+    def test_structured_merge_keep_dropped_for_portrait(self) -> None:
+        out = filter_keeps_for_task(
+            [{"text": "休闲merge海鲜货柜真机表面", "scopes": ["merge_ladder"]}],
+            "character.DogCollage",
+            "狗狗拼板",
+        )
+        self.assertEqual(out, [])
+
+    def test_short_universal_keep_survives_portrait(self) -> None:
+        out = filter_keeps_for_task(
+            ["柔光圆润", {"text": "干净棚光", "scopes": ["universal"]}],
+            "character.DogCollage",
+            "狗狗拼板",
+        )
+        self.assertTrue(any("柔光圆润" in k or "干净棚光" in k for k in out))
+
+    def test_tag_keep_phrase_marks_gh_as_merge(self) -> None:
+        tagged = tag_keep_phrase(_GH_DOG_BLEED_KEEPS[0])
+        self.assertIn("merge_ladder", tagged.get("scopes") or [])
+        self.assertIn("merge_ladder", infer_keep_scopes(_GH_DOG_BLEED_KEEPS[2]))
+
+    def test_audit_reports_dropped_gh_keeps(self) -> None:
+        kept, dropped = filter_keeps_with_audit(
+            _GH_DOG_BLEED_KEEPS + ["柔光圆润"],
+            "character.DogCollage",
+            "狗狗拼板",
+        )
+        self.assertTrue(any("柔光圆润" in k for k in kept))
+        self.assertGreaterEqual(len(dropped), 3)
+        self.assertTrue(any("货柜" in d or "海鲜" in d or "釉面" in d for d in dropped))
+
+    def test_normalize_keep_item_unions_explicit_and_inferred(self) -> None:
+        text, scopes = normalize_keep_item(
+            {"text": "柔光圆润休闲merge海鲜货柜", "scopes": ["universal"]}
+        )
+        self.assertIn("海鲜货柜", text)
+        self.assertIn("merge_ladder", scopes)
+        self.assertIn("universal", scopes)
+
+    def test_instrument_merge_does_not_get_seafood_cabinet_keeps(self) -> None:
+        out = filter_keeps_for_task(
+            _GH_DOG_BLEED_KEEPS + ["五链合成：同域合理升级、档差明显即可"],
+            "prop.InstrumentMerge",
+            "吉他合成梯整表",
+        )
+        blob = "｜".join(out)
+        self.assertNotIn("海鲜", blob)
+        self.assertNotIn("龙虾", blob)
+        self.assertNotIn("玩具货柜", blob)
+        self.assertTrue(any("五链合成" in k for k in out))
+
+    def test_instrument_merge_drops_volume_ladder_ban(self) -> None:
+        packed = filter_habits_for_task(
+            [
+                "白底不可接受，要和L1一样透明/黑空底；档差要一眼可辨且体量递增；禁止换物种；零件必须累计",
+                "赛博霓虹/霓虹紫",
+            ],
+            "prop.InstrumentMerge",
+            "吉他合成梯整表",
+            limit=5,
+        )
+        blob = "｜".join(packed)
+        self.assertNotIn("体量递增", blob)
+        self.assertNotIn("黑空底", blob)
+        self.assertTrue(any("赛博" in h for h in packed))
+
+    def test_festival_candy_merge_does_not_get_seafood_keeps(self) -> None:
+        out = filter_keeps_for_task(
+            _GH_DOG_BLEED_KEEPS + ["五链合成：同域合理升级、档差明显即可"],
+            "prop.FestivalMerge",
+            "糖果合成梯整表",
+        )
+        blob = "｜".join(out)
+        self.assertNotIn("海鲜", blob)
+        self.assertNotIn("龙虾", blob)
+        self.assertNotIn("玩具货柜", blob)
+        self.assertTrue(any("五链合成" in k for k in out))
 
 
 class TestCollapseOpposedPrefs(unittest.TestCase):
@@ -447,6 +556,32 @@ class TestBuildPackIntegration(unittest.TestCase):
             self.assertIn("正向保留", block)
         else:
             self.assertNotIn("正向保留", block)
+
+    def test_dog_collage_pack_drops_on_disk_gh_keeps(self) -> None:
+        """Regression: real taste.json GH cabinet keeps must not enter portrait prompt_block."""
+        root = Path(__file__).resolve().parents[1]
+        pack = build_warm_start_pack(
+            root,
+            {"modules": {"character.DogCollage": {}}, "entries": []},
+            module="character.DogCollage",
+            goal="一张2x2多品种狗狗拼板；可爱休闲游戏吉祥物立绘；无垫图",
+        )
+        block = pack.get("prompt_block") or ""
+        self.assertNotIn("海鲜货柜", block)
+        self.assertNotIn("龙虾", block)
+        self.assertNotIn("玩具货柜", block)
+        self.assertNotIn("#FEFDFB", block)
+        self.assertIn("inject_summary", pack)
+        self.assertIn("不拦截", pack.get("inject_summary") or "")
+        # If disk still has GH keeps, audit must report drops (not silent lose without summary).
+        from improve.taste_profile import load_taste
+
+        raw = load_taste(root).get("keep_phrases") or []
+        blob = "｜".join(
+            (x.get("text") if isinstance(x, dict) else str(x)) for x in raw
+        )
+        if "货柜" in blob or "海鲜" in blob or "#FEFDFB" in blob:
+            self.assertGreaterEqual(len(pack.get("dropped_keeps") or []), 1)
 
 
 if __name__ == "__main__":

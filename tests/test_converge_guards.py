@@ -112,6 +112,39 @@ class TestPolicyDefaults(unittest.TestCase):
             )
         )
 
+    def test_plateau_rounds_1_stops_on_first_non_improve(self) -> None:
+        """Project wall-clock: plateau_rounds=1 → R3≤best 即 STOP_PLATEAU（狗狗 merge 场景）。"""
+        self.assertEqual(
+            decide_round_stop(
+                score_ok=True,
+                total=8.44,
+                dims={"perspective_anatomy": 8.9},
+                round_num=3,
+                min_rounds=1,
+                threshold=9.5,
+                anatomy_floor=7.5,
+                best_total=8.56,
+                no_improve_streak=1,
+                plateau_rounds=1,
+                regression_drop=0.15,
+                early_stop_min_round=2,
+                safe_early_stop=True,
+            ),
+            "STOP_PLATEAU",
+        )
+
+    def test_early_stop_block_ignores_gate_notes_guard(self) -> None:
+        """judge 不得用「有 gate_notes」短路早停（否则 merge 贴边提示会逼满 4 轮）。"""
+        src = (ROOT / "skills_kit" / "converge.py").read_text(encoding="utf-8")
+        self.assertNotIn(
+            "if not passed and should_continue and not gate_notes:",
+            src,
+        )
+        self.assertIn(
+            "must NOT force burning remaining rounds after plateau/regression",
+            src,
+        )
+
     def test_missing_anat_fail_closed(self) -> None:
         self.assertFalse(anatomy_ok_for_stop(None))
         self.assertFalse(anatomy_ok_for_stop({"composition": 9.9}))

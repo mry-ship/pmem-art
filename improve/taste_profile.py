@@ -89,14 +89,39 @@ def save_taste(root: Path, taste: dict[str, Any]) -> Path:
     raise TimeoutError(f"口味档案写入被占用，已重试仍失败: {p}") from last_err
 
 
-def _uniq_append(lst: list[Any], item: str, limit: int = 40) -> list[Any]:
-    item = (item or "").strip()
-    if not item:
+def _keep_text(item: Any) -> str:
+    if isinstance(item, dict):
+        return str(item.get("text") or item.get("phrase") or item.get("keep") or "").strip()
+    return str(item or "").strip()
+
+
+def _uniq_append(lst: list[Any], item: Any, limit: int = 40) -> list[Any]:
+    """Append str or {text,scopes}; de-dupe by text (case-insensitive)."""
+    if isinstance(item, dict):
+        text = _keep_text(item)
+        if not text:
+            return lst
+        low = text.lower()
+        existing = []
+        for x in lst:
+            xt = _keep_text(x)
+            if xt.lower() == low:
+                continue
+            existing.append(x)
+        existing.append({"text": text, "scopes": list(item.get("scopes") or [])})
+        return existing[-limit:]
+    item_s = str(item or "").strip()
+    if not item_s:
         return lst
     # de-dupe case-insensitive for short phrases
-    low = item.lower()
-    existing = [x for x in lst if isinstance(x, str) and x.lower() != low]
-    existing.append(item)
+    low = item_s.lower()
+    existing = []
+    for x in lst:
+        xt = _keep_text(x)
+        if xt.lower() == low:
+            continue
+        existing.append(x)
+    existing.append(item_s)
     return existing[-limit:]
 
 
@@ -219,7 +244,11 @@ def apply_feedback_to_taste(
 
     if kind == "recipe":
         sc["keeps"] = int(sc.get("keeps", 0)) + 1
-        taste["keep_phrases"] = _uniq_append(taste.get("keep_phrases") or [], clip_phrase(t, 80))
+        # 写入即打域标，避免全局 keep 锅炖串进非 merge 出图
+        from .warm_start import tag_keep_phrase
+
+        tagged = tag_keep_phrase(clip_phrase(t, 80))
+        taste["keep_phrases"] = _uniq_append(taste.get("keep_phrases") or [], tagged)
         for h in _extract_hints(t, LIGHTING_HINTS):
             taste["preferred_lighting"] = _uniq_append(taste.get("preferred_lighting") or [], h)
         for h in _extract_hints(t, COMPOSITION_HINTS):

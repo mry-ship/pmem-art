@@ -34,7 +34,7 @@ class TestConvergeLoop(unittest.TestCase):
         self._write(td, "cell", {
             "status": "generated_pending_judge",
             "accept_threshold": 9.5,
-            "max_rounds": 4,
+            "max_rounds": 3,
             "rounds": [{"round": 1, "image": "r1.jpg", "judged": False}],
         })
         hit = loop_followup(td)
@@ -47,7 +47,7 @@ class TestConvergeLoop(unittest.TestCase):
         self._write(td, "cell", {
             "status": "continue",
             "accept_threshold": 9.5,
-            "max_rounds": 4,
+            "max_rounds": 3,
             "rounds": [{"round": 1, "image": "r1.jpg", "judged": True, "score": 8.3}],
         })
         hit = loop_followup(td)
@@ -60,7 +60,7 @@ class TestConvergeLoop(unittest.TestCase):
         self._write(td, "cell", {
             "status": "max_rounds_reached",
             "accept_threshold": 9.5,
-            "max_rounds": 4,
+            "max_rounds": 3,
             "rounds": [
                 {"round": i, "image": f"r{i}.jpg", "judged": True, "score": 8.5}
                 for i in range(1, 5)
@@ -108,7 +108,7 @@ class TestConvergeLoop(unittest.TestCase):
         self._write(td, "cell", {
             "status": "generated_pending_judge",
             "accept_threshold": 9.5,
-            "max_rounds": 4,
+            "max_rounds": 3,
             "rounds": [{"round": 1, "image": "r1.jpg", "judged": False}],
         })
         self.assertEqual(active_owner_conversation_id(td), "")
@@ -127,7 +127,7 @@ class TestConvergeLoop(unittest.TestCase):
             {
                 "status": "generated_pending_judge",
                 "accept_threshold": 9.5,
-                "max_rounds": 4,
+                "max_rounds": 3,
                 "rounds": [{"round": 1, "image": "r1.jpg", "judged": False}],
             },
             conversation_id="conv-draw",
@@ -187,7 +187,7 @@ class TestConvergeLoop(unittest.TestCase):
                 {
                     "status": "generated_pending_judge",
                     "accept_threshold": 9.5,
-                    "max_rounds": 4,
+                    "max_rounds": 3,
                     "rounds": [{"round": 1, "image": "r1.jpg", "judged": False}],
                 },
                 ensure_ascii=False,
@@ -247,7 +247,7 @@ class TestConvergeLoop(unittest.TestCase):
             {
                 "status": "generated_pending_judge",
                 "accept_threshold": 9.5,
-                "max_rounds": 4,
+                "max_rounds": 3,
                 "rounds": [{"round": 1, "image": "r1.jpg", "judged": False}],
             },
             conversation_id="conv-draw",
@@ -288,7 +288,7 @@ class TestConvergeLoop(unittest.TestCase):
         self._write(td, "cell", {
             "status": "generated_pending_judge",
             "accept_threshold": 9.5,
-            "max_rounds": 4,
+            "max_rounds": 3,
             "rounds": [{"round": 1, "image": "r1.jpg", "judged": False}],
         })
         payload = json.dumps({
@@ -314,7 +314,7 @@ class TestConvergeLoop(unittest.TestCase):
             {
                 "status": "generated_pending_judge",
                 "accept_threshold": 9.5,
-                "max_rounds": 4,
+                "max_rounds": 3,
                 "rounds": [{"round": 1, "image": "r1.jpg", "judged": False}],
             },
             conversation_id="conv-draw",
@@ -341,7 +341,7 @@ class TestConvergeLoop(unittest.TestCase):
             {
                 "status": "generated_pending_judge",
                 "accept_threshold": 9.5,
-                "max_rounds": 4,
+                "max_rounds": 3,
                 "rounds": [{"round": 1, "image": "r1.jpg", "judged": False}],
             },
             conversation_id="conv-draw",

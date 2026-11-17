@@ -1,0 +1,15 @@
+{
+  "saved_at": 1794924289.0827549,
+  "text": "UI概念稿：Royal Match类三消休闲主界面 竖屏9:16",
+  "banner": "【按点名锁定 ui.kit】",
+  "route_ids": [
+    "ui.kit"
+  ],
+  "mode": "skill",
+  "execute_ok": true,
+  "artist_say": "【按点名锁定 ui.kit】",
+  "plan_conflict": false,
+  "confidence": "named",
+  "conversation_id": "session:royal_match_main_20261117",
+  "named_seed": true
+}

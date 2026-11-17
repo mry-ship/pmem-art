@@ -1,0 +1,15 @@
+{
+  "saved_at": 1794919977.3683014,
+  "text": "一组灵动不同小狗2x2拼板",
+  "banner": "【按点名锁定 draw.ordinary】",
+  "route_ids": [
+    "draw.ordinary"
+  ],
+  "mode": "default",
+  "execute_ok": true,
+  "artist_say": "【按点名锁定 draw.ordinary】",
+  "plan_conflict": false,
+  "confidence": "named",
+  "conversation_id": "session:dog_lively_collage_20261117",
+  "named_seed": true
+}

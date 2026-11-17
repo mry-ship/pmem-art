@@ -139,7 +139,7 @@
       <div id="svg-host" role="img" aria-labelledby="title aria"></div>
       <p id="aria" class="visually-hidden" style="position:absolute;left:-9999px"></p>
     </div>
-    <p class="hint">强制收敛类统一：最多 4 轮、合格线 <code>≥9.5</code>；履历可见、记忆静默。进阶 peek 日常不用喊，<code>finish</code> 已后台跑过。</p>
+    <p class="hint">强制收敛类统一：最多 3 轮、合格线 <code>≥9.5</code>；履历可见、记忆静默。进阶 peek 日常不用喊，<code>finish</code> 已后台跑过。</p>
   </main>
   <script>
 (function () {
@@ -168,7 +168,7 @@
         { id: "c", x: 420, y: 20, w: 160, h: 48, t1: "3 六维打分", t2: "judge 展示不足", c: "n-neu" },
         { id: "d", x: 420, y: 110, w: 160, h: 48, t1: "≥9.5 ?", t2: "解剖硬伤否决", c: "n-neu" },
         { id: "e", x: 230, y: 110, w: 150, h: 48, t1: "< 9.5 且 i<4", t2: "≤2 条部位修正", c: "n-bad" },
-        { id: "f", x: 610, y: 110, w: 100, h: 48, t1: "达标停", t2: "或 Best-of-4", c: "n-ok" },
+        { id: "f", x: 610, y: 110, w: 100, h: 48, t1: "达标停", t2: "或 Best-of-3", c: "n-ok" },
         { id: "g", x: 580, y: 200, w: 130, h: 48, t1: "finish", t2: "履历 + 静默记忆", c: "n-mem" }
       ],
       edges: [["a","b"],["b","c"],["c","d"],["d","e","no"],["d","f","yes"],["e","b","下一轮",true],["f","g"]]

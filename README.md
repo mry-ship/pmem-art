@@ -4,7 +4,7 @@
 
 **画师的美术记忆系统**（Cursor / Claude Code / Codex）
 
-把「别赛博 / 这版留着」、过稿配方和翻车红线记在这个项目里。下次画同一角色、同一场景，先翻这些记录再出图，画面更稳，少重复犯错。不够分就改，最多 **4 轮**，直到 **≥ 9.50**。
+把「别赛博 / 这版留着」、过稿配方和翻车红线记在这个项目里。下次画同一角色、同一场景，先翻这些记录再出图，画面更稳，少重复犯错。不够分就改，最多 **3 轮**，直到 **≥ 9.50**。
 
 **日常直接说人话就行**（例：`画一张窗边女孩`），不必背技能名、不必敲斜杠。系统会认路；说不清会先问你一句。进阶才需要 `/pmem-…`。
 
@@ -16,7 +16,7 @@
 ![Skills](https://img.shields.io/badge/美术技能-10-8B5CF6)
 ![Threshold](https://img.shields.io/badge/合格线-≥9.50-blue)
 
-[📦 下载用户包 0.16.10-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.10-art) · [📖 使用手册](USER_MANUAL.md) · [认路白话流程图](docs/route_pipeline.html) · [进阶技能点选](docs/skills/flows.html) · [效果图墙](#效果长什么样) · [全页展陈](docs/showcase/skills-homepage/index.html) · [架构](ARCHITECTURE.md)
+[📦 下载用户包 0.16.11-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.11-art) · [📖 使用手册](USER_MANUAL.md) · [认路白话流程图](docs/route_pipeline.html) · [进阶技能点选](docs/skills/flows.html) · [效果图墙](#效果长什么样) · [全页展陈](docs/showcase/skills-homepage/index.html) · [架构](ARCHITECTURE.md)
 
 </div>
 
@@ -27,17 +27,17 @@
 目的是美术记忆。你随口说的审美、定过的稿、踩过的坑，都收进项目，后面的图沿着同一条线收敛。
 
 - **记住**：红线、过稿配方、色板、身份锚点写在 `.memory-art/`
-- **收敛**：每轮打分挑刺，不到 9.50 只改那一两处，满 4 轮交最高分
+- **收敛**：每轮打分挑刺，不到 9.50 只改那一两处，满 3 轮交最高分
 - **稳住**：同一张脸不换人，同一套画风不漂，说过不要的不再出现
 
 技能是配套工具。你平时只要大白话提需；总控会认路（见 [认路白话流程图](docs/route_pipeline.html)），只有一种确定情况就直接做，多种情况先问你。原画、克隆、变体、界面、图标、合成梯都不用自己点名——说不清时系统会问一句，不会默默画错。
 
 ## 一分钟接入
 
-**推荐画师：下用户包**（不含研发用 pmem）→ [Releases · v0.16.10-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.10-art)
+**推荐画师：下用户包**（不含研发用 pmem）→ [Releases · v0.16.11-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.11-art)
 
 ```bash
-# 解压 pmem-art-0.16.10-art.zip 后
+# 解压 pmem-art-0.16.11-art.zip 后
 pip install -r requirements.txt
 pyw -3 -u pmem_art.py init --name "MyArtProject"
 pyw -3 -u pmem_art.py skills --install
@@ -71,7 +71,7 @@ Runtime: `pillow`, `numpy`, `pyyaml`. Tests: `pytest`（见 `pytest.ini`，`test
 1. 直接说人话           把想做的话说完；有参考就拖进来（没有也行）
 2. 看最前面的标签       【按 XX 走了】/【走默认路径】/【路由停】先问你一句
 3. 若问你就回一句       例如图标选 A/B/C，或补一句「画一张××」
-4. 出图                 生 1 张 → 打分挑刺 → 不到 9.50 就改（最多 4 轮）
+4. 出图                 生 1 张 → 打分挑刺 → 不到 9.50 就改（最多 3 轮）
 5. 看过程               结算打开过程板：参考图、每轮图、六维和总分
 ```
 
@@ -102,7 +102,7 @@ Runtime: `pillow`, `numpy`, `pyyaml`. Tests: `pytest`（见 `pytest.ini`，`test
 </thead>
 <tbody>
 <tr><td>1</td><td>总控</td><td><code>/pmem-agent</code></td><td>以后只走这一条。一轮审核：确定就列出分析并直接执行；多种情况先列出来等确认。另提要求则再审一遍，确认后再执行。可默认的路径/版式/同范围写入分析。单交付交一支；整页对比可依次多支。出图结算仍是那一支的格式。</td></tr>
-<tr><td>2</td><td>生图</td><td><code>/pmem-draw</code></td><td>普通图、原画、克隆、变体或镜头包。生图最多 4 轮，合格线 ≥9.5。结算给一张可点开的过程板。有参考但没说新题材时，不进克隆。</td></tr>
+<tr><td>2</td><td>生图</td><td><code>/pmem-draw</code></td><td>普通图、原画、克隆、变体或镜头包。生图最多 3 轮，合格线 ≥9.5。结算给一张可点开的过程板。有参考但没说新题材时，不进克隆。</td></tr>
 <tr><td>3</td><td>界面</td><td><code>/pmem-ui</code></td><td>一整套 HUD / 菜单 / 九宫格。不用单张插画代替。</td></tr>
 <tr><td>4</td><td>图标</td><td><code>/pmem-icon</code></td><td>三档不混：A 桌面母版、B 线性 SVG、C 道具格。</td></tr>
 <tr><td>5</td><td>合成梯</td><td><code>/pmem-merge-ladder</code></td><td>先用 3 稿定链型/档数/画风（说不通就不出图）；默认整表一组（通常 8 档，对标后跟合理档数）；仅点名逐格才一档一张。商业对标优先；生物链要眼睛；白卡禁超框。论述和出图留在过程板。</td></tr>
@@ -138,7 +138,7 @@ pyw -3 -u pmem_art.py atlas
 
 ### 四档改动幅度（选错了用嘴改就行）
 
-百分比是这一轮提示词允许改多少。`low` 跟第 1 轮的句子比，另外三档跟上一轮的句子比。四档合格线都是 ≥9.50，生图最多 4 轮。
+百分比是这一轮提示词允许改多少。`low` 跟第 1 轮的句子比，另外三档跟上一轮的句子比。四档合格线都是 ≥9.50，生图最多 3 轮。
 
 <table>
 <thead>
@@ -180,7 +180,7 @@ pyw -3 -u pmem_art.py atlas
 停机线统一：**≥ 9.50**（`high` / `recompose` 至少跑 2 轮），并内置 **5 项安全收敛护栏**：
 1. **每轮垫最初参考图**：`low` / `medium` / `high` / `recompose` 每一轮都垫最初的 `style_ref`，修正只追加进提示词。风格跳跃不垫旧风格图，也不垫上一轮成图。`pad=previous` 仍是显式链式覆盖。
 2. **解剖 `< 7.5` 一票否决（熔断）**：全局停机仍以加权总分 `≥ 9.50` 为准，仅当 `透视与解剖 < 7.5`（严重肢体/结构崩坏）时强制禁停重修；看板同时展示 `总分≥9.5` 与 `总分≥9.5 且 解剖≥8.5` 双指标。
-3. **前 3 轮不因掉分停**：生图上限就是第 4 轮。到第 4 轮时，若连续 2 轮比历史最高分低超过 `0.5`，交历史最高分那张。
+3. **前 2 轮不因掉分停**：生图上限就是第 3 轮。到第 3 轮时，若连续 2 轮比历史最高分低超过 `0.5`，交历史最高分那张。
 4. **按题材触发 R1 结构底线**：仅人物/生物自动注入关节/握持/双瞳高光底线；纯空镜仅注入透视灭点与接触阴影；UI/图标跳过人体解剖词。
 5. **精简回流与评分容错**：单轮 `【回流修正】` 硬限 `≤ 2` 条；评分 API 偶发失败自动重试，绝不灌入泛化套话污染下一轮 Prompt。
 
@@ -194,7 +194,7 @@ pyw -3 -u pmem_art.py atlas
 
 > **怎么认路、怎么用技能** → [认路白话流程图](docs/route_pipeline.html)（推荐先打开）  
 > **全页展陈（话术 + 过程图 + 终稿）** → [docs/showcase/skills-homepage/index.html](docs/showcase/skills-homepage/index.html)  
-> 图源：`docs/workbench_guide/`（技能教学样例）+ 最新合成梯整表 · 闭环最多 4 轮 · ≥9.50
+> 图源：`docs/workbench_guide/`（技能教学样例）+ 最新合成梯整表 · 闭环最多 3 轮 · ≥9.50
 
 ### draw · 普通图 / 原画 / 克隆 / 变体
 

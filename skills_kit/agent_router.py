@@ -1123,7 +1123,7 @@ def _draw_done(route_id: str) -> str:
         return "点选前不生图，机位句子写完即停"
     if route_id == "draw.multi":
         return "这一态六维调和平均 ≥ 9.50，且身份和结构各在该在的地方"
-    return "六维调和平均 ≥ 9.50，最多 4 轮"
+    return "六维调和平均 ≥ 9.50，最多 3 轮"
 
 
 def plan_route(
@@ -1332,9 +1332,9 @@ def plan_route(
                     deliverable="先交关上这一态",
                     images=pics,
                     locks="身份图的身份；机位以结构图为准，身份图原来的机位作废",
-                    done="关上这一态：最多4轮、≥9.5到线即停（标明是否≥9.5）",
-                    next_output="上一态交件（≥9.5 或满 4 轮最高分；没过线不要标通过）",
-                    note="converge start --contract split；最多4轮到线即停；不要写 --scale medium",
+                    done="关上这一态：最多3轮、≥9.5到线即停（标明是否≥9.5）",
+                    next_output="上一态交件（≥9.5 或满 3 轮最高分；没过线不要标通过）",
+                    note="converge start --contract split；最多3轮到线即停；不要写 --scale medium",
                 )
             )
             route_ids.append(rid)
@@ -1342,9 +1342,9 @@ def plan_route(
                 _handoff(
                     route,
                     deliverable="只改成打开这一态",
-                    images=["上一态交件（过线那张，或满4轮最高分）"],
+                    images=["上一态交件（过线那张，或满3轮最高分）"],
                     locks="机位不变，只改开合",
-                    done="打开这一态：最多4轮、≥9.5到线即停（标明是否≥9.5）",
+                    done="打开这一态：最多3轮、≥9.5到线即停（标明是否≥9.5）",
                     next_output="打开这一张",
                     skip=pics,
                     note="只垫上一态交件这一张；没到 9.5 也要开下一态，但不得把未过线标成通过",
@@ -1358,30 +1358,30 @@ def plan_route(
             locks = "身份、画风和机位按这一节；普通图锁机位"
             done = _draw_done(rid)
             if rid == "draw.ordinary":
-                note = "单张、medium、≥9.50到线即停，最多4兜底。不说成多图分工"
+                note = "单张、medium、≥9.50到线即停，最多3兜底。不说成多图分工"
                 locks = "锁机位和身份。多张参考留在列表里，生成只垫宽高比对齐的那张"
                 if reason == "job_remap" and remap_note:
                     note = f"{remap_note}；{note}"
             elif rid == "draw.variant" and reason == "job_remap" and remap_note:
                 note = remap_note
             elif rid in ("draw.multi", "draw.split"):
-                note = "banner：每交付物最多4轮、≥9.5到线即停（标明是否≥9.5）"
-                done = "每交付物最多4轮到线即停，标明过线/未过线"
+                note = "banner：每交付物最多3轮、≥9.5到线即停（标明是否≥9.5）"
+                done = "每交付物最多3轮到线即停，标明过线/未过线"
         elif rid == "ui.kit":
-            done = "默认概念最多4轮到线即停；仅点名 full kit 再加1张总表+切线清单"
+            done = "默认概念最多3轮到线即停；仅点名 full kit 再加1张总表+切线清单"
             locks = "整套界面，不用单张插画交差；未点名禁止拆全家桶"
-            note = "banner：最多4轮·≥9.5到线即停；默认 concept-only"
+            note = "banner：最多3轮·≥9.5到线即停；默认 concept-only"
         elif rid.startswith("icon."):
-            done = "批量预览齐；关键枚默认不开；翻车才开最多4轮闭环；A 默认只交 Light"
+            done = "批量预览齐；关键枚默认不开；翻车才开最多3轮闭环；A 默认只交 Light"
             locks = route["when"]
             note = "banner：B/C 只批量；关键枚默认禁；A 未点名勿假齐套三态"
         elif rid == "merge.ladder":
             done = (
-                "关系最多2稿（过了就停）→整表最多4轮到线即停（通常8、竞品合理可6）；"
-                "点名逐格时各档并行独立 session、每档最多4轮；未点名必须整表"
+                "关系最多2稿（过了就停）→整表最多3轮到线即停（通常8、竞品合理可6）；"
+                "点名逐格时各档并行独立 session、每档最多3轮；未点名必须整表"
             )
-            locks = "同一条升级链；未点名逐格禁止拆单张；到线即停不鼓励凑满4轮"
-            note = "banner：最多4轮到线即停；关系≤2；逐格须并行；交件标明是否过线"
+            locks = "同一条升级链；未点名逐格禁止拆单张；到线即停不鼓励凑满3轮"
+            note = "banner：最多3轮到线即停；关系≤2；逐格须并行；交件标明是否过线"
         elif rid == "prompt.write":
             done = "交出提示词方案，不生图"
             locks = "只写提示词"

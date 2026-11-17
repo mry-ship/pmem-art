@@ -5,7 +5,7 @@
 - CLI 做廉价启发式硬拦 + 写入会话
 - converge generate 首轮无过闸则拒绝；过闸后默认注入 revised
 
-不改动 ConvergeGate 的 9.5 / 满4轮 / 垫图规则；只把错误前提挡在 R1 之前。
+不改动 ConvergeGate 的 9.5 / 满3轮 / 垫图规则；只把错误前提挡在 R1 之前。
 
 逃生：须 `PMEM_ART_ALLOW_GATE_SKIP=1` + `--skip-reason`，可另加
 `--skip-reasonableness-gate` / `PMEM_ART_SKIP_REASONABLENESS_GATE=1`

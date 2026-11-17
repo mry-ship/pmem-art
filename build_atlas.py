@@ -2096,7 +2096,7 @@ function renderImproveTab() {
           </div>
           <div style="padding:8px 10px;background:#090d16;border-radius:8px;border:1px solid var(--border);margin-bottom:8px;">
             <strong style="color:var(--teal);">2️⃣ 4轮 ≥9.5分 闭环自评收敛 (Converge Engine)：</strong><br>
-            每次生图最多迭代 <b>4 轮</b>，六维加权调和平均，满 <b>9.5 / 10 分</b>才交付，满 4 轮取最高分；胜出图与踩坑红线自动写回记忆。
+            每次生图最多迭代 <b>3 轮</b>，六维加权调和平均，满 <b>9.5 / 10 分</b>才交付，满 3 轮取最高分；胜出图与踩坑红线自动写回记忆。
           </div>
           <div style="padding:8px 10px;background:#090d16;border-radius:8px;border:1px solid var(--border);">
             <strong style="color:#d8b4fe;">3️⃣ 浏览器 3 秒无感自动刷新：</strong><br>

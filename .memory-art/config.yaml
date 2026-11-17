@@ -54,9 +54,13 @@ converge:
   merged_generate_and_judge: false
   stop_policy: dynamic_threshold
   default_scale: medium
-  max_rounds: 4
-  # 掉分/平台安全早停默认关。要开再写 true；打开后仍是掉≥0.15、从第 2 轮起。
-  safe_early_stop: false
+  max_rounds: 3
+  # 质量不变墙钟：交历史最高分，不降 9.5 到线。掉≥0.15 或平台（plateau_rounds）从第 2 轮起可停。
+  # plateau_rounds=1 对齐平台纪律「本轮≤历史最高 → finish」，避免为凑满 max_rounds(3) 再画掉分轮。
+  safe_early_stop: true
+  early_stop_min_round: 2
+  regression_drop: 0.15
+  plateau_rounds: 1
   target_thresholds:
     low: 9.5
     medium: 9.5

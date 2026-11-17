@@ -165,7 +165,7 @@ class TestUnderstandingContract(unittest.TestCase):
         sess = {
             "status": "continue",
             "accept_threshold": 9.5,
-            "max_rounds": 4,
+            "max_rounds": 3,
             "route_ids": ["draw.ordinary"],
             "understanding_contract": build_contract(
                 route_ids=["draw.ordinary"],

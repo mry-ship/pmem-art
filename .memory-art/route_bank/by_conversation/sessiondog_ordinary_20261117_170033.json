@@ -1,0 +1,15 @@
+{
+  "saved_at": 1794906046.951404,
+  "text": "一张可爱狗狗普通图，单主体胸像级正面或3/4，可爱休闲游戏吉祥物立绘气质",
+  "banner": "【按点名锁定 draw.ordinary】",
+  "route_ids": [
+    "draw.ordinary"
+  ],
+  "mode": "default",
+  "execute_ok": true,
+  "artist_say": "【按点名锁定 draw.ordinary】",
+  "plan_conflict": false,
+  "confidence": "named",
+  "conversation_id": "session:dog_ordinary_20261117_170033",
+  "named_seed": true
+}

@@ -893,7 +893,7 @@ class TestGateFixes(unittest.TestCase):
             "scale": "medium",
             "accept_threshold": 9.5,
             "threshold": 9.5,
-            "max_rounds": 4,
+            "max_rounds": 3,
             "rounds": [{
                 "round": i,
                 "score": 8.0,

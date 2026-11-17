@@ -1,15 +1,14 @@
 {
-  "saved_at": 1794494590.6770115,
-  "text": "用这份参考接着做多图分工开态完工",
-  "banner": "【按点名锁定 draw.multi】",
+  "saved_at": 1794924226.0714436,
+  "text": "给我生成一个类似于RoyalMatch的UI主界面图",
+  "banner": "【按 【最多4轮·到线即停】SpriteCook式 UI Kit/HUD/九宫格整套 走了】",
   "route_ids": [
-    "draw.multi"
+    "ui.kit"
   ],
   "mode": "skill",
   "execute_ok": true,
-  "artist_say": "【按点名锁定 draw.multi】",
+  "artist_say": "【按 【最多4轮·到线即停】SpriteCook式 UI Kit/HUD/九宫格整套 走了】\n按整套界面（HUD/菜单/九宫格）来做，不是单张插画。",
   "plan_conflict": false,
-  "confidence": "named",
-  "conversation_id": "",
-  "named_seed": true
+  "confidence": "high",
+  "conversation_id": ""
 }

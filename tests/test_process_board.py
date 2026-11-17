@@ -1,4 +1,4 @@
-"""Finish writes a clickable process board, including discussion drafts."""
+"""Finish writes process sheet (primary) + HTML sidecar, including discussion drafts."""
 from __future__ import annotations
 
 import json
@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from skills_kit.converge import cmd_converge
-from skills_kit.process_board import write_process_board
+from skills_kit.process_board import write_process_artifacts, write_process_board
 
 
 class ProcessBoardTests(unittest.TestCase):
@@ -49,7 +49,19 @@ class ProcessBoardTests(unittest.TestCase):
             "winner": {"round": 1, "score": 9.11, "defects": "两态角度还没对齐"},
             "convergence_badge": "出图一轮交件 · 未过线，采用第 1 轮",
         }
-        index = write_process_board(td, sess, winner=sess["winner"])
+        arts = write_process_artifacts(td, sess, winner=sess["winner"])
+        index = arts["board"]
+        sheet = arts["sheet"]
+        rounds_md = arts["rounds"]
+        self.assertTrue(sheet.is_file())
+        self.assertEqual(sheet.name, "process_sheet.jpg")
+        self.assertGreater(sheet.stat().st_size, 1000)
+        self.assertTrue(rounds_md.is_file())
+        rounds_txt = rounds_md.read_text(encoding="utf-8")
+        self.assertIn("轮次单图表", rounds_txt)
+        self.assertIn("| 轮次 | 分数 | 可点图 |", rounds_txt)
+        self.assertIn("第 1 轮", rounds_txt)
+        self.assertIn("[第1轮]", rounds_txt)
         page = index.read_text(encoding="utf-8")
         self.assertIn("出图一轮交件 · 未过线，采用第 1 轮", page)
         self.assertIn("参考图分析", page)
@@ -64,7 +76,11 @@ class ProcessBoardTests(unittest.TestCase):
         self.assertIn('class="lightbox"', page)
         self.assertIn("两态角度还没对齐", page)
         self.assertIn("未到 9.50", page)
+        self.assertIn("process_sheet.jpg", page)
         self.assertTrue(any((index.parent / "images").glob("r1.*")))
+        # legacy helper still returns HTML path
+        legacy = write_process_board(td, sess, winner=sess["winner"])
+        self.assertEqual(legacy.name, "index.html")
 
     def test_discuss_is_stored_on_the_session(self):
         td = Path(tempfile.mkdtemp())
@@ -95,7 +111,7 @@ class ProcessBoardTests(unittest.TestCase):
             "scale": "medium",
             "accept_threshold": 9.5,
             "threshold": 9.5,
-            "max_rounds": 4,
+            "max_rounds": 3,
             "status": "running",
             "rounds": [{
                 "round": i,
@@ -116,11 +132,23 @@ class ProcessBoardTests(unittest.TestCase):
             session_id="fin-board", apply_memory=False, silent=True,
         )
         self.assertEqual(rc, 0)
-        page = (td / ".memory-art" / "converge" / "boards" / "fin-board" / "index.html").read_text(encoding="utf-8")
+        board_dir = td / ".memory-art" / "converge" / "boards" / "fin-board"
+        page = (board_dir / "index.html").read_text(encoding="utf-8")
+        sheet = board_dir / "process_sheet.jpg"
         report = (mem / "fin-board_report.md").read_text(encoding="utf-8")
+        saved = json.loads((mem / "fin-board.json").read_text(encoding="utf-8"))
+        self.assertTrue(sheet.is_file())
+        self.assertGreater(sheet.stat().st_size, 1000)
         self.assertIn("第 1 轮 · 8.50", page)
         self.assertIn("未到 9.50", page)
-        self.assertIn("boards/fin-board/index.html", report)
+        self.assertIn("过程图拼板", report)
+        self.assertIn("boards/fin-board/process_sheet.jpg", report)
+        self.assertIn("轮次单图表", report)
+        self.assertIn("| 轮次 | 分数 | 可点图 |", report)
+        self.assertTrue((board_dir / "rounds.md").is_file())
+        self.assertIn("process_sheet.jpg", str(saved.get("process_sheet") or ""))
+        self.assertIn("rounds.md", str(saved.get("process_rounds") or ""))
+        self.assertIn("index.html", str(saved.get("process_board") or ""))
 
     def test_finish_refuses_before_four_rounds_under_threshold(self):
         td = Path(tempfile.mkdtemp())
@@ -135,7 +163,7 @@ class ProcessBoardTests(unittest.TestCase):
             "scale": "medium",
             "accept_threshold": 9.5,
             "threshold": 9.5,
-            "max_rounds": 4,
+            "max_rounds": 3,
             "status": "running",
             "rounds": [{
                 "round": 1,
@@ -173,7 +201,7 @@ class ProcessBoardTests(unittest.TestCase):
             "scale": "medium",
             "accept_threshold": 9.5,
             "threshold": 9.5,
-            "max_rounds": 4,
+            "max_rounds": 3,
             "status": "continue",
             "rounds": [{
                 "round": 1,

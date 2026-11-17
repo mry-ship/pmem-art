@@ -77,14 +77,14 @@ def _norm_ref_paths(paths: Any) -> list[str]:
     return out
 
 
-# 重路径：与普通图对齐——≥9.5 到线即停，最多 4 轮兜底（关系/合理性仍要写）
-MERGE_OVERVIEW_MAX_ROUNDS = 4
+# 重路径：与普通图对齐——≥9.5 到线即停，最多 3 轮兜底（关系/合理性仍要写）
+MERGE_OVERVIEW_MAX_ROUNDS = 3
 MERGE_OVERVIEW_MAX_DISCUSS = 2  # 论述便宜；第 1 稿过了就停
-MERGE_PER_CELL_MAX_ROUNDS = 4
-UI_CONCEPT_MAX_ROUNDS = 4
-UI_SHEET_MAX_ROUNDS = 4
-ICON_KEY_MAX_ROUNDS = 4
-SPLIT_MAX_ROUNDS = 4
+MERGE_PER_CELL_MAX_ROUNDS = 3
+UI_CONCEPT_MAX_ROUNDS = 3
+UI_SHEET_MAX_ROUNDS = 3
+ICON_KEY_MAX_ROUNDS = 3
+SPLIT_MAX_ROUNDS = 3
 # 整表叠轮垫上一张：仅当上一张够高分且无结构/关系硬伤
 MERGE_OVERVIEW_PAD_PREV_MIN_SCORE = 8.5
 _MERGE_STRUCTURAL_FAIL_MARKERS = (
@@ -230,7 +230,7 @@ def _split_speed_requested(
     route_ids: list[str] | None = None,
     contract: str = "",
 ) -> bool:
-    """多图分工 / 远中近 / split 合同：每交付物最多4轮、≥9.5到线即停。"""
+    """多图分工 / 远中近 / split 合同：每交付物最多3轮、≥9.5到线即停。"""
     if str(contract or "").strip().lower() == "split":
         return True
     ids, blob = _route_blob(
@@ -275,7 +275,7 @@ def _apply_merge_overview_caps(
     sess["merge_sheet_cap"] = MERGE_OVERVIEW_MAX_ROUNDS
     sess["merge_discuss_cap"] = MERGE_OVERVIEW_MAX_DISCUSS
     sess["max_rounds"] = capped
-    # 停机以整表清单 + ≥9.5 到线为准；最多 4 轮兜底
+    # 停机以整表清单 + ≥9.5 到线为准；最多 3 轮兜底
     sess["stop_policy"] = "merge_overview_checklist"
     sess["single_judge"] = False
     return capped
@@ -384,7 +384,7 @@ def _apply_skill_speed_caps(
     module: str = "",
     max_rounds: int,
 ) -> int:
-    """Heavy-path: max 4 rounds, ≥9.5 early stop (not single-shot). First match wins."""
+    """Heavy-path: max 3 rounds, ≥9.5 early stop (not single-shot). First match wins."""
     g = goal or str(sess.get("goal") or "")
     er = expect_route or ""
     mod = module or str(sess.get("module") or "")
@@ -537,6 +537,7 @@ def converge_generate(
     draft_ok: bool = False,
     verbose: bool = False,
     silent: bool = False,
+    emit_prompt: bool = False,
 ) -> dict[str, Any]:
     """
     Step 2 (Generate-Only Step):
@@ -544,6 +545,7 @@ def converge_generate(
     prepended (`compose_style_first_prompt`), automatically inheriting `aspect_ratio` and `reference_image_paths`
     from the reference image when not explicitly provided.
     Contains NO scoring, NO self-evaluation, and NO call to `auto_vlm_judge_image`.
+    emit_prompt=True: print final prompt only (no image, no round register).
     """
     rc = cmd_converge(
         root,
@@ -568,6 +570,7 @@ def converge_generate(
         draft_ok=draft_ok,
         verbose=verbose,
         silent=silent,
+        emit_prompt=emit_prompt,
     )
     sf, err = _try_session_file(root, session_id)
     if sf is None:
@@ -1041,6 +1044,13 @@ def _apply_finish_memory_and_atlas(
     )
     if sess.get("ref_image"):
         win_body += f"- **参考垫图**：`{sess.get('ref_image')}`（解构：{sess.get('ref_analysis')}）\n"
+    if warm.get("inject_summary") or warm.get("dropped_keeps"):
+        drop_n = len(warm.get("dropped_keeps") or [])
+        win_body += (
+            f"\n<p><small>{warm.get('inject_summary') or '记忆注入摘要'}"
+            f"{' · 已静默丢弃 ' + str(drop_n) + ' 条域外 keep' if drop_n else ''}"
+            f"（不拦截）</small></p>\n"
+        )
     if warm.get("prompt_block"):
         win_body += f"\n<details><summary>Warm-Start 包</summary>\n\n```\n{warm.get('prompt_block')}\n```\n</details>\n"
     met_bar = _score_of_round(winner) >= canonical_th
@@ -1290,9 +1300,10 @@ def cmd_converge(
     expect_route: str = "",
     conversation_id: str = "",
     settle_background: bool | None = None,
+    emit_prompt: bool = False,
 ) -> int:
     """
-    converge_mode: quality (default, dynamic threshold per scale, max 4 rounds, stop ≥9.5 or best-of-4) | fast (warm-start fast-track hints).
+    converge_mode: quality (default, dynamic threshold per scale, max 3 rounds, stop ≥9.5 or best-of-3) | fast (warm-start fast-track hints).
     draft_ok: if True (user said 草稿/fast), final accept may use soft threshold in fast mode.
     silent: default False — 默认打印评分履历；True/--quiet 仅一行结论。verbose=True 等同强制打印全量报告。
     settle_background: finish 时记忆/atlas 是否后台 settle。None=CLI 默认后台（PMEM_FINISH_SETTLE_BG=0 可关）；
@@ -1301,6 +1312,7 @@ def cmd_converge(
     skip_route_gate: 跳过「开画前必须先 route」闸门（须 ALLOW + skip_reason；默认 False）。
     skip_reasonableness_gate: 跳过合理性闸（同上）。
     skip_reason: 跳闸审计原因（生产跳闸必填）。
+    emit_prompt: generate 只出最终 Prompt（无图、不登记 rounds）；禁止与 --image 同开。
     """
     if verbose:
         silent = False
@@ -1522,6 +1534,9 @@ def cmd_converge(
             "regression_drop": float(
                 cfg_conv.get("regression_drop") or DEFAULT_REGRESSION_DROP
             ),
+            "plateau_rounds": int(
+                cfg_conv.get("plateau_rounds") or DEFAULT_PLATEAU_ROUNDS
+            ),
             "safe_early_stop": (
                 DEFAULT_SAFE_EARLY_STOP
                 if cfg_conv.get("safe_early_stop") is None
@@ -1595,6 +1610,13 @@ def cmd_converge(
             f" | 媒介: {sess.get('medium_family')}"
             f"{' | 合同: split' if sess.get('contract') == 'split' else ''}"
             f" | 安全早停: {'开' if sess.get('safe_early_stop') else '关'}"
+            + (
+                f"（掉≥{sess.get('regression_drop') or DEFAULT_REGRESSION_DROP}"
+                f"/平台{int(sess.get('plateau_rounds') or DEFAULT_PLATEAU_ROUNDS)}轮"
+                f"/R≥{sess.get('early_stop_min_round') or DEFAULT_EARLY_STOP_MIN_ROUND}）"
+                if sess.get("safe_early_stop")
+                else ""
+            )
         )
         print("📋 " + format_contract_summary(understanding).replace("\n", "\n   "))
         _def_ok, _def_msg = defaults_visibility_ok(understanding)
@@ -1826,7 +1848,16 @@ def cmd_converge(
             print("❌ [生成与评分隔离拦截] `converge generate` 阶段严禁传入 score / dims / defects / strengths 等自评打分参数！")
             return 1
 
+        if emit_prompt and (image or "").strip():
+            print(
+                "❌ [emit-prompt] 禁止与 `--image` 同开。"
+                "先 `converge generate --emit-prompt` 拿最终 Prompt → GenerateImage → "
+                f"再 `converge generate --image <path>` 登记。"
+            )
+            return 1
+
         r_no = round_num if round_num > 0 else (len(rounds) + 1)
+        caller_prompt_raw = (prompt or "").strip()
         from .gate_skip import resolve_skip_request
 
         skip_route_ok, skip_route_msg = resolve_skip_request(
@@ -2166,6 +2197,73 @@ def cmd_converge(
 
         composed_prompt = generate_prefix(sess, composed_prompt)
 
+        from .final_prompt_gate import final_prompt_sha1 as _final_prompt_sha1
+        from .final_prompt_gate import format_final_prompt_lines
+
+        # Prefer exact pending prompt when registering after --emit-prompt with empty --prompt.
+        pending_boot = str(sess.get("pending_final_prompt") or "").strip()
+        pending_r = int(sess.get("pending_final_prompt_round") or 0)
+        if (
+            (not emit_prompt)
+            and (image or "").strip()
+            and pending_boot
+            and pending_r == int(r_no)
+            and not caller_prompt_raw
+        ):
+            composed_prompt = pending_boot
+            warm_merged = bool(sess.get("warm_start_merged"))
+            warm_hash = str(sess.get("warm_start_block_sha1") or warm_hash or "")
+            prompt_before_warm = str(
+                sess.get("pending_prompt_before_warm") or prompt_before_warm or ""
+            )
+            warm_block = str((warm or {}).get("prompt_block") or warm_block or "").strip()
+
+        if emit_prompt:
+            sha_emit = _final_prompt_sha1(composed_prompt)
+            sess["pending_final_prompt"] = composed_prompt
+            sess["pending_final_prompt_sha1"] = sha_emit
+            sess["pending_final_prompt_round"] = int(r_no)
+            sess["pending_prompt_before_warm"] = prompt_before_warm
+            sess["status"] = "prompt_ready"
+            sess["ready_to_finish"] = False
+            sess["ActionRequired"] = f"GENERATE_IMAGE_R{r_no}"
+            _write_session_json(sf, sess)
+            mark_active_session(root, session_id)
+            warm_n_red = len((warm or {}).get("top_redlines") or [])
+            warm_n_rec = len((warm or {}).get("top_recipes") or [])
+            memory_line = ""
+            warm_seg_line = ""
+            assembly_line = f"   · 装配句（未并记忆）: {prompt_before_warm}\n"
+            if apply_memory and warm_block:
+                merged_bit = "已并入" if sess.get("warm_start_merged") else "未并入"
+                inj = str(warm.get("inject_summary") or "").strip()
+                inj_bit = f"；{inj}" if inj else ""
+                memory_line = (
+                    f"   · 📚 pmem-art 记忆{merged_bit}：模块 {warm.get('module') or sess.get('module') or '?'} "
+                    f"（recipe {warm_n_rec} · 红线 {warm_n_red}；"
+                    f"WARM_START_MERGED={'1' if sess.get('warm_start_merged') else '0'}{inj_bit}）\n"
+                )
+                warm_preview = warm_block if len(warm_block) <= 400 else warm_block[:400] + "…"
+                warm_seg_line = (
+                    f"   · Warm-Start 段（{len(warm_block)}字"
+                    f"{'' if not warm_hash else ' · sha1=' + warm_hash}）:\n{warm_preview}\n"
+                )
+            floor_line = f"   · 结构底线: {floor_zh}\n" if floor_zh else ""
+            final_lines = "\n".join(format_final_prompt_lines(composed_prompt))
+            print(
+                f"📝 [Step 2A · emit-prompt] 第 {r_no}/{mr} 轮最终 Prompt 已就绪（未登记成图、未过输出物理闸）\n"
+                f"{memory_line}"
+                f"{floor_line}"
+                f"{assembly_line}"
+                f"{warm_seg_line}"
+                f"{final_lines}\n"
+                f"   · 下一步：用上面「最终 Prompt」调用 GenerateImage（或外部生图），"
+                f"再 `{pmem_art_cli()} converge generate --id {session_id} --round {r_no} "
+                f"--image <path>` 登记（可省略 --prompt，将复用 pending）。\n"
+                f"   · 禁止 stub/占位图/低熵图骗闸；禁止 Probe/Overwrite 探测再生图。"
+            )
+            return 0
+
         if generate_cmd:
             proc = subprocess.run(
                 generate_cmd,
@@ -2195,6 +2293,13 @@ def cmd_converge(
                     print(f"❌ [生成后输出图比例校验拦截] {exc}")
                     return 1
 
+        if not (image or "").strip():
+            print(
+                "❌ [生图闸门] 登记成图需要 `--image`。"
+                "若只要最终 Prompt：加 `--emit-prompt`（不要带 --image）。"
+            )
+            return 1
+
         p_img = Path(image) if image else Path()
         if image and not p_img.is_file():
             cand = root / image
@@ -2214,8 +2319,6 @@ def cmd_converge(
             why = "；".join(phys_gen["reasons"])
             print(f"❌ [生图闸门] 拒绝登记无效输出图：{why}")
             return 1
-
-        from .final_prompt_gate import final_prompt_sha1 as _final_prompt_sha1
 
         gen_entry = {
             "round": r_no,
@@ -2249,6 +2352,13 @@ def cmd_converge(
         sess["status"] = "generated_pending_judge"
         sess["ready_to_finish"] = False
         sess["ActionRequired"] = f"JUDGE_ROUND_{r_no}"
+        for _pk in (
+            "pending_final_prompt",
+            "pending_final_prompt_sha1",
+            "pending_final_prompt_round",
+            "pending_prompt_before_warm",
+        ):
+            sess.pop(_pk, None)
         _write_session_json(sf, sess)
         mark_active_session(root, session_id)
 
@@ -2272,10 +2382,12 @@ def cmd_converge(
         assembly_line = f"   · 装配句（未并记忆）: {prompt_before_warm}\n"
         if apply_memory and warm_block:
             merged_bit = "已并入" if sess.get("warm_start_merged") else "未并入"
+            inj = str(warm.get("inject_summary") or "").strip()
+            inj_bit = f"；{inj}" if inj else ""
             memory_line = (
                 f"   · 📚 pmem-art 记忆{merged_bit}：模块 {warm.get('module') or sess.get('module') or '?'} "
                 f"（recipe {warm_n_rec} · 红线 {warm_n_red}；"
-                f"WARM_START_MERGED={'1' if sess.get('warm_start_merged') else '0'}）\n"
+                f"WARM_START_MERGED={'1' if sess.get('warm_start_merged') else '0'}{inj_bit}）\n"
             )
             warm_preview = warm_block if len(warm_block) <= 400 else warm_block[:400] + "…"
             warm_seg_line = (
@@ -2298,8 +2410,6 @@ def cmd_converge(
             dim_weights=s_prof.get("dim_weights"),
             anatomy_floor=float(sess.get("anatomy_floor") or 7.5),
         )
-        from .final_prompt_gate import format_final_prompt_lines
-
         final_lines = "\n".join(format_final_prompt_lines(composed_prompt))
         print(
             f"🎨 [Step 2A · 仅生图阶段完成] 第 {r_no}/{mr} 轮图像已生成: `{image}` ({v_badge})\n"
@@ -2508,8 +2618,11 @@ def cmd_converge(
             judge_res["ready_to_finish"] = r_no >= mr
         should_continue = bool((not passed) and r_no < mr)
 
-        # R4+ safe early-stop (drop / plateau) — hard-wired, not agent prose.
-        if not passed and should_continue and not gate_notes:
+        # Safe early-stop (drop / plateau) — hard-wired, not agent prose.
+        # Deliver historical best: current-round gate_notes (merge 贴边残片/邻档提示等)
+        # must NOT force burning remaining rounds after plateau/regression.
+        # Physical/score penalties above still apply to *this* round's score.
+        if not passed and should_continue:
             hist = [
                 r for r in rounds
                 if r.get("judged")
@@ -2546,7 +2659,9 @@ def cmd_converge(
                 anatomy_floor=float(sess.get("anatomy_floor") or DEFAULT_ANATOMY_FLOOR),
                 best_total=best_before,
                 no_improve_streak=no_improve_now,
-                plateau_rounds=DEFAULT_PLATEAU_ROUNDS,
+                plateau_rounds=int(
+                    sess.get("plateau_rounds") or DEFAULT_PLATEAU_ROUNDS
+                ),
                 regression_drop=float(sess.get("regression_drop") or DEFAULT_REGRESSION_DROP),
                 early_stop_min_round=int(
                     sess.get("early_stop_min_round") or DEFAULT_EARLY_STOP_MIN_ROUND
@@ -3108,15 +3223,36 @@ def cmd_converge(
                 doctor_tip = None
 
         board_rel = ""
+        sheet_rel = ""
         try:
-            from skills_kit.process_board import write_process_board
-            board_path = write_process_board(root, sess, winner=winner)
+            from skills_kit.process_board import write_process_artifacts
+            arts = write_process_artifacts(root, sess, winner=winner)
+            board_path = arts["board"]
+            sheet_path = arts["sheet"]
             board_rel = board_path.relative_to(root).as_posix()
+            sheet_rel = sheet_path.relative_to(root).as_posix()
+            rounds_path = arts.get("rounds")
+            rounds_rel = ""
+            if rounds_path is not None:
+                rounds_rel = rounds_path.relative_to(root).as_posix()
+            sess["process_sheet"] = sheet_rel
             sess["process_board"] = board_rel
+            if rounds_rel:
+                sess["process_rounds"] = rounds_rel
             _write_session_json(sf, sess)
-            md_lines.extend(["", f"过程板（点开每张图）：`{board_rel}`", ""])
+            md_lines.extend(["", f"过程图拼板（总览）：`{sheet_rel}`", ""])
+            from skills_kit.process_board import format_rounds_click_table
+            md_lines.append(
+                format_rounds_click_table(
+                    root, sess, winner=winner, board_dir=board_path.parent
+                )
+            )
+            if rounds_rel:
+                md_lines.extend(["", f"轮次单图表文件：`{rounds_rel}`", ""])
+            else:
+                md_lines.append("")
         except Exception as exc:
-            md_lines.extend(["", f"过程板未写出：{exc}", ""])
+            md_lines.extend(["", f"过程图未写出：{exc}", ""])
 
         report_text = "\n".join(md_lines)
         report_file = sf.with_name(f"{sf.stem}_report.md")
@@ -3130,8 +3266,25 @@ def cmd_converge(
                 f"{badge} 收敛完成（{badge_text}）· 第 {winner.get('round')} 轮 "
                 f"{_score_of(winner):.2f}/10 · `{winner.get('image')}`"
             )
-            if board_rel:
-                print(f"过程板（点开每张图）：{board_rel}")
+            if sheet_rel:
+                print(f"过程图拼板（总览）：{sheet_rel}")
+            try:
+                from skills_kit.process_board import format_rounds_click_table
+                print(
+                    format_rounds_click_table(
+                        root,
+                        sess,
+                        winner=winner,
+                        board_dir=(Path(root) / sheet_rel).parent if sheet_rel else None,
+                    )
+                )
+            except Exception:
+                win_r = int((winner or {}).get("round") or 0)
+                for row in list(sess.get("rounds") or []):
+                    rn = int(row.get("round") or 0)
+                    img = str(row.get("image") or "").strip() or "(缺图)"
+                    mark = " ★胜出" if rn == win_r else ""
+                    print(f"  第 {rn} 轮{mark}：{img}")
             if tip:
                 from improve import print_whisper_tip
                 print_whisper_tip(tip)

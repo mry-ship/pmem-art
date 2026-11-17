@@ -1,0 +1,112 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-11-17 21:22:20 UTC+8",
+  "session_id": "dog_lively_collage_20261117",
+  "goal": "一组灵动不同小狗2x2拼板",
+  "module": "character.DogLivelyCollage",
+  "converge_mode": "quality",
+  "guided_mode": "text_guided",
+  "threshold": 9.5,
+  "max_rounds": 4,
+  "rounds_used": 4,
+  "winner_round": 3,
+  "winner_score": 9.36,
+  "winner_image": "assets/character/doglivelycollage/r3.jpg",
+  "winner_passed": false,
+  "outcome": "共 4 轮未达阈值，采用最高分",
+  "what_fixed": [
+    "左上柯基加大歪头与右耳飞起；左下哈士奇改三四分正面、双耳扬起吐舌",
+    "只改左下哈士奇：三四分偏正面、双耳竖起扬起、吐舌笑，其余三格与版式锁住不动",
+    "只加强左下哈士奇双耳扬起与耳尖外撇，其余三格与版式不动",
+    "已满4轮取最高分"
+  ],
+  "what_still_weak": "左下哈士奇双耳仍偏常规竖耳，耳尖外撇飞起幅度弱于点名扬起；与贵宾前扑动势对比略平；点名锁未单独验收：四品种可辨；统一可爱休闲游戏吉祥物立绘；灵动姿态表情；浅色干净底；2x2可读格",
+  "strengths": "左下哈士奇已改为偏三四分正面吐舌笑、蓝眼可读；柯基歪头与柴犬吐舌、贵宾前扑仍灵动；2x2浅奶油圆角卡格统一",
+  "taste_deltas": {
+    "from_strengths": [
+      "左下哈士奇已改为偏三四分正面吐舌笑、蓝眼可读；柯基歪头与柴犬吐舌、贵宾前扑仍灵动；2x2浅奶油圆角卡格统一"
+    ],
+    "from_defects": [
+      "左下哈士奇仍是偏侧脸回望吐舌，未改成三四分偏正面且双耳扬起；该格动势锁点未兑现；prompt 改动 41% 超过档位上限 40%；点名锁未单独验收：四品种可辨；统一可爱休闲游戏吉祥物立绘；灵动姿态表情",
+      "左下哈士奇双耳仍偏常规竖耳，耳尖外撇飞起幅度弱于点名扬起；与贵宾前扑动势对比略平；点名锁未单独验收：四品种可辨；统一可爱休闲游戏吉祥物立绘；灵动姿态表情；浅色干净底；2x2可读格",
+      "左下哈士奇双耳仍接近常规竖耳，耳尖外撇扬起幅度不够明显，本轮点名耳动势未充分兑现；点名锁未单独验收：四品种可辨；统一可爱休闲游戏吉祥物立绘；灵动姿态表情；浅色干净底；2x2可读格"
+    ]
+  },
+  "warm_start_confidence": 0.3,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 8.99,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 9.01,
+      "passed": false
+    },
+    {
+      "round": 3,
+      "score": 9.36,
+      "passed": false
+    },
+    {
+      "round": 4,
+      "score": 9.34,
+      "passed": false
+    }
+  ],
+  "lessons": [
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：左上柯基歪头幅度偏弱、耳动势不足偏近静肖像；左下哈士奇是回眸侧脸而非双耳扬起的正面偏四分灵动态；点名锁未单独验收：四品种可辨；统一可爱休闲游戏吉祥物立绘；灵动姿",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "8.99"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：四品种一眼可辨且2x2圆角卡格清晰可读；浅奶油棚拍底干净、柔棚光加轻轮廓光统一；柴犬吐舌笑与贵宾前扑姿态有灵动感",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "8.99"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：左下哈士奇仍是偏侧脸回望吐舌，未改成三四分偏正面且双耳扬起；该格动势锁点未兑现；prompt 改动 41% 超过档位上限 40%；点名锁未单独验收：四品种可辨；",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.01"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：左上柯基歪头抬头与耳尖动势比上轮更明显；柴犬吐舌与贵宾前扑仍灵动；2x2浅奶油圆角卡格保持清晰",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.01"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：左下哈士奇双耳仍偏常规竖耳，耳尖外撇飞起幅度弱于点名扬起；与贵宾前扑动势对比略平；点名锁未单独验收：四品种可辨；统一可爱休闲游戏吉祥物立绘；灵动姿态表情；浅色干",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.36"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：左下哈士奇已改为偏三四分正面吐舌笑、蓝眼可读；柯基歪头与柴犬吐舌、贵宾前扑仍灵动；2x2浅奶油圆角卡格统一",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.36"
+    },
+    {
+      "category": "style_lock",
+      "lesson": "本轮短板偏「style_lock」：左下哈士奇双耳仍接近常规竖耳，耳尖外撇扬起幅度不够明显，本轮点名耳动势未充分兑现；点名锁未单独验收：四品种可辨；统一可爱休闲游戏吉祥物立绘；灵动姿态表情；浅色干",
+      "drill": "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
+      "from_score": "9.34"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：四品种与2x2浅奶油圆角卡格仍清晰；柯基歪头、柴犬吐舌、贵宾前扑动势保留；哈士奇保持三四分正面吐舌蓝眼",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.34"
+    }
+  ]
+}

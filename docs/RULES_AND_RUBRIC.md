@@ -103,7 +103,7 @@ python3 pmem_art.py converge start --session s_rec --scale recompose \
    - 生成端同时担任裁判时存在「Prompt 锚定效应（Prompt Confirmation Bias）」：模型看到自己写了“300g 粗纹纸”或“木漏日”，就默认画出来了并给出 `9.6+`；且对「不出错/不乱加配饰」过度奖励。
 2. **已落地的代码修复**：
    - `parse_5d_dims()`：从各维分数算加权调和平均（有无瑕疵时走六维，否则走工艺五维），禁止手填总分。门槛维低于线时，正式分改取该维，并且不能停。像素离线分已停用，不进入正式分，也不再打印。
-   - `audit_score_inflation()`：当缺陷描述含 `缺乏飞白 / 数字化噪点|痕迹|滤镜 / 照搬 / 呆板 / 平光` 等短板词时，自动将分数硬顶封死在 `<= 8.90`，强制进入下一轮（直到满 4 轮）。否定说法（`非数字化` / `未出现`）不误杀。
+   - `audit_score_inflation()`：当缺陷描述含 `缺乏飞白 / 数字化噪点|痕迹|滤镜 / 照搬 / 呆板 / 平光` 等短板词时，自动将分数硬顶封死在 `<= 8.90`，强制进入下一轮（直到满 3 轮）。否定说法（`非数字化` / `未出现`）不误杀。
    - 缺陷栏为空或仅套话（`无明显硬伤` 等）时拒绝 `STOP_TARGET_REACHED`。
    - 收敛停滞预警 (`stagnated`)：当相邻两轮分差 `< min_round_leap` 且未达阈值时提示升级重构力度（**软预警**：不改分、不单独拒绝达标；真正挡达标的是分数/缺陷实质/物理图闸门/prompt Δ 超限）。
    - **安全收敛五项护栏（硬接线：`skills_kit/converge_policy.py` → `judge_auto` / `converge generate|judge`；批跑经 `scripts/v8_skill_converge_policy.py` 再导出）**：

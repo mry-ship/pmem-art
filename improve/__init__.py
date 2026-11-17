@@ -44,11 +44,15 @@ from .warm_start import (
     extract_entry_score,
     filter_habits_for_task,
     filter_keeps_for_task,
+    filter_keeps_with_audit,
     habit_relevant_for_task,
+    infer_keep_scopes,
     merge_conflict_taste_phrase,
     merge_warm_start_prompt,
+    normalize_keep_item,
     print_warm_start,
     rank_memory_entry,
+    tag_keep_phrase,
 )
 from .reflection import list_reflections, write_session_reflection
 from .lessons import (

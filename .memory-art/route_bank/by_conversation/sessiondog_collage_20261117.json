@@ -1,0 +1,15 @@
+{
+  "saved_at": 1794909219.2466419,
+  "text": "一张2x2多品种狗狗拼板：柯基、柴犬、哈士奇、贵宾同框；可爱休闲游戏吉祥物立绘；浅色干净底；胸像头肩级；无垫图",
+  "banner": "【按点名锁定 draw.ordinary】",
+  "route_ids": [
+    "draw.ordinary"
+  ],
+  "mode": "default",
+  "execute_ok": true,
+  "artist_say": "【按点名锁定 draw.ordinary】",
+  "plan_conflict": false,
+  "confidence": "named",
+  "conversation_id": "session:dog_collage_20261117",
+  "named_seed": true
+}

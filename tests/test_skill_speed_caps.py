@@ -1,4 +1,4 @@
-"""重路径：最多4轮·到线即停 + 检测收窄 + 关系最多 2。"""
+"""重路径：最多3轮·到线即停 + 检测收窄 + 关系最多 2。"""
 from __future__ import annotations
 
 import json
@@ -39,12 +39,12 @@ def _body(name: str) -> str:
 
 class SkillSpeedCapsTests(unittest.TestCase):
     def test_constants(self) -> None:
-        self.assertEqual(MERGE_OVERVIEW_MAX_ROUNDS, 4)
+        self.assertEqual(MERGE_OVERVIEW_MAX_ROUNDS, 3)
         self.assertEqual(MERGE_OVERVIEW_MAX_DISCUSS, 2)
-        self.assertEqual(MERGE_PER_CELL_MAX_ROUNDS, 4)
-        self.assertEqual(UI_CONCEPT_MAX_ROUNDS, 4)
-        self.assertEqual(ICON_KEY_MAX_ROUNDS, 4)
-        self.assertEqual(SPLIT_MAX_ROUNDS, 4)
+        self.assertEqual(MERGE_PER_CELL_MAX_ROUNDS, 3)
+        self.assertEqual(UI_CONCEPT_MAX_ROUNDS, 3)
+        self.assertEqual(ICON_KEY_MAX_ROUNDS, 3)
+        self.assertEqual(SPLIT_MAX_ROUNDS, 3)
 
     def test_detection_narrow(self) -> None:
         self.assertEqual(
@@ -76,33 +76,33 @@ class SkillSpeedCapsTests(unittest.TestCase):
         self.assertFalse(_split_speed_requested(goal="", route_ids=["draw.ordinary"]))
 
     def test_apply_caps(self) -> None:
-        ov: dict = {"route_ids": ["merge.ladder"], "max_rounds": 4}
+        ov: dict = {"route_ids": ["merge.ladder"], "max_rounds": 3}
         self.assertEqual(
             _apply_skill_speed_caps(
-                ov, goal="整表一组合成梯", expect_route="merge.ladder", max_rounds=4
+                ov, goal="整表一组合成梯", expect_route="merge.ladder", max_rounds=3
             ),
-            4,
+            3,
         )
         self.assertEqual(ov.get("merge_discuss_cap"), 2)
         self.assertFalse(ov.get("single_judge"))
 
-        multi: dict = {"route_ids": ["draw.multi"], "max_rounds": 4}
+        multi: dict = {"route_ids": ["draw.multi"], "max_rounds": 3}
         self.assertEqual(
-            _apply_skill_speed_caps(multi, goal="", expect_route="", max_rounds=4),
-            4,
+            _apply_skill_speed_caps(multi, goal="", expect_route="", max_rounds=3),
+            3,
         )
-        self.assertEqual(multi.get("split_round_cap"), 4)
+        self.assertEqual(multi.get("split_round_cap"), 3)
         self.assertFalse(multi.get("single_judge"))
 
-        cell: dict = {"route_ids": ["merge.ladder"], "max_rounds": 4}
+        cell: dict = {"route_ids": ["merge.ladder"], "max_rounds": 3}
         self.assertEqual(
             _apply_skill_speed_caps(
                 cell,
                 goal="merge per_cell 一档一张 L3",
                 expect_route="merge.ladder",
-                max_rounds=4,
+                max_rounds=3,
             ),
-            4,
+            3,
         )
         self.assertFalse(cell.get("single_judge"))
 
@@ -111,7 +111,7 @@ class SkillSpeedCapsTests(unittest.TestCase):
             _apply_skill_speed_caps(
                 ui, goal="UI概念稿：主菜单", expect_route="ui.kit", max_rounds=8
             ),
-            4,
+            3,
         )
         self.assertEqual(ui.get("ui_delivery"), "concept")
         self.assertFalse(ui.get("single_judge"))
@@ -121,10 +121,10 @@ class SkillSpeedCapsTests(unittest.TestCase):
             _apply_skill_speed_caps(
                 sheet, goal="UI组件表：按钮态", expect_route="ui.kit", max_rounds=8
             ),
-            4,
+            3,
         )
         self.assertEqual(sheet.get("ui_delivery"), "sheet")
-        self.assertEqual(sheet.get("ui_round_cap"), 4)
+        self.assertEqual(sheet.get("ui_round_cap"), 3)
         self.assertFalse(sheet.get("single_judge"))
 
         icon: dict = {"route_ids": ["icon.c"], "max_rounds": 8}
@@ -132,9 +132,9 @@ class SkillSpeedCapsTests(unittest.TestCase):
             _apply_skill_speed_caps(
                 icon, goal="道具格：药水", expect_route="icon.c", max_rounds=8
             ),
-            4,
+            3,
         )
-        self.assertEqual(icon.get("icon_key_cap"), 4)
+        self.assertEqual(icon.get("icon_key_cap"), 3)
         self.assertFalse(icon.get("single_judge"))
 
     def test_generate_allows_round_2_blocks_past_cap(self) -> None:
@@ -156,7 +156,7 @@ class SkillSpeedCapsTests(unittest.TestCase):
                 "status": "running",
                 "threshold": 9.5,
                 "accept_threshold": 9.5,
-                "max_rounds": 4,
+                "max_rounds": 3,
                 "merge_delivery": "per_cell",
                 "single_judge": False,
                 "route_ids": ["merge.ladder"],
@@ -189,7 +189,7 @@ class SkillSpeedCapsTests(unittest.TestCase):
                 {"round": i, "image": f"r{i}.png", "score": 8.0, "judged": True}
                 for i in range(1, 5)
             ]
-            sess2["max_rounds"] = 4
+            sess2["max_rounds"] = 3
             sf.write_text(json.dumps(sess2, ensure_ascii=False, indent=2), encoding="utf-8")
             rc5 = cmd_converge(
                 root,
@@ -210,7 +210,7 @@ class SkillSpeedCapsTests(unittest.TestCase):
             self.assertNotIn("出图一轮交件", body, name)
             self.assertIn("到线即停", body, name)
         ui = _body("pmem-ui")
-        self.assertIn("最多4轮", ui)
+        self.assertIn("最多3轮", ui)
         icon = _body("pmem-icon")
         self.assertIn("未点名勿写已齐套", icon)
         self.assertIn("Dark/Tinted 已派生齐", icon)

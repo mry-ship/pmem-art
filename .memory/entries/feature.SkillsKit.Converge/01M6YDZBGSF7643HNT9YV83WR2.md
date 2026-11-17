@@ -16,8 +16,8 @@ summary: 重路径不再强制出图一轮交件，改最多4轮
 verify: python3 -c "from skills_kit.converge import MERGE_OVERVIEW_MAX_ROUNDS,MERGE_PER_CELL_MAX_ROUNDS,UI_CONCEPT_MAX_ROUNDS,ICON_KEY_MAX_ROUNDS,SPLIT_MAX_ROUNDS;
   assert all(x==4 for x in (MERGE_OVERVIEW_MAX_ROUNDS,MERGE_PER_CELL_MAX_ROUNDS,UI_CONCEPT_MAX_ROUNDS,ICON_KEY_MAX_ROUNDS,SPLIT_MAX_ROUNDS))"
 applies: converge 重路径轮次硬顶
-verified: '2026-11-10'
-verified_at: '2026-11-10T02:23:39.834+08:00'
+verified: '2026-11-17'
+verified_at: '2026-11-17T22:00:28.510+08:00'
 ---
 旧结论：UI/Icon/merge/多图为出图一轮交件（max_rounds=1、single_judge）。
 更正：上述路径恢复与普通图一致——≥9.5到线即停，最多4轮兜底；取消 start 时写入 single_judge。

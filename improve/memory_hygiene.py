@@ -227,10 +227,15 @@ def dedupe_taste_phrases(root: Path) -> dict[str, Any]:
 
     taste = load_taste(root)
 
-    def _dedupe(items: list[Any], *, limit: int) -> list[str]:
-        out: list[str] = []
+    def _item_text(raw: Any) -> str:
+        if isinstance(raw, dict):
+            return str(raw.get("text") or raw.get("phrase") or raw.get("keep") or "").strip()
+        return str(raw or "").strip()
+
+    def _dedupe(items: list[Any], *, limit: int, retag_keeps: bool = False) -> list[Any]:
+        out: list[Any] = []
         for raw in items or []:
-            t = str(raw or "").strip()
+            t = _item_text(raw)
             if not t:
                 continue
             low = t.lower()
@@ -238,22 +243,31 @@ def dedupe_taste_phrases(root: Path) -> dict[str, Any]:
             drop = False
             replace_at = -1
             for i, prev in enumerate(out):
-                pl = prev.lower()
+                pt = _item_text(prev)
+                pl = pt.lower()
                 if low == pl:
                     drop = True
                     break
-                if low in pl and len(t) < len(prev):
+                if low in pl and len(t) < len(pt):
                     drop = True
                     break
-                if pl in low and len(t) > len(prev):
+                if pl in low and len(t) > len(pt):
                     replace_at = i
                     break
             if drop:
                 continue
+            stored: Any = t
+            if retag_keeps:
+                from .warm_start import tag_keep_phrase
+
+                if isinstance(raw, dict) and raw.get("scopes"):
+                    stored = {"text": t, "scopes": list(raw.get("scopes") or [])}
+                else:
+                    stored = tag_keep_phrase(t)
             if replace_at >= 0:
-                out[replace_at] = t
+                out[replace_at] = stored
             else:
-                out.append(t)
+                out.append(stored)
         return out[-limit:]
 
     before = {
@@ -265,7 +279,7 @@ def dedupe_taste_phrases(root: Path) -> dict[str, Any]:
     taste["reject_phrases"] = _dedupe(taste.get("reject_phrases") or [], limit=24)
     taste["style_notes"] = _dedupe(taste.get("style_notes") or [], limit=20)
     taste["banned_habits"] = _dedupe(taste.get("banned_habits") or [], limit=24)
-    taste["keep_phrases"] = _dedupe(taste.get("keep_phrases") or [], limit=16)
+    taste["keep_phrases"] = _dedupe(taste.get("keep_phrases") or [], limit=16, retag_keeps=True)
     save_taste(root, taste)
     after = {
         "reject": len(taste.get("reject_phrases") or []),

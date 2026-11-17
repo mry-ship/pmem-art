@@ -25,7 +25,10 @@ _TOPIC_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
     ("candy_merge", re.compile(r"糖果|焊蛋糕|气球档|棒糖|马戏|奖牌体量|L1像素锁|L1锁与气球|节日合成", re.I)),
     ("merge_ladder", re.compile(
         r"合成梯|五链合成|整表多格|邻档剪影|同域合理升级|shop_ladder|overview_sheet|"
-        r"merge\s*overview|白底不可接受|禁止换物种|零件必须累计|档差要一眼|和L1一样透明|黑空底",
+        r"merge\s*overview|白底不可接受|禁止换物种|零件必须累计|档差要一眼|和L1一样透明|黑空底|"
+        # GH / 休闲货柜表面（旧 taste keep 常无「合成梯」字样，漏标会灌进普通图）
+        r"货柜|糖釉|Gossip\s*Harbor|海鲜|玩具货柜|柔光釉面|块面釉面|釉面高光|"
+        r"同店玩具货面|#FEFDFB|龙虾|蟹|蚝",
         re.I,
     )),
     ("softcandy", re.compile(r"草莓软糖|软糖SSS|籽粒凹|蒂叶|半透明SSS|软糖表面", re.I)),
@@ -59,11 +62,52 @@ _UNIVERSAL_BAN = re.compile(
 _INJECT_REDLINE_CAP = 3
 _INJECT_BAN_CAP = 5
 _INJECT_KEEP_CAP = 4
+# 无强主题的长 keep / 「确认作为…锚点」默认不注入（fail-closed），避免 GH 货柜句漏标串味
+_KEEP_UNMARKED_MAX_LEN = 36
+_KEEP_ANCHOR_MARK = re.compile(r"确认作为.+锚点")
+_UNIVERSAL_SCOPE = "universal"
 
 
 def _scopes_in(text: str) -> set[str]:
     blob = text or ""
     return {name for name, pat in _TOPIC_PATTERNS if pat.search(blob)}
+
+
+def normalize_keep_item(item: Any) -> tuple[str, set[str]]:
+    """Accept str or {text/phrase, scopes}; always union explicit scopes with text inference."""
+    if isinstance(item, dict):
+        text = str(item.get("text") or item.get("phrase") or item.get("keep") or "").strip()
+        explicit = {str(s).strip() for s in (item.get("scopes") or []) if str(s).strip()}
+    else:
+        text = str(item or "").strip()
+        explicit = set()
+    if not text:
+        return "", set()
+    return text, (explicit | _scopes_in(text))
+
+
+def infer_keep_scopes(text: str) -> list[str]:
+    """Tag a keep phrase for storage: strong topics, else universal if short, else []."""
+    t = (text or "").strip()
+    if not t:
+        return []
+    strong = sorted(_scopes_in(t) & _STRONG_TOPICS)
+    if strong:
+        return strong
+    if len(t) <= _KEEP_UNMARKED_MAX_LEN and not _KEEP_ANCHOR_MARK.search(t):
+        return [_UNIVERSAL_SCOPE]
+    return []
+
+
+def tag_keep_phrase(text: str) -> dict[str, Any]:
+    """Write-time shape: {text, scopes}. Long unmarked → scopes=[] (inject will drop)."""
+    t = (text or "").strip()
+    return {"text": t, "scopes": infer_keep_scopes(t)}
+
+
+def keep_item_text(item: Any) -> str:
+    text, _scopes = normalize_keep_item(item)
+    return text
 
 
 def _context_scopes(module: str, goal: str = "") -> set[str]:
@@ -221,7 +265,25 @@ def entry_on_topic_for_task(entry: dict[str, Any], module: str, goal: str = "") 
 
 
 def _is_merge_module(module: str) -> bool:
+    """Only merge.* — prop.*Merge 另用货柜表面闸；扩大这里会误杀糖果「黑底整表」禁令。"""
     return str(module or "").strip().lower().startswith("merge.")
+
+
+_GH_CABINET_SURFACE = re.compile(
+    r"货柜|糖釉|Gossip\s*Harbor|海鲜|玩具货柜|柔光釉面|块面釉面|釉面高光|"
+    r"同店玩具货面|#FEFDFB|龙虾|蟹|蚝|港湾青|珊瑚龙虾",
+    re.I,
+)
+# 仅真·货柜/GH 任务；勿把 FestivalMerge/糖果合成梯当成海鲜货柜（会灌龙虾/蚝）
+_TASK_WANTS_GH_CABINET = re.compile(
+    r"货柜|Gossip\s*Harbor|海鲜|merge\.Harbor|HarborOrange|HarborHotCocoa|HarborSeafood",
+    re.I,
+)
+
+
+def _task_wants_gh_cabinet_surface(module: str, goal: str = "") -> bool:
+    """GH/海鲜货柜 keep 只给货柜类任务；糖果/吉他/花园合成梯不得吃海鲜表面。"""
+    return bool(_TASK_WANTS_GH_CABINET.search(f"{module or ''} {goal or ''}"))
 
 
 # merge.* 注入时与现行 GH 软立体糖釉合同相反的 taste 短语
@@ -282,6 +344,11 @@ def filter_habits_for_task(habits: list[Any], module: str, goal: str = "", *, li
             continue
         if merge_mod and merge_conflict_taste_phrase(text):
             continue
+        # 任意合成梯：勿把「体量递增/黑空底」类旧禁令当禁用习惯（会反教模型别做档差）
+        # 糖果复合句（焊蛋糕/气球）仍可留给 FestivalMerge
+        if "merge_ladder" in ctx and re.search(r"体量递增|黑空底|纯黑隔离|框高阶梯", text):
+            if not re.search(r"糖果|焊蛋糕|气球档", text):
+                continue
         key = text.lower()
         if key in seen:
             continue
@@ -309,30 +376,52 @@ def _prior_sku_bleed(text: str, goal: str) -> bool:
     return token.lower() not in str(goal or "").lower()
 
 
-def filter_keeps_for_task(keeps: list[Any], module: str, goal: str = "", *, limit: int = _INJECT_KEEP_CAP) -> list[str]:
-    """Prefer constructive keep phrases; still drop hard off-topic keeps."""
+def filter_keeps_with_audit(
+    keeps: list[Any], module: str, goal: str = "", *, limit: int = _INJECT_KEEP_CAP
+) -> tuple[list[str], list[str]]:
+    """Return (kept texts, dropped texts). Domain mismatch / long unmarked → drop."""
     merge_mod = _is_merge_module(module)
     ctx = _context_scopes(module, goal)
     out: list[str] = []
+    dropped: list[str] = []
     seen: set[str] = set()
     for k in reversed(list(keeps or [])):
-        text = str(k or "").strip()
+        text, scope_set = normalize_keep_item(k)
         if not text:
             continue
+        drop_reason = False
         if merge_mod and merge_conflict_taste_phrase(text):
-            continue
+            drop_reason = True
         # merge 货柜任务：花园/UI 场景 keep 不得灌进道具整表
-        if merge_mod and ("fairy_garden" in (_scopes_in(text) & _STRONG_TOPICS)):
-            if "merge_ladder" not in (_scopes_in(text) & _STRONG_TOPICS) and not re.search(
+        strong = scope_set & _STRONG_TOPICS
+        if not drop_reason and merge_mod and ("fairy_garden" in strong):
+            if "merge_ladder" not in strong and not re.search(
                 r"货柜|糖釉|Gossip\s*Harbor|玩具货柜", text, re.I
             ):
-                continue
-        if _foreign_artifact_bleed(text, module, goal):
-            continue
-        if _prior_sku_bleed(text, goal):
-            continue
-        topics = _scopes_in(text) & _STRONG_TOPICS
-        if topics and not (topics & ctx):
+                drop_reason = True
+        if not drop_reason and _foreign_artifact_bleed(text, module, goal):
+            drop_reason = True
+        if not drop_reason and _prior_sku_bleed(text, goal):
+            drop_reason = True
+        if not drop_reason and strong and not (strong & ctx):
+            drop_reason = True
+        # GH/海鲜货柜表面 keep：仅货柜/糖果类任务可注入，禁止骑到吉他/建筑等其它 merge
+        if (
+            not drop_reason
+            and _GH_CABINET_SURFACE.search(text)
+            and not _task_wants_gh_cabinet_surface(module, goal)
+        ):
+            drop_reason = True
+        # fail-closed: no strong topic → only short universal / explicit universal
+        if not drop_reason and not strong:
+            is_universal = _UNIVERSAL_SCOPE in scope_set
+            if _KEEP_ANCHOR_MARK.search(text) or len(text) > _KEEP_UNMARKED_MAX_LEN:
+                drop_reason = True
+            elif not is_universal and len(text) > _KEEP_UNMARKED_MAX_LEN:
+                drop_reason = True
+        if drop_reason:
+            if text not in dropped:
+                dropped.append(text)
             continue
         key = text.lower()
         if key in seen:
@@ -342,7 +431,14 @@ def filter_keeps_for_task(keeps: list[Any], module: str, goal: str = "", *, limi
         if len(out) >= limit:
             break
     out.reverse()
-    return out
+    dropped.reverse()
+    return out, dropped
+
+
+def filter_keeps_for_task(keeps: list[Any], module: str, goal: str = "", *, limit: int = _INJECT_KEEP_CAP) -> list[str]:
+    """Prefer constructive keep phrases; still drop hard off-topic keeps."""
+    kept, _dropped = filter_keeps_with_audit(keeps, module, goal, limit=limit)
+    return kept
 
 
 _COLD_MARK = re.compile(r"冷光|冷色|冷光源|冷色调")
@@ -533,7 +629,8 @@ def build_warm_start_pack(
     taste = load_taste(root)
     palette = (modules.get(module) or {}).get("palette") or []
     banned = filter_habits_for_task(taste.get("banned_habits") or [], module, goal)
-    keeps = filter_keeps_for_task(taste.get("keep_phrases") or [], module, goal)
+    raw_keeps = taste.get("keep_phrases") or []
+    keeps, dropped_keeps = filter_keeps_with_audit(raw_keeps, module, goal)
 
     recipe_summaries = [
         {"id": e.get("id"), "summary": e.get("summary"), "module": e.get("module")}
@@ -588,10 +685,25 @@ def build_warm_start_pack(
     ctx_scopes = _context_scopes(module, goal)
     def _knowledge_ok(card: dict[str, Any]) -> bool:
         blob = f"{card.get('title') or ''} {card.get('body') or ''}"
+        cid = str(card.get("id") or "")
         if "watercolor" in ctx_scopes and re.search(r"赛璐珞|cel.?shade|硬边色块分层", blob, re.I):
             return False
         if "prop_icon" not in ctx_scopes and re.search(r"prop\s*icon|真alpha|cheese\s*platter", blob, re.I):
             return False
+        # UI / 图标任务禁止挂厚涂·水彩·赛璐珞等插画介质卡（会把界面画成插画）
+        if "ui_shell" in ctx_scopes or "app_icon" in ctx_scopes:
+            if re.search(r"厚涂|水彩|赛璐珞|painterly|watercolor|cel.?shade|侧逆光|Q版头身", blob, re.I):
+                return False
+            if cid in ("tech-painterly", "tech-watercolor", "tech-celshade", "light-rim", "style-chibi"):
+                return False
+        # 侧逆光 / Q版 知识卡：必须目标点名，禁止默认骑到所有角色图改光改比例
+        goal_l = str(goal or "")
+        if cid == "light-rim" or re.search(r"侧逆光|rim\s*light", blob, re.I):
+            if not re.search(r"侧逆光|rim\s*light", goal_l, re.I):
+                return False
+        if cid == "style-chibi" or re.search(r"Q版头身|2\s*~\s*3\s*头身", blob, re.I):
+            if not re.search(r"Q版|头身|chibi|吉祥物", goal_l, re.I):
+                return False
         card_topics = _scopes_in(blob) & _STRONG_TOPICS
         if card_topics - ctx_scopes:
             return False
@@ -667,6 +779,12 @@ def build_warm_start_pack(
 
     prompt_block = "\n".join(prompt_block_lines)
 
+    # 给人看、不进生图词、不拦截：本趟注入/丢弃摘要
+    inject_summary = (
+        f"记忆注入摘要（不拦截）：注入 keep {len(keeps)} · 丢弃域外/未标 keep {len(dropped_keeps)} · "
+        f"红线 {len(redline_summaries)} · 知识卡 {len(private_kcards) + len(shared_kcards)}"
+    )
+
     return {
         "project_id": proj_id,
         "project_name": proj_name,
@@ -695,6 +813,8 @@ def build_warm_start_pack(
             "keep_phrases": keeps,
             "banned_habits_raw_tail": (taste.get("banned_habits") or [])[-10:],
         },
+        "dropped_keeps": dropped_keeps[:12],
+        "inject_summary": inject_summary,
         "prompt_block": prompt_block,
         "built_at": _now_cst().strftime("%Y-%m-%d %H:%M:%S UTC+8"),
     }
@@ -721,6 +841,14 @@ def print_warm_start(pack: dict[str, Any]) -> None:
     print(f"   · 置信度: {pack.get('confidence', 0):.2f} | fast-track 资格: {'✅' if pack.get('fast_track_eligible') else '❌'}")
     for reason in pack.get("confidence_reasons") or []:
         print(f"   · {reason}")
+    summary = str(pack.get("inject_summary") or "").strip()
+    if summary:
+        print(f"   · {summary}")
+    dropped = pack.get("dropped_keeps") or []
+    if dropped:
+        preview = "；".join(str(x)[:28] for x in dropped[:3])
+        more = f" 等{len(dropped)}条" if len(dropped) > 3 else ""
+        print(f"   · 已静默丢弃域外 keep 示例: {preview}{more}")
     print()
     print(pack.get("prompt_block") or "")
 

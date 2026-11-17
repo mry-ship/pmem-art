@@ -11,7 +11,7 @@ from typing import Any
 from ._time import _now_cst
 
 DEFAULT_THRESHOLD = 9.5
-DEFAULT_MAX_ROUNDS = 4
+DEFAULT_MAX_ROUNDS = 3
 FAST_SOFT_THRESHOLD = 9.0  # fast-track: prefer fewer regens when score>=9.0 & delta small; final accept still >=9.5 unless draft
 # Physical image gate: solid-gray probes sit ~2.5–2.9; real art JPEGs are typically ≥6.
 MIN_IMAGE_BYTE_ENTROPY = 3.2

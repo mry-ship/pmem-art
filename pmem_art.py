@@ -29,7 +29,7 @@ from lifecycle import ensure_stdio_survives_locale
 
 ensure_stdio_survives_locale()
 
-VERSION = "0.16.10-art"
+VERSION = "0.16.11-art"
 MEMORY_DIR = ".memory-art"
 
 KIND_META = {
@@ -2197,7 +2197,7 @@ def main() -> int:
 
     p_sgate = sub.add_parser(
         "showcase-gate",
-        help="展陈 HTML 终稿闸门：正式分 < 9.5 且未满 4 轮不能当终稿（不调生图）",
+        help="展陈 HTML 终稿闸门：正式分 < 9.5 且未满 3 轮不能当终稿（不调生图）",
     )
     p_sgate.add_argument("--html", required=True, help="展陈 index.html 路径")
 
@@ -2273,10 +2273,10 @@ def main() -> int:
         "--max-rounds",
         type=int,
         default=None,
-        help="最大收敛轮次（默认 4：≥9.5 停，满 4 轮取最高分）",
+        help="最大收敛轮次（默认 3：≥9.5 停，满 3 轮取最高分）",
     )
     p_conv.add_argument("--mode", dest="converge_mode", choices=("quality", "fast"), default="quality",
-                        help="quality=最多4轮×≥9.5（默认）；fast=warm-start 置信高时可 fast-track")
+                        help="quality=最多3轮×≥9.5（默认）；fast=warm-start 置信高时可 fast-track")
     p_conv.add_argument("--scale", dest="converge_scale", choices=("low", "medium", "high", "recompose"), default="",
                         help="收敛强度：low=只修缺陷，medium=补足加小优化（默认），high=允许重构构图和重做光影，recompose=按用户指定方向改构图")
     p_conv.add_argument("--medium-family", dest="medium_family", default="",
@@ -2287,7 +2287,13 @@ def main() -> int:
     p_conv.add_argument("--recompose-dir", dest="recompose_dir", default="",
                         help="当用户明确要求改变构图时指定新构图方向（如：从特写改为全景 / 把主体移到画面左侧三分点）")
     p_conv.add_argument("--draft", action="store_true", help="用户明确要草稿/fast 时允许软合格线（仅 fast 模式）")
-    p_conv.add_argument("--round", dest="round_num", type=int, default=0, help="当前轮次序号 (1..4)")
+    p_conv.add_argument("--round", dest="round_num", type=int, default=0, help="当前轮次序号 (1..3)")
+    p_conv.add_argument(
+        "--emit-prompt",
+        dest="emit_prompt",
+        action="store_true",
+        help="generate 只出最终 Prompt（无图、不登记）；禁止与 --image 同开；生图后用 --image 再登记",
+    )
     p_conv.add_argument("--image", "-i", default="", help="本轮生成图片路径")
     p_conv.add_argument("--score", "-s", type=float, default=0.0, help="本轮综合评分（满分 10.0）")
     p_conv.add_argument("--dims", default="", help="六维细分得分说明（构图/光影/透视/质感/风格/无瑕疵）")
@@ -2780,6 +2786,7 @@ def main() -> int:
             skip_reason=getattr(args, "skip_reason", "") or "",
             expect_route=getattr(args, "route_id", "") or "",
             conversation_id=getattr(args, "conversation", "") or "",
+            emit_prompt=bool(getattr(args, "emit_prompt", False)),
             # CLI finish：默认后台 settle；--settle-sync / settle 子命令走同步
             settle_background=(
                 False

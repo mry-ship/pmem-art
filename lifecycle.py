@@ -1826,12 +1826,9 @@ DOCTOR_STATE_FILE = "last_doctor.json"
 DOCTOR_CLAIM_LOCK = "last_doctor.claim"
 DOCTOR_INTERVAL_HOURS = 24.0
 DOCTOR_CLAIM_TTL_MINUTES = 30.0
-# Cursor hooks + CLI 结算都可抢槽；未列入的事件只消费已写好的高信号提示。
+# 只在会话边界 / 结算后抢槽；出图中途（pre-gen / post-asset / pre-tool / post-tool）禁止 spawn，
+# 避免每轮生图再烧半分钟级 doctor。未列入的事件只消费已写好的高信号提示。
 DOCTOR_HOOK_EVENTS = frozenset({
-    "pre-tool",
-    "pre-gen",
-    "post-tool",
-    "post-asset",
     "stop",
     "session",
     "converge_finish",
@@ -2273,7 +2270,9 @@ def consume_doctor_tip(root: Path) -> str | None:
 
 def maybe_lazy_doctor_on_hook(root: Path, event: str) -> str | None:
     """
-    On spawn events (hooks + converge_finish): if doctor due (>24h), claim + background spawn.
+    On boundary spawn events (session / stop / converge_finish only): if doctor due (>24h),
+    claim + background spawn. Mid-art hooks (pre-gen / post-asset / pre-tool / post-tool)
+    never spawn — they only consume an already-written tip.
     Always try to surface at most one high-signal whisper tip (from a finished quiet run).
     Never dumps the full doctor report into the hook message.
     """

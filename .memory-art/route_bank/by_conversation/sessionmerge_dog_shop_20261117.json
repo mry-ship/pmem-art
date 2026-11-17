@@ -1,0 +1,15 @@
+{
+  "saved_at": 1794924259.184528,
+  "text": "merge overview_sheet：港湾宠物店糖釉小狗 shop_ladder L1-L8，2x4浅奶油圆角卡，Gossip Harbor玩具货柜",
+  "banner": "【按点名锁定 merge.ladder】",
+  "route_ids": [
+    "merge.ladder"
+  ],
+  "mode": "skill",
+  "execute_ok": true,
+  "artist_say": "【按点名锁定 merge.ladder】",
+  "plan_conflict": false,
+  "confidence": "named",
+  "conversation_id": "session:merge_dog_shop_20261117",
+  "named_seed": true
+}

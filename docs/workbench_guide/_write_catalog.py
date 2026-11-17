@@ -56,7 +56,7 @@ DOC = {
             "when": "单张插画/道具/气氛，没说整套 UI、升级梯、换题材克隆",
             "how": [
                 "对话框输入 /pmem-draw 或直接说「画一张…」。",
-                "闭环最多 4 轮，合格线 ≥9.5；每轮会改提示词再出。",
+                "闭环最多 3 轮，合格线 ≥9.5；每轮会改提示词再出。",
                 "有原图但没说新题材 → 仍是普通图，不进克隆。",
             ],
             "examples": [
@@ -195,7 +195,7 @@ DOC = {
                 },
                 {
                     "round": 4,
-                    "label": "第 4 轮 · 达标",
+                    "label": "第 3 轮 · 达标",
                     "score": 9.54,
                     "passed": True,
                     "path": "draw-clone/final.jpg",
@@ -499,7 +499,7 @@ DOC = {
                 },
                 {
                     "round": 4,
-                    "label": "第 4 轮",
+                    "label": "第 3 轮",
                     "score": 9.48,
                     "passed": False,
                     "path": "merge-ladder/process_r4.jpg",

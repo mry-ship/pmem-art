@@ -5209,3 +5209,23 @@ modules:
         - 48
       safe_margin_px: 4
       max_size_kb: 512
+  character.DogLivelyCollage:
+    title: 角色与立绘·DogLivelyCollage (Realistic)
+    category: character
+    status: active
+    description: "题材画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光| 点名锁每轮都要单独留住，不许整张漂掉：四品种可辨；统一可爱休闲游戏吉祥物立绘；灵动 · 自动归类至 角色与立绘 (character.DogLivelyCollage) · 置信度 0.92"
+    paths:
+      - "assets/character/doglivelycollage/**"
+    aliases:
+      - DogLivelyCollage
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      allowed_resolutions:
+        - 1024x1024
+      alpha_required: false
+      safe_margin_px: 16
+      max_size_kb: 1024
+    parent: brand.WorldStyle
+    inherits: brand.WorldStyle
