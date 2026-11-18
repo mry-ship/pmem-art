@@ -102,7 +102,7 @@ Runtime: `pillow`, `numpy`, `pyyaml`. Tests: `pytest`（见 `pytest.ini`，`test
 </thead>
 <tbody>
 <tr><td>1</td><td>总控</td><td><code>/pmem-agent</code></td><td>以后只走这一条。一轮审核：确定就列出分析并直接执行；多种情况先列出来等确认。另提要求则再审一遍，确认后再执行。可默认的路径/版式/同范围写入分析。单交付交一支；整页对比可依次多支。出图结算仍是那一支的格式。</td></tr>
-<tr><td>2</td><td>生图</td><td><code>/pmem-draw</code></td><td>普通图、原画、克隆、变体或镜头包。生图最多 3 轮，合格线 ≥9.5。结算给一张可点开的过程板。有参考但没说新题材时，不进克隆。</td></tr>
+<tr><td>2</td><td>生图</td><td><code>/pmem-draw</code></td><td>普通图、原画、克隆、变体、镜头包、局部改。正式生图最多 3 轮，合格线 ≥9.5。成图只拧点名小处走<strong>局部改</strong>（默认 1～2 枪，不凑三轮）。有参考但没说新题材时，不进克隆。</td></tr>
 <tr><td>3</td><td>界面</td><td><code>/pmem-ui</code></td><td>一整套 HUD / 菜单 / 九宫格。不用单张插画代替。</td></tr>
 <tr><td>4</td><td>图标</td><td><code>/pmem-icon</code></td><td>三档不混：A 桌面母版、B 线性 SVG、C 道具格。</td></tr>
 <tr><td>5</td><td>合成梯</td><td><code>/pmem-merge-ladder</code></td><td>先用 3 稿定链型/档数/画风（说不通就不出图）；默认整表一组（通常 8 档，对标后跟合理档数）；仅点名逐格才一档一张。商业对标优先；生物链要眼睛；白卡禁超框。论述和出图留在过程板。</td></tr>
@@ -126,7 +126,7 @@ pyw -3 -u pmem_art.py atlas
 - 删除 = 移入 `.memory-art/_trash/`（可找回）；刷新后不会再把已删图加载回来
 - 教学示例图受保护，工作台删不掉
 
-要原画、克隆、变体或镜头包时，仍把类型写在 `/pmem-agent` 的句子里，例如「原画」「按这张风格画一把新钥匙」「换个表情」「先给 4 套机位」。总控会交给对应的那一支。
+要原画、克隆、变体、镜头包或局部改时，仍把类型写在 `/pmem-agent` 的句子里，例如「原画」「按这张风格画一把新钥匙」「换个表情」「先给 4 套机位」「就改这一点 / 修一下这张」。总控会交给对应的那一支。
 
 ### `/pmem-agent`：以后只走这一条
 
@@ -196,7 +196,7 @@ pyw -3 -u pmem_art.py atlas
 > **全页展陈（话术 + 过程图 + 终稿）** → [docs/showcase/skills-homepage/index.html](docs/showcase/skills-homepage/index.html)  
 > 图源：`docs/workbench_guide/`（技能教学样例）+ 最新合成梯整表 · 闭环最多 3 轮 · ≥9.50
 
-### draw · 普通图 / 原画 / 克隆 / 变体
+### draw · 普通图 / 原画 / 克隆 / 变体 / 局部改
 
 从左到右：原图 → 过程 → 终稿（表头分是终稿总分）。
 

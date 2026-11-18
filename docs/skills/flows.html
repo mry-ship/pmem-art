@@ -123,7 +123,7 @@
       <a href="../route_pipeline.html">docs/route_pipeline.html</a>
       （直接说人话即可，不必背斜杠）。本页是进阶：点选各技能内部流程图。
     </p>
-    <p>现在是 10 个技能。没点名走总控大白话认路。原画、克隆、变体、镜头包收在 draw 里；合成梯先过关系，<strong>默认整表一组</strong>，仅点名逐格才一档一张。手册见 <a href="../../USER_MANUAL.md">USER_MANUAL.md</a>。</p>
+    <p>现在是 10 个技能。没点名走总控大白话认路。原画、克隆、变体、镜头包、局部改收在 draw 里；合成梯先过关系，<strong>默认整表一组</strong>，仅点名逐格才一档一张。手册见 <a href="../../USER_MANUAL.md">USER_MANUAL.md</a>。</p>
   </header>
   <main>
     <div class="pick" id="pick" role="group" aria-label="选择技能"></div>
@@ -160,8 +160,8 @@
     draw: {
       label: "draw",
       title: "/pmem-draw",
-      sub: "/pmem-draw · 通用生图",
-      aria: "查记忆，开收敛，最多四轮生图打分，达标或满轮取最高分，finish 静默写记忆。",
+      sub: "/pmem-draw · 通用生图（含局部改）",
+      aria: "查记忆，开收敛，正式最多三轮生图打分；局部改默认一两枪快修。达标或满轮取最高分，finish 静默写记忆。",
       nodes: [
         { id: "a", x: 40, y: 20, w: 150, h: 48, t1: "1 查记忆", t2: "search + warm-start", c: "n-neu" },
         { id: "b", x: 230, y: 20, w: 150, h: 48, t1: "2 生 1 张", t2: "generate", c: "n-blue" },
