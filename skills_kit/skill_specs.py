@@ -19,14 +19,26 @@ from ._time import _now_cst
 # heading 前缀「## 记忆静默」勿改（pack_headings / slice_route_body 依赖）。
 _MEMORY_SILENT_DRAW = """## 记忆静默 / 履历可见（Agent 必读）
 - `converge finish` 后系统**自动**写反思、更新 `taste.json`、强化 recipe/红线、悄悄排队 1–2 条知识建议——**无需**再跑 `/pmem-coach`。
-- 对用户默认展示：**参考图分析 + 每轮原图路径（可点开）+ 六维与总分 + 过程图 JPG + 总结**；HTML 过程板只是旁路，不要求玩家去文件夹打开。记忆写入不要旁白。
+- 对用户默认展示见「交件可见」：Read `process_sheet.jpg` + 贴可点**轮次单图表** + 再 Read 每一轮原图 + 结算末行**本次耗时**。HTML 过程板只是旁路。记忆写入不要旁白。
 - 用户要安静出图时用 `--quiet` 或说「只要终稿」。想看进步、短板或知识卡时再用 `/pmem-coach`。
 """
 
 _MEMORY_SILENT_KIT = """## 记忆静默 / 履历可见（Agent 必读）
 - `converge finish` 后系统自动写反思/口味/learn 队列——**无需**再跑 `/pmem-coach`。
-- 对用户默认展示：**每轮可点原图路径 + 六维分 + 不足 + 改点 + 过程图 JPG + 全轮履历**；若有「小提示」原样转述（每会话最多 1 条）。**禁止**旁白记忆写入；禁止只甩 HTML 过程板。
+- 对用户默认展示见「交件可见」：Read `process_sheet.jpg` + 贴可点**轮次单图表** + 再 Read 每一轮原图 + 结算末行**本次耗时**。若有「小提示」原样转述（每会话最多 1 条）。**禁止**旁白记忆写入；禁止只甩 HTML。
 - 只要终稿：`--quiet`。教练 / 广度：用户明确要求或进阶技能时再给。
+"""
+
+# 出图执行包必须带上这一节。只写在未被 pack 的第二节里，界面/图标/合成梯结算会漏掉可点表和拼板。
+_DELIVERY_VISIBLE = """## 交件可见（出图结算 · Agent 必读）
+
+跑过 `converge finish` 的出图，结算按这个顺序给玩家。两样都要，再报耗时。
+
+1. **过程图拼板**：Read `process_sheet.jpg` 贴进对话（总览每轮缩略、分数、不足、胜出框）。
+2. **轮次单图表**：贴 finish 打印的 Markdown 表（轮次 × 分数 × 可点图链接）；再对每一轮原图 Read 一次贴进对话。也可用 `rounds.md`。
+3. **本次耗时**：把 finish 报告里的「本次耗时」原样写在结算最后一行。
+
+禁止只交拼板。禁止只甩 HTML。没跑闭环的纯文字交付不必出这两样。
 """
 
 # 底/透明度按引擎分流：Cursor 无 alpha；gpt-image 等可真透明；禁止后抠。
@@ -215,7 +227,7 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 1. **最前一行**：`route` 的 `banner`（【走默认路径】或【按 XX 走了】或【路由停】）。
 2. 这一轮分析。标明是确定后直接执行，还是确认后才执行。若用了路径/版式类默认，列一行「本趟默认：…」。
 3. 第二段选了哪一支（或依次哪几支）、按哪一节；步骤表六样。
-4. 那一支自己的结算，格式不改。出图的仍是：参考图分析；每一轮出图（可点路径、六维、总分、改点）；**过程图拼板** + **轮次单图表**（表内每轮可点开）并 Read 每轮原图；总结。总控不另写一套。禁止只交拼板、禁止只甩 HTML。整页对比展陈才给对比页 HTML。
+4. 那一支自己的结算，格式不改。出图的仍是：参考图分析；每一轮出图（可点路径、六维、总分、改点）；**过程图拼板** + **轮次单图表**（表内每轮可点开）并 Read 每轮原图；总结；最后一行写 finish 里的**本次耗时**。总控不另写一套。禁止只交拼板、禁止只甩 HTML。整页对比展陈才给对比页 HTML。
 """,
     },
     {
@@ -299,10 +311,12 @@ route 锁定后只读注册表该行的 **`pack_headings` 执行包**；不要�
 3. 每轮续跑前先读最小工作集：`python3 pmem_art.py contract working-set --id <session>`——只用合同+本图+单点改嘱，**禁止**靠长聊天重谈 L0/L1。
 4. 画师新反馈先归层：`python3 pmem_art.py contract classify --text "…"`；再 `contract patch --id <session> --feedback "…"`。L0=可能换交付/重开；L1=升锁点；L2=只改一处。
 5. 首轮 generate 前：`reasonableness review`（`--draft` + `--revised` + checklist）过闸。
-6. 出图顺序（禁 stub）：`converge generate --emit-prompt` 打印「最终 Prompt」→ GenerateImage 逐字用该句 → `converge generate --image <path>` 登记（可省 `--prompt` 复用 pending）。`converge generate` **自动并入** Warm-Start；打印 `WARM_START_MERGED=1|0` 与 `FINAL_PROMPT_SHA1=`。禁止另写 brief、禁止手贴 Warm-Start、禁止占位图骗闸。
+6. 出图顺序（禁 stub）：`converge generate --emit-prompt` 打印「最终 Prompt」→ GenerateImage 逐字用该句 → `converge generate --image <path>` 登记（可省 `--prompt` 复用 pending）。`converge generate` **自动并入** Warm-Start；打印 `WARM_START_MERGED=1|0` 与 `FINAL_PROMPT_SHA1=`。禁止另写 brief、禁止手贴 Warm-Start、禁止占位图骗闸。垫图只用该轮打印的那一张：默认是最初参考，改点只写进提示词；只有打印写明垫第几轮成图时，才垫那张成图。
 7. 看图打六维 → `converge judge`；≥9.5 到线即 `finish`；不到线最多 3 轮；交件标明是否过线。本项目已开安全早停：掉分/平台 → 交历史最高分，见停机码立即 `finish`。
 8. 风格优先级同第 2 条；都无才查 `benchmark lookup` / `COMMERCIAL_BENCHMARK.md`（**按品类**；仅 merge 钉 Gossip Harbor）；**禁止**把 benchmarks 目录图当垫图（start/generate 双闸）。
 9. 禁止裸 `--skip-route-gate`（须 `PMEM_ART_ALLOW_GATE_SKIP=1` + `--skip-reason`）。会话命令一律显式 `--id`。
+
+{{DELIVERY_VISIBLE}}
 
 ---
 
@@ -384,6 +398,7 @@ route 锁定后只读注册表该行的 **`pack_headings` 执行包**；不要�
 - **垫图**：
   - `low` / `medium`：每一轮都垫最初的参考图。多张图时垫宽高比对齐交付物的那张，其余图留在会话列表里。
   - `high` / `recompose`：机位还没换时垫最初那张。机位已经换过之后，下一轮垫换过机位的最高分那张。
+  - 审图没达标继续画时，垫哪张以审图打印和 `converge next` 为准。默认仍垫最初参考，改点只写进提示词。只有打印写明垫第几轮成图时，才把那张成图交给生图。
   - 没有参考图的纯文本任务：不垫成图，只在提示词上追加改点。
   - 定稿写死底：实色、场景，或「透明意图」。**Cursor GenerateImage 无 alpha**：透明意图改写成不透明隔离底（默认纯黑），禁止后抠。**gpt-image 等支持透明时**可直接交真 alpha PNG。品红块和品红底 JPG 不能当交付。
   - **风格跳跃（`recompose_bold` / `style_jump`）**：不垫旧风格参考，也不垫上一轮成图。剪影和画幅留在提示词里。
@@ -475,6 +490,7 @@ python3 pmem_art.py converge finish
 3. **两样都交（缺一不可）**：
    - **过程图拼板**：Read `process_sheet.jpg` 贴进对话（总览分数/不足）。
    - **轮次单图表**：贴 finish 打印的 Markdown 表（轮次×分数×可点图链接）；并对每一轮原图再 Read 一次贴进对话，方便逐张点开。也可用 `rounds.md`。
+   - **本次耗时**：写在结算最后一行，用 finish 报告里的那一句。
    - 禁止只交拼板不交单图表；禁止只甩 HTML。
 4. **总结**：胜出哪一轮、总分、留下的那一处不足；若触发了商业对标，附诊断结论。
 有多轮论述（合成梯关系稿）时，每一稿都要先记，不能只留在对话里：
@@ -665,6 +681,9 @@ improve/coach/learn 推销仅在用户主动要时再给。
 2. full kit：概念 + **1 张**组件总表 + 切线清单；禁零件级二次 converge 全家桶。
 3. 风格优先级：有文字跟文字（有参考时垫图只锁版式/机位）；有参考无文字跟参考表面；无参考仅题材文字按文字推出；都无才 `benchmark lookup --category ui.casual`（或该品类卡）写「对标品类=…」进 vibe/surface；**禁止垫竞品截图像素**；未点名三消勿默套 RM。
 4. 首轮须 reasonableness；converge generate 并入记忆；禁裸 skip-route-gate。
+5. 续轮垫图跟审图打印和 `converge next`：默认仍垫最初参考，不要改垫上一轮成图；只有打印写明垫第几轮成图时才垫成图。
+
+{{DELIVERY_VISIBLE}}
 
 ## 怎么用（复制即用）
 ```text
@@ -858,7 +877,7 @@ A/B/C **标题并列**，禁止把 C 嵌进 B、把 A 甩到 B 的 Step 之后�
 
 ## 二、Mode A：App Icon 1024×1024 母版专项（iOS App Store / Android Adaptive 桌面启动图标）
 
-当用户要求制作 **App Icon / 手机桌面图标 / iOS 启动图标 / Android 自适应图标 / 产品 Logo 图标** 时走本节约。
+当用户要求制作 **App Icon / 手机桌面图标 / iOS 启动图标 / Android 自适应图标 / 产品 Logo 图标** 时走本节约。续轮垫图跟审图打印和 `converge next`：默认仍垫最初参考，改点只写进提示词；只有打印写明垫第几轮成图时，才垫那张成图。
 
 ### A1. 1024×1024 满幅直角母版与系统圆角安全区铁律
 - **严禁预裁透明圆角**：母版必须输出 **`1024×1024` 满幅直角正方形（Full-bleed Square PNG，无 Alpha 透明缺角）**，防止系统套用 iOS 超椭圆或 Android Adaptive 遮罩时露出黑边/白边裂隙。
@@ -889,6 +908,8 @@ python3 pmem_art.py converge judge --session appicon --round 1 --image app_icon_
 ```
 
 ## 三、Mode B：一致化 SVG 矢量图标集流程（Brief → Spec → Batch → Review → Converge）
+
+续轮垫图跟审图打印和 `converge next`：默认仍垫最初参考，改点只写进提示词；只有打印写明垫第几轮成图时，才垫那张成图。
 
 ### B1：理解项目与图标清单
 收集：行业/项目气质、品牌色、大约数量。按组：Navigation / Communication / Trust / Actions / Industry-Specific（或游戏 Inventory / Combat / Status / Crafting）。
@@ -951,6 +972,8 @@ python3 pmem_art.py ingest icons/preview.html -p "icon set preview" --apply
 
 ## 四、Mode C：游戏道具隔离底栅格图标（64/128/256px PNG，非 SVG）
 
+续轮垫图跟审图打印和 `converge next`：默认仍垫最初参考，改点只写进提示词；只有打印写明垫第几轮成图时，才垫那张成图。
+
 {{ALPHA_BG_POLICY}}
 
 先锁「线宽/圆角/色板/投影」style-spec，再**批量**生成隔离底 PNG 做 preview。  
@@ -988,7 +1011,9 @@ python3 pmem_art.py reasonableness review --id <icon_c_id> --skill icon.c \
 - [ ] 底隔离合格：Cursor=纯黑/实色空底（未后抠）；透明引擎=真 alpha；厚剪影 64px 可认
 - [ ] 套件描边/色板/投影一致；无字
 - [ ] 品类主光 + 接触影；无场景插画
-- [ ] 关键枚若收敛：评分履历可见
+- [ ] 关键枚若收敛：评分履历可见；交件可见两样（拼板 + 可点轮次表）和本次耗时都要给
+
+{{DELIVERY_VISIBLE}}
 
 {{MEMORY_SILENT_KIT}}
 """,
@@ -1062,8 +1087,10 @@ python3 pmem_art.py learn list
 1. 定 `chain_mode` / `levels` / `delivery`（默认 overview_sheet、常 8；有格子参考跟格数；仅点名逐格才 per_cell）。
 2. **未点名接续 → 新开关系稿**：禁止把仓库旧 merge 的 yaml/relation/成图/同题旧模块直接当底稿；只可借字段格式。新目录 + 新 session；题材与档序按本句原话写。
 3. 关系稿最多 2：五问 + `relation-judge` + 对标档序 + `surface` 一句；说不通不出图。
-4. 风格：有文字跟文字；没写风格钉 Gossip Harbor 货柜（整表参考只锁格子）；点名写实/水彩等才离开。玩家点名垫 GH/竞品**真机图锁画风**时：跟截图货面，**勿再灌缺省软糖釉长句**；宜垫 `assets/refs/gossip_harbor` 货条/单格，勿默垫 `assets/skill_*` 旧交付。禁止未点名就垫竞品抄构图。**无玩家风格/格子参考时禁止把上轮成图垫进 GenerateImage**；首轮若偏写实/产品静物，下一轮纯文整张重开并强调糖釉玩具硬句（converge 遇写实病会自动不链上轮板）。
+4. 风格：有文字跟文字；没写风格钉 Gossip Harbor 货柜（整表参考只锁格子）；点名写实/水彩等才离开。玩家点名垫 GH/竞品**真机图锁画风**时：跟截图货面，**勿再灌缺省软糖釉长句**；宜垫 `assets/refs/gossip_harbor` 货条/单格，勿默垫 `assets/skill_*` 旧交付。禁止未点名就垫竞品抄构图。**无玩家风格/格子参考时禁止把上轮成图垫进 GenerateImage**；首轮若偏写实/产品静物，下一轮纯文整张重开并强调糖釉玩具硬句（converge 遇写实病会自动不链上轮板）。有参考时每一轮仍垫最初那张，不要改垫上一轮成图；只有审图或 converge next 写明垫第几轮成图时才垫成图。
 5. 整表最多 3 轮、≥9.5 到线即停；逐格各档并行。会话 id 显式，禁默写 `latest`。
+
+{{DELIVERY_VISIBLE}}
 
 ## 开场
 - **先认接续**：只有玩家点名旧稿/旧目录/接着上次，才打开旧 relation；否则新写 phase1，输出到并列新文件夹。
@@ -1334,6 +1361,7 @@ _MEMORY_EXPAND = {
     "{{MEMORY_SILENT_DRAW}}": _MEMORY_SILENT_DRAW.strip(),
     "{{MEMORY_SILENT_KIT}}": _MEMORY_SILENT_KIT.strip(),
     "{{ALPHA_BG_POLICY}}": _ALPHA_BG_POLICY.strip(),
+    "{{DELIVERY_VISIBLE}}": _DELIVERY_VISIBLE.strip(),
 }
 for _spec in SKILL_SPECS:
     _body = _spec.get("body") or ""

@@ -1,0 +1,35 @@
+﻿{
+  "mode": "icon.c",
+  "delivery": "batch_preview_sheet",
+  "tile": {
+    "shape": "rounded_square_chess_piece",
+    "surface": "bright_white_porcelain",
+    "bevel": "thick_3d_soft_grey_bottom_edge",
+    "corner_radius": "heavy",
+    "keep_tile_frame": true
+  },
+  "icon_surface": {
+    "look": "glossy_plastic_cgi_cartoon",
+    "lighting": "top_left_soft_studio",
+    "silhouette": "thick_readable_at_64px",
+    "no_text": true,
+    "no_scene_bg": true
+  },
+  "isolation": {
+    "engine": "cursor_generate_image",
+    "bg": "#000000",
+    "alpha": "opaque_isolation"
+  },
+  "layout": "3x5_equal_gaps",
+  "count_per_set": 15,
+  "sets": {
+    "ocean": ["clownfish","octopus","starfish","seahorse","sea_turtle","dolphin","whale","jellyfish","crab","lobster","coral","seashell","shrimp","manta_ray","penguin"],
+    "dog": ["corgi","shiba","poodle","french_bulldog","golden_retriever","husky","border_collie","dachshund","bichon","samoyed","german_shepherd","bulldog","yorkshire","akita","pug"]
+  },
+  "locks": [
+    "white_rounded_tile_always",
+    "single_centered_object_per_tile",
+    "same_camera_and_bevel_across_set",
+    "no_labels_no_numbers"
+  ]
+}

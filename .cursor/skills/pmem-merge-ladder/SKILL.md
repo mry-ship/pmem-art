@@ -23,8 +23,18 @@ description: 玩家要一条同域合成升级梯，或生图分流判成合成�
 1. 定 `chain_mode` / `levels` / `delivery`（默认 overview_sheet、常 8；有格子参考跟格数；仅点名逐格才 per_cell）。
 2. **未点名接续 → 新开关系稿**：禁止把仓库旧 merge 的 yaml/relation/成图/同题旧模块直接当底稿；只可借字段格式。新目录 + 新 session；题材与档序按本句原话写。
 3. 关系稿最多 2：五问 + `relation-judge` + 对标档序 + `surface` 一句；说不通不出图。
-4. 风格：有文字跟文字；没写风格钉 Gossip Harbor 货柜（整表参考只锁格子）；点名写实/水彩等才离开。玩家点名垫 GH/竞品**真机图锁画风**时：跟截图货面，**勿再灌缺省软糖釉长句**；宜垫 `assets/refs/gossip_harbor` 货条/单格，勿默垫 `assets/skill_*` 旧交付。禁止未点名就垫竞品抄构图。**无玩家风格/格子参考时禁止把上轮成图垫进 GenerateImage**；首轮若偏写实/产品静物，下一轮纯文整张重开并强调糖釉玩具硬句（converge 遇写实病会自动不链上轮板）。
+4. 风格：有文字跟文字；没写风格钉 Gossip Harbor 货柜（整表参考只锁格子）；点名写实/水彩等才离开。玩家点名垫 GH/竞品**真机图锁画风**时：跟截图货面，**勿再灌缺省软糖釉长句**；宜垫 `assets/refs/gossip_harbor` 货条/单格，勿默垫 `assets/skill_*` 旧交付。禁止未点名就垫竞品抄构图。**无玩家风格/格子参考时禁止把上轮成图垫进 GenerateImage**；首轮若偏写实/产品静物，下一轮纯文整张重开并强调糖釉玩具硬句（converge 遇写实病会自动不链上轮板）。有参考时每一轮仍垫最初那张，不要改垫上一轮成图；只有审图或 converge next 写明垫第几轮成图时才垫成图。
 5. 整表最多 3 轮、≥9.5 到线即停；逐格各档并行。会话 id 显式，禁默写 `latest`。
+
+## 交件可见（出图结算 · Agent 必读）
+
+跑过 `converge finish` 的出图，结算按这个顺序给玩家。两样都要，再报耗时。
+
+1. **过程图拼板**：Read `process_sheet.jpg` 贴进对话（总览每轮缩略、分数、不足、胜出框）。
+2. **轮次单图表**：贴 finish 打印的 Markdown 表（轮次 × 分数 × 可点图链接）；再对每一轮原图 Read 一次贴进对话。也可用 `rounds.md`。
+3. **本次耗时**：把 finish 报告里的「本次耗时」原样写在结算最后一行。
+
+禁止只交拼板。禁止只甩 HTML。没跑闭环的纯文字交付不必出这两样。
 
 ## 开场
 - **先认接续**：只有玩家点名旧稿/旧目录/接着上次，才打开旧 relation；否则新写 phase1，输出到并列新文件夹。
@@ -101,11 +111,6 @@ pyw -3 -u pmem_art.py converge judge --session <merge_id> --round <N> --image <s
 pyw -3 -u pmem_art.py converge finish --session <merge_id>
 ```
 per_cell：各档并行独立 session；`merge audit` 验收。
-
-### 墙钟（不伤质量）
-- **R1 一次写准**：糖釉块面高光、禁哑光黏土/软塑胶、机位、浅奶油卡、档序剪影硬锁全部写进首轮 `revised`；少漂一轮 ≈ 少 3～5 分钟。
-- **到线即停 / 安全早停**：本项目 `safe_early_stop: true`（`plateau_rounds=1`）。正式分 ≥9.5 或 `STOP_REGRESSION`/`STOP_PLATEAU` → 立刻 `finish` 交历史最高分；禁止为凑满 3 再画。
-- **关系一稿过**：五问 + `relation-judge` 一次过关再出图；关系返工比多画一轮更贵。
 
 ### 整表验收清单
 - [ ] 超框/切顶：整件落在浅色圆角卡内并留边

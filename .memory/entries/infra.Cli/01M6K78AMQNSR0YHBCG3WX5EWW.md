@@ -30,6 +30,8 @@ note_date: '2026-11-04'
 summary: 工作台：履历/批量删/定位；索引与揭示桥；主画廊只定稿
 verify: python pmem_art.py atlas；点文件夹选中文件；删除后刷新不回魂
 applies: 使用 art-atlas 工作台时
+verified: '2026-11-18'
+verified_at: '2026-11-18T15:22:20.907+08:00'
 ---
 # AtlasWorkbench 合并结论（现行）
 

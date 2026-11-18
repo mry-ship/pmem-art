@@ -631,22 +631,41 @@ def _spawn_detached_finish_settle(root: Path, session_id: str) -> bool:
 
 
 def _finish_write_final_slot(root: Path, sf: Path, sess: dict[str, Any], winner: dict[str, Any]) -> None:
-    """Sync workbench final.* slot — must not wait on memory settle."""
+    """Copy the winning plate to ``assets/.../final.*`` so the workbench gallery can see it.
+
+    Cursor 生成目录在仓库外。终稿槽必须落在项目 ``assets/`` 里；过程图文件名带 rN，
+    主画廊会把它藏起来。图还在仓库外时先不写，等 settle 拷进 assets 后再写。
+    """
     try:
-        win_rel = str(winner.get("image") or "").replace("\\", "/")
-        if not win_rel or win_rel.startswith("docs/showcase/"):
-            return
-        win_path = Path(win_rel) if Path(win_rel).is_absolute() else (root / win_rel)
-        if not win_path.is_file():
+        root = Path(root)
+        win_path: Path | None = None
+        win_rel = ""
+        for raw in (winner.get("asset_image"), winner.get("image")):
+            text = str(raw or "").strip()
+            if not text or text.replace("\\", "/").startswith("docs/showcase/"):
+                continue
+            cand = Path(text) if Path(text).is_absolute() else (root / text)
+            if not cand.is_file():
+                continue
+            try:
+                rel = cand.resolve().relative_to(root.resolve()).as_posix()
+            except ValueError:
+                continue
+            if not rel.startswith("assets/"):
+                continue
+            win_path = cand
+            win_rel = rel
+            break
+        if win_path is None:
             return
         ext = win_path.suffix.lower() or ".jpg"
         if ext not in {".jpg", ".jpeg", ".png", ".webp"}:
             ext = ".jpg"
-        try:
-            parent_rel = win_path.resolve().parent.relative_to(root.resolve()).as_posix()
-        except Exception:
-            parent_rel = str(Path(win_rel).parent).replace("\\", "/")
-        final_rel = f"{parent_rel}/final{ext}"
+        parent_rel = str(Path(win_rel).parent).replace("\\", "/")
+        if parent_rel in {"", "."}:
+            final_rel = f"final{ext}"
+        else:
+            final_rel = f"{parent_rel}/final{ext}"
         final_path = root / final_rel
         if win_path.resolve() != final_path.resolve():
             final_path.parent.mkdir(parents=True, exist_ok=True)
@@ -940,6 +959,75 @@ def _resolve_pad_auto(
     return style, carry_fix, 0, False, why
 
 
+def _score_bit(rounds: list, number: int) -> str:
+    scored = next(
+        (
+            r.get("score")
+            for r in rounds
+            if isinstance(r, dict) and int(r.get("round") or 0) == int(number)
+        ),
+        None,
+    )
+    if scored is None:
+        return "尚未打分"
+    try:
+        return f"{float(scored):.2f} 分"
+    except (TypeError, ValueError):
+        return "尚未打分"
+
+
+def _describe_next_pad(
+    *,
+    nxt: int,
+    pad_image: str,
+    pad_round: int,
+    continuation: bool,
+    pad_reason: str,
+    prior_plate: str = "",
+    prior_score_text: str = "",
+    plate_score_text: str = "",
+    when_word: str = "下一轮",
+) -> dict[str, Any]:
+    """Agent-facing pad lines. Must follow _resolve_pad_auto, not _best_plate.
+
+    auto/ref keep the original reference and put fixes in the prompt.
+    Only pad=previous, or high/recompose after camera-change evidence, names a plate.
+    """
+    image = (pad_image or "").strip()
+    score_bit = prior_score_text or "尚未打分"
+    if continuation and image:
+        score = f"（{plate_score_text}）" if plate_score_text else ""
+        kind = "plate"
+        headline = f"{when_word}第 {nxt} 轮，垫第 {pad_round} 轮成图{score}：{image}"
+        only = "生图参考图只用这一张成图。"
+        avoid = ""
+        action = f"先用第 {pad_round} 轮这张成图垫出第 {nxt} 轮"
+    elif not image:
+        kind = "none"
+        headline = f"{when_word}第 {nxt} 轮不垫图。"
+        only = "不要垫参考图，也不要垫上轮成图。"
+        avoid = (
+            f"上轮成图不要拿去垫（{score_bit}）：{prior_plate}"
+            if (prior_plate or "").strip()
+            else ""
+        )
+        action = f"第 {nxt} 轮不垫图，改点只写进提示词"
+    else:
+        kind = "ref"
+        headline = f"{when_word}第 {nxt} 轮，垫图仍用最初那张：{image}"
+        only = "生图参考图只用最初这张。"
+        avoid = (
+            f"上轮成图不要拿去垫（{score_bit}）：{prior_plate}"
+            if (prior_plate or "").strip()
+            else ""
+        )
+        action = f"先用最初那张参考垫出第 {nxt} 轮，不要垫上一轮成图"
+    lines = [headline, f"策略：{pad_reason}", only]
+    if avoid:
+        lines.append(avoid)
+    return {"kind": kind, "lines": lines, "action": action}
+
+
 def _apply_finish_memory_and_atlas(
     root: Path,
     data: dict[str, Any],
@@ -1018,6 +1106,8 @@ def _apply_finish_memory_and_atlas(
         keep_showcase = win_img_orig.replace("\\", "/").startswith("docs/showcase/")
         if not keep_showcase:
             winner["image"] = win_img
+    # 胜出图刚拷进 assets/。此刻再写 final.*，atlas 刷新才能扫到定稿槽。
+    _finish_write_final_slot(root, sf, sess, winner)
 
     settle_word = (
         "达标"
@@ -1816,28 +1906,22 @@ def cmd_converge(
             scale=str(sess.get("scale") or ""),
             style_jump=bool(sess.get("style_jump")),
         )
+        pad_view = _describe_next_pad(
+            nxt=nxt,
+            pad_image=pad_image,
+            pad_round=pad_round,
+            continuation=bool(continuation and pad_image),
+            pad_reason=pad_reason,
+            prior_plate=image,
+            prior_score_text=score_bit,
+            plate_score_text=_score_bit(rounds, pad_round) if continuation else "",
+        )
+        lines = list(pad_view["lines"])
         if continuation and pad_image:
-            print(
-                f"下一轮第 {nxt} 轮，策略建议垫第 {pad_round} 轮（{score_bit}）：{pad_image}\n"
-                f"策略：{pad_reason}\n"
-                f"生图参考图只用这一张。\n"
-                f"提示词：{compose_continuation_prompt(pad_fix or fix, prof)}"
-            )
-        elif not (pad_image or "").strip():
-            print(
-                f"下一轮第 {nxt} 轮不垫图。\n"
-                f"策略：{pad_reason}\n"
-                f"上轮成图不链（{score_bit}）：{image}\n"
-                f"提示词仍带改点：{pad_fix or fix}"
-            )
+            lines.append(f"提示词：{compose_continuation_prompt(pad_fix or fix, prof)}")
         else:
-            shown = pad_image or style_ref or "（无风格参考）"
-            print(
-                f"下一轮第 {nxt} 轮，垫最初的参考图：{shown}\n"
-                f"策略：{pad_reason}\n"
-                f"上轮成图不链（{score_bit}）：{image}\n"
-                f"提示词仍带改点：{pad_fix or fix}"
-            )
+            lines.append(f"提示词仍带改点：{pad_fix or fix}")
+        print("\n".join(lines))
         return 0
 
     if action == "generate":
@@ -2250,14 +2334,28 @@ def cmd_converge(
                 )
             floor_line = f"   · 结构底线: {floor_zh}\n" if floor_zh else ""
             final_lines = "\n".join(format_final_prompt_lines(composed_prompt))
+            prior_image, _prior_fix, prior_no = _best_plate(rounds, r_no, root)
+            emit_pad = _describe_next_pad(
+                nxt=r_no,
+                pad_image=carry_image,
+                pad_round=carry_round,
+                continuation=bool(policy_continuation and carry_image),
+                pad_reason=str(pad_reason),
+                prior_plate=prior_image,
+                prior_score_text=_score_bit(rounds, prior_no) if prior_image else "",
+                plate_score_text=_score_bit(rounds, carry_round) if policy_continuation else "",
+                when_word="本轮",
+            )
+            pad_hint = "".join(f"   · {line}\n" for line in emit_pad["lines"])
             print(
                 f"📝 [Step 2A · emit-prompt] 第 {r_no}/{mr} 轮最终 Prompt 已就绪（未登记成图、未过输出物理闸）\n"
+                f"{pad_hint}"
                 f"{memory_line}"
                 f"{floor_line}"
                 f"{assembly_line}"
                 f"{warm_seg_line}"
                 f"{final_lines}\n"
-                f"   · 下一步：用上面「最终 Prompt」调用 GenerateImage（或外部生图），"
+                f"   · 下一步：用上面「最终 Prompt」调用 GenerateImage（或外部生图），垫图只用上面打印的那一张；"
                 f"再 `{pmem_art_cli()} converge generate --id {session_id} --round {r_no} "
                 f"--image <path>` 登记（可省略 --prompt，将复用 pending）。\n"
                 f"   · 禁止 stub/占位图/低熵图骗闸；禁止 Probe/Overwrite 探测再生图。"
@@ -2369,7 +2467,12 @@ def cmd_converge(
         )
         suggest_target = suggested_paths[0] if suggested_paths else "（无）"
         actual_shown = eff_ref_paths if eff_ref_paths else "（无）"
-        diverge_bit = "（与策略建议不一致）" if pad_diverged else ""
+        if pad_diverged and not policy_continuation:
+            diverge_bit = "（与策略不一致：应垫最初参考，上轮成图不要拿去垫）"
+        elif pad_diverged:
+            diverge_bit = "（与策略建议不一致）"
+        else:
+            diverge_bit = ""
         pad_line = (
             f"   · 策略建议垫图: {suggest_target}（{pad_reason}）\n"
             f"   · 本轮实际垫图: {actual_shown}{diverge_bit}\n"
@@ -2846,21 +2949,50 @@ def cmd_converge(
         else:
             sess["status"] = "continue"
             sess["ActionRequired"] = f"GENERATE_ROUND_{r_no + 1}"
-            nxt_image, nxt_fix, nxt_round = _best_plate(rounds, r_no + 1, root)
-            fix_line = nxt_fix or entry["next_fix"]
+            nxt = r_no + 1
+            style_ref = str(sess.get("ref_image") or "").strip()
+            pad_image, pad_fix, pad_round, continuation, pad_reason = _resolve_pad_auto(
+                rounds,
+                nxt,
+                root,
+                style_ref=style_ref,
+                pad_mode=str(sess.get("pad_mode") or DEFAULT_PAD_MODE),
+                anatomy_floor=float(sess.get("anatomy_floor") or DEFAULT_ANATOMY_FLOOR),
+                subject_kind=classify_subject(
+                    goal=str(sess.get("goal") or ""),
+                    ref_analysis=sess.get("ref_analysis") or "",
+                    ref_image=style_ref,
+                    module=str(sess.get("module") or ""),
+                ),
+                goal=str(sess.get("goal") or ""),
+                module=str(sess.get("module") or ""),
+                ref_analysis=str(sess.get("ref_analysis") or ""),
+                scale=str(sess.get("scale") or ""),
+                style_jump=bool(sess.get("style_jump")),
+            )
+            prior_image, prior_fix, prior_round = _best_plate(rounds, nxt, root)
+            fix_line = pad_fix or prior_fix or entry["next_fix"]
+            pad_view = _describe_next_pad(
+                nxt=nxt,
+                pad_image=pad_image,
+                pad_round=pad_round,
+                continuation=bool(continuation and pad_image),
+                pad_reason=pad_reason,
+                prior_plate=prior_image,
+                prior_score_text=_score_bit(rounds, prior_round) if prior_image else "",
+                plate_score_text=_score_bit(rounds, pad_round) if continuation else "",
+            )
             msg = (
-                f"🔄 [Step 2B · 六维审图 · {src_badge}] 第 {r_no}/{mr} 轮得分 {score:.2f} < 目标阈值 {th:.2f}（未达标继续下一轮第 {r_no + 1} 轮）。\n"
+                f"🔄 [Step 2B · 六维审图 · {src_badge}] 第 {r_no}/{mr} 轮得分 {score:.2f} < 目标阈值 {th:.2f}（未达标继续下一轮第 {nxt} 轮）。\n"
                 f"   · 图像校验: {v_badge} | 六维: {judge_res['dims']}\n"
                 f"   · 不合理处: {entry['defects']}\n"
             )
-            if nxt_image:
-                msg += (
-                    f"   · 下一轮先垫这张再出图：第 {nxt_round} 轮 `{nxt_image}`\n"
-                    f"   · 只改这一处：{fix_line}\n"
-                    f"   · 生图参考图只用这一张。可先 `converge next --id {session_id}` 核对路径，画完再 generate。\n"
-                )
-            else:
-                msg += f"   · 下一轮只改：{entry['next_fix']}\n"
+            for line in pad_view["lines"]:
+                msg += f"   · {line}\n"
+            msg += (
+                f"   · 只改这一处：{fix_line}\n"
+                f"   · 可先 `converge next --id {session_id}` 核对路径，画完再 generate。\n"
+            )
             if skip_ahead:
                 msg += (
                     f"   · ⚡ Fast-track 提示：已 ≥{soft_th} 且与上轮变化很小 — "
@@ -2878,7 +3010,9 @@ def cmd_converge(
                     "   · 稳定性提示：medium 锁机位下连续大修易糊；"
                     "若下一轮仍同类碎边/体积问题，可显式 `--scale high`（需你确认，不会自动升档）。\n"
                 )
-            msg += f"   👉 先用上面这张垫图出第 {r_no + 1} 轮，再 `converge generate`，然后 `converge judge`。"
+            msg += (
+                f"   👉 {pad_view['action']}，再 `converge generate`，然后 `converge judge`。"
+            )
 
         vlm_report = judge_res.get("remote_vlm") or {}
         if vlm_report.get("source") == "independent_vlm":
@@ -3224,6 +3358,11 @@ def cmd_converge(
 
         board_rel = ""
         sheet_rel = ""
+        elapsed_line = ""
+        if action == "finish":
+            from skills_kit.process_board import stamp_elapsed
+
+            elapsed_line = stamp_elapsed(sess)
         try:
             from skills_kit.process_board import write_process_artifacts
             arts = write_process_artifacts(root, sess, winner=winner)
@@ -3253,6 +3392,8 @@ def cmd_converge(
                 md_lines.append("")
         except Exception as exc:
             md_lines.extend(["", f"过程图未写出：{exc}", ""])
+        if elapsed_line:
+            md_lines.extend(["", f"**{elapsed_line}**", ""])
 
         report_text = "\n".join(md_lines)
         report_file = sf.with_name(f"{sf.stem}_report.md")
@@ -3297,6 +3438,8 @@ def cmd_converge(
             except ValueError:
                 report_rel = report_file
             print(f"📎 评分履历已写盘: {report_rel} （去掉 --quiet 可在终端打印）")
+            if elapsed_line:
+                print(elapsed_line)
         else:
             print(report_text)
             if action == "finish":

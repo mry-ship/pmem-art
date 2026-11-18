@@ -46,7 +46,7 @@
 
 ### 3. 评分履历可见 · 记忆静默写入（默认）
 - 闭环每轮须向用户展示：**本轮原图可点开路径**、六维分、不足、下一轮改点；`converge finish` 默认打印全轮评分履历，并同时交两样主件：**过程图拼板 JPG** + **轮次单图表**（轮次×分数×可点单图）；HTML 仅静默旁路。写记忆（`--no-apply` 可跳过；只要终稿加 `--quiet`）。
-- Agent 交件：`Read` `process_sheet.jpg`；贴轮次 Markdown 表；再 `Read` 每一轮原图；**禁止**只交拼板、**禁止**只甩 HTML。
+- Agent 交件：`Read` `process_sheet.jpg`；贴轮次 Markdown 表；再 `Read` 每一轮原图；**禁止**只交拼板、**禁止**只甩 HTML。结算最后一行写 finish 报告里的「本次耗时」。
 - `finish` / 高信号 `feedback` 后仍自动写反思、更新 taste、强化 recipe/红线、悄悄排队 learn——**不要**旁白记忆写入；最多转述一行「小提示」。
 - 进步、短板、知识卡用 `/pmem-coach`。知识卡没有玩家明确收下，不要写入。
 

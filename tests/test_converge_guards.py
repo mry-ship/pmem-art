@@ -29,7 +29,11 @@ from skills_kit.prompt_scale import (  # noqa: E402
     get_converge_scale_profile,
 )
 from skills_kit.subject_lexicon import to_prompt_english  # noqa: E402
-from skills_kit.converge import _defect_text_copied, _resolve_pad_auto  # noqa: E402
+from skills_kit.converge import (  # noqa: E402
+    _defect_text_copied,
+    _describe_next_pad,
+    _resolve_pad_auto,
+)
 
 
 class TestPolicyDefaults(unittest.TestCase):
@@ -446,6 +450,59 @@ class TestPadAuto(unittest.TestCase):
                 defects="灭点略偏",
             )
         )
+
+    def test_auto_instruction_keeps_original_ref(self) -> None:
+        view = _describe_next_pad(
+            nxt=2,
+            pad_image="C:/ref.png",
+            pad_round=0,
+            continuation=False,
+            pad_reason="pad=auto→style_ref（每轮垫最初参考，修正只写进提示词）",
+            prior_plate="C:/r1.jpg",
+            prior_score_text="8.72 分",
+        )
+        text = "\n".join(view["lines"]) + view["action"]
+        self.assertEqual(view["kind"], "ref")
+        self.assertIn("垫图仍用最初那张：C:/ref.png", text)
+        self.assertIn("上轮成图不要拿去垫（8.72 分）：C:/r1.jpg", text)
+        self.assertIn("只用最初这张", text)
+        self.assertNotIn("只用这一张成图", text)
+        self.assertNotIn("先垫这张再出图", text)
+        self.assertIn("不要垫上一轮成图", view["action"])
+
+    def test_previous_instruction_chains_plate(self) -> None:
+        view = _describe_next_pad(
+            nxt=3,
+            pad_image="C:/r2.jpg",
+            pad_round=2,
+            continuation=True,
+            pad_reason="pad=previous",
+            prior_plate="C:/r2.jpg",
+            prior_score_text="9.05 分",
+            plate_score_text="9.05 分",
+        )
+        text = "\n".join(view["lines"]) + view["action"]
+        self.assertEqual(view["kind"], "plate")
+        self.assertIn("垫第 2 轮成图（9.05 分）：C:/r2.jpg", text)
+        self.assertIn("只用这一张成图", text)
+        self.assertNotIn("最初那张", text)
+        self.assertIn("先用第 2 轮这张成图", view["action"])
+
+    def test_style_jump_instruction_pads_nothing(self) -> None:
+        view = _describe_next_pad(
+            nxt=2,
+            pad_image="",
+            pad_round=0,
+            continuation=False,
+            pad_reason="style_jump：不垫风格参考，也不链成图",
+            prior_plate="C:/r1.jpg",
+            prior_score_text="8.10 分",
+        )
+        text = "\n".join(view["lines"]) + view["action"]
+        self.assertEqual(view["kind"], "none")
+        self.assertIn("不垫图", text)
+        self.assertIn("不要垫参考图，也不要垫上轮成图", text)
+        self.assertIn("C:/r1.jpg", text)
 
 
 class TestJudgeAnatomyVeto(unittest.TestCase):

@@ -94,6 +94,10 @@ def _h2_by_prefix(body: str, prefix: str) -> str:
     return ""
 
 
+def _delivery_heading(body: str) -> str:
+    return _h2_by_prefix(body, "## 交件可见")
+
+
 def _any_heading(body: str, exact: str) -> str:
     want = (exact or "").strip()
     if not want:
@@ -197,11 +201,12 @@ def _icon_routes(body: str) -> list[dict[str, Any]]:
         ("icon.c", "C", "背包道具格"),
     )
     memory = _h2_by_prefix(body, "## 记忆静默")
+    delivery = _delivery_heading(body)
     routes: list[dict[str, Any]] = []
     for rid, letter, when in spec:
         heading = _mode_heading(body, letter)
         checklist = _any_heading(body, f"### Mode {letter}")
-        pack = [h for h in (heading, checklist, memory) if h]
+        pack = [h for h in (heading, checklist, delivery, memory) if h]
         routes.append(
             {
                 "id": rid,
@@ -236,12 +241,13 @@ def _draw_pack_headings(body: str, section: str, heading: str) -> list[str]:
     # 有执行卡则不再塞整节「二、」（降合规长度）；卡内须含 reasonableness/converge 关键词
     loop_or_card = card or loop
     memory = _h2_by_prefix(body, "## 记忆静默")
+    delivery = _delivery_heading(body)
     if section == "普通图":
-        return [h for h in (route_gate, loop_or_card or heading, memory) if h]
+        return [h for h in (route_gate, loop_or_card or heading, delivery, memory) if h]
     if section == "镜头包":
         return [h for h in (route_gate, heading) if h]
-    # 克隆 / 变体 / 多图分工 / 原画：公共闭环 + 叠加合同
-    return [h for h in (route_gate, loop_or_card, heading, memory) if h]
+    # 克隆 / 变体 / 多图分工 / 原画：公共闭环 + 叠加合同 + 交件可见
+    return [h for h in (route_gate, loop_or_card, heading, delivery, memory) if h]
 
 
 def build_registry(specs: list[dict[str, Any]], *, installed_root: Path | None = None) -> dict[str, Any]:
@@ -269,10 +275,12 @@ def build_registry(specs: list[dict[str, Any]], *, installed_root: Path | None =
             if rid == "merge.ladder":
                 card = _h2_by_prefix(body, "## 执行卡")
                 forbid = _h2_by_prefix(body, "## 禁止")
-                pack = [h for h in (card, forbid) if h] or ([heading] if heading else [])
+                delivery = _delivery_heading(body)
+                pack = [h for h in (card, delivery, forbid) if h] or ([heading] if heading else [])
             elif rid in {"ui.kit", "prompt.write"}:
                 card = _h2_by_prefix(body, "## 执行卡")
-                pack = [card] if card else ([heading] if heading else [])
+                delivery = _delivery_heading(body) if rid == "ui.kit" else ""
+                pack = [h for h in (card, delivery) if h] or ([heading] if heading else [])
             else:
                 pack = [heading] if heading else []
         routes.append(
@@ -305,9 +313,11 @@ def build_registry(specs: list[dict[str, Any]], *, installed_root: Path | None =
             pack = [card]
         elif rid == "merge.ladder":
             forbid = _h2_by_prefix(body, "## 禁止")
-            pack = [h for h in (card, forbid) if h] or ([heading] if heading else [])
+            delivery = _delivery_heading(body)
+            pack = [h for h in (card, delivery, forbid) if h] or ([heading] if heading else [])
         elif rid == "ui.kit" and card:
-            pack = [card]
+            delivery = _delivery_heading(body)
+            pack = [h for h in (card, delivery) if h]
         else:
             pack = [heading] if heading else []
         routes.append(

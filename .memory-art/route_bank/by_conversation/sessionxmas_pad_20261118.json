@@ -1,0 +1,15 @@
+{
+  "saved_at": 1794990178.2395916,
+  "text": "竖屏圣诞活动界面。参考垫图的分区构图和手绘软渐变画风，题材换成圣诞节，内容更丰富。标题写圣诞节。保留信息钮、关闭钮、礼物计时、宝箱进度、一男一女半身、两张订单卡、大块留白棋盘、底部三条发生器、橙色能量钮。棋盘多数格子仍空，圣诞物件比垫图略多但仍散落。不要感恩节食物和标题，不要手机外框。",
+  "banner": "【按点名锁定 draw.clone】",
+  "route_ids": [
+    "draw.clone"
+  ],
+  "mode": "skill",
+  "execute_ok": true,
+  "artist_say": "【按点名锁定 draw.clone】",
+  "plan_conflict": false,
+  "confidence": "named",
+  "conversation_id": "session:xmas_pad_20261118",
+  "named_seed": true
+}

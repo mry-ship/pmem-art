@@ -1,0 +1,73 @@
+{
+  "schema": "pmem-art.reflection.v1",
+  "project_id": "pmem-art",
+  "project_name": "pmem-art",
+  "layer_scope": "private",
+  "written_at": "2026-11-18 14:46:33 UTC+8",
+  "session_id": "ocean_refstyle_20261118",
+  "goal": "克隆。锁参考图棋子表面：大圆角冷白方块，物件鼓而居中、几乎撑满格，高饱和糖釉，左上柔白高光，无硬描边，短软接触影。新题材，不抄食物，换新主体。一张3:4竖向总表，3列5行共15枚等大棋子，正面平视略俯。从左到右、从上到下：小丑鱼、海龟、章鱼、水母、螃蟹、海星、海豚、海马、鲨鱼、河豚、龙虾、鲸鱼、魔鬼鱼、珊瑚、寄居蟹。禁止文字、数字、猫、空洞缺格、W标、硬金属、灰蒙玩具货架、写实摄影。",
+  "module": "icon.OceanRefStyle",
+  "converge_mode": "quality",
+  "guided_mode": "ref_image_guided",
+  "threshold": 9.5,
+  "max_rounds": 3,
+  "rounds_used": 2,
+  "winner_round": 2,
+  "winner_score": 9.52,
+  "winner_image": "assets/icon/oceanrefstyle/ocean_refstyle_r2.jpg",
+  "winner_passed": true,
+  "outcome": "达标定稿 · 最高分第 2 轮",
+  "what_fixed": [
+    "背景换成干净的浅暖实色，不留照片毛色。海豚腹部贴住白格，接触影压在肚子下。糖釉和高饱和保持不动。"
+  ],
+  "what_still_weak": "残余可接受点：个别高光块大小还有一点差别，不挡认种类。",
+  "strengths": "冷白大圆角方块守住。高饱和糖釉守住。无文字守住。背景已是干净浅暖实色。海豚腹部贴住白格。十五枚鼓圆糖釉仍接近参考棋子。",
+  "taste_deltas": {
+    "from_strengths": [
+      "冷白大圆角方块守住。高饱和糖釉守住。无文字守住。背景已是干净浅暖实色。海豚腹部贴住白格。十五枚鼓圆糖釉仍接近参考棋子。"
+    ],
+    "from_defects": [
+      "背景还留着参考照片的模糊暖毛色。海豚肚子略悬，接触影没贴住腹部。"
+    ]
+  },
+  "warm_start_confidence": 0.3,
+  "fast_track": false,
+  "scores": [
+    {
+      "round": 1,
+      "score": 9.32,
+      "passed": false
+    },
+    {
+      "round": 2,
+      "score": 9.52,
+      "passed": true
+    }
+  ],
+  "lessons": [
+    {
+      "category": "color_palette",
+      "lesson": "本轮短板偏「color_palette」：背景还留着参考照片的模糊暖毛色。海豚肚子略悬，接触影没贴住腹部。",
+      "drill": "从模块 palette 抽 3 HEX 做限色练习，禁止引入霓虹辅色",
+      "from_score": "9.32"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：冷白大圆角方块守住。高饱和糖釉守住。无文字守住。十五枚鼓圆、左上柔白高光，接近参考棋子表面。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.32"
+    },
+    {
+      "category": "lighting",
+      "lesson": "本轮短板偏「lighting」：个别高光块大小还有一点差别，不挡认种类。",
+      "drill": "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
+      "from_score": "9.52"
+    },
+    {
+      "category": "keep",
+      "lesson": "保留本轮已做对的：冷白大圆角方块守住。高饱和糖釉守住。无文字守住。背景已是干净浅暖实色。海豚腹部贴住白格。十五枚鼓圆糖釉仍接近参考棋子。",
+      "drill": "下一轮 Prompt 显式写入这些亮点作为正向锚点",
+      "from_score": "9.52"
+    }
+  ]
+}

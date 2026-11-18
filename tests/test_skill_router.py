@@ -178,6 +178,28 @@ class SkillRouterTests(unittest.TestCase):
         ordinary_pack = slice_route_body(draw_body, by_id["draw.ordinary"])
         self.assertIn("零点五", ordinary_pack)
         self.assertIn("reasonableness", ordinary_pack)
+        image_routes = (
+            "draw.ordinary",
+            "draw.clone",
+            "draw.key",
+            "draw.variant",
+            "draw.multi",
+            "ui.kit",
+            "merge.ladder",
+            "icon.a",
+            "icon.b",
+            "icon.c",
+        )
+        for rid in image_routes:
+            packed = slice_route_body(bodies[by_id[rid]["skill"]], by_id[rid])
+            self.assertIn("交件可见", packed, rid)
+            self.assertIn("process_sheet.jpg", packed, rid)
+            self.assertIn("轮次单图表", packed, rid)
+            self.assertIn("本次耗时", packed, rid)
+        lens_pack = slice_route_body(draw_body, by_id["draw.lens"])
+        self.assertNotIn("交件可见", lens_pack)
+        prompt_pack = slice_route_body(bodies[by_id["prompt.write"]["skill"]], by_id["prompt.write"])
+        self.assertNotIn("交件可见", prompt_pack)
         for rid in ("icon.a", "icon.b", "icon.c"):
             packed = slice_route_body(icon_body, by_id[rid])
             self.assertIn("记忆静默", packed)

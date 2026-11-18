@@ -72,10 +72,20 @@ route 锁定后只读注册表该行的 **`pack_headings` 执行包**；不要�
 3. 每轮续跑前先读最小工作集：`pyw -3 -u pmem_art.py contract working-set --id <session>`——只用合同+本图+单点改嘱，**禁止**靠长聊天重谈 L0/L1。
 4. 画师新反馈先归层：`pyw -3 -u pmem_art.py contract classify --text "…"`；再 `contract patch --id <session> --feedback "…"`。L0=可能换交付/重开；L1=升锁点；L2=只改一处。
 5. 首轮 generate 前：`reasonableness review`（`--draft` + `--revised` + checklist）过闸。
-6. 出图顺序（禁 stub）：`converge generate --emit-prompt` 打印「最终 Prompt」→ GenerateImage 逐字用该句 → `converge generate --image <path>` 登记（可省 `--prompt` 复用 pending）。`converge generate` **自动并入** Warm-Start；打印 `WARM_START_MERGED=1|0` 与 `FINAL_PROMPT_SHA1=`。禁止另写 brief、禁止手贴 Warm-Start、禁止占位图骗闸。
-7. 看图打六维 → `converge judge`；≥9.5 到线即 `finish`；不到线最多 3 轮；交件标明是否过线。本项目已开安全早停：掉分/平台 → 交历史最高分，见停机码立即 finish。
+6. 出图顺序（禁 stub）：`converge generate --emit-prompt` 打印「最终 Prompt」→ GenerateImage 逐字用该句 → `converge generate --image <path>` 登记（可省 `--prompt` 复用 pending）。`converge generate` **自动并入** Warm-Start；打印 `WARM_START_MERGED=1|0` 与 `FINAL_PROMPT_SHA1=`。禁止另写 brief、禁止手贴 Warm-Start、禁止占位图骗闸。垫图只用该轮打印的那一张：默认是最初参考，改点只写进提示词；只有打印写明垫第几轮成图时，才垫那张成图。
+7. 看图打六维 → `converge judge`；≥9.5 到线即 `finish`；不到线最多 3 轮；交件标明是否过线。本项目已开安全早停：掉分/平台 → 交历史最高分，见停机码立即 `finish`。
 8. 风格优先级同第 2 条；都无才查 `benchmark lookup` / `COMMERCIAL_BENCHMARK.md`（**按品类**；仅 merge 钉 Gossip Harbor）；**禁止**把 benchmarks 目录图当垫图（start/generate 双闸）。
 9. 禁止裸 `--skip-route-gate`（须 `PMEM_ART_ALLOW_GATE_SKIP=1` + `--skip-reason`）。会话命令一律显式 `--id`。
+
+## 交件可见（出图结算 · Agent 必读）
+
+跑过 `converge finish` 的出图，结算按这个顺序给玩家。两样都要，再报耗时。
+
+1. **过程图拼板**：Read `process_sheet.jpg` 贴进对话（总览每轮缩略、分数、不足、胜出框）。
+2. **轮次单图表**：贴 finish 打印的 Markdown 表（轮次 × 分数 × 可点图链接）；再对每一轮原图 Read 一次贴进对话。也可用 `rounds.md`。
+3. **本次耗时**：把 finish 报告里的「本次耗时」原样写在结算最后一行。
+
+禁止只交拼板。禁止只甩 HTML。没跑闭环的纯文字交付不必出这两样。
 
 ---
 
@@ -120,7 +130,7 @@ route 锁定后只读注册表该行的 **`pack_headings` 执行包**；不要�
    - `--mode fast`：warm-start 置信度高时可走 **fast track**（仍须每张打分；最终采纳默认仍要 ≥9.5，除非用户明确说「草稿/fast/先看看」）。
    - `converge generate` **自动把 Warm-Start `prompt_block` 并入提示词**。对话里回显「装配句 / Warm-Start 段 / 最终 Prompt」与 `WARM_START_MERGED=1`。禁止再靠手贴，也禁止用「GenerateImage Hook 有没有跑」判断是否并入。
    - **出图硬规**：`GenerateImage` / Shell / apikey-image 的 description（或等价字段）**必须**填 generate 打印的「最终 Prompt（出图须用这句）」；同屏会打印 `FINAL_PROMPT_SHA1=`，可用 `skills_kit.final_prompt_gate.assert_used_final_prompt` 对账。禁止另写第二份 brief、禁止手贴 Warm-Start。
-   - **墙钟硬规（日常交付）**：主链禁止 `doctor` / `hygiene` / 深检 / `--help` 试错；禁止 Probe / Overwrite / stub 骗闸；顺序 `--emit-prompt` → 生图 → `--image` 登记；显式 session；本对话优先；**首轮 brief 一次写准**（身份、机位、材质、禁令、底色、动势/品种硬锁写进 R1 revised）；本项目已开安全早停，见停机码立即 finish（不降 9.5 到线）。
+   - **墙钟硬规（日常交付）**：主链禁止 `doctor` / `hygiene` / 深检 / `--help` 试错；禁止 Probe / Overwrite / stub 骗闸；顺序 `--emit-prompt` → 生图 → `--image` 登记；显式 session；本对话优先；**首轮 brief 一次写准**（身份、机位、材质、禁令、底色、动势/品种硬锁写进 R1 revised）；本项目已开安全早停，见停机码立即 `finish`（不降 9.5 到线）。
    - **档位只规定能动多少，出图句用开会话打印的那一家**：
      - `low`：写成一处可改，并点名邻区保持原样。
      - `medium`：只留一处看得见的打磨，机位锁死。
@@ -157,6 +167,7 @@ route 锁定后只读注册表该行的 **`pack_headings` 执行包**；不要�
 - **垫图**：
   - `low` / `medium`：每一轮都垫最初的参考图。多张图时垫宽高比对齐交付物的那张，其余图留在会话列表里。
   - `high` / `recompose`：机位还没换时垫最初那张。机位已经换过之后，下一轮垫换过机位的最高分那张。
+  - 审图没达标继续画时，垫哪张以审图打印和 `converge next` 为准。默认仍垫最初参考，改点只写进提示词。只有打印写明垫第几轮成图时，才把那张成图交给生图。
   - 没有参考图的纯文本任务：不垫成图，只在提示词上追加改点。
   - 定稿写死底：实色、场景，或「透明意图」。**Cursor GenerateImage 无 alpha**：透明意图改写成不透明隔离底（默认纯黑），禁止后抠。**gpt-image 等支持透明时**可直接交真 alpha PNG。品红块和品红底 JPG 不能当交付。
   - **风格跳跃（`recompose_bold` / `style_jump`）**：不垫旧风格参考，也不垫上一轮成图。剪影和画幅留在提示词里。
@@ -251,6 +262,7 @@ pyw -3 -u pmem_art.py converge finish
 3. **两样都交（缺一不可）**：
    - **过程图拼板**：Read `process_sheet.jpg` 贴进对话（总览分数/不足）。
    - **轮次单图表**：贴 finish 打印的 Markdown 表（轮次×分数×可点图链接）；并对每一轮原图再 Read 一次贴进对话，方便逐张点开。也可用 `rounds.md`。
+   - **本次耗时**：写在结算最后一行，用 finish 报告里的那一句。
    - 禁止只交拼板不交单图表；禁止只甩 HTML。
 4. **总结**：胜出哪一轮、总分、留下的那一处不足；若触发了商业对标，附诊断结论。
 有多轮论述（合成梯关系稿）时，每一稿都要先记，不能只留在对话里：
@@ -272,7 +284,7 @@ improve/coach/learn 推销仅在用户主动要时再给。
 
 ## 记忆静默 / 履历可见（Agent 必读）
 - `converge finish` 后系统**自动**写反思、更新 `taste.json`、强化 recipe/红线、悄悄排队 1–2 条知识建议——**无需**再跑 `/pmem-coach`。
-- 对用户默认展示：**参考图分析 + 每轮原图路径（可点开）+ 六维与总分 + 过程图 JPG + 总结**；HTML 过程板只是旁路，不要求玩家去文件夹打开。记忆写入不要旁白。
+- 对用户默认展示见「交件可见」：Read `process_sheet.jpg` + 贴可点**轮次单图表** + 再 Read 每一轮原图 + 结算末行**本次耗时**。HTML 过程板只是旁路。记忆写入不要旁白。
 - 用户要安静出图时用 `--quiet` 或说「只要终稿」。想看进步、短板或知识卡时再用 `/pmem-coach`。
 
 ## 合同 · 原画

@@ -19,7 +19,8 @@
       "file": ".cursor/skills/pmem-ui/SKILL.md",
       "heading": "# `/pmem-ui` — SpriteCook 式 UI Kit / HUD / 九宫格整套生成",
       "pack_headings": [
-        "## 执行卡 · UI（Agent 必读）"
+        "## 执行卡 · UI（Agent 必读）",
+        "## 交件可见（出图结算 · Agent 必读）"
       ],
       "routable": true,
       "simultaneous_pixels": false,
@@ -35,6 +36,7 @@
       "pack_headings": [
         "## 二、Mode A：App Icon 1024×1024 母版专项（iOS App Store / Android Adaptive 桌面启动图标）",
         "### Mode A",
+        "## 交件可见（出图结算 · Agent 必读）",
         "## 记忆静默 / 履历可见（Agent 必读）"
       ],
       "routable": true,
@@ -51,6 +53,7 @@
       "pack_headings": [
         "## 三、Mode B：一致化 SVG 矢量图标集流程（Brief → Spec → Batch → Review → Converge）",
         "### Mode B",
+        "## 交件可见（出图结算 · Agent 必读）",
         "## 记忆静默 / 履历可见（Agent 必读）"
       ],
       "routable": true,
@@ -67,6 +70,7 @@
       "pack_headings": [
         "## 四、Mode C：游戏道具隔离底栅格图标（64/128/256px PNG，非 SVG）",
         "### Mode C",
+        "## 交件可见（出图结算 · Agent 必读）",
         "## 记忆静默 / 履历可见（Agent 必读）"
       ],
       "routable": true,
@@ -82,6 +86,7 @@
       "heading": "# `/pmem-merge-ladder` — 同域合成梯",
       "pack_headings": [
         "## 执行卡",
+        "## 交件可见（出图结算 · Agent 必读）",
         "## 禁止"
       ],
       "routable": true,
@@ -114,6 +119,7 @@
         "## 零点五、开画前强制 route（与总控同闸；点名 `/pmem-draw` 也要跑）",
         "## 执行卡 · 出图闭环（Agent 必读；细则见第二节）",
         "## 合同 · 克隆",
+        "## 交件可见（出图结算 · Agent 必读）",
         "## 记忆静默 / 履历可见（Agent 必读）"
       ],
       "routable": true,
@@ -131,6 +137,7 @@
         "## 零点五、开画前强制 route（与总控同闸；点名 `/pmem-draw` 也要跑）",
         "## 执行卡 · 出图闭环（Agent 必读；细则见第二节）",
         "## 合同 · 变体",
+        "## 交件可见（出图结算 · Agent 必读）",
         "## 记忆静默 / 履历可见（Agent 必读）"
       ],
       "routable": true,
@@ -148,6 +155,7 @@
         "## 零点五、开画前强制 route（与总控同闸；点名 `/pmem-draw` 也要跑）",
         "## 执行卡 · 出图闭环（Agent 必读；细则见第二节）",
         "## 合同 · 多图分工",
+        "## 交件可见（出图结算 · Agent 必读）",
         "## 记忆静默 / 履历可见（Agent 必读）"
       ],
       "routable": true,
@@ -165,6 +173,7 @@
         "## 零点五、开画前强制 route（与总控同闸；点名 `/pmem-draw` 也要跑）",
         "## 执行卡 · 出图闭环（Agent 必读；细则见第二节）",
         "## 合同 · 原画",
+        "## 交件可见（出图结算 · Agent 必读）",
         "## 记忆静默 / 履历可见（Agent 必读）"
       ],
       "routable": true,
@@ -251,6 +260,7 @@
       "pack_headings": [
         "## 零点五、开画前强制 route（与总控同闸；点名 `/pmem-draw` 也要跑）",
         "## 执行卡 · 出图闭环（Agent 必读；细则见第二节）",
+        "## 交件可见（出图结算 · Agent 必读）",
         "## 记忆静默 / 履历可见（Agent 必读）"
       ],
       "routable": true,

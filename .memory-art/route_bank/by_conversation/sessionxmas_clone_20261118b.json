@@ -1,0 +1,15 @@
+{
+  "saved_at": 1794986322.04184,
+  "text": "有参考图，换成圣诞节题材，锁糖釉画风，界面排版可以重排，画一张内容丰富的圣诞节活动界面。竖屏9:16手绘糖釉，不抄感恩节主体。",
+  "banner": "【按点名锁定 draw.clone】",
+  "route_ids": [
+    "draw.clone"
+  ],
+  "mode": "skill",
+  "execute_ok": true,
+  "artist_say": "【按点名锁定 draw.clone】",
+  "plan_conflict": false,
+  "confidence": "named",
+  "conversation_id": "session:xmas_clone_20261118b",
+  "named_seed": true
+}

@@ -37,7 +37,7 @@ A/B/C **标题并列**，禁止把 C 嵌进 B、把 A 甩到 B 的 Step 之后�
 
 ## 二、Mode A：App Icon 1024×1024 母版专项（iOS App Store / Android Adaptive 桌面启动图标）
 
-当用户要求制作 **App Icon / 手机桌面图标 / iOS 启动图标 / Android 自适应图标 / 产品 Logo 图标** 时走本节约。
+当用户要求制作 **App Icon / 手机桌面图标 / iOS 启动图标 / Android 自适应图标 / 产品 Logo 图标** 时走本节约。续轮垫图跟审图打印和 `converge next`：默认仍垫最初参考，改点只写进提示词；只有打印写明垫第几轮成图时，才垫那张成图。
 
 ### A1. 1024×1024 满幅直角母版与系统圆角安全区铁律
 - **严禁预裁透明圆角**：母版必须输出 **`1024×1024` 满幅直角正方形（Full-bleed Square PNG，无 Alpha 透明缺角）**，防止系统套用 iOS 超椭圆或 Android Adaptive 遮罩时露出黑边/白边裂隙。
@@ -68,6 +68,8 @@ pyw -3 -u pmem_art.py converge judge --session appicon --round 1 --image app_ico
 ```
 
 ## 三、Mode B：一致化 SVG 矢量图标集流程（Brief → Spec → Batch → Review → Converge）
+
+续轮垫图跟审图打印和 `converge next`：默认仍垫最初参考，改点只写进提示词；只有打印写明垫第几轮成图时，才垫那张成图。
 
 ### B1：理解项目与图标清单
 收集：行业/项目气质、品牌色、大约数量。按组：Navigation / Communication / Trust / Actions / Industry-Specific（或游戏 Inventory / Combat / Status / Crafting）。
@@ -130,6 +132,8 @@ pyw -3 -u pmem_art.py ingest icons/preview.html -p "icon set preview" --apply
 
 ## 四、Mode C：游戏道具隔离底栅格图标（64/128/256px PNG，非 SVG）
 
+续轮垫图跟审图打印和 `converge next`：默认仍垫最初参考，改点只写进提示词；只有打印写明垫第几轮成图时，才垫那张成图。
+
 ## 底与透明度（按生图引擎 · Agent 必读）
 - **Cursor `GenerateImage` 不支持真透明**。口语要「透明底」时，改写为**不透明隔离底**（默认纯黑 `#000000`，或定稿写死的实色空底）；交不透明 PNG/JPG 即可。**禁止**成图后再抠色、抠角、本地挖洞冒充 alpha。**例外：合成梯整表（overview_sheet）用浅色圆角卡，纯黑只给 per_cell。**
 - **第三方支持透明的引擎**（如 `gpt-image` / 明确带 alpha 的 API）：可**直接**生成真 alpha PNG；白底/品红底不算透明底。
@@ -170,9 +174,19 @@ pyw -3 -u pmem_art.py reasonableness review --id <icon_c_id> --skill icon.c \
 - [ ] 底隔离合格：Cursor=纯黑/实色空底（未后抠）；透明引擎=真 alpha；厚剪影 64px 可认
 - [ ] 套件描边/色板/投影一致；无字
 - [ ] 品类主光 + 接触影；无场景插画
-- [ ] 关键枚若收敛：评分履历可见
+- [ ] 关键枚若收敛：评分履历可见；交件可见两样（拼板 + 可点轮次表）和本次耗时都要给
+
+## 交件可见（出图结算 · Agent 必读）
+
+跑过 `converge finish` 的出图，结算按这个顺序给玩家。两样都要，再报耗时。
+
+1. **过程图拼板**：Read `process_sheet.jpg` 贴进对话（总览每轮缩略、分数、不足、胜出框）。
+2. **轮次单图表**：贴 finish 打印的 Markdown 表（轮次 × 分数 × 可点图链接）；再对每一轮原图 Read 一次贴进对话。也可用 `rounds.md`。
+3. **本次耗时**：把 finish 报告里的「本次耗时」原样写在结算最后一行。
+
+禁止只交拼板。禁止只甩 HTML。没跑闭环的纯文字交付不必出这两样。
 
 ## 记忆静默 / 履历可见（Agent 必读）
 - `converge finish` 后系统自动写反思/口味/learn 队列——**无需**再跑 `/pmem-coach`。
-- 对用户默认展示：**每轮可点原图路径 + 六维分 + 不足 + 改点 + 过程图 JPG + 全轮履历**；若有「小提示」原样转述（每会话最多 1 条）。**禁止**旁白记忆写入；禁止只甩 HTML 过程板。
+- 对用户默认展示见「交件可见」：Read `process_sheet.jpg` + 贴可点**轮次单图表** + 再 Read 每一轮原图 + 结算末行**本次耗时**。若有「小提示」原样转述（每会话最多 1 条）。**禁止**旁白记忆写入；禁止只甩 HTML。
 - 只要终稿：`--quiet`。教练 / 广度：用户明确要求或进阶技能时再给。

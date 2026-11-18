@@ -113,6 +113,7 @@ class ProcessBoardTests(unittest.TestCase):
             "threshold": 9.5,
             "max_rounds": 3,
             "status": "running",
+            "started_at": "2026-11-18 14:00:00 UTC+8",
             "rounds": [{
                 "round": i,
                 "score": 8.5,
@@ -149,6 +150,54 @@ class ProcessBoardTests(unittest.TestCase):
         self.assertIn("process_sheet.jpg", str(saved.get("process_sheet") or ""))
         self.assertIn("rounds.md", str(saved.get("process_rounds") or ""))
         self.assertIn("index.html", str(saved.get("process_board") or ""))
+        self.assertIn("本次耗时", report)
+        self.assertTrue(str(saved.get("elapsed_text") or "").startswith("本次耗时"))
+        self.assertGreaterEqual(int(saved.get("elapsed_sec") or 0), 0)
+
+    def test_stamp_elapsed_is_deterministic(self):
+        from datetime import datetime, timedelta, timezone
+
+        from skills_kit.process_board import format_rounds_click_table, stamp_elapsed
+
+        sess = {"started_at": "2026-11-18 14:00:00 UTC+8", "rounds": []}
+        now = datetime(2026, 11, 18, 14, 12, 5, tzinfo=timezone(timedelta(hours=8)))
+        text = stamp_elapsed(sess, now=now)
+        self.assertEqual(text, "本次耗时：12分5秒")
+        self.assertEqual(sess["elapsed_sec"], 12 * 60 + 5)
+        table = format_rounds_click_table(Path("."), sess)
+        self.assertIn("本次耗时：12分5秒", table)
+        later = datetime(2026, 11, 18, 15, 2, 3, tzinfo=timezone(timedelta(hours=8)))
+        hour = stamp_elapsed({"started_at": "2026-11-18 14:00:00 UTC+8"}, now=later)
+        self.assertEqual(hour, "本次耗时：1小时2分3秒")
+        self.assertEqual(stamp_elapsed({"goal": "无开始时间"}, now=now), "")
+
+    def test_final_slot_stays_inside_assets(self):
+        from skills_kit.converge import _finish_write_final_slot
+
+        td = Path(tempfile.mkdtemp())
+        outside = Path(tempfile.mkdtemp())
+        mem = td / ".memory-art" / "converge"
+        mem.mkdir(parents=True)
+        asset_dir = td / "assets" / "icon" / "ocean"
+        asset_dir.mkdir(parents=True)
+        src = outside / "ocean_r2.jpg"
+        src.write_bytes(b"outside")
+        inside = asset_dir / "ocean_r2.jpg"
+        inside.write_bytes(b"inside-plate")
+        sf = mem / "ocean.json"
+        sess = {"session_id": "ocean", "winner": {"image": str(src)}}
+        sf.write_text("{}", encoding="utf-8")
+        _finish_write_final_slot(td, sf, sess, sess["winner"])
+        self.assertFalse((outside / "final.jpg").exists())
+        self.assertNotIn("final_image", sess)
+        sess["winner"]["asset_image"] = "assets/icon/ocean/ocean_r2.jpg"
+        _finish_write_final_slot(td, sf, sess, sess["winner"])
+        final = asset_dir / "final.jpg"
+        self.assertTrue(final.is_file())
+        self.assertEqual(final.read_bytes(), b"inside-plate")
+        self.assertEqual(sess["final_image"], "assets/icon/ocean/final.jpg")
+        saved = json.loads(sf.read_text(encoding="utf-8"))
+        self.assertEqual(saved["final_image"], "assets/icon/ocean/final.jpg")
 
     def test_finish_refuses_before_four_rounds_under_threshold(self):
         td = Path(tempfile.mkdtemp())

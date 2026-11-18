@@ -1,0 +1,14 @@
+{
+  "saved_at": 1794988823.7313242,
+  "text": "不是让你生成一张每个部位装修好之后的图嘛，你怎么还是破破烂烂的",
+  "banner": "【走默认路径】按 普通图 走了",
+  "route_ids": [
+    "draw.ordinary"
+  ],
+  "mode": "default",
+  "execute_ok": true,
+  "artist_say": "【走默认路径】按 普通图 走了\n按普通单张来画（不是整套界面/图标/合成梯）。",
+  "plan_conflict": false,
+  "confidence": "medium",
+  "conversation_id": "restore-bg-done-20261118"
+}

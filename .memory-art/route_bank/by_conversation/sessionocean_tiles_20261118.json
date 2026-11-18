@@ -1,0 +1,15 @@
+{
+  "saved_at": 1794981548.530071,
+  "text": "3D软塑料玩具质感的海洋生物三消棋子总表，一张图。身份锁死15枚互不相同的棋子，每枚是白底大圆角方块，上面居中一只软塑料海洋生物，种类按从左到右、从上到下：小丑鱼、海龟、章鱼、水母、螃蟹、海星、海豚、海马、鲨鱼、河豚、龙虾、鲸鱼、魔鬼鱼、珊瑚、寄居蟹。材质是圆润软塑料、暖高光、轻微糖釉反光，休闲三消商业可读度。底是不透明浅海沙色实底。禁止食物、薯条、奶酪、南瓜、苹果、椰子、杨桃、冰淇淋、葡萄、爱心、字母W、猫、重复种类、文字、数字、透明底、硬镜面金属、写实摄影、缺块空洞。",
+  "banner": "【按点名锁定 draw.ordinary】",
+  "route_ids": [
+    "draw.ordinary"
+  ],
+  "mode": "default",
+  "execute_ok": true,
+  "artist_say": "【按点名锁定 draw.ordinary】",
+  "plan_conflict": false,
+  "confidence": "named",
+  "conversation_id": "session:ocean_tiles_20261118",
+  "named_seed": true
+}

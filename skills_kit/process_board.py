@@ -8,8 +8,13 @@ from __future__ import annotations
 import html
 import shutil
 import textwrap
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
+
+from ._time import _now_cst
+
+_CST = timezone(timedelta(hours=8))
 
 
 def _esc(text: Any) -> str:
@@ -88,6 +93,49 @@ def _threshold(sess: dict[str, Any]) -> float:
         return float(sess.get("accept_threshold") or sess.get("threshold") or 9.5)
     except (TypeError, ValueError):
         return 9.5
+
+
+def _parse_cst(raw: Any) -> datetime | None:
+    text = str(raw or "").strip()
+    if not text:
+        return None
+    for fmt in ("%Y-%m-%d %H:%M:%S UTC+8", "%Y-%m-%d %H:%M:%S"):
+        try:
+            parsed = datetime.strptime(text, fmt)
+        except ValueError:
+            continue
+        if parsed.tzinfo is None:
+            parsed = parsed.replace(tzinfo=_CST)
+        return parsed
+    return None
+
+
+def _format_duration(seconds: int) -> str:
+    seconds = max(0, int(seconds))
+    hours, rem = divmod(seconds, 3600)
+    minutes, secs = divmod(rem, 60)
+    if hours:
+        return f"{hours}小时{minutes}分{secs}秒"
+    if minutes:
+        return f"{minutes}分{secs}秒"
+    return f"{secs}秒"
+
+
+def stamp_elapsed(sess: dict[str, Any], *, now: datetime | None = None) -> str:
+    """Write finished_at / elapsed_sec / elapsed_text. Empty when started_at is missing."""
+    clock = now or _now_cst()
+    if clock.tzinfo is None:
+        clock = clock.replace(tzinfo=_CST)
+    sess["finished_at"] = clock.strftime("%Y-%m-%d %H:%M:%S UTC+8")
+    started = _parse_cst(sess.get("started_at"))
+    if started is None:
+        sess["elapsed_text"] = ""
+        return ""
+    seconds = max(0, int((clock - started).total_seconds()))
+    sess["elapsed_sec"] = seconds
+    text = f"本次耗时：{_format_duration(seconds)}"
+    sess["elapsed_text"] = text
+    return text
 
 
 def _summary_text(sess: dict[str, Any], winner: dict[str, Any] | None, line: float) -> str:
@@ -169,6 +217,7 @@ def write_process_sheet(
     line = _threshold(sess)
     goal = str(sess.get("goal") or sess.get("session_id") or "过程图")
     summary = _summary_text(sess, winner, line)
+    elapsed = str(sess.get("elapsed_text") or "").strip()
 
     # Layout: header + grid (up to 4 cells) + footer
     n = max(1, len(rounds))
@@ -178,7 +227,7 @@ def write_process_sheet(
     thumb_w, thumb_h = 380, 300
     pad = 16
     header_h = 92
-    footer_h = 110
+    footer_h = 136 if elapsed else 110
     sheet_w = pad + cols * (cell_w + pad)
     sheet_h = header_h + pad + rows * (cell_h + pad) + footer_h
 
@@ -272,6 +321,8 @@ def write_process_sheet(
     for wl in textwrap.wrap(_clip(summary, 160), width=70)[:3]:
         draw.text((pad, sy), wl, fill=(213, 222, 234), font=font_body)
         sy += 20
+    if elapsed:
+        draw.text((pad, min(sy, sheet_h - 22)), elapsed, fill=(143, 209, 143), font=font_body)
 
     out = out_dir / "process_sheet.jpg"
     sheet.save(out, format="JPEG", quality=90, optimize=True)
@@ -298,29 +349,31 @@ def format_rounds_click_table(
     rounds = list(sess.get("rounds") or [])
     if not rounds:
         lines.append("| — | — | 还没有出图轮 |")
-        return "\n".join(lines)
-
-    for row in rounds:
-        rn = int(row.get("round") or 0)
-        sc = _score(row)
-        sc_txt = "待审" if sc is None else f"{sc:.2f}"
-        mark = " ★胜出" if rn == win_round else ""
-        # Prefer board copy (stable under boards/.../images/), else session image.
-        board_copy = None
-        if out_dir.is_dir():
-            for cand in (out_dir / "images").glob(f"r{rn}.*"):
-                board_copy = cand
-                break
-        src = board_copy or _find_image(root, str(row.get("image") or ""))
-        if src is None:
-            link = "(缺图)"
-        else:
-            try:
-                rel = src.resolve().relative_to(root.resolve()).as_posix()
-            except ValueError:
-                rel = src.as_posix()
-            link = f"[第{rn}轮]({rel})"
-        lines.append(f"| 第 {rn} 轮{mark} | {sc_txt} | {link} |")
+    else:
+        for row in rounds:
+            rn = int(row.get("round") or 0)
+            sc = _score(row)
+            sc_txt = "待审" if sc is None else f"{sc:.2f}"
+            mark = " ★胜出" if rn == win_round else ""
+            # Prefer board copy (stable under boards/.../images/), else session image.
+            board_copy = None
+            if out_dir.is_dir():
+                for cand in (out_dir / "images").glob(f"r{rn}.*"):
+                    board_copy = cand
+                    break
+            src = board_copy or _find_image(root, str(row.get("image") or ""))
+            if src is None:
+                link = "(缺图)"
+            else:
+                try:
+                    rel = src.resolve().relative_to(root.resolve()).as_posix()
+                except ValueError:
+                    rel = src.as_posix()
+                link = f"[第{rn}轮]({rel})"
+            lines.append(f"| 第 {rn} 轮{mark} | {sc_txt} | {link} |")
+    elapsed = str(sess.get("elapsed_text") or "").strip()
+    if elapsed:
+        lines.extend(["", elapsed])
     return "\n".join(lines)
 
 
@@ -437,6 +490,9 @@ def write_process_artifacts(
 
     line = _threshold(sess)
     end = _esc(_summary_text(sess, winner, line))
+    elapsed = str(sess.get("elapsed_text") or "").strip()
+    if elapsed:
+        end = f"{end}<br>{_esc(elapsed)}"
     session_id = str(sess.get("session_id") or "session")
     goal = _esc(sess.get("goal") or session_id)
     ref_block = ""
