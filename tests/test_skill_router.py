@@ -178,6 +178,12 @@ class SkillRouterTests(unittest.TestCase):
         ordinary_pack = slice_route_body(draw_body, by_id["draw.ordinary"])
         self.assertIn("零点五", ordinary_pack)
         self.assertIn("reasonableness", ordinary_pack)
+        touchup_pack = slice_route_body(draw_body, by_id["draw.touchup"])
+        self.assertIn("合同 · 局部改", touchup_pack)
+        self.assertIn("最多1枪", touchup_pack)
+        self.assertIn("零点五", touchup_pack)
+        self.assertNotIn("交件可见", touchup_pack)
+        self.assertLess(by_id["draw.touchup"]["phase"], by_id["draw.ordinary"]["phase"])
         image_routes = (
             "draw.ordinary",
             "draw.clone",

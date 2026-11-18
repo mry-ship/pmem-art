@@ -1,0 +1,14 @@
+{
+  "saved_at": 1795006309.9310093,
+  "text": "继续这张；局部改：收一点高光",
+  "banner": "【按 局部改 走了】",
+  "route_ids": [
+    "draw.touchup"
+  ],
+  "mode": "skill",
+  "execute_ok": true,
+  "artist_say": "【按 局部改 走了】\n按已认的那条技能继续。",
+  "plan_conflict": false,
+  "confidence": "high",
+  "conversation_id": "session:touchup_selftest_20261118c"
+}

@@ -557,6 +557,22 @@ def advise_route(
         neighbor_conflict = False
         if conf == "low":
             conf = "medium"
+    # 普通图「优化这张」与局部改近邻易撞库：本判已是 ordinary 且无局部改硬锚时，忽略 touchup 近邻冲突
+    if (
+        neighbor_conflict
+        and list(plan.route_ids) == ["draw.ordinary"]
+        and not conflict
+        and not vague
+        and not re.search(r"局部改|局部修|只改手|只修手|就改这一点|走局部改", raw)
+    ):
+        top_ids = []
+        labeled = [n for n in neighbors if list(n.get("route_ids") or [])]
+        if labeled:
+            top_ids = list(labeled[0].get("route_ids") or [])
+        if top_ids == ["draw.touchup"]:
+            neighbor_conflict = False
+            if conf == "low":
+                conf = "medium"
     if vague:
         conf = "ask"
     if canon_warnings and conf in {"high", "medium"}:

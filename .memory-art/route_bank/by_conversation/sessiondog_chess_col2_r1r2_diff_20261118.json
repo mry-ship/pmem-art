@@ -1,0 +1,15 @@
+{
+  "saved_at": 1795007689.0708807,
+  "text": "忽略此前分析与结论，勿沿用历史推理；基于当前整表从零独立局部改。只改第二列第一行与第二列第二行两只狗狗（其余13格不动）。禁止画狐狸/狐科动物——整表都是狗。上格=柴犬狗：赤芝短毛、三角立耳、卷尾、经典坐姿、深棕虹膜。下格=金毛寻回犬：奶油金长毛更蓬、软坐且一爪抬起、蜜色虹膜、尾不卷成柴犬环。两格必须一眼可分，禁双胞胎。",
+  "banner": "【按点名锁定 draw.touchup】",
+  "route_ids": [
+    "draw.touchup"
+  ],
+  "mode": "skill",
+  "execute_ok": true,
+  "artist_say": "【按点名锁定 draw.touchup】",
+  "plan_conflict": false,
+  "confidence": "named",
+  "conversation_id": "session:dog_chess_col2_r1r2_diff_20261118",
+  "named_seed": true
+}

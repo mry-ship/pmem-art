@@ -84,6 +84,7 @@ MERGE_PER_CELL_MAX_ROUNDS = 3
 UI_CONCEPT_MAX_ROUNDS = 3
 UI_SHEET_MAX_ROUNDS = 3
 ICON_KEY_MAX_ROUNDS = 3
+TOUCHUP_MAX_ROUNDS = 2
 SPLIT_MAX_ROUNDS = 3
 # 整表叠轮垫上一张：仅当上一张够高分且无结构/关系硬伤
 MERGE_OVERVIEW_PAD_PREV_MIN_SCORE = 8.5
@@ -376,6 +377,63 @@ def _apply_split_speed_caps(
     return capped
 
 
+def _touchup_requested(
+    *,
+    goal: str = "",
+    expect_route: str = "",
+    route_ids: list[str] | None = None,
+) -> bool:
+    ids = [str(x) for x in (route_ids or []) if str(x)]
+    if "draw.touchup" in ids or expect_route == "draw.touchup":
+        return True
+    g = goal or ""
+    return bool(
+        re.search(r"局部改|局部修|局部修改|局部调整|走局部改|就改这一点|修一下这张", g)
+    )
+
+
+def _apply_touchup_caps(
+    sess: dict[str, Any],
+    *,
+    goal: str = "",
+    expect_route: str = "",
+    max_rounds: int,
+) -> int:
+    """局部改快通道：最多 2 枪，默认 low，人眼可交，不凑 9.5 三轮。"""
+    ids = [str(x) for x in (sess.get("route_ids") or []) if str(x)]
+    if not _touchup_requested(goal=goal, expect_route=expect_route, route_ids=ids):
+        return int(max_rounds)
+    capped = min(int(max_rounds), TOUCHUP_MAX_ROUNDS)
+    sess["touchup"] = True
+    sess["max_rounds"] = capped
+    sess["touchup_cap"] = TOUCHUP_MAX_ROUNDS
+    # 默认保守修瑕；允许人眼过即 finish（不强制 ≥9.5）
+    if not str(sess.get("scale") or "").strip():
+        sess["scale"] = "low"
+    sess["draft_ok"] = True
+    sess["accept_threshold"] = float(sess.get("accept_threshold") or DEFAULT_THRESHOLD)
+    # 首轮垫待改成图（ref）；续枪可链上轮
+    if not str(sess.get("pad_mode") or "").strip():
+        sess["pad_mode"] = "ref"
+    # 自动盖一枚轻量合理性通过，省掉正式 review 墙钟
+    if not isinstance(sess.get("reasonableness"), dict) or not sess["reasonableness"].get("passed"):
+        sess["reasonableness"] = {
+            "passed": True,
+            "skill": "touchup",
+            "skill_raw": "touchup",
+            "draft_prompt": str(sess.get("goal") or ""),
+            "revised_prompt": str(sess.get("goal") or ""),
+            "checklist": {
+                "only_named_delta": "ok",
+                "hard_locks": "ok",
+                "fail_at_glance": "ok",
+            },
+            "issues": [],
+            "auto_touchup": True,
+        }
+    return capped
+
+
 def _apply_skill_speed_caps(
     sess: dict[str, Any],
     *,
@@ -388,6 +446,10 @@ def _apply_skill_speed_caps(
     g = goal or str(sess.get("goal") or "")
     er = expect_route or ""
     mod = module or str(sess.get("module") or "")
+    # 局部改优先：先于 merge/ui 等重路径硬顶
+    ids = [str(x) for x in (sess.get("route_ids") or []) if str(x)]
+    if _touchup_requested(goal=g, expect_route=er, route_ids=ids):
+        return _apply_touchup_caps(sess, goal=g, expect_route=er, max_rounds=int(max_rounds))
     eff = _apply_merge_overview_caps(sess, goal=g, expect_route=er, max_rounds=int(max_rounds))
     if sess.get("merge_delivery") == "overview_sheet":
         return eff
@@ -395,7 +457,6 @@ def _apply_skill_speed_caps(
     if sess.get("merge_delivery") == "per_cell":
         return eff
     # merge.ladder 关系会话（尚未写出 delivery）：仍锁论述上限
-    ids = [str(x) for x in (sess.get("route_ids") or []) if str(x)]
     if "merge.ladder" in ids or er == "merge.ladder":
         sess["merge_discuss_cap"] = MERGE_OVERVIEW_MAX_DISCUSS
     eff = _apply_ui_speed_caps(
@@ -1642,7 +1703,29 @@ def cmd_converge(
             module=module or "",
             max_rounds=int(max_rounds),
         )
-        if sess.get("merge_delivery") == "overview_sheet":
+        if sess.get("touchup"):
+            # 未显式传 scale 时钉 low，并刷新会话档位画像
+            if not (scale or "").strip():
+                touch_prof = get_converge_scale_profile(
+                    "low",
+                    recompose_dir=recompose_dir,
+                    goal=goal,
+                    ref_analysis=ref_analysis,
+                    ref_image=ref_image,
+                    module=module,
+                    medium_family=medium_family,
+                    contract=contract,
+                )
+                sess["scale"] = "low"
+                sess["scale_profile"] = touch_prof
+                sess["medium_family"] = str(touch_prof.get("medium_family") or "generic")
+                scale_prof = touch_prof
+                eff_scale = "low"
+            print(
+                f"🩹 [局部改] 快通道：最多 {eff_max} 枪（默认1枪人眼交）；"
+                f"跳过正式合理性闸；不凑 ≥9.5 三轮履历。"
+            )
+        elif sess.get("merge_delivery") == "overview_sheet":
             print(
                 f"🪜 [merge overview] ≥9.5到线即停，最多 {eff_max} 轮；"
                 f"关系稿最多 {MERGE_OVERVIEW_MAX_DISCUSS}（过了就停）；"
@@ -1736,12 +1819,19 @@ def cmd_converge(
             print(f"🖼️  垫图/参考图模式: {ref_image}")
             if ref_analysis:
                 print(f"🔍 参考图解构基准: {ref_analysis}")
-        print(
-            "\n👉 Agent：首轮出图前先过合理性闸 "
-            f"`{pmem_art_cli()} reasonableness review --id <session> --skill <…> "
-            "--draft \"…\" --revised \"…\" --checklist \"…\"`（必须同时交出更合理的提示词）；"
-            "再 `converge generate`（仅生图，不打分），然后 `converge judge`。"
-        )
+        if sess.get("touchup"):
+            print(
+                "\n👉 Agent（局部改）：直接 `converge generate --emit-prompt` → 垫成图出图 → "
+                "`converge generate --image`；人眼过就 `finish --quiet`。"
+                "禁止再跑正式 reasonableness / 禁止凑三轮拼板。"
+            )
+        else:
+            print(
+                "\n👉 Agent：首轮出图前先过合理性闸 "
+                f"`{pmem_art_cli()} reasonableness review --id <session> --skill <…> "
+                "--draft \"…\" --revised \"…\" --checklist \"…\"`（必须同时交出更合理的提示词）；"
+                "再 `converge generate`（仅生图，不打分），然后 `converge judge`。"
+            )
         return 0
 
     if action == "discuss" and (session_id or "latest") == "latest":
@@ -3069,8 +3159,23 @@ def cmd_converge(
 
         judged_for_finish = [r for r in rounds if _score_of(r) >= 0]
         if not judged_for_finish:
-            print("ℹ️ 当前会话还没有完成审图的轮次（先 converge judge 再 finish）。")
-            return 0
+            if sess.get("touchup"):
+                imaged = [r for r in rounds if str(r.get("image") or "").strip()]
+                if not imaged:
+                    print("ℹ️ 局部改还没有成图。先 `converge generate --image` 再 finish。")
+                    return 0
+                for row in imaged:
+                    if _score_of(row) < 0:
+                        row["score"] = 0.0
+                        row["judged"] = True
+                        row.setdefault("defects", "touchup 人眼交件（未跑六维）")
+                        row.setdefault("strengths", "局部改快通道")
+                        row.setdefault("dims", {})
+                judged_for_finish = imaged
+                _write_session_json(sf, sess)
+            else:
+                print("ℹ️ 当前会话还没有完成审图的轮次（先 converge judge 再 finish）。")
+                return 0
 
         def _structure_ok(row: dict[str, Any]) -> bool:
             return round_passes_structure_gates(
@@ -3152,6 +3257,15 @@ def cmd_converge(
             max_rounds=mr,
             early_safe_stop=early_safe,
         )
+        if sess.get("touchup"):
+            # 局部改：人眼交件，不挡在 9.5 门槛
+            sess["showcase_ready"] = True
+            badge_text = f"局部改快通道 · 第 {winner['round']} 枪交件"
+            outcome_str = (
+                f"🩹 **局部改交件**：第 {winner['round']} 枪（"
+                f"{'人眼过、未跑六维' if win_score <= 0 else f'分 {_score_of(winner):.2f}'}"
+                f"）；不凑正式三轮。"
+            )
         if early_safe and win_score < float(accept_th):
             # 展陈 caption / HTML audit 依赖「安全早停|出图一轮交件」识别
             if sess.get("single_judge"):

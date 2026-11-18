@@ -40,6 +40,7 @@ pyw -3 -u pmem_art.py route --text "<玩家原话>" --canonical "<标准路由�
 | 类型码 | 怎么认 | 交给 | 典型 route_id |
 | :--- | :--- | :--- | :--- |
 | **普通图** | 单张插画/气氛/道具静物，没说整套 UI、没说升级梯、没说换题材克隆 | `/pmem-draw` | `draw.ordinary` |
+| **局部改** | 已有成图；只改点名部位/小瑕疵；不换题材机位身份 | `/pmem-draw`（局部改合同） | `draw.touchup` |
 | **原画 / Key Art** | 主视觉、Key Art、概念气氛、宣传立绘、无操作控件的大场面 | `/pmem-draw`（原画合同） | `draw.key` |
 | **克隆** | 有参考且说「按这风格画新题材 / 锁画风换主体」 | `/pmem-draw`（克隆合同） | `draw.clone` |
 | **变体** | 同一身份，只改表情/动作/小道具/局部 | `/pmem-draw`（变体合同） | `draw.variant` |

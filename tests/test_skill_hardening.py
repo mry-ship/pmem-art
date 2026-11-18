@@ -60,11 +60,25 @@ class GateSkipTests(unittest.TestCase):
 
 
 class JobRemapTests(unittest.TestCase):
-    def test_local_fix_remaps_ordinary(self) -> None:
+    def test_local_fix_remaps_touchup(self) -> None:
         plan = plan_route("只修手指和接触阴影，机位别动")
-        self.assertEqual(plan.route_ids, ["draw.ordinary"])
+        self.assertEqual(plan.route_ids, ["draw.touchup"])
         self.assertEqual(plan.reason, "job_remap")
-        self.assertIn("局部修", plan.announce)
+        self.assertIn("局部改", plan.announce)
+
+    def test_natural_local_fix_routes_touchup(self) -> None:
+        plan = plan_route("这张图左手有点歪，帮我把手指修一下")
+        self.assertEqual(plan.route_ids, ["draw.touchup"])
+        self.assertIn(plan.reason, ("touchup", "job_remap", "named_touchup"))
+        self.assertIn("局部改", plan.announce)
+
+    def test_touchup_canon_keep_subject_not_poisoned(self) -> None:
+        from skills_kit.route_normalize import build_canonical_brief
+
+        brief = build_canonical_brief("有成图；只改局部；不换题材机位身份；走局部改")
+        self.assertEqual(brief["guess_route_id"], "draw.touchup")
+        plan = plan_route("有成图；只改局部；不换题材机位身份；走局部改")
+        self.assertEqual(plan.route_ids, ["draw.touchup"])
 
     def test_arm_not_local_fix_false_friend(self) -> None:
         plan = plan_route("只修手臂姿态，画一张战士")

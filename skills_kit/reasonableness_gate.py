@@ -55,6 +55,11 @@ SKILL_CHECKLISTS: dict[str, tuple[str, ...]] = {
         "fail_at_glance",
         "only_named_delta",
     ),
+    "touchup": (
+        "only_named_delta",
+        "hard_locks",
+        "fail_at_glance",
+    ),
     "split": (
         "subject_action",
         "contact_scale",
@@ -131,6 +136,10 @@ SKILL_ALIASES: dict[str, str] = {
     "draw.clone": "clone",
     "变体": "variant",
     "draw.variant": "variant",
+    "局部改": "touchup",
+    "局部修": "touchup",
+    "touchup": "touchup",
+    "draw.touchup": "touchup",
     "多图分工": "split",
     "多图": "split",
     "multi": "split",
@@ -682,6 +691,7 @@ def apply_review_to_session(sess: dict[str, Any], review: dict[str, Any]) -> dic
 
 ROUTE_TO_REVIEW_SKILL = {
     "draw.ordinary": "ordinary",
+    "draw.touchup": "touchup",
     "draw.key": "keyart",
     "draw.clone": "clone",
     "draw.variant": "variant",
@@ -747,6 +757,13 @@ def check_reasonableness_gate(
             + " 不一致。请按这次 route 重跑 reasonableness review。",
             "",
         )
+    ids = [str(x) for x in (sess.get("route_ids") or []) if str(x)]
+    if "draw.touchup" in ids or bool(sess.get("touchup")):
+        # 局部改快通道：不强制 revised 对账；优先本轮 --prompt
+        incoming = (prompt or "").strip()
+        revised = str((blob or {}).get("revised_prompt") or "").strip() if blob else ""
+        return True, "局部改快通道：跳过正式合理性闸（只改点名部位）", incoming or revised
+
     if not blob or not blob.get("passed"):
         issues = ""
         if blob and blob.get("issues"):
@@ -755,7 +772,7 @@ def check_reasonableness_gate(
             False,
             "出图前缺少已通过的合理性审核。请先：\n"
             f"  {pmem_art_cli()} reasonableness review --id <session> "
-            "--skill <ordinary|keyart|clone|variant|split|ui|icon.a|icon.b|icon.c|merge> "
+            "--skill <ordinary|keyart|clone|variant|touchup|split|ui|icon.a|icon.b|icon.c|merge> "
             "--draft \"<草稿提示词>\" --revised \"<更合理的提示词>\" "
             "--checklist \"subject_action=ok;contact_scale=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok\"\n"
             "审核须同时给出 revised；过闸后再 converge generate。"

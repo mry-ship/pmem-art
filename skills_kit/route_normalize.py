@@ -19,6 +19,7 @@ COLLOQUIAL_EXPAND: dict[str, list[str]] = load_lexicon()
 CANON_TEMPLATES: dict[str, str] = {
     # 禁止写「不换题材」：子串「换题材」曾把标准句二次规则误判成克隆
     "draw.ordinary": "要画一张图；有参考；题材不变；走普通图",
+    "draw.touchup": "有成图；只改局部；不换题材机位身份；走局部改",
     "draw.clone": "有参考图；换新题材；锁画风；走克隆",
     "draw.variant": "同一身份；换表情或动作或画风；机位已在图上；走变体",
     "draw.multi": "多张附图各管一件事；或关开态要锁同一机位；走多图分工",
@@ -117,6 +118,29 @@ def infer_signals(
         ),
         "merge_per_cell": _has(raw, r"一档一张|逐格|per_cell|单张出档|每档一张"),
         "key": _has(raw, r"主视觉|概念海报|Key\s*Art|气氛图"),
+        "touchup": (
+            _has(
+                raw,
+                r"局部修|局部改|局部修改|局部调整|走局部改|走局部修|"
+                r"就改这一点|就改这里|只改这一点|只修这一点|"
+                r"修一下这张|微调这张|改一下这张|"
+                r"只改手|只修手|只改手指|只修手指",
+            )
+            or (
+                _has(raw, r"手指|指尖|耳尖|高光|接触阴影|小瑕疵|瑕疵")
+                and _has(raw, r"修一下|微调|改一下|歪了|有点歪|只改|只修")
+            )
+            or (
+                _has(raw, r"修一下|微调|改一下")
+                and _has(raw, r"这张|成图|机位别动|别的地方别动|别动")
+            )
+        )
+        # 「不换题材/不换机位」是局部改锁句，禁止被「换题材」子串误杀
+        and not _has(raw, r"重做|推倒|整套界面|合成梯|表情差分|设定表")
+        and not (
+            _has(raw, r"(?<![不])换题材|(?<![不])换机位")
+            and not _has(raw, r"不换题材|不换机位|题材不变")
+        ),
         "style": _has(raw, r"以后按这张|锁风格|都用这张的色|锁定画风|锁定风格|风格锁定"),
         # 锁完还要验证成图（排除「以后/往后出图都按」只锁不画）
         "style_then_verify": (
@@ -194,6 +218,8 @@ def build_canonical_brief(
         rid = "draw.lens"
     elif sig["multi"] or sig["two_state"]:
         rid = "draw.multi"
+    elif sig.get("touchup"):
+        rid = "draw.touchup"
     elif sig["has_ref"] and sig["new_subject"] and not sig["keep_subject"]:
         rid = "draw.clone"
     elif sig["variant"]:

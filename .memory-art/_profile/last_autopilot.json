@@ -1,9 +1,9 @@
 {
-  "ran_at": "2026-11-18 18:00:00 UTC+8",
+  "ran_at": "2026-11-18 21:14:05 UTC+8",
   "source": "feedback",
   "session_id": "fb-visual_correction",
   "tip": null,
-  "tip_candidate": "「小提示」下次注意：狗狗棋子灵动神态加强每个都要像精",
+  "tip_candidate": "「小提示」下次注意：第二列第一行和第二列第二行太像；",
   "taste_changes": [],
   "learn_queued": [
     "key-extreme-breakdown"

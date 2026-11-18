@@ -1,0 +1,15 @@
+{
+  "saved_at": 1795006866.5270905,
+  "text": "继续这张；局部改：只改第一行第二列（格2）柴犬。货不对板——现在偏大只秋田感；改成 SMALL fox Shiba（小号狐狸柴）：头更小更狐狸、体量更紧凑、赤芝配色+卷尾经典坐姿；其余14格、白圆角卡、黑底、3D Q版玩具风一律不动",
+  "banner": "【按点名锁定 draw.touchup】",
+  "route_ids": [
+    "draw.touchup"
+  ],
+  "mode": "skill",
+  "execute_ok": true,
+  "artist_say": "【按点名锁定 draw.touchup】",
+  "plan_conflict": false,
+  "confidence": "named",
+  "conversation_id": "session:dog_chess_r1c2_shiba_touchup_20261118",
+  "named_seed": true
+}

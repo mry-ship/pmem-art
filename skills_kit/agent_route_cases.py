@@ -207,8 +207,17 @@ def build_cases() -> list[Case]:
         _add(out, bucket="prompt_then_draw", text=f"先写提示词，然后再画一张立绘，第{i}套", mode="skill", routes=["prompt.write", "draw.ordinary"])
         _add(out, bucket="critique_then_draw", text=f"审完再改这张立绘，第{i}张", mode="skill", routes=["critique.review", "draw.ordinary"], images=["ref/in.png"])
 
-    # JOB_REMAP：高频活映射到已有合同（不是 unrecognized）
-    for word in ("局部修", "姿势锁", "同一场景换光", "画幅延展", "放大清稿"):
+    # JOB_REMAP：局部改走 touchup；其余仍映射到已有合同（不是 unrecognized）
+    for i in range(8):
+        _add(
+            out,
+            bucket="job_remap",
+            text=f"帮我做局部修，第{i}件",
+            mode="skill",
+            routes=["draw.touchup"],
+            reason="job_remap",
+        )
+    for word in ("姿势锁", "同一场景换光", "画幅延展", "放大清稿"):
         for i in range(8):
             _add(
                 out,
@@ -285,7 +294,10 @@ def build_cases() -> list[Case]:
         ("仓库里那些没归类的图收进图谱", "skill", ["atlas.file"], [], [], ""),
         ("我最近画得怎么样，短板在哪", "skill", ["coach.report"], [], [], ""),
         ("把这句话扩成可以拿去画的说法，先别出图", "skill", ["prompt.write"], [], [], ""),
-        ("只改手，别的地方别动", "skill", ["draw.ordinary"], [], [], "job_remap"),
+        ("只改手，别的地方别动", "skill", ["draw.touchup"], [], [], "job_remap"),
+        # 近邻文案须带「局部改」硬锚，避免和「深度优化这张图」普通图话术撞库
+        ("局部改：手指关节糊了，垫成图只修手，机位别动", "skill", ["draw.touchup"], ["out/base.png"], [], "touchup"),
+        ("有成图；只改局部；不换题材机位身份；走局部改", "skill", ["draw.touchup"], [], [], "named_touchup"),
         ("把这张往外延展画面", "skill", ["draw.ordinary"], [], [], "job_remap"),
         ("拉一条故事板", "stop", [], [], [], "job_ask"),
         ("锁姿势，人别换动作", "skill", ["draw.ordinary"], [], [], "job_remap"),

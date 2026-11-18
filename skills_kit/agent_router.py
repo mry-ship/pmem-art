@@ -20,11 +20,22 @@ UNRECOGNIZED_JOBS = (
 # 高频活 → 映射到已有合同（不新开技能；banner 带别名）。
 # value: (route_id, reason, announce_label, note)
 JOB_REMAP: dict[str, tuple[str, str, str, str]] = {
-    "局部修": ("draw.ordinary", "job_remap", "普通图·局部修", "scale=low；锁机位只改点名部位"),
-    "只改手指": ("draw.ordinary", "job_remap", "普通图·局部修", "scale=low；只改手指"),
-    "只修手指": ("draw.ordinary", "job_remap", "普通图·局部修", "scale=low；只修手指"),
-    "只改手": ("draw.ordinary", "job_remap", "普通图·局部修", "scale=low；只改手"),
-    "只修手": ("draw.ordinary", "job_remap", "普通图·局部修", "scale=low；只修手"),
+    # 局部改快通道（draw.touchup）：禁止再掉进普通图三轮
+    "局部修改": ("draw.touchup", "job_remap", "局部改", "scale=low；max_rounds≤2；垫成图；默认1枪"),
+    "局部调整": ("draw.touchup", "job_remap", "局部改", "scale=low；max_rounds≤2；垫成图；默认1枪"),
+    "局部修": ("draw.touchup", "job_remap", "局部改", "scale=low；max_rounds≤2；锁机位只改点名部位"),
+    "局部改": ("draw.touchup", "job_remap", "局部改", "scale=low；max_rounds≤2；锁机位只改点名部位"),
+    "就改这一点": ("draw.touchup", "job_remap", "局部改", "scale=low；只改点名部位"),
+    "就改这里": ("draw.touchup", "job_remap", "局部改", "scale=low；只改点名部位"),
+    "只改这一点": ("draw.touchup", "job_remap", "局部改", "scale=low；只改点名部位"),
+    "只修这一点": ("draw.touchup", "job_remap", "局部改", "scale=low；只改点名部位"),
+    "修一下这张": ("draw.touchup", "job_remap", "局部改", "scale=low；垫这张成图"),
+    "微调这张": ("draw.touchup", "job_remap", "局部改", "scale=low；垫这张成图"),
+    "改一下这张": ("draw.touchup", "job_remap", "局部改", "scale=low；垫这张成图"),
+    "只改手指": ("draw.touchup", "job_remap", "局部改", "scale=low；只改手指"),
+    "只修手指": ("draw.touchup", "job_remap", "局部改", "scale=low；只修手指"),
+    "只改手": ("draw.touchup", "job_remap", "局部改", "scale=low；只改手"),
+    "只修手": ("draw.touchup", "job_remap", "局部改", "scale=low；只修手"),
     "放大清稿": ("draw.ordinary", "job_remap", "普通图·清稿", "scale=low；放大清瑕不改机位"),
     "放大后清": ("draw.ordinary", "job_remap", "普通图·清稿", "scale=low；放大清瑕不改机位"),
     "同一场景换光": ("draw.ordinary", "job_remap", "普通图·换光", "scale=recompose 或 medium；只改光，身份场景锁"),
@@ -718,6 +729,88 @@ _VARIANT_STRONG = (
 _VARIANT_WEAK = ("生气", "微笑", "闭眼", "侧目", "眨眼", "惊讶", "叹气", "姿势", "动作")
 _VARIANT_IDENTITY = ("同一张脸", "同一身份", "还是她", "还是他", "别换人", "同一个")
 
+_TOUCHUP_EXPLICIT = (
+    "局部修",
+    "局部改",
+    "局部修改",
+    "局部调整",
+    "走局部改",
+    "走局部修",
+    "就改这一点",
+    "就改这里",
+    "只改这一点",
+    "只修这一点",
+    "修一下这张",
+    "微调这张",
+    "改一下这张",
+)
+_TOUCHUP_PART = (
+    "手指",
+    "指尖",
+    "耳朵",
+    "耳尖",
+    "高光",
+    "接触阴影",
+    "小瑕疵",
+    "瑕疵",
+    "钮扣",
+    "扣子",
+)
+_TOUCHUP_ACTION = (
+    "修一下",
+    "微调",
+    "改一下",
+    "歪了",
+    "有点歪",
+    "修修",
+    "清一下",
+)
+_TOUCHUP_KEEP = (
+    "机位别动",
+    "别的地方别动",
+    "其他别动",
+    "别动",
+    "不要动",
+    "题材不变",
+    "这张",
+    "成图",
+    "上一张",
+    "刚画",
+    "继续这",
+)
+_TOUCHUP_BAN_HARD = (
+    "重做",
+    "推倒",
+    "另起炉灶",
+    "整套界面",
+    "合成梯",
+    "表情差分",
+    "设定表",
+)
+
+
+def _touchup_banned_swap(text: str) -> bool:
+    """真换题材/机位才禁；「不换题材」锁句不算。"""
+    body = text or ""
+    if _any(body, ("不换题材", "不换机位", "题材不变")):
+        return False
+    return _any(body, ("换题材", "换机位"))
+
+
+def _wants_touchup(text: str) -> bool:
+    """成图后局部小改；命中则走 draw.touchup，禁止落到普通图三轮。"""
+    body = text or ""
+    banned = _any(body, _TOUCHUP_BAN_HARD) or _touchup_banned_swap(body)
+    if banned and not _any(body, _TOUCHUP_EXPLICIT):
+        return False
+    if _any(body, _TOUCHUP_EXPLICIT):
+        return True
+    if _any(body, _TOUCHUP_PART) and _any(body, _TOUCHUP_ACTION + ("只改", "只修")):
+        return True
+    if _any(body, _TOUCHUP_ACTION) and _any(body, _TOUCHUP_KEEP):
+        return True
+    return False
+
 
 def _wants_variant(text: str) -> bool:
     if _any(text, ("画这个角色", "来一张她的立绘", "来一张他的立绘")) and not _any(
@@ -1123,6 +1216,8 @@ def _draw_done(route_id: str) -> str:
         return "点选前不生图，机位句子写完即停"
     if route_id == "draw.multi":
         return "这一态六维调和平均 ≥ 9.50，且身份和结构各在该在的地方"
+    if route_id == "draw.touchup":
+        return "默认1枪交件；可选第2枪；不凑 ≥9.5 三轮"
     return "六维调和平均 ≥ 9.50，最多 3 轮"
 
 
@@ -1156,7 +1251,7 @@ def plan_route(
         return _stop("job_ask", ask_job)
 
     _DOWNGRADE_MENU = (
-        "可改口：局部修/只改手→普通图 low；设定表→变体；分镜→先说清故事板或镜头包；"
+        "可改口：局部修/只改手→局部改快通道；设定表→变体；分镜→先说清故事板或镜头包；"
         "色板/情绪板→/pmem-style-lock 或文字描述；序列帧/平铺贴图暂无技能。"
     )
 
@@ -1265,6 +1360,12 @@ def plan_route(
         elif _wants_multi(raw, pics, roles):
             chosen = ["draw.multi"]
             reason = "multi"
+        elif ("走局部改" in raw or "走局部修" in raw) and not _new_subject(raw):
+            chosen = ["draw.touchup"]
+            reason = "named_touchup"
+        elif _wants_touchup(raw):
+            chosen = ["draw.touchup"]
+            reason = "touchup"
         elif _wants_variant(raw) and _any(raw, _VARIANT_IDENTITY):
             # 已锁同一身份时，表情/姿势优先变体，避免被「改成」误抢成克隆
             chosen = ["draw.variant"]
@@ -1357,7 +1458,15 @@ def plan_route(
         if rid.startswith("draw."):
             locks = "身份、画风和机位按这一节；普通图锁机位"
             done = _draw_done(rid)
-            if rid == "draw.ordinary":
+            if rid == "draw.touchup":
+                note = (
+                    "scale=low；max_rounds≤2；垫待改成图（可加局部参考）；"
+                    "跳过正式三轮与强制 ≥9.5；默认1枪，人眼过即可 finish"
+                )
+                locks = "锁机位、身份、题材与未点名区域；只改点名部位"
+                if reason == "job_remap" and remap_note:
+                    note = f"{remap_note}；{note}"
+            elif rid == "draw.ordinary":
                 note = "单张、medium、≥9.50到线即停，最多3兜底。不说成多图分工"
                 locks = "锁机位和身份。多张参考留在列表里，生成只垫宽高比对齐的那张"
                 if reason == "job_remap" and remap_note:
@@ -1423,6 +1532,8 @@ def plan_route(
     labels = "、".join(_section_label(routes[rid]) for rid in chosen)
     if reason == "style_then_clone":
         announce = "按 锁风格→克隆验证 走了"
+    elif reason in ("touchup", "named_touchup"):
+        announce = "按 局部改 走了"
     elif reason == "job_remap" and remap_label:
         announce = f"按 {remap_label} 走了"
     else:

@@ -4,6 +4,7 @@
   "stale_skills": [],
   "tighten": [
     "没人要「几套镜头」→ 不进镜头包。有参考图本身不是镜头包。",
+    "有成图且说局部修/就改这一点/修一下这张/只改手指 → 局部改，不进普通图三轮。",
     "有参考，但没说新题材、新物件、新角色 → 普通图，不进克隆。",
     "单张弹框、只要一张图标 → 不升成整套界面或图标集。整套才去界面 / 图标。有参考又要换题材的这一张，走克隆。",
     "只说「画这个角色」→ 普通图或原画，不进变体。变体要出现换画风、表情或动作。",
@@ -107,6 +108,21 @@
       "routable": true,
       "simultaneous_pixels": false,
       "phase": 40
+    },
+    {
+      "id": "draw.touchup",
+      "when": "已有成图；只改点名部位/小瑕疵；不换题材、机位、身份、整构图",
+      "skill": "pmem-draw",
+      "section": "局部改",
+      "file": ".cursor/skills/pmem-draw/SKILL.md",
+      "heading": "## 合同 · 局部改",
+      "pack_headings": [
+        "## 零点五、开画前强制 route（与总控同闸；点名 `/pmem-draw` 也要跑）",
+        "## 合同 · 局部改"
+      ],
+      "routable": true,
+      "simultaneous_pixels": false,
+      "phase": 45
     },
     {
       "id": "draw.clone",

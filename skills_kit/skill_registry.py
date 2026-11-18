@@ -12,6 +12,7 @@ _DRAW_HEADING = {
     "图标": None,  # A/B/C come from the icon skill, not this one row
     "合成梯": ("merge.ladder", "pmem-merge-ladder"),
     "镜头包": ("draw.lens", "pmem-draw"),
+    "局部改": ("draw.touchup", "pmem-draw"),
     "克隆": ("draw.clone", "pmem-draw"),
     "变体": ("draw.variant", "pmem-draw"),
     "多图分工": ("draw.multi", "pmem-draw"),
@@ -246,6 +247,9 @@ def _draw_pack_headings(body: str, section: str, heading: str) -> list[str]:
         return [h for h in (route_gate, loop_or_card or heading, delivery, memory) if h]
     if section == "镜头包":
         return [h for h in (route_gate, heading) if h]
+    # 局部改：短合同，禁止塞满三轮执行卡/交件拼板/记忆静默（静默段会带「交件可见」）
+    if section == "局部改":
+        return [h for h in (route_gate, heading) if h]
     # 克隆 / 变体 / 多图分工 / 原画：公共闭环 + 叠加合同 + 交件可见
     return [h for h in (route_gate, loop_or_card, heading, delivery, memory) if h]
 
@@ -343,6 +347,7 @@ def build_registry(specs: list[dict[str, Any]], *, installed_root: Path | None =
         "icon.c": 22,
         "merge.ladder": 30,
         "draw.lens": 40,
+        "draw.touchup": 45,
         "draw.clone": 50,
         "draw.variant": 60,
         "draw.multi": 70,
@@ -428,6 +433,7 @@ def build_registry(specs: list[dict[str, Any]], *, installed_root: Path | None =
         ("draw.multi", ("reasonableness", "converge judge", "合同 · 多图分工")),
         ("draw.key", ("reasonableness", "converge judge", "合同 · 原画")),
         ("draw.ordinary", ("reasonableness", "converge judge", "零点五", "执行卡")),
+        ("draw.touchup", ("合同 · 局部改", "最多1枪", "零点五")),
     ):
         route = by_rid.get(rid) or {}
         packed = slice_route_body(draw_body, route)

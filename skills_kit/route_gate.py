@@ -21,6 +21,7 @@ _MAX_AGE_SEC = 2 * 60 * 60  # 2 小时内有效
 _SEEDABLE_ROUTES = frozenset(
     {
         "draw.ordinary",
+        "draw.touchup",
         "draw.key",
         "draw.clone",
         "draw.variant",

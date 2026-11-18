@@ -17,7 +17,6 @@
     "doctor:20261109": "2026-11-09 21:22:02 UTC+8",
     "converge_finish:skill1109-ordinary": "2026-11-09 23:28:29 UTC+8",
     "converge_finish:skill1109-variant": "2026-11-09 23:31:56 UTC+8",
-    "converge_finish:skill1109-multi": "2026-11-09 23:46:20 UTC+8",
     "doctor:20261110": "2026-11-10 00:06:01 UTC+8",
     "converge_finish:skill1109-ui": "2026-11-10 00:09:13 UTC+8",
     "converge_finish:skill1109-multi-on": "2026-11-10 00:17:39 UTC+8",
@@ -39,7 +38,8 @@
     "doctor:20261117": "2026-11-17 17:16:27 UTC+8",
     "converge_finish:xmas_clone_20261118b": "2026-11-18 15:53:06 UTC+8",
     "converge_finish:xmas_pad_20261118": "2026-11-18 16:38:06 UTC+8",
-    "converge_finish:valentine_merge_ui_20261118": "2026-11-18 17:38:28 UTC+8"
+    "converge_finish:valentine_merge_ui_20261118": "2026-11-18 17:38:28 UTC+8",
+    "doctor:20261118": "2026-11-18 20:33:16 UTC+8"
   },
-  "updated_at": "2026-11-18 17:38:28 UTC+8"
+  "updated_at": "2026-11-18 20:33:16 UTC+8"
 }
