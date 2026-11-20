@@ -28,6 +28,7 @@ _ONE_SECTION = {
     "pmem-prompt": ("prompt.write", "要写提示词、扩写 brief"),
     "pmem-merge-ladder": ("merge.ladder", "同域升级梯默认整表一组八档；点名数量或参考跟格数"),
     "pmem-ui": ("ui.kit", "整屏、HUD、弹窗套件、九宫格、按钮状态"),
+    "pmem-layer-split": ("layer.split", "拆图层、分图叠回、装修/变身槽位切块"),
 }
 
 
@@ -322,6 +323,10 @@ def build_registry(specs: list[dict[str, Any]], *, installed_root: Path | None =
         elif rid == "ui.kit" and card:
             delivery = _delivery_heading(body)
             pack = [h for h in (card, delivery) if h]
+        elif rid == "layer.split":
+            delivery = _delivery_heading(body)
+            # 整份合同 + 交件可见（可点单图表）；无独立执行卡
+            pack = [h for h in (heading, delivery) if h]
         else:
             pack = [heading] if heading else []
         routes.append(
@@ -346,6 +351,7 @@ def build_registry(specs: list[dict[str, Any]], *, installed_root: Path | None =
         "icon.b": 21,
         "icon.c": 22,
         "merge.ladder": 30,
+        "layer.split": 35,
         "draw.lens": 40,
         "draw.touchup": 45,
         "draw.clone": 50,

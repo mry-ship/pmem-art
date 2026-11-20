@@ -12,7 +12,8 @@ from .defaults import SIZE_BUCKETS, QUALITY_BY_AREA, ALLOWED_SIZES
 
 
 def load_json(path: Path) -> Any:
-    return json.loads(path.read_text(encoding="utf-8"))
+    # utf-8-sig: Windows editors / PowerShell Set-Content may write BOM
+    return json.loads(path.read_text(encoding="utf-8-sig"))
 
 
 def save_json(path: Path, data: Any) -> None:

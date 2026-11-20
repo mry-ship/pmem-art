@@ -13,9 +13,11 @@ from .defaults import (
     ISOLATE_PROMPT,
     BG_ISOLATE_PROMPT,
     ALLOWED_SIZES,
+    ISOLATE_USE_CONTEXT_PAD,
     SHADOW_GROUNDED,
     SHADOW_FLYING,
     SHADOW_DISTANT,
+    aspect_pad_rule,
 )
 from .job import Job, assert_allowed_size
 
@@ -43,7 +45,8 @@ def shadow_rule_for(layer: dict) -> str:
     return SHADOW_GROUNDED
 
 
-def _find_image_gen() -> Path:
+def _find_image_gen() -> Path | None:
+    """Prefer gpt-image-2.5 via apikey-image. None → Agent falls back to Cursor GenerateImage."""
     env = os.environ.get("APIKEY_IMAGE_GEN")
     if env and Path(env).exists():
         return Path(env)
@@ -54,20 +57,35 @@ def _find_image_gen() -> Path:
     ):
         if c.exists():
             return c
-    raise FileNotFoundError(
-        "apikey-image/image_gen.py not found; set APIKEY_IMAGE_GEN or install skill"
-    )
+    return None
 
 
-def _prompt_for(layer: dict, extra_remove: str = "") -> str:
+def _prompt_for(
+    layer: dict,
+    extra_remove: str = "",
+    *,
+    canvas_wh: tuple[int, int] | None = None,
+    size: str | None = None,
+) -> str:
     remove = layer.get("remove") or ""
     if extra_remove:
         remove = (remove + ", " + extra_remove).strip(", ")
     keep = layer.get("keep") or layer.get("note") or layer["id"]
     if layer.get("id") == "bg" or layer.get("mode") == "full":
+        cw, ch = canvas_wh or (0, 0)
+        eng = size or layer.get("size") or "1024x1536"
+        if cw > 0 and ch > 0:
+            aspect_rule = aspect_pad_rule(cw, ch, eng)
+        else:
+            aspect_rule = (
+                "Keep scenic proportions identical to the crop. "
+                "If engine size aspect differs from the crop, pad with matching "
+                "sky/ground margins — NEVER squash or stretch."
+            )
         return BG_ISOLATE_PROMPT.format(
             keep=keep,
             remove=remove or "all characters, props, foreground subjects",
+            aspect_rule=aspect_rule,
         )
     return ISOLATE_PROMPT.format(
         keep=keep,
@@ -83,6 +101,8 @@ def _run_one(
     prompt: str,
     size: str,
     quality: str,
+    *,
+    context: Path | None = None,
 ) -> tuple[bool, str]:
     assert_allowed_size(size)
     cmd = [
@@ -92,14 +112,21 @@ def _run_one(
         str(out),
         "--image",
         str(crop),
-        "--size",
-        size,
-        "--quality",
-        quality,
-        "--background",
-        "transparent",
-        prompt,
     ]
+    # Dual-pad: generous crop first, then full-scene boxed context (if present)
+    if context is not None and context.is_file():
+        cmd.extend(["--image", str(context)])
+    cmd.extend(
+        [
+            "--size",
+            size,
+            "--quality",
+            quality,
+            "--background",
+            "transparent",
+            prompt,
+        ]
+    )
     try:
         r = subprocess.run(
             cmd, capture_output=True, text=True, encoding="utf-8", errors="replace"
@@ -139,6 +166,14 @@ def isolate_layers(
     status = job.load_status()
     layers_st = status.setdefault("layers", {})
     job.new_dir.mkdir(exist_ok=True)
+    canvas = truth.get("canvas") or {}
+    canvas_wh = (int(canvas.get("w") or 0), int(canvas.get("h") or 0))
+    if canvas_wh[0] <= 0 or canvas_wh[1] <= 0:
+        try:
+            ref = job.open_ref({"ref": truth.get("ref")})
+            canvas_wh = ref.size
+        except Exception:
+            canvas_wh = (0, 0)
 
     targets = []
     for layer in truth["layers"]:
@@ -163,6 +198,9 @@ def isolate_layers(
         if not crop.exists():
             print("SKIP no crop", lid)
             continue
+        ctx = job.crops_dir / f"{lid}_ctx.png"
+        if not (ISOLATE_USE_CONTEXT_PAD and ctx.is_file()):
+            ctx = None
         size = layer.get("size") or "1024x1024"
         if size not in ALLOWED_SIZES:
             size = "1024x1024"
@@ -171,12 +209,13 @@ def isolate_layers(
         if st.get("status") == "dirty":
             extra = "; ".join(st.get("reasons") or [])
         out = job.new_dir / Path(layer["file"]).name
-        targets.append((layer, crop, out, size, quality, extra))
+        targets.append((layer, crop, ctx, out, size, quality, extra))
 
     print(f"isolate targets: {[t[0]['id'] for t in targets]} workers={workers}")
     if dry_run:
-        for layer, crop, out, size, quality, extra in targets:
-            print(f"DRY {layer['id']} size={size} q={quality} -> {out.name}")
+        for layer, crop, ctx, out, size, quality, extra in targets:
+            ctx_s = f" +ctx={ctx.name}" if ctx else ""
+            print(f"DRY {layer['id']} size={size} q={quality}{ctx_s} -> {out.name}")
         return {"targets": [t[0]["id"] for t in targets], "dry_run": True}
 
     if not targets:
@@ -184,17 +223,54 @@ def isolate_layers(
         return status
 
     image_gen = _find_image_gen()
+    if image_gen is None:
+        # Soft stop: skill allows Cursor GenerateImage fallback (Agent-side).
+        print(
+            "NO_GPT_IMAGE_25: no gpt-image-2.5 path; "
+            "Agent must isolate with Cursor GenerateImage "
+            "(opaque black isolation bg; no post cutout). "
+            "Do not mention keys to the user."
+        )
+        for layer, crop, ctx, out, size, quality, extra in targets:
+            lid = layer["id"]
+            prev = layers_st.get(lid, {})
+            entry = {
+                "status": "needs_cursor_gen",
+                "file": prev.get("file"),
+                "retries": int(prev.get("retries") or 0),
+                "source": "await_cursor",
+                "crop": f"_crops/{crop.name}",
+                "out": f"new/{out.name}",
+                "size": size,
+                "quality": quality,
+                "prompt": _prompt_for(
+                    layer, extra_remove=extra, canvas_wh=canvas_wh, size=size
+                ),
+            }
+            if ctx is not None:
+                entry["context"] = f"_crops/{ctx.name}"
+            layers_st[lid] = entry
+            print("NEED_CURSOR", lid, "->", out.name, "+ctx" if ctx else "")
+        status["layers"] = layers_st
+        status["dirty_ids"] = [t[0]["id"] for t in targets]
+        status["engine"] = "cursor_fallback"
+        job.save_status(status)
+        return status
 
     def work(item):
-        layer, crop, out, size, quality, extra = item
-        prompt = _prompt_for(layer, extra_remove=extra)
-        ok, msg = _run_one(image_gen, crop, out, prompt, size, quality)
-        return layer["id"], layer, out, ok, msg
+        layer, crop, ctx, out, size, quality, extra = item
+        prompt = _prompt_for(
+            layer, extra_remove=extra, canvas_wh=canvas_wh, size=size
+        )
+        ok, msg = _run_one(
+            image_gen, crop, out, prompt, size, quality, context=ctx
+        )
+        return layer["id"], layer, ctx, out, ok, msg, extra
 
     with ThreadPoolExecutor(max_workers=max(1, workers)) as ex:
         futs = [ex.submit(work, t) for t in targets]
         for fut in as_completed(futs):
-            lid, layer, out, ok, msg = fut.result()
+            lid, layer, ctx, out, ok, msg, extra = fut.result()
             prev = layers_st.get(lid, {})
             retries = int(prev.get("retries") or 0)
             if prev.get("status") == "dirty":
@@ -205,20 +281,38 @@ def isolate_layers(
                     "file": f"new/{out.name}",
                     "retries": retries,
                     "source": "isolate",
+                    "engine": "gpt-image-2.5",
                     "last_size": layer.get("size"),
                     "last_quality": layer.get("quality"),
+                    "pads": ["crop"] + (["context"] if ctx else []),
                 }
                 print("OK", lid, msg)
             else:
-                layers_st[lid] = {
-                    "status": "error",
+                # API present but call failed → also hand off to Cursor path
+                sz = layer.get("size") or "1024x1024"
+                entry = {
+                    "status": "needs_cursor_gen",
                     "file": prev.get("file"),
                     "retries": retries,
-                    "source": "isolate",
+                    "source": "await_cursor",
+                    "crop": f"_crops/{lid}.png",
+                    "out": f"new/{out.name}",
+                    "size": sz,
+                    "quality": layer.get("quality") or "high",
+                    "prompt": _prompt_for(
+                        layer,
+                        extra_remove=extra if prev.get("status") == "dirty" else "",
+                        canvas_wh=canvas_wh,
+                        size=sz,
+                    ),
                     "error": msg,
                 }
-                print("FAIL", lid, msg)
+                if ctx is not None:
+                    entry["context"] = f"_crops/{ctx.name}"
+                layers_st[lid] = entry
+                print("FAIL_FALLBACK_CURSOR", lid, msg)
 
     status["layers"] = layers_st
+    status["engine"] = "gpt-image-2.5"
     job.save_status(status)
     return status

@@ -95,6 +95,21 @@
       "phase": 30
     },
     {
+      "id": "layer.split",
+      "when": "拆图层、分图叠回、装修/变身槽位切块",
+      "skill": "pmem-layer-split",
+      "section": "场景切块隔离与叠回（脚印校准→隔离→闸门→幽灵）",
+      "file": ".cursor/skills/pmem-layer-split/SKILL.md",
+      "heading": "# `/pmem-layer-split` — 场景切块隔离与叠回",
+      "pack_headings": [
+        "# `/pmem-layer-split` — 场景切块隔离与叠回",
+        "## 交件可见（拆层结算 · Agent 必读）"
+      ],
+      "routable": true,
+      "simultaneous_pixels": false,
+      "phase": 35
+    },
+    {
       "id": "draw.lens",
       "when": "玩家明确要几套机位 / 镜头 / 光给自己挑",
       "skill": "pmem-draw",

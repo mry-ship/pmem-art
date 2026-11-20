@@ -14,6 +14,7 @@ from .compose import compose
 from .gate import run_gate
 from .qa import ghost_qa
 from .emit_html import emit_html
+from .post_isolate import post_isolate_normalize
 from .defaults import DEFAULT_WORKERS, GATE
 
 
@@ -34,6 +35,7 @@ def build_parser() -> argparse.ArgumentParser:
             "calibrate",
             "bg",
             "isolate",
+            "normalize",
             "compose",
             "gate",
             "qa",
@@ -50,6 +52,11 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--force", action="store_true", help="Re-isolate even if status=ok")
     p.add_argument("--scale", type=int, default=2, help="Compose canvas scale vs ref")
     p.add_argument("--skip-match", action="store_true", help="Skip template match (trust plan crops)")
+    p.add_argument(
+        "--no-tighten-from-bg",
+        action="store_true",
+        help="Do not shrink footprints using empty-bg difference (default: tighten when bg plate exists)",
+    )
     p.add_argument("--dry-run", action="store_true", help="isolate: print targets only")
     p.add_argument("--title", default="", help="stack.html title")
     p.add_argument(
@@ -87,7 +94,11 @@ def main(argv: list[str] | None = None) -> int:
     ids = _ids(args.ids)
 
     if args.command in ("setup", "calibrate"):
-        setup_and_calibrate(job, skip_match=args.skip_match)
+        setup_and_calibrate(
+            job,
+            skip_match=args.skip_match,
+            tighten_from_bg=not bool(getattr(args, "no_tighten_from_bg", False)),
+        )
         return 0
 
     if args.command == "bg":
@@ -103,6 +114,13 @@ def main(argv: list[str] | None = None) -> int:
             skip_bg=_use_local_bg(args),
             dry_run=args.dry_run,
         )
+        if not args.dry_run:
+            # Skill: engine aspect + footprint asp normalize before compose
+            post_isolate_normalize(job, ids=ids)
+        return 0
+
+    if args.command == "normalize":
+        post_isolate_normalize(job, ids=ids)
         return 0
 
     if args.command == "compose":
@@ -138,16 +156,27 @@ def main(argv: list[str] | None = None) -> int:
             print("no dirty layers")
             return 0
         print("retry dirty:", dirty)
-        isolate_layers(job, ids=dirty, workers=args.workers, force=True, skip_bg=True)
+        # bg_bake dirty must re-isolate bg — never skip_bg when bg is in the retry set
+        isolate_layers(
+            job,
+            ids=dirty,
+            workers=args.workers,
+            force=True,
+            skip_bg=("bg" not in dirty),
+        )
+        post_isolate_normalize(job, ids=dirty)
         compose(job, scale=args.scale)
         run_gate(job)
-        ghost_qa(job, scale=args.scale)
+        ghost_qa(job, scale=args.scale, apply_dirty=True)
         return 0
+
+    _tighten = not bool(getattr(args, "no_tighten_from_bg", False))
 
     if args.command == "run-local":
         # no API — setup + bg + compose(if sprites exist) + gate + qa + emit
-        setup_and_calibrate(job, skip_match=args.skip_match)
+        setup_and_calibrate(job, skip_match=args.skip_match, tighten_from_bg=_tighten)
         build_local_background(job)
+        post_isolate_normalize(job)
         # if new/ has other sprites, compose
         compose(job, scale=args.scale)
         run_gate(job)
@@ -159,7 +188,7 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     if args.command == "pipeline":
-        setup_and_calibrate(job, skip_match=args.skip_match)
+        setup_and_calibrate(job, skip_match=args.skip_match, tighten_from_bg=_tighten)
         local_bg = _use_local_bg(args)
         if local_bg:
             build_local_background(job)
@@ -172,17 +201,33 @@ def main(argv: list[str] | None = None) -> int:
         )
         if args.dry_run:
             return 0
+        post_isolate_normalize(job)
         compose(job, scale=args.scale)
         st = run_gate(job)
         for round_i in range(args.max_rounds):
             dirty = st.get("dirty_ids") or []
             if not dirty:
-                break
+                # gate clean — still run ghost; hot layers may re-dirty for next round
+                g = ghost_qa(job, scale=args.scale, apply_dirty=True)
+                st = job.load_status()
+                dirty = st.get("dirty_ids") or []
+                if not dirty:
+                    break
+                if g.get("level") == "ok":
+                    break
             print(f"pipeline retry round {round_i+1}: {dirty}")
-            isolate_layers(job, ids=dirty, workers=args.workers, force=True, skip_bg=True)
+            isolate_layers(
+                job,
+                ids=dirty,
+                workers=args.workers,
+                force=True,
+                skip_bg=("bg" not in dirty),
+            )
+            post_isolate_normalize(job, ids=dirty)
             compose(job, scale=args.scale)
             st = run_gate(job)
-        ghost_qa(job, scale=args.scale)
+        # final ghost (may still mark dirty for Agent / needs_human)
+        ghost_qa(job, scale=args.scale, apply_dirty=True)
         emit_html(job, title=args.title or None)
         return 0
 

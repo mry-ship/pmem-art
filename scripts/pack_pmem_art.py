@@ -150,6 +150,11 @@ def should_skip(path: Path, root: Path) -> bool:
     # 本地 skill_YYYYMMDD_* 验证散图不进用户包（体积大、非运行时依赖）。
     if len(parts) >= 2 and parts[0] == "assets" and parts[1].startswith("skill_"):
         return True
+    # 拆层 job 工作目录（含 split_plan.json）是本机交付产物，不进用户包。
+    if len(parts) >= 2 and parts[0] == "assets":
+        job_dir = root / parts[0] / parts[1]
+        if (job_dir / "split_plan.json").is_file():
+            return True
     if path.name.endswith(".local.yaml"):
         return True
     return False

@@ -14,6 +14,8 @@ note_date: '2026-11-18'
 summary: 可点轮次表写在执行包没带走的第二节，界面图标合成梯会漏交
 verify: slice_route_body 对 draw.ordinary、ui.kit、merge.ladder、icon.a 含「轮次单图表」
 applies: 改技能结算文案或 pack_headings 时
+verified: '2026-11-20'
+verified_at: '2026-11-20T17:02:25.781+08:00'
 ---
 现象：同一套闭环里，有的技能结算会贴可点轮次表和过程拼板，界面、图标、合成梯经常不贴。
 原因：双主交件的具体步骤写在 draw 的「## 二、」Step 3。

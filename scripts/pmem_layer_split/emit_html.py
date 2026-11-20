@@ -241,4 +241,62 @@ setLevel(0); setGhost(40);
     out = job.root / "stack.html"
     out.write_text(html, encoding="utf-8")
     print("wrote", out)
+
+    # Clickable single-image table for Agent delivery (relative to repo root when possible)
+    layers_md = _write_layers_click_table(job, placed, ref_name=ref_name)
+    print("wrote", layers_md)
+    return out
+
+
+def _write_layers_click_table(job: Job, placed: list[dict], *, ref_name: str) -> Path:
+    """Write layers.md: Markdown table with repo-relative links for every deliverable image."""
+    root = job.root
+    repo = root
+    for _ in range(6):
+        if (repo / "pmem_art.py").is_file() or (repo / ".git").exists():
+            break
+        if repo.parent == repo:
+            break
+        repo = repo.parent
+
+    def _link(path: Path, label: str) -> str:
+        if not path.is_file():
+            return f"{label}（缺图）"
+        try:
+            rel = path.resolve().relative_to(repo.resolve()).as_posix()
+        except ValueError:
+            rel = path.as_posix()
+        return f"[{label}]({rel})"
+
+    lines = [
+        "### 图层单图表（点路径看大图）",
+        "",
+        "| # | 名称 | 可点图 |",
+        "| --- | --- | --- |",
+    ]
+    mid = root / "_compose_mid.png"
+    preview = root / "_compose_preview.png"
+    ref = root / ref_name
+    lines.append(f"| — | 叠回整图 | {_link(mid, '_compose_mid.png')} |")
+    lines.append(f"| — | 幽灵对比 | {_link(preview, '_compose_preview.png')} |")
+    if ref.is_file():
+        lines.append(f"| — | 原图 | {_link(ref, ref_name)} |")
+    for i, p in enumerate(placed, start=1):
+        file_name = str(p.get("file") or "")
+        name = str(p.get("name") or p.get("id") or file_name)
+        base = Path(file_name).name if file_name else f"{p.get('id')}.png"
+        # Prefer deliverable new/ (or new/拆图) over compose new_trim/
+        candidates = [
+            root / "new" / base,
+            root / "new" / "拆图" / base,
+            root / file_name if file_name else None,
+            root / "new_trim" / base,
+        ]
+        layer_path = next((c for c in candidates if c is not None and c.is_file()), root / "new" / base)
+        lines.append(f"| {i} | {name} | {_link(layer_path, base)} |")
+    lines.append("")
+    lines.append("Agent 交件：贴本表，再对表内每一张 `Read`；禁止只甩 stack.html。")
+    lines.append("")
+    out = root / "layers.md"
+    out.write_text("\n".join(lines) + "\n", encoding="utf-8")
     return out

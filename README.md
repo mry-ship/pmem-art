@@ -13,10 +13,10 @@
 ![Release](https://img.shields.io/github/v/release/mry-ship/pmem-art?label=release)
 ![Cursor](https://img.shields.io/badge/Cursor-支持-000000)
 ![Claude Code](https://img.shields.io/badge/Claude%20Code-支持-D97757)
-![Skills](https://img.shields.io/badge/美术技能-10-8B5CF6)
+![Skills](https://img.shields.io/badge/美术技能-11-8B5CF6)
 ![Threshold](https://img.shields.io/badge/合格线-≥9.50-blue)
 
-[📦 下载用户包 0.16.13-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.13-art) · [📖 使用手册](USER_MANUAL.md) · [认路白话流程图](docs/route_pipeline.html) · [进阶技能点选](docs/skills/flows.html) · [效果图墙](#效果长什么样) · [全页展陈](docs/showcase/skills-homepage/index.html) · [架构](ARCHITECTURE.md)
+[📦 下载用户包 0.16.14-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.14-art) · [📖 使用手册](USER_MANUAL.md) · [认路白话流程图](docs/route_pipeline.html) · [进阶技能点选](docs/skills/flows.html) · [效果图墙](#效果长什么样) · [全页展陈](docs/showcase/skills-homepage/index.html) · [架构](ARCHITECTURE.md)
 
 </div>
 
@@ -34,10 +34,10 @@
 
 ## 一分钟接入
 
-**推荐画师：下用户包**（不含研发用 pmem）→ [Releases · v0.16.13-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.13-art)
+**推荐画师：下用户包**（不含研发用 pmem）→ [Releases · v0.16.14-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.14-art)
 
 ```bash
-# 解压 pmem-art-0.16.13-art.zip 后
+# 解压 pmem-art-0.16.14-art.zip 后
 pip install -r requirements.txt
 pyw -3 -u pmem_art.py init --name "MyArtProject"
 pyw -3 -u pmem_art.py skills --install
@@ -92,9 +92,9 @@ Runtime: `pillow`, `numpy`, `pyyaml`. Tests: `pytest`（见 `pytest.ini`，`test
 
 句子里写了「原画」，总控会交给生图里的原画那一支。你不用再输入别的命令。
 
-### 10 个技能
+### 11 个技能
 
-玩家日常只调用 **`/pmem-agent`**。下表其余 9 条是它读过之后会去执行的技能，不用自己点。技能文件一共 **10 个**。
+玩家日常只调用 **`/pmem-agent`**。下表其余 10 条是它读过之后会去执行的技能，不用自己点。技能文件一共 **11 个**。
 
 <table>
 <thead>
@@ -106,11 +106,12 @@ Runtime: `pillow`, `numpy`, `pyyaml`. Tests: `pytest`（见 `pytest.ini`，`test
 <tr><td>3</td><td>界面</td><td><code>/pmem-ui</code></td><td>一整套 HUD / 菜单 / 九宫格。不用单张插画代替。</td></tr>
 <tr><td>4</td><td>图标</td><td><code>/pmem-icon</code></td><td>三档不混：A 桌面母版、B 线性 SVG、C 道具格。</td></tr>
 <tr><td>5</td><td>合成梯</td><td><code>/pmem-merge-ladder</code></td><td>先用 3 稿定链型/档数/画风（说不通就不出图）；默认整表一组（通常 8 档，对标后跟合理档数）；仅点名逐格才一档一张。商业对标优先；生物链要眼睛；白卡禁超框。论述和出图留在过程板。</td></tr>
-<tr><td>6</td><td>提示词</td><td><code>/pmem-prompt</code></td><td>按交付类型扩成 2～4 套可选 brief。不生图，点选后再交给对应技能。</td></tr>
-<tr><td>7</td><td>锁风格</td><td><code>/pmem-style-lock</code></td><td>从样张抽色板、光影、禁用词。不进自动生图。</td></tr>
-<tr><td>8</td><td>审图</td><td><code>/pmem-critique</code></td><td>只打分挑刺，不生图。</td></tr>
-<tr><td>9</td><td>归档</td><td><code>/pmem-atlas</code></td><td>散图归位，刷新看图工作台（见下方「看图工作台」）。</td></tr>
-<tr><td>10</td><td>教练</td><td><code>/pmem-coach</code></td><td>进步、短板、知识合在这一条里看。说「进步」或「知识」就看那一份。知识卡要你说收下才写入。</td></tr>
+<tr><td>6</td><td>拆图层</td><td><code>/pmem-layer-split</code></td><td>完整场景拆成可叠回透明层（背景+部件）。先定块再隔离；脚印过松会拦；幽灵热点回灌重抽。交叠回整图 + 散层，不只甩 HTML。</td></tr>
+<tr><td>7</td><td>提示词</td><td><code>/pmem-prompt</code></td><td>按交付类型扩成 2～4 套可选 brief。不生图，点选后再交给对应技能。</td></tr>
+<tr><td>8</td><td>锁风格</td><td><code>/pmem-style-lock</code></td><td>从样张抽色板、光影、禁用词。不进自动生图。</td></tr>
+<tr><td>9</td><td>审图</td><td><code>/pmem-critique</code></td><td>只打分挑刺，不生图。</td></tr>
+<tr><td>10</td><td>归档</td><td><code>/pmem-atlas</code></td><td>散图归位，刷新看图工作台（见下方「看图工作台」）。</td></tr>
+<tr><td>11</td><td>教练</td><td><code>/pmem-coach</code></td><td>进步、短板、知识合在这一条里看。说「进步」或「知识」就看那一份。知识卡要你说收下才写入。</td></tr>
 </tbody>
 </table>
 

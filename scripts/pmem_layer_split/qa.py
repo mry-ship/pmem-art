@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
-"""Quantitative ghost QA: MAE + heatmap vs ref."""
+"""Quantitative ghost QA: MAE + heatmap vs ref.
+
+Also feeds per-layer footprint MAE back into layer_status as dirty when above
+GATE.layer_ghost_mae_max — gate ok alone must not pass as restore-ready.
+"""
 from __future__ import annotations
 
 import math
@@ -11,7 +15,61 @@ from .defaults import GATE
 from .job import Job, save_json
 
 
-def ghost_qa(job: Job, *, scale: int = 2) -> dict:
+def apply_ghost_dirty(job: Job, report: dict) -> list[str]:
+    """Mark hot layers dirty when per-footprint MAE exceeds layer_ghost_mae_max.
+
+    Returns newly dirtied ids (excluding needs_human / already dirty without change).
+    """
+    thr = float(GATE.get("layer_ghost_mae_max", 52.0))
+    hot = report.get("hot_layers") or []
+    status = job.load_status()
+    layers = status.setdefault("layers", {})
+    dirtied: list[str] = []
+    dirty_ids = list(status.get("dirty_ids") or [])
+    for lid, mae in hot:
+        try:
+            mae_f = float(mae)
+        except (TypeError, ValueError):
+            continue
+        if mae_f < thr:
+            continue
+        prev = layers.get(lid) or {}
+        if prev.get("status") == "needs_human":
+            continue
+        reasons = list(prev.get("reasons") or [])
+        tag = f"layer_ghost_mae={mae_f:.1f}>{thr}"
+        if tag not in reasons and not any(str(r).startswith("layer_ghost_mae=") for r in reasons):
+            reasons.append(tag)
+        # keep prior metrics; only escalate to dirty for retry
+        retries = int(prev.get("retries") or 0)
+        layers[lid] = {
+            **prev,
+            "status": "dirty",
+            "reasons": reasons,
+            "retries": retries,
+            "metrics": {
+                **(prev.get("metrics") or {}),
+                "layer_ghost_mae": round(mae_f, 3),
+            },
+            "file": prev.get("file"),
+            "source": prev.get("source", "isolate"),
+        }
+        if lid not in dirty_ids:
+            dirty_ids.append(lid)
+        dirtied.append(lid)
+        print(f"GHOST→dirty {lid}: {tag}")
+    # also if whole-compose fail, ensure top hot layers are in dirty set
+    if report.get("level") == "fail":
+        for lid, mae in hot[:5]:
+            if lid not in dirty_ids:
+                dirty_ids.append(lid)
+    status["dirty_ids"] = dirty_ids
+    status["ok_ids"] = [k for k, v in layers.items() if v.get("status") == "ok"]
+    job.save_status(status)
+    return dirtied
+
+
+def ghost_qa(job: Job, *, scale: int = 2, apply_dirty: bool = True) -> dict:
     truth = job.load_truth()
     mid = job.root / "_compose_mid.png"
     if not mid.exists():
@@ -72,4 +130,13 @@ def ghost_qa(job: Job, *, scale: int = 2) -> dict:
         f"ghost QA: mae={report['mae']} psnr={report['psnr']} level={level} "
         f"hot={ranked[:3]}"
     )
+    if apply_dirty:
+        dirtied = apply_ghost_dirty(job, report)
+        if dirtied:
+            print(f"ghost dirty feedback: {dirtied} (thr={GATE.get('layer_ghost_mae_max')})")
+        elif level == "fail":
+            print(
+                "ghost level=fail — do NOT treat as shippable; "
+                "retry hot layers or tighten footprints"
+            )
     return report

@@ -15,6 +15,8 @@ note_date: '2026-11-02'
 summary: 默认 image2.5 背景；split_plan 先紧后扩只改点名边
 verify: pipeline 默认 isolate 含 bg；--bg-local 才本地挖洞；SKILL §1.1/§3
 applies: 执行 /pmem-layer-split 或拆层叠回时
+verified: '2026-11-19'
+verified_at: '2026-11-19T21:24:37.891+08:00'
 ---
 需求：默认背景必须用 image2.5 出锐利空舞台；本地挖洞易糊，仅 --bg-local / run-local。split_plan 估框改为先紧后扩+只改点名边，禁止整表乱拧。
 必须保持：非背景隔离仍 gpt-image-2.5；size 仅三档；叠回 contain+底对齐；合同在 SKILL。

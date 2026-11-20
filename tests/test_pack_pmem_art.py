@@ -37,6 +37,16 @@ class TestPackPmemArt(unittest.TestCase):
             self.assertTrue(any(n.endswith("atlas_reveal.py") for n in names))
             self.assertFalse(any("/.memory/" in n.replace("\\", "/") for n in names))
             self.assertFalse(any(n.endswith("pmem.mdc") for n in names))
+            # layer-split job workdirs (split_plan.json) must not ship
+            self.assertFalse(
+                any("/assets/" in n.replace("\\", "/") and "/split_plan.json" in n.replace("\\", "/") for n in names)
+            )
+            self.assertTrue(
+                any(n.replace("\\", "/").endswith("scripts/pmem_layer_split/defaults.py") for n in names)
+            )
+            self.assertTrue(
+                any("/pmem-layer-split/SKILL.md" in n.replace("\\", "/") for n in names)
+            )
             mcp_name = next(n for n in names if n.endswith(".cursor/mcp.json"))
             atlas_name = next(n for n in names if n.endswith("build_atlas.py"))
             with zipfile.ZipFile(zip_path) as zf:
