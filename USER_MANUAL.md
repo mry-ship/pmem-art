@@ -6,7 +6,7 @@
 > **用户包下载（不含研发用 pmem）** → [GitHub Release v0.16.14-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.14-art)  
 > **认路白话流程图** → [docs/route_pipeline.html](docs/route_pipeline.html)（推荐先看：大白话从提需到出图）  
 > **先看总览？** → [README.md](README.md) · **进阶斜杠技能**见下文（可选用） · 旧点选流程 [docs/skills/flows.html](docs/skills/flows.html)  
-> **看图墙 / 技能用法与结果？** → [README · 效果长什么样](README.md#效果长什么样) · [全页展陈](docs/showcase/skills-homepage/index.html)（图源 `docs/workbench_guide/` + 最新合成梯）
+> **看图墙 / 技能用法与结果？** → [README · 效果长什么样](README.md#效果长什么样) · [全页展陈](docs/showcase/skills-homepage/index.html)（图源 `docs/workbench_guide/` + 合成梯；拆图层见展陈 `#layer`）
 
 ---
 

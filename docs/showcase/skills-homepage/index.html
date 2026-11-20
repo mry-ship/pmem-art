@@ -106,6 +106,7 @@
     <h1>技能展陈 · 怎么用、结果长什么样</h1>
     <p>
       正式生图闭环最多 3 轮 · ≥9.5 停 · 满 3 轮取最高分。成图只拧点名小处走<strong>局部改</strong>（默认 1～2 枪）。锁风格和提示词不生图。合成梯先定关系，默认整表一组（对标后档数跟合理）。
+      <strong>拆图层</strong>（0.16.14+）先定块再隔离叠回，交叠回整图与散层。
       当前图源是仓库里仍在追踪的 <code>docs/workbench_guide/</code> 教学样例，外加最新鸟类合成梯整表。
       认路总图见
       <a href="../../route_pipeline.html">docs/route_pipeline.html</a> ·
@@ -116,7 +117,7 @@
       <a class="pill ok" href="https://github.com/mry-ship/pmem-art/releases/tag/v0.16.14-art">用户包 v0.16.14-art</a>
       <span class="pill ok">图源 workbench_guide</span>
       <span class="pill ok">局部改快通道</span>
-      <span class="pill ok">拆图层叠回</span>
+      <span class="pill ok">拆图层叠回 · 11 技能</span>
       <span class="pill ok">合成梯默认整表</span>
       <span class="pill ok">鸟类轻门 L1–L6</span>
       <span class="pill" style="color:#7dd3fc;border-color:rgba(56,189,248,.45)">蓝框 = 原图 / 参考</span>
@@ -130,6 +131,7 @@
     <a href="#ui">界面</a>
     <a href="#icon">图标</a>
     <a href="#merge">合成梯</a>
+    <a href="#layer">拆图层</a>
     <a href="#style">锁风格</a>
     <a href="#prompt">提示词</a>
   </nav>
@@ -267,6 +269,22 @@
     </div>
     <div class="grid sheet">
       <figure class="win sheet"><img src="./birds_merge_overview.png" alt="birds merge overview" /><figcaption><strong>鸟类合成梯整表 · 终稿</strong>L1–L6 同框；每格一货柜件，L2 起可读大眼。</figcaption></figure>
+    </div>
+  </section>
+
+  <section id="layer">
+    <h2>拆图层 · /pmem-layer-split</h2>
+    <p class="lead">完整场景拆成可叠回透明层（背景 + 部件）。先定块再隔离；脚印过松会拦；幽灵热点回灌重抽。交叠回整图 + 散层，不只甩 HTML。</p>
+    <div class="invoke">
+      <div class="tag-row"><span class="tag has-ref">要有完整场景图</span><span class="slash">/pmem-layer-split</span></div>
+      <p>玩家说：<em>帮我拆分，背景算一份，然后其他的拆成 9 份。</em></p>
+      <div class="meta">定块 → setup 脚印校准 → 并行隔离 → autofit 叠回 → 闸门 / 幽灵验收</div>
+    </div>
+    <div class="note">
+      口语也可说「拆图层 / 分图叠回 / 装修槽位拆件」。不要和局部改（成图只拧一点）搞混。
+      教学样例尚未收进 <code>docs/workbench_guide/</code>；交件以叠回整图、幽灵对比与各层散图为准，流程见
+      <a href="../../skills/flows.html">flows · layer</a> 与
+      <a href="../../../USER_MANUAL.md">使用手册</a>。
     </div>
   </section>
 

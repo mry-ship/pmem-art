@@ -30,7 +30,7 @@
 - **收敛**：每轮打分挑刺，不到 9.50 只改那一两处，满 3 轮交最高分
 - **稳住**：同一张脸不换人，同一套画风不漂，说过不要的不再出现
 
-技能是配套工具。你平时只要大白话提需；总控会认路（见 [认路白话流程图](docs/route_pipeline.html)），只有一种确定情况就直接做，多种情况先问你。原画、克隆、变体、界面、图标、合成梯都不用自己点名——说不清时系统会问一句，不会默默画错。
+技能是配套工具。你平时只要大白话提需；总控会认路（见 [认路白话流程图](docs/route_pipeline.html)），只有一种确定情况就直接做，多种情况先问你。原画、克隆、变体、界面、图标、合成梯、拆图层都不用自己点名——说不清时系统会问一句，不会默默画错。
 
 ## 一分钟接入
 
@@ -222,6 +222,10 @@ pyw -3 -u pmem_art.py atlas
 | 乐器合成梯 · 终稿 | 鸟类 Chickens · L1–L6 整表 |
 | :---: | :---: |
 | ![merge](docs/workbench_guide/merge-ladder/final.jpg) | ![birds](docs/showcase/skills-homepage/birds_merge_overview.png) |
+
+### 拆图层 · `/pmem-layer-split`（0.16.14+）
+
+完整场景 → 背景 + 部件透明层 → autofit 叠回。口语：「拆图层 / 分图叠回 / 背景一份其余九份」。交叠回整图与散层，不只甩 HTML。流程与对照 → [全页展陈 · 拆图层](docs/showcase/skills-homepage/index.html#layer) · [flows · layer](docs/skills/flows.html)。
 
 完整话术与过程轮次 → [全页展陈](docs/showcase/skills-homepage/index.html)。认路思路 → [route_pipeline.html](docs/route_pipeline.html)。
 

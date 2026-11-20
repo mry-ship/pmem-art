@@ -123,7 +123,7 @@
       <a href="../route_pipeline.html">docs/route_pipeline.html</a>
       （直接说人话即可，不必背斜杠）。本页是进阶：点选各技能内部流程图。
     </p>
-    <p>现在是 10 个技能。没点名走总控大白话认路。原画、克隆、变体、镜头包、局部改收在 draw 里；合成梯先过关系，<strong>默认整表一组</strong>，仅点名逐格才一档一张。手册见 <a href="../../USER_MANUAL.md">USER_MANUAL.md</a>。</p>
+    <p>现在是 11 个技能。没点名走总控大白话认路。原画、克隆、变体、镜头包、局部改收在 draw 里；合成梯先过关系，<strong>默认整表一组</strong>，仅点名逐格才一档一张；拆图层先定块再隔离叠回。手册见 <a href="../../USER_MANUAL.md">USER_MANUAL.md</a>。</p>
   </header>
   <main>
     <div class="pick" id="pick" role="group" aria-label="选择技能"></div>
@@ -233,6 +233,22 @@
         { id: "g", x: 610, y: 110, w: 110, h: 48, t1: "交付", t2: "整表终稿", c: "n-ok" }
       ],
       edges: [["a","b"],["b","c"],["c","d"],["d","e"],["e","f","no"],["e","g","yes"],["f","d","",true]]
+    },
+    layer: {
+      label: "layer",
+      title: "/pmem-layer-split",
+      sub: "/pmem-layer-split · 拆图层叠回",
+      aria: "定块脚印 → setup 校准 → 并行隔离 → autofit 叠回 → 闸门/幽灵验收；交叠回整图与散层，不只甩 HTML。",
+      nodes: [
+        { id: "a", x: 20, y: 24, w: 140, h: 48, t1: "0 定块", t2: "背景+部件脚印", c: "n-neu" },
+        { id: "b", x: 180, y: 24, w: 140, h: 48, t1: "1 setup", t2: "truth/guide", c: "n-neu" },
+        { id: "c", x: 340, y: 24, w: 150, h: 48, t1: "2 并行隔离", t2: "gpt/Cursor 黑底", c: "n-blue" },
+        { id: "d", x: 510, y: 24, w: 150, h: 48, t1: "3 autofit 叠回", t2: "脚印对准", c: "n-blue" },
+        { id: "e", x: 340, y: 110, w: 150, h: 48, t1: "4 闸门/幽灵", t2: "过松/热点回灌", c: "n-neu" },
+        { id: "f", x: 180, y: 110, w: 140, h: 48, t1: "不过重抽", t2: "热点层回灌", c: "n-bad" },
+        { id: "g", x: 520, y: 110, w: 140, h: 48, t1: "交付", t2: "叠回+散层", c: "n-ok" }
+      ],
+      edges: [["a","b"],["b","c"],["c","d"],["d","e"],["e","f","no"],["e","g","yes"],["f","c","",true]]
     },
     lens: {
       label: "lens",
@@ -351,7 +367,7 @@
     }
   };
 
-  const order = ["agent","draw","ui","icon","clone","ladder","prompt","lens","style","critique","variant","atlas","improve","coach","learn"];
+  const order = ["agent","draw","ui","icon","clone","ladder","layer","prompt","lens","style","critique","variant","atlas","improve","coach","learn"];
   const pick = document.getElementById("pick");
   const host = document.getElementById("svg-host");
   const titleEl = document.getElementById("title");

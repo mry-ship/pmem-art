@@ -20,6 +20,8 @@ aliases:
 - 主页手册
 - 发版文档
 - README同步
+verified: '2026-11-20'
+verified_at: '2026-11-20T21:25:01.446+08:00'
 source:
   conversation: 1c3c3fc0-ee1e-4b91-82b0-59a517862363
 ---
