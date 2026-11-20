@@ -11,7 +11,7 @@ anchors:
 - scripts/pack_pmem_art.py
 - improve/memory_trust.py
 - feedback.py#_write_memory_entry_unlocked
-revision: git:pending-0.16.15
+revision: git:b2791b0
 author: 1002378395@qq.com
 note_date: '2026-11-20'
 summary: 当前用户包版本是 v0.16.15-art（记忆trust + doctor/B2 加固）
