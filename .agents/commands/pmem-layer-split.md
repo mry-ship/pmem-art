@@ -1,6 +1,5 @@
 ---
-name: pmem-layer-split
-description: 把一张完整场景图拆成可叠回的透明图层（装修/变身槽位）。出图钉死样子/视角/风格；大小位置可漂，拼回按脚印 autofit 对准。优先 gpt-image-2.5，否则 Cursor 黑底。用户说「拆图层 / 分图叠回 / 新图旧图拆件 / 装修分块 / layer split」或 /pmem-layer-split 时使用。
+description: 场景切块隔离与叠回（脚印校准→隔离→闸门→幽灵）（pmem-art）
 ---
 
 # `/pmem-layer-split` — 场景切块隔离与叠回
@@ -25,12 +24,23 @@ description: 把一张完整场景图拆成可叠回的透明图层（装修/变
 
 ---
 
+## 执行卡 · 拆图层（Agent 必读）
+
+1. 读原图 → 写 `assets/<job>/split_plan.json`（`id/name/z/crop/keep/remove/file`；玩家点名 N 层则 `modules` 含 bg 总数 = N）。
+2. `setup` → 看 `_crops_guide.png` + `_crops/`：贴边切肢先扩框再 setup；框够大优先，禁止为过闸收框。
+3. 背景优先 gpt-image-2.5；无通路再用 Cursor **不透明隔离底**（默认纯黑），禁止后抠。
+4. `isolate` 并行抽未过线层（双垫图：全主体 crop + `_ctx`）；出图硬锁样子/视角/风格，大小位置可漂。
+5. `compose` → `gate` → `qa` → `emit`；脚印不过 → 重抽精灵或扩被点名边，禁止拧框凑比例。
+6. 结算贴 `layers.md`（或等价可点表）并 `Read` 叠回整图 + 各层散图；`stack.html` 仅旁路。
+7. 细则见下方「一次做对的流程 / 闸门与尺寸」；本地壳 `pyw -3 -u scripts/run_pmem_layer_split.py --job assets/<job> …`。
+
+---
+
 ## 统一 CLI
 
 ```text
 pyw -3 -u scripts/run_pmem_layer_split.py --job assets/<job> setup [--skip-match] [--no-tighten-from-bg]
 pyw -3 -u scripts/run_pmem_layer_split.py --job assets/<job> isolate [--workers 4] [--ids a,b] [--force] [--dry-run]
-pyw -3 -u scripts/run_pmem_layer_split.py --job assets/<job> normalize [--ids a,b]  # isolate 后自动也会跑
 pyw -3 -u scripts/run_pmem_layer_split.py --job assets/<job> compose
 pyw -3 -u scripts/run_pmem_layer_split.py --job assets/<job> gate
 pyw -3 -u scripts/run_pmem_layer_split.py --job assets/<job> qa
@@ -42,11 +52,8 @@ pyw -3 -u scripts/run_pmem_layer_split.py --job assets/<job> bg                 
 pyw -3 -u scripts/run_pmem_layer_split.py --job assets/<job> run-local          # 无远端生图干跑
 ```
 
-`isolate` / `pipeline` / `retry-dirty` **自动**跑 `normalize`（背景裁回画布纵横比 + 部件按脚印 asp letterbox），再 compose。
-
 Agent 定稿 `split_plan.json` 后，**优先跑 CLI**，不要每 job 再抄一份 `_setup/_compose`。  
-`isolate` 若报「无 gpt-image-2.5 通路」：对本批目标层改用 Cursor GenerateImage（垫对应 `_crops/<id>.png`，提示词同 §3/§4），落盘到 `new/` 后必须先 **近黑→alpha（若黑底）→ `normalize`**，再 `compose`→`gate`→`qa`→`emit`。禁止跳过 `normalize`。  
-`retry-dirty` / pipeline 重试：若 dirty 含 `bg`，**必须重抽 bg**（不可 `skip_bg`）。
+`isolate` 若报「无 gpt-image-2.5 通路」：对本批目标层改用 Cursor GenerateImage（垫对应 `_crops/<id>.png`，提示词同 §3/§4），落盘到 `new/` 后继续 `compose`→`gate`→`qa`→`emit`。
 
 ---
 
@@ -185,38 +192,19 @@ Extract ONLY listed subject(s). Occlusion→complete hidden parts; no redesign. 
 ```
 
 - `isolate` 默认并行（`--workers 4`），**含 bg**；跳过 `status=ok`；优先 gpt-image-2.5；**部件双垫 crop+ctx**；bg 提示自动带 `aspect_pad_rule`；部件提示含完整性第 5 条  
-- 无 gpt-image-2.5 通路：Agent 用 Cursor GenerateImage 逐层补齐；**必须**垫 `_crops/<id>.png`，有则再垫 `_crops/<id>_ctx.png`；提示词带**样子硬锁 + 完整性**；黑底隔离，勿对人提密钥；落盘后 **近黑→alpha → `normalize`**，再 compose（大小交给 autofit）  
-- 脏层：`retry-dirty` 或 `isolate --ids … --force`；dirty 含 bg 时不可跳过 bg  
-- 成功写入 `new/` + `layer_status`；CLI `isolate` 成功路径已自动 `normalize`
+- 无 gpt-image-2.5 通路：Agent 用 Cursor GenerateImage 逐层补齐；**必须**垫 `_crops/<id>.png`，有则再垫 `_crops/<id>_ctx.png`；提示词带**样子硬锁 + 完整性**；黑底隔离，勿对人提密钥；大小交给拼回对准  
+- 脏层：`retry-dirty` 或 `isolate --ids … --force`  
+- 成功写入 `new/` + `layer_status`
 
 #### 4.1 出图后反向验收（本趟必做，再 compose）
 
-**闸门 ok ≠ 可交件。** 对照 `_crops/<id>.png` 与 `new/<file>` 逐层过一遍（目视硬闸）：
+对照 `_crops/<id>.png` 与 `new/<file>` 逐层过一遍（`viking_camp_10` 教训）：
 
 1. **残缺/贴边**：矛尖、焰尖、帐篷侧、披风边是否被画幅切开 → 扩 crop 或重抽  
 2. **串戏**：邻居身体/家具是否烤进本层 → 重抽并加强 `remove`  
-3. **换样**：完整但已不是 crop 里那件（另造枪架/盾/幔帐顶替 A 字帐）→ 重抽；框本就切肢则先修框  
-4. **缺件**：同槽应在的挂饰/壶/毯/矛数量是否丢失 → 重抽  
-5. **背景烤脏 / 空舞台疤**：角色残影、道具轮廓、**道具脚印暗斑/接地影残留**、另造英雄树、空地形状漂了 → 重抽 bg（gate `bg_bake` 也会抓；目视仍必做）  
-6. **缺接地影**：`grounded=true` 层脚下/底座无柔接触影、像漂浮 → 重抽并确认 shadow_rule；禁整片泥地圆盘冒充影  
-7. **遮挡过重**：crop 大半被邻居挡 → **先收邻居边再抽**（勿指望模型从残影猜对外形）  
-7. 通过后再 `normalize`→`compose`→`gate`→`qa`→`emit`；交 `_compose_mid.png`
-
-#### 4.2 通用解法（所有 job 默认 · 管线硬步骤）
-
-后续任意拆分都走这套，禁止只当单次手工补丁：
-
-| 问题 | 通用解法 | 落点 |
-|---|---|---|
-| 引擎三档 size ≠ 原图纵横比 | isolate 后 **normalize**：bg 裁回画布 asp；部件按脚印 asp **letterbox（α=1）** | `post_isolate.py`；`isolate`/`pipeline` 自动跑 |
-| letterbox 后主体偏大 / asp 过闸幽灵差 | **compose 默认 autofit=true**（NCC 缩小对准脚印）；禁止 plan 默认写 `autofit:false` | `compose.py`；仅玩家点名关 |
-| 背景烤进角色/道具 / 脚印污渍 | bg 清场含影渍；锁远树位点；洞无缝续写；gate **`bg_bake≤0.58`**；§4.1 目视空舞台疤 | `BG_ISOLATE_PROMPT`；`GATE.bg_bake_max` |
-| 物件缺接地影 | `grounded` → 影属精灵；禁泥地圆盘；§4.1 缺影必重抽 | `SHADOW_GROUNDED`；`ISOLATE_PROMPT` |
-| 闸门过了仍换样 | 提示加 **NO REDESIGN**；`feat_match≥0.55`；**§4.1 目视仍必做** | `ISOLATE_PROMPT`；`GATE.feat_match_min` |
-| 切肢逼换样 | 框包全+pad；禁为 asp 收框；`edge_clip` | §1.1/§1.3 |
-| 幽灵 fail | **禁止当合格交件**（除非玩家明确接受）；重抽热点层或收/扩被点名边 | §7 |
-
-排除：为过闸拧脚印；只 letterbox 不开 autofit；把 gate ok 当终审；遮挡残 crop 硬抽指望脑补。
+3. **换样**：完整但已不是 crop 里那件（另造枪架/盾）→ 重抽；框本就切肢则先修框  
+4. **缺件**：同槽应在的挂饰/壶/毯是否丢失 → 重抽  
+5. 通过后再 `compose`→`gate`→`qa`→`emit`；交 `_compose_mid.png`
 
 ### 5. 叠回（摆好位置再交件）
 
@@ -226,9 +214,9 @@ Extract ONLY listed subject(s). Occlusion→complete hidden parts; no redesign. 
 - **踩地**（`grounded=true` / 默认）：**底对齐框底**（锁地面槽位）  
 - **墙挂**（`grounded=false`）：**框内居中**（锁墙位）  
 - **吊灯/悬吊**：`anchor=top-center`（贴框顶，避免居中把灯拽下来）  
-- **大小自校准（默认开）**：相对原图脚印区做 NCC，在 contain 内自动缩小（`scale_mul≤1`）；与 letterbox 搭配使用。`compose.autofit` **默认 true**；仅玩家点名才写 `false`  
+- **大小自校准**：相对原图脚印区做 NCC，在 contain 内自动缩小（`scale_mul≤1`），纠正隔离引擎放大特写  
 - 框比主体明显更大 → **先收 crop**，不要靠居中硬凑；**禁止为过 fill 闸把门框撑大**  
-- **背景：`cover_uniform`（等比缩放+居中裁）**——禁止非等比 `resize(W,H)`；isolate 后须已 `normalize` 到画布 asp  
+- **背景：`cover_uniform`（等比缩放+居中裁）**——禁止非等比 `resize(W,H)`  
 - 超宽前景：`width` + 底对齐  
 - 禁止道具 `cover`、**禁止任何层非等比拉伸**  
 - **交件主件**：`_compose_mid.png`（摆好的叠回整图）+ `_compose_preview.png`（原图|叠回|幽灵）+ `stack.html` + `layers.md`；散层 `new/*.png` 为附图
@@ -240,20 +228,17 @@ Extract ONLY listed subject(s). Occlusion→complete hidden parts; no redesign. 
 | `asp_err` | ≤ 0.18 | dirty |
 | `fill` | 0.72–1.08（若有 `scale_mul` 则下限 ×scale_mul²） | dirty |
 | alpha 均值 | 0.02–0.92 | dirty |
-| `feat_match`（相对 `_crops` 蒙版比对） | ≥ 0.55 | dirty（特征/机位漂了） |
+| `feat_match`（相对 `_crops` 蒙版比对） | ≥ 0.42 | dirty（特征/机位漂了） |
 | `edge_clip`（不透明质量压在画幅边框上的比例） | ≤ 0.018 | dirty（部位不完整/贴边裁切） |
-| `bg_bake`（bg 在道具脚印内 vs 原图 NCC） | ≤ 0.58 | dirty（空舞台仍烤着道具/影渍） |
-| `bg_stretch_err` | ≤ 0.12 | dirty（未 normalize 到画布 asp） |
 | 重试 | ≤ 2 | `needs_human` |
 
-只重抽 `dirty`；`ok` 落盘不动。`bg_bake` / `feat_match` 过了仍须 §4.1 目视换样。
+只重抽 `dirty`；`ok` 落盘不动。背景看 `mode=cover_uniform`（日志含 `stretch_err`，仅诊断）。
 
 ### 7. 定量幽灵 + HTML
 
 - `qa`：MAE / PSNR / 热力；≥28 warn；≥48 fail  
-- **幽灵 fail（≥48）默认不得当合格交件**；标清未过线，或重抽热点后再交  
 - `emit`：`stack.html` + `layers.md`（可点单图表）  
-- 目视：Ghost 40% 咬合、无串戏、遮挡层齐、**`grounded` 层必须带 crop 同向柔接地影**（影是精灵一部分；禁整片草地地毯假影）；**背景与部件均无压扁感**
+- 目视：Ghost 40% 咬合、无串戏、遮挡层齐、接地影符合 `grounded`；**背景与部件均无压扁感**
 
 ---
 

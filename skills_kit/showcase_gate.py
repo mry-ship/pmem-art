@@ -1,7 +1,8 @@
 """Showcase HTML finish gate.
 
-A scored **final** cell cannot ship if last score < 9.5 and completed rounds < 4
-(unless early safe-stop). Style-lock / prompt / refs do not generate, so they are skipped.
+A scored **final** cell cannot ship if last score < 9.5 and completed rounds
+< DEFAULT_MAX_ROUNDS (3) (unless early safe-stop). Style-lock / prompt / refs do
+not generate, so they are skipped.
 
 Process boards (`process_board.py`) caption each history card as「第 N 轮 · score」and mark
 the winner with ``figure.card.win``. Intermediate history cards are **not** finals — only

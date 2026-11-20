@@ -325,8 +325,8 @@ def build_registry(specs: list[dict[str, Any]], *, installed_root: Path | None =
             pack = [h for h in (card, delivery) if h]
         elif rid == "layer.split":
             delivery = _delivery_heading(body)
-            # 整份合同 + 交件可见（可点单图表）；无独立执行卡
-            pack = [h for h in (heading, delivery) if h]
+            # 执行卡 + 交件可见；禁止把整份 H1 合同塞进执行包（会爆 pack_line 软上限）
+            pack = [h for h in (card, delivery) if h] or ([heading] if heading else [])
         else:
             pack = [heading] if heading else []
         routes.append(

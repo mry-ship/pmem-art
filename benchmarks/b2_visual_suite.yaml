@@ -1,0 +1,58 @@
+# B2 视觉测试固定任务集（骨架）
+# 真模型出图 + 独立 VLM 盲评后才写入 .memory-art/_profile/b2_last.json
+# 本文件不含实测分数；分数由 b2_visual_bench.py 跑完后落盘。
+version: 1
+layer: B2
+name: pmem-art visual evolution suite
+compare:
+  arms:
+    - cold_start   # 空/剥离记忆
+    - warm_start   # 继承第一批记忆
+  metrics:
+    - id: character_consistency
+      label: 角色一致性
+      weight: 0.25
+    - id: style_consistency
+      label: 风格一致性
+      weight: 0.20
+    - id: brief_fit
+      label: 需求符合度
+      weight: 0.25
+    - id: layer_restore
+      label: 图层还原度
+      weight: 0.15
+    - id: spec_pass_rate
+      label: 规格合格率
+      weight: 0.15
+  regression_drop: 0.15   # 相对 baseline 任一核心指标掉 ≥ 此值 → doctor 硬信号
+tasks:
+  - id: b2-char-expr
+    category: character
+    title: 同一角色不同表情
+    brief: "同一身份锁脸：微笑 / 皱眉 / 惊讶 三态半身"
+    metrics: [character_consistency, style_consistency, brief_fit]
+  - id: b2-char-pose
+    category: character
+    title: 同一角色不同姿态
+    brief: "同一身份：站姿 / 坐姿 / 跑步 三态，锁头身与服装锚点"
+    metrics: [character_consistency, style_consistency, brief_fit]
+  - id: b2-scene-lens
+    category: scene
+    title: 同一场景不同镜头
+    brief: "同一地点：远景建立 / 中景叙事 / 近景特写"
+    metrics: [style_consistency, brief_fit, spec_pass_rate]
+  - id: b2-ui-family
+    category: ui
+    title: 同一 UI 家族不同弹窗
+    brief: "同家族：确认框 / 奖励框 / 设置框，锁色板与圆角"
+    metrics: [style_consistency, brief_fit, spec_pass_rate]
+  - id: b2-merge-ladder
+    category: merge
+    title: 合成梯多档
+    brief: "同族 shop_ladder 整表（默认 8 档或点名档数）"
+    metrics: [style_consistency, brief_fit, spec_pass_rate]
+  - id: b2-layer-split
+    category: layer_split
+    title: 拆层与叠回
+    brief: "完整场景拆层后 autofit 叠回，对照幽灵图"
+    metrics: [layer_restore, brief_fit, spec_pass_rate]

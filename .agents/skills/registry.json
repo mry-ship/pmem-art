@@ -102,7 +102,7 @@
       "file": ".cursor/skills/pmem-layer-split/SKILL.md",
       "heading": "# `/pmem-layer-split` — 场景切块隔离与叠回",
       "pack_headings": [
-        "# `/pmem-layer-split` — 场景切块隔离与叠回",
+        "## 执行卡 · 拆图层（Agent 必读）",
         "## 交件可见（拆层结算 · Agent 必读）"
       ],
       "routable": true,

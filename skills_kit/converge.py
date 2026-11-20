@@ -1216,6 +1216,8 @@ def _apply_finish_memory_and_atlas(
         role="approved" if met_bar else "reference",
         caption=win_caption,
         status=recipe_status,
+        # Auto settle is candidate only — promote via `memory promote` / B2 re-verify.
+        trust="candidate",
         extra_meta={
             "ai_params": {
                 "prompt": str(winner.get("prompt") or sess.get("goal") or ""),
@@ -1227,6 +1229,18 @@ def _apply_finish_memory_and_atlas(
         replace_same_asset=met_bar,
     )
     saved_paths.append(str(p_rec.relative_to(root)))
+    if met_bar:
+        try:
+            from improve.memory_trust import maybe_auto_verify_on_repeat_pass
+
+            auto_verified = maybe_auto_verify_on_repeat_pass(
+                root, module=mod, threshold=float(canonical_th)
+            )
+            if auto_verified:
+                sess["auto_verified_recipes"] = list(auto_verified)
+                saved_paths.extend([f"trust:verified:{eid}" for eid in auto_verified])
+        except Exception:
+            pass
 
     failed = [r for r in rounds if not r.get("passed") and r.get("defects")]
     if failed:
@@ -1268,6 +1282,7 @@ def _apply_finish_memory_and_atlas(
                 asset=worst_img,
                 role="rejected",
                 caption=red_caption,
+                trust="candidate",
                 replace_same_asset=True,
             )
             saved_paths.append(str(p_red.relative_to(root)))

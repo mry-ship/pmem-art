@@ -25,10 +25,11 @@ class TestCanAcceptWinner(unittest.TestCase):
 
     def test_under_threshold_must_continue(self) -> None:
         self.assertFalse(can_accept_winner(1, 8.30))
-        self.assertFalse(can_accept_winner(3, 8.56))
+        # DEFAULT_MAX_ROUNDS=3：未满轮且未过线必须继续
+        self.assertFalse(can_accept_winner(2, 8.56))
 
     def test_max_rounds_may_ship_best(self) -> None:
-        self.assertTrue(can_accept_winner(4, 8.56))
+        self.assertTrue(can_accept_winner(3, 8.56))
 
     def test_early_safe_stop_may_ship_best(self) -> None:
         self.assertTrue(can_accept_winner(1, 7.66, early_safe_stop=True))
@@ -42,13 +43,13 @@ class TestCanAcceptWinner(unittest.TestCase):
 class TestHtmlAudit(unittest.TestCase):
     def test_flags_early_stop(self) -> None:
         html = """
-        <figure><figcaption><strong>low · 3 轮</strong>8.43 → 8.50</figcaption></figure>
+        <figure><figcaption><strong>low · 2 轮</strong>8.43 → 8.50</figcaption></figure>
         <figure><figcaption><strong>原图</strong></figcaption></figure>
         """
         issues = audit_showcase_html(html)
         self.assertEqual(len(issues), 1)
         self.assertEqual(issues[0]["score"], 8.50)
-        self.assertEqual(issues[0]["rounds"], 3)
+        self.assertEqual(issues[0]["rounds"], 2)
 
     def test_skips_prompt_section_and_refs(self) -> None:
         html = """
@@ -111,15 +112,15 @@ class TestHtmlAudit(unittest.TestCase):
         self.assertEqual(audit_showcase_html(html), [])
 
     def test_process_board_without_win_gates_best_score_only(self) -> None:
+        # 无 .win 时取最高分；未满 DEFAULT_MAX_ROUNDS=3 且 <9.5 → 拦
         html = """
         <figure class="card"><figcaption><b>第 1 轮 · 8.50</b></figcaption></figure>
         <figure class="card"><figcaption><b>第 2 轮 · 9.22</b></figcaption></figure>
-        <figure class="card"><figcaption><b>第 3 轮 · 9.10</b></figcaption></figure>
         """
         issues = audit_showcase_html(html)
         self.assertEqual(len(issues), 1)
         self.assertEqual(issues[0]["score"], 9.22)
-        self.assertEqual(issues[0]["rounds"], 3)
+        self.assertEqual(issues[0]["rounds"], 2)
 
     def test_missing_image_flagged(self) -> None:
         html = "<figure><figcaption><strong>clone · 1 轮</strong>未出图</figcaption></figure>"

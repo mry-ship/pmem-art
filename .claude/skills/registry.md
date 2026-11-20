@@ -23,7 +23,7 @@
 | `icon.b` | 21 | 一套线性 SVG | `pmem-icon` | ## 三、Mode B：一致化 SVG 矢量图标集流程（Brief → Spec → Batch → Review → Converge） | ## 三、Mode B：一致化 SVG 矢量… + ### Mode B + ## 交件可见（出图结算 · Agent 必… + ## 记忆静默 / 履历可见（Agent 必… | true |
 | `icon.c` | 22 | 背包道具格 | `pmem-icon` | ## 四、Mode C：游戏道具隔离底栅格图标（64/128/256px PNG，非 SVG） | ## 四、Mode C：游戏道具隔离底栅格图… + ### Mode C + ## 交件可见（出图结算 · Agent 必… + ## 记忆静默 / 履历可见（Agent 必… | true |
 | `merge.ladder` | 30 | 同域升级梯（默认整表一组、L1–L8；有参考跟格数，点名数量跟点名；仅点名逐格才 per_cell）；糖果/甜品默认 shop_ladder；工具瓶罐可 same_object；未点名非糖果可轻门 | `pmem-merge-ladder` | # `/pmem-merge-ladder` — 同域合成梯 | ## 执行卡 + ## 交件可见（出图结算 · Agent 必… + ## 禁止 | true |
-| `layer.split` | 35 | 拆图层、分图叠回、装修/变身槽位切块 | `pmem-layer-split` | # `/pmem-layer-split` — 场景切块隔离与叠回 | # `/pmem-layer-split` … + ## 交件可见（拆层结算 · Agent 必… | true |
+| `layer.split` | 35 | 拆图层、分图叠回、装修/变身槽位切块 | `pmem-layer-split` | # `/pmem-layer-split` — 场景切块隔离与叠回 | ## 执行卡 · 拆图层（Agent 必读） + ## 交件可见（拆层结算 · Agent 必… | true |
 | `draw.lens` | 40 | 玩家明确要几套机位 / 镜头 / 光给自己挑 | `pmem-draw` | ## 合同 · 镜头包 | ## 零点五、开画前强制 route（与总控… + ## 合同 · 镜头包 | true |
 | `draw.touchup` | 45 | 已有成图；只改点名部位/小瑕疵；不换题材、机位、身份、整构图 | `pmem-draw` | ## 合同 · 局部改 | ## 零点五、开画前强制 route（与总控… + ## 合同 · 局部改 | true |
 | `draw.clone` | 50 | 有参考，并且要换一个新题材，锁的是画风 | `pmem-draw` | ## 合同 · 克隆 | ## 零点五、开画前强制 route（与总控… + ## 执行卡 · 出图闭环（Agent 必读… + ## 合同 · 克隆 + ## 交件可见（出图结算 · Agent 必… + ## 记忆静默 / 履历可见（Agent 必… | true |

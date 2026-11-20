@@ -51,6 +51,9 @@ python3 pmem_art.py converge start --session s_rec --scale recompose \
 
 ## 3. 六维严苛审图标准与反虚高机制 (Anti-Inflation Rubric)
 
+> **评分真源速查**：[`SCORING_CANON.md`](SCORING_CANON.md)（六维 vs Absolute-5D、权重、硬否决、交付类型）。  
+> Absolute-5D = 工艺五维历史别名；有无瑕度时一律按六维算停机分。
+
 针对早期审图中曾出现的「因未乱加配饰/基本完成度达标而给分偏高（如 Case 02 R2 曾虚高至 9.65 分，实际严苛重审为 8.80 分）」问题，六维审图强制执行以下**严苛扣分准则**。正式分是加权调和平均，不要手填总分。无瑕疵固定占 25%，与另外五维一样盲评。
 
 1. **构图与视觉张力 (`Composition`)**：

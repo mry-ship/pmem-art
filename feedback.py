@@ -237,6 +237,7 @@ def write_memory_entry(
     extra_meta: dict[str, Any] | None = None,
     replace_same_asset: bool = False,
     status: str = "active",
+    trust: str = "candidate",
 ) -> Path:
     proj_id = ""
     proj_name = ""
@@ -266,6 +267,7 @@ def write_memory_entry(
             extra_meta=extra_meta,
             replace_same_asset=replace_same_asset,
             status=status,
+            trust=trust,
             proj_id=proj_id,
             proj_name=proj_name,
         )
@@ -286,8 +288,9 @@ def _write_memory_entry_unlocked(
     extra_meta: dict[str, Any] | None,
     replace_same_asset: bool,
     status: str,
-    proj_id: str,
-    proj_name: str,
+    trust: str = "candidate",
+    proj_id: str = "",
+    proj_name: str = "",
 ) -> Path:
     entries_root.mkdir(parents=True, exist_ok=True)
     existing_same: Path | None = None
@@ -304,8 +307,35 @@ def _write_memory_entry_unlocked(
                     continue
                 existing_same = prior
                 break
+    preserved_trust_lines = ""
     if existing_same is not None:
         eid = existing_same.stem
+        # Never demote verified/canonical when finish/feedback rewrite the same asset.
+        try:
+            prior_text = existing_same.read_text(encoding="utf-8")
+        except (UnicodeDecodeError, OSError):
+            prior_text = ""
+        m_trust = re.search(r"^trust:\s*(\w+)\s*$", prior_text, re.M)
+        m_status = re.search(r"^status:\s*(\w+)\s*$", prior_text, re.M)
+        old_trust_raw = (m_trust.group(1) if m_trust else "").strip().lower()
+        old_status = (m_status.group(1) if m_status else "active").strip().lower()
+        try:
+            from improve.memory_trust import TRUST_RANK, normalize_trust
+
+            # Legacy entries without trust frontmatter grandfather as verified.
+            old_trust = normalize_trust(old_trust_raw, status=old_status)
+            new_trust = normalize_trust(str(trust or "candidate"), status=status)
+            old_rank = TRUST_RANK.get(old_trust, 0)
+            new_rank = TRUST_RANK.get(new_trust, 0)
+        except Exception:
+            old_trust, old_rank, new_rank = old_trust_raw or "candidate", -1, 0
+        if old_rank > new_rank:
+            trust = old_trust
+            keep_keys = ("trust_by", "trust_at")
+            for key in keep_keys:
+                km = re.search(rf"^{key}:\s*(.+)\s*$", prior_text, re.M)
+                if km:
+                    preserved_trust_lines += f"{key}: {km.group(1).strip()}\n"
     else:
         eid = _next_id(entries_root, kind)
     now = _now_cst().strftime("%Y-%m-%d")
@@ -359,6 +389,8 @@ def _write_memory_entry_unlocked(
         f"module: {module}\n"
         f"kind: {kind}\n"
         f"status: {status}\n"
+        f"trust: {trust}\n"
+        f"{preserved_trust_lines}"
         f"note_date: '{now}'\n"
         f"verified: '{now}'\n"
         f"author: Cursor对话·画师反馈\n"
@@ -529,6 +561,7 @@ def cmd_feedback(
                 extra_meta={"style_fork": style_fork} if style_fork else None,
                 replace_same_asset=False,
                 status="pending",
+                trust="candidate",
                 proj_id=proj_id,
                 proj_name=proj_name,
             )

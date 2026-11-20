@@ -96,11 +96,13 @@
 └─────────────────────────────────────────────────────────────────────────┘
 ```
 
-### 4.1 开画路由闸门与 Absolute-5D 分数
+### 4.1 开画路由闸门与六维分数
 
 - **Route gate**：`converge start` 前必须有近期本地 `route` 结果（`.memory-art/route_bank/last_advise.json`，默认 2 小时内有效）。美术零门槛；Agent 先跑 `pyw -3 -u pmem_art.py route --text "…"`。调试跳闸须 `PMEM_ART_ALLOW_GATE_SKIP=1` + `--skip-reason`（可另加 `--skip-route-gate` / env）；仅设 `PMEM_ART_SKIP_ROUTE_GATE` 不够。缺缓存时优先 `converge start --route-id …` 点名种闸。
-- **评分**：收敛以 Absolute-5D（构图/光影/透视解剖/质感/风格）为主闸；`recompose`/`high` 档贴原停机前需在 **strengths/defects** 中检出机位变化证据（`_recompose_change_evidence`），提示词里的「重构机位」不算。
+- **评分（真源）**：正式尺为**六维**加权调和平均（构图/光影/透视解剖/质感/风格/无瑕度；无瑕度固定约 25%）。历史名 **Absolute-5D** = 前五个工艺维别名；`parse_5d_dims` / Agent Absolute-5D 检查表均按现行六维合同执行。细则见 [`docs/SCORING_CANON.md`](docs/SCORING_CANON.md)。`recompose`/`high` 档贴原停机前需在 **strengths/defects** 中检出机位变化证据（`_recompose_change_evidence`），提示词里的「重构机位」不算。
 - **垫图策略**：`pad=auto` 默认每轮垫最初 style_ref；仅在机位已换证据成立时才链最高分换机位成图。
+- **Benchmark**：`benchmark_evolution*` = **B1 系统测试**（非视觉进化）。B2/B3 见 [`docs/BENCHMARK_LAYERS.md`](docs/BENCHMARK_LAYERS.md)。
+- **记忆可信度**：自动写入 `trust=candidate`；`memory promote|revoke|resolve` 见 [`docs/MEMORY_TRUST.md`](docs/MEMORY_TRUST.md)。
 
 ---
 

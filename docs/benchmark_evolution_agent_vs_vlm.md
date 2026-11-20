@@ -1,5 +1,8 @@
 # 演进报告 Agent Absolute-5D vs VLM（gpt-5.6-sol）
 
+> **归类**：这是 **B1 示意过程图**上的旁证——剧本分与独立 VLM 可严重脱钩。  
+> 不能当作视觉进化证明。分层合同见 [BENCHMARK_LAYERS.md](BENCHMARK_LAYERS.md)。
+
 - 样本：benchmark-evolution 14 张实测过程图（`/tmp/e2e_quant_staging`）
 - Agent 源：`judge_source=agent_absolute_5d`（报告正式分）
 - VLM：`openai_compatible` / `gpt-5.6-sol`，绝对品质盲评

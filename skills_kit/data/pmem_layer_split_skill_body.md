@@ -20,6 +20,18 @@
 
 ---
 
+## 执行卡 · 拆图层（Agent 必读）
+
+1. 读原图 → 写 `assets/<job>/split_plan.json`（`id/name/z/crop/keep/remove/file`；玩家点名 N 层则 `modules` 含 bg 总数 = N）。
+2. `setup` → 看 `_crops_guide.png` + `_crops/`：贴边切肢先扩框再 setup；框够大优先，禁止为过闸收框。
+3. 背景优先 gpt-image-2.5；无通路再用 Cursor **不透明隔离底**（默认纯黑），禁止后抠。
+4. `isolate` 并行抽未过线层（双垫图：全主体 crop + `_ctx`）；出图硬锁样子/视角/风格，大小位置可漂。
+5. `compose` → `gate` → `qa` → `emit`；脚印不过 → 重抽精灵或扩被点名边，禁止拧框凑比例。
+6. 结算贴 `layers.md`（或等价可点表）并 `Read` 叠回整图 + 各层散图；`stack.html` 仅旁路。
+7. 细则见下方「一次做对的流程 / 闸门与尺寸」；本地壳 `pyw -3 -u scripts/run_pmem_layer_split.py --job assets/<job> …`。
+
+---
+
 ## 统一 CLI
 
 ```text

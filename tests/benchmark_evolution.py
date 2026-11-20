@@ -1,20 +1,20 @@
 #!/usr/bin/env python3
-# Showcase harness (not a CI gate). Contract: converge generate → judge · Absolute-5D · thr 9.5.
+# B1 SYSTEM INTEGRATION ONLY (not a CI gate; not visual evolution proof).
+# Procedural PIL + scripted scores → CLI/memory/Warm-Start metrics only.
+# Visual evolution → docs/BENCHMARK_LAYERS.md + benchmarks/b2_visual_bench.py.
+# Contract: converge generate → judge · six-dim (Absolute-5D = craft alias) · thr 9.5.
 """
-pmem-art Quantitative & Visual Evolution Benchmark
-==================================================
-Runs a complete, verifiable 2-batch E2E benchmark starting from an EMPTY project:
+pmem-art B1 System Integration Benchmark
+========================================
+Runs a 2-batch E2E harness from an EMPTY project:
 - Stage 0: Empty project (`pmem_art.py init`)
-- Batch 1: Cold Start on Empty Project (4 domains → builds memory, redlines, taste, knowledge cards)
-- Batch 2: Warm Start on the NOW NON-EMPTY Project (same 4 domains + 3 external auto-ingests)
+- Batch 1: Cold Start (4 domains → memory / redlines / taste)
+- Batch 2: Warm Start on the same project (+ ingest)
 
-Each round uses the current engine contract:
-  converge generate (image only) → converge judge (Absolute-5D / agent_absolute_5d, offline advisory only)
+Report **system** metrics (entries, recipes, redlines, warm-start hits).
+Do **not** treat scripted Absolute-5D/六维 scores as evidence that art got better.
 
-Generates:
-1. Rich procedural PIL illustrations for every round + 3 ingested assets.
-2. `benchmark-evolution-report.html` — self-contained interactive visual + data report.
-3. `benchmark-evolution-preview.png` — high-res overview composite image for quick preview.
+See docs/BENCHMARK_LAYERS.md.
 """
 from __future__ import annotations
 

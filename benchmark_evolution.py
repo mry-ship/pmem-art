@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
-# DEPRECATED_FOR_CI — historical showcase harness (pre generate/judge · thr 9.5).
+# B1 SYSTEM INTEGRATION ONLY — DEPRECATED_FOR_CI.
+# Preset scores + make_test_png() prove CLI/memory/Warm-Start plumbing, NOT visual evolution.
+# Visual claims → docs/BENCHMARK_LAYERS.md (B2) + benchmarks/b2_visual_bench.py.
 # Current contract: converge generate → judge; DEFAULT_THRESHOLD = 9.5. Not a CI gate.
 """
-pmem-art Quantitative Multi-Batch Evolution Benchmark
-=====================================================
-Tests the real CLI & engine starting from an EMPTY project (Batch 1: Cold Start),
-then continues on the NOW NON-EMPTY project (Batch 2: Warm Start on Same Project),
-and tests cross-entity transfer (Batch 3: Mature Project New Entity Transfer).
-Outputs detailed JSON & Markdown metrics tables.
+pmem-art B1 System Integration Benchmark (NOT visual evolution)
+===============================================================
+Tests CLI & memory from an EMPTY project (Batch 1: Cold Start),
+then Warm-Start on the same project (Batch 2), plus cross-entity transfer.
+Uses programmatic PNGs and **scripted scores/defects** — report memory counts /
+recall / redline writes only. Do not claim image quality improved.
+See docs/BENCHMARK_LAYERS.md.
 """
 from __future__ import annotations
 

@@ -16,7 +16,7 @@
 ![Skills](https://img.shields.io/badge/美术技能-11-8B5CF6)
 ![Threshold](https://img.shields.io/badge/合格线-≥9.50-blue)
 
-[📦 下载用户包 0.16.14-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.14-art) · [📖 使用手册](USER_MANUAL.md) · [认路白话流程图](docs/route_pipeline.html) · [进阶技能点选](docs/skills/flows.html) · [效果图墙](#效果长什么样) · [全页展陈](docs/showcase/skills-homepage/index.html) · [架构](ARCHITECTURE.md)
+[📦 下载用户包 0.16.15-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.15-art) · [📖 使用手册](USER_MANUAL.md) · [认路白话流程图](docs/route_pipeline.html) · [进阶技能点选](docs/skills/flows.html) · [效果图墙](#效果长什么样) · [全页展陈](docs/showcase/skills-homepage/index.html) · [架构](ARCHITECTURE.md)
 
 </div>
 
@@ -34,10 +34,10 @@
 
 ## 一分钟接入
 
-**推荐画师：下用户包**（不含研发用 pmem）→ [Releases · v0.16.14-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.14-art)
+**推荐画师：下用户包**（不含研发用 pmem）→ [Releases · v0.16.15-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.15-art)
 
 ```bash
-# 解压 pmem-art-0.16.14-art.zip 后
+# 解压 pmem-art-0.16.15-art.zip 后
 pip install -r requirements.txt
 pyw -3 -u pmem_art.py init --name "MyArtProject"
 pyw -3 -u pmem_art.py skills --install
@@ -233,16 +233,20 @@ pyw -3 -u pmem_art.py atlas
 
 ## 记忆是干什么的（简单说）
 
-画师日常不用记命令。Skill 跑完会悄悄把「红线、过稿配方、色板」写进项目里的 `.memory-art/`。
+画师日常不用记命令。Skill 跑完会悄悄把「红线、过稿配方、色板」写进项目里的 `.memory-art/`（自动条目先是 **candidate**；主美确认后再升 verified / canonical）。
 
 你也可以随口沉淀：
 
 ```bash
 pyw -3 -u pmem_art.py feedback "太赛博了，别这样画" -m character.Astra
 pyw -3 -u pmem_art.py feedback "这版留着" -m character.Astra -a path/to/keep.png
+pyw -3 -u pmem_art.py memory promote --id <ENTRY_ID> --to canonical --by "主美"
 ```
 
-下次再画同角色 / 同场景，Agent 会先翻这些记录，少重复翻车。细节见 [USER_MANUAL.md](USER_MANUAL.md)。
+下次再画同角色 / 同场景，Agent 会先翻这些记录，少重复翻车。细节见 [USER_MANUAL.md](USER_MANUAL.md) · [记忆可信度](docs/MEMORY_TRUST.md)。
+
+评分以**六维**为准（Absolute-5D 是工艺五维别名）→ [评分真源](docs/SCORING_CANON.md)。  
+`benchmark_evolution` 只是 **B1 系统测试**，不能证明画质进化 → [Benchmark 三层](docs/BENCHMARK_LAYERS.md)。
 
 ---
 

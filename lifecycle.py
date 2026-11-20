@@ -2040,6 +2040,51 @@ def collect_doctor_summary(root: Path, data: dict[str, Any]) -> dict[str, Any]:
     if len(candidates) > 20:
         soft_signals.append(f"candidates {len(candidates)}")
 
+    # B2 visual regression (only when empirical scores exist)
+    b2_report: dict[str, Any] = {"ok": True, "skipped": True}
+    try:
+        repo_root = Path(__file__).resolve().parent
+        if str(repo_root) not in sys.path:
+            sys.path.insert(0, str(repo_root))
+        from benchmarks.b2_visual_bench import compare_to_baseline, load_suite
+
+        drop = 0.15
+        try:
+            suite = load_suite()
+            raw_drop = (suite.get("compare") or {}).get("regression_drop")
+            if raw_drop is not None:
+                drop = float(raw_drop)
+        except Exception:
+            drop = 0.15
+        b2_report = compare_to_baseline(root, drop=drop)
+        if not b2_report.get("skipped") and not b2_report.get("ok"):
+            regs = b2_report.get("regressions") or []
+            signals.append(f"B2退化 {len(regs)}")
+    except Exception as exc:  # noqa: BLE001
+        b2_report = {"ok": True, "skipped": True, "reason": f"b2 harness unavailable ({exc})"}
+
+    art_extras: dict[str, Any] = {}
+    repair_tips: list[str] = []
+    try:
+        from improve.art_doctor_ext import build_repair_tips, collect_art_doctor_extras
+
+        art_extras = collect_art_doctor_extras(root, data)
+        skills = art_extras.get("skills") or {}
+        backlog = art_extras.get("candidate_backlog") or {}
+        anchors = art_extras.get("visual_anchors") or {}
+        if not skills.get("ok"):
+            signals.append(f"技能缺失 {len(skills.get('missing') or [])}")
+        if not backlog.get("ok"):
+            soft_signals.append(f"candidate堆积 {backlog.get('candidate_total', 0)}")
+        if anchors.get("gap_count"):
+            # already soft via asset_gaps; keep tip generation
+            pass
+        repair_tips = build_repair_tips(
+            skills=skills, backlog=backlog, anchors=anchors, b2=b2_report
+        )
+    except Exception as exc:  # noqa: BLE001
+        art_extras = {"error": str(exc)}
+
     needs_attention = bool(signals)
     tip_line = None
     if needs_attention:
@@ -2070,6 +2115,9 @@ def collect_doctor_summary(root: Path, data: dict[str, Any]) -> dict[str, Any]:
         "soft_signals": soft_signals,
         "needs_attention": needs_attention,
         "tip_line": tip_line,
+        "b2_regression": b2_report,
+        "art_extras": art_extras,
+        "repair_tips": repair_tips,
     }
 
 
@@ -2124,7 +2172,36 @@ def print_doctor_summary(summary: dict[str, Any]) -> None:
         f"硬QA={summary.get('qa_issue_count', 0)}  "
         f"缺图QA={summary.get('qa_missing_file_count', 0)}"
     )
+    b2 = summary.get("b2_regression") or {}
+    if b2.get("skipped"):
+        print(f"   B2视觉: 跳过（{b2.get('reason') or '无 empirical 基线'}）")
+    elif b2.get("ok"):
+        print("   B2视觉: 相对 baseline 无退化")
+    else:
+        print("   B2视觉: 退化项 → " + "；".join(b2.get("regressions") or [])[:200])
+    extras = summary.get("art_extras") or {}
+    skills = extras.get("skills") or {}
+    backlog = extras.get("candidate_backlog") or {}
+    if skills:
+        miss = skills.get("missing") or []
+        print(
+            f"   技能文件: ok={skills.get('ok')}  present={len(skills.get('present') or [])}  "
+            f"missing={len(miss)}"
+            + (f" ({', '.join(miss[:4])})" if miss else "")
+        )
+    if backlog:
+        print(
+            f"   记忆trust: candidate={backlog.get('candidate_total', 0)} "
+            f"(recipe {backlog.get('candidate_recipes', 0)} · redline {backlog.get('candidate_redlines', 0)})"
+        )
+    tips = list(summary.get("repair_tips") or [])
+    if tips:
+        print("\n   修复建议:")
+        for tip in tips[:6]:
+            print(f"      → {tip}")
     print("\n   Mode C 持续循环: sync → candidates/accept → search/validate → record → atlas")
+    print("   记忆可信度: memory promote|revoke|resolve · 见 docs/MEMORY_TRUST.md")
+    print("   Benchmark分层: B1系统 / B2视觉 / B3生产 · 见 docs/BENCHMARK_LAYERS.md")
 
 
 def cmd_doctor_lifecycle(root: Path, data: dict[str, Any]) -> int:

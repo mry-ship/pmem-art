@@ -495,10 +495,12 @@ def rank_memory_entry(
     target_module: str = "",
     query: str = "",
     prioritize_kind: bool = False,
-) -> tuple[int, int, int, int, float, int, str]:
+) -> tuple:
     """Simplest unified weighting key across all pmem-art recall points (Two-Layer Aware):
-    (kind_priority, private_layer_priority, settled_priority, exact_module_match, round_score, query_token_overlap, date_str)
+    (kind_priority, private_layer_priority, settled_priority, trust_priority,
+     exact_module_match, round_score, query_token_overlap, date_str)
     settled_priority is 0 for provisional (未达阈值) recipes so they rank under confirmed entries.
+    trust_priority: candidate=0 / verified=1 / canonical=2 (see improve.memory_trust).
     - private_layer_priority: 1 for project-private memories/cards (.memory-art/), 0 for cross-project shared (~/.pmem-art/shared/).
       Ensures project-private layer always ranks above shared layer when both match!
     Higher tuple sorts first with reverse=True.
@@ -525,7 +527,14 @@ def rank_memory_entry(
     kind_prio = (10 - int(e.get("kind_order", 9))) if prioritize_kind else 0
     date_str = str(e.get("verified") or e.get("note_date") or e.get("updated_at") or e.get("id") or "")
     settled = 0 if str(e.get("status") or "active").lower() == "provisional" else 1
-    return (kind_prio, private_prio, settled, exact_mod, extract_entry_score(e), overlap, date_str)
+    try:
+        from .memory_trust import trust_rank_tuple
+
+        trust_prio = trust_rank_tuple(e)
+    except Exception:
+        trust_prio = 0
+    # Higher tuple sorts first with reverse=True; trust sits after settled.
+    return (kind_prio, private_prio, settled, trust_prio, exact_mod, extract_entry_score(e), overlap, date_str)
 
 
 _STALE_MERGE_VOLUME = (
@@ -574,7 +583,13 @@ def build_warm_start_pack(
         return (em in lineage_set) or (not module)
 
     def _entry_live(e: dict) -> bool:
-        return str(e.get("status") or "active").lower() not in ("archived", "superseded", "inactive", "pending")
+        return str(e.get("status") or "active").lower() not in (
+            "archived",
+            "superseded",
+            "inactive",
+            "pending",
+            "revoked",
+        )
 
     def _stale_merge_phrase(e: dict) -> bool:
         """merge 旧闸 summary 不进注入：框高阶梯 / 纯黑整表底与现行合同相反。"""
@@ -644,15 +659,20 @@ def build_warm_start_pack(
     # Confidence: strong recipe match + few *injected* redlines → fast-track eligible
     conf = 0.0
     reasons: list[str] = []
-    confirmed_recipes = [
-        e for e in recipes
-        if str(e.get("status") or "active").lower() != "provisional"
-    ]
+    try:
+        from .memory_trust import trust_counts_for_recipe_confidence
+
+        confirmed_recipes = [e for e in recipes if trust_counts_for_recipe_confidence(e)]
+    except Exception:
+        confirmed_recipes = [
+            e for e in recipes
+            if str(e.get("status") or "active").lower() != "provisional"
+        ]
     if confirmed_recipes:
         conf += 0.45
-        reasons.append(f"命中 {len(confirmed_recipes)} 条达标 recipe")
+        reasons.append(f"命中 {len(confirmed_recipes)} 条 verified/canonical recipe")
     elif recipes:
-        reasons.append("只有未达标 provisional recipe，不计入定稿置信")
+        reasons.append("仅有 candidate/provisional recipe，不计入定稿置信（须 memory promote）")
     if decisions:
         conf += 0.15
         reasons.append(f"命中 {len(decisions)} 条审美拍板")

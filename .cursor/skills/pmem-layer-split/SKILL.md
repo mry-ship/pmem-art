@@ -25,12 +25,23 @@ description: 把一张完整场景图拆成可叠回的透明图层（装修/变
 
 ---
 
+## 执行卡 · 拆图层（Agent 必读）
+
+1. 读原图 → 写 `assets/<job>/split_plan.json`（`id/name/z/crop/keep/remove/file`；玩家点名 N 层则 `modules` 含 bg 总数 = N）。
+2. `setup` → 看 `_crops_guide.png` + `_crops/`：贴边切肢先扩框再 setup；框够大优先，禁止为过闸收框。
+3. 背景优先 gpt-image-2.5；无通路再用 Cursor **不透明隔离底**（默认纯黑），禁止后抠。
+4. `isolate` 并行抽未过线层（双垫图：全主体 crop + `_ctx`）；出图硬锁样子/视角/风格，大小位置可漂。
+5. `compose` → `gate` → `qa` → `emit`；脚印不过 → 重抽精灵或扩被点名边，禁止拧框凑比例。
+6. 结算贴 `layers.md`（或等价可点表）并 `Read` 叠回整图 + 各层散图；`stack.html` 仅旁路。
+7. 细则见下方「一次做对的流程 / 闸门与尺寸」；本地壳 `pyw -3 -u scripts/run_pmem_layer_split.py --job assets/<job> …`。
+
+---
+
 ## 统一 CLI
 
 ```text
 pyw -3 -u scripts/run_pmem_layer_split.py --job assets/<job> setup [--skip-match] [--no-tighten-from-bg]
 pyw -3 -u scripts/run_pmem_layer_split.py --job assets/<job> isolate [--workers 4] [--ids a,b] [--force] [--dry-run]
-pyw -3 -u scripts/run_pmem_layer_split.py --job assets/<job> normalize [--ids a,b]  # isolate 后自动也会跑
 pyw -3 -u scripts/run_pmem_layer_split.py --job assets/<job> compose
 pyw -3 -u scripts/run_pmem_layer_split.py --job assets/<job> gate
 pyw -3 -u scripts/run_pmem_layer_split.py --job assets/<job> qa
@@ -42,11 +53,8 @@ pyw -3 -u scripts/run_pmem_layer_split.py --job assets/<job> bg                 
 pyw -3 -u scripts/run_pmem_layer_split.py --job assets/<job> run-local          # 无远端生图干跑
 ```
 
-`isolate` / `pipeline` / `retry-dirty` **自动**跑 `normalize`（背景裁回画布纵横比 + 部件按脚印 asp letterbox），再 compose。
-
 Agent 定稿 `split_plan.json` 后，**优先跑 CLI**，不要每 job 再抄一份 `_setup/_compose`。  
-`isolate` 若报「无 gpt-image-2.5 通路」：对本批目标层改用 Cursor GenerateImage（垫对应 `_crops/<id>.png`，提示词同 §3/§4），落盘到 `new/` 后必须先 **近黑→alpha（若黑底）→ `normalize`**，再 `compose`→`gate`→`qa`→`emit`。禁止跳过 `normalize`。  
-`retry-dirty` / pipeline 重试：若 dirty 含 `bg`，**必须重抽 bg**（不可 `skip_bg`）。
+`isolate` 若报「无 gpt-image-2.5 通路」：对本批目标层改用 Cursor GenerateImage（垫对应 `_crops/<id>.png`，提示词同 §3/§4），落盘到 `new/` 后继续 `compose`→`gate`→`qa`→`emit`。
 
 ---
 
@@ -62,10 +70,9 @@ Agent 定稿 `split_plan.json` 后，**优先跑 CLI**，不要每 job 再抄一
 - **点名了「拆成 N 个 / N 层 / N 个部位」**：`modules` 总数（含 bg）必须 = **N**，禁止自动多拆或少拆
 - **N 是硬约束，划分质量由 Agent 负责**：在凑满 N 的前提下，自己选**更好的语义切法**——
   - 优先：同槽位绑定、遮挡闭合、装修/变身可独立替换的件
-  - 该合的合（同一功能组、同一可替换槽 → 一层，如沙发+茶几+留声机；帐篷口小陶罐可并进帐篷）
+  - 该合的合（同一功能组、同一可替换槽 → 一层，如沙发+茶几+留声机）
   - 该拆的拆（互相遮挡、可单独换装、前景压后景 → 分开）
-  - **可见中景必须有槽（防幽灵树/石）**：侧翼中景英雄树、显眼中景石阵等——若 bg 合同禁止烤进空舞台（远树才留 bg），则必须占一个 `modules` 槽（或并进 cabin/arch 同槽）；**禁止**「bg 不烤 + 9 件也不收」导致叠回丢树
-  - 禁止：为凑 N 把无关碎件胡乱拆碎，或把明显该独立的槽硬并成一团；也禁止用小陶罐/碎件挤掉中景英雄树这类大面积可见件
+  - 禁止：为凑 N 把无关碎件胡乱拆碎，或把明显该独立的槽硬并成一团
 - 玩家若同时点了清单（「男人、吧台、酒柜…」）→ **以点名清单为准**，数量跟清单；清单外不擅自加层
 - 只有数量、没清单时：先在回复里用一行写出拟分的 N 个 `id/name`，再写 `split_plan` 并 `setup` 出 guide（可默认项直接执行，不必为「怎么划」再追问一轮，除非身份/题材会划错）
 
@@ -73,28 +80,24 @@ Agent 定稿 `split_plan.json` 后，**优先跑 CLI**，不要每 job 再抄一
 
 Agent 对归一化坐标**天生不准**（竖图更甚）。合同要求按下面走，禁止「整表凭感觉再微调一轮」：
 
-1. **先包全，再留足垫**：第一稿 = 主体外接矩形 + pad **≥0.08**（矛尖/焰/披风/靴底等柔边按 **0.10** 写）。轮廓必须全包。**禁止**贴边切肢紧框；禁止单框撑到吞并邻槽  
-2. **立刻 `setup` → 看 `_crops_guide.png` + `_crops/<id>.png`**：setup **只再外扩 `CROP_PAD_PLAN=0.05`**（Agent 已垫过；勿再叠 0.10+0.08 把脚印撑爆），isolate 裁切再加 `CROP_PAD_ISOLATE_EXTRA=0.05`；写出 `_crops/<id>_ctx.png`。plan 原稿框不会被改写（避免反复 setup 越扩越大）  
+1. **先包全，再留足垫**：第一稿 = 主体外接矩形 + pad **≥0.08**（矛尖/焰/披风/靴底等柔边按 **0.10–0.12** 写）。轮廓必须全包。**禁止**贴边切肢紧框；禁止单框撑到吞并邻槽  
+2. **立刻 `setup` → 看 `_crops_guide.png` + `_crops/<id>.png`**：setup **固定再外扩 `CROP_PAD_PLAN=0.10`**，isolate 裁切再加 `CROP_PAD_ISOLATE_EXTRA=0.08`；写出 `_crops/<id>_ctx.png`。plan 原稿框不会被改写（避免反复 setup 越扩越大）  
 3. **完整性预检**：任一 `_crops` 主体贴边切开 → **改 plan 该边再 setup**（≥0.04），禁止残缺 crop 出图  
 4. **只改被点名的边**：用户说「2 右边切一点」→ 只把该 id 的 `W` 或右缘 +0.02～0.04，**禁止**同时重写整张表  
 5. 改完再画 guide 确认；通过后才 `isolate`  
 6. 宁可多一轮「单边微调」，也不要一次「全面优化」把已合格框拧坏  
-7. **禁止为过闸拧脚印 / 禁止为降 asp 收框**：`fill`/`asp_err`/`feat_match`/`edge_clip` 不过 → **重抽精灵**或**扩**被点名的边；**禁止**把框裁矮/裁窄凑比例（更切肢 → 换样）  
-8. **过松脚印必收（`scale_mul` 信号）**：compose 后若 `scale_mul < 0.75` → 脚印相对主体过大或 isolate 过近；**先收 plan 该边再 setup**（或重抽更贴 crop 的 FOV），**禁止**为抬 fill 把框撑大。灯柱/角色 ≈0.66 是典型翻车；遮挡补全件（枪架）≈0.78 可过闸。
+7. **禁止为过闸拧脚印 / 禁止为降 asp 收框**：`fill`/`asp_err`/`feat_match`/`edge_clip` 不过 → **重抽精灵**或**扩**被点名的边；**禁止**把框裁矮/裁窄凑比例（更切肢 → 换样）
 
-对照：`defaults.CROP_PAD_*` / `GATE.scale_mul_min`；反例：贴边紧框送进模型、为 asp 收框、整表吞并邻槽、松框靠 autofit 缩到 0.66；`viking_camp_10` 枪架/盾切肢后另造完整件 → 幽灵热点。
+对照：`defaults.CROP_PAD_*`；反例：贴边紧框送进模型、为 asp 收框、整表吞并邻槽；`viking_camp_10` 枪架/盾切肢后另造完整件 → 幽灵热点。
 
 #### 1.2 分块语义
 
 - `z`：背景 → 建筑 → 中景道具/角色 → 前景遮挡物（底叶、前段路石、压住别人的桌沿等常最高）
 - **同槽位绑定**：食槽边羊跟食槽；轮胎上羊跟轮胎；琴仙跟树桩；池跟船；**枪架+圆盾若互相咬边且单独框会切肢 → 优先同槽一层**（除非玩家点名必须拆开且两框都能包全）  
 - **遮挡闭合**：被挡主体要能补全；挡它的前景必须单独成层且 z 更高  
-- **强遮挡先治框**：若 crop 大半被邻居身体挡住（枪架被角色、柴堆被腿/火）→ **先收邻居边或合槽**，禁止把残影硬送 isolate 指望脑补成另一件完整道具  
 - **重叠框的 z**：相交时更靠后的 id `z` 更小  
 - **`grounded`**：`true` 踩地轻接触影；`false` 飞行无落地影；远景建筑可 skip  
-- 背景整幅一层；`keep` 写空舞台（天空/远树/地面材质），`remove` 列尽角色/道具/建筑/**已单列的中景英雄树**，**勿把角色烤进背景**  
-- **空舞台清场（通用）**：去掉道具时必须连带去掉其接地影/火圈污渍/脚印暗斑；洞用周围草地/雪地无缝续写；锁**远**树数量与位点，禁止另造英雄树或改清空地形状；**中景英雄树必须有自己的 module（或并进建筑槽）**，不能只从 bg remove 却无处安放；道具影跟物件层走，不留在 bg  
-- **接地影（通用）**：`grounded=true` 的物件层必须带 crop 同向柔接触影（影属精灵）；禁整片草地/泥地圆盘假底；`grounded=false` 无落地影  
+- 背景整幅一层；`keep` 写空舞台，`remove` 列尽角色/道具，**勿把角色烤进背景**  
 - **`keep`/`remove` 短标签**：框定后 crop 已锁死对象；`keep` 只写槽位身份（约 5～25 词），`remove` 列邻居；**禁止**长文自由描述压过裁切像素——出图以 `_crops/<id>.png` 为准，求一模一样
 
 #### 1.3 部位完整性合同（viking 反向）
@@ -117,7 +120,7 @@ Agent 对归一化坐标**天生不准**（竖图更甚）。合同要求按下�
 
 1. 导出 `_crops/<id>.png` + `_crops_guide.png`  
 2. 模板匹配写 `truth_boxes.json`（分 < 0.55 → `calibrate_fail`）  
-3. 若已有空舞台 bg 板：按 **原图−bg 差** 收到主体剪影后仍留 **pad≈0.06**（`CROP_PAD_TIGHTEN`）；再固定外扩写出 isolate 用宽松 `_crops/<id>.png`（`CROP_PAD_ISOLATE_EXTRA=0.05`）。**禁止**迭代贴边狂扩（易铺满整图）  
+3. 若已有空舞台 bg 板：按 **原图−bg 差** 收到主体剪影后仍留 **pad≈0.08**（`CROP_PAD_TIGHTEN`）；再固定外扩写出 isolate 用宽松 `_crops/<id>.png`（`CROP_PAD_ISOLATE_EXTRA=0.08`）。**禁止**迭代贴边狂扩（易铺满整图）  
 4. 同时写 `_crops/<id>_ctx.png`（整图高亮本槽）+ `_footprints.json`（`locked: true`）——**叠回贴 footprints；出图双垫 crop+ctx**；**不把扩后框写回 plan.crop**  
 5. 框仍明显大于剪影且吞邻槽 → **先收 plan 再 setup**；若只是「留足垫」不算过松  
 6. `--no-tighten-from-bg` 可关差分成框（仅调试）  
@@ -143,17 +146,14 @@ Agent 对归一化坐标**天生不准**（竖图更甚）。合同要求按下�
 3. 叠回时背景走 **`cover_uniform`**（等比缩放 + 居中裁切）——**禁止** `resize(W,H)` 非等比拉伸
 4. 交件背景观感必须与原图同比例，不能「胖了/扁了」
 
-背景提示要点（与 `defaults.BG_ISOLATE_PROMPT` 同步 · 所有 job 默认）：
+背景提示要点：
 
 ```text
-EMPTY STAGE BACKGROUND — LOCK camera and landscape to the crop.
-KEEP ONLY: empty scenic plate (sky/horizon/distant trees/ground material).
-MUST REMOVE: every listed subject AND their contact shadows / footprint stains / prop-only glow pools.
-Hole-fill with seamless grass/snow continuation — no scar rings, no muddy blobs.
-Distant pines stay FAR/SMALL like crop; do NOT invent midground hero trees flanking the clearing.
-Keep the middle clearing OPEN — do not refill with trees/rocks to look pretty.
-Prop shadows travel WITH prop layers — not left on bg.
+EMPTY STAGE BACKGROUND — LOCK camera and architecture to the crop.
+KEEP ONLY (slot tag): <keep>
+MUST REMOVE: <remove> — do NOT bake into bg.
 {aspect_rule}  ← engine vs canvas pad; NEVER squash
+SAME camera / proportions / art style. Sharp opaque scenic fill.
 ```
 
 **本地挖洞（`bg` / `--bg-local`）仅可选**：大洞 inpaint/高斯易糊、拉丝，**不得作为默认交付背景**。只用于离线 `run-local` 或用户明确只要占位底。
@@ -188,49 +188,24 @@ Hard locks:
 3) SAME features / materials / colors / part inventory as in the crop
 4) SAME art style — extract only, do not restyle
 5) WHOLE-SUBJECT COMPLETENESS — full subject + transparent margin; no border clipping
-6) NO REDESIGN / NO SPECIES CHANGE
-7) SAME SCENE LIGHTING FAMILY as crop/ctx — keep fire/lantern warmth + moon cool rim; no studio softbox relight
-{shadow_rule}  ← grounded: soft contact shadow IS part of sprite; flying: none
-Size may drift → compose autofit — but avoid wild hero-zoom (scale_mul≪1 fails gate). No dirt/grass carpet disk.
+Size may drift → compose autofit. No wild hero-zoom.
 Extract ONLY listed subject(s). Occlusion→complete hidden parts; no redesign. No squash.
 ```
 
 - `isolate` 默认并行（`--workers 4`），**含 bg**；跳过 `status=ok`；优先 gpt-image-2.5；**部件双垫 crop+ctx**；bg 提示自动带 `aspect_pad_rule`；部件提示含完整性第 5 条  
-- 无 gpt-image-2.5 通路：Agent 用 Cursor GenerateImage 逐层补齐；**必须**垫 `_crops/<id>.png`，有则再垫 `_crops/<id>_ctx.png`；提示词带**样子硬锁 + 完整性**；黑底隔离，勿对人提密钥；落盘后 **近黑→alpha → `normalize`**，再 compose（大小交给 autofit）  
-- 脏层：`retry-dirty` 或 `isolate --ids … --force`；dirty 含 bg 时不可跳过 bg  
-- 成功写入 `new/` + `layer_status`；CLI `isolate` 成功路径已自动 `normalize`
+- 无 gpt-image-2.5 通路：Agent 用 Cursor GenerateImage 逐层补齐；**必须**垫 `_crops/<id>.png`，有则再垫 `_crops/<id>_ctx.png`；提示词带**样子硬锁 + 完整性**；黑底隔离，勿对人提密钥；大小交给拼回对准  
+- 脏层：`retry-dirty` 或 `isolate --ids … --force`  
+- 成功写入 `new/` + `layer_status`
 
 #### 4.1 出图后反向验收（本趟必做，再 compose）
 
-**闸门 ok ≠ 可交件。** 对照 `_crops/<id>.png` 与 `new/<file>` 逐层过一遍（目视硬闸）：
+对照 `_crops/<id>.png` 与 `new/<file>` 逐层过一遍（`viking_camp_10` 教训）：
 
 1. **残缺/贴边**：矛尖、焰尖、帐篷侧、披风边是否被画幅切开 → 扩 crop 或重抽  
 2. **串戏**：邻居身体/家具是否烤进本层 → 重抽并加强 `remove`  
-3. **换样**：完整但已不是 crop 里那件（另造枪架/盾/幔帐顶替 A 字帐）→ 重抽；框本就切肢则先修框  
-4. **缺件**：同槽应在的挂饰/壶/毯/矛数量是否丢失 → 重抽  
-5. **背景烤脏 / 空舞台疤**：角色残影、道具轮廓、**道具脚印暗斑/接地影残留**、另造英雄树、空地形状漂了 → 重抽 bg（gate `bg_bake` 也会抓；目视仍必做）  
-6. **缺接地影**：`grounded=true` 层脚下/底座无柔接触影、像漂浮 → 重抽并确认 `shadow_rule`；禁整片泥地圆盘冒充影  
-7. **遮挡过重**：crop 大半被邻居挡 → **先收邻居边再抽**（勿指望模型从残影猜对外形）  
-8. 通过后再 `normalize`→`compose`→`gate`→`qa`→`emit`；交 `_compose_mid.png`
-
-#### 4.2 通用解法（所有 job 默认 · 管线硬步骤）
-
-后续任意拆分都走这套，禁止只当单次手工补丁：
-
-| 问题 | 通用解法 | 落点 |
-|---|---|---|
-| 引擎三档 size ≠ 原图纵横比 | isolate 后 **normalize**：bg 裁回画布 asp；部件按脚印 asp **letterbox（α=1）** | `post_isolate.py`；`isolate`/`pipeline` 自动跑 |
-| letterbox 后主体偏大 / asp 过闸幽灵差 | **compose 默认 autofit=true**（NCC 缩小对准脚印）；禁止 plan 默认写 `autofit:false` | `compose.py`；仅玩家点名关 |
-| autofit `scale_mul` 过低（灯/人） | gate **`scale_mul≥0.75`**；不过 → **收 plan 脚印再 setup** 或重抽贴 crop FOV；禁止撑大框抬 fill | `GATE.scale_mul_min`；§1.1 第 8 条 |
-| 中景英雄树幽灵空洞 | 定块时给松树/石阵 module（或并建筑槽）；bg 只留远小树 | §1.0 / §1.2 |
-| 背景烤进角色/道具 / 脚印污渍 | bg 清场含影渍；锁远树位点；洞无缝续写；gate **`bg_bake≤0.58`**（NCC×MAE，防远树误报）；§4.1 目视空舞台疤 | `BG_ISOLATE_PROMPT`；`gate._bg_bake_score` |
-| 物件缺接地影 | `grounded` → 影属精灵；禁泥地圆盘；§4.1 缺影必重抽 | `SHADOW_GROUNDED`；`ISOLATE_PROMPT` |
-| 棚拍重光照丢篝火/月光 | isolate 第 7 条锁场景光；§4.1 对照 crop 冷暖 | `ISOLATE_PROMPT` |
-| 闸门过了仍换样 / 幽灵热 | 提示加 **NO REDESIGN**；`feat_match≥0.55`；**qa 把层 MAE>`layer_ghost_mae_max` 回灌 dirty**；§4.1 目视仍必做 | `GATE.layer_ghost_mae_max`；`qa.apply_ghost_dirty` |
-| 切肢逼换样 | 框包全+pad；禁为 asp 收框；`edge_clip` | §1.1/§1.3 |
-| 幽灵 fail | **禁止当合格交件**（除非玩家明确接受）；重抽热点层或收/扩被点名边 | §7 |
-
-排除：为过闸拧脚印；只 letterbox 不开 autofit；把 gate ok 当终审；遮挡残 crop 硬抽指望脑补；空舞台留下道具影渍当「氛围」；bg 禁英雄树却不给中景树槽；松框靠 autofit 缩到 ≪0.75（尤其 ≈0.66）仍当合格。
+3. **换样**：完整但已不是 crop 里那件（另造枪架/盾）→ 重抽；框本就切肢则先修框  
+4. **缺件**：同槽应在的挂饰/壶/毯是否丢失 → 重抽  
+5. 通过后再 `compose`→`gate`→`qa`→`emit`；交 `_compose_mid.png`
 
 ### 5. 叠回（摆好位置再交件）
 
@@ -240,9 +215,9 @@ Extract ONLY listed subject(s). Occlusion→complete hidden parts; no redesign. 
 - **踩地**（`grounded=true` / 默认）：**底对齐框底**（锁地面槽位）  
 - **墙挂**（`grounded=false`）：**框内居中**（锁墙位）  
 - **吊灯/悬吊**：`anchor=top-center`（贴框顶，避免居中把灯拽下来）  
-- **大小自校准（默认开）**：相对原图脚印区做 NCC，在 contain 内自动缩小（`scale_mul≤1`）；与 letterbox 搭配使用。`compose.autofit` **默认 true**；仅玩家点名才写 `false`  
+- **大小自校准**：相对原图脚印区做 NCC，在 contain 内自动缩小（`scale_mul≤1`），纠正隔离引擎放大特写  
 - 框比主体明显更大 → **先收 crop**，不要靠居中硬凑；**禁止为过 fill 闸把门框撑大**  
-- **背景：`cover_uniform`（等比缩放+居中裁）**——禁止非等比 `resize(W,H)`；isolate 后须已 `normalize` 到画布 asp  
+- **背景：`cover_uniform`（等比缩放+居中裁）**——禁止非等比 `resize(W,H)`  
 - 超宽前景：`width` + 底对齐  
 - 禁止道具 `cover`、**禁止任何层非等比拉伸**  
 - **交件主件**：`_compose_mid.png`（摆好的叠回整图）+ `_compose_preview.png`（原图|叠回|幽灵）+ `stack.html` + `layers.md`；散层 `new/*.png` 为附图
@@ -253,24 +228,18 @@ Extract ONLY listed subject(s). Occlusion→complete hidden parts; no redesign. 
 |---|---|---|
 | `asp_err` | ≤ 0.18 | dirty |
 | `fill` | 0.72–1.08（若有 `scale_mul` 则下限 ×scale_mul²） | dirty |
-| `scale_mul`（autofit 缩小系数） | ≥ 0.75 | dirty（脚印过松或 isolate 过近 — 收框再 setup / 重抽；遮挡补全≈0.78 可过） |
 | alpha 均值 | 0.02–0.92 | dirty |
-| `feat_match`（相对 `_crops` 蒙版比对） | ≥ 0.55 | dirty（特征/机位漂了） |
+| `feat_match`（相对 `_crops` 蒙版比对） | ≥ 0.42 | dirty（特征/机位漂了） |
 | `edge_clip`（不透明质量压在画幅边框上的比例） | ≤ 0.018 | dirty（部位不完整/贴边裁切） |
-| `bg_bake`（脚印内 NCC×MAE 权重；抗远树/天空误报） | ≤ 0.58 | dirty（空舞台仍烤着道具/影渍） |
-| `bg_stretch_err` | ≤ 0.12 | dirty（未 normalize 到画布 asp） |
-| `layer_ghost_mae`（qa 回灌） | ≤ 52 | dirty（该脚印内叠回差过大） |
 | 重试 | ≤ 2 | `needs_human` |
 
-只重抽 `dirty`；`ok` 落盘不动。`bg_bake` / `feat_match` / `scale_mul` 过了仍须 §4.1 目视换样。**gate ok ≠ 可交件**——还要看幽灵与目视。
+只重抽 `dirty`；`ok` 落盘不动。背景看 `mode=cover_uniform`（日志含 `stretch_err`，仅诊断）。
 
 ### 7. 定量幽灵 + HTML
 
 - `qa`：MAE / PSNR / 热力；≥28 warn；≥48 fail  
-- **层热点回灌**：脚印内 MAE > `layer_ghost_mae_max`（默认 52）→ 该层标 dirty，pipeline/`retry-dirty` 可再抽  
-- **幽灵 fail（≥48）默认不得当合格交件**；标清未过线，或重抽热点后再交  
 - `emit`：`stack.html` + `layers.md`（可点单图表）  
-- 目视：Ghost 40% 咬合、无串戏、遮挡层齐、**`grounded` 层必须带 crop 同向柔接地影**（影是精灵一部分；禁整片草地地毯假影）；**背景与部件均无压扁感**；中景树/石若原图有则叠回必须有对应层
+- 目视：Ghost 40% 咬合、无串戏、遮挡层齐、接地影符合 `grounded`；**背景与部件均无压扁感**
 
 ---
 

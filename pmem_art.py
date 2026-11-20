@@ -29,7 +29,7 @@ from lifecycle import ensure_stdio_survives_locale
 
 ensure_stdio_survives_locale()
 
-VERSION = "0.16.14-art"
+VERSION = "0.16.15-art"
 MEMORY_DIR = ".memory-art"
 
 KIND_META = {
@@ -1625,7 +1625,7 @@ def cmd_search(data: dict[str, Any], module: str, path: str, query: str) -> int:
     matched = []
     for e in data["entries"]:
         # Hide retired lessons so superseded STOP=8.50-style advice cannot resurface.
-        if str(e.get("status") or "active").lower() in ("superseded", "archived", "inactive", "pending"):
+        if str(e.get("status") or "active").lower() in ("superseded", "archived", "inactive", "pending", "revoked"):
             continue
         em = e.get("module", "")
         if target_mod and em not in lineage_set and e.get("scope") != "project":
@@ -1896,7 +1896,13 @@ def cmd_hook(root: Path, data: dict[str, Any], event: str) -> int:
         matched = []
         if module:
             def _live(e: dict[str, Any]) -> bool:
-                return str(e.get("status") or "active").lower() not in ("superseded", "archived", "inactive", "pending")
+                return str(e.get("status") or "active").lower() not in (
+                    "superseded",
+                    "archived",
+                    "inactive",
+                    "pending",
+                    "revoked",
+                )
 
             matched = [
                 e
@@ -2397,6 +2403,22 @@ def main() -> int:
     p_learn.add_argument("--seed-modules", action="store_true", help="接受时写入可选空模块种子")
     p_learn.add_argument("--silent", action="store_true", help="只写提案不打印（后台用）")
 
+    p_mem = sub.add_parser(
+        "memory",
+        help="美术记忆可信度：promote|revoke|resolve（candidate→verified→canonical）",
+    )
+    p_mem.add_argument(
+        "memory_action",
+        choices=("promote", "revoke", "resolve"),
+        help="promote 升级 / revoke 撤销 / resolve 冲突裁决",
+    )
+    p_mem.add_argument("--id", default="", help="promote/revoke 的条目 id")
+    p_mem.add_argument("--to", default="", help="promote 目标：verified|canonical")
+    p_mem.add_argument("--by", default="", help="promote 确认人（主美）")
+    p_mem.add_argument("--reason", default="", help="revoke/resolve 原因")
+    p_mem.add_argument("--keep", default="", help="resolve：保留的条目 id")
+    p_mem.add_argument("--drop", default="", help="resolve：标记 superseded 的条目 id")
+
     p_hook = sub.add_parser("hook", help="处理 Cursor / Claude Code / Codex 的 Hook 闸门事件")
     p_hook.add_argument(
         "event",
@@ -2849,6 +2871,10 @@ def main() -> int:
             seed_modules=args.seed_modules, ids=ids,
             silent=bool(getattr(args, "silent", False)),
         )
+    if args.command == "memory":
+        from improve.memory_trust import cmd_memory_trust
+
+        return cmd_memory_trust(root, args)
     if args.command == "hook":
         return cmd_hook(root, data, args.event)
     parser.print_help()

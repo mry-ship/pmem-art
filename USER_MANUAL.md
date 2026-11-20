@@ -1,9 +1,9 @@
 # 📘 pmem-art 画师使用手册 — 怎么在 Cursor / Codex 里越画越准
 
-> **版本**：`v0.16.14-art`  
+> **版本**：`v0.16.15-art`  
 > **核心理念（零门槛）**：**直接说人话就行**。例如「画一张窗边女孩」「参考这张，换成一只猫」。**不用背技能名、不用敲斜杠、不用碰命令行、不用写 YAML。** 附图可有可无。  
 > 电脑会自己认路；认不清会**先问你一句**，不会默默画错。你只会看到类似 `【按 克隆 走了】` / `【走默认路径】` 这种标签。  
-> **用户包下载（不含研发用 pmem）** → [GitHub Release v0.16.14-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.14-art)  
+> **用户包下载（不含研发用 pmem）** → [GitHub Release v0.16.15-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.15-art)  
 > **认路白话流程图** → [docs/route_pipeline.html](docs/route_pipeline.html)（推荐先看：大白话从提需到出图）  
 > **先看总览？** → [README.md](README.md) · **进阶斜杠技能**见下文（可选用） · 旧点选流程 [docs/skills/flows.html](docs/skills/flows.html)  
 > **看图墙 / 技能用法与结果？** → [README · 效果长什么样](README.md#效果长什么样) · [全页展陈](docs/showcase/skills-homepage/index.html)（图源 `docs/workbench_guide/` + 合成梯；拆图层见展陈 `#layer`）
@@ -367,6 +367,10 @@ flowchart TD
 4. 需要保留的亮点 vs 需要规避的瑕疵
 
 ### 2.2 六维严苛打分标准（满分 10.0 分，`>= 9.5` 才算合格）
+
+评分真源（六维 vs Absolute-5D、硬否决、交付类型）→ [docs/SCORING_CANON.md](docs/SCORING_CANON.md)。  
+Benchmark 分层（B1 系统 ≠ 视觉进化）→ [docs/BENCHMARK_LAYERS.md](docs/BENCHMARK_LAYERS.md)。  
+自动记忆先是 candidate，主美确认再升 → [docs/MEMORY_TRUST.md](docs/MEMORY_TRUST.md)。
 
 现行默认按 **每维 /10**，程序用媒介家族的六维加权调和平均得到正式分（不要手填总分）。示例写法：  
 `构图8.6/光影8.2/透视7.8/质感8.0/风格8.4/无瑕疵8.5`  

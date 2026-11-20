@@ -1,4 +1,4 @@
-"""Ten skills, one /pmem- command each."""
+"""Primary /pmem-* skills, one command each."""
 from __future__ import annotations
 
 import sys
@@ -25,6 +25,7 @@ PRIMARY = [
     "pmem-coach",
     "pmem-merge-ladder",
     "pmem-prompt",
+    "pmem-layer-split",
 ]
 
 RETIRED_FOLDERS = [
