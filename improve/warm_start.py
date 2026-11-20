@@ -564,12 +564,72 @@ def stale_merge_inject_summary(entry: dict[str, Any]) -> bool:
     return any(k in summary for k in _STALE_MERGE_VOLUME + _STALE_MERGE_BLACK)
 
 
+_AUTO_REDLINE_GOAL = re.compile(r"^\[收敛踩坑红线\]\s*(.{0,80}?)：\s*避免「(.+)」\s*$")
+_AUTO_REDLINE_BARE = re.compile(r"^\[收敛踩坑红线\]\s*避免「(.+)」\s*$")
+
+
+def strip_redline_identity(summary: str) -> str:
+    """注入句去掉旧任务目标，只留要避开的现象。"""
+    text = str(summary or "").strip()
+    aimed = _AUTO_REDLINE_GOAL.match(text)
+    if aimed:
+        return f"避免「{aimed.group(2).strip()}」"
+    bare = _AUTO_REDLINE_BARE.match(text)
+    if bare:
+        return f"避免「{bare.group(1).strip()}」"
+    return text
+
+
+def gate_style_memory(
+    rows: list[dict[str, Any]],
+    *,
+    goal: str = "",
+    contract: dict[str, Any] | None = None,
+) -> tuple[list[dict[str, Any]], list[dict[str, str]]]:
+    """已确认的风格记忆才进提示词。候选和未写信任的条目只留在排除记录里。"""
+    from .memory_trust import entry_trust
+
+    grid: dict[str, Any] = {}
+    if isinstance(contract, dict) and isinstance(contract.get("grid"), dict):
+        grid = contract["grid"]
+    kept: list[dict[str, Any]] = []
+    excluded: list[dict[str, str]] = []
+    for entry in rows:
+        eid = str(entry.get("id") or "")
+        kind = str(entry.get("kind") or "")
+        trust = entry_trust(entry)
+        summary = str(entry.get("summary") or "")
+        if trust not in ("verified", "canonical"):
+            excluded.append({"id": eid, "kind": kind, "reason": "未人工确认，不作为硬约束"})
+            continue
+        line = strip_redline_identity(summary) if kind == "style_redline" else summary
+        forbid_hit = ""
+        for item in grid.get("forbid") or []:
+            phrase = str(item).strip()
+            if len(phrase) >= 4 and phrase in line and "避免" not in line and "禁止" not in line:
+                forbid_hit = phrase
+                break
+        if forbid_hit:
+            excluded.append({"id": eid, "kind": kind, "reason": f"与当前明确禁止冲突：{forbid_hit}"})
+            continue
+        reason = "已人工确认"
+        aimed = _AUTO_REDLINE_GOAL.match(summary.strip())
+        if aimed and aimed.group(1).strip() and aimed.group(1).strip() not in str(goal or ""):
+            reason = "已人工确认；注入时去掉了旧任务目标"
+        copied = dict(entry)
+        copied["_inject_line"] = line
+        copied["_inject_reason"] = reason
+        kept.append(copied)
+    return kept, excluded
+
+
 def build_warm_start_pack(
     root: Path,
     data: dict[str, Any],
     module: str,
     goal: str = "",
     top_n: int = 3,
+    contract: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Assemble top recipes + redlines + personal taste for first-prompt injection."""
     entries = data.get("entries") or []
@@ -579,8 +639,15 @@ def build_warm_start_pack(
     parent = lineage[1] if len(lineage) > 1 else None
     lineage_set = set(lineage)
 
-    def _mod_ok(em: str) -> bool:
-        return (em in lineage_set) or (not module)
+    def _mod_ok(em: str, *, kind: str = "") -> bool:
+        # 未指定模块时不把全库灌进提示词。父模块只放行风格红线/拍板，不放行配方身份。
+        if not module:
+            return False
+        if str(em or "") == module:
+            return True
+        if kind in ("style_redline", "art_decision") and em in lineage_set:
+            return True
+        return False
 
     def _entry_live(e: dict) -> bool:
         return str(e.get("status") or "active").lower() not in (
@@ -620,7 +687,7 @@ def build_warm_start_pack(
     redlines = [
         e for e in entries
         if e.get("kind") == "style_redline"
-        and _mod_ok(e.get("module", ""))
+        and _mod_ok(e.get("module", ""), kind="style_redline")
         and _entry_live(e)
         and not _stale_merge_phrase(e)
         and entry_on_topic_for_task(e, module, goal)
@@ -628,7 +695,7 @@ def build_warm_start_pack(
     decisions = [
         e for e in entries
         if e.get("kind") == "art_decision"
-        and _mod_ok(e.get("module", ""))
+        and _mod_ok(e.get("module", ""), kind="art_decision")
         and _entry_live(e)
         and entry_on_topic_for_task(e, module, goal)
     ]
@@ -638,8 +705,25 @@ def build_warm_start_pack(
     redlines_ranked = sorted(
         redlines, key=lambda e: rank_memory_entry(e, target_module=module, query=goal), reverse=True
     )
-    redlines = redlines_ranked[:_INJECT_REDLINE_CAP]
-    decisions = sorted(decisions, key=lambda e: rank_memory_entry(e, target_module=module, query=goal), reverse=True)[:top_n]
+    redlines_gated, redline_excluded = gate_style_memory(
+        redlines_ranked, goal=goal, contract=contract
+    )
+    redlines = redlines_gated[:_INJECT_REDLINE_CAP]
+    for overflow in redlines_gated[_INJECT_REDLINE_CAP:]:
+        redline_excluded.append(
+            {
+                "id": str(overflow.get("id") or ""),
+                "kind": "style_redline",
+                "reason": "超出红线注入上限",
+            }
+        )
+    decisions_ranked = sorted(
+        decisions, key=lambda e: rank_memory_entry(e, target_module=module, query=goal), reverse=True
+    )
+    decisions_gated, decision_excluded = gate_style_memory(
+        decisions_ranked, goal=goal, contract=contract
+    )
+    decisions = decisions_gated[:top_n]
 
     taste = load_taste(root)
     palette = (modules.get(module) or {}).get("palette") or []
@@ -652,8 +736,21 @@ def build_warm_start_pack(
         for e in recipes
     ]
     redline_summaries = [
-        {"id": e.get("id"), "summary": e.get("summary"), "module": e.get("module")}
+        {
+            "id": e.get("id"),
+            "summary": e.get("_inject_line") or e.get("summary"),
+            "module": e.get("module"),
+            "reason": e.get("_inject_reason") or "",
+        }
         for e in redlines
+    ]
+    decision_rows = [
+        {
+            "id": e.get("id"),
+            "summary": e.get("_inject_line") or e.get("summary"),
+            "reason": e.get("_inject_reason") or "",
+        }
+        for e in decisions
     ]
 
     # Confidence: strong recipe match + few *injected* redlines → fast-track eligible
@@ -763,7 +860,7 @@ def build_warm_start_pack(
     if decisions:
         prompt_block_lines.append("- 审美拍板:")
         for d in decisions[:top_n]:
-            prompt_block_lines.append(f"  · {d.get('summary')}")
+            prompt_block_lines.append(f"  · {d.get('_inject_line') or d.get('summary')}")
     if palette:
         prompt_block_lines.append(f"- 模块色板: {palette}")
 
@@ -800,9 +897,21 @@ def build_warm_start_pack(
     prompt_block = "\n".join(prompt_block_lines)
 
     # 给人看、不进生图词、不拦截：本趟注入/丢弃摘要
+    inject_trace = {
+        "included": [
+            {"id": r.get("id"), "kind": "style_redline", "reason": r.get("reason") or ""}
+            for r in redline_summaries
+        ]
+        + [
+            {"id": d.get("id"), "kind": "art_decision", "reason": d.get("reason") or ""}
+            for d in decision_rows
+        ],
+        "excluded": list(redline_excluded) + list(decision_excluded),
+    }
     inject_summary = (
-        f"记忆注入摘要（不拦截）：注入 keep {len(keeps)} · 丢弃域外/未标 keep {len(dropped_keeps)} · "
-        f"红线 {len(redline_summaries)} · 知识卡 {len(private_kcards) + len(shared_kcards)}"
+        f"记忆取舍（不拦截）：注入红线 {len(redline_summaries)} · 排除 {len(inject_trace['excluded'])} · "
+        f"keep {len(keeps)} · 丢弃域外 keep {len(dropped_keeps)} · "
+        f"知识卡 {len(private_kcards) + len(shared_kcards)}"
     )
 
     return {
@@ -816,7 +925,14 @@ def build_warm_start_pack(
         "confidence_reasons": reasons,
         "top_recipes": recipe_summaries,
         "top_redlines": redline_summaries,
-        "art_decisions": [{"id": e.get("id"), "summary": e.get("summary"), "layer_scope": "private"} for e in decisions],
+        "art_decisions": [
+            {
+                "id": e.get("id"),
+                "summary": e.get("_inject_line") or e.get("summary"),
+                "layer_scope": "private",
+            }
+            for e in decisions
+        ],
         "private_knowledge": [{"id": c.get("id"), "title": c.get("title"), "body": c.get("body"), "layer_scope": "private"} for c in private_kcards],
         "shared_knowledge": [{"id": c.get("id"), "title": c.get("title"), "body": c.get("body"), "layer_scope": "shared"} for c in shared_kcards],
         "palette": palette,
@@ -834,6 +950,7 @@ def build_warm_start_pack(
             "banned_habits_raw_tail": (taste.get("banned_habits") or [])[-10:],
         },
         "dropped_keeps": dropped_keeps[:12],
+        "inject_trace": inject_trace,
         "inject_summary": inject_summary,
         "prompt_block": prompt_block,
         "built_at": _now_cst().strftime("%Y-%m-%d %H:%M:%S UTC+8"),
@@ -864,6 +981,12 @@ def print_warm_start(pack: dict[str, Any]) -> None:
     summary = str(pack.get("inject_summary") or "").strip()
     if summary:
         print(f"   · {summary}")
+    excluded = (pack.get("inject_trace") or {}).get("excluded") or []
+    if excluded:
+        preview = "；".join(
+            f"{row.get('id') or '—'}:{row.get('reason') or ''}" for row in excluded[:3]
+        )
+        print(f"   · 未注入示例: {preview}")
     dropped = pack.get("dropped_keeps") or []
     if dropped:
         preview = "；".join(str(x)[:28] for x in dropped[:3])

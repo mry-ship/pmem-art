@@ -24,8 +24,8 @@ class TestNormalizeTrust(unittest.TestCase):
     def test_provisional_is_candidate(self) -> None:
         self.assertEqual(normalize_trust("", status="provisional"), "candidate")
 
-    def test_legacy_active_grandfather(self) -> None:
-        self.assertEqual(normalize_trust("", status="active"), "verified")
+    def test_missing_trust_is_candidate(self) -> None:
+        self.assertEqual(normalize_trust("", status="active"), "candidate")
 
     def test_recipe_confidence_gate(self) -> None:
         self.assertFalse(
@@ -109,12 +109,12 @@ class TestPromoteRevoke(unittest.TestCase):
             self.assertEqual(maybe_auto_verify_on_repeat_pass(root, module="character.Astra"), [])
             self._write_entry(root, "R2", trust="candidate", score=9.55)
             promoted = maybe_auto_verify_on_repeat_pass(root, module="character.Astra")
-            self.assertEqual(sorted(promoted), ["R1", "R2"])
+            self.assertEqual(promoted, [])
             for eid in ("R1", "R2"):
                 raw = (root / ".memory-art" / "entries" / "character.Astra" / f"{eid}.md").read_text(
                     encoding="utf-8"
                 )
-                self.assertIn("trust: verified", raw)
+                self.assertIn("trust: candidate", raw)
 
 
 if __name__ == "__main__":

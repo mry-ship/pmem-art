@@ -17,8 +17,8 @@ def normalize_trust(raw: object, *, status: object = "active") -> str:
     st = str(status or "active").strip().lower()
     if st == "provisional" or st in _DEAD_STATUS:
         return "candidate"
-    # Grandfather: legacy live entries without trust act as verified.
-    return "verified"
+    # 没写 trust 不再当成已验证。doctor 堆积仍只数显式 trust=candidate，避免把整库旧条目塞进 promote 队列。
+    return "candidate"
 
 
 def entry_trust(entry: dict[str, Any]) -> str:
@@ -197,101 +197,18 @@ def json_dumps_str(s: str) -> str:
     return json.dumps(s, ensure_ascii=False)
 
 
-def _recipe_pass_score(meta: dict[str, Any]) -> float | None:
-    """Best-effort score from ai_params / body for a recipe entry dict or frontmatter."""
-    import json as _json
-
-    params = meta.get("ai_params")
-    if isinstance(params, str):
-        try:
-            params = _json.loads(params)
-        except Exception:
-            params = None
-    if isinstance(params, dict) and params.get("score") is not None:
-        try:
-            return float(params.get("score"))
-        except (TypeError, ValueError):
-            pass
-    if meta.get("score") is not None:
-        try:
-            return float(meta.get("score"))
-        except (TypeError, ValueError):
-            pass
-    return None
-
-
-def _load_module_recipe_metas(root: Path, module: str) -> list[dict[str, Any]]:
-    from lifecycle import iter_md_files
-
-    mod_dir = root / ".memory-art" / "entries" / module
-    if not mod_dir.is_dir():
-        return []
-    out: list[dict[str, Any]] = []
-    for md in iter_md_files(mod_dir, recursive=False):
-        try:
-            raw = md.read_text(encoding="utf-8")
-        except (OSError, UnicodeDecodeError):
-            continue
-        parts = _split_frontmatter(raw)
-        if parts is None:
-            continue
-        fm, _body = parts
-        try:
-            from pmem_art import load_yaml
-
-            meta = load_yaml(fm) or {}
-        except Exception:
-            continue
-        if not isinstance(meta, dict):
-            continue
-        if str(meta.get("kind") or "") != "recipe":
-            continue
-        meta["_path"] = str(md)
-        meta["_id"] = str(meta.get("id") or md.stem)
-        out.append(meta)
-    return out
-
-
 def maybe_auto_verify_on_repeat_pass(
     root: Path,
     *,
     module: str,
     threshold: float = 9.5,
 ) -> list[str]:
-    """If the same module has ≥2 live recipes that already passed the bar, promote candidates → verified.
+    """自评达标不升级。verified 只来自人工 `memory promote`。
 
-    One ≥9.5 finish stays candidate. A second passing recipe in the same module is treated as
-    repeat verification for all passing candidates in that module (not a jump to canonical).
+    签名保留给 converge finish。同模块多次 ≥ 阈值不再把 candidate 升成 verified。
     """
-    if not module:
-        return []
-    recipes = _load_module_recipe_metas(root, module)
-    passing: list[dict[str, Any]] = []
-    for meta in recipes:
-        st = str(meta.get("status") or "active").lower()
-        if st in _DEAD_STATUS or st == "provisional":
-            continue
-        score = _recipe_pass_score(meta)
-        # Only explicit scored recipes count — unscored legacy actives must not mass-promote.
-        if score is None:
-            continue
-        if float(score) + 1e-9 >= float(threshold):
-            passing.append(meta)
-    if len(passing) < 2:
-        return []
-    promoted: list[str] = []
-    for meta in passing:
-        if entry_trust(meta) != "candidate":
-            continue
-        eid = str(meta.get("_id") or meta.get("id") or "")
-        if not eid:
-            continue
-        try:
-            promote_entry(root, eid, to="verified", by="auto:repeat_pass")
-            promoted.append(eid)
-        except (ValueError, FileNotFoundError):
-            continue
-    return promoted
+    del root, module, threshold
+    return []
 
 
 def cmd_memory_trust(root: Path, args: Any) -> int:

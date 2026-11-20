@@ -45,6 +45,11 @@ _DELIVERY_VISIBLE = """## 交件可见（出图结算 · Agent 必读）
 
 禁止只交拼板。禁止只甩 HTML。
 
+### 四格与防污染（执行时必读）
+四格不进路由句。必须保持、可以变化、明确禁止、交付规格只写 `contract set --keep --vary --forbid --spec`，标明原话或推断。禁止写入 `--canonical`。普通图用「题材不变」，禁止写「不换题材」。合同里的升级、一组、多张不得改技能。首轮提示词和后续修改只服从四格；聊天不是第二份需求；用户改口就用最新原话重写四格。
+记忆只辅助。当前原话和四格优先于历史记忆。候选红线、没写 trust 的条目、旧任务主体、构图、档序和完整提示词不进提示词。已确认红线去掉旧任务目标，与明确禁止冲突则排除。研发 `.memory` 不进美术提示词。界面不继承合成梯玩具货柜缺省。
+未点名接续只垫 `assets/refs/`、`downloads/`、`assets/skill_*/refs/`。禁止垫 out、phase1、关系稿、`.memory-art/converge` 过程板。垫图只取样式；只有用户说优化这张图才写原图不足。双参考像素同框仍硬停。最多 3 轮。
+
 ### 非闭环多图（拆层 / 审图 / 锁风样张 / 归档等）
 同样强制可点单图表 + 逐张 Read。拆层须含叠回整图、幽灵对比、全部 `new/*.png`（有 `layers.md` 直接贴）。纯文字交付（提示词、无附图教练）不必出表。
 """
@@ -118,6 +123,8 @@ SKILL_SPECS: list[dict[str, Any]] = [
 
 **⚠ 风险**：标准句写错会带偏检索；若与原话规则冲突，`route` 会报 `plan_conflict` 并降为 `confidence=low`，必须停下来问人，禁止硬执行。
 
+**四格不进路由句**：必须保持、可以变化、明确禁止、交付规格只写 `contract set --keep --vary --forbid --spec`。标准路由句仍用上表短模板。禁止把四格写进 `--canonical`，也禁止写成「不换题材」（会子串命中「换题材」，把普通图判成克隆）。普通图模板用「题材不变」。
+
 ### 0.2 再跑本地 route
 
 ```bash
@@ -154,10 +161,10 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 能默认的当场写进分析。不要把「玩家没写成绝对路径」当成多种情况。
 
 **理解合同（防多轮漂移 · 总控必做）**：
-1. 分析里写出「默认：… / 锁什么 / 不锁什么」。
-2. `converge start` 后立刻 `python3 pmem_art.py contract set --id <session> --defaults "默认：…" [--locks … --unlocks … --vibe … --surface-fix …]`。
-3. 交给执行侧时交代：每轮先 `contract working-set`，禁止靠长聊天重谈 L0/L1。
-4. 画师纠正：先 `contract classify --text "…"`，再 `contract patch --id <session> --feedback "…"`（L0 可能重开，L2 只改一处）。
+1. 分析里写出四格：必须保持、可以变化、明确禁止、交付规格。能推断的直接写入，并标明「推断」；用户原话标明「原话」。不要为此多问一轮。
+2. `converge start` 后立刻 `python3 pmem_art.py contract set --id <session> --keep "…" --vary "…" --forbid "…" --spec "…" [--inferred "与四格中相同的推断句"] [--defaults "默认：…" --vibe …]`。四格不要写进标准路由句。
+3. 交给执行侧时交代：每轮先 `contract working-set`，禁止靠长聊天重谈 L0/L1/四格。后续修改继续遵守必须保持和明确禁止。
+4. 画师纠正：先 `contract classify --text "…"`，再 `contract patch --id <session> --feedback "…"`（L0 可能重开，L2 只改一处）。用户明确改需求时，用最新原话重写四格。
 
 ### 审完怎么走
 
@@ -325,7 +332,7 @@ route 锁定后只读注册表该行的 **`pack_headings` 执行包**；不要�
 ## 执行卡 · 出图闭环（Agent 必读；细则见第二节）
 
 1. `converge start`（缺缓存可 `--route-id` 点名种闸）→ Warm-Start 自动写入；会话写入 **理解合同 v1**（冻当前理解，不冻美术原句）。
-2. 开跑后立刻补可见默认：`python3 pmem_art.py contract set --id <session> --defaults "默认：…" [--locks "…" --unlocks "…" --vibe "…" --surface-fix "只改一处…"]`。`--vibe` 按风格优先级：①文字；②有文字+构图/整表参考→画风跟文字、垫图只锁版式；③无文字有风格参考→跟参考表面；④无参考仅题材文字→按文字推出；⑤都无→查 `COMMERCIAL_BENCHMARK` **按品类**填一句（仅 merge 品类钉 Gossip Harbor；禁止非 merge 套 Gossip Harbor 货柜）。
+2. 开跑后立刻写入四格：`python3 pmem_art.py contract set --id <session> --keep "…" --vary "…" --forbid "…" --spec "…" [--inferred "推断句"] [--defaults "默认：…" --vibe "…" --surface-fix "只改一处…"]`。四格不进路由句。`--vibe` 按风格优先级：①文字；②有文字+构图/整表参考→画风跟文字、垫图只锁版式；③无文字有风格参考→跟参考表面；④无参考仅题材文字→按文字推出；⑤都无→查 `COMMERCIAL_BENCHMARK` **按品类**填一句（仅 merge 品类钉 Gossip Harbor；禁止非 merge 套 Gossip Harbor 货柜）。Warm-Start 只注入已人工确认、且与四格不冲突的红线；候选红线和旧任务目标不进提示词。配方仍不进提示词。
 3. 每轮续跑前先读最小工作集：`python3 pmem_art.py contract working-set --id <session>`——只用合同+本图+单点改嘱，**禁止**靠长聊天重谈 L0/L1。
 4. 画师新反馈先归层：`python3 pmem_art.py contract classify --text "…"`；再 `contract patch --id <session> --feedback "…"`。L0=可能换交付/重开；L1=升锁点；L2=只改一处。
 5. 首轮 generate 前：`reasonableness review`（`--draft` + `--revised` + checklist）过闸。
@@ -594,6 +601,7 @@ improve/coach/learn 推销仅在用户主动要时再给。
 ### 硬闸
 - **必须有待改成图**（玩家附图 / 刚交的终稿 / 明确路径）。goal 写清「继续这张 / 修这张 / 局部改」。
 - **锁**：机位、身份、题材、整构图、未点名区域。
+- **四格不进路由句**。局部改的保持项和禁止项写入 `contract set`，不写进标准路由句。
 - **只改**：玩家点名的部位或瑕疵（可另垫一张局部参考说明目标质感/造型）。
 - **打回正式技能**：重做 / 换题材 / 换机位 / 整脸表情差分 / 合成梯某档重画 → 不要硬走本通道。
 
@@ -727,6 +735,7 @@ improve/coach/learn 推销仅在用户主动要时再给。
 3. 风格优先级：有文字跟文字（有参考时垫图只锁版式/机位）；有参考无文字跟参考表面；无参考仅题材文字按文字推出；都无才 `benchmark lookup --category ui.casual`（或该品类卡）写「对标品类=…」进 vibe/surface；**禁止垫竞品截图像素**；未点名三消勿默套 RM。
 4. 首轮须 reasonableness；converge generate 并入记忆；禁裸 skip-route-gate。
 5. 续轮垫图跟审图打印和 `converge next`：默认仍垫最初参考，不要改垫上一轮成图；只有打印写明垫第几轮成图时才垫成图。
+6. 四格不进路由句。开跑写入 `--keep --vary --forbid --spec`。候选红线和旧任务主体不进提示词。细则见本节下方「四格与防污染」。
 
 {{DELIVERY_VISIBLE}}
 
@@ -1134,6 +1143,7 @@ python3 pmem_art.py learn list
 3. 关系稿最多 2：五问 + `relation-judge` + 对标档序 + `surface` 一句；说不通不出图。
 4. 风格：有文字跟文字；没写风格钉 Gossip Harbor 货柜（整表参考只锁格子）；点名写实/水彩等才离开。玩家点名垫 GH/竞品**真机图锁画风**时：跟截图货面，**勿再灌缺省软糖釉长句**；宜垫 `assets/refs/gossip_harbor` 货条/单格，勿默垫 `assets/skill_*` 旧交付。禁止未点名就垫竞品抄构图。**无玩家风格/格子参考时禁止把上轮成图垫进 GenerateImage**；首轮若偏写实/产品静物，下一轮纯文整张重开并强调糖釉玩具硬句（converge 遇写实病会自动不链上轮板）。有参考时每一轮仍垫最初那张，不要改垫上一轮成图；只有审图或 converge next 写明垫第几轮成图时才垫成图。
 5. 整表最多 3 轮、≥9.5 到线即停；逐格各档并行。会话 id 显式，禁默写 `latest`。
+6. 四格不进路由句。关系稿按本句原话，不把旧任务主体当底稿。候选红线不进提示词。细则见本节下方「四格与防污染」。
 
 {{DELIVERY_VISIBLE}}
 

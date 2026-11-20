@@ -322,7 +322,7 @@ def _write_memory_entry_unlocked(
         try:
             from improve.memory_trust import TRUST_RANK, normalize_trust
 
-            # Legacy entries without trust frontmatter grandfather as verified.
+            # 只保住文件里写明的 verified/canonical。缺 trust 视为 candidate，覆盖时不自动升成 verified。
             old_trust = normalize_trust(old_trust_raw, status=old_status)
             new_trust = normalize_trust(str(trust or "candidate"), status=status)
             old_rank = TRUST_RANK.get(old_trust, 0)

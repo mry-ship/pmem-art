@@ -48,10 +48,12 @@ description: 总控：一轮审核，确定就执行（pmem-art）
 
 **⚠ 风险**：标准句写错会带偏检索；若与原话规则冲突，`route` 会报 `plan_conflict` 并降为 `confidence=low`，必须停下来问人，禁止硬执行。
 
+**四格不进路由句**：必须保持、可以变化、明确禁止、交付规格只写 `contract set --keep --vary --forbid --spec`。标准路由句仍用上表短模板。禁止把四格写进 `--canonical`，也禁止写成「不换题材」（会子串命中「换题材」，把普通图判成克隆）。普通图模板用「题材不变」。
+
 ### 0.2 再跑本地 route
 
 ```bash
-pyw -3 -u pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>"
+python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>"
 ```
 
 有附图时加 `--image <路径>`（可多次）；有身份/结构分工时加 `--role identity` / `--role structure`（与 `--image` 顺序对齐）。Agent 自用加 `--json`；**给美术看时只用输出里的 `artist_say`**（或 `route --brief`），禁止把 confidence / neighbors / json 刷给画师。
@@ -84,10 +86,10 @@ pyw -3 -u pmem_art.py route --text "<玩家原话>" --canonical "<标准路由�
 能默认的当场写进分析。不要把「玩家没写成绝对路径」当成多种情况。
 
 **理解合同（防多轮漂移 · 总控必做）**：
-1. 分析里写出「默认：… / 锁什么 / 不锁什么」。
-2. `converge start` 后立刻 `pyw -3 -u pmem_art.py contract set --id <session> --defaults "默认：…" [--locks … --unlocks … --vibe … --surface-fix …]`。
-3. 交给执行侧时交代：每轮先 `contract working-set`，禁止靠长聊天重谈 L0/L1。
-4. 画师纠正：先 `contract classify --text "…"`，再 `contract patch --id <session> --feedback "…"`（L0 可能重开，L2 只改一处）。
+1. 分析里写出四格：必须保持、可以变化、明确禁止、交付规格。能推断的直接写入，并标明「推断」；用户原话标明「原话」。不要为此多问一轮。
+2. `converge start` 后立刻 `python3 pmem_art.py contract set --id <session> --keep "…" --vary "…" --forbid "…" --spec "…" [--inferred "与四格中相同的推断句"] [--defaults "默认：…" --vibe …]`。四格不要写进标准路由句。
+3. 交给执行侧时交代：每轮先 `contract working-set`，禁止靠长聊天重谈 L0/L1/四格。后续修改继续遵守必须保持和明确禁止。
+4. 画师纠正：先 `contract classify --text "…"`，再 `contract patch --id <session> --feedback "…"`（L0 可能重开，L2 只改一处）。用户明确改需求时，用最新原话重写四格。
 
 ### 审完怎么走
 
@@ -120,7 +122,7 @@ pyw -3 -u pmem_art.py route --text "<玩家原话>" --canonical "<标准路由�
 
 高频活走 **remap/ask**，不新开技能：局部修/只改手/清稿/换光/延展/姿势锁 → 普通图（banner 带别名）；设定表/三视图 → 变体；分镜/故事板/字标/色板点选/情绪板 → 先问。真做不到（序列帧、平铺/无缝贴图）才停并写「没有识别到可用技能」。透明底、表情表、拼板、远中近、镜头包点选后的机位、审完再改，仍落在已有合同里。
 
-命中之后，在该文件里查找这一行的 `heading`，并读取同行的 `pack_headings`。标题里的反引号可以忽略，文字对上即可。找不到，注册表过期：停，写明要跑 `pyw -3 -u pmem_art.py skills --install`，不用过期的那一行出图。
+命中之后，在该文件里查找这一行的 `heading`，并读取同行的 `pack_headings`。标题里的反引号可以忽略，文字对上即可。找不到，注册表过期：停，写明要跑 `python3 pmem_art.py skills --install`，不用过期的那一行出图。
 
 对上之后先写步骤表，再执行。步骤表是告知，不再开一轮点选。简单任务一行，写完就执行。每一步只走一支。下一步拿上一步交出来的图。上一步没做完，下一步不开始。每一行写全这六样，缺一样这步不能开始：
 
@@ -128,7 +130,7 @@ pyw -3 -u pmem_art.py route --text "<玩家原话>" --canonical "<标准路由�
 2. 这一步交什么
 3. 垫哪张，不垫哪张
 4. 锁什么
-5. 怎样算做完（生图步：≥9.5 到线，或达到该会话轮次硬顶并标明未过线；普通图与重路径均为最多 3，≥9.5到线即停；展陈 HTML 还要 `pyw -3 -u pmem_art.py showcase-gate --html <路径>` 通过）
+5. 怎样算做完（生图步：≥9.5 到线，或达到该会话轮次硬顶并标明未过线；普通图与重路径均为最多 3，≥9.5到线即停；展陈 HTML 还要 `python3 pmem_art.py showcase-gate --html <路径>` 通过）
 6. 交给下一步什么
 
 回显以 `route` 的 `banner` 为准（最前一行）。例如「【按 多图分工 走了】」「【走默认路径】按 普通图 走了」「【按 Mode A 走了】」。这句只说明选了哪一节，不问选哪条技能。

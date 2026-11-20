@@ -2353,14 +2353,28 @@ def cmd_converge(
         warm_hash = ""
         warm_block = ""
         if apply_memory:
-            if not str(warm.get("prompt_block") or "").strip():
+            from .understanding_contract import contract_inject_stamp
+
+            understanding = sess.get("understanding_contract")
+            understanding = understanding if isinstance(understanding, dict) else {}
+            stamp = contract_inject_stamp(understanding)
+            # 四格写进合同之后重算注入，避免开画时的记忆包盖过当前需求。
+            rebuild_warm = (not str(warm.get("prompt_block") or "").strip()) or (
+                bool(stamp) and str(warm.get("contract_stamp") or "") != stamp
+            )
+            if rebuild_warm:
                 warm = build_warm_start_pack(
                     root,
                     data if isinstance(data, dict) else {},
                     module=str(sess.get("module") or module or "brand.WorldStyle"),
                     goal=str(sess.get("goal") or goal or ""),
+                    contract=understanding,
                 )
+                if stamp:
+                    warm["contract_stamp"] = stamp
                 sess["warm_start"] = warm
+                if stamp:
+                    print(f"   · {warm.get('inject_summary') or '记忆已按四格合同重算'}")
             warm_block = str(warm.get("prompt_block") or "").strip()
             before = composed_prompt
             composed_prompt = merge_warm_start_prompt(composed_prompt, warm)

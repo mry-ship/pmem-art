@@ -40,13 +40,12 @@ class TestAutoVerifyWritePath(unittest.TestCase):
                     trust="candidate",
                     extra_meta={"ai_params": {"prompt": "x", "score": score, "round": 1}},
                 )
-            # first call after one would no-op; after two → promote
             promoted = maybe_auto_verify_on_repeat_pass(root, module="character.Astra", threshold=9.5)
-            self.assertEqual(len(promoted), 2)
+            self.assertEqual(promoted, [])
             entries = list((root / ".memory-art" / "entries" / "character.Astra").glob("*.md"))
             self.assertEqual(len(entries), 2)
             for p in entries:
-                self.assertIn("trust: verified", p.read_text(encoding="utf-8"))
+                self.assertIn("trust: candidate", p.read_text(encoding="utf-8"))
 
     def test_replace_same_asset_does_not_demote_canonical(self) -> None:
         from feedback import write_memory_entry
@@ -102,8 +101,8 @@ class TestAutoVerifyWritePath(unittest.TestCase):
             self.assertIn("trust: canonical", raw)
             self.assertIn("再过线同资产", raw)
 
-    def test_replace_same_asset_preserves_legacy_grandfather_verified(self) -> None:
-        """Old active recipe with no trust: field must not be demoted to candidate."""
+    def test_replace_same_asset_does_not_promote_missing_trust(self) -> None:
+        """缺 trust 的旧条目覆盖时保持 candidate，不自动写成 verified。"""
         import re
 
         from feedback import write_memory_entry
@@ -160,7 +159,8 @@ class TestAutoVerifyWritePath(unittest.TestCase):
                 replace_same_asset=True,
             )
             raw = legacy.read_text(encoding="utf-8")
-            self.assertIn("trust: verified", raw)
+            self.assertIn("trust: candidate", raw)
+            self.assertNotIn("trust: verified", raw)
             self.assertIn("覆盖旧资产", raw)
 
 

@@ -34,7 +34,7 @@ description: 玩家要写提示词、扩写 brief、要几套可选说法时使�
 1. 用一行写出草稿：**判定类型：`…` · 依据：… · 将交给：`/pmem-…`**
 2. **立刻**把原话收成标准路由句并跑（与总控同闸，禁止只靠本表盲猜定案）：
 ```bash
-pyw -3 -u pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>"
+python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>"
 ```
 3. 以 CLI `route_ids` / `banner` 校正类型行；冲突时改类型行并注明「以 route 为准」。后续每套方案旁标注 **`route_id=…`**（通常与校正后类型一致）。
 
@@ -146,7 +146,7 @@ pyw -3 -u pmem_art.py route --text "<玩家原话>" --canonical "<标准路由�
    - 变体/锁死 brief 等极确定时只出 **1 套**，并写：「只有一套：因为……再拆会和原话冲突。」
 4. 问玩家：选字母，或补充/改口（含「其实我要的是 UI 不是原画」这类改类型）。**点选前禁止开生图。**
 5. 玩家选定某套后交给出图技能时：该套中文/英文目标句可作为 `reasonableness review` 的 `--draft`；出图支路仍须再跑一次闸门并产出 `--revised`（可在选定句上补硬锁与元素预算）。
-6. **若之后要出图**：再跑一次 `pyw -3 -u pmem_art.py route --text "<原话或选定方案>" --canonical "<标准路由句>"`（可用方案旁已标的 `route_id` 种闸），再进对应 `/pmem-…`；禁止只凭本技能自判类型直接 `converge start`。
+6. **若之后要出图**：再跑一次 `python3 pmem_art.py route --text "<原话或选定方案>" --canonical "<标准路由句>"`（可用方案旁已标的 `route_id` 种闸），再进对应 `/pmem-…`；禁止只凭本技能自判类型直接 `converge start`。
 
 ## 怎么用（复制即用）
 ```text

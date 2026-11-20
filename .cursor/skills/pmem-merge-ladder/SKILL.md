@@ -25,6 +25,7 @@ description: 玩家要一条同域合成升级梯，或生图分流判成合成�
 3. 关系稿最多 2：五问 + `relation-judge` + 对标档序 + `surface` 一句；说不通不出图。
 4. 风格：有文字跟文字；没写风格钉 Gossip Harbor 货柜（整表参考只锁格子）；点名写实/水彩等才离开。玩家点名垫 GH/竞品**真机图锁画风**时：跟截图货面，**勿再灌缺省软糖釉长句**；宜垫 `assets/refs/gossip_harbor` 货条/单格，勿默垫 `assets/skill_*` 旧交付。禁止未点名就垫竞品抄构图。**无玩家风格/格子参考时禁止把上轮成图垫进 GenerateImage**；首轮若偏写实/产品静物，下一轮纯文整张重开并强调糖釉玩具硬句（converge 遇写实病会自动不链上轮板）。有参考时每一轮仍垫最初那张，不要改垫上一轮成图；只有审图或 converge next 写明垫第几轮成图时才垫成图。
 5. 整表最多 3 轮、≥9.5 到线即停；逐格各档并行。会话 id 显式，禁默写 `latest`。
+6. 四格不进路由句。关系稿按本句原话，不把旧任务主体当底稿。候选红线不进提示词。细则见本节下方「四格与防污染」。
 
 ## 交件可见（出图结算 · Agent 必读）
 
@@ -40,6 +41,11 @@ description: 玩家要一条同域合成升级梯，或生图分流判成合成�
 5. **中途每轮**：每次 `judge` 后立刻贴/更新可点表（至少本轮一行）并 Read 本轮原图；不要等 finish 才第一次给可点单图。
 
 禁止只交拼板。禁止只甩 HTML。
+
+### 四格与防污染（执行时必读）
+四格不进路由句。必须保持、可以变化、明确禁止、交付规格只写 `contract set --keep --vary --forbid --spec`，标明原话或推断。禁止写入 `--canonical`。普通图用「题材不变」，禁止写「不换题材」。合同里的升级、一组、多张不得改技能。首轮提示词和后续修改只服从四格；聊天不是第二份需求；用户改口就用最新原话重写四格。
+记忆只辅助。当前原话和四格优先于历史记忆。候选红线、没写 trust 的条目、旧任务主体、构图、档序和完整提示词不进提示词。已确认红线去掉旧任务目标，与明确禁止冲突则排除。研发 `.memory` 不进美术提示词。界面不继承合成梯玩具货柜缺省。
+未点名接续只垫 `assets/refs/`、`downloads/`、`assets/skill_*/refs/`。禁止垫 out、phase1、关系稿、`.memory-art/converge` 过程板。垫图只取样式；只有用户说优化这张图才写原图不足。双参考像素同框仍硬停。最多 3 轮。
 
 ### 非闭环多图（拆层 / 审图 / 锁风样张 / 归档等）
 同样强制可点单图表 + 逐张 Read。拆层须含叠回整图、幽灵对比、全部 `new/*.png`（有 `layers.md` 直接贴）。纯文字交付（提示词、无附图教练）不必出表。
@@ -94,7 +100,7 @@ description: 玩家要一条同域合成升级梯，或生图分流判成合成�
 
 ### 机读
 ```bash
-pyw -3 -u pmem_art.py merge relation-judge --file <yaml> --all
+python3 pmem_art.py merge relation-judge --file <yaml> --all
 ```
 exit 0 才能出图。`scale_pct` 可不单调；邻档 `silhouette` 整句禁相同。
 
@@ -112,11 +118,11 @@ L2 …
 
 ## 出图闭环
 ```bash
-pyw -3 -u pmem_art.py converge start --session <merge_id> --goal "merge overview_sheet：…" --module <模块> --route-id merge.ladder
-pyw -3 -u pmem_art.py reasonableness review --id <merge_id> --skill merge --draft "…" --revised "…" --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;single_centered_item=ok;chain_mode_declared=ok;upgrade_reason_concrete=ok;family_or_base_lock=ok;sheet_safe_zone=ok"
-pyw -3 -u pmem_art.py converge generate --session <merge_id> --round <N> --image <sheet> --prompt "<模板修订句>"
-pyw -3 -u pmem_art.py converge judge --session <merge_id> --round <N> --image <sheet> --dims "构图9.0/光影9.0/透视9.0/质感9.0/风格9.0/无瑕疵9.0" --defects "…" --next-fix "…"
-pyw -3 -u pmem_art.py converge finish --session <merge_id>
+python3 pmem_art.py converge start --session <merge_id> --goal "merge overview_sheet：…" --module <模块> --route-id merge.ladder
+python3 pmem_art.py reasonableness review --id <merge_id> --skill merge --draft "…" --revised "…" --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;single_centered_item=ok;chain_mode_declared=ok;upgrade_reason_concrete=ok;family_or_base_lock=ok;sheet_safe_zone=ok"
+python3 pmem_art.py converge generate --session <merge_id> --round <N> --image <sheet> --prompt "<模板修订句>"
+python3 pmem_art.py converge judge --session <merge_id> --round <N> --image <sheet> --dims "构图9.0/光影9.0/透视9.0/质感9.0/风格9.0/无瑕疵9.0" --defects "…" --next-fix "…"
+python3 pmem_art.py converge finish --session <merge_id>
 ```
 per_cell：各档并行独立 session；`merge audit` 验收。
 

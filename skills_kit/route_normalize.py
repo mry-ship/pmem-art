@@ -184,6 +184,9 @@ def validate_canonical(canonical: str) -> list[str]:
         warns.append("ordinary_canon_self_poison:用「题材不变」代替「不换题材」")
     if re.search(r"有参考也不换题材|有参考但也不换", c):
         warns.append("ordinary_canon_self_poison:改用「有参考；题材不变；走普通图」")
+    # 四格只进 contract set。写进标准句会让二次 plan 吃到升级/一组/换题材等词。
+    if re.search(r"必须保持|可以变化|明确禁止|交付规格|--keep|--vary|--forbid|--spec", c):
+        warns.append("grid_in_canonical:四格只写 contract set，禁止写进标准路由句")
     # 锁风格验证句缺「验证图」易卡在只入库
     if re.search(r"锁风格|锁定风格|锁定画风", c) and re.search(r"出图|生图|画一张", c):
         if not re.search(r"验证图|锁完出图|锁风格后克隆|克隆验证", c):

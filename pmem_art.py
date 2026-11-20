@@ -29,7 +29,7 @@ from lifecycle import ensure_stdio_survives_locale
 
 ensure_stdio_survives_locale()
 
-VERSION = "0.16.15-art"
+VERSION = "0.16.16-art"
 MEMORY_DIR = ".memory-art"
 
 KIND_META = {
@@ -2361,7 +2361,7 @@ def main() -> int:
 
     p_contract = sub.add_parser(
         "contract",
-        help="理解合同：外置冻理解 + 每轮最小工作集 + 反馈归层（不改 9.5/4轮/route 硬闸）",
+        help="理解合同：四格需求 + 每轮最小工作集 + 反馈归层（不改 9.5/3轮/route 硬闸）",
     )
     p_contract.add_argument(
         "action",
@@ -2374,6 +2374,15 @@ def main() -> int:
     p_contract.add_argument("--unlocks", default="", help="L1 不锁，逗号/分号分隔")
     p_contract.add_argument("--vibe", dest="commercial_vibe", default="", help="缺风格时的商业气质一句")
     p_contract.add_argument("--surface-fix", default="", help="L2 当轮只改一处")
+    p_contract.add_argument("--keep", default="", help="四格·必须保持。不要写进标准路由句")
+    p_contract.add_argument("--vary", default="", help="四格·可以变化")
+    p_contract.add_argument("--forbid", default="", help="四格·明确禁止")
+    p_contract.add_argument("--spec", default="", help="四格·交付规格")
+    p_contract.add_argument(
+        "--inferred",
+        default="",
+        help="四格里哪些句子是系统推断（须与 --keep/--vary/--forbid/--spec 中的句子一致）",
+    )
     p_contract.add_argument("--feedback", default="", help="patch 时的画师原话")
     p_contract.add_argument("--text", default="", help="classify/patch 用的文本")
     p_contract.add_argument("--json", dest="json_out", action="store_true", help="JSON 输出")
@@ -2831,6 +2840,11 @@ def main() -> int:
             feedback=getattr(args, "feedback", "") or "",
             text=getattr(args, "text", "") or "",
             json_out=bool(getattr(args, "json_out", False)),
+            keep=getattr(args, "keep", "") or "",
+            vary=getattr(args, "vary", "") or "",
+            forbid=getattr(args, "forbid", "") or "",
+            spec=getattr(args, "spec", "") or "",
+            inferred=getattr(args, "inferred", "") or "",
         )
     if args.command == "reasonableness":
         from skills_kit.reasonableness_gate import cmd_reasonableness_at_root

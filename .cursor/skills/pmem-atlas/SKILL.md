@@ -9,16 +9,16 @@ description: 当用户输入 /pmem-atlas 时触发。自动扫描归位未分类
 
 1. **扫描并自动归档未分类散图**：
    ```bash
-    pyw -3 -u pmem_art.py classify-watch --apply
+    python3 pmem_art.py classify-watch --apply
    ```
     命令自动归档高置信度候选；汇报实际归档的路径。低置信度或无法分类的文件保持原位并列出原因，不要为了清空列表强行移动。**无散图 / 空结果**：说「没有待归档散图」，不要装作扫到了文件。调用 `/pmem-atlas` 即授权执行这项自动归档，无需再等待确认。
 2. **模块与记忆总览**：
    ```bash
-   pyw -3 -u pmem_art.py list
+   python3 pmem_art.py list
    ```
 3. **重新编译单文件交互式图谱**：
    ```bash
-   pyw -3 -u pmem_art.py atlas
+   python3 pmem_art.py atlas
    ```
    告知用户用终端打印的 **`http://127.0.0.1:<端口>/art-atlas.html`** 打开工作台（或双击根目录「打开工作台.cmd」）。**禁止**只双击磁盘上的 `art-atlas.html`：`file://` 下删除/文件夹定位常被浏览器拦住。
 

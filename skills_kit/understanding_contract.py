@@ -134,6 +134,13 @@ def empty_contract() -> dict[str, Any]:
             "defaults_shown": [],
             "commercial_vibe": "",
         },
+        "grid": {
+            "keep": [],
+            "vary": [],
+            "forbid": [],
+            "spec": [],
+            "inferred": [],
+        },
         "l2": {
             "open": True,
             "surface_fix": "",
@@ -185,6 +192,11 @@ def build_contract(
     commercial_vibe: str = "",
     surface_fix: str = "",
     notes: str = "",
+    keep: list[str] | str | None = None,
+    vary: list[str] | str | None = None,
+    forbid: list[str] | str | None = None,
+    spec: list[str] | str | None = None,
+    inferred: list[str] | str | None = None,
 ) -> dict[str, Any]:
     """Build understanding contract v1 (soft lock of current interpretation)."""
     c = empty_contract()
@@ -198,6 +210,16 @@ def build_contract(
     c["l1"]["commercial_vibe"] = str(commercial_vibe or "").strip()
     c["l2"]["surface_fix"] = str(surface_fix or "").strip()
     c["notes"] = str(notes or "").strip()
+    if keep is not None:
+        c["grid"]["keep"] = _uniq(_as_list(keep))
+    if vary is not None:
+        c["grid"]["vary"] = _uniq(_as_list(vary))
+    if forbid is not None:
+        c["grid"]["forbid"] = _uniq(_as_list(forbid))
+    if spec is not None:
+        c["grid"]["spec"] = _uniq(_as_list(spec))
+    if inferred is not None:
+        c["grid"]["inferred"] = _uniq(_as_list(inferred))
     return c
 
 
@@ -235,6 +257,49 @@ def contract_from_session_bootstrap(
     )
 
 
+def _grid(contract: dict[str, Any] | None) -> dict[str, Any]:
+    if not isinstance(contract, dict):
+        return {"keep": [], "vary": [], "forbid": [], "spec": [], "inferred": []}
+    grid = contract.get("grid")
+    if not isinstance(grid, dict):
+        return {"keep": [], "vary": [], "forbid": [], "spec": [], "inferred": []}
+    return grid
+
+
+def _format_grid_lines(contract: dict[str, Any] | None) -> list[str]:
+    grid = _grid(contract)
+    inferred = {str(x).strip() for x in (grid.get("inferred") or []) if str(x).strip()}
+
+    def one(label: str, key: str) -> str:
+        items = [str(x).strip() for x in (grid.get(key) or []) if str(x).strip()]
+        if not items:
+            return f"{label}：（未写）"
+        parts = [f"{item}（推断）" if item in inferred else f"{item}（原话）" for item in items]
+        return f"{label}：" + "；".join(parts)
+
+    return [
+        one("必须保持", "keep"),
+        one("可以变化", "vary"),
+        one("明确禁止", "forbid"),
+        one("交付规格", "spec"),
+    ]
+
+
+def contract_inject_stamp(contract: dict[str, Any] | None) -> str:
+    """Non-empty when the four-grid should force a Warm-Start rebuild."""
+    import hashlib
+
+    grid = _grid(contract)
+    if not any(grid.get(key) for key in ("keep", "vary", "forbid", "spec")):
+        return ""
+    blob = json.dumps(
+        {key: list(grid.get(key) or []) for key in ("keep", "vary", "forbid", "spec", "inferred")},
+        ensure_ascii=False,
+        sort_keys=True,
+    )
+    return hashlib.sha1(blob.encode("utf-8")).hexdigest()[:12]
+
+
 def format_contract_summary(contract: dict[str, Any] | None) -> str:
     c = contract if isinstance(contract, dict) else empty_contract()
     l0 = c.get("l0") if isinstance(c.get("l0"), dict) else {}
@@ -251,6 +316,7 @@ def format_contract_summary(contract: dict[str, Any] | None) -> str:
     unlocks = l1.get("unlocks") or []
     lines.append(f"L1 锁：{'；'.join(locks) if locks else '（未写，可后补）'}")
     lines.append(f"L1 不锁：{'；'.join(unlocks) if unlocks else '（未写）'}")
+    lines.extend(_format_grid_lines(c))
     defaults = l1.get("defaults_shown") or []
     if defaults:
         lines.append("本趟默认：" + "｜".join(str(x) for x in defaults))
@@ -321,6 +387,11 @@ def apply_feedback(contract: dict[str, Any], feedback: str) -> dict[str, Any]:
             short = text if len(text) <= 24 else text[:24]
             tags = [short]
         l1["locks"] = _uniq(_as_list(l1.get("locks")) + tags)
+        grid = c.setdefault("grid", {})
+        if not isinstance(grid, dict):
+            grid = {}
+            c["grid"] = grid
+        grid["keep"] = _uniq(_as_list(grid.get("keep")) + tags)
         note = str(c.get("notes") or "")
         c["notes"] = (note + f"\n[L1升版] {text}").strip()
     else:
@@ -342,6 +413,11 @@ def merge_contract_fields(
     delivery: str | None = None,
     route_ids: list[str] | None = None,
     notes: str | None = None,
+    keep: list[str] | str | None = None,
+    vary: list[str] | str | None = None,
+    forbid: list[str] | str | None = None,
+    spec: list[str] | str | None = None,
+    inferred: list[str] | str | None = None,
 ) -> dict[str, Any]:
     c = json.loads(json.dumps(contract if isinstance(contract, dict) else empty_contract()))
     if raw_utterance is not None:
@@ -368,6 +444,19 @@ def merge_contract_fields(
         l1["unlocks"] = _uniq(_as_list(unlocks))
     if commercial_vibe is not None:
         l1["commercial_vibe"] = str(commercial_vibe).strip()
+    grid = c.setdefault("grid", {})
+    if not isinstance(grid, dict):
+        grid = {}
+        c["grid"] = grid
+    for key, value in (
+        ("keep", keep),
+        ("vary", vary),
+        ("forbid", forbid),
+        ("spec", spec),
+        ("inferred", inferred),
+    ):
+        if value is not None:
+            grid[key] = _uniq(_as_list(value))
     l2 = c.setdefault("l2", {})
     if not isinstance(l2, dict):
         l2 = {}
@@ -402,6 +491,7 @@ def format_working_set(
         f"L1 锁：{'；'.join(l1.get('locks') or []) or '（未写）'}",
         f"L1 不锁：{'；'.join(l1.get('unlocks') or []) or '（未写）'}",
     ]
+    lines.extend(_format_grid_lines(c))
     defaults = l1.get("defaults_shown") or []
     if defaults:
         lines.append("默认：" + "｜".join(str(x) for x in defaults))
@@ -548,6 +638,11 @@ def cmd_contract(
     feedback: str = "",
     text: str = "",
     json_out: bool = False,
+    keep: str = "",
+    vary: str = "",
+    forbid: str = "",
+    spec: str = "",
+    inferred: str = "",
 ) -> int:
     action = (action or "show").strip().lower()
     sid, remap_note = resolve_contract_session_id(root, session_id or "latest")
@@ -609,8 +704,25 @@ def cmd_contract(
             kwargs["commercial_vibe"] = commercial_vibe
         if surface_fix:
             kwargs["surface_fix"] = surface_fix
+        if keep:
+            kwargs["keep"] = keep
+            if not locks:
+                kwargs["locks"] = keep
+        if vary:
+            kwargs["vary"] = vary
+            if not unlocks:
+                kwargs["unlocks"] = vary
+        if forbid:
+            kwargs["forbid"] = forbid
+        if spec:
+            kwargs["spec"] = spec
+        if inferred:
+            kwargs["inferred"] = inferred
         if not kwargs:
-            print("❌ set 至少提供 --defaults / --locks / --unlocks / --vibe / --surface-fix 之一")
+            print(
+                "❌ set 至少提供 --defaults / --locks / --unlocks / --vibe / "
+                "--surface-fix / --keep / --vary / --forbid / --spec 之一"
+            )
             return 1
         contract = merge_contract_fields(contract, **kwargs)
         save_session_contract(root, sid, contract)

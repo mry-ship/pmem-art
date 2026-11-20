@@ -112,6 +112,20 @@ class CanonicalWarnTests(unittest.TestCase):
         warns = validate_canonical("要画一张图；有参考；题材不变；走普通图")
         self.assertEqual(warns, [])
 
+    def test_grid_in_canonical_is_conflict(self) -> None:
+        warns = validate_canonical(
+            "要画一张图；有参考；题材不变；走普通图。必须保持画风。可以变化一组升级"
+        )
+        self.assertTrue(any("grid_in_canonical" in w for w in warns))
+        payload = advise_route(
+            "参考这张图，做同风格的蓝色品质宝箱",
+            images=["ref.png"],
+            canonical="要画一张图；有参考；题材不变；走普通图。必须保持：原画风。交付规格：单张",
+        )
+        self.assertTrue(payload.get("plan_conflict"))
+        self.assertFalse(payload.get("execute_ok"))
+        self.assertNotEqual(payload.get("route_ids"), ["merge.ladder"])
+
     def test_advise_marks_conflict_on_poison(self) -> None:
         payload = advise_route(
             "画一张窗边女孩",

@@ -14,6 +14,7 @@ description: 仅当玩家点名 UI/HUD/九宫格，或生图分流判成整套�
 3. 风格优先级：有文字跟文字（有参考时垫图只锁版式/机位）；有参考无文字跟参考表面；无参考仅题材文字按文字推出；都无才 `benchmark lookup --category ui.casual`（或该品类卡）写「对标品类=…」进 vibe/surface；**禁止垫竞品截图像素**；未点名三消勿默套 RM。
 4. 首轮须 reasonableness；converge generate 并入记忆；禁裸 skip-route-gate。
 5. 续轮垫图跟审图打印和 `converge next`：默认仍垫最初参考，不要改垫上一轮成图；只有打印写明垫第几轮成图时才垫成图。
+6. 四格不进路由句。开跑写入 `--keep --vary --forbid --spec`。候选红线和旧任务主体不进提示词。细则见本节下方「四格与防污染」。
 
 ## 交件可见（出图结算 · Agent 必读）
 
@@ -29,6 +30,11 @@ description: 仅当玩家点名 UI/HUD/九宫格，或生图分流判成整套�
 5. **中途每轮**：每次 `judge` 后立刻贴/更新可点表（至少本轮一行）并 Read 本轮原图；不要等 finish 才第一次给可点单图。
 
 禁止只交拼板。禁止只甩 HTML。
+
+### 四格与防污染（执行时必读）
+四格不进路由句。必须保持、可以变化、明确禁止、交付规格只写 `contract set --keep --vary --forbid --spec`，标明原话或推断。禁止写入 `--canonical`。普通图用「题材不变」，禁止写「不换题材」。合同里的升级、一组、多张不得改技能。首轮提示词和后续修改只服从四格；聊天不是第二份需求；用户改口就用最新原话重写四格。
+记忆只辅助。当前原话和四格优先于历史记忆。候选红线、没写 trust 的条目、旧任务主体、构图、档序和完整提示词不进提示词。已确认红线去掉旧任务目标，与明确禁止冲突则排除。研发 `.memory` 不进美术提示词。界面不继承合成梯玩具货柜缺省。
+未点名接续只垫 `assets/refs/`、`downloads/`、`assets/skill_*/refs/`。禁止垫 out、phase1、关系稿、`.memory-art/converge` 过程板。垫图只取样式；只有用户说优化这张图才写原图不足。双参考像素同框仍硬停。最多 3 轮。
 
 ### 非闭环多图（拆层 / 审图 / 锁风样张 / 归档等）
 同样强制可点单图表 + 逐张 Read。拆层须含叠回整图、幽灵对比、全部 `new/*.png`（有 `layers.md` 直接贴）。纯文字交付（提示词、无附图教练）不必出表。
@@ -72,19 +78,19 @@ description: 仅当玩家点名 UI/HUD/九宫格，或生图分流判成整套�
 ### Step 0：确定屏幕类型与规格
 确认：屏幕类型、平台（桌面/主机 vs 移动）、画幅、目标模块（如 `ui.MainMenu` / `ui.InventoryHUD`）。玩家写了画幅，或点名了某一块具体的屏，以那一块屏为准。垫图是手机竖屏时，概念稿和组件表都用 `9:16`，垫原图，禁止填成 `16:9`。模块里过期的方图规格不能把主界面收成 1:1。垫图分析只写风格、构图和特征。
 ```bash
-pyw -3 -u pmem_art.py search --module <ui.模块>
+python3 pmem_art.py search --module <ui.模块>
 ```
 
 ### Step 1：概念先行（Concept First）—— 不可跳过
 1. 若用户丢入概念图：先做参考图视觉解构（构图分区、主辅色 HEX、金属/木纹/霓虹材质、控件密度），再进入组件抽取。
 2. 若无概念图：先生成 **1 张完整屏幕概念稿**（整屏布局，统一材质与色板），**最多3轮、≥9.5到线即停**（生→judge→不到线再改；满3轮交最高分并标明是否≥9.5）：
    ```bash
-   pyw -3 -u pmem_art.py converge start --goal "UI概念稿：<屏幕类型+风格>" --module <ui.模块> --route-id ui.kit [--scale medium|high]
+   python3 pmem_art.py converge start --goal "UI概念稿：<屏幕类型+风格>" --module <ui.模块> --route-id ui.kit [--scale medium|high]
    # 首轮前必过合理性闸（同时交出更合理提示词）：
-   pyw -3 -u pmem_art.py reasonableness review --id <session> --skill ui \
+   python3 pmem_art.py reasonableness review --id <session> --skill ui \
      --draft "<草稿>" --revised "<分区/控件/禁忌写清的修订句>" \
      --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;layout_zones=ok;no_content_clutter=ok;chrome_not_illustration=ok;cta_clear_of_faces=ok;control_craft=ok"
-   pyw -3 -u pmem_art.py converge generate … && converge judge … && converge finish
+   python3 pmem_art.py converge generate … && converge judge … && converge finish
    ```
 3. **concept-only 到此交货**。仅 full kit：**概念稿审完后才进入组件表**——不要在概念未锁定时散生按钮。合理性闸不过不许 generate。
 
@@ -154,8 +160,8 @@ ui_kit_<name>/
 
 ### Step 5：沉淀记忆
 ```bash
-pyw -3 -u pmem_art.py ingest <concept或主面板路径> -p "UI kit <屏幕> 概念/主面板" --apply
-pyw -3 -u pmem_art.py feedback "UI套件色板与九宫格规范：<摘要>" --module <ui.模块> --kind art_decision
+python3 pmem_art.py ingest <concept或主面板路径> -p "UI kit <屏幕> 概念/主面板" --apply
+python3 pmem_art.py feedback "UI套件色板与九宫格规范：<摘要>" --module <ui.模块> --kind art_decision
 ```
 
 ## 三、界面审图（概念稿和组件表同名五项；管线只做门槛）

@@ -487,11 +487,42 @@ class TestBuildPackIntegration(unittest.TestCase):
         self.assertIn("R_KEEP", recipe_ids)
         self.assertNotIn("RL_STALE", redline_ids)
         self.assertNotIn("RL_STALE_MEASURED", redline_ids)
-        self.assertIn("RL_KEEP", redline_ids)
+        self.assertNotIn("RL_KEEP", redline_ids)
+        excluded_ids = {
+            row.get("id") for row in (pack.get("inject_trace") or {}).get("excluded") or []
+        }
+        self.assertIn("RL_KEEP", excluded_ids)
+        self.assertNotIn("按压喷瓶", pack["prompt_block"])
         # recipes stay on pack for confidence, but must not enter prompt as「优先复用」
         self.assertNotIn("优先复用定稿方向", pack["prompt_block"])
         self.assertNotIn("R_KEEP", pack["prompt_block"])
         self.assertIn("旧 recipe 只参与置信", pack["prompt_block"])
+
+    def test_verified_redline_drops_old_goal(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        data = {
+            "modules": {"prop.Chest": {}},
+            "entries": [
+                {
+                    "id": "RL_OLD",
+                    "kind": "style_redline",
+                    "module": "prop.Chest",
+                    "status": "active",
+                    "trust": "verified",
+                    "summary": "[收敛踩坑红线] 金色木箱拱门：避免「塑料高光」",
+                }
+            ],
+        }
+        pack = build_warm_start_pack(
+            root,
+            data,
+            module="prop.Chest",
+            goal="同风格蓝色品质宝箱",
+        )
+        block = pack["prompt_block"]
+        self.assertIn("避免「塑料高光」", block)
+        self.assertNotIn("金色木箱拱门", block)
+        self.assertNotIn("优先复用定稿方向", block)
 
     def test_pack_filters_bleed_and_caps_redlines(self) -> None:
         root = Path(__file__).resolve().parents[1]

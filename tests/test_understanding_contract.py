@@ -18,6 +18,7 @@ from skills_kit.understanding_contract import (  # noqa: E402
     contract_from_session_bootstrap,
     defaults_visibility_ok,
     ensure_session_contract,
+    format_contract_summary,
     format_working_set,
     resolve_contract_session_id,
     working_set_from_session,
@@ -58,6 +59,20 @@ class TestUnderstandingContract(unittest.TestCase):
         c2 = apply_feedback(c, "不对，我要的是图标")
         self.assertEqual(c2["l2"]["feedback_layer"], "l0")
         self.assertIn("L0", c2["notes"])
+
+    def test_grid_marks_inferred_separately(self) -> None:
+        c = build_contract(
+            raw_utterance="参考这张，做同风格的蓝色品质宝箱",
+            keep=["原图画风", "原图材质"],
+            vary=["主体换成宝箱", "主色改蓝"],
+            forbid=["不要复制原图主体"],
+            spec=["单张方图"],
+            inferred=["单张方图"],
+        )
+        text = format_contract_summary(c)
+        self.assertIn("原图画风（原话）", text)
+        self.assertIn("单张方图（推断）", text)
+        self.assertIn("不要复制原图主体（原话）", text)
 
     def test_working_set_mentions_single_fix(self) -> None:
         c = contract_from_session_bootstrap(

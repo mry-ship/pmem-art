@@ -49,6 +49,14 @@ def _data() -> dict:
                 "module": "prop.Candy",
                 "status": "active",
                 "summary": "禁止把蜜桃糖焊进蛋糕",
+            },
+            {
+                "id": "REDLINE_OK",
+                "kind": "style_redline",
+                "module": "prop.Candy",
+                "status": "active",
+                "trust": "verified",
+                "summary": "禁止糖釉发灰",
             }
         ],
     }
@@ -427,7 +435,9 @@ class TestGenerateMergesMemory(unittest.TestCase):
             round0 = (sess.get("rounds") or [{}])[0]
             prompt = str(round0.get("prompt") or "")
             self.assertIn(WARM_START_MARK, prompt)
-            self.assertIn("蜜桃糖焊进蛋糕", prompt)
+            # 没写 trust 的旧红线不再进提示词；人工确认过的红线仍然并入。
+            self.assertNotIn("蜜桃糖焊进蛋糕", prompt)
+            self.assertIn("禁止糖釉发灰", prompt)
             before = str(round0.get("prompt_before_warm") or "")
             self.assertTrue(before)
             self.assertNotIn(WARM_START_MARK, before)

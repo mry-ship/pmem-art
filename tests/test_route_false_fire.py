@@ -33,6 +33,16 @@ class RouteFalseFireTests(unittest.TestCase):
             self.assertEqual(plan.route_ids, ["draw.ordinary"], text)
             self.assertNotIn("critique.review", plan.route_ids, text)
 
+    def test_same_style_chest_is_not_merge(self) -> None:
+        from skills_kit.route_normalize import normalize_for_route
+
+        text = "参考这张图，做同风格的蓝色品质宝箱"
+        plan = plan_route(text, images=["ref.png"])
+        self.assertNotEqual(plan.route_ids, ["merge.ladder"])
+        folded = normalize_for_route("把这只宝箱变成蓝色品质")
+        self.assertNotIn("别画原来", folded)
+        self.assertNotIn("换题材", folded)
+
     def test_merge_bare_sheet_or_grow_not_ladder(self) -> None:
         for text in ("把这套道具整表导出一下", "表格整表打印", "越来越大的宝箱", "八档剑"):
             plan = plan_route(text)
