@@ -1,7 +1,7 @@
 """理解合同（外置）+ 每轮最小工作集 + 反馈归层。
 
 目标：美术话糊时冻住「系统当前理解」，多轮只注入最小包，减少聊天考古导致的漂移。
-不改动 route 闸 / 9.5 / 4 轮 / 垫图 / 续写硬约束（表一-A）。
+不改动 route 闸 / 9.5 / 最多 3 轮 / 垫图 / 续写硬约束（表一-A）。
 """
 from __future__ import annotations
 
@@ -285,6 +285,14 @@ def _format_grid_lines(contract: dict[str, Any] | None) -> list[str]:
     ]
 
 
+def warm_needs_rebuild(warm: dict[str, Any] | None, stamp: str) -> bool:
+    """Rebuild when the pack is missing, or the four-grid stamp changed, including back to empty."""
+    pack = warm if isinstance(warm, dict) else {}
+    block = str(pack.get("prompt_block") or "").strip()
+    prev = str(pack.get("contract_stamp") or "")
+    return (not block) or prev != str(stamp or "")
+
+
 def contract_inject_stamp(contract: dict[str, Any] | None) -> str:
     """Non-empty when the four-grid should force a Warm-Start rebuild."""
     import hashlib
@@ -387,11 +395,6 @@ def apply_feedback(contract: dict[str, Any], feedback: str) -> dict[str, Any]:
             short = text if len(text) <= 24 else text[:24]
             tags = [short]
         l1["locks"] = _uniq(_as_list(l1.get("locks")) + tags)
-        grid = c.setdefault("grid", {})
-        if not isinstance(grid, dict):
-            grid = {}
-            c["grid"] = grid
-        grid["keep"] = _uniq(_as_list(grid.get("keep")) + tags)
         note = str(c.get("notes") or "")
         c["notes"] = (note + f"\n[L1升版] {text}").strip()
     else:

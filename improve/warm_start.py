@@ -580,6 +580,54 @@ def strip_redline_identity(summary: str) -> str:
     return text
 
 
+_FORBID_AVOID_TAIL = re.compile(r"(避免|禁止|不要|不许|严禁|勿|别再|别加|别用|别画)$")
+_FORBID_PREFIX_SEPS = set("，,。；;！!\n、：:（）()[]【】")
+
+
+def _forbid_prefix_avoids(prefix: str) -> bool:
+    """True when the words immediately before a phrase tell the model to avoid it."""
+    cleaned = prefix.rstrip("「」\"'“” ")
+    if _FORBID_AVOID_TAIL.search(cleaned):
+        return True
+    if cleaned.endswith("别") and (len(cleaned) == 1 or cleaned[-2] in _FORBID_PREFIX_SEPS):
+        return True
+    return False
+
+
+def _forbid_occurrence_avoided(text: str, index: int) -> bool:
+    start = 0
+    window = max(0, index - 24)
+    for pos in range(index - 1, window - 1, -1):
+        if text[pos] in _FORBID_PREFIX_SEPS:
+            start = pos + 1
+            break
+    else:
+        start = window
+    return _forbid_prefix_avoids(text[start:index])
+
+
+def conflicting_forbid_phrase(line: str, forbid_items: Any) -> str:
+    """Return a forbid phrase this line affirms.
+
+    An occurrence counts as agreement only when the words immediately before it
+    say to avoid it. Another occurrence in the same line can still affirm it.
+    """
+    text = str(line or "")
+    for item in forbid_items or []:
+        phrase = str(item).strip()
+        if len(phrase) < 2 or phrase not in text:
+            continue
+        start = 0
+        while True:
+            found = text.find(phrase, start)
+            if found < 0:
+                break
+            if not _forbid_occurrence_avoided(text, found):
+                return phrase
+            start = found + len(phrase)
+    return ""
+
+
 def gate_style_memory(
     rows: list[dict[str, Any]],
     *,
@@ -603,12 +651,7 @@ def gate_style_memory(
             excluded.append({"id": eid, "kind": kind, "reason": "未人工确认，不作为硬约束"})
             continue
         line = strip_redline_identity(summary) if kind == "style_redline" else summary
-        forbid_hit = ""
-        for item in grid.get("forbid") or []:
-            phrase = str(item).strip()
-            if len(phrase) >= 4 and phrase in line and "避免" not in line and "禁止" not in line:
-                forbid_hit = phrase
-                break
+        forbid_hit = conflicting_forbid_phrase(line, grid.get("forbid") or [])
         if forbid_hit:
             excluded.append({"id": eid, "kind": kind, "reason": f"与当前明确禁止冲突：{forbid_hit}"})
             continue
@@ -700,7 +743,60 @@ def build_warm_start_pack(
         and entry_on_topic_for_task(e, module, goal)
     ]
 
-    recipes = sorted(recipes, key=lambda e: rank_memory_entry(e, target_module=module, query=goal), reverse=True)[:top_n]
+    pooled = {id(e) for e in recipes + redlines + decisions}
+
+    def _unpooled_reason(entry: dict[str, Any]) -> str:
+        kind = str(entry.get("kind") or "")
+        if not _entry_live(entry):
+            return "已作废或停用，不注入"
+        if not _mod_ok(str(entry.get("module") or ""), kind="" if kind == "recipe" else kind):
+            return "其他模块，不注入"
+        if _stale_merge_phrase(entry):
+            return "过期合成梯规则，不注入"
+        if not entry_on_topic_for_task(entry, module, goal):
+            return "与当前任务主题不符，不注入"
+        if kind == "recipe" and not _recipe_ok_for_shell_goal(entry):
+            return "与当前界面母版任务不符，不注入"
+        return "未进入本轮注入，不进提示词"
+
+    pre_excluded: list[dict[str, str]] = []
+    try:
+        from .memory_trust import trust_counts_for_recipe_confidence as _recipe_confirmed
+    except Exception:
+        def _recipe_confirmed(entry: dict[str, Any]) -> bool:
+            return str(entry.get("status") or "active").lower() != "provisional"
+
+    for entry in entries:
+        if not isinstance(entry, dict):
+            continue
+        kind = str(entry.get("kind") or "")
+        if kind not in ("recipe", "style_redline", "art_decision"):
+            continue
+        if id(entry) in pooled:
+            continue
+        pre_excluded.append(
+            {
+                "id": str(entry.get("id") or ""),
+                "kind": kind,
+                "reason": _unpooled_reason(entry),
+            }
+        )
+
+    recipe_pool = list(recipes)
+    recipes = sorted(
+        recipe_pool, key=lambda e: rank_memory_entry(e, target_module=module, query=goal), reverse=True
+    )[:top_n]
+    kept_recipe_ids = {id(e) for e in recipes}
+    for entry in recipe_pool:
+        if id(entry) in kept_recipe_ids and _recipe_confirmed(entry):
+            reason = "已确认 recipe 只参与置信，不进提示词"
+        elif id(entry) in kept_recipe_ids:
+            reason = "未人工确认，recipe 不进提示词也不抬置信"
+        else:
+            reason = "超出 recipe 保留上限，不进提示词也不抬置信"
+        pre_excluded.append(
+            {"id": str(entry.get("id") or ""), "kind": "recipe", "reason": reason}
+        )
     # Rank all on-topic redlines, but only inject a short cap — excess must not crush confidence / prompt.
     redlines_ranked = sorted(
         redlines, key=lambda e: rank_memory_entry(e, target_module=module, query=goal), reverse=True
@@ -724,12 +820,38 @@ def build_warm_start_pack(
         decisions_ranked, goal=goal, contract=contract
     )
     decisions = decisions_gated[:top_n]
+    for overflow in decisions_gated[top_n:]:
+        decision_excluded.append(
+            {
+                "id": str(overflow.get("id") or ""),
+                "kind": "art_decision",
+                "reason": "超出拍板注入上限",
+            }
+        )
 
     taste = load_taste(root)
     palette = (modules.get(module) or {}).get("palette") or []
     banned = filter_habits_for_task(taste.get("banned_habits") or [], module, goal)
     raw_keeps = taste.get("keep_phrases") or []
     keeps, dropped_keeps = filter_keeps_with_audit(raw_keeps, module, goal)
+    forbid_items = []
+    if isinstance(contract, dict) and isinstance(contract.get("grid"), dict):
+        forbid_items = list(contract["grid"].get("forbid") or [])
+    if forbid_items:
+        kept_phrases: list[str] = []
+        for phrase_text in keeps:
+            hit = conflicting_forbid_phrase(str(phrase_text), forbid_items)
+            if not hit:
+                kept_phrases.append(phrase_text)
+                continue
+            pre_excluded.append(
+                {
+                    "id": f"keep:{str(phrase_text)[:24]}",
+                    "kind": "keep",
+                    "reason": f"与当前明确禁止冲突：{hit}",
+                }
+            )
+        keeps = kept_phrases
 
     recipe_summaries = [
         {"id": e.get("id"), "summary": e.get("summary"), "module": e.get("module")}
@@ -829,6 +951,23 @@ def build_warm_start_pack(
         return True
 
     recalled_cards = [c for c in recalled_cards if _knowledge_ok(c)]
+
+    def _knowledge_allows(card: dict[str, Any]) -> bool:
+        for blob in (card.get("title"), card.get("body")):
+            hit = conflicting_forbid_phrase(str(blob or ""), forbid_items)
+            if not hit:
+                continue
+            pre_excluded.append(
+                {
+                    "id": str(card.get("id") or ""),
+                    "kind": "knowledge",
+                    "reason": f"与当前明确禁止冲突：{hit}",
+                }
+            )
+            return False
+        return True
+
+    recalled_cards = [c for c in recalled_cards if _knowledge_allows(c)]
     private_kcards = [c for c in recalled_cards if c.get("layer_scope") == "private"]
     shared_kcards = [c for c in recalled_cards if c.get("layer_scope") == "shared"]
     if shared_kcards or private_kcards:
@@ -906,7 +1045,7 @@ def build_warm_start_pack(
             {"id": d.get("id"), "kind": "art_decision", "reason": d.get("reason") or ""}
             for d in decision_rows
         ],
-        "excluded": list(redline_excluded) + list(decision_excluded),
+        "excluded": list(pre_excluded) + list(redline_excluded) + list(decision_excluded),
     }
     inject_summary = (
         f"记忆取舍（不拦截）：注入红线 {len(redline_summaries)} · 排除 {len(inject_trace['excluded'])} · "

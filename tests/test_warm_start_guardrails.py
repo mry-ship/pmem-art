@@ -3,10 +3,12 @@ from __future__ import annotations
 
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from improve.warm_start import (
     build_warm_start_pack,
     collapse_opposed_prefs,
+    conflicting_forbid_phrase,
     entry_on_topic_for_task,
     filter_habits_for_task,
     filter_keeps_for_task,
@@ -613,6 +615,191 @@ class TestBuildPackIntegration(unittest.TestCase):
         )
         if "货柜" in blob or "海鲜" in blob or "#FEFDFB" in blob:
             self.assertGreaterEqual(len(pack.get("dropped_keeps") or []), 1)
+
+
+class TestMemoryPollutionTrace(unittest.TestCase):
+    """污染记忆要留下排除原因，并且不能进入最终提示词。"""
+
+    def _pack(self, contract: dict | None = None):
+        root = Path(__file__).resolve().parents[1]
+        data = {
+            "modules": {"ui.MainMenu": {}, "merge.Harbor": {}},
+            "entries": [
+                {
+                    "id": "RL_NOTRUST",
+                    "kind": "style_redline",
+                    "module": "ui.MainMenu",
+                    "status": "active",
+                    "summary": "[收敛踩坑红线] 旧主菜单金币条：避免「硬描边」",
+                },
+                {
+                    "id": "RL_CAND",
+                    "kind": "style_redline",
+                    "module": "ui.MainMenu",
+                    "status": "active",
+                    "trust": "candidate",
+                    "summary": "[收敛踩坑红线] 皇家三消骨架：避免「中心圆盘」",
+                },
+                {
+                    "id": "RL_DEAD",
+                    "kind": "style_redline",
+                    "module": "ui.MainMenu",
+                    "status": "superseded",
+                    "trust": "verified",
+                    "summary": "[收敛踩坑红线] 已废止：主菜单必须留厚金边",
+                },
+                {
+                    "id": "RL_OK",
+                    "kind": "style_redline",
+                    "module": "ui.MainMenu",
+                    "status": "active",
+                    "trust": "verified",
+                    "summary": "[收敛踩坑红线] 避免「按钮没有按下态」",
+                },
+                {
+                    "id": "AD_OTHER",
+                    "kind": "art_decision",
+                    "module": "merge.Harbor",
+                    "status": "active",
+                    "trust": "verified",
+                    "summary": "合成梯缺省表面写成港湾货柜缺省句",
+                },
+                {
+                    "id": "AD_FORBID",
+                    "kind": "art_decision",
+                    "module": "ui.MainMenu",
+                    "status": "active",
+                    "trust": "verified",
+                    "summary": "主菜单骨架直接铺宣传海报",
+                },
+                {
+                    "id": "R_FAIL",
+                    "kind": "recipe",
+                    "module": "ui.MainMenu",
+                    "status": "active",
+                    "summary": "失败经验：主菜单沿用旧入口排法",
+                },
+                {
+                    "id": "R_OLD",
+                    "kind": "recipe",
+                    "module": "ui.MainMenu",
+                    "status": "active",
+                    "trust": "verified",
+                    "summary": "旧档序：主菜单从左到右排八个入口",
+                },
+            ],
+        }
+        return build_warm_start_pack(
+            root,
+            data,
+            module="ui.MainMenu",
+            goal="休闲主菜单概念稿",
+            contract=contract,
+        )
+
+    def _reasons(self, pack: dict) -> dict[str, str]:
+        return {
+            str(row.get("id") or ""): str(row.get("reason") or "")
+            for row in (pack.get("inject_trace") or {}).get("excluded") or []
+        }
+
+    def test_pollution_cases_stay_out_of_prompt(self) -> None:
+        pack = self._pack(
+            {"grid": {"keep": [], "vary": [], "forbid": ["宣传海报"], "spec": []}}
+        )
+        block = pack["prompt_block"]
+        reasons = self._reasons(pack)
+        self.assertIn("未人工确认", reasons["RL_NOTRUST"])
+        self.assertIn("未人工确认", reasons["RL_CAND"])
+        self.assertIn("已作废或停用", reasons["RL_DEAD"])
+        self.assertIn("其他模块", reasons["AD_OTHER"])
+        self.assertIn("宣传海报", reasons["AD_FORBID"])
+        self.assertIn("未人工确认", reasons["R_FAIL"])
+        self.assertIn("不进提示词", reasons["R_OLD"])
+        for token in (
+            "旧主菜单金币条",
+            "皇家三消",
+            "中心圆盘",
+            "厚金边",
+            "港湾货柜缺省句",
+            "宣传海报",
+            "失败经验",
+            "旧入口排法",
+            "从左到右排八个入口",
+        ):
+            self.assertNotIn(token, block, token)
+        self.assertIn("避免「按钮没有按下态」", block)
+        self.assertIn("R_OLD", {row["id"] for row in pack["top_recipes"]})
+        self.assertNotIn("R_OLD", block)
+        self.assertIn("命中 1 条 verified/canonical recipe", pack["confidence_reasons"])
+        self.assertNotIn("优先复用定稿方向", block)
+
+    def test_forbid_uses_affirming_clause(self) -> None:
+        self.assertEqual(conflicting_forbid_phrase("避免「硬描边」", ["硬描边"]), "")
+        self.assertEqual(conflicting_forbid_phrase("严禁硬描边", ["硬描边"]), "")
+        self.assertEqual(conflicting_forbid_phrase("别加硬描边", ["硬描边"]), "")
+        self.assertEqual(conflicting_forbid_phrase("特别硬描边", ["硬描边"]), "硬描边")
+        self.assertEqual(conflicting_forbid_phrase("不要留白要硬描边", ["硬描边"]), "硬描边")
+        self.assertEqual(conflicting_forbid_phrase("按钮加硬描边（避免塑料感）", ["硬描边"]), "硬描边")
+        self.assertEqual(conflicting_forbid_phrase("避免留白、铺宣传海报", ["宣传海报"]), "宣传海报")
+        self.assertEqual(conflicting_forbid_phrase("铺宣传海报，禁止留白", ["宣传海报"]), "宣传海报")
+        self.assertEqual(conflicting_forbid_phrase("主菜单按钮加硬描边", ["硬描边"]), "硬描边")
+        root = Path(__file__).resolve().parents[1]
+        data = {
+            "modules": {"ui.MainMenu": {}},
+            "entries": [
+                {
+                    "id": "AD_MIX",
+                    "kind": "art_decision",
+                    "module": "ui.MainMenu",
+                    "status": "active",
+                    "trust": "verified",
+                    "summary": "铺宣传海报，禁止留白",
+                },
+                {
+                    "id": "RL_ALIGN",
+                    "kind": "style_redline",
+                    "module": "ui.MainMenu",
+                    "status": "active",
+                    "trust": "verified",
+                    "summary": "[收敛踩坑红线] 避免「硬描边」",
+                },
+            ],
+        }
+        contract = {"grid": {"forbid": ["宣传海报", "硬描边"]}}
+        with patch(
+            "improve.warm_start.load_taste",
+            return_value={"keep_phrases": ["主菜单要铺宣传海报"], "banned_habits": []},
+        ), patch(
+            "improve.knowledge.recall_layered_knowledge_cards",
+            return_value=[
+                {
+                    "id": "CARD_POSTER",
+                    "title": "禁止留白",
+                    "body": "中心直接铺宣传海报",
+                    "layer_scope": "private",
+                }
+            ],
+        ):
+            pack = build_warm_start_pack(
+                root,
+                data,
+                module="ui.MainMenu",
+                goal="休闲主菜单概念稿",
+                contract=contract,
+            )
+        block = pack["prompt_block"]
+        reasons = self._reasons(pack)
+        self.assertNotIn("宣传海报", block)
+        self.assertIn("宣传海报", reasons["AD_MIX"])
+        self.assertIn("宣传海报", reasons["keep:主菜单要铺宣传海报"])
+        self.assertIn("宣传海报", reasons["CARD_POSTER"])
+        self.assertIn("避免「硬描边」", block)
+
+    def test_missing_grid_does_not_apply_forbid(self) -> None:
+        open_pack = self._pack(None)
+        self.assertIn("宣传海报", open_pack["prompt_block"])
+        self.assertNotIn("AD_FORBID", self._reasons(open_pack))
 
 
 if __name__ == "__main__":

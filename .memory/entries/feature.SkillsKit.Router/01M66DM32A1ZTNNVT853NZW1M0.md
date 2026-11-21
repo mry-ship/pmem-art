@@ -22,8 +22,8 @@ aliases:
 - plan_conflict普通图
 - 也不换题材误克隆
 - 标准句自毒
-verified: '2026-11-10'
-verified_at: '2026-11-10T02:23:39.834+08:00'
+verified: '2026-11-21'
+verified_at: '2026-11-21T15:48:12.571+08:00'
 source:
   conversation: aa0265fa-d1f5-45f9-b116-1b37f31766d0
 ---

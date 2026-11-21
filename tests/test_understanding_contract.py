@@ -16,7 +16,9 @@ from skills_kit.understanding_contract import (  # noqa: E402
     classify_feedback,
     cmd_contract,
     contract_from_session_bootstrap,
+    contract_inject_stamp,
     defaults_visibility_ok,
+    warm_needs_rebuild,
     ensure_session_contract,
     format_contract_summary,
     format_working_set,
@@ -26,6 +28,32 @@ from skills_kit.understanding_contract import (  # noqa: E402
 
 
 class TestUnderstandingContract(unittest.TestCase):
+    def test_bootstrap_leaves_grid_unwritten(self) -> None:
+        contract = contract_from_session_bootstrap(
+            goal="画一张窗边女孩",
+            route_ids=["draw.ordinary"],
+            banner="【走默认路径】",
+        )
+        self.assertEqual(contract["grid"]["keep"], [])
+        self.assertEqual(contract["grid"]["vary"], [])
+        self.assertEqual(contract["grid"]["forbid"], [])
+        self.assertEqual(contract["grid"]["spec"], [])
+        self.assertEqual(contract_inject_stamp(contract), "")
+        text = format_contract_summary(contract)
+        self.assertIn("必须保持：（未写）", text)
+        self.assertIn("可以变化：（未写）", text)
+        self.assertIn("明确禁止：（未写）", text)
+        self.assertIn("交付规格：（未写）", text)
+        src = (ROOT / "skills_kit" / "converge.py").read_text(encoding="utf-8")
+        self.assertIn("四格未写", src)
+        self.assertIn("本轮记忆注入不受四格约束", src)
+        self.assertIn("warm_needs_rebuild", src)
+        self.assertFalse(warm_needs_rebuild({"prompt_block": "已有", "contract_stamp": ""}, ""))
+        self.assertTrue(
+            warm_needs_rebuild({"prompt_block": "已有", "contract_stamp": "abc"}, "")
+        )
+
+
     def test_classify_layers(self) -> None:
         self.assertEqual(classify_feedback("不对，走错技能了")["layer"], "l0")
         self.assertEqual(classify_feedback("不符合预期")["layer"], "l0")
@@ -213,6 +241,7 @@ class TestUnderstandingContract(unittest.TestCase):
         self.assertTrue(any("构图" in x for x in c2["l1"]["locks"]))
         self.assertTrue(all(len(x) <= 24 for x in c2["l1"]["locks"]))
         self.assertIn("机位不要动", c2["notes"])
+        self.assertEqual(c2["grid"]["keep"], [])
 
     def test_split_only_legacy_delivery(self) -> None:
         sess = {"goal": "多图", "contract": "split", "rounds": []}

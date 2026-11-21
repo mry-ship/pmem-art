@@ -26,6 +26,8 @@ aliases:
 - touchup
 - spot fix
 - draw.touchup
+verified: '2026-11-21'
+verified_at: '2026-11-21T15:48:12.571+08:00'
 source:
   conversation: b3206fc3-5edb-4094-ad92-97f526162318
 ---

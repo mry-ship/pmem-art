@@ -138,7 +138,7 @@ class TestPolicyDefaults(unittest.TestCase):
         )
 
     def test_early_stop_block_ignores_gate_notes_guard(self) -> None:
-        """judge 不得用「有 gate_notes」短路早停（否则 merge 贴边提示会逼满 4 轮）。"""
+        """judge 不得用「有 gate_notes」短路早停（否则 merge 贴边提示会逼满剩余轮次）。"""
         src = (ROOT / "skills_kit" / "converge.py").read_text(encoding="utf-8")
         self.assertNotIn(
             "if not passed and should_continue and not gate_notes:",

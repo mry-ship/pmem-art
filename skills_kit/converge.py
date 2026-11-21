@@ -1775,7 +1775,7 @@ def cmd_converge(
                     {"at": "start", "text": lock_text or goal, "overrides": dict(ov)}
                 )
                 print(f"🔓 画师锁定微调已生效：{format_dim_lock_summary_zh(eff_scale, ov)}")
-        # 理解合同 v1：外置当前理解（不改 route/9.5/4轮/垫图等硬闸）
+        # 理解合同 v1：外置当前理解（不改 route/9.5/最多3轮/垫图等硬闸）
         from .understanding_contract import (
             contract_from_session_bootstrap,
             defaults_visibility_ok,
@@ -2353,15 +2353,18 @@ def cmd_converge(
         warm_hash = ""
         warm_block = ""
         if apply_memory:
-            from .understanding_contract import contract_inject_stamp
+            from .understanding_contract import contract_inject_stamp, warm_needs_rebuild
 
             understanding = sess.get("understanding_contract")
             understanding = understanding if isinstance(understanding, dict) else {}
             stamp = contract_inject_stamp(understanding)
-            # 四格写进合同之后重算注入，避免开画时的记忆包盖过当前需求。
-            rebuild_warm = (not str(warm.get("prompt_block") or "").strip()) or (
-                bool(stamp) and str(warm.get("contract_stamp") or "") != stamp
-            )
+            if not stamp:
+                print(
+                    "⚠️ 四格未写：必须保持、可以变化、明确禁止、交付规格都是空的，"
+                    "本轮记忆注入不受四格约束。写入请用 contract set。"
+                )
+            # 四格写入、改写或清空之后都重算，避免开画时的记忆包盖过当前需求。
+            rebuild_warm = warm_needs_rebuild(warm, stamp)
             if rebuild_warm:
                 warm = build_warm_start_pack(
                     root,
@@ -2370,11 +2373,9 @@ def cmd_converge(
                     goal=str(sess.get("goal") or goal or ""),
                     contract=understanding,
                 )
-                if stamp:
-                    warm["contract_stamp"] = stamp
+                warm["contract_stamp"] = stamp
                 sess["warm_start"] = warm
-                if stamp:
-                    print(f"   · {warm.get('inject_summary') or '记忆已按四格合同重算'}")
+                print(f"   · {warm.get('inject_summary') or '记忆已按四格合同重算'}")
             warm_block = str(warm.get("prompt_block") or "").strip()
             before = composed_prompt
             composed_prompt = merge_warm_start_prompt(composed_prompt, warm)
