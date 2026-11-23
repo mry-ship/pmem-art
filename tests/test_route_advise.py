@@ -63,6 +63,19 @@ class RouteAdviseTests(unittest.TestCase):
         self.assertEqual(payload["route_ids"], ["draw.ordinary"])
         self.assertTrue(payload["would_execute"])
 
+    def test_prompt_scheme_bie_sheng_tu_not_ordinary(self) -> None:
+        """「提示词方案 + 别生图」须走 prompt.write，禁止默认普通图 banner。"""
+        text = "写一套红伞蘑菇芝士果盘的提示词方案，别生图"
+        plan = plan_route(text)
+        self.assertEqual(plan.route_ids, ["prompt.write"])
+        self.assertEqual(plan.reason, "prompt")
+        self.assertNotIn("普通图", plan.announce)
+        self.assertIn("提示词", plan.announce)
+        payload = advise_route(text)
+        self.assertEqual(payload["route_ids"], ["prompt.write"])
+        self.assertTrue(payload["banner"].startswith("【按 "))
+        self.assertIn("提示词", payload["banner"])
+
     def test_skill_banner_and_plan_align(self) -> None:
         text = "参考这张的画风，别画原来的人，换成修车的男孩"
         payload = advise_route(text, images=["ref/style.png"])

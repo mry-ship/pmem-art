@@ -1,6 +1,6 @@
 ---
 name: pmem-agent
-description: 玩家没点名具体技能时使用。只审一轮，列出合理性、缺漏和理解错误。只有一种确定情况就列出分析并直接执行。多种情况先列出来，等玩家确认再执行。玩家另提要求就再审一遍，仍等确认后再执行。可默认的路径/版式/同范围不要当成多种情况。第二段前必须先跑 python3 pmem_art.py route（本地规则+近邻），禁止只靠读长 SKILL 盲猜。定稳后由总控读注册表 pack_headings，用 slice_route_body 打包执行包（出图=闭环+合同），只把定稿、全部附图和该执行包交给一个 agent。总控自己不生图。回显按哪一节走了；默认兜底最前写【走默认路径】。结算格式仍是那一支自己的。
+description: 玩家没点名具体技能时使用。只审一轮，列出合理性、缺漏和理解错误。只有一种确定情况就列出分析并直接执行。多种情况先列出来，等玩家确认再执行。玩家另提要求就再审一遍，仍等确认后再执行。可默认的路径/版式/同范围不要当成多种情况。第二段前必须先跑 pyw -3 -u pmem_art.py route（本地规则+近邻），禁止只靠读长 SKILL 盲猜。定稳后由总控读注册表 pack_headings，用 slice_route_body 打包执行包（出图=闭环+合同），只把定稿、全部附图和该执行包交给一个 agent。总控自己不生图。回显按哪一节走了；默认兜底最前写【走默认路径】。结算格式仍是那一支自己的。
 ---
 
 # `/pmem-agent` — 总控
@@ -54,7 +54,7 @@ description: 玩家没点名具体技能时使用。只审一轮，列出合理�
 ### 0.2 再跑本地 route
 
 ```bash
-python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>"
+pyw -3 -u pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>"
 ```
 
 有附图时加 `--image <路径>`（可多次）；有身份/结构分工时加 `--role identity` / `--role structure`（与 `--image` 顺序对齐）。Agent 自用加 `--json`；**给美术看时只用输出里的 `artist_say`**（或 `route --brief`），禁止把 confidence / neighbors / json 刷给画师。
@@ -73,7 +73,7 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 
 只审一轮。这一轮写明交付物是什么、每张图锁什么、每张图不锁什么，并查合理性、缺漏和理解错误：合不合理，漏了什么，有没有理解错。漏的补上。理解错的按原话改回来。合不合理是看这句话能不能和原话、附图同时成立。
 
-不要再开第二轮去复查。分析列给玩家看。不要把分析和执行并成一句口头分流：分析先写出来。**执行默认（两套写法同一合同）**：普通单交付默认本对话只读执行包自跑；仅 merge 逐格并行 / 多技能展陈等同范围清单才开 Task/子 agent（只交注册表 `pack_headings` 拼成的执行包，不是八份全文、也不是单挂合同丢闭环）。禁止另选技能或把整份 SKILL 塞给执行侧。裁节用 `skills_kit.skill_registry.slice_route_body(body, route)`（内部按 `pack_headings` 调 `slice_markdown_section`，并跳过围栏内伪标题）。**子 agent / 本对话执行失败时**：总控在本对话按同一执行包自行续跑或收束，禁止甩锅「已交给子 agent」后沉默；缺图/闸拦/冲突先向玩家说清并给可改说法。
+不要再开第二轮去复查。分析列给玩家看。不要把分析和执行并成一句口头分流：分析先写出来。**执行默认（两套写法同一合同）**：普通单交付默认本对话只读执行包自跑；仅 merge 逐格并行 / 多技能展陈等同范围清单才开 Task/子 agent（只交注册表 `pack_headings` 拼成的执行包，不是八份全文、也不是单挂合同丢闭环）。**并行上限**：同时活跃 Task/子 agent ≤ `.memory-art/config.yaml` → `agent.max_parallel`（默认 **4**；本机卡改 **2**，勿 >5）；超出分批，上一批结束再开下一批。禁止另选技能或把整份 SKILL 塞给执行侧。裁节用 `skills_kit.skill_registry.slice_route_body(body, route)`（内部按 `pack_headings` 调 `slice_markdown_section`，并跳过围栏内伪标题）。**子 agent / 本对话执行失败时**：总控在本对话按同一执行包自行续跑或收束，禁止甩锅「已交给子 agent」后沉默；缺图/闸拦/冲突先向玩家说清并给可改说法。
 
 ### 默认 vs 硬不确定（防卡死）
 
@@ -88,7 +88,7 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 
 **理解合同（防多轮漂移 · 总控必做）**：
 1. 分析里写出四格：必须保持、可以变化、明确禁止、交付规格。能推断的直接写入，并标明「推断」；用户原话标明「原话」。不要为此多问一轮。
-2. `converge start` 后立刻 `python3 pmem_art.py contract set --id <session> --keep "…" --vary "…" --forbid "…" --spec "…" [--inferred "与四格中相同的推断句"] [--defaults "默认：…" --vibe …]`。四格不要写进标准路由句。
+2. `converge start` 后立刻 `pyw -3 -u pmem_art.py contract set --id <session> --keep "…" --vary "…" --forbid "…" --spec "…" [--inferred "与四格中相同的推断句"] [--defaults "默认：…" --vibe …]`。四格不要写进标准路由句。
 3. 交给执行侧时交代：每轮先 `contract working-set`，禁止靠长聊天重谈 L0/L1/四格。后续修改继续遵守必须保持和明确禁止。
 4. 画师纠正：先 `contract classify --text "…"`，再 `contract patch --id <session> --feedback "…"`（L0 可能重开，L2 只改一处）。用户明确改需求时，用最新原话重写四格。
 
@@ -106,6 +106,7 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 - 出图主链（`start`→`emit-prompt`→生图→`generate --image` 登记→`judge`）禁止跑 `doctor` / `hygiene` / 深检 / `--help` 探索；维护任务放到出图前、`finish` 后或单独点名。
 - 禁止 Probe / Overwrite / stub 占位图骗闸 / 额外探测再生图；顺序：`converge generate --emit-prompt` → GenerateImage → `converge generate --image` → judge。
 - 显式 session（禁 `latest`）；普通单交付本对话优先；Task 仅 merge 逐格并行 / 多技能展陈。
+- **并行上限**：同时活跃 Task/子 agent ≤ `agent.max_parallel`（默认 4）；超出分批排队。
 - 首轮 brief 一次写准（身份/机位/材质/禁令/底色/动势品种等硬锁），硬锁不留到下一轮。
 - **平台纪律（本项目已开安全早停）**：`safe_early_stop: true`；掉≥0.15 或平台持平/掉分（`plateau_rounds`，本项目=1）且 R≥2 → 交历史最高分并标明未过线；见 `STOP_*` 立即 `finish`，禁止凑满 3。开场 search 只取要点，禁整包 JSON 刷屏。
 
@@ -123,7 +124,7 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 
 高频活走 **remap/ask**，不新开技能：局部修/只改手/清稿/换光/延展/姿势锁 → 普通图（banner 带别名）；设定表/三视图 → 变体；分镜/故事板/字标/色板点选/情绪板 → 先问。真做不到（序列帧、平铺/无缝贴图）才停并写「没有识别到可用技能」。透明底、表情表、拼板、远中近、镜头包点选后的机位、审完再改，仍落在已有合同里。
 
-命中之后，在该文件里查找这一行的 `heading`，并读取同行的 `pack_headings`。标题里的反引号可以忽略，文字对上即可。找不到，注册表过期：停，写明要跑 `python3 pmem_art.py skills --install`，不用过期的那一行出图。
+命中之后，在该文件里查找这一行的 `heading`，并读取同行的 `pack_headings`。标题里的反引号可以忽略，文字对上即可。找不到，注册表过期：停，写明要跑 `pyw -3 -u pmem_art.py skills --install`，不用过期的那一行出图。
 
 对上之后先写步骤表，再执行。步骤表是告知，不再开一轮点选。简单任务一行，写完就执行。每一步只走一支。下一步拿上一步交出来的图。上一步没做完，下一步不开始。每一行写全这六样，缺一样这步不能开始：
 
@@ -131,7 +132,7 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 2. 这一步交什么
 3. 垫哪张，不垫哪张
 4. 锁什么
-5. 怎样算做完（生图步：≥9.5 到线，或达到该会话轮次硬顶并标明未过线；普通图与重路径均为最多 3，≥9.5到线即停；展陈 HTML 还要 `python3 pmem_art.py showcase-gate --html <路径>` 通过）
+5. 怎样算做完（生图步：≥9.5 到线，或达到该会话轮次硬顶并标明未过线；普通图与重路径均为最多 3，≥9.5到线即停；展陈 HTML 还要 `pyw -3 -u pmem_art.py showcase-gate --html <路径>` 通过）
 6. 交给下一步什么
 
 回显以 `route` 的 `banner` 为准（最前一行）。例如「【按 多图分工 走了】」「【走默认路径】按 普通图 走了」「【按 Mode A 走了】」。这句只说明选了哪一节，不问选哪条技能。
@@ -158,7 +159,7 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 它按执行包执行。总控不在候选里。父级把 `banner`（含【走默认路径】或【按 XX 走了】）原样写给玩家，放在结论最前。
 
 - **普通单交付**：只执行一支。
-- **定稿写明是「整页展陈 / 对比页 / 多技能同范围重跑」**：按定稿清单**依次点名**调用对应技能（每次一支、做完再下一支），最后收成新 HTML；不要因为清单里有多项就打回重问范围。
+- **定稿写明是「整页展陈 / 对比页 / 多技能同范围重跑」**：按定稿清单点名对应技能；可并行开 Task，但同时活跃 ≤ `agent.max_parallel`（默认 4），超出分批；最后收成新 HTML；不要因为清单里有多项就打回重问范围。
 
 执行会生图的技能时，定稿和每一张图一起带上。会 `converge start` 的，`--reference-image-paths` 写上每一张图，第一张是垫图原件，其余按定稿顺序跟在后面，一张不删。`--aspect-ratio` 跟第一张垫图的方向：竖屏用 `9:16` 或 `3:4`，横屏用 `16:9` 或 `4:3`，方图用 `1:1`。禁止把竖屏垫图加边填成横画布。`--ref-analysis` 只写风格、构图和特征；不足只在玩家要求优化这张图时写。身份图宽高比不同，也不从列表里删。生成轮若只能垫一张，垫原件里方向对齐的那张；打分时仍把成图和每一张参考图按定稿并排看。
 

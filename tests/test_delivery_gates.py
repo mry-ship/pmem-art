@@ -346,18 +346,19 @@ class DeliveryGateTests(unittest.TestCase):
             self.assertEqual(first["reference_image_paths"], second["reference_image_paths"])
             self.assertTrue(Path(pad).is_file())
 
-    def test_portrait_pad_cannot_be_filled_into_landscape(self) -> None:
+    def test_portrait_pad_opposite_delivery_is_style_only(self) -> None:
+        """竖垫 + 横交付：只锁画风，不硬加边、不拦会话。"""
         with tempfile.TemporaryDirectory() as tmp:
             src = Path(tmp) / "phone.png"
             Image.new("RGB", (40, 90), (20, 40, 80)).save(src)
-            with self.assertRaises(ValueError) as caught:
-                validate_converge_params(
-                    session_id="merge-pad",
-                    aspect_ratio="4:3",
-                    reference_image_paths=[str(src)],
-                    root=Path(tmp),
-                )
-            self.assertIn("不能加边填成", str(caught.exception))
+            res = validate_converge_params(
+                session_id="merge-pad",
+                aspect_ratio="4:3",
+                reference_image_paths=[str(src)],
+                root=Path(tmp),
+            )
+            self.assertEqual(res["aspect_ratio"], "4:3")
+            self.assertTrue(any("只锁画风" in w for w in (res.get("warnings") or [])))
 
     def test_style_strip_pad_allows_square_delivery(self) -> None:
         """横条货条只锁画风：显式 1:1 交付时不因方向翻车拦截。"""
@@ -371,6 +372,22 @@ class DeliveryGateTests(unittest.TestCase):
                 root=Path(tmp),
             )
             self.assertEqual(res["aspect_ratio"], "1:1")
+            self.assertTrue(any("只锁画风" in w for w in (res.get("warnings") or [])))
+
+    def test_portrait_named_strip_is_not_a_food_strip(self) -> None:
+        """竖图即使文件名带 strip，也不能被说成横条货条。"""
+        with tempfile.TemporaryDirectory() as tmp:
+            src = Path(tmp) / "clone_style_ref_strip.jpg"
+            Image.new("RGB", (169, 276), (40, 140, 60)).save(src)
+            res = validate_converge_params(
+                session_id="clone-strip-name",
+                aspect_ratio="16:9",
+                reference_image_paths=[str(src)],
+                root=Path(tmp),
+            )
+            warnings = " ".join(res.get("warnings") or [])
+            self.assertEqual(res["aspect_ratio"], "16:9")
+            self.assertNotIn("横条", warnings)
             self.assertTrue(any("只锁画风" in w for w in (res.get("warnings") or [])))
 
 

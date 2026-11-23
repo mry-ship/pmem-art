@@ -77,19 +77,19 @@ description: 【最多3轮·到线即停】SpriteCook式 UI Kit/HUD/九宫格整
 ### Step 0：确定屏幕类型与规格
 确认：屏幕类型、平台（桌面/主机 vs 移动）、画幅、目标模块（如 `ui.MainMenu` / `ui.InventoryHUD`）。玩家写了画幅，或点名了某一块具体的屏，以那一块屏为准。垫图是手机竖屏时，概念稿和组件表都用 `9:16`，垫原图，禁止填成 `16:9`。模块里过期的方图规格不能把主界面收成 1:1。垫图分析只写风格、构图和特征。
 ```bash
-python3 pmem_art.py search --module <ui.模块>
+pyw -3 -u pmem_art.py search --module <ui.模块>
 ```
 
 ### Step 1：概念先行（Concept First）—— 不可跳过
 1. 若用户丢入概念图：先做参考图视觉解构（构图分区、主辅色 HEX、金属/木纹/霓虹材质、控件密度），再进入组件抽取。
 2. 若无概念图：先生成 **1 张完整屏幕概念稿**（整屏布局，统一材质与色板），**最多3轮、≥9.5到线即停**（生→judge→不到线再改；满3轮交最高分并标明是否≥9.5）：
    ```bash
-   python3 pmem_art.py converge start --goal "UI概念稿：<屏幕类型+风格>" --module <ui.模块> --route-id ui.kit [--scale medium|high]
+   pyw -3 -u pmem_art.py converge start --goal "UI概念稿：<屏幕类型+风格>" --module <ui.模块> --route-id ui.kit [--scale medium|high]
    # 首轮前必过合理性闸（同时交出更合理提示词）：
-   python3 pmem_art.py reasonableness review --id <session> --skill ui \
+   pyw -3 -u pmem_art.py reasonableness review --id <session> --skill ui \
      --draft "<草稿>" --revised "<分区/控件/禁忌写清的修订句>" \
      --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;layout_zones=ok;no_content_clutter=ok;chrome_not_illustration=ok;cta_clear_of_faces=ok;control_craft=ok"
-   python3 pmem_art.py converge generate … && converge judge … && converge finish
+   pyw -3 -u pmem_art.py converge generate … && converge judge … && converge finish
    ```
 3. **concept-only 到此交货**。仅 full kit：**概念稿审完后才进入组件表**——不要在概念未锁定时散生按钮。合理性闸不过不许 generate。
 
@@ -159,8 +159,8 @@ ui_kit_<name>/
 
 ### Step 5：沉淀记忆
 ```bash
-python3 pmem_art.py ingest <concept或主面板路径> -p "UI kit <屏幕> 概念/主面板" --apply
-python3 pmem_art.py feedback "UI套件色板与九宫格规范：<摘要>" --module <ui.模块> --kind art_decision
+pyw -3 -u pmem_art.py ingest <concept或主面板路径> -p "UI kit <屏幕> 概念/主面板" --apply
+pyw -3 -u pmem_art.py feedback "UI套件色板与九宫格规范：<摘要>" --module <ui.模块> --kind art_decision
 ```
 
 ## 三、界面审图（概念稿和组件表同名五项；管线只做门槛）

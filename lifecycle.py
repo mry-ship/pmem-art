@@ -510,6 +510,10 @@ def default_config(project_name: str = "Untitled Art Project", mode: str = "youn
                 "recompose": 9.5,
             },
         },
+        # Task/子 agent / merge 逐格 / 拆层 isolate 同时活跃上限；本机卡顿可改成 2。
+        "agent": {
+            "max_parallel": 4,
+        },
         "vlm_judge": {
             "enabled": "auto",
             "provider": "openai",

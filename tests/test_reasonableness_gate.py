@@ -322,6 +322,20 @@ class TestReview(unittest.TestCase):
         )
         self.assertTrue(out["passed"], out["issues"])
 
+    def test_ui_ban_illust_pad_phrase_not_false_positive(self) -> None:
+        """否定/一眼失败句里的「叙事插画垫」不得误拦。"""
+        chk = default_checklist_template("ui")
+        rev = (
+            "商业休闲主菜单：顶栏资源珠、中央主按钮；描边体积投影字重；"
+            "主按钮不遮脸；无乱码；禁止叙事插画垫与气氛图垫；"
+            "一眼失败是叙事插画垫图或 CTA 压脸。"
+        )
+        out = review_reasonableness(
+            skill="ui", draft="主菜单", revised=rev, checklist_text=chk
+        )
+        self.assertTrue(out["passed"], out["issues"])
+        self.assertFalse(any("插画" in x and "垫图母版" in x for x in out["issues"]))
+
     def test_keyart_requires_layout_not_style_echo(self) -> None:
         self.assertIn("layout_not_style_echo", default_checklist_template("keyart"))
         self.assertIn("framing_lock", default_checklist_template("keyart"))

@@ -58,11 +58,8 @@ def apply_ghost_dirty(job: Job, report: dict) -> list[str]:
             dirty_ids.append(lid)
         dirtied.append(lid)
         print(f"GHOST→dirty {lid}: {tag}")
-    # also if whole-compose fail, ensure top hot layers are in dirty set
-    if report.get("level") == "fail":
-        for lid, mae in hot[:5]:
-            if lid not in dirty_ids:
-                dirty_ids.append(lid)
+    # Whole-compose fail must not pull under-threshold or still-ok layers into dirty_ids.
+    # pipeline retries dirty_ids; adding hot[:5] re-rolls layers that already matched.
     status["dirty_ids"] = dirty_ids
     status["ok_ids"] = [k for k, v in layers.items() if v.get("status") == "ok"]
     job.save_status(status)

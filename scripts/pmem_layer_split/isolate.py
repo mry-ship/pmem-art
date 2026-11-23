@@ -205,9 +205,10 @@ def isolate_layers(
         if size not in ALLOWED_SIZES:
             size = "1024x1024"
         quality = layer.get("quality") or "high"
+        # Gate reasons are metric sentences (scale_mul, layer_ghost_mae).
+        # Appending them to MUST REMOVE makes the redraw fill the frame.
+        # Part-level corrections belong in the plan keep/remove, written by the agent.
         extra = ""
-        if st.get("status") == "dirty":
-            extra = "; ".join(st.get("reasons") or [])
         out = job.new_dir / Path(layer["file"]).name
         targets.append((layer, crop, ctx, out, size, quality, extra))
 

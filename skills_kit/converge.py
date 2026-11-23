@@ -21,6 +21,113 @@ def _write_session_json(sf: Path, sess: dict[str, Any]) -> None:
     os.replace(tmp, sf)
 
 
+def _file_sha1(path: Path) -> str:
+    import hashlib
+
+    h = hashlib.sha1()
+    with path.open("rb") as fh:
+        for chunk in iter(lambda: fh.read(1024 * 1024), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def _foreign_plate_owner(root: Path, sha1: str, session_id: str, round_num: int) -> str:
+    """Other converge rounds that already registered this exact file bytes."""
+    digest = (sha1 or "").strip()
+    if not digest:
+        return ""
+    folder = Path(root) / ".memory-art" / "converge"
+    if not folder.is_dir():
+        return ""
+    sid = (session_id or "").strip()
+    try:
+        this_round = int(round_num)
+    except (TypeError, ValueError):
+        this_round = 0
+    for path in sorted(folder.glob("*.json")):
+        if (
+            path.name.startswith("_")
+            or path.name.endswith(".tmp.json")
+            or path.name.endswith(".json.tmp")
+        ):
+            continue
+        try:
+            if path.stat().st_size > 20_000_000:
+                continue
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        if not isinstance(data, dict):
+            continue
+        other_sid = str(data.get("session_id") or path.stem)
+        rows = data.get("rounds") or []
+        if not isinstance(rows, list):
+            continue
+        for row in rows:
+            if not isinstance(row, dict):
+                continue
+            if str(row.get("image_sha1") or "").strip() != digest:
+                continue
+            try:
+                other_round = int(row.get("round") or 0)
+            except (TypeError, ValueError):
+                other_round = 0
+            same_session = other_sid == sid or path.stem == sid
+            if same_session and other_round == this_round:
+                continue
+            return f"{other_sid} 第 {other_round} 轮"
+    return ""
+
+
+def _finish_plate_replaced(root: Path, winner: dict[str, Any]) -> str:
+    """Non-empty when the scored file was swapped after generate/judge."""
+    recorded = str((winner or {}).get("image_sha1") or "").strip()
+    if not recorded:
+        return ""
+    raw = str((winner or {}).get("image") or "").strip()
+    if not raw:
+        return "计分轮次没有成图路径"
+    path = Path(raw)
+    if not path.is_file():
+        path = Path(root) / raw
+    if not path.is_file():
+        return f"计分后成图丢失：{raw}"
+    now = _file_sha1(path)
+    if now != recorded:
+        return (
+            f"计分后成图被换掉：登记 sha1={recorded[:12]}…，磁盘={now[:12]}…。"
+            "分数作废，请用原文件或重新 judge。"
+        )
+    return ""
+
+
+def _assert_output_matches_session_aspect(
+    *,
+    image_path: Path,
+    traits: dict[str, Any],
+    session_ar: str,
+) -> tuple[bool, str]:
+    """Hard gate: registered plate must match session delivery aspect (orientation / >15%)."""
+    from .image_gates import _aspect_relation
+
+    ar = str(session_ar or "").strip()
+    if not ar:
+        return False, "会话未锁定 aspect_ratio；start 须显式传入 --aspect-ratio"
+    rel = _aspect_relation(
+        int(traits.get("width") or 0),
+        int(traits.get("height") or 0),
+        ar,
+    )
+    if rel.get("hard_fail"):
+        return (
+            False,
+            f"成图 {image_path.name} 是 {traits.get('width')}x{traits.get('height')} "
+            f"（{rel.get('simplified')}），与会话交付画幅 {ar} 不一致。"
+            "请按会话画幅重出再登记，禁止竖图冒充横会话（或相反）。",
+        )
+    return True, ""
+
+
 def _score_of_round(r: dict[str, Any]) -> float:
     try:
         val = r.get("score")
@@ -1590,6 +1697,7 @@ def cmd_converge(
         if draft_ok and converge_mode == "fast":
             eff_threshold = min(eff_threshold, FAST_SOFT_THRESHOLD)
 
+        aspect_explicit = bool(str(aspect_ratio or "").strip())
         default_ar = str(aspect_ratio or "").strip()
         default_ref_paths: list[str] = []
         ref_traits: dict[str, Any] = {}
@@ -1605,6 +1713,14 @@ def cmd_converge(
                 )
                 return 1
         if ref_image or reference_image_paths:
+            # 有垫图时必须显式交付画幅，禁止静默继承竖/横垫把会话锁歪
+            if not aspect_explicit:
+                print(
+                    "❌ [Step 1 · 会话启动参数校验拦截] 有垫图时必须显式传入 "
+                    "`--aspect-ratio`（如 16:9 / 9:16 / 1:1）。"
+                    "禁止从垫图像素静默继承画幅，以免竖垫锁成竖会话却按横幅出图。"
+                )
+                return 1
             try:
                 start_param_val = validate_converge_params(
                     session_id=session_id,
@@ -1625,6 +1741,15 @@ def cmd_converge(
             except (FileNotFoundError, ValueError) as exc:
                 print(f"❌ [Step 1 · 会话启动参数校验拦截] {exc}")
                 return 1
+
+        from .parallel_slots import assert_can_start
+
+        slot_ok, slot_msg = assert_can_start(
+            root, data if isinstance(data, dict) else {}, session_id=session_id
+        )
+        if not slot_ok:
+            print(f"❌ [并行槽] {slot_msg}")
+            return 1
 
         if (conversation_id or "").strip() and sf.exists():
             try:
@@ -1676,6 +1801,7 @@ def cmd_converge(
             "default_aspect_ratio": default_ar,
             "default_reference_image_paths": default_ref_paths,
             "aspect_ratio": default_ar,
+            "aspect_explicit": bool(aspect_explicit),
             "reference_image_paths": default_ref_paths,
             "ref_physical_traits": ref_traits,
             "param_validation": start_param_val,
@@ -1797,6 +1923,7 @@ def cmd_converge(
             f" | 最早停机轮次: {int(scale_prof.get('min_rounds_before_stop') or 1)}"
             f" | 媒介: {sess.get('medium_family')}"
             f"{' | 合同: split' if sess.get('contract') == 'split' else ''}"
+            f" | 画幅: {default_ar or '未锁'}"
             f" | 安全早停: {'开' if sess.get('safe_early_stop') else '关'}"
             + (
                 f"（掉≥{sess.get('regression_drop') or DEFAULT_REGRESSION_DROP}"
@@ -1806,6 +1933,7 @@ def cmd_converge(
                 else ""
             )
         )
+        print(f"   · 并行槽: {slot_msg}")
         print("📋 " + format_contract_summary(understanding).replace("\n", "\n   "))
         _def_ok, _def_msg = defaults_visibility_ok(understanding)
         print(("   ✅ " if _def_ok else "   ⚠️ ") + _def_msg)
@@ -2538,14 +2666,54 @@ def cmd_converge(
             print(f"❌ [生图闸门] 拒绝登记无效输出图：{why}")
             return 1
 
+        # 不论是否有垫图：成图像素必须对上会话交付画幅（防 Cursor 出竖图却登进 16:9 会话）
+        sess_ar = (
+            eff_ar
+            or str(sess.get("default_aspect_ratio") or sess.get("aspect_ratio") or "")
+        ).strip()
+        if not sess_ar:
+            # 无垫图、start 未显式画幅：用首张成图锁定，后续轮仍硬校
+            locked = str(
+                img_v.get("canonical_aspect_ratio") or img_v.get("aspect_ratio") or ""
+            ).strip()
+            if not locked or locked == "unknown":
+                print(
+                    "❌ [生图闸门] 无法从成图推断 aspect_ratio；"
+                    "请 `converge start --aspect-ratio …` 后重开。"
+                )
+                return 1
+            sess_ar = locked
+            sess["default_aspect_ratio"] = sess_ar
+            sess["aspect_ratio"] = sess_ar
+            sess["aspect_explicit"] = False
+            print(
+                f"⚠️ [生图闸门·画幅] 会话未锁画幅，已用首张成图锁定为 {sess_ar}；"
+                "之后轮次须与此一致。"
+            )
+        ar_ok, ar_why = _assert_output_matches_session_aspect(
+            image_path=p_img, traits=img_v, session_ar=sess_ar
+        )
+        if not ar_ok:
+            print(f"❌ [生图闸门·画幅] {ar_why}")
+            return 1
+        image_sha1 = _file_sha1(p_img) if p_img.is_file() else ""
+        owner = _foreign_plate_owner(root, image_sha1, str(session_id or ""), r_no)
+        if owner:
+            print(
+                f"❌ [生图对账] 这张图和 {owner} 的成图是同一份字节，拒绝登记。"
+                "请重出，不要把别的轮次或别的技能的图拷过来。"
+            )
+            return 1
+
         gen_entry = {
             "round": r_no,
             "round_label": f"第 {r_no} 轮候选图（待独立审图）",
             "stage": "generated_pending_judge",
             "judged": False,
             "image": image,
+            "image_sha1": image_sha1,
             "image_verification": img_v,
-            "aspect_ratio": eff_ar or img_v.get("canonical_aspect_ratio", ""),
+            "aspect_ratio": sess_ar,
             "reference_image_paths": eff_ref_paths,
             "param_validation": val_res,
             "step_trace": ["step1_start", "step2_generate"],
@@ -2681,6 +2849,26 @@ def cmd_converge(
             return 1
         eff_image = image or (existing_r.get("image", "") if existing_r else "")
         recorded_gen_prompt = existing_r.get("prompt", "") if existing_r else ""
+        # 防登记后被换文件：sha1 对不上则拒审。审过的轮次也留下 sha1，finish 再对一次。
+        recorded_sha = str((existing_r or {}).get("image_sha1") or "").strip()
+        plate_sha1 = recorded_sha
+        if eff_image:
+            p_judge = Path(eff_image)
+            if not p_judge.is_file():
+                p_judge = root / eff_image
+            if recorded_sha and not p_judge.is_file():
+                print(f"❌ [生图对账] 第 {r_no} 轮成图丢失：{eff_image}")
+                return 1
+            if p_judge.is_file():
+                now_sha = _file_sha1(p_judge)
+                if recorded_sha and now_sha != recorded_sha:
+                    print(
+                        f"❌ [生图对账] 第 {r_no} 轮成图已被替换："
+                        f"登记 sha1={recorded_sha[:12]}…，磁盘={now_sha[:12]}…。"
+                        "请用 generate 时的同一文件审图，禁止事后换图挂分。"
+                    )
+                    return 1
+                plate_sha1 = now_sha
 
         judged_rounds = [
             r for r in rounds
@@ -2967,6 +3155,7 @@ def cmd_converge(
             "param_validation": prev_pv,
             "generated_at": (existing_r or {}).get("generated_at", ""),
             "image": eff_image,
+            "image_sha1": plate_sha1,
             "image_verification": judge_res["image_verification"],
             "raw_score": judge_res["raw_score"],
             "score": round(float(score), 2),
@@ -3313,6 +3502,14 @@ def cmd_converge(
                         f"`{win_score:.2f}` < `{float(accept_th):.2f}`，交付历史最高分"
                         f"（第 {winner['round']} 轮）"
                     )
+        if action == "finish":
+            replaced = _finish_plate_replaced(root, winner)
+            if replaced:
+                print(f"❌ [生图对账] {replaced}")
+                sess["showcase_ready"] = False
+                _write_session_json(sf, sess)
+                return 1
+
         if action == "finish" and not sess["showcase_ready"]:
             print(
                 f"❌ 还不能 finish：最高 {win_score:.2f} < {float(accept_th):.2f}，"

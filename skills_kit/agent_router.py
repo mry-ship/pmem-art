@@ -944,8 +944,12 @@ def _wants_prompt(text: str) -> bool:
             "先不出图",
             "先别出图",
             "先别画",
+            "别生图",
+            "不要生图",
+            "不生图",
             "只写提示词",
             "写提示词",
+            "提示词方案",
             "扩写",
             "扩成",
             "先出",
@@ -953,7 +957,9 @@ def _wants_prompt(text: str) -> bool:
         ),
     ):
         return True
-    return _any(text, ("扩成", "扩写")) and _any(text, ("先不出图", "先别出图", "先别画"))
+    return _any(text, ("扩成", "扩写")) and _any(
+        text, ("先不出图", "先别出图", "先别画", "别生图", "不生图")
+    )
 
 
 def _prompt_then_draw(text: str) -> bool:

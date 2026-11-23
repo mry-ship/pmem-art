@@ -58,12 +58,12 @@ A/B/C **标题并列**，禁止把 C 嵌进 B、把 A 甩到 B 的 Step 之后�
 **App Icon 多维透镜（通用）**：明细见 `docs/APPICON_MULTI_LENS.md`——①栅格体验；②小尺寸去色仍认；③符号权重 P0 英雄撑满；④满幅直角 + 72%–80% 安全区；⑤色 70/20/10；⑥一主光、形先于质；⑦同品类上架图标气质（非泛插画海报）。缺画风时 revised 必须写同品类顶级上架图标气质。空喊「高级」却剪影糊 → 识别度或安全区 <8.0 不能停。
 
 ```bash
-python3 pmem_art.py converge start --session appicon --module brand.WorldStyle --scale high --route-id icon.a --goal "iOS 1024x1024 App Icon: 青瓷质感记账应用，中心单枚立体青釉金币流光符号"
-python3 pmem_art.py reasonableness review --id appicon --skill icon.a \
+pyw -3 -u pmem_art.py converge start --session appicon --module brand.WorldStyle --scale high --route-id icon.a --goal "iOS 1024x1024 App Icon: 青瓷质感记账应用，中心单枚立体青釉金币流光符号"
+pyw -3 -u pmem_art.py reasonableness review --id appicon --skill icon.a \
   --draft "<草稿>" --revised "<单符号+72%-80%安全区+满幅直角无字的修订句>" \
   --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;safe_zone=ok;single_symbol=ok;full_bleed_no_round_mask=ok"
-python3 pmem_art.py converge generate --session appicon --round 1 --image app_icon_r1.png
-python3 pmem_art.py converge judge --session appicon --round 1 --image app_icon_r1.png \
+pyw -3 -u pmem_art.py converge generate --session appicon --round 1 --image app_icon_r1.png
+pyw -3 -u pmem_art.py converge judge --session appicon --round 1 --image app_icon_r1.png \
   --dims "识别度9.6/安全区9.7/光影质感9.5/多尺寸合规9.6/色板纯粹9.7/无瑕疵9.5"
 # CLI：max_rounds=3；≥9.5到线即停；满3轮交最高分并标明是否 ≥9.5
 ```
@@ -118,8 +118,8 @@ icons/
 ### B5：关键图标最多3轮闭环（可选·默认跳过）
 用户点名某枚「不对」或一致性不过时才开；垫最初 style-spec/样张；**禁止**对整套每枚开闭环：
 ```bash
-python3 pmem_art.py converge start --goal "图标 <name> 对齐 style-spec" --module brand.WorldStyle --route-id icon.b
-python3 pmem_art.py reasonableness review --id <session> --skill icon.b \
+pyw -3 -u pmem_art.py converge start --goal "图标 <name> 对齐 style-spec" --module brand.WorldStyle --route-id icon.b
+pyw -3 -u pmem_art.py reasonableness review --id <session> --skill icon.b \
   --draft "<草稿>" --revised "<线宽/端点/清单写清的修订句>" \
   --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;stroke_consistency=ok"
 然后：generate → judge →（不到线继续，最多3轮）→ finish（标明是否 ≥9.5）
@@ -127,8 +127,8 @@ python3 pmem_art.py reasonableness review --id <session> --skill icon.b \
 
 ### B6：沉淀
 ```bash
-python3 pmem_art.py feedback "图标集 style-spec：<preset+stroke+grid摘要>" --module brand.WorldStyle --kind art_decision
-python3 pmem_art.py ingest icons/preview.html -p "icon set preview" --apply
+pyw -3 -u pmem_art.py feedback "图标集 style-spec：<preset+stroke+grid摘要>" --module brand.WorldStyle --kind art_decision
+pyw -3 -u pmem_art.py ingest icons/preview.html -p "icon set preview" --apply
 ```
 
 ## 四、Mode C：游戏道具隔离底栅格图标（64/128/256px PNG，非 SVG）
@@ -143,8 +143,8 @@ python3 pmem_art.py ingest icons/preview.html -p "icon set preview" --apply
 先锁「线宽/圆角/色板/投影」style-spec，再**批量**生成隔离底 PNG 做 preview。  
 **关键枚 converge 默认禁止**：仅玩家点名某枚不对、或一致性审查不过时才开；开则最多3轮、≥9.5到线即停（CLI `max_rounds=3`，标明是否 ≥9.5）。**禁止**默认对背包每一格开闭环。
 ```bash
-python3 pmem_art.py converge start --session <icon_c_id> --goal "道具格：<name>" --module brand.WorldStyle --route-id icon.c
-python3 pmem_art.py reasonableness review --id <icon_c_id> --skill icon.c \
+pyw -3 -u pmem_art.py converge start --session <icon_c_id> --goal "道具格：<name>" --module brand.WorldStyle --route-id icon.c
+pyw -3 -u pmem_art.py reasonableness review --id <icon_c_id> --skill icon.c \
   --draft "<草稿>" --revised "<厚剪影+纯黑隔离底或真alpha+棚拍光+无字的修订句>" \
   --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;silhouette_read=ok;transparent_friendly=ok"
 # 然后：converge generate → judge → finish（均带 --session <icon_c_id>）

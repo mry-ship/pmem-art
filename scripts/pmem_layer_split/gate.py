@@ -215,14 +215,15 @@ def run_gate(job: Job, *, force_ids: list[str] | None = None) -> dict:
                     )
                 if fill > fill_max:
                     reasons.append(f"fill={fill:.3f}>{fill_max}")
-                # Loose footprint / over-zoomed isolate → autofit shrinks hard; restore drifts.
-                # Prefer tighten plan crop + re-setup; never widen box just to raise fill.
+                # Slight size is not a redraw. A low scale_mul only means the sprite
+                # sits small in the footprint. Redraw is for a different silhouette,
+                # missing parts, clipped edges, or baked neighbors. Never widen the
+                # box just to raise fill.
                 scale_mul_min = float(GATE.get("scale_mul_min", 0.75))
                 if scale_mul < scale_mul_min:
-                    reasons.append(
-                        f"scale_mul={scale_mul:.3f}<{scale_mul_min} "
-                        "(footprint too loose or sprite over-zoomed — tighten plan crop then setup, "
-                        "or re-isolate closer to crop FOV; do NOT widen box)"
+                    print(
+                        f"NOTE {lid}: scale_mul={scale_mul:.3f}<{scale_mul_min} "
+                        "(same object, size only — do not redraw for scale)"
                     )
                 if src:
                     am = _alpha_mean(src)

@@ -15,7 +15,7 @@ from .gate import run_gate
 from .qa import ghost_qa
 from .emit_html import emit_html
 from .post_isolate import post_isolate_normalize
-from .defaults import DEFAULT_WORKERS, GATE
+from .defaults import DEFAULT_WORKERS, GATE, resolve_default_workers
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -48,7 +48,12 @@ def build_parser() -> argparse.ArgumentParser:
         help="Subcommand",
     )
     p.add_argument("--ids", default="", help="Comma-separated layer ids (isolate/gate force)")
-    p.add_argument("--workers", type=int, default=DEFAULT_WORKERS)
+    p.add_argument(
+        "--workers",
+        type=int,
+        default=None,
+        help=f"isolate concurrency (default: agent.max_parallel from config, else {DEFAULT_WORKERS})",
+    )
     p.add_argument("--force", action="store_true", help="Re-isolate even if status=ok")
     p.add_argument("--scale", type=int, default=2, help="Compose canvas scale vs ref")
     p.add_argument("--skip-match", action="store_true", help="Skip template match (trust plan crops)")
@@ -92,6 +97,11 @@ def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     job = Job(Path(args.job))
     ids = _ids(args.ids)
+    workers = (
+        int(args.workers)
+        if args.workers is not None
+        else resolve_default_workers(job.root)
+    )
 
     if args.command in ("setup", "calibrate"):
         setup_and_calibrate(
@@ -109,7 +119,7 @@ def main(argv: list[str] | None = None) -> int:
         isolate_layers(
             job,
             ids=ids,
-            workers=args.workers,
+            workers=workers,
             force=args.force,
             skip_bg=_use_local_bg(args),
             dry_run=args.dry_run,
@@ -155,16 +165,29 @@ def main(argv: list[str] | None = None) -> int:
         if not dirty:
             print("no dirty layers")
             return 0
-        print("retry dirty:", dirty)
+        layers = st.get("layers") or {}
+        retry_ids = []
+        for lid in dirty:
+            reasons = list((layers.get(lid) or {}).get("reasons") or [])
+            if reasons and all(str(r).startswith("layer_ghost_mae=") for r in reasons):
+                continue
+            retry_ids.append(lid)
+        if not retry_ids:
+            print(
+                "retry-dirty stop: ghost-only — name the wrong part in keep/remove, "
+                "then isolate --ids. Do not blind redraw."
+            )
+            return 0
+        print("retry dirty:", retry_ids)
         # bg_bake dirty must re-isolate bg — never skip_bg when bg is in the retry set
         isolate_layers(
             job,
-            ids=dirty,
-            workers=args.workers,
+            ids=retry_ids,
+            workers=workers,
             force=True,
-            skip_bg=("bg" not in dirty),
+            skip_bg=("bg" not in retry_ids),
         )
-        post_isolate_normalize(job, ids=dirty)
+        post_isolate_normalize(job, ids=retry_ids)
         compose(job, scale=args.scale)
         run_gate(job)
         ghost_qa(job, scale=args.scale, apply_dirty=True)
@@ -194,7 +217,7 @@ def main(argv: list[str] | None = None) -> int:
             build_local_background(job)
         isolate_layers(
             job,
-            workers=args.workers,
+            workers=workers,
             force=args.force,
             skip_bg=local_bg,
             dry_run=args.dry_run,
@@ -205,25 +228,37 @@ def main(argv: list[str] | None = None) -> int:
         compose(job, scale=args.scale)
         st = run_gate(job)
         for round_i in range(args.max_rounds):
-            dirty = st.get("dirty_ids") or []
+            dirty = list(st.get("dirty_ids") or [])
             if not dirty:
-                # gate clean — still run ghost; hot layers may re-dirty for next round
+                # gate clean — ghost may mark real hot layers; do not blind-redraw them
                 g = ghost_qa(job, scale=args.scale, apply_dirty=True)
                 st = job.load_status()
-                dirty = st.get("dirty_ids") or []
-                if not dirty:
+                dirty = list(st.get("dirty_ids") or [])
+                if not dirty or g.get("level") == "ok":
                     break
-                if g.get("level") == "ok":
-                    break
-            print(f"pipeline retry round {round_i+1}: {dirty}")
+            layers = st.get("layers") or {}
+            retry_ids = []
+            for lid in dirty:
+                reasons = list((layers.get(lid) or {}).get("reasons") or [])
+                if reasons and all(str(r).startswith("layer_ghost_mae=") for r in reasons):
+                    continue
+                retry_ids.append(lid)
+            if not retry_ids:
+                print(
+                    "pipeline stop: dirty layers are ghost-only — "
+                    "name the wrong part in keep/remove, then isolate --ids. "
+                    "Do not blind redraw."
+                )
+                break
+            print(f"pipeline retry round {round_i+1}: {retry_ids}")
             isolate_layers(
                 job,
-                ids=dirty,
-                workers=args.workers,
+                ids=retry_ids,
+                workers=workers,
                 force=True,
-                skip_bg=("bg" not in dirty),
+                skip_bg=("bg" not in retry_ids),
             )
-            post_isolate_normalize(job, ids=dirty)
+            post_isolate_normalize(job, ids=retry_ids)
             compose(job, scale=args.scale)
             st = run_gate(job)
         # final ghost (may still mark dirty for Agent / needs_human)

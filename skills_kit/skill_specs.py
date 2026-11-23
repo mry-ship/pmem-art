@@ -147,7 +147,7 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 
 只审一轮。这一轮写明交付物是什么、每张图锁什么、每张图不锁什么，并查合理性、缺漏和理解错误：合不合理，漏了什么，有没有理解错。漏的补上。理解错的按原话改回来。合不合理是看这句话能不能和原话、附图同时成立。
 
-不要再开第二轮去复查。分析列给玩家看。不要把分析和执行并成一句口头分流：分析先写出来。**执行默认（两套写法同一合同）**：普通单交付默认本对话只读执行包自跑；仅 merge 逐格并行 / 多技能展陈等同范围清单才开 Task/子 agent（只交注册表 `pack_headings` 拼成的执行包，不是八份全文、也不是单挂合同丢闭环）。禁止另选技能或把整份 SKILL 塞给执行侧。裁节用 `skills_kit.skill_registry.slice_route_body(body, route)`（内部按 `pack_headings` 调 `slice_markdown_section`，并跳过围栏内伪标题）。**子 agent / 本对话执行失败时**：总控在本对话按同一执行包自行续跑或收束，禁止甩锅「已交给子 agent」后沉默；缺图/闸拦/冲突先向玩家说清并给可改说法。
+不要再开第二轮去复查。分析列给玩家看。不要把分析和执行并成一句口头分流：分析先写出来。**执行默认（两套写法同一合同）**：普通单交付默认本对话只读执行包自跑；仅 merge 逐格并行 / 多技能展陈等同范围清单才开 Task/子 agent（只交注册表 `pack_headings` 拼成的执行包，不是八份全文、也不是单挂合同丢闭环）。**并行上限**：同时活跃 Task/子 agent ≤ `.memory-art/config.yaml` → `agent.max_parallel`（默认 **4**；本机卡改 **2**，勿 >5）；超出分批，上一批结束再开下一批。禁止另选技能或把整份 SKILL 塞给执行侧。裁节用 `skills_kit.skill_registry.slice_route_body(body, route)`（内部按 `pack_headings` 调 `slice_markdown_section`，并跳过围栏内伪标题）。**子 agent / 本对话执行失败时**：总控在本对话按同一执行包自行续跑或收束，禁止甩锅「已交给子 agent」后沉默；缺图/闸拦/冲突先向玩家说清并给可改说法。
 
 ### 默认 vs 硬不确定（防卡死）
 
@@ -180,6 +180,7 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 - 出图主链（`start`→`emit-prompt`→生图→`generate --image` 登记→`judge`）禁止跑 `doctor` / `hygiene` / 深检 / `--help` 探索；维护任务放到出图前、`finish` 后或单独点名。
 - 禁止 Probe / Overwrite / stub 占位图骗闸 / 额外探测再生图；顺序：`converge generate --emit-prompt` → GenerateImage → `converge generate --image` → judge。
 - 显式 session（禁 `latest`）；普通单交付本对话优先；Task 仅 merge 逐格并行 / 多技能展陈。
+- **并行上限**：同时活跃 Task/子 agent ≤ `agent.max_parallel`（默认 4）；超出分批排队。
 - 首轮 brief 一次写准（身份/机位/材质/禁令/底色/动势品种等硬锁），硬锁不留到下一轮。
 - **平台纪律（本项目已开安全早停）**：`safe_early_stop: true`；掉≥0.15 或平台持平/掉分（`plateau_rounds`，本项目=1）且 R≥2 → 交历史最高分并标明未过线；见 `STOP_*` 立即 `finish`，禁止凑满 3。开场 search 只取要点，禁整包 JSON 刷屏。
 
@@ -232,7 +233,7 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 它按执行包执行。总控不在候选里。父级把 `banner`（含【走默认路径】或【按 XX 走了】）原样写给玩家，放在结论最前。
 
 - **普通单交付**：只执行一支。
-- **定稿写明是「整页展陈 / 对比页 / 多技能同范围重跑」**：按定稿清单**依次点名**调用对应技能（每次一支、做完再下一支），最后收成新 HTML；不要因为清单里有多项就打回重问范围。
+- **定稿写明是「整页展陈 / 对比页 / 多技能同范围重跑」**：按定稿清单点名对应技能；可并行开 Task，但同时活跃 ≤ `agent.max_parallel`（默认 4），超出分批；最后收成新 HTML；不要因为清单里有多项就打回重问范围。
 
 执行会生图的技能时，定稿和每一张图一起带上。会 `converge start` 的，`--reference-image-paths` 写上每一张图，第一张是垫图原件，其余按定稿顺序跟在后面，一张不删。`--aspect-ratio` 跟第一张垫图的方向：竖屏用 `9:16` 或 `3:4`，横屏用 `16:9` 或 `4:3`，方图用 `1:1`。禁止把竖屏垫图加边填成横画布。`--ref-analysis` 只写风格、构图和特征；不足只在玩家要求优化这张图时写。身份图宽高比不同，也不从列表里删。生成轮若只能垫一张，垫原件里方向对齐的那张；打分时仍把成图和每一张参考图按定稿并排看。
 
@@ -1142,7 +1143,7 @@ python3 pmem_art.py learn list
 2. **未点名接续 → 新开关系稿**：禁止把仓库旧 merge 的 yaml/relation/成图/同题旧模块直接当底稿；只可借字段格式。新目录 + 新 session；题材与档序按本句原话写。
 3. 关系稿最多 2：五问 + `relation-judge` + 对标档序 + `surface` 一句；说不通不出图。
 4. 风格：有文字跟文字；没写风格钉 Gossip Harbor 货柜（整表参考只锁格子）；点名写实/水彩等才离开。玩家点名垫 GH/竞品**真机图锁画风**时：跟截图货面，**勿再灌缺省软糖釉长句**；宜垫 `assets/refs/gossip_harbor` 货条/单格，勿默垫 `assets/skill_*` 旧交付。禁止未点名就垫竞品抄构图。**无玩家风格/格子参考时禁止把上轮成图垫进 GenerateImage**；首轮若偏写实/产品静物，下一轮纯文整张重开并强调糖釉玩具硬句（converge 遇写实病会自动不链上轮板）。有参考时每一轮仍垫最初那张，不要改垫上一轮成图；只有审图或 converge next 写明垫第几轮成图时才垫成图。
-5. 整表最多 3 轮、≥9.5 到线即停；逐格各档并行。会话 id 显式，禁默写 `latest`。
+5. 整表最多 3 轮、≥9.5 到线即停；逐格各档并行，同时开档 ≤ `agent.max_parallel`（默认 4）。会话 id 显式，禁默写 `latest`。
 6. 四格不进路由句。关系稿按本句原话，不把旧任务主体当底稿。候选红线不进提示词。细则见本节下方「四格与防污染」。
 
 {{DELIVERY_VISIBLE}}
@@ -1221,7 +1222,7 @@ python3 pmem_art.py converge generate --session <merge_id> --round <N> --image <
 python3 pmem_art.py converge judge --session <merge_id> --round <N> --image <sheet> --dims "构图9.0/光影9.0/透视9.0/质感9.0/风格9.0/无瑕疵9.0" --defects "…" --next-fix "…"
 python3 pmem_art.py converge finish --session <merge_id>
 ```
-per_cell：各档并行独立 session；`merge audit` 验收。
+per_cell：各档并行独立 session，同时开档 ≤ `agent.max_parallel`（默认 4）；`merge audit` 验收。
 
 ### 整表验收清单
 - [ ] 超框/切顶：整件落在浅色圆角卡内并留边

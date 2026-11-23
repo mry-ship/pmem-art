@@ -705,6 +705,7 @@ def cmd_ingest(
     prompt: str = "",
     apply: bool = False,
     seed_record: bool = True,
+    refresh_atlas: bool = True,
 ) -> int:
     """
     classify → ensure module (auto-add) → place into canonical path → optional asset_record stub.
@@ -790,17 +791,24 @@ def cmd_ingest(
         plan["asset_record"] = str(record_path.relative_to(root))
 
     plan["module_status"] = status
-    from pmem_art import refresh_atlas_silent
-    atlas_out = refresh_atlas_silent(root)
-    if atlas_out:
-        plan["atlas_refreshed"] = str(atlas_out.relative_to(root))
-    plan["message"] = f"已入库 → 模块 {mid} ({status}) · {dest_rel}（已自动同步至 art-atlas.html）"
+    if refresh_atlas:
+        from pmem_art import refresh_atlas_silent
+
+        atlas_out = refresh_atlas_silent(root)
+        if atlas_out:
+            plan["atlas_refreshed"] = str(atlas_out.relative_to(root))
+        plan["message"] = f"已入库 → 模块 {mid} ({status}) · {dest_rel}（已自动同步至 art-atlas.html）"
+    else:
+        plan["message"] = f"已入库 → 模块 {mid} ({status}) · {dest_rel}（批量模式：稍后再刷 atlas）"
     print(json.dumps(plan, ensure_ascii=False, indent=2))
     return 0
 
 
 def cmd_watch_sync_classify(root: Path, data: dict[str, Any], apply: bool = False) -> int:
-    """Scan watch_dirs for images not mapped → classify each → queue candidates / optional ingest."""
+    """Scan watch_dirs for images not mapped → classify each → write candidates / optional ingest.
+
+    逐项容错：单张失败不中断整批；--apply 时不在每张后刷 atlas（末尾刷一次）。
+    """
     cfg = (data.get("config") or {}).get("classify") or {}
     watch = cfg.get("watch_dirs") or ["assets", ".cursor/generated", "generated"]
     from lifecycle import list_image_files
@@ -822,11 +830,59 @@ def cmd_watch_sync_classify(root: Path, data: dict[str, Any], apply: bool = Fals
 
     extra = f"（已跳过 {skipped_staging} 张 skill_* 清点目录）" if skipped_staging else ""
     print(f"👀 classify-watch: {len(queued)} unmapped images under {watch}{extra}")
+    high_t = float(cfg.get("high_confidence_threshold", 0.78))
+    ok_n = err_n = ingest_n = 0
+    errors: list[str] = []
     for rel in queued:
-        c = classify_asset(root, data, path=rel, prompt="")
-        mid, status = ensure_module_from_classification(root, data, c, force_active=False)
-        print(f"   · {rel}")
-        print(f"     → {c['suggested_module']}  conf={c['confidence']}  decision={c['decision']}  wrote={status}")
-        if apply and c["confidence"] >= float(cfg.get("high_confidence_threshold", 0.78)):
-            cmd_ingest(root, data, path=rel, prompt="", apply=True, seed_record=True)
+        try:
+            c = classify_asset(root, data, path=rel, prompt="")
+            mid, status = ensure_module_from_classification(root, data, c, force_active=False)
+            print(f"   · {rel}")
+            print(
+                f"     → {c['suggested_module']}  conf={c['confidence']}  "
+                f"decision={c['decision']}  wrote={status}"
+            )
+            if apply and float(c.get("confidence") or 0) >= high_t:
+                rc = cmd_ingest(
+                    root,
+                    data,
+                    path=rel,
+                    prompt="",
+                    apply=True,
+                    seed_record=True,
+                    refresh_atlas=False,
+                )
+                if rc == 0:
+                    ingest_n += 1
+                else:
+                    err_n += 1
+                    errors.append(f"ingest失败:{rel}")
+            ok_n += 1
+        except Exception as ex:  # noqa: BLE001 — 批量续跑必须吞单张异常
+            err_n += 1
+            errors.append(f"{rel}: {type(ex).__name__}: {ex}")
+            print(f"   · {rel}")
+            print(f"     ⚠ 跳过本张：{type(ex).__name__}: {ex}")
+            continue
+    if apply and ingest_n:
+        try:
+            from pmem_art import refresh_atlas_silent
+
+            atlas_out = refresh_atlas_silent(root)
+            if atlas_out:
+                print(f"🗺️  批量入库结束，已刷新 {atlas_out.relative_to(root)}")
+        except Exception as ex:  # noqa: BLE001
+            print(f"⚠️ 末尾刷新 atlas 失败（入库已保留）：{type(ex).__name__}: {ex}")
+            err_n += 1
+    print(
+        f"👀 classify-watch 小结：处理 {ok_n}/{len(queued)}，"
+        f"高置信入库 {ingest_n}，失败/跳过 {err_n}"
+    )
+    if errors:
+        for line in errors[:12]:
+            print(f"   · err {line}")
+        if len(errors) > 12:
+            print(f"   · …另有 {len(errors) - 12} 条")
+    if queued and ok_n == 0 and err_n > 0:
+        return 1
     return 0

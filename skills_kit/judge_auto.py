@@ -18,6 +18,7 @@ from .prompt_scale import (
 )
 from .scoring import (
     audit_score_inflation,
+    cap_reported_dims,
     defects_are_substantive,
     parse_5d_dims,
 )
@@ -501,6 +502,18 @@ def auto_vlm_judge_image(
     else:
         decision = "STOP_MAX_ROUNDS"
 
+    reported_dims, reported_line = cap_reported_dims(
+        audit_res.get("dims_parsed") or {},
+        weighted=audit_res.get("weighted_score"),
+        calibrated=float(calibrated),
+        rubric_mode=rubric_mode,
+    )
+    if reported_line:
+        eff_dims = reported_line
+        note = "封顶后六维已压到不超过正式分"
+        if note not in audit_res["warnings"]:
+            audit_res["warnings"].append(note)
+
     return {
         "image_path": image_path,
         "resolved_path": str(p) if traits.get("exists") else image_path,
@@ -511,7 +524,7 @@ def auto_vlm_judge_image(
         "max_rounds": max_rounds,
         "min_rounds_before_stop": min_rounds,
         "dims": eff_dims,
-        "dims_parsed": audit_res["dims_parsed"],
+        "dims_parsed": reported_dims,
         "anatomy_score": anat_val,
         "anatomy_floor": anatomy_floor,
         "anatomy_veto_blocked": anatomy_veto_blocked,

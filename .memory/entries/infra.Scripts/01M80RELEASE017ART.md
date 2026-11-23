@@ -3,7 +3,7 @@ id: 01M80RELEASE017ART
 module: infra.Scripts
 entity: Packaging
 kind: correction
-status: active
+status: archived
 supersedes:
 - 01M7XAHX2QGQH697ZN65QZJ06K
 anchors:

@@ -875,6 +875,99 @@ def audit_score_inflation(
     }
 
 
+_REPORT_DIM_ZH: dict[str, str] = {
+    "composition": "构图",
+    "lighting_color": "光影",
+    "perspective_anatomy": "透视",
+    "texture_detail": "质感",
+    "spec_style": "风格",
+    "flawlessness": "无瑕疵",
+    "style_palette": "风格色板",
+    "nine_slice_structure": "结构",
+    "lighting_material": "光影材质",
+    "rgba_pipeline_compliance": "管线合规",
+    "state_suite_cohesion": "套件",
+    "glyph_silhouette": "识别度",
+    "squircle_safe_zone": "安全区",
+    "tactile_lighting": "光影质感",
+    "multisize_adaptive": "多尺寸",
+    "palette_purity": "色板纯粹",
+    "silhouette": "剪影识别",
+    "stroke_palette": "描边色板",
+    "studio_light": "棚拍光",
+    "alpha": "透明底",
+    "no_text": "无字",
+    "stroke_consistency": "笔画一致",
+    "visual_weight": "视觉重量",
+    "optical_center": "留白",
+    "recognizability": "功能识别",
+    "structure": "结构",
+    "compliance": "合规",
+    "intent": "还原",
+}
+
+
+def cap_reported_dims(
+    parsed: dict[str, Any] | None,
+    *,
+    weighted: float | None,
+    calibrated: float,
+    rubric_mode: str = "",
+) -> tuple[dict[str, Any], str]:
+    """Pull reported axes down to the official score after a hard cap.
+
+    A single axis above the harmonic mean is normal and is left alone.
+    Axes move only when the official score was pulled below that mean,
+    so a 7.90 total cannot still display 9.6 on every axis.
+    """
+    src = dict(parsed or {})
+    if weighted is None or not src:
+        return src, ""
+    try:
+        mean = float(weighted)
+        cap = round(float(calibrated), 2)
+    except (TypeError, ValueError):
+        return src, ""
+    if cap + 0.02 >= mean:
+        return src, ""
+    lowered = False
+    out: dict[str, Any] = {}
+    for key, val in src.items():
+        try:
+            num = float(val)
+        except (TypeError, ValueError):
+            out[key] = val
+            continue
+        if num > cap + 1e-9:
+            out[key] = cap
+            lowered = True
+        else:
+            out[key] = round(num, 2)
+    if not lowered:
+        return src, ""
+    labels = dict(_REPORT_DIM_ZH)
+    if rubric_mode == "skill_additive_5d":
+        # 加和尺的「风格/光影」不能写成「风格色板/光影材质」，否则会改判成界面尺。
+        labels["style_palette"] = "风格"
+        labels["lighting_material"] = "光影"
+    if any(key not in labels for key in out):
+        return out, ""
+    try:
+        line = "/".join(f"{labels[key]}{float(out[key]):.2f}" for key in out)
+    except (TypeError, ValueError):
+        return out, ""
+    again = parse_5d_dims(line).get("parsed") or {}
+    if set(again) != set(out):
+        return out, ""
+    for key, val in out.items():
+        try:
+            if abs(float(again[key]) - float(val)) > 0.05:
+                return out, ""
+        except (TypeError, ValueError):
+            return out, ""
+    return out, line
+
+
 def calibrate_against_offline(
     calibrated: float,
     offline_score: float | None = None,

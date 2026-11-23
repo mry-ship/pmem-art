@@ -1,6 +1,6 @@
 # 技能注册表
 
-来源：`skills_kit/skill_specs.py`。生成：`python3 pmem_art.py skills --install`。
+来源：`skills_kit/skill_specs.py`。生成：`pyw -3 -u pmem_art.py skills --install`。
 
 ## tighten
 
@@ -14,7 +14,7 @@
 
 ## 路由
 
-执行以 `python3 pmem_art.py route` 的 `route_ids` 为准。这张表核对 heading；**交给执行侧用 `pack_headings` + `slice_route_body`**（出图合同=零点五+第二节+合同；图标=Mode+§五清单+记忆静默）。phase 是查阅顺序，不要用它改判。普通图 phase 最大，只作兜底。
+执行以 `pyw -3 -u pmem_art.py route` 的 `route_ids` 为准。这张表核对 heading；**交给执行侧用 `pack_headings` + `slice_route_body`**（出图合同=零点五+第二节+合同；图标=Mode+§五清单+记忆静默）。phase 是查阅顺序，不要用它改判。普通图 phase 最大，只作兜底。
 
 | id | phase | when | skill | heading | pack | routable |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |

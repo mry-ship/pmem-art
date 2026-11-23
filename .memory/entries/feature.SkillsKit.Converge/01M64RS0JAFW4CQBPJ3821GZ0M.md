@@ -22,6 +22,8 @@ aliases:
 - 软质量虚高
 - 8.90硬顶
 - 平光封顶
+verified: '2026-11-23'
+verified_at: '2026-11-23T16:38:52.743+08:00'
 source:
   conversation: ce0a2f88-0981-43b7-8c37-34c2ca7e87a4
 ---

@@ -21,13 +21,11 @@ from .image_gates import (
 )
 
 def _is_style_surface_strip(path: Path, *, width: int = 0, height: int = 0) -> bool:
-    """横条货条/风格条：只锁画风，不锁交付画幅。"""
-    name = (path.name or "").lower()
-    if "_strip" in name or "food_strip" in name or "seafood_food_strip" in name:
-        return True
+    """极宽货条才只锁画风。文件名里的 strip 不算，竖图不能靠改名混过去。"""
+    del path
     w, h = int(width or 0), int(height or 0)
     if w > 0 and h > 0 and (w / max(h, 1)) >= 2.4:
-        # 极宽货条（如 1330×405）即无 strip 后缀也只当画风垫
+        # 极宽货条（如 1330×405）只当画风垫
         return True
     return False
 
@@ -264,7 +262,18 @@ def validate_case_generation_params(
                 try:
                     padded = ensure_aspect_matched_ref(resolved_refs[0], actual_ar)
                 except ValueError:
-                    raise
+                    # 交付画幅已给定但与垫图方向相反：只锁画风，不拦会话、不加边硬填
+                    style_surface_only = True
+                    warnings.append(
+                        f"'{resolved_refs[0].name}' 方向与交付 aspect_ratio={actual_ar} 不一致，"
+                        f"只锁画风不锁画幅；本趟按 {actual_ar} 出图，不强制几何加边。"
+                    )
+                    ref_rel = {
+                        "hard_fail": False,
+                        "rel_diff": float(ref_rel.get("rel_diff") or 0),
+                        "simplified": ref_rel.get("simplified"),
+                    }
+                    padded = resolved_refs[0]
                 if padded != resolved_refs[0] and padded.is_file():
                     resolved_refs[0] = padded
                     primary_traits = _inspect_image_physical_traits(padded)

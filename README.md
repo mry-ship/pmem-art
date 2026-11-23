@@ -16,7 +16,7 @@
 ![Skills](https://img.shields.io/badge/美术技能-11-8B5CF6)
 ![Threshold](https://img.shields.io/badge/合格线-≥9.50-blue)
 
-[📦 下载用户包 0.16.17-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.17-art) · [📖 使用手册](USER_MANUAL.md) · [认路白话流程图](docs/route_pipeline.html) · [进阶技能点选](docs/skills/flows.html) · [效果图墙](#效果长什么样) · [全页展陈](docs/showcase/skills-homepage/index.html) · [架构](ARCHITECTURE.md)
+[📦 下载用户包 0.16.18-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.18-art) · [📖 使用手册](USER_MANUAL.md) · [认路白话流程图](docs/route_pipeline.html) · [进阶技能点选](docs/skills/flows.html) · [效果图墙](#效果长什么样) · [全页展陈](docs/showcase/skills-homepage/index.html) · [架构](ARCHITECTURE.md)
 
 </div>
 
@@ -34,13 +34,13 @@
 
 ## 一分钟接入
 
-**推荐画师：下用户包**（不含研发用 pmem）→ [Releases · v0.16.17-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.17-art)
+**推荐画师：下用户包**（不含研发用 pmem）→ [Releases · v0.16.18-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.18-art)
 
 ```bash
-# 解压 pmem-art-0.16.17-art.zip 后
+# 解压 pmem-art-0.16.18-art.zip 后
 pip install -r requirements.txt
-python3 pmem_art.py init --name "MyArtProject"
-python3 pmem_art.py skills --install
+pyw -3 -u pmem_art.py init --name "MyArtProject"
+pyw -3 -u pmem_art.py skills --install
 ```
 
 开发仓克隆：
@@ -49,8 +49,8 @@ python3 pmem_art.py skills --install
 git clone https://github.com/mry-ship/pmem-art.git
 cd pmem-art
 pip install -r requirements.txt
-python3 pmem_art.py init --name "MyArtProject"
-python3 pmem_art.py skills --install
+pyw -3 -u pmem_art.py init --name "MyArtProject"
+pyw -3 -u pmem_art.py skills --install
 ```
 
 Runtime: `pillow`, `numpy`, `pyyaml`. Tests: `pytest`（见 `pytest.ini`，`testpaths=tests`）。
@@ -61,7 +61,7 @@ Runtime: `pillow`, `numpy`, `pyyaml`. Tests: `pytest`（见 `pytest.ini`，`test
 | :--- | :--- |
 | 空项目 / 用户包 | `init` → `skills --install` |
 | 已有美术目录（不乱移文件） | `bootstrap --mode legacy --roots Art assets` → `accept --all` → `skills --install` |
-| 只刷新技能 | `python3 pmem_art.py skills --install` |
+| 只刷新技能 | `pyw -3 -u pmem_art.py skills --install` |
 
 ---
 
@@ -118,7 +118,7 @@ Runtime: `pillow`, `numpy`, `pyyaml`. Tests: `pytest`（见 `pytest.ini`，`test
 ### 看图工作台（art-atlas）
 
 ```bash
-python3 pmem_art.py atlas
+pyw -3 -u pmem_art.py atlas
 ```
 
 终端会打印本机地址（端口按项目自动分配，多开时不会互抢，例如 `http://127.0.0.1:27913/art-atlas.html`）。**请用打印出的 http 链接打开**，或双击根目录「打开工作台.cmd」（不要只双击本地 `art-atlas.html`：`file://` 下删除/定位常被浏览器拦住；也不要假定永远是 27865）。
@@ -133,7 +133,7 @@ python3 pmem_art.py atlas
 
 `/pmem-agent` 是总控，自己不生图。只审一轮：写出交付物、每张图锁什么、不锁什么，并查合理性、缺漏和理解错误。能默认的（路径、版式、「再跑一遍」同范围等）写成「默认：…」放进分析，不要拿来卡流程。只有一种确定情况，列出分析后直接执行。交付物类型互斥、身份/题材会做错、话与图矛盾这类多种情况，列出来等你确认，确认前不执行。你如果没选列出的情况、而是另提要求，就按新话说再审一遍，仍要等你确认后再执行。
 
-第二段把定稿、每一张图、现有技能文件交给一个 agent。普通单交付选一支；定稿若是整页展陈/对比页，按清单依次点名多支并收新 HTML。回显「按 XX 走了」。出图结算仍是那一支自己的过程板。
+第二段把定稿、每一张图、现有技能文件交给一个 agent。普通单交付选一支；定稿若是整页展陈/对比页，按清单点名多支并收新 HTML（可并行 Task，同时活跃 ≤ `agent.max_parallel`，默认 4）。回显「按 XX 走了」。出图结算仍是那一支自己的过程板。
 
 <a id="四档闸门每档允许变什么--禁止变什么"></a>
 
@@ -187,6 +187,8 @@ python3 pmem_art.py atlas
 
 嫌某档太死或太放：同档直接加一句话，例如「medium：允许更大冷暖对比，仍禁止换机位」。细则 → [手册附录 A](USER_MANUAL.md#附录-a四档---scale-细则与示例)。
 
+**计分对账（0.16.18+）**：缺陷词把正式分压下去之后，报出来的六维也不会再高于这个分。同一份成图不能再登记到另一轮或另一个技能。结算时若磁盘上的图和计分时不是同一份，分数作废，不能 `finish`。竖图不会因为文件名里有 `strip` 就被当成横条货条。
+
 ---
 
 <a id="效果长什么样"></a>
@@ -238,11 +240,11 @@ python3 pmem_art.py atlas
 你也可以随口沉淀：
 
 ```bash
-python3 pmem_art.py feedback "太赛博了，别这样画" -m character.Astra
-python3 pmem_art.py feedback "这版留着" -m character.Astra -a path/to/keep.png
-python3 pmem_art.py memory promote --id <ENTRY_ID> --to canonical --by "主美"
-python3 pmem_art.py memory audit   # 缺 trust / candidate 不进提示词
-# python3 pmem_art.py memory promote-missing --to verified --by "主美" --apply
+pyw -3 -u pmem_art.py feedback "太赛博了，别这样画" -m character.Astra
+pyw -3 -u pmem_art.py feedback "这版留着" -m character.Astra -a path/to/keep.png
+pyw -3 -u pmem_art.py memory promote --id <ENTRY_ID> --to canonical --by "主美"
+pyw -3 -u pmem_art.py memory audit   # 缺 trust / candidate 不进提示词
+# pyw -3 -u pmem_art.py memory promote-missing --to verified --by "主美" --apply
 ```
 
 下次再画同角色 / 同场景，Agent 会先翻这些记录，少重复翻车。细节见 [USER_MANUAL.md](USER_MANUAL.md) · [记忆可信度](docs/MEMORY_TRUST.md)。

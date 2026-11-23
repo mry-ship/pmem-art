@@ -46,6 +46,12 @@ class TestReasonablenessL0(unittest.TestCase):
         msg = _l0_subject_drift(draft, revised)
         self.assertIn("换题材", msg)
 
+    def test_subject_paraphrase_not_drift(self) -> None:
+        draft = "红伞白点蘑菇托盘上放瑞士芝士、蓝果橙果绿叶，黑底休闲3D"
+        revised = "红伞蘑菇上放瑞士芝士与蓝橙果绿叶，黑底休闲3D棚拍，无字"
+        msg = _l0_subject_drift(draft, revised)
+        self.assertEqual(msg, "")
+
     def test_review_flags_l0(self) -> None:
         draft = "热可可合成梯八档整表，浅色圆角卡"
         revised = "赛博城市夜景海报霓虹广告牌巨型构图"

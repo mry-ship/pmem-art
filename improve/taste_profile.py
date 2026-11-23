@@ -75,17 +75,24 @@ def save_taste(root: Path, taste: dict[str, Any]) -> Path:
     taste["layer_scope"] = "private"
     import time
 
+    from lifecycle import memory_write_lock
+
     taste["updated_at"] = _now_cst().strftime("%Y-%m-%d %H:%M:%S UTC+8")
     p = taste_path(root)
     last_err: Exception | None = None
-    for attempt in range(6):
+    payload = json.dumps(taste, ensure_ascii=False, indent=2) + "\n"
+    for attempt in range(8):
         try:
-            p.write_text(json.dumps(taste, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+            # 锁内只做原子落盘；sync 拷库放锁外，避免 Windows 复制 memory_write.lock 自锁
+            with memory_write_lock(root, timeout_sec=8.0):
+                tmp = p.with_suffix(p.suffix + ".tmp")
+                tmp.write_text(payload, encoding="utf-8")
+                os.replace(tmp, p)
             sync_active_project_to_library(root)
             return p
-        except OSError as ex:
+        except (OSError, TimeoutError) as ex:
             last_err = ex
-            time.sleep(0.2 * (attempt + 1))
+            time.sleep(0.25 * (attempt + 1))
     raise TimeoutError(f"口味档案写入被占用，已重试仍失败: {p}") from last_err
 
 

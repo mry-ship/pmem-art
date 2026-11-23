@@ -390,6 +390,21 @@ _L0_SKIP_CHUNKS = frozenset(
 )
 
 
+def _l0_anchor_kept(anchor: str, revised: str) -> bool:
+    """Exact hit, or paraphrase soft-keep via ≥2 distinct 2-grams still present."""
+    a = (anchor or "").strip()
+    r = (revised or "").strip()
+    if not a or not r:
+        return False
+    if a in r:
+        return True
+    if len(a) < 3:
+        return False
+    grams = {a[i : i + 2] for i in range(len(a) - 1)}
+    hit = sum(1 for g in grams if g in r)
+    return hit >= min(2, len(grams))
+
+
 def _l0_subject_drift(draft: str, revised: str) -> str:
     """If draft names clear subject chunks that revised drops, flag drift."""
     d = (draft or "").strip()
@@ -408,8 +423,9 @@ def _l0_subject_drift(draft: str, revised: str) -> str:
         if len(anchors) >= 3:
             break
     if anchors:
-        missing = [a for a in anchors if a not in r]
-        if len(missing) >= 2:
+        missing = [a for a in anchors if not _l0_anchor_kept(a, r)]
+        # 多数锚点仍在（含改写）则放过；整段换题材才会丢 ≥2 且过半
+        if len(missing) >= 2 and len(missing) > len(anchors) // 2:
             return (
                 "revised 疑似丢掉 draft 主体锚点（"
                 + "、".join(missing[:3])
@@ -469,7 +485,12 @@ def _heuristic_issues(skill: str, draft: str, revised: str, notes: str = "") -> 
     if skill == "ui":
         if not _UI_ZONE_RE.search(r):
             issues.append("ui 缺分区：修订句须点名九宫格/顶栏底栏/内容区/面板等")
-        if _UI_ILLUST_PAD_BAD_RE.search(blob):
+        # 分字段查：拼 blob 会让 revised 里的「一眼失败/禁止」误否掉 notes 里的实锤垫图句
+        if any(
+            any(not _negated_before(chunk, m.start()) for m in _UI_ILLUST_PAD_BAD_RE.finditer(chunk))
+            for chunk in (d, r, n)
+            if chunk
+        ):
             issues.append(
                 "ui 禁止叙事插画当垫图母版：主菜单须先写八项控件规格；真实截图只提炼文字，不垫插画/气氛图出控件"
             )

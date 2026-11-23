@@ -45,10 +45,10 @@ GATE = {
     "bg_bake_max": 0.58,
     # bg plate aspect vs canvas after normalize (diagnostic hard fail if still stretched)
     "bg_stretch_err_max": 0.12,
-    # autofit scale_mul floor — below this footprint is too loose OR sprite over-zoomed.
-    # Catches lantern/heroine ≈0.66 disasters. Occlusion-complete props (rack/woodpile) often
-    # land ≈0.78 (complete sprite larger than visible ref patch) — keep floor at 0.75, not 0.82.
-    # Fix: tighten plan crop + re-setup (preferred) or re-isolate closer to crop FOV — NEVER widen box.
+    # Diagnostic only — do NOT mark dirty / do NOT redraw for this.
+    # Same object sitting a bit small in the footprint is fixed by placement.
+    # Redraw is for a different silhouette, missing parts, clipped edges, or baked neighbors.
+    # 0.75 remains the note threshold (lantern/heroine ≈0.66 is worth a look, not a re-roll).
     "scale_mul_min": 0.75,
     # whole-compose ghost QA
     "ghost_mae_warn": 28.0,
@@ -91,7 +91,7 @@ Hard locks (appearance must match the primary crop):
 7) SAME SCENE LIGHTING FAMILY as the crop/context — keep warm fire/lantern bounce AND cool moon/sky rim if both are visible on the subject; do NOT relight into neutral studio softbox or product-shot even lighting on a black void.
 Size may be slightly off — compose will autofit to the frozen footprint box; still avoid wild hero-zoom if possible. Prefer subject scale close to the crop (over-zoom forces autofit scale_mul≪1 and breaks restore).
 Extract ONLY the listed subject(s). If a neighbor occludes the subject in the crop, complete the hidden part consistently with the crop silhouette — do NOT invent a different object, gender, pose, prop layout, roof type, or species.
-If the crop itself cuts the subject (box too tight), still emit a COMPLETE subject matching crop style/geometry — but Agent should have expanded the crop first; do not redesign into a different prop.
+If the crop itself cuts the subject (box too tight), still emit a COMPLETE subject whose silhouette, pose, and part layout match the crop. A tidier product-shot with a different pose or part layout is FAIL. Agent should have expanded the crop first.
 If occlusion hides MOST of the subject, Agent should have tightened neighbor boxes or merged slots first — still do NOT invent a different prop species.
 Natural proportions — do NOT squash or stretch.
 {shadow_rule}
@@ -113,7 +113,7 @@ Hard locks:
 2) SAME ground/horizon/distant-tree layout and proportions — distant pines stay FAR, SMALL, and recessed like the crop silhouettes; do NOT invent large midground hero trees flanking the clearing, new paths, or a rearranged forest. Midground hero trees/rocks that are their OWN modules are removed here and live on those layers — do not bake them into bg AND do not leave dark stump scars.
 3) SAME art style and scenic lighting family (cool night / warm ambient OK) — but NO baked prop silhouettes
 4) ZERO prop residue — no ghost bodies, tents, racks, pots, banners, half-erased furniture, or dark oval stains where props stood
-5) HOLE FILL — where removed objects sat, continue the surrounding grass/snow/floor seamlessly so the empty stage looks naturally unoccupied; no muddy inpaint blobs, no swiss-cheese holes, no scar rings
+5) HOLE FILL — fill only the hole a removed prop left, by continuing the ground already visible beside that hole. Keep the crop's flowers, scenic light, and open lawn pattern everywhere else. Do not repaint a new meadow or move those flowers. No muddy inpaint blobs, no swiss-cheese holes, no scar rings
 6) Prop shadows travel WITH prop layers — empty stage must NOT keep those ground shadows
 7) Open empty clearing in the middle must remain OPEN — do not refill it with trees/rocks/props to "look pretty"
 {aspect_rule}
@@ -173,4 +173,29 @@ SHADOW_DISTANT = (
     "no huge fake oval studio shadow."
 )
 
+# 库内回落值；运行时优先读 `.memory-art/config.yaml` → `agent.max_parallel`（见 resolve_default_workers）。
 DEFAULT_WORKERS = 4
+
+
+def resolve_default_workers(start: "Path | None" = None) -> int:
+    """Nearest project `agent.max_parallel`, else DEFAULT_WORKERS. Clamped to 1..8."""
+    from pathlib import Path
+
+    cur = (start or Path.cwd()).resolve()
+    for base in (cur, *cur.parents):
+        cfg = base / ".memory-art" / "config.yaml"
+        if not cfg.is_file():
+            continue
+        try:
+            import yaml  # type: ignore
+
+            data = yaml.safe_load(cfg.read_text(encoding="utf-8")) or {}
+            agent = data.get("agent") if isinstance(data, dict) else None
+            raw = (agent or {}).get("max_parallel") if isinstance(agent, dict) else None
+            if raw is None:
+                break
+            n = int(raw)
+            return max(1, min(8, n))
+        except Exception:
+            break
+    return DEFAULT_WORKERS
