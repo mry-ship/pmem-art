@@ -8,7 +8,8 @@ from pathlib import Path
 
 
 class TestAutoVerifyWritePath(unittest.TestCase):
-    def test_two_written_recipes_auto_verify(self) -> None:
+    def test_two_written_recipes_do_not_auto_verify(self) -> None:
+        """自评二次过线不再自动升 verified；须 memory promote。"""
         from feedback import write_memory_entry
         from improve.memory_trust import maybe_auto_verify_on_repeat_pass
 

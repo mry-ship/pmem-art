@@ -243,6 +243,42 @@ class TestUnderstandingContract(unittest.TestCase):
         self.assertIn("机位不要动", c2["notes"])
         self.assertEqual(c2["grid"]["keep"], [])
 
+    def test_set_keep_does_not_copy_into_locks(self) -> None:
+        td = Path(tempfile.mkdtemp())
+        folder = td / ".memory-art" / "converge"
+        folder.mkdir(parents=True)
+        (folder / "g1.json").write_text(
+            json.dumps(
+                {
+                    "session_id": "g1",
+                    "goal": "画猫",
+                    "route_ids": ["draw.ordinary"],
+                    "rounds": [],
+                    "understanding_contract": build_contract(
+                        route_ids=["draw.ordinary"], delivery="draw.ordinary"
+                    ),
+                },
+                ensure_ascii=False,
+            ),
+            encoding="utf-8",
+        )
+        rc = cmd_contract(
+            td,
+            action="set",
+            session_id="g1",
+            keep="机位固定；身份是橘猫",
+            vary="表情可换",
+            forbid="赛博紫",
+            spec="单张方图",
+        )
+        self.assertEqual(rc, 0)
+        data = json.loads((folder / "g1.json").read_text(encoding="utf-8"))
+        grid = data["understanding_contract"]["grid"]
+        self.assertTrue(any("橘猫" in x for x in grid["keep"]))
+        self.assertTrue(any("赛博紫" in x for x in grid["forbid"]))
+        self.assertEqual(data["understanding_contract"]["l1"]["locks"], [])
+        self.assertEqual(data["understanding_contract"]["l1"]["unlocks"], [])
+
     def test_split_only_legacy_delivery(self) -> None:
         sess = {"goal": "多图", "contract": "split", "rounds": []}
         c = ensure_session_contract(sess)

@@ -3,9 +3,10 @@ id: 01M7XAHX2QGQH697ZN65QZJ06K
 module: infra.Scripts
 entity: Packaging
 kind: correction
-status: active
+status: archived
 supersedes:
 - 01M7WSRELEASE015ART
+superseded_by: 01M80RELEASE017ART
 anchors:
 - pmem_art.py
 - scripts/pack_pmem_art.py

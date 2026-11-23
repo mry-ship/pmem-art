@@ -29,7 +29,7 @@ from lifecycle import ensure_stdio_survives_locale
 
 ensure_stdio_survives_locale()
 
-VERSION = "0.16.16-art"
+VERSION = "0.16.17-art"
 MEMORY_DIR = ".memory-art"
 
 KIND_META = {
@@ -2414,19 +2414,36 @@ def main() -> int:
 
     p_mem = sub.add_parser(
         "memory",
-        help="美术记忆可信度：promote|revoke|resolve（candidate→verified→canonical）",
+        help="美术记忆可信度：promote|revoke|resolve|audit|promote-missing",
     )
     p_mem.add_argument(
         "memory_action",
-        choices=("promote", "revoke", "resolve"),
-        help="promote 升级 / revoke 撤销 / resolve 冲突裁决",
+        choices=("promote", "revoke", "resolve", "audit", "promote-missing"),
+        help="promote 升级 / revoke 撤销 / resolve 冲突 / audit 审计 / promote-missing 缺 trust 迁移",
     )
     p_mem.add_argument("--id", default="", help="promote/revoke 的条目 id")
-    p_mem.add_argument("--to", default="", help="promote 目标：verified|canonical")
+    p_mem.add_argument("--to", default="", help="promote / promote-missing 目标：verified|canonical")
     p_mem.add_argument("--by", default="", help="promote 确认人（主美）")
     p_mem.add_argument("--reason", default="", help="revoke/resolve 原因")
     p_mem.add_argument("--keep", default="", help="resolve：保留的条目 id")
     p_mem.add_argument("--drop", default="", help="resolve：标记 superseded 的条目 id")
+    p_mem.add_argument("-m", "--module", default="", help="audit / promote-missing：限定模块（含子模块前缀）")
+    p_mem.add_argument(
+        "--kind",
+        default="",
+        help="audit / promote-missing：种类，逗号分隔（默认 audit=recipe+红线+拍板；promote-missing=红线+拍板）",
+    )
+    p_mem.add_argument(
+        "--apply",
+        action="store_true",
+        help="promote-missing：真正写盘（默认只预览）",
+    )
+    p_mem.add_argument(
+        "--limit",
+        type=int,
+        default=0,
+        help="promote-missing：最多处理 N 条（0=不限）",
+    )
 
     p_hook = sub.add_parser("hook", help="处理 Cursor / Claude Code / Codex 的 Hook 闸门事件")
     p_hook.add_argument(

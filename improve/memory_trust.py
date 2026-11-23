@@ -211,6 +211,137 @@ def maybe_auto_verify_on_repeat_pass(
     return []
 
 
+_INJECT_KINDS = frozenset({"style_redline", "art_decision", "recipe"})
+_DEFAULT_PROMOTE_MISSING_KINDS = frozenset({"style_redline", "art_decision"})
+
+
+def _entry_live_for_trust(entry: dict[str, Any]) -> bool:
+    st = str(entry.get("status") or "active").strip().lower()
+    return st not in _DEAD_STATUS and st != "provisional"
+
+
+def _load_library_entries(root: Path) -> list[dict[str, Any]]:
+    """Best-effort load of live art-memory entry dicts for audit/migrate."""
+    from lifecycle import iter_md_files
+
+    entries_root = root / ".memory-art" / "entries"
+    if not entries_root.is_dir():
+        return []
+    out: list[dict[str, Any]] = []
+    for md in iter_md_files(entries_root, recursive=True):
+        try:
+            raw = md.read_text(encoding="utf-8")
+        except (OSError, UnicodeDecodeError):
+            continue
+        parts = _split_frontmatter(raw)
+        if parts is None:
+            continue
+        fm, _body = parts
+        meta: dict[str, Any] = {}
+        for line in fm.splitlines():
+            m = re.match(r"^([A-Za-z0-9_]+)\s*:\s*(.*)$", line)
+            if not m:
+                continue
+            key, val = m.group(1), m.group(2).strip()
+            if (val.startswith('"') and val.endswith('"')) or (
+                val.startswith("'") and val.endswith("'")
+            ):
+                val = val[1:-1]
+            meta[key] = val
+        if not meta.get("id"):
+            meta["id"] = md.stem
+        meta["_path"] = str(md)
+        out.append(meta)
+    return out
+
+
+def audit_trust_entries(
+    root: Path,
+    *,
+    module: str = "",
+    kinds: frozenset[str] | set[str] | None = None,
+) -> dict[str, Any]:
+    """Count live entries that cannot inject (missing trust or still candidate)."""
+    want_kinds = frozenset(kinds) if kinds else _INJECT_KINDS
+    mod = str(module or "").strip()
+    missing: list[dict[str, str]] = []
+    candidates: list[dict[str, str]] = []
+    verified = 0
+    for entry in _load_library_entries(root):
+        kind = str(entry.get("kind") or "")
+        if kind not in want_kinds:
+            continue
+        if not _entry_live_for_trust(entry):
+            continue
+        em = str(entry.get("module") or "")
+        if mod and em != mod and not em.startswith(mod + "."):
+            continue
+        raw_trust = str(entry.get("trust") or "").strip().lower()
+        row = {
+            "id": str(entry.get("id") or ""),
+            "kind": kind,
+            "module": em,
+            "summary": str(entry.get("summary") or "")[:80],
+        }
+        if not raw_trust:
+            missing.append(row)
+            continue
+        if raw_trust == "candidate":
+            candidates.append(row)
+            continue
+        if raw_trust in ("verified", "canonical"):
+            verified += 1
+    return {
+        "missing_trust": missing,
+        "explicit_candidate": candidates,
+        "verified_or_canonical": verified,
+        "missing_total": len(missing),
+        "candidate_total": len(candidates),
+    }
+
+
+def promote_missing_trust(
+    root: Path,
+    *,
+    to: str = "verified",
+    by: str = "",
+    module: str = "",
+    kinds: frozenset[str] | set[str] | None = None,
+    apply: bool = False,
+    limit: int = 0,
+) -> dict[str, Any]:
+    """Promote live entries that lack a trust field (upgrade migration helper).
+
+    Default kinds are style_redline + art_decision (injectable). Recipes are
+    opt-in via --kind recipe. Dry-run unless apply=True.
+    """
+    target = str(to or "verified").strip().lower()
+    if target not in ("verified", "canonical"):
+        raise ValueError("promote-missing --to must be verified|canonical")
+    want_kinds = frozenset(kinds) if kinds else _DEFAULT_PROMOTE_MISSING_KINDS
+    audit = audit_trust_entries(root, module=module, kinds=want_kinds)
+    rows = list(audit["missing_trust"])
+    if limit and limit > 0:
+        rows = rows[: int(limit)]
+    promoted: list[str] = []
+    if apply:
+        for row in rows:
+            eid = row["id"]
+            if not eid:
+                continue
+            promote_entry(root, eid, to=target, by=by or "promote-missing")
+            promoted.append(eid)
+    return {
+        "apply": bool(apply),
+        "to": target,
+        "kinds": sorted(want_kinds),
+        "planned": rows,
+        "planned_total": len(rows),
+        "promoted": promoted,
+        "promoted_total": len(promoted),
+    }
+
+
 def cmd_memory_trust(root: Path, args: Any) -> int:
     action = str(getattr(args, "memory_action", "") or getattr(args, "action", "") or "")
     try:
@@ -241,8 +372,78 @@ def cmd_memory_trust(root: Path, args: Any) -> int:
             )
             print(f"✅ keep={args.keep} drop={args.drop} superseded")
             return 0
+        if action == "audit":
+            kind_raw = str(getattr(args, "kind", "") or "").strip()
+            kinds = (
+                frozenset(x.strip() for x in kind_raw.split(",") if x.strip())
+                if kind_raw
+                else None
+            )
+            report = audit_trust_entries(
+                root,
+                module=str(getattr(args, "module", "") or ""),
+                kinds=kinds,
+            )
+            print(
+                "📋 memory audit（live · 可注入种类）\n"
+                f"   缺 trust（不进提示词）: {report['missing_total']}\n"
+                f"   显式 candidate（不进提示词）: {report['candidate_total']}\n"
+                f"   verified/canonical: {report['verified_or_canonical']}"
+            )
+            for label, key in (
+                ("缺 trust 样本", "missing_trust"),
+                ("candidate 样本", "explicit_candidate"),
+            ):
+                rows = report.get(key) or []
+                if not rows:
+                    continue
+                print(f"\n   {label}:")
+                for row in rows[:12]:
+                    print(
+                        f"      - [{row.get('kind')}] {row.get('id')} "
+                        f"@{row.get('module')} · {row.get('summary')}"
+                    )
+            if report["missing_total"]:
+                print(
+                    "\n   迁移预览: memory promote-missing --to verified --by \"…\""
+                    "\n   确认写入: memory promote-missing --to verified --by \"…\" --apply"
+                )
+            return 0
+        if action == "promote-missing":
+            to = str(getattr(args, "to", "") or "verified").strip() or "verified"
+            kind_raw = str(getattr(args, "kind", "") or "").strip()
+            kinds = (
+                frozenset(x.strip() for x in kind_raw.split(",") if x.strip())
+                if kind_raw
+                else None
+            )
+            limit = int(getattr(args, "limit", 0) or 0)
+            apply = bool(getattr(args, "apply", False))
+            result = promote_missing_trust(
+                root,
+                to=to,
+                by=str(getattr(args, "by", "") or ""),
+                module=str(getattr(args, "module", "") or ""),
+                kinds=kinds,
+                apply=apply,
+                limit=limit,
+            )
+            mode = "已写入" if apply else "预览（未写盘，加 --apply 才升级）"
+            print(
+                f"{'✅' if apply else '👀'} promote-missing → trust={result['to']} · {mode}\n"
+                f"   kinds={','.join(result['kinds'])}  planned={result['planned_total']}  "
+                f"promoted={result['promoted_total']}"
+            )
+            for row in (result.get("planned") or [])[:15]:
+                mark = "→" if apply else "·"
+                print(
+                    f"   {mark} [{row.get('kind')}] {row.get('id')} @{row.get('module')}"
+                )
+            if not apply and result["planned_total"]:
+                print("   确认无误后再加 --apply。")
+            return 0
     except (ValueError, FileNotFoundError) as exc:
         print(f"❌ {exc}")
         return 2
-    print("usage: memory promote|revoke|resolve …")
+    print("usage: memory promote|revoke|resolve|audit|promote-missing …")
     return 2

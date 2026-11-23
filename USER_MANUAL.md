@@ -1,9 +1,9 @@
 # 📘 pmem-art 画师使用手册 — 怎么在 Cursor / Codex 里越画越准
 
-> **版本**：`v0.16.16-art`  
+> **版本**：`v0.16.17-art`  
 > **核心理念（零门槛）**：**直接说人话就行**。例如「画一张窗边女孩」「参考这张，换成一只猫」。**不用背技能名、不用敲斜杠、不用碰命令行、不用写 YAML。** 附图可有可无。  
 > 电脑会自己认路；认不清会**先问你一句**，不会默默画错。你只会看到类似 `【按 克隆 走了】` / `【走默认路径】` 这种标签。  
-> **用户包下载（不含研发用 pmem）** → [GitHub Release v0.16.16-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.16-art)  
+> **用户包下载（不含研发用 pmem）** → [GitHub Release v0.16.17-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.17-art)  
 > **认路白话流程图** → [docs/route_pipeline.html](docs/route_pipeline.html)（推荐先看：大白话从提需到出图）  
 > **先看总览？** → [README.md](README.md) · **进阶斜杠技能**见下文（可选用） · 旧点选流程 [docs/skills/flows.html](docs/skills/flows.html)  
 > **看图墙 / 技能用法与结果？** → [README · 效果长什么样](README.md#效果长什么样) · [全页展陈](docs/showcase/skills-homepage/index.html)（图源 `docs/workbench_guide/` + 合成梯；拆图层见展陈 `#layer`）
@@ -435,6 +435,23 @@ python3 pmem_art.py feedback "换成水彩" -m character.Astra
 - **调整词**（换成水彩 / 改成Q版 / 修一下） → 自动记为 **`visual_correction`（勘误 + 画风分叉）**
 - **定调词**（以后都用… / 统一用…） → 自动记为 **`art_decision`（审美拍板）**
 
+自动写入的条目默认是 **`trust=candidate`（候选）**，**不会**进下一趟生图提示词。只有你确认过的红线/拍板才硬约束：
+
+```bash
+python3 pmem_art.py memory audit
+python3 pmem_art.py memory promote --id <ENTRY_ID> --to verified
+# 升级旧库（缺 trust 字段的红线/拍板；默认只预览，加 --apply 才写）
+python3 pmem_art.py memory promote-missing --to verified --by "主美" --apply
+```
+
+开跑后把「必须保持 / 可以变化 / 明确禁止 / 交付规格」写进理解合同四格（**不要**写进标准路由句）：
+
+```bash
+python3 pmem_art.py contract set --id <session> --keep "…" --vary "…" --forbid "…" --spec "…"
+```
+
+细则见 [`docs/MEMORY_TRUST.md`](docs/MEMORY_TRUST.md)。
+
 ---
 
 ## 第四章：三种项目接入方式（空项目 / 老项目 / 持续生图）
@@ -480,6 +497,8 @@ python3 pmem_art.py ingest .cursor/generated/new.png -p "角色Astra 水彩 概�
 | `python3 pmem_art.py converge finish` | 结算达标图或 3 轮最高分图；**默认写入记忆、打印评分履历，并写出可点开的过程板**（`--no-apply` 可跳过写记忆；`--quiet` 只要一行结论，过程板路径仍给出）。不到 9.5 且未满 3 轮时直接失败，不能当终稿 |
 | `python3 pmem_art.py showcase-gate --html <index.html>` | 展陈 HTML 终稿闸门：正式分 < 9.5 且未满 3 轮的格不能交 |
 | `python3 pmem_art.py feedback "<原话>" -m <模块> [-a <图>]` | 把画师自然语言评价沉淀为记忆 |
+| `python3 pmem_art.py contract set --id <session> --keep/vary/forbid/spec "…"` | 写入本趟四格（不进路由句；空四格时记忆注入不受 forbid 约束） |
+| `python3 pmem_art.py memory audit` / `promote` / `promote-missing` | 审计缺 trust；人工确认后才进提示词 |
 | `python3 pmem_art.py search -m <模块>` | 召回该模块（含父模块）的红线、定稿与色板 |
 | `python3 pmem_art.py ingest <图> -p "<说明>" --apply` | 四信号分类并归档图片 |
 | `python3 pmem_art.py atlas` | 生成看图工作台，并拉起本机 reveal 服务；**用打印出的 http 地址打开**（删除/定位才稳定） |

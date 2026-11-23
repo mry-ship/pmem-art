@@ -709,12 +709,8 @@ def cmd_contract(
             kwargs["surface_fix"] = surface_fix
         if keep:
             kwargs["keep"] = keep
-            if not locks:
-                kwargs["locks"] = keep
         if vary:
             kwargs["vary"] = vary
-            if not unlocks:
-                kwargs["unlocks"] = vary
         if forbid:
             kwargs["forbid"] = forbid
         if spec:

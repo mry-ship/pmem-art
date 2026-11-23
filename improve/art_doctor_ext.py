@@ -4,9 +4,6 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-from .memory_trust import entry_trust
-
-
 def _skill_install_roots(root: Path) -> list[Path]:
     return [
         root / ".cursor" / "skills",
@@ -74,6 +71,11 @@ def _cli() -> str:
         return "pyw -3 -u pmem_art.py"
 
 
+# Soft-signal kinds that Warm-Start can inject after promote-missing (default).
+# recipe 缺 trust 只影响置信、不进 prompt；不进 doctor 迁移软信号，避免与 promote-missing 默认范围错位。
+_PROMOTE_MISSING_KINDS = frozenset({"style_redline", "art_decision"})
+
+
 def check_candidate_backlog(data: dict[str, Any], *, soft_limit: int = 20) -> dict[str, Any]:
     """Count explicit trust=candidate actives waiting for promote (not provisional fails)."""
     entries = [e for e in (data.get("entries") or []) if isinstance(e, dict)]
@@ -83,7 +85,7 @@ def check_candidate_backlog(data: dict[str, Any], *, soft_limit: int = 20) -> di
         if str(e.get("status") or "active").lower()
         not in ("archived", "superseded", "inactive", "pending", "revoked", "provisional")
     ]
-    # Explicit frontmatter only — inferred provisional→candidate must not inflate promote queue.
+    # Explicit frontmatter only — missing trust is tracked separately (not promote-queue noise).
     candidates = [
         e
         for e in live
@@ -101,6 +103,37 @@ def check_candidate_backlog(data: dict[str, Any], *, soft_limit: int = 20) -> di
         "hint": (
             f"candidate 记忆 {len(candidates)} 条（recipe {len(recipes)}）—"
             f"请 `memory promote` 或 `memory revoke` 清理"
+            if overloaded
+            else ""
+        ),
+    }
+
+
+def check_missing_trust(data: dict[str, Any], *, soft_limit: int = 1) -> dict[str, Any]:
+    """Live redline/decision with no trust — blocked from prompt until promote-missing."""
+    entries = [e for e in (data.get("entries") or []) if isinstance(e, dict)]
+    missing = [
+        e
+        for e in entries
+        if str(e.get("kind") or "") in _PROMOTE_MISSING_KINDS
+        and str(e.get("status") or "active").lower()
+        not in ("archived", "superseded", "inactive", "pending", "revoked", "provisional")
+        and not str(e.get("trust") or "").strip()
+    ]
+    redlines = [e for e in missing if e.get("kind") == "style_redline"]
+    decisions = [e for e in missing if e.get("kind") == "art_decision"]
+    overloaded = len(missing) >= soft_limit
+    return {
+        "ok": not overloaded,
+        "missing_total": len(missing),
+        "missing_redlines": len(redlines),
+        "missing_decisions": len(decisions),
+        "missing_recipes": 0,
+        "soft_limit": soft_limit,
+        "hint": (
+            f"缺 trust {len(missing)} 条（红线 {len(redlines)} · 拍板 {len(decisions)}）—"
+            f"不进提示词；先 `memory audit`，确认后 "
+            f"`memory promote-missing --to verified --by … --apply`"
             if overloaded
             else ""
         ),
@@ -136,9 +169,10 @@ def build_repair_tips(
     backlog: dict[str, Any],
     anchors: dict[str, Any],
     b2: dict[str, Any] | None = None,
+    missing_trust: dict[str, Any] | None = None,
 ) -> list[str]:
     tips: list[str] = []
-    for block in (skills, backlog, anchors):
+    for block in (skills, backlog, anchors, missing_trust or {}):
         hint = str(block.get("hint") or "").strip()
         if hint:
             tips.append(hint)
@@ -161,9 +195,36 @@ def build_repair_tips(
 def collect_art_doctor_extras(root: Path, data: dict[str, Any]) -> dict[str, Any]:
     skills = check_skill_files(root)
     backlog = check_candidate_backlog(data)
+    # Prefer on-disk audit: library JSON may omit or normalize trust differently.
+    try:
+        from .memory_trust import _DEFAULT_PROMOTE_MISSING_KINDS, audit_trust_entries
+
+        report = audit_trust_entries(root, kinds=_DEFAULT_PROMOTE_MISSING_KINDS)
+        missing = {
+            "ok": report["missing_total"] < 1,
+            "missing_total": report["missing_total"],
+            "missing_redlines": sum(
+                1 for r in report["missing_trust"] if r.get("kind") == "style_redline"
+            ),
+            "missing_decisions": sum(
+                1 for r in report["missing_trust"] if r.get("kind") == "art_decision"
+            ),
+            "missing_recipes": 0,
+            "soft_limit": 1,
+            "hint": (
+                f"缺 trust {report['missing_total']} 条（红线/拍板）—"
+                f"不进提示词；先 `memory audit`，确认后 "
+                f"`memory promote-missing --to verified --by … --apply`"
+                if report["missing_total"]
+                else ""
+            ),
+        }
+    except Exception:
+        missing = check_missing_trust(data)
     anchors = check_visual_anchors(data)
     return {
         "skills": skills,
         "candidate_backlog": backlog,
+        "missing_trust": missing,
         "visual_anchors": anchors,
     }

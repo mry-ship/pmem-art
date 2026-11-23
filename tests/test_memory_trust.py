@@ -6,10 +6,12 @@ import unittest
 from pathlib import Path
 
 from improve.memory_trust import (
+    audit_trust_entries,
     entry_trust,
     maybe_auto_verify_on_repeat_pass,
     normalize_trust,
     promote_entry,
+    promote_missing_trust,
     resolve_conflict,
     revoke_entry,
     trust_counts_for_recipe_confidence,
@@ -102,7 +104,7 @@ class TestPromoteRevoke(unittest.TestCase):
             self.assertIn("trust: verified", keep)
             self.assertIn("status: superseded", drop)
 
-    def test_auto_verify_needs_two_passes(self) -> None:
+    def test_auto_verify_never_promotes(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             self._write_entry(root, "R1", trust="candidate", score=9.6)
@@ -115,6 +117,34 @@ class TestPromoteRevoke(unittest.TestCase):
                     encoding="utf-8"
                 )
                 self.assertIn("trust: candidate", raw)
+
+    def test_promote_missing_dry_run_and_apply(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            d = root / ".memory-art" / "entries" / "character.Astra"
+            d.mkdir(parents=True)
+            (d / "RL1.md").write_text(
+                "---\nid: RL1\nmodule: character.Astra\nkind: style_redline\n"
+                "status: active\nsummary: \"避免赛博紫\"\n---\nbody\n",
+                encoding="utf-8",
+            )
+            (d / "RL2.md").write_text(
+                "---\nid: RL2\nmodule: character.Astra\nkind: style_redline\n"
+                "status: active\ntrust: candidate\nsummary: \"避免头大\"\n---\nbody\n",
+                encoding="utf-8",
+            )
+            audit = audit_trust_entries(root, kinds={"style_redline", "art_decision"})
+            self.assertEqual(audit["missing_total"], 1)
+            self.assertEqual(audit["candidate_total"], 1)
+            preview = promote_missing_trust(root, to="verified", by="tester", apply=False)
+            self.assertEqual(preview["planned_total"], 1)
+            self.assertEqual(preview["promoted_total"], 0)
+            self.assertNotIn("trust:", (d / "RL1.md").read_text(encoding="utf-8").split("---")[1])
+            done = promote_missing_trust(root, to="verified", by="tester", apply=True)
+            self.assertEqual(done["promoted_total"], 1)
+            self.assertIn("trust: verified", (d / "RL1.md").read_text(encoding="utf-8"))
+            # explicit candidate is not touched by promote-missing
+            self.assertIn("trust: candidate", (d / "RL2.md").read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":

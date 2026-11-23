@@ -16,7 +16,7 @@
 ![Skills](https://img.shields.io/badge/美术技能-11-8B5CF6)
 ![Threshold](https://img.shields.io/badge/合格线-≥9.50-blue)
 
-[📦 下载用户包 0.16.16-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.16-art) · [📖 使用手册](USER_MANUAL.md) · [认路白话流程图](docs/route_pipeline.html) · [进阶技能点选](docs/skills/flows.html) · [效果图墙](#效果长什么样) · [全页展陈](docs/showcase/skills-homepage/index.html) · [架构](ARCHITECTURE.md)
+[📦 下载用户包 0.16.17-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.17-art) · [📖 使用手册](USER_MANUAL.md) · [认路白话流程图](docs/route_pipeline.html) · [进阶技能点选](docs/skills/flows.html) · [效果图墙](#效果长什么样) · [全页展陈](docs/showcase/skills-homepage/index.html) · [架构](ARCHITECTURE.md)
 
 </div>
 
@@ -34,10 +34,10 @@
 
 ## 一分钟接入
 
-**推荐画师：下用户包**（不含研发用 pmem）→ [Releases · v0.16.16-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.16-art)
+**推荐画师：下用户包**（不含研发用 pmem）→ [Releases · v0.16.17-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.17-art)
 
 ```bash
-# 解压 pmem-art-0.16.16-art.zip 后
+# 解压 pmem-art-0.16.17-art.zip 后
 pip install -r requirements.txt
 python3 pmem_art.py init --name "MyArtProject"
 python3 pmem_art.py skills --install
@@ -241,6 +241,8 @@ python3 pmem_art.py atlas
 python3 pmem_art.py feedback "太赛博了，别这样画" -m character.Astra
 python3 pmem_art.py feedback "这版留着" -m character.Astra -a path/to/keep.png
 python3 pmem_art.py memory promote --id <ENTRY_ID> --to canonical --by "主美"
+python3 pmem_art.py memory audit   # 缺 trust / candidate 不进提示词
+# python3 pmem_art.py memory promote-missing --to verified --by "主美" --apply
 ```
 
 下次再画同角色 / 同场景，Agent 会先翻这些记录，少重复翻车。细节见 [USER_MANUAL.md](USER_MANUAL.md) · [记忆可信度](docs/MEMORY_TRUST.md)。

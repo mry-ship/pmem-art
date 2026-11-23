@@ -2071,16 +2071,23 @@ def collect_doctor_summary(root: Path, data: dict[str, Any]) -> dict[str, Any]:
         art_extras = collect_art_doctor_extras(root, data)
         skills = art_extras.get("skills") or {}
         backlog = art_extras.get("candidate_backlog") or {}
+        missing_trust = art_extras.get("missing_trust") or {}
         anchors = art_extras.get("visual_anchors") or {}
         if not skills.get("ok"):
             signals.append(f"技能缺失 {len(skills.get('missing') or [])}")
         if not backlog.get("ok"):
             soft_signals.append(f"candidate堆积 {backlog.get('candidate_total', 0)}")
+        if not missing_trust.get("ok"):
+            soft_signals.append(f"缺trust {missing_trust.get('missing_total', 0)}")
         if anchors.get("gap_count"):
             # already soft via asset_gaps; keep tip generation
             pass
         repair_tips = build_repair_tips(
-            skills=skills, backlog=backlog, anchors=anchors, b2=b2_report
+            skills=skills,
+            backlog=backlog,
+            anchors=anchors,
+            b2=b2_report,
+            missing_trust=missing_trust,
         )
     except Exception as exc:  # noqa: BLE001
         art_extras = {"error": str(exc)}
@@ -2189,10 +2196,14 @@ def print_doctor_summary(summary: dict[str, Any]) -> None:
             f"missing={len(miss)}"
             + (f" ({', '.join(miss[:4])})" if miss else "")
         )
-    if backlog:
+    missing_trust = extras.get("missing_trust") or {}
+    if backlog or missing_trust:
         print(
             f"   记忆trust: candidate={backlog.get('candidate_total', 0)} "
             f"(recipe {backlog.get('candidate_recipes', 0)} · redline {backlog.get('candidate_redlines', 0)})"
+            f"  缺trust={missing_trust.get('missing_total', 0)}"
+            f" (红线 {missing_trust.get('missing_redlines', 0)} · "
+            f"拍板 {missing_trust.get('missing_decisions', 0)})"
         )
     tips = list(summary.get("repair_tips") or [])
     if tips:
@@ -2200,7 +2211,9 @@ def print_doctor_summary(summary: dict[str, Any]) -> None:
         for tip in tips[:6]:
             print(f"      → {tip}")
     print("\n   Mode C 持续循环: sync → candidates/accept → search/validate → record → atlas")
-    print("   记忆可信度: memory promote|revoke|resolve · 见 docs/MEMORY_TRUST.md")
+    print(
+        "   记忆可信度: memory promote|revoke|resolve|audit|promote-missing · 见 docs/MEMORY_TRUST.md"
+    )
     print("   Benchmark分层: B1系统 / B2视觉 / B3生产 · 见 docs/BENCHMARK_LAYERS.md")
 
 
