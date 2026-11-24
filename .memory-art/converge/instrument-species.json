@@ -78,7 +78,7 @@
   "accept_threshold": 9.5,
   "max_rounds": 4,
   "ready_to_finish": false,
-  "status": "running",
+  "status": "finished",
   "rounds": [],
   "warm_start": {
     "project_id": "pmem-art",
@@ -172,5 +172,6 @@
       "defects": "无；六条与五问都过。",
       "next_fix": "写入 merge_phase1.yaml track band，跑 relation-judge。"
     }
-  ]
+  ],
+  "slot_released_reason": "abandoned before 2026-11-23; slot released so a new session can start; not a scored delivery"
 }

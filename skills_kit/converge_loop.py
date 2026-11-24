@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 from typing import Any
 
+from .converge_policy import EARLY_STOP_REASONS
 from .showcase_gate import DEFAULT_MAX_ROUNDS, DEFAULT_THRESHOLD, can_accept_winner
 
 _ACTIVE = "_active.json"
@@ -184,8 +185,8 @@ def loop_followup(root: Path, session_id: str = "") -> dict[str, str] | None:
     th = float(sess.get("accept_threshold") or sess.get("threshold") or DEFAULT_THRESHOLD)
     mr = int(sess.get("max_rounds") or DEFAULT_MAX_ROUNDS)
     early_flag = str(sess.get("status") or "") == "early_safe_stop" or any(
-        str(r.get("decision") or "") in {"STOP_REGRESSION", "STOP_PLATEAU"}
-        or str(r.get("early_safe_stop") or "") in {"STOP_REGRESSION", "STOP_PLATEAU"}
+        str(r.get("decision") or "") in EARLY_STOP_REASONS
+        or str(r.get("early_safe_stop") or "") in EARLY_STOP_REASONS
         for r in judged
     )
     if can_accept_winner(

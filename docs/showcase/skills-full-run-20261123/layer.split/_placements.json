@@ -1,0 +1,104 @@
+[
+  {
+    "id": "bg",
+    "name": "1 背景空舞台",
+    "note": "giant soft-focus garden leaves, pink-purple flower buds, blue sky gaps, golden s",
+    "z": 1,
+    "file": "new_trim/01-bg.png",
+    "truth": {
+      "left": 0.0,
+      "top": 0.0,
+      "width": 1.0,
+      "height": 1.0
+    },
+    "left": 0.0,
+    "top": 0.0,
+    "width": 1.0,
+    "height": 1.0
+  },
+  {
+    "id": "mushrooms",
+    "name": "2 左侧蘑菇簇",
+    "note": "cluster of stylized pink and blue spotted toadstools with white stems on grass",
+    "z": 2,
+    "file": "new_trim/02-mushrooms.png",
+    "truth": {
+      "left": 0.0,
+      "top": 0.2898,
+      "width": 0.4094,
+      "height": 0.4398
+    },
+    "left": 0.06951530612244898,
+    "top": 0.439453125,
+    "width": 0.2697704081632653,
+    "height": 0.290234375
+  },
+  {
+    "id": "pond_boat",
+    "name": "3 池塘香蕉船",
+    "note": "round cobblestone pond, wooden pier, yellow banana-shaped boat with mast on wate",
+    "z": 3,
+    "file": "new_trim/03-pond_boat.png",
+    "truth": {
+      "left": 0.0,
+      "top": 0.45,
+      "width": 0.4694,
+      "height": 0.5195
+    },
+    "left": 0.035076530612244895,
+    "top": 0.528125,
+    "width": 0.3985969387755102,
+    "height": 0.44140625
+  },
+  {
+    "id": "main_house",
+    "name": "4 中央花瓣小屋",
+    "note": "two-story fairy cottage with brown shingle lower roof, wooden door, circular win",
+    "z": 4,
+    "file": "new_trim/04-main_house.png",
+    "truth": {
+      "left": 0.0893,
+      "top": 0.1094,
+      "width": 0.6798,
+      "height": 0.6805
+    },
+    "left": 0.14030612244897958,
+    "top": 0.21171875,
+    "width": 0.5778061224489796,
+    "height": 0.578125
+  },
+  {
+    "id": "treehouse_mole",
+    "name": "5 树屋与鼹鼠",
+    "note": "gnarled tree trunk, secondary treehouse with thatch roof and round window, yello",
+    "z": 5,
+    "file": "new_trim/05-treehouse_mole.png",
+    "truth": {
+      "left": 0.4094,
+      "top": 0.0297,
+      "width": 0.5906,
+      "height": 0.7203
+    },
+    "left": 0.4330357142857143,
+    "top": 0.0875,
+    "width": 0.5427295918367347,
+    "height": 0.6625
+  },
+  {
+    "id": "foreground",
+    "name": "6 前景蘑菇桌与草地",
+    "note": "large red spotted mushroom table with cheese wedge raspberry blueberries, lush g",
+    "z": 6,
+    "file": "new_trim/06-foreground.png",
+    "truth": {
+      "left": 0.0089,
+      "top": 0.5492,
+      "width": 0.9911,
+      "height": 0.4508
+    },
+    "left": 0.008928571428571428,
+    "top": 0.54921875,
+    "width": 0.9904336734693877,
+    "height": 0.45078125
+  }
+]

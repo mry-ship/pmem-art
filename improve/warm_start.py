@@ -58,6 +58,11 @@ _UNIVERSAL_BAN = re.compile(
     r"霓虹|赛博|油腻|过曝|漏抠|毛边|脏暗|脏色|头身|头过大|手部崩坏|塑料感|写实皮肤|毛孔|扁平无体积|灰雾废土|可读乱码",
     re.I,
 )
+# 角色肢体/宠物习惯。图标和界面任务没有点名这些词时不注入。
+_CHARACTER_BODY_HABIT = re.compile(
+    r"狗|虹膜|瞳孔|头身|棋子|(?:全身|半身).{0,12}(?:眼|狗|人|角色|立绘|姿势)|(?:眼|狗|角色|立绘).{0,12}(?:全身|半身)"
+)
+_BODY_FRAMING = re.compile(r"全身|半身|立绘")
 
 _INJECT_REDLINE_CAP = 3
 _INJECT_BAN_CAP = 5
@@ -166,9 +171,8 @@ def _foreign_artifact_bleed(text: str, module: str, goal: str = "") -> bool:
     blob = text or ""
     if not _FOREIGN_ARTIFACT.search(blob):
         return False
-    task_blob = f"{module or ''} {goal or ''}"
-    if _FOREIGN_ARTIFACT.search(task_blob):
-        return False
+    # 任务自己带了某个交付物词，不能因此放行记忆里的其他交付物。
+    # 同族词只按当前任务范围从记忆句里剥掉。
     ctx = _context_scopes(module, goal)
     stripped = blob
     if "merge_ladder" in ctx or "candy_merge" in ctx or str(module or "").lower().startswith("merge."):
@@ -202,6 +206,12 @@ def habit_relevant_for_task(habit: str, module: str, goal: str = "") -> bool:
     text = (habit or "").strip()
     if not text:
         return False
+    ctx = _context_scopes(module, goal)
+    if ("app_icon" in ctx or "ui_shell" in ctx) and _CHARACTER_BODY_HABIT.search(text):
+        if not _CHARACTER_BODY_HABIT.search(goal or ""):
+            return False
+    if _prior_sku_bleed(text, goal):
+        return False
     if _UNIVERSAL_BAN.search(text):
         return True
     # Unmarked habits that still name another deliverable family → drop.
@@ -212,6 +222,17 @@ def habit_relevant_for_task(habit: str, module: str, goal: str = "") -> bool:
         # No strong domain marker → treat as generic short guardrail.
         return True
     return bool(habit_topics & _context_scopes(module, goal))
+
+
+def filter_composition_prefs(vals: list[str], module: str, goal: str = "") -> list[str]:
+    """Drop character framing prefs (全身/半身/立绘) from icon and UI prompts."""
+    cleaned = [str(v).strip() for v in vals if str(v).strip()]
+    ctx = _context_scopes(module, goal)
+    if "app_icon" not in ctx and "ui_shell" not in ctx:
+        return cleaned
+    if _BODY_FRAMING.search(goal or ""):
+        return cleaned
+    return [v for v in cleaned if not _BODY_FRAMING.search(v)]
 
 
 def _goal_tokens(goal: str) -> list[str]:
@@ -237,11 +258,14 @@ def _soft_goal_overlap_ok(entry: dict[str, Any], goal: str, module: str = "") ->
     """When entry has no strong topic tags: drop foreign-artifact bleed with 0 goal overlap.
 
     Vague goals / generic short redlines (no foreign artifact) still keep.
+    Concrete SKUs from another run never keep, even when a short goal has no tokens.
     """
+    blob = f"{entry.get('summary') or ''} {entry.get('body') or ''}"
+    if _prior_sku_bleed(blob, goal):
+        return False
     g_toks = _goal_tokens(goal)
     if len(g_toks) < 2:
         return True
-    blob = f"{entry.get('summary') or ''} {entry.get('body') or ''}"
     hay = blob.lower()
     if any(t in hay for t in g_toks):
         return True
@@ -632,9 +656,10 @@ def gate_style_memory(
     rows: list[dict[str, Any]],
     *,
     goal: str = "",
+    module: str = "",
     contract: dict[str, Any] | None = None,
 ) -> tuple[list[dict[str, Any]], list[dict[str, str]]]:
-    """已确认的风格记忆才进提示词。候选和未写信任的条目只留在排除记录里。"""
+    """已确认的风格记忆才进提示词。候选、未写信任、他趟物件和其他交付物只留在排除记录里。"""
     from .memory_trust import entry_trust
 
     grid: dict[str, Any] = {}
@@ -651,6 +676,12 @@ def gate_style_memory(
             excluded.append({"id": eid, "kind": kind, "reason": "未人工确认，不作为硬约束"})
             continue
         line = strip_redline_identity(summary) if kind == "style_redline" else summary
+        if _prior_sku_bleed(line, goal):
+            excluded.append({"id": eid, "kind": kind, "reason": "点名了他趟具体物件，不进提示词"})
+            continue
+        if _foreign_artifact_bleed(line, module, goal):
+            excluded.append({"id": eid, "kind": kind, "reason": "其他交付物的说法，不进提示词"})
+            continue
         forbid_hit = conflicting_forbid_phrase(line, grid.get("forbid") or [])
         if forbid_hit:
             excluded.append({"id": eid, "kind": kind, "reason": f"与当前明确禁止冲突：{forbid_hit}"})
@@ -802,7 +833,7 @@ def build_warm_start_pack(
         redlines, key=lambda e: rank_memory_entry(e, target_module=module, query=goal), reverse=True
     )
     redlines_gated, redline_excluded = gate_style_memory(
-        redlines_ranked, goal=goal, contract=contract
+        redlines_ranked, goal=goal, module=module, contract=contract
     )
     redlines = redlines_gated[:_INJECT_REDLINE_CAP]
     for overflow in redlines_gated[_INJECT_REDLINE_CAP:]:
@@ -817,7 +848,7 @@ def build_warm_start_pack(
         decisions, key=lambda e: rank_memory_entry(e, target_module=module, query=goal), reverse=True
     )
     decisions_gated, decision_excluded = gate_style_memory(
-        decisions_ranked, goal=goal, contract=contract
+        decisions_ranked, goal=goal, module=module, contract=contract
     )
     decisions = decisions_gated[:top_n]
     for overflow in decisions_gated[top_n:]:
@@ -948,6 +979,8 @@ def build_warm_start_pack(
             return False
         if _foreign_artifact_bleed(blob, module, goal):
             return False
+        if _prior_sku_bleed(blob, goal):
+            return False
         return True
 
     recalled_cards = [c for c in recalled_cards if _knowledge_ok(c)]
@@ -1016,6 +1049,12 @@ def build_warm_start_pack(
             if key in ("preferred_lighting", "preferred_color_temperature")
             else [str(v).strip() for v in raw_vals if str(v).strip()][-3:]
         )
+        if key == "preferred_composition":
+            vals = filter_composition_prefs(vals, module, goal)
+        vals = [
+            v for v in vals
+            if not _prior_sku_bleed(v, goal) and not _foreign_artifact_bleed(v, module, goal)
+        ]
         if vals:
             taste_bits.append(f"{label}={' / '.join(vals)}")
     if taste_bits:
@@ -1100,15 +1139,23 @@ WARM_START_MARK = "【Warm-Start 注入包"
 
 
 def merge_warm_start_prompt(prompt: str, pack: dict[str, Any] | None) -> str:
-    """Prepend the session warm-start block unless it is already in the prompt."""
+    """Prepend the session warm-start block unless it is already in the prompt.
+
+    Taste lines that contradict this round's brief are left out of the block.
+    The taste profile itself is not edited.
+    """
     block = str((pack or {}).get("prompt_block") or "").strip()
     text = str(prompt or "").strip()
     if not block:
         return text
+    if text:
+        from skills_kit.prompt_scale import drop_opposed_injections
+
+        block = drop_opposed_injections(block, brief=text).strip()
+    if not block:
+        return text
     if WARM_START_MARK in text or block in text:
         return text
-    if not text:
-        return block
     return f"{block}\n{text}"
 
 

@@ -870,6 +870,7 @@ def audit_score_inflation(
         "dims_parsed": w_info.get("parsed", {}),
         "rubric_mode": w_info.get("rubric_mode") or "",
         "weighted_score": weighted,
+        "hurdle": w_info.get("hurdle"),
         "stagnated": stagnated,
         "warnings": warnings,
     }

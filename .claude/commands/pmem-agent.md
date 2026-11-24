@@ -45,6 +45,7 @@ description: 总控：一轮审核，确定就执行（pmem-art）
 | 界面 | `整套界面或 HUD 或九宫格与状态族；走界面` |
 | 图标A/B/C | `1024 桌面启动图标；走图标A` / `线性 SVG；走图标B` / `背包透明底；走图标C` |
 | 合成梯 | `同一套东西一档比一档大；走合成梯` |
+| 拆图层 | `完整场景要拆成可叠回的层；走拆图层` |
 
 **⚠ 风险**：标准句写错会带偏检索；若与原话规则冲突，`route` 会报 `plan_conflict` 并降为 `confidence=low`，必须停下来问人，禁止硬执行。
 
@@ -64,7 +65,7 @@ pyw -3 -u pmem_art.py route --text "<玩家原话>" --canonical "<标准路由�
 - `execute_ok=true`：写步骤表并执行；随后才能 `converge start`（无 route 缓存会被闸门拦住）。
 - `confidence=ask` / 糊话门 / `plan_conflict` / `mode=stop`：先问美术，**禁止默默走普通图开画**。
 - **路由冲突闸（即使 execute_ok）**：近邻 `route_ids` 与本判明显不一致；或一次甩出 **≥3** 个互斥支路且原话不是整页展陈/对比页/同范围全清单、也不是「所有技能 / 技能变体全部跑一遍」；或「再跑一遍」被扩成九支全开——一律当 **ask**，列选项问人，**禁止**只信 `execute_ok` 硬开画。原话就是全技能清点时，全清单 `execute_ok`。同一身份上的「换成惊讶」仍是变体，禁止因为「换成」把放行打成假。
-- 点名了 `/pmem-ui` / `/pmem-draw` / `/pmem-icon` / `/pmem-merge-ladder` 等：**仍须**先跑 `route`（点名锁定不改判）。若已认清 `route_id`，`converge start --route-id <id>` 在缺缓存时可**点名种闸**，不必 `--skip-route-gate`。`/pmem-draw` / `/pmem-icon` 子类型不唯一时必须带 `--route-id` 或先跑完整 route。禁止靠 `--skip-route-gate` 偷跑，除非用户明确说调试跳闸。
+- 点名了 `/pmem-ui` / `/pmem-draw` / `/pmem-icon` / `/pmem-merge-ladder` / `/pmem-layer-split` 等：**仍须**先跑 `route`（点名锁定不改判）。若已认清 `route_id`，`converge start --route-id <id>` 在缺缓存时可**点名种闸**，不必 `--skip-route-gate`。`/pmem-draw` / `/pmem-icon` 子类型不唯一时必须带 `--route-id` 或先跑完整 route。禁止靠 `--skip-route-gate` 偷跑，除非用户明确说调试跳闸。
 
 白话流程图：`docs/route_pipeline.html`。重建库：`route --rebuild`。用户正负例：`.memory-art/route_bank/user.jsonl`。
 
@@ -102,12 +103,12 @@ pyw -3 -u pmem_art.py route --text "<玩家原话>" --canonical "<标准路由�
 ### 日常交付墙钟（不伤结果）
 
 - ≥9.5 **到线即停**，禁止凑满 3 轮。
-- 出图主链（`start`→`emit-prompt`→生图→`generate --image` 登记→`judge`）禁止跑 `doctor` / `hygiene` / 深检 / `--help` 探索；维护任务放到出图前、`finish` 后或单独点名。
-- 禁止 Probe / Overwrite / stub 占位图骗闸 / 额外探测再生图；顺序：`converge generate --emit-prompt` → GenerateImage → `converge generate --image` → judge。
+- 出图主链（第 1 轮 `emit-prompt`→生图→登记→`judge`；下一轮由审图在同一次写好定稿）禁止跑 `doctor` / `hygiene` / 深检 / `--help` 探索；维护任务放到出图前、`finish` 后或单独点名。
+- 禁止 Probe / Overwrite / stub 占位图骗闸 / 额外探测再生图。第 1 轮：`converge generate --emit-prompt` → GenerateImage → `converge generate --image` → judge。从第 2 轮起直接用审图打印的最终 Prompt 生图再登记，不要再开一次 emit；会话没有下一轮 pending 才补一次。分数和定稿看会话 JSON，禁止等外层脚本把日志一次性写完。
 - 显式 session（禁 `latest`）；普通单交付本对话优先；Task 仅 merge 逐格并行 / 多技能展陈。
 - **并行上限**：同时活跃 Task/子 agent ≤ `agent.max_parallel`（默认 4）；超出分批排队。
 - 首轮 brief 一次写准（身份/机位/材质/禁令/底色/动势品种等硬锁），硬锁不留到下一轮。
-- **平台纪律（本项目已开安全早停）**：`safe_early_stop: true`；掉≥0.15 或平台持平/掉分（`plateau_rounds`，本项目=1）且 R≥2 → 交历史最高分并标明未过线；见 `STOP_*` 立即 `finish`，禁止凑满 3。开场 search 只取要点，禁整包 JSON 刷屏。
+- **平台纪律（本项目已开安全早停）**：`safe_early_stop: true`；掉≥0.15 或平台持平/掉分（`plateau_rounds`，本项目=1）且 R≥2 → 交历史最高分并标明未过线；门槛维仍低于线时第 2 轮起 `STOP_HURDLE_BOUND`。见 `STOP_*` 立即 `finish`，禁止凑满 3。开场 search 只取要点，禁整包 JSON 刷屏。
 
 ## 第二段 · 总控对表，再交给一个 agent 执行
 
@@ -116,7 +117,7 @@ pyw -3 -u pmem_art.py route --text "<玩家原话>" --canonical "<标准路由�
 先用第零段的 `route` 结果（`plan.route_ids`）决定走哪一支，有对话 id 就给 `route` 和 `converge start` 加上 `--conversation <id>`。`.cursor/skills/registry.md` 只用来核对 heading。本地 route 已经先跑 `tighten` 再对 when。总控不要按 phase、tighten、when 再判一次。普通图排在最后，只是兜底。定稿前后要交的东西不一样，就拆成多步，每步单独对一次。`route_ids` 的含义如下，只作读表，不作第二次分流：
 
 1. 有参考但没换题材是普通图。没人要几套机位，不是镜头包。关、开的机位和身份不在同一张图上，是多图分工。单张弹框、单张图标，不是整套界面或图标集。
-2. 整屏、HUD、九宫格、按钮状态族是界面。桌面 1024 是图标 A，一套线性 SVG 是图标 B，背包 64/128/256 是图标 C。A/B/C 同时命中就停下来，只问这一处。同一套东西一档比一档大，是合成梯。
+2. 整屏、HUD、九宫格、按钮状态族是界面。桌面 1024 是图标 A，一套线性 SVG 是图标 B，背包 64/128/256 是图标 C。A/B/C 同时命中就停下来，只问这一处。同一套东西一档比一档大，是合成梯。同一张完整场景要拆成可叠回的层，是拆图层，不是局部改，也不是普通图。
 3. 「以后按这张画」是锁风格。同一句还要画一张时，锁完再克隆验证。「只审、不画」是审图；「别画成某种风格」「不画背景」不是审图。「归档 / 散图归位 / 收进图谱」是归档，画面里的「归位」不是归档。进步、短板，以及知识卡的查看或收下，是教练。要写提示词、先不出图，是提示词。
 4. 以上都不是，才是普通图。
 5. 定稿写明两张参考的像素必须同时出现在同一张成图里：**当前能力缺口**——注册表没有 `simultaneous_pixels: true` 的行。必须停，并贴标准降级话术（见下「双参考同框 · 怎么改说」）；**禁止**改派硬做、禁止假装能同框。

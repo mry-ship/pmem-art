@@ -40,6 +40,25 @@ GATE = {
     # fraction of opaque alpha mass on outer border — high ⇒ clipped/incomplete part
     "edge_clip_max": 0.018,
     "edge_clip_border_px": 2,
+    # longest flush run on the CONTENT bbox edge, as a fraction of that side.
+    # A straight cut through the subject (pond sliced on the left) stays high
+    # after letterbox pads the file border, so edge_clip misses it.
+    "content_cut_max": 0.32,
+    "content_cut_border_px": 3,
+    # Rows of the content box's left or right edge that touch that edge.
+    # A 249px cap slice was only 0.23 of a tall bbox, so the ratio alone passed.
+    # A whole round edge can itself touch its box for about 70 rows; sliced caps were 169+.
+    "side_cut_px": 120,
+    # Opposite transparent gaps of the content box inside the footprint frame.
+    # One side empty is a removed neighbor. Both sides empty means the subject
+    # was shrunk into the middle of the picture band.
+    # Both ends must clear this. A mushroom cluster at 0.15/0.14 still fills its crop;
+    # a mole floating at 0.36/0.30 does not.
+    "inner_gap_max": 0.15,
+    # Share of the subject's opaque pixels that sit outside the picture band.
+    # A thin tip may cross. A subject drawn into the pad (pond rim pushed out
+    # until contain-fit shrinks the whole layer) is above this.
+    "engine_band_bleed_max": 0.12,
     # bg vs ref NCC inside prop footprints — high ⇒ characters/props still baked into empty stage
     # 0.62 still let soft residue / footprint stains slip on busy camps — tighten for empty-stage quality
     "bg_bake_max": 0.58,
@@ -75,10 +94,10 @@ ISOLATE_USE_CONTEXT_PAD = True
 
 # {shadow_rule} filled from layer.grounded (see isolate.shadow_rule_for)
 # Crop pixels = GROUND TRUTH for LOOK. KEEP/REMOVE are short slot tags only — never invent over the crop.
-# Size may drift → compose autofit to frozen footprint.
+# Position and span stay inside the crop frame. Compose pastes that frame; it does not recenter.
 ISOLATE_PROMPT = """STRICT ISOLATE — LOCK LOOK to crop pixels for restore-quality layer split (not a redesign).
 Transparent background if the engine supports alpha; otherwise solid pure black isolation plate (no gray, no scene).
-References: (1) PRIMARY = generous crop of THIS subject — pixel ground truth for identity/pose/materials.
+References: (1) PRIMARY = this subject's crop, already contain-fitted on the engine canvas. Black bars are empty pad, not part of the scene. The picture inside the bars is the pixel ground truth for identity, pose, and materials.
 (2) OPTIONAL SECOND = full scene with THIS subject's box highlighted (outside dimmed) — use only for lighting/style/context continuity; do NOT copy neighbors or the whole scene.
 KEEP text only NAMES the slot — do NOT invent details from KEEP alone; match what is visible in the primary crop.
 Hard locks (appearance must match the primary crop):
@@ -86,12 +105,13 @@ Hard locks (appearance must match the primary crop):
 2) SAME composition pose and orientation / silhouette shape as the crop
 3) SAME key features, materials, colors, part inventory as visible on the subject in the crop
 4) SAME art style as the crop (line, shading, saturation) — extract/split only, do not restyle
-5) WHOLE-SUBJECT COMPLETENESS — the full subject must fit inside the output with a clear transparent margin; do NOT clip spear tips, flame tips, hanging charms, cloak hems, limbs, poles, or roof peaks against the image border. Prefer a slightly smaller subject with margin over a cut-off silhouette.
+5) WHOLE-SUBJECT COMPLETENESS — do NOT clip caps, curls, rims, bells, spear tips, flame tips, hanging charms, cloak hems, limbs, poles, or roof peaks. Keep the margin the subject already has inside the crop. If the reference shows empty crop between a tip, curl, vine, cap, or rim and the crop edge, keep that same empty gap. Do NOT slide that part onto the picture-band edge. Black bars outside the picture band are empty padding and must stay empty. Do NOT stretch any part out to those bars. Do NOT pull the subject into a smaller product shot. A straight cut through a rounded part is FAIL.
 6) NO REDESIGN / NO SPECIES CHANGE — silhouette family must match the crop (A-frame tent stays A-frame, not a draped pavilion; cabin stays the crop viewpoint, not a new frontal house; same spear count / shield layout). A complete but different prop = FAIL.
 7) SAME SCENE LIGHTING FAMILY as the crop/context — keep warm fire/lantern bounce AND cool moon/sky rim if both are visible on the subject; do NOT relight into neutral studio softbox or product-shot even lighting on a black void.
-Size may be slightly off — compose will autofit to the frozen footprint box; still avoid wild hero-zoom if possible. Prefer subject scale close to the crop (over-zoom forces autofit scale_mul≪1 and breaks restore).
-Extract ONLY the listed subject(s). If a neighbor occludes the subject in the crop, complete the hidden part consistently with the crop silhouette — do NOT invent a different object, gender, pose, prop layout, roof type, or species.
-If the crop itself cuts the subject (box too tight), still emit a COMPLETE subject whose silhouette, pose, and part layout match the crop. A tidier product-shot with a different pose or part layout is FAIL. Agent should have expanded the crop first.
+8) POSITION AND SPAN LOCK — the picture band IS the footprint. Keep the subject in the same place and at the same size as in that band. This is an in-place edit: delete the listed neighbors and turn the rest transparent. Do NOT redraw, rescale, or move parts that are already fully visible. Compose maps the picture band onto the footprint and clips anything drawn in the black bars. It will not scale the subject back.
+{frame_rule}
+Edit in place. Delete everything that is not the listed subject. If a neighbor occludes the subject in the crop, complete ONLY the hidden part, inside the same span — do NOT redraw the visible part, and do NOT invent a different object, gender, pose, prop layout, roof type, or species.
+If the crop already shows the full silhouette, keep that exact span inside the picture band. Do not move a side-sitting subject to the center, and do not shorten a part so it no longer spans the same fraction of the band. A tidier product-shot is FAIL.
 If occlusion hides MOST of the subject, Agent should have tightened neighbor boxes or merged slots first — still do NOT invent a different prop species.
 Natural proportions — do NOT squash or stretch.
 {shadow_rule}
@@ -119,6 +139,54 @@ Hard locks:
 {aspect_rule}
 Sharp clean opaque scenic fill. Empty stage must still match the crop's empty landscape identity when all listed subjects are gone.
 """
+
+
+def engine_content_band(
+    content_w: int, content_h: int, engine_w: int, engine_h: int
+) -> tuple[float, float, float, float]:
+    """Fractions of the engine frame that are empty pad around the crop.
+
+    Returns (left, top, right, bottom). The crop is contain-fitted, never
+    squashed. A taller crop gets left/right bars; a wider crop gets top/bottom
+    bars. Those bars are the only pad. They are not a second margin inside
+    the picture.
+    """
+    content_asp = content_w / max(1, content_h)
+    engine_asp = engine_w / max(1, engine_h)
+    if abs(content_asp - engine_asp) / max(engine_asp, 1e-6) < 0.02:
+        return (0.0, 0.0, 0.0, 0.0)
+    if content_asp < engine_asp:
+        side = (1.0 - content_asp / engine_asp) / 2.0
+        return (side, 0.0, side, 0.0)
+    vert = (1.0 - engine_asp / content_asp) / 2.0
+    return (0.0, vert, 0.0, vert)
+
+
+def frame_rule(size: str, band: tuple[float, float, float, float]) -> str:
+    """Tell a prop isolate which part of the engine canvas is the crop."""
+    left, top, right, bottom = band
+    if max(band) < 0.01:
+        return (
+            f"Output size {size} matches the crop aspect. "
+            "That crop frame is the output frame. "
+            "Do not add a wide empty margin inside it."
+        )
+    x0, y0 = left, top
+    x1, y1 = 1.0 - right, 1.0 - bottom
+    return (
+        f"Output size is exactly {size}. The primary reference is already padded "
+        "to this canvas with solid black bars. "
+        f"Picture band: x {x0:.0%}–{x1:.0%}, y {y0:.0%}–{y1:.0%} of the frame. "
+        "The black bars are empty padding, not part of the scene. Leave them transparent. "
+        "Keep the subject where it sits inside the crop, including the grass or sky "
+        "between the subject and the crop edge. "
+        "Do not stretch a cap, curl, rim, or bell out to the bars. "
+        "If the reference shows empty crop between a tip and the band edge, keep that gap. "
+        "Do not move the tip onto the band edge. "
+        "Pixels in the black bars are outside the footprint and will be clipped. "
+        "Do not draw in the bars. "
+        "Do not shrink the subject into a product shot in the middle of the band."
+    )
 
 
 def aspect_pad_rule(canvas_w: int, canvas_h: int, size: str) -> str:

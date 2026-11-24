@@ -137,6 +137,50 @@ class TestPolicyDefaults(unittest.TestCase):
             "STOP_PLATEAU",
         )
 
+    def test_hurdle_bound_stops_at_round_2(self) -> None:
+        """门槛把正式分压在达标线以下时，第 2 轮停，不再开第 3 轮。"""
+        common = dict(
+            score_ok=True,
+            dims={"squircle_safe_zone": 7.6},
+            min_rounds=1,
+            threshold=9.5,
+            anatomy_floor=7.5,
+            plateau_rounds=1,
+            regression_drop=0.15,
+            early_stop_min_round=2,
+            safe_early_stop=True,
+            hurdle_blocks_target=True,
+        )
+        self.assertIsNone(
+            decide_round_stop(
+                total=7.2,
+                round_num=1,
+                best_total=None,
+                no_improve_streak=0,
+                **common,
+            )
+        )
+        self.assertEqual(
+            decide_round_stop(
+                total=7.6,
+                round_num=2,
+                best_total=7.2,
+                no_improve_streak=0,
+                **common,
+            ),
+            "STOP_HURDLE_BOUND",
+        )
+        self.assertEqual(
+            decide_round_stop(
+                total=7.0,
+                round_num=2,
+                best_total=7.6,
+                no_improve_streak=1,
+                **common,
+            ),
+            "STOP_REGRESSION",
+        )
+
     def test_early_stop_block_ignores_gate_notes_guard(self) -> None:
         """judge 不得用「有 gate_notes」短路早停（否则 merge 贴边提示会逼满剩余轮次）。"""
         src = (ROOT / "skills_kit" / "converge.py").read_text(encoding="utf-8")
@@ -366,6 +410,71 @@ class TestPadAuto(unittest.TestCase):
             self.assertEqual(num, 0)
             self.assertIn("style_ref", reason)
             self.assertNotIn("changed_camera", reason)
+
+    def test_icon_a_without_style_ref_pads_best_plate(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            img = root / "r1.png"
+            img.write_bytes(b"\x89PNG\r\n\x1a\n" + b"\x00" * 64)
+            rounds = [
+                {
+                    "round": 1,
+                    "image": str(img),
+                    "score": 7.3,
+                    "next_fix": "外轮廓被四边裁到",
+                }
+            ]
+            pad, fix, num, cont, reason = _resolve_pad_auto(
+                rounds,
+                2,
+                root,
+                style_ref="",
+                pad_mode="auto",
+                route_ids=["icon.a"],
+            )
+            self.assertTrue(cont)
+            self.assertEqual(Path(pad).resolve(), img.resolve())
+            self.assertEqual(num, 1)
+            self.assertEqual(fix, "外轮廓被四边裁到")
+            self.assertIn("icon_best", reason)
+
+    def test_icon_crop_note_flags_stage_inside_the_old_band(self) -> None:
+        from PIL import Image
+
+        from skills_kit.converge import _icon_crop_note
+
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / "stage.png"
+            im = Image.new("RGB", (200, 200), (20, 40, 90))
+            im.paste(Image.new("RGB", (160, 150), (220, 40, 40)), (20, 25))
+            im.save(path)
+            note = _icon_crop_note(["icon.a"], str(path))
+            quiet = _icon_crop_note(["ordinary"], str(path))
+        self.assertIn("四边留白", note)
+        self.assertIn("四边裁开", note)
+        self.assertNotIn("76%", note)
+        self.assertEqual(quiet, "")
+
+    def test_icon_a_with_style_ref_stays_on_ref(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            img = root / "r1.png"
+            img.write_bytes(b"\x89PNG\r\n\x1a\n" + b"\x00" * 64)
+            ref = root / "ref.png"
+            ref.write_bytes(b"\x89PNG\r\n\x1a\n" + b"\x00" * 64)
+            rounds = [{"round": 1, "image": str(img), "score": 7.3, "next_fix": "裁切"}]
+            pad, _fix, num, cont, reason = _resolve_pad_auto(
+                rounds,
+                2,
+                root,
+                style_ref=str(ref),
+                pad_mode="auto",
+                route_ids=["icon.a"],
+            )
+            self.assertFalse(cont)
+            self.assertEqual(Path(pad).resolve(), ref.resolve())
+            self.assertEqual(num, 0)
+            self.assertIn("style_ref", reason)
 
     def test_style_jump_pads_nothing(self) -> None:
         with tempfile.TemporaryDirectory() as td:

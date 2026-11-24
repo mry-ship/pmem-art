@@ -1,0 +1,26 @@
+{
+  "route_id": "ui.kit",
+  "banner": "【按 ui.kit · concept-only 走了】",
+  "ok": true,
+  "passed_line": true,
+  "best_score": 9.56,
+  "rounds": 1,
+  "session_id": "showcase-ui-kit-20261123",
+  "final_image": "docs/showcase/skills-full-run-20261123/ui.kit/r1.jpg",
+  "process_sheet": "docs/showcase/skills-full-run-20261123/ui.kit/process_sheet.jpg",
+  "images": [
+    {
+      "slot": "R1",
+      "path": "docs/showcase/skills-full-run-20261123/ui.kit/r1.jpg",
+      "score": 9.56
+    },
+    {
+      "slot": "final",
+      "path": "docs/showcase/skills-full-run-20261123/ui.kit/r1.jpg",
+      "score": 9.56
+    }
+  ],
+  "text_deliverable": "",
+  "elapsed": "30分0秒",
+  "notes": "合理性闸八项文字规格、无垫图；第1轮过线≥9.5即 finish"
+}

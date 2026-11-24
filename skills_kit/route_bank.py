@@ -80,6 +80,12 @@ CONFUSION_CARDS: list[dict[str, str]] = [
         "keywords": "表情|差分|换个画风|同一张脸",
     },
     {
+        "id": "layer_not_ordinary",
+        "when": "完整场景要拆成可叠回的层",
+        "tip": "走拆图层，不进普通图或局部改，也不走 converge。",
+        "keywords": "拆图层|分图叠回|layer split",
+    },
+    {
         "id": "multi_split_roles",
         "when": "两张图各管一件事，或关开态机位与身份不在同一张",
         "tip": "走多图分工；关开写成前后两行。",

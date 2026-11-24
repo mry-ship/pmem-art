@@ -15,6 +15,32 @@ from .colloquial_lexicon import expand_terms, load_lexicon, rewrite_colloquial
 # 兼容旧引用：懒加载深度表
 COLLOQUIAL_EXPAND: dict[str, list[str]] = load_lexicon()
 
+_LAYER_NEG_RE = re.compile(
+    r"(?:别|不要|不是|不做|无需|无须)\s*(?:拆图层|分图叠回|layer\s*split)",
+    re.I,
+)
+
+
+def wants_layer_split(text: str) -> bool:
+    """拆图层口语。与 plan_route 共用，避免标准句和规则各判各的。"""
+    body = _LAYER_NEG_RE.sub("", text or "")
+    low = body.lower()
+    # 「layer splitting」不是技能名；要成词的 layer split
+    if re.search(r"\blayer split\b", low) or re.search(r"\blayersplit\b", low):
+        return True
+    if any(word in body for word in ("拆图层", "分图叠回", "新图旧图拆件", "装修分块")):
+        return True
+    # 「背景一份其余九份」才算；「背景一份，其他留给标题」不算
+    if re.search(r"背景一份.{0,12}(?:其余|剩下|其他).{0,8}(?:\d+|[一二三四五六七八九十两几多若干]+)?份", body):
+        return True
+    # 槽位本身可以是一张普通图；要带拆、叠回或切块
+    if any(word in body for word in ("装修槽位", "变身槽位")) and any(
+        word in body for word in ("拆", "叠回", "切块", "分块")
+    ):
+        return True
+    return False
+
+
 # Agent 写标准句时应用的固定模板（短、可机读）
 CANON_TEMPLATES: dict[str, str] = {
     # 禁止写「不换题材」：子串「换题材」曾把标准句二次规则误判成克隆
@@ -30,6 +56,7 @@ CANON_TEMPLATES: dict[str, str] = {
     "icon.b": "一套线性 SVG 图标；走图标B",
     "icon.c": "背包道具隔离底栅格图标；走图标C",
     "merge.ladder": "同一套东西一档比一档大；默认整表 overview_sheet、L1–L8；走合成梯",
+    "layer.split": "完整场景要拆成可叠回的层；走拆图层",
     # 交付形态词进标准句，供近邻检索（route_id 仍是 merge.ladder）
     "merge.overview": "合成梯整表一组出齐；overview_sheet；走合成梯",
     "merge.per_cell": "合成梯一档一张逐格；per_cell；仅点名才走；走合成梯",
@@ -97,9 +124,10 @@ def infer_signals(
         "lens": _has(raw, r"几套机位|镜头包|机位包|给自己挑|几套镜头")
         and not _has(raw, r"只要一张|镜头感"),
         "ui": _has(raw, r"整套界面|一整屏|HUD|九宫格|主菜单|状态族"),
-        "icon_a": _has(raw, r"1024|桌面图标|启动图标|应用图标"),
+        "icon_a": _has(raw, r"1024|桌面图标|启动图标|应用图标|app\s*icon|App\s*Icon|AppIcon|APPICON"),
         "icon_b": _has(raw, r"线性\s*svg|线性图标|svg\s*图标"),
         "icon_c": _has(raw, r"背包|道具格|透明底") and _has(raw, r"64|128|256|图标"),
+        "layer": wants_layer_split(raw),
         "merge": (
             not _has(raw, r"没有合成梯|不要合成梯|不做合成梯|别做合成梯")
             and _has(
@@ -152,7 +180,7 @@ def infer_signals(
             or (
                 _has(raw, r"出图|生图|画一张|先出一张")
                 and _has(raw, r"锁风格|锁定风格|锁定画风|风格锁定|以后按这张|都用这张的色")
-                and not _has(raw, r"以后出图|往后出图|出图都按|出图都用|以后都按|以后都用")
+                and not _has(raw, r"以后出图|往后出图|出图都按|出图都用|以后都按|以后都用|不生图|不要生图|别生图")
             )
         ),
         # 「别画原来的人」是克隆信号，不要误判成只审
@@ -215,8 +243,14 @@ def build_canonical_brief(
         rid = "icon.b"
     elif sig["icon_c"]:
         rid = "icon.c"
+    elif sig["merge"] and sig.get("layer"):
+        rid = "stop.hard"
     elif sig["merge"]:
         rid = "merge.ladder"
+    elif sig.get("layer") and sig.get("touchup"):
+        rid = "stop.hard"
+    elif sig.get("layer"):
+        rid = "layer.split"
     elif sig["lens"]:
         rid = "draw.lens"
     elif sig["multi"] or sig["two_state"]:

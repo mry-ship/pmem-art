@@ -248,6 +248,22 @@ def goal_matches_route_text(goal: str, route_text: str) -> tuple[bool, str]:
     return False, "goal 与 route 原文无法对齐"
 
 
+def _layer_blocks_converge(goal: str) -> str:
+    """拆图层有自己的定块/隔离/叠回，route 放行也不等于可以 converge start。"""
+    g = (goal or "").strip()
+    if not g:
+        return ""
+    from .agent_router import plan_route
+
+    probe = plan_route(g)
+    if list(probe.route_ids or []) == ["layer.split"]:
+        return (
+            "这条是拆图层，不走 converge start。"
+            "请按 /pmem-layer-split 定块、隔离、叠回。"
+        )
+    return ""
+
+
 def check_route_gate(
     root: Path,
     *,
@@ -262,6 +278,9 @@ def check_route_gate(
         return False, "上次路由属于另一对话。请对当前这句话重新跑 route。"
 
     named_id = resolve_named_route_id(goal=goal, expect_route=expect_route)
+    blocked = _layer_blocks_converge(goal)
+    if blocked:
+        return False, blocked
 
     def _try_named_seed(why: str) -> tuple[bool, str] | None:
         """仅无缓存/过期时可种闸；禁止覆盖新鲜且路由不一致的缓存。
@@ -348,4 +367,9 @@ def check_route_gate(
         if not ok_match:
             # 有新鲜缓存时不对 goal 漂移做点名覆盖；要求重 route
             return False, f"上次 route 原文与当前 goal 对不上，请重新 route。{why}；route 原文：{t[:40]}"
+    if saved_ids == ["layer.split"]:
+        return (
+            False,
+            "上次路由是拆图层，不走 converge start。请按 /pmem-layer-split 定块、隔离、叠回。",
+        )
     return True, str(data.get("banner") or "route ok")

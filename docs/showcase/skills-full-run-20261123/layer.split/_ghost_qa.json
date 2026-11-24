@@ -1,0 +1,33 @@
+{
+  "mae": 50.143,
+  "psnr": 11.093,
+  "level": "fail",
+  "thresholds": {
+    "warn": 28.0,
+    "fail": 48.0
+  },
+  "hot_layers": [
+    [
+      "pond_boat",
+      62.901
+    ],
+    [
+      "foreground",
+      59.076
+    ],
+    [
+      "main_house",
+      52.483
+    ],
+    [
+      "mushrooms",
+      49.582
+    ],
+    [
+      "treehouse_mole",
+      48.368
+    ]
+  ],
+  "heatmap": "_ghost_heatmap.png",
+  "preview": "_compose_preview.png"
+}

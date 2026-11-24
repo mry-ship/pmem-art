@@ -78,7 +78,7 @@
   "accept_threshold": 9.5,
   "max_rounds": 4,
   "ready_to_finish": true,
-  "status": "early_safe_stop",
+  "status": "finished",
   "rounds": [
     {
       "round": 1,
@@ -612,5 +612,6 @@
     }
   ],
   "ActionRequired": "STOP_PICK_BEST",
-  "showcase_ready": false
+  "showcase_ready": false,
+  "slot_released_reason": "abandoned before 2026-11-23; slot released so a new session can start; not a scored delivery"
 }

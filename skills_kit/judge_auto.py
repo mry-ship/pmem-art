@@ -148,6 +148,20 @@ def auto_vlm_judge_image(
         else:
             judge_source = "agent_self_judge"
 
+    geo_reason = ""
+    if p.is_file():
+        from .icon_geometry import cap_dims_for_icon_geometry
+
+        dims, geo_reason = cap_dims_for_icon_geometry(
+            p,
+            dims,
+            goal=goal or str(scale_prof.get("goal") or ""),
+            module=module,
+        )
+        if geo_reason:
+            defects = f"{defects}；{geo_reason}".strip("；") if defects else geo_reason
+            remote_meta = {**remote_meta, "geometry_skip": geo_reason}
+
     w_info = parse_5d_dims(dims, scale_prof.get("dim_weights"), module=module)
     weighted = w_info.get("weighted_score")
 
@@ -216,6 +230,11 @@ def auto_vlm_judge_image(
         module=module,
     )
     calibrated = audit_res["calibrated_score"]
+    if geo_reason:
+        calibrated = min(float(calibrated), 7.2)
+        warn = "图标几何早停：安全区明显不够，正式分不超过 7.2"
+        if warn not in audit_res["warnings"]:
+            audit_res["warnings"].append(warn)
     image_gate_blocked = bool(require_image and phys["blocked"])
     if image_gate_blocked:
         for reason in phys["reasons"]:
@@ -537,6 +556,7 @@ def auto_vlm_judge_image(
             if audit_res.get("weighted_score") is not None
             else None
         ),
+        "hurdle": audit_res.get("hurdle"),
         "raw_score": audit_res["raw_score"],
         "calibrated_score": round(float(calibrated), 2),
         "defects": defects,

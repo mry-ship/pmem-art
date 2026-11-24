@@ -1,0 +1,19 @@
+﻿🧠 `/pmem-improve` 自我迭代完成（进阶 peek）
+   · 扫描反思会话: 20 份（最近 20）
+   · 近期平均胜出分: 9.08
+   · 近期平均收敛轮次: 3.35
+   · 高频翻车点:
+      – (1×) Pressed行画成灰色写着Pressed字样的宽钮，不是Retry/Home压暗内陷态；四绿圆与红X缺Pressed对
+      – (1×) 成对钮几乎同亮度同高光，Pressed未真正压暗内陷；四绿圆仍只有Normal一行缺Pressed；套件多态可辨度不够；
+      – (1×) Pressed仍偏像复制Normal、压暗不够；面板旁误标Panse；Close Pressed可辨弱；管线合规8.8（
+      – (1×) 底栏三钮变成浇花壶/丝带卷/锤子，不是情人节merge发生器（花篮/甜品炉/礼物箱）；NPC仍是棒球帽男孩+蓝巾绿外套红
+      – (1×) 男NPC仍戴棒球帽，情人节正装不彻底；中发生器是巧克力盒而非爱心甜品炉，发生器身份略糊；左侧阶段宝箱与倒计时礼盒叠层仍略
+   · 口味档案：本次无新增短语（信号不足或已收敛）
+   · 强化优先 recipe（下次 warm-start 加权）:
+      · [icon.AppIcon] [收敛胜出 9.64分] STUNNING 1024 Christmas App Icon remake: same ging — 惊艳点到位：冰晶碎玻璃+体积暴雪+冷暖硬切+呵气泪光；窗台无
+      · [brand.WorldStyle] [收敛胜出 9.61分] 用这份参考做多图分工：identity=ref_life.jpg structure=ref_ui_ — 结构图3/4高角度卧室机位已守住；床左壁炉右转角侧壁宽度已守
+      · [brand.WorldStyle] [收敛胜出 9.61分] 用这份参考接着做多图分工开态/完工：只改装修完成度，锁机位身份与转角侧壁；垫上一态关态交件 clos — 结构图3/4高角度卧室机位已守住；床左壁炉右转角侧壁宽度已守
+      · [icon.AppIcon] [收敛胜出 9.60分] 1024 App Icon Christmas version: same ginger-braid — 母版双人圣诞身份锁定；Light/Dark/Tinted 齐
+      · [icon.AppIcon] [收敛胜出 9.60分] Fix Christmas 1024 App Icon: SAME mother+baby Chri — 1024满幅直角母版；窗台无烛；左右冷暖合理；Light/D
+   · 档案路径: .memory-art/_profile/taste.json
+   · 日常已静默自动驾驶；本命令为可选 peek。

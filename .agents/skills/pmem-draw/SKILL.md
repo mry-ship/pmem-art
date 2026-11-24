@@ -1,11 +1,11 @@
 ---
 name: pmem-draw
-description: 玩家要生图时使用。点名 /pmem-draw 时必须先跑 route，以 CLI banner/route_ids 锁定子合同；禁止先自判定案。点名了原画/克隆/变体/镜头包等只作点名锁定核对。普通图、原画、克隆、变体、多图分工、镜头包、局部改（成图快修）在本技能里做。两张及以上的图各管一件事，或同一物件的多个状态要锁同一个机位，走多图分工，不走四档。整套 UI、图标集、合成梯读对应技能再做，禁止用单张插画合同代替。
+description: 玩家要生图时使用。点名 /pmem-draw 时必须先跑 route，以 CLI banner/route_ids 锁定子合同；禁止先自判定案。点名了原画/克隆/变体/镜头包等只作点名锁定核对。普通图、原画、克隆、变体、多图分工、镜头包、局部改（成图快修）在本技能里做。两张及以上的图各管一件事，或同一物件的多个状态要锁同一个机位，走多图分工，不走四档。整套 UI、图标集、合成梯、拆图层读对应技能再做，禁止用单张插画合同代替。
 ---
 
 # `/pmem-draw` — 生图总入口
 
-**路由以 CLI 为准；本技能只做绘图执行。** 点名 `/pmem-draw` 时：**禁止先自判定案**——先跑 `route`（零点五），以 `route_ids` / `banner` 锁定子合同；本技能只认子合同条款与点名锁定，不问选哪条技能、不再让人选技能。回显 banner 只供改口，不等确认。需求路由、标准路由句模板与确认边界见 `/pmem-agent`。整套 UI / 图标 / 合成梯不在本文件生图。
+**路由以 CLI 为准；本技能只做绘图执行。** 点名 `/pmem-draw` 时：**禁止先自判定案**——先跑 `route`（零点五），以 `route_ids` / `banner` 锁定子合同；本技能只认子合同条款与点名锁定，不问选哪条技能、不再让人选技能。回显 banner 只供改口，不等确认。需求路由、标准路由句模板与确认边界见 `/pmem-agent`。整套 UI / 图标 / 合成梯 / 拆图层不在本文件生图。
 
 ## 子合同目录
 
@@ -30,6 +30,7 @@ description: 玩家要生图时使用。点名 /pmem-draw 时必须先跑 route�
 | **界面** | 玩家要整屏、HUD、弹窗套件、九宫格、按钮状态 | **不要在本文件生图**。转交 `pmem-ui` |
 | **图标** | 桌面图标、一套线性 SVG、背包道具格 | **不要在本文件生图**。转交 `pmem-icon`（A/B/C 不混） |
 | **合成梯** | 同域升级梯（默认整表一组、L1–L8；有参考跟格数，点名数量跟点名；仅点名逐格才 per_cell）；糖果/甜品默认 shop_ladder；工具瓶罐可 same_object；未点名非糖果可轻门 | **不要在本文件生图**。转交 `pmem-merge-ladder` |
+| **拆图层** | 完整场景拆成可叠回的层（分图叠回、背景一份其余若干份、装修/变身槽位） | **不要在本文件生图**。转交 `pmem-layer-split` |
 | **镜头包** | 玩家明确要几套机位 / 镜头 / 光给自己挑 | 「合同 · 镜头包」；点选前禁止生图 |
 | **局部改** | 已有成图；只改点名部位/小瑕疵；不换题材、机位、身份、整构图 | 零点五+「合同 · 局部改」（快通道，禁止三轮普通图） |
 | **克隆** | 有参考，并且要换一个新题材，锁的是画风 | 零点五+第二节+「合同 · 克隆」 |
@@ -47,8 +48,9 @@ description: 玩家要生图时使用。点名 /pmem-draw 时必须先跑 route�
 5. 只说「画这个角色」→ 普通图或原画，不进变体。变体要出现换画风、表情或动作。
 6. 两张图分工不同，或关/开这类状态和身份不在同一张图上 → **多图分工**。一张图改表情仍走变体。
 7. 回显的类型必须和实际执行的合同是同一个。玩家下一句改口，丢掉这一支重来；已经画完的图不能拿去冒充新合同的结果。
+8. 说拆图层、分图叠回、背景一份其余几份 → **拆图层**，不进普通图或局部改。转交 `pmem-layer-split`。
 
-普通图和原画走第二节闭环。克隆和变体仍用第二节的打分轮次和 `converge` 命令（多图分工也用第二节），但不要按第一节继承构图；垫图和停机按合同。**局部改只走「合同 · 局部改」**，禁止套第二节三轮。镜头包、界面、图标、合成梯不要从第二节往下生。风格优先级：文字 > 风格参考 > 品类默认（有文字+构图参考时参考只锁版式）；都无才查 `docs/COMMERCIAL_BENCHMARK.md`（merge 默认钉 Gossip Harbor）；禁止非 merge 一律套 Gossip Harbor 货柜。
+普通图和原画走第二节闭环。克隆和变体仍用第二节的打分轮次和 `converge` 命令（多图分工也用第二节），但不要按第一节继承构图；垫图和停机按合同。**局部改只走「合同 · 局部改」**，禁止套第二节三轮。镜头包、界面、图标、合成梯、拆图层不要从第二节往下生。风格优先级：文字 > 风格参考 > 品类默认（有文字+构图参考时参考只锁版式）；都无才查 `docs/COMMERCIAL_BENCHMARK.md`（merge 默认钉 Gossip Harbor）；禁止非 merge 一律套 Gossip Harbor 货柜。
 
 ## 零点五、开画前强制 route（与总控同闸；点名 `/pmem-draw` 也要跑）
 
@@ -63,7 +65,7 @@ pyw -3 -u pmem_art.py route --text "<玩家原话>" --canonical "<标准路由�
 4. 缺缓存时可 `converge start --route-id draw.ordinary|draw.touchup|draw.clone|draw.key|…` **点名种闸**（与完整 route 等价放行）。
 5. **禁止裸跳闸**：须 `PMEM_ART_ALLOW_GATE_SKIP=1` + `--skip-reason`；仅设 `PMEM_ART_SKIP_ROUTE_GATE` 不够。日常用 route 或 `--route-id` 点名种闸。
 6. 点名锁定/口头草稿与 `route_ids` 冲突：停问玩家，禁止硬开画。
-7. 判成界面 / 图标 / 合成梯：先留下本次 route 缓存，再读对应技能。
+7. 判成界面 / 图标 / 合成梯 / 拆图层：先留下本次 route 缓存，再读对应技能。拆图层禁止在本文件 `converge start`。
 
 route 锁定后只读注册表该行的 **`pack_headings` 执行包**；不要整份全文串味。镜头包点选前不生图，仍须先 route。
 
@@ -76,8 +78,8 @@ route 锁定后只读注册表该行的 **`pack_headings` 执行包**；不要�
 3. 每轮续跑前先读最小工作集：`pyw -3 -u pmem_art.py contract working-set --id <session>`——只用合同+本图+单点改嘱，**禁止**靠长聊天重谈 L0/L1。
 4. 画师新反馈先归层：`pyw -3 -u pmem_art.py contract classify --text "…"`；再 `contract patch --id <session> --feedback "…"`。L0=可能换交付/重开；L1=升锁点；L2=只改一处。
 5. 首轮 generate 前：`reasonableness review`（`--draft` + `--revised` + checklist）过闸。
-6. 出图顺序（禁 stub）：`converge generate --emit-prompt` 打印「最终 Prompt」→ GenerateImage 逐字用该句 → `converge generate --image <path>` 登记（可省 `--prompt` 复用 pending）。`converge generate` **自动并入** Warm-Start；打印 `WARM_START_MERGED=1|0` 与 `FINAL_PROMPT_SHA1=`。禁止另写 brief、禁止手贴 Warm-Start、禁止占位图骗闸。垫图只用该轮打印的那一张：默认是最初参考，改点只写进提示词；只有打印写明垫第几轮成图时，才垫那张成图。
-7. 看图打六维 → `converge judge`；≥9.5 到线即 `finish`；不到线最多 3 轮；交件标明是否过线。本项目已开安全早停：掉分/平台 → 交历史最高分，见停机码立即 `finish`。
+6. 出图顺序（禁 stub）：第 1 轮 `converge generate --emit-prompt` 打印「最终 Prompt」→ GenerateImage 逐字用该句 → `converge generate --image <path>` 登记（可省 `--prompt` 复用 pending）。从第 2 轮起用上一轮 `judge` 已经写入的最终 Prompt，直接生图再登记，不要再开一次 emit。`converge generate` **自动并入** Warm-Start；打印 `WARM_START_MERGED=1|0` 与 `FINAL_PROMPT_SHA1=`。禁止另写 brief、禁止手贴 Warm-Start、禁止占位图骗闸。垫图只用该轮打印的那一张：默认是最初参考，改点只写进提示词；只有打印写明垫第几轮成图时，才垫那张成图。
+7. 看图打六维 → `converge judge`。还要下一轮时，同一次审图会把下一轮定稿写进会话（`SCORE_READY` 之后的最终 Prompt）。≥9.5 到线即 `finish`；不到线最多 3 轮；交件标明是否过线。本项目已开安全早停：掉分/平台 → 交历史最高分，见停机码立即 `finish`。分数以会话 JSON 为准，不要等外层脚本的日志。
 8. 风格优先级同第 2 条；都无才查 `benchmark lookup` / `COMMERCIAL_BENCHMARK.md`（**按品类**；仅 merge 钉 Gossip Harbor）；**禁止**把 benchmarks 目录图当垫图（start/generate 双闸）。
 9. 禁止裸 `--skip-route-gate`（须 `PMEM_ART_ALLOW_GATE_SKIP=1` + `--skip-reason`）。会话命令一律显式 `--id`。
 
@@ -145,9 +147,9 @@ route 锁定后只读注册表该行的 **`pack_headings` 执行包**；不要�
    - 默认 `--mode quality` = 合格线 ≥9.5 **到线即停**；最多 3 轮兜底，不鼓励跑满。正式分 ≥9.5 立刻 `finish`，禁止为凑轮次再画。
    - `--scale`：`low` 贴原修瑕 · `medium` 小优化锁机位（默认）· `high` 大胆跃升+可叙事 · `recompose` 须配 `--recompose-dir`。
    - `--mode fast`：warm-start 置信度高时可走 **fast track**（仍须每张打分；最终采纳默认仍要 ≥9.5，除非用户明确说「草稿/fast/先看看」）。
-   - `converge generate` **自动把 Warm-Start `prompt_block` 并入提示词**。对话里回显「装配句 / Warm-Start 段 / 最终 Prompt」与 `WARM_START_MERGED=1`。禁止再靠手贴，也禁止用「GenerateImage Hook 有没有跑」判断是否并入。
+   - `converge generate` **自动把 Warm-Start `prompt_block` 并入提示词**。对话里回显「装配句 / Warm-Start 段 / 最终 Prompt」与 `WARM_START_MERGED=1`。禁止再靠手贴，也禁止用「GenerateImage Hook 有没有跑」判断是否并入。本轮正文写了高饱和、撑满或指定占比、不要投影时，Warm-Start 不贴「避免过饱和 / 柔光」，medium 档位句不加「不改机位 / 柔化光影」。口味档案留着，只是这一条不进生图词。
    - **出图硬规**：`GenerateImage` / Shell / apikey-image 的 description（或等价字段）**必须**填 generate 打印的「最终 Prompt（出图须用这句）」；同屏会打印 `FINAL_PROMPT_SHA1=`，可用 `skills_kit.final_prompt_gate.assert_used_final_prompt` 对账。禁止另写第二份 brief、禁止手贴 Warm-Start。
-   - **墙钟硬规（日常交付）**：主链禁止 `doctor` / `hygiene` / 深检 / `--help` 试错；禁止 Probe / Overwrite / stub 骗闸；顺序 `--emit-prompt` → 生图 → `--image` 登记；显式 session；本对话优先；**首轮 brief 一次写准**（身份、机位、材质、禁令、底色、动势/品种硬锁写进 R1 revised）；本项目已开安全早停，见停机码立即 `finish`（不降 9.5 到线）。
+   - **墙钟硬规（日常交付）**：主链禁止 `doctor` / `hygiene` / 深检 / `--help` 试错；禁止 Probe / Overwrite / stub 骗闸。第 1 轮 `--emit-prompt` → 生图 → `--image` 登记。从第 2 轮起，审图已经把下一轮定稿写进会话（`SCORE_READY` 之后的最终 Prompt），直接生图再登记，不要再开一次 emit；会话里没有下一轮 pending 才补一次。登记复用本轮已发出的最终 Prompt，不重算合理性、Warm-Start 和装配。分数和定稿以会话 JSON 为准，禁止等外层脚本把日志一次性写完；外层脚本禁止 `capture_output` 后在进程结束时一次写日志。显式 session；本对话优先；**首轮 brief 一次写准**（身份、机位、材质、禁令、底色、动势/品种硬锁写进 R1 revised）；本项目已开安全早停，见停机码立即 `finish`（不降 9.5 到线）。
    - **档位只规定能动多少，出图句用开会话打印的那一家**：
      - `low`：写成一处可改，并点名邻区保持原样。
      - `medium`：只留一处看得见的打磨，机位锁死。
@@ -162,7 +164,7 @@ route 锁定后只读注册表该行的 **`pack_headings` 执行包**；不要�
      --draft "<草稿提示词>" --revised "<更合理的提示词>" \
      --checklist "subject_action=ok;contact_scale=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok"
    ```
-   清单模板：`pyw -3 -u pmem_art.py reasonableness template --skill ordinary`。修订句必须写清：主体动作、接触/尺度、元素预算、硬锁、一眼失败条件。首轮 `generate` **强制使用 revised**（未再审的其他 `--prompt` 会被忽略）；可省略 `--prompt`。非首轮空 `--prompt` 回退 revised。后续审美迭代不得推翻硬锁与预算。调试才允许 `--skip-reasonableness-gate`。
+   清单模板：`pyw -3 -u pmem_art.py reasonableness template --skill ordinary`。修订句必须写清：主体动作、接触/尺度、元素预算、硬锁、一眼失败条件。英雄必须从玩家命名的东西里长出来：先写「让人认出」这款东西在做什么，再写英雄。禁止先造一个物件（一枚徽章、一颗星、一叠摆件、参照品的角色）再让闸门把这个物件锁死。清单自标 ok 代替不了这一句。参照某款成品只锁完成度。硬锁是版式和玩家点名的东西，不是草稿里自造的物件。首轮 `generate` **强制使用 revised**（未再审的其他 `--prompt` 会被忽略）；可省略 `--prompt`。非首轮空 `--prompt` 回退 revised。后续审美迭代不得推翻版式硬锁和玩家点名的东西。调试才允许 `--skip-reasonableness-gate`。
 4. **Best-of-N 首帧（默认禁止）**：只有玩家明确说「先试几套方向 / 并行挑一张 / Best-of-N」才开；默认同方向进 R1，禁止自作主张先画 2~3 张再挑。若开了：须在合理性闸之后，并写明选了哪条。
 
 ---
@@ -249,7 +251,7 @@ pyw -3 -u pmem_art.py converge judge \
 - **情况 2：本轮评分 `< 9.5` 且 $i < 3$**
   🔄 **不合格！** 必须把本轮最低分维度的具体硬伤转化为 **≤2 条部位级修正指令**（如具体关节/持物连接、接触阴影、边缘描边），并入第 $i+1$ 轮 Prompt，**严禁**堆砌「加强氛围、提升体积光」等空泛套话；若本轮评分解析失败，先重试 1 次，仍失败则保持上一轮有效缺陷与底图，绝不用套话污染 Prompt。未 `judge` 不能开下一轮，`finish` 会失败，Cursor stop hook 也会把对话打回来，直到 ≥9.5 或满 3 轮。
 - **情况 2b：掉分/平台早停（本项目已开）**
-  本项目 `converge.safe_early_stop: true`：从第 2 轮起，相对历史最高掉 ≥`0.15`，或平台持平/掉分达到 `plateau_rounds`（本项目=1）→ 交付历史最高分并标明未过线。阈值保持 0.15 / 第 2 轮，不要改回 0.5 / 末轮才启用早停；**禁止**为省时间下调 9.5 到线。
+  本项目 `converge.safe_early_stop: true`：从第 2 轮起，相对历史最高掉 ≥`0.15`，或平台持平/掉分达到 `plateau_rounds`（本项目=1）→ 交付历史最高分并标明未过线。门槛维仍低于线、正式分被该维替换时，第 2 轮起 `STOP_HURDLE_BOUND`，不再开下一轮。阈值保持 0.15 / 第 2 轮，不要改回 0.5 / 末轮才启用早停；**禁止**为省时间下调 9.5 到线。
 - **情况 3：已满 3 轮（$i = 3$）且评分仍 `< 9.5`**
   🏁 **达到 3 轮上限，停止循环！** 从第 1 ~ 3 轮中**挑选综合评分最高的那一轮图片**作为最终交付图，进入 Step 3。
 
@@ -308,7 +310,7 @@ improve/coach/learn 推销仅在用户主动要时再给。
 
 只在类型是原画时加在闭环上。闭环轮次、9.5、评分履历与上面相同。
 
-提示词用完整句子，不要纯 tag。顺序：主体与动作，场景，光影与时段，材质与画风，色板，景别画幅。排斥项写成正向句（「干净的青瓷白与墨蓝，无霓虹」）。每轮用上一轮的具体缺陷重写整句，仍禁止只堆负向 tag。无玩家画风 / 无风格样张时：画风句必须写成**同品类顶级商业 Key Art / 上架主视觉气质**（空气透视、主视觉记忆点、商业完成度用具体名词），禁止空喊「史诗好看」或回落泛插画。**仅当题材是软糖/半透明糖果介质时**：修订句须写半透明 SSS、宽柔高光、边缘暖散射，并禁止硬塑胶/油镜高光；金器/木箱/陶瓷等非软糖题材勿套这条。要几套构图自己挑，改走镜头包，点选前不生图。
+提示词用完整句子，不要纯 tag。顺序：主体与动作，场景，光影与时段，材质与画风，色板，景别画幅。排斥项写成正向句（「干净的青瓷白与墨蓝，无霓虹」）。每轮用上一轮的具体缺陷重写整句，仍禁止只堆负向 tag。无玩家画风 / 无风格样张时：画风句必须写成**同品类顶级商业 Key Art / 上架主视觉气质**（空气透视、主视觉记忆点、商业完成度用具体名词），禁止空喊「史诗好看」或回落泛插画。**仅当题材是软糖/半透明糖果介质时**：修订句写半透明 SSS、宽柔高光、边缘暖散射。金器/木箱/陶瓷等非软糖题材不套这条。要几套构图自己挑，改走镜头包，点选前不生图。
 
 **硬闸 · 有风格样张时（layout_not_style_echo）**：只借色板 / 光影 / 媒介 / 笔触，**禁止**继承样张的机位、主体占比、前景道具摆位、左右分区。成图构图一眼能对上样张分区或同一机位 → 构图维压到 ≤8.5 且本轮不可停；禁止用「大体像风格」软过。合理性闸 checklist 必须标 `layout_not_style_echo=ok`。
 

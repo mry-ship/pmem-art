@@ -424,7 +424,10 @@ def _named_skill(text: str) -> str:
 
 def _icon_modes(text: str) -> set[str]:
     modes: set[str] = set()
-    desktop = _any(text, ("桌面图标", "启动图标", "应用图标", "app icon", "App Icon"))
+    desktop = _any(
+        text,
+        ("桌面图标", "启动图标", "应用图标", "app icon", "App Icon", "appicon", "AppIcon", "APPICON"),
+    )
     if desktop or (_hit(text, "1024") and _any(text, ("图标", "icon", "桌面", "启动"))):
         modes.add("icon.a")
     # B 必须带线性/svg；单说「图标集」不算 B，走未分档问句
@@ -572,6 +575,13 @@ def _wants_merge(text: str) -> bool:
     ):
         return True
     return False
+
+
+def _wants_layer(text: str) -> bool:
+    """完整场景拆成可叠回层。与标准句启发式共用同一判定。"""
+    from .route_normalize import wants_layer_split
+
+    return wants_layer_split(text)
 
 
 def _wants_lens(text: str) -> bool:
@@ -1104,6 +1114,8 @@ def _showcase_ids(text: str) -> list[str]:
         ("图标C", "icon.c"),
         ("图标c", "icon.c"),
         ("合成梯", "merge.ladder"),
+        ("拆图层", "layer.split"),
+        ("分图叠回", "layer.split"),
         ("原画", "draw.key"),
         ("普通图", "draw.ordinary"),
         ("克隆", "draw.clone"),
@@ -1188,6 +1200,8 @@ def _section_label(route: dict[str, Any]) -> str:
         return section
     if route["id"].startswith("draw."):
         return section
+    if route["id"] == "layer.split":
+        return "拆图层"
     return section or route["id"]
 
 
@@ -1289,9 +1303,11 @@ def plan_route(
         reason = "skill_suite"
     elif remap:
         rid, reason, remap_label, remap_note = remap
+        if _wants_layer(raw) or _wants_layer(spoken):
+            return _stop("hard_ambiguity", "拆图层和另一条合同同时出现，先问这一处")
         chosen = [rid]
     draw_only = named == "pmem-draw"
-    # 点名 /pmem-draw 仍允许句内的界面、图标、合成梯
+    # 点名 /pmem-draw 仍允许句内的界面、图标、合成梯、拆图层
     open_specialist = (not named) or draw_only
     page = _showcase_page(raw)
     showcase_ids = _showcase_ids(raw) if page else []
@@ -1307,6 +1323,7 @@ def plan_route(
         "pmem-atlas",
         "pmem-coach",
         "pmem-prompt",
+        "pmem-layer-split",
     }:
         chosen = {
             "pmem-ui": ["ui.kit"],
@@ -1316,6 +1333,7 @@ def plan_route(
             "pmem-atlas": ["atlas.file"],
             "pmem-coach": ["coach.report"],
             "pmem-prompt": ["prompt.write"],
+            "pmem-layer-split": ["layer.split"],
         }[named]
         reason = "named"
         # 点名锁风格但仍要验证成图 → 升级成串行，禁止卡在只入库
@@ -1353,6 +1371,13 @@ def plan_route(
                 "要重跑哪一支，或说明是整页展陈、对比页的同范围",
             )
 
+    if not chosen and open_specialist and _wants_merge(raw) and (
+        _wants_layer(raw) or _wants_layer(spoken)
+    ):
+        return _stop("hard_ambiguity", "合成梯和拆图层同时出现，先问这一处")
+    if not chosen and (_wants_layer(raw) or _wants_layer(spoken)) and _wants_touchup(raw):
+        return _stop("hard_ambiguity", "拆图层和局部改同时出现，先问这一处")
+
     if not chosen:
         if open_specialist and _wants_ui(raw):
             chosen = ["ui.kit"]
@@ -1360,6 +1385,9 @@ def plan_route(
         elif open_specialist and _wants_merge(raw):
             chosen = ["merge.ladder"]
             reason = "merge"
+        elif open_specialist and (_wants_layer(raw) or _wants_layer(spoken)):
+            chosen = ["layer.split"]
+            reason = "layer"
         elif _wants_lens(raw):
             chosen = ["draw.lens"]
             reason = "lens"
@@ -1497,6 +1525,10 @@ def plan_route(
             )
             locks = "同一条升级链；未点名逐格禁止拆单张；到线即停不鼓励凑满3轮"
             note = "banner：最多3轮到线即停；关系≤2；逐格须并行；交件标明是否过线"
+        elif rid == "layer.split":
+            done = "定块过 guide 才 isolate；交叠回整图、幽灵对比和各层散图；禁止走普通图三轮"
+            locks = "锁原图样子、视角、画风、位置和跨度；只补被挡住的部分"
+            note = "禁止 converge start；走拆图层 CLI。结算贴 layers.md 并 Read 叠回与散层"
         elif rid == "prompt.write":
             done = "交出提示词方案，不生图"
             locks = "只写提示词"

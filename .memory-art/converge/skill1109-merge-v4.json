@@ -113,7 +113,7 @@
   "accept_threshold": 9.5,
   "max_rounds": 4,
   "ready_to_finish": false,
-  "status": "continue",
+  "status": "finished",
   "owner_conversation_id": "937b0471-9edf-4b8f-8cd9-ce1b94cf40fe",
   "route_ids": [
     "merge.ladder"
@@ -442,5 +442,6 @@
   "warm_start_merged": true,
   "warm_start_merged_at": "2026-11-10 02:14:13",
   "warm_start_block_sha1": "09fd439eefd4",
-  "ActionRequired": "GENERATE_ROUND_2"
+  "ActionRequired": "GENERATE_ROUND_2",
+  "slot_released_reason": "abandoned before 2026-11-23; slot released so a new session can start; not a scored delivery"
 }

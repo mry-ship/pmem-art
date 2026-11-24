@@ -17,6 +17,8 @@ note_date: '2026-11-05'
 summary: 商店图标七层通用合同；禁棚拍小物大留白
 verify: docs/APPICON_MULTI_LENS.md 存在；skill_specs 含 App Icon 多维透镜
 applies: /pmem-icon Mode A
+verified: '2026-11-24'
+verified_at: '2026-11-24T14:15:07.894+08:00'
 source:
   conversation: ccfc4c53-773f-4c77-90b0-4088c1330449
 ---

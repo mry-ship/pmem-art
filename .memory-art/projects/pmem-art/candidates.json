@@ -510,5 +510,373 @@
     "source": "classify_auto_add",
     "created_at": "2026-11-12T23:12:43+0800",
     "status": "candidate"
+  },
+  {
+    "module_id": "misc.Probe",
+    "category": "misc",
+    "folder": "assets\\misc\\probe",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/viking_camp_10/_probe_r1.png"
+    ],
+    "paths_glob": [
+      "assets/misc/probe/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-23T14:49:37+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.Debug",
+    "category": "character",
+    "folder": "assets\\character\\debug",
+    "file_count": 1,
+    "confidence": 0.688,
+    "sample_files": [
+      "assets/wine_lounge_split/_debug_dart_boxes.png"
+    ],
+    "paths_glob": [
+      "assets/character/debug/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-23T14:51:16+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Debug",
+    "category": "misc",
+    "folder": "assets\\misc\\debug",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/wine_lounge_split/_debug_dart_guess.png"
+    ],
+    "paths_glob": [
+      "assets/misc/debug/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-23T14:51:16+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Refs",
+    "category": "misc",
+    "folder": "assets\\misc\\refs",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/_refs/final.jpg"
+    ],
+    "paths_glob": [
+      "assets/misc/refs/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-23T14:51:17+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.Bar",
+    "category": "character",
+    "folder": "assets\\character\\bar",
+    "file_count": 1,
+    "confidence": 0.688,
+    "sample_files": [
+      "assets/wine_lounge_6/new/02-bar_wall.png"
+    ],
+    "paths_glob": [
+      "assets/character/bar/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-23T15:11:13+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.Barrel",
+    "category": "character",
+    "folder": "assets\\character\\barrel",
+    "file_count": 1,
+    "confidence": 0.688,
+    "sample_files": [
+      "assets/wine_lounge_6/new/03-barrel_zone.png"
+    ],
+    "paths_glob": [
+      "assets/character/barrel/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-23T15:11:13+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.Lounge",
+    "category": "character",
+    "folder": "assets\\character\\lounge",
+    "file_count": 1,
+    "confidence": 0.688,
+    "sample_files": [
+      "assets/wine_lounge_6/new/04-lounge.png"
+    ],
+    "paths_glob": [
+      "assets/character/lounge/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-23T15:11:13+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.Man",
+    "category": "character",
+    "folder": "assets\\character\\man",
+    "file_count": 1,
+    "confidence": 0.688,
+    "sample_files": [
+      "assets/wine_lounge_6/new/05-man.png"
+    ],
+    "paths_glob": [
+      "assets/character/man/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-23T15:11:14+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.Foosball",
+    "category": "character",
+    "folder": "assets\\character\\foosball",
+    "file_count": 1,
+    "confidence": 0.6,
+    "sample_files": [
+      "assets/wine_lounge_6/new/06-foosball.png"
+    ],
+    "paths_glob": [
+      "assets/character/foosball/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-23T15:11:14+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Barrel",
+    "category": "misc",
+    "folder": "assets\\misc\\barrel",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/wine_lounge_6/_crops/barrel_zone.png"
+    ],
+    "paths_glob": [
+      "assets/misc/barrel/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-23T15:12:13+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Bar",
+    "category": "misc",
+    "folder": "assets\\misc\\bar",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/wine_lounge_6/_crops/bar_wall.png"
+    ],
+    "paths_glob": [
+      "assets/misc/bar/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-23T15:12:13+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Lounge",
+    "category": "misc",
+    "folder": "assets\\misc\\lounge",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/wine_lounge_6/_crops/lounge.png"
+    ],
+    "paths_glob": [
+      "assets/misc/lounge/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-23T15:12:49+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Man",
+    "category": "misc",
+    "folder": "assets\\misc\\man",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/wine_lounge_6/_crops/man.png"
+    ],
+    "paths_glob": [
+      "assets/misc/man/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-23T15:12:49+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.Wine",
+    "category": "character",
+    "folder": "assets\\character\\wine",
+    "file_count": 1,
+    "confidence": 0.688,
+    "sample_files": [
+      "assets/wine_lounge_split/new/01-wine_cabinet.png"
+    ],
+    "paths_glob": [
+      "assets/character/wine/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-23T15:12:50+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.Grape",
+    "category": "character",
+    "folder": "assets\\character\\grape",
+    "file_count": 1,
+    "confidence": 0.688,
+    "sample_files": [
+      "assets/wine_lounge_split/new/02-grape_press.png"
+    ],
+    "paths_glob": [
+      "assets/character/grape/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-23T15:12:50+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.Dartboard",
+    "category": "character",
+    "folder": "assets\\character\\dartboard",
+    "file_count": 1,
+    "confidence": 0.6,
+    "sample_files": [
+      "assets/wine_lounge_split/new/05-dartboard.png"
+    ],
+    "paths_glob": [
+      "assets/character/dartboard/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-23T15:12:50+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.Chandelier",
+    "category": "character",
+    "folder": "assets\\character\\chandelier",
+    "file_count": 1,
+    "confidence": 0.6,
+    "sample_files": [
+      "assets/wine_lounge_split/new/06-chandelier.png"
+    ],
+    "paths_glob": [
+      "assets/character/chandelier/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-23T15:12:50+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "character.Plant",
+    "category": "character",
+    "folder": "assets\\character\\plant",
+    "file_count": 1,
+    "confidence": 0.688,
+    "sample_files": [
+      "assets/wine_lounge_split/new/11-plant.png"
+    ],
+    "paths_glob": [
+      "assets/character/plant/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-23T15:13:19+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Wine",
+    "category": "misc",
+    "folder": "assets\\misc\\wine",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/wine_lounge_split/new_trim/01-wine_cabinet.png"
+    ],
+    "paths_glob": [
+      "assets/misc/wine/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-23T15:13:19+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Chandelier",
+    "category": "misc",
+    "folder": "assets\\misc\\chandelier",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/wine_lounge_split/_crops/chandelier.png"
+    ],
+    "paths_glob": [
+      "assets/misc/chandelier/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-23T15:14:40+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Dartboard",
+    "category": "misc",
+    "folder": "assets\\misc\\dartboard",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/wine_lounge_split/_crops/dartboard.png"
+    ],
+    "paths_glob": [
+      "assets/misc/dartboard/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-23T15:14:40+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "vfx.Grape",
+    "category": "vfx",
+    "folder": "assets\\vfx\\grape",
+    "file_count": 1,
+    "confidence": 0.588,
+    "sample_files": [
+      "assets/wine_lounge_split/_crops/grape_press.png"
+    ],
+    "paths_glob": [
+      "assets/vfx/grape/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-23T15:14:40+0800",
+    "status": "candidate"
+  },
+  {
+    "module_id": "misc.Plant",
+    "category": "misc",
+    "folder": "assets\\misc\\plant",
+    "file_count": 1,
+    "confidence": 0.4,
+    "sample_files": [
+      "assets/wine_lounge_split/_crops/plant.png"
+    ],
+    "paths_glob": [
+      "assets/misc/plant/**"
+    ],
+    "source": "classify_auto_add",
+    "created_at": "2026-11-23T15:14:41+0800",
+    "status": "candidate"
   }
 ]

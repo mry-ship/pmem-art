@@ -1,0 +1,26 @@
+# showcase 海鲜甜品店 · shop_ladder L1–L8（overview_sheet 2×4 横屏 16:9）
+# 第 1 稿：GH Seafood 真链档序 + 甜品完成态；垫真机锁货面气质，格内换海鲜甜品 SKU。
+# 过程类型：A 同族形变/同店升级。糖虾球→鱼布丁→碗装→拼盘→龙虾碗→蛋糕→圣代→盛宴托盘。
+version: showcase-seafood-dessert-20261123
+pipeline: art-merge-two-phase
+delivery: overview_sheet
+
+tracks:
+  showcase_seafood_dessert:
+    module: showcase.MergeLadder
+    chain_mode: shop_ladder
+    levels: 8
+    grid_rows: 2
+    grid_cols: 4
+    surface: "垫 GH 真机锁画风：跟棋盘货条软糖釉块面、暖饱和、圆润厚实、无硬描边；材质为糖釉玩具货柜道具非实物。禁写实摄影、美食棚拍、玻璃折射、木纹指纹、硬镜面 CGI。2×4 浅奶油圆角卡横屏 16:9；每格一件居中留边，无字无脸。家族色相：珊瑚粉+奶油白+海沫青。"
+    commercial_ref: "Gossip Harbor Seafood7→甜品完成态扩8: CandyShrimp→FishPudding→SweetFishBowl→ShellDessertPlatter→LobsterIceBowl→SeaCake→ParfaitTower→DessertFeastTray"
+    process_type: "shop_ladder_seafood_dessert_same_shop"
+    rows:
+      - { level: 1, name: 糖渍虾球, silhouette: "单颗粉红虾球糖釉玩具Standalone无盘", scale_delta: 基档, scale_pct: 0.52, evolve_to: CandyShrimp, merge_why: "—", parts_add: "—" }
+      - { level: 2, name: 鱼形布丁, silhouette: "浅圆碟糖釉玩具上一条鱼形布丁整块色", scale_delta: "+小", scale_pct: 0.58, evolve_to: FishPudding, merge_why: "两颗虾球合成鱼形布丁，圆球剪影换成鱼形软糖块", parts_add: "浅圆碟" }
+      - { level: 3, name: 甜鱼碗, silhouette: "深圆碗糖釉玩具，碗内简化鱼块与奶油色块可读", scale_delta: "+小", scale_pct: 0.64, evolve_to: SweetFishBowl, merge_why: "两碟鱼布丁合成一碗甜鱼碗，碟换成深碗件数略增", parts_add: "深圆碗" }
+      - { level: 4, name: 贝甜拼盘, silhouette: "椭圆浅盘糖釉玩具，贝虾鱼三块甜品色并置", scale_delta: "+中", scale_pct: 0.70, evolve_to: ShellDessertPlatter, merge_why: "两碗甜鱼碗合成一件贝甜拼盘，碗换椭圆盘分区可读", parts_add: "椭圆盘" }
+      - { level: 5, name: 龙虾冰碗, silhouette: "圆碗糖釉玩具，碗口内整只龙虾糖块与冰色块主轮廓", scale_delta: "+中", scale_pct: 0.76, evolve_to: LobsterIceBowl, merge_why: "两盘贝甜拼盘浓缩成一碗龙虾冰甜品，主轮廓换成龙虾碗", parts_add: "圆碗+冰色块" }
+      - { level: 6, name: 海鲜蛋糕, silhouette: "单层圆蛋糕糖釉玩具，顶上有简化龙虾与鱼形糖饰", scale_delta: "+中", scale_pct: 0.82, evolve_to: SeaCake, merge_why: "两碗龙虾冰碗合成一件海鲜主题蛋糕，碗换成蛋糕完成态", parts_add: "蛋糕胚+糖饰" }
+      - { level: 7, name: 海鲜圣代, silhouette: "高玻璃杯糖釉玩具（非真玻璃），层叠奶油与海鲜糖饰", scale_delta: "+大", scale_pct: 0.88, evolve_to: SeafoodParfait, merge_why: "两块海鲜蛋糕合成一杯海鲜圣代，蛋糕换成竖高杯层叠", parts_add: "高杯+层叠" }
+      - { level: 8, name: 甜品盛宴托, silhouette: "浅托盘糖釉玩具上蛋糕一角、圣代杯、小碗三件并置单货", scale_delta: "+大", scale_pct: 0.92, evolve_to: DessertFeastTray, merge_why: "两份海鲜圣代放上浅托盘成为一件甜品盛宴，仍同店海鲜甜品", parts_add: "浅托盘+多小品" }

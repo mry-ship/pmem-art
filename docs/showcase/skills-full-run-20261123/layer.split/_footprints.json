@@ -1,0 +1,106 @@
+{
+  "ref": "ref_full.jpg",
+  "canvas": {
+    "w": 784,
+    "h": 1280
+  },
+  "note": "FROZEN position+size contract. compose/gate must use these boxes; do NOT widen to pass fill/asp. Re-isolate sprites instead.",
+  "layers": [
+    {
+      "id": "bg",
+      "left": 0.0,
+      "top": 0.0,
+      "width": 1.0,
+      "height": 1.0,
+      "px": [
+        0,
+        0,
+        784,
+        1280
+      ],
+      "anchor": "center",
+      "grounded": false,
+      "locked": true
+    },
+    {
+      "id": "mushrooms",
+      "left": 0.0,
+      "top": 0.2898,
+      "width": 0.4094,
+      "height": 0.4398,
+      "px": [
+        0,
+        370,
+        320,
+        933
+      ],
+      "anchor": "bottom-center",
+      "grounded": true,
+      "locked": true
+    },
+    {
+      "id": "pond_boat",
+      "left": 0.0,
+      "top": 0.45,
+      "width": 0.4694,
+      "height": 0.5195,
+      "px": [
+        0,
+        576,
+        368,
+        1240
+      ],
+      "anchor": "bottom-center",
+      "grounded": true,
+      "locked": true
+    },
+    {
+      "id": "main_house",
+      "left": 0.0893,
+      "top": 0.1094,
+      "width": 0.6798,
+      "height": 0.6805,
+      "px": [
+        70,
+        140,
+        602,
+        1011
+      ],
+      "anchor": "bottom-center",
+      "grounded": true,
+      "locked": true
+    },
+    {
+      "id": "treehouse_mole",
+      "left": 0.4094,
+      "top": 0.0297,
+      "width": 0.5906,
+      "height": 0.7203,
+      "px": [
+        320,
+        38,
+        784,
+        960
+      ],
+      "anchor": "bottom-center",
+      "grounded": true,
+      "locked": true
+    },
+    {
+      "id": "foreground",
+      "left": 0.0089,
+      "top": 0.5492,
+      "width": 0.9911,
+      "height": 0.4508,
+      "px": [
+        6,
+        702,
+        784,
+        1280
+      ],
+      "anchor": "bottom-center",
+      "grounded": true,
+      "locked": true
+    }
+  ]
+}

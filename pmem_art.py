@@ -29,7 +29,7 @@ from lifecycle import ensure_stdio_survives_locale
 
 ensure_stdio_survives_locale()
 
-VERSION = "0.16.18-art"
+VERSION = "0.16.19-art"
 MEMORY_DIR = ".memory-art"
 
 KIND_META = {
@@ -2263,8 +2263,8 @@ def main() -> int:
     p_conv = sub.add_parser("converge", help="闭环收敛（Warm-Start + 严格两步分离：converge generate 仅生图 -> converge judge 独立VLM审图 · 按档位目标阈值动态停机）")
     p_conv.add_argument(
         "action",
-        choices=("start", "generate", "judge", "next", "step", "round", "finish", "settle", "table", "status", "warm", "lock", "discuss"),
-        help="子操作（next=出图前打印最高分垫图；generate=仅登记生图；judge=独立审图；settle=finish 后后台记忆/atlas）",
+        choices=("start", "prepare", "generate", "judge", "next", "step", "round", "finish", "settle", "table", "status", "warm", "lock", "discuss"),
+        help="子操作（prepare=同一进程 start+合同+合理性+emit-prompt；generate=仅登记生图；judge=独立审图）",
     )
     p_conv.add_argument("--session", "--id", dest="session", default="latest", help="会话 ID（默认 latest，支持 --id 或 --session）")
     p_conv.add_argument("--goal", "--brief", "-g", dest="goal", default="", help="本次生图目标描述（支持 --goal 或 --brief）")
@@ -2348,6 +2348,12 @@ def main() -> int:
         default="",
         help="跳闸审计原因（与 --skip-*-gate 或 ALLOW 联用；无原因则拒）",
     )
+    p_conv.add_argument("--revised", default="", help="prepare：合理性修订句")
+    p_conv.add_argument("--reason-draft", dest="reason_draft", default="", help="prepare：合理性草稿")
+    p_conv.add_argument("--checklist", default="", help="prepare：合理性清单")
+    p_conv.add_argument("--reason-skill", dest="reason_skill", default="ordinary", help="prepare：合理性技能 id")
+    p_conv.add_argument("--defaults", default="", help="prepare：合同里已向玩家说明的默认项")
+    p_conv.add_argument("--locks", default="", help="prepare：合同硬锁")
     p_conv.add_argument(
         "--route-id",
         default="",
@@ -2794,6 +2800,35 @@ def main() -> int:
                 _max_rounds = DEFAULT_MAX_ROUNDS
         else:
             _max_rounds = int(args.max_rounds)
+        if args.action == "prepare":
+            from skills_kit.converge import cmd_converge_prepare
+            return cmd_converge_prepare(
+                root,
+                data,
+                session_id=args.session,
+                goal=args.goal,
+                module=args.module,
+                scale=getattr(args, "converge_scale", "") or "medium",
+                threshold=args.threshold,
+                max_rounds=_max_rounds,
+                aspect_ratio=getattr(args, "aspect_ratio", "") or "",
+                ref_image=args.ref_image,
+                ref_analysis=args.ref_analysis,
+                reference_image_paths=getattr(args, "reference_image_paths", "") or None,
+                medium_family=getattr(args, "medium_family", "") or "",
+                contract=getattr(args, "converge_contract", "") or "",
+                skip_route_gate=bool(getattr(args, "skip_route_gate", False)),
+                skip_reason=getattr(args, "skip_reason", "") or "",
+                expect_route=getattr(args, "route_id", "") or "",
+                conversation_id=getattr(args, "conversation", "") or "",
+                defaults=getattr(args, "defaults", "") or "",
+                locks=getattr(args, "locks", "") or "",
+                reason_skill=getattr(args, "reason_skill", "") or "ordinary",
+                reason_draft=getattr(args, "reason_draft", "") or "",
+                revised=getattr(args, "revised", "") or "",
+                checklist=getattr(args, "checklist", "") or "",
+                recompose_dir=getattr(args, "recompose_dir", "") or "",
+            )
         return cmd_converge(
             root,
             data,

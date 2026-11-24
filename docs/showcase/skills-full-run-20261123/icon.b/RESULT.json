@@ -1,0 +1,24 @@
+{
+  "route_id": "icon.b",
+  "banner": "【按 icon.b 线性 SVG 批量（Mode B）走了】",
+  "ok": true,
+  "passed_line": null,
+  "best_score": null,
+  "rounds": 0,
+  "session_id": "showcase-icon-b-20261123",
+  "final_image": "",
+  "process_sheet": "",
+  "images": [
+    { "slot": "home", "path": "docs/showcase/skills-full-run-20261123/icon.b/home.svg", "score": null },
+    { "slot": "shop", "path": "docs/showcase/skills-full-run-20261123/icon.b/shop.svg", "score": null },
+    { "slot": "merge", "path": "docs/showcase/skills-full-run-20261123/icon.b/merge.svg", "score": null },
+    { "slot": "bag", "path": "docs/showcase/skills-full-run-20261123/icon.b/bag.svg", "score": null },
+    { "slot": "star", "path": "docs/showcase/skills-full-run-20261123/icon.b/star.svg", "score": null },
+    { "slot": "heart", "path": "docs/showcase/skills-full-run-20261123/icon.b/heart.svg", "score": null },
+    { "slot": "settings", "path": "docs/showcase/skills-full-run-20261123/icon.b/settings.svg", "score": null },
+    { "slot": "profile", "path": "docs/showcase/skills-full-run-20261123/icon.b/profile.svg", "score": null }
+  ],
+  "text_deliverable": "Mode B：Brief→Spec(Clean 24/1.5)→Batch 8枚 SVG→一致性审查通过。交付 style-spec.json、preview.html、review.md；未开 converge。 informal 估分约 8.7，批量预览达标。",
+  "elapsed": "",
+  "notes": "关键枚闭环默认跳过；纯 SVG 批量，无 GenerateImage/converge。shop 与 bag 语义已拆：shop=店面篷，bag=背袋。"
+}

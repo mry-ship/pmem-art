@@ -1,0 +1,21 @@
+{
+  "route_id": "critique.review",
+  "banner": "【按 `/pmem-critique` 主美级六维审稿走了】",
+  "ok": true,
+  "passed_line": false,
+  "best_score": 8.42,
+  "rounds": 0,
+  "session_id": "showcase-critique-20261123",
+  "final_image": "docs/showcase/skills-full-run-20261123/critique.review/critique_target.jpg",
+  "process_sheet": "",
+  "images": [
+    {
+      "slot": "review",
+      "path": "docs/showcase/skills-full-run-20261123/critique.review/critique_target.jpg",
+      "score": 8.42
+    }
+  ],
+  "text_deliverable": "单图六维外审：构图8.6/光影8.4/透视8.7/质感8.3/风格8.5/无瑕疵8.2，调和平均8.42；外审尺合格挑刺，交付门9.5未达。对标休闲 merge 货柜道具气质（GH 软糖釉），主病色相合同与塑料食物感/接触影。已交 critique.md，未记红线，未开 converge。",
+  "elapsed": "",
+  "notes": "vlm-judge 未配置 API → agent_self_judge；源图 docs/showcase/skills-full-run-20261123/refs/critique_target.jpg 已复制到本目录。无瑕疵为门槛维最低分。"
+}

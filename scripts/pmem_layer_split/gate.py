@@ -25,6 +25,76 @@ def _alpha_mean(path: Path) -> float:
     return float(a.mean()) if a.size else 0.0
 
 
+def _inner_gaps(path: Path) -> tuple[float, float, float, float]:
+    """Transparent gap on each side of the alpha bbox, as a fraction of the frame.
+
+    Returns (top, bottom, left, right). Both ends of one axis large means the
+    subject was shrunk into the middle. One large end is a removed neighbor.
+    """
+    im = Image.open(path).convert("RGBA")
+    w, h = im.size
+    if w < 2 or h < 2:
+        return (1.0, 1.0, 1.0, 1.0)
+    mask = im.getchannel("A").point(lambda p: 255 if p > 40 else 0)
+    bb = mask.getbbox()
+    if not bb:
+        return (1.0, 1.0, 1.0, 1.0)
+    x0, y0, x1, y1 = bb
+    return (y0 / h, (h - y1) / h, x0 / w, (w - x1) / w)
+
+
+def _content_cut_ratio(path: Path, border: int | None = None) -> float:
+    """Fraction of a content-bbox side that is flush with that side.
+
+    Measures the opaque silhouette, not the file border. Letterbox padding
+    moves a sliced pond off the file edge, so edge_clip stays near 0 while
+    half the content height is a straight cut.
+    """
+    im = Image.open(path).convert("RGBA")
+    a = np.asarray(im.getchannel("A"))
+    mask = a > 40
+    ys, xs = np.where(mask)
+    if len(xs) < 32:
+        return 0.0
+    x0, y0, x1, y1 = int(xs.min()), int(ys.min()), int(xs.max()), int(ys.max())
+    bh = y1 - y0 + 1
+    bw = x1 - x0 + 1
+    if bh < 8 or bw < 8:
+        return 0.0
+    b = max(1, int(border if border is not None else GATE.get("content_cut_border_px", 3)))
+    b = min(b, bh, bw)
+    left = float(mask[y0 : y1 + 1, x0 : x0 + b].any(axis=1).mean())
+    right = float(mask[y0 : y1 + 1, x1 - b + 1 : x1 + 1].any(axis=1).mean())
+    top = float(mask[y0 : y0 + b, x0 : x1 + 1].any(axis=0).mean())
+    bottom = float(mask[y1 - b + 1 : y1 + 1, x0 : x1 + 1].any(axis=0).mean())
+    return max(left, right, top, bottom)
+
+
+def _side_flush_rows(path: Path, border: int | None = None) -> tuple[int, int]:
+    """How many rows of the content box touch its left edge, and its right edge.
+
+    A sliced cap is a long run of rows and only a small fraction of a tall box.
+    The ratio gate misses that. Top and bottom are not counted: a ground contact
+    is a long horizontal edge on purpose.
+    """
+    im = Image.open(path).convert("RGBA")
+    a = np.asarray(im.getchannel("A"))
+    mask = a > 40
+    ys, xs = np.where(mask)
+    if len(xs) < 32:
+        return (0, 0)
+    x0, y0, x1, y1 = int(xs.min()), int(ys.min()), int(xs.max()), int(ys.max())
+    bh = y1 - y0 + 1
+    bw = x1 - x0 + 1
+    if bh < 8 or bw < 8:
+        return (0, 0)
+    b = max(1, int(border if border is not None else GATE.get("content_cut_border_px", 3)))
+    b = min(b, bh, bw)
+    left = int(mask[y0 : y1 + 1, x0 : x0 + b].any(axis=1).sum())
+    right = int(mask[y0 : y1 + 1, x1 - b + 1 : x1 + 1].any(axis=1).sum())
+    return left, right
+
+
 def _edge_clip_ratio(path: Path, border: int | None = None) -> float:
     """Fraction of opaque alpha mass on the outer border (pre-trim).
 
@@ -108,7 +178,9 @@ def _feat_match(sprite: Path, crop: Path) -> float:
     """
     if not sprite.exists() or not crop.exists():
         return 0.0
-    spr = trim_alpha(Image.open(sprite).convert("RGBA"))
+    # Compare frames, not a trimmed-and-recentered subject. A tree shoved
+    # to the middle of its canvas must not score as if it still spanned the crop.
+    spr = Image.open(sprite).convert("RGBA")
     crop_im = Image.open(crop).convert("RGB")
     cw, ch = crop_im.size
     if cw < 8 or ch < 8 or spr.size[0] < 4 or spr.size[1] < 4:
@@ -238,6 +310,22 @@ def run_gate(job: Job, *, force_ids: list[str] | None = None) -> dict:
                             f"edge_clip={clip:.3f}>{GATE['edge_clip_max']} "
                             "(incomplete — subject touches frame border)"
                         )
+                    cut = _content_cut_ratio(src)
+                    m["content_cut"] = round(cut, 4)
+                    cut_max = float(GATE.get("content_cut_max", 0.18))
+                    if cut > cut_max:
+                        reasons.append(
+                            f"content_cut={cut:.3f}>{cut_max:.2f} "
+                            "(straight cut through the subject silhouette)"
+                        )
+                    left_rows, right_rows = _side_flush_rows(src)
+                    m["side_cut_px"] = [left_rows, right_rows]
+                    side_max = int(GATE.get("side_cut_px", 120))
+                    if left_rows > side_max or right_rows > side_max:
+                        reasons.append(
+                            f"side_cut_px L{left_rows}/R{right_rows}>{side_max} "
+                            "(rounded part sliced on the left or right)"
+                        )
                     crop = job.root / "_crops" / f"{lid}.png"
                     if crop.exists():
                         fm = _feat_match(src, crop)
@@ -245,6 +333,29 @@ def run_gate(job: Job, *, force_ids: list[str] | None = None) -> dict:
                         if fm < GATE["feat_match_min"]:
                             reasons.append(
                                 f"feat_match={fm:.3f}<{GATE['feat_match_min']} (crop truth drift)"
+                            )
+                    top, bot, left, right = _inner_gaps(src)
+                    m["inner_gap"] = [round(v, 4) for v in (top, bot, left, right)]
+                    gap_max = float(GATE.get("inner_gap_max", 0.14))
+                    if top > gap_max and bot > gap_max:
+                        reasons.append(
+                            f"inner_gap vertical {top:.2f}/{bot:.2f}>{gap_max:.2f} "
+                            "(subject shrunk inside the picture band)"
+                        )
+                    if left > gap_max and right > gap_max:
+                        reasons.append(
+                            f"inner_gap horizontal {left:.2f}/{right:.2f}>{gap_max:.2f} "
+                            "(subject shrunk inside the picture band)"
+                        )
+                    fit_path = job.root / "_engine_fit.json"
+                    if fit_path.is_file():
+                        try:
+                            fit = load_json(fit_path)
+                        except Exception:
+                            fit = {}
+                        if (fit.get(lid) or {}).get("bled"):
+                            reasons.append(
+                                "engine_band_bleed (subject drawn into the engine pad bars)"
                             )
             m["asp_err"] = round(asp, 4)
 

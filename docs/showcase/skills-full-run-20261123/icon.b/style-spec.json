@@ -1,0 +1,26 @@
+{
+  "preset": "Clean",
+  "project": "海港甜品站功能导航",
+  "session": "showcase-icon-b-20261123",
+  "grid": 24,
+  "viewBox": "0 0 24 24",
+  "strokeWidth": 1.5,
+  "linecap": "round",
+  "linejoin": "round",
+  "fill": "none",
+  "colorToken": "currentColor",
+  "padding": 2,
+  "opticalBalance": "简单形略加重主笔画；复杂形减段数保 24px 可认",
+  "cornerRadiusHint": 2,
+  "icons": [
+    { "name": "home", "file": "home.svg", "group": "Navigation", "keywords": ["主页", "首页"] },
+    { "name": "shop", "file": "shop.svg", "group": "Navigation", "keywords": ["商店", "商城"] },
+    { "name": "merge", "file": "merge.svg", "group": "Actions", "keywords": ["合成", "合并"] },
+    { "name": "bag", "file": "bag.svg", "group": "Inventory", "keywords": ["背包", "行囊"] },
+    { "name": "star", "file": "star.svg", "group": "Status", "keywords": ["收藏", "星级"] },
+    { "name": "heart", "file": "heart.svg", "group": "Status", "keywords": ["喜爱", "生命"] },
+    { "name": "settings", "file": "settings.svg", "group": "Navigation", "keywords": ["设置", "齿轮"] },
+    { "name": "profile", "file": "profile.svg", "group": "Navigation", "keywords": ["个人", "账户"] }
+  ],
+  "forbidden": ["硬编码 hex 色", "根节点 transform", "混用 stroke-width", "公开图标库整段粘贴"]
+}

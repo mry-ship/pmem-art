@@ -1,0 +1,15 @@
+{
+  "route_id": "draw.lens",
+  "banner": "【按 镜头包 走了】",
+  "ok": true,
+  "passed_line": null,
+  "best_score": null,
+  "rounds": 0,
+  "session_id": "showcase-lens-20261123",
+  "final_image": "",
+  "process_sheet": "",
+  "images": [],
+  "text_deliverable": "海港甜品站女店员四套机位/光方案（A 近原图眼平 3/4 腰半身；B 膝线仰拍全身靠窗；C 发顶俯拍托盘近景；D 客席低仰递甜中近景）。交付 lens_options.md；status=awaiting_pick；no_generate。",
+  "elapsed": "",
+  "notes": "no_generate：点选前禁止生图；awaiting_pick；路由 execute_ok；B/C/D 相对对照锚至少改景别/高度/角度两项。"
+}

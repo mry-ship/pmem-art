@@ -1,0 +1,20 @@
+{
+  "route_id": "merge.ladder",
+  "banner": "【按 同域合成梯：先定链型与关系，再按交付出图 走了】",
+  "ok": true,
+  "passed_line": false,
+  "best_score": 9.39,
+  "rounds": 3,
+  "session_id": "showcase-merge-20261123",
+  "final_image": "docs/showcase/skills-full-run-20261123/merge.ladder/final.jpg",
+  "process_sheet": "docs/showcase/skills-full-run-20261123/merge.ladder/process_sheet.jpg",
+  "images": [
+    {"slot": "R1", "path": "docs/showcase/skills-full-run-20261123/merge.ladder/r1.jpg", "score": 4.43},
+    {"slot": "R2", "path": "docs/showcase/skills-full-run-20261123/merge.ladder/r2.jpg", "score": 9.39},
+    {"slot": "R3", "path": "docs/showcase/skills-full-run-20261123/merge.ladder/r3.jpg", "score": 8.84},
+    {"slot": "final", "path": "docs/showcase/skills-full-run-20261123/merge.ladder/final.jpg", "score": 9.39}
+  ],
+  "text_deliverable": "docs/showcase/skills-full-run-20261123/merge.ladder/merge_phase1.yaml",
+  "elapsed": "29分42秒",
+  "notes": "关系1稿+relation-judge过闸；整表3轮最高R2=9.39未过9.5线；L1虾球与L7糖釉杯可再修"
+}

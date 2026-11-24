@@ -1,0 +1,40 @@
+{
+  "route_id": "icon.c",
+  "banner": "【按 Mode C / icon.c 走了】",
+  "ok": true,
+  "passed_line": false,
+  "best_score": 9.45,
+  "rounds": 3,
+  "session_id": "showcase-icon-c-20261123",
+  "final_image": "docs/showcase/skills-full-run-20261123/icon.c/final.jpg",
+  "process_sheet": "docs/showcase/skills-full-run-20261123/icon.c/process_sheet.jpg",
+  "images": [
+    {
+      "slot": "R1",
+      "path": "docs/showcase/skills-full-run-20261123/icon.c/preview_batch.jpg",
+      "score": 9.26
+    },
+    {
+      "slot": "R2",
+      "path": "docs/showcase/skills-full-run-20261123/icon.c/preview_batch_r2.jpg",
+      "score": 9.43
+    },
+    {
+      "slot": "R3",
+      "path": "docs/showcase/skills-full-run-20261123/icon.c/preview_batch_r3.jpg",
+      "score": 9.45
+    },
+    {
+      "slot": "final",
+      "path": "docs/showcase/skills-full-run-20261123/icon.c/final.jpg",
+      "score": 9.45
+    }
+  ],
+  "text_deliverable": "docs/showcase/skills-full-run-20261123/icon.c/style-spec.json",
+  "elapsed": "28分23秒",
+  "notes": "Mode C 批量预览交付（key_item_converge=false）；opaque_isolation 纯黑底；马卡龙/纸杯蛋糕/冰淇淋三枚；满3轮最高分9.45未过9.5线",
+  "bg": "opaque_isolation",
+  "key_item_converge": false,
+  "delivery": "batch_preview_sheet",
+  "pad_used": ["docs/showcase/skills-full-run-20261123/refs/icon_c_vibe.jpg"]
+}

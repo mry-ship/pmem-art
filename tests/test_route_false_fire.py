@@ -524,6 +524,86 @@ class RouteFalseFireTests(unittest.TestCase):
         clone = plan_route("参考这张，变成微笑的猫", images=["a.png"])
         self.assertEqual(clone.route_ids, ["draw.clone"])
 
+    def test_layer_split_route_is_not_ordinary_or_touchup(self) -> None:
+        from skills_kit.route_normalize import build_canonical_brief
+
+        hits = (
+            "按这张图拆图层并叠回",
+            "/pmem-layer-split 按这张图拆图层并叠回",
+            "/pmem-draw 把这张场景拆图层",
+            "分图叠回要幽灵 HTML",
+            "背景一份其余九份",
+            "装修槽位拆件",
+            "完整场景要拆成可叠回的层；走拆图层",
+            "layer split this tavern scene",
+        )
+        for text in hits:
+            plan = plan_route(text, images=["scene.png"])
+            self.assertEqual(plan.route_ids, ["layer.split"], text)
+            self.assertIn("拆图层", plan.announce, text)
+            self.assertIn("禁止 converge", plan.steps[0].note)
+        brief = build_canonical_brief("按这张图拆图层并叠回", images=["scene.png"])
+        self.assertEqual(brief["guess_route_id"], "layer.split")
+        self.assertIn("layer.split", plan_route("把所有技能以及技能变体全部跑一遍").route_ids)
+
+    def test_layer_split_does_not_steal_neighbors(self) -> None:
+        self.assertEqual(plan_route("画一张窗边的猫").route_ids, ["draw.ordinary"])
+        self.assertEqual(
+            plan_route("就改这一点，手指歪了", images=["a.png"]).route_ids,
+            ["draw.touchup"],
+        )
+        merge = plan_route("这把剑一档比一档大，做合成梯")
+        self.assertEqual(merge.route_ids, ["merge.ladder"])
+        self.assertEqual(
+            plan_route("不要拆图层，就画一张猫").route_ids,
+            ["draw.ordinary"],
+        )
+        self.assertEqual(plan_route("画一个装修槽位的柜子").route_ids, ["draw.ordinary"])
+        self.assertEqual(plan_route("背景一份，其他留给标题").route_ids, ["draw.ordinary"])
+        self.assertEqual(plan_route("背景一份其余九份").route_ids, ["layer.split"])
+        self.assertEqual(
+            plan_route("layer splitting the poster groups").route_ids,
+            ["draw.ordinary"],
+        )
+        self.assertNotEqual(
+            plan_route("layer split this tavern scene").route_ids,
+            ["draw.ordinary"],
+        )
+        self.assertEqual(
+            plan_route("只审这张叠回整图，别画", images=["a.png"]).route_ids,
+            ["critique.review"],
+        )
+        both = plan_route("这张要拆图层，同时做合成梯一档比一档大")
+        self.assertEqual(both.mode, "stop")
+        self.assertEqual(both.reason, "hard_ambiguity")
+        touch = plan_route("修一下这张，另外拆图层", images=["a.png"])
+        self.assertEqual(touch.mode, "stop")
+        self.assertEqual(touch.reason, "hard_ambiguity")
+        audit = plan_route("检查拆图层技能是否有问题")
+        self.assertEqual(audit.mode, "stop")
+        self.assertNotEqual(audit.route_ids, ["layer.split"])
+
+    def test_layer_split_can_pass_route_but_not_converge(self) -> None:
+        from skills_kit.route_bank import rebuild_packaged_bank
+        from skills_kit.route_normalize import build_canonical_brief
+
+        rebuild_packaged_bank()
+        lock = build_canonical_brief("以后按这张色板画风；走锁风格；不生图")
+        self.assertEqual(lock["guess_route_id"], "style.lock")
+        payload = advise_route("按这张图拆图层并叠回", images=["scene.png"])
+        self.assertEqual(payload["route_ids"], ["layer.split"])
+        self.assertTrue(payload["execute_ok"], payload.get("artist_say"))
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            save_route_advise(root, payload, text="按这张图拆图层并叠回")
+            ok, msg = check_route_gate(root, goal="按这张图拆图层并叠回")
+            self.assertFalse(ok)
+            self.assertIn("不走 converge", msg)
+            ok_draw, msg_draw = check_route_gate(
+                root, goal="画一张水彩半身的窗边女孩", expect_route="draw.ordinary"
+            )
+            self.assertFalse(ok_draw, msg_draw)
+
 
 if __name__ == "__main__":
     unittest.main()

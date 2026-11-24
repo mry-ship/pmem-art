@@ -1,0 +1,205 @@
+{
+  "ref": "ref_full.jpg",
+  "notes": "展陈 layer.split：童话微缩花园竖图；6 层含 bg。语义：空舞台远景→左下蘑菇簇→池塘香蕉船→中央花瓣小屋→右侧树屋鼹鼠→前景蘑菇桌与步道草地。",
+  "modules": [
+    {
+      "id": "bg",
+      "name": "1 背景空舞台",
+      "z": 1,
+      "crop": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+      ],
+      "mode": "full",
+      "grounded": false,
+      "keep": "giant soft-focus garden leaves, pink-purple flower buds, blue sky gaps, golden sun god-rays from upper left — empty whimsical garden backdrop only",
+      "remove": "cottage, treehouse, mushroom table, pond, boat, mole, path, grass props, all characters and furniture",
+      "file": "01-bg.png",
+      "_truth_crop": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+      ],
+      "_isolate_crop": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+      ],
+      "_pixel_aspect": 0.613,
+      "_size": "1024x1536",
+      "_quality": "high",
+      "_area": 1.0,
+      "_match_score": 1.0,
+      "_calibrate_fail": false
+    },
+    {
+      "id": "mushrooms",
+      "name": "2 左侧蘑菇簇",
+      "z": 2,
+      "crop": [
+        0.0,
+        0.34,
+        0.36,
+        0.34
+      ],
+      "grounded": true,
+      "keep": "cluster of stylized pink and blue spotted toadstools with white stems on grass",
+      "remove": "house, tree, pond, foreground table, background leaves beyond cluster",
+      "file": "02-mushrooms.png",
+      "_truth_crop": [
+        0.0,
+        0.2898,
+        0.4094,
+        0.4398
+      ],
+      "_isolate_crop": [
+        0.0,
+        0.2398,
+        0.4594,
+        0.5398
+      ],
+      "_pixel_aspect": 0.57,
+      "_size": "1024x1536",
+      "_quality": "high",
+      "_area": 0.1801,
+      "_match_score": 1.0,
+      "_calibrate_fail": false
+    },
+    {
+      "id": "pond_boat",
+      "name": "3 池塘香蕉船",
+      "z": 3,
+      "crop": [
+        0.0,
+        0.5,
+        0.42,
+        0.42
+      ],
+      "grounded": true,
+      "keep": "round cobblestone pond, wooden pier, yellow banana-shaped boat with mast on water, small purple bell-flower lantern vine at left edge",
+      "remove": "main house, treehouse, mole, mushroom table, large background leaves",
+      "file": "03-pond_boat.png",
+      "_truth_crop": [
+        0.0,
+        0.45,
+        0.4694,
+        0.5195
+      ],
+      "_isolate_crop": [
+        0.0,
+        0.4,
+        0.5194,
+        0.6
+      ],
+      "_pixel_aspect": 0.553,
+      "_size": "1024x1536",
+      "_quality": "high",
+      "_area": 0.2439,
+      "_match_score": 1.0,
+      "_calibrate_fail": false
+    },
+    {
+      "id": "main_house",
+      "name": "4 中央花瓣小屋",
+      "z": 4,
+      "crop": [
+        0.14,
+        0.16,
+        0.58,
+        0.58
+      ],
+      "grounded": true,
+      "keep": "two-story fairy cottage with brown shingle lower roof, wooden door, circular window, large purple petal upper roof, green leaf finial, stone path segment at base",
+      "remove": "treehouse, pond, mushroom table, mole, distant giant leaves as separate props",
+      "file": "04-main_house.png",
+      "_truth_crop": [
+        0.0893,
+        0.1094,
+        0.6798,
+        0.6805
+      ],
+      "_isolate_crop": [
+        0.0393,
+        0.0594,
+        0.7798,
+        0.7805
+      ],
+      "_pixel_aspect": 0.612,
+      "_size": "1024x1536",
+      "_quality": "high",
+      "_area": 0.4626,
+      "_match_score": 1.0,
+      "_calibrate_fail": false
+    },
+    {
+      "id": "treehouse_mole",
+      "name": "5 树屋与鼹鼠",
+      "z": 5,
+      "crop": [
+        0.46,
+        0.08,
+        0.54,
+        0.62
+      ],
+      "grounded": true,
+      "keep": "gnarled tree trunk, secondary treehouse with thatch roof and round window, yellow ladder, cheerful mole head from dirt mound, small gift boxes beside mound",
+      "remove": "main cottage, pond, foreground mushroom table, background-only bokeh",
+      "file": "05-treehouse_mole.png",
+      "_truth_crop": [
+        0.4094,
+        0.0297,
+        0.5906,
+        0.7203
+      ],
+      "_isolate_crop": [
+        0.3594,
+        0.0,
+        0.6406,
+        0.8
+      ],
+      "_pixel_aspect": 0.502,
+      "_size": "1024x1536",
+      "_quality": "high",
+      "_area": 0.4254,
+      "_match_score": 1.0,
+      "_calibrate_fail": false
+    },
+    {
+      "id": "foreground",
+      "name": "6 前景蘑菇桌与草地",
+      "z": 6,
+      "crop": [
+        0.06,
+        0.6,
+        0.94,
+        0.4
+      ],
+      "grounded": true,
+      "keep": "large red spotted mushroom table with cheese wedge raspberry blueberries, lush grass with daisies, curved stone path, foreground lawn flowers",
+      "remove": "house walls, tree trunk core, pond water, background sky leaves",
+      "file": "06-foreground.png",
+      "_truth_crop": [
+        0.0089,
+        0.5492,
+        0.9911,
+        0.4508
+      ],
+      "_isolate_crop": [
+        0.0,
+        0.4992,
+        1.0,
+        0.5008
+      ],
+      "_pixel_aspect": 1.347,
+      "_size": "1536x1024",
+      "_quality": "high",
+      "_area": 0.4468,
+      "_match_score": 1.0,
+      "_calibrate_fail": false
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "mode": "C",
+  "route_id": "icon.c",
+  "session": "showcase-icon-c-20261123",
+  "module": "showcase.IconC",
+  "delivery": "batch_preview_sheet",
+  "aspect": "1:1",
+  "bg": "opaque_isolation",
+  "bg_color": "#000000",
+  "engine": "Cursor GenerateImage",
+  "post_cutout": false,
+  "key_item_converge": false,
+  "pad": "docs/showcase/skills-full-run-20261123/refs/icon_c_vibe.jpg",
+  "pad_role": "道具格完成度",
+  "pad_unlocks": "蘑菇芝士水果身份；不抄参考构图像素",
+  "surface": "圆润厚实3D糖釉软渐变、暖饱和粉彩甜点色、左上柔光棚拍+软接触影、无硬镜面CGI、无硬描边",
+  "silhouette": "thick readable at 64px",
+  "no_text": true,
+  "no_scene": true,
+  "winner": "final.jpg",
+  "best_score": 9.45,
+  "passed_line": false,
+  "preview_image": "final.jpg",
+  "icons": [
+    {"id": "macaron", "zh": "马卡龙"},
+    {"id": "cupcake", "zh": "纸杯蛋糕"},
+    {"id": "ice_cream", "zh": "冰淇淋"}
+  ]
+}

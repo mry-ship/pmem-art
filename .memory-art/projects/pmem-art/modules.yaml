@@ -39,6 +39,9 @@ categories:
   prop:
     label: prop
     icon: 📦
+  showcase:
+    label: showcase
+    icon: 📦
 synonyms:
   -
     - 立绘
@@ -3184,7 +3187,7 @@ modules:
   character.R4:
     title: 角色与立绘·R4
     category: character
-    status: candidate
+    status: active
     description: 自动归类至 角色与立绘 (character.R4) · 置信度 0.6
     paths:
       - "assets/character/r4/**"
@@ -5297,3 +5300,685 @@ modules:
       max_size_kb: 2048
     parent: scene.MainArea
     inherits: scene.MainArea
+  scene.UiKitPause:
+    title: 场景与原画·UiKitPause
+    category: scene
+    status: active
+    description: 自动归类至 场景与原画 (scene.UiKitPause) · 置信度 0.78
+    paths:
+      - "assets/scene/uikitpause/**"
+    aliases:
+      - UiKitPause
+    entities: []
+    palette: []
+    specs:
+      resolution: 576x1024
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  misc.Probe:
+    title: 待归类资产·Probe
+    category: misc
+    status: candidate
+    description: 自动归类至 待归类资产 (misc.Probe) · 置信度 0.4
+    paths:
+      - "assets/misc/probe/**"
+    aliases:
+      - Probe
+    entities: []
+    palette: []
+    specs:
+      resolution: 114x226
+      alpha_required: false
+      max_size_kb: 2048
+  character.Debug:
+    title: 角色与立绘·Debug
+    category: character
+    status: candidate
+    description: 自动归类至 角色与立绘 (character.Debug) · 置信度 0.688
+    paths:
+      - "assets/character/debug/**"
+    aliases:
+      - Debug
+    entities: []
+    palette: []
+    specs:
+      resolution: 409x1024
+      allowed_resolutions:
+        - 409x1024
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  misc.Debug:
+    title: 待归类资产·Debug
+    category: misc
+    status: candidate
+    description: 自动归类至 待归类资产 (misc.Debug) · 置信度 0.4
+    paths:
+      - "assets/misc/debug/**"
+    aliases:
+      - Debug
+    entities: []
+    palette: []
+    specs:
+      resolution: 52x52
+      alpha_required: false
+      max_size_kb: 2048
+  misc.Refs:
+    title: 待归类资产·Refs
+    category: misc
+    status: candidate
+    description: 自动归类至 待归类资产 (misc.Refs) · 置信度 0.4
+    paths:
+      - "assets/misc/refs/**"
+    aliases:
+      - Refs
+    entities: []
+    palette: []
+    specs:
+      resolution: 720x1280
+      alpha_required: false
+      max_size_kb: 2048
+  ui.Thanksgiving:
+    title: 界面与九宫格·Thanksgiving
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.Thanksgiving) · 置信度 0.78
+    paths:
+      - "assets/ui/thanksgiving/**"
+    aliases:
+      - Thanksgiving
+    entities: []
+    palette: []
+    specs:
+      resolution: 519x935
+      allowed_resolutions:
+        - 519x935
+      alpha_required: false
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512
+  ui.Valentine:
+    title: 界面与九宫格·Valentine
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.Valentine) · 置信度 0.78
+    paths:
+      - "assets/ui/valentine/**"
+    aliases:
+      - Valentine
+    entities: []
+    palette: []
+    specs:
+      resolution: 720x1280
+      allowed_resolutions:
+        - 720x1280
+      alpha_required: false
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512
+  character.DogCollage20261117:
+    title: 角色与立绘·DogCollage20261117
+    category: character
+    status: active
+    description: 自动归类至 角色与立绘 (character.DogCollage20261117) · 置信度 0.9
+    paths:
+      - "assets/character/dogcollage20261117/**"
+    aliases:
+      - DogCollage20261117
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      allowed_resolutions:
+        - 1024x1024
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  character.R3:
+    title: 角色与立绘·R3
+    category: character
+    status: active
+    description: 自动归类至 角色与立绘 (character.R3) · 置信度 0.9
+    paths:
+      - "assets/character/r3/**"
+    aliases:
+      - R3
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      allowed_resolutions:
+        - 1024x1024
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  character.DogOrdinary20261117:
+    title: 角色与立绘·DogOrdinary20261117
+    category: character
+    status: active
+    description: 自动归类至 角色与立绘 (character.DogOrdinary20261117) · 置信度 0.9
+    paths:
+      - "assets/character/dogordinary20261117/**"
+    aliases:
+      - DogOrdinary20261117
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      allowed_resolutions:
+        - 1024x1024
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  ui.Dog:
+    title: 界面与九宫格·Dog
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.Dog) · 置信度 0.78
+    paths:
+      - "assets/ui/dog/**"
+    aliases:
+      - Dog
+    entities: []
+    palette: []
+    specs:
+      resolution: 1152x864
+      allowed_resolutions:
+        - 1152x864
+      alpha_required: false
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512
+  brand.Dog:
+    title: 风格圣经·Dog
+    category: brand
+    status: active
+    description: 自动归类至 风格圣经 (brand.Dog) · 置信度 0.843
+    paths:
+      - "assets/brand/dog/**"
+    aliases:
+      - Dog
+    entities: []
+    palette: []
+    specs:
+      resolution: 1152x864
+      alpha_required: false
+      max_size_kb: 2048
+  ui.ChessDog15:
+    title: 界面与九宫格·ChessDog15
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.ChessDog15) · 置信度 0.78
+    paths:
+      - "assets/ui/chessdog15/**"
+    aliases:
+      - ChessDog15
+    entities: []
+    palette: []
+    specs:
+      resolution: 1152x864
+      allowed_resolutions:
+        - 1152x864
+      alpha_required: false
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512
+  ui.Ocean:
+    title: 界面与九宫格·Ocean
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.Ocean) · 置信度 0.78
+    paths:
+      - "assets/ui/ocean/**"
+    aliases:
+      - Ocean
+    entities: []
+    palette: []
+    specs:
+      resolution: 1152x864
+      allowed_resolutions:
+        - 1152x864
+      alpha_required: false
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512
+  ui.Component:
+    title: 界面与九宫格·Component
+    category: ui
+    status: active
+    description: 自动归类至 界面与九宫格 (ui.Component) · 置信度 0.78
+    paths:
+      - "assets/ui/component/**"
+    aliases:
+      - Component
+    entities: []
+    palette: []
+    specs:
+      resolution: 720x1280
+      allowed_resolutions:
+        - 720x1280
+      alpha_required: false
+      nine_slice:
+        - 48
+        - 48
+        - 48
+        - 48
+      safe_margin_px: 4
+      max_size_kb: 512
+  scene.01:
+    title: 场景与原画·01
+    category: scene
+    status: active
+    description: 自动归类至 场景与原画 (scene.01) · 置信度 0.78
+    paths:
+      - "assets/scene/01/**"
+    aliases:
+      - 1
+    entities: []
+    palette: []
+    specs:
+      resolution: 720x1280
+      aspect_ratio: "16:9"
+      alpha_required: false
+      max_size_kb: 2048
+  character.Bar:
+    title: 角色与立绘·Bar
+    category: character
+    status: candidate
+    description: 自动归类至 角色与立绘 (character.Bar) · 置信度 0.688
+    paths:
+      - "assets/character/bar/**"
+    aliases:
+      - Bar
+    entities: []
+    palette: []
+    specs:
+      resolution: 788x1265
+      allowed_resolutions:
+        - 788x1265
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  character.Barrel:
+    title: 角色与立绘·Barrel
+    category: character
+    status: candidate
+    description: 自动归类至 角色与立绘 (character.Barrel) · 置信度 0.688
+    paths:
+      - "assets/character/barrel/**"
+    aliases:
+      - Barrel
+    entities: []
+    palette: []
+    specs:
+      resolution: 601x1302
+      allowed_resolutions:
+        - 601x1302
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  character.Lounge:
+    title: 角色与立绘·Lounge
+    category: character
+    status: candidate
+    description: 自动归类至 角色与立绘 (character.Lounge) · 置信度 0.688
+    paths:
+      - "assets/character/lounge/**"
+    aliases:
+      - Lounge
+    entities: []
+    palette: []
+    specs:
+      resolution: 852x1210
+      allowed_resolutions:
+        - 852x1210
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  character.Man:
+    title: 角色与立绘·Man
+    category: character
+    status: candidate
+    description: 自动归类至 角色与立绘 (character.Man) · 置信度 0.688
+    paths:
+      - "assets/character/man/**"
+    aliases:
+      - Man
+    entities: []
+    palette: []
+    specs:
+      resolution: 400x1047
+      allowed_resolutions:
+        - 400x1047
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  character.Foosball:
+    title: 角色与立绘·Foosball
+    category: character
+    status: candidate
+    description: 自动归类至 角色与立绘 (character.Foosball) · 置信度 0.6
+    paths:
+      - "assets/character/foosball/**"
+    aliases:
+      - Foosball
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      allowed_resolutions:
+        - 1024x1024
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  misc.Barrel:
+    title: 待归类资产·Barrel
+    category: misc
+    status: candidate
+    description: 自动归类至 待归类资产 (misc.Barrel) · 置信度 0.4
+    paths:
+      - "assets/misc/barrel/**"
+    aliases:
+      - Barrel
+    entities: []
+    palette: []
+    specs:
+      resolution: 156x338
+      alpha_required: true
+      max_size_kb: 2048
+  misc.Bar:
+    title: 待归类资产·Bar
+    category: misc
+    status: candidate
+    description: 自动归类至 待归类资产 (misc.Bar) · 置信度 0.4
+    paths:
+      - "assets/misc/bar/**"
+    aliases:
+      - Bar
+    entities: []
+    palette: []
+    specs:
+      resolution: 236x379
+      alpha_required: true
+      max_size_kb: 2048
+  misc.Lounge:
+    title: 待归类资产·Lounge
+    category: misc
+    status: candidate
+    description: 自动归类至 待归类资产 (misc.Lounge) · 置信度 0.4
+    paths:
+      - "assets/misc/lounge/**"
+    aliases:
+      - Lounge
+    entities: []
+    palette: []
+    specs:
+      resolution: 188x267
+      alpha_required: true
+      max_size_kb: 2048
+  misc.Man:
+    title: 待归类资产·Man
+    category: misc
+    status: candidate
+    description: 自动归类至 待归类资产 (misc.Man) · 置信度 0.4
+    paths:
+      - "assets/misc/man/**"
+    aliases:
+      - Man
+    entities: []
+    palette: []
+    specs:
+      resolution: 188x492
+      alpha_required: true
+      max_size_kb: 2048
+  character.Wine:
+    title: 角色与立绘·Wine
+    category: character
+    status: candidate
+    description: 自动归类至 角色与立绘 (character.Wine) · 置信度 0.688
+    paths:
+      - "assets/character/wine/**"
+    aliases:
+      - Wine
+    entities: []
+    palette: []
+    specs:
+      resolution: 864x1152
+      allowed_resolutions:
+        - 864x1152
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  character.Grape:
+    title: 角色与立绘·Grape
+    category: character
+    status: candidate
+    description: 自动归类至 角色与立绘 (character.Grape) · 置信度 0.688
+    paths:
+      - "assets/character/grape/**"
+    aliases:
+      - Grape
+    entities: []
+    palette: []
+    specs:
+      resolution: 864x1152
+      allowed_resolutions:
+        - 864x1152
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  character.Dartboard:
+    title: 角色与立绘·Dartboard
+    category: character
+    status: candidate
+    description: 自动归类至 角色与立绘 (character.Dartboard) · 置信度 0.6
+    paths:
+      - "assets/character/dartboard/**"
+    aliases:
+      - Dartboard
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      allowed_resolutions:
+        - 1024x1024
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  character.Chandelier:
+    title: 角色与立绘·Chandelier
+    category: character
+    status: candidate
+    description: 自动归类至 角色与立绘 (character.Chandelier) · 置信度 0.6
+    paths:
+      - "assets/character/chandelier/**"
+    aliases:
+      - Chandelier
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      allowed_resolutions:
+        - 1024x1024
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  character.Plant:
+    title: 角色与立绘·Plant
+    category: character
+    status: candidate
+    description: 自动归类至 角色与立绘 (character.Plant) · 置信度 0.688
+    paths:
+      - "assets/character/plant/**"
+    aliases:
+      - Plant
+    entities: []
+    palette: []
+    specs:
+      resolution: 864x1152
+      allowed_resolutions:
+        - 864x1152
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  misc.Wine:
+    title: 待归类资产·Wine
+    category: misc
+    status: candidate
+    description: 自动归类至 待归类资产 (misc.Wine) · 置信度 0.4
+    paths:
+      - "assets/misc/wine/**"
+    aliases:
+      - Wine
+    entities: []
+    palette: []
+    specs:
+      resolution: 815x1058
+      alpha_required: true
+      max_size_kb: 2048
+  misc.Chandelier:
+    title: 待归类资产·Chandelier
+    category: misc
+    status: candidate
+    description: 自动归类至 待归类资产 (misc.Chandelier) · 置信度 0.4
+    paths:
+      - "assets/misc/chandelier/**"
+    aliases:
+      - Chandelier
+    entities: []
+    palette: []
+    specs:
+      resolution: 164x184
+      alpha_required: true
+      max_size_kb: 2048
+  misc.Dartboard:
+    title: 待归类资产·Dartboard
+    category: misc
+    status: candidate
+    description: 自动归类至 待归类资产 (misc.Dartboard) · 置信度 0.4
+    paths:
+      - "assets/misc/dartboard/**"
+    aliases:
+      - Dartboard
+    entities: []
+    palette: []
+    specs:
+      resolution: 62x93
+      alpha_required: true
+      max_size_kb: 2048
+  vfx.Grape:
+    title: 特效与序列帧·Grape
+    category: vfx
+    status: candidate
+    description: 自动归类至 特效与序列帧 (vfx.Grape) · 置信度 0.588
+    paths:
+      - "assets/vfx/grape/**"
+    aliases:
+      - Grape
+    entities: []
+    palette: []
+    specs:
+      resolution: 113x226
+      alpha_required: true
+      safe_margin_px: 16
+      max_size_kb: 1024
+  misc.Plant:
+    title: 待归类资产·Plant
+    category: misc
+    status: candidate
+    description: 自动归类至 待归类资产 (misc.Plant) · 置信度 0.4
+    paths:
+      - "assets/misc/plant/**"
+    aliases:
+      - Plant
+    entities: []
+    palette: []
+    specs:
+      resolution: 123x267
+      alpha_required: true
+      max_size_kb: 2048
+  showcase.UiKit:
+    title: showcase·UiKit (Cyber)
+    category: showcase
+    status: active
+    description: "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/p · 自动归类至 showcase (showcase.UiKit) · 置信度 0.92"
+    paths:
+      - "assets/showcase/uikit/**"
+    aliases:
+      - UiKit
+    entities: []
+    palette: []
+    specs:
+      resolution: 720x1280
+      alpha_required: false
+      max_size_kb: 2048
+  showcase.IconC:
+    title: showcase·IconC (Cyber)
+    category: showcase
+    status: active
+    description: "点名锁每轮都要单独留住，不许整张漂掉：route=icon.c；三枚甜品道具（马卡龙/纸杯蛋糕/冰淇淋）；纯黑不透明隔离底#000000；厚剪影棚拍主光+接触影 · 自动归类至 showcase (showcase.IconC) · 置信度 0.85"
+    paths:
+      - "assets/showcase/iconc/**"
+    aliases:
+      - IconC
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      alpha_required: false
+      max_size_kb: 2048
+  showcase.Variant:
+    title: showcase·Variant (Cyber)
+    category: showcase
+    status: active
+    description: "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/p · 自动归类至 showcase (showcase.Variant) · 置信度 0.92"
+    paths:
+      - "assets/showcase/variant/**"
+    aliases:
+      - Variant
+    entities: []
+    palette: []
+    specs:
+      resolution: 1024x1024
+      alpha_required: false
+      max_size_kb: 2048
+    parent: brand.WorldStyle
+    inherits: brand.WorldStyle
+  showcase.Multi:
+    title: showcase·Multi (Cyber)
+    category: showcase
+    status: active
+    description: "【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】\n- 所属专项记忆库: pmem-art (.memory-art/projects/p · 自动归类至 showcase (showcase.Multi) · 置信度 0.92"
+    paths:
+      - "assets/showcase/multi/**"
+    aliases:
+      - Multi
+    entities: []
+    palette: []
+    specs:
+      resolution: 1280x720
+      alpha_required: false
+      max_size_kb: 2048
+    parent: brand.WorldStyle
+    inherits: brand.WorldStyle

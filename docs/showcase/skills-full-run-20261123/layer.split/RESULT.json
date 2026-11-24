@@ -1,0 +1,25 @@
+{
+  "route_id": "layer.split",
+  "banner": "【按 layer.split 场景切块隔离与叠回走了】",
+  "ok": true,
+  "passed_line": false,
+  "best_score": null,
+  "rounds": 2,
+  "session_id": "showcase-layer-20261123",
+  "final_image": "docs/showcase/skills-full-run-20261123/layer.split/_compose_mid.png",
+  "process_sheet": "docs/showcase/skills-full-run-20261123/layer.split/_compose_preview.png",
+  "images": [
+    { "slot": "ref", "path": "docs/showcase/skills-full-run-20261123/layer.split/ref_full.jpg", "score": null },
+    { "slot": "compose", "path": "docs/showcase/skills-full-run-20261123/layer.split/_compose_mid.png", "score": null },
+    { "slot": "ghost", "path": "docs/showcase/skills-full-run-20261123/layer.split/_compose_preview.png", "score": null },
+    { "slot": "01-bg", "path": "docs/showcase/skills-full-run-20261123/layer.split/new/01-bg.png", "score": null },
+    { "slot": "02-mushrooms", "path": "docs/showcase/skills-full-run-20261123/layer.split/new/02-mushrooms.png", "score": null },
+    { "slot": "03-pond_boat", "path": "docs/showcase/skills-full-run-20261123/layer.split/new/03-pond_boat.png", "score": null },
+    { "slot": "04-main_house", "path": "docs/showcase/skills-full-run-20261123/layer.split/new/04-main_house.png", "score": null },
+    { "slot": "05-treehouse_mole", "path": "docs/showcase/skills-full-run-20261123/layer.split/new/05-treehouse_mole.png", "score": null },
+    { "slot": "06-foreground", "path": "docs/showcase/skills-full-run-20261123/layer.split/new/06-foreground.png", "score": null }
+  ],
+  "text_deliverable": "童话花园竖图拆 6 层（bg+5 语义槽）：setup→gpt-image-2.5 双垫隔离→compose→gate→qa→emit。交叠回整图、三栏幽灵对比、new/*.png 散层与 layers.md；stack.html 旁路。",
+  "elapsed": "约 6 分钟（isolate×2 + compose/gate/qa）",
+  "notes": "gate：5/6 ok，mushrooms needs_human（scale_mul=0.66<0.75，已重抽 2 次）。ghost QA fail：MAE=50.1 PSNR=11.1；pond_boat/foreground/main_house 层 MAE>52。叠回目视咬合可用，定量幽灵未过 48 阈。"
+}

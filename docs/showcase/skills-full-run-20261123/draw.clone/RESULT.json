@@ -1,0 +1,31 @@
+{
+  "route_id": "draw.clone",
+  "banner": "【按点名锁定 draw.clone】",
+  "ok": true,
+  "passed_line": true,
+  "best_score": 9.53,
+  "rounds": 2,
+  "session_id": "showcase-clone-20261123",
+  "final_image": "docs/showcase/skills-full-run-20261123/draw.clone/final.jpg",
+  "process_sheet": "docs/showcase/skills-full-run-20261123/draw.clone/process_sheet.jpg",
+  "images": [
+    {
+      "slot": "R1",
+      "path": "docs/showcase/skills-full-run-20261123/draw.clone/r1.jpg",
+      "score": 9.46
+    },
+    {
+      "slot": "R2",
+      "path": "docs/showcase/skills-full-run-20261123/draw.clone/r2.jpg",
+      "score": 9.53
+    },
+    {
+      "slot": "final",
+      "path": "docs/showcase/skills-full-run-20261123/draw.clone/final.jpg",
+      "score": 9.53
+    }
+  ],
+  "text_deliverable": "克隆：锁休闲3D卡通花园参考画风（style_ref_strip 仅画风垫图），新题材黄昏渡船码头 16:9；未抄回树屋花园主体。",
+  "elapsed": "23分13秒",
+  "notes": "第2轮 CLI 登记 9.53 过线；展陈目录 r2 已换为同名修正成图（首轮 R2 文件错位）。竖版参考垫 16:9 使用 clone_style_ref_strip.jpg 过参校验。"
+}

@@ -854,6 +854,9 @@ def target_dims_allow_stop(
     return anat is not None and anat >= floor
 
 
+EARLY_STOP_REASONS = frozenset({"STOP_REGRESSION", "STOP_PLATEAU", "STOP_HURDLE_BOUND"})
+
+
 def decide_round_stop(
     *,
     score_ok: bool,
@@ -872,6 +875,7 @@ def decide_round_stop(
     subject_kind: str = "",
     defects: str = "",
     style_text: str = "",
+    hurdle_blocks_target: bool = False,
 ) -> str | None:
     """Return stop_reason or None to continue. Score failures never stop here."""
     if not score_ok or total is None:
@@ -895,6 +899,9 @@ def decide_round_stop(
     if round_num >= int(early_stop_min_round):
         if best_total is not None and total <= float(best_total) - float(regression_drop):
             return "STOP_REGRESSION"
+        # 门槛维仍低于线时，正式分就是该维，再开一轮也到不了 9.5。
+        if hurdle_blocks_target and total < float(threshold):
+            return "STOP_HURDLE_BOUND"
         if no_improve_streak >= plateau_rounds:
             return "STOP_PLATEAU"
     return None

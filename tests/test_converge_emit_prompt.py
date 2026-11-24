@@ -172,6 +172,55 @@ class TestConvergeEmitPrompt(unittest.TestCase):
             self.assertEqual(rounds[0].get("prompt"), pending_text)
             self.assertNotIn("pending_final_prompt", sess2)
             self.assertIn("FINAL_PROMPT_SHA1=", out)
+            self.assertIn("没有重算", out)
+            self.assertNotIn("当前未执行任何自评", out)
+
+    def test_judge_writes_next_prompt_once(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            data: dict = {"config": {"converge": {}}, "modules": {}, "entries": []}
+            sid = _seed_session(root)
+            img = _noisy_png(root / "r1.png", size=256)
+            with redirect_stdout(io.StringIO()):
+                self.assertEqual(
+                    cmd_converge(
+                        root, data, "generate", session_id=sid, round_num=1,
+                        emit_prompt=True, skip_route_gate=True,
+                        skip_reason="unit test emit-prompt", apply_memory=False,
+                    ),
+                    0,
+                )
+                self.assertEqual(
+                    cmd_converge(
+                        root, data, "generate", session_id=sid, round_num=1,
+                        image=str(img), prompt="", skip_route_gate=True,
+                        skip_reason="unit test emit-prompt", apply_memory=False,
+                    ),
+                    0,
+                )
+            buf = io.StringIO()
+            with redirect_stdout(buf):
+                rc = cmd_converge(
+                    root, data, "judge", session_id=sid, round_num=1,
+                    image=str(img),
+                    dims="构图8.0/光影8.0/透视8.0/质感8.0/风格8.0/无瑕度8.0",
+                    defects="茶盏边还虚",
+                    next_fix="把茶盏边再画实一点",
+                    strengths="小猫蹲姿清楚",
+                    skip_route_gate=True,
+                    skip_reason="unit test emit-prompt",
+                    apply_memory=False,
+                )
+            out = buf.getvalue()
+            self.assertEqual(rc, 0, out)
+            self.assertIn("SCORE_READY", out)
+            self.assertIn("NEXT_PROMPT_BEGIN round=2", out)
+            self.assertEqual(out.count("FINAL_PROMPT_SHA1="), 1)
+            sess = json.loads(_session_file(root, sid).read_text(encoding="utf-8"))
+            self.assertEqual(len(sess.get("rounds") or []), 1)
+            self.assertTrue(sess["rounds"][0].get("judged"))
+            self.assertEqual(int(sess.get("pending_final_prompt_round") or 0), 2)
+            self.assertIn("把茶盏边再画实一点", sess.get("pending_final_prompt") or "")
 
 
 if __name__ == "__main__":

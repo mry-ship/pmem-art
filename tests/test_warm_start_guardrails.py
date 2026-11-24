@@ -801,6 +801,107 @@ class TestMemoryPollutionTrace(unittest.TestCase):
         self.assertIn("宣传海报", open_pack["prompt_block"])
         self.assertNotIn("AD_FORBID", self._reasons(open_pack))
 
+    def test_verified_other_run_identity_stays_out_of_prompt(self) -> None:
+        """已确认记忆仍不得把别的物件、别的交付物或研发记忆写进提示词。"""
+        root = Path(__file__).resolve().parents[1]
+        data = {
+            "modules": {"ui.MainMenu": {}},
+            "entries": [
+                {
+                    "id": "RL_SKU",
+                    "kind": "style_redline",
+                    "module": "ui.MainMenu",
+                    "status": "active",
+                    "trust": "verified",
+                    "summary": "[收敛踩坑红线] 主菜单按钮：避免「露莓果酱焊上蛋糕」",
+                },
+                {
+                    "id": "AD_SKU",
+                    "kind": "art_decision",
+                    "module": "ui.MainMenu",
+                    "status": "active",
+                    "trust": "verified",
+                    "summary": "主菜单热可可杯必须留托盘高光",
+                },
+                {
+                    "id": "AD_FAMILY",
+                    "kind": "art_decision",
+                    "module": "ui.MainMenu",
+                    "status": "active",
+                    "trust": "verified",
+                    "summary": "主菜单图标用 currentColor 描边",
+                },
+                {
+                    "id": "RL_OK2",
+                    "kind": "style_redline",
+                    "module": "ui.MainMenu",
+                    "status": "active",
+                    "trust": "verified",
+                    "summary": "[收敛踩坑红线] 避免「按钮没有按下态」",
+                },
+            ],
+        }
+        with patch(
+            "improve.warm_start.load_taste",
+            return_value={
+                "keep_phrases": ["露莓果酱糖釉高光"],
+                "banned_habits": ["不要霓虹", "不要画热可可杯"],
+                "preferred_lighting": ["柔光", "HarborHotCocoa暖光"],
+            },
+        ), patch(
+            "improve.knowledge.recall_layered_knowledge_cards",
+            return_value=[
+                {
+                    "id": "CARD_SKU",
+                    "title": "主菜单按下态",
+                    "body": "不要画成草莓软糖SSS",
+                    "layer_scope": "private",
+                }
+            ],
+        ):
+            pack = build_warm_start_pack(
+                root,
+                data,
+                module="ui.MainMenu",
+                goal="休闲主菜单概念稿",
+            )
+        block = pack["prompt_block"]
+        reasons = self._reasons(pack)
+        self.assertIn("他趟具体物件", reasons["RL_SKU"])
+        self.assertIn("他趟具体物件", reasons["AD_SKU"])
+        self.assertIn("其他交付物", reasons["AD_FAMILY"])
+        for token in (
+            "露莓果酱",
+            "热可可",
+            "currentColor",
+            "草莓软糖SSS",
+            "HarborHotCocoa",
+        ):
+            self.assertNotIn(token, block, token)
+        self.assertIn("避免「按钮没有按下态」", block)
+        self.assertIn("不要霓虹", block)
+        self.assertIn("柔光", block)
+
+    def test_layer_isolate_prompt_drops_memory_dump(self) -> None:
+        from scripts.pmem_layer_split.isolate import _prompt_for
+
+        leaked = _prompt_for(
+            {
+                "id": "boat",
+                "keep": "木船 Warm-Start 候选红线 style_redline",
+                "remove": "码头 .memory 收敛踩坑",
+            }
+        )
+        self.assertNotIn("Warm-Start", leaked)
+        self.assertNotIn("候选红线", leaked)
+        self.assertNotIn("style_redline", leaked)
+        self.assertNotIn(".memory", leaked)
+        self.assertNotIn("收敛踩坑", leaked)
+        self.assertIn("boat", leaked)
+        clean = _prompt_for({"id": "boat", "keep": "木船", "remove": "码头"})
+        self.assertIn("木船", clean)
+        self.assertIn("码头", clean)
+
 
 if __name__ == "__main__":
     unittest.main()

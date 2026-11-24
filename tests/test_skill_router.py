@@ -107,10 +107,13 @@ class SkillRouterTests(unittest.TestCase):
         self.assertIn("Gossip Harbor", merge)
         self.assertIn("GOSSIP_HARBOR_MERGE.md", merge)
         self.assertIn("有参考又要换题材的这一张，走克隆", draw)
+        self.assertIn("转交 `pmem-layer-split`", draw)
+        self.assertIn("layer.split", _spec("pmem-prompt")["body"])
         self.assertIn("--reference-image-paths", draw)
         self.assertIn("不能只看垫进去的那一张就给分", draw)
 
         console = _spec("pmem-agent")["body"]
+        self.assertIn("走拆图层", console)
         self.assertIn("总控自己不生图", console)
         self.assertIn("只审一轮", console)
         self.assertNotIn("固定 2 轮", console)

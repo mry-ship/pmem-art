@@ -1,0 +1,31 @@
+{
+  "route_id": "draw.variant",
+  "banner": "【按点名锁定 draw.variant】",
+  "ok": true,
+  "passed_line": false,
+  "best_score": 9.47,
+  "rounds": 2,
+  "session_id": "showcase-variant-20261123",
+  "final_image": "docs/showcase/skills-full-run-20261123/draw.variant/final.jpg",
+  "process_sheet": "docs/showcase/skills-full-run-20261123/draw.variant/process_sheet.jpg",
+  "images": [
+    {
+      "slot": "R1",
+      "path": "docs/showcase/skills-full-run-20261123/draw.variant/r1.jpg",
+      "score": 9.47
+    },
+    {
+      "slot": "R2",
+      "path": "docs/showcase/skills-full-run-20261123/draw.variant/r2.jpg",
+      "score": 7.9
+    },
+    {
+      "slot": "final",
+      "path": "docs/showcase/skills-full-run-20261123/draw.variant/final.jpg",
+      "score": 9.47
+    }
+  ],
+  "text_deliverable": "",
+  "elapsed": "23分41秒",
+  "notes": "未过线：最高 9.47<9.5；R2 安全早停 STOP_REGRESSION（7.90），交付 R1 惊讶表情差分"
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>icon.b · 线性 SVG 预览 · skills-full-run-20261123</title>
+  <style>
+    :root { --fg: #2d2438; --bg: #faf7f2; --card: #fff; --muted: #6b6175; }
+    * { box-sizing: border-box; }
+    body { font-family: system-ui, sans-serif; margin: 0; padding: 24px; background: var(--bg); color: var(--fg); }
+    h1 { font-size: 1.25rem; margin: 0 0 8px; }
+    p.meta { color: var(--muted); font-size: 0.875rem; margin: 0 0 20px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
+    .cell {
+      background: var(--card);
+      border: 1px solid #e8e2d9;
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+    }
+    .cell .label { font-size: 0.75rem; margin-top: 10px; color: var(--muted); }
+    .sizes { display: flex; align-items: center; justify-content: center; gap: 16px; color: var(--fg); }
+    .sizes img { display: block; }
+    footer { margin-top: 24px; font-size: 0.75rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <h1>海港甜品站 · 功能图标 B（Clean 1.5）</h1>
+  <p class="meta">24×24 · currentColor · round cap/join · 8 枚批量预览（无闭环）</p>
+  <div class="grid" id="grid"></div>
+  <footer>showcase-icon-b-20261123 · preset Clean</footer>
+  <script>
+    const icons = ["home","shop","merge","bag","star","heart","settings","profile"];
+  const grid = document.getElementById("grid");
+  icons.forEach(name => {
+    const el = document.createElement("div");
+    el.className = "cell";
+    el.innerHTML = `
+      <div class="sizes">
+        <img src="${name}.svg" width="24" height="24" alt="${name} 24px"/>
+        <img src="${name}.svg" width="48" height="48" alt="${name} 48px"/>
+      </div>
+      <div class="label">${name}.svg</div>`;
+    grid.appendChild(el);
+  });
+  </script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "route_id": "icon.a",
+  "banner": "【按点名锁定 icon.a】",
+  "ok": true,
+  "passed_line": false,
+  "best_score": 8.02,
+  "rounds": 2,
+  "session_id": "showcase-icon-a-20261123",
+  "final_image": "docs/showcase/skills-full-run-20261123/icon.a/final_light.jpg",
+  "process_sheet": "docs/showcase/skills-full-run-20261123/icon.a/process_sheet.jpg",
+  "images": [
+    {"slot": "R1", "path": "docs/showcase/skills-full-run-20261123/icon.a/r1.jpg", "score": 8.02},
+    {"slot": "R2", "path": "docs/showcase/skills-full-run-20261123/icon.a/r2.jpg", "score": 7.35},
+    {"slot": "final", "path": "docs/showcase/skills-full-run-20261123/icon.a/final_light.jpg", "score": 8.02}
+  ],
+  "text_deliverable": "",
+  "elapsed": "24分11秒",
+  "notes": "未过线≥9.5；R2 STOP_REGRESSION（7.35<8.02）早停，交付R1 Light母版（仍缺满幅直角与单符号干净剪影）"
+}

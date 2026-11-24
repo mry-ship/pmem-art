@@ -3,10 +3,13 @@
 from __future__ import annotations
 
 import os
+import re
 import subprocess
 import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
+
+from PIL import Image
 
 from .defaults import (
     DEFAULT_WORKERS,
@@ -18,6 +21,8 @@ from .defaults import (
     SHADOW_FLYING,
     SHADOW_DISTANT,
     aspect_pad_rule,
+    engine_content_band,
+    frame_rule,
 )
 from .job import Job, assert_allowed_size
 
@@ -60,17 +65,65 @@ def _find_image_gen() -> Path | None:
     return None
 
 
+def _engine_wh(size: str) -> tuple[int, int]:
+    ew, eh = [int(x) for x in str(size).lower().split("x")]
+    return ew, eh
+
+
+def _band_for_crop(crop: Path, size: str) -> tuple[float, float, float, float]:
+    ew, eh = _engine_wh(size)
+    if crop.is_file():
+        with Image.open(crop) as im:
+            return engine_content_band(im.size[0], im.size[1], ew, eh)
+    return (0.0, 0.0, 0.0, 0.0)
+
+
+def _write_engine_reference(crop: Path, size: str, dest: Path) -> tuple[float, float, float, float]:
+    """Contain-fit the crop onto the engine canvas. Black bars are the pad."""
+    ew, eh = _engine_wh(size)
+    band = _band_for_crop(crop, size)
+    left, top, right, bottom = band
+    with Image.open(crop) as src:
+        im = src.convert("RGB")
+    canvas = Image.new("RGB", (ew, eh), (0, 0, 0))
+    x0 = int(round(left * ew))
+    y0 = int(round(top * eh))
+    x1 = max(x0 + 1, int(round((1.0 - right) * ew)))
+    y1 = max(y0 + 1, int(round((1.0 - bottom) * eh)))
+    fitted = im.resize((x1 - x0, y1 - y0), Image.Resampling.LANCZOS)
+    canvas.paste(fitted, (x0, y0))
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    canvas.save(dest)
+    return band
+
+
+_MEMORY_DUMP = re.compile(
+    r"Warm-Start|style_redline|art_decision|\.memory\b|候选红线|收敛踩坑|必须避开红线|优先复用定稿",
+    re.I,
+)
+
+
+def _slot_tag(text: str, fallback: str) -> str:
+    """槽位标签只留短身份。记忆包、红线和研发记忆整段不得进隔离提示词。"""
+    raw = str(text or "").strip()
+    if not raw or _MEMORY_DUMP.search(raw):
+        return fallback
+    return raw
+
+
 def _prompt_for(
     layer: dict,
     extra_remove: str = "",
     *,
     canvas_wh: tuple[int, int] | None = None,
     size: str | None = None,
+    frame: str = "",
 ) -> str:
-    remove = layer.get("remove") or ""
-    if extra_remove:
-        remove = (remove + ", " + extra_remove).strip(", ")
-    keep = layer.get("keep") or layer.get("note") or layer["id"]
+    remove = _slot_tag(layer.get("remove") or "", "")
+    extra = _slot_tag(extra_remove, "") if extra_remove else ""
+    if extra:
+        remove = (remove + ", " + extra).strip(", ")
+    keep = _slot_tag(layer.get("keep") or layer.get("note") or "", layer["id"])
     if layer.get("id") == "bg" or layer.get("mode") == "full":
         cw, ch = canvas_wh or (0, 0)
         eng = size or layer.get("size") or "1024x1536"
@@ -91,7 +144,18 @@ def _prompt_for(
         keep=keep,
         remove=remove or "neighbors, ground, sky",
         shadow_rule=shadow_rule_for(layer),
+        frame_rule=frame
+        or "The crop frame is the output frame. Do not add a wide empty margin inside it.",
     )
+
+
+def _prop_reference(layer: dict, crop: Path, size: str) -> tuple[Path, str]:
+    """Props see a crop already padded to the engine canvas. Background does not."""
+    if layer.get("id") == "bg" or layer.get("mode") == "full":
+        return crop, ""
+    dest = crop.with_name(f"{crop.stem}_engine.png")
+    _write_engine_reference(crop, size, dest)
+    return dest, frame_rule(size, _band_for_crop(crop, size))
 
 
 def _run_one(
@@ -216,7 +280,11 @@ def isolate_layers(
     if dry_run:
         for layer, crop, ctx, out, size, quality, extra in targets:
             ctx_s = f" +ctx={ctx.name}" if ctx else ""
-            print(f"DRY {layer['id']} size={size} q={quality}{ctx_s} -> {out.name}")
+            ref, rule = _prop_reference(layer, crop, size)
+            band_s = " engine-band" if ref != crop else ""
+            print(f"DRY {layer['id']} size={size} q={quality}{ctx_s}{band_s} -> {out.name}")
+            if rule:
+                print(" ", rule.split(".")[0])
         return {"targets": [t[0]["id"] for t in targets], "dry_run": True}
 
     if not targets:
@@ -235,17 +303,22 @@ def isolate_layers(
         for layer, crop, ctx, out, size, quality, extra in targets:
             lid = layer["id"]
             prev = layers_st.get(lid, {})
+            ref, rule = _prop_reference(layer, crop, size)
             entry = {
                 "status": "needs_cursor_gen",
                 "file": prev.get("file"),
                 "retries": int(prev.get("retries") or 0),
                 "source": "await_cursor",
-                "crop": f"_crops/{crop.name}",
+                "crop": f"_crops/{ref.name}",
                 "out": f"new/{out.name}",
                 "size": size,
                 "quality": quality,
                 "prompt": _prompt_for(
-                    layer, extra_remove=extra, canvas_wh=canvas_wh, size=size
+                    layer,
+                    extra_remove=extra,
+                    canvas_wh=canvas_wh,
+                    size=size,
+                    frame=rule,
                 ),
             }
             if ctx is not None:
@@ -260,11 +333,12 @@ def isolate_layers(
 
     def work(item):
         layer, crop, ctx, out, size, quality, extra = item
+        ref, rule = _prop_reference(layer, crop, size)
         prompt = _prompt_for(
-            layer, extra_remove=extra, canvas_wh=canvas_wh, size=size
+            layer, extra_remove=extra, canvas_wh=canvas_wh, size=size, frame=rule
         )
         ok, msg = _run_one(
-            image_gen, crop, out, prompt, size, quality, context=ctx
+            image_gen, ref, out, prompt, size, quality, context=ctx
         )
         return layer["id"], layer, ctx, out, ok, msg, extra
 
@@ -305,6 +379,7 @@ def isolate_layers(
                         extra_remove=extra if prev.get("status") == "dirty" else "",
                         canvas_wh=canvas_wh,
                         size=sz,
+                        frame=_prop_reference(layer, job.crops_dir / f"{lid}.png", sz)[1],
                     ),
                     "error": msg,
                 }

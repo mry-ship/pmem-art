@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from pack_pmem_art import assert_pack_clean, pack  # noqa: E402
+from pack_pmem_art import assert_pack_clean, pack, tracked_rel_paths  # noqa: E402
 from pmem_art import VERSION  # noqa: E402
 
 
@@ -56,6 +56,14 @@ class TestPackPmemArt(unittest.TestCase):
             self.assertNotIn("pmem", mcp.get("mcpServers") or {})
             self.assertIn('flawlessness: "无瑕度"', atlas_txt)
             self.assertNotIn('flawlessness: "完成度"', atlas_txt)
+            tracked = set(tracked_rel_paths(ROOT))
+            prefix = f"pmem-art-{str(VERSION).replace(' ', '')}/"
+            for name in norm:
+                self.assertTrue(name.startswith(prefix), name)
+                rel = name[len(prefix):]
+                self.assertIn(rel, tracked, rel)
+                self.assertNotIn("/.memory/", f"/{rel}/")
+                self.assertFalse(rel == ".memory" or rel.startswith(".memory/"))
 
 
 if __name__ == "__main__":

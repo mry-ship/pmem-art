@@ -266,6 +266,7 @@ def build_cases() -> list[Case]:
         ("/pmem-atlas 散图归位", "atlas.file"),
         ("/pmem-coach 看看进步", "coach.report"),
         ("/pmem-prompt 先写提示词，先不出图", "prompt.write"),
+        ("/pmem-layer-split 按这张图拆图层并叠回", "layer.split"),
     ]
     for phrase, rid in named:
         for i in range(8):
@@ -308,6 +309,14 @@ def build_cases() -> list[Case]:
         ("出一张三视图设定", "skill", ["draw.variant"], [], [], "job_remap"),
         ("做一枚 1024 桌面图标，第64版", "skill", ["icon.a"], [], [], ""),
         ("做一套线性 svg 图标，第64套", "skill", ["icon.b"], [], [], ""),
+        ("按这张图拆图层并叠回", "skill", ["layer.split"], ["scene.png"], [], "layer"),
+        ("完整场景要拆成可叠回的层；走拆图层", "skill", ["layer.split"], [], [], "layer"),
+        ("分图叠回要幽灵 HTML", "skill", ["layer.split"], [], [], "layer"),
+        ("背景一份其余九份", "skill", ["layer.split"], ["scene.png"], [], "layer"),
+        ("装修槽位拆件", "skill", ["layer.split"], ["scene.png"], [], "layer"),
+        ("画一个装修槽位的柜子", "default", ["draw.ordinary"], [], [], ""),
+        ("不要拆图层，就画一张猫", "default", ["draw.ordinary"], [], [], ""),
+        ("背景一份，其他留给标题", "default", ["draw.ordinary"], [], [], ""),
     ]
     for text, mode, routes, images, roles, reason in held:
         _add(out, bucket="heldout", text=text, mode=mode, routes=routes, images=images, roles=roles, reason=reason)

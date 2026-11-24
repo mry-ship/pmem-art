@@ -1,0 +1,41 @@
+{
+  "route_id": "atlas.file",
+  "banner": "【按 /pmem-atlas 走了】",
+  "ok": true,
+  "passed_line": null,
+  "best_score": null,
+  "rounds": 0,
+  "session_id": "showcase-atlas-20261123",
+  "final_image": "",
+  "process_sheet": "",
+  "images": [],
+  "text_deliverable": "已刷新 art-atlas.html（9532.6 KB，索引 895 张）；工作台 http://127.0.0.1:27913/art-atlas.html。classify-watch --apply 曾扫 116 张未映射图，高置信自动入库约 36 条后进程中断，余下低置信仍为 candidate/原位。list 显示 120 个有内容模块；doctor：映射覆盖率 78.4%，STALE=3，孤儿 82，缺图锚点 28。",
+  "elapsed": "",
+  "notes": "无出图；doctor 有告警（exit 非 0 属预期）。完整日志：atlas.log / list.log / doctor.log / classify-watch.log（部分）。",
+  "atlas": {
+    "html": "art-atlas.html",
+    "size_kb": 9532.6,
+    "indexed_images": 895,
+    "workbench_url": "http://127.0.0.1:27913/art-atlas.html"
+  },
+  "classify_watch": {
+    "apply": true,
+    "unmapped_scanned": 116,
+    "ingest_moved_approx": 36,
+    "partial": true,
+    "log": "docs/showcase/skills-full-run-20261123/atlas.file/classify-watch.log"
+  },
+  "doctor_summary": {
+    "coverage_pct": 78.4,
+    "assets_total": 379,
+    "assets_mapped": 297,
+    "orphans": 82,
+    "stale": 3,
+    "missing_image_anchors": 28,
+    "modules_active": 180
+  },
+  "list_summary": {
+    "modules_with_content_shown": 120,
+    "empty_scaffold_hidden": 214
+  }
+}

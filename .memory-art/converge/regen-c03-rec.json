@@ -108,7 +108,7 @@
   "accept_threshold": 9.6,
   "max_rounds": 4,
   "ready_to_finish": false,
-  "status": "continue",
+  "status": "finished",
   "rounds": [
     {
       "round": 1,
@@ -451,5 +451,6 @@
   "anatomy_floor": 7.5,
   "early_stop_min_round": 4,
   "regression_drop": 0.5,
-  "ActionRequired": "GENERATE_ROUND_3"
+  "ActionRequired": "GENERATE_ROUND_3",
+  "slot_released_reason": "abandoned before 2026-11-23; slot released so a new session can start; not a scored delivery"
 }

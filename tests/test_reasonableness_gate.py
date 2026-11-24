@@ -100,6 +100,61 @@ class TestReview(unittest.TestCase):
         self.assertFalse(out["passed"])
         self.assertTrue(any("清单未齐" in x for x in out["issues"]))
 
+    def test_icon_a_no_ref_default_requires_crop_contrast_shadow(self) -> None:
+        chk = default_checklist_template("icon.a")
+        out = review_reasonableness(
+            skill="icon.a",
+            draft="记账 app icon",
+            revised="1024 满幅直角，落在 72%-80% 安全区。无字。同品类上架图标气质。",
+            checklist_text=chk,
+        )
+        self.assertFalse(out["passed"])
+        blob = " ".join(out["issues"])
+        self.assertIn("裁切", blob)
+        self.assertIn("冷暖", blob)
+        self.assertIn("软卡通厚体积", blob)
+        self.assertIn("中间图示", blob)
+
+    def test_icon_a_outer_contour_percent_fails(self) -> None:
+        chk = default_checklist_template("icon.a")
+        rev = (
+            "1024 满幅直角，四角顶边，无字。"
+            "外轮廓被画面裁到，约占 76%，底色只留在四角，不要四周留空，不要投影，不要光点。"
+            "可读核心落在 72%–80% 安全区。底色与主体冷暖相反。软卡通厚体积。"
+        )
+        out = review_reasonableness(
+            skill="icon.a", draft="记账 app icon", revised=rev, checklist_text=chk
+        )
+        self.assertFalse(out["passed"])
+        self.assertTrue(any("百分数" in x for x in out["issues"]), out["issues"])
+
+    def test_icon_a_center_without_store_finish_fails(self) -> None:
+        chk = default_checklist_template("icon.a")
+        rev = (
+            "1024 满幅直角，四角顶边，无字。"
+            "外轮廓被四边裁开，底色只留在四角，不要四周留空，不要投影，不要光点。"
+            "可读核心落在 72%–80% 安全区。底色与主体冷暖相反。软卡通厚体积。"
+        )
+        out = review_reasonableness(
+            skill="icon.a", draft="记账 app icon", revised=rev, checklist_text=chk
+        )
+        self.assertFalse(out["passed"])
+        self.assertTrue(any("中间图示" in x for x in out["issues"]), out["issues"])
+        self.assertTrue(any("符号完成度" in x for x in out["issues"]), out["issues"])
+
+    def test_icon_a_named_style_keeps_center_bar_without_clay_ban(self) -> None:
+        chk = default_checklist_template("icon.a")
+        rev = (
+            "1024 满幅直角水彩 App Icon，四角顶边，无字。"
+            "外轮廓被四边裁开，底色只留在四角，不要四周留空，不要投影，不要光点。"
+            "可读核心落在 72%–80% 安全区。底色与主体冷暖相反。"
+            "中间图示按同品类已上架图标的完成度来画。"
+        )
+        out = review_reasonableness(
+            skill="icon.a", draft="水彩 app icon", revised=rev, checklist_text=chk
+        )
+        self.assertTrue(out["passed"], out["issues"])
+
     def test_icon_a_requires_safe_zone(self) -> None:
         chk = default_checklist_template("icon.a")
         out = review_reasonableness(
@@ -115,13 +170,87 @@ class TestReview(unittest.TestCase):
         chk = default_checklist_template("icon.a")
         rev = (
             "1024 满幅直角 App Icon，四角顶边无圆角蒙版；红发女抱哭婴圣诞装单符号；"
-            "主体落在 72%-80% 安全区；无字；窗外只留极淡光点预算。"
-            "一眼失败：贴边、烤进圆角底板或细碎灯串糊成噪点。"
+            "主体落在 72%-80% 安全区；外轮廓被画面裁切，底色只留在四角，不要四周留空，不要投影，不要光点；"
+            "底色与主体冷暖相反；软卡通厚体积；无字。"
+            "中间图示按同品类已上架图标的完成度来画：一块材料铺满整个符号，高光成块，不要哑光黏土。"
+            "一眼失败：烤进圆角底板或细碎灯串糊成噪点。"
         )
         out = review_reasonableness(
             skill="icon.a", draft="icon draft", revised=rev, checklist_text=chk
         )
         self.assertTrue(out["passed"], out["issues"])
+
+    def test_icon_a_identity_ban_fails(self) -> None:
+        chk = default_checklist_template("icon.a")
+        rev = (
+            "1024 满幅直角 App Icon，四角顶边无圆角蒙版；红发女抱哭婴圣诞装单符号；"
+            "主体落在 72%-80% 安全区；外轮廓被画面裁切，底色只留在四角；"
+            "底色与主体冷暖相反；软卡通厚体积；无字。"
+            "中间图示按同品类已上架图标的完成度来画：一块材料铺满整个符号，高光成块。"
+            "不要国王，不要王冠。"
+        )
+        out = review_reasonableness(
+            skill="icon.a", draft="icon draft", revised=rev, checklist_text=chk
+        )
+        self.assertFalse(out["passed"])
+        self.assertTrue(any("排斥句" in x for x in out["issues"]), out["issues"])
+
+    def test_icon_a_match3_blank_stack_fails(self) -> None:
+        chk = default_checklist_template("icon.a")
+        draft = "Tile Match 休闲三消 app icon，中间一叠方块加一颗星"
+        revised = (
+            "1024 满幅直角，四角顶边，无圆角蒙版。休闲三消中间一叠方块，"
+            "三块色块叠成小塔，加一颗星。落在 72%–80% 安全区。无字。"
+        )
+        out = review_reasonableness(
+            skill="icon.a", draft=draft, revised=revised, checklist_text=chk
+        )
+        self.assertFalse(out["passed"])
+        self.assertTrue(any("摆件" in x for x in out["issues"]), out["issues"])
+
+    def test_icon_a_game_badge_fails(self) -> None:
+        chk = default_checklist_template("icon.a")
+        draft = "Tile Match 休闲三消 app icon，中间一叠方块加一颗星"
+        revised = (
+            "1024 满幅直角，四角顶边，无圆角蒙版。休闲三消只留一枚超大牌面，"
+            "牌上有可配花色。正对画面，落在 72%-80% 安全区。无字。禁止空白色块叠塔。"
+        )
+        out = review_reasonableness(
+            skill="icon.a", draft=draft, revised=revised, checklist_text=chk
+        )
+        self.assertFalse(out["passed"])
+        self.assertTrue(any("玩法" in x or "徽章" in x for x in out["issues"]), out["issues"])
+
+    def test_icon_a_game_play_may_drop_invented_anchors(self) -> None:
+        chk = default_checklist_template("icon.a")
+        draft = "Tile Match 休闲三消 app icon，中间一叠方块加一颗星"
+        revised = (
+            "1024 满幅直角，四角顶边，无圆角蒙版。"
+            "让人认出：把花色相同的几张牌配成一组消掉。"
+            "休闲三消的英雄是好几张正面的牌，花色能对上。"
+            "正对画面，外轮廓被画面裁切，底色只留在四角，落在 72%-80% 安全区，不要四周留空，不要投影，不要光点。"
+            "底色与主体冷暖相反。软卡通厚体积。无字。禁止叠塔。"
+            "中间图示按同品类已上架图标的完成度来画：一块材料铺满整个符号，高光成块，不要哑光黏土。"
+        )
+        out = review_reasonableness(
+            skill="icon.a", draft=draft, revised=revised, checklist_text=chk
+        )
+        self.assertTrue(out["passed"], out["issues"])
+        self.assertFalse(any("主体锚点" in x for x in out["issues"]))
+
+    def test_icon_a_match3_king_swap_still_fails(self) -> None:
+        chk = default_checklist_template("icon.a")
+        draft = "Tile Match 休闲三消 app icon，中间一叠方块加一颗星"
+        revised = (
+            "1024 满幅直角国王半身撑满，四角顶边，无圆角蒙版。"
+            "落在 72%-80% 安全区。无字。"
+        )
+        out = review_reasonableness(
+            skill="icon.a", draft=draft, revised=revised, checklist_text=chk
+        )
+        self.assertFalse(out["passed"])
+        self.assertTrue(any("玩法" in x for x in out["issues"]), out["issues"])
+        self.assertTrue(any("主体锚点" in x for x in out["issues"]), out["issues"])
 
     def test_icon_a_rejects_round_mask(self) -> None:
         chk = default_checklist_template("icon.a")
@@ -190,7 +319,9 @@ class TestReview(unittest.TestCase):
         chk = default_checklist_template("icon.a")
         rev = (
             "1024 满幅直角 App Icon，主体 75% 安全区，无字单符号；"
-            "一眼失败包括：主体贴边、安全区不够、角区露白、以及烤进圆角底板。"
+            "外轮廓被画面裁切，底色只留在四角，不要四周留空，不要投影，不要光点；底色与主体冷暖相反；软卡通厚体积。"
+            "中间图示按同品类已上架图标的完成度来画：一块材料铺满整个符号，高光成块，不要哑光黏土。"
+            "一眼失败包括：安全区不够、角区露白、以及烤进圆角底板。"
         )
         out = review_reasonableness(
             skill="icon.a", draft="app icon", revised=rev, checklist_text=chk

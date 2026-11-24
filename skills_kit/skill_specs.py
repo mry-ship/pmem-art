@@ -120,6 +120,7 @@ SKILL_SPECS: list[dict[str, Any]] = [
 | 界面 | `整套界面或 HUD 或九宫格与状态族；走界面` |
 | 图标A/B/C | `1024 桌面启动图标；走图标A` / `线性 SVG；走图标B` / `背包透明底；走图标C` |
 | 合成梯 | `同一套东西一档比一档大；走合成梯` |
+| 拆图层 | `完整场景要拆成可叠回的层；走拆图层` |
 
 **⚠ 风险**：标准句写错会带偏检索；若与原话规则冲突，`route` 会报 `plan_conflict` 并降为 `confidence=low`，必须停下来问人，禁止硬执行。
 
@@ -139,7 +140,7 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 - `execute_ok=true`：写步骤表并执行；随后才能 `converge start`（无 route 缓存会被闸门拦住）。
 - `confidence=ask` / 糊话门 / `plan_conflict` / `mode=stop`：先问美术，**禁止默默走普通图开画**。
 - **路由冲突闸（即使 execute_ok）**：近邻 `route_ids` 与本判明显不一致；或一次甩出 **≥3** 个互斥支路且原话不是整页展陈/对比页/同范围全清单、也不是「所有技能 / 技能变体全部跑一遍」；或「再跑一遍」被扩成九支全开——一律当 **ask**，列选项问人，**禁止**只信 `execute_ok` 硬开画。原话就是全技能清点时，全清单 `execute_ok`。同一身份上的「换成惊讶」仍是变体，禁止因为「换成」把放行打成假。
-- 点名了 `/pmem-ui` / `/pmem-draw` / `/pmem-icon` / `/pmem-merge-ladder` 等：**仍须**先跑 `route`（点名锁定不改判）。若已认清 `route_id`，`converge start --route-id <id>` 在缺缓存时可**点名种闸**，不必 `--skip-route-gate`。`/pmem-draw` / `/pmem-icon` 子类型不唯一时必须带 `--route-id` 或先跑完整 route。禁止靠 `--skip-route-gate` 偷跑，除非用户明确说调试跳闸。
+- 点名了 `/pmem-ui` / `/pmem-draw` / `/pmem-icon` / `/pmem-merge-ladder` / `/pmem-layer-split` 等：**仍须**先跑 `route`（点名锁定不改判）。若已认清 `route_id`，`converge start --route-id <id>` 在缺缓存时可**点名种闸**，不必 `--skip-route-gate`。`/pmem-draw` / `/pmem-icon` 子类型不唯一时必须带 `--route-id` 或先跑完整 route。禁止靠 `--skip-route-gate` 偷跑，除非用户明确说调试跳闸。
 
 白话流程图：`docs/route_pipeline.html`。重建库：`route --rebuild`。用户正负例：`.memory-art/route_bank/user.jsonl`。
 
@@ -177,12 +178,12 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 ### 日常交付墙钟（不伤结果）
 
 - ≥9.5 **到线即停**，禁止凑满 3 轮。
-- 出图主链（`start`→`emit-prompt`→生图→`generate --image` 登记→`judge`）禁止跑 `doctor` / `hygiene` / 深检 / `--help` 探索；维护任务放到出图前、`finish` 后或单独点名。
-- 禁止 Probe / Overwrite / stub 占位图骗闸 / 额外探测再生图；顺序：`converge generate --emit-prompt` → GenerateImage → `converge generate --image` → judge。
+- 出图主链（第 1 轮 `emit-prompt`→生图→登记→`judge`；下一轮由审图在同一次写好定稿）禁止跑 `doctor` / `hygiene` / 深检 / `--help` 探索；维护任务放到出图前、`finish` 后或单独点名。
+- 禁止 Probe / Overwrite / stub 占位图骗闸 / 额外探测再生图。第 1 轮：`converge generate --emit-prompt` → GenerateImage → `converge generate --image` → judge。从第 2 轮起直接用审图打印的最终 Prompt 生图再登记，不要再开一次 emit；会话没有下一轮 pending 才补一次。分数和定稿看会话 JSON，禁止等外层脚本把日志一次性写完。
 - 显式 session（禁 `latest`）；普通单交付本对话优先；Task 仅 merge 逐格并行 / 多技能展陈。
 - **并行上限**：同时活跃 Task/子 agent ≤ `agent.max_parallel`（默认 4）；超出分批排队。
 - 首轮 brief 一次写准（身份/机位/材质/禁令/底色/动势品种等硬锁），硬锁不留到下一轮。
-- **平台纪律（本项目已开安全早停）**：`safe_early_stop: true`；掉≥0.15 或平台持平/掉分（`plateau_rounds`，本项目=1）且 R≥2 → 交历史最高分并标明未过线；见 `STOP_*` 立即 `finish`，禁止凑满 3。开场 search 只取要点，禁整包 JSON 刷屏。
+- **平台纪律（本项目已开安全早停）**：`safe_early_stop: true`；掉≥0.15 或平台持平/掉分（`plateau_rounds`，本项目=1）且 R≥2 → 交历史最高分并标明未过线；门槛维仍低于线时第 2 轮起 `STOP_HURDLE_BOUND`。见 `STOP_*` 立即 `finish`，禁止凑满 3。开场 search 只取要点，禁整包 JSON 刷屏。
 
 ## 第二段 · 总控对表，再交给一个 agent 执行
 
@@ -191,7 +192,7 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 先用第零段的 `route` 结果（`plan.route_ids`）决定走哪一支，有对话 id 就给 `route` 和 `converge start` 加上 `--conversation <id>`。`.cursor/skills/registry.md` 只用来核对 heading。本地 route 已经先跑 `tighten` 再对 when。总控不要按 phase、tighten、when 再判一次。普通图排在最后，只是兜底。定稿前后要交的东西不一样，就拆成多步，每步单独对一次。`route_ids` 的含义如下，只作读表，不作第二次分流：
 
 1. 有参考但没换题材是普通图。没人要几套机位，不是镜头包。关、开的机位和身份不在同一张图上，是多图分工。单张弹框、单张图标，不是整套界面或图标集。
-2. 整屏、HUD、九宫格、按钮状态族是界面。桌面 1024 是图标 A，一套线性 SVG 是图标 B，背包 64/128/256 是图标 C。A/B/C 同时命中就停下来，只问这一处。同一套东西一档比一档大，是合成梯。
+2. 整屏、HUD、九宫格、按钮状态族是界面。桌面 1024 是图标 A，一套线性 SVG 是图标 B，背包 64/128/256 是图标 C。A/B/C 同时命中就停下来，只问这一处。同一套东西一档比一档大，是合成梯。同一张完整场景要拆成可叠回的层，是拆图层，不是局部改，也不是普通图。
 3. 「以后按这张画」是锁风格。同一句还要画一张时，锁完再克隆验证。「只审、不画」是审图；「别画成某种风格」「不画背景」不是审图。「归档 / 散图归位 / 收进图谱」是归档，画面里的「归位」不是归档。进步、短板，以及知识卡的查看或收下，是教练。要写提示词、先不出图，是提示词。
 4. 以上都不是，才是普通图。
 5. 定稿写明两张参考的像素必须同时出现在同一张成图里：**当前能力缺口**——注册表没有 `simultaneous_pixels: true` 的行。必须停，并贴标准降级话术（见下「双参考同框 · 怎么改说」）；**禁止**改派硬做、禁止假装能同框。
@@ -261,12 +262,12 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
             "禁止先自判定案。点名了原画/克隆/变体/镜头包等只作点名锁定核对。"
             "普通图、原画、克隆、变体、多图分工、镜头包、局部改（成图快修）在本技能里做。"
             "两张及以上的图各管一件事，或同一物件的多个状态要锁同一个机位，走多图分工，不走四档。"
-            "整套 UI、图标集、合成梯读对应技能再做，禁止用单张插画合同代替。"
+            "整套 UI、图标集、合成梯、拆图层读对应技能再做，禁止用单张插画合同代替。"
         ),
         "body": r"""
 # `/pmem-draw` — 生图总入口
 
-**路由以 CLI 为准；本技能只做绘图执行。** 点名 `/pmem-draw` 时：**禁止先自判定案**——先跑 `route`（零点五），以 `route_ids` / `banner` 锁定子合同；本技能只认子合同条款与点名锁定，不问选哪条技能、不再让人选技能。回显 banner 只供改口，不等确认。需求路由、标准路由句模板与确认边界见 `/pmem-agent`。整套 UI / 图标 / 合成梯不在本文件生图。
+**路由以 CLI 为准；本技能只做绘图执行。** 点名 `/pmem-draw` 时：**禁止先自判定案**——先跑 `route`（零点五），以 `route_ids` / `banner` 锁定子合同；本技能只认子合同条款与点名锁定，不问选哪条技能、不再让人选技能。回显 banner 只供改口，不等确认。需求路由、标准路由句模板与确认边界见 `/pmem-agent`。整套 UI / 图标 / 合成梯 / 拆图层不在本文件生图。
 
 ## 子合同目录
 
@@ -291,6 +292,7 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 | **界面** | 玩家要整屏、HUD、弹窗套件、九宫格、按钮状态 | **不要在本文件生图**。转交 `pmem-ui` |
 | **图标** | 桌面图标、一套线性 SVG、背包道具格 | **不要在本文件生图**。转交 `pmem-icon`（A/B/C 不混） |
 | **合成梯** | 同域升级梯（默认整表一组、L1–L8；有参考跟格数，点名数量跟点名；仅点名逐格才 per_cell）；糖果/甜品默认 shop_ladder；工具瓶罐可 same_object；未点名非糖果可轻门 | **不要在本文件生图**。转交 `pmem-merge-ladder` |
+| **拆图层** | 完整场景拆成可叠回的层（分图叠回、背景一份其余若干份、装修/变身槽位） | **不要在本文件生图**。转交 `pmem-layer-split` |
 | **镜头包** | 玩家明确要几套机位 / 镜头 / 光给自己挑 | 「合同 · 镜头包」；点选前禁止生图 |
 | **局部改** | 已有成图；只改点名部位/小瑕疵；不换题材、机位、身份、整构图 | 零点五+「合同 · 局部改」（快通道，禁止三轮普通图） |
 | **克隆** | 有参考，并且要换一个新题材，锁的是画风 | 零点五+第二节+「合同 · 克隆」 |
@@ -308,8 +310,9 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 5. 只说「画这个角色」→ 普通图或原画，不进变体。变体要出现换画风、表情或动作。
 6. 两张图分工不同，或关/开这类状态和身份不在同一张图上 → **多图分工**。一张图改表情仍走变体。
 7. 回显的类型必须和实际执行的合同是同一个。玩家下一句改口，丢掉这一支重来；已经画完的图不能拿去冒充新合同的结果。
+8. 说拆图层、分图叠回、背景一份其余几份 → **拆图层**，不进普通图或局部改。转交 `pmem-layer-split`。
 
-普通图和原画走第二节闭环。克隆和变体仍用第二节的打分轮次和 `converge` 命令（多图分工也用第二节），但不要按第一节继承构图；垫图和停机按合同。**局部改只走「合同 · 局部改」**，禁止套第二节三轮。镜头包、界面、图标、合成梯不要从第二节往下生。风格优先级：文字 > 风格参考 > 品类默认（有文字+构图参考时参考只锁版式）；都无才查 `docs/COMMERCIAL_BENCHMARK.md`（merge 默认钉 Gossip Harbor）；禁止非 merge 一律套 Gossip Harbor 货柜。
+普通图和原画走第二节闭环。克隆和变体仍用第二节的打分轮次和 `converge` 命令（多图分工也用第二节），但不要按第一节继承构图；垫图和停机按合同。**局部改只走「合同 · 局部改」**，禁止套第二节三轮。镜头包、界面、图标、合成梯、拆图层不要从第二节往下生。风格优先级：文字 > 风格参考 > 品类默认（有文字+构图参考时参考只锁版式）；都无才查 `docs/COMMERCIAL_BENCHMARK.md`（merge 默认钉 Gossip Harbor）；禁止非 merge 一律套 Gossip Harbor 货柜。
 
 ## 零点五、开画前强制 route（与总控同闸；点名 `/pmem-draw` 也要跑）
 
@@ -324,7 +327,7 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 4. 缺缓存时可 `converge start --route-id draw.ordinary|draw.touchup|draw.clone|draw.key|…` **点名种闸**（与完整 route 等价放行）。
 5. **禁止裸跳闸**：须 `PMEM_ART_ALLOW_GATE_SKIP=1` + `--skip-reason`；仅设 `PMEM_ART_SKIP_ROUTE_GATE` 不够。日常用 route 或 `--route-id` 点名种闸。
 6. 点名锁定/口头草稿与 `route_ids` 冲突：停问玩家，禁止硬开画。
-7. 判成界面 / 图标 / 合成梯：先留下本次 route 缓存，再读对应技能。
+7. 判成界面 / 图标 / 合成梯 / 拆图层：先留下本次 route 缓存，再读对应技能。拆图层禁止在本文件 `converge start`。
 
 route 锁定后只读注册表该行的 **`pack_headings` 执行包**；不要整份全文串味。镜头包点选前不生图，仍须先 route。
 
@@ -337,8 +340,8 @@ route 锁定后只读注册表该行的 **`pack_headings` 执行包**；不要�
 3. 每轮续跑前先读最小工作集：`python3 pmem_art.py contract working-set --id <session>`——只用合同+本图+单点改嘱，**禁止**靠长聊天重谈 L0/L1。
 4. 画师新反馈先归层：`python3 pmem_art.py contract classify --text "…"`；再 `contract patch --id <session> --feedback "…"`。L0=可能换交付/重开；L1=升锁点；L2=只改一处。
 5. 首轮 generate 前：`reasonableness review`（`--draft` + `--revised` + checklist）过闸。
-6. 出图顺序（禁 stub）：`converge generate --emit-prompt` 打印「最终 Prompt」→ GenerateImage 逐字用该句 → `converge generate --image <path>` 登记（可省 `--prompt` 复用 pending）。`converge generate` **自动并入** Warm-Start；打印 `WARM_START_MERGED=1|0` 与 `FINAL_PROMPT_SHA1=`。禁止另写 brief、禁止手贴 Warm-Start、禁止占位图骗闸。垫图只用该轮打印的那一张：默认是最初参考，改点只写进提示词；只有打印写明垫第几轮成图时，才垫那张成图。
-7. 看图打六维 → `converge judge`；≥9.5 到线即 `finish`；不到线最多 3 轮；交件标明是否过线。本项目已开安全早停：掉分/平台 → 交历史最高分，见停机码立即 `finish`。
+6. 出图顺序（禁 stub）：第 1 轮 `converge generate --emit-prompt` 打印「最终 Prompt」→ GenerateImage 逐字用该句 → `converge generate --image <path>` 登记（可省 `--prompt` 复用 pending）。从第 2 轮起用上一轮 `judge` 已经写入的最终 Prompt，直接生图再登记，不要再开一次 emit。`converge generate` **自动并入** Warm-Start；打印 `WARM_START_MERGED=1|0` 与 `FINAL_PROMPT_SHA1=`。禁止另写 brief、禁止手贴 Warm-Start、禁止占位图骗闸。垫图只用该轮打印的那一张：默认是最初参考，改点只写进提示词；只有打印写明垫第几轮成图时，才垫那张成图。
+7. 看图打六维 → `converge judge`。还要下一轮时，同一次审图会把下一轮定稿写进会话（`SCORE_READY` 之后的最终 Prompt）。≥9.5 到线即 `finish`；不到线最多 3 轮；交件标明是否过线。本项目已开安全早停：掉分/平台 → 交历史最高分，见停机码立即 `finish`。分数以会话 JSON 为准，不要等外层脚本的日志。
 8. 风格优先级同第 2 条；都无才查 `benchmark lookup` / `COMMERCIAL_BENCHMARK.md`（**按品类**；仅 merge 钉 Gossip Harbor）；**禁止**把 benchmarks 目录图当垫图（start/generate 双闸）。
 9. 禁止裸 `--skip-route-gate`（须 `PMEM_ART_ALLOW_GATE_SKIP=1` + `--skip-reason`）。会话命令一律显式 `--id`。
 
@@ -385,9 +388,9 @@ route 锁定后只读注册表该行的 **`pack_headings` 执行包**；不要�
    - 默认 `--mode quality` = 合格线 ≥9.5 **到线即停**；最多 3 轮兜底，不鼓励跑满。正式分 ≥9.5 立刻 `finish`，禁止为凑轮次再画。
    - `--scale`：`low` 贴原修瑕 · `medium` 小优化锁机位（默认）· `high` 大胆跃升+可叙事 · `recompose` 须配 `--recompose-dir`。
    - `--mode fast`：warm-start 置信度高时可走 **fast track**（仍须每张打分；最终采纳默认仍要 ≥9.5，除非用户明确说「草稿/fast/先看看」）。
-   - `converge generate` **自动把 Warm-Start `prompt_block` 并入提示词**。对话里回显「装配句 / Warm-Start 段 / 最终 Prompt」与 `WARM_START_MERGED=1`。禁止再靠手贴，也禁止用「GenerateImage Hook 有没有跑」判断是否并入。
+   - `converge generate` **自动把 Warm-Start `prompt_block` 并入提示词**。对话里回显「装配句 / Warm-Start 段 / 最终 Prompt」与 `WARM_START_MERGED=1`。禁止再靠手贴，也禁止用「GenerateImage Hook 有没有跑」判断是否并入。本轮正文写了高饱和、撑满或指定占比、不要投影时，Warm-Start 不贴「避免过饱和 / 柔光」，medium 档位句不加「不改机位 / 柔化光影」。口味档案留着，只是这一条不进生图词。
    - **出图硬规**：`GenerateImage` / Shell / apikey-image 的 description（或等价字段）**必须**填 generate 打印的「最终 Prompt（出图须用这句）」；同屏会打印 `FINAL_PROMPT_SHA1=`，可用 `skills_kit.final_prompt_gate.assert_used_final_prompt` 对账。禁止另写第二份 brief、禁止手贴 Warm-Start。
-   - **墙钟硬规（日常交付）**：主链禁止 `doctor` / `hygiene` / 深检 / `--help` 试错；禁止 Probe / Overwrite / stub 骗闸；顺序 `--emit-prompt` → 生图 → `--image` 登记；显式 session；本对话优先；**首轮 brief 一次写准**（身份、机位、材质、禁令、底色、动势/品种硬锁写进 R1 revised）；本项目已开安全早停，见停机码立即 `finish`（不降 9.5 到线）。
+   - **墙钟硬规（日常交付）**：主链禁止 `doctor` / `hygiene` / 深检 / `--help` 试错；禁止 Probe / Overwrite / stub 骗闸。第 1 轮 `--emit-prompt` → 生图 → `--image` 登记。从第 2 轮起，审图已经把下一轮定稿写进会话（`SCORE_READY` 之后的最终 Prompt），直接生图再登记，不要再开一次 emit；会话里没有下一轮 pending 才补一次。登记复用本轮已发出的最终 Prompt，不重算合理性、Warm-Start 和装配。分数和定稿以会话 JSON 为准，禁止等外层脚本把日志一次性写完；外层脚本禁止 `capture_output` 后在进程结束时一次写日志。显式 session；本对话优先；**首轮 brief 一次写准**（身份、机位、材质、禁令、底色、动势/品种硬锁写进 R1 revised）；本项目已开安全早停，见停机码立即 `finish`（不降 9.5 到线）。
    - **档位只规定能动多少，出图句用开会话打印的那一家**：
      - `low`：写成一处可改，并点名邻区保持原样。
      - `medium`：只留一处看得见的打磨，机位锁死。
@@ -402,7 +405,7 @@ route 锁定后只读注册表该行的 **`pack_headings` 执行包**；不要�
      --draft "<草稿提示词>" --revised "<更合理的提示词>" \
      --checklist "subject_action=ok;contact_scale=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok"
    ```
-   清单模板：`python3 pmem_art.py reasonableness template --skill ordinary`。修订句必须写清：主体动作、接触/尺度、元素预算、硬锁、一眼失败条件。首轮 `generate` **强制使用 revised**（未再审的其他 `--prompt` 会被忽略）；可省略 `--prompt`。非首轮空 `--prompt` 回退 revised。后续审美迭代不得推翻硬锁与预算。调试才允许 `--skip-reasonableness-gate`。
+   清单模板：`python3 pmem_art.py reasonableness template --skill ordinary`。修订句必须写清：主体动作、接触/尺度、元素预算、硬锁、一眼失败条件。英雄必须从玩家命名的东西里长出来：先写「让人认出」这款东西在做什么，再写英雄。禁止先造一个物件（一枚徽章、一颗星、一叠摆件、参照品的角色）再让闸门把这个物件锁死。清单自标 ok 代替不了这一句。参照某款成品只锁完成度。硬锁是版式和玩家点名的东西，不是草稿里自造的物件。首轮 `generate` **强制使用 revised**（未再审的其他 `--prompt` 会被忽略）；可省略 `--prompt`。非首轮空 `--prompt` 回退 revised。后续审美迭代不得推翻版式硬锁和玩家点名的东西。调试才允许 `--skip-reasonableness-gate`。
 4. **Best-of-N 首帧（默认禁止）**：只有玩家明确说「先试几套方向 / 并行挑一张 / Best-of-N」才开；默认同方向进 R1，禁止自作主张先画 2~3 张再挑。若开了：须在合理性闸之后，并写明选了哪条。
 
 ---
@@ -486,7 +489,7 @@ python3 pmem_art.py converge judge \
 - **情况 2：本轮评分 `< 9.5` 且 $i < 3$**
   🔄 **不合格！** 必须把本轮最低分维度的具体硬伤转化为 **≤2 条部位级修正指令**（如具体关节/持物连接、接触阴影、边缘描边），并入第 $i+1$ 轮 Prompt，**严禁**堆砌「加强氛围、提升体积光」等空泛套话；若本轮评分解析失败，先重试 1 次，仍失败则保持上一轮有效缺陷与底图，绝不用套话污染 Prompt。未 `judge` 不能开下一轮，`finish` 会失败，Cursor stop hook 也会把对话打回来，直到 ≥9.5 或满 3 轮。
 - **情况 2b：掉分/平台早停（本项目已开）**
-  本项目 `converge.safe_early_stop: true`：从第 2 轮起，相对历史最高掉 ≥`0.15`，或平台持平/掉分达到 `plateau_rounds`（本项目=1）→ 交付历史最高分并标明未过线。阈值保持 0.15 / 第 2 轮，不要改回 0.5 / 末轮才启用早停；**禁止**为省时间下调 9.5 到线。
+  本项目 `converge.safe_early_stop: true`：从第 2 轮起，相对历史最高掉 ≥`0.15`，或平台持平/掉分达到 `plateau_rounds`（本项目=1）→ 交付历史最高分并标明未过线。门槛维仍低于线、正式分被该维替换时，第 2 轮起 `STOP_HURDLE_BOUND`，不再开下一轮。阈值保持 0.15 / 第 2 轮，不要改回 0.5 / 末轮才启用早停；**禁止**为省时间下调 9.5 到线。
 - **情况 3：已满 3 轮（$i = 3$）且评分仍 `< 9.5`**
   🏁 **达到 3 轮上限，停止循环！** 从第 1 ~ 3 轮中**挑选综合评分最高的那一轮图片**作为最终交付图，进入 Step 3。
 
@@ -542,7 +545,7 @@ improve/coach/learn 推销仅在用户主动要时再给。
 
 只在类型是原画时加在闭环上。闭环轮次、9.5、评分履历与上面相同。
 
-提示词用完整句子，不要纯 tag。顺序：主体与动作，场景，光影与时段，材质与画风，色板，景别画幅。排斥项写成正向句（「干净的青瓷白与墨蓝，无霓虹」）。每轮用上一轮的具体缺陷重写整句，仍禁止只堆负向 tag。无玩家画风 / 无风格样张时：画风句必须写成**同品类顶级商业 Key Art / 上架主视觉气质**（空气透视、主视觉记忆点、商业完成度用具体名词），禁止空喊「史诗好看」或回落泛插画。**仅当题材是软糖/半透明糖果介质时**：修订句须写半透明 SSS、宽柔高光、边缘暖散射，并禁止硬塑胶/油镜高光；金器/木箱/陶瓷等非软糖题材勿套这条。要几套构图自己挑，改走镜头包，点选前不生图。
+提示词用完整句子，不要纯 tag。顺序：主体与动作，场景，光影与时段，材质与画风，色板，景别画幅。排斥项写成正向句（「干净的青瓷白与墨蓝，无霓虹」）。每轮用上一轮的具体缺陷重写整句，仍禁止只堆负向 tag。无玩家画风 / 无风格样张时：画风句必须写成**同品类顶级商业 Key Art / 上架主视觉气质**（空气透视、主视觉记忆点、商业完成度用具体名词），禁止空喊「史诗好看」或回落泛插画。**仅当题材是软糖/半透明糖果介质时**：修订句写半透明 SSS、宽柔高光、边缘暖散射。金器/木箱/陶瓷等非软糖题材不套这条。要几套构图自己挑，改走镜头包，点选前不生图。
 
 **硬闸 · 有风格样张时（layout_not_style_echo）**：只借色板 / 光影 / 媒介 / 笔触，**禁止**继承样张的机位、主体占比、前景道具摆位、左右分区。成图构图一眼能对上样张分区或同一机位 → 构图维压到 ≤8.5 且本轮不可停；禁止用「大体像风格」软过。合理性闸 checklist 必须标 `layout_not_style_echo=ok`。
 
@@ -936,11 +939,16 @@ A/B/C **标题并列**，禁止把 C 嵌进 B、把 A 甩到 B 的 Step 之后�
 
 ### A1. 1024×1024 满幅直角母版与系统圆角安全区铁律
 - **严禁预裁透明圆角**：母版必须输出 **`1024×1024` 满幅直角正方形（Full-bleed Square PNG，无 Alpha 透明缺角）**，防止系统套用 iOS 超椭圆或 Android Adaptive 遮罩时露出黑边/白边裂隙。
-- **核心图形安全区（Center 72%–80% Safe Zone）**：核心主符号收束在画布中心 **`72%–80%`（约 `740×740 px`）** 内，四周留呼吸负空间，绝不贴边。
+- **可读核心（Center 72%–80%）**：要认得出的五官、符号和花色落在画面中部 **`72%–80%`**，避开系统圆角会切掉的四角。这个百分数不是外轮廓的尺寸。
+- **外轮廓**：被四边裁开，底色只留在四角。禁止四周留一圈舞台，禁止底下投影，禁止把外轮廓写成「约占 76%」。
 - **零细碎文字红线**：只保留 **1 个高辨识度核心记忆符号**；缩放到 `29×29` / `60×60` 仍一眼可认。
 
-### A2. 光学微立体质感与光影层次
-- **三层景深**：① 底板环境渐变（70% 主色）→ ② 中心主符号微倾体块（20% 辅色 + 接触阴影）→ ③ 顶部 45° 高光切角（10% 点缀色）。
+### A2. 正对的单枚英雄
+- **一个英雄，正对画面**：底是一整块与英雄冷暖相反的纯色，只留在四角。外轮廓被四边裁开。可读核心落在 72%–80% 安全区。一主光，形先于质。禁止微倾的桌面摆件，禁止多块叠塔，禁止同色贴同色。好几张相同物件必须咬成一个符号，这一团一起被四边裁开，禁止分成互不相连的几块。
+- **中间图示（所有 icon.a）**：画面中部那枚符号按同品类已上架图标的完成度来画。无别的画风句时必须写进 revised：「中间图示按同品类已上架图标的完成度来画：一块材料铺满整个符号，高光成块。」先认品类，再从 `docs/COMMERCIAL_BENCHMARK.md` 抽这一枚的表面：休闲游戏图标用软立体、块面高光、圆润厚实；工具图标用克制微立体。非休闲不套货柜糖釉，不垫竞品像素抄脸。
+- **无参考、无画风句的默认（必须写进 revised）**：英雄正对。外轮廓被四边裁开，底色只留在四角。可读核心落在 72%–80% 安全区。底是一整块与英雄冷暖相反的纯色，铺到四角。软卡通厚体积，剪影加厚，一主光，形先于质。中间图示按同品类已上架图标的完成度来画：一块材料铺满整个符号，高光成块。玩家写了水彩、扁平、线稿、厚涂或矢量时跟玩家的画风，软卡通和块面高光不盖过去，仍要写中间图示按同品类已上架图标的完成度。有参考图时跟参考的表面，仍要守裁切、冷暖拉开和中间图示这句。好几张相同物件咬成一个符号，这一团一起被四边裁开。
+- **用正面句**：英雄写它是什么。不要写「不要国王」「不要王冠」「不要胡子」这类排斥句，排斥句会把被禁的角色写进图。参照别的商店图标只取完成度，不把对方的角色写进提示词。
+- **先写让人认出什么**：命名了游戏，修订句先写玩法，英雄从这句长出来。禁止把游戏收成一枚徽章、一颗星、一张牌或一叠摆件。参照别的商店图标只锁完成度，不抄对方的角色，也不把参照收成几个形容词。闸门拦的是摆件和徽章，不指定某一款必须画成哪一个物件。
 - **iOS 18+ 三态**：默认只保证 **Light 母版**过关。Dark / Tinted **仅玩家点名**才另开 converge（各开最多3轮闭环）；没有点名就不要交假齐套，也不要写「已派生」。
 
 ### A3. 多尺寸导出与 `app-icon-preview.html`
@@ -949,13 +957,13 @@ A/B/C **标题并列**，禁止把 C 嵌进 B、把 A 甩到 B 的 Step 之后�
 ### A4. App Icon 审图与命令
 识别度或安全区低于 **8.0** 时正式分改取该维，不能停。维：小尺寸识别 / 安全区 / 光影质感 / 深浅色·多尺寸 / 色板纯粹（再加无瑕疵盲评，占 25%）。
 
-**App Icon 多维透镜（通用）**：明细见 `docs/APPICON_MULTI_LENS.md`——①栅格体验；②小尺寸去色仍认；③符号权重 P0 英雄撑满；④满幅直角 + 72%–80% 安全区；⑤色 70/20/10；⑥一主光、形先于质；⑦同品类上架图标气质（非泛插画海报）。缺画风时 revised 必须写同品类顶级上架图标气质。空喊「高级」却剪影糊 → 识别度或安全区 <8.0 不能停。
+**App Icon 多维透镜（通用）**：明细见 `docs/APPICON_MULTI_LENS.md`——①栅格体验；②小尺寸去色仍认；③符号权重 P0 英雄撑满；④满幅直角，外轮廓被四边裁开，可读核心在 72%–80%；⑤色 70/20/10；⑥一主光、形先于质；⑦同品类上架图标气质（非泛插画海报）。缺画风时 revised 必须写同品类顶级上架图标气质。空喊「高级」却剪影糊 → 识别度或安全区 <8.0 不能停。
+
+从零新画用 `--scale medium`，第 1 轮到线就能停。正文写了撑满、占比或四边裁切时，档位句不再加「不改机位」，也不再加「不做整体 recompose」。没有风格参考图时，第 2 轮垫最高分那张成图，只改裁切，禁止整段重画；四周留白不算要保持的内容，外轮廓可以顶到四边。任一边缘留白超过约 6% 就继续写裁切，外接框过了 72% 不算已经裁满。`--scale high` 只用于已有成图还要抬层次。出图前优先一条 `converge prepare`：同一进程做完 start、合同、合理性、emit-prompt。9.5、最多 3 轮、合理性闸都不降。
 
 ```bash
-python3 pmem_art.py converge start --session appicon --module brand.WorldStyle --scale high --route-id icon.a --goal "iOS 1024x1024 App Icon: 青瓷质感记账应用，中心单枚立体青釉金币流光符号"
-python3 pmem_art.py reasonableness review --id appicon --skill icon.a \
-  --draft "<草稿>" --revised "<单符号+72%-80%安全区+满幅直角无字的修订句>" \
-  --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;safe_zone=ok;single_symbol=ok;full_bleed_no_round_mask=ok"
+python3 pmem_art.py converge prepare --session appicon --module brand.WorldStyle --scale medium --route-id icon.a --goal "iOS 1024x1024 App Icon: 青瓷质感记账应用，中心单枚立体青釉金币流光符号" --reason-skill icon.a --reason-draft "<草稿>" --revised "<单符号+72%-80%安全区+满幅直角无字的修订句>" --checklist "subject_action=ok;element_budget=ok;hard_locks=ok;fail_at_glance=ok;safe_zone=ok;single_symbol=ok;full_bleed_no_round_mask=ok"
+# prepare 已含 start、合同、合理性、emit-prompt。用打印出的最终 Prompt 生图后，再登记和审图：
 python3 pmem_art.py converge generate --session appicon --round 1 --image app_icon_r1.png
 python3 pmem_art.py converge judge --session appicon --round 1 --image app_icon_r1.png \
   --dims "识别度9.6/安全区9.7/光影质感9.5/多尺寸合规9.6/色板纯粹9.7/无瑕疵9.5"
@@ -1051,7 +1059,8 @@ python3 pmem_art.py reasonableness review --id <icon_c_id> --skill icon.c \
 
 ### Mode A
 - [ ] 1024 满幅直角，未预裁圆角蒙版
-- [ ] 主符号在 72%–80% 安全区；无字
+- [ ] 外轮廓被四边裁开，底色只留在四角；可读核心在 72%–80% 安全区；无字
+- [ ] 中间图示按同品类已上架图标的完成度：一块材料铺满整个符号，高光成块
 - [ ] Light 母版 + 尺寸矩阵齐；Dark/Tinted 仅点名才有，未点名勿写已齐套
 - [ ] 跑了收敛则展示评分履历并标明过线/未过线（只要终稿用 --quiet）
 
@@ -1179,9 +1188,8 @@ python3 pmem_art.py learn list
 ## 风格与底（只写一处）
 1. 有文字风格 → 跟文字（整表参考仍可垫锁版式）。
 2. 有参考无文字 → `ref-read` 取样式写 `surface`；整表参考无文字时仍钉 Gossip Harbor，参考只锁格子。
-3. 都无 → Gossip Harbor **玩具货柜**写入 `surface`（软立体糖釉玩具货柜、圆润厚实、柔光釉面高光、棋盘缩略可认；禁硬镜面CGI/皮克斯硬塑/哑光黏土软塑胶UI，不只禁硬镜面）。
-- **surface 必禁**：写实摄影、美食棚拍、产品静物、玻璃真实折射、木纹指纹、果汁乳浊摄影感、微距毛孔、硬镜面 3D、硬镜面CGI、皮克斯硬塑、哑光黏土拟态、软塑胶 UI。只写「Gossip Harbor」四字不够，必须带玩具货柜+禁写实硬句+禁 3D。
-- **档位句必禁摄影质感**：`silhouette` / 出图 L 行只写糖釉玩具剪影/件数/容器/完成态；禁止焦斑、烤痕、鳞片微距、湿润汤面感、分区摆放、摄影级摆盘。这些词会盖过 surface「不是实物」，首轮就漂写实。`relation-judge` 机读拦截（点名写实除外）。柠檬片等配菜：纯文默认拦；**垫 GH 真机锁画风**时可跟截图。
+3. 都无 → Gossip Harbor **玩具货柜**写入 `surface`：软立体糖釉玩具货柜、圆润厚实、柔光釉面高光、棋盘缩略可认。只写「Gossip Harbor」四字不够，必须带玩具货柜和糖釉。
+- **档位句**：`silhouette` / 出图 L 行只写糖釉玩具剪影、件数、容器、完成态和整块色。`relation-judge` 见到摄影质感词会打回，不要把这些词写进提示词。柠檬片等配菜：纯文默认拦；**垫 GH 真机锁画风**时可跟截图。
 - **垫真机锁画风**：goal/refs 含 `assets/refs/gossip_harbor` 或「垫真机/截图锁画风」→ `generate_prefix` 改灌「垫图锁画风」短句，**不再灌**缺省 `_MERGE_SURFACE`；审图也不要因缺陷里出现「木纹」等词误报「未指定风格却偏写实」。
 - **overview_sheet 默认浅色圆角卡**（浅蓝/奶油浅底），禁止默用纯黑整表底（黑底留给 per_cell 隔离）。
 - per_cell：Cursor 纯黑/实色隔离；透明引擎可真 alpha。禁止后抠。
@@ -1205,12 +1213,11 @@ exit 0 才能出图。`scale_pct` 可不单调；邻档 `silhouette` 整句禁�
 ## 出图提示词模板（GenerateImage 必用）
 统一前缀（整表锁死）+ 每格一句短描述：
 ```text
-<surface 一句：Gossip Harbor 玩具货柜，软立体糖釉玩具货柜，禁写实/棚拍/折射/木纹/硬镜面CGI/哑光黏土软塑胶UI>。整表统一：同一 3/4 俯视、同一柔光左上、浅色圆角卡、同色相家族；每格一件居中留边；无字无脸。
-L1 <短名>：<糖釉玩具剪影/容器/完成态一句；整块色可读；禁焦斑鳞片湿润柠檬片香菜末>
+<surface 一句：Gossip Harbor 玩具货柜，软立体糖釉，圆润厚实，块面高光，棋盘缩略可认>。整表统一：同一 3/4 俯视、同一柔光左上、浅色圆角卡、同色相家族；每格一件居中留边；无字无脸。
+L1 <短名>：<糖釉玩具剪影/容器/完成态一句；整块色可读>
 L2 …
 （按 levels 列完）
-禁止跨格拼贴、残片、切顶；邻档靠剪影或件数可分，不靠放大。
-禁止美食棚拍、产品静物、玻璃真实折射、木纹指纹、果汁乳浊摄影感、档位摄影质感词。
+邻档靠剪影或件数可分。
 ```
 有格子参考：垫参考锁行列与卡底，格内换题材。无参考竖屏：4×2 + 9:16。
 
@@ -1246,7 +1253,7 @@ per_cell：各档并行独立 session，同时开档 ≤ `agent.max_parallel`（
         "title": "提示词生成器：按交付类型扩写可选方案",
         "description": (
             "玩家要写提示词、扩写 brief、要几套可选说法时使用。只有 /pmem-prompt。"
-            "先判定交付类型（普通图/原画/克隆/变体/镜头包/UI/图标A·B·C/合成梯等），"
+            "先判定交付类型（普通图/原画/克隆/变体/镜头包/UI/图标A·B·C/合成梯/拆图层等），"
             "再按该类专属清单从合理性、美观、画风、景别、光影、材质、禁忌等维度丰满，"
             "给出 2～4 套可选方案（或唯一方案并说明为何只有一套）。本技能不生图。"
         ),
@@ -1256,12 +1263,12 @@ per_cell：各档并行独立 session，同时开档 ≤ `agent.max_parallel`（
 
 玩家要「帮我写提示词 / 把这句话写丰满 / 给我几套 brief 选」时走这一条。**本技能不生图、不跑 converge。** 交出去的是给玩家挑选或再改的提示词方案。
 
-玩家点名了界面、图标、合成梯、原画、克隆等并要直接出图时，不要用本技能代替那一支；可以先用本技能出方案，玩家点选后再交给对应生图技能。
+玩家点名了界面、图标、合成梯、拆图层、原画、克隆等并要直接出图时，不要用本技能代替那一支；可以先用本技能出方案，玩家点选后再交给对应生图技能。
 
 ## 执行卡 · 提示词（Agent 必读）
 
 1. **不生图、不跑 converge**。先 route 定类型，方案旁标 `route_id=`。
-2. 2～4 套须同属已判定类型；UI/图标/合成梯禁止用普通插画句式交差。
+2. 2～4 套须同属已判定类型；UI/图标/合成梯/拆图层禁止用普通插画句式交差。拆图层 `route_id=layer.split`，交给 `/pmem-layer-split`，不跑 converge。
 3. 风格优先级：①有文字跟文字（有构图/整表参考时参考只锁版式，不锁画风）；②有参考无文字跟参考表面；③无参考仅题材/链型文字按文字推出；④都无才 `benchmark lookup` / `COMMERCIAL_BENCHMARK.md`（**按已判定品类**填一句；仅判成 merge 时钉 Gossip Harbor，禁止非 merge 套 Gossip Harbor 货柜）。
 4. 玩家点选后若要出图：再跑 route，进对应 `/pmem-…`；禁止本技能直接 `converge start`。
 
@@ -1295,9 +1302,10 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 | **图标 B** | 线性 SVG 导航/功能图标集 | `/pmem-icon` B | `icon.b` |
 | **图标 C** | 游戏背包道具格、隔离底栅格图标（Cursor 实色空底 / 透明引擎真 alpha） | `/pmem-icon` C | `icon.c` |
 | **合成梯** | 同域升级链（默认整表一组 8 档；点名数量或参考跟格数）、一档比一档大 | `/pmem-merge-ladder` | `merge.ladder` |
+| **拆图层** | 完整场景拆成可叠回的层；分图叠回、装修/变身槽位 | `/pmem-layer-split` | `layer.split` |
 | **锁风格 brief** | 只要色板/光影/禁用词文字规格，不求出图 | `/pmem-style-lock`（或先出文字再锁） | `style.lock` |
 
-认成 UI / 图标 / 合成梯时：**禁止**用普通插画句式交差。类型在「原画 vs 普通图」「图标 A vs C」之间晃，先问玩家，不要猜完就出 4 套混类方案。风格按优先级：有文字/参考跟已有；都无才查 `docs/COMMERCIAL_BENCHMARK.md`（按类型品类；仅合成梯钉 Gossip Harbor）。
+认成 UI / 图标 / 合成梯 / 拆图层时：**禁止**用普通插画句式交差。拆图层方案只写隔离层要锁的样子、视角、位置和跨度，不写一张新插画。类型在「原画 vs 普通图」「图标 A vs C」之间晃，先问玩家，不要猜完就出 4 套混类方案。风格按优先级：有文字/参考跟已有；都无才查 `docs/COMMERCIAL_BENCHMARK.md`（按类型品类；仅合成梯钉 Gossip Harbor）。
 
 ---
 
@@ -1352,9 +1360,9 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 
 ### 图标 A（App Icon）
 - 扩写须对照 `docs/APPICON_MULTI_LENS.md`
-- 满幅直角母版；核心符号落在 **72%–80% 安全区**；撑满、剪影优先
+- 满幅直角母版；外轮廓被四边裁开，底色只留在四角；可读核心落在 **72%–80% 安全区**；剪影优先
 - **单符号**高识别；无字、不烤圆角遮罩
-- **缺画风**：每套写同品类顶级上架图标气质；禁止泛插画海报风
+- **缺画风、无参考**：每套写上默认句：外轮廓被四边裁开，底色只留在四角；可读核心落在 72%–80% 安全区；底与英雄冷暖相反；软卡通厚体积，剪影加厚，一主光。中间图示按同品类已上架图标的完成度来画：一块材料铺满整个符号，高光成块。先认品类再抽表面。英雄用正面句，不写「不要国王」这类排斥句。不要把外轮廓写成约占 76%。好几张相同物件咬成一个符号。
 - 方案差异：符号隐喻不同，或浅/深底板——不要画成风景插画
 
 ### 图标 B（SVG 集）
@@ -1417,7 +1425,7 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
         "title": "场景切块隔离与叠回（脚印校准→隔离→闸门→幽灵）",
         "description": (
             "把一张完整场景图拆成可叠回的透明图层（装修/变身槽位）。"
-            "出图钉死样子/视角/风格；大小位置可漂，拼回按脚印 autofit 对准。"
+            "出图钉死样子、视角、画风、位置和跨度；叠回按脚印整幅贴回，禁止缩小居中。"
             "优先 gpt-image-2.5，否则 Cursor 黑底。"
             "用户说「拆图层 / 分图叠回 / 新图旧图拆件 / 装修分块 / layer split」或 /pmem-layer-split 时使用。"
         ),

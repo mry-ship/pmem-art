@@ -1,0 +1,21 @@
+{
+  "route_id": "style.lock",
+  "banner": "【按 style.lock 走了】",
+  "ok": true,
+  "passed_line": null,
+  "best_score": null,
+  "rounds": 0,
+  "session_id": "showcase-stylelock-20261123",
+  "final_image": "",
+  "process_sheet": "",
+  "images": [
+    {
+      "slot": "anchor",
+      "path": "docs/showcase/skills-full-run-20261123/refs/style_lock_sample.jpg",
+      "score": null
+    }
+  ],
+  "text_deliverable": "showcase.StyleLock：从样张提炼 11 项 HEX 色板（70/20/10）、粘土哑光 3D 童话微景观渲染、顶偏前柔暖光与浅景深；写入 art_decision + recipe + style_redline 三条记忆；主文件 style_bible.md。",
+  "elapsed": "",
+  "notes": "no_generate；未跑 converge；样张路径以 docs/showcase/skills-full-run-20261123/refs/ 为准。"
+}

@@ -54,8 +54,7 @@ CONVERGE_SCALE_PROFILES: dict[str, dict[str, Any]] = {
         "min_round_leap": 0.10,
         "prompt_delta_baseline": "first",
         "prompt_directive": (
-            "原图画风优先：锁视角与姿态落点（手/脚具体触点以参考像素为准，"
-            "禁止把搭膝改成撑地或后仰），仅微修局部质感"
+            "原图画风优先：锁视角与姿态落点（手和脚的触点跟参考像素），仅微修局部质感"
         ),
     },
     "medium": {
@@ -338,8 +337,7 @@ def _infer_case_style_and_subject(
         )
     else:
         case_redlines = [
-            "viewpoint_angle (不改机位与镜头视角)",
-            "style_surface (跟提示词品类默认画风，禁止回落写实棚拍)",
+            "style_surface (跟提示词品类默认画风)",
         ]
     return style_head, has_char, case_redlines
 
@@ -741,12 +739,121 @@ def _apply_prompt_language_and_stubs(
     return cleaned
 
 
+def directive_survives_in_prompt(directive: str, prompt: str) -> bool:
+    """True when the scale line is still in the prompt, or the brief removed it on purpose."""
+    directive = (directive or "").strip()
+    prompt = prompt or ""
+    if not directive:
+        return True
+    if not prompt.strip():
+        return False
+    if directive in prompt:
+        return True
+    surviving = drop_opposed_injections(directive, brief=prompt).strip(" |")
+    if not surviving:
+        return True
+    return surviving in prompt
+
+
+def _icon_hero_grid(path: Path) -> tuple[int, int, int, int, int, int, int, int, int] | None:
+    """Hero box on the coarse grid: minx, miny, maxx, maxy, gw, gh, step, w, h."""
+    try:
+        from PIL import Image
+    except ImportError:
+        return None
+    im = Image.open(path).convert("RGB")
+    w, h = im.size
+    if w < 8 or h < 8:
+        return None
+    px = im.load()
+    step = max(1, min(w, h) // 160)
+    gw = (w + step - 1) // step
+    gh = (h + step - 1) // step
+
+    def col(gx: int, gy: int) -> tuple[int, int, int]:
+        return px[min(gx * step, w - 1), min(gy * step, h - 1)]
+
+    def near(a: tuple[int, int, int], b: tuple[int, int, int], tol: int = 46) -> bool:
+        return abs(a[0] - b[0]) + abs(a[1] - b[1]) + abs(a[2] - b[2]) <= tol
+
+    seen = bytearray(gw * gh)
+    stack: list[tuple[int, int]] = []
+    for gx, gy in ((0, 0), (gw - 1, 0), (0, gh - 1), (gw - 1, gh - 1)):
+        i = gy * gw + gx
+        if not seen[i]:
+            seen[i] = 1
+            stack.append((gx, gy))
+    while stack:
+        gx, gy = stack.pop()
+        base = col(gx, gy)
+        for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+            nx, ny = gx + dx, gy + dy
+            if nx < 0 or ny < 0 or nx >= gw or ny >= gh:
+                continue
+            i = ny * gw + nx
+            if seen[i] or not near(col(nx, ny), base):
+                continue
+            seen[i] = 1
+            stack.append((nx, ny))
+    minx, miny, maxx, maxy = gw, gh, 0, 0
+    hit = False
+    for gy in range(gh):
+        row = gy * gw
+        for gx in range(gw):
+            if seen[row + gx]:
+                continue
+            hit = True
+            if gx < minx:
+                minx = gx
+            if gy < miny:
+                miny = gy
+            if gx > maxx:
+                maxx = gx
+            if gy > maxy:
+                maxy = gy
+    if not hit:
+        return None
+    return minx, miny, maxx, maxy, gw, gh, step, w, h
+
+
+def icon_subject_span(path: Path) -> tuple[float, float] | None:
+    """Width and height of the hero box, as fractions of the canvas.
+
+    Background is whatever can be walked from the four corners, including a
+    smooth gradient. The box size is not the edge-crop test.
+    """
+    box = _icon_hero_grid(path)
+    if not box:
+        return None
+    minx, miny, maxx, maxy, _gw, _gh, step, w, h = box
+    return (maxx - minx + 1) * step / w, (maxy - miny + 1) * step / h
+
+
+def icon_stage_margins(path: Path) -> tuple[float, float, float, float] | None:
+    """Empty ground on the left, right, top and bottom, as fractions of the canvas.
+
+    A store icon is cropped when every side is near zero and ground survives
+    only in the corners. A centered box at 76% still has a stage on all four sides.
+    """
+    box = _icon_hero_grid(path)
+    if not box:
+        return None
+    minx, miny, maxx, maxy, _gw, _gh, step, w, h = box
+    left = minx * step / w
+    right = max(0.0, 1.0 - (maxx + 1) * step / w)
+    top = miny * step / h
+    bottom = max(0.0, 1.0 - (maxy + 1) * step / h)
+    return left, right, top, bottom
+
+
 def compose_continuation_prompt(
     fix: str,
     scale_prof: dict[str, Any],
     *,
     stub_notes: list[str] | None = None,
     locks: list[str] | None = None,
+    pad_image: str = "",
+    release_margin: bool = False,
 ) -> str:
     """Round 2+: the pad is the previous plate. Name one repair; do not restate the scene."""
     from .must_fix import sanitize_continuation_fix
@@ -770,11 +877,18 @@ def compose_continuation_prompt(
     lock_pin = ""
     if lock_bits:
         lock_pin = "L1锁必须保住：" + "；".join(lock_bits[:8]) + "。"
+    pad_path = (pad_image or "").strip()
+    pad_clause = f"垫这张成图：{pad_path}。" if pad_path else "垫图是目前分数最高的那张成图。"
+    if release_margin:
+        keep = "主体、配色和边框保持垫图。四周留白不算要保持的内容，外轮廓顶到四边，底色只留在四角。"
+    else:
+        keep = "没点名的地方保持垫图。"
     edit = (
         f"{keep_camera}{lock_pin}"
-        f"垫图是目前分数最高的那张成图。只改这一处：{one}。没点名的地方保持垫图。"
+        f"{pad_clause}只改这一处：{one}。{keep}"
         "禁止借改点换题材/换品类/换技能。"
     )
+    directive = drop_opposed_injections(directive, brief=f"{one}\n{lock_pin}")
     ordered: list[str] = []
     for part in (directive, edit):
         if part and part not in ordered:
@@ -796,7 +910,8 @@ def compose_style_first_prompt(
     directive = strip_affirmative_locks_from_prompt(directive, scale=scale)
     body = _body_without_scale_banner(clean_p, directive)
     body = strip_affirmative_locks_from_prompt(body, scale=scale)
-    tail = _constraint_tail(scale_prof)
+    directive = drop_opposed_injections(directive, brief=body)
+    tail = drop_opposed_injections(_constraint_tail(scale_prof), brief=body)
     parts = [p for p in (directive, body, tail) if p]
     # Drop exact duplicates while keeping order.
     ordered: list[str] = []
@@ -1226,10 +1341,8 @@ def get_converge_scale_profile(
             if "性别、物种、年龄段" in text:
                 continue
             cleaned_limits.append(item)
-        if not any("禁止回落写实" in str(x) or "style_surface" in str(x) for x in cleaned_limits):
-            cleaned_limits.append(
-                "style_surface (跟提示词品类默认画风，禁止回落写实棚拍)"
-            )
+        if not any("style_surface" in str(x) or "品类默认画风" in str(x) for x in cleaned_limits):
+            cleaned_limits.append("style_surface (跟提示词品类默认画风)")
         merged_limits = cleaned_limits
     prof["forbidden_changes"] = merged_limits
     from .medium_family import apply_family_to_profile, infer_medium_family
@@ -1271,5 +1384,111 @@ def get_converge_scale_profile(
     else:
         prof["ref_analysis"] = str(ref_analysis or "")
     return prof
+
+
+_CLAUSE_NEG = re.compile(r"(避免|不要|不许|禁止|严禁|勿|别再|别加|别用|别画|别|无)$")
+_FILL_ASK = re.compile(
+    r"撑满|约占[^。；|\n]{0,8}\d+\s*%|占到\s*\d+\s*%|"
+    r"\d+\s*%[^。；|\n]{0,12}安全区|放大到|四边裁|只留在四角"
+)
+_JUICY_ASK = re.compile(r"高饱和|软卡通厚体积|冷暖相反|冷底暖|与英雄冷暖")
+_BLOCK_HL_ASK = re.compile(r"高光成块")
+_GLAZE_ASK = re.compile(r"厚糖釉|糖釉")
+_SHADOW_ASK = re.compile(
+    r"不要[^。；|\n]{0,18}投影|无投影|收掉[^。；|\n]{0,10}投影|"
+    r"少留[^。；|\n]{0,10}投影|投影收掉"
+)
+_HIGH_SAT = re.compile(r"高饱和")
+_REJECT_REF_PERSON = re.compile(
+    r"不要画国王|不要国王|不要人脸|不要画人脸|不要胡子|不要皇冠"
+)
+
+
+def _clause_affirmed(text: str, pattern: re.Pattern[str]) -> bool:
+    """True when a match is a request, not a phrase the same clause tells the model to avoid."""
+    for match in pattern.finditer(text or ""):
+        window = text[max(0, match.start() - 16) : match.start()]
+        for sep in "，,。；;！!\n、：:（）()[]【】|":
+            cut = window.rfind(sep)
+            if cut >= 0:
+                window = window[cut + 1 :]
+                break
+        if _CLAUSE_NEG.search(window.rstrip("「」\"'“” ")):
+            continue
+        return True
+    return False
+
+
+def _drop_pref_token(text: str, key: str, token: str) -> str:
+    def repl(match: re.Match[str]) -> str:
+        parts = [
+            part.strip()
+            for part in re.split(r"\s*/\s*", match.group(1))
+            if part.strip() and part.strip() != token
+        ]
+        if not parts:
+            return ""
+        return f"{key}={' / '.join(parts)}"
+
+    return re.sub(rf"{re.escape(key)}=([^；;\n|]+)", repl, text)
+
+
+def _drop_ban_token(text: str, token: str) -> str:
+    """Remove one slash-separated ban, leaving the rest of the habit line."""
+    text = text.replace(f"{token}/", "").replace(f"/{token}", "")
+    text = re.sub(rf"(?<=[：:])\s*{re.escape(token)}(?=\s*[；;]|$)", "", text)
+    return re.sub(r"[；;]{2,}", "；", text)
+
+
+def drop_opposed_injections(prompt: str, *, memory_block: str = "", brief: str = "") -> str:
+    """Current brief wins over taste and scale lines that say the opposite.
+
+    Taste stays in the profile. Only this prompt loses the opposing phrase.
+    Pass ``brief`` when ``prompt`` is just the Warm-Start block or the scale
+    clause, so those clauses are never added once the brief already disagrees.
+    """
+    text = str(prompt or "")
+    if not text.strip():
+        return text
+    authored = str(brief or "").strip()
+    if authored:
+        source = authored
+    else:
+        source = text
+        block = str(memory_block or "").strip()
+        if block and block in source:
+            source = source.replace(block, " ", 1)
+    if _clause_affirmed(source, _JUICY_ASK):
+        text = _drop_pref_token(text, "色温", "避免过饱和")
+    if _clause_affirmed(source, _GLAZE_ASK):
+        text = _drop_ban_token(text, "油腻高光")
+    if _clause_affirmed(source, _SHADOW_ASK) or _clause_affirmed(source, _BLOCK_HL_ASK):
+        text = _drop_pref_token(text, "光影", "柔光")
+        text = re.sub(r"，?柔化光影(?:和留白|与留白层次|与次表面散射)?", "", text)
+        text = text.replace("，只抛光已经有的材质和光，不另起一种光", "")
+        text = text.replace("只抛光已经有的材质和光，不另起一种光", "")
+    if _clause_affirmed(source, _FILL_ASK):
+        text = text.replace("保画风与机位", "保画风")
+        text = text.replace("不改机位与镜头视角", "")
+        text = text.replace("不做整体 recompose / 换景别故事", "")
+        text = text.replace("不做整体 recompose", "")
+        text = text.replace("换景别故事", "")
+        text = re.sub(r"约束：\s*；", "约束：", text)
+        text = re.sub(r"约束：\s*(?=\||$)", "", text)
+    if _clause_affirmed(source, _REJECT_REF_PERSON):
+        text = text.replace("保持原图性别、物种、年龄段与核心外观", "")
+        text = re.sub(r"；\s*；", "；", text)
+        text = re.sub(r"；\s*(?=\||$)", "", text)
+    text = re.sub(r"；{2,}", "；", text)
+    text = re.sub(r"，{2,}", "，", text)
+    text = re.sub(r"：，", "：", text)
+    text = re.sub(r"个人口味:\s*；\s*", "个人口味: ", text)
+    text = re.sub(r"[ \t]{2,}", " ", text)
+    lines: list[str] = []
+    for line in text.split("\n"):
+        if re.fullmatch(r"\s*-?\s*个人口味:\s*", line):
+            continue
+        lines.append(line)
+    return "\n".join(lines).strip()
 
 

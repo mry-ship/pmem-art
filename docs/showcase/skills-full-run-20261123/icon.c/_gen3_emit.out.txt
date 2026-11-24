@@ -1,0 +1,34 @@
+﻿🧠 [合理性闸门] 非首轮未给 --prompt，回退到合理性修订提示词
+WARM_START_MERGED=1 sha1=1dbd92b47859 source=converge.generate (并以本字段为准；勿用 GenerateImage Hook 有无判断并入)
+📝 [Step 2A · emit-prompt] 第 3/3 轮最终 Prompt 已就绪（未登记成图、未过输出物理闸）
+   · 本轮第 3 轮不垫图。
+   · 策略：pad=auto→style_ref（每轮垫最初参考，修正只写进提示词）
+   · 不要垫参考图，也不要垫上轮成图。
+   · 上轮成图不要拿去垫（9.43 分）：C:\Users\ZhengLangPC\Desktop\Cursor-Pmem-Art\docs\showcase\skills-full-run-20261123\icon.c\preview_batch_r2.jpg
+   · 📚 pmem-art 记忆已并入：模块 showcase.IconC （recipe 0 · 红线 0；WARM_START_MERGED=1；记忆取舍（不拦截）：注入红线 0 · 排除 403 · keep 0 · 丢弃域外 keep 7 · 知识卡 2）
+   · 结构底线: 结构底线：肢体数量与关节符合该物种，四足、翼或尾的连接清楚；接触阴影与承托可读；禁止多肢融化。不要改成人类双肘或强制双眼
+   · 装配句（未并记忆）: 题材画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光| 三枚甜品道具格图标：马卡龙、纸杯蛋糕、冰淇淋；纯黑不透明隔离底 opaque_isolation #000000；厚剪影64px可认；左上棚拍柔光+接触影；圆润厚实3D糖釉休闲背包格气质；无字无场景；垫图只锁道具格完成度| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；跟提示词品类默认画风，禁止回落写实棚拍 | Structure floor: limb count and joints match this species, and legs, wings, or the tail connect clearly; contact shadows read; do not melt extra limbs. Do not convert this into a human elbow pair or force two eyes | 纸杯蛋糕linern缘褶皱细节略平；三枚体量中冰淇淋略偏大占格
+   · Warm-Start 段（738字 · sha1=1dbd92b47859）:
+【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】
+- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)
+- 目标模块: showcase.IconC
+- 置信度: 0.45（fast-track 资格: 否）
+- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。
+- 个人口味: 光影=柔光 / 顶光 / 暖光；构图=全身 / 居中/对称构图 / 半身；色温=暖色调 / 避免过饱和
+- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；狗狗棋子要全身多姿势灵动，不要只画狗头；眼睛要虹膜瞳孔湿高光，禁止统一黑珠白点；狗狗棋子要全身多姿势灵动不要只画狗头眼睛要虹膜瞳孔湿高光禁止统一黑珠白点；脏暗阴影/脏色；赛博霓虹/霓虹紫
+- 跨项目共享通用技法卡 (Shared L…
+FINAL_PROMPT_SHA1=1b9f06eb4d0c
+   · 最终 Prompt（出图须用这句）: 点名锁每轮都要单独留住，不许整张漂掉：route=icon.c；三枚甜品道具（马卡龙/纸杯蛋糕/冰淇淋）；纯黑不透明隔离底#000000；厚剪影棚拍主光+接触影；无字无场景；垫图只锁道具格完成度气质 | 【Warm-Start 注入包 — 第 1 轮 Prompt 必须吸收】
+- 所属专项记忆库: pmem-art (.memory-art/projects/pmem-art/)
+- 目标模块: showcase.IconC
+- 置信度: 0.45（fast-track 资格: 否）
+- 注：同模块旧 recipe 只参与置信，不进生图词（避免「优先复用」把旧题材/旧档序当成本趟底稿）。
+- 个人口味: 光影=柔光 / 顶光 / 暖光；构图=全身 / 居中/对称构图 / 半身；色温=暖色调 / 避免过饱和
+- 个人禁用习惯（已按任务域过滤）: 漏抠/黑底/毛边；狗狗棋子要全身多姿势灵动，不要只画狗头；眼睛要虹膜瞳孔湿高光，禁止统一黑珠白点；狗狗棋子要全身多姿势灵动不要只画狗头眼睛要虹膜瞳孔湿高光禁止统一黑珠白点；脏暗阴影/脏色；赛博霓虹/霓虹紫
+- 跨项目共享通用技法卡 (Shared Layer · 无风格污染):
+  · [icon-stroke-grid-spec] 图标工程规范：线宽统一、安全网格与剪影可读性: 成套技能/功能图标必须锁定统一的描边线宽（如全局统一 2px 描边，严禁 1px 与 6px 混杂）、统一圆角半径与 16px~24px 安全内边距网格，确保在 64x64px 极小缩略尺寸下主体几何剪影依然一眼可辨、不与背景杂光粘连。
+  · [palette-70-20-10] 色彩构成：70-20-10 色板比例黄金法则: 画面色彩严格遵循 70% 主导底色（稳住大体量与环境基调）、20% 辅助次色（区分结构层级与透气过渡）、10% 高对比点缀色（仅用于视觉中心与核心识别锚点）；严禁未经授权的高饱和荧光/霓虹杂色乱入破坏色调统一。
+题材画风优先：保画风与机位，柔化光影，只抛光已经有的材质和光，不另起一种光| 三枚甜品道具格图标：马卡龙、纸杯蛋糕、冰淇淋；纯黑不透明隔离底 opaque_isolation #000000；厚剪影64px可认；左上棚拍柔光+接触影；圆润厚实3D糖釉休闲背包格气质；无字无场景；垫图只锁道具格完成度| 约束：不改机位与镜头视角；不增删主体元素清单；不做整体 recompose / 换景别故事；跟提示词品类默认画风，禁止回落写实棚拍 | Structure floor: limb count and joints match this species, and legs, wings, or the tail connect clearly; contact shadows read; do not melt extra limbs. Do not convert this into a human elbow pair or force two eyes | 纸杯蛋糕linern缘褶皱细节略平；三枚体量中冰淇淋略偏大占格
+   · 出图硬规：GenerateImage/外部 API 的 description 必须逐字用上面这句；禁止另写 brief、禁止手贴 Warm-Start、禁止只贴装配句。
+   · 下一步：用上面「最终 Prompt」调用 GenerateImage（或外部生图），垫图只用上面打印的那一张；再 `pyw -3 -u pmem_art.py converge generate --id showcase-icon-c-20261123 --round 3 --image <path>` 登记（可省略 --prompt，将复用 pending）。
+   · 禁止 stub/占位图/低熵图骗闸；禁止 Probe/Overwrite 探测再生图。

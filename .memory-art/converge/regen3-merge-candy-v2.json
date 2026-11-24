@@ -78,7 +78,7 @@
   "accept_threshold": 9.5,
   "max_rounds": 4,
   "ready_to_finish": false,
-  "status": "running",
+  "status": "finished",
   "rounds": [],
   "warm_start": {
     "project_id": "pmem-art",
@@ -203,5 +203,6 @@
   "pad_mode": "auto",
   "anatomy_floor": 7.5,
   "early_stop_min_round": 4,
-  "regression_drop": 0.5
+  "regression_drop": 0.5,
+  "slot_released_reason": "abandoned before 2026-11-23; slot released so a new session can start; not a scored delivery"
 }

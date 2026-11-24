@@ -1,0 +1,45 @@
+{
+  "bg": {
+    "box_px_asp": 0.6125,
+    "spr_asp": 0.6125,
+    "fill": 1.0,
+    "scale_mul": 1.0,
+    "mode": "cover_uniform_sky_align",
+    "stretch_err": 0.0
+  },
+  "mushrooms": {
+    "box_px_asp": 0.5702,
+    "spr_asp": 0.5701,
+    "fill": 0.4348,
+    "scale_mul": 0.66,
+    "mode": "contain"
+  },
+  "pond_boat": {
+    "box_px_asp": 0.5534,
+    "spr_asp": 0.5534,
+    "fill": 0.7215,
+    "scale_mul": 0.85,
+    "mode": "contain"
+  },
+  "main_house": {
+    "box_px_asp": 0.6119,
+    "spr_asp": 0.6121,
+    "fill": 0.7221,
+    "scale_mul": 0.85,
+    "mode": "contain"
+  },
+  "treehouse_mole": {
+    "box_px_asp": 0.5022,
+    "spr_asp": 0.5022,
+    "fill": 0.8452,
+    "scale_mul": 0.92,
+    "mode": "contain"
+  },
+  "foreground": {
+    "box_px_asp": 1.3466,
+    "spr_asp": 1.3465,
+    "fill": 0.9994,
+    "scale_mul": 1.0,
+    "mode": "contain"
+  }
+}

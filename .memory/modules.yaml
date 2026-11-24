@@ -65,6 +65,11 @@ modules:
     paths: [.agents/skills/pmem-icon/**, .cursor/skills/pmem-icon/**, skills_kit/export_mode_c_icon.py]
     aliases: [图标, pmem-icon]
     entities: [AppIconMultiLens, IconConvergeOptional]
+  feature.SkillsKit.LayerSplit:
+    description: /pmem-layer-split 拆层隔离与叠回
+    paths: [scripts/pmem_layer_split/**, .agents/skills/pmem-layer-split/**, .cursor/skills/pmem-layer-split/**]
+    aliases: [拆图层, layer-split, pmem-layer-split]
+    entities: [IsolatePrompt]
   feature.SkillsKit.MergeLadder:
     description: /pmem-merge-ladder 合成梯通吃；写记忆时按议题下沉 Relation/Delivery
     paths: [skills_kit/merge_relation.py, .agents/skills/pmem-merge-ladder/**, .cursor/skills/pmem-merge-ladder/**]

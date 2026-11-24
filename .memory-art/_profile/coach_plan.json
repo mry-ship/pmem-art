@@ -1,68 +1,72 @@
 {
   "schema": "pmem-art.coach.v1",
-  "built_at": "2026-11-12 22:07:57 UTC+8",
+  "built_at": "2026-11-23 14:49:36 UTC+8",
   "reflections_scanned": 20,
   "weak_spots": [
     {
-      "category": "style_lock",
-      "hits": 48,
-      "drills": [
-        "对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
-        "打开上次混风反例，列出 3 条禁止混入的风格词"
-      ]
-    },
-    {
       "category": "lighting",
-      "hits": 47,
+      "hits": 70,
       "drills": [
         "同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
         "只改光源方向重绘一轮，强制统一高光材质"
       ]
     },
     {
-      "category": "material",
-      "hits": 40,
+      "category": "narrative_camera",
+      "hits": 52,
       "drills": [
-        "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
-        "去掉油腻高光：改用硬边分层或青瓷釉面高光"
+        "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+        "Key Art：先写一句叙事再构图，主体动作靠前"
       ]
     },
     {
       "category": "line_edge",
-      "hits": 32,
+      "hits": 50,
       "drills": [
         "透明底边缘检查：放大 200% 查毛边与漏抠",
         "统一描边宽度预设（如 1.5px round）整套重描"
       ]
     },
     {
-      "category": "narrative_camera",
-      "hits": 21,
+      "category": "color_palette",
+      "hits": 34,
       "drills": [
-        "同一场景三种景别（远/中/特写）各一张，只改镜头语言",
-        "Key Art：先写一句叙事再构图，主体动作靠前"
+        "从模块 palette 抽 3 HEX 做限色练习，禁止引入霓虹辅色",
+        "把上次红线里的脏色/霓虹写成 Negative，重跑 1 轮"
+      ]
+    },
+    {
+      "category": "material",
+      "hits": 29,
+      "drills": [
+        "同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
+        "去掉油腻高光：改用硬边分层或青瓷釉面高光"
       ]
     }
   ],
   "next_draw_goals": [
     {
-      "draw_goal": "下一张专门练「style_lock」：对照 style-lock 色板 HEX 做 1 张「只换动作不换风」练习",
-      "category": "style_lock"
-    },
-    {
       "draw_goal": "下一张专门练「lighting」：同一角色固定机位，分别画顶光 / 侧逆光 / 黄金时刻，对比明暗交界",
       "category": "lighting"
     },
     {
-      "draw_goal": "下一张专门练「material」：同形不同材质：金属 / 布 / 陶瓷各一张，锁死高光形状",
-      "category": "material"
+      "draw_goal": "下一张专门练「narrative_camera」：同一场景三种景别（远/中/特写）各一张，只改镜头语言",
+      "category": "narrative_camera"
+    },
+    {
+      "draw_goal": "下一张专门练「line_edge」：透明底边缘检查：放大 200% 查毛边与漏抠",
+      "category": "line_edge"
     }
   ],
   "capability_trend": {
     "declining_weaknesses": [
-      "line_edge"
+      "composition",
+      "narrative_camera"
     ],
-    "rising_weaknesses": [],
+    "rising_weaknesses": [
+      "line_edge",
+      "color_palette"
+    ],
     "note": "newer vs older half of reflections"
   },
   "encouragement": "短板在下降，保持 warm-start + 每轮「本轮可学」闭环。"

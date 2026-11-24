@@ -55,19 +55,21 @@ class DeliveryGateTests(unittest.TestCase):
         line = merge_surface_lock_line("甜品八档合成梯", "")
         self.assertIn("Gossip Harbor", line)
         self.assertIn("玩具货柜", line)
-        self.assertIn("写实摄影", line)
-        self.assertIn("美食棚拍", line)
+        self.assertIn("软立体糖釉", line)
+        self.assertNotIn("写实摄影", line)
+        self.assertNotIn("美食棚拍", line)
+        self.assertNotIn("焦斑", line)
         self.assertEqual(merge_surface_lock_line("写实甜品摄影", ""), "")
-        # 仅点名 GH 不够：仍须注入完整禁写实硬句
         still = merge_surface_lock_line("merge.DewberryJam", "Gossip Harbor glossy cartoon 3D juice mousse")
-        self.assertIn("美食棚拍", still)
+        self.assertIn("软立体糖釉", still)
+        self.assertNotIn("美食棚拍", still)
         # Warm-Start 零散命中「棋盘缩略 / 产品静物」不得整句跳过
         diluted = merge_surface_lock_line(
             "merge.DewberryJam",
             "配方：棋盘缩略一眼可认；红线：避免产品静物拼贴；Gossip Harbor glossy cartoon 3D",
         )
         self.assertIn("材质锁死", diluted)
-        self.assertIn("写实摄影", diluted)
+        self.assertNotIn("写实摄影", diluted)
         # 完整硬句已在文中才跳过
         full = (
             "休闲 merge 货柜默认气质：Gossip Harbor 玩具货柜——"
@@ -82,10 +84,9 @@ class DeliveryGateTests(unittest.TestCase):
         self.assertEqual(merge_surface_lock_line("merge.Jam", full), "")
         default_lock = merge_surface_lock_line("甜品八档合成梯", "")
         self.assertIn("软立体糖釉", default_lock)
-        self.assertIn("哑光黏土", default_lock)
-        self.assertIn("平面绘本贴纸", default_lock)
         self.assertIn("档位句", default_lock)
-        self.assertIn("焦斑", default_lock)
+        self.assertNotIn("哑光黏土", default_lock)
+        self.assertNotIn("焦斑", default_lock)
         self.assertNotIn("平面货柜感", default_lock)
         self.assertNotIn("禁任何 3D", default_lock)
         # taste「避开赛博霓虹」在 prompt 里不得误关锁；goal 真点名水彩/写实仍留空
@@ -97,7 +98,7 @@ class DeliveryGateTests(unittest.TestCase):
             prompt=cyber_taste,
         )
         self.assertIn("材质锁死", locked)
-        self.assertIn("写实摄影", locked)
+        self.assertNotIn("写实摄影", locked)
         prefixed = generate_prefix(
             {"route_ids": ["merge.ladder"], "goal": "露莓果酱八档合成梯整表"},
             cyber_taste,
@@ -110,7 +111,7 @@ class DeliveryGateTests(unittest.TestCase):
             "Gossip Harbor glossy cartoon 3D juice glass wood spoon",
         )
         self.assertIn("Gossip Harbor", prompt)
-        self.assertIn("美食棚拍", prompt)
+        self.assertNotIn("美食棚拍", prompt)
         self.assertIn("玩具货柜", prompt)
         self.assertTrue(prompt.startswith("休闲 merge"))
         notes = judge_gate_notes(
@@ -160,11 +161,16 @@ class DeliveryGateTests(unittest.TestCase):
         blob = "\n".join(str(x) for x in (prof.get("forbidden_changes") or []))
         self.assertNotIn("保持原图画风", blob)
         self.assertNotIn("性别、物种、年龄段", blob)
-        self.assertIn("禁止回落写实", blob)
+        self.assertIn("不改机位", blob)
+        self.assertNotIn("禁止回落写实", blob)
+        self.assertIn("品类默认画风", blob)
         text = compose_style_first_prompt("八格果酱货柜", prof)
         self.assertNotIn("保持原图画风", text)
         self.assertNotIn("性别、物种、年龄段", text)
-        self.assertIn("禁止回落写实", text)
+        self.assertIn("不改机位", text)
+        self.assertNotIn("禁止回落写实", text)
+        self.assertIn("品类默认画风", text)
+        self.assertIn("保画风与机位", str(prof.get("prompt_directive") or ""))
         # 有垫图时仍保留角色改图锁
         with_ref = get_converge_scale_profile(
             "medium",
@@ -174,6 +180,7 @@ class DeliveryGateTests(unittest.TestCase):
         )
         ref_blob = "\n".join(str(x) for x in (with_ref.get("forbidden_changes") or []))
         self.assertIn("保持原图画风", ref_blob)
+        self.assertIn("不改机位", ref_blob)
 
     def test_overview_volume_flat_neighbors_are_soft_hints(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>pmem-art · 全技能展陈 · 2026-11-23</title>
+<style>
+  :root {
+    --bg: #0b0f19; --card: #111827; --line: #1e293b;
+    --text: #f1f5f9; --muted: #94a3b8; --dim: #64748b;
+    --accent: #38bdf8; --ok: #34d399; --warn: #fbbf24;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; color: var(--text);
+    font: 14px/1.55 "PingFang SC", "Noto Sans SC", system-ui, sans-serif;
+    background: var(--bg);
+  }
+  a { color: var(--accent); }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 28px 18px 72px; }
+  .hero {
+    border: 1px solid #312e81; border-radius: 18px; padding: 24px 26px;
+    background: linear-gradient(135deg, #111827, #1e1b4b 55%, #0f172a);
+    margin-bottom: 22px;
+  }
+  .hero h1 { margin: 0 0 8px; font-size: 26px; }
+  .hero p { margin: 0; color: #cbd5e1; max-width: 72ch; }
+  .pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .pill {
+    font-size: 12px; padding: 4px 12px; border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.14); color: var(--muted);
+  }
+  .pill.ok { color: var(--ok); border-color: rgba(52,211,153,.4); }
+  nav.toc {
+    position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; gap: 8px;
+    padding: 10px 0 14px; background: rgba(11,15,25,.92); backdrop-filter: blur(8px);
+  }
+  nav.toc a {
+    font-size: 12px; color: var(--muted); padding: 4px 12px; border-radius: 999px;
+    border: 1px solid transparent; text-decoration: none;
+  }
+  nav.toc a:hover { color: var(--text); border-color: var(--line); }
+  section {
+    border: 1px solid var(--line); border-radius: 16px; background: var(--card);
+    padding: 18px; margin-bottom: 16px; scroll-margin-top: 96px;
+  }
+  section h2 { margin: 0 0 6px; font-size: 18px; }
+  section .lead { color: var(--muted); margin: 0 0 14px; font-size: 13px; }
+  .invoke {
+    border: 1px solid rgba(196,181,253,.28); background: rgba(196,181,253,.08);
+    border-radius: 12px; padding: 12px 14px; margin-bottom: 12px;
+  }
+  .slash {
+    font-family: ui-monospace, Menlo, monospace; color: var(--accent);
+    background: rgba(56,189,248,.12); padding: 2px 8px; border-radius: 6px; font-size: 13px;
+  }
+  .meta { color: var(--muted); font-size: 13px; margin-top: 6px; }
+  .meta b { color: var(--warn); }
+  .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 8px; align-items: center; }
+  .tag {
+    font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 6px;
+    border: 1px solid transparent;
+  }
+  .tag.ok { color: #7dd3fc; background: rgba(56,189,248,.14); border-color: rgba(56,189,248,.45); }
+  .tag.no-ref { color: #fcd34d; background: rgba(251,191,36,.12); border-color: rgba(251,191,36,.5); }
+  .grid {
+    display: grid; gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+  figure {
+    margin: 0; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: #0b1220;
+  }
+  figure.win { border-color: rgba(251,191,36,.55); }
+  figure.ref { border-color: rgba(56,189,248,.45); }
+  figure img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; }
+  figure.wide img { aspect-ratio: 16/9; object-fit: contain; background: #0b1220; }
+  figcaption {
+    padding: 8px 10px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--line);
+  }
+  figcaption strong { display: block; color: var(--text); }
+  .note {
+    margin-top: 12px; padding: 10px 12px; border-left: 3px solid var(--accent);
+    background: rgba(56,189,248,.08); color: var(--muted); font-size: 13px; border-radius: 0 8px 8px 0;
+  }
+  footer { text-align: center; color: var(--dim); font-size: 12px; margin-top: 20px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <h1>全技能并行展陈 · 2026-11-23</h1>
+    <p>
+      18 支 route 全清单跑通。出图闭环最多 3 轮 · ≥9.5 到线即停；安全早停交历史最高分。
+      垫图仅锁气质/版式（Gossip Harbor 真机 + workbench 样张），禁止像素抄构图。
+    </p>
+    <div class="pills">
+      <span class="pill ok">18/18 RESULT</span>
+      <span class="pill ok">多技能展陈</span>
+      <span class="pill">金框 = 终稿</span>
+      <span class="pill">蓝框 = 参考/散件</span>
+    </div>
+  </header>
+  <nav class="toc">
+    <a href="#ui-kit">ui.kit</a><a href="#icon-a">icon.a</a><a href="#icon-b">icon.b</a><a href="#icon-c">icon.c</a><a href="#merge-ladder">merge.ladder</a><a href="#layer-split">layer.split</a><a href="#draw-lens">draw.lens</a><a href="#draw-touchup">draw.touchup</a><a href="#draw-clone">draw.clone</a><a href="#draw-variant">draw.variant</a><a href="#draw-multi">draw.multi</a><a href="#draw-key">draw.key</a><a href="#style-lock">style.lock</a><a href="#critique-review">critique.review</a><a href="#atlas-file">atlas.file</a><a href="#coach-report">coach.report</a><a href="#prompt-write">prompt.write</a><a href="#draw-ordinary">draw.ordinary</a>
+  </nav>
+  
+  <section id="ui-kit">
+    <h2>ui.kit</h2>
+    <p class="lead">【按 ui.kit · concept-only 走了】</p>
+    <div class="invoke">
+      <div class="tag-row"><span class="slash">ui.kit</span>
+      <span class="tag ok">过线</span></div>
+      <div class="meta"><b>过线</b>　best=9.56　耗时 30分0秒</div>
+      <p>合理性闸八项文字规格、无垫图；第1轮过线≥9.5即 finish</p>
+    </div>
+    <div class="grid three">
+      <figure class="wide"><img src="ui.kit/r1.jpg" alt="第 1 轮 · 9.56" /><figcaption><strong>第 1 轮 · 9.56</strong></figcaption></figure>
+      <figure class="win wide"><img src="ui.kit/r1.jpg" alt="final" /><figcaption><strong>终稿 · 1 轮 · 9.56</strong></figcaption></figure>
+      <figure class="wide"><img src="ui.kit/process_sheet.jpg" alt="process sheet" /><figcaption><strong>过程拼板</strong></figcaption></figure>
+    </div>
+    
+  </section>
+  <section id="icon-a">
+    <h2>icon.a</h2>
+    <p class="lead">【按点名锁定 icon.a】</p>
+    <div class="invoke">
+      <div class="tag-row"><span class="slash">icon.a</span>
+      <span class="tag no-ref">未过线</span></div>
+      <div class="meta"><b>未过线</b>　best=8.02　耗时 24分11秒</div>
+      <p>未过线≥9.5；R2 STOP_REGRESSION（7.35&lt;8.02）早停，交付R1 Light母版（仍缺满幅直角与单符号干净剪影）</p>
+    </div>
+    <div class="grid three">
+      <figure class="wide"><img src="icon.a/r1.jpg" alt="第 1 轮 · 8.02" /><figcaption><strong>第 1 轮 · 8.02</strong></figcaption></figure>
+      <figure class="wide"><img src="icon.a/r2.jpg" alt="第 2 轮 · 7.35" /><figcaption><strong>第 2 轮 · 7.35</strong></figcaption></figure>
+      <figure class="win wide"><img src="icon.a/final_light.jpg" alt="final" /><figcaption><strong>终稿 · 2 轮 · 8.02 · STOP_REGRESSION</strong></figcaption></figure>
+      <figure class="wide"><img src="icon.a/process_sheet.jpg" alt="process sheet" /><figcaption><strong>过程拼板</strong></figcaption></figure>
+    </div>
+    
+  </section>
+  <section id="icon-b">
+    <h2>icon.b</h2>
+    <p class="lead">【按 icon.b 线性 SVG 批量（Mode B）走了】</p>
+    <div class="invoke">
+      <div class="tag-row"><span class="slash">icon.b</span>
+      <span class="tag no-ref">非出图/不适用</span></div>
+      <div class="meta"><b>非出图/不适用</b>　best=—</div>
+      <p>关键枚闭环默认跳过；纯 SVG 批量，无 GenerateImage/converge。shop 与 bag 语义已拆：shop=店面篷，bag=背袋。</p>
+    </div>
+    <div class="grid three">
+      <figure class="ref"><img src="icon.b/home.svg" alt="home" /><figcaption><strong>home</strong></figcaption></figure>
+      <figure class="ref"><img src="icon.b/shop.svg" alt="shop" /><figcaption><strong>shop</strong></figcaption></figure>
+      <figure class="ref"><img src="icon.b/merge.svg" alt="merge" /><figcaption><strong>merge</strong></figcaption></figure>
+      <figure class="ref"><img src="icon.b/bag.svg" alt="bag" /><figcaption><strong>bag</strong></figcaption></figure>
+      <figure class="ref"><img src="icon.b/star.svg" alt="star" /><figcaption><strong>star</strong></figcaption></figure>
+      <figure class="ref"><img src="icon.b/heart.svg" alt="heart" /><figcaption><strong>heart</strong></figcaption></figure>
+      <figure class="ref"><img src="icon.b/settings.svg" alt="settings" /><figcaption><strong>settings</strong></figcaption></figure>
+      <figure class="ref"><img src="icon.b/profile.svg" alt="profile" /><figcaption><strong>profile</strong></figcaption></figure>
+      <figure class="ref"><img src="icon.b/home.svg" alt="home" /><figcaption><strong>home</strong></figcaption></figure>
+      <figure class="ref"><img src="icon.b/shop.svg" alt="shop" /><figcaption><strong>shop</strong></figcaption></figure>
+      <figure class="ref"><img src="icon.b/merge.svg" alt="merge" /><figcaption><strong>merge</strong></figcaption></figure>
+      <figure class="ref"><img src="icon.b/bag.svg" alt="bag" /><figcaption><strong>bag</strong></figcaption></figure>
+      <figure class="ref"><img src="icon.b/star.svg" alt="star" /><figcaption><strong>star</strong></figcaption></figure>
+      <figure class="ref"><img src="icon.b/heart.svg" alt="heart" /><figcaption><strong>heart</strong></figcaption></figure>
+      <figure class="ref"><img src="icon.b/settings.svg" alt="settings" /><figcaption><strong>settings</strong></figcaption></figure>
+      <figure class="ref"><img src="icon.b/profile.svg" alt="profile" /><figcaption><strong>profile</strong></figcaption></figure>
+    </div>
+    
+  </section>
+  <section id="icon-c">
+    <h2>icon.c</h2>
+    <p class="lead">【按 Mode C / icon.c 走了】</p>
+    <div class="invoke">
+      <div class="tag-row"><span class="slash">icon.c</span>
+      <span class="tag no-ref">未过线</span></div>
+      <div class="meta"><b>未过线</b>　best=9.45　耗时 28分23秒</div>
+      <p>Mode C 批量预览交付（key_item_converge=false）；opaque_isolation 纯黑底；马卡龙/纸杯蛋糕/冰淇淋三枚；满3轮最高分9.45未过9.5线</p>
+    </div>
+    <div class="grid three">
+      <figure class="wide"><img src="icon.c/preview_batch.jpg" alt="第 1 轮 · 9.26" /><figcaption><strong>第 1 轮 · 9.26</strong></figcaption></figure>
+      <figure class="wide"><img src="icon.c/preview_batch_r2.jpg" alt="第 2 轮 · 9.43" /><figcaption><strong>第 2 轮 · 9.43</strong></figcaption></figure>
+      <figure class="wide"><img src="icon.c/preview_batch_r3.jpg" alt="第 3 轮 · 9.45" /><figcaption><strong>第 3 轮 · 9.45</strong></figcaption></figure>
+      <figure class="win wide"><img src="icon.c/final.jpg" alt="final" /><figcaption><strong>终稿 · 3 轮 · 9.45</strong></figcaption></figure>
+      <figure class="wide"><img src="icon.c/process_sheet.jpg" alt="process sheet" /><figcaption><strong>过程拼板</strong></figcaption></figure>
+    </div>
+    
+  </section>
+  <section id="merge-ladder">
+    <h2>merge.ladder</h2>
+    <p class="lead">【按 同域合成梯：先定链型与关系，再按交付出图 走了】</p>
+    <div class="invoke">
+      <div class="tag-row"><span class="slash">merge.ladder</span>
+      <span class="tag no-ref">未过线</span></div>
+      <div class="meta"><b>未过线</b>　best=9.39　耗时 29分42秒</div>
+      <p>关系1稿+relation-judge过闸；整表3轮最高R2=9.39未过9.5线；L1虾球与L7糖釉杯可再修</p>
+    </div>
+    <div class="grid three">
+      <figure class="wide"><img src="merge.ladder/r1.jpg" alt="第 1 轮 · 4.43" /><figcaption><strong>第 1 轮 · 4.43</strong></figcaption></figure>
+      <figure class="wide"><img src="merge.ladder/r2.jpg" alt="第 2 轮 · 9.39" /><figcaption><strong>第 2 轮 · 9.39</strong></figcaption></figure>
+      <figure class="wide"><img src="merge.ladder/r3.jpg" alt="第 3 轮 · 8.84" /><figcaption><strong>第 3 轮 · 8.84</strong></figcaption></figure>
+      <figure class="win wide"><img src="merge.ladder/final.jpg" alt="final" /><figcaption><strong>终稿 · 3 轮 · 9.39</strong></figcaption></figure>
+      <figure class="wide"><img src="merge.ladder/process_sheet.jpg" alt="process sheet" /><figcaption><strong>过程拼板</strong></figcaption></figure>
+    </div>
+    
+  </section>
+  <section id="layer-split">
+    <h2>layer.split</h2>
+    <p class="lead">【按 layer.split 场景切块隔离与叠回走了】</p>
+    <div class="invoke">
+      <div class="tag-row"><span class="slash">layer.split</span>
+      <span class="tag no-ref">未过线</span></div>
+      <div class="meta"><b>未过线</b>　best=—　耗时 约 6 分钟（isolate×2 + compose/gate/qa）</div>
+      <p>gate：5/6 ok，mushrooms needs_human（scale_mul=0.66&lt;0.75，已重抽 2 次）。ghost QA fail：MAE=50.1 PSNR=11.1；pond_boat/foreground/main_house 层 MAE&gt;52。叠回目视咬合可用，定量幽灵未过 48 阈。</p>
+    </div>
+    <div class="grid three">
+      <figure class="ref"><img src="layer.split/ref_full.jpg" alt="ref" /><figcaption><strong>ref</strong></figcaption></figure>
+      <figure class="ref"><img src="layer.split/_compose_mid.png" alt="compose" /><figcaption><strong>compose</strong></figcaption></figure>
+      <figure class="ref"><img src="layer.split/_compose_preview.png" alt="ghost" /><figcaption><strong>ghost</strong></figcaption></figure>
+      <figure class="ref"><img src="layer.split/new/01-bg.png" alt="01-bg" /><figcaption><strong>01-bg</strong></figcaption></figure>
+      <figure class="ref"><img src="layer.split/new/02-mushrooms.png" alt="02-mushrooms" /><figcaption><strong>02-mushrooms</strong></figcaption></figure>
+      <figure class="ref"><img src="layer.split/new/03-pond_boat.png" alt="03-pond_boat" /><figcaption><strong>03-pond_boat</strong></figcaption></figure>
+      <figure class="ref"><img src="layer.split/new/04-main_house.png" alt="04-main_house" /><figcaption><strong>04-main_house</strong></figcaption></figure>
+      <figure class="ref"><img src="layer.split/new/05-treehouse_mole.png" alt="05-treehouse_mole" /><figcaption><strong>05-treehouse_mole</strong></figcaption></figure>
+      <figure class="ref"><img src="layer.split/new/06-foreground.png" alt="06-foreground" /><figcaption><strong>06-foreground</strong></figcaption></figure>
+      <figure class="win wide"><img src="layer.split/_compose_mid.png" alt="final" /><figcaption><strong>终稿</strong></figcaption></figure>
+    </div>
+    
+  </section>
+  <section id="draw-lens">
+    <h2>draw.lens</h2>
+    <p class="lead">【按 镜头包 走了】</p>
+    <div class="invoke">
+      <div class="tag-row"><span class="slash">draw.lens</span>
+      <span class="tag no-ref">非出图/不适用</span></div>
+      <div class="meta"><b>非出图/不适用</b>　best=—</div>
+      <p>no_generate：点选前禁止生图；awaiting_pick；路由 execute_ok；B/C/D 相对对照锚至少改景别/高度/角度两项。</p>
+    </div>
+    <div class="grid three">
+      <p class="lead">无附图（文字交付）。</p>
+    </div>
+    <p class="note">点选前不生图。方案见 <a href="draw.lens/lens_options.md">lens_options.md</a>。</p>
+  </section>
+  <section id="draw-touchup">
+    <h2>draw.touchup</h2>
+    <p class="lead">【按局部改走了】</p>
+    <div class="invoke">
+      <div class="tag-row"><span class="slash">draw.touchup</span>
+      <span class="tag no-ref">未过线</span></div>
+      <div class="meta"><b>未过线</b>　best=0.00　耗时 7分14秒</div>
+      <p>局部改快通道第1枪交件；未凑≥9.5三轮闭环；finish 未跑正式六维 judge（touchup 人眼过即停）</p>
+    </div>
+    <div class="grid three">
+      <figure class="ref"><img src="draw.touchup/touchup_source.jpg" alt="source" /><figcaption><strong>source</strong></figcaption></figure>
+      <figure class="wide"><img src="draw.touchup/touchup_r1.jpg" alt="第 1 轮 · 0.00" /><figcaption><strong>第 1 轮 · 0.00</strong></figcaption></figure>
+      <figure class="win wide"><img src="draw.touchup/touchup_r1.jpg" alt="final" /><figcaption><strong>终稿 · 3 轮 · 0.00</strong></figcaption></figure>
+      <figure class="wide"><img src="draw.touchup/process_sheet.jpg" alt="process sheet" /><figcaption><strong>过程拼板</strong></figcaption></figure>
+    </div>
+    
+  </section>
+  <section id="draw-clone">
+    <h2>draw.clone</h2>
+    <p class="lead">【按点名锁定 draw.clone】</p>
+    <div class="invoke">
+      <div class="tag-row"><span class="slash">draw.clone</span>
+      <span class="tag ok">过线</span></div>
+      <div class="meta"><b>过线</b>　best=9.53　耗时 23分13秒</div>
+      <p>第2轮 CLI 登记 9.53 过线；展陈目录 r2 已换为同名修正成图（首轮 R2 文件错位）。竖版参考垫 16:9 使用 clone_style_ref_strip.jpg 过参校验。</p>
+    </div>
+    <div class="grid three">
+      <figure class="wide"><img src="draw.clone/r1.jpg" alt="第 1 轮 · 9.46" /><figcaption><strong>第 1 轮 · 9.46</strong></figcaption></figure>
+      <figure class="wide"><img src="draw.clone/r2.jpg" alt="第 2 轮 · 9.53" /><figcaption><strong>第 2 轮 · 9.53</strong></figcaption></figure>
+      <figure class="win wide"><img src="draw.clone/final.jpg" alt="final" /><figcaption><strong>终稿 · 2 轮 · 9.53</strong></figcaption></figure>
+      <figure class="wide"><img src="draw.clone/process_sheet.jpg" alt="process sheet" /><figcaption><strong>过程拼板</strong></figcaption></figure>
+    </div>
+    
+  </section>
+  <section id="draw-variant">
+    <h2>draw.variant</h2>
+    <p class="lead">【按点名锁定 draw.variant】</p>
+    <div class="invoke">
+      <div class="tag-row"><span class="slash">draw.variant</span>
+      <span class="tag no-ref">未过线</span></div>
+      <div class="meta"><b>未过线</b>　best=9.47　耗时 23分41秒</div>
+      <p>未过线：最高 9.47&lt;9.5；R2 安全早停 STOP_REGRESSION（7.90），交付 R1 惊讶表情差分</p>
+    </div>
+    <div class="grid three">
+      <figure class="wide"><img src="draw.variant/r1.jpg" alt="第 1 轮 · 9.47" /><figcaption><strong>第 1 轮 · 9.47</strong></figcaption></figure>
+      <figure class="wide"><img src="draw.variant/r2.jpg" alt="第 2 轮 · 7.90" /><figcaption><strong>第 2 轮 · 7.90</strong></figcaption></figure>
+      <figure class="win wide"><img src="draw.variant/final.jpg" alt="final" /><figcaption><strong>终稿 · 2 轮 · 9.47 · STOP_REGRESSION</strong></figcaption></figure>
+      <figure class="wide"><img src="draw.variant/process_sheet.jpg" alt="process sheet" /><figcaption><strong>过程拼板</strong></figcaption></figure>
+    </div>
+    
+  </section>
+  <section id="draw-multi">
+    <h2>draw.multi</h2>
+    <p class="lead">【按 多图分工 走了】</p>
+    <div class="invoke">
+      <div class="tag-row"><span class="slash">draw.multi</span>
+      <span class="tag ok">过线</span></div>
+      <div class="meta"><b>过线</b>　best=9.53　耗时 关态 33分18秒；开态 2分59秒</div>
+      <p>关态会话 aspect 已统一 16:9 登记；finish 板同步后 off_r2/off_final/on_r1 为 720×1280。两态均≥9.5 过线。</p>
+    </div>
+    <div class="grid three">
+      <figure class="wide"><img src="draw.multi/off_r1.jpg" alt="第 1 轮 · 关态 · 8.11" /><figcaption><strong>第 1 轮 · 关态 · 8.11</strong></figcaption></figure>
+      <figure class="wide"><img src="draw.multi/off_r2.jpg" alt="第 1 轮 · 关态 · 9.53" /><figcaption><strong>第 1 轮 · 关态 · 9.53</strong></figcaption></figure>
+      <figure class="wide"><img src="draw.multi/off_final.jpg" alt="第 1 轮 · 关态 · 9.53" /><figcaption><strong>第 1 轮 · 关态 · 9.53</strong></figcaption></figure>
+      <figure class="wide"><img src="draw.multi/on_r1.jpg" alt="第 1 轮 · 开态 · 9.53" /><figcaption><strong>第 1 轮 · 开态 · 9.53</strong></figcaption></figure>
+      <figure class="win wide"><img src="draw.multi/on_r1.jpg" alt="final" /><figcaption><strong>终稿 · 4 轮 · 9.53</strong></figcaption></figure>
+      <figure class="wide"><img src="../../../.memory-art/converge/boards/showcase-multi-off/process_sheet.jpg" alt="process sheet" /><figcaption><strong>过程拼板</strong></figcaption></figure>
+    </div>
+    
+  </section>
+  <section id="draw-key">
+    <h2>draw.key</h2>
+    <p class="lead">【按点名锁定 draw.key】</p>
+    <div class="invoke">
+      <div class="tag-row"><span class="slash">draw.key</span>
+      <span class="tag ok">过线</span></div>
+      <div class="meta"><b>过线</b>　best=9.60　耗时 20分18秒</div>
+      <p>原画 Key Art·海港餐厅黄昏；无垫图；16:9；第2轮9.60过线≥9.5；空气透视与上架商业气质；禁止Gossip Harbor货柜格</p>
+    </div>
+    <div class="grid three">
+      <figure class="wide"><img src="draw.key/r1.jpg" alt="第 1 轮 · 8.90" /><figcaption><strong>第 1 轮 · 8.90</strong></figcaption></figure>
+      <figure class="wide"><img src="draw.key/r2.jpg" alt="第 2 轮 · 9.60" /><figcaption><strong>第 2 轮 · 9.60</strong></figcaption></figure>
+      <figure class="win wide"><img src="draw.key/final.jpg" alt="final" /><figcaption><strong>终稿 · 2 轮 · 9.60</strong></figcaption></figure>
+      <figure class="wide"><img src="draw.key/process_sheet.jpg" alt="process sheet" /><figcaption><strong>过程拼板</strong></figcaption></figure>
+    </div>
+    
+  </section>
+  <section id="style-lock">
+    <h2>style.lock</h2>
+    <p class="lead">【按 style.lock 走了】</p>
+    <div class="invoke">
+      <div class="tag-row"><span class="slash">style.lock</span>
+      <span class="tag no-ref">非出图/不适用</span></div>
+      <div class="meta"><b>非出图/不适用</b>　best=—</div>
+      <p>no_generate；未跑 converge；样张路径以 docs/showcase/skills-full-run-20261123/refs/ 为准。</p>
+    </div>
+    <div class="grid three">
+      <figure class="ref"><img src="refs/style_lock_sample.jpg" alt="anchor" /><figcaption><strong>anchor</strong></figcaption></figure>
+    </div>
+    <p class="note"><a href="style.lock/style_bible.md">style_bible.md</a></p>
+  </section>
+  <section id="critique-review">
+    <h2>critique.review</h2>
+    <p class="lead">【按 `/pmem-critique` 主美级六维审稿走了】</p>
+    <div class="invoke">
+      <div class="tag-row"><span class="slash">critique.review</span>
+      <span class="tag no-ref">未过线</span></div>
+      <div class="meta"><b>未过线</b>　best=8.42</div>
+      <p>vlm-judge 未配置 API → agent_self_judge；源图 docs/showcase/skills-full-run-20261123/refs/critique_target.jpg 已复制到本目录。无瑕疵为门槛维最低分。</p>
+    </div>
+    <div class="grid three">
+      <figure class="ref"><img src="critique.review/critique_target.jpg" alt="review" /><figcaption><strong>review</strong></figcaption></figure>
+      <figure class="ref wide"><img src="critique.review/critique_target.jpg" alt="critique target" /><figcaption><strong>参考 · 送审图</strong></figcaption></figure>
+    </div>
+    <p class="note"><a href="critique.review/critique.md">critique.md</a> · 外审尺，不生图。</p>
+  </section>
+  <section id="atlas-file">
+    <h2>atlas.file</h2>
+    <p class="lead">【按 /pmem-atlas 走了】</p>
+    <div class="invoke">
+      <div class="tag-row"><span class="slash">atlas.file</span>
+      <span class="tag no-ref">非出图/不适用</span></div>
+      <div class="meta"><b>非出图/不适用</b>　best=—</div>
+      <p>无出图；doctor 有告警（exit 非 0 属预期）。完整日志：atlas.log / list.log / doctor.log / classify-watch.log（部分）。</p>
+    </div>
+    <div class="grid three">
+      <p class="lead">无附图（文字交付）。</p>
+    </div>
+    <p class="note">已刷新仓库根 <code>art-atlas.html</code>。</p>
+  </section>
+  <section id="coach-report">
+    <h2>coach.report</h2>
+    <p class="lead">【按 /pmem-coach 进步+短板+知识偷看走了】</p>
+    <div class="invoke">
+      <div class="tag-row"><span class="slash">coach.report</span>
+      <span class="tag no-ref">非出图/不适用</span></div>
+      <div class="meta"><b>非出图/不适用</b>　best=—</div>
+      <p>no_generate；未执行 learn accept。improve run 首轮 taste 档案锁失败后重试成功。coach 写入 coach_plan.json 为 CLI 正常副作用。</p>
+    </div>
+    <div class="grid three">
+      <p class="lead">无附图（文字交付）。</p>
+    </div>
+    <p class="note"><a href="coach.report/coach.md">coach.md</a></p>
+  </section>
+  <section id="prompt-write">
+    <h2>prompt.write</h2>
+    <p class="lead">【走默认路径】按 普通图 走了</p>
+    <div class="invoke">
+      <div class="tag-row"><span class="slash">prompt.write</span>
+      <span class="tag no-ref">非出图/不适用</span></div>
+      <div class="meta"><b>非出图/不适用</b>　best=—</div>
+      <p>不生图、无 converge；方案同质 route_id=draw.ordinary，点选后交 /pmem-draw。route confidence low 不影响提示词交付。</p>
+    </div>
+    <div class="grid three">
+      <p class="lead">无附图（文字交付）。</p>
+    </div>
+    <p class="note"><a href="prompt.write/prompts.md">prompts.md</a> · 4 套普通图方案。</p>
+  </section>
+  <section id="draw-ordinary">
+    <h2>draw.ordinary</h2>
+    <p class="lead">【按点名锁定 draw.ordinary】</p>
+    <div class="invoke">
+      <div class="tag-row"><span class="slash">draw.ordinary</span>
+      <span class="tag ok">过线</span></div>
+      <div class="meta"><b>过线</b>　best=9.50　耗时 24分9秒</div>
+      <p>第2轮正式分9.50过线即停；终稿取R2。果粒数量仍略超brief字面（多颗蓝莓/双橙），见六维无瑕疵备注。</p>
+    </div>
+    <div class="grid three">
+      <figure class="wide"><img src="draw.ordinary/r1.jpg" alt="第 1 轮 · 9.45" /><figcaption><strong>第 1 轮 · 9.45</strong></figcaption></figure>
+      <figure class="wide"><img src="draw.ordinary/r2.jpg" alt="第 2 轮 · 9.50" /><figcaption><strong>第 2 轮 · 9.50</strong></figcaption></figure>
+      <figure class="win wide"><img src="draw.ordinary/final.jpg" alt="final" /><figcaption><strong>终稿 · 2 轮 · 9.50</strong></figcaption></figure>
+      <figure class="wide"><img src="draw.ordinary/process_sheet.jpg" alt="process sheet" /><figcaption><strong>过程拼板</strong></figcaption></figure>
+    </div>
+    
+  </section>
+  <footer>路径：docs/showcase/skills-full-run-20261123/index.html · 源：各支 RESULT.json</footer>
+</div>
+</body>
+</html>

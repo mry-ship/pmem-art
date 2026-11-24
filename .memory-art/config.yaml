@@ -66,6 +66,11 @@ converge:
     medium: 9.5
     high: 9.5
     recompose: 9.5
+# Task/子 agent / merge 逐格 / 拆层 isolate 同时活跃上限。本机卡顿可改成 2；强机也不建议 >5。
+agent:
+  max_parallel: 4
+  # 超过这么多小时仍未 finish 的会话不占并行槽，也不改它的 JSON。0=关闭。
+  slot_stale_hours: 36
 vlm_judge:
   enabled: auto
   provider: openai

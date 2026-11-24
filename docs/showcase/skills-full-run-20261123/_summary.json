@@ -1,0 +1,477 @@
+[
+  {
+    "id": "atlas.file",
+    "ok": true,
+    "pass": null,
+    "score": null,
+    "final": "",
+    "sheet": "",
+    "elapsed": "",
+    "banner": "【按 /pmem-atlas 走了】",
+    "notes": "无出图；doctor 有告警（exit 非 0 属预期）。完整日志：atlas.log / list.log / doctor.log / classify-watch.log（部分）。",
+    "images": []
+  },
+  {
+    "id": "coach.report",
+    "ok": true,
+    "pass": null,
+    "score": null,
+    "final": "",
+    "sheet": "",
+    "elapsed": "",
+    "banner": "【按 /pmem-coach 进步+短板+知识偷看走了】",
+    "notes": "no_generate；未执行 learn accept。improve run 首轮 taste 档案锁失败后重试成功。coach 写入 coach_plan.json 为 CLI 正常副作用。",
+    "images": []
+  },
+  {
+    "id": "critique.review",
+    "ok": true,
+    "pass": false,
+    "score": 8.42,
+    "final": "docs/showcase/skills-full-run-20261123/critique.review/critique_target.jpg",
+    "sheet": "",
+    "elapsed": "",
+    "banner": "【按 `/pmem-critique` 主美级六维审稿走了】",
+    "notes": "vlm-judge 未配置 API → agent_self_judge；源图 docs/showcase/skills-full-run-20261123/refs/critique_target.jpg 已复制到本目录。无瑕疵为门槛维最低分。",
+    "images": [
+      {
+        "slot": "review",
+        "path": "docs/showcase/skills-full-run-20261123/critique.review/critique_target.jpg",
+        "score": 8.42
+      }
+    ]
+  },
+  {
+    "id": "draw.clone",
+    "ok": true,
+    "pass": true,
+    "score": 9.53,
+    "final": "docs/showcase/skills-full-run-20261123/draw.clone/final.jpg",
+    "sheet": "docs/showcase/skills-full-run-20261123/draw.clone/process_sheet.jpg",
+    "elapsed": "23分13秒",
+    "banner": "【按点名锁定 draw.clone】",
+    "notes": "第2轮 CLI 登记 9.53 过线；展陈目录 r2 已换为同名修正成图（首轮 R2 文件错位）。竖版参考垫 16:9 使用 clone_style_ref_strip.jpg 过参校验。",
+    "images": [
+      {
+        "slot": "R1",
+        "path": "docs/showcase/skills-full-run-20261123/draw.clone/r1.jpg",
+        "score": 9.46
+      },
+      {
+        "slot": "R2",
+        "path": "docs/showcase/skills-full-run-20261123/draw.clone/r2.jpg",
+        "score": 9.53
+      },
+      {
+        "slot": "final",
+        "path": "docs/showcase/skills-full-run-20261123/draw.clone/final.jpg",
+        "score": 9.53
+      }
+    ]
+  },
+  {
+    "id": "draw.key",
+    "ok": true,
+    "pass": true,
+    "score": 9.6,
+    "final": "docs/showcase/skills-full-run-20261123/draw.key/final.jpg",
+    "sheet": "docs/showcase/skills-full-run-20261123/draw.key/process_sheet.jpg",
+    "elapsed": "20分18秒",
+    "banner": "【按点名锁定 draw.key】",
+    "notes": "原画 Key Art·海港餐厅黄昏；无垫图；16:9；第2轮9.60过线≥9.5；空气透视与上架商业气质；禁止Gossip Harbor货柜格",
+    "images": [
+      {
+        "slot": "R1",
+        "path": "docs/showcase/skills-full-run-20261123/draw.key/r1.jpg",
+        "score": 8.9
+      },
+      {
+        "slot": "R2",
+        "path": "docs/showcase/skills-full-run-20261123/draw.key/r2.jpg",
+        "score": 9.6
+      }
+    ]
+  },
+  {
+    "id": "draw.lens",
+    "ok": true,
+    "pass": null,
+    "score": null,
+    "final": "",
+    "sheet": "",
+    "elapsed": "",
+    "banner": "【按 镜头包 走了】",
+    "notes": "no_generate：点选前禁止生图；awaiting_pick；路由 execute_ok；B/C/D 相对对照锚至少改景别/高度/角度两项。",
+    "images": []
+  },
+  {
+    "id": "draw.multi",
+    "ok": true,
+    "pass": true,
+    "score": 9.53,
+    "final": "docs/showcase/skills-full-run-20261123/draw.multi/on_r1.jpg",
+    "sheet": ".memory-art/converge/boards/showcase-multi-off/process_sheet.jpg",
+    "elapsed": "关态 33分18秒；开态 2分59秒",
+    "banner": "【按 多图分工 走了】",
+    "notes": "关态会话 aspect 已统一 16:9 登记；finish 板同步后 off_r2/off_final/on_r1 为 720×1280。两态均≥9.5 过线。",
+    "images": [
+      {
+        "slot": "off-R1",
+        "path": "docs/showcase/skills-full-run-20261123/draw.multi/off_r1.jpg",
+        "score": 8.11
+      },
+      {
+        "slot": "off-final",
+        "path": "docs/showcase/skills-full-run-20261123/draw.multi/off_r2.jpg",
+        "score": 9.53
+      },
+      {
+        "slot": "off-pad-for-on",
+        "path": "docs/showcase/skills-full-run-20261123/draw.multi/off_final.jpg",
+        "score": 9.53
+      },
+      {
+        "slot": "on-final",
+        "path": "docs/showcase/skills-full-run-20261123/draw.multi/on_r1.jpg",
+        "score": 9.53
+      }
+    ]
+  },
+  {
+    "id": "draw.ordinary",
+    "ok": true,
+    "pass": true,
+    "score": 9.5,
+    "final": "docs/showcase/skills-full-run-20261123/draw.ordinary/final.jpg",
+    "sheet": "docs/showcase/skills-full-run-20261123/draw.ordinary/process_sheet.jpg",
+    "elapsed": "24分9秒",
+    "banner": "【按点名锁定 draw.ordinary】",
+    "notes": "第2轮正式分9.50过线即停；终稿取R2。果粒数量仍略超brief字面（多颗蓝莓/双橙），见六维无瑕疵备注。",
+    "images": [
+      {
+        "slot": "R1",
+        "path": "docs/showcase/skills-full-run-20261123/draw.ordinary/r1.jpg",
+        "score": 9.45
+      },
+      {
+        "slot": "R2",
+        "path": "docs/showcase/skills-full-run-20261123/draw.ordinary/r2.jpg",
+        "score": 9.5
+      },
+      {
+        "slot": "final",
+        "path": "docs/showcase/skills-full-run-20261123/draw.ordinary/final.jpg",
+        "score": 9.5
+      }
+    ]
+  },
+  {
+    "id": "draw.touchup",
+    "ok": true,
+    "pass": false,
+    "score": 0.0,
+    "final": "docs/showcase/skills-full-run-20261123/draw.touchup/touchup_r1.jpg",
+    "sheet": "docs/showcase/skills-full-run-20261123/draw.touchup/process_sheet.jpg",
+    "elapsed": "7分14秒",
+    "banner": "【按局部改走了】",
+    "notes": "局部改快通道第1枪交件；未凑≥9.5三轮闭环；finish 未跑正式六维 judge（touchup 人眼过即停）",
+    "images": [
+      {
+        "slot": "R1",
+        "path": "docs/showcase/skills-full-run-20261123/draw.touchup/touchup_r1.jpg",
+        "score": 0.0
+      },
+      {
+        "slot": "source",
+        "path": "docs/showcase/skills-full-run-20261123/draw.touchup/touchup_source.jpg",
+        "score": null
+      }
+    ]
+  },
+  {
+    "id": "draw.variant",
+    "ok": true,
+    "pass": false,
+    "score": 9.47,
+    "final": "docs/showcase/skills-full-run-20261123/draw.variant/final.jpg",
+    "sheet": "docs/showcase/skills-full-run-20261123/draw.variant/process_sheet.jpg",
+    "elapsed": "23分41秒",
+    "banner": "【按点名锁定 draw.variant】",
+    "notes": "未过线：最高 9.47<9.5；R2 安全早停 STOP_REGRESSION（7.90），交付 R1 惊讶表情差分",
+    "images": [
+      {
+        "slot": "R1",
+        "path": "docs/showcase/skills-full-run-20261123/draw.variant/r1.jpg",
+        "score": 9.47
+      },
+      {
+        "slot": "R2",
+        "path": "docs/showcase/skills-full-run-20261123/draw.variant/r2.jpg",
+        "score": 7.9
+      },
+      {
+        "slot": "final",
+        "path": "docs/showcase/skills-full-run-20261123/draw.variant/final.jpg",
+        "score": 9.47
+      }
+    ]
+  },
+  {
+    "id": "icon.a",
+    "ok": true,
+    "pass": false,
+    "score": 8.02,
+    "final": "docs/showcase/skills-full-run-20261123/icon.a/final_light.jpg",
+    "sheet": "docs/showcase/skills-full-run-20261123/icon.a/process_sheet.jpg",
+    "elapsed": "24分11秒",
+    "banner": "【按点名锁定 icon.a】",
+    "notes": "未过线≥9.5；R2 STOP_REGRESSION（7.35<8.02）早停，交付R1 Light母版（仍缺满幅直角与单符号干净剪影）",
+    "images": [
+      {
+        "slot": "R1",
+        "path": "docs/showcase/skills-full-run-20261123/icon.a/r1.jpg",
+        "score": 8.02
+      },
+      {
+        "slot": "R2",
+        "path": "docs/showcase/skills-full-run-20261123/icon.a/r2.jpg",
+        "score": 7.35
+      },
+      {
+        "slot": "final",
+        "path": "docs/showcase/skills-full-run-20261123/icon.a/final_light.jpg",
+        "score": 8.02
+      }
+    ]
+  },
+  {
+    "id": "icon.b",
+    "ok": true,
+    "pass": null,
+    "score": null,
+    "final": "",
+    "sheet": "",
+    "elapsed": "",
+    "banner": "【按 icon.b 线性 SVG 批量（Mode B）走了】",
+    "notes": "关键枚闭环默认跳过；纯 SVG 批量，无 GenerateImage/converge。shop 与 bag 语义已拆：shop=店面篷，bag=背袋。",
+    "images": [
+      {
+        "slot": "home",
+        "path": "docs/showcase/skills-full-run-20261123/icon.b/home.svg",
+        "score": null
+      },
+      {
+        "slot": "shop",
+        "path": "docs/showcase/skills-full-run-20261123/icon.b/shop.svg",
+        "score": null
+      },
+      {
+        "slot": "merge",
+        "path": "docs/showcase/skills-full-run-20261123/icon.b/merge.svg",
+        "score": null
+      },
+      {
+        "slot": "bag",
+        "path": "docs/showcase/skills-full-run-20261123/icon.b/bag.svg",
+        "score": null
+      },
+      {
+        "slot": "star",
+        "path": "docs/showcase/skills-full-run-20261123/icon.b/star.svg",
+        "score": null
+      },
+      {
+        "slot": "heart",
+        "path": "docs/showcase/skills-full-run-20261123/icon.b/heart.svg",
+        "score": null
+      },
+      {
+        "slot": "settings",
+        "path": "docs/showcase/skills-full-run-20261123/icon.b/settings.svg",
+        "score": null
+      },
+      {
+        "slot": "profile",
+        "path": "docs/showcase/skills-full-run-20261123/icon.b/profile.svg",
+        "score": null
+      }
+    ]
+  },
+  {
+    "id": "icon.c",
+    "ok": true,
+    "pass": false,
+    "score": 9.45,
+    "final": "docs/showcase/skills-full-run-20261123/icon.c/final.jpg",
+    "sheet": "docs/showcase/skills-full-run-20261123/icon.c/process_sheet.jpg",
+    "elapsed": "28分23秒",
+    "banner": "【按 Mode C / icon.c 走了】",
+    "notes": "Mode C 批量预览交付（key_item_converge=false）；opaque_isolation 纯黑底；马卡龙/纸杯蛋糕/冰淇淋三枚；满3轮最高分9.45未过9.5线",
+    "images": [
+      {
+        "slot": "R1",
+        "path": "docs/showcase/skills-full-run-20261123/icon.c/preview_batch.jpg",
+        "score": 9.26
+      },
+      {
+        "slot": "R2",
+        "path": "docs/showcase/skills-full-run-20261123/icon.c/preview_batch_r2.jpg",
+        "score": 9.43
+      },
+      {
+        "slot": "R3",
+        "path": "docs/showcase/skills-full-run-20261123/icon.c/preview_batch_r3.jpg",
+        "score": 9.45
+      },
+      {
+        "slot": "final",
+        "path": "docs/showcase/skills-full-run-20261123/icon.c/final.jpg",
+        "score": 9.45
+      }
+    ]
+  },
+  {
+    "id": "layer.split",
+    "ok": true,
+    "pass": false,
+    "score": null,
+    "final": "docs/showcase/skills-full-run-20261123/layer.split/_compose_mid.png",
+    "sheet": "docs/showcase/skills-full-run-20261123/layer.split/_compose_preview.png",
+    "elapsed": "约 6 分钟（isolate×2 + compose/gate/qa）",
+    "banner": "【按 layer.split 场景切块隔离与叠回走了】",
+    "notes": "gate：5/6 ok，mushrooms needs_human（scale_mul=0.66<0.75，已重抽 2 次）。ghost QA fail：MAE=50.1 PSNR=11.1；pond_boat/foreground/main_house 层 MAE>52。叠回目视咬合可用，定量幽灵未过 48 阈。",
+    "images": [
+      {
+        "slot": "ref",
+        "path": "docs/showcase/skills-full-run-20261123/layer.split/ref_full.jpg",
+        "score": null
+      },
+      {
+        "slot": "compose",
+        "path": "docs/showcase/skills-full-run-20261123/layer.split/_compose_mid.png",
+        "score": null
+      },
+      {
+        "slot": "ghost",
+        "path": "docs/showcase/skills-full-run-20261123/layer.split/_compose_preview.png",
+        "score": null
+      },
+      {
+        "slot": "01-bg",
+        "path": "docs/showcase/skills-full-run-20261123/layer.split/new/01-bg.png",
+        "score": null
+      },
+      {
+        "slot": "02-mushrooms",
+        "path": "docs/showcase/skills-full-run-20261123/layer.split/new/02-mushrooms.png",
+        "score": null
+      },
+      {
+        "slot": "03-pond_boat",
+        "path": "docs/showcase/skills-full-run-20261123/layer.split/new/03-pond_boat.png",
+        "score": null
+      },
+      {
+        "slot": "04-main_house",
+        "path": "docs/showcase/skills-full-run-20261123/layer.split/new/04-main_house.png",
+        "score": null
+      },
+      {
+        "slot": "05-treehouse_mole",
+        "path": "docs/showcase/skills-full-run-20261123/layer.split/new/05-treehouse_mole.png",
+        "score": null
+      },
+      {
+        "slot": "06-foreground",
+        "path": "docs/showcase/skills-full-run-20261123/layer.split/new/06-foreground.png",
+        "score": null
+      }
+    ]
+  },
+  {
+    "id": "merge.ladder",
+    "ok": true,
+    "pass": false,
+    "score": 9.39,
+    "final": "docs/showcase/skills-full-run-20261123/merge.ladder/final.jpg",
+    "sheet": "docs/showcase/skills-full-run-20261123/merge.ladder/process_sheet.jpg",
+    "elapsed": "29分42秒",
+    "banner": "【按 同域合成梯：先定链型与关系，再按交付出图 走了】",
+    "notes": "关系1稿+relation-judge过闸；整表3轮最高R2=9.39未过9.5线；L1虾球与L7糖釉杯可再修",
+    "images": [
+      {
+        "slot": "R1",
+        "path": "docs/showcase/skills-full-run-20261123/merge.ladder/r1.jpg",
+        "score": 4.43
+      },
+      {
+        "slot": "R2",
+        "path": "docs/showcase/skills-full-run-20261123/merge.ladder/r2.jpg",
+        "score": 9.39
+      },
+      {
+        "slot": "R3",
+        "path": "docs/showcase/skills-full-run-20261123/merge.ladder/r3.jpg",
+        "score": 8.84
+      },
+      {
+        "slot": "final",
+        "path": "docs/showcase/skills-full-run-20261123/merge.ladder/final.jpg",
+        "score": 9.39
+      }
+    ]
+  },
+  {
+    "id": "prompt.write",
+    "ok": true,
+    "pass": null,
+    "score": null,
+    "final": "",
+    "sheet": "",
+    "elapsed": "",
+    "banner": "【走默认路径】按 普通图 走了",
+    "notes": "不生图、无 converge；方案同质 route_id=draw.ordinary，点选后交 /pmem-draw。route confidence low 不影响提示词交付。",
+    "images": []
+  },
+  {
+    "id": "style.lock",
+    "ok": true,
+    "pass": null,
+    "score": null,
+    "final": "",
+    "sheet": "",
+    "elapsed": "",
+    "banner": "【按 style.lock 走了】",
+    "notes": "no_generate；未跑 converge；样张路径以 docs/showcase/skills-full-run-20261123/refs/ 为准。",
+    "images": [
+      {
+        "slot": "anchor",
+        "path": "docs/showcase/skills-full-run-20261123/refs/style_lock_sample.jpg",
+        "score": null
+      }
+    ]
+  },
+  {
+    "id": "ui.kit",
+    "ok": true,
+    "pass": true,
+    "score": 9.56,
+    "final": "docs/showcase/skills-full-run-20261123/ui.kit/r1.jpg",
+    "sheet": "docs/showcase/skills-full-run-20261123/ui.kit/process_sheet.jpg",
+    "elapsed": "30分0秒",
+    "banner": "【按 ui.kit · concept-only 走了】",
+    "notes": "合理性闸八项文字规格、无垫图；第1轮过线≥9.5即 finish",
+    "images": [
+      {
+        "slot": "R1",
+        "path": "docs/showcase/skills-full-run-20261123/ui.kit/r1.jpg",
+        "score": 9.56
+      },
+      {
+        "slot": "final",
+        "path": "docs/showcase/skills-full-run-20261123/ui.kit/r1.jpg",
+        "score": 9.56
+      }
+    ]
+  }
+]

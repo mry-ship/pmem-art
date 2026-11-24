@@ -1,0 +1,234 @@
+[
+  {
+    "id": "ui.kit",
+    "skill": "pmem-ui",
+    "heading": "# `/pmem-ui` — SpriteCook 式 UI Kit / HUD / 九宫格整套生成",
+    "pack_headings": [
+      "## 执行卡 · UI（Agent 必读）",
+      "## 交件可见（出图结算 · Agent 必读）"
+    ],
+    "file": ".cursor/skills/pmem-ui/SKILL.md",
+    "pack_path": "docs/showcase/skills-full-run-20261123/packs/ui_kit.md",
+    "pack_chars": 1697
+  },
+  {
+    "id": "icon.a",
+    "skill": "pmem-icon",
+    "heading": "## 二、Mode A：App Icon 1024×1024 母版专项（iOS App Store / Android Adaptive 桌面启动图标）",
+    "pack_headings": [
+      "## 二、Mode A：App Icon 1024×1024 母版专项（iOS App Store / Android Adaptive 桌面启动图标）",
+      "### Mode A",
+      "## 交件可见（出图结算 · Agent 必读）",
+      "## 记忆静默 / 履历可见（Agent 必读）"
+    ],
+    "file": ".cursor/skills/pmem-icon/SKILL.md",
+    "pack_path": "docs/showcase/skills-full-run-20261123/packs/icon_a.md",
+    "pack_chars": 3502
+  },
+  {
+    "id": "icon.b",
+    "skill": "pmem-icon",
+    "heading": "## 三、Mode B：一致化 SVG 矢量图标集流程（Brief → Spec → Batch → Review → Converge）",
+    "pack_headings": [
+      "## 三、Mode B：一致化 SVG 矢量图标集流程（Brief → Spec → Batch → Review → Converge）",
+      "### Mode B",
+      "## 交件可见（出图结算 · Agent 必读）",
+      "## 记忆静默 / 履历可见（Agent 必读）"
+    ],
+    "file": ".cursor/skills/pmem-icon/SKILL.md",
+    "pack_path": "docs/showcase/skills-full-run-20261123/packs/icon_b.md",
+    "pack_chars": 3910
+  },
+  {
+    "id": "icon.c",
+    "skill": "pmem-icon",
+    "heading": "## 四、Mode C：游戏道具隔离底栅格图标（64/128/256px PNG，非 SVG）",
+    "pack_headings": [
+      "## 四、Mode C：游戏道具隔离底栅格图标（64/128/256px PNG，非 SVG）",
+      "### Mode C",
+      "## 交件可见（出图结算 · Agent 必读）",
+      "## 记忆静默 / 履历可见（Agent 必读）"
+    ],
+    "file": ".cursor/skills/pmem-icon/SKILL.md",
+    "pack_path": "docs/showcase/skills-full-run-20261123/packs/icon_c.md",
+    "pack_chars": 1697
+  },
+  {
+    "id": "merge.ladder",
+    "skill": "pmem-merge-ladder",
+    "heading": "# `/pmem-merge-ladder` — 同域合成梯",
+    "pack_headings": [
+      "## 执行卡",
+      "## 交件可见（出图结算 · Agent 必读）",
+      "## 禁止"
+    ],
+    "file": ".cursor/skills/pmem-merge-ladder/SKILL.md",
+    "pack_path": "docs/showcase/skills-full-run-20261123/packs/merge_ladder.md",
+    "pack_chars": 2100
+  },
+  {
+    "id": "layer.split",
+    "skill": "pmem-layer-split",
+    "heading": "# `/pmem-layer-split` — 场景切块隔离与叠回",
+    "pack_headings": [
+      "## 执行卡 · 拆图层（Agent 必读）",
+      "## 交件可见（拆层结算 · Agent 必读）"
+    ],
+    "file": ".cursor/skills/pmem-layer-split/SKILL.md",
+    "pack_path": "docs/showcase/skills-full-run-20261123/packs/layer_split.md",
+    "pack_chars": 1383
+  },
+  {
+    "id": "draw.lens",
+    "skill": "pmem-draw",
+    "heading": "## 合同 · 镜头包",
+    "pack_headings": [
+      "## 零点五、开画前强制 route（与总控同闸；点名 `/pmem-draw` 也要跑）",
+      "## 合同 · 镜头包"
+    ],
+    "file": ".cursor/skills/pmem-draw/SKILL.md",
+    "pack_path": "docs/showcase/skills-full-run-20261123/packs/draw_lens.md",
+    "pack_chars": 1261
+  },
+  {
+    "id": "draw.touchup",
+    "skill": "pmem-draw",
+    "heading": "## 合同 · 局部改",
+    "pack_headings": [
+      "## 零点五、开画前强制 route（与总控同闸；点名 `/pmem-draw` 也要跑）",
+      "## 合同 · 局部改"
+    ],
+    "file": ".cursor/skills/pmem-draw/SKILL.md",
+    "pack_path": "docs/showcase/skills-full-run-20261123/packs/draw_touchup.md",
+    "pack_chars": 1876
+  },
+  {
+    "id": "draw.clone",
+    "skill": "pmem-draw",
+    "heading": "## 合同 · 克隆",
+    "pack_headings": [
+      "## 零点五、开画前强制 route（与总控同闸；点名 `/pmem-draw` 也要跑）",
+      "## 执行卡 · 出图闭环（Agent 必读；细则见第二节）",
+      "## 合同 · 克隆",
+      "## 交件可见（出图结算 · Agent 必读）",
+      "## 记忆静默 / 履历可见（Agent 必读）"
+    ],
+    "file": ".cursor/skills/pmem-draw/SKILL.md",
+    "pack_path": "docs/showcase/skills-full-run-20261123/packs/draw_clone.md",
+    "pack_chars": 4818
+  },
+  {
+    "id": "draw.variant",
+    "skill": "pmem-draw",
+    "heading": "## 合同 · 变体",
+    "pack_headings": [
+      "## 零点五、开画前强制 route（与总控同闸；点名 `/pmem-draw` 也要跑）",
+      "## 执行卡 · 出图闭环（Agent 必读；细则见第二节）",
+      "## 合同 · 变体",
+      "## 交件可见（出图结算 · Agent 必读）",
+      "## 记忆静默 / 履历可见（Agent 必读）"
+    ],
+    "file": ".cursor/skills/pmem-draw/SKILL.md",
+    "pack_path": "docs/showcase/skills-full-run-20261123/packs/draw_variant.md",
+    "pack_chars": 4346
+  },
+  {
+    "id": "draw.multi",
+    "skill": "pmem-draw",
+    "heading": "## 合同 · 多图分工",
+    "pack_headings": [
+      "## 零点五、开画前强制 route（与总控同闸；点名 `/pmem-draw` 也要跑）",
+      "## 执行卡 · 出图闭环（Agent 必读；细则见第二节）",
+      "## 合同 · 多图分工",
+      "## 交件可见（出图结算 · Agent 必读）",
+      "## 记忆静默 / 履历可见（Agent 必读）"
+    ],
+    "file": ".cursor/skills/pmem-draw/SKILL.md",
+    "pack_path": "docs/showcase/skills-full-run-20261123/packs/draw_multi.md",
+    "pack_chars": 4937
+  },
+  {
+    "id": "draw.key",
+    "skill": "pmem-draw",
+    "heading": "## 合同 · 原画",
+    "pack_headings": [
+      "## 零点五、开画前强制 route（与总控同闸；点名 `/pmem-draw` 也要跑）",
+      "## 执行卡 · 出图闭环（Agent 必读；细则见第二节）",
+      "## 合同 · 原画",
+      "## 交件可见（出图结算 · Agent 必读）",
+      "## 记忆静默 / 履历可见（Agent 必读）"
+    ],
+    "file": ".cursor/skills/pmem-draw/SKILL.md",
+    "pack_path": "docs/showcase/skills-full-run-20261123/packs/draw_key.md",
+    "pack_chars": 4384
+  },
+  {
+    "id": "style.lock",
+    "skill": "pmem-style-lock",
+    "heading": "# `/pmem-style-lock` — 样张提炼风格圣经与色板锁定",
+    "pack_headings": [
+      "# `/pmem-style-lock` — 样张提炼风格圣经与色板锁定"
+    ],
+    "file": ".cursor/skills/pmem-style-lock/SKILL.md",
+    "pack_path": "docs/showcase/skills-full-run-20261123/packs/style_lock.md",
+    "pack_chars": 1396
+  },
+  {
+    "id": "critique.review",
+    "skill": "pmem-critique",
+    "heading": "# `/pmem-critique` — 主美级六维审稿与红线入库",
+    "pack_headings": [
+      "# `/pmem-critique` — 主美级六维审稿与红线入库"
+    ],
+    "file": ".cursor/skills/pmem-critique/SKILL.md",
+    "pack_path": "docs/showcase/skills-full-run-20261123/packs/critique_review.md",
+    "pack_chars": 1267
+  },
+  {
+    "id": "atlas.file",
+    "skill": "pmem-atlas",
+    "heading": "# `/pmem-atlas` — 整理散图与刷新可视化图谱",
+    "pack_headings": [
+      "# `/pmem-atlas` — 整理散图与刷新可视化图谱"
+    ],
+    "file": ".cursor/skills/pmem-atlas/SKILL.md",
+    "pack_path": "docs/showcase/skills-full-run-20261123/packs/atlas_file.md",
+    "pack_chars": 768
+  },
+  {
+    "id": "coach.report",
+    "skill": "pmem-coach",
+    "heading": "# `/pmem-coach` — 进步 / 短板 / 知识（三条偷看合成一条）",
+    "pack_headings": [
+      "# `/pmem-coach` — 进步 / 短板 / 知识（三条偷看合成一条）"
+    ],
+    "file": ".cursor/skills/pmem-coach/SKILL.md",
+    "pack_path": "docs/showcase/skills-full-run-20261123/packs/coach_report.md",
+    "pack_chars": 612
+  },
+  {
+    "id": "prompt.write",
+    "skill": "pmem-prompt",
+    "heading": "# `/pmem-prompt` — 提示词生成器（按类型分流）",
+    "pack_headings": [
+      "## 执行卡 · 提示词（Agent 必读）"
+    ],
+    "file": ".cursor/skills/pmem-prompt/SKILL.md",
+    "pack_path": "docs/showcase/skills-full-run-20261123/packs/prompt_write.md",
+    "pack_chars": 371
+  },
+  {
+    "id": "draw.ordinary",
+    "skill": "pmem-draw",
+    "heading": "## 二、标准执行流程（Step 1 ~ Step 3）",
+    "pack_headings": [
+      "## 零点五、开画前强制 route（与总控同闸；点名 `/pmem-draw` 也要跑）",
+      "## 执行卡 · 出图闭环（Agent 必读；细则见第二节）",
+      "## 交件可见（出图结算 · Agent 必读）",
+      "## 记忆静默 / 履历可见（Agent 必读）"
+    ],
+    "file": ".cursor/skills/pmem-draw/SKILL.md",
+    "pack_path": "docs/showcase/skills-full-run-20261123/packs/draw_ordinary.md",
+    "pack_chars": 3851
+  }
+]

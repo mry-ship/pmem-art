@@ -114,7 +114,7 @@
   "accept_threshold": 9.5,
   "max_rounds": 3,
   "ready_to_finish": false,
-  "status": "running",
+  "status": "finished",
   "owner_conversation_id": "session:ocean_tiles_20261118",
   "route_ids": [
     "draw.ordinary"
@@ -245,5 +245,6 @@
       "feedback_layer": ""
     },
     "notes": ""
-  }
+  },
+  "slot_released_reason": "abandoned before 2026-11-23; slot released so a new session can start; not a scored delivery"
 }

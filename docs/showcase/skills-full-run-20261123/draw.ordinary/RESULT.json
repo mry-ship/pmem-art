@@ -1,0 +1,19 @@
+{
+  "route_id": "draw.ordinary",
+  "banner": "【按点名锁定 draw.ordinary】",
+  "ok": true,
+  "passed_line": true,
+  "best_score": 9.5,
+  "rounds": 2,
+  "session_id": "showcase-ordinary-20261123",
+  "final_image": "docs/showcase/skills-full-run-20261123/draw.ordinary/final.jpg",
+  "process_sheet": "docs/showcase/skills-full-run-20261123/draw.ordinary/process_sheet.jpg",
+  "images": [
+    { "slot": "R1", "path": "docs/showcase/skills-full-run-20261123/draw.ordinary/r1.jpg", "score": 9.45 },
+    { "slot": "R2", "path": "docs/showcase/skills-full-run-20261123/draw.ordinary/r2.jpg", "score": 9.5 },
+    { "slot": "final", "path": "docs/showcase/skills-full-run-20261123/draw.ordinary/final.jpg", "score": 9.5 }
+  ],
+  "text_deliverable": "",
+  "elapsed": "24分9秒",
+  "notes": "第2轮正式分9.50过线即停；终稿取R2。果粒数量仍略超brief字面（多颗蓝莓/双橙），见六维无瑕疵备注。"
+}

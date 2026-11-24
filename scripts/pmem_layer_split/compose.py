@@ -2,6 +2,7 @@
 """Contain / cover / width compose into calibrated footprints."""
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 import numpy as np
@@ -158,6 +159,58 @@ def autofit_scale_to_ref(
     return float(best_s)
 
 
+def place_band(
+    canvas: Image.Image,
+    im: Image.Image,
+    L: int,
+    T: int,
+    BW: int,
+    BH: int,
+    band: list | tuple,
+    *,
+    anchor: str = "bottom-center",
+) -> dict:
+    """Map the picture band onto the footprint. Spill does not change the scale.
+
+    band is (left, top, right, bottom) margins of `im`. The band is contained
+    in the footprint at one scale. When the band aspect matches the footprint
+    it fills the box. Pixels outside the band hang past the box and the canvas
+    clips them.
+    """
+    W, H = canvas.size
+    iw, ih = im.size
+    left, top, right, bottom = [float(v) for v in band]
+    bx = int(round(left * iw))
+    by = int(round(top * ih))
+    bw = max(1, iw - int(round((left + right) * iw)))
+    bh = max(1, ih - int(round((top + bottom) * ih)))
+    scale = min(BW / bw, BH / bh)
+    _lanczos = getattr(getattr(Image, "Resampling", Image), "LANCZOS", Image.BICUBIC)
+    nw, nh = max(1, int(round(iw * scale))), max(1, int(round(ih * scale)))
+    r = im.resize((nw, nh), _lanczos)
+    band_w = max(1, int(round(bw * scale)))
+    band_h = max(1, int(round(bh * scale)))
+    ax, ay = _anchor_xy(L, T, BW, BH, band_w, band_h, anchor)
+    x = int(round(ax - bx * scale))
+    y = int(round(ay - by * scale))
+    pad = 500
+    tmp = Image.new("RGBA", (W + pad * 2, H + pad * 2), (0, 0, 0, 0))
+    tmp.paste(r, (x + pad, y + pad), r)
+    canvas.alpha_composite(tmp.crop((pad, pad, pad + W, pad + H)))
+    return {
+        "left": x / W,
+        "top": y / H,
+        "width": nw / W,
+        "height": nh / H,
+        "nw": band_w,
+        "nh": band_h,
+        "box_w": BW,
+        "box_h": BH,
+        "anchor": "band",
+        "scale_mul": 1.0,
+    }
+
+
 def place_scaled(
     canvas: Image.Image,
     im: Image.Image,
@@ -283,8 +336,11 @@ def compose(job: Job, *, scale: int = 2) -> dict:
                 f"src_asp={spr_asp:.3f} canvas_asp={box_asp:.3f} stretch_err={stretch_err:.3f}"
             )
         else:
-            im = trim_alpha(im.convert("RGBA"))
-            im.save(job.trim_dir / Path(layer["file"]).name)
+            if im.mode != "RGBA":
+                im = im.convert("RGBA")
+            # Gallery trim only. Placement uses the full frame so a branch
+            # that sits on the left of the crop stays on the left.
+            trim_alpha(im).save(job.trim_dir / Path(layer["file"]).name)
             # Prefer frozen pixel box from truth/footprints (position+size lock)
             if layer.get("px") and len(layer["px"]) == 4:
                 x0, y0, x1, y1 = [int(v) for v in layer["px"]]
@@ -303,25 +359,33 @@ def compose(job: Job, *, scale: int = 2) -> dict:
                 BH = int(layer["height"] * H)
             if mode == "cover" and layer["id"] != "bg":
                 mode = "contain"  # skill: forbid prop cover
-            # Position lock: wall/ceiling (ungrounded) → center in truth box;
-            # grounded → bottom-align. Explicit layer.anchor wins.
-            if layer.get("anchor"):
-                anchor = str(layer.get("anchor"))
-            elif layer.get("grounded") is False:
-                anchor = "center"
-            else:
-                anchor = "bottom-center"
-            # Size lock: shrink ≤ contain if a smaller scale matches the original crop better.
-            # Job/plan can force full footprint fit: compose.autofit=false or no_autofit=true
-            if plan_no_autofit or layer.get("no_autofit") is True:
-                scale_mul = 1.0
-            else:
-                scale_mul = autofit_scale_to_ref(
-                    ref_rgb, im, L, T, BW, BH, anchor=anchor, base_mode=mode
+            # Frame lock: paste the whole picture band at scale 1.
+            # Leftover contain margin follows the layer anchor (grounded sits
+            # on the footprint bottom). Do not align the opaque mass, and do
+            # not NCC-shrink a hero zoom.
+            anchor = str(layer.get("anchor") or "center")
+            mode = "contain"
+            scale_mul = 1.0
+            _ = plan_no_autofit
+            placed_band = None
+            fit_path = job.root / "_engine_fit.json"
+            if fit_path.is_file():
+                try:
+                    fit_all = json.loads(fit_path.read_text(encoding="utf-8"))
+                    placed_band = (fit_all.get(layer["id"]) or {}).get("placed_band")
+                except Exception:
+                    placed_band = None
+            if placed_band and max(float(v) for v in placed_band) > 0.005:
+                # The picture band is the crop. Map it onto the footprint.
+                # Contain of the whole engine canvas is what shrank the pond.
+                info = place_band(
+                    canvas, im, L, T, BW, BH, placed_band, anchor=anchor
                 )
-            info = place_scaled(
-                canvas, im, L, T, BW, BH, mode, anchor=anchor, scale_mul=scale_mul
-            )
+                mode = "band"
+            else:
+                info = place_scaled(
+                    canvas, im, L, T, BW, BH, mode, anchor=anchor, scale_mul=scale_mul
+                )
             box_asp = BW / BH if BH else 1.0
             spr_asp = im.size[0] / max(1, im.size[1])
             fill = (info["nw"] * info["nh"]) / max(1, BW * BH)

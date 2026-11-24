@@ -1,0 +1,20 @@
+{
+  "route_id": "draw.multi",
+  "banner": "【按 多图分工 走了】",
+  "ok": true,
+  "passed_line": true,
+  "best_score": 9.53,
+  "rounds": 3,
+  "session_id": "showcase-multi-off;showcase-multi-on",
+  "final_image": "docs/showcase/skills-full-run-20261123/draw.multi/on_r1.jpg",
+  "process_sheet": ".memory-art/converge/boards/showcase-multi-off/process_sheet.jpg",
+  "images": [
+    { "slot": "off-R1", "path": "docs/showcase/skills-full-run-20261123/draw.multi/off_r1.jpg", "score": 8.11 },
+    { "slot": "off-final", "path": "docs/showcase/skills-full-run-20261123/draw.multi/off_r2.jpg", "score": 9.53 },
+    { "slot": "off-pad-for-on", "path": "docs/showcase/skills-full-run-20261123/draw.multi/off_final.jpg", "score": 9.53 },
+    { "slot": "on-final", "path": "docs/showcase/skills-full-run-20261123/draw.multi/on_r1.jpg", "score": 9.53 }
+  ],
+  "text_deliverable": "多图分工关/开两态：关态垫 identity+structure（首轮），开态垫关态过线成图 off_r2。关 2 轮 off_r2 9.53 过线；开 1 轮 on_r1 9.53 过线。",
+  "elapsed": "关态 33分18秒；开态 2分59秒",
+  "notes": "关态会话 aspect 已统一 16:9 登记；finish 板同步后 off_r2/off_final/on_r1 为 720×1280。两态均≥9.5 过线。"
+}

@@ -667,6 +667,22 @@ def maybe_run_independent_vlm_judge(
         return out
 
     try:
+        from skills_kit.icon_geometry import icon_geometry_skip_reason
+
+        geo_reason = icon_geometry_skip_reason(
+            p,
+            goal=goal or str((scale_prof or {}).get("goal") or ""),
+            module=module,
+        )
+    except Exception:
+        geo_reason = ""
+    if geo_reason:
+        out["geometry_skip"] = geo_reason
+        out["source"] = "agent_self_judge"
+        out["error"] = ""
+        return out
+
+    try:
         obs = call_vision_judge(
             p,
             cfg=cfg,

@@ -158,7 +158,7 @@ def audit_showcase_html(html: str) -> list[dict[str, Any]]:
             ((sc if sc is not None else -1.0), n) for *_a, n, sc in process_cells
         )
     page_early = bool(
-        re.search(r"(安全早停|出图一轮交件|STOP_REGRESSION|STOP_PLATEAU)", body, re.I)
+        re.search(r"(安全早停|出图一轮交件|STOP_REGRESSION|STOP_PLATEAU|STOP_HURDLE_BOUND)", body, re.I)
     )
 
     for attrs, caption, inner in cells:
@@ -196,7 +196,7 @@ def audit_showcase_html(html: str) -> list[dict[str, Any]]:
             rounds = max_process_rounds
         early = bool(
             re.search(
-                r"(安全早停|出图一轮交件|STOP_REGRESSION|STOP_PLATEAU)",
+                r"(安全早停|出图一轮交件|STOP_REGRESSION|STOP_PLATEAU|STOP_HURDLE_BOUND)",
                 caption + " " + inner,
                 re.I,
             )

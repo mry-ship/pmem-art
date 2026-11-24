@@ -301,8 +301,7 @@ def judge_relation_rows(
                 if hits:
                     issues.append(
                         f"L{r.level:02d} {field_name} 含美食摄影质感词 {hits}："
-                        f"只写糖釉玩具剪影/件数/容器/完成态；"
-                        f"禁止焦斑鳞片湿润汤面感摄影级摆盘（点名写实或垫真机锁画风除外）"
+                        f"改成糖釉玩具剪影、件数、容器、完成态和整块色"
                     )
                     break
     return (len(issues) == 0, issues)
@@ -443,15 +442,10 @@ _STYLE_OPT_OUT = (
 )
 _MERGE_SURFACE = (
     "休闲 merge 货柜默认气质：Gossip Harbor 玩具货柜——"
-    "软立体糖釉道具、圆润厚实、无硬描边、暖饱和、块面高光可读、棋盘缩略一眼可认"
-    "（对标真机棋盘货的休闲图标完成度，不是美食棚拍）。"
-    "材质锁死为有体积的糖釉玩具货柜道具（柔光高光可读），不是实物，也不是哑光黏土/软塑胶 UI 图标。"
-    "禁止：写实摄影、美食棚拍、产品静物、玻璃真实折射、木纹指纹、果汁乳浊摄影感、"
-    "微距毛孔、油光金属、暗沉旧塑料、硬镜面 CGI、硬卡通 CGI、皮克斯硬塑胶高光、"
-    "哑光黏土拟态、软塑胶 UI 图标、平面绘本贴纸风冒充货柜。"
-    "档位句只写糖釉玩具剪影/件数/容器/完成态与整块色；"
-    "禁止焦斑/烤痕/鳞片微距/湿润汤面感/柠檬片香菜末/摄影级摆盘质感词（点名写实或垫真机截图锁画风除外）。"
-    "仅格子/版式参考：只锁格子，不跟参考写实表面；玩家垫 GH 真机锁画风时跟截图货面，勿再灌本缺省句。"
+    "软立体糖釉道具、圆润厚实、无硬描边、暖饱和、块面高光可读、棋盘缩略一眼可认。"
+    "材质锁死为有体积的糖釉玩具货柜道具，柔光高光可读。"
+    "档位句只写糖釉玩具剪影、件数、容器、完成态和整块色。"
+    "仅格子参考时只锁格子；玩家垫 GH 真机锁画风时跟截图货面。"
 )
 
 # 档位清单里会盖过「不是实物」的美食摄影质感词（身份词如「柠檬茶」不在此列）
@@ -530,20 +524,11 @@ def _gh_pad_allows_garnish(track: dict[str, Any] | None) -> bool:
 
 
 def _has_full_merge_surface_lock(blob: str) -> bool:
-    """完整默认锁已在文中：须含材质锁死 + 禁写实硬句 + 档位句禁摄影质感，不能只靠零散词。"""
+    """正面缺省句已在文中：材质锁死 + 糖釉玩具。零散「棋盘缩略 / Gossip Harbor」不算。"""
     text = str(blob or "")
-    if "材质锁死" not in text:
+    if "材质锁死" not in text or "糖釉" not in text:
         return False
-    if "写实摄影" not in text and "美食棚拍" not in text:
-        return False
-    if "档位句" not in text and "焦斑" not in text:
-        return False
-    return (
-        "手绘糖釉" in text
-        or "卡通玩具" in text
-        or "糖釉" in text
-        or "玻璃真实折射" in text
-    )
+    return "玩具货柜" in text or "Gossip Harbor" in text
 
 
 def merge_surface_lock_line(goal: str = "", prompt: str = "") -> str:

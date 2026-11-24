@@ -390,6 +390,101 @@ _L0_SKIP_CHUNKS = frozenset(
 )
 
 
+_GAME_NAMED_RE = re.compile(r"游戏|三消|配牌|tile\s*match|match-?\s*3", re.I)
+_STILL_STACK_RE = re.compile(r"一叠|叠成|叠塔|小塔|积木|空白方块|纯色方块|色块叠|桌面摆件")
+_PLAY_LINE_RE = re.compile(r"让人认出|玩法是")
+_PLAY_BODY_RE = re.compile(r"相同|配成|一组|好几张|多张|半身|角色")
+_BADGE_RE = re.compile(r"(一枚|一颗|单枚).{0,8}(星|徽章|牌)")
+# 无参考图时，漂在中间的静物和同色底会把安全区、识别度压到 8 以下。
+_ICON_CROP_RE = re.compile(r"被画面裁|外轮廓被裁|不要四周留空|不留一圈舞台|四边裁|只留在四角")
+_ICON_OUTER_PERCENT_RE = re.compile(r"外轮廓[^。；|\n]{0,12}(?:约占|占到|\d+\s*%)")
+_ICON_CONTRAST_RE = re.compile(r"冷暖相反|底色拉开|底色与主体拉开|与英雄冷暖")
+_ICON_STORE_VOLUME_RE = re.compile(r"软卡通厚体积")
+_ICON_IDENTITY_BAN_RE = re.compile(r"不要国王|不要王冠|不要皇冠|不要胡子|不要披风|不要人脸|不要画国王")
+_ICON_OTHER_STYLE_RE = re.compile(r"水彩|扁平|线稿|厚涂|矢量")
+_ICON_CORE_FINISH_RE = re.compile(r"中间图示按同品类已上架图标的完成度")
+_ICON_ONE_MATERIAL_RE = re.compile(r"一块材料|材料铺满")
+_ICON_BLOCK_HL_RE = re.compile(r"高光成块")
+_STILL_LIFE_ANCHOR_RE = re.compile(r"叠|方块|积木|小塔|色块|颗星")
+
+
+def _positive_hit(text: str, cre: re.Pattern[str]) -> bool:
+    return any(not _negated_before(text, m.start()) for m in cre.finditer(text or ""))
+
+
+def _play_replaces_invented_object(text: str) -> bool:
+    """玩法句已经写明，并且英雄不再是叠塔或单枚徽章。"""
+    blob = text or ""
+    if not (_PLAY_LINE_RE.search(blob) and _PLAY_BODY_RE.search(blob)):
+        return False
+    if _positive_hit(blob, _STILL_STACK_RE):
+        return False
+    if _BADGE_RE.search(blob):
+        return False
+    return True
+
+
+def _icon_a_game_read_issues(draft: str, revised: str) -> list[str]:
+    """命名了游戏时，英雄必须从玩法句长出来。不把某一款收成固定物件。"""
+    issues: list[str] = []
+    if _positive_hit(revised, _STILL_STACK_RE):
+        issues.append(
+            "icon.a 英雄是桌面摆件：禁止叠塔和漂着的静物。"
+            "先写让人认出什么，英雄从这句长出来"
+        )
+    if not _GAME_NAMED_RE.search(f"{draft}\n{revised}"):
+        return issues
+    if not _PLAY_LINE_RE.search(revised):
+        issues.append(
+            "icon.a 命名了游戏，修订句却没有让人认出的玩法。"
+            "先写玩法，再写英雄。禁止收成一枚徽章、一颗星或一叠摆件"
+        )
+    elif _BADGE_RE.search(revised) or not _PLAY_BODY_RE.search(revised):
+        issues.append(
+            "icon.a 游戏被收成一枚徽章。让人认出的玩法要写进英雄，不能只留一颗星或一张牌"
+        )
+    return issues
+
+
+def _icon_a_store_default_issues(revised: str) -> list[str]:
+    """无参考图的默认上架图标：裁切、冷暖拉开、不投影。有别的画风句时不强迫软卡通。"""
+    text = revised or ""
+    issues: list[str] = []
+    if not _ICON_CROP_RE.search(text):
+        issues.append(
+            "icon.a 缺裁切：外轮廓被四边裁开，底色只留在四角。"
+            "72%–80% 只写给可读核心"
+        )
+    if _ICON_OUTER_PERCENT_RE.search(text):
+        issues.append(
+            "icon.a 外轮廓不要写百分数：72%–80% 只给可读核心。"
+            "外轮廓被四边裁开，底色只留在四角"
+        )
+    if not re.search(r"只留在四角|四边裁", text):
+        issues.append("icon.a 缺四角：底色只留在四角，外轮廓被四边裁到")
+    if not _ICON_CONTRAST_RE.search(text):
+        issues.append("icon.a 缺对比：底要与英雄冷暖相反，不能同色贴同色")
+    if _ICON_IDENTITY_BAN_RE.search(text):
+        issues.append(
+            "icon.a 排斥句会把被禁的角色写进图：英雄用正面句写清，"
+            "不要写不要国王、不要王冠、不要胡子"
+        )
+    if not _ICON_OTHER_STYLE_RE.search(text) and not _ICON_STORE_VOLUME_RE.search(text):
+        issues.append(
+            "icon.a 无参考又没写别的画风时，要写软卡通厚体积、剪影加厚、一主光"
+        )
+    if not _ICON_CORE_FINISH_RE.search(text):
+        issues.append(
+            "icon.a 缺中间图示：写「中间图示按同品类已上架图标的完成度来画」。"
+            "先认品类再抽表面，不写空的「高级」"
+        )
+    if not _ICON_OTHER_STYLE_RE.search(text) and not (
+        _ICON_ONE_MATERIAL_RE.search(text) and _ICON_BLOCK_HL_RE.search(text)
+    ):
+        issues.append("icon.a 缺符号完成度：一块材料铺满整个符号，高光成块")
+    return issues
+
+
 def _l0_anchor_kept(anchor: str, revised: str) -> bool:
     """Exact hit, or paraphrase soft-keep via ≥2 distinct 2-grams still present."""
     a = (anchor or "").strip()
@@ -405,7 +500,7 @@ def _l0_anchor_kept(anchor: str, revised: str) -> bool:
     return hit >= min(2, len(grams))
 
 
-def _l0_subject_drift(draft: str, revised: str) -> str:
+def _l0_subject_drift(draft: str, revised: str, *, skill: str = "") -> str:
     """If draft names clear subject chunks that revised drops, flag drift."""
     d = (draft or "").strip()
     r = (revised or "").strip()
@@ -422,6 +517,9 @@ def _l0_subject_drift(draft: str, revised: str) -> str:
         anchors.append(ch)
         if len(anchors) >= 3:
             break
+    # 草稿里自造的叠塔/徽章可以丢掉，只要修订句写了玩法并且英雄从这句长出来
+    if skill == "icon.a" and _GAME_NAMED_RE.search(f"{d}\n{r}") and _play_replaces_invented_object(r):
+        anchors = [a for a in anchors if not _STILL_LIFE_ANCHOR_RE.search(a)]
     if anchors:
         missing = [a for a in anchors if not _l0_anchor_kept(a, r)]
         # 多数锚点仍在（含改写）则放过；整段换题材才会丢 ≥2 且过半
@@ -446,7 +544,7 @@ def _heuristic_issues(skill: str, draft: str, revised: str, notes: str = "") -> 
         issues.append("revised 太短：修订提示词须写清主体、动作/布局与硬锁（至少约一句完整出图句）")
     if d and r and d == r and len(r) < 80:
         issues.append("revised 与 draft 完全相同且过短：请至少补上硬锁或元素预算，或把已合理处写完整")
-    l0_msg = _l0_subject_drift(d, r)
+    l0_msg = _l0_subject_drift(d, r, skill=skill)
     if l0_msg:
         issues.append(l0_msg)
     crowd_hits = _CROWD_RE.findall(r)
@@ -470,6 +568,8 @@ def _heuristic_issues(skill: str, draft: str, revised: str, notes: str = "") -> 
             issues.append(
                 "icon.a 禁止圆角底板：母版必须直角满幅；圆角由系统蒙版后加，不可烤进成图"
             )
+        issues.extend(_icon_a_game_read_issues(d, r))
+        issues.extend(_icon_a_store_default_issues(r))
     if skill == "icon.c" and not _ISOLATION_BG_RE.search(r):
         issues.append(
             "icon.c 缺底隔离：修订句须写纯黑/实色隔离底（Cursor）或透明底/transparent（透明引擎）；禁止后抠冒充 alpha"
@@ -481,7 +581,9 @@ def _heuristic_issues(skill: str, draft: str, revised: str, notes: str = "") -> 
             )
         m_hard = _HARD_PLASTIC_ONLY_RE.search(r)
         if m_hard and not _negated_before(r, m_hard.start()):
-            issues.append("软糖题材勿把硬塑胶当目标介质：请改成软糖半透明并显式禁止硬塑胶")
+            issues.append(
+                "软糖题材写成了硬塑胶：改成半透明软糖、宽柔高光、边缘暖散射"
+            )
     if skill == "ui":
         if not _UI_ZONE_RE.search(r):
             issues.append("ui 缺分区：修订句须点名九宫格/顶栏底栏/内容区/面板等")

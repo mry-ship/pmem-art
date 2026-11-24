@@ -8,9 +8,9 @@ description: 场景切块隔离与叠回（脚印校准→隔离→闸门→幽�
 
 **还原合同（玩家口径）**  
 1. **出图（isolate）硬锁样子 + 完整性**：视角 / 机位 / 姿势 / 外形特征 / 画风要尽量**一模一样**；部位须**完整**（不贴边裁切）；`_crops` 脚印像素是真值，`keep` 只作短槽位标签  
-2. **出图时大小·位置可漂**：同一件只是略大/略小/略偏，留给贴回，不要为此重抽；**比例不可漂**——禁止压扁/拉长（背景用 aspect 垫边 + 叠回 `cover_uniform`）。换了轮廓、朝向或零件清单，放大也没用  
-3. **拼回（compose）由 Agent/管线快速对准并交摆好的整图**：以 `truth_boxes` / `_footprints.json` 为槽位真值，用 contain + 锚点 + `autofit_scale_to_ref` 对准脚印；交 `_compose_mid.png` + preview + `stack.html`；**禁止为过闸拧框**  
-4. **定块先于出图**：`_crops_guide.png` 上还有吞邻框，禁止 isolate。出图后只查贴边、串戏、换样、缺件、谁压谁；略小不是重抽理由
+2. **出图时位置和跨度不可漂**：主体在裁切框里靠哪一侧、横枝或池沿伸到哪，出图必须停在同一位置。只允许补被挡住的部分。禁止特写重居中，禁止把切口当成完整轮廓。比例不可漂——禁止压扁/拉长（背景用 aspect 垫边 + 叠回 `cover_uniform`）  
+3. **拼回按裁切框整幅贴回**：引擎尺寸和裁切比例不同时，主垫先垫成引擎画布，生成后只切掉垫边里真正空白的部分；伸进垫边的尖端留下。叠回把**画面带**一对一贴进 `truth_boxes` 脚印，不把整张引擎画布 contain 进脚印（那会把主体缩小并挪走）。尖端可以伸出脚印，由画布裁掉。`scale_mul=1`，不按透明外接矩形居中，也不按 NCC 缩小。交 `_compose_mid.png` + preview + `stack.html`；**禁止为过闸拧框**  
+4. **定块先于出图**：`_crops_guide.png` 上还有吞邻框，禁止 isolate。出图后查贴边、直切、串戏、换样、缺件、谁压谁、跨度是否还在裁切的同一侧
 
 **引擎（按优先级）**  
 1. **优先** `apikey-image` / `gpt-image-2.5`（`--background transparent --image <crop>`）— 真透明、比例稳  
@@ -29,7 +29,7 @@ description: 场景切块隔离与叠回（脚印校准→隔离→闸门→幽�
 1. 读原图，先定谁压谁，再写 `assets/<job>/split_plan.json`（`id/name/z/crop/keep/remove/file`；点名 N 层则含 bg 共 N 层）。z 从后到前：背景（远景，以及整片草地/地板）→ 建筑 → 中景件 → 只有真挡住别人的件。一框一件；池跟船、树跟树上的屋可以同槽。禁止用下半幅横带把草地、整条路和前景道具绑成最高层。同一件只写进一个 keep。keep 只写槽位名（约 5～25 词）。
 2. `setup` 后必须 Read `_crops_guide.png` 和每张 `_crops/<id>.png`。贴边切肢只扩那一条边。某一框包进了另一槽的主体（路进了屋、横带盖住塘或角色）→ 先改这个框再 setup。guide 没过，禁止 isolate。禁止为了 fill/scale 收框或撑框。
 3. 背景优先 gpt-image-2.5；无通路再用 Cursor **不透明隔离底**（默认纯黑），禁止后抠。空舞台只补拆走物体留下的洞，地面花和纹样留住。
-4. `isolate` 并行抽未过线层（`--workers` ≤ `agent.max_parallel`，默认 4；双垫 crop + `_ctx`）。对着 crop 重画同一件、同一朝向、同一零件；被挡的边按 crop 里的形状补全。略小、略偏交给 compose。换了轮廓、朝向或零件才算失败。
+4. `isolate` 并行抽未过线层（`--workers` ≤ `agent.max_parallel`，默认 4；双垫 crop + `_ctx`）。对着 crop 重画同一件、同一朝向、同一零件，并停在裁切里的同一位置和跨度。被挡的边只在原跨度内补全。换了轮廓、朝向、零件或跨度才算失败。
 5. 重抽只写看图能指出的零件（船要横躺、屋顶不要另做台阶）。禁止把 MAE、scale、fill 句子写进 remove 或提示词。禁止为了填满框把地面画成一块板。
 6. isolate 之后、compose 之前，Read 每张 `new/` 对照对应 `_crops/`。换了轮廓、朝向或零件：先把错的零件写进该层 keep/remove，再只重抽该层。这关没过禁止 compose。通过后才 `compose` → `gate` → `qa` → `emit`，再 Read 叠回对照原图。谁压谁错了就改回定块，不要为 scale 重抽，也不要拧框。本地壳 `pyw -3 -u scripts/run_pmem_layer_split.py --job assets/<job> …`。
 7. 结算贴 `layers.md`（或等价可点表）并 `Read` 叠回整图 + 各层散图；`stack.html` 仅旁路。
@@ -180,7 +180,7 @@ SAME camera / proportions / art style. Sharp opaque scenic fill.
 
 `_crops/<id>.png`（宽松）+ `_crops/<id>_ctx.png` + 冻结 footprints 是主体**样子与槽位**真值。  
 **keep/remove 只做短槽位标签**；样子以主垫 crop 为准，要尽量一模一样。  
-只抽主体、禁止整砖复刻邻居；大小略漂交给 compose autofit。按 `grounded` 切换阴影句（`defaults.ISOLATE_PROMPT` + `shadow_rule`）。
+只抽主体、禁止整砖复刻邻居；位置和跨度跟主垫裁切，不交给叠回挪回原位。按 `grounded` 切换阴影句（`defaults.ISOLATE_PROMPT` + `shadow_rule`）。
 
 ```text
 STRICT ISOLATE — LOCK LOOK to crop pixels (restore-quality split).
@@ -190,13 +190,13 @@ Hard locks:
 2) SAME pose / orientation / silhouette
 3) SAME features / materials / colors / part inventory as in the crop
 4) SAME art style — extract only, do not restyle
-5) WHOLE-SUBJECT COMPLETENESS — full subject + transparent margin; no border clipping
-Size may drift → compose autofit. No wild hero-zoom.
-Extract ONLY listed subject(s). Occlusion→complete hidden parts; no redesign. No squash.
+5) WHOLE-SUBJECT COMPLETENESS — keep the crop's own margin, including the empty gap between a tip and the crop edge; black bars stay empty; do not slide a tip onto the band edge
+6) POSITION AND SPAN LOCK — the picture band is the footprint; keep the subject's place and size; black bars are clipped, do not draw in them
+Extract ONLY listed subject(s). Occlusion fills hidden parts inside that same span. No redesign. No squash.
 ```
 
-- `isolate` 默认并行（`--workers` 跟 `agent.max_parallel`，默认 **4**；本机卡可改 **2**），**含 bg**；跳过 `status=ok`；优先 gpt-image-2.5；**部件双垫 crop+ctx**；bg 提示自动带 `aspect_pad_rule`；部件提示含完整性第 5 条  
-- 无 gpt-image-2.5 通路：Agent 用 Cursor GenerateImage 逐层补齐；**必须**垫 `_crops/<id>.png`，有则再垫 `_crops/<id>_ctx.png`；提示词带**样子硬锁 + 完整性**；黑底隔离，勿对人提密钥；大小交给拼回对准  
+- `isolate` 默认并行（`--workers` 跟 `agent.max_parallel`，默认 **4**；本机卡可改 **2**），**含 bg**；跳过 `status=ok`；优先 gpt-image-2.5；**部件双垫**：主垫先写成 `_crops/<id>_engine.png`（裁切等比放进引擎画布，黑边是垫），再加 ctx；bg 提示自动带 `aspect_pad_rule`；部件提示带 `frame_rule`  
+- 无 gpt-image-2.5 通路：Agent 用 Cursor GenerateImage 逐层补齐；**必须**垫 `_crops/<id>.png`，有则再垫 `_crops/<id>_ctx.png`；提示词带**样子硬锁 + 完整性**；黑底隔离，勿对人提密钥。位置和大小跟画面带，不交给叠回再缩放  
 - 脏层：先把看图能指出的错写进该层 keep/remove，再 `isolate --ids … --force`。不要裸跑 `retry-dirty` 指望闸门句子被删掉  
 - 成功写入 `new/` + `layer_status`
 
@@ -208,21 +208,17 @@ Extract ONLY listed subject(s). Occlusion→complete hidden parts; no redesign. 
 2. **串戏**：邻居身体/家具是否烤进本层 → 重抽并加强 `remove`  
 3. **换样**：完整但已不是 crop 里那件（另造枪架/盾）→ 重抽；框本就切肢则先修框  
 4. **缺件**：同槽应在的挂饰/壶/毯是否丢失 → 重抽  
-5. **略小放过**：仍是 crop 里那一件，只是略小或略偏 → 交给 compose，禁止为 scale/fill 重抽把这层画满  
+5. **跨度跑了要重抽**：主体被挪到画布中央、横枝或池沿不再伸到裁切里的位置、或内容边缘有一段直切 → 重抽。不要靠叠回缩小把跨度找回来  
 6. 通过后再 `compose`→`gate`→`qa`→`emit`；交 `_compose_mid.png`。重抽说明只写错的零件，禁止把 MAE、scale、fill 句子写进 remove
 
 ### 5. 叠回（摆好位置再交件）
 
-画布 = 原图比例（CLI 默认 2×）。Trim 后贴脚印——**交件必须给出已摆好的整图**，不能只交散层：
+画布 = 原图比例（CLI 默认 2×）。整幅裁切框贴脚印——**交件必须给出已摆好的整图**，不能只交散层：
 
-- 默认 `contain` + 水平居中；优先用 truth 里冻结的 **`px` 像素框**  
-- **踩地**（`grounded=true` / 默认）：**底对齐框底**（锁地面槽位）  
-- **墙挂**（`grounded=false`）：**框内居中**（锁墙位）  
-- **吊灯/悬吊**：`anchor=top-center`（贴框顶，避免居中把灯拽下来）  
-- **大小自校准**：相对原图脚印区做 NCC，在 contain 内自动缩小（`scale_mul≤1`），纠正隔离引擎放大特写  
+- 道具层把**画面带**一对一贴进 truth 的 **`px` 像素框**，`scale_mul=1`。垫边里的尖端可以伸出框，不把整张引擎画布 contain 进去，也不按不透明质量再挪一次  
 - 框比主体明显更大 → **先收 crop**，不要靠居中硬凑；**禁止为过 fill 闸把门框撑大**  
 - **背景：`cover_uniform`（等比缩放+居中裁）**——禁止非等比 `resize(W,H)`  
-- 超宽前景：`width` + 底对齐  
+- 踩地件用脚印的 bottom-center。画面带和脚印同比例时铺满；尖端伸出框由画布裁掉。不再用 `width` 模式把主体拉满  
 - 禁止道具 `cover`、**禁止任何层非等比拉伸**  
 - **交件主件**：`_compose_mid.png`（摆好的叠回整图）+ `_compose_preview.png`（原图|叠回|幽灵）+ `stack.html` + `layers.md`；散层 `new/*.png` 为附图
 
@@ -234,14 +230,20 @@ Extract ONLY listed subject(s). Occlusion→complete hidden parts; no redesign. 
 | `fill` | 0.72–1.08（若有 `scale_mul` 则下限 ×scale_mul²） | dirty |
 | alpha 均值 | 0.02–0.92 | dirty |
 | `feat_match`（相对 `_crops` 蒙版比对） | ≥ 0.55 | dirty（特征/机位漂了） |
-| `edge_clip`（不透明质量压在画幅边框上的比例） | ≤ 0.018 | dirty（部位不完整/贴边裁切） |
+| `edge_clip`（不透明质量压在文件最外 2px 的比例） | ≤ 0.018 | dirty（贴文件边） |
+| `content_cut`（内容外接边有多长是直切） | ≤ 0.32 | dirty（主体被直切；完整圆沿大约 0.20，直切大约 0.51） |
+| `side_cut_px`（左或右有多少行贴着内容边） | ≤ 120 | dirty（伞盖、卷枝、池沿被侧面直切；完整圆沿大约 70 行，直切大约 170 行以上） |
+| `inner_gap`（同一轴上下或左右两侧的透明边） | ≤ 0.15 | dirty（主体缩在画面带里面；只空一边是去掉的邻居） |
+| `engine_band_bleed`（主体落在画面带外的像素占比） | ≤ 0.12 | dirty（主体画进了垫边；尖端可以留，整件不行） |
+| `bg_stretch_err` | ≤ 0.12 | dirty（背景被压扁或拉长） |
+| `bg_bake` | ≤ 0.58 | dirty（空舞台还烤着道具） |
 | 重试 | ≤ 2 | `needs_human` |
 
-只重抽换样、缺件、贴边、串戏的层；`ok` 落盘不动。同一件只是略小（`scale_mul` 低于 0.75）不要为此重抽。背景看 `mode=cover_uniform`（日志含 `stretch_err`，仅诊断）。
+只重抽换样、缺件、贴边、直切、跨度跑了、串戏的层；`ok` 落盘不动。`scale_mul` 低于 0.75 只记一笔，不因此重抽。背景看 `mode=cover_uniform`。
 
 ### 7. 定量幽灵 + HTML
 
-- `qa`：MAE / PSNR / 热力；≥28 warn；≥48 fail  
+- `qa`：整图 MAE / PSNR / 热力；≥28 warn；≥48 fail。单层脚印 MAE >52 会把该层标脏，那是重画笔触，不单独重抽  
 - `emit`：`stack.html` + `layers.md`（可点单图表）  
 - 目视：Ghost 40% 咬合、无串戏、遮挡层齐、接地影符合 `grounded`；**背景与部件均无压扁感**
 
@@ -265,7 +267,9 @@ assets/<job>/
   _crops/ + _crops_guide.png
   _crops/<id>_ctx.png       # 整图高亮本槽（isolate 副垫）
   new/  new_trim/
+  _compose_mid.png          # 摆好的叠回整图（交件必看）
   _compose_preview.png
+  _engine_fit.json          # 画面带在成图里的位置
   _compose_metrics.json     # 含 scale_mul
   _placements.json
   _ghost_qa.json
@@ -295,7 +299,7 @@ assets/<job>/
 ### 四格与防污染（执行时必读）
 四格不进路由句。必须保持、可以变化、明确禁止、交付规格只写 `contract set --keep --vary --forbid --spec`，标明原话或推断。禁止写入 `--canonical`。合同里的升级、一组、多张不得改技能。拆层只修边缘、遮挡补全和叠回还原，不另造数字阈值。
 记忆只辅助。当前原话和四格优先于历史记忆。候选红线、没写 trust 的条目、旧任务主体、构图和完整提示词不进提示词。研发 `.memory` 不进美术提示词。
-未点名接续只垫 `assets/refs/`、`downloads/`、`assets/skill_*/refs/`。禁止垫 out、phase1、关系稿、`.memory-art/converge` 过程板。垫图只取样式；只有用户说优化这张图才写原图不足。双参考像素同框仍硬停。最多 3 轮。
+未点名接续只垫 `assets/refs/`、`downloads/`、`assets/skill_*/refs/`。禁止垫 out、phase1、关系稿、`.memory-art/converge` 过程板。垫图只取样式；只有用户说优化这张图才写原图不足。双参考像素同框仍硬停。拆层不走普通图三轮闭环，失败层只重抽该层，禁止 `converge start`。
 
 ## 触发
 

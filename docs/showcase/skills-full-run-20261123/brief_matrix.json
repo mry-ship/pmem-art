@@ -1,0 +1,164 @@
+{
+  "run_id": "skills-full-run-20261123",
+  "root": "docs/showcase/skills-full-run-20261123",
+  "cli": "pyw -3 -u pmem_art.py",
+  "cli_alt": ".\\pmem_artw.cmd",
+  "rules": [
+    "显式 session id，禁止 latest",
+    "到线≥9.5即停，最多3轮；见 STOP_* 立即 finish",
+    "出图主链禁 doctor/hygiene/--help",
+    "顺序: emit-prompt → GenerateImage → generate --image → judge",
+    "垫图只锁气质/版式，禁止像素抄构图/机位",
+    "Windows 禁止改用 python/python3/py 控制台版",
+    "输出落到 docs/showcase/skills-full-run-20261123/<route_id>/",
+    "只读执行包 packs/<route>.md，禁止另选技能"
+  ],
+  "routes": {
+    "ui.kit": {
+      "session": "showcase-ui-kit-20261123",
+      "brief": "休闲三消主菜单 HUD 概念图：顶栏金币/体力清晰、主 CTA 最大、暖饱和软立体；对标 Royal Match 级密度气质，禁止抄任何竞品像素构图。",
+      "pad": ["docs/showcase/skills-full-run-20261123/refs/ui_casual_hud_vibe.jpg"],
+      "pad_role": "气质密度参考，只锁完成度不锁构图",
+      "aspect": "9:16",
+      "module": "showcase.UiKit"
+    },
+    "icon.a": {
+      "session": "showcase-icon-a-20261123",
+      "brief": "海港甜品站 App Icon Light 母版：单符号马卡龙塔撑满安全区 72%-80%，满幅直角，暖糖釉软立体。只交 Light。",
+      "pad": ["docs/showcase/skills-full-run-20261123/refs/icon_a_vibe.jpg"],
+      "pad_role": "上架图标气质",
+      "aspect": "1:1",
+      "module": "showcase.IconA"
+    },
+    "icon.b": {
+      "session": "showcase-icon-b-20261123",
+      "brief": "线性 SVG 功能图标集 8 枚：home shop merge bag star heart settings profile；统一 24 viewBox、1.5 stroke、currentColor、圆角端点。",
+      "pad": [],
+      "aspect": "1:1",
+      "module": "showcase.IconB"
+    },
+    "icon.c": {
+      "session": "showcase-icon-c-20261123",
+      "brief": "背包道具格隔离底：马卡龙/纸杯蛋糕/冰淇淋三枚预览；纯黑底 opaque_isolation；厚剪影 64px 可认。",
+      "pad": ["docs/showcase/skills-full-run-20261123/refs/icon_c_vibe.jpg"],
+      "pad_role": "道具格完成度",
+      "aspect": "1:1",
+      "module": "showcase.IconC"
+    },
+    "merge.ladder": {
+      "session": "showcase-merge-20261123",
+      "brief": "海鲜甜品 shop_ladder 整表 overview_sheet L1–L8；Gossip Harbor 玩具货柜软糖釉；垫 GH 真机锁货面与格数版式，禁止抄像素身份。",
+      "pad": [
+        "docs/showcase/skills-full-run-20261123/refs/merge_gh_strip.png",
+        "docs/showcase/skills-full-run-20261123/refs/merge_gh_shelf.jpg"
+      ],
+      "pad_role": "格数版式+货面气质",
+      "aspect": "16:9",
+      "module": "showcase.MergeLadder",
+      "delivery": "overview_sheet",
+      "levels": 8,
+      "chain": "shop_ladder"
+    },
+    "layer.split": {
+      "session": "showcase-layer-20261123",
+      "brief": "把场景图拆成可叠回透明层（背景+主体部件）；交叠回整图、幽灵对比、各层散图。",
+      "pad": ["docs/showcase/skills-full-run-20261123/refs/layer_scene.jpg"],
+      "pad_role": "待拆完整场景",
+      "aspect": "16:9",
+      "module": "showcase.LayerSplit"
+    },
+    "draw.lens": {
+      "session": "showcase-lens-20261123",
+      "brief": "海港甜品站女店员角色：给出 3～4 套机位/光方案供点选，点选前禁止生图。",
+      "pad": [],
+      "module": "showcase.Lens",
+      "no_generate": true
+    },
+    "draw.touchup": {
+      "session": "showcase-touchup-20261123",
+      "brief": "只修蓝果高光与伞缘软边；不换题材机位身份。",
+      "pad": ["docs/showcase/skills-full-run-20261123/refs/touchup_source.jpg"],
+      "pad_role": "待改成图",
+      "aspect": "1:1",
+      "module": "showcase.Touchup"
+    },
+    "draw.clone": {
+      "session": "showcase-clone-20261123",
+      "brief": "锁参考画风，换成新题材：黄昏渡船码头，不要画参考里原来的人物/物件身份。",
+      "pad": ["docs/showcase/skills-full-run-20261123/refs/clone_style_ref.jpg"],
+      "pad_role": "风格锁",
+      "aspect": "16:9",
+      "module": "showcase.Clone"
+    },
+    "draw.variant": {
+      "session": "showcase-variant-20261123",
+      "brief": "同一身份同一机位，换成惊讶表情；身份与机位已在参考图上。",
+      "pad": ["docs/showcase/skills-full-run-20261123/refs/variant_identity.jpg"],
+      "pad_role": "身份+机位",
+      "aspect": "1:1",
+      "module": "showcase.Variant"
+    },
+    "draw.multi": {
+      "session": "showcase-multi-20261123",
+      "brief": "多图分工两态：关态道具货柜关灯、开态同机位点亮；身份图与结构图分工，第二态垫第一态过线成图。",
+      "pad": [
+        "docs/showcase/skills-full-run-20261123/refs/multi_identity.jpg",
+        "docs/showcase/skills-full-run-20261123/refs/multi_structure_hud.jpg"
+      ],
+      "pad_roles": ["identity", "structure"],
+      "aspect": "16:9",
+      "module": "showcase.Multi"
+    },
+    "draw.key": {
+      "session": "showcase-key-20261123",
+      "brief": "上架 Key Art：海港餐厅黄昏主视觉，空气透视，商店截图完成度；禁止空喊史诗、禁止套货柜格。",
+      "pad": [],
+      "vibe": "上架 Key Art 顶级商业气质",
+      "aspect": "16:9",
+      "module": "showcase.KeyArt"
+    },
+    "style.lock": {
+      "session": "showcase-stylelock-20261123",
+      "brief": "从样张提炼色板 HEX、光影、禁用词并落库；不生图。",
+      "pad": ["docs/showcase/skills-full-run-20261123/refs/style_lock_sample.jpg"],
+      "module": "showcase.StyleLock",
+      "no_generate": true
+    },
+    "critique.review": {
+      "session": "showcase-critique-20261123",
+      "brief": "六维审稿挑刺，可记红线；不生图。",
+      "pad": ["docs/showcase/skills-full-run-20261123/refs/critique_target.jpg"],
+      "module": "showcase.Critique",
+      "no_generate": true
+    },
+    "atlas.file": {
+      "session": "showcase-atlas-20261123",
+      "brief": "扫描归位散图并刷新 art-atlas.html；不生图。",
+      "pad": [],
+      "module": "showcase.Atlas",
+      "no_generate": true
+    },
+    "coach.report": {
+      "session": "showcase-coach-20261123",
+      "brief": "输出进步/短板/知识卡偷看报告；知识卡不自动写入。",
+      "pad": [],
+      "module": "showcase.Coach",
+      "no_generate": true
+    },
+    "prompt.write": {
+      "session": "showcase-prompt-20261123",
+      "brief": "按普通图类型扩写 2～4 套可选提示词方案：红伞蘑菇芝士果盘黑底棚拍；不生图。",
+      "pad": [],
+      "module": "showcase.Prompt",
+      "no_generate": true
+    },
+    "draw.ordinary": {
+      "session": "showcase-ordinary-20261123",
+      "brief": "休闲3D道具：红伞白点蘑菇托盘，上置瑞士芝士块+蓝果+橙果与绿叶，纯黑底棚拍。",
+      "pad": [],
+      "vibe": "休闲道具货柜软立体商业完成度（非 merge 整表）",
+      "aspect": "1:1",
+      "module": "showcase.Ordinary"
+    }
+  }
+}

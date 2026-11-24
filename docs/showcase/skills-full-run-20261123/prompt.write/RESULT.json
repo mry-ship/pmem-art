@@ -1,0 +1,15 @@
+{
+  "route_id": "prompt.write",
+  "banner": "【走默认路径】按 普通图 走了",
+  "ok": true,
+  "passed_line": null,
+  "best_score": null,
+  "rounds": 0,
+  "session_id": "showcase-prompt-20261123",
+  "final_image": "",
+  "process_sheet": "",
+  "images": [],
+  "text_deliverable": "普通图 draw.ordinary：红伞蘑菇芝士果盘黑底棚拍，交付 4 套可选提示词（俯视/平视/微距/暖侧光），中英执行句+材质光影禁忌；opaque_isolation 纯黑底。主文件 prompts.md。",
+  "elapsed": "",
+  "notes": "不生图、无 converge；方案同质 route_id=draw.ordinary，点选后交 /pmem-draw。route confidence low 不影响提示词交付。"
+}

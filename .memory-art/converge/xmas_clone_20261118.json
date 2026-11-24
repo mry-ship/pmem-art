@@ -110,7 +110,7 @@
   "accept_threshold": 9.5,
   "max_rounds": 3,
   "ready_to_finish": false,
-  "status": "running",
+  "status": "finished",
   "owner_conversation_id": "session:xmas_clone_20261118",
   "route_ids": [
     "draw.clone"
@@ -296,5 +296,6 @@
     "force_pass": false,
     "skill_raw": "clone"
   },
-  "discussions": []
+  "discussions": [],
+  "slot_released_reason": "abandoned before 2026-11-23; slot released so a new session can start; not a scored delivery"
 }

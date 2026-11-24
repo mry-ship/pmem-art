@@ -19,6 +19,8 @@ aliases:
 - emit-prompt
 - 先出Prompt
 - 无图出Prompt
+verified: '2026-11-23'
+verified_at: '2026-11-23T23:14:23.694+08:00'
 source:
   conversation: ecc26a91-afaa-451d-a24e-bcc932bdcb45
 ---

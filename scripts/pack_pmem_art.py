@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import re
 import shutil
+import subprocess
 import sys
 import zipfile
 from pathlib import Path
@@ -160,9 +161,28 @@ def should_skip(path: Path, root: Path) -> bool:
     return False
 
 
+def tracked_rel_paths(root: Path) -> list[str]:
+    """User zip follows the git index. Local jobs and scratch stay out."""
+    try:
+        out = subprocess.check_output(
+            ["git", "ls-files", "-z"],
+            cwd=root,
+            stderr=subprocess.DEVNULL,
+        )
+    except (OSError, subprocess.CalledProcessError) as exc:
+        raise SystemExit(f"pack requires a git checkout: {exc}") from exc
+    rels: list[str] = []
+    for raw in out.split(b"\0"):
+        if not raw:
+            continue
+        rels.append(raw.decode("utf-8", "surrogateescape").replace("\\", "/"))
+    return rels
+
+
 def iter_source_files(root: Path) -> list[Path]:
     files: list[Path] = []
-    for path in root.rglob("*"):
+    for rel in tracked_rel_paths(root):
+        path = root / rel
         if not path.is_file():
             continue
         if should_skip(path, root):

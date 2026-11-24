@@ -146,7 +146,9 @@ from .prompt_scale import (
     classify_subject,
     compose_continuation_prompt,
     compose_style_first_prompt,
+    directive_survives_in_prompt,
     get_converge_scale_profile,
+    icon_stage_margins,
     strip_redline_tags_from_generation_text,
 )
 from .image_gates import _inspect_image_physical_traits, resolve_case_config
@@ -163,6 +165,7 @@ from .converge_policy import (
     DEFAULT_SAFE_EARLY_STOP,
     coerce_dims_dict,
     decide_round_stop,
+    EARLY_STOP_REASONS,
     round_passes_structure_gates,
 )
 
@@ -1053,6 +1056,32 @@ def _style_jump_requested(scale: str = "", goal: str = "", flagged: bool = False
     return any(tok in blob for tok in ("style_jump", "recompose_bold", "风格跳跃"))
 
 
+def _icon_a_pads_best_plate(route_ids, style_ref: str) -> bool:
+    """Icon A with no style file edits the best plate. A competitor name is not a pad."""
+    if str(style_ref or "").strip():
+        return False
+    return "icon.a" in [str(x).strip() for x in (route_ids or []) if str(x).strip()]
+
+
+def _icon_crop_note(route_ids, image: str) -> str:
+    if "icon.a" not in [str(x).strip() for x in (route_ids or []) if str(x).strip()]:
+        return ""
+    path = Path(str(image or "").strip())
+    if not path.is_file():
+        return ""
+    margins = icon_stage_margins(path)
+    if not margins:
+        return ""
+    left, right, top, bottom = margins
+    if max(left, right, top, bottom) <= 0.06:
+        return ""
+    return (
+        f"量到四边留白左{left:.0%}右{right:.0%}上{top:.0%}下{bottom:.0%}。"
+        "外轮廓被四边裁开，底色只留在四角，四周不要留一圈舞台。"
+        "可读核心留在画面中部。已有的主体和边框留住"
+    )
+
+
 def _resolve_pad_auto(
     rounds: list,
     round_num: int,
@@ -1067,6 +1096,7 @@ def _resolve_pad_auto(
     ref_analysis: str = "",
     scale: str = "",
     style_jump: bool = False,
+    route_ids: list | None = None,
 ) -> tuple[str, str, int, bool, str]:
     """Pad policy: auto/ref always use the original style_ref. Fixes stay in the prompt.
 
@@ -1090,6 +1120,18 @@ def _resolve_pad_auto(
             return "", carry_fix, 0, False, "merge无参考：禁止 pad=previous 链上轮成图"
     if _style_jump_requested(scale, goal, style_jump):
         return "", carry_fix, 0, False, "style_jump：不垫风格参考，也不链成图"
+    if (
+        _icon_a_pads_best_plate(route_ids, style)
+        and carry_image
+        and int(round_num) >= 2
+    ):
+        return (
+            carry_image,
+            carry_fix,
+            carry_round,
+            True,
+            "pad=icon_best（图标无风格参考，垫最高分成图，只改裁切）",
+        )
     if (scale or "").strip().lower() in {"high", "recompose"}:
         # Camera-changed evidence: strengths/defects only (same gate as judge).
         # Prompt / next_fix 「重构机位」 is an instruction, not proof.
@@ -1493,8 +1535,8 @@ def _cmd_converge_settle(
         str(sess.get("status") or "") == "early_safe_stop"
         or bool(sess.get("single_judge"))
         or any(
-            str((r or {}).get("early_safe_stop") or "") in ("STOP_REGRESSION", "STOP_PLATEAU")
-            or str((r or {}).get("decision") or "") in ("STOP_REGRESSION", "STOP_PLATEAU")
+            str((r or {}).get("early_safe_stop") or "") in EARLY_STOP_REASONS
+            or str((r or {}).get("decision") or "") in EARLY_STOP_REASONS
             for r in rounds
         )
     )
@@ -1574,6 +1616,7 @@ def cmd_converge(
     conversation_id: str = "",
     settle_background: bool | None = None,
     emit_prompt: bool = False,
+    defer_warm: bool = False,
 ) -> int:
     """
     converge_mode: quality (default, dynamic threshold per scale, max 3 rounds, stop ≥9.5 or best-of-3) | fast (warm-start fast-track hints).
@@ -1687,8 +1730,16 @@ def cmd_converge(
             module = infer_module_from_text(goal, data)
 
         from improve import build_warm_start_pack, print_warm_start
-        warm = build_warm_start_pack(root, data, module=module or "brand.WorldStyle", goal=goal or "")
-        print_warm_start(warm)
+        if defer_warm:
+            warm = {
+                "deferred": True,
+                "prompt_block": "",
+                "inject_summary": "prepare 延后到合同与合理性落定后一次装载",
+            }
+            print("WARM_START_DEFERRED=1")
+        else:
+            warm = build_warm_start_pack(root, data, module=module or "brand.WorldStyle", goal=goal or "")
+            print_warm_start(warm)
 
         fast_track = bool(converge_mode == "fast" and warm.get("fast_track_eligible"))
         scale_target_th = float(scale_prof.get("target_score_threshold", DEFAULT_THRESHOLD))
@@ -2138,6 +2189,7 @@ def cmd_converge(
             ref_analysis=str(sess.get("ref_analysis") or ""),
             scale=str(sess.get("scale") or ""),
             style_jump=bool(sess.get("style_jump")),
+            route_ids=list(sess.get("route_ids") or []),
         )
         pad_view = _describe_next_pad(
             nxt=nxt,
@@ -2151,7 +2203,14 @@ def cmd_converge(
         )
         lines = list(pad_view["lines"])
         if continuation and pad_image:
-            lines.append(f"提示词：{compose_continuation_prompt(pad_fix or fix, prof)}")
+            lines.append(
+                "提示词："
+                + compose_continuation_prompt(
+                    pad_fix or fix,
+                    prof,
+                    release_margin="icon_best" in str(pad_reason),
+                )
+            )
         else:
             lines.append(f"提示词仍带改点：{pad_fix or fix}")
         print("\n".join(lines))
@@ -2175,6 +2234,16 @@ def cmd_converge(
 
         r_no = round_num if round_num > 0 else (len(rounds) + 1)
         caller_prompt_raw = (prompt or "").strip()
+        pending_text_early = str(sess.get("pending_final_prompt") or "").strip()
+        pending_round_early = int(sess.get("pending_final_prompt_round") or 0)
+        # emit 已经定稿并过闸。登记成图只挂上这张图，不再重跑合理性、Warm-Start 和装配。
+        reuse_pending = (
+            (not emit_prompt)
+            and bool((image or "").strip())
+            and bool(pending_text_early)
+            and pending_round_early == int(r_no)
+            and not caller_prompt_raw
+        )
         from .gate_skip import resolve_skip_request
 
         skip_route_ok, skip_route_msg = resolve_skip_request(
@@ -2221,7 +2290,9 @@ def cmd_converge(
         if skip_reas_msg.startswith("拒绝"):
             print(f"❌ [合理性闸门] {skip_reas_msg}")
             return 1
-        if skip_reas_ok:
+        if reuse_pending:
+            pass
+        elif skip_reas_ok:
             print(f"⚠️ [合理性闸门跳过] {skip_reas_msg}")
         else:
             from .reasonableness_gate import check_reasonableness_gate
@@ -2326,6 +2397,7 @@ def cmd_converge(
             ref_analysis=str(sess.get("ref_analysis") or ref_analysis or ""),
             scale=str(sess.get("scale") or scale or ""),
             style_jump=bool(sess.get("style_jump")),
+            route_ids=list(sess.get("route_ids") or []),
         )
         style_jump = (
             str(pad_reason).startswith("style_jump")
@@ -2417,138 +2489,138 @@ def cmd_converge(
                 print(f"❌ [生成前硬性参数校验拦截] {exc}")
                 return 1
 
-        s_prof = get_converge_scale_profile(
-            sess.get("scale", "medium"),
-            recompose_dir=sess.get("recompose_dir", ""),
-            goal=sess.get("goal", ""),
-            ref_analysis=sess.get("ref_analysis", ""),
-            ref_image=sess.get("ref_image", ""),
-            module=sess.get("module", ""),
-            medium_family=str(sess.get("medium_family") or ""),
-            contract=str(sess.get("contract") or ""),
-        )
-        # Artist may loosen a dim mid-loop (still same --scale); fold into session + prompt.
-        ov_now = _apply_lock_texts(lock_text or "", next_fix or "", prompt or "", source=f"generate_r{r_no}")
-        from skills_kit.prompt_scale import format_lock_override_prompt_hint
-        lock_hint = format_lock_override_prompt_hint(str(sess.get("scale") or "medium"), ov_now)
-        stub_notes: list[str] = []
-        floor_zh = ""
-        if continuation:
-            from .local_locks import locks_from_session as _locks_from_session
-
-            composed_prompt = compose_continuation_prompt(
-                carry_fix or prompt,
-                s_prof,
-                stub_notes=stub_notes,
-                locks=_locks_from_session(sess),
-            )
-        else:
-            composed_prompt = compose_style_first_prompt(prompt, s_prof, stub_notes=stub_notes)
-            # R1 (and any non-continuation round) inject the English structure floor.
-            # The Chinese twin is printed for the artist and is not sent to the model.
-            floor_args = dict(
-                goal=str(sess.get("goal") or goal or ""),
-                ref_analysis=sess.get("ref_analysis") or ref_analysis or "",
-                ref_image=eff_ref_img,
-                module=str(sess.get("module") or module or ""),
-            )
-            floor = build_r1_structure_floor(**floor_args, lang="en")
-            floor_zh = build_r1_structure_floor(**floor_args, lang="zh")
-            if floor and floor not in composed_prompt:
-                composed_prompt = f"{composed_prompt} | {floor}".strip(" |")
-        if lock_hint:
-            composed_prompt = f"{composed_prompt} | {lock_hint}".strip(" |")
-        if not continuation and carry_fix and carry_fix not in composed_prompt:
-            composed_prompt = f"{composed_prompt} | {carry_fix}".strip(" |")
-
-        # Stability: r2+ always pin ≤2 must-fix lines from prior judge (additive, idempotent).
-        if int(r_no) >= 2:
-            from .must_fix import inject_must_fix, previous_round_next_fix
-
-            prior_fix = (carry_fix or "").strip() or previous_round_next_fix(rounds, r_no)
-            if not prior_fix:
-                prior_fix = str(next_fix or "").strip()
-            if prior_fix:
-                composed_prompt = inject_must_fix(composed_prompt, prior_fix)
-
-        from improve import build_warm_start_pack, merge_warm_start_prompt
-        import hashlib as _hashlib
-
-        # 对账用：Warm-Start 并入前的装配句（已含档位/改点/floor，不含记忆包）
-        prompt_before_warm = composed_prompt
-        warm = sess.get("warm_start") if isinstance(sess.get("warm_start"), dict) else {}
-        warm_merged = False
-        warm_hash = ""
-        warm_block = ""
-        if apply_memory:
-            from .understanding_contract import contract_inject_stamp, warm_needs_rebuild
-
-            understanding = sess.get("understanding_contract")
-            understanding = understanding if isinstance(understanding, dict) else {}
-            stamp = contract_inject_stamp(understanding)
-            if not stamp:
-                print(
-                    "⚠️ 四格未写：必须保持、可以变化、明确禁止、交付规格都是空的，"
-                    "本轮记忆注入不受四格约束。写入请用 contract set。"
-                )
-            # 四格写入、改写或清空之后都重算，避免开画时的记忆包盖过当前需求。
-            rebuild_warm = warm_needs_rebuild(warm, stamp)
-            if rebuild_warm:
-                warm = build_warm_start_pack(
-                    root,
-                    data if isinstance(data, dict) else {},
-                    module=str(sess.get("module") or module or "brand.WorldStyle"),
-                    goal=str(sess.get("goal") or goal or ""),
-                    contract=understanding,
-                )
-                warm["contract_stamp"] = stamp
-                sess["warm_start"] = warm
-                print(f"   · {warm.get('inject_summary') or '记忆已按四格合同重算'}")
-            warm_block = str(warm.get("prompt_block") or "").strip()
-            before = composed_prompt
-            composed_prompt = merge_warm_start_prompt(composed_prompt, warm)
-            warm_merged = bool(warm_block) and (
-                warm_block in composed_prompt
-                or composed_prompt != before
-                or "【Warm-Start" in composed_prompt
-            )
-            if warm_block:
-                warm_hash = _hashlib.sha1(warm_block.encode("utf-8")).hexdigest()[:12]
-            sess["warm_start_merged"] = warm_merged
-            sess["warm_start_merged_at"] = _now_cst().strftime("%Y-%m-%d %H:%M:%S")
-            sess["warm_start_block_sha1"] = warm_hash
-            # 并入证据先落盘：后续垫图/物理闸失败也不丢，避免误报「没并入」
-            _write_session_json(sf, sess)
-            print(
-                f"WARM_START_MERGED={'1' if warm_merged else '0'}"
-                f" sha1={warm_hash or '-'} source=converge.generate"
-                f" (并以本字段为准；勿用 GenerateImage Hook 有无判断并入)"
-            )
-
-        from .delivery_gates import generate_prefix
-
-        composed_prompt = generate_prefix(sess, composed_prompt)
-
         from .final_prompt_gate import final_prompt_sha1 as _final_prompt_sha1
         from .final_prompt_gate import format_final_prompt_lines
-
-        # Prefer exact pending prompt when registering after --emit-prompt with empty --prompt.
-        pending_boot = str(sess.get("pending_final_prompt") or "").strip()
-        pending_r = int(sess.get("pending_final_prompt_round") or 0)
-        if (
-            (not emit_prompt)
-            and (image or "").strip()
-            and pending_boot
-            and pending_r == int(r_no)
-            and not caller_prompt_raw
-        ):
-            composed_prompt = pending_boot
+        if reuse_pending:
+            s_prof = {"dim_weights": {}, "scale": str(sess.get("scale") or "medium")}
+            stub_notes = []
+            floor_zh = ""
+            composed_prompt = pending_text_early
+            prompt_before_warm = str(sess.get("pending_prompt_before_warm") or "")
+            warm = sess.get("warm_start") if isinstance(sess.get("warm_start"), dict) else {}
             warm_merged = bool(sess.get("warm_start_merged"))
-            warm_hash = str(sess.get("warm_start_block_sha1") or warm_hash or "")
-            prompt_before_warm = str(
-                sess.get("pending_prompt_before_warm") or prompt_before_warm or ""
+            warm_hash = str(sess.get("warm_start_block_sha1") or "")
+            warm_block = str(warm.get("prompt_block") or "").strip()
+        if not reuse_pending:
+            s_prof = get_converge_scale_profile(
+                sess.get("scale", "medium"),
+                recompose_dir=sess.get("recompose_dir", ""),
+                goal=sess.get("goal", ""),
+                ref_analysis=sess.get("ref_analysis", ""),
+                ref_image=sess.get("ref_image", ""),
+                module=sess.get("module", ""),
+                medium_family=str(sess.get("medium_family") or ""),
+                contract=str(sess.get("contract") or ""),
             )
-            warm_block = str((warm or {}).get("prompt_block") or warm_block or "").strip()
+            # Artist may loosen a dim mid-loop (still same --scale); fold into session + prompt.
+            ov_now = _apply_lock_texts(lock_text or "", next_fix or "", prompt or "", source=f"generate_r{r_no}")
+            from skills_kit.prompt_scale import format_lock_override_prompt_hint
+            lock_hint = format_lock_override_prompt_hint(str(sess.get("scale") or "medium"), ov_now)
+            stub_notes: list[str] = []
+            floor_zh = ""
+            if continuation:
+                from .local_locks import locks_from_session as _locks_from_session
+
+                composed_prompt = compose_continuation_prompt(
+                    carry_fix or prompt,
+                    s_prof,
+                    stub_notes=stub_notes,
+                    locks=_locks_from_session(sess),
+                    pad_image=carry_image,
+                    release_margin="icon_best" in str(pad_reason),
+                )
+            else:
+                composed_prompt = compose_style_first_prompt(prompt, s_prof, stub_notes=stub_notes)
+                # R1 (and any non-continuation round) inject the English structure floor.
+                # The Chinese twin is printed for the artist and is not sent to the model.
+                floor_args = dict(
+                    goal=str(sess.get("goal") or goal or ""),
+                    ref_analysis=sess.get("ref_analysis") or ref_analysis or "",
+                    ref_image=eff_ref_img,
+                    module=str(sess.get("module") or module or ""),
+                )
+                floor = build_r1_structure_floor(**floor_args, lang="en")
+                floor_zh = build_r1_structure_floor(**floor_args, lang="zh")
+                if floor and floor not in composed_prompt:
+                    composed_prompt = f"{composed_prompt} | {floor}".strip(" |")
+            if lock_hint:
+                composed_prompt = f"{composed_prompt} | {lock_hint}".strip(" |")
+            if not continuation and carry_fix and carry_fix not in composed_prompt:
+                composed_prompt = f"{composed_prompt} | {carry_fix}".strip(" |")
+
+            # Stability: r2+ always pin ≤2 must-fix lines from prior judge (additive, idempotent).
+            if int(r_no) >= 2:
+                from .must_fix import inject_must_fix, previous_round_next_fix
+
+                prior_fix = (carry_fix or "").strip() or previous_round_next_fix(rounds, r_no)
+                if not prior_fix:
+                    prior_fix = str(next_fix or "").strip()
+                if prior_fix:
+                    composed_prompt = inject_must_fix(composed_prompt, prior_fix)
+
+            from improve import build_warm_start_pack, merge_warm_start_prompt
+            import hashlib as _hashlib
+
+            # 对账用：Warm-Start 并入前的装配句（已含档位/改点/floor，不含记忆包）
+            prompt_before_warm = composed_prompt
+            warm = sess.get("warm_start") if isinstance(sess.get("warm_start"), dict) else {}
+            warm_merged = False
+            warm_hash = ""
+            warm_block = ""
+            if apply_memory:
+                from .understanding_contract import contract_inject_stamp, warm_needs_rebuild
+
+                understanding = sess.get("understanding_contract")
+                understanding = understanding if isinstance(understanding, dict) else {}
+                stamp = contract_inject_stamp(understanding)
+                if not stamp:
+                    print(
+                        "⚠️ 四格未写：必须保持、可以变化、明确禁止、交付规格都是空的，"
+                        "本轮记忆注入不受四格约束。写入请用 contract set。"
+                    )
+                # 四格写入、改写或清空之后都重算，避免开画时的记忆包盖过当前需求。
+                rebuild_warm = warm_needs_rebuild(warm, stamp)
+                if rebuild_warm:
+                    warm = build_warm_start_pack(
+                        root,
+                        data if isinstance(data, dict) else {},
+                        module=str(sess.get("module") or module or "brand.WorldStyle"),
+                        goal=str(sess.get("goal") or goal or ""),
+                        contract=understanding,
+                    )
+                    warm["contract_stamp"] = stamp
+                    sess["warm_start"] = warm
+                    print(f"   · {warm.get('inject_summary') or '记忆已按四格合同重算'}")
+                warm_block = str(warm.get("prompt_block") or "").strip()
+                before = composed_prompt
+                composed_prompt = merge_warm_start_prompt(composed_prompt, warm)
+                warm_merged = bool(warm_block) and (
+                    warm_block in composed_prompt
+                    or composed_prompt != before
+                    or "【Warm-Start" in composed_prompt
+                )
+                if warm_block:
+                    warm_hash = _hashlib.sha1(warm_block.encode("utf-8")).hexdigest()[:12]
+                sess["warm_start_merged"] = warm_merged
+                sess["warm_start_merged_at"] = _now_cst().strftime("%Y-%m-%d %H:%M:%S")
+                sess["warm_start_block_sha1"] = warm_hash
+                # 并入证据先落盘：后续垫图/物理闸失败也不丢，避免误报「没并入」
+                _write_session_json(sf, sess)
+                print(
+                    f"WARM_START_MERGED={'1' if warm_merged else '0'}"
+                    f" sha1={warm_hash or '-'} source=converge.generate"
+                    f" (并以本字段为准；勿用 GenerateImage Hook 有无判断并入)"
+                )
+
+            from .delivery_gates import generate_prefix
+
+            composed_prompt = generate_prefix(sess, composed_prompt)
+            from .prompt_scale import drop_opposed_injections
+
+            composed_prompt = drop_opposed_injections(composed_prompt, memory_block=warm_block)
+
+            from .final_prompt_gate import final_prompt_sha1 as _final_prompt_sha1
+            from .final_prompt_gate import format_final_prompt_lines
 
         if emit_prompt:
             sha_emit = _final_prompt_sha1(composed_prompt)
@@ -2791,31 +2863,39 @@ def cmd_converge(
         fix_line = ""
         if continuation and carry_fix and carry_fix not in composed_prompt:
             fix_line = f"   · 改点: {carry_fix}\n"
-        fallback_judge_prompt = agent_absolute_5d_judge_prompt(
-            goal=str(sess.get("goal") or goal or ""),
-            target_threshold=th,
-            round_num=r_no,
-            max_rounds=mr,
-            scale=str(sess.get("scale") or ""),
-            ref_analysis=str(sess.get("ref_analysis") or ""),
-            dim_weights=s_prof.get("dim_weights"),
-            anatomy_floor=float(sess.get("anatomy_floor") or 7.5),
-        )
-        final_lines = "\n".join(format_final_prompt_lines(composed_prompt))
-        print(
-            f"🎨 [Step 2A · 仅生图阶段完成] 第 {r_no}/{mr} 轮图像已生成: `{image}` ({v_badge})\n"
-            f"{pad_line}"
-            f"{memory_line}"
-            f"{floor_line}"
-            f"{fix_line}"
-            f"{stub_line}"
-            f"{assembly_line}"
-            f"{warm_seg_line}"
-            f"{final_lines}\n"
-            f"   · 当前未执行任何自评或 VLM 裁判；请先看图再打六维，不要从 9.3 起跳：\n"
-            f"{fallback_judge_prompt}\n"
-            f"   · 然后：`{pmem_art_cli()} converge judge --id {session_id} --round {r_no} --image {image} --dims ...`"
-        )
+        if reuse_pending:
+            print(
+                f"🎨 [Step 2A · 登记成图] 第 {r_no}/{mr} 轮已登记: `{image}` ({v_badge})\n"
+                f"FINAL_PROMPT_SHA1={_final_prompt_sha1(composed_prompt)}\n"
+                f"   · 提示词沿用本轮 emit 的定稿，没有重算。\n"
+                f"   · 看图后打六维：`{pmem_art_cli()} converge judge --id {session_id} --round {r_no} --image {image} --dims ...`"
+            )
+        else:
+            fallback_judge_prompt = agent_absolute_5d_judge_prompt(
+                goal=str(sess.get("goal") or goal or ""),
+                target_threshold=th,
+                round_num=r_no,
+                max_rounds=mr,
+                scale=str(sess.get("scale") or ""),
+                ref_analysis=str(sess.get("ref_analysis") or ""),
+                dim_weights=s_prof.get("dim_weights"),
+                anatomy_floor=float(sess.get("anatomy_floor") or 7.5),
+            )
+            final_lines = "\n".join(format_final_prompt_lines(composed_prompt))
+            print(
+                f"🎨 [Step 2A · 仅生图阶段完成] 第 {r_no}/{mr} 轮图像已生成: `{image}` ({v_badge})\n"
+                f"{pad_line}"
+                f"{memory_line}"
+                f"{floor_line}"
+                f"{fix_line}"
+                f"{stub_line}"
+                f"{assembly_line}"
+                f"{warm_seg_line}"
+                f"{final_lines}\n"
+                f"   · 当前未执行任何自评或 VLM 裁判；请先看图再打六维，不要从 9.3 起跳：\n"
+                f"{fallback_judge_prompt}\n"
+                f"   · 然后：`{pmem_art_cli()} converge judge --id {session_id} --round {r_no} --image {image} --dims ...`"
+            )
         return 0
 
     if action in ("judge", "round"):
@@ -2950,7 +3030,7 @@ def cmd_converge(
             if not gate_notes:
                 gate_notes.append("磁盘无有效生成图或图像内容无效")
         directive = str(s_prof.get("prompt_directive") or "")
-        if not recorded_gen_prompt or (directive and directive not in recorded_gen_prompt):
+        if not directive_survives_in_prompt(directive, recorded_gen_prompt or ""):
             gate_notes.append("生成 prompt 未包含本档 prompt_directive")
         if str(s_prof.get("scale") or "") == "recompose":
             direction = str(sess.get("recompose_dir") or "").strip()
@@ -3060,6 +3140,7 @@ def cmd_converge(
             dims_now = coerce_dims_dict(judge_res.get("dims_parsed")) or _round_dims_dict(
                 {"dims": judge_res.get("dims"), "dims_parsed": judge_res.get("dims_parsed")}
             )
+            hurdle = judge_res.get("hurdle") if isinstance(judge_res.get("hurdle"), dict) else None
             early_safe_stop = decide_round_stop(
                 score_ok=True,
                 total=float(score),
@@ -3082,16 +3163,23 @@ def cmd_converge(
                     if sess.get("safe_early_stop") is None
                     else bool(sess.get("safe_early_stop"))
                 ),
+                hurdle_blocks_target=bool(hurdle) and float(score) < float(th),
             )
-            if early_safe_stop in ("STOP_REGRESSION", "STOP_PLATEAU"):
+            if early_safe_stop in EARLY_STOP_REASONS:
                 should_continue = False
                 judge_res["decision"] = early_safe_stop
                 judge_res["ready_to_finish"] = True
-                warn_es = (
-                    f"安全早停 {early_safe_stop}：第 {r_no} 轮起连续掉分/平台，"
-                    f"保底结算历史最高分轮次（门槛 drop≥{sess.get('regression_drop') or DEFAULT_REGRESSION_DROP}，"
-                    f"R≥{sess.get('early_stop_min_round') or DEFAULT_EARLY_STOP_MIN_ROUND}）"
-                )
+                if early_safe_stop == "STOP_HURDLE_BOUND":
+                    warn_es = (
+                        f"安全早停 {early_safe_stop}：第 {r_no} 轮正式分仍被门槛维压住，"
+                        f"到不了 {th:.2f}，不再开下一轮"
+                    )
+                else:
+                    warn_es = (
+                        f"安全早停 {early_safe_stop}：第 {r_no} 轮起连续掉分/平台，"
+                        f"保底结算历史最高分轮次（门槛 drop≥{sess.get('regression_drop') or DEFAULT_REGRESSION_DROP}，"
+                        f"R≥{sess.get('early_stop_min_round') or DEFAULT_EARLY_STOP_MIN_ROUND}）"
+                    )
                 judge_res["audit_warnings"] = list(judge_res.get("audit_warnings") or []) + [warn_es]
 
         merged_defects = judge_res.get("defects") or defects
@@ -3118,6 +3206,13 @@ def cmd_converge(
             and r_no >= 2
         ):
             skip_ahead = True
+
+        crop_note = _icon_crop_note(list(sess.get("route_ids") or []), str(eff_image or ""))
+        if crop_note and crop_note not in (next_fix or ""):
+            next_fix = f"{crop_note}。{next_fix}".strip("。") if next_fix else crop_note
+            if crop_note not in str(merged_defects or ""):
+                merged_defects = f"{merged_defects or ''}；{crop_note}".strip("；")
+                judge_res["defects"] = merged_defects
 
         lessons = craft_lessons_from_round(
             defects=merged_defects, strengths=strengths, next_fix=next_fix,
@@ -3233,15 +3328,19 @@ def cmd_converge(
                 f"⚡ Fast-track 草稿软达标：第 {r_no} 轮 {score:.2f} ≥ {soft_th} 且 Δ 很小。"
                 f"用户已允许草稿 — 可 `converge finish --id {session_id}`；正式交付仍建议冲到 ≥{th:.2f}。"
             )
-        elif early_safe_stop in ("STOP_REGRESSION", "STOP_PLATEAU"):
+        elif early_safe_stop in EARLY_STOP_REASONS:
             scored_rounds = [r for r in rounds if r.get("score") is not None]
             best = max(scored_rounds, key=lambda x: x["score"]) if scored_rounds else entry
             sess["status"] = "early_safe_stop"
             sess["ActionRequired"] = "STOP_PICK_BEST"
             sess["ready_to_finish"] = True
+            if early_safe_stop == "STOP_HURDLE_BOUND":
+                why = "正式分仍被门槛维压住，到不了达标线，不再开下一轮。"
+            else:
+                why = "后半程掉分/平台，停止继续糊化。"
             msg = (
                 f"🛑 [安全早停 · {early_safe_stop}] 第 {r_no}/{mr} 轮得分 {score:.2f}，"
-                f"后半程掉分/平台，停止继续糊化。\n"
+                f"{why}\n"
                 f"   · 保底最高分：第 {best.get('round')} 轮 ({best.get('score'):.2f} 分: {best.get('image')})。\n"
                 f"   · 请运行 `{pmem_art_cli()} converge finish --id {session_id}` 结算。"
             )
@@ -3278,6 +3377,7 @@ def cmd_converge(
                 ref_analysis=str(sess.get("ref_analysis") or ""),
                 scale=str(sess.get("scale") or ""),
                 style_jump=bool(sess.get("style_jump")),
+                route_ids=list(sess.get("route_ids") or []),
             )
             prior_image, prior_fix, prior_round = _best_plate(rounds, nxt, root)
             fix_line = pad_fix or prior_fix or entry["next_fix"]
@@ -3320,7 +3420,10 @@ def cmd_converge(
                     "若下一轮仍同类碎边/体积问题，可显式 `--scale high`（需你确认，不会自动升档）。\n"
                 )
             msg += (
-                f"   👉 {pad_view['action']}，再 `converge generate`，然后 `converge judge`。"
+                f"   👉 {pad_view['action']}。"
+                "分数已经在会话里。还要下一轮时，这次审图会把下一轮定稿提示词写进会话，只组装一次。"
+                "看到最终 Prompt 就生图，再 `converge generate --image` 登记。"
+                "不要另开一次 emit，不要等外层脚本的日志文件。"
             )
 
         vlm_report = judge_res.get("remote_vlm") or {}
@@ -3354,6 +3457,44 @@ def cmd_converge(
 
         _write_session_json(sf, sess)
         mark_active_session(root, session_id)
+        print(
+            f"SCORE_READY round={r_no} score={float(score):.2f} "
+            f"continue={1 if should_continue and not passed else 0}",
+            flush=True,
+        )
+        if should_continue and not passed:
+            # 所有技能同一条：审图落盘后同一次写好下一轮定稿。登记仍复用 pending，不再组装。
+            print(f"NEXT_PROMPT_BEGIN round={int(r_no) + 1}", flush=True)
+            rc_next = cmd_converge(
+                root,
+                data,
+                "generate",
+                session_id=session_id,
+                round_num=int(r_no) + 1,
+                prompt="",
+                emit_prompt=True,
+                apply_memory=apply_memory,
+                scale=str(sess.get("scale") or ""),
+                module=str(sess.get("module") or ""),
+                goal=str(sess.get("goal") or ""),
+                ref_image=str(sess.get("ref_image") or ""),
+                ref_analysis=str(sess.get("ref_analysis") or ""),
+                medium_family=str(sess.get("medium_family") or ""),
+                contract=str(sess.get("contract") or ""),
+                aspect_ratio=str(sess.get("default_aspect_ratio") or sess.get("aspect_ratio") or ""),
+                skip_route_gate=skip_route_gate,
+                skip_reasonableness_gate=skip_reasonableness_gate,
+                skip_reason=skip_reason,
+                expect_route=expect_route,
+                conversation_id=(conversation_id or "").strip()
+                or str(sess.get("owner_conversation_id") or ""),
+                silent=silent,
+            )
+            if rc_next != 0:
+                print(
+                    "⚠️ 下一轮定稿提示词这次没写进会话。分数已经记下。"
+                    "可以再跑一次 generate --emit-prompt。不要等外层日志。"
+                )
         print(msg)
         print_round_lessons(lessons, silent=silent)
         return 0
@@ -3463,9 +3604,9 @@ def cmd_converge(
             or bool(sess.get("single_judge"))
             or any(
                 str((r or {}).get("early_safe_stop") or "")
-                in ("STOP_REGRESSION", "STOP_PLATEAU")
+                in EARLY_STOP_REASONS
                 or str((r or {}).get("decision") or "")
-                in ("STOP_REGRESSION", "STOP_PLATEAU")
+                in EARLY_STOP_REASONS
                 for r in judged_for_finish
             )
         )
@@ -3803,3 +3944,115 @@ def cmd_converge(
 
     print(f"未知 converge 子操作: {action}")
     return 1
+
+
+def cmd_converge_prepare(
+    root: Path,
+    data: dict[str, Any],
+    *,
+    session_id: str,
+    goal: str,
+    module: str = "",
+    scale: str = "medium",
+    threshold: float = DEFAULT_THRESHOLD,
+    max_rounds: int = DEFAULT_MAX_ROUNDS,
+    aspect_ratio: str = "",
+    ref_image: str = "",
+    ref_analysis: str = "",
+    reference_image_paths: list[str] | tuple[str, ...] | str | None = None,
+    medium_family: str = "",
+    contract: str = "",
+    skip_route_gate: bool = False,
+    skip_reason: str = "",
+    expect_route: str = "",
+    conversation_id: str = "",
+    defaults: str = "",
+    locks: str = "",
+    reason_skill: str = "ordinary",
+    reason_draft: str = "",
+    revised: str = "",
+    checklist: str = "",
+    recompose_dir: str = "",
+) -> int:
+    """start + contract set + reasonableness + emit-prompt in one process.
+
+    Does not lower 9.5, skip the reasonableness gate, or register an image.
+    Warm-start is built once, after the contract and the revised brief exist.
+    A failed review does not open a session, so it does not hold a parallel slot.
+    """
+    from .reasonableness_gate import format_review_print, review_reasonableness
+
+    preview = review_reasonableness(
+        skill=reason_skill or "ordinary",
+        draft=reason_draft,
+        revised=revised,
+        checklist_text=checklist,
+    )
+    if not preview.get("passed"):
+        print(format_review_print(preview))
+        print("合理性未过，未开启会话。")
+        return 1
+    rc = cmd_converge(
+        root,
+        data,
+        "start",
+        session_id=session_id,
+        goal=goal,
+        module=module,
+        scale=scale or "medium",
+        threshold=threshold,
+        max_rounds=max_rounds,
+        aspect_ratio=aspect_ratio,
+        ref_image=ref_image,
+        ref_analysis=ref_analysis,
+        reference_image_paths=reference_image_paths,
+        medium_family=medium_family,
+        contract=contract,
+        skip_route_gate=skip_route_gate,
+        skip_reason=skip_reason,
+        expect_route=expect_route,
+        conversation_id=conversation_id,
+        recompose_dir=recompose_dir,
+        defer_warm=True,
+    )
+    if rc != 0:
+        return rc
+    from .understanding_contract import cmd_contract
+
+    rc = cmd_contract(
+        root,
+        action="set",
+        session_id=session_id,
+        defaults=defaults or "prepare 已写明档位、画幅和垫图，按本次参数执行",
+        locks=locks,
+    )
+    if rc != 0:
+        return rc
+    from .reasonableness_gate import cmd_reasonableness_at_root
+
+    rc = cmd_reasonableness_at_root(
+        root,
+        action="review",
+        session_id=session_id,
+        skill=reason_skill or "ordinary",
+        draft=reason_draft,
+        revised=revised,
+        checklist=checklist,
+    )
+    if rc != 0:
+        return rc
+    return cmd_converge(
+        root,
+        data,
+        "generate",
+        session_id=session_id,
+        round_num=1,
+        emit_prompt=True,
+        goal=goal,
+        module=module,
+        scale=scale or "medium",
+        skip_route_gate=skip_route_gate,
+        skip_reason=skip_reason,
+        expect_route=expect_route,
+        conversation_id=conversation_id,
+    )

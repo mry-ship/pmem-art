@@ -1,0 +1,26 @@
+{
+  "route_id": "draw.touchup",
+  "banner": "【按局部改走了】",
+  "ok": true,
+  "passed_line": false,
+  "best_score": 0.0,
+  "rounds": 1,
+  "session_id": "showcase-touchup-20261123",
+  "final_image": "docs/showcase/skills-full-run-20261123/draw.touchup/touchup_r1.jpg",
+  "process_sheet": "docs/showcase/skills-full-run-20261123/draw.touchup/process_sheet.jpg",
+  "images": [
+    {
+      "slot": "R1",
+      "path": "docs/showcase/skills-full-run-20261123/draw.touchup/touchup_r1.jpg",
+      "score": 0.0
+    },
+    {
+      "slot": "source",
+      "path": "docs/showcase/skills-full-run-20261123/draw.touchup/touchup_source.jpg",
+      "score": null
+    }
+  ],
+  "text_deliverable": "",
+  "elapsed": "7分14秒",
+  "notes": "局部改快通道第1枪交件；未凑≥9.5三轮闭环；finish 未跑正式六维 judge（touchup 人眼过即停）"
+}

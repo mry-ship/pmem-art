@@ -1,0 +1,15 @@
+{
+  "route_id": "coach.report",
+  "banner": "【按 /pmem-coach 进步+短板+知识偷看走了】",
+  "ok": true,
+  "passed_line": null,
+  "best_score": null,
+  "rounds": 0,
+  "session_id": "showcase-coach-20261123",
+  "final_image": "",
+  "process_sheet": "",
+  "images": [],
+  "text_deliverable": "三条偷看合成：进步曲线 7d/30d（均分8.87/9.07）、口味档案与 improve 9.08；短板 Top5 以 lighting 为首；知识 5 条 suggest 仅列未 accept，私有8+共享15张。主件 coach.md。",
+  "elapsed": "",
+  "notes": "no_generate；未执行 learn accept。improve run 首轮 taste 档案锁失败后重试成功。coach 写入 coach_plan.json 为 CLI 正常副作用。"
+}

@@ -1,0 +1,129 @@
+{
+  "layers": {
+    "mushrooms": {
+      "status": "needs_human",
+      "reasons": [
+        "scale_mul=0.660<0.75 (footprint too loose or sprite over-zoomed — tighten plan crop then setup, or re-isolate closer to crop FOV; do NOT widen box)"
+      ],
+      "retries": 2,
+      "metrics": {
+        "box_px_asp": 0.5702,
+        "spr_asp": 0.5701,
+        "fill": 0.4348,
+        "scale_mul": 0.66,
+        "mode": "contain",
+        "edge_clip": 0.0,
+        "feat_match": 0.5925,
+        "asp_err": 0.0002
+      },
+      "file": "new/02-mushrooms.png"
+    },
+    "main_house": {
+      "status": "dirty",
+      "reasons": [
+        "layer_ghost_mae=52.5>52.0"
+      ],
+      "retries": 1,
+      "metrics": {
+        "box_px_asp": 0.6119,
+        "spr_asp": 0.6121,
+        "fill": 0.7221,
+        "scale_mul": 0.85,
+        "mode": "contain",
+        "edge_clip": 0.0,
+        "feat_match": 0.6557,
+        "asp_err": 0.0003,
+        "layer_ghost_mae": 52.483
+      },
+      "file": "new/04-main_house.png",
+      "source": "isolate"
+    },
+    "bg": {
+      "status": "ok",
+      "reasons": [],
+      "retries": 0,
+      "metrics": {
+        "box_px_asp": 0.6125,
+        "spr_asp": 0.6125,
+        "fill": 1.0,
+        "scale_mul": 1.0,
+        "mode": "cover_uniform_sky_align",
+        "stretch_err": 0.0,
+        "bg_bake": 0.0,
+        "asp_err": 0.0
+      },
+      "file": "new/01-bg.png",
+      "source": "isolate"
+    },
+    "pond_boat": {
+      "status": "dirty",
+      "reasons": [
+        "layer_ghost_mae=62.9>52.0"
+      ],
+      "retries": 2,
+      "metrics": {
+        "box_px_asp": 0.5534,
+        "spr_asp": 0.5534,
+        "fill": 0.7215,
+        "scale_mul": 0.85,
+        "mode": "contain",
+        "edge_clip": 0.0,
+        "feat_match": 0.6273,
+        "asp_err": 0.0,
+        "layer_ghost_mae": 62.901
+      },
+      "file": "new/03-pond_boat.png",
+      "source": "isolate"
+    },
+    "treehouse_mole": {
+      "status": "ok",
+      "reasons": [],
+      "retries": 0,
+      "metrics": {
+        "box_px_asp": 0.5022,
+        "spr_asp": 0.5022,
+        "fill": 0.8452,
+        "scale_mul": 0.92,
+        "mode": "contain",
+        "edge_clip": 0.0,
+        "feat_match": 0.6854,
+        "asp_err": 0.0
+      },
+      "file": "new/05-treehouse_mole.png",
+      "source": "isolate"
+    },
+    "foreground": {
+      "status": "dirty",
+      "reasons": [
+        "layer_ghost_mae=59.1>52.0"
+      ],
+      "retries": 2,
+      "metrics": {
+        "box_px_asp": 1.3466,
+        "spr_asp": 1.3465,
+        "fill": 0.9994,
+        "scale_mul": 1.0,
+        "mode": "contain",
+        "edge_clip": 0.0,
+        "feat_match": 0.6536,
+        "asp_err": 0.0001,
+        "layer_ghost_mae": 59.076
+      },
+      "file": "new/06-foreground.png",
+      "source": "isolate"
+    }
+  },
+  "version": 1,
+  "engine": "gpt-image-2.5",
+  "dirty_ids": [
+    "pond_boat",
+    "foreground",
+    "main_house",
+    "mushrooms",
+    "treehouse_mole"
+  ],
+  "ok_ids": [
+    "bg",
+    "treehouse_mole"
+  ]
+}
