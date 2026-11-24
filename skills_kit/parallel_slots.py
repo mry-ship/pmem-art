@@ -11,6 +11,8 @@ from typing import Any
 
 # finished 不占槽。prepare 中途失败且还没有成图时记 prepare_aborted，同样不占槽。
 _TERMINAL = frozenset({"finished", "prepare_aborted"})
+# 心跳状态。lost 是确认失联，不再占槽。其余状态靠 heartbeat_at，不看文件 mtime。
+HEARTBEAT_STATES = ("generating", "waiting_model", "awaiting_human", "lost")
 # 预占只挡住「会话文件还没写出来」的窗口。崩溃留下的预占过期后不再占槽。
 RESERVE_TTL_SEC = 15 * 60
 _SAFE_ID = re.compile(r"[^A-Za-z0-9._-]+")
@@ -38,11 +40,163 @@ def slot_stale_seconds(data: dict[str, Any] | None) -> float:
     return hours * 3600.0
 
 
-def list_active_sessions(root: Path, data: dict[str, Any] | None = None) -> list[dict[str, Any]]:
-    """Scan `.memory-art/converge/*.json` for non-finished sessions.
+def _heartbeat_dir(root: Path) -> Path:
+    return Path(root) / ".memory-art" / "converge" / "_heartbeats"
 
-    Files older than agent.slot_stale_hours (default 36) do not hold a slot.
-    Their JSON is left unchanged.
+
+def _corrupt_dir(root: Path) -> Path:
+    return Path(root) / ".memory-art" / "converge" / "_corrupt"
+
+
+def write_heartbeat(root: Path, session_id: str, state: str) -> None:
+    """Refresh liveness without rewriting the session file or its mtime."""
+    sid = (session_id or "").strip()
+    if not sid:
+        return
+    phase = state if state in HEARTBEAT_STATES else "generating"
+    folder = _heartbeat_dir(root)
+    folder.mkdir(parents=True, exist_ok=True)
+    payload = {"session_id": sid, "state": phase, "at": time.time()}
+    path = folder / f"{_safe_session_id(sid)}.json"
+    path.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+
+
+def read_heartbeat(root: Path, session_id: str) -> dict[str, Any] | None:
+    sid = (session_id or "").strip()
+    if not sid:
+        return None
+    path = _heartbeat_dir(root) / f"{_safe_session_id(sid)}.json"
+    if not path.is_file():
+        return None
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    return data if isinstance(data, dict) else None
+
+
+def _epoch_of(value: Any) -> float | None:
+    if isinstance(value, (int, float)) and not isinstance(value, bool):
+        number = float(value)
+        if number > 10_000:
+            return number
+    text = str(value or "").strip()
+    if not text:
+        return None
+    try:
+        number = float(text)
+    except ValueError:
+        number = 0.0
+    else:
+        if number > 10_000:
+            return number
+    core = text.replace("UTC+8", "").strip()
+    try:
+        from datetime import datetime
+
+        return datetime.strptime(core, "%Y-%m-%d %H:%M:%S").timestamp()
+    except ValueError:
+        return None
+
+
+def _liveness(root: Path, session_id: str, sess: dict[str, Any]) -> tuple[str, float | None]:
+    side = read_heartbeat(root, session_id) or {}
+    side_at = _epoch_of(side.get("at"))
+    side_state = str(side.get("state") or "")
+    sess_at = _epoch_of(sess.get("heartbeat_at"))
+    sess_state = str(sess.get("heartbeat_state") or "")
+    if side_at is not None and (sess_at is None or side_at >= sess_at):
+        state = side_state if side_state in HEARTBEAT_STATES else (sess_state or "generating")
+        return state, side_at
+    if sess_at is not None:
+        state = sess_state if sess_state in HEARTBEAT_STATES else "generating"
+        return state, sess_at
+    started = _epoch_of(sess.get("started_at"))
+    if started is not None:
+        state = sess_state if sess_state in HEARTBEAT_STATES else "generating"
+        return state, started
+    return sess_state or "generating", None
+
+
+def isolate_corrupt_session(root: Path, path: Path, error: str) -> dict[str, Any]:
+    """Move a broken session aside and keep holding its slot until someone releases it."""
+    folder = _corrupt_dir(root)
+    folder.mkdir(parents=True, exist_ok=True)
+    sid = path.stem
+    hold_path = folder / f"{_safe_session_id(sid)}.hold.json"
+    record: dict[str, Any] = {
+        "session_id": sid,
+        "status": "corrupt",
+        "error": (error or "")[:500],
+        "holds_slot": True,
+        "isolated_at": time.time(),
+        "isolated_path": "",
+    }
+    dest = folder / path.name
+    if dest.exists():
+        dest = folder / f"{path.stem}-{int(time.time())}{path.suffix}"
+    try:
+        path.replace(dest)
+        record["isolated_path"] = str(dest)
+    except OSError as exc:
+        record["isolated_path"] = str(path)
+        record["error"] = f"{record['error']}; 隔离失败: {exc}"[:500]
+    hold_path.write_text(json.dumps(record, ensure_ascii=False, indent=2), encoding="utf-8")
+    with (folder / "log.jsonl").open("a", encoding="utf-8") as handle:
+        handle.write(json.dumps(record, ensure_ascii=False) + "\n")
+    return record
+
+
+def list_corrupt_holds(root: Path) -> list[dict[str, Any]]:
+    folder = _corrupt_dir(root)
+    if not folder.is_dir():
+        return []
+    out: list[dict[str, Any]] = []
+    for path in sorted(folder.glob("*.hold.json")):
+        try:
+            rec = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        if not isinstance(rec, dict) or not rec.get("holds_slot"):
+            continue
+        out.append(
+            {
+                "session_id": str(rec.get("session_id") or path.name.replace(".hold.json", "")),
+                "status": "corrupt",
+                "path": str(rec.get("isolated_path") or path),
+                "module": "",
+                "error": str(rec.get("error") or ""),
+            }
+        )
+    return out
+
+
+def release_corrupt_slot(root: Path, session_id: str) -> bool:
+    """Drop a corrupt hold after a person confirms it or the file is restored."""
+    sid = (session_id or "").strip()
+    if not sid:
+        return False
+    path = _corrupt_dir(root) / f"{_safe_session_id(sid)}.hold.json"
+    if not path.is_file():
+        return False
+    try:
+        rec = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        rec = {"session_id": sid}
+    if not isinstance(rec, dict):
+        rec = {"session_id": sid}
+    rec["holds_slot"] = False
+    rec["released_at"] = time.time()
+    path.write_text(json.dumps(rec, ensure_ascii=False, indent=2), encoding="utf-8")
+    return True
+
+
+def list_active_sessions(root: Path, data: dict[str, Any] | None = None) -> list[dict[str, Any]]:
+    """Non-finished sessions, plus corrupt files that still hold a slot.
+
+    Freshness uses heartbeat_at / the heartbeat sidecar / started_at.
+    File mtime is not a running state. lost does not hold a slot.
+    Corrupt JSON is isolated and keeps the slot until release_corrupt_slot.
     """
     d = root / ".memory-art" / "converge"
     if not d.is_dir():
@@ -50,34 +204,69 @@ def list_active_sessions(root: Path, data: dict[str, Any] | None = None) -> list
     stale_sec = slot_stale_seconds(data)
     now = time.time()
     out: list[dict[str, Any]] = []
+    held: set[str] = set()
     for p in sorted(d.glob("*.json")):
         if p.name.endswith(".tmp") or p.name.startswith("_"):
             continue
         try:
             sess = json.loads(p.read_text(encoding="utf-8"))
-        except (OSError, json.JSONDecodeError):
+        except json.JSONDecodeError as exc:
+            rec = isolate_corrupt_session(root, p, f"JSONDecodeError: {exc}")
+            sid = str(rec.get("session_id") or p.stem)
+            if sid not in held:
+                held.add(sid)
+                out.append(
+                    {
+                        "session_id": sid,
+                        "status": "corrupt",
+                        "path": str(rec.get("isolated_path") or p),
+                        "module": "",
+                    }
+                )
+            continue
+        except OSError:
             continue
         if not isinstance(sess, dict):
+            rec = isolate_corrupt_session(root, p, "会话 JSON 不是对象")
+            sid = str(rec.get("session_id") or p.stem)
+            if sid not in held:
+                held.add(sid)
+                out.append(
+                    {
+                        "session_id": sid,
+                        "status": "corrupt",
+                        "path": str(rec.get("isolated_path") or p),
+                        "module": "",
+                    }
+                )
             continue
         status = str(sess.get("status") or "").strip()
         if not status or status in _TERMINAL:
             continue
-        if stale_sec > 0:
-            try:
-                if now - p.stat().st_mtime > stale_sec:
-                    continue
-            except OSError:
-                continue
-        # 未过期的非 finished 一律占槽（含 converged 等 finish、early_safe_stop）
         sid = str(sess.get("session_id") or p.stem)
+        state, beat = _liveness(root, sid, sess)
+        if state == "lost":
+            continue
+        if stale_sec > 0 and beat is not None and now - beat > stale_sec:
+            continue
+        if sid in held:
+            continue
+        held.add(sid)
         out.append(
             {
                 "session_id": sid,
                 "status": status,
                 "path": str(p),
                 "module": str(sess.get("module") or ""),
+                "heartbeat_state": state,
             }
         )
+    for item in list_corrupt_holds(root):
+        sid = str(item["session_id"])
+        if sid in held:
+            continue
+        held.add(sid)
+        out.append(item)
     return out
 
 

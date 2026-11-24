@@ -29,7 +29,7 @@ from lifecycle import ensure_stdio_survives_locale
 
 ensure_stdio_survives_locale()
 
-VERSION = "0.16.20-art"
+VERSION = "0.16.21-art"
 MEMORY_DIR = ".memory-art"
 
 KIND_META = {
@@ -1840,13 +1840,13 @@ def cmd_hook(root: Path, data: dict[str, Any], event: str) -> int:
     # Write/Edit/MCP/pre-tool 不认领。须已有活跃 converge session。
     if event == "post-asset" and conv_id and is_generate_image_tool(tool, args_obj):
         try:
-            from skills_kit.converge_loop import (
-                active_session_id,
-                claim_active_conversation,
-            )
+            from skills_kit.converge_loop import active_session_id, claim_active_conversation
+            from skills_kit.parallel_slots import write_heartbeat
 
-            if active_session_id(root):
-                claim_active_conversation(root, conv_id)
+            claim_active_conversation(root, conv_id)
+            beat_sid = active_session_id(root, conversation_id=conv_id) or active_session_id(root)
+            if beat_sid:
+                write_heartbeat(root, beat_sid, "awaiting_human")
         except Exception:
             pass
 
@@ -1857,12 +1857,13 @@ def cmd_hook(root: Path, data: dict[str, Any], event: str) -> int:
         module = ""
         warm: dict[str, Any] = {}
         sess: dict[str, Any] = {}
+        sid = ""
         try:
             from skills_kit.converge_loop import (
                 active_session_id,
                 load_session,
             )
-            sid = active_session_id(root)
+            sid = active_session_id(root, conversation_id=conv_id) or active_session_id(root)
             sess = load_session(root, sid) if sid else {}
             if sess:
                 module = str(sess.get("module") or "")
@@ -1871,6 +1872,13 @@ def cmd_hook(root: Path, data: dict[str, Any], event: str) -> int:
                     q = str(sess.get("goal") or "")
         except Exception:
             sess = {}
+        if event == "pre-gen" and sid and is_generate_image_tool(tool, args_obj):
+            try:
+                from skills_kit.parallel_slots import write_heartbeat
+
+                write_heartbeat(root, sid, "waiting_model")
+            except Exception:
+                pass
         # 真生图且路由未放行：拦住 GenerateImage。stop followup 仍按对话归属，这里不改。
         if event == "pre-gen":
             try:
@@ -1971,10 +1979,11 @@ def cmd_hook(root: Path, data: dict[str, Any], event: str) -> int:
             followup_allowed_for_conversation,
             loop_followup,
         )
-        # 全局 _active 只服务「认领了出图」的那个 conversation；
-        # 别的任务窗 stop 时禁止发 followup_message，否则会挤占并抢走焦点。
+        # 每个 conversation 只催自己登记的会话，不看最后启动的那一个。
         allow_followup = followup_allowed_for_conversation(root, conv_id)
-        blocker = loop_followup(root) if allow_followup else None
+        blocker = (
+            loop_followup(root, conversation_id=conv_id) if allow_followup else None
+        )
         if blocker:
             followup = blocker["message"]
             advice.append("🛑 生图闭环还没停：" + followup)

@@ -16,7 +16,7 @@
 ![Skills](https://img.shields.io/badge/美术技能-11-8B5CF6)
 ![Threshold](https://img.shields.io/badge/合格线-≥9.50-blue)
 
-[📦 下载用户包 0.16.20-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.20-art) · [📖 使用手册](USER_MANUAL.md) · [认路白话流程图](docs/route_pipeline.html) · [进阶技能点选](docs/skills/flows.html) · [效果图墙](#效果长什么样) · [全页展陈](docs/showcase/skills-homepage/index.html) · [架构](ARCHITECTURE.md)
+[📦 下载用户包 0.16.21-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.21-art) · [📖 使用手册](USER_MANUAL.md) · [认路白话流程图](docs/route_pipeline.html) · [进阶技能点选](docs/skills/flows.html) · [效果图墙](#效果长什么样) · [全页展陈](docs/showcase/skills-homepage/index.html) · [架构](ARCHITECTURE.md)
 
 </div>
 
@@ -34,10 +34,10 @@
 
 ## 一分钟接入
 
-**推荐画师：下用户包**（不含研发用 pmem）→ [Releases · v0.16.20-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.20-art)
+**推荐画师：下用户包**（不含研发用 pmem）→ [Releases · v0.16.21-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.21-art)
 
 ```bash
-# 解压 pmem-art-0.16.20-art.zip 后
+# 解压 pmem-art-0.16.21-art.zip 后
 pip install -r requirements.txt
 pyw -3 -u pmem_art.py init --name "MyArtProject"
 pyw -3 -u pmem_art.py skills --install
@@ -189,7 +189,7 @@ pyw -3 -u pmem_art.py atlas
 
 **计分对账（0.16.18+）**：缺陷词把正式分压下去之后，报出来的六维也不会再高于这个分。同一份成图不能再登记到另一轮或另一个技能。结算时若磁盘上的图和计分时不是同一份，分数作废，不能 `finish`。竖图不会因为文件名里有 `strip` 就被当成横条货条。
 
-**这一版（0.16.20）**：`converge prepare` 可以一次写入四格。同一会话按修订号写入，后写的旧稿不能盖住新稿。带原图只改表情、还要其余保持时，先问局部改还是变体，不开克隆。0.16.19 的准备一次做完、门槛早停、36 小时旧会话不占槽、图标符号偏小会拦住，仍然有效。用户包仍不含研发用 pmem。
+**这一版（0.16.21）**：保存合同必须带上读取时的修订号，对不上就拒绝。通用六维不能跨到下一维，也不能超过 10 分。成图要真正解码后才过验收。多个会话各自登记活动索引。准备失败会清掉这次的活动指针。损坏的会话文件先隔离并继续占槽。槽位看心跳，不看文件修改时间。正式资产按内容哈希落盘。带原图改表情时，「其它保持」和拿不准的说法都会先问。0.16.20 的四格一次写入、修订号、表情先问，仍然有效。用户包仍不含研发用 pmem。
 
 ---
 

@@ -28,22 +28,76 @@ def session_json_path(root: Path, session_id: str, *, suffix: str = ".json") -> 
     return path
 
 
+def _empty_index() -> dict[str, Any]:
+    return {"sessions": {}, "conversations": {}, "order": []}
+
+
+def _normalize_active(data: dict[str, Any]) -> dict[str, Any]:
+    """Accept the old single pointer and the session/conversation index."""
+    if not isinstance(data, dict):
+        return _empty_index()
+    sessions = data.get("sessions")
+    if isinstance(sessions, dict):
+        clean: dict[str, Any] = {}
+        for sid, entry in sessions.items():
+            key = str(sid or "").strip()
+            if not key:
+                continue
+            if isinstance(entry, dict):
+                clean[key] = {
+                    "conversation_id": str(entry.get("conversation_id") or "").strip(),
+                    "started_at": str(entry.get("started_at") or "").strip(),
+                }
+            else:
+                clean[key] = {
+                    "conversation_id": str(entry or "").strip(),
+                    "started_at": "",
+                }
+        convs_in = data.get("conversations")
+        convs: dict[str, str] = {}
+        if isinstance(convs_in, dict):
+            for cid, sid in convs_in.items():
+                c = str(cid or "").strip()
+                s = str(sid or "").strip()
+                if c and s in clean and clean[s]["conversation_id"] == c:
+                    convs[c] = s
+        for sid, entry in clean.items():
+            cid = entry["conversation_id"]
+            if cid and cid not in convs:
+                convs[cid] = sid
+        order = [str(x) for x in (data.get("order") or []) if str(x) in clean]
+        for sid in clean:
+            if sid not in order:
+                order.append(sid)
+        return {"sessions": clean, "conversations": convs, "order": order}
+    sid = str(data.get("session_id") or "").strip()
+    if not sid:
+        return _empty_index()
+    owner = str(data.get("owner_conversation_id") or "").strip()
+    convs = {owner: sid} if owner else {}
+    return {
+        "sessions": {sid: {"conversation_id": owner, "started_at": ""}},
+        "conversations": convs,
+        "order": [sid],
+    }
+
+
 def _read_active(root: Path) -> dict[str, Any]:
     path = _converge_dir(root) / _ACTIVE
     if not path.is_file():
-        return {}
+        return _empty_index()
     try:
         data = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
-        return {}
-    return data if isinstance(data, dict) else {}
+        return _empty_index()
+    return _normalize_active(data if isinstance(data, dict) else {})
 
 
 def _write_active(root: Path, data: dict[str, Any]) -> None:
     folder = _converge_dir(root)
     folder.mkdir(parents=True, exist_ok=True)
     (folder / _ACTIVE).write_text(
-        json.dumps(data, ensure_ascii=False),
+        json.dumps(_normalize_active(data), ensure_ascii=False),
         encoding="utf-8",
     )
 
@@ -52,77 +106,147 @@ def mark_active_session(
     root: Path,
     session_id: str,
     conversation_id: str = "",
+    started_at: str = "",
 ) -> None:
-    """Mark the converge cell that stop-hook may nudge — keep prior owner when possible."""
+    """Register one session. A later session must not erase another session's owner."""
     sid = (session_id or "latest").strip() or "latest"
-    prev = _read_active(root)
-    payload: dict[str, Any] = {"session_id": sid}
+    data = _read_active(root)
+    sessions: dict[str, Any] = data["sessions"]
+    convs: dict[str, str] = data["conversations"]
+    entry = dict(sessions.get(sid) or {"conversation_id": "", "started_at": ""})
+    if (started_at or "").strip():
+        entry["started_at"] = started_at.strip()
     explicit = (conversation_id or "").strip()
-    prev_sid = str(prev.get("session_id") or "").strip()
-    # Same cell (or first write): keep prior owner; switching to a different sid clears it.
-    same_cell = prev_sid in ("", sid) or (prev_sid == "latest" and sid == "latest")
     if explicit:
-        payload["owner_conversation_id"] = explicit
-    elif same_cell:
-        kept = str(prev.get("owner_conversation_id") or "").strip()
-        if kept:
-            payload["owner_conversation_id"] = kept
-    _write_active(root, payload)
+        previous = str(entry.get("conversation_id") or "").strip()
+        if previous and previous != explicit and convs.get(previous) == sid:
+            convs.pop(previous, None)
+        other = convs.get(explicit)
+        if other and other != sid:
+            other_entry = dict(sessions.get(other) or {"conversation_id": ""})
+            if other_entry.get("conversation_id") == explicit:
+                other_entry["conversation_id"] = ""
+                sessions[other] = other_entry
+        entry["conversation_id"] = explicit
+        convs[explicit] = sid
+    sessions[sid] = entry
+    order = [x for x in data["order"] if x != sid]
+    order.append(sid)
+    _write_active(root, {"sessions": sessions, "conversations": convs, "order": order})
 
 
-def claim_active_conversation(root: Path, conversation_id: str) -> str:
-    """Bind active converge to this composer when unbound; return owner id (may be empty)."""
+def claim_active_conversation(
+    root: Path,
+    conversation_id: str,
+    session_id: str = "",
+) -> str:
+    """Bind this conversation to one unbound session. Never steal another owner."""
     cid = (conversation_id or "").strip()
     if not cid:
         return ""
     data = _read_active(root)
-    if not data.get("session_id"):
+    sessions: dict[str, Any] = data["sessions"]
+    convs: dict[str, str] = data["conversations"]
+    if not sessions:
         return ""
-    owner = str(data.get("owner_conversation_id") or "").strip()
-    if not owner:
-        data["owner_conversation_id"] = cid
-        _write_active(root, data)
-        return cid
-    return owner
+    bound = convs.get(cid)
+    if bound and bound in sessions:
+        return str(sessions[bound].get("conversation_id") or "")
+    requested = (session_id or "").strip()
+    if requested:
+        targets = [requested] if requested in sessions else []
+    else:
+        targets = [
+            sid
+            for sid, entry in sessions.items()
+            if not str(entry.get("conversation_id") or "").strip()
+        ]
+    if len(targets) != 1:
+        return ""
+    sid = targets[0]
+    entry = dict(sessions.get(sid) or {"conversation_id": ""})
+    owner = str(entry.get("conversation_id") or "").strip()
+    if owner and owner != cid:
+        return owner
+    entry["conversation_id"] = cid
+    sessions[sid] = entry
+    convs[cid] = sid
+    _write_active(
+        root,
+        {"sessions": sessions, "conversations": convs, "order": data["order"]},
+    )
+    return cid
 
 
-def active_owner_conversation_id(root: Path) -> str:
-    return str(_read_active(root).get("owner_conversation_id") or "").strip()
+def active_owner_conversation_id(root: Path, session_id: str = "") -> str:
+    data = _read_active(root)
+    sid = (session_id or "").strip()
+    sessions: dict[str, Any] = data["sessions"]
+    if not sid:
+        if len(sessions) != 1:
+            return ""
+        sid = next(iter(sessions))
+    entry = sessions.get(sid) or {}
+    return str(entry.get("conversation_id") or "").strip()
 
 
 def followup_allowed_for_conversation(root: Path, conversation_id: str) -> bool:
     """
-    Only the owning composer may receive stop followup_message.
+    Only the composer that owns a registered session may receive stop followup.
 
     - No conversation_id in hook payload → allow (CLI / older hosts).
-    - Owner empty → deny for Cursor chats (must claim via GenerateImage post-asset only;
-      pre-gen never claims, even if manually mounted).
-    - Owner mismatch → deny (do not hijack unrelated chats).
+    - This conversation is not in the index → deny (must claim via GenerateImage
+      post-asset; pre-gen never claims).
+    - Another conversation's session does not make this one allowed.
     """
     cid = (conversation_id or "").strip()
     if not cid:
         return True
-    owner = active_owner_conversation_id(root)
-    if not owner:
+    data = _read_active(root)
+    sid = str(data["conversations"].get(cid) or "").strip()
+    if not sid:
         return False
-    return owner == cid
+    entry = data["sessions"].get(sid) or {}
+    return str(entry.get("conversation_id") or "").strip() == cid
 
 
-def clear_active_session(root: Path, session_id: str = "") -> None:
+def clear_active_session(
+    root: Path,
+    session_id: str = "",
+    started_at: str = "",
+) -> None:
     path = _converge_dir(root) / _ACTIVE
     if not path.is_file():
         return
-    if session_id:
+    if not (session_id or "").strip():
         try:
-            current = json.loads(path.read_text(encoding="utf-8"))
-        except (OSError, json.JSONDecodeError):
-            current = {}
-        if str(current.get("session_id") or "") not in ("", session_id, "latest"):
-            return
-    try:
-        path.unlink()
-    except OSError:
-        pass
+            path.unlink()
+        except OSError:
+            pass
+        return
+    data = _read_active(root)
+    sid = session_id.strip()
+    sessions: dict[str, Any] = data["sessions"]
+    if sid not in sessions:
+        return
+    entry = sessions[sid]
+    expected = (started_at or "").strip()
+    recorded = str(entry.get("started_at") or "").strip()
+    if expected and recorded and expected != recorded:
+        return
+    sessions.pop(sid)
+    convs: dict[str, str] = data["conversations"]
+    cid = str(entry.get("conversation_id") or "").strip()
+    if cid and convs.get(cid) == sid:
+        convs.pop(cid, None)
+    order = [x for x in data["order"] if x != sid]
+    if not sessions:
+        try:
+            path.unlink()
+        except OSError:
+            pass
+        return
+    _write_active(root, {"sessions": sessions, "conversations": convs, "order": order})
 
 
 def load_session(root: Path, session_id: str) -> dict[str, Any]:
@@ -136,13 +260,29 @@ def load_session(root: Path, session_id: str) -> dict[str, Any]:
     return data if isinstance(data, dict) else {}
 
 
-def active_session_id(root: Path) -> str:
-    return str(_read_active(root).get("session_id") or "").strip()
+def active_session_id(root: Path, conversation_id: str = "") -> str:
+    """Session for this conversation. With no conversation, only when exactly one is registered."""
+    data = _read_active(root)
+    cid = (conversation_id or "").strip()
+    if cid:
+        return str(data["conversations"].get(cid) or "").strip()
+    sessions: dict[str, Any] = data["sessions"]
+    if len(sessions) == 1:
+        return next(iter(sessions))
+    return ""
 
 
-def loop_followup(root: Path, session_id: str = "") -> dict[str, str] | None:
-    """If the active converge cell is not done, return the next mandatory step."""
-    sid = (session_id or active_session_id(root) or "").strip()
+def loop_followup(
+    root: Path,
+    session_id: str = "",
+    conversation_id: str = "",
+) -> dict[str, str] | None:
+    """Next step for one session. A conversation resolves its own session, not the latest start."""
+    sid = (session_id or "").strip()
+    if not sid and (conversation_id or "").strip():
+        sid = active_session_id(root, conversation_id=conversation_id)
+    if not sid:
+        sid = active_session_id(root)
     if not sid:
         return None
     sess = load_session(root, sid)

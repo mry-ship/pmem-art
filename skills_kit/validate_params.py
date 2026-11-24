@@ -10,10 +10,12 @@ from typing import Any
 
 from ._time import _now_cst
 
-from .prompt_scale import DEFAULT_THRESHOLD, MIN_IMAGE_BYTE_ENTROPY, MIN_IMAGE_EDGE_PX
+from .prompt_scale import DEFAULT_THRESHOLD, MIN_IMAGE_EDGE_PX
 from .scoring import defects_are_substantive
 from .image_gates import (
+    BLANK_FRAME_SHARE,
     VALID_ASPECT_RATIOS,
+    _ALPHA_COVERAGE_FLOOR,
     _aspect_relation,
     _inspect_image_physical_traits,
     _parse_ratio_float,
@@ -421,22 +423,34 @@ def _physical_image_gate(
     *,
     image_path: str = "",
     target_th: float = DEFAULT_THRESHOLD,
+    asset_kind: str = "",
 ) -> dict[str, Any]:
-    """Hard fail when there is no real on-disk image (or it is blank / too small)."""
+    """拦无法解码、几乎全透明、或整幅单一颜色的图。字节熵只记录，不单独放行或拦截。"""
     reasons: list[str] = []
+    kind = asset_kind or str(traits.get("asset_kind") or "opaque")
+    if kind not in _ALPHA_COVERAGE_FLOOR:
+        kind = "opaque"
     if not traits.get("exists"):
         label = (image_path or "").strip() or "<empty>"
         reasons.append(f"磁盘无有效生成图: {label}")
+    elif not traits.get("decode_ok"):
+        err = str(traits.get("decode_error") or "无法解码").strip()
+        reasons.append(f"图片解码失败: {err}")
     else:
         w = int(traits.get("width") or 0)
         h = int(traits.get("height") or 0)
-        entropy = float(traits.get("color_entropy") or 0.0)
         if w < MIN_IMAGE_EDGE_PX or h < MIN_IMAGE_EDGE_PX:
             reasons.append(f"分辨率过低: {w}x{h}（至少 {MIN_IMAGE_EDGE_PX}px 边长）")
-        if entropy < MIN_IMAGE_BYTE_ENTROPY:
-            reasons.append(
-                f"图像内容熵过低: {entropy:.2f} < {MIN_IMAGE_BYTE_ENTROPY}（疑似空白/纯色占位图）"
-            )
+        if traits.get("has_alpha"):
+            floor = _ALPHA_COVERAGE_FLOOR[kind]
+            coverage = float(traits.get("alpha_coverage") or 0.0)
+            if coverage < floor:
+                reasons.append(
+                    f"有效像素过少: alpha {coverage:.1%} < {floor:.1%}（{kind}）"
+                )
+        blank = float(traits.get("blank_ratio") or 0.0)
+        if blank >= BLANK_FRAME_SHARE:
+            reasons.append(f"画面几乎为空: 空白比例 {blank:.1%}")
     blocked = bool(reasons)
     return {
         "blocked": blocked,

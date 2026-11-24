@@ -22,7 +22,13 @@ from .scoring import (
     defects_are_substantive,
     parse_5d_dims,
 )
-from .image_gates import _aspect_relation, _inspect_image_physical_traits, resolve_case_config
+from .image_gates import (
+    _aspect_relation,
+    _inspect_image_physical_traits,
+    empty_physical_traits,
+    physical_asset_kind_for_session,
+    resolve_case_config,
+)
 from .validate_params import _physical_image_gate
 from .absolute_5d_agent_rubric import AGENT_JUDGE_SOURCE
 from .subject_lexicon import clause
@@ -87,15 +93,12 @@ def auto_vlm_judge_image(
         if cand_cwd.is_file():
             p = cand_cwd
 
-    traits = _inspect_image_physical_traits(p) if image_path else {
-        "exists": False,
-        "size_bytes": 0,
-        "size_kb": 0.0,
-        "width": 0,
-        "height": 0,
-        "aspect_ratio": "unknown",
-        "color_entropy": 0.0,
-    }
+    asset_kind = physical_asset_kind_for_session(root, session_id, module=module)
+    traits = (
+        _inspect_image_physical_traits(p, asset_kind=asset_kind)
+        if image_path
+        else empty_physical_traits()
+    )
 
     target_th = float(scale_prof.get("target_score_threshold", DEFAULT_THRESHOLD))
     max_rounds = int(scale_prof.get("max_rounds", DEFAULT_MAX_ROUNDS))
@@ -199,7 +202,12 @@ def auto_vlm_judge_image(
                     f"实测为 {aspect_rel['simplified']} ({traits.get('width')}x{traits.get('height')})"
                 )
 
-    phys = _physical_image_gate(traits, image_path=str(image_path or ""), target_th=target_th)
+    phys = _physical_image_gate(
+        traits,
+        image_path=str(image_path or ""),
+        target_th=target_th,
+        asset_kind=asset_kind,
+    )
     if require_image and phys["blocked"]:
         for reason in phys["reasons"]:
             if reason not in indep_defects:

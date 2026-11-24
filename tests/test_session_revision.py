@@ -55,6 +55,75 @@ class SessionRevisionTests(unittest.TestCase):
             self.assertEqual(int(disk["_rev"]), 2)
             self.assertTrue(sf.with_name(sf.name + ".lock").is_file() or os.path.exists(sf.with_name(sf.name + ".lock")))
 
+    def test_stale_contract_does_not_cover_a_newer_contract(self) -> None:
+        """重读最新会话再贴旧合同，不能靠新的 _rev 把新合同盖掉。"""
+        from skills_kit.understanding_contract import save_session_contract
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            sf = root / ".memory-art" / "converge" / "c1.json"
+            sf.parent.mkdir(parents=True)
+            _write_session_json(
+                sf,
+                {
+                    "session_id": "c1",
+                    "status": "running",
+                    "rounds": [],
+                    "understanding_contract": {"grid": {"keep": ["原合同"]}},
+                },
+            )
+            base = json.loads(sf.read_text(encoding="utf-8"))
+            base_rev = int(base["_rev"])
+            save_session_contract(
+                root,
+                "c1",
+                {"grid": {"keep": ["B 的新合同"]}},
+                base_rev=base_rev,
+            )
+            newer = json.loads(sf.read_text(encoding="utf-8"))
+            newer["rounds"] = [{"round": 1, "image": "r1.png"}]
+            _write_session_json(sf, newer)
+            held_rev = int(json.loads(sf.read_text(encoding="utf-8"))["_rev"])
+            with self.assertRaises(SessionRevisionConflict):
+                save_session_contract(
+                    root,
+                    "c1",
+                    {"grid": {"keep": ["A 的旧草稿"]}},
+                    base_rev=base_rev,
+                )
+            disk = json.loads(sf.read_text(encoding="utf-8"))
+            self.assertEqual(disk["understanding_contract"]["grid"]["keep"], ["B 的新合同"])
+            self.assertEqual(disk["rounds"][0]["image"], "r1.png")
+            self.assertEqual(int(disk["_rev"]), held_rev)
+
+    def test_contract_save_matches_the_rev_from_the_read(self) -> None:
+        from skills_kit.understanding_contract import save_session_contract
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            sf = root / ".memory-art" / "converge" / "c2.json"
+            sf.parent.mkdir(parents=True)
+            _write_session_json(
+                sf,
+                {
+                    "session_id": "c2",
+                    "status": "running",
+                    "rounds": [{"round": 1, "image": "keep.png"}],
+                    "understanding_contract": {"grid": {"keep": ["原合同"]}},
+                },
+            )
+            base_rev = int(json.loads(sf.read_text(encoding="utf-8"))["_rev"])
+            save_session_contract(
+                root,
+                "c2",
+                {"grid": {"keep": ["这一次的合同"]}},
+                base_rev=base_rev,
+            )
+            disk = json.loads(sf.read_text(encoding="utf-8"))
+            self.assertEqual(disk["understanding_contract"]["grid"]["keep"], ["这一次的合同"])
+            self.assertEqual(disk["rounds"][0]["image"], "keep.png")
+            self.assertEqual(int(disk["_rev"]), base_rev + 1)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -52,29 +52,88 @@ class TestStaleSlots(unittest.TestCase):
             data = {"config": {"agent": {"max_parallel": 1, "slot_stale_hours": 36}}}
             stale = d / "old.json"
             stale.write_text(
-                json.dumps({"session_id": "old", "status": "running"}),
+                json.dumps({"session_id": "old", "status": "running", "heartbeat_state": "generating"}),
                 encoding="utf-8",
             )
-            old_ts = time.time() - 40 * 3600
-            os.utime(stale, (old_ts, old_ts))
             fresh = d / "live.json"
             fresh.write_text(
-                json.dumps({"session_id": "live", "status": "running"}),
+                json.dumps(
+                    {
+                        "session_id": "live",
+                        "status": "running",
+                        "heartbeat_state": "waiting_model",
+                        "heartbeat_at": time.time(),
+                    }
+                ),
                 encoding="utf-8",
             )
+            from skills_kit.parallel_slots import write_heartbeat
+
+            write_heartbeat(root, "old", "generating")
+            hb = root / ".memory-art" / "converge" / "_heartbeats" / "old.json"
+            hb.write_text(
+                json.dumps({"session_id": "old", "state": "generating", "at": time.time() - 40 * 3600}),
+                encoding="utf-8",
+            )
+            os.utime(stale, (time.time(), time.time()))
             active = list_active_sessions(root, data)
             self.assertEqual([a["session_id"] for a in active], ["live"])
             self.assertIn('"status": "running"', stale.read_text(encoding="utf-8"))
-            now = time.time()
-            os.utime(stale, (now, now))
+            write_heartbeat(root, "old", "awaiting_human")
             again = [a["session_id"] for a in list_active_sessions(root, data)]
             self.assertEqual(again, ["live", "old"])
-            os.utime(stale, (old_ts, old_ts))
+            hb.write_text(
+                json.dumps({"session_id": "old", "state": "lost", "at": time.time()}),
+                encoding="utf-8",
+            )
+            self.assertEqual(
+                [a["session_id"] for a in list_active_sessions(root, data)],
+                ["live"],
+            )
             ok, _msg = assert_can_start(root, data, session_id="newer")
             self.assertFalse(ok)
             data_open = {"config": {"agent": {"max_parallel": 2, "slot_stale_hours": 36}}}
             ok2, _ = assert_can_start(root, data_open, session_id="newer")
             self.assertTrue(ok2)
+
+    def test_corrupt_session_holds_a_slot_until_released(self) -> None:
+        from skills_kit.parallel_slots import release_corrupt_slot
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            d = root / ".memory-art" / "converge"
+            d.mkdir(parents=True)
+            (d / "broken.json").write_text("{", encoding="utf-8")
+            data = {"config": {"agent": {"max_parallel": 1}}}
+            active = list_active_sessions(root, data)
+            self.assertEqual([a["session_id"] for a in active], ["broken"])
+            self.assertEqual(active[0]["status"], "corrupt")
+            self.assertFalse((d / "broken.json").is_file())
+            self.assertTrue((d / "_corrupt").is_dir())
+            ok, _msg = assert_can_start(root, data, session_id="other")
+            self.assertFalse(ok)
+            self.assertTrue(release_corrupt_slot(root, "broken"))
+            self.assertEqual(list_active_sessions(root, data), [])
+            ok2, _ = assert_can_start(root, data, session_id="other")
+            self.assertTrue(ok2)
+
+    def test_same_filename_assets_do_not_overwrite(self) -> None:
+        from skills_kit.converge import ensure_conv_asset
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            first = root / "s1"
+            second = root / "s2"
+            first.mkdir()
+            second.mkdir()
+            (first / "r1.png").write_bytes(b"aaaa-unique-content-1")
+            (second / "r1.png").write_bytes(b"bbbb-unique-content-2")
+            left = ensure_conv_asset(root, {}, str(first / "r1.png"), "brand.WorldStyle", "a")
+            right = ensure_conv_asset(root, {}, str(second / "r1.png"), "brand.WorldStyle", "b")
+            self.assertNotEqual(left, right)
+            self.assertIn("/id_", left.replace("\\", "/"))
+            self.assertTrue((root / left).read_bytes().startswith(b"aaaa"))
+            self.assertTrue((root / right).read_bytes().startswith(b"bbbb"))
 
 
 class TestIconTasteFilter(unittest.TestCase):

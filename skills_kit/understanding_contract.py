@@ -617,15 +617,46 @@ def load_session_contract(
     return sess, contract
 
 
-def save_session_contract(root: Path, session_id: str, contract: dict[str, Any]) -> Path:
+def save_session_contract(
+    root: Path,
+    session_id: str,
+    contract: dict[str, Any],
+    *,
+    base_rev: int,
+) -> Path:
+    """写回合同。``base_rev`` 是调用者读取合同时看到的 ``_rev``。
+
+    在同一把锁里对磁盘修订。先重读再拿刚读到的 ``_rev`` 去过检查，
+    版本号会加一，但旧合同仍能盖住新合同。
+    """
     from .converge import _write_session_json
+    from .session_lock import session_file_lock
 
     path = _session_path(root, session_id)
-    sess = json.loads(path.read_text(encoding="utf-8"))
-    if not isinstance(sess, dict):
-        raise ValueError("会话 JSON 损坏")
-    sess["understanding_contract"] = contract
-    _write_session_json(path, sess)
+    try:
+        expected = int(base_rev)
+    except (TypeError, ValueError) as exc:
+        raise SessionRevisionConflict(f"合同 base_rev 无效: {base_rev!r}") from exc
+    with session_file_lock(path):
+        if not path.is_file():
+            raise FileNotFoundError(f"会话不存在: {path}")
+        try:
+            sess = json.loads(path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError as exc:
+            raise ValueError("会话 JSON 损坏") from exc
+        if not isinstance(sess, dict):
+            raise ValueError("会话 JSON 损坏")
+        try:
+            disk_rev = int(sess.get("_rev") or 0)
+        except (TypeError, ValueError):
+            disk_rev = 0
+        if disk_rev != expected:
+            raise SessionRevisionConflict(
+                f"{path.name} 磁盘修订 {disk_rev}，合同基于 {expected}"
+            )
+        sess["understanding_contract"] = contract
+        sess["_rev"] = expected
+        _write_session_json(path, sess)
     return path
 
 
@@ -676,6 +707,10 @@ def cmd_contract(
                 f"`{pmem_art_cli()} converge start --id <id> …`。"
             )
         return 1
+    try:
+        base_rev = int(sess.get("_rev") or 0)
+    except (TypeError, ValueError):
+        base_rev = 0
 
     if action == "show":
         if json_out:
@@ -729,7 +764,7 @@ def cmd_contract(
             return 1
         contract = merge_contract_fields(contract, **kwargs)
         try:
-            save_session_contract(root, sid, contract)
+            save_session_contract(root, sid, contract, base_rev=base_rev)
         except SessionRevisionConflict as exc:
             print(f"❌ 会话已被另一处写入，这次没有覆盖。请重读会话后再写。{exc}")
             return 1
@@ -745,7 +780,7 @@ def cmd_contract(
             return 1
         contract = apply_feedback(contract, fb)
         try:
-            save_session_contract(root, sid, contract)
+            save_session_contract(root, sid, contract, base_rev=base_rev)
         except SessionRevisionConflict as exc:
             print(f"❌ 会话已被另一处写入，这次没有覆盖。请重读会话后再写。{exc}")
             return 1

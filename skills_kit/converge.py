@@ -6,6 +6,7 @@ import json
 import os
 import re
 import shutil
+import time
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from typing import Any
@@ -188,7 +189,12 @@ from .prompt_scale import (
     icon_stage_margins,
     strip_redline_tags_from_generation_text,
 )
-from .image_gates import _inspect_image_physical_traits, resolve_case_config
+from .image_gates import (
+    _inspect_image_physical_traits,
+    empty_physical_traits,
+    physical_asset_kind,
+    resolve_case_config,
+)
 from .validate_params import _physical_image_gate, _round_counts_as_passed, validate_converge_params
 from .judge_auto import auto_vlm_judge_image
 from .absolute_5d_agent_rubric import agent_absolute_5d_judge_prompt
@@ -839,6 +845,54 @@ def _spawn_detached_finish_settle(root: Path, session_id: str) -> bool:
         return False
 
 
+def ensure_conv_asset(
+    root: Path,
+    data: dict[str, Any],
+    img_str: str,
+    module_id: str,
+    prompt_str: str,
+) -> str:
+    """Copy a plate to an immutable content-hash path. final.* stays a separate display slot."""
+    if not img_str:
+        return ""
+    cand = Path(img_str)
+    if not cand.is_absolute():
+        cand = root / img_str
+    if not cand.is_file():
+        return img_str
+    digest = _file_sha1(cand)
+    ext = cand.suffix.lower() if cand.suffix.lower() in {".jpg", ".jpeg", ".png", ".webp"} else ".png"
+    dom = module_id.split(".")[0] if "." in module_id else "misc"
+    ent = module_id.split(".")[1].lower() if "." in module_id else "general"
+    try:
+        rel_c = cand.resolve().relative_to(root.resolve()).as_posix()
+    except Exception:
+        rel_c = ""
+    if rel_c.startswith("assets/") and Path(rel_c).name.startswith(f"id_{digest[:20]}"):
+        return rel_c
+    dest_rel = f"assets/{dom}/{ent}/id_{digest[:20]}{ext}"
+    dest_p = root / dest_rel
+    if dest_p.is_file() and _file_sha1(dest_p) != digest:
+        dest_rel = f"assets/{dom}/{ent}/id_{digest[:20]}_{cand.stat().st_size}{ext}"
+        dest_p = root / dest_rel
+    dest_p.parent.mkdir(parents=True, exist_ok=True)
+    if cand.resolve() != dest_p.resolve() and not dest_p.is_file():
+        shutil.copy2(str(cand), str(dest_p))
+    try:
+        from classify import classify_asset, ensure_module_from_classification
+
+        cl = classify_asset(root, data, path=dest_rel, prompt=prompt_str)
+        cl["suggested_module"] = module_id
+        cl["domain"] = dom
+        cl["entity"] = module_id.split(".")[1] if "." in module_id else module_id
+        cl["canonical_rel"] = dest_rel
+        cl["asset_id"] = digest
+        ensure_module_from_classification(root, data, cl, force_active=True)
+    except Exception:
+        pass
+    return dest_rel
+
+
 def _finish_write_final_slot(root: Path, sf: Path, sess: dict[str, Any], winner: dict[str, Any]) -> None:
     """Copy the winning plate to ``assets/.../final.*`` so the workbench gallery can see it.
 
@@ -1311,37 +1365,7 @@ def _apply_finish_memory_and_atlas(
     mod = sess.get("module") or "brand.WorldStyle"
 
     def _ensure_conv_asset(img_str: str, m_id: str, prompt_str: str) -> str:
-        if not img_str:
-            return ""
-        cand = Path(img_str)
-        if not cand.is_absolute():
-            cand = root / img_str
-        if not cand.is_file():
-            return img_str
-        try:
-            rel_c = cand.resolve().relative_to(root.resolve()).as_posix()
-            if rel_c.startswith("assets/"):
-                return rel_c
-        except Exception:
-            pass
-        dom = m_id.split(".")[0] if "." in m_id else "misc"
-        ent = m_id.split(".")[1].lower() if "." in m_id else "general"
-        dest_rel = f"assets/{dom}/{ent}/{cand.name}"
-        dest_p = root / dest_rel
-        dest_p.parent.mkdir(parents=True, exist_ok=True)
-        if cand.resolve() != dest_p.resolve():
-            shutil.copy2(str(cand), str(dest_p))
-        try:
-            from classify import classify_asset, ensure_module_from_classification
-            cl = classify_asset(root, data, path=dest_rel, prompt=prompt_str)
-            cl["suggested_module"] = m_id
-            cl["domain"] = dom
-            cl["entity"] = m_id.split(".")[1] if "." in m_id else m_id
-            cl["canonical_rel"] = dest_rel
-            ensure_module_from_classification(root, data, cl, force_active=True)
-        except Exception:
-            pass
-        return dest_rel
+        return ensure_conv_asset(root, data, img_str, m_id, prompt_str)
 
     win_img_orig = str(winner.get("image") or "")
     win_img = _ensure_conv_asset(
@@ -1351,6 +1375,7 @@ def _apply_finish_memory_and_atlas(
     )
     if win_img:
         winner["asset_image"] = win_img
+        winner["asset_id"] = Path(win_img).stem
         keep_showcase = win_img_orig.replace("\\", "/").startswith("docs/showcase/")
         if not keep_showcase:
             winner["image"] = win_img
@@ -2019,9 +2044,19 @@ def _cmd_converge_inner(
             )
             sess["understanding_contract"] = understanding
             sess["slot_token"] = slot_claim.token
+            sess["heartbeat_state"] = "generating"
+            sess["heartbeat_at"] = time.time()
             _write_session_json(sf, sess, replace_session=True)
             slot_claim.commit()
-            mark_active_session(root, session_id, conversation_id or "")
+            mark_active_session(
+                root,
+                session_id,
+                conversation_id or "",
+                started_at=str(sess.get("started_at") or ""),
+            )
+            from .parallel_slots import write_heartbeat
+
+            write_heartbeat(root, session_id, "generating")
             print(
                 f"🎯 [收敛会话已启动] 模块: {sess['module']} | 模式: {converge_mode} | 强度(scale): {eff_scale} ({scale_prof['label']})"
                 f"{' · FAST-TRACK' if fast_track else ''} | 动态达标线: >= {sess['accept_threshold']} 分即停"
@@ -2778,16 +2813,21 @@ def _cmd_converge_inner(
             cand = root / image
             if cand.is_file():
                 p_img = cand
-        img_v = _inspect_image_physical_traits(p_img) if image else {
-            "exists": False,
-            "size_bytes": 0,
-            "size_kb": 0.0,
-            "width": 0,
-            "height": 0,
-            "aspect_ratio": "unknown",
-            "color_entropy": 0.0,
-        }
-        phys_gen = _physical_image_gate(img_v, image_path=str(image or ""), target_th=th)
+        asset_kind = physical_asset_kind(
+            route_ids=sess.get("route_ids"),
+            module=str(sess.get("module") or ""),
+        )
+        img_v = (
+            _inspect_image_physical_traits(p_img, asset_kind=asset_kind)
+            if image
+            else empty_physical_traits()
+        )
+        phys_gen = _physical_image_gate(
+            img_v,
+            image_path=str(image or ""),
+            target_th=th,
+            asset_kind=asset_kind,
+        )
         if phys_gen["blocked"]:
             why = "；".join(phys_gen["reasons"])
             print(f"❌ [生图闸门] 拒绝登记无效输出图：{why}")
@@ -4053,6 +4093,7 @@ def abort_prepare_session(
         "at": _now_cst().strftime("%Y-%m-%d %H:%M:%S UTC+8"),
     }
     token = ""
+    cleared_started = ""
     try:
         sf = _session_file(root, session_id)
     except ValueError:
@@ -4074,6 +4115,7 @@ def abort_prepare_session(
             try:
                 _write_session_json(sf, sess)
                 record["released"] = True
+                cleared_started = current_started or started_at
             except SessionRevisionConflict:
                 record["released"] = False
                 record["skipped"] = "replaced"
@@ -4084,8 +4126,10 @@ def abort_prepare_session(
     audit = _prepare_audit_path(root, session_id)
     with audit.open("a", encoding="utf-8") as handle:
         handle.write(json.dumps(record, ensure_ascii=False) + "\n")
-    if token and record.get("released"):
-        release_slot(root, session_id, token=token)
+    if record.get("released"):
+        if token:
+            release_slot(root, session_id, token=token)
+        clear_active_session(root, session_id, started_at=cleared_started)
     if record.get("skipped") == "already_has_image":
         print(f"prepare 在 {stage} 失败，会话已有成图，继续占并行槽。审计：{audit}")
     elif record.get("skipped") == "replaced":

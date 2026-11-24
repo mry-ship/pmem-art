@@ -87,6 +87,41 @@ class TestConvergeLoop(unittest.TestCase):
         # 错窗不能把归属抢走
         self.assertEqual(active_owner_conversation_id(td), "conv-draw")
 
+    def test_parallel_sessions_keep_their_own_conversations(self) -> None:
+        td = Path(tempfile.mkdtemp())
+        folder = td / ".memory-art" / "converge"
+        folder.mkdir(parents=True)
+        pending = {
+            "status": "generated_pending_judge",
+            "accept_threshold": 9.5,
+            "max_rounds": 3,
+            "rounds": [{"round": 1, "image": "r1.jpg", "judged": False}],
+        }
+        (folder / "cell-a.json").write_text(json.dumps(pending), encoding="utf-8")
+        (folder / "cell-b.json").write_text(json.dumps(pending), encoding="utf-8")
+        mark_active_session(td, "cell-a", conversation_id="conv-a")
+        mark_active_session(td, "cell-b", conversation_id="conv-b")
+        self.assertEqual(active_owner_conversation_id(td, "cell-a"), "conv-a")
+        self.assertEqual(active_owner_conversation_id(td, "cell-b"), "conv-b")
+        self.assertEqual(active_owner_conversation_id(td), "")
+        hit_a = loop_followup(td, conversation_id="conv-a")
+        hit_b = loop_followup(td, conversation_id="conv-b")
+        self.assertIn("--id cell-a", hit_a["message"])
+        self.assertIn("--id cell-b", hit_b["message"])
+        self.assertIsNone(loop_followup(td))
+        payload = json.dumps({
+            "conversation_id": "conv-a",
+            "status": "completed",
+            "loop_count": 0,
+        })
+        buf = io.StringIO()
+        with mock.patch("sys.stdin", io.StringIO(payload)), redirect_stdout(buf):
+            rc = pa.cmd_hook(td, {"entries": []}, "stop")
+        self.assertEqual(rc, 0)
+        out = json.loads(buf.getvalue())
+        self.assertIn("--id cell-a", str(out.get("followup_message") or ""))
+        self.assertNotIn("cell-b", str(out.get("followup_message") or ""))
+
     def test_new_session_clears_stale_owner(self) -> None:
         td = Path(tempfile.mkdtemp())
         folder = td / ".memory-art" / "converge"

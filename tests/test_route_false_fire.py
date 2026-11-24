@@ -541,6 +541,30 @@ class RouteFalseFireTests(unittest.TestCase):
             images=["cat.png"],
         )
         self.assertEqual(named.route_ids, ["draw.variant"])
+        other_form = plan_route(
+            "把表情改成惊讶，其它保持不动。",
+            images=["cat.png"],
+        )
+        self.assertEqual(other_form.reason, "expression_keep")
+        soft = plan_route(
+            "把表情改成惊讶，其他地方尽量别变。",
+            images=["cat.png"],
+        )
+        self.assertEqual(soft.reason, "expression_keep")
+        unsure = plan_route(
+            "参考这张，把表情改成惊讶，其他地方你看着办。",
+            images=["cat.png"],
+        )
+        self.assertEqual(unsure.mode, "stop")
+        self.assertEqual(unsure.reason, "expression_uncertain")
+        self.assertEqual(unsure.route_ids, [])
+        negated = plan_route(
+            "不用保持其他，参考这张把这只猫改成惊讶。",
+            images=["cat.png"],
+        )
+        self.assertNotEqual(negated.reason, "expression_keep")
+        self.assertNotEqual(negated.reason, "expression_uncertain")
+        self.assertNotIn(negated.reason, ("expression_keep", "expression_uncertain"))
 
     def test_layer_split_route_is_not_ordinary_or_touchup(self) -> None:
         from skills_kit.route_normalize import build_canonical_brief

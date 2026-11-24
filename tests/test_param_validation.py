@@ -807,7 +807,9 @@ class TestGateFixes(unittest.TestCase):
         path = Path(tempfile.gettempdir()) / "pmem_gate_probe.webp"
         path.write_bytes(bytes(raw))
         info = _inspect_image_physical_traits(path)
-        self.assertEqual((info["width"], info["height"]), (768, 1344))
+        self.assertEqual((info["header_width"], info["header_height"]), (768, 1344))
+        self.assertFalse(info["decode_ok"])
+        self.assertEqual((info["width"], info["height"]), (0, 0))
 
     def test_offline_score_does_not_change_official(self) -> None:
         from skills_kit.scoring import calibrate_against_offline

@@ -700,12 +700,15 @@ _KEEP_REST = (
     "其他保持不动",
     "其余保持不动",
     "别的保持不动",
+    "其它保持不动",
     "其他保持",
     "其余保持",
     "别的保持",
+    "其它保持",
     "其他不动",
     "其余不动",
     "别的不动",
+    "其它不动",
     "其他都别动",
     "其余都别动",
     "别的都别动",
@@ -715,7 +718,23 @@ _KEEP_REST = (
     "别的别动",
     "保持其余",
     "保持其他",
+    "保持其它",
+    "其他地方尽量别变",
+    "其它地方尽量别变",
+    "别的地方尽量别变",
+    "尽量别变",
 )
+# 「其它」和「其他」都算。否定句（不用保持、别保持）不算保持。
+_KEEP_YES = re.compile(
+    r"(其他|其它|其余|别的)"
+    r"(?:的)?(?:地方|部分|都|也)?"
+    r"(?:都)?"
+    r"(?:尽量|尽可能)?"
+    r"(?:给我)?"
+    r"(?:保持|不动|别动|别变|不变|不要变|别改|少动)"
+)
+_KEEP_SOFT = re.compile(r"(看着办|尽量别变|其他地方|其它地方|其余地方|别的地方)")
+_KEEP_NO = re.compile(r"(不要|不用|并非|不是|别要).{0,12}(保持|不动)|别保持")
 # 不要求贴在句末。「改成惊讶的表情，其他保持不动」也算表情，不是新物种。
 _EXPR_SWAP_ANY = re.compile(
     r"(变成|改成|换成)(?:一个|一下|个|张)?"
@@ -723,20 +742,49 @@ _EXPR_SWAP_ANY = re.compile(
 )
 
 
-def _expression_keep_ask(text: str, images: list[str]) -> bool:
-    """带原图改表情又要求其余保持：先问局部改还是变体，禁止直接开克隆。
+def _spans_overlap(left: re.Match[str], right: re.Match[str]) -> bool:
+    return not (left.end() <= right.start() or right.end() <= left.start())
+
+
+def _keep_rest_signal(text: str) -> str:
+    """yes / no / uncertain / empty. 否定句不把「其余保持」算成要保持。"""
+    body = text or ""
+    yes_hits = list(_KEEP_YES.finditer(body))
+    no_hits = list(_KEEP_NO.finditer(body))
+    if _any(body, _KEEP_REST):
+        # 词表命中也算肯定，除非整句被否定盖住。
+        if not no_hits:
+            return "yes"
+    real_yes = [hit for hit in yes_hits if not any(_spans_overlap(hit, neg) for neg in no_hits)]
+    if real_yes:
+        return "yes"
+    if no_hits:
+        return "no"
+    if _KEEP_SOFT.search(body):
+        return "uncertain"
+    return ""
+
+
+def _expression_keep_ask(text: str, images: list[str]) -> str:
+    """带原图改表情又要求其余保持：先问。拿不准也问，不落普通图或克隆。
 
     「走变体 / 走局部改」是点名，不拦。没有原图时仍可走变体。
-    「变成微笑的猫」没有保持句，仍是克隆。
+    「变成微笑的猫」没有保持句，仍是克隆。否定「不用保持」不拦。
+    返回 expression_keep、expression_uncertain 或空串。
     """
     body = text or ""
     if _any(body, ("走变体", "走局部改", "走局部修")):
-        return False
-    if not _any(body, _KEEP_REST):
-        return False
+        return ""
     if not _EXPR_SWAP_ANY.search(body):
-        return False
-    return _has_ref(body, images)
+        return ""
+    if not _has_ref(body, images):
+        return ""
+    signal = _keep_rest_signal(body)
+    if signal == "yes":
+        return "expression_keep"
+    if signal == "uncertain":
+        return "expression_uncertain"
+    return ""
 
 
 def _has_ref(text: str, images: list[str]) -> bool:
@@ -1420,10 +1468,16 @@ def plan_route(
         return _stop("hard_ambiguity", "合成梯和拆图层同时出现，先问这一处")
     if not chosen and (_wants_layer(raw) or _wants_layer(spoken)) and _wants_touchup(raw):
         return _stop("hard_ambiguity", "拆图层和局部改同时出现，先问这一处")
-    if not chosen and _expression_keep_ask(raw, pics):
+    expression_ask = "" if chosen else _expression_keep_ask(raw, pics)
+    if expression_ask == "expression_keep":
         return _stop(
             "expression_keep",
             "带原图只改表情，还要其余保持：先选局部改（垫成图只改表情）或变体（同一身份重画）。这一步不走克隆。",
+        )
+    if expression_ask == "expression_uncertain":
+        return _stop(
+            "expression_uncertain",
+            "带原图在改表情，但是否保持其余没看准。先选局部改或变体。这一步不走普通图，也不走克隆。",
         )
 
     if not chosen:

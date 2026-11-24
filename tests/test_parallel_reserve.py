@@ -252,6 +252,48 @@ class PrepareAbortTests(unittest.TestCase):
             release_slot(root, "same", token="newer-token")
             self.assertEqual(list_reservations(root), [])
 
+    def test_abort_clears_only_the_matching_active_pointer(self) -> None:
+        from skills_kit.converge import abort_prepare_session
+        from skills_kit.converge_loop import active_session_id, mark_active_session
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            folder = root / ".memory-art" / "converge"
+            folder.mkdir(parents=True)
+            (folder / "prep.json").write_text(
+                json.dumps(
+                    {
+                        "session_id": "prep",
+                        "status": "running",
+                        "started_at": "this-start",
+                        "slot_token": "",
+                        "rounds": [],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            mark_active_session(root, "prep", conversation_id="conv-a", started_at="this-start")
+            abort_prepare_session(root, "prep", stage="contract", rc=1, started_at="this-start")
+            self.assertEqual(active_session_id(root), "")
+            (folder / "prep.json").write_text(
+                json.dumps(
+                    {
+                        "session_id": "prep",
+                        "status": "running",
+                        "started_at": "newer-start",
+                        "rounds": [],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            mark_active_session(root, "prep", conversation_id="conv-b", started_at="newer-start")
+            abort_prepare_session(root, "prep", stage="contract", rc=1, started_at="this-start")
+            self.assertEqual(active_session_id(root), "prep")
+            self.assertEqual(
+                json.loads((folder / "prep.json").read_text(encoding="utf-8"))["status"],
+                "running",
+            )
+
 
 if __name__ == "__main__":
     unittest.main()

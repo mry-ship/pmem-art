@@ -17,6 +17,7 @@ from skills_kit.converge import (
     cmd_converge,
 )
 from skills_kit.image_gates import _inspect_image_physical_traits
+from skills_kit.validate_params import _physical_image_gate
 from skills_kit.parallel_slots import assert_can_start, list_active_sessions, max_parallel
 from improve.taste_profile import save_taste, load_taste
 
@@ -98,6 +99,29 @@ class TestParallelSlots(unittest.TestCase):
             self.assertTrue(ok2)
             self.assertEqual(max_parallel(data), 2)
             self.assertEqual(len(list_active_sessions(root)), 2)
+
+
+class TestGeneralDimBounds(unittest.TestCase):
+    def test_general_axis_does_not_steal_the_next_label(self) -> None:
+        from skills_kit.scoring import parse_5d_dims
+
+        stolen = parse_5d_dims("构图/光影9.5/透视9.0/质感9.1/风格9.2/无瑕疵9.3")
+        self.assertNotIn("composition", stolen["parsed"])
+        self.assertIsNone(stolen["weighted_score"])
+        kept = parse_5d_dims("构图:9.6/光影 9.5/透视9.4/质感9.3/风格9.2/无瑕疵9.1")
+        self.assertEqual(kept["parsed"]["composition"], 9.6)
+        self.assertEqual(kept["parsed"]["lighting_color"], 9.5)
+        self.assertIsNotNone(kept["weighted_score"])
+        self.assertLessEqual(kept["weighted_score"], 10)
+
+    def test_general_axis_above_ten_is_dropped(self) -> None:
+        from skills_kit.scoring import parse_5d_dims
+
+        over = parse_5d_dims("构图11/光影9.5/透视9.0/质感9.1/风格9.2/无瑕疵9.3")
+        self.assertNotIn("composition", over["parsed"])
+        self.assertIsNone(over["weighted_score"])
+        kv = parse_5d_dims("composition=12 lighting=9 perspective=9 texture=9 style=9")
+        self.assertIsNone(kv["weighted_score"])
 
 
 class TestImageSha1(unittest.TestCase):
@@ -317,6 +341,88 @@ class TestTasteLock(unittest.TestCase):
             self.assertTrue(path.is_file())
             again = json.loads(path.read_text(encoding="utf-8"))
             self.assertIn("soft gloss", str(again.get("likes") or again))
+
+
+class TestDecodedPhysicalGate(unittest.TestCase):
+    def test_broken_png_is_not_valid_because_the_header_parses(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "broken.png"
+            Image.new("RGB", (128, 128), (20, 40, 60)).save(path)
+            raw = path.read_bytes()
+            idat = raw.find(b"IDAT")
+            self.assertGreater(idat, 0)
+            path.write_bytes(raw[: idat + 8] + b"\xff" * 24)
+            traits = _inspect_image_physical_traits(path)
+            self.assertGreater(traits["header_width"], 0)
+            self.assertFalse(traits["decode_ok"])
+            self.assertEqual(traits["width"], 0)
+            gate = _physical_image_gate(traits, image_path=str(path))
+            self.assertTrue(gate["blocked"])
+            self.assertTrue(any("解码" in r for r in gate["reasons"]))
+            self.assertFalse(any("熵" in r for r in gate["reasons"]))
+
+    def test_flat_color_fails_on_pixels_not_byte_entropy(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "flat.png"
+            Image.new("RGB", (128, 128), (180, 180, 180)).save(path)
+            traits = _inspect_image_physical_traits(path)
+            self.assertTrue(traits["decode_ok"])
+            self.assertGreaterEqual(traits["blank_ratio"], 0.985)
+            traits["color_entropy"] = 7.5
+            gate = _physical_image_gate(traits, image_path=str(path))
+            self.assertTrue(gate["blocked"])
+            self.assertTrue(any("空白" in r for r in gate["reasons"]))
+            self.assertFalse(any("熵" in r for r in gate["reasons"]))
+
+    def test_two_tone_image_passes_even_if_bytes_compress(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "mark.png"
+            img = Image.new("RGB", (128, 128), (12, 18, 32))
+            img.paste((220, 48, 36), (24, 24, 104, 104))
+            img.save(path)
+            traits = _inspect_image_physical_traits(path)
+            self.assertTrue(traits["decode_ok"])
+            gate = _physical_image_gate(traits, image_path=str(path))
+            self.assertFalse(gate["blocked"], gate["reasons"])
+
+    def test_layer_with_almost_no_opaque_pixels_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "speck.png"
+            img = Image.new("RGBA", (128, 128), (0, 0, 0, 0))
+            img.putpixel((3, 3), (255, 0, 0, 255))
+            img.save(path)
+            traits = _inspect_image_physical_traits(path, asset_kind="layer")
+            self.assertTrue(traits["decode_ok"])
+            self.assertTrue(traits["has_alpha"])
+            self.assertLess(traits["alpha_coverage"], 0.01)
+            gate = _physical_image_gate(traits, image_path=str(path), asset_kind="layer")
+            self.assertTrue(gate["blocked"])
+            self.assertTrue(any("有效像素" in r for r in gate["reasons"]))
+
+    def test_layer_subject_on_transparency_passes(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "blob.png"
+            img = Image.new("RGBA", (128, 128), (0, 0, 0, 0))
+            img.paste((40, 160, 90, 255), (30, 20, 100, 110))
+            img.save(path)
+            traits = _inspect_image_physical_traits(path, asset_kind="layer")
+            gate = _physical_image_gate(traits, image_path=str(path), asset_kind="layer")
+            self.assertFalse(gate["blocked"], gate["reasons"])
+
+    def test_low_byte_entropy_does_not_block_a_decoded_picture(self) -> None:
+        traits = {
+            "exists": True,
+            "decode_ok": True,
+            "width": 256,
+            "height": 256,
+            "color_entropy": 1.1,
+            "has_alpha": False,
+            "alpha_coverage": 1.0,
+            "blank_ratio": 0.4,
+            "asset_kind": "opaque",
+        }
+        gate = _physical_image_gate(traits)
+        self.assertFalse(gate["blocked"], gate["reasons"])
 
 
 if __name__ == "__main__":

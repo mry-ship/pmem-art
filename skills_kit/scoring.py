@@ -282,6 +282,22 @@ GENERAL_5D_KEYS = (
     "texture_detail",
     "spec_style",
 )
+# 通用维的空白不能吃进下一维的标签。超过 10 分不算这一维。
+_GENERAL_LABEL = (
+    "无瑕度|无瑕疵|无暇|flawlessness|flawless|spec_style|"
+    "构图|composition|光影|色彩|lighting|透视|解剖|结构|perspective|anatomy|"
+    "质感|肌理|细节|texture|风格|规格"
+)
+_GENERAL_GAP = rf"(?:(?!{_GENERAL_LABEL})[^\d]){{0,12}}"
+
+
+def _as_ten_point(val: float) -> float | None:
+    """Keep a general-rubric axis on 0–10. Slightly over 10 from rounding becomes 10."""
+    if val < 0 or val > 10.05:
+        return None
+    if val > 10:
+        return 10.0
+    return val
 
 
 _KV_5D_ALIAS = {
@@ -325,7 +341,10 @@ def _parse_kv_5d(dims_str: str, weights: dict[str, float]) -> dict[str, Any] | N
             dest = _KV_5D_ALIAS.get(k)
         if dest is None:
             continue
-        bucket.setdefault(dest, []).append(float(val))
+        bounded = _as_ten_point(float(val))
+        if bounded is None:
+            return None
+        bucket.setdefault(dest, []).append(bounded)
     parsed = {k: round(sum(v) / len(v), 2) for k, v in bucket.items()}
     needed = ("composition", "lighting_color", "perspective_anatomy", "texture_detail", "spec_style")
     # Only the old four-key dialect may invent lighting. Any other missing dim fails closed.
@@ -584,23 +603,28 @@ def parse_5d_dims(
     }
     # Do not let `spec` match the substring inside `perspective`.
     patterns = {
-        "composition": r"(?:构图|composition)[^0-9]*([0-9]+(?:\.[0-9]+)?)",
-        "lighting_color": r"(?:光影|色彩|lighting)[^0-9]*([0-9]+(?:\.[0-9]+)?)",
-        "perspective_anatomy": r"(?:透视|解剖|结构|perspective|anatomy)[^0-9]*([0-9]+(?:\.[0-9]+)?)",
-        "texture_detail": r"(?:质感|肌理|细节|texture)[^0-9]*([0-9]+(?:\.[0-9]+)?)",
+        "composition": rf"(?:构图|composition){_GENERAL_GAP}([0-9]+(?:\.[0-9]+)?)",
+        "lighting_color": rf"(?:光影|色彩|lighting){_GENERAL_GAP}([0-9]+(?:\.[0-9]+)?)",
+        "perspective_anatomy": rf"(?:透视|解剖|结构|perspective|anatomy){_GENERAL_GAP}([0-9]+(?:\.[0-9]+)?)",
+        "texture_detail": rf"(?:质感|肌理|细节|texture){_GENERAL_GAP}([0-9]+(?:\.[0-9]+)?)",
         "spec_style": (
             r"(?:风格|规格|spec_style|"
             r"(?<![A-Za-z])spec(?![A-Za-z_])|"
             r"(?<![A-Za-z])style(?![A-Za-z_]))"
-            r"[^0-9]*([0-9]+(?:\.[0-9]+)?)"
+            + _GENERAL_GAP
+            + r"([0-9]+(?:\.[0-9]+)?)"
         ),
-        "flawlessness": r"(?:无瑕度|无瑕疵|无暇|flawlessness|flawless)[^0-9]*([0-9]+(?:\.[0-9]+)?)",
+        "flawlessness": rf"(?:无瑕度|无瑕疵|无暇|flawlessness|flawless){_GENERAL_GAP}([0-9]+(?:\.[0-9]+)?)",
     }
     parsed: dict[str, float] = {}
     for k, pat in patterns.items():
         m = _re.search(pat, dims_str or "", flags=_re.IGNORECASE)
-        if m:
-            parsed[k] = float(m.group(1))
+        if not m:
+            continue
+        bounded = _as_ten_point(float(m.group(1)))
+        if bounded is None:
+            continue
+        parsed[k] = bounded
     from .medium_family import GENERAL_6D_KEYS, ensure_general_weights
 
     w6 = ensure_general_weights(w)
