@@ -696,6 +696,49 @@ def _new_subject(text: str) -> bool:
     return _swap_subject_signal(text)
 
 
+_KEEP_REST = (
+    "其他保持不动",
+    "其余保持不动",
+    "别的保持不动",
+    "其他保持",
+    "其余保持",
+    "别的保持",
+    "其他不动",
+    "其余不动",
+    "别的不动",
+    "其他都别动",
+    "其余都别动",
+    "别的都别动",
+    "其他别动",
+    "其余别动",
+    "别的地方别动",
+    "别的别动",
+    "保持其余",
+    "保持其他",
+)
+# 不要求贴在句末。「改成惊讶的表情，其他保持不动」也算表情，不是新物种。
+_EXPR_SWAP_ANY = re.compile(
+    r"(变成|改成|换成)(?:一个|一下|个|张)?"
+    r"(微笑|生气|闭眼|侧目|眨眼|惊讶|叹气|表情|差分|姿势|动作)"
+)
+
+
+def _expression_keep_ask(text: str, images: list[str]) -> bool:
+    """带原图改表情又要求其余保持：先问局部改还是变体，禁止直接开克隆。
+
+    「走变体 / 走局部改」是点名，不拦。没有原图时仍可走变体。
+    「变成微笑的猫」没有保持句，仍是克隆。
+    """
+    body = text or ""
+    if _any(body, ("走变体", "走局部改", "走局部修")):
+        return False
+    if not _any(body, _KEEP_REST):
+        return False
+    if not _EXPR_SWAP_ANY.search(body):
+        return False
+    return _has_ref(body, images)
+
+
 def _has_ref(text: str, images: list[str]) -> bool:
     return bool(images) or _any(
         text,
@@ -1377,6 +1420,11 @@ def plan_route(
         return _stop("hard_ambiguity", "合成梯和拆图层同时出现，先问这一处")
     if not chosen and (_wants_layer(raw) or _wants_layer(spoken)) and _wants_touchup(raw):
         return _stop("hard_ambiguity", "拆图层和局部改同时出现，先问这一处")
+    if not chosen and _expression_keep_ask(raw, pics):
+        return _stop(
+            "expression_keep",
+            "带原图只改表情，还要其余保持：先选局部改（垫成图只改表情）或变体（同一身份重画）。这一步不走克隆。",
+        )
 
     if not chosen:
         if open_specialist and _wants_ui(raw):

@@ -29,7 +29,7 @@ from lifecycle import ensure_stdio_survives_locale
 
 ensure_stdio_survives_locale()
 
-VERSION = "0.16.19-art"
+VERSION = "0.16.20-art"
 MEMORY_DIR = ".memory-art"
 
 KIND_META = {
@@ -2354,6 +2354,10 @@ def main() -> int:
     p_conv.add_argument("--reason-skill", dest="reason_skill", default="ordinary", help="prepare：合理性技能 id")
     p_conv.add_argument("--defaults", default="", help="prepare：合同里已向玩家说明的默认项")
     p_conv.add_argument("--locks", default="", help="prepare：合同硬锁")
+    p_conv.add_argument("--keep", default="", help="prepare：四格·必须保持")
+    p_conv.add_argument("--vary", default="", help="prepare：四格·可以变化")
+    p_conv.add_argument("--forbid", default="", help="prepare：四格·明确禁止")
+    p_conv.add_argument("--spec", default="", help="prepare：四格·交付规格")
     p_conv.add_argument(
         "--route-id",
         default="",
@@ -2823,6 +2827,10 @@ def main() -> int:
                 conversation_id=getattr(args, "conversation", "") or "",
                 defaults=getattr(args, "defaults", "") or "",
                 locks=getattr(args, "locks", "") or "",
+                keep=getattr(args, "keep", "") or "",
+                vary=getattr(args, "vary", "") or "",
+                forbid=getattr(args, "forbid", "") or "",
+                spec=getattr(args, "spec", "") or "",
                 reason_skill=getattr(args, "reason_skill", "") or "ordinary",
                 reason_draft=getattr(args, "reason_draft", "") or "",
                 revised=getattr(args, "revised", "") or "",

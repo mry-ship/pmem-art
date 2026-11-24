@@ -181,6 +181,24 @@ class TestPolicyDefaults(unittest.TestCase):
             "STOP_REGRESSION",
         )
 
+    def test_hurdle_hit_is_strict_and_missing_key_is_not_a_hit(self) -> None:
+        from skills_kit.converge_policy import hurdle_still_blocks
+        from skills_kit.scoring import apply_hurdles
+
+        hurdles = (("glyph_silhouette", 8.0), ("squircle_safe_zone", 8.0))
+        score, hit = apply_hurdles(9.2, {"glyph_silhouette": 9.0, "squircle_safe_zone": 8.0}, hurdles)
+        self.assertIsNone(hit)
+        self.assertEqual(score, 9.2)
+        self.assertFalse(hurdle_still_blocks(hit, score, 9.5))
+        score, hit = apply_hurdles(9.2, {"tactile_lighting": 6.0}, hurdles)
+        self.assertIsNone(hit)
+        self.assertEqual(score, 9.2)
+        score, hit = apply_hurdles(9.2, {"glyph_silhouette": 7.99, "squircle_safe_zone": 9.0}, hurdles)
+        self.assertEqual(hit["key"], "glyph_silhouette")
+        self.assertEqual(score, 7.99)
+        self.assertTrue(hurdle_still_blocks(hit, score, 9.5))
+        self.assertFalse(hurdle_still_blocks(hit, 9.5, 9.5))
+
     def test_early_stop_block_ignores_gate_notes_guard(self) -> None:
         """judge 不得用「有 gate_notes」短路早停（否则 merge 贴边提示会逼满剩余轮次）。"""
         src = (ROOT / "skills_kit" / "converge.py").read_text(encoding="utf-8")

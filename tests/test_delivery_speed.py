@@ -65,6 +65,11 @@ class TestStaleSlots(unittest.TestCase):
             active = list_active_sessions(root, data)
             self.assertEqual([a["session_id"] for a in active], ["live"])
             self.assertIn('"status": "running"', stale.read_text(encoding="utf-8"))
+            now = time.time()
+            os.utime(stale, (now, now))
+            again = [a["session_id"] for a in list_active_sessions(root, data)]
+            self.assertEqual(again, ["live", "old"])
+            os.utime(stale, (old_ts, old_ts))
             ok, _msg = assert_can_start(root, data, session_id="newer")
             self.assertFalse(ok)
             data_open = {"config": {"agent": {"max_parallel": 2, "slot_stale_hours": 36}}}
@@ -180,9 +185,16 @@ class TestPrepareOneProcess(unittest.TestCase):
                     reason_draft="青瓷小猫蹲坐捧茶盏",
                     revised=revised,
                     checklist=default_checklist_template("ordinary"),
+                    keep="同一只青瓷小猫",
+                    forbid="不要文字",
                 )
             text = buf.getvalue()
             self.assertEqual(rc, 0, text)
+            sess = json.loads((root / ".memory-art" / "converge" / "prep-1.json").read_text(encoding="utf-8"))
+            self.assertEqual(sess.get("opened_by"), "prepare")
+            grid = (sess.get("understanding_contract") or {}).get("grid") or {}
+            self.assertIn("同一只青瓷小猫", grid.get("keep") or [])
+            self.assertIn("不要文字", grid.get("forbid") or [])
             self.assertIn("emit-prompt", text)
             self.assertEqual(text.count("WARM_START_DEFERRED=1"), 1)
             self.assertEqual(text.count("收敛会话已启动"), 1)

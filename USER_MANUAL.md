@@ -1,9 +1,9 @@
 # 📘 pmem-art 画师使用手册 — 怎么在 Cursor / Codex 里越画越准
 
-> **版本**：`v0.16.19-art`  
+> **版本**：`v0.16.20-art`  
 > **核心理念（零门槛）**：**直接说人话就行**。例如「画一张窗边女孩」「参考这张，换成一只猫」。**不用背技能名、不用敲斜杠、不用碰命令行、不用写 YAML。** 附图可有可无。  
 > 电脑会自己认路；认不清会**先问你一句**，不会默默画错。你只会看到类似 `【按 克隆 走了】` / `【走默认路径】` 这种标签。  
-> **用户包下载（不含研发用 pmem）** → [GitHub Release v0.16.19-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.19-art)  
+> **用户包下载（不含研发用 pmem）** → [GitHub Release v0.16.20-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.20-art)  
 > **认路白话流程图** → [docs/route_pipeline.html](docs/route_pipeline.html)（推荐先看：大白话从提需到出图）  
 > **先看总览？** → [README.md](README.md) · **进阶斜杠技能**见下文（可选用） · 旧点选流程 [docs/skills/flows.html](docs/skills/flows.html)  
 > **看图墙 / 技能用法与结果？** → [README · 效果长什么样](README.md#效果长什么样) · [全页展陈](docs/showcase/skills-homepage/index.html)（图源 `docs/workbench_guide/` + 合成梯；拆图层见展陈 `#layer`）
@@ -106,7 +106,7 @@ flowchart TD
 
 这一轮写出交付物、每张图锁什么、不锁什么，并查合不合理、漏了什么、有没有理解错。路径/版式/「再跑一遍」同范围等可默认项写成「默认：…」放进分析。只有一种确定情况，列出分析后直接执行。交付类型互斥、身份题材会做错、话图矛盾，列出来等你确认，确认前不执行。你如果没选列出的情况、而是另提要求，就再审一遍，仍要等你确认后再执行。
 
-第二段会 `converge start` 时，先把这一轮分析用 `converge discuss` 记进同一会话，过程板上能看到需求是怎么定下来的。多张图全部写入 `--reference-image-paths`，第一张对齐交付物的宽高比，其余按定稿顺序跟在后面。生成轮若只能垫一张，垫宽高比对齐的那张；打分时仍把成图和每一张参考图并排看。
+开会话是同一条状态机，两条入口。修订句和清单已经写好、这一轮要出提示词时，用 `converge prepare`：同一进程完成 start、四格合同、合理性、emit-prompt。合理性没过不建会话、不占并行槽。四格用 `--keep`、`--vary`、`--forbid`、`--spec`。还要先写关系稿时，用 `converge start`，再把这一轮分析用 `converge discuss` 记进同一会话；`discuss` 不并进 prepare。局部改仍用 `converge start --route-id draw.touchup`。两条都写同一个会话文件，带修订号；后写的一方若基于旧修订，会拒绝覆盖。多张图全部写入 `--reference-image-paths`，第一张对齐交付物的宽高比，其余按定稿顺序跟在后面。生成轮若只能垫一张，垫宽高比对齐的那张；打分时仍把成图和每一张参考图并排看。
 
 ---
 
@@ -492,7 +492,8 @@ pyw -3 -u pmem_art.py ingest .cursor/generated/new.png -p "角色Astra 水彩 �
 | :--- | :--- |
 | `pyw -3 -u pmem_art.py skills --install` | 安装/刷新 `.cursor`、`.claude`、`.agents` 下的 11 个技能。每个技能一个 `/pmem-` 命令 |
 | `pyw -3 -u pmem_art.py skills --list` | 查看所有内置技能列表 |
-| `pyw -3 -u pmem_art.py converge start -g "<目标>" -m <模块> [--scale medium] [--ref-image <图> --ref-analysis "<解构>"]` | 开启一轮最多 3 次、`>= 9.5` 分的收敛生图会话 |
+| `pyw -3 -u pmem_art.py converge prepare -g "<目标>" -m <模块> --reason-draft "<草稿>" --revised "<修订句>" --checklist "<清单>" [--keep/--vary/--forbid/--spec "<四格>"]` | 修订句已齐时的开会话入口：同一进程做 start、四格、合理性、第 1 轮提示词。合理性没过不建会话 |
+| `pyw -3 -u pmem_art.py converge start -g "<目标>" -m <模块> [--scale medium] [--ref-image <图> --ref-analysis "<解构>"]` | 底层开会话。关系稿先行或局部改走这条；出提示词前仍要过合理性闸。与 prepare 写同一个会话文件 |
 | `pyw -3 -u pmem_art.py converge generate --round <i> -i <图> -p "<Prompt>"` | **仅生图登记**（禁止带 score/dims；与 judge 必须分两步）。上一轮没审完不能开下一轮 |
 | `pyw -3 -u pmem_art.py converge judge --round <i> -i <图> --dims "..." --strengths "..." --defects "..." --next-fix "..."` | **独立审图**：六维打分、亮点、不合理处与下一轮修正（须先有 generate） |
 | `pyw -3 -u pmem_art.py converge discuss --round <稿次> -p "<正文>" --defects "<没过的行>" --next-fix "<下一稿只改哪里>"` | 记下还没出图的论述稿（合成梯关系讨论）。结算时列进过程板 |

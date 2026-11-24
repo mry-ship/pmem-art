@@ -857,6 +857,16 @@ def target_dims_allow_stop(
 EARLY_STOP_REASONS = frozenset({"STOP_REGRESSION", "STOP_PLATEAU", "STOP_HURDLE_BOUND"})
 
 
+def hurdle_still_blocks(hurdle: Any, score: float, threshold: float) -> bool:
+    """True only when a hurdle dim actually hit and the official score is still under the line.
+
+    A missing dimension is not a hit. ``apply_hurdles`` leaves the harmonic mean alone
+    until a listed dim is strictly under its floor, then replaces the official score
+    with that dim. Equality with the floor is not a hit.
+    """
+    return isinstance(hurdle, dict) and float(score) < float(threshold)
+
+
 def decide_round_stop(
     *,
     score_ok: bool,

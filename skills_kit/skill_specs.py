@@ -163,7 +163,7 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 
 **理解合同（防多轮漂移 · 总控必做）**：
 1. 分析里写出四格：必须保持、可以变化、明确禁止、交付规格。能推断的直接写入，并标明「推断」；用户原话标明「原话」。不要为此多问一轮。
-2. `converge start` 后立刻 `python3 pmem_art.py contract set --id <session> --keep "…" --vary "…" --forbid "…" --spec "…" [--inferred "与四格中相同的推断句"] [--defaults "默认：…" --vibe …]`。四格不要写进标准路由句。
+2. 修订句已经写好时，四格随 `converge prepare --keep "…" --vary "…" --forbid "…" --spec "…"` 一次写入。还要先记关系稿时，`converge start` 后立刻 `python3 pmem_art.py contract set --id <session> --keep "…" --vary "…" --forbid "…" --spec "…" [--inferred "与四格中相同的推断句"] [--defaults "默认：…" --vibe …]`。四格不要写进标准路由句。两条都写同一个会话文件。
 3. 交给执行侧时交代：每轮先 `contract working-set`，禁止靠长聊天重谈 L0/L1/四格。后续修改继续遵守必须保持和明确禁止。
 4. 画师纠正：先 `contract classify --text "…"`，再 `contract patch --id <session> --feedback "…"`（L0 可能重开，L2 只改一处）。用户明确改需求时，用最新原话重写四格。
 
@@ -240,7 +240,7 @@ python3 pmem_art.py route --text "<玩家原话>" --canonical "<标准路由句>
 
 定稿写明两张参考的像素必须同时出现在同一张成图里：注册表里没有 `simultaneous_pixels` 为 true 的行——**暂不支持**，停并贴「双参考同框 · 怎么改说」；不改派到多图分工冒充同框，不开始出图。
 
-选中的技能会 `converge start` 时，启动后先把这一轮分析用 `converge discuss` 记进同一会话；**首轮 generate 前必须再跑** `reasonableness review`（`--draft` + 更合理的 `--revised` + 该技能 checklist），过闸后才出图。过程板上会留下需求与合理性修订。多技能依次跑时，每一支用自己的会话；对比 HTML 在全部完成后写。
+修订句和清单已经写好时，用 `converge prepare` 开会话（同一进程做 start、四格、合理性、emit-prompt；合理性没过不建会话）。还要先写关系稿时，才 `converge start`，并把这一轮分析用 `converge discuss` 记进同一会话；**首轮 generate 前必须再跑** `reasonableness review`（`--draft` + 更合理的 `--revised` + 该技能 checklist），过闸后才出图。`discuss` 不并进 prepare。局部改仍用 `converge start --route-id draw.touchup`。过程板上会留下需求与合理性修订。多技能依次跑时，每一支用自己的会话；对比 HTML 在全部完成后写。
 
 ## 交给玩家的结论
 

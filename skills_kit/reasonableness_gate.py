@@ -973,6 +973,7 @@ def cmd_reasonableness_at_root(
     force: bool = False,
 ) -> int:
     from .converge import _session_file, _write_session_json
+    from .session_lock import SessionRevisionConflict
 
     action_n = (action or "review").strip().lower()
     sf = _session_file(root, session_id)
@@ -1024,7 +1025,11 @@ def cmd_reasonableness_at_root(
     sess = json.loads(sf.read_text(encoding="utf-8"))
     # Always persist latest attempt (passed flag tells generate whether to unlock).
     sess = apply_review_to_session(sess, review)
-    _write_session_json(sf, sess)
+    try:
+        _write_session_json(sf, sess)
+    except SessionRevisionConflict as exc:
+        print(f"❌ 会话已被另一处写入，这次没有覆盖。请重读会话后再写。{exc}")
+        return 1
     print(format_review_print(review))
     if review.get("passed"):
         print(

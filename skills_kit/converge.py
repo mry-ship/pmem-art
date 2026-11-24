@@ -13,12 +13,49 @@ from typing import Any
 from ._time import _now_cst
 
 
-def _write_session_json(sf: Path, sess: dict[str, Any]) -> None:
-    """Atomic session write (tmp + os.replace) to reduce parallel RMW corruption."""
+def _disk_session_rev(sf: Path) -> int:
+    if not sf.is_file():
+        return 0
+    try:
+        current = json.loads(sf.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return 0
+    if not isinstance(current, dict):
+        return 0
+    try:
+        return int(current.get("_rev") or 0)
+    except (TypeError, ValueError):
+        return 0
+
+
+def _write_session_json(
+    sf: Path,
+    sess: dict[str, Any],
+    *,
+    replace_session: bool = False,
+) -> None:
+    """Atomic check-and-set. A stale reader cannot cover a newer revision.
+
+    ``replace_session`` is only for opening a session over the same id.
+    Partial updates (generate / judge / contract / discuss) must match ``_rev``.
+    """
+    from .session_lock import SessionRevisionConflict, session_file_lock
+
     sf.parent.mkdir(parents=True, exist_ok=True)
-    tmp = sf.with_suffix(sf.suffix + ".tmp")
-    tmp.write_text(json.dumps(sess, ensure_ascii=False, indent=2), encoding="utf-8")
-    os.replace(tmp, sf)
+    with session_file_lock(sf):
+        disk_rev = _disk_session_rev(sf)
+        try:
+            mem_rev = int(sess.get("_rev") or 0)
+        except (TypeError, ValueError):
+            mem_rev = 0
+        if sf.is_file() and not replace_session and mem_rev != disk_rev:
+            raise SessionRevisionConflict(
+                f"{sf.name} 磁盘修订 {disk_rev}，这次基于 {mem_rev}"
+            )
+        sess["_rev"] = disk_rev + 1
+        tmp = sf.with_suffix(sf.suffix + ".tmp")
+        tmp.write_text(json.dumps(sess, ensure_ascii=False, indent=2), encoding="utf-8")
+        os.replace(tmp, sf)
 
 
 def _file_sha1(path: Path) -> str:
@@ -166,6 +203,7 @@ from .converge_policy import (
     coerce_dims_dict,
     decide_round_stop,
     EARLY_STOP_REASONS,
+    hurdle_still_blocks,
     round_passes_structure_gates,
 )
 
@@ -1580,6 +1618,21 @@ def cmd_converge(
     root: Path,
     data: dict[str, Any],
     action: str,
+    **kwargs: Any,
+) -> int:
+    from .session_lock import SessionRevisionConflict
+
+    try:
+        return _cmd_converge_inner(root, data, action, **kwargs)
+    except SessionRevisionConflict as exc:
+        print(f"❌ 会话已被另一处写入，这次没有覆盖。请重读会话后再写。{exc}")
+        return 1
+
+
+def _cmd_converge_inner(
+    root: Path,
+    data: dict[str, Any],
+    action: str,
     *,
     session_id: str = "latest",
     goal: str = "",
@@ -1617,6 +1670,7 @@ def cmd_converge(
     settle_background: bool | None = None,
     emit_prompt: bool = False,
     defer_warm: bool = False,
+    opened_by: str = "",
 ) -> int:
     """
     converge_mode: quality (default, dynamic threshold per scale, max 3 rounds, stop ≥9.5 or best-of-3) | fast (warm-start fast-track hints).
@@ -1793,240 +1847,241 @@ def cmd_converge(
                 print(f"❌ [Step 1 · 会话启动参数校验拦截] {exc}")
                 return 1
 
-        from .parallel_slots import assert_can_start
+        from .parallel_slots import SlotClaim
 
-        slot_ok, slot_msg = assert_can_start(
-            root, data if isinstance(data, dict) else {}, session_id=session_id
-        )
-        if not slot_ok:
-            print(f"❌ [并行槽] {slot_msg}")
-            return 1
-
-        if (conversation_id or "").strip() and sf.exists():
-            try:
-                prev_sess = json.loads(sf.read_text(encoding="utf-8"))
-            except (OSError, json.JSONDecodeError):
-                prev_sess = {}
-            prev_owner = str((prev_sess or {}).get("owner_conversation_id") or "").strip()
-            prev_status = str((prev_sess or {}).get("status") or "")
-            if (
-                prev_owner
-                and prev_owner != conversation_id.strip()
-                and prev_status not in ("finished",)
-            ):
-                print(
-                    f"❌ [会话] {session_id} 还属于另一对话（{prev_owner}）。"
-                    "请换一个 --session，或等那边 finish。"
-                )
+        with SlotClaim(root, data if isinstance(data, dict) else {}, session_id) as slot_claim:
+            slot_ok, slot_msg = slot_claim.ok, slot_claim.msg
+            if not slot_ok:
+                print(f"❌ [并行槽] {slot_msg}")
                 return 1
+            if (conversation_id or "").strip() and sf.exists():
+                try:
+                    prev_sess = json.loads(sf.read_text(encoding="utf-8"))
+                except (OSError, json.JSONDecodeError):
+                    prev_sess = {}
+                prev_owner = str((prev_sess or {}).get("owner_conversation_id") or "").strip()
+                prev_status = str((prev_sess or {}).get("status") or "")
+                if (
+                    prev_owner
+                    and prev_owner != conversation_id.strip()
+                    and prev_status not in ("finished", "prepare_aborted")
+                ):
+                    print(
+                        f"❌ [会话] {session_id} 还属于另一对话（{prev_owner}）。"
+                        "请换一个 --session，或等那边 finish。"
+                    )
+                    return 1
 
-        from .route_gate import load_route_advise
+            from .route_gate import load_route_advise
 
-        advise_now = load_route_advise(root, conversation_id or "") or {}
-        if advise_now.get("_foreign"):
-            advise_now = {}
+            advise_now = load_route_advise(root, conversation_id or "") or {}
+            if advise_now.get("_foreign"):
+                advise_now = {}
 
-        sess = {
-            "session_id": session_id,
-            "started_at": _now_cst().strftime("%Y-%m-%d %H:%M:%S UTC+8"),
-            "goal": goal or "未命名生图任务",
-            "module": module or "brand.WorldStyle",
-            "mode": "ref_image_guided" if ref_image else "text_guided",
-            "converge_mode": converge_mode,
-            "quality_mode": converge_mode,
-            "stop_policy": "dynamic_threshold",
-            "merged_generate_and_judge": False,
-            "three_step_separation": True,
-            "pipeline_mode": "strict_three_step_start_generate_judge",
-            "scale": eff_scale,
-            "style_jump": bool(style_jump_requested),
-            "scale_profile": scale_prof,
-            "medium_family": str(scale_prof.get("medium_family") or "generic"),
-            "contract": "split" if str(contract or "").strip().lower() == "split" else "",
-            "target_score_threshold": base_th,
-            "recompose_dir": recompose_dir,
-            "fast_track": fast_track,
-            "draft_ok": bool(draft_ok),
-            "ref_image": ref_image,
-            "ref_analysis": ref_analysis,
-            "default_aspect_ratio": default_ar,
-            "default_reference_image_paths": default_ref_paths,
-            "aspect_ratio": default_ar,
-            "aspect_explicit": bool(aspect_explicit),
-            "reference_image_paths": default_ref_paths,
-            "ref_physical_traits": ref_traits,
-            "param_validation": start_param_val,
-            "step_trace": ["step1_start"],
-            "threshold": eff_threshold,
-            "accept_threshold": base_th,
-            "max_rounds": int(max_rounds),
-            "ready_to_finish": False,
-            "status": "running",
-            "owner_conversation_id": (conversation_id or "").strip(),
-            "route_ids": [str(x) for x in (advise_now.get("route_ids") or []) if str(x)],
-            "rounds": [],
-            "warm_start": warm,
-            "lessons_all": [],
-            "dim_lock_overrides": {},
-            "dim_lock_history": [],
-            "pad_mode": str(cfg_conv.get("pad_mode") or DEFAULT_PAD_MODE),
-            "anatomy_floor": float(cfg_conv.get("anatomy_floor") or DEFAULT_ANATOMY_FLOOR),
-            "early_stop_min_round": int(
-                cfg_conv.get("early_stop_min_round") or DEFAULT_EARLY_STOP_MIN_ROUND
-            ),
-            "regression_drop": float(
-                cfg_conv.get("regression_drop") or DEFAULT_REGRESSION_DROP
-            ),
-            "plateau_rounds": int(
-                cfg_conv.get("plateau_rounds") or DEFAULT_PLATEAU_ROUNDS
-            ),
-            "safe_early_stop": (
-                DEFAULT_SAFE_EARLY_STOP
-                if cfg_conv.get("safe_early_stop") is None
-                else bool(cfg_conv.get("safe_early_stop"))
-            ),
-        }
-        if expect_route and expect_route not in sess["route_ids"]:
-            sess["route_ids"] = list(sess["route_ids"]) + [str(expect_route)]
-        eff_max = _apply_skill_speed_caps(
-            sess,
-            goal=goal or "",
-            expect_route=expect_route or "",
-            module=module or "",
-            max_rounds=int(max_rounds),
-        )
-        if sess.get("touchup"):
-            # 未显式传 scale 时钉 low，并刷新会话档位画像
-            if not (scale or "").strip():
-                touch_prof = get_converge_scale_profile(
-                    "low",
-                    recompose_dir=recompose_dir,
-                    goal=goal,
-                    ref_analysis=ref_analysis,
-                    ref_image=ref_image,
-                    module=module,
-                    medium_family=medium_family,
-                    contract=contract,
+            sess = {
+                "session_id": session_id,
+                "opened_by": (opened_by or "start").strip() or "start",
+                "started_at": _now_cst().strftime("%Y-%m-%d %H:%M:%S UTC+8"),
+                "goal": goal or "未命名生图任务",
+                "module": module or "brand.WorldStyle",
+                "mode": "ref_image_guided" if ref_image else "text_guided",
+                "converge_mode": converge_mode,
+                "quality_mode": converge_mode,
+                "stop_policy": "dynamic_threshold",
+                "merged_generate_and_judge": False,
+                "three_step_separation": True,
+                "pipeline_mode": "strict_three_step_start_generate_judge",
+                "scale": eff_scale,
+                "style_jump": bool(style_jump_requested),
+                "scale_profile": scale_prof,
+                "medium_family": str(scale_prof.get("medium_family") or "generic"),
+                "contract": "split" if str(contract or "").strip().lower() == "split" else "",
+                "target_score_threshold": base_th,
+                "recompose_dir": recompose_dir,
+                "fast_track": fast_track,
+                "draft_ok": bool(draft_ok),
+                "ref_image": ref_image,
+                "ref_analysis": ref_analysis,
+                "default_aspect_ratio": default_ar,
+                "default_reference_image_paths": default_ref_paths,
+                "aspect_ratio": default_ar,
+                "aspect_explicit": bool(aspect_explicit),
+                "reference_image_paths": default_ref_paths,
+                "ref_physical_traits": ref_traits,
+                "param_validation": start_param_val,
+                "step_trace": ["step1_start"],
+                "threshold": eff_threshold,
+                "accept_threshold": base_th,
+                "max_rounds": int(max_rounds),
+                "ready_to_finish": False,
+                "status": "running",
+                "owner_conversation_id": (conversation_id or "").strip(),
+                "route_ids": [str(x) for x in (advise_now.get("route_ids") or []) if str(x)],
+                "rounds": [],
+                "warm_start": warm,
+                "lessons_all": [],
+                "dim_lock_overrides": {},
+                "dim_lock_history": [],
+                "pad_mode": str(cfg_conv.get("pad_mode") or DEFAULT_PAD_MODE),
+                "anatomy_floor": float(cfg_conv.get("anatomy_floor") or DEFAULT_ANATOMY_FLOOR),
+                "early_stop_min_round": int(
+                    cfg_conv.get("early_stop_min_round") or DEFAULT_EARLY_STOP_MIN_ROUND
+                ),
+                "regression_drop": float(
+                    cfg_conv.get("regression_drop") or DEFAULT_REGRESSION_DROP
+                ),
+                "plateau_rounds": int(
+                    cfg_conv.get("plateau_rounds") or DEFAULT_PLATEAU_ROUNDS
+                ),
+                "safe_early_stop": (
+                    DEFAULT_SAFE_EARLY_STOP
+                    if cfg_conv.get("safe_early_stop") is None
+                    else bool(cfg_conv.get("safe_early_stop"))
+                ),
+            }
+            if expect_route and expect_route not in sess["route_ids"]:
+                sess["route_ids"] = list(sess["route_ids"]) + [str(expect_route)]
+            eff_max = _apply_skill_speed_caps(
+                sess,
+                goal=goal or "",
+                expect_route=expect_route or "",
+                module=module or "",
+                max_rounds=int(max_rounds),
+            )
+            if sess.get("touchup"):
+                # 未显式传 scale 时钉 low，并刷新会话档位画像
+                if not (scale or "").strip():
+                    touch_prof = get_converge_scale_profile(
+                        "low",
+                        recompose_dir=recompose_dir,
+                        goal=goal,
+                        ref_analysis=ref_analysis,
+                        ref_image=ref_image,
+                        module=module,
+                        medium_family=medium_family,
+                        contract=contract,
+                    )
+                    sess["scale"] = "low"
+                    sess["scale_profile"] = touch_prof
+                    sess["medium_family"] = str(touch_prof.get("medium_family") or "generic")
+                    scale_prof = touch_prof
+                    eff_scale = "low"
+                print(
+                    f"🩹 [局部改] 快通道：最多 {eff_max} 枪（默认1枪人眼交）；"
+                    f"跳过正式合理性闸；不凑 ≥9.5 三轮履历。"
                 )
-                sess["scale"] = "low"
-                sess["scale_profile"] = touch_prof
-                sess["medium_family"] = str(touch_prof.get("medium_family") or "generic")
-                scale_prof = touch_prof
-                eff_scale = "low"
-            print(
-                f"🩹 [局部改] 快通道：最多 {eff_max} 枪（默认1枪人眼交）；"
-                f"跳过正式合理性闸；不凑 ≥9.5 三轮履历。"
-            )
-        elif sess.get("merge_delivery") == "overview_sheet":
-            print(
-                f"🪜 [merge overview] ≥9.5到线即停，最多 {eff_max} 轮；"
-                f"关系稿最多 {MERGE_OVERVIEW_MAX_DISCUSS}（过了就停）；"
-                f"交件须标明是否 ≥9.5/清单过关。"
-            )
-        elif sess.get("merge_delivery") == "per_cell":
-            print(
-                f"🪜 [merge per_cell] 本档 ≥9.5到线即停，最多 {eff_max} 轮；"
-                f"关系稿最多 {MERGE_OVERVIEW_MAX_DISCUSS}；"
-                f"多档须并行开独立 session 生图（禁止串行等完一档再开下一档）。"
-            )
-        elif sess.get("ui_delivery"):
-            print(
-                f"🖥️ [ui] {sess.get('ui_delivery')} ≥9.5到线即停，最多 {eff_max} 轮；"
-                f"未点名 full kit 禁止拆组件表。"
-            )
-        elif sess.get("icon_key_cap"):
-            print(
-                f"🧩 [icon] 关键枚若开闭环：≥9.5到线即停，最多 {eff_max} 轮；"
-                f"批量默认不逐枚开闭环。"
-            )
-        elif sess.get("split_round_cap"):
-            print(
-                f"🗂️ [split] 本交付物 ≥9.5到线即停，最多 {eff_max} 轮。"
-            )
-        if lock_text or goal:
-            from skills_kit.prompt_scale import merge_dim_lock_overrides, format_dim_lock_summary_zh
-            ov = merge_dim_lock_overrides(eff_scale, {}, goal or "", lock_text or "")
-            if ov:
-                sess["dim_lock_overrides"] = ov
-                sess["dim_lock_history"].append(
-                    {"at": "start", "text": lock_text or goal, "overrides": dict(ov)}
+            elif sess.get("merge_delivery") == "overview_sheet":
+                print(
+                    f"🪜 [merge overview] ≥9.5到线即停，最多 {eff_max} 轮；"
+                    f"关系稿最多 {MERGE_OVERVIEW_MAX_DISCUSS}（过了就停）；"
+                    f"交件须标明是否 ≥9.5/清单过关。"
                 )
-                print(f"🔓 画师锁定微调已生效：{format_dim_lock_summary_zh(eff_scale, ov)}")
-        # 理解合同 v1：外置当前理解（不改 route/9.5/最多3轮/垫图等硬闸）
-        from .understanding_contract import (
-            contract_from_session_bootstrap,
-            defaults_visibility_ok,
-            format_contract_summary,
-        )
+            elif sess.get("merge_delivery") == "per_cell":
+                print(
+                    f"🪜 [merge per_cell] 本档 ≥9.5到线即停，最多 {eff_max} 轮；"
+                    f"关系稿最多 {MERGE_OVERVIEW_MAX_DISCUSS}；"
+                    f"多档须并行开独立 session 生图（禁止串行等完一档再开下一档）。"
+                )
+            elif sess.get("ui_delivery"):
+                print(
+                    f"🖥️ [ui] {sess.get('ui_delivery')} ≥9.5到线即停，最多 {eff_max} 轮；"
+                    f"未点名 full kit 禁止拆组件表。"
+                )
+            elif sess.get("icon_key_cap"):
+                print(
+                    f"🧩 [icon] 关键枚若开闭环：≥9.5到线即停，最多 {eff_max} 轮；"
+                    f"批量默认不逐枚开闭环。"
+                )
+            elif sess.get("split_round_cap"):
+                print(
+                    f"🗂️ [split] 本交付物 ≥9.5到线即停，最多 {eff_max} 轮。"
+                )
+            if lock_text or goal:
+                from skills_kit.prompt_scale import merge_dim_lock_overrides, format_dim_lock_summary_zh
+                ov = merge_dim_lock_overrides(eff_scale, {}, goal or "", lock_text or "")
+                if ov:
+                    sess["dim_lock_overrides"] = ov
+                    sess["dim_lock_history"].append(
+                        {"at": "start", "text": lock_text or goal, "overrides": dict(ov)}
+                    )
+                    print(f"🔓 画师锁定微调已生效：{format_dim_lock_summary_zh(eff_scale, ov)}")
+            # 理解合同 v1：外置当前理解（不改 route/9.5/最多3轮/垫图等硬闸）
+            from .understanding_contract import (
+                contract_from_session_bootstrap,
+                defaults_visibility_ok,
+                format_contract_summary,
+            )
 
-        understanding = contract_from_session_bootstrap(
-            goal=goal or "",
-            route_ids=list(sess.get("route_ids") or []),
-            advise=advise_now,
-        )
-        sess["understanding_contract"] = understanding
-        _write_session_json(sf, sess)
-        mark_active_session(root, session_id, conversation_id or "")
-        print(
-            f"🎯 [收敛会话已启动] 模块: {sess['module']} | 模式: {converge_mode} | 强度(scale): {eff_scale} ({scale_prof['label']})"
-            f"{' · FAST-TRACK' if fast_track else ''} | 动态达标线: >= {sess['accept_threshold']} 分即停"
-            f"{'（草稿软线 ' + str(eff_threshold) + '）' if draft_ok else ''} | 最大兜底轮次: {sess['max_rounds']}"
-            f" | 最早停机轮次: {int(scale_prof.get('min_rounds_before_stop') or 1)}"
-            f" | 媒介: {sess.get('medium_family')}"
-            f"{' | 合同: split' if sess.get('contract') == 'split' else ''}"
-            f" | 画幅: {default_ar or '未锁'}"
-            f" | 安全早停: {'开' if sess.get('safe_early_stop') else '关'}"
-            + (
-                f"（掉≥{sess.get('regression_drop') or DEFAULT_REGRESSION_DROP}"
-                f"/平台{int(sess.get('plateau_rounds') or DEFAULT_PLATEAU_ROUNDS)}轮"
-                f"/R≥{sess.get('early_stop_min_round') or DEFAULT_EARLY_STOP_MIN_ROUND}）"
-                if sess.get("safe_early_stop")
-                else ""
+            understanding = contract_from_session_bootstrap(
+                goal=goal or "",
+                route_ids=list(sess.get("route_ids") or []),
+                advise=advise_now,
             )
-        )
-        print(f"   · 并行槽: {slot_msg}")
-        print("📋 " + format_contract_summary(understanding).replace("\n", "\n   "))
-        _def_ok, _def_msg = defaults_visibility_ok(understanding)
-        print(("   ✅ " if _def_ok else "   ⚠️ ") + _def_msg)
-        print(
-            f"   👉 补默认/锁点：`{pmem_art_cli()} contract set --id {session_id} "
-            "--defaults \"默认：…\" [--locks \"…\" --unlocks \"…\" --vibe \"…\" "
-            "--surface-fix \"只改一处…\"]`；"
-            f"每轮最小包：`{pmem_art_cli()} contract working-set --id {session_id}`"
-        )
-        print(f"🎚️  Scale 内部权重与约束: weights={scale_prof['dim_weights']} | budget={scale_prof['next_fix_budget']}")
-        print(f"🧭 Scale 指令: {scale_prof['prompt_directive']}")
-        hint = str(scale_prof.get("best_direction_hint") or "").strip()
-        if hint:
-            print(f"✨ 最优方向（按档加法，勿当第二份DNA锁）: {hint}")
-        print(f"🧷 本档保留集: {scale_prof.get('retention_set')}")
-        tail = _constraint_tail(scale_prof)
-        if tail:
-            print(f"📌 约束写在生成词末尾: {tail}")
-        if fast_track:
+            sess["understanding_contract"] = understanding
+            sess["slot_token"] = slot_claim.token
+            _write_session_json(sf, sess, replace_session=True)
+            slot_claim.commit()
+            mark_active_session(root, session_id, conversation_id or "")
             print(
-                f"⚡ Fast-track：warm-start 置信 {warm.get('confidence')} 高。"
-                f"仍须每张打分；若 score≥{FAST_SOFT_THRESHOLD} 且与上轮 Δ 很小可少重生，"
-                f"但最终采纳默认仍要 ≥{base_th}（除非用户明确草稿/fast）。"
+                f"🎯 [收敛会话已启动] 模块: {sess['module']} | 模式: {converge_mode} | 强度(scale): {eff_scale} ({scale_prof['label']})"
+                f"{' · FAST-TRACK' if fast_track else ''} | 动态达标线: >= {sess['accept_threshold']} 分即停"
+                f"{'（草稿软线 ' + str(eff_threshold) + '）' if draft_ok else ''} | 最大兜底轮次: {sess['max_rounds']}"
+                f" | 最早停机轮次: {int(scale_prof.get('min_rounds_before_stop') or 1)}"
+                f" | 媒介: {sess.get('medium_family')}"
+                f"{' | 合同: split' if sess.get('contract') == 'split' else ''}"
+                f" | 画幅: {default_ar or '未锁'}"
+                f" | 安全早停: {'开' if sess.get('safe_early_stop') else '关'}"
+                + (
+                    f"（掉≥{sess.get('regression_drop') or DEFAULT_REGRESSION_DROP}"
+                    f"/平台{int(sess.get('plateau_rounds') or DEFAULT_PLATEAU_ROUNDS)}轮"
+                    f"/R≥{sess.get('early_stop_min_round') or DEFAULT_EARLY_STOP_MIN_ROUND}）"
+                    if sess.get("safe_early_stop")
+                    else ""
+                )
             )
-        if ref_image:
-            print(f"🖼️  垫图/参考图模式: {ref_image}")
-            if ref_analysis:
-                print(f"🔍 参考图解构基准: {ref_analysis}")
-        if sess.get("touchup"):
+            print(f"   · 并行槽: {slot_msg}")
+            print("📋 " + format_contract_summary(understanding).replace("\n", "\n   "))
+            _def_ok, _def_msg = defaults_visibility_ok(understanding)
+            print(("   ✅ " if _def_ok else "   ⚠️ ") + _def_msg)
             print(
-                "\n👉 Agent（局部改）：直接 `converge generate --emit-prompt` → 垫成图出图 → "
-                "`converge generate --image`；人眼过就 `finish --quiet`。"
-                "禁止再跑正式 reasonableness / 禁止凑三轮拼板。"
+                f"   👉 补默认/锁点：`{pmem_art_cli()} contract set --id {session_id} "
+                "--defaults \"默认：…\" [--locks \"…\" --unlocks \"…\" --vibe \"…\" "
+                "--surface-fix \"只改一处…\"]`；"
+                f"每轮最小包：`{pmem_art_cli()} contract working-set --id {session_id}`"
             )
-        else:
-            print(
-                "\n👉 Agent：首轮出图前先过合理性闸 "
-                f"`{pmem_art_cli()} reasonableness review --id <session> --skill <…> "
-                "--draft \"…\" --revised \"…\" --checklist \"…\"`（必须同时交出更合理的提示词）；"
-                "再 `converge generate`（仅生图，不打分），然后 `converge judge`。"
-            )
-        return 0
+            print(f"🎚️  Scale 内部权重与约束: weights={scale_prof['dim_weights']} | budget={scale_prof['next_fix_budget']}")
+            print(f"🧭 Scale 指令: {scale_prof['prompt_directive']}")
+            hint = str(scale_prof.get("best_direction_hint") or "").strip()
+            if hint:
+                print(f"✨ 最优方向（按档加法，勿当第二份DNA锁）: {hint}")
+            print(f"🧷 本档保留集: {scale_prof.get('retention_set')}")
+            tail = _constraint_tail(scale_prof)
+            if tail:
+                print(f"📌 约束写在生成词末尾: {tail}")
+            if fast_track:
+                print(
+                    f"⚡ Fast-track：warm-start 置信 {warm.get('confidence')} 高。"
+                    f"仍须每张打分；若 score≥{FAST_SOFT_THRESHOLD} 且与上轮 Δ 很小可少重生，"
+                    f"但最终采纳默认仍要 ≥{base_th}（除非用户明确草稿/fast）。"
+                )
+            if ref_image:
+                print(f"🖼️  垫图/参考图模式: {ref_image}")
+                if ref_analysis:
+                    print(f"🔍 参考图解构基准: {ref_analysis}")
+            if sess.get("touchup"):
+                print(
+                    "\n👉 Agent（局部改）：直接 `converge generate --emit-prompt` → 垫成图出图 → "
+                    "`converge generate --image`；人眼过就 `finish --quiet`。"
+                    "禁止再跑正式 reasonableness / 禁止凑三轮拼板。"
+                )
+            else:
+                print(
+                    "\n👉 Agent：首轮出图前先过合理性闸 "
+                    f"`{pmem_art_cli()} reasonableness review --id <session> --skill <…> "
+                    "--draft \"…\" --revised \"…\" --checklist \"…\"`（必须同时交出更合理的提示词）；"
+                    "再 `converge generate`（仅生图，不打分），然后 `converge judge`。"
+                )
+            return 0
 
     if action == "discuss" and (session_id or "latest") == "latest":
         # 先于 exists 检查：禁止默写 latest；有活跃会话则改绑
@@ -3163,7 +3218,7 @@ def cmd_converge(
                     if sess.get("safe_early_stop") is None
                     else bool(sess.get("safe_early_stop"))
                 ),
-                hurdle_blocks_target=bool(hurdle) and float(score) < float(th),
+                hurdle_blocks_target=hurdle_still_blocks(hurdle, float(score), float(th)),
             )
             if early_safe_stop in EARLY_STOP_REASONS:
                 should_continue = False
@@ -3946,6 +4001,99 @@ def cmd_converge(
     return 1
 
 
+def _prepare_audit_path(root: Path, session_id: str) -> Path:
+    from .parallel_slots import _safe_session_id
+
+    folder = root / ".memory-art" / "converge" / "_prepare_audit"
+    folder.mkdir(parents=True, exist_ok=True)
+    return folder / f"{_safe_session_id(session_id)}.jsonl"
+
+
+def _session_has_plate(sess: dict[str, Any]) -> bool:
+    for row in sess.get("rounds") or []:
+        if isinstance(row, dict) and str(row.get("image") or "").strip():
+            return True
+    return False
+
+
+def _session_started_at(root: Path, session_id: str) -> str:
+    try:
+        sf = _session_file(root, session_id)
+        sess = json.loads(sf.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError, ValueError):
+        return ""
+    if not isinstance(sess, dict):
+        return ""
+    return str(sess.get("started_at") or "")
+
+
+def abort_prepare_session(
+    root: Path,
+    session_id: str,
+    *,
+    stage: str,
+    rc: int,
+    detail: str = "",
+    started_at: str = "",
+) -> None:
+    """Drop a prepare session that never registered an image, and keep an audit line.
+
+    A session that already has a plate stays active. A newer start on the same id
+    (different started_at) is left alone, including its reservation. Re-running
+    prepare on the same id overwrites this file instead of creating a second session.
+    """
+    from .parallel_slots import release_slot
+    from .session_lock import SessionRevisionConflict
+
+    record: dict[str, Any] = {
+        "session_id": session_id,
+        "stage": stage,
+        "rc": int(rc),
+        "detail": (detail or "")[:500],
+        "at": _now_cst().strftime("%Y-%m-%d %H:%M:%S UTC+8"),
+    }
+    token = ""
+    try:
+        sf = _session_file(root, session_id)
+    except ValueError:
+        sf = None
+    if sf is not None and sf.is_file():
+        try:
+            sess = json.loads(sf.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            sess = None
+        current_started = str((sess or {}).get("started_at") or "") if isinstance(sess, dict) else ""
+        replaced = bool(started_at and current_started and current_started != started_at)
+        if isinstance(sess, dict) and replaced:
+            record["released"] = False
+            record["skipped"] = "replaced"
+        elif isinstance(sess, dict) and not _session_has_plate(sess):
+            token = str(sess.get("slot_token") or "")
+            sess["status"] = "prepare_aborted"
+            sess["prepare_failure"] = dict(record)
+            try:
+                _write_session_json(sf, sess)
+                record["released"] = True
+            except SessionRevisionConflict:
+                record["released"] = False
+                record["skipped"] = "replaced"
+                token = ""
+        elif isinstance(sess, dict):
+            record["released"] = False
+            record["skipped"] = "already_has_image"
+    audit = _prepare_audit_path(root, session_id)
+    with audit.open("a", encoding="utf-8") as handle:
+        handle.write(json.dumps(record, ensure_ascii=False) + "\n")
+    if token and record.get("released"):
+        release_slot(root, session_id, token=token)
+    if record.get("skipped") == "already_has_image":
+        print(f"prepare 在 {stage} 失败，会话已有成图，继续占并行槽。审计：{audit}")
+    elif record.get("skipped") == "replaced":
+        print(f"prepare 在 {stage} 失败，同号会话已被另一次启动替换，原会话保持不动。审计：{audit}")
+    else:
+        print(f"prepare 在 {stage} 失败，尚未出图的会话不再占并行槽。审计：{audit}")
+
+
 def cmd_converge_prepare(
     root: Path,
     data: dict[str, Any],
@@ -3968,6 +4116,10 @@ def cmd_converge_prepare(
     conversation_id: str = "",
     defaults: str = "",
     locks: str = "",
+    keep: str = "",
+    vary: str = "",
+    forbid: str = "",
+    spec: str = "",
     reason_skill: str = "ordinary",
     reason_draft: str = "",
     revised: str = "",
@@ -4014,9 +4166,11 @@ def cmd_converge_prepare(
         conversation_id=conversation_id,
         recompose_dir=recompose_dir,
         defer_warm=True,
+        opened_by="prepare",
     )
     if rc != 0:
         return rc
+    started_at = _session_started_at(root, session_id)
     from .understanding_contract import cmd_contract
 
     rc = cmd_contract(
@@ -4025,8 +4179,13 @@ def cmd_converge_prepare(
         session_id=session_id,
         defaults=defaults or "prepare 已写明档位、画幅和垫图，按本次参数执行",
         locks=locks,
+        keep=keep,
+        vary=vary,
+        forbid=forbid,
+        spec=spec,
     )
     if rc != 0:
+        abort_prepare_session(root, session_id, stage="contract", rc=rc, started_at=started_at)
         return rc
     from .reasonableness_gate import cmd_reasonableness_at_root
 
@@ -4040,8 +4199,9 @@ def cmd_converge_prepare(
         checklist=checklist,
     )
     if rc != 0:
+        abort_prepare_session(root, session_id, stage="reasonableness", rc=rc, started_at=started_at)
         return rc
-    return cmd_converge(
+    rc = cmd_converge(
         root,
         data,
         "generate",
@@ -4056,3 +4216,6 @@ def cmd_converge_prepare(
         expect_route=expect_route,
         conversation_id=conversation_id,
     )
+    if rc != 0:
+        abort_prepare_session(root, session_id, stage="emit-prompt", rc=rc, started_at=started_at)
+    return rc

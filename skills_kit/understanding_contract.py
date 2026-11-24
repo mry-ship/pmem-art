@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Any
 
 from .platform_cli import pmem_art_cli
+from .session_lock import SessionRevisionConflict
 
 CONTRACT_VERSION = 1
 
@@ -609,22 +610,22 @@ def load_session_contract(
     had = isinstance(sess.get("understanding_contract"), dict)
     contract = ensure_session_contract(sess)
     if persist_if_missing and not had:
+        from .converge import _write_session_json
+
         sess["understanding_contract"] = contract
-        tmp = path.with_suffix(".json.tmp")
-        tmp.write_text(json.dumps(sess, ensure_ascii=False, indent=2), encoding="utf-8")
-        tmp.replace(path)
+        _write_session_json(path, sess)
     return sess, contract
 
 
 def save_session_contract(root: Path, session_id: str, contract: dict[str, Any]) -> Path:
+    from .converge import _write_session_json
+
     path = _session_path(root, session_id)
     sess = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(sess, dict):
         raise ValueError("会话 JSON 损坏")
     sess["understanding_contract"] = contract
-    tmp = path.with_suffix(".json.tmp")
-    tmp.write_text(json.dumps(sess, ensure_ascii=False, indent=2), encoding="utf-8")
-    tmp.replace(path)
+    _write_session_json(path, sess)
     return path
 
 
@@ -664,6 +665,9 @@ def cmd_contract(
         # show/working-set/defaults-check：旧会话缺字段时懒写入，避免磁盘与 CLI 两套真相
         persist = action in ("show", "working-set", "defaults-check")
         sess, contract = load_session_contract(root, sid, persist_if_missing=persist)
+    except SessionRevisionConflict as exc:
+        print(f"❌ 会话已被另一处写入，这次没有覆盖。请重读会话后再写。{exc}")
+        return 1
     except (OSError, ValueError, json.JSONDecodeError, FileNotFoundError) as exc:
         print(f"❌ {exc}")
         if (session_id or "").strip() in ("", "latest"):
@@ -724,7 +728,11 @@ def cmd_contract(
             )
             return 1
         contract = merge_contract_fields(contract, **kwargs)
-        save_session_contract(root, sid, contract)
+        try:
+            save_session_contract(root, sid, contract)
+        except SessionRevisionConflict as exc:
+            print(f"❌ 会话已被另一处写入，这次没有覆盖。请重读会话后再写。{exc}")
+            return 1
         print(format_contract_summary(contract))
         ok, msg = defaults_visibility_ok(contract)
         print(("✅ " if ok else "⚠️ ") + msg)
@@ -736,7 +744,11 @@ def cmd_contract(
             print("❌ patch 需要 --feedback 或 --text")
             return 1
         contract = apply_feedback(contract, fb)
-        save_session_contract(root, sid, contract)
+        try:
+            save_session_contract(root, sid, contract)
+        except SessionRevisionConflict as exc:
+            print(f"❌ 会话已被另一处写入，这次没有覆盖。请重读会话后再写。{exc}")
+            return 1
         hit = classify_feedback(fb)
         print(f"已归层 {hit['layer']}（{hit['reason']}）")
         print(format_contract_summary(contract))

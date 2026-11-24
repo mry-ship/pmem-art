@@ -524,6 +524,24 @@ class RouteFalseFireTests(unittest.TestCase):
         clone = plan_route("参考这张，变成微笑的猫", images=["a.png"])
         self.assertEqual(clone.route_ids, ["draw.clone"])
 
+    def test_expression_keep_with_image_asks_not_clone(self) -> None:
+        text = "帮我把这只猫改成惊讶的表情，其他保持不动。"
+        plan = plan_route(text, images=["cat.png"])
+        self.assertEqual(plan.mode, "stop")
+        self.assertEqual(plan.reason, "expression_keep")
+        self.assertEqual(plan.route_ids, [])
+        advised = advise_route(text, images=["cat.png"])
+        self.assertFalse(advised["execute_ok"], advised.get("route_ids"))
+        spoken = plan_route("参考这张，把这只猫改成惊讶的表情，其余保持不动")
+        self.assertEqual(spoken.reason, "expression_keep")
+        bare = plan_route(text)
+        self.assertEqual(bare.route_ids, ["draw.variant"])
+        named = plan_route(
+            "同一身份；走变体。帮我把这只猫改成惊讶的表情，其他保持不动。",
+            images=["cat.png"],
+        )
+        self.assertEqual(named.route_ids, ["draw.variant"])
+
     def test_layer_split_route_is_not_ordinary_or_touchup(self) -> None:
         from skills_kit.route_normalize import build_canonical_brief
 

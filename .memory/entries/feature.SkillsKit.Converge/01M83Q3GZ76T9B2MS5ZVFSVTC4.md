@@ -13,6 +13,8 @@ note_date: '2026-11-23'
 summary: converge start 按 max_parallel 硬拦活跃会话槽
 verify: tests.test_hard_pits_gates.TestParallelSlots
 applies: converge start
+verified: '2026-11-24'
+verified_at: '2026-11-24T23:02:55.714+08:00'
 source:
   kind: conversation
 ---
