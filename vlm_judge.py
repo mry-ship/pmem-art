@@ -83,7 +83,7 @@ def load_vlm_judge_config(root: Path | None, data: dict[str, Any] | None = None)
         local = Path(root) / ".memory-art" / "vlm_judge.local.yaml"
         if local.is_file():
             try:
-                from pmem_art import load_yaml
+                from core.yamlio import load_yaml
                 local_data = load_yaml(local.read_text(encoding="utf-8"))
                 if isinstance(local_data, dict):
                     # Allow either top-level keys or nested under vlm_judge:
@@ -817,7 +817,7 @@ def cmd_vlm_judge(
         if not image:
             print("❌ probe 需要 --image <path>")
             return 1
-        from skills_kit import get_converge_scale_profile
+        from skills_kit.scale_profile import get_converge_scale_profile
 
         prof = get_converge_scale_profile(scale or "medium", goal=goal, module=module)
         res = maybe_run_independent_vlm_judge(

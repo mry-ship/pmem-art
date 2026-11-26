@@ -43,6 +43,8 @@ class SkillsKitModulePathsTests(unittest.TestCase):
             "skills_kit/export_mode_c_icon.py": "feature.SkillsKit.Icon",
             "skills_kit/alpha_policy.py": "feature.SkillsKit",
             ".agents/skills/pmem-draw/SKILL.md": "feature.SkillsKit.Draw",
+            ".agents/skills/pmem-lens/SKILL.md": "feature.SkillsKit.Lens",
+            ".agents/skills/pmem-touchup/SKILL.md": "feature.SkillsKit.Touchup",
             ".agents/skills/pmem-ui/SKILL.md": "feature.SkillsKit.UI",
             ".agents/skills/pmem-icon/SKILL.md": "feature.SkillsKit.Icon",
             ".agents/skills/pmem-merge-ladder/SKILL.md": "feature.SkillsKit.MergeLadder",

@@ -12,20 +12,7 @@ from .showcase_gate import DEFAULT_MAX_ROUNDS, DEFAULT_THRESHOLD, can_accept_win
 _ACTIVE = "_active.json"
 
 
-def _converge_dir(root: Path) -> Path:
-    return Path(root) / ".memory-art" / "converge"
-
-
-def session_json_path(root: Path, session_id: str, *, suffix: str = ".json") -> Path | None:
-    """会话文件必须落在 .memory-art/converge 这一层。拒绝 .. 和分隔符。"""
-    folder = _converge_dir(root).resolve()
-    sid = (session_id or "").strip()
-    if not sid or any(ch in sid for ch in "/\\:\0"):
-        return None
-    path = (folder / f"{sid}{suffix}").resolve()
-    if path.parent != folder:
-        return None
-    return path
+from core.session import converge_dir as _converge_dir, session_json_path  # noqa: F401
 
 
 def _empty_index() -> dict[str, Any]:

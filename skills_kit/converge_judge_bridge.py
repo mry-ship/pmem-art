@@ -68,7 +68,7 @@ def _official_total(dims: dict[str, Any], item: dict[str, Any], defects: str = "
         return None
     if any(k not in dims for k in _GENERAL_DIM_KEYS):
         return None
-    from .converge_policy import (
+    from .judge_rules import (
         DEFAULT_ANATOMY_FLOOR,
         SCENE_COLLAPSE_FLOOR,
         anatomy_score,
@@ -77,7 +77,7 @@ def _official_total(dims: dict[str, Any], item: dict[str, Any], defects: str = "
         style_body_floor,
         style_scene_floor,
     )
-    from .prompt_scale import classify_subject
+    from .subject_lexicon import classify_subject_kind as classify_subject
 
     scale_prof = item.get("scale_prof") if isinstance(item.get("scale_prof"), dict) else {}
     goal = str(item.get("goal") or scale_prof.get("goal") or "")

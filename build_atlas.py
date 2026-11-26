@@ -5011,8 +5011,8 @@ def generate_atlas_html(data: dict[str, Any], out_path: Path) -> Path:
     return out_path
 
 if __name__ == "__main__":
-    from pmem_art import load_project
+    from core import hooks as _hooks
     root = Path(__file__).resolve().parent
-    data = load_project(root, embed_images=False)
+    data = _hooks.call("project.load", root, embed_images=False)
     out = generate_atlas_html(data, root / "art-atlas.html")
     print(f"Built {out} ({round(out.stat().st_size / 1024, 1)} KB)")

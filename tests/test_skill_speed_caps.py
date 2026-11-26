@@ -146,9 +146,9 @@ class SkillSpeedCapsTests(unittest.TestCase):
             sf = _session_file(root, "cell_cap_test")
             sf.parent.mkdir(parents=True, exist_ok=True)
             img2 = root / "c.png"
-            Image.new("RGB", (64, 64), (20, 30, 40)).save(img2)
+            Image.effect_noise((128, 128), 64).convert("RGB").save(img2)
             overflow = root / "too_many.png"
-            Image.new("RGB", (64, 64), (20, 30, 40)).save(overflow)
+            Image.effect_noise((128, 128), 64).convert("RGB").save(overflow)
             sess = {
                 "session_id": "cell_cap_test",
                 "goal": "merge per_cell L2",

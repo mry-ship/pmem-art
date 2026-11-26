@@ -45,7 +45,7 @@ pyw -3 -u pmem_art.py route --text "<玩家原话>" --canonical "<标准路由�
 | **原画 / Key Art** | 主视觉、Key Art、概念气氛、宣传立绘、无操作控件的大场面 | `/pmem-draw`（原画合同） | `draw.key` |
 | **克隆** | 有参考且说「按这风格画新题材 / 锁画风换主体」 | `/pmem-draw`（克隆合同） | `draw.clone` |
 | **变体** | 同一身份，只改表情/动作/小道具/局部 | `/pmem-draw`（变体合同） | `draw.variant` |
-| **镜头包** | 同一主体要几套机位/景别可选 | `/pmem-draw`（镜头包；点选前不生图） | `draw.lens` |
+| **镜头包** | 同一主体要几套机位/景别可选 | `/pmem-lens`（点选前不生图） | `draw.lens` |
 | **UI / HUD** | 主菜单、弹窗、九宫格、按钮态、整屏 HUD、商店截图级界面 | `/pmem-ui` | `ui.kit` |
 | **图标 A** | iOS/Android 桌面启动图标、App Icon 1024 母版 | `/pmem-icon` A | `icon.a` |
 | **图标 B** | 线性 SVG 导航/功能图标集 | `/pmem-icon` B | `icon.b` |

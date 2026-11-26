@@ -26,6 +26,20 @@ dist/
 _tmp_*
 _probe_*
 
+# Root-level debug dumps (audit / route / pack / rootfix); never commit
+/_audit_*
+/_route_*
+/_pack_*
+/_test_rootfix*
+/_help_reason.txt
+/_merge_pack.md
+/_validate_issues.json
+/tmpl.txt
+/skill-test-report.html
+
+# Generated atlas data sidecar (history had 5-12MB versions; rebuilt by `pmem_art.py atlas`)
+.memory-art/atlas_data.json
+
 # External / store screenshots for UI benchmarking (not gallery)
 downloads/**
 !downloads/README.md

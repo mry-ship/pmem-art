@@ -771,8 +771,8 @@ def ensure_cursor_stubs(root: Path) -> None:
     )
     _rewrite_codex_art_hook_launchers(root / ".codex" / "hooks.json", py=py)
     try:
-        from skills_kit import install_skills_and_agent_configs
-        install_skills_and_agent_configs(root, quiet=True)
+        from core import hooks as _hooks
+        _hooks.call("skills.install", root, quiet=True)
     except Exception as exc:
         print(f"⚠️ 安装技能包时出现警告: {exc}")
 
@@ -1110,7 +1110,7 @@ def triage_memory_inbox(root: Path, data: dict[str, Any]) -> dict[str, Any]:
             continue
         # lightweight: reuse project parser if available
         try:
-            from pmem_art import load_yaml
+            from core.yamlio import load_yaml
             meta = load_yaml(m.group(1)) or {}
         except Exception:
             meta = {}

@@ -16,7 +16,7 @@
 ![Skills](https://img.shields.io/badge/美术技能-11-8B5CF6)
 ![Threshold](https://img.shields.io/badge/合格线-≥9.50-blue)
 
-[📦 下载用户包 0.16.21-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.21-art) · [📖 使用手册](USER_MANUAL.md) · [认路白话流程图](docs/route_pipeline.html) · [进阶技能点选](docs/skills/flows.html) · [效果图墙](#效果长什么样) · [全页展陈](docs/showcase/skills-homepage/index.html) · [架构](ARCHITECTURE.md)
+[📦 下载用户包 0.16.22-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.22-art) · [📖 使用手册](USER_MANUAL.md) · [认路白话流程图](docs/route_pipeline.html) · [进阶技能点选](docs/skills/flows.html) · [效果图墙](#效果长什么样) · [全页展陈](docs/showcase/skills-homepage/index.html) · [架构](ARCHITECTURE.md)
 
 </div>
 
@@ -34,10 +34,10 @@
 
 ## 一分钟接入
 
-**推荐画师：下用户包**（不含研发用 pmem）→ [Releases · v0.16.21-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.21-art)
+**推荐画师：下用户包**（不含研发用 pmem）→ [Releases · v0.16.22-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.22-art)
 
 ```bash
-# 解压 pmem-art-0.16.21-art.zip 后
+# 解压 pmem-art-0.16.22-art.zip 后
 pip install -r requirements.txt
 pyw -3 -u pmem_art.py init --name "MyArtProject"
 pyw -3 -u pmem_art.py skills --install
@@ -102,7 +102,7 @@ Runtime: `pillow`, `numpy`, `pyyaml`. Tests: `pytest`（见 `pytest.ini`，`test
 </thead>
 <tbody>
 <tr><td>1</td><td>总控</td><td><code>/pmem-agent</code></td><td>以后只走这一条。一轮审核：确定就列出分析并直接执行；多种情况先列出来等确认。另提要求则再审一遍，确认后再执行。可默认的路径/版式/同范围写入分析。单交付交一支；整页对比可依次多支。出图结算仍是那一支的格式。</td></tr>
-<tr><td>2</td><td>生图</td><td><code>/pmem-draw</code></td><td>普通图、原画、克隆、变体、镜头包、局部改。正式生图最多 3 轮，合格线 ≥9.5。成图只拧点名小处走<strong>局部改</strong>（默认 1～2 枪，不凑三轮）。有参考但没说新题材时，不进克隆。</td></tr>
+<tr><td>2</td><td>生图</td><td><code>/pmem-draw</code></td><td>普通图、原画、克隆、变体、多图分工。正式生图最多 3 轮，合格线 ≥9.5。镜头包走 <code>/pmem-lens</code>，成图只拧点名小处走 <code>/pmem-touchup</code>（默认 1～2 枪，不凑三轮）。有参考但没说新题材时，不进克隆。</td></tr>
 <tr><td>3</td><td>界面</td><td><code>/pmem-ui</code></td><td>一整套 HUD / 菜单 / 九宫格。不用单张插画代替。</td></tr>
 <tr><td>4</td><td>图标</td><td><code>/pmem-icon</code></td><td>三档不混：A 桌面母版、B 线性 SVG、C 道具格。</td></tr>
 <tr><td>5</td><td>合成梯</td><td><code>/pmem-merge-ladder</code></td><td>先用 3 稿定链型/档数/画风（说不通就不出图）；默认整表一组（通常 8 档，对标后跟合理档数）；仅点名逐格才一档一张。商业对标优先；生物链要眼睛；白卡禁超框。论述和出图留在过程板。</td></tr>
@@ -201,7 +201,7 @@ pyw -3 -u pmem_art.py atlas
 > **全页展陈（话术 + 过程图 + 终稿）** → [docs/showcase/skills-homepage/index.html](docs/showcase/skills-homepage/index.html)  
 > 图源：`docs/workbench_guide/`（技能教学样例）+ 最新合成梯整表 · 闭环最多 3 轮 · ≥9.50
 
-### draw · 普通图 / 原画 / 克隆 / 变体 / 局部改
+### draw · 普通图 / 原画 / 克隆 / 变体 / 多图分工
 
 从左到右：原图 → 过程 → 终稿（表头分是终稿总分）。
 

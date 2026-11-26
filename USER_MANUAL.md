@@ -1,9 +1,9 @@
 # 📘 pmem-art 画师使用手册 — 怎么在 Cursor / Codex 里越画越准
 
-> **版本**：`v0.16.21-art`  
+> **版本**：`v0.16.22-art`  
 > **核心理念（零门槛）**：**直接说人话就行**。例如「画一张窗边女孩」「参考这张，换成一只猫」。**不用背技能名、不用敲斜杠、不用碰命令行、不用写 YAML。** 附图可有可无。  
 > 电脑会自己认路；认不清会**先问你一句**，不会默默画错。你只会看到类似 `【按 克隆 走了】` / `【走默认路径】` 这种标签。  
-> **用户包下载（不含研发用 pmem）** → [GitHub Release v0.16.21-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.21-art)  
+> **用户包下载（不含研发用 pmem）** → [GitHub Release v0.16.22-art](https://github.com/mry-ship/pmem-art/releases/tag/v0.16.22-art)  
 > **认路白话流程图** → [docs/route_pipeline.html](docs/route_pipeline.html)（推荐先看：大白话从提需到出图）  
 > **先看总览？** → [README.md](README.md) · **进阶斜杠技能**见下文（可选用） · 旧点选流程 [docs/skills/flows.html](docs/skills/flows.html)  
 > **看图墙 / 技能用法与结果？** → [README · 效果长什么样](README.md#效果长什么样) · [全页展陈](docs/showcase/skills-homepage/index.html)（图源 `docs/workbench_guide/` + 合成梯；拆图层见展陈 `#layer`）
@@ -53,7 +53,7 @@
 | 技能指令 | 什么时候用 |
 | :--- | :--- |
 | **`/pmem-agent`** | 总控。没点名具体技能时走这一条。一轮审核：确定就列出分析并直接执行；多种情况等确认。另提要求则再审一遍，确认后再执行。可默认则默认。对比展陈可点名多支（并行 ≤ `agent.max_parallel`，默认 4）。不生图；结算格式仍是那一支自己的 |
-| **`/pmem-draw`** | 生图。普通图、原画、克隆、变体、镜头包、局部改。正式交付打磨到 9.5；成图只拧点名小处说「修一下这张 / 就改这一点」走局部改快通道。要锁某一支，把类型写在句子里 |
+| **`/pmem-draw`** | 生图。普通图、原画、克隆、变体、多图分工。正式交付打磨到 9.5。镜头包走 `/pmem-lens`，成图只拧点名小处走 `/pmem-touchup`。要锁某一支，把类型写在句子里 |
 | **`/pmem-ui`** | 一整套 HUD/菜单。判成界面才走 |
 | **`/pmem-icon`** | 图标三档不混：桌面母版、线性 SVG、道具格 |
 | **`/pmem-merge-ladder`** | 合成梯。先 3 稿定链型/档数/画风；默认整表一组（通常 8，对标后可 6）；仅点名逐格才一档一张。商业对标优先；生物要眼睛；白卡禁超框 |
@@ -64,7 +64,7 @@
 | **`/pmem-atlas`** | 整理散图，刷新看图工作台（须用 http 打开，见第六章 `atlas`） |
 | **`/pmem-coach`** | 进步、短板、知识合成一条。说「进步」或「知识」就看那一份。知识卡要你说收下才写入 |
 
-> **已退役**：`/pmem-lens-propose` 不再作为独立入口；机位/镜头包请写在 `/pmem-draw` 句子里（「先给几套机位」）。UI 九宫格交付仍以 `manifest.json` 为验收清单。
+> **已退役**：`/pmem-lens-propose` 不再作为独立入口；机位/镜头包请走 `/pmem-lens`（「先给几套机位」）。UI 九宫格交付仍以 `manifest.json` 为验收清单。
 
 镜头包点选前不生图。有参考但没说新题材时，不会走进克隆。已有成图、只改点名部位时走局部改，不进普通图三轮。
 
@@ -234,7 +234,7 @@ flowchart TD
 
 ---
 
-### 镜头包（写在 `/pmem-draw` 里）— 生图前点选
+### 镜头包（`/pmem-lens`）— 生图前点选
 
 ```mermaid
 flowchart LR

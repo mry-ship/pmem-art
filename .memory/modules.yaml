@@ -51,10 +51,20 @@ modules:
     aliases: [展陈闸, showcase-gate]
     entities: [ShowcaseGateProcessBoard, ShowcaseRerun, ShowcaseBareIconDrop, ShowcaseMissingImageFile, Dim6Label]
   feature.SkillsKit.Draw:
-    description: /pmem-draw 普通图·原画·克隆·变体·多图·镜头包
+    description: /pmem-draw 普通图·原画·克隆·变体·多图；镜头包与局部改已拆出
     paths: [.agents/skills/pmem-draw/**, .cursor/skills/pmem-draw/**]
     aliases: [生图, pmem-draw]
     entities: [StyleThenCloneKeyartGate]
+  feature.SkillsKit.Lens:
+    description: /pmem-lens 镜头包，先给机位方案，点选前不生图
+    paths: [.agents/skills/pmem-lens/**, .cursor/skills/pmem-lens/**]
+    aliases: [镜头包, pmem-lens]
+    entities: [LensPackBeforeDraw]
+  feature.SkillsKit.Touchup:
+    description: /pmem-touchup 局部改快通道，垫成图只改点名处
+    paths: [.agents/skills/pmem-touchup/**, .cursor/skills/pmem-touchup/**]
+    aliases: [局部改, pmem-touchup]
+    entities: [TouchupFastLane]
   feature.SkillsKit.UI:
     description: /pmem-ui 整套界面与 HUD
     paths: [.agents/skills/pmem-ui/**, .cursor/skills/pmem-ui/**]

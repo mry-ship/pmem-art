@@ -15,6 +15,8 @@ def _skill_install_roots(root: Path) -> list[Path]:
 _EXPECTED_SKILLS = (
     "pmem-agent",
     "pmem-draw",
+    "pmem-lens",
+    "pmem-touchup",
     "pmem-ui",
     "pmem-icon",
     "pmem-merge-ladder",

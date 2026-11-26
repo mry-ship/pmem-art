@@ -11,8 +11,8 @@ _DRAW_HEADING = {
     "界面": ("ui.kit", "pmem-ui"),
     "图标": None,  # A/B/C come from the icon skill, not this one row
     "合成梯": ("merge.ladder", "pmem-merge-ladder"),
-    "镜头包": ("draw.lens", "pmem-draw"),
-    "局部改": ("draw.touchup", "pmem-draw"),
+    "镜头包": ("draw.lens", "pmem-lens"),
+    "局部改": ("draw.touchup", "pmem-touchup"),
     "克隆": ("draw.clone", "pmem-draw"),
     "变体": ("draw.variant", "pmem-draw"),
     "多图分工": ("draw.multi", "pmem-draw"),
@@ -277,7 +277,13 @@ def build_registry(specs: list[dict[str, Any]], *, installed_root: Path | None =
         else:
             heading = _skill_open(body)
             section = by_name[skill]["title"]
-            if rid == "merge.ladder":
+            if rid in {"draw.lens", "draw.touchup"}:
+                # 独立短技能：零点五 route + 合同；不带闭环、交件可见、记忆静默
+                contract = _contract_heading(body, name)
+                route_gate = _h2_by_prefix(body, "## 零点五")
+                heading = contract or heading
+                pack = [h for h in (route_gate, contract) if h]
+            elif rid == "merge.ladder":
                 card = _h2_by_prefix(body, "## 执行卡")
                 forbid = _h2_by_prefix(body, "## 禁止")
                 delivery = _delivery_heading(body)
@@ -442,7 +448,8 @@ def build_registry(specs: list[dict[str, Any]], *, installed_root: Path | None =
         ("draw.touchup", ("合同 · 局部改", "最多1枪", "零点五")),
     ):
         route = by_rid.get(rid) or {}
-        packed = slice_route_body(draw_body, route)
+        owner_body = by_name.get(str(route.get("skill") or ""), {}).get("body") or draw_body
+        packed = slice_route_body(owner_body, route)
         for needle in must:
             if needle not in packed:
                 section_cut_ok = False

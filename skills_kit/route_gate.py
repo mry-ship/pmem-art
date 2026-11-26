@@ -49,6 +49,8 @@ _SLASH_TO_ROUTE: dict[str, str] = {
     "/pmem-atlas": "atlas.file",
     "/pmem-coach": "coach.report",
     "/pmem-prompt": "prompt.write",
+    "/pmem-lens": "draw.lens",
+    "/pmem-touchup": "draw.touchup",
 }
 
 

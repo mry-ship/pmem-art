@@ -6,7 +6,7 @@ Converge threshold stays DEFAULT_THRESHOLD (9.5): hit STOP or run max_rounds →
 """
 from __future__ import annotations
 
-from .prompt_scale import DEFAULT_THRESHOLD
+from core.scale_constants import DEFAULT_THRESHOLD
 
 AGENT_JUDGE_SOURCE = "agent_absolute_5d"
 

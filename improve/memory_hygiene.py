@@ -96,7 +96,7 @@ def _dump_assets_yaml(assets: list[dict[str, Any]]) -> str:
 def detach_missing_assets(root: Path, *, apply: bool = True) -> dict[str, Any]:
     """Rewrite entry frontmatter: missing path → role=detached + detached_path, drop live path."""
     from lifecycle import iter_md_files
-    from pmem_art import load_yaml
+    from core.yamlio import load_yaml
 
     entries_dir = root / MEMORY_DIR / "entries"
     touched = 0

@@ -320,7 +320,7 @@ def promote_final(
     sess_path: Path | None = None
     sess_doc: dict[str, Any] | None = None
     if session_id:
-        from skills_kit.converge_loop import session_json_path
+        from core.session import session_json_path
 
         cand = session_json_path(root_r, session_id)
         if cand is None:

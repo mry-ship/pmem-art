@@ -113,12 +113,12 @@
     {
       "id": "draw.lens",
       "when": "玩家明确要几套机位 / 镜头 / 光给自己挑",
-      "skill": "pmem-draw",
-      "section": "镜头包",
-      "file": ".cursor/skills/pmem-draw/SKILL.md",
+      "skill": "pmem-lens",
+      "section": "镜头包：先给 4 套机位方案，点选前不生图",
+      "file": ".cursor/skills/pmem-lens/SKILL.md",
       "heading": "## 合同 · 镜头包",
       "pack_headings": [
-        "## 零点五、开画前强制 route（与总控同闸；点名 `/pmem-draw` 也要跑）",
+        "## 零点五、开画前 route",
         "## 合同 · 镜头包"
       ],
       "routable": true,
@@ -128,12 +128,12 @@
     {
       "id": "draw.touchup",
       "when": "已有成图；只改点名部位/小瑕疵；不换题材、机位、身份、整构图",
-      "skill": "pmem-draw",
-      "section": "局部改",
-      "file": ".cursor/skills/pmem-draw/SKILL.md",
+      "skill": "pmem-touchup",
+      "section": "【最多1枪】局部改快通道：成图只拧点名处",
+      "file": ".cursor/skills/pmem-touchup/SKILL.md",
       "heading": "## 合同 · 局部改",
       "pack_headings": [
-        "## 零点五、开画前强制 route（与总控同闸；点名 `/pmem-draw` 也要跑）",
+        "## 零点五、开画前 route",
         "## 合同 · 局部改"
       ],
       "routable": true,

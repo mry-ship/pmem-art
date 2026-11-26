@@ -179,7 +179,7 @@ def match_module(
 def _light_dims(path: Path) -> dict[str, Any]:
     """Read only headers for size; never embed base64."""
     try:
-        from pmem_art import inspect_png
+        from core.imageinfo import inspect_png
 
         info = inspect_png(path, embed_data_uri=False)
         return {

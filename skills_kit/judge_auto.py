@@ -10,12 +10,9 @@ from typing import Any
 
 from ._time import _now_cst
 
-from .prompt_scale import (
-    DEFAULT_MAX_ROUNDS,
-    DEFAULT_THRESHOLD,
-    classify_subject,
-    get_converge_scale_profile,
-)
+from core.scale_constants import DEFAULT_MAX_ROUNDS, DEFAULT_THRESHOLD
+from .scale_profile import get_converge_scale_profile
+from .subject_lexicon import classify_subject_kind as classify_subject
 from .scoring import (
     audit_score_inflation,
     cap_reported_dims,
@@ -29,10 +26,10 @@ from .image_gates import (
     physical_asset_kind_for_session,
     resolve_case_config,
 )
-from .validate_params import _physical_image_gate
+from .image_gates import _physical_image_gate
 from .absolute_5d_agent_rubric import AGENT_JUDGE_SOURCE
 from .subject_lexicon import clause
-from .converge_policy import (
+from .judge_rules import (
     DEFAULT_ANATOMY_FLOOR,
     NON_ANATOMY_RUBRICS,
     SCENE_COLLAPSE_FLOOR,

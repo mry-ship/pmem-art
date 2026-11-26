@@ -1149,7 +1149,7 @@ def merge_warm_start_prompt(prompt: str, pack: dict[str, Any] | None) -> str:
     if not block:
         return text
     if text:
-        from skills_kit.prompt_scale import drop_opposed_injections
+        from core.injection_filter import drop_opposed_injections
 
         block = drop_opposed_injections(block, brief=text).strip()
     if not block:

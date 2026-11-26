@@ -1533,8 +1533,8 @@ def _apply_finish_memory_and_atlas(
     # atlas：仅 settle 子进程默认同步刷；测例同步 finish 跳过，避免卡单测
     if refresh_atlas:
         try:
-            from pmem_art import refresh_atlas_silent
-            out = refresh_atlas_silent(root)
+            from core import hooks as _hooks
+            out = _hooks.call("atlas.refresh", root)
             if out is None and verbose:
                 print(f"⚠️ atlas 刷新未写出（session={session_id}）", flush=True)
         except Exception as atlas_exc:

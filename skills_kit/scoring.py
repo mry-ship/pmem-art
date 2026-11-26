@@ -11,7 +11,7 @@ from typing import Any
 
 from ._time import _now_cst
 
-from .prompt_scale import APP_ICON_DIM_WEIGHTS, DEFAULT_THRESHOLD, UI_DEDICATED_DIM_WEIGHTS
+from core.scale_constants import APP_ICON_DIM_WEIGHTS, DEFAULT_THRESHOLD, UI_DEDICATED_DIM_WEIGHTS
 
 def _is_app_icon_5d_context(dims_str: str = "", module: str = "") -> bool:
     mod = (module or "").strip().lower()
@@ -792,7 +792,7 @@ def audit_score_inflation(
         "copied the reference",
     )
     hit_kw = _keyword_hits(defects_lower, severe_defect_keywords)
-    from .converge_policy import STYLE_INFLATION_IGNORE, infer_style_family
+    from .judge_rules import STYLE_INFLATION_IGNORE, infer_style_family
 
     style_family = infer_style_family(
         str(scale_prof.get("goal") or ""),

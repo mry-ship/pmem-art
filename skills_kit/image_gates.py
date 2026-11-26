@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any
 
 from ._time import _now_cst
+from core.scale_constants import DEFAULT_THRESHOLD, MIN_IMAGE_EDGE_PX
 
 # 透明类资产的有效像素下限。低于此值视为几乎没有内容，而不是一张可用的层或图标。
 _ALPHA_COVERAGE_FLOOR = {
@@ -94,7 +95,7 @@ def _header_size(raw: bytes) -> tuple[int, int]:
     if len(raw) >= 24 and raw[:8] == b"\x89PNG\r\n\x1a\n" and raw[12:16] == b"IHDR":
         return struct.unpack(">II", raw[16:24])
     if len(raw) >= 16 and raw[:4] == b"RIFF" and raw[8:12] == b"WEBP":
-        from pmem_art import _webp_size
+        from core.imageinfo import _webp_size
 
         wh = _webp_size(raw)
         if wh:
@@ -394,4 +395,42 @@ def _parse_ratio_float(ar_str: str) -> float | None:
     return None
 
 
-
+def _physical_image_gate(
+    traits: dict[str, Any],
+    *,
+    image_path: str = "",
+    target_th: float = DEFAULT_THRESHOLD,
+    asset_kind: str = "",
+) -> dict[str, Any]:
+    """拦无法解码、几乎全透明、或整幅单一颜色的图。字节熵只记录，不单独放行或拦截。"""
+    reasons: list[str] = []
+    kind = asset_kind or str(traits.get("asset_kind") or "opaque")
+    if kind not in _ALPHA_COVERAGE_FLOOR:
+        kind = "opaque"
+    if not traits.get("exists"):
+        label = (image_path or "").strip() or "<empty>"
+        reasons.append(f"磁盘无有效生成图: {label}")
+    elif not traits.get("decode_ok"):
+        err = str(traits.get("decode_error") or "无法解码").strip()
+        reasons.append(f"图片解码失败: {err}")
+    else:
+        w = int(traits.get("width") or 0)
+        h = int(traits.get("height") or 0)
+        if w < MIN_IMAGE_EDGE_PX or h < MIN_IMAGE_EDGE_PX:
+            reasons.append(f"分辨率过低: {w}x{h}（至少 {MIN_IMAGE_EDGE_PX}px 边长）")
+        if traits.get("has_alpha"):
+            floor = _ALPHA_COVERAGE_FLOOR[kind]
+            coverage = float(traits.get("alpha_coverage") or 0.0)
+            if coverage < floor:
+                reasons.append(
+                    f"有效像素过少: alpha {coverage:.1%} < {floor:.1%}（{kind}）"
+                )
+        blank = float(traits.get("blank_ratio") or 0.0)
+        if blank >= BLANK_FRAME_SHARE:
+            reasons.append(f"画面几乎为空: 空白比例 {blank:.1%}")
+    blocked = bool(reasons)
+    return {
+        "blocked": blocked,
+        "reasons": reasons,
+        "score_cap": round(float(target_th) - 0.05, 2) if blocked else None,
+    }

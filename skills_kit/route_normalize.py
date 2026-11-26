@@ -30,6 +30,9 @@ def wants_layer_split(text: str) -> bool:
         return True
     if any(word in body for word in ("拆图层", "分图叠回", "新图旧图拆件", "装修分块")):
         return True
+    # 「拆成可叠回的图层」「分图层」「图层拆分」
+    if re.search(r"(拆|分)成.{0,6}(图层|可叠回|叠回)|可叠回的?(图层|层)|分图层|拆分图层|图层拆分", body):
+        return True
     # 「背景一份其余九份」才算；「背景一份，其他留给标题」不算
     if re.search(r"背景一份.{0,12}(?:其余|剩下|其他).{0,8}(?:\d+|[一二三四五六七八九十两几多若干]+)?份", body):
         return True

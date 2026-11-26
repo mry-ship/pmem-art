@@ -589,7 +589,11 @@ def _wants_lens(text: str) -> bool:
         return False
     if _LENS.search(text):
         return True
-    return _any(text, ("远中近", "机位包", "几套镜头", "镜头包", "几套机位"))
+    return _any(
+        text,
+        ("远中近", "机位包", "几套镜头", "镜头包", "几套机位",
+         "不同镜头", "不同机位", "几种机位", "几种镜头", "几个机位", "镜头方案", "机位方案"),
+    )
 
 
 _IDENTITY_LOCK = (
@@ -668,6 +672,11 @@ _SWAP_SUBJECT = (
     "改成一只",
     "变成一只",
 )
+# 「按这张的画风画一只猫」：锁画风 + 点名新主体。带「以后/锁/验证」的归锁风格，不在此列。
+_STYLE_THEN_SUBJECT = re.compile(
+    r"(画风|风格|色调|笔触|色板|画法|配色)\s*[，,]?\s*(画|来|出)\s*(一|1)?\s*[只个张幅位头条家座辆艘棵朵]"
+)
+_NEW_ONE = re.compile(r"(画|来|出)\s*(一|1)?\s*[只个张幅位头条家座辆艘]\s*新的")
 # 裸「换题材」须左边界不是「不」（覆盖 不换 / 也不换）
 _SWAP_TOPIC = re.compile(r"(?<![不])换题材")
 
@@ -681,6 +690,12 @@ def _swap_subject_signal(text: str) -> bool:
     if _expression_swap_locked(text):
         return False
     if _SWAP_TOPIC.search(text):
+        return True
+    if _NEW_ONE.search(text):
+        return True
+    if _STYLE_THEN_SUBJECT.search(text) and not _any(
+        text, ("以后", "往后", "锁风格", "锁定", "验证", "锁一下")
+    ):
         return True
     return _any(text, _SWAP_SUBJECT)
 
@@ -827,6 +842,9 @@ _VARIANT_STRONG = (
     "同一张脸",
     "同一身份",
 )
+_SEASON_SWAP = re.compile(
+    r"换成.{0,4}(冬天|夏天|春天|秋天|雪天|雨天|夜晚|白天|黄昏)(版|版本|款|的衣服|的服装|装)"
+)
 _VARIANT_WEAK = ("生气", "微笑", "闭眼", "侧目", "眨眼", "惊讶", "叹气", "姿势", "动作")
 _VARIANT_IDENTITY = ("同一张脸", "同一身份", "还是她", "还是他", "别换人", "同一个")
 
@@ -865,6 +883,10 @@ _TOUCHUP_ACTION = (
     "有点歪",
     "修修",
     "清一下",
+    "去掉",
+    "擦掉",
+    "抹掉",
+    "清掉",
 )
 _TOUCHUP_KEEP = (
     "机位别动",
@@ -918,9 +940,14 @@ def _wants_variant(text: str) -> bool:
         text, ("表情", "差分", "换画风", "动作", "生气", "微笑", "变体", "表情包")
     ):
         return False
-    if _any(text, _VARIANT_STRONG):
+    if _any(text, _VARIANT_STRONG) or _SEASON_SWAP.search(text):
         return True
     return _any(text, _VARIANT_WEAK) and _any(text, _VARIANT_IDENTITY)
+
+
+_MULTI_STATES = re.compile(
+    r"同一(个)?机位.{0,14}(分别|状态)|(两|三|四|\d)\s*张图?\s*同一(个)?机位|前后\s*(两|三|四|\d)?\s*个?\s*状态"
+)
 
 
 def _wants_multi(text: str, images: list[str], roles: list[str]) -> bool:
@@ -929,6 +956,8 @@ def _wants_multi(text: str, images: list[str], roles: list[str]) -> bool:
         return True
     if _any(text, ("各管一件事", "身份图", "结构图", "这张是脸", "第一张是脸", "一张管")):
         return True
+    if _MULTI_STATES.search(text):
+        return True
     if _any(text, ("关上", "打开", "关开")) and _any(
         text, ("另一张", "不在同一张", "身份在", "两态", "同一机位", "锁同一机位")
     ):
@@ -936,9 +965,14 @@ def _wants_multi(text: str, images: list[str], roles: list[str]) -> bool:
     return False
 
 
+_KEY_ORIGINAL = re.compile(r"(画|出|来|做|要|搞)\s*(一|1)?\s*[张幅个]?\s*原画(?!风|师)")
+
+
 def _wants_key(text: str) -> bool:
     if _hit(text, "带字主视觉"):
         return False
+    if _KEY_ORIGINAL.search(text):
+        return True
     if _any(text, ("主视觉", "Key Art", "key art", "气氛图", "概念海报", "宣传图", "KeyArt")):
         return True
     # 裸「概念图」不够；须带海报/主视觉/宣传气质，避免随手概念稿升原画合同
@@ -963,6 +997,11 @@ def _wants_style(text: str) -> bool:
             "锁定风格",
             "锁成风格",
             "锁风格",
+            "锁一下风格",
+            "锁一下画风",
+            "锁一下这张",
+            "锁一下色板",
+            "锁个风格",
             "风格锁定",
             "色板锁上",
             "以后照这个画",
@@ -1055,6 +1094,12 @@ def _wants_prompt(text: str) -> bool:
             "扩成",
             "先出",
             "先写",
+            "写个",
+            "写一个",
+            "写一份",
+            "写套",
+            "写几套",
+            "给我几套",
         ),
     ):
         return True
@@ -1415,8 +1460,12 @@ def plan_route(
         "pmem-coach",
         "pmem-prompt",
         "pmem-layer-split",
+        "pmem-lens",
+        "pmem-touchup",
     }:
         chosen = {
+            "pmem-lens": ["draw.lens"],
+            "pmem-touchup": ["draw.touchup"],
             "pmem-ui": ["ui.kit"],
             "pmem-merge-ladder": ["merge.ladder"],
             "pmem-style-lock": ["style.lock"],
@@ -1502,7 +1551,7 @@ def plan_route(
         elif _wants_touchup(raw):
             chosen = ["draw.touchup"]
             reason = "touchup"
-        elif _wants_variant(raw) and _any(raw, _VARIANT_IDENTITY):
+        elif _wants_variant(raw) and (_any(raw, _VARIANT_IDENTITY) or _SEASON_SWAP.search(raw)):
             # 已锁同一身份时，表情/姿势优先变体，避免被「改成」误抢成克隆
             chosen = ["draw.variant"]
             reason = "variant"

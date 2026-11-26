@@ -212,7 +212,7 @@ def inspect_image_traits(path: Path) -> dict[str, Any]:
     if not path.is_file():
         return traits
     try:
-        from pmem_art import inspect_png
+        from core.imageinfo import inspect_png
         info = inspect_png(path)
         w, h = int(info.get("width") or 0), int(info.get("height") or 0)
         traits.update({
@@ -628,7 +628,7 @@ def seed_asset_record_stub(root: Path, module_id: str, rel_path: str, classifica
     ts = datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S")
     eid = f"INGEST{ts}"
     path = entries / f"{eid}.md"
-    from pmem_art import inspect_png
+    from core.imageinfo import inspect_png
     info = inspect_png(root / rel_path) if (root / rel_path).exists() else {}
     dom_cn_map = {
         "character": "角色与立绘",
@@ -792,9 +792,9 @@ def cmd_ingest(
 
     plan["module_status"] = status
     if refresh_atlas:
-        from pmem_art import refresh_atlas_silent
+        from core import hooks as _hooks
 
-        atlas_out = refresh_atlas_silent(root)
+        atlas_out = _hooks.call("atlas.refresh", root)
         if atlas_out:
             plan["atlas_refreshed"] = str(atlas_out.relative_to(root))
         plan["message"] = f"已入库 → 模块 {mid} ({status}) · {dest_rel}（已自动同步至 art-atlas.html）"
@@ -866,9 +866,9 @@ def cmd_watch_sync_classify(root: Path, data: dict[str, Any], apply: bool = Fals
             continue
     if apply and ingest_n:
         try:
-            from pmem_art import refresh_atlas_silent
+            from core import hooks as _hooks
 
-            atlas_out = refresh_atlas_silent(root)
+            atlas_out = _hooks.call("atlas.refresh", root)
             if atlas_out:
                 print(f"🗺️  批量入库结束，已刷新 {atlas_out.relative_to(root)}")
         except Exception as ex:  # noqa: BLE001

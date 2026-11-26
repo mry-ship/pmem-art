@@ -424,7 +424,7 @@ def _maybe_auto_promote_module(root: Path, module: str, kind: str) -> None:
     if kind not in _PROMOTABLE_KINDS or not module or module.startswith("_"):
         return
     try:
-        from pmem_art import load_yaml
+        from core.yamlio import load_yaml
         from lifecycle import promote_module
     except Exception:
         return
@@ -633,8 +633,8 @@ def cmd_feedback(
         else:
             print(f"「小提示」已记下")
     try:
-        from pmem_art import refresh_atlas_silent
-        refresh_atlas_silent(root)
+        from core import hooks as _hooks
+        _hooks.call("atlas.refresh", root)
     except Exception:
         pass
     return 0

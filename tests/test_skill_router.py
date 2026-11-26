@@ -17,6 +17,8 @@ from skills_kit.skill_specs import SKILL_SPECS
 PRIMARY = [
     "pmem-agent",
     "pmem-draw",
+    "pmem-lens",
+    "pmem-touchup",
     "pmem-style-lock",
     "pmem-critique",
     "pmem-atlas",
@@ -67,7 +69,7 @@ class SkillRouterTests(unittest.TestCase):
         self.assertIn("合同 · 克隆", draw)
         self.assertIn("每一轮都垫最初那张风格参考", draw)
         self.assertIn("内容区回声了参考主体", draw)
-        self.assertIn("禁止在这一步生图", draw)
+        self.assertIn("禁止在这一步生图", _spec("pmem-lens")["body"])
         self.assertIn("克隆和变体仍用第二节", draw)
         self.assertNotIn("可主动提议跑", draw)
         self.assertEqual(DEFAULT_MAX_ROUNDS, 3)
@@ -183,7 +185,7 @@ class SkillRouterTests(unittest.TestCase):
         ordinary_pack = slice_route_body(draw_body, by_id["draw.ordinary"])
         self.assertIn("零点五", ordinary_pack)
         self.assertIn("reasonableness", ordinary_pack)
-        touchup_pack = slice_route_body(draw_body, by_id["draw.touchup"])
+        touchup_pack = slice_route_body(bodies["pmem-touchup"], by_id["draw.touchup"])
         self.assertIn("合同 · 局部改", touchup_pack)
         self.assertIn("最多1枪", touchup_pack)
         self.assertIn("零点五", touchup_pack)
@@ -214,9 +216,9 @@ class SkillRouterTests(unittest.TestCase):
         self.assertIn("双参考像素同框仍硬停", layer_pack)
         self.assertNotIn("## 统一 CLI", layer_pack)
         self.assertNotIn("## 一次做对的流程", layer_pack)
-        touchup_pack = slice_route_body(draw_body, by_id["draw.touchup"])
+        touchup_pack = slice_route_body(bodies["pmem-touchup"], by_id["draw.touchup"])
         self.assertIn("四格不进路由句", touchup_pack)
-        lens_pack = slice_route_body(draw_body, by_id["draw.lens"])
+        lens_pack = slice_route_body(bodies["pmem-lens"], by_id["draw.lens"])
         self.assertNotIn("交件可见", lens_pack)
         prompt_pack = slice_route_body(bodies[by_id["prompt.write"]["skill"]], by_id["prompt.write"])
         self.assertNotIn("交件可见", prompt_pack)
